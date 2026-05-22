@@ -161,6 +161,7 @@ public extension ConnectionSpec.Location {
 
 public extension ConnectionSpec {
     static let defaultFastest = ConnectionSpec(location: .any(.fastest), features: [])
+    static let defaultRandom = ConnectionSpec(location: .any(.random), features: [])
     static let secureCoreFastest = ConnectionSpec(location: .secureCore(.any(.fastest)), features: [])
 
     #if DEBUG

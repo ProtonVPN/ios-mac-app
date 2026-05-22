@@ -24,6 +24,7 @@ import Cocoa
 import Combine
 import CommonNetworking
 import Connection
+import ConnectionInventory
 import Dependencies
 import Domain
 import Ergonomics

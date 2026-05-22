@@ -18,6 +18,7 @@
 
 import CommonNetworking
 import ComposableArchitecture
+import ConnectionInventory
 import Dependencies
 import Domain
 import LegacyCommon
@@ -119,10 +120,6 @@ public struct CountriesFeature {
     @Dependency(\.openCredentiallessSignUp) private var openCredentiallessSignUp
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.switchToPrimaryTab) private var switchToPrimaryTab
-    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
-    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
-    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
-    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
 
     public var body: some ReducerOf<Self> {
         CombineReducers {
@@ -620,17 +617,8 @@ public struct CountriesFeature {
         )
     }
 
-    /// Profiles rely on current defaults (NetShield, NAT, Safe Mode, Port Forwarding),
-    /// so we build the connection request from profile + current settings each time.
     private func connectionSpec(for profile: Profile) -> ConnectionSpec {
-        let connectionRequest = profile.connectionRequest(
-            withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
-            withDefaultNATType: natTypePropertyProvider.getNATType(),
-            withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
-            withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
-            trigger: .profile
-        )
-        return ConnectionSpec(connectionRequest: connectionRequest)
+        profile.connectionSpec(trigger: .profile)
     }
 
     private func pathCountryState(

@@ -19,15 +19,18 @@
 import Domain
 
 public enum CityStateConnectionSpecFactory {
-    public static func makeSpec(location: ConnectionSpec.Location) -> ConnectionSpec {
-        .init(location: location, features: [])
+    public static func makeSpec(
+        location: ConnectionSpec.Location,
+        features: Set<ConnectionSpec.Feature> = []
+    ) -> ConnectionSpec {
+        .init(location: location, features: features)
     }
 
-    static func serverLocation(for server: ServerInfo, subregion: String) -> ConnectionSpec.Location {
-        if case .secureCore = server.logical.kind {
+    public static func serverLocation(for server: ServerInfo, subregion: String) -> ConnectionSpec.Location {
+        if case let .secureCore(entryCountryCode) = server.logical.kind {
             return .secureCore(.hop(
                 to: server.logical.exitCountryCode,
-                via: server.logical.entryCountryCode
+                via: entryCountryCode
             ))
         }
 

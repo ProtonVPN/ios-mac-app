@@ -26,6 +26,7 @@ import Combine
 import CommonNetworking
 import ComposableArchitecture
 import Connection
+import ConnectionInventory
 import Dependencies
 import Domain
 import Ergonomics
@@ -50,10 +51,6 @@ final class HeaderViewModel {
     @Dependency(\.featureFlagProvider) var featureFlags
     @Dependency(\.credentialsProvider) var credentials
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
-    @Dependency(\.specBuilder) private var specBuilder
-    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
-    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
-    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.serverRepository) private var serverRepository
 
@@ -185,14 +182,7 @@ final class HeaderViewModel {
             connectionProtocol: propertiesManager.connectionProtocol,
             defaultProfileAccessTier: 0
         )
-        let request = profile.connectionRequest(
-            withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
-            withDefaultNATType: natTypePropertyProvider.getNATType(),
-            withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
-            withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
-            trigger: .changeServer
-        )
-        let spec = specBuilder.spec(request)
+        let spec = profile.connectionSpec(trigger: .changeServer)
         connectionCommandClient.send(.connect(spec, profile.connectionProtocol, .changeServer))
     }
 

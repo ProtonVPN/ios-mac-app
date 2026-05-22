@@ -16,10 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CommonNetworking
-import Domain
+import Foundation
 
 public extension ConnectionSpec {
+    /// Converts a high-level `ConnectionRequest` into the lower-level `ConnectionSpec` used by the
+    /// connection layer. Session-level flags on the request (`netShieldType`, `natType`, `safeMode`,
+    /// `portForwarding`, `trigger`, `connectionProtocol`) are intentionally discarded — they do not
+    /// belong to `ConnectionSpec`'s concerns (location + feature flags from the chosen server).
     init(connectionRequest: ConnectionRequest) {
         let location: ConnectionSpec.Location
         var features: Set<ConnectionSpec.Feature> = []
@@ -60,7 +63,7 @@ public extension ConnectionSpec {
                     location = .exact(
                         .paid,
                         logicalID: serverModel.id,
-                        number: serverModel.serverNameComponents.sequence,
+                        number: ServerNameComponents(name: serverModel.name).sequence,
                         subregion: serverModel.city,
                         regionCode: country
                     )

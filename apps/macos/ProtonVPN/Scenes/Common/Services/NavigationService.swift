@@ -23,6 +23,7 @@
 import Cocoa
 import CommonNetworking
 import ComposableArchitecture
+import ConnectionInventory
 import Domain
 import Ergonomics
 import LegacyCommon
@@ -234,16 +235,8 @@ class NavigationService {
     private func triggerAutoConnect() {
         let profileManager = factory.makeProfileManager()
         if let profile = profileManager.autoConnectProfile {
-            let defaultRequest = propertiesManager.lastConnectionRequest
-            let request = profile.connectionRequest(
-                withDefaultNetshield: defaultRequest?.netShieldType ?? .off,
-                withDefaultNATType: defaultRequest?.natType ?? .default,
-                withDefaultSafeMode: defaultRequest?.safeMode,
-                withDefaultPortForwarding: defaultRequest?.portForwarding,
-                trigger: .auto
-            )
-            let spec = ConnectionSpec(connectionRequest: request)
-            connectionCommandClient.send(.connect(spec, request.connectionProtocol, .auto))
+            let spec = profile.connectionSpec(trigger: .auto)
+            connectionCommandClient.send(.connect(spec, profile.connectionProtocol, .auto))
             return
         }
 

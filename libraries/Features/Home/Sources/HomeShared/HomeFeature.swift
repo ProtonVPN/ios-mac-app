@@ -294,8 +294,7 @@ private extension HomeFeature {
                     log.error("User is not authorized for server change, action should have been unavailable")
                     return .none
                 }
-                let randomConnectionSpec = ConnectionSpec(location: .any(.random), features: .init())
-                connectionCommandClient.send(.connect(randomConnectionSpec, nil, .changeServer))
+                connectionCommandClient.send(.connect(.defaultRandom, nil, .changeServer))
                 return .none
 
             case let .connectionCommandReceived(.connect(spec, connectionProtocol, trigger)):

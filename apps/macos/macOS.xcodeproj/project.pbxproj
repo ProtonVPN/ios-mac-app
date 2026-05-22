@@ -114,7 +114,6 @@
 		A48B18662F6B02BA004F385F /* CountriesSectionSwiftUIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48B18652F6B02BA004F385F /* CountriesSectionSwiftUIController.swift */; };
 		A48B18CE2F6B14FE004F385F /* QuickSettingsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48B18CD2F6B14FE004F385F /* QuickSettingsFeature.swift */; };
 		A48D80492E66F8DB00734EEA /* MenuManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48D80482E66F8DB00734EEA /* MenuManager.swift */; };
-		A4939F7A2FB71CFE00A97308 /* SecureCoreConnectionSpecResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4939F792FB71CFE00A97308 /* SecureCoreConnectionSpecResolver.swift */; };
 		A4939F7C2FB71DC300A97308 /* SecureCoreConnectionSpecResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4939F7B2FB71DC300A97308 /* SecureCoreConnectionSpecResolverTests.swift */; };
 		A4A7C7672E437F66002652F2 /* QuickSettingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C7662E437F66002652F2 /* QuickSettingType.swift */; };
 		A4B925132F29074A00E17037 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B925122F29074800E17037 /* main.swift */; };
@@ -620,7 +619,6 @@
 		A48B18652F6B02BA004F385F /* CountriesSectionSwiftUIController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesSectionSwiftUIController.swift; sourceTree = "<group>"; };
 		A48B18CD2F6B14FE004F385F /* QuickSettingsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsFeature.swift; sourceTree = "<group>"; };
 		A48D80482E66F8DB00734EEA /* MenuManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuManager.swift; sourceTree = "<group>"; };
-		A4939F792FB71CFE00A97308 /* SecureCoreConnectionSpecResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureCoreConnectionSpecResolver.swift; sourceTree = "<group>"; };
 		A4939F7B2FB71DC300A97308 /* SecureCoreConnectionSpecResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureCoreConnectionSpecResolverTests.swift; sourceTree = "<group>"; };
 		A4A7C7662E437F66002652F2 /* QuickSettingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingType.swift; sourceTree = "<group>"; };
 		A4B925122F29074800E17037 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -1892,7 +1890,6 @@
 				D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */,
 				E142F24C20A9B45800029163 /* UpdateManager.swift */,
 				EE4E7DF41F6276C9000F7D5E /* WindowService.swift */,
-				A4939F792FB71CFE00A97308 /* SecureCoreConnectionSpecResolver.swift */,
 				F3747C0326D4E45100EF2F00 /* macOSNetworkingDelegate.swift */,
 			);
 			path = Services;
@@ -3336,7 +3333,6 @@
 				EE7874A51F3B6569001E261E /* WarningPopupViewController.swift in Sources */,
 				AD8130FF2A85360800729E03 /* SharedDependencies+Live.swift in Sources */,
 				EE8EF1F21F1FC71F0057CD94 /* OverviewItemViewModel.swift in Sources */,
-				A4939F7A2FB71CFE00A97308 /* SecureCoreConnectionSpecResolver.swift in Sources */,
 				A4FD647D2F7AB5FB0071D13F /* QuickSettingDetailViewController.swift in Sources */,
 				4CA7BA512965E0040001C7E7 /* SecureCoreWarningViewModel.swift in Sources */,
 				EEFE81DB1F3F6D150052A7A6 /* NavigationService.swift in Sources */,

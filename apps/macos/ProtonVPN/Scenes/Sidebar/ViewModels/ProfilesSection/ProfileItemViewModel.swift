@@ -33,11 +33,6 @@ class ProfileItemViewModel: AbstractProfileViewModel {
     private let alertService: CoreAlertService
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
-    @Dependency(\.specBuilder) private var specBuilder
-    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
-    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
-    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
-    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
 
     var enabled: Bool {
         !underMaintenance
@@ -88,14 +83,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
 
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             log.debug("Will connect to profile: \(profile.logDescription)", category: .connectionConnect, event: .trigger)
-            let request = profile.connectionRequest(
-                withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
-                withDefaultNATType: natTypePropertyProvider.getNATType(),
-                withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
-                withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
-                trigger: .profile
-            )
-            let spec = specBuilder.spec(request)
+            let spec = profile.connectionSpec(trigger: .profile)
             connectionCommandClient.send(.connect(spec, profile.connectionProtocol, .profile))
         }
 

@@ -76,45 +76,15 @@ public struct DefaultProfileFeature {
             guard case .connected = vpnConnectionStatus else {
                 return false
             }
-
-            @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
-            @Dependency(\.safeModePropertyProvider) var safeModePropertyProvider
-            @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
-            @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
             @Dependency(\.propertiesManager) var propertiesManager
-            let connectionSpec = ConnectionSpec(
-                connectionRequest: profile.connectionRequest(
-                    withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
-                    withDefaultNATType: natTypePropertyProvider.getNATType(),
-                    withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
-                    withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
-                    trigger: .profile
-                )
-            )
-
-            return propertiesManager.lastConnectionIntent == connectionSpec
+            return propertiesManager.lastConnectionIntent == profile.connectionSpec(trigger: .profile)
         }
 
         var isConnecting: Bool {
             guard case let .connecting(connectionSpec, _) = vpnConnectionStatus else {
                 return false
             }
-
-            @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
-            @Dependency(\.safeModePropertyProvider) var safeModePropertyProvider
-            @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
-            @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
-            let expectedSpec = ConnectionSpec(
-                connectionRequest: profile.connectionRequest(
-                    withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
-                    withDefaultNATType: natTypePropertyProvider.getNATType(),
-                    withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
-                    withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
-                    trigger: .profile
-                )
-            )
-
-            return connectionSpec == expectedSpec
+            return connectionSpec == profile.connectionSpec(trigger: .profile)
         }
 
         var isUsersTierTooLow: Bool {

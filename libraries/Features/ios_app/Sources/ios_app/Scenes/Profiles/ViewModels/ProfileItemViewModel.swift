@@ -39,10 +39,6 @@ import VPNAppCore
 final class ProfileItemViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
-    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
-    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
-    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
-    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
 
     private let profile: Profile
     private let alertService: AlertService
@@ -225,15 +221,7 @@ final class ProfileItemViewModel {
     private var cancellables = Set<AnyCancellable>()
 
     private var profileConnectionSpec: ConnectionSpec {
-        ConnectionSpec(
-            connectionRequest: profile.connectionRequest(
-                withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
-                withDefaultNATType: natTypePropertyProvider.getNATType(),
-                withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
-                withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
-                trigger: .profile
-            )
-        )
+        profile.connectionSpec(trigger: .profile)
     }
 
     private func startObserving() {

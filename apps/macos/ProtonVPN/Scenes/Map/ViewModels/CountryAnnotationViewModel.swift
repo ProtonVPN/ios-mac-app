@@ -24,6 +24,7 @@ import Cocoa
 import CommonNetworking
 import ComposableArchitecture
 import Connection
+import ConnectionInventory
 import CoreLocation
 import Dependencies
 import Domain
@@ -194,7 +195,7 @@ class StandardCountryAnnotationViewModel: ConnectableAnnotationViewModel {
         } else {
             let serverType = ServerType.standard
             log.debug("Connect requested by pressing on a country on the map. Will connect to country: \(countryCode) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
-            let spec = ConnectionSpec(location: .country(code: countryCode, order: .fastest), features: [])
+            let spec = CityStateConnectionSpecFactory.makeSpec(location: .country(code: countryCode, order: .fastest))
             connectionCommandClient.send(.connect(spec, nil, .map))
         }
     }
@@ -236,16 +237,10 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
             log.debug("Server on the map clicked. Already connected, so will disconnect from VPN. ", category: .connectionDisconnect, event: .trigger)
             connectionCommandClient.send(.disconnect(.map))
         } else {
-            let serverID = servers[row].logical.id
-            @Dependency(\.serverRepository) var repository
-            guard let server = repository.getFirstServer(filteredBy: [.logicalID(serverID)], orderedBy: .none) else {
-                log.error("No server found with id \(serverID)", category: .connectionConnect)
-                return
-            }
-            let location: ConnectionSpec.Location = .secureCore(
-                .hop(to: server.logical.exitCountryCode, via: server.logical.entryCountryCode)
+            let server = servers[row]
+            let spec = CityStateConnectionSpecFactory.makeSpec(
+                location: CityStateConnectionSpecFactory.serverLocation(for: server, subregion: server.logical.city ?? "")
             )
-            let spec = ConnectionSpec(location: location, features: [])
             log.debug("Server on the map clicked. Will connect to \(server.logical.name)", category: .connectionConnect, event: .trigger)
             connectionCommandClient.send(.connect(spec, nil, .map))
         }

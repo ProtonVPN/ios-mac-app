@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import Connection
+import ConnectionInventory
 import Domain
 import Ergonomics
 import LegacyCommon

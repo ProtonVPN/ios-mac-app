@@ -31,6 +31,21 @@ extension ConnectionProtocol: LocalizedStringConvertible {
     }
 }
 
+extension ConnectionProtocol: @retroactive CustomStringConvertible {
+    public var description: String {
+        localizedString
+    }
+
+    public var localizedString: String {
+        switch self {
+        case let .vpnProtocol(vpnProtocol):
+            vpnProtocol.localizedDescription
+        case .smartProtocol:
+            Localizable.smartTitle
+        }
+    }
+}
+
 extension VpnProtocol: LocalizedStringConvertible {
     public var localizedDescription: String {
         var string: String

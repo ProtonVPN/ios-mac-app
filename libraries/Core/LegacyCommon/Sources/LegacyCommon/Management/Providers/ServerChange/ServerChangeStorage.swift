@@ -18,6 +18,7 @@
 
 import CommonNetworking
 import Dependencies
+import Domain
 import Foundation
 import IssueReporting
 import NetworkExtension

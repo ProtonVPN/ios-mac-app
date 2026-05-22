@@ -19,42 +19,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Domain
 import Foundation
-import Strings
-import VPNAppCore
-import VPNShared
 
-extension ConnectionProtocol: @retroactive CustomStringConvertible {
-    /// Returns an array of all supported protocols on the current platform.
-    /// - Parameter wireguardTLS: Whether WireGuard TLS feature flag enabled. If false, the protocol list will not
-    /// include WireGuard TCP and TLS.
-    public static func availableProtocols(wireguardTLSEnabled: Bool) -> [Self] {
-        allCases
-            .removing([.vpnProtocol(.wireGuard(.tcp)), .vpnProtocol(.wireGuard(.tls))], if: !wireguardTLSEnabled)
-            .removing(deprecatedProtocols)
-    }
-
-    public var description: String {
-        localizedString
-    }
-
-    public var localizedString: String {
-        switch self {
-        case let .vpnProtocol(vpnProtocol):
-            vpnProtocol.localizedDescription
-        case .smartProtocol:
-            Localizable.smartTitle
-        }
-    }
-
-    public static func uiSort(lhs: Self, rhs: Self) -> Bool {
-        guard let lhsProtocol = lhs.vpnProtocol, let rhsProtocol = rhs.vpnProtocol else {
-            return lhs == .smartProtocol && rhs != .smartProtocol // smart protocol gets sorted first
-        }
-
-        return VpnProtocol.uiSort(lhs: lhsProtocol, rhs: rhsProtocol)
-    }
+public enum ConnectionRequestCodingError: Error {
+    case unknownValue
 }
 
 public struct ConnectionRequest: Identifiable {
@@ -70,7 +38,18 @@ public struct ConnectionRequest: Identifiable {
     public let profileName: String?
     public let trigger: UserInitiatedVPNChange.VPNTrigger?
 
-    public init(serverType: ServerType, connectionType: ConnectionRequestType, connectionProtocol: ConnectionProtocol, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?, portForwarding: Bool?, profileId: String?, profileName: String?, trigger: UserInitiatedVPNChange.VPNTrigger?) {
+    public init(
+        serverType: ServerType,
+        connectionType: ConnectionRequestType,
+        connectionProtocol: ConnectionProtocol,
+        netShieldType: NetShieldType,
+        natType: NATType,
+        safeMode: Bool?,
+        portForwarding: Bool?,
+        profileId: String?,
+        profileName: String?,
+        trigger: UserInitiatedVPNChange.VPNTrigger?
+    ) {
         self.serverType = serverType
         self.connectionType = connectionType
         self.connectionProtocol = connectionProtocol
@@ -266,7 +245,7 @@ extension ConnectionRequestType: Codable {
             let name = try container.decode(String.self, forKey: .state)
             self = .state(name: name, code: countryCode)
         default:
-            throw CodingError.unknownValue
+            throw ConnectionRequestCodingError.unknownValue
         }
     }
 
@@ -314,7 +293,7 @@ extension CountryConnectionRequestType: Codable {
             let server = try container.decode(ServerModel.self, forKey: .associatedValue)
             self = .server(server)
         default:
-            throw CodingError.unknownValue
+            throw ConnectionRequestCodingError.unknownValue
         }
     }
 

@@ -18,6 +18,7 @@
 
 import AppIntents
 import Connection
+import ConnectionInventory
 import Dependencies
 import Domain
 import Localization
@@ -74,11 +75,11 @@ public struct ConnectToRegionIntent: AppIntent {
 
     private func specForSelection() -> ConnectionSpec? {
         if let city {
-            ConnectionSpec(location: .city(name: city.name, code: city.countryCode, order: .fastest), features: [])
+            CityStateConnectionSpecFactory.makeSpec(location: .city(name: city.name, code: city.countryCode, order: .fastest))
         } else if let state {
-            ConnectionSpec(location: .state(name: state.name, code: state.countryCode, order: .fastest), features: [])
+            CityStateConnectionSpecFactory.makeSpec(location: .state(name: state.name, code: state.countryCode, order: .fastest))
         } else if let code = country?.id {
-            ConnectionSpec(location: .country(code: code, order: .fastest), features: [])
+            CityStateConnectionSpecFactory.makeSpec(location: .country(code: code, order: .fastest))
         } else {
             nil
         }

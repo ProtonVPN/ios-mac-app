@@ -21,7 +21,7 @@
 //
 
 import Cocoa
-import CommonNetworking
+import ConnectionInventory
 import Dependencies
 import Domain
 import LegacyCommon
@@ -67,7 +67,7 @@ class StatusMenuCountryItemViewModel {
         } else {
             serverGroup.kind.locationWithOrder()
         }
-        let spec = ConnectionSpec(location: location, features: features)
+        let spec = CityStateConnectionSpecFactory.makeSpec(location: location, features: features)
         connectionCommandClient.send(.connect(spec, nil, .country))
     }
 
