@@ -39,6 +39,7 @@ public struct HomeFeature {
     @Dependency(\.serverChangeAuthorizer) private var authorizer
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.connectionIntentStorage) private var connectionIntentStorage
+    @Dependency(\.pendingDisconnectCompletions) private var pendingDisconnectCompletions
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.alertService) private var alertService
     @Dependency(\.continuousClock) private var clock
@@ -100,7 +101,6 @@ public struct HomeFeature {
         case connectionState
         case connectionCommands
         case connectionConnectCommandEffect
-        case connectionDisconnectCommandEffect
     }
 
     public enum Action {
@@ -318,20 +318,20 @@ private extension HomeFeature {
                 .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
 
             case let .connectionCommandReceived(.disconnect(trigger, completion)):
-                let connectionState = state.$connectionState
+                let alreadyDisconnected = state.connectionState.is(\.disconnected)
                 return .merge(
                     .cancel(id: CancelID.connectionConnectCommandEffect),
                     .run { send in
+                        if let completion {
+                            if alreadyDisconnected {
+                                await MainActor.run { completion() }
+                            } else {
+                                await pendingDisconnectCompletions.enqueue(completion)
+                            }
+                        }
                         AppEvent.userInitiatedVPNChange.post(trigger)
                         await send(.connection(.input(.disconnect)))
-                        try? await connectionState.when(
-                            willBe: \.disconnected,
-                            every: .milliseconds(200),
-                            deadline: .seconds(3)
-                        ) {}
-                        await completion?()
                     }
-                    .cancellable(id: CancelID.connectionDisconnectCommandEffect, cancelInFlight: true)
                 )
 
             case .connectionCommandReceived(.retry):
@@ -495,6 +495,10 @@ private extension HomeFeature {
                     .send(.sharedProperties(.newConnectionState(connectionState))),
                     .send(.sharedProperties(.newConnectionStatus(status)))
                 )
+            case .connection(.delegate(.disconnected)):
+                return .run { _ in
+                    await pendingDisconnectCompletions.drainAndInvoke()
+                }
             case let .connection(.delegate(.intentResolutionFailed(intent, resolutionError))):
                 SentryHelper.shared?.log(error: resolutionError)
                 switch resolutionError {

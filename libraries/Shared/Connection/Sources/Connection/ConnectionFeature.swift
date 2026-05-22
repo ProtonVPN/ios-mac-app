@@ -92,6 +92,10 @@ public struct ConnectionFeature: Sendable {
         @dynamicMemberLookup
         public enum Delegate: Sendable {
             case stateChanged(ConnectionState)
+            /// Emitted whenever the connection state transitions into `.disconnected`.
+            /// Consumers should subscribe to this to react to "VPN is now fully down" — e.g.
+            /// to invoke completion callbacks tied to a user-initiated disconnect.
+            case disconnected
             case connectionFailed(ConnectionError)
             case intentResolutionFailed(ConnectionPreparationIntent, with: ConnectionIntentResolutionError)
             case localAgentNotice(LocalAgentTwoFactorAuthenticationError)
@@ -453,6 +457,12 @@ public struct ConnectionFeature: Sendable {
             return .none
         }
         state.connectionState = newValue
+        if newValue.is(\.disconnected) {
+            return .merge(
+                .send(.delegate(.stateChanged(newValue))),
+                .send(.delegate(.disconnected))
+            )
+        }
         return .send(.delegate(.stateChanged(newValue)))
     }
 
@@ -602,6 +612,8 @@ extension ConnectionFeature.Action.Delegate: CustomDebugStringConvertible {
             ".intentResolutionFailed(\(intent), \(resolutionError))"
         case let .localAgentNotice(error):
             ".localAgentNotice(\(error.errorCodeString))"
+        case .disconnected:
+            ".stateChanged(.disconnected)"
         }
     }
 }

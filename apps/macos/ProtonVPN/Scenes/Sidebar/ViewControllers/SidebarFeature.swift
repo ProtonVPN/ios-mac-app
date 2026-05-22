@@ -153,6 +153,7 @@ struct SidebarFeature {
     @Dependency(\.defaultsProvider) private var defaultsProvider
     @Dependency(\.sidebarEventsClient) private var sidebarEventsClient
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
+    @Dependency(\.pendingDisconnectCompletions) private var pendingDisconnectCompletions
     @Dependency(\.continuousClock) private var clock
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
@@ -199,7 +200,6 @@ struct SidebarFeature {
         case plutoniumSetting
         case killSwitchSetting
         case connectionConnectCommandEffect
-        case connectionDisconnectCommandEffect
         case plutoniumSync
     }
 }
@@ -284,7 +284,6 @@ private extension SidebarFeature {
                     .cancel(id: CancelID.plutoniumSetting),
                     .cancel(id: CancelID.killSwitchSetting),
                     .cancel(id: CancelID.connectionConnectCommandEffect),
-                    .cancel(id: CancelID.connectionDisconnectCommandEffect),
                     .cancel(id: CancelID.plutoniumSync)
                 )
             case .viewDidAppear, .mouseDown:
@@ -440,21 +439,21 @@ private extension SidebarFeature {
                 state.overlayState = .hidden
                 @Shared(.intentionallyDisconnected) var intentionallyDisconnected
                 $intentionallyDisconnected.withLock { $0 = true }
-                let connectionState = state.$connectionState
+                let alreadyDisconnected = state.connectionState.is(\.disconnected)
                 return .merge(
                     .cancel(id: CancelID.connectionConnectCommandEffect),
                     .cancel(id: CancelID.overlayDelay),
                     .run { send in
+                        if let completion {
+                            if alreadyDisconnected {
+                                await MainActor.run { completion() }
+                            } else {
+                                await pendingDisconnectCompletions.enqueue(completion)
+                            }
+                        }
                         AppEvent.userInitiatedVPNChange.post(trigger)
                         await send(.connection(.input(.disconnect)))
-                        try? await connectionState.when(
-                            willBe: \.disconnected,
-                            every: .milliseconds(200),
-                            deadline: .seconds(3)
-                        ) {}
-                        await completion?()
                     }
-                    .cancellable(id: CancelID.connectionDisconnectCommandEffect, cancelInFlight: true)
                 )
             case .connectionCommandReceived(.retry):
                 let spec = propertiesManager.lastConnectionIntent
@@ -559,6 +558,10 @@ private extension SidebarFeature {
                     .send(.syncNATPortMappingState),
                     .send(.syncPlutoniumState)
                 )
+            case .connection(.delegate(.disconnected)):
+                return .run { _ in
+                    await pendingDisconnectCompletions.drainAndInvoke()
+                }
             case let .connection(.delegate(.intentResolutionFailed(intent, resolutionError))):
                 log.warning(
                     "Intent resolution failed; presenting upsell",

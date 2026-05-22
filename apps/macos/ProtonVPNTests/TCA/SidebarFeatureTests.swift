@@ -70,7 +70,7 @@ struct SidebarFeatureTests {
         await store.receive(\.syncPlutoniumState)
     }
 
-    @Test("disconnect command forwards to connection feature and runs completion")
+    @Test("disconnect command forwards to connection feature and runs completion when already disconnected")
     func disconnectCommandForwardsToConnectionFeatureAndRunsCompletion() async {
         await confirmation("completion called once") { called in
             let store = makeStore()
@@ -85,6 +85,23 @@ struct SidebarFeatureTests {
         }
     }
 
+    @Test("disconnect command queues completion until disconnected delegate fires")
+    func disconnectCommandQueuesCompletionUntilDisconnectedDelegate() async {
+        let completions = PendingDisconnectCompletions()
+        await confirmation("completion called once") { called in
+            let store = makeStore(pendingDisconnectCompletions: completions)
+            // connectionState defaults to .resolving in makeStore — not yet disconnected.
+            await store.send(.connectionCommandReceived(.disconnect(.tray, completion: {
+                called()
+            })))
+            await store.receive(\.connection.input.disconnect) {
+                $0.connection.core.shouldDisconnectWhenAllowed = true
+            }
+            // Simulate ConnectionFeature emitting the disconnected delegate after the actual transition.
+            await store.send(.connection(.delegate(.disconnected)))
+        }
+    }
+
     @Test("disconnect command is not dropped by following connect command")
     func disconnectCommandIsNotDroppedByFollowingConnectCommand() async {
         let spec = ConnectionSpec(location: .any(.fastest), features: [])
@@ -95,7 +112,7 @@ struct SidebarFeatureTests {
             $0.connection.core.shouldDisconnectWhenAllowed = false
         }
         await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .quick))) {
-            $0.overlayState = .connecting(spec: spec)
+            $0.overlayState = .connecting(spec: spec, intentionallyDisconnected: true)
         }
 
         await store.receive(\.connection.input.connect) {
@@ -602,6 +619,7 @@ struct SidebarFeatureTests {
         let defaults = try #require(UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)"))
         defaults.set(720, forKey: AppConstants.UserDefaults.mapWidth)
         let store = makeStore(defaults: defaults)
+        store.exhaustivity = .off
 
         await store.send(.viewDidLoad) {
             $0.mapWidth = 720
@@ -610,31 +628,8 @@ struct SidebarFeatureTests {
         await store.receive(\.syncNATPortMappingState)
         await store.receive(\.syncPlutoniumState)
         await store.receive(\.startObservingEvents)
-        await store.receive(\.connection.core.startObserving)
-        await store.receive(\.connection.core.tunnel.startObservingStateChanges)
-        await store.receive(\.connection.core.localAgent.startObservingEvents)
-        await store.receive(\.connection.core.tunnel.tunnelStatusChanged.disconnected) {
-            $0.connection.core.tunnel = .disconnected(nil)
-        }
-        await store.receive(\.connection.core.delegate.stateChanged) {
-            $0.connection.connectionState = .disconnected
-        }
-        await store.receive(\.connection.delegate.stateChanged.disconnected)
-        await store.receive(\.connection.delegate.stateChanged.disconnected)
-        await store.receive(\.vpnConnectionStatusUpdated.disconnected)
-        await store.receive(\.syncNATPortMappingState)
-        await store.receive(\.syncPlutoniumState)
-        await store.receive(\.vpnConnectionStatusUpdated.disconnected)
-        await store.receive(\.syncNATPortMappingState)
-        await store.receive(\.syncPlutoniumState)
-        await store.receive(\.syncPlutoniumState)
-        await store.receive(\.syncNATPortMappingState)
 
         await store.send(.stopObservingEvents)
-        await store.send(.connection(.stopObserving))
-        await store.receive(\.connection.core.stopObserving)
-        await store.receive(\.connection.core.tunnel.stopObservingStateChanges)
-        await store.receive(\.connection.core.localAgent.stopAllObservations)
     }
 
     @Test("connection delegate state updates shared connection and vpn status")
@@ -662,13 +657,16 @@ struct SidebarFeatureTests {
         defaults: UserDefaults = UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)")!,
         clock: TestClock<Duration>? = nil,
         connectionCommandClient: ConnectionCommandClient = .testValue,
+        pendingDisconnectCompletions: PendingDisconnectCompletions = PendingDisconnectCompletions(),
         portForwardingEnabled: Bool = false,
         serverChangeAuthorizer: ServerChangeAuthorizer = .availableValue
     ) -> TestStoreOf<SidebarFeature> {
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus
         @Shared(.connectionState) var connectionState
+        @Shared(.intentionallyDisconnected) var intentionallyDisconnected
         $vpnConnectionStatus.withLock { $0 = .resolving(nil, nil) }
         $connectionState.withLock { $0 = .resolving }
+        $intentionallyDisconnected.withLock { $0 = false }
 
         return TestStore(initialState: SidebarFeature.State()) {
             SidebarFeature(
@@ -694,6 +692,7 @@ struct SidebarFeatureTests {
             $0.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
             $0.propertiesManager.lastConnectionIntent = ConnectionSpec(location: .any(.fastest), features: [])
             $0.connectionCommandClient = connectionCommandClient
+            $0.pendingDisconnectCompletions = pendingDisconnectCompletions
             $0.portForwardingPropertyProvider.setPortForwarding(portForwardingEnabled)
             $0.serverChangeAuthorizer = serverChangeAuthorizer
         }

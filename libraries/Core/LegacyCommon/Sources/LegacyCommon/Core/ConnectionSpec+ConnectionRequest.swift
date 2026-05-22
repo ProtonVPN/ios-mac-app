@@ -18,7 +18,6 @@
 
 import CommonNetworking
 import Domain
-import ProtonCoreFeatureFlags
 
 public extension ConnectionSpec {
     init(connectionRequest: ConnectionRequest) {
