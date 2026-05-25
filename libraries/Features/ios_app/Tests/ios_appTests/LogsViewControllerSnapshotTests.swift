@@ -31,7 +31,26 @@ struct LogsViewControllerSnapshotTests {
     @Test("Logs view controller displays logs")
     func logsViewControllerDisplaysLogs() {
         let logs = readTestLogs()
-        let state = LogsViewFeature.State(logSource: .app, logs: logs)
+        let state = LogsViewFeature.State(logSource: .app, logs: logs, isLoading: false)
+        let store = StoreOf<LogsViewFeature>(initialState: state) {
+            EmptyReducer()
+        }
+        let viewController = LogsViewController(store: store)
+        let navigationController = UINavigationController(rootViewController: viewController)
+        viewController.hidesBottomBarWhenPushed = true
+
+        assertSnapshot(
+            of: navigationController,
+            as: .wait(
+                for: 0.2,
+                on: .image(on: .iPhone13Pro, traits: UITraitCollection(userInterfaceStyle: .dark))
+            )
+        )
+    }
+
+    @Test("Logs view controller displays loading indicator")
+    func logsViewControllerDisplaysLoadingIndicator() {
+        let state = LogsViewFeature.State(logSource: .app, isLoading: true)
         let store = StoreOf<LogsViewFeature>(initialState: state) {
             EmptyReducer()
         }

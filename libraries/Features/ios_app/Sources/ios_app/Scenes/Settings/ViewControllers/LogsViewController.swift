@@ -27,11 +27,15 @@ import UIKit
 
 final class LogsViewController: UIViewController {
     private let textView = UITextView().with {
-        $0.layoutManager.allowsNonContiguousLayout = false
         $0.backgroundColor = .clear
         $0.font = UIFont.monospacedSystemFont(ofSize: 12, weight: .regular)
         $0.textColor = .normalTextColor()
         $0.text = ""
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    private let loadingIndicator = UIActivityIndicatorView(style: .large).with {
+        $0.hidesWhenStopped = true
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
 
@@ -64,6 +68,13 @@ final class LogsViewController: UIViewController {
             guard let self else { return }
 
             navigationItem.title = store.title
+
+            if store.isLoading {
+                loadingIndicator.startAnimating()
+            } else {
+                loadingIndicator.stopAnimating()
+            }
+
             if renderedLogs != store.logs {
                 renderedLogs = store.logs
                 textView.text = store.logs
@@ -74,20 +85,28 @@ final class LogsViewController: UIViewController {
 
     private func setupLayout() {
         view.addSubview(textView)
+        view.addSubview(loadingIndicator)
 
         NSLayoutConstraint.activate([
             textView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             textView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             textView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             textView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+
+            loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
     }
 
     private func scrollToBottom(animated: Bool) {
-        let verticalOffset = textView.contentSize.height
-        let offset = CGPoint(x: 0, y: verticalOffset)
-        if offset.y > 0 {
-            textView.setContentOffset(offset, animated: animated)
+        guard !textView.text.isEmpty else { return }
+        let lastCharRange = NSRange(location: textView.text.utf16.count - 1, length: 1)
+        if animated {
+            textView.scrollRangeToVisible(lastCharRange)
+        } else {
+            UIView.performWithoutAnimation {
+                textView.scrollRangeToVisible(lastCharRange)
+            }
         }
     }
 
