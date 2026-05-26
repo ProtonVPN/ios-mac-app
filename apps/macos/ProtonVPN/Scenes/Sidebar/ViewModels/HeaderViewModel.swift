@@ -112,10 +112,6 @@ final class HeaderViewModel {
         connectionState.isConnected
     }
 
-    private var isQuickConnectInDisconnectMode: Bool {
-        connectionState.isConnected
-    }
-
     var connectedCountryCode: String? {
         connectedServer?.logical.exitCountryCode
     }
@@ -162,7 +158,7 @@ final class HeaderViewModel {
     }
 
     func quickConnectAction() {
-        if isQuickConnectInDisconnectMode {
+        if isConnected {
             log.debug("Disconnect requested by selecting Quick connect", category: .connectionDisconnect, event: .trigger)
             connectionCommandClient.send(.disconnect(.quick))
         } else {

@@ -43,7 +43,6 @@
         init() {
             self.appReducer = .init(initialState: .loading, reducer: {
                 AppReducer()
-                    .dependency(\.vpnConnectionStatusPublisher, VPNConnectionStatusPublisherKey.watchVPNConnectionStatusChanges)
                     ._printChanges()
             })
             appDelegate.navigationService.sendAction = { [appReducer] action in

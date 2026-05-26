@@ -123,7 +123,7 @@
                     try await configurator.configure(&manager, for: .connection(intent))
                 }
             } errorHandler: { error in
-                guard case .ikeCredentialsUnavailable = error as? WireguardConfiguratorError else {
+                guard case .ikeCredentialsUnavailable = error as? IkeConfiguratorError else {
                     XCTFail("Expected ikeCredentialsUnavailable error, got \(error)")
                     return
                 }

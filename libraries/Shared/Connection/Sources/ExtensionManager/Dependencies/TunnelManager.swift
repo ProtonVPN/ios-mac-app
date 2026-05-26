@@ -174,11 +174,17 @@ final class PacketTunnelManager: TunnelManager {
 
     var statusStream: AsyncStream<TunnelState> {
         log.debug("Creating TunnelState stream for tunnel observation", category: .connection)
+        // The notification's payload is the source of truth — it represents the manager whose
+        // status just changed. We do not re-resolve the global "active manager" state here:
+        // doing so decouples each emit from its triggering event and can mask transitions
+        // during a protocol switch. Downstream `ConnectionFeature.updateStateSending...`
+        // already coalesces equivalent state changes. One-shot reads via `status` still apply
+        // activity-priority resolution across all managers.
         return UncheckedSendable(
             NotificationCenter.default
                 .notifications(named: .NEVPNStatusDidChange)
                 .compactMap { StatusChangePayload.from(statusDidChangeNotification: $0) }
-                .map { await self.currentTunnelState(after: $0) }
+                .map { await self.tunnelState(from: $0) }
         )
         .eraseToStream()
     }
@@ -192,25 +198,9 @@ final class PacketTunnelManager: TunnelManager {
         guard !activeManagers.isEmpty else {
             return nil
         }
-        return activeManagers.max(by: { lhs, rhs in
-            statusPriority(lhs.value.session.status) < statusPriority(rhs.value.session.status)
-        })
-    }
-
-    private func statusPriority(_ status: NEVPNStatus) -> Int {
-        switch status {
-        case .connected:
-            4
-        case .reasserting:
-            3
-        case .connecting:
-            2
-        case .disconnecting:
-            1
-        case .invalid, .disconnected:
-            0
-        @unknown default:
-            0
+        let priority: KeyPath<NEVPNStatus, Int> = \.activityPriority
+        return activeManagers.max {
+            $0.value.session.status[keyPath: priority] < $1.value.session.status[keyPath: priority]
         }
     }
 
@@ -224,15 +214,6 @@ final class PacketTunnelManager: TunnelManager {
         } catch {
             log.error("Failed to determine connected state: \(error)", category: .connection)
             return .connected(payload.tunnelProtocol, nil)
-        }
-    }
-
-    private func currentTunnelState(after payload: StatusChangePayload) async -> TunnelState {
-        do {
-            return try await status
-        } catch {
-            log.error("Failed to resolve global tunnel status: \(error)", category: .connection)
-            return await tunnelState(from: payload)
         }
     }
 
@@ -416,6 +397,22 @@ private extension NEVPNProtocol {
                 return username
             }
             return String(username.suffix(from: index))
+        }
+    }
+}
+
+private extension NEVPNStatus {
+    /// Ranks tunnel statuses by "how active the tunnel is", with `.connected` highest. Used to
+    /// pick the most-active manager when several `NETunnelProviderManager`s exist in parallel
+    /// (e.g. during a protocol switch).
+    var activityPriority: Int {
+        switch self {
+        case .connected: 4
+        case .reasserting: 3
+        case .connecting: 2
+        case .disconnecting: 1
+        case .invalid, .disconnected: 0
+        @unknown default: 0
         }
     }
 }

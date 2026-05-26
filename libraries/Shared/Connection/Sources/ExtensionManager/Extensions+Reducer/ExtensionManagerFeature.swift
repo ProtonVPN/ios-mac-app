@@ -176,10 +176,12 @@ extension TunnelConnectionError: ProtonVPNError {
 
     public var errorDescription: String? {
         switch self {
-        case let .tunnelStartFailed(error as WireguardConfiguratorError):
+        case let .tunnelStartFailed(error as IkeConfiguratorError):
             if case .ikeCredentialsUnavailable = error {
                 return includeCode(inside: Localizable.errorVpnCredentialsMissing)
             }
+            return includeCode(inside: Localizable.connectionErrorTunnelConnection)
+        case .tunnelStartFailed:
             return includeCode(inside: Localizable.connectionErrorTunnelConnection)
         default:
             return includeCode(inside: Localizable.connectionErrorTunnelConnection)

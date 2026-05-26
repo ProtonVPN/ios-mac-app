@@ -59,6 +59,7 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
                 guard case let .connected(_, server, _, _) = state else { return nil }
                 return server
             }
+            .removeDuplicates()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] server in
                 self?.vpnConnectionChanged(server)

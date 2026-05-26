@@ -135,37 +135,40 @@ class NavigationService {
         autoConnectIfEnabled()
     }
 
-    private func autoConnectIfEnabled() {
-        if connectionState.is(\.connected) {
+    /// Whether the conditions are met to start an auto-connect:
+    ///   * VPN is fully disconnected,
+    ///   * a user is logged in,
+    ///   * that user has auto-connect enabled in their settings.
+    private var shouldAutoConnect: Bool {
+        switch connectionState {
+        case .connected:
             log.debug("Skipping auto-connect: already connected", category: .app)
-            return
-        }
-
-        if connectionState.is(\.connecting) {
+            return false
+        case .connecting, .resolving:
             log.debug("Skipping auto-connect: already connecting", category: .app)
-            return
-        }
-
-        if connectionState.is(\.resolving) {
-            log.debug("Skipping auto-connect: already connecting", category: .app)
-            return
-        }
-
-        guard connectionState.is(\.disconnected) else {
+            return false
+        case .disconnecting:
             log.debug("Skipping auto-connect: connection state is \(connectionState)", category: .app)
-            return
+            return false
+        case .disconnected:
+            break
         }
 
         guard let username = authKeychain.username else {
             log.debug("Skipping auto-connect: no username in keychain", category: .app)
-            return
+            return false
         }
 
         guard propertiesManager.getAutoConnect(for: username).enabled else {
             log.debug("Skipping auto-connect: auto-connect disabled for user", category: .app)
-            return
+            return false
         }
 
+        return true
+    }
+
+    private func autoConnectIfEnabled() {
+        guard shouldAutoConnect else { return }
         log.info("Initiating auto-connect", category: .app)
         triggerAutoConnect()
     }
@@ -200,9 +203,7 @@ class NavigationService {
                 log.error("Expected session to be established when receiving gateway")
             }
 
-            if connectionState.is(\.disconnected), let username = authKeychain.username, propertiesManager.getAutoConnect(for: username).enabled {
-                triggerAutoConnect()
-            }
+            autoConnectIfEnabled()
 
             if appHasPresented {
                 showSidebar()

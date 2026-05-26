@@ -59,7 +59,6 @@
             }
             .ifCaseLet(/State.loggedIn, action: /Action.app) {
                 SidebarReducer()
-                    .dependency(\.vpnConnectionStatusPublisher, VPNConnectionStatusPublisherKey.watchVPNConnectionStatusChanges)
                     ._printChanges()
             }
         }

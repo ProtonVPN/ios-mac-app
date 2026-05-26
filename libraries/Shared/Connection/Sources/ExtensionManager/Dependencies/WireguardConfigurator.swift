@@ -269,7 +269,7 @@ extension ManagerConfigurator {
             username = credentials.name
             passwordReference = try keychain.fetchOpenVpnPassword()
         } catch {
-            throw WireguardConfiguratorError.ikeCredentialsUnavailable(error)
+            throw IkeConfiguratorError.ikeCredentialsUnavailable(error)
         }
 
         config.username = ikeUsername(baseUsername: username, features: intent.features, endpointID: intent.server.endpoint.id)
@@ -366,6 +366,13 @@ enum WireguardConfiguratorError: Error {
     case configurationEncodingError(Error)
     case keychainImplementationError(TunnelKeychainImplementationError)
     case keychainError(Error)
+}
+
+/// Errors raised while building an IKEv2 `NEVPNProtocolIKEv2` configuration. Kept separate
+/// from `WireguardConfiguratorError` so callers can pattern-match on protocol-specific
+/// failures without conflating the two transports.
+enum IkeConfiguratorError: Error {
+    /// VPN keychain credentials could not be read while preparing the IKE configuration.
     case ikeCredentialsUnavailable(Error)
 }
 

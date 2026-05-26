@@ -858,7 +858,7 @@ private extension SidebarFeature {
         }
         switch activeVpnProtocol {
         case .ike:
-            return "10.1.0.1"
+            return VpnProtocol.ikeGatewayAddress
         case .wireGuard:
             return wireGuardGatewayAddress()
         }
@@ -877,8 +877,8 @@ private extension SidebarFeature {
         let hermesIsEnabled = hermesClient.isEnabled().wrappedValue
         let hermesIsAllowed = featureAuthorizerProvider.authorizer(for: HermesFeature.self)().isAllowed
         if hermesIsEnabled, hermesIsAllowed {
-            return "10.2.0.1"
+            return VpnProtocol.wireGuardGatewayAddress
         }
-        return propertiesManager.wireguardConfig.dnsServers?.first ?? "10.2.0.1"
+        return propertiesManager.wireguardConfig.dnsServers?.first ?? VpnProtocol.wireGuardGatewayAddress
     }
 }

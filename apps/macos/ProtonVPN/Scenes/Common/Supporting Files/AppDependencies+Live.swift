@@ -77,6 +77,7 @@ extension DoHVPN {
                 $connectionState
                     .publisher
                     .map { $0.is(\.connected) }
+                    .removeDuplicates()
                     .values
             }
         )
