@@ -19,6 +19,7 @@ import ProtonCoreLoginUI
 import ProtonCoreNetworking
 import ProtonCorePayments
 import ProtonCorePushNotifications
+import ProtonCoreServices
 import ProtonCoreUIFoundations
 import Settings
 import SharedErgonomics
@@ -119,7 +120,9 @@ final class CoreLoginService {
             Task { @MainActor [weak self] in
                 do {
                     @Dependency(\.userSettingsClient) var userSettingsClient
-                    self?.propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings(authCredentials: authCredentials)
+                    let userSettings = try await userSettingsClient.fetchUserSettings(authCredentials: authCredentials)
+                    self?.propertiesManager.userSettings = userSettings
+                    self?.propertiesManager.userInfo?.apply(userSettings)
                     try await self?.appSessionManager.finishLogin(authCredentials: authCredentials)
                     completion(.success(()))
                 } catch {
