@@ -58,17 +58,4 @@ public extension NetShieldType {
     func isUserTierTooLow(_ userTier: Int) -> Bool {
         userTier < lowestTier
     }
-
-    var vpnManagerClientConfigurationFlags: [VpnManagerClientConfiguration] {
-        switch self {
-        case .off:
-            []
-        case .level1:
-            [.netShieldLevel1]
-        case .level2:
-            [.netShieldLevel2]
-        case .level3:
-            [.netShieldLevel3]
-        }
-    }
 }

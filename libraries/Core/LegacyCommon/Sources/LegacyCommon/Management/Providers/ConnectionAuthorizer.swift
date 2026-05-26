@@ -44,16 +44,16 @@ extension ConnectionAuthorizer: DependencyKey {
 
             switch request.connectionType {
             case .fastest:
-                return .success
+                return .success(nil)
 
             case .random:
                 guard credentials.tier.isFreeTier else {
-                    return .success
+                    return .success(nil)
                 }
 
                 switch serverChangeAuthorizer.serverChangeAvailability() {
                 case .available:
-                    return .success
+                    return .success(nil)
                 case let .unavailable(date, duration, exhaustedSkips):
                     return .failure(.serverChangeUnavailable(
                         until: date,
@@ -64,14 +64,14 @@ extension ConnectionAuthorizer: DependencyKey {
 
             case let .city(_, code), let .state(_, code), let .country(code, _):
                 guard credentials.tier.isFreeTier else {
-                    return .success
+                    return .success(nil)
                 }
 
                 return .failure(.specificCountryUnavailable(countryCode: code))
 
             case let .gateway(name):
                 guard credentials.tier.isFreeTier else {
-                    return .success
+                    return .success(nil)
                 }
 
                 log.assertionFailure("Free user requested connection to a gateway.", category: .connectionConnect)

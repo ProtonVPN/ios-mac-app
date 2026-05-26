@@ -68,7 +68,7 @@ class NavigationService {
     private let wakeAutoConnectDelayInterval: TimeInterval = 2.5 // seconds
     private let wakeSuppressionInterval: TimeInterval = 5 // seconds
 
-    init(_ factory: Factory) { // be careful not to initialize anything that could create a cycle if that object were to use the NavigationService (e.g. AppStateManager)
+    init(_ factory: Factory) {
         self.factory = factory
     }
 
@@ -376,13 +376,13 @@ extension NavigationService {
                 showLogIn()
             }
 
-            NSRunningApplication.current.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+            NSRunningApplication.current.activate(options: [.activateAllWindows])
         }
 
         // Addresses bug where menu bar becomes active when switching from .accessory to .regular mode
-        if (NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.dock").first?.activate(options: []))! {
-            dispatch_after_delay(0.1, queue: .main) {
-                NSRunningApplication.current.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+        if NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.dock").first?.activate(options: []) == true {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                NSRunningApplication.current.activate(options: [.activateAllWindows])
             }
         }
     }

@@ -26,11 +26,10 @@ import LegacyCommon
 import VPNShared
 
 class AppSessionManagerMock: AppSessionManager {
-    init(sessionStatus: SessionStatus, loggedIn: Bool, sessionChanged: Notification.Name, vpnGateway: VpnGatewayProtocol) {
+    init(sessionStatus: SessionStatus, loggedIn: Bool, sessionChanged: Notification.Name) {
         self.sessionStatus = sessionStatus
         self.loggedIn = loggedIn
         self.sessionChanged = sessionChanged
-        self.vpnGateway = vpnGateway
     }
 
     var callbackLogIn: ((String, String, () -> Void, (Error) -> Void) -> Void)?
@@ -43,8 +42,6 @@ class AppSessionManagerMock: AppSessionManager {
     var callbackCanPreviewApp: (() -> Bool)?
 
     // MARK: AppSessionManager implementation
-
-    var vpnGateway: VpnGatewayProtocol
 
     var sessionStatus: SessionStatus
 

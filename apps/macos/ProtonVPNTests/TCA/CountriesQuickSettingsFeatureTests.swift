@@ -237,15 +237,10 @@ struct CountriesQuickSettingsFeatureTests {
     @Test("discourage secure core activate performs selection and dismisses")
     func discourageSecureCoreActivatePerformsSelectionAndDismisses() async {
         @Shared(.discourageSecureCore) var discourageSecureCore = true
+        @Shared(.secureCoreToggle) var secureCoreToggle = false
         @Shared(.userTier) var userTier: Int? = .paidTier
 
-        var receivedSelection: (QuickSettingType, QuickSettingOptionID)?
-        let store = makeStore(
-            performOptionSelection: { type, option, dismiss in
-                receivedSelection = (type, option)
-                dismiss()
-            }
-        )
+        let store = makeStore()
 
         await store.send(.buttonTapped(.secureCoreDisplay)) {
             $0.destination = .quickSettingDetail(Self.expectedDetail(type: .secureCoreDisplay, from: $0))
@@ -265,10 +260,10 @@ struct CountriesQuickSettingsFeatureTests {
 
         await store.send(.destination(.presented(.discourageSecureCoreView(.delegate(.activateTapped))))) {
             $0.destination = nil
+            $0.secureCore.$isEnabled.withLock { $0 = true }
         }
         await store.receive(\.dismissDetails)
-        #expect(receivedSelection?.0 == .secureCoreDisplay)
-        #expect(receivedSelection?.1 == .secureCoreOn)
+        #expect(secureCoreToggle == true)
     }
 
     @Test("free user netshield paid option shows netshield upsell")
@@ -355,10 +350,7 @@ struct CountriesQuickSettingsFeatureTests {
                 stats: .zero(enabled: false)
             )
         )) {
-            QuickSettingsFeature(environment: .init(
-                performOptionSelection: { _, _, dismiss in dismiss() },
-                initialNetShieldStats: { .zero(enabled: false) }
-            ))
+            QuickSettingsFeature()
         } withDependencies: {
             $0.netShieldPropertyProvider.getNetShieldType = { .off }
         }
@@ -401,10 +393,7 @@ struct CountriesQuickSettingsFeatureTests {
         @Shared(.userTier) var userTier: Int? = .paidTier
 
         let store = TestStore(initialState: QuickSettingsFeature.State()) {
-            QuickSettingsFeature(environment: .init(
-                performOptionSelection: { _, _, dismiss in dismiss() },
-                initialNetShieldStats: { .zero(enabled: false) }
-            ))
+            QuickSettingsFeature()
         } withDependencies: {
             $0.hermesClient.setIsEnabled(true)
         }
@@ -421,14 +410,9 @@ struct CountriesQuickSettingsFeatureTests {
         }
     }
 
-    private func makeStore(
-        performOptionSelection: @escaping @Sendable (QuickSettingType, QuickSettingOptionID, @escaping @Sendable () -> Void) -> Void = { _, _, dismiss in dismiss() }
-    ) -> TestStoreOf<QuickSettingsFeature> {
+    private func makeStore() -> TestStoreOf<QuickSettingsFeature> {
         TestStore(initialState: .init()) {
-            QuickSettingsFeature(environment: .init(
-                performOptionSelection: performOptionSelection,
-                initialNetShieldStats: { .zero(enabled: false) }
-            ))
+            QuickSettingsFeature()
         }
     }
 

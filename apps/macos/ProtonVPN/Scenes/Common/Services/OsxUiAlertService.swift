@@ -75,11 +75,6 @@ final class OsxUiAlertService: UIAlertService {
             let userUpdateVC = UserAccountUpdateViewController(alert: userAccountUpdateAlert)
             alert.dismiss = { [weak self] in self?.dismissCompletion(alert) }
             modalVC = userUpdateVC
-        case let expandableSystemAlert as ExpandableSystemAlert:
-            let expandableViewModel = ExpandablePopupViewModel(expandableSystemAlert)
-            expandableViewModel.dismissViewController = { [weak self] in self?.dismissCompletion(alert) }
-            alert.dismiss = { [weak expandableViewModel] in expandableViewModel?.close() }
-            modalVC = ExpandableContentPopupViewController(viewModel: expandableViewModel)
         default:
             let popUp = PopUpViewModel(
                 alert: alert,

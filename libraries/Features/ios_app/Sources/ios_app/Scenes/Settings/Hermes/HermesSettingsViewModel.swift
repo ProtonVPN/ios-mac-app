@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Connection
 import Dependencies
 import Domain
 import Hermes
@@ -23,6 +24,7 @@ import LegacyCommon
 import Sharing
 import Strings
 import SwiftUI
+import VPNAppCore
 
 @Observable
 final class HermesSettingsViewModel {
@@ -67,9 +69,11 @@ final class HermesSettingsViewModel {
     var alert: Alert?
 
     @ObservationIgnored
-    @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
-    @ObservationIgnored
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
+    @ObservationIgnored
+    @Shared(.connectionState) private var connectionState: ConnectionState
+    @ObservationIgnored
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     private var initialState: State
 
@@ -104,25 +108,21 @@ final class HermesSettingsViewModel {
             completionHandler(false)
             return
         }
-        vpnStateConfiguration.getInfoSync { info in
-            switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-            case .immediate:
-                completionHandler(false)
-            case .withConnectionUpdate, .withReconnect:
-                completionHandler(true)
-            }
+        switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+        case .immediate:
+            completionHandler(false)
+        case .withConnectionUpdate, .withReconnect:
+            completionHandler(true)
         }
         initialState = newState
     }
 
     func isReconnectionNecessaryFromNetShieldChange(completionHandler: @escaping (_ reconnectionIsNecessary: Bool) -> Void) {
-        vpnStateConfiguration.getInfoSync { info in
-            switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-            case .immediate:
-                completionHandler(false)
-            case .withConnectionUpdate, .withReconnect:
-                completionHandler(true)
-            }
+        switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+        case .immediate:
+            completionHandler(false)
+        case .withConnectionUpdate, .withReconnect:
+            completionHandler(true)
         }
     }
 

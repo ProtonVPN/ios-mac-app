@@ -35,9 +35,7 @@ import VPNShared
 typealias PropertiesToOverride =
     CoreAlertServiceFactory &
     UpdateCheckerFactory &
-    VpnAuthenticationFactory &
-    VpnConnectionInterceptDelegate &
-    VpnCredentialsConfiguratorFactoryCreator
+    VpnAuthenticationFactory
 
 open class Container: PropertiesToOverride {
     @Dependency(\.date) var date
@@ -47,9 +45,6 @@ open class Container: PropertiesToOverride {
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.networking) var networking
     private lazy var profileManager = ProfileManager(self)
-
-    private lazy var vpnManager: VpnManagerProtocol = VpnManager(self)
-    private lazy var vpnGateway: VpnGatewayProtocol = VpnGateway(self)
 
     private lazy var pushNotificationService: PushNotificationServiceProtocol = PushNotificationService(apiService: networking.apiService)
 
@@ -89,34 +84,11 @@ open class Container: PropertiesToOverride {
         fatalError("Should have overridden \(caller)")
     }
 
-    // MARK: - Configs to override
-
-    #if os(macOS)
-        open var vpnConnectionInterceptPolicies: [VpnConnectionInterceptPolicyItem] {
-            [
-                MisconfiguredLocalNetworkIntercept(factory: self),
-                PlutoniumIKEv2ConflictIntercept(factory: self),
-            ]
-        }
-    #else
-        open var vpnConnectionInterceptPolicies: [VpnConnectionInterceptPolicyItem] {
-            [
-                MisconfiguredLocalNetworkIntercept(factory: self),
-            ]
-        }
-    #endif
-
     // MARK: - Factories to override
 
     // MARK: CoreAlertService
 
     open func makeCoreAlertService() -> CoreAlertService {
-        shouldHaveOverridden()
-    }
-
-    // MARK: VpnCredentialsConfigurator
-
-    open func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory {
         shouldHaveOverridden()
     }
 
@@ -139,27 +111,11 @@ extension Container: ProfileManagerFactory {
     }
 }
 
-// MARK: VpnManagerConfigurationPreparer
-
-extension Container: VpnManagerConfigurationPreparerFactory {
-    public func makeVpnManagerConfigurationPreparer() -> VpnManagerConfigurationPreparer {
-        VpnManagerConfigurationPreparer(self)
-    }
-}
-
 // MARK: AvailabilityCheckerResolverFactory
 
 extension Container: AvailabilityCheckerResolverFactory {
     public func makeAvailabilityCheckerResolver(wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
         AvailabilityCheckerResolverImplementation(wireguardConfig: wireguardConfig)
-    }
-}
-
-// MARK: ServerTierCheckerFactory
-
-extension Container: ServerTierCheckerFactory {
-    func makeServerTierChecker() -> ServerTierChecker {
-        ServerTierChecker(alertService: makeCoreAlertService())
     }
 }
 
@@ -184,14 +140,6 @@ extension Container: MaintenanceManagerFactory {
 extension Container: MaintenanceManagerHelperFactory {
     public func makeMaintenanceManagerHelper() -> MaintenanceManagerHelper {
         maintenanceManagerHelper
-    }
-}
-
-// MARK: LocalAgentConnectionFactoryCreator
-
-extension Container: LocalAgentConnectionFactoryCreator {
-    public func makeLocalAgentConnectionFactory() -> LocalAgentConnectionFactory {
-        LocalAgentConnectionFactoryImplementation()
     }
 }
 

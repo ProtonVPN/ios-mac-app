@@ -109,7 +109,7 @@ final class PopUpViewModel: NSObject {
     }
 
     private func action(_ index: Array<Any>.Index) -> AlertAction? {
-        alert.actions[optional: index]
+        alert.actions.indices.contains(index) ? alert.actions[index] : nil
     }
 }
 

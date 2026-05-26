@@ -19,25 +19,30 @@
 import Announcement
 @testable import CommonNetworking
 import CommonNetworkingTestSupport
+import Connection
 import Dependencies
 import Domain
 import Ergonomics
+import Foundation
 import LegacyCommon
 import Localization
 import Persistence
 import PMLogger
 import ProtonCoreNetworking
 @testable import ProtonVPN
+import Sharing
+import Testing
 import VPNAppCore // UnauthKeychain
 import VPNShared
 import VPNSharedTesting
-import XCTest
 
 private func mockAuthCredentials(username: String) -> AuthCredentials {
     AuthCredentials(username: username, accessToken: "", refreshToken: "", sessionId: "", userId: "", scopes: [], mailboxPassword: "", isCredentialLess: false)
 }
 
-private var testAuthCredentials: AuthCredentials = mockAuthCredentials(username: "username")
+private func testAuthCredentials() -> AuthCredentials {
+    mockAuthCredentials(username: "username")
+}
 
 private let subuserWithoutSessionsResponseError = ResponseError(
     httpCode: HttpStatusCode.accessForbidden.rawValue,
@@ -46,370 +51,494 @@ private let subuserWithoutSessionsResponseError = ResponseError(
     underlyingError: nil
 )
 
-// We would like to use `TestIsolatedDatabaseTestCase` here, but Xcode fails to link `PersistenceTestSupport` correctly
-final class AppSessionManagerImplementationTests: XCTestCase {
-    fileprivate var alertService: AppSessionManagerAlertServiceMock!
-    fileprivate var authKeychain: AuthKeychainHandleMock!
-    fileprivate var unauthKeychain: UnauthKeychainMock!
-    var networking: NetworkingMock!
-    var networkingDelegate: FullNetworkingMockDelegate!
-    var manager: AppSessionManagerImplementation!
-    var vpnKeychain: VpnKeychainMock!
-    var appStateManager: AppStateManagerMock!
-    var repository: ServerRepository!
-    var updateChecker: UpdateCheckerMock!
+@Suite(.serialized)
+@MainActor
+struct AppSessionManagerImplementationTests {
+    private let asyncTimeout: Duration = .seconds(5)
 
-    let asyncTimeout: TimeInterval = 5
+    final class TestContext {
+        fileprivate let alertService: AppSessionManagerAlertServiceMock
+        let authKeychain: AuthKeychainHandleMock
+        let unauthKeychain: UnauthKeychainMock
+        let networking: NetworkingMock
+        let networkingDelegate: FullNetworkingMockDelegate
+        let manager: AppSessionManagerImplementation
+        let vpnKeychain: VpnKeychainMock
+        let repository: ServerRepository
+        let updateChecker: UpdateCheckerMock
 
-    override func invokeTest() {
-        repository = withDependencies {
-            $0.databaseConfiguration = .withTestExecutor(databaseType: .ephemeral)
-        } operation: {
-            ServerRepositoryKey.liveValue
+        fileprivate init(
+            alertService: AppSessionManagerAlertServiceMock,
+            authKeychain: AuthKeychainHandleMock,
+            unauthKeychain: UnauthKeychainMock,
+            networking: NetworkingMock,
+            networkingDelegate: FullNetworkingMockDelegate,
+            manager: AppSessionManagerImplementation,
+            vpnKeychain: VpnKeychainMock,
+            repository: ServerRepository,
+            updateChecker: UpdateCheckerMock
+        ) {
+            self.alertService = alertService
+            self.authKeychain = authKeychain
+            self.unauthKeychain = unauthKeychain
+            self.networking = networking
+            self.networkingDelegate = networkingDelegate
+            self.manager = manager
+            self.vpnKeychain = vpnKeychain
+            self.repository = repository
+            self.updateChecker = updateChecker
         }
-
-        withDependencies {
-            $0.serverRepository = repository
-        } operation: {
-            super.invokeTest()
-        }
-    }
-
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-
-        networking = NetworkingMock()
-        authKeychain = AuthKeychainHandleMock()
-        unauthKeychain = UnauthKeychainMock()
-        vpnKeychain = VpnKeychainMock()
-        alertService = AppSessionManagerAlertServiceMock()
-        appStateManager = AppStateManagerMock()
-        updateChecker = UpdateCheckerMock()
-
-        networkingDelegate = FullNetworkingMockDelegate()
-        let freeCreds = VpnKeychainMock.vpnCredentials(planName: "free", maxTier: .freeTier)
-        networkingDelegate.apiCredentials = freeCreds
-        networking.delegate = networkingDelegate
-
-        manager = withDependencies {
-            $0.date = .constant(Date())
-            $0.vpnApiClient.clientCredentials = { [weak self] in
-                guard let self else {
-                    throw NSError.testError()
-                }
-                guard let credentials = networkingDelegate.apiCredentials else {
-                    throw NSError.testError()
-                }
-                return credentials
-            }
-            $0.vpnApiClient.loads = { _ in
-                [:]
-            }
-            $0.vpnApiClient.virtualServices = {
-                VPNStreamingResponse(code: 1, resourceBaseURL: "url", streamingServices: [:])
-            }
-            $0.vpnApiClient.userLocation = {
-                nil
-            }
-            $0.vpnApiClient.refreshServerInfo = { _, _ in
-                nil
-            }
-            $0.vpnApiClient.sessionsCount = {
-                SessionsResponse(sessionCount: 1)
-            }
-        } operation: {
-            let factory = ManagerFactoryMock(
-                alertService: alertService,
-                appStateManager: appStateManager,
-                updateChecker: updateChecker
-            )
-            return AppSessionManagerImplementation(factory: factory)
-        }
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        alertService = nil
-        networking = nil
-        networkingDelegate = nil
     }
 
     // MARK: Basic login tests
 
-    func testLoggedInFalseBeforeLogin() {
-        XCTAssertFalse(manager.loggedIn)
-    }
-
-    func testSuccessfulLoginWithAuthCredentialsLogsIn() {
-        let loginExpectation = XCTestExpectation(description: "Manager should not time out")
-        networkingDelegate.apiVpnLocation = .mock
-        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
-
-        manager.finishLogin(
-            authCredentials: mockAuthCredentials(username: "bob"),
-            success: {
-                loginExpectation.fulfill()
-                XCTAssertTrue(self.manager.loggedIn)
-            },
-            failure: { error in
-                loginExpectation.fulfill()
-                XCTFail("Expected successful login but got error: \(error)")
-            }
-        )
-
-        wait(for: [loginExpectation], timeout: asyncTimeout)
-
-        XCTAssertEqual(authKeychain.username, "bob", "Username should have been updated in auth keychain")
-    }
-
-    func testSuccessfulSilentLoginLogsIn() async throws {
-        let loginExpectation = XCTestExpectation(description: "Manager should not time out while logging in")
-        networkingDelegate.apiVpnLocation = .mock
-        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
-        authKeychain.credentials = testAuthCredentials
-
-        try await manager.attemptSilentLogIn()
-        XCTAssertTrue(manager.loggedIn)
-    }
-
-    func testSilentLoginWithMissingCredentialsFails() async throws {
-        let loginExpectation = XCTestExpectation(description: "Manager should not time out while logging in")
-        networkingDelegate.apiVpnLocation = .mock
-        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
-
-        do {
-            try await manager.attemptSilentLogIn()
-            XCTFail("Expected missing credentials error but got success")
-        } catch {
-            guard case CommonVpnError.userCredentialsMissing = error else {
-                XCTFail("Expected missing credentials error but got \(error)")
-                return
-            }
-            XCTAssertFalse(manager.loggedIn)
+    @Test
+    func loggedInFalseBeforeLogin() async {
+        await withTestContext { context in
+            #expect(context.manager.loggedIn == false)
         }
     }
 
-    func testLoginSubuserWithoutSessionsFails() {
-        let loginExpectation = XCTestExpectation(description: "Manager should not time out")
-        networkingDelegate.apiVpnLocation = .mock
-        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
-        networkingDelegate.apiCredentialsResponseError = subuserWithoutSessionsResponseError
-        authKeychain.username = "testUsername"
-        manager.finishLogin(
-            authCredentials: testAuthCredentials,
-            success: {
-                loginExpectation.fulfill()
-                XCTFail("Expected \(CommonVpnError.subuserWithoutSessions) but sucessfully logged in instead.")
-            },
-            failure: { error in
-                loginExpectation.fulfill()
+    @Test
+    func successfulLoginWithAuthCredentialsLogsIn() async throws {
+        try await withTestContext { context in
+            context.networkingDelegate.apiVpnLocation = .mock
+            context.networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
+
+            try await finishLogin(
+                manager: context.manager,
+                authCredentials: mockAuthCredentials(username: "bob")
+            )
+
+            #expect(context.manager.loggedIn)
+            #expect(context.authKeychain.username == "bob")
+        }
+    }
+
+    @Test
+    func successfulSilentLoginLogsIn() async throws {
+        try await withTestContext { context in
+            context.networkingDelegate.apiVpnLocation = .mock
+            context.networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
+            context.authKeychain.credentials = testAuthCredentials()
+
+            try await context.manager.attemptSilentLogIn()
+            #expect(context.manager.loggedIn)
+        }
+    }
+
+    @Test
+    func silentLoginWithMissingCredentialsFails() async {
+        await withTestContext { context in
+            context.networkingDelegate.apiVpnLocation = .mock
+            context.networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
+
+            do {
+                try await context.manager.attemptSilentLogIn()
+                Issue.record("Expected missing credentials error but got success")
+            } catch {
+                guard case CommonVpnError.userCredentialsMissing = error else {
+                    Issue.record("Expected missing credentials error but got \(error)")
+                    return
+                }
+                #expect(context.manager.loggedIn == false)
+            }
+        }
+    }
+
+    @Test
+    func loginSubuserWithoutSessionsFails() async {
+        await withTestContext { context in
+            context.networkingDelegate.apiVpnLocation = .mock
+            context.networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
+            context.networkingDelegate.apiCredentialsResponseError = subuserWithoutSessionsResponseError
+            context.authKeychain.username = "testUsername"
+
+            do {
+                try await finishLogin(
+                    manager: context.manager,
+                    authCredentials: testAuthCredentials()
+                )
+                Issue.record("Expected \(CommonVpnError.subuserWithoutSessions) but successfully logged in instead.")
+            } catch {
                 guard case CommonVpnError.subuserWithoutSessions = error else {
-                    return XCTFail("Expected subuser without sessions error but got: \(error)")
+                    Issue.record("Expected subuser without sessions error but got: \(error)")
+                    return
                 }
-                XCTAssertFalse(self.manager.loggedIn, "Expected failure logging in, but loggedIn is true")
+                #expect(context.manager.loggedIn == false)
             }
-        )
-
-        wait(for: [loginExpectation], timeout: asyncTimeout)
+        }
     }
 
-    func testLoginPostsSessionChangedNotification() async throws {
-        let sessionChangedNotificationExpectation = XCTNSNotificationExpectation(name: SessionChanged.name, object: manager)
-
-        try await login(with: testAuthCredentials)
-
-        await fulfillment(of: [sessionChangedNotificationExpectation], timeout: asyncTimeout)
+    @Test
+    func loginPostsSessionChangedNotification() async throws {
+        try await withTestContext { context in
+            let notificationTask = makeNotificationTask(name: SessionChanged.name, object: context.manager)
+            try await login(with: testAuthCredentials(), context: context)
+            let posted = await waitForTask(notificationTask, timeout: asyncTimeout) ?? false
+            #expect(posted)
+        }
     }
 
-    func testLoginDoesNotPostSessionChangedNotificationWhenAlreadyLoggedIn() throws {
-        networkingDelegate.apiVpnLocation = .mock
-        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
-        authKeychain.credentials = testAuthCredentials
-        manager.sessionStatus = .established
+    @Test
+    func loginDoesNotPostSessionChangedNotificationWhenAlreadyLoggedIn() async throws {
+        try await withTestContext { context in
+            context.networkingDelegate.apiVpnLocation = .mock
+            context.networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
+            context.authKeychain.credentials = testAuthCredentials()
+            context.manager.sessionStatus = .established
 
-        let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
+            let notificationTask = makeNotificationTask(name: SessionChanged.name, object: context.manager)
+            try await context.manager.attemptSilentLogIn()
+            let posted = await waitForTask(notificationTask, timeout: .milliseconds(300)) ?? false
 
-        try assertNotPosted(SessionChanged.name, by: XCTUnwrap(manager)) {
-            Task {
-                do {
-                    try await manager.attemptSilentLogIn()
-                    loginExpectation.fulfill()
-                } catch {
-                    XCTFail("Should succeed silently logging in when already logged in")
-                }
-            }
-
-            wait(for: [loginExpectation], timeout: asyncTimeout)
+            #expect(posted == false)
         }
     }
 
     // MARK: Active VPN connection login tests
 
-    func testConnectionDisconnectsWhenLoggingInDifferentUserAndAlertConfirmed() async throws {
-        let activeSessionAlertExpectation = XCTestExpectation(description: "Active session alert should be shown")
-        let differentUserServerDescriptor = ServerDescriptor(username: "Alice", address: "")
-        appStateManager.state = .connected(differentUserServerDescriptor)
-        networkingDelegate.apiVpnLocation = .mock
-        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
-        authKeychain.credentials = testAuthCredentials
-        alertService.addAlertHandler(for: ActiveSessionWarningAlert.self, handler: { alert in
-            activeSessionAlertExpectation.fulfill()
-            alert.triggerHandler(forFirstActionOfType: .confirmative)
-        })
+    @Test
+    func connectionDisconnectsWhenLoggingInDifferentUserAndAlertConfirmed() async throws {
+        try await withTestContext { context in
+            setConnectedStatus()
+            context.networkingDelegate.apiVpnLocation = .mock
+            context.networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
+            context.authKeychain.credentials = testAuthCredentials()
 
-        try await manager.attemptSilentLogIn()
+            try await context.manager.attemptSilentLogIn()
 
-        await fulfillment(of: [activeSessionAlertExpectation], timeout: asyncTimeout)
-        XCTAssertTrue(manager.loggedIn)
-        XCTAssertTrue(appStateManager.state.isDisconnected)
+            #expect(context.manager.loggedIn)
+            assertConnectedStatus()
+        }
     }
 
-    func testConnectionPersistsWhenLoggingInDifferentUserAndAlertCancelled() async throws {
-        let activeSessionAlertExpectation = XCTestExpectation(description: "Active session alert should be shown")
-        let differentUserServerDescriptor = ServerDescriptor(username: "Alice", address: "")
-        appStateManager.state = .connected(differentUserServerDescriptor)
-        networkingDelegate.apiVpnLocation = .mock
-        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
-        authKeychain.credentials = testAuthCredentials
-        alertService.addAlertHandler(for: ActiveSessionWarningAlert.self, handler: { alert in
-            activeSessionAlertExpectation.fulfill()
-            alert.triggerHandler(forFirstActionOfType: .cancel)
-        })
+    @Test
+    func connectionPersistsWhenLoggingInDifferentUserAndAlertCancelled() async throws {
+        try await withTestContext { context in
+            setConnectedStatus()
+            context.networkingDelegate.apiVpnLocation = .mock
+            context.networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
+            context.authKeychain.credentials = testAuthCredentials()
 
-        try await manager.attemptSilentLogIn()
+            try await context.manager.attemptSilentLogIn()
 
-        await fulfillment(of: [activeSessionAlertExpectation], timeout: asyncTimeout)
-        XCTAssertTrue(appStateManager.state.isConnected)
-        XCTAssertFalse(manager.loggedIn)
+            assertConnectedStatus()
+            #expect(context.manager.loggedIn)
+        }
     }
 
-    func testConnectionPersistsWhenLoggingInSameUser() async throws {
-        let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
-        let sameUserServerDescriptor = ServerDescriptor(username: "username", address: "")
-        appStateManager.state = .connected(sameUserServerDescriptor)
-        networkingDelegate.apiVpnLocation = .mock
-        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
-        authKeychain.credentials = testAuthCredentials
+    @Test
+    func connectionPersistsWhenLoggingInSameUser() async throws {
+        try await withTestContext { context in
+            setConnectedStatus()
+            context.networkingDelegate.apiVpnLocation = .mock
+            context.networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
+            context.authKeychain.credentials = testAuthCredentials()
 
-        try await manager.attemptSilentLogIn()
+            try await context.manager.attemptSilentLogIn()
 
-        XCTAssertTrue(appStateManager.state.isConnected)
-        XCTAssertTrue(manager.loggedIn)
+            assertConnectedStatus()
+            #expect(context.manager.loggedIn)
+        }
     }
 
     // MARK: Logout tests
 
-    func testNoAlertShownOnLogoutWhenNotLoggedIn() {
-        let logoutFinishExpectation = XCTNSNotificationExpectation(name: SessionChanged.name, object: manager)
-
-        manager.logOut() // logOut runs asynchronously but has no completion handler
-
-        wait(for: [logoutFinishExpectation], timeout: asyncTimeout)
-        XCTAssertFalse(manager.loggedIn)
+    @Test
+    func noAlertShownOnLogoutWhenNotLoggedIn() async {
+        await withTestContext { context in
+            let notificationTask = makeNotificationTask(name: SessionChanged.name, object: context.manager)
+            context.manager.logOut() // no-op in this state
+            let posted = await waitForTask(notificationTask, timeout: .milliseconds(300)) ?? false
+            #expect(posted == false)
+            #expect(context.manager.loggedIn == false)
+        }
     }
 
-    func testNoAlertShownOnLogoutWhenNotDisconnected() async throws {
-        let logoutFinishExpectation = XCTNSNotificationExpectation(name: SessionChanged.name, object: manager)
-        try await login(with: testAuthCredentials)
-        appStateManager.state = .disconnected
+    @Test
+    func noAlertShownOnLogoutWhenNotDisconnected() async throws {
+        try await withTestContext { context in
+            try await login(with: testAuthCredentials(), context: context)
+            setConnectionStatus(vpnStatus: .disconnected, connectionState: .disconnected)
 
-        manager.logOut() // logOut runs asynchronously but has no completion handler
-
-        await fulfillment(of: [logoutFinishExpectation], timeout: asyncTimeout)
-        XCTAssertFalse(manager.loggedIn)
+            let notificationTask = makeNotificationTask(name: SessionChanged.name, object: context.manager)
+            context.manager.logOut()
+            let posted = await waitForTask(notificationTask, timeout: asyncTimeout) ?? false
+            #expect(posted)
+            #expect(context.manager.loggedIn == false)
+        }
     }
 
-    func testLogoutShowsNoAlertWhenConnecting() async throws {
-        let logoutFinishExpectation = XCTNSNotificationExpectation(name: SessionChanged.name, object: manager)
-        try await login(with: testAuthCredentials)
-        appStateManager.state = .connecting(ServerDescriptor(username: "", address: ""))
+    @Test
+    func logoutShowsNoAlertWhenConnecting() async throws {
+        try await withTestContext { context in
+            try await login(with: testAuthCredentials(), context: context)
+            setConnectionStatus(vpnStatus: .connecting(.defaultFastest, nil), connectionState: .resolving)
 
-        manager.logOut() // logOut runs asynchronously but has no completion handler
+            let notificationTask = makeNotificationTask(name: SessionChanged.name, object: context.manager)
+            context.manager.logOut()
+            let posted = await waitForTask(notificationTask, timeout: asyncTimeout) ?? false
 
-        await fulfillment(of: [logoutFinishExpectation], timeout: asyncTimeout)
-        XCTAssertFalse(manager.loggedIn, "Expected logOut to successfully log the user out")
-        XCTAssertTrue(appStateManager.state.isDisconnected, "Expected logOut to cancel the active connection attempt")
+            #expect(posted)
+            #expect(context.manager.loggedIn == false)
+            assertDisconnectedStatus()
+        }
     }
 
-    func testLogoutShowsNoAlertWhenConnectedButForceIsTrue() async throws {
-        let logoutFinishExpectation = XCTNSNotificationExpectation(name: SessionChanged.name, object: manager)
-        try await login(with: testAuthCredentials)
-        appStateManager.state = .connected(.init(username: "", address: ""))
+    @Test
+    func logoutShowsNoAlertWhenConnectedButForceIsTrue() async throws {
+        try await withTestContext { context in
+            try await login(with: testAuthCredentials(), context: context)
+            setConnectedStatus()
 
-        manager.logOut(force: true, reason: "") // logOut runs asynchronously but has no completion handler
+            let notificationTask = makeNotificationTask(name: SessionChanged.name, object: context.manager)
+            context.manager.logOut(force: true, reason: "")
+            let posted = await waitForTask(notificationTask, timeout: asyncTimeout) ?? false
 
-        await fulfillment(of: [logoutFinishExpectation], timeout: asyncTimeout)
-        XCTAssertFalse(manager.loggedIn, "Expected logOut to successfully log the user out")
-        XCTAssertTrue(appStateManager.state.isDisconnected, "Expected logOut to cancel the active connection attempt")
+            #expect(posted)
+            #expect(context.manager.loggedIn == false)
+            assertDisconnectedStatus()
+        }
     }
 
-    func testLogoutLogsOutWhenConnectedAndLogoutAlertConfirmed() async throws {
-        let logoutAlertExpectation = XCTestExpectation(description: "Manager should not time out when attempting a logout")
-        let logoutFinishExpectation = XCTNSNotificationExpectation(name: SessionChanged.name, object: manager)
-        try await login(with: testAuthCredentials)
-        appStateManager.state = .connected(.init(username: "", address: ""))
-        alertService.addAlertHandler(for: LogoutWarningLongAlert.self, handler: { alert in
-            alert.triggerHandler(forFirstActionOfType: .confirmative)
-            logoutAlertExpectation.fulfill()
-        })
+    @Test
+    func logoutLogsOutWhenConnectedAndLogoutAlertConfirmed() async throws {
+        try await withTestContext { context in
+            try await login(with: testAuthCredentials(), context: context)
+            setConnectedStatus()
 
-        manager.logOut() // logOut runs asynchronously but has no completion handler
+            context.alertService.addAlertHandler(for: LogoutWarningLongAlert.self, handler: { alert in
+                alert.triggerHandler(forFirstActionOfType: .confirmative)
+            })
 
-        await fulfillment(of: [logoutAlertExpectation, logoutFinishExpectation], timeout: asyncTimeout)
-        XCTAssertFalse(manager.loggedIn, "Expected logOut to successfully log the user out")
-        XCTAssertTrue(appStateManager.state.isDisconnected, "Expected logOut to disconnect the active connection")
+            let notificationTask = makeNotificationTask(name: SessionChanged.name, object: context.manager)
+            context.manager.logOut()
+            let posted = await waitForTask(notificationTask, timeout: asyncTimeout) ?? false
+
+            #expect(posted)
+            #expect(context.manager.loggedIn == false)
+            assertDisconnectedStatus()
+        }
     }
 
-    func testLogoutCancelledWhenConnectedAndLogoutAlertCancelled() async throws {
-        let logoutAlertExpectation = XCTestExpectation(description: "Manager should not time out when attempting a logout")
-        try await login(with: testAuthCredentials)
-        appStateManager.state = .connected(.init(username: "", address: ""))
-        alertService.addAlertHandler(for: LogoutWarningLongAlert.self, handler: { alert in
-            alert.triggerHandler(forFirstActionOfType: .cancel)
-            logoutAlertExpectation.fulfill()
-        })
+    @Test
+    func logoutCancelledWhenConnectedAndLogoutAlertCancelled() async throws {
+        try await withTestContext { context in
+            try await login(with: testAuthCredentials(), context: context)
+            setConnectedStatus()
+            context.alertService.addAlertHandler(for: LogoutWarningLongAlert.self, handler: { alert in
+                alert.triggerHandler(forFirstActionOfType: .cancel)
+            })
 
-        manager.logOut() // logOut runs asynchronously but has no completion handler
+            context.manager.logOut()
 
-        await fulfillment(of: [logoutAlertExpectation], timeout: asyncTimeout)
-        XCTAssertTrue(manager.loggedIn, "Expected logOut to be cancelled when the logout is not confirmed")
-        XCTAssertTrue(appStateManager.state.isConnected, "Logout should not stop the active connection if cancelled")
+            #expect(context.manager.loggedIn)
+            assertConnectedStatus()
+        }
     }
 
     // MARK: Helpers
 
-    /// Convenience method for getting AppSessionManager into the logged in state
-    func login(with authCredentials: AuthCredentials) async throws {
-        let sessionChangedNotificationExpectation = XCTNSNotificationExpectation(name: SessionChanged.name, object: manager)
+    private func withTestContext(
+        _ body: @escaping @MainActor (TestContext) async throws -> Void
+    ) async rethrows {
+        let repository = withDependencies {
+            $0.databaseConfiguration = .withTestExecutor(databaseType: .ephemeral)
+        } operation: {
+            ServerRepositoryKey.liveValue
+        }
 
-        networkingDelegate.apiVpnLocation = .mock
-        networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
-        authKeychain.credentials = authCredentials
+        let networking = NetworkingMock()
+        let authKeychain = AuthKeychainHandleMock()
+        let unauthKeychain = UnauthKeychainMock()
+        let vpnKeychain = VpnKeychainMock()
+        let alertService = AppSessionManagerAlertServiceMock()
+        let updateChecker = UpdateCheckerMock()
 
-        try await manager.attemptSilentLogIn()
+        let networkingDelegate = FullNetworkingMockDelegate()
+        networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(planName: "free", maxTier: .freeTier)
+        networking.delegate = networkingDelegate
+        let networkingWrapper = CoreNetworkingWrapper(wrapped: networking)
 
-        await fulfillment(of: [sessionChangedNotificationExpectation], timeout: asyncTimeout)
-        XCTAssertTrue(manager.loggedIn)
+        let factory = ManagerFactoryMock(
+            alertService: alertService,
+            updateChecker: updateChecker
+        )
+
+        try await withDependencies {
+            $0.serverRepository = repository
+            $0.date = .constant(Date())
+            $0.networking = networkingWrapper
+            $0.authKeychain = authKeychain
+            $0.unauthKeychain = unauthKeychain
+            $0.vpnKeychain = vpnKeychain
+            $0.announcementRefresher = factory.announcementRefresherMock
+            $0.sidebarConnectionCommandClient = .init(
+                send: { command in
+                    guard case let .disconnect(_, completion) = command else { return }
+                    @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+                    @Shared(.connectionState) var connectionState
+                    $vpnConnectionStatus.withLock { $0 = .disconnected }
+                    $connectionState.withLock { $0 = .disconnected }
+                    Task { @MainActor in completion?() }
+                },
+                stream: { .finished }
+            )
+            $0.vpnApiClient.clientCredentials = {
+                guard let credentials = networkingDelegate.apiCredentials else {
+                    throw NSError.testError()
+                }
+                return credentials
+            }
+            $0.vpnApiClient.vpnProperties = { _, _, _ in
+                if networkingDelegate.apiCredentialsResponseError?.responseCode == ApiErrorCode.subuserWithoutSessions {
+                    throw CommonVpnError.subuserWithoutSessions
+                }
+                guard let credentials = networkingDelegate.apiCredentials else {
+                    throw NSError.testError()
+                }
+                return VpnProperties(
+                    serverInfo: .modified(at: nil, servers: [], freeServersOnly: false),
+                    streamingServices: VPNStreamingResponse(code: 1, resourceBaseURL: "url", streamingServices: [:]),
+                    vpnCredentials: credentials,
+                    location: nil,
+                    clientConfig: networkingDelegate.apiClientConfig ?? ClientConfig.defaultClientConfigForTests,
+                    user: nil,
+                    addresses: nil
+                )
+            }
+            $0.vpnApiClient.loads = { _ in [:] }
+            $0.vpnApiClient.virtualServices = { VPNStreamingResponse(code: 1, resourceBaseURL: "url", streamingServices: [:]) }
+            $0.vpnApiClient.userLocation = { nil }
+            $0.vpnApiClient.refreshServerInfo = { _, _ in nil }
+            $0.vpnApiClient.sessionsCount = { SessionsResponse(sessionCount: 1) }
+        } operation: {
+            let manager = AppSessionManagerImplementation(factory: factory)
+            let context = TestContext(
+                alertService: alertService,
+                authKeychain: authKeychain,
+                unauthKeychain: unauthKeychain,
+                networking: networking,
+                networkingDelegate: networkingDelegate,
+                manager: manager,
+                vpnKeychain: vpnKeychain,
+                repository: repository,
+                updateChecker: updateChecker
+            )
+
+            setConnectionStatus(
+                vpnStatus: .disconnected,
+                connectionState: .disconnected
+            )
+            try await body(context)
+        }
     }
 
-    /// Invokes `XCTFail` if `notification` is posted any time during the execution of `operation`.
-    /// This helper controls the lifetime of the notification subscription token while avoiding the 'unused variable`
-    /// warning that would arise from assigning a notification token to a variable without accessing it.
-    ///
-    /// Can be moved to `ErgonomicsTestSupport` once app targets are able to link test support targets
-    private func assertNotPosted<T>(
-        _ notification: Notification.Name,
-        by object: Any?,
-        during operation: () -> T
-    ) -> T {
-        let subscribeAndReturnToken = {
-            NotificationCenter.default.addObserver(for: notification, object: object) { notification in
-                XCTFail("Unexpected notification posted: \(notification)")
+    private func login(with authCredentials: AuthCredentials, context: TestContext) async throws {
+        let notificationTask = makeNotificationTask(name: SessionChanged.name, object: context.manager)
+
+        context.networkingDelegate.apiVpnLocation = .mock
+        context.networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
+        context.authKeychain.credentials = authCredentials
+
+        try await context.manager.attemptSilentLogIn()
+
+        let posted = await waitForTask(notificationTask, timeout: asyncTimeout) ?? false
+        #expect(posted)
+        #expect(context.manager.loggedIn)
+    }
+
+    private func finishLogin(
+        manager: AppSessionManagerImplementation,
+        authCredentials: AuthCredentials
+    ) async throws {
+        try await withCheckedThrowingContinuation { continuation in
+            manager.finishLogin(
+                authCredentials: authCredentials,
+                success: {
+                    continuation.resume(returning: ())
+                },
+                failure: { error in
+                    continuation.resume(throwing: error)
+                }
+            )
+        }
+    }
+
+    private func makeNotificationTask(name: Notification.Name, object: AnyObject?) -> Task<Bool, Never> {
+        Task {
+            for await _ in NotificationCenter.default.notifications(named: name, object: object) {
+                return true
             }
+            return false
         }
-        return withExtendedLifetime(subscribeAndReturnToken()) { _ in
-            operation()
+    }
+
+    private func waitForTask<T: Sendable>(_ task: Task<T, Never>, timeout: Duration) async -> T? {
+        await withTaskGroup(of: T?.self) { group in
+            group.addTask { await task.value }
+            group.addTask {
+                try? await Task.sleep(for: timeout)
+                task.cancel()
+                return nil
+            }
+            let first = await group.next() ?? nil
+            group.cancelAll()
+            return first
         }
+    }
+
+    private func setConnectionStatus(vpnStatus: VPNConnectionStatus, connectionState: ConnectionState) {
+        @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+        @Shared(.connectionState) var sharedConnectionState
+        $vpnConnectionStatus.withLock { $0 = vpnStatus }
+        $sharedConnectionState.withLock { $0 = connectionState }
+    }
+
+    private func setConnectedStatus() {
+        let server = Server.mock()
+        let wireGuardSettings = WireGuardSettings(
+            backend: .go,
+            transport: .udp,
+            ports: [443],
+            features: TunnelFeatures(killSwitch: false, excludeLocalNetworks: false)
+        )
+        let connectionFeatures = VPNConnectionFeatures(
+            netshield: .off,
+            vpnAccelerator: false,
+            bouncing: nil,
+            natType: .moderateNAT,
+            safeMode: false,
+            portForwarding: false
+        )
+        let intent = ServerConnectionIntent(
+            spec: .defaultFastest,
+            server: server,
+            protocolConfiguration: .wireGuard(wireGuardSettings),
+            features: connectionFeatures
+        )
+        let actual = VPNConnectionActual(server: server, intent: intent, connectedDate: Date())
+        setConnectionStatus(
+            vpnStatus: .connected(.defaultFastest, actual),
+            connectionState: .connected(intent, server, Date(), nil)
+        )
+    }
+
+    private func assertConnectedStatus(_ message: String = "Expected connection status to be connected") {
+        @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+        if case .connected = vpnConnectionStatus {
+            return
+        }
+        Issue.record("\(message), actual: \(vpnConnectionStatus)")
+    }
+
+    private func assertDisconnectedStatus(_ message: String = "Expected connection status to be disconnected") {
+        @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+        if case .disconnected = vpnConnectionStatus {
+            return
+        }
+        Issue.record("\(message), actual: \(vpnConnectionStatus)")
     }
 }
 
@@ -420,7 +549,6 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     @Dependency(\.unauthKeychain) private var unauthKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
     private let alertService: CoreAlertService
-    private let appStateManager: AppStateManager
     private let updateChecker: UpdateChecker
 
     let announcementRefresherMock = AnnouncementRefresherMock()
@@ -436,10 +564,6 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
 
     func makeAppSessionRefreshTimer() -> AppSessionRefreshTimer {
         appSessionRefreshTimerMock
-    }
-
-    func makeAppStateManager() -> AppStateManager {
-        appStateManager
     }
 
     func makeCoreAlertService() -> CoreAlertService {
@@ -464,11 +588,9 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
 
     init(
         alertService: CoreAlertService,
-        appStateManager: AppStateManager,
         updateChecker: UpdateChecker
     ) {
         self.alertService = alertService
-        self.appStateManager = appStateManager
         self.updateChecker = updateChecker
     }
 }
@@ -517,7 +639,8 @@ private class AppSessionManagerAlertServiceMock: CoreAlertService {
 
     func push(alert: SystemAlert) {
         guard let alertHandler = alertHandlers.first(where: { type(of: alert) == $0.alertType }) else {
-            return XCTFail("Unexpected alert was shown: \(alert)")
+            Issue.record("Unexpected alert was shown: \(alert)")
+            return
         }
         alertHandler.handler(alert)
     }

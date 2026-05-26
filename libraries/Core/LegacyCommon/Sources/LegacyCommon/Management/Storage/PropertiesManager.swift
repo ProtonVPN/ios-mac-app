@@ -40,8 +40,6 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var hasConnected: Bool { get set }
     var isSubsequentLaunch: Bool { get set }
     var firstLaunchReported: Bool { get set }
-    var lastIkeConnection: ConnectionConfiguration? { get set }
-    var lastWireguardConnection: ConnectionConfiguration? { get set }
     var lastPreparedServer: ServerModel? { get set }
     var lastConnectionRequest: ConnectionRequest? { get set }
 
@@ -160,8 +158,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case blockUpdatePrompt = "BlockUpdatePrompt"
         case autoConnectProfile = "AutoConnect_"
         case connectOnDemand = "ConnectOnDemand"
-        case lastIkeConnection = "LastIkeConnection"
-        case lastWireguardConnection = "LastWireguardConnection"
         case lastPreparingServer = "LastPreparingServer"
         case lastConnectionRequest = "LastConnectionRequest"
         case lastUserAccountPlan = "LastUserAccountPlan"
@@ -256,10 +252,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
     // Use to do first time connecting stuff if needed
     @BoolProperty(.connectOnDemand) public var hasConnected: Bool
-
-    @Property(.lastIkeConnection) public var lastIkeConnection: ConnectionConfiguration?
-
-    @Property(.lastWireguardConnection) public var lastWireguardConnection: ConnectionConfiguration?
 
     @Property(.lastPreparingServer) public var lastPreparedServer: ServerModel?
     @Property(.lastConnectionRequest) public var lastConnectionRequest: ConnectionRequest?
@@ -383,8 +375,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         hasConnected = false
         $secureCoreToggle.withLock { $0 = false }
         discourageSecureCore = true
-        lastIkeConnection = nil
-        lastWireguardConnection = nil
         trialWelcomed = false
         warnedTrialExpiring = false
         warnedTrialExpired = false

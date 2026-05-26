@@ -203,9 +203,6 @@ extension IosAlertService: CoreAlertService {
         case is ConnectingWithBadLANAlert:
             showDefaultSystemAlert(alert)
 
-        case let alert as FreeConnectionsAlert:
-            show(alert)
-
         case let alert as PaymentAlert:
             showDefaultSystemAlert(alert)
 
@@ -486,21 +483,6 @@ extension IosAlertService: CoreAlertService {
     private func show(_ alert: SubuserWithoutConnectionsAlert) {
         let controller = UIHostingController(rootView: NoConnectionsAvailableView(mode: alert.mode))
         windowService.present(modal: controller)
-    }
-
-    // remove when countries TCA migrated;
-    private func show(_ alert: FreeConnectionsAlert) {
-        let upgradeAction: (() -> Void) = { [weak self] in
-            guard let self else { return }
-            windowService.dismissModal {
-                Task { @MainActor in
-                    self.presentDirectSubscriptionManagement()
-                }
-            }
-        }
-
-        let upsellViewController = modalsFactory.freeConnectionsViewController(countries: alert.countries, upgradeAction: upgradeAction)
-        windowService.present(modal: upsellViewController)
     }
 
     @MainActor

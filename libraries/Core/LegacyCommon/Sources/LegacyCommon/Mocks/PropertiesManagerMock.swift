@@ -51,8 +51,6 @@
 
         public var blockOneTimeAnnouncement: Bool = false
         public var blockUpdatePrompt: Bool = false
-        public var lastIkeConnection: ConnectionConfiguration?
-        public var lastWireguardConnection: ConnectionConfiguration?
         public var lastPreparedServer: ServerModel?
         public var lastConnectionRequest: ConnectionRequest?
 
@@ -198,7 +196,6 @@
         public func logoutCleanup() {
             hasConnected = false
             secureCoreToggle = false
-            lastIkeConnection = nil
             reportBugEmail = nil
         }
 

@@ -74,12 +74,6 @@ final class DependencyContainer: Container {
         macAlertService
     }
 
-    // MARK: VpnCredentialsConfiguratorFactoryCreator
-
-    override func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory {
-        MacVpnCredentialsConfiguratorFactory(appGroup: DomainConstants.AppGroups.main)
-    }
-
     // MARK: VpnAuthentication
 
     override func makeVpnAuthentication() -> VpnAuthentication {

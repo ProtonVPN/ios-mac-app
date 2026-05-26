@@ -264,9 +264,6 @@ extension MacAlertService: CoreAlertService {
                 upsellModalType: .cantSkip(before: alert.until, totalDuration: alert.duration, longSkip: alert.longSkip)
             )
 
-        case let alert as FreeConnectionsAlert:
-            log.info("FreeConnectionsAlert on mac should be shown through TCA")
-
         case let alert as ForceUpgradeAlert:
             showDefaultSystemAlert(alert)
 

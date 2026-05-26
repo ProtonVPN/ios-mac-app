@@ -19,6 +19,7 @@
 import AppKit
 import Combine
 import CommonNetworking
+import Connection
 import Dependencies
 import Domain
 import Hermes
@@ -55,9 +56,10 @@ final class HermesViewModel {
     @Dependency(\.sessionService) private var sessionService: SessionService
     @Dependency(\.linkOpener) private var linkOpener
     @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Shared(.connectionState) private var connectionState: ConnectionState
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     private let alertService: any CoreAlertService
-    @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
 
     private var initialState: State
@@ -82,15 +84,13 @@ final class HermesViewModel {
             completion?()
             return
         }
-        vpnStateConfiguration.getInfoSync { [weak self] info in
-            switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-            case .immediate:
+        switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+        case .immediate:
+            completion?()
+        case .withConnectionUpdate, .withReconnect:
+            showAlert(.reconnectNecessary) { [weak self] in
+                self?.userConfirmsReconnection()
                 completion?()
-            case .withConnectionUpdate, .withReconnect:
-                self?.showAlert(.reconnectNecessary) {
-                    self?.userConfirmsReconnection()
-                    completion?()
-                }
             }
         }
         initialState = newState

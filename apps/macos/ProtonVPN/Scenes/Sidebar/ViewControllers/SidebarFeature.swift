@@ -91,10 +91,8 @@ struct SidebarFeature {
     // MARK: - Init
 
     init(
-        quickSettingsEnvironment: QuickSettingsFeature.Environment,
         environment: Environment
     ) {
-        self.quickSettingsEnvironment = quickSettingsEnvironment
         self.environment = environment
     }
 
@@ -104,7 +102,6 @@ struct SidebarFeature {
         var defaultMapWidth: CGFloat
     }
 
-    private let quickSettingsEnvironment: QuickSettingsFeature.Environment
     private let environment: Environment
     @Dependency(\.defaultsProvider) private var defaultsProvider
     @Dependency(\.sidebarEventsClient) private var sidebarEventsClient
@@ -125,7 +122,7 @@ struct SidebarFeature {
         }
 
         Scope(state: \.countriesSection, action: \.countriesSection) {
-            CountriesSectionFeature(quickSettingsEnvironment: quickSettingsEnvironment)
+            CountriesSectionFeature()
         }
 
         Reduce { state, action in

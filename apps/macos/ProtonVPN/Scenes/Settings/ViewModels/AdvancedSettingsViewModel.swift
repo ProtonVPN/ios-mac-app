@@ -18,6 +18,7 @@
 
 import CommonNetworking
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
 import Foundation
@@ -31,7 +32,6 @@ final class AdvancedSettingsViewModel {
     typealias Factory = CoreAlertServiceFactory
     private let factory: Factory
 
-    @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     @Dependency(\.propertiesManager) private var propertiesManager
 
@@ -44,6 +44,8 @@ final class AdvancedSettingsViewModel {
 
     @Shared(.telemetryUsageData) var telemetryUsageData
     @Shared(.telemetryCrashReports) var telemetryCrashReports
+    @Shared(.connectionState) private var connectionState: ConnectionState
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     private var featureFlags: FeatureFlags {
         propertiesManager.featureFlags
@@ -176,26 +178,24 @@ final class AdvancedSettingsViewModel {
             return
         }
 
-        vpnStateConfiguration.getInfoSync { [weak self] info in
-            switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-            case .withConnectionUpdate:
-                // in-place change when connected and using local agent
+        switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+        case .withConnectionUpdate:
+            // in-place change when connected and using local agent
+            natTypePropertyProvider.setNATType(natType)
+            sidebarConnectionCommandClient.send(.applySettings([.moderateNAT(natType)]))
+            completion(true)
+        case .withReconnect:
+            alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.moderateNatTitle, confirmHandler: { [weak self] in
                 self?.natTypePropertyProvider.setNATType(natType)
-                self?.sidebarConnectionCommandClient.send(.applySettings([.moderateNAT(natType)]))
+                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
+                self?.sidebarConnectionCommandClient.send(.retry)
                 completion(true)
-            case .withReconnect:
-                self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.moderateNatTitle, confirmHandler: { [weak self] in
-                    self?.natTypePropertyProvider.setNATType(natType)
-                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
-                    self?.sidebarConnectionCommandClient.send(.retry)
-                    completion(true)
-                }, cancelHandler: {
-                    completion(false)
-                }))
-            case .immediate:
-                self?.natTypePropertyProvider.setNATType(natType)
-                completion(true)
-            }
+            }, cancelHandler: {
+                completion(false)
+            }))
+        case .immediate:
+            natTypePropertyProvider.setNATType(natType)
+            completion(true)
         }
     }
 
@@ -210,26 +210,24 @@ final class AdvancedSettingsViewModel {
             return
         }
 
-        vpnStateConfiguration.getInfoSync { [weak self] info in
-            switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-            case .withConnectionUpdate:
-                // in-place change when connected and using local agent
+        switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+        case .withConnectionUpdate:
+            // in-place change when connected and using local agent
+            safeModePropertyProvider.setSafeMode(safeMode)
+            sidebarConnectionCommandClient.send(.applySettings([.safeMode(safeMode)]))
+            completion(true)
+        case .withReconnect:
+            alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.nonStandardPortsTitle, confirmHandler: { [weak self] in
                 self?.safeModePropertyProvider.setSafeMode(safeMode)
-                self?.sidebarConnectionCommandClient.send(.applySettings([.safeMode(safeMode)]))
+                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
+                self?.sidebarConnectionCommandClient.send(.retry)
                 completion(true)
-            case .withReconnect:
-                self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.nonStandardPortsTitle, confirmHandler: { [weak self] in
-                    self?.safeModePropertyProvider.setSafeMode(safeMode)
-                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
-                    self?.sidebarConnectionCommandClient.send(.retry)
-                    completion(true)
-                }, cancelHandler: {
-                    completion(false)
-                }))
-            case .immediate:
-                self?.safeModePropertyProvider.setSafeMode(safeMode)
-                completion(true)
-            }
+            }, cancelHandler: {
+                completion(false)
+            }))
+        case .immediate:
+            safeModePropertyProvider.setSafeMode(safeMode)
+            completion(true)
         }
     }
 

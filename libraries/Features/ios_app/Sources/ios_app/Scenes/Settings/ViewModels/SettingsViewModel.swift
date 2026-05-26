@@ -22,6 +22,7 @@
 
 import Combine
 import CommonNetworking
+import Connection
 import Dependencies
 import Domain
 import Ergonomics
@@ -56,6 +57,7 @@ final class SettingsViewModel {
 
     @Dependency(\.propertiesManager) private var propertiesManager
     @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
+    @Shared(.connectionState) private var connectionState: ConnectionState
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
@@ -65,7 +67,6 @@ final class SettingsViewModel {
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
     @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
-    @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     @Dependency(\.appInfo) private var appInfo
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.networking) private var networking
@@ -574,22 +575,20 @@ final class SettingsViewModel {
                     let currentSafeMode = safeModePropertyProvider.getSafeMode() ?? true
                     let newSafeMode = !currentSafeMode
 
-                    vpnStateConfiguration.getInfoSync { info in
-                        switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-                        case .withConnectionUpdate:
+                    switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+                    case .withConnectionUpdate:
+                        safeModePropertyProvider.setSafeMode(newSafeMode)
+                        callback(toggleOn)
+                    case .withReconnect:
+                        alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.nonStandardPortsChangeTitle, confirmHandler: {
                             self.safeModePropertyProvider.setSafeMode(newSafeMode)
                             callback(toggleOn)
-                        case .withReconnect:
-                            self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.nonStandardPortsChangeTitle, confirmHandler: {
-                                self.safeModePropertyProvider.setSafeMode(newSafeMode)
-                                callback(toggleOn)
-                                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
-                                self.retryConnection()
-                            }))
-                        case .immediate:
-                            self.safeModePropertyProvider.setSafeMode(newSafeMode)
-                            callback(toggleOn)
-                        }
+                            log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
+                            self.retryConnection()
+                        }))
+                    case .immediate:
+                        safeModePropertyProvider.setSafeMode(newSafeMode)
+                        callback(toggleOn)
                     }
                 }
             ),
