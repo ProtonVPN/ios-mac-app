@@ -33,6 +33,7 @@ import Payments
 import ProtonCoreFeatureFlags
 import Strings
 import VPNAppCore
+import VPNNetworking
 
 @Reducer
 public struct HomeFeature {
@@ -43,12 +44,14 @@ public struct HomeFeature {
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.alertService) private var alertService
     @Dependency(\.continuousClock) private var clock
+    @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.misconfiguredLanInspector) private var misconfiguredLanInspector
     #if os(iOS)
         @Dependency(\.openCredentiallessSignUp) private var openCredentiallessSignUp
     #endif
 
     @SharedReader(.userTier) private var userTier: Int?
-    @SharedReader(.killSwitch) var killSwitch
+    @Shared(.killSwitch) var killSwitch: Bool
 
     @Reducer
     public enum Destination {
@@ -143,7 +146,21 @@ public struct HomeFeature {
         case alert(PresentationAction<HomeAlert>)
 
         @CasePathable
-        public enum HomeAlert: Equatable {}
+        public enum HomeAlert: Equatable {
+            /// User chose "Enable Kill Switch" on the bad-LAN alert. We flip the kill switch
+            /// (which suppresses the bad-LAN intercept on the re-issued connect) and retry.
+            case enableKillSwitchAndConnect(PendingConnect)
+            /// User chose "Continue" on the bad-LAN alert. We retry connect bypassing intercepts.
+            case connectAnywayDespiteBadLAN(PendingConnect)
+        }
+    }
+
+    /// Captures the parameters of a `.connect` command paused while we await user input on an
+    /// intercept alert.
+    public struct PendingConnect: Equatable, Sendable {
+        public let spec: ConnectionSpec
+        public let connectionProtocol: ConnectionProtocol?
+        public let trigger: UserInitiatedVPNChange.VPNTrigger?
     }
 
     private static let whatsNewPresentationDelay: Duration = .seconds(3)
@@ -241,8 +258,8 @@ private extension HomeFeature {
                             await send(.incomingAlert(alert))
                         }
                     },
-                    .run { send in
-                        for await value in $killSwitch.publisher.removeDuplicates().values.dropFirst() {
+                    .run { [killSwitch = $killSwitch] send in
+                        for await value in killSwitch.publisher.removeDuplicates().values.dropFirst() {
                             await send(.killSwitchSettingChanged(value))
                         }
                     },
@@ -309,16 +326,12 @@ private extension HomeFeature {
                         return .none
                     }
                 }
-                let intent = ConnectionPreparationIntent(
-                    spec: spec,
-                    connectionProtocol: connectionProtocol,
-                    acceptableProtocols: .all
-                )
-                return .run { send in
-                    AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
-                    await send(.connection(.input(.connect(intent))))
+                let pending = PendingConnect(spec: spec, connectionProtocol: connectionProtocol, trigger: trigger)
+                if let alert = interceptAlert(for: pending) {
+                    state.alert = alert
+                    return .none
                 }
-                .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
+                return performConnect(pending: pending)
 
             case let .connectionCommandReceived(.disconnect(trigger, completion)):
                 let alreadyDisconnected = state.connectionState.is(\.disconnected)
@@ -380,6 +393,13 @@ private extension HomeFeature {
                     await send(.connection(.input(.onLogout)))
                     await completion?()
                 }
+
+            case let .alert(.presented(.enableKillSwitchAndConnect(pending))):
+                $killSwitch.withLock { $0 = true }
+                return performConnect(pending: pending)
+
+            case let .alert(.presented(.connectAnywayDespiteBadLAN(pending))):
+                return performConnect(pending: pending)
 
             case let .connectionStatus(.connectionStatusBanner(.delegate(.upsellTapped(mode)))):
                 let upsellModalType: UpsellModalType = switch mode {
@@ -578,6 +598,46 @@ private extension HomeFeature {
         } message: {
             TextState(String(localized: alert.message))
         }
+    }
+
+    /// Encapsulates the side effects of dispatching a `.connect` command after intercept checks
+    /// have been resolved (either none fired or the user confirmed via alert).
+    func performConnect(pending: PendingConnect) -> Effect<Action> {
+        let intent = ConnectionPreparationIntent(
+            spec: pending.spec,
+            connectionProtocol: pending.connectionProtocol,
+            acceptableProtocols: .all
+        )
+        return .run { [trigger = pending.trigger] send in
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
+            await send(.connection(.input(.connect(intent))))
+        }
+        .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
+    }
+
+    /// Returns an alert if any pre-connect intercept (e.g. misconfigured LAN) applies to the
+    /// pending connect; otherwise `nil`.
+    func interceptAlert(for pending: PendingConnect) -> AlertState<Action.HomeAlert>? {
+        if propertiesManager.featureFlags.unsafeLanWarnings,
+           !killSwitch,
+           let bad = misconfiguredLanInspector.firstBadInterface() {
+            return AlertState {
+                TextState(Localizable.badInterfaceIpRangeAlertTitle)
+            } actions: {
+                ButtonState(action: .enableKillSwitchAndConnect(pending)) {
+                    TextState(Localizable.killSwitchEnable)
+                }
+                ButtonState(role: .destructive, action: .connectAnywayDespiteBadLAN(pending)) {
+                    TextState(Localizable.continue)
+                }
+            } message: {
+                TextState(Localizable.promptKillSwitchDueToBadInterfaceIpRange(
+                    bad.name ?? "Unknown Interface",
+                    bad.subnetDescription ?? "Unknown Subnet"
+                ))
+            }
+        }
+        return nil
     }
 }
 

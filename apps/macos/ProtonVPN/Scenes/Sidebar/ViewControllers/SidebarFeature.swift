@@ -28,7 +28,10 @@ import LegacyCommon
 import PaymentsShared
 import Persistence
 import ProtonCoreFeatureFlags
+import Sharing
+import Strings
 import VPNAppCore
+import VPNNetworking
 
 @Reducer
 struct SidebarFeature {
@@ -136,7 +139,23 @@ struct SidebarFeature {
         case alert(PresentationAction<Alert>)
 
         @CasePathable
-        enum Alert: Equatable {}
+        enum Alert: Equatable {
+            /// User chose "Enable Kill Switch" on the bad-LAN alert. We flip the kill switch
+            /// (which suppresses the bad-LAN intercept on the re-issued connect) and retry.
+            case enableKillSwitchAndConnect(PendingConnect)
+            /// User chose "Continue" on the bad-LAN alert. We retry connect bypassing intercepts.
+            case connectAnywayDespiteBadLAN(PendingConnect)
+            /// User chose "Connect" on the Plutonium+IKE alert. We disable Plutonium and retry.
+            case disablePlutoniumAndConnect(PendingConnect)
+        }
+    }
+
+    /// Captures the parameters of a `.connect` command paused while we await user input on an
+    /// intercept alert. Sized to be `Equatable` so it can ride inside `AlertState`.
+    struct PendingConnect: Equatable {
+        let spec: ConnectionSpec
+        let connectionProtocol: ConnectionProtocol?
+        let trigger: UserInitiatedVPNChange.VPNTrigger?
     }
 
     // MARK: - Init
@@ -167,6 +186,10 @@ struct SidebarFeature {
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
+    @Dependency(\.misconfiguredLanInspector) private var misconfiguredLanInspector
+
+    @Shared(.killSwitch) private var killSwitch: Bool
+    @Shared(.plutoniumFeature) private var plutoniumFeature: PlutoniumFeatureToggle
 
     var body: some ReducerOf<Self> {
         Scope(state: \.connection, action: \.connection) {
@@ -261,16 +284,14 @@ private extension SidebarFeature {
                         }
                     }
                     .cancellable(id: CancelID.portForwardingSetting),
-                    .run { send in
-                        @SharedReader(.plutoniumFeature) var plutoniumFeature
-                        for await _ in $plutoniumFeature.publisher.values {
+                    .run { [plutoniumFeature = $plutoniumFeature] send in
+                        for await _ in plutoniumFeature.publisher.values {
                             await send(.syncPlutoniumState)
                         }
                     }
                     .cancellable(id: CancelID.plutoniumSetting),
-                    .run { send in
-                        @SharedReader(.killSwitch) var killSwitch
-                        for await value in $killSwitch.publisher.removeDuplicates().values.dropFirst() {
+                    .run { [killSwitch = $killSwitch] send in
+                        for await value in killSwitch.publisher.removeDuplicates().values.dropFirst() {
                             await send(.killSwitchSettingChanged(value))
                         }
                     }
@@ -422,19 +443,12 @@ private extension SidebarFeature {
                         ))))
                     }
                 }
-                let intent = connectionPreparationIntent(
-                    spec: spec,
-                    connectionProtocol: connectionProtocol ?? propertiesManager.connectionProtocol
-                )
-                beginConnectingOverlay(&state)
-                return .merge(
-                    .cancel(id: CancelID.overlayDelay),
-                    .run { send in
-                        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
-                        await send(.connection(.input(.connect(intent))))
-                    }
-                    .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
-                )
+                let pending = PendingConnect(spec: spec, connectionProtocol: connectionProtocol, trigger: trigger)
+                if let alert = interceptAlert(for: pending) {
+                    state.alert = alert
+                    return .none
+                }
+                return performConnect(&state, pending: pending)
             case let .connectionCommandReceived(.disconnect(trigger, completion)):
                 state.overlayState = .hidden
                 @Shared(.intentionallyDisconnected) var intentionallyDisconnected
@@ -506,6 +520,14 @@ private extension SidebarFeature {
                     await send(.connection(.input(.onLogout)))
                     await completion?()
                 }
+            case let .alert(.presented(.enableKillSwitchAndConnect(pending))):
+                $killSwitch.withLock { $0 = true }
+                return performConnect(&state, pending: pending)
+            case let .alert(.presented(.connectAnywayDespiteBadLAN(pending))):
+                return performConnect(&state, pending: pending)
+            case let .alert(.presented(.disablePlutoniumAndConnect(pending))):
+                $plutoniumFeature.withLock { $0.disable() }
+                return performConnect(&state, pending: pending)
             default:
                 return .none
             }
@@ -641,8 +663,8 @@ private extension SidebarFeature {
 
             case .syncPlutoniumState:
                 let connectionState = state.connectionState
+                let feature = plutoniumFeature
                 return .run { _ in
-                    @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
                     guard FeatureFlagsRepository.shared
                         .isEnabled(VPNFeatureFlagType.plutoniumMacOS, reloadValue: true), case .enabled = feature
                     else {
@@ -668,6 +690,79 @@ private extension SidebarFeature {
                 return .none
             }
         }
+    }
+
+    /// Encapsulates the side effects of dispatching a `.connect` command after intercept checks
+    /// have been resolved (either none fired or the user confirmed via alert).
+    func performConnect(_ state: inout State, pending: PendingConnect) -> Effect<Action> {
+        let intent = connectionPreparationIntent(
+            spec: pending.spec,
+            connectionProtocol: pending.connectionProtocol ?? propertiesManager.connectionProtocol
+        )
+        beginConnectingOverlay(&state)
+        return .merge(
+            .cancel(id: CancelID.overlayDelay),
+            .run { [trigger = pending.trigger] send in
+                AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
+                await send(.connection(.input(.connect(intent))))
+            }
+            .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
+        )
+    }
+
+    /// Returns an alert if any pre-connect intercept (e.g. misconfigured LAN, Plutonium+IKE)
+    /// applies to the pending connect; otherwise `nil`. Intercept policies are evaluated in
+    /// priority order — once one fires, later policies do not run.
+    func interceptAlert(for pending: PendingConnect) -> AlertState<Action.Alert>? {
+        let effectiveProtocol = pending.connectionProtocol ?? propertiesManager.connectionProtocol
+
+        // Plutonium + IKE conflict (macOS only). Fires when the user has Split Tunneling
+        // enabled and tries to connect with IKEv2, which the Plutonium extension does not
+        // support. Confirming the alert disables Plutonium for this connection.
+        if case .enabled = plutoniumFeature, effectiveProtocol == .vpnProtocol(.ike) {
+            // Title includes the profile name when the connect originates from a saved profile.
+            let title: String = if let profileName = propertiesManager.lastConnectionRequest?.profileName {
+                Localizable.splitTunnelingConnectToProfileNameAlertTitle(profileName)
+            } else {
+                Localizable.splitTunnelingConnectToProfileAlertTitle
+            }
+            return AlertState {
+                TextState(title)
+            } actions: {
+                ButtonState(action: .disablePlutoniumAndConnect(pending)) {
+                    TextState(Localizable.connect)
+                }
+                ButtonState(role: .cancel) {
+                    TextState(Localizable.cancel)
+                }
+            } message: {
+                TextState(Localizable.splitTunnelingConnectToProfileAlertDescription)
+            }
+        }
+
+        // Misconfigured LAN. Fires when an interface uses a non-RFC1918 subnet that the OS
+        // would otherwise route around the tunnel. Kill Switch fully mitigates the issue.
+        if propertiesManager.featureFlags.unsafeLanWarnings,
+           !killSwitch,
+           let bad = misconfiguredLanInspector.firstBadInterface() {
+            return AlertState {
+                TextState(Localizable.badInterfaceIpRangeAlertTitle)
+            } actions: {
+                ButtonState(action: .enableKillSwitchAndConnect(pending)) {
+                    TextState(Localizable.killSwitchEnable)
+                }
+                ButtonState(role: .destructive, action: .connectAnywayDespiteBadLAN(pending)) {
+                    TextState(Localizable.continue)
+                }
+            } message: {
+                TextState(Localizable.promptKillSwitchDueToBadInterfaceIpRange(
+                    bad.name ?? "Unknown Interface",
+                    bad.subnetDescription ?? "Unknown Subnet"
+                ))
+            }
+        }
+
+        return nil
     }
 
     func beginConnectingOverlay(_ state: inout State) {

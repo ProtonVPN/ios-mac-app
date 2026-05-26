@@ -39,6 +39,7 @@ let package = Package(
         .package(path: "../../Shared/Connection"),
         .package(path: "../../Shared/Persistence"),
         .package(path: "../../Shared/ConnectionInventory"),
+        .package(path: "../../Shared/VPNNetworking"),
 
         .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),
         .package(url: "https://github.com/apple/swift-collections", .upToNextMajor(from: "1.1.4")),
@@ -65,6 +66,7 @@ let package = Package(
                 "CommonNetworking",
                 "Connection",
                 "Localization",
+                "VPNNetworking",
                 "Persistence",
                 "Theme",
                 "SharedViews",
