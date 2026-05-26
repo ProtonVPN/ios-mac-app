@@ -28,8 +28,6 @@
 		119C351666130ADA97AB491F /* SubuserAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C9A83FB783483559C8FE68 /* SubuserAlertWindowController.swift */; };
 		3328A24484BCAA8F674140DC /* XPCConnectionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */; };
 		42082651256BB78600A621EC /* NSView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082650256BB78600A621EC /* NSView+Children.swift */; };
-		423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423467C5261CEAAF00A73773 /* UserAccountUpdateViewController.swift */; };
-		423467C8261CEAAF00A73773 /* UserAccountUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 423467C6261CEAAF00A73773 /* UserAccountUpdateViewController.xib */; };
 		427A1F1024F5398900E95912 /* NotificationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */; };
 		428B63C425558B5F00C90D40 /* QuickSettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428B63C325558B5F00C90D40 /* QuickSettingButton.swift */; };
 		42BDA8B0251A40A4009A0C96 /* NSTextField+RealSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */; };
@@ -128,6 +126,7 @@
 		A4CCFE842EC375750072D2C4 /* DynamicBugReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */; };
 		A4DB97072FBC4CB000186A29 /* QuickSettingDetailFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DB97062FBC4CAF00186A29 /* QuickSettingDetailFeature.swift */; };
 		A4DB97092FBC6D9000186A29 /* MapConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DB97082FBC6D9000186A29 /* MapConstants.swift */; };
+		A4DB98732FBDC46E00186A29 /* ConnectingOverlayFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DB98722FBDC46E00186A29 /* ConnectingOverlayFeature.swift */; };
 		A4E1265C2F9A1120008D0340 /* SidebarConnectionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E1265B2F9A1120008D0340 /* SidebarConnectionCommand.swift */; };
 		A4E247872F72E98800733E7B /* SidebarFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E247862F72E98800733E7B /* SidebarFeature.swift */; };
 		A4E247892F72E9DF00733E7B /* SidebarFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */; };
@@ -174,7 +173,6 @@
 		D50B8021295DC3F900D85D29 /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = D50B8020295DC3F900D85D29 /* NEHelper */; };
 		D516EB9D2315775E0095B735 /* MacAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516EB9C2315775E0095B735 /* MacAlertService.swift */; };
 		D5204E6A22A11B8400FFAB99 /* XCUIElement+clearText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */; };
-		D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */; };
 		D54BB5DF2990ECEB00733E45 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5DD2990ECEB00733E45 /* credentials.plist */; };
 		D54BB5E02990ECEB00733E45 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5DE2990ECEB00733E45 /* subusercredentials.plist */; };
 		D54BB5E2299124D800733E45 /* twofausercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5E1299124D800733E45 /* twofausercredentials.plist */; };
@@ -246,10 +244,7 @@
 		E1B31817224D2D78004D8171 /* SettingsTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B31816224D2D77004D8171 /* SettingsTabBarViewModel.swift */; };
 		E1B3B6402024FEF00093A8FF /* ButtonImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B3B63F2024FEF00093A8FF /* ButtonImageView.swift */; };
 		E1B80FE1203E000100F1D76C /* ConnectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B80FE0203E000100F1D76C /* ConnectingViewController.swift */; };
-		E1B80FE3203E003D00F1D76C /* ConnectingOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1B80FE2203E003D00F1D76C /* ConnectingOverlay.xib */; };
-		E1B80FE5203E109E00F1D76C /* ConnectingWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B80FE4203E109E00F1D76C /* ConnectingWindowController.swift */; };
 		E1B9A7D0203EBD30009677BC /* ConnectingOverlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B9A7CF203EBD30009677BC /* ConnectingOverlayButton.swift */; };
-		E1B9A7D2203ECE9E009677BC /* ConnectingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B9A7D1203ECE9E009677BC /* ConnectingOverlayViewModel.swift */; };
 		E1C2032A2027191100F4D375 /* ZoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C203292027191100F4D375 /* ZoomView.swift */; };
 		E1EA77FB2294366A007B9C2F /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA77FA2294366A007B9C2F /* Alerts.swift */; };
 		E1F59B5620DCF26A00798435 /* StatusMenuCountryViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F59B5420DCF26A00798435 /* StatusMenuCountryViewItem.swift */; };
@@ -564,8 +559,6 @@
 		17F6646170F7CB52D5A45560 /* AnnouncementDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementDetailViewController.xib; sourceTree = "<group>"; };
 		351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = XPCConnectionsRepository.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Services/XPCConnectionsRepository.swift; sourceTree = "<group>"; };
 		42082650256BB78600A621EC /* NSView+Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Children.swift"; sourceTree = "<group>"; };
-		423467C5261CEAAF00A73773 /* UserAccountUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountUpdateViewController.swift; sourceTree = "<group>"; };
-		423467C6261CEAAF00A73773 /* UserAccountUpdateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserAccountUpdateViewController.xib; sourceTree = "<group>"; };
 		427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManagerProtocol.swift; sourceTree = "<group>"; };
 		428B63C325558B5F00C90D40 /* QuickSettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingButton.swift; sourceTree = "<group>"; };
 		42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+RealSizing.swift"; sourceTree = "<group>"; };
@@ -638,6 +631,7 @@
 		A4CCFE822EC375750072D2C4 /* DynamicBugReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportManager.swift; sourceTree = "<group>"; };
 		A4DB97062FBC4CAF00186A29 /* QuickSettingDetailFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailFeature.swift; sourceTree = "<group>"; };
 		A4DB97082FBC6D9000186A29 /* MapConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConstants.swift; sourceTree = "<group>"; };
+		A4DB98722FBDC46E00186A29 /* ConnectingOverlayFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingOverlayFeature.swift; sourceTree = "<group>"; };
 		A4E1265B2F9A1120008D0340 /* SidebarConnectionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarConnectionCommand.swift; sourceTree = "<group>"; };
 		A4E247862F72E98800733E7B /* SidebarFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarFeature.swift; sourceTree = "<group>"; };
 		A4E247882F72E9DF00733E7B /* SidebarFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarFeatureTests.swift; sourceTree = "<group>"; };
@@ -684,7 +678,6 @@
 		D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiWarningPopupViewController.swift; sourceTree = "<group>"; };
 		D516EB9C2315775E0095B735 /* MacAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacAlertService.swift; sourceTree = "<group>"; };
 		D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+clearText.swift"; sourceTree = "<group>"; };
-		D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectingOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		D54BB5DD2990ECEB00733E45 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		D54BB5DE2990ECEB00733E45 /* subusercredentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
 		D54BB5E1299124D800733E45 /* twofausercredentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = twofausercredentials.plist; sourceTree = "<group>"; };
@@ -760,10 +753,7 @@
 		E1B31816224D2D77004D8171 /* SettingsTabBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTabBarViewModel.swift; sourceTree = "<group>"; };
 		E1B3B63F2024FEF00093A8FF /* ButtonImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonImageView.swift; sourceTree = "<group>"; };
 		E1B80FE0203E000100F1D76C /* ConnectingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingViewController.swift; sourceTree = "<group>"; };
-		E1B80FE2203E003D00F1D76C /* ConnectingOverlay.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConnectingOverlay.xib; sourceTree = "<group>"; };
-		E1B80FE4203E109E00F1D76C /* ConnectingWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingWindowController.swift; sourceTree = "<group>"; };
 		E1B9A7CF203EBD30009677BC /* ConnectingOverlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingOverlayButton.swift; sourceTree = "<group>"; };
-		E1B9A7D1203ECE9E009677BC /* ConnectingOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingOverlayViewModel.swift; sourceTree = "<group>"; };
 		E1C203292027191100F4D375 /* ZoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomView.swift; sourceTree = "<group>"; };
 		E1EA77FA2294366A007B9C2F /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		E1F59B5420DCF26A00798435 /* StatusMenuCountryViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuCountryViewItem.swift; sourceTree = "<group>"; };
@@ -1154,15 +1144,6 @@
 			path = "Subuser alert";
 			sourceTree = "<group>";
 		};
-		423467C4261CEA9400A73773 /* Downgrade */ = {
-			isa = PBXGroup;
-			children = (
-				423467C5261CEAAF00A73773 /* UserAccountUpdateViewController.swift */,
-				423467C6261CEAAF00A73773 /* UserAccountUpdateViewController.xib */,
-			);
-			path = Downgrade;
-			sourceTree = "<group>";
-		};
 		4CCD3DCA2B72412B0002DA4A /* TestPlans */ = {
 			isa = PBXGroup;
 			children = (
@@ -1485,7 +1466,6 @@
 			isa = PBXGroup;
 			children = (
 				66A8A0CA2DBA8B490064CB10 /* HermesViewModelTests.swift */,
-				D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */,
 				A4939F7B2FB71DC300A97308 /* SecureCoreConnectionSpecResolverTests.swift */,
 			);
 			name = ViewModels;
@@ -1848,7 +1828,6 @@
 		F36ECDF62611D9B10089B898 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				423467C4261CEA9400A73773 /* Downgrade */,
 				F36ECDF72611D9BD0089B898 /* About */,
 				F36ECDFE2611D9EC0089B898 /* Common */,
 				F36ECE032611DBAC0089B898 /* Login */,
@@ -2233,8 +2212,8 @@
 		F36ECE1C2611DE9B0089B898 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				A4DB98722FBDC46E00186A29 /* ConnectingOverlayFeature.swift */,
 				E1B80FE0203E000100F1D76C /* ConnectingViewController.swift */,
-				E1B80FE4203E109E00F1D76C /* ConnectingWindowController.swift */,
 				EE11F92B1F39B7D8006C389C /* HeaderViewController.swift */,
 				EE24A3AA1F1BDDEF00B70949 /* ProfilesSectionViewController.swift */,
 				A4E1265B2F9A1120008D0340 /* SidebarConnectionCommand.swift */,
@@ -2250,7 +2229,6 @@
 			isa = PBXGroup;
 			children = (
 				F36ECE1F2611DECF0089B898 /* ProfilesSection */,
-				E1B9A7D1203ECE9E009677BC /* ConnectingOverlayViewModel.swift */,
 				EE5B17441F39CDF700879BE0 /* HeaderViewModel.swift */,
 			);
 			path = ViewModels;
@@ -2283,7 +2261,6 @@
 				F36ECE262611DF330089B898 /* ProfilesSection */,
 				EE7874A61F3B8F6F001E261E /* FlagView.swift */,
 				EE35FC421F1CD2DA00CFE26F /* SidebarTabBarView.swift */,
-				E1B80FE2203E003D00F1D76C /* ConnectingOverlay.xib */,
 				EE11F9241F39B3E6006C389C /* Header.xib */,
 				E1FFCF80202DAF17001B8108 /* ServerInfo.xib */,
 			);
@@ -3030,7 +3007,6 @@
 				EEFE81CD1F3F361A0052A7A6 /* MapHeader.xib in Resources */,
 				E1454CEE206FC6A900E6D396 /* HelpPopover.xib in Resources */,
 				EEBB82E81F1DF5A60041432A /* Overview.xib in Resources */,
-				423467C8261CEAAF00A73773 /* UserAccountUpdateViewController.xib in Resources */,
 				4CC3E3162FB32D2500CA2A4B /* text-template.html in Resources */,
 				F320E03226F08D7A00336F7A /* Welcome.xib in Resources */,
 				EEBB82F31F1E0BCF0041432A /* OverviewItem.xib in Resources */,
@@ -3064,7 +3040,6 @@
 				A44463CC2ECF178E0008288D /* ProtonVPN_ike_root.der in Resources */,
 				E5EB08C4281FC4A700F29B20 /* TwoFactorView.xib in Resources */,
 				EE98CFD21F14E247000D6688 /* GeneralSettings.xib in Resources */,
-				E1B80FE3203E003D00F1D76C /* ConnectingOverlay.xib in Resources */,
 				EE98CFE11F15100F000D6688 /* About.xib in Resources */,
 				E18262AF21302ED100A6A48F /* dsa_pub.pem in Resources */,
 				E1F59B5720DCF26A00798435 /* StatusMenuCountryViewItem.xib in Resources */,
@@ -3195,7 +3170,6 @@
 				A4939F7C2FB71DC300A97308 /* SecureCoreConnectionSpecResolverTests.swift in Sources */,
 				E15B755C20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift in Sources */,
 				A4E247892F72E9DF00733E7B /* SidebarFeatureTests.swift in Sources */,
-				D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */,
 				ADDB04AB2B7A533800211434 /* CountriesSectionFeatureTests.swift in Sources */,
 				D5C7C8B92B0B9A9600641808 /* AppSessionRefreshTimerMock.swift in Sources */,
 				E1683FFA2372DCBD00992E75 /* AlertTests.swift in Sources */,
@@ -3270,7 +3244,6 @@
 			files = (
 				E9F88DE727B544E0003E5179 /* Colors+BugReport.swift in Sources */,
 				EE01DD011F5C2658003D62ED /* SCCoreCircleButton.swift in Sources */,
-				E1B80FE5203E109E00F1D76C /* ConnectingWindowController.swift in Sources */,
 				428B63C425558B5F00C90D40 /* QuickSettingButton.swift in Sources */,
 				EEBB82DE1F1DEB800041432A /* ProfilesContainerViewController.swift in Sources */,
 				EE068DC41F23E8A90006C2D0 /* ProfileItemViewModel.swift in Sources */,
@@ -3370,7 +3343,6 @@
 				A4FD647D2F7AB5FB0071D13F /* QuickSettingDetailViewController.swift in Sources */,
 				4CA7BA512965E0040001C7E7 /* SecureCoreWarningViewModel.swift in Sources */,
 				EEFE81DB1F3F6D150052A7A6 /* NavigationService.swift in Sources */,
-				E1B9A7D2203ECE9E009677BC /* ConnectingOverlayViewModel.swift in Sources */,
 				EEFE81D01F3F36740052A7A6 /* MapHeaderBackground.swift in Sources */,
 				EE5CF7701F4DDCDF0002BBF3 /* ProfilesMenuViewModel.swift in Sources */,
 				F315847527C7939400D1F6CC /* AdvancedSettingsViewController.swift in Sources */,
@@ -3497,7 +3469,6 @@
 				E1B9A7D0203EBD30009677BC /* ConnectingOverlayButton.swift in Sources */,
 				E5FF89622A810046002B4A49 /* SideBarTab.swift in Sources */,
 				A458E2E72F6C1580006205D7 /* PortForwardingQuickSettingFeature.swift in Sources */,
-				423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */,
 				4CFFC94427E0C0AE0035969B /* CancellationButton.swift in Sources */,
 				EEFE81D71F3F41B10052A7A6 /* MapHeaderViewModel.swift in Sources */,
 				E565986C2820FEDD004F2240 /* WarningView.swift in Sources */,
@@ -3524,6 +3495,7 @@
 				3328A24484BCAA8F674140DC /* XPCConnectionsRepository.swift in Sources */,
 				09A7611B37870D3AFF300CF6 /* WireguardMacLogProvider.swift in Sources */,
 				00812A4F085892E5DCCEE741 /* SysexGuideWindowController.swift in Sources */,
+				A4DB98732FBDC46E00186A29 /* ConnectingOverlayFeature.swift in Sources */,
 				E5085BCE2DC22F0B00C22ABC /* PlutoniumWindowController.swift in Sources */,
 				5553CE25D76277AC1F78D477 /* AnnouncementDetailViewController.swift in Sources */,
 				5AD7615A4525DAA15F6ED3BF /* AnnouncementFeatureView.swift in Sources */,

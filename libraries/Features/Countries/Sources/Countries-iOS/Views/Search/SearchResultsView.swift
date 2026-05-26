@@ -54,10 +54,13 @@ struct SearchResultsView: View {
                 .listRowBackground(Color(.background))
 
         case .upsell:
-            UpsellBannerView(numberOfCountries: store.numberOfCountries, onUpgrade: { store.send(.showUpsell) })
-                .listRowInsets(Dimensions.upsellEdgeInsets)
-                .listRowBackground(Color.clear)
-                .listRowSeparator(.hidden)
+            UpsellBannerView(
+                variant: .search(numberOfCountries: store.numberOfCountries),
+                onUpgrade: { store.send(.showUpsell) }
+            )
+            .listRowInsets(Dimensions.upsellEdgeInsets)
+            .listRowBackground(Color.clear)
+            .listRowSeparator(.hidden)
 
         case let .country(country):
             searchCountryRow(country)

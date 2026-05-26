@@ -23,7 +23,6 @@ import CountriesShared
 import Dependencies
 import Domain
 import LegacyCommon
-import Modals
 import Payments
 import SharedViews
 import Sharing
@@ -86,7 +85,7 @@ public struct CountriesListView: View {
                     .padding(.horizontal, .themeSpacing12)
                 } else {
                     upsellBanner
-                        .padding(.horizontal, .themeSpacing12)
+                        .padding(.horizontal, .themeSpacing8)
                 }
             }
             ForEach(store.scope(state: \.countries, action: \.countries)) { store in
@@ -101,19 +100,13 @@ public struct CountriesListView: View {
     private var upsellBanner: some View {
         switch store.serverChangeAvailability {
         case .available:
-            UpsellBannerView(viewModel: .init(
-                leftIcon: Modals.Asset.worldwideCoverage,
-                text: Localizable.freeBannerText
-            ) {
+            UpsellBannerView(variant: .allCountries) {
                 store.send(.upsellBannerTapped)
-            })
+            }
         case .unavailable:
-            UpsellBannerView(viewModel: .init(
-                leftIcon: Modals.Asset.wrongCountry,
-                text: Localizable.wrongCountryBannerText
-            ) {
+            UpsellBannerView(variant: .wrongCountry) {
                 store.send(.upsellBannerTapped)
-            })
+            }
         }
     }
 
@@ -189,7 +182,11 @@ private struct CountriesListSheetsModifier: ViewModifier {
                 UpsellViewController(
                     modalType: store.modalType,
                     upgradeAction: { store.send(.upgradeTapped) },
-                    continueAction: { store.send(.continueTapped) }
+                    continueAction: { store.send(.continueTapped) },
+                    optionalAction: {
+                        guard case .cantSkip = store.modalType else { return }
+                        store.send(.optionalActionTapped)
+                    }
                 )
                 .frame(width: Dimensions.Upsell.width, height: Dimensions.Upsell.height)
                 .background(Color(.background))

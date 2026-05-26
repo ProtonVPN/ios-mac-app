@@ -29,6 +29,7 @@ let package = Package(
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/PMLogger"),
+        .package(path: "../../Foundations/Strings"),
 
         .package(path: "../../Core/NEHelper"),
         .package(path: "../../Core/SharedViews"),
@@ -74,6 +75,7 @@ let package = Package(
                 "ConnectionDetails",
                 "Domain",
                 "PMLogger",
+                "Strings",
                 .product(name: "Modals", package: "Modals"),
                 .product(name: "ModalsServices", package: "Modals"),
                 .product(name: "Payments", package: "Payments", condition: .when(platforms: [.iOS])),

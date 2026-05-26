@@ -23,13 +23,7 @@
 import Cocoa
 
 class ConnectionOverlay: NSView {
-    let fullBlurRadius = 4.0
-
-    var blurRadius = 4.0
-    var blurReduction: Double?
-    var blurReductionTimer: Timer?
-    var stopAnimatingTimer: Timer?
-    var blurReductionCompletion: (() -> Void)?
+    private let blurRadius = 4.0
 
     override var isHidden: Bool {
         didSet {
@@ -47,33 +41,17 @@ class ConnectionOverlay: NSView {
         fatalError("Unsupported initializer")
     }
 
-    func removeBlur(over time: TimeInterval, completion: @escaping () -> Void) {
-        stopAnimating()
+    private func setup() {
+        let blurLayer = CALayer()
+        wantsLayer = true
+        layer = blurLayer
 
-        blurReduction = fullBlurRadius / (time * 60)
-        blurReductionCompletion = completion
-
-        DispatchQueue.main.async { [weak self] in
-            guard let self else {
-                return
-            }
-
-            blurReductionTimer = Timer.scheduledTimer(timeInterval: 1 / 60, target: self, selector: #selector(reduceBlur), userInfo: nil, repeats: true)
-            stopAnimatingTimer = Timer.scheduledTimer(timeInterval: time, target: self, selector: #selector(stopAnimating), userInfo: nil, repeats: false)
+        if isHidden {
+            layer?.needsDisplayOnBoundsChange = false
+            return
         }
-    }
 
-    func stopBlurAnimation() {
-        guard let timer = blurReductionTimer else { return }
-
-        if timer.isValid {
-            stopAnimating()
-        }
-    }
-
-    private func buildLayerBlurEffect() {
         layer?.masksToBounds = true
-
         layer?.needsDisplayOnBoundsChange = true
 
         let blurFilter = CIFilter(name: "CIGaussianBlur")!
@@ -82,46 +60,5 @@ class ConnectionOverlay: NSView {
         layer?.backgroundFilters = [blurFilter]
 
         layer?.setNeedsDisplay()
-    }
-
-    private func removeLayerBlurEffects() {
-        layer?.needsDisplayOnBoundsChange = false
-    }
-
-    private func setup() {
-        let blurLayer = CALayer()
-        wantsLayer = true
-        layer = blurLayer
-
-        if !isHidden {
-            buildLayerBlurEffect()
-        } else {
-            removeLayerBlurEffects()
-        }
-    }
-
-    @objc
-    private func reduceBlur() {
-        guard let blurReduction else { return }
-
-        if (blurRadius - blurReduction) > 0.0 {
-            blurRadius -= blurReduction
-        }
-    }
-
-    @objc
-    private func stopAnimating() {
-        blurReductionTimer?.invalidate()
-        stopAnimatingTimer?.invalidate()
-        blurRadius = fullBlurRadius
-
-        DispatchQueue.main.async { [weak self] in
-            guard let self else {
-                return
-            }
-
-            blurReductionCompletion?()
-            blurReductionCompletion = nil
-        }
     }
 }

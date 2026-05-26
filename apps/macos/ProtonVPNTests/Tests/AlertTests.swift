@@ -44,10 +44,10 @@ class AlertTests: XCTestCase {
     func testSingleInstanceOfAlerts() {
         XCTAssert(windowService.displayCount == 0)
 
-        alertService.push(alert: MITMAlert())
+        alertService.push(alert: LogoutWarningAlert(confirmHandler: {}))
         XCTAssert(windowService.displayCount == 1)
 
-        alertService.push(alert: MITMAlert())
+        alertService.push(alert: LogoutWarningAlert(confirmHandler: {}))
         XCTAssert(windowService.displayCount == 1)
 
         alertService.push(alert: AppUpdateRequiredAlert(ResponseError.unknownError))
@@ -76,8 +76,8 @@ class AlertTests: XCTestCase {
             cancelRan = true
         }
 
-        let alert1 = SecureCoreToggleDisconnectAlert(confirmHandler: confirmationHandler1, cancelHandler: cancellationHandler1)
-        let alert2 = SecureCoreToggleDisconnectAlert(confirmHandler: confirmationHandler2, cancelHandler: cancellationHandler2)
+        let alert1 = ProtocolNotAvailableForServerAlert(confirmHandler: confirmationHandler1, cancelHandler: cancellationHandler1)
+        let alert2 = ProtocolNotAvailableForServerAlert(confirmHandler: confirmationHandler2, cancelHandler: cancellationHandler2)
 
         alertService.push(alert: alert1)
         XCTAssert(windowService.displayCount == 1)

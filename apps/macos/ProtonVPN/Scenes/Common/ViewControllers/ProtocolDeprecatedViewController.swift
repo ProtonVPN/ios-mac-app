@@ -42,19 +42,6 @@ final class ProtocolDeprecatedViewController: WarningPopupViewController {
 }
 
 extension WarningPopupViewModel {
-    convenience init(alert: ProtocolDeprecatedAlert) {
-        self.init(
-            title: alert.title!,
-            description: alert.message!,
-            linkDescription: alert.linkText,
-            url: VPNLink.protocolDeprecations.urlString,
-            onConfirm: alert.enableSmartProtocol,
-            confirmTitle: alert.confirmTitle,
-            onCancel: nil,
-            cancelTitle: alert.dismissTitle
-        )
-    }
-
     convenience init(alert: IkeDeprecatedAlert) {
         self.init(
             title: alert.title!,
@@ -63,19 +50,6 @@ extension WarningPopupViewModel {
             url: VPNLink.ikev2Deprecation.urlString,
             onConfirm: alert.enableSmartProtocol,
             confirmTitle: alert.confirmTitle,
-            onCancel: alert.dismiss,
-            cancelTitle: alert.dismissTitle
-        )
-    }
-
-    convenience init(alert: IKEv2PlutoniumConflictAlert) {
-        self.init(
-            title: alert.title!,
-            description: alert.message!,
-            linkDescription: alert.linkText,
-            url: VPNLink.splitTunnelingMacOS.urlString,
-            onConfirm: alert.disablePlutoniumHandler,
-            confirmTitle: alert.disablePlutoniumTitle,
             onCancel: alert.dismiss,
             cancelTitle: alert.dismissTitle
         )

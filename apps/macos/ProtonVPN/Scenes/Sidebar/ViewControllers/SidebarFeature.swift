@@ -24,6 +24,8 @@ import Domain
 import ExtensionManager
 import Foundation
 import LegacyCommon
+import PaymentsShared
+import Persistence
 import ProtonCoreFeatureFlags
 import VPNAppCore
 
@@ -31,6 +33,32 @@ import VPNAppCore
 struct SidebarFeature {
     @ObservableState
     struct State: Equatable {
+        @CasePathable
+        enum OverlayState: Equatable {
+            case hidden
+            case connecting(ConnectingOverlayFeature.State)
+            case autoDismiss(ConnectingOverlayFeature.State)
+            case suppressed
+
+            var connectingOverlay: ConnectingOverlayFeature.State? {
+                switch self {
+                case let .connecting(state), let .autoDismiss(state):
+                    state
+                case .hidden, .suppressed:
+                    nil
+                }
+            }
+
+            var isVisible: Bool {
+                switch self {
+                case .connecting, .autoDismiss:
+                    true
+                case .hidden, .suppressed:
+                    false
+                }
+            }
+        }
+
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
         @Shared(.connectionState) var connectionState: ConnectionState
         var connection: ConnectionFeature.State = .initialState
@@ -41,21 +69,36 @@ struct SidebarFeature {
         }
 
         var selectedTab: SidebarTab = .countries
-        var isLoadingOverlayVisible = false
-        var isOverlayWindowPresented = false
+        var overlayState: OverlayState = .hidden
         var expandState: ExpandState = .compact
         var mapWidth: CGFloat = 600
         var isFullscreen = false
-        var isOccludedVisible = true
         var natPortMappingRunning = false
         var countriesSection = CountriesSectionFeature.State()
+        @Presents var alert: AlertState<Action.Alert>?
+        var pendingReconnectIntent: ConnectionPreparationIntent?
+
+        var connectingOverlay: ConnectingOverlayFeature.State? {
+            get { overlayState.connectingOverlay }
+            set {
+                guard let newValue else { return }
+                switch overlayState {
+                case .connecting:
+                    overlayState = .connecting(newValue)
+                case .autoDismiss:
+                    overlayState = .autoDismiss(newValue)
+                case .hidden, .suppressed:
+                    break
+                }
+            }
+        }
 
         var isExpandButtonHidden: Bool {
             isFullscreen
         }
 
         var shouldPresentLoadingOverlay: Bool {
-            isLoadingOverlayVisible && isOccludedVisible
+            overlayState.isVisible
         }
     }
 
@@ -68,24 +111,27 @@ struct SidebarFeature {
         case startObservingEvents
         case stopObservingEvents
         case connectedOverlayDelayElapsed
-        case overlayWindowPresentedChanged(Bool)
         case overlayDismissedByUser
 
         case windowDidResize(width: CGFloat, height: CGFloat)
         case windowDidEndLiveResize(width: CGFloat, isFullscreen: Bool)
         case windowWillEnterFullScreen
         case windowWillExitFullScreen
-        case occlusionStateChanged(isVisible: Bool)
         case killSwitchSettingChanged(Bool)
         case vpnConnectionStatusUpdated(VPNConnectionStatus)
         case syncNATPortMappingState
         case syncPlutoniumState
+        case connectingOverlay(ConnectingOverlayFeature.Action)
 
         case tabChanged(SidebarTab)
         case expandButtonTapped
         case connectionCommandReceived(SidebarConnectionCommand)
 
         case countriesSection(CountriesSectionFeature.Action)
+        case alert(PresentationAction<Alert>)
+
+        @CasePathable
+        enum Alert: Equatable {}
     }
 
     // MARK: - Init
@@ -113,7 +159,8 @@ struct SidebarFeature {
     @Dependency(\.plutoniumManager) private var plutoniumManager
     @Dependency(\.hermesClient) private var hermesClient
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
-    @Dependency(\.pushAlert) private var pushAlert
+    @Dependency(\.serverRepository) private var serverRepository
+    @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
 
     var body: some ReducerOf<Self> {
         Scope(state: \.connection, action: \.connection) {
@@ -124,7 +171,6 @@ struct SidebarFeature {
         Scope(state: \.countriesSection, action: \.countriesSection) {
             CountriesSectionFeature()
         }
-
         Reduce { state, action in
             switch action {
             case .viewDidLoad:
@@ -165,12 +211,6 @@ struct SidebarFeature {
                     }
                     .cancellable(id: CancelID.windowExitFullScreen),
                     .run { send in
-                        for await isVisible in sidebarEventsClient.occlusionStateChanged() {
-                            await send(.occlusionStateChanged(isVisible: isVisible))
-                        }
-                    }
-                    .cancellable(id: CancelID.occlusion),
-                    .run { send in
                         let stream = await sidebarConnectionCommandClient.stream()
                         for await command in stream {
                             await send(.connectionCommandReceived(command))
@@ -205,7 +245,6 @@ struct SidebarFeature {
                     .cancel(id: CancelID.windowEndResize),
                     .cancel(id: CancelID.windowEnterFullScreen),
                     .cancel(id: CancelID.windowExitFullScreen),
-                    .cancel(id: CancelID.occlusion),
                     .cancel(id: CancelID.overlayDelay),
                     .cancel(id: CancelID.connectionCommands),
                     .cancel(id: CancelID.portForwardingSetting),
@@ -241,10 +280,6 @@ struct SidebarFeature {
                 state.isFullscreen = false
                 return .none
 
-            case let .occlusionStateChanged(isVisible):
-                state.isOccludedVisible = isVisible
-                return .none
-
             case .killSwitchSettingChanged:
                 guard state.vpnConnectionStatus.isConnected(using: state.connectionState) else {
                     return .none
@@ -254,16 +289,38 @@ struct SidebarFeature {
                     spec: spec,
                     connectionProtocol: propertiesManager.connectionProtocol
                 )
-                return .send(.connection(.input(.connect(intent))))
+                log.info(
+                    "Reconnecting due to killSwitch setting change",
+                    category: .connectionConnect,
+                    metadata: ["spec.location": "\(spec.location)"]
+                )
+                beginConnectingOverlay(&state, connectionSpec: intent.spec)
+                return .merge(
+                    .cancel(id: CancelID.overlayDelay),
+                    .send(.connection(.input(.connect(intent))))
+                )
 
             case let .vpnConnectionStatusUpdated(connectionStatus):
                 state.$vpnConnectionStatus.withLock { $0 = connectionStatus }
                 switch connectionStatus {
                 case .resolving, .connecting:
-                    state.isLoadingOverlayVisible = true
+                    if state.overlayState != .suppressed {
+                        beginConnectingOverlay(
+                            &state,
+                            connectionSpec: connectionStatus.spec ?? propertiesManager.lastConnectionIntent
+                        )
+                        syncConnectingOverlayState(&state, connectionStatus: connectionStatus)
+                    }
                     return .cancel(id: CancelID.overlayDelay)
 
                 case .connected:
+                    // .connected signals the in-place settings update has finished;
+                    // clear the suppression so subsequent passive reconnects are visible.
+                    if state.overlayState == .suppressed {
+                        state.overlayState = .hidden
+                        return .cancel(id: CancelID.overlayDelay)
+                    }
+                    transitionToAutoDismiss(&state, connectionStatus: connectionStatus)
                     return .run { send in
                         try await clock.sleep(for: .seconds(3))
                         await send(.connectedOverlayDelayElapsed)
@@ -271,7 +328,7 @@ struct SidebarFeature {
                     .cancellable(id: CancelID.overlayDelay, cancelInFlight: true)
 
                 case .disconnecting, .disconnected:
-                    state.isLoadingOverlayVisible = false
+                    state.overlayState = .hidden
                     return .cancel(id: CancelID.overlayDelay)
                 }
 
@@ -328,16 +385,15 @@ struct SidebarFeature {
                 .cancellable(id: CancelID.plutoniumSync, cancelInFlight: true)
 
             case .connectedOverlayDelayElapsed:
-                state.isLoadingOverlayVisible = false
-                return .none
-
-            case let .overlayWindowPresentedChanged(isPresented):
-                state.isOverlayWindowPresented = isPresented
+                state.overlayState = .hidden
                 return .none
 
             case .overlayDismissedByUser:
-                state.isLoadingOverlayVisible = false
+                state.overlayState = .hidden
                 return .cancel(id: CancelID.overlayDelay)
+
+            case .connectingOverlay(.delegate(.dismissRequested)):
+                return .send(.overlayDismissedByUser)
 
             case let .tabChanged(tab):
                 state.selectedTab = tab
@@ -348,11 +404,29 @@ struct SidebarFeature {
                 return .none
 
             case let .connectionCommandReceived(.connect(spec, connectionProtocol, trigger)):
-                state.isLoadingOverlayVisible = true
+                if trigger == .changeServer {
+                    let availability = serverChangeAuthorizer.serverChangeAvailability()
+                    if case let .unavailable(until, duration, exhaustedSkips) = availability {
+                        let intent = connectionPreparationIntent(
+                            spec: spec,
+                            connectionProtocol: connectionProtocol ?? propertiesManager.connectionProtocol
+                        )
+                        state.pendingReconnectIntent = intent
+                        return .send(.countriesSection(.quickSettings(.presentUpsell(
+                            .cantSkip(
+                                before: until,
+                                totalDuration: duration,
+                                longSkip: exhaustedSkips
+                            )
+                        ))))
+                    }
+                }
+
                 let intent = connectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: connectionProtocol ?? propertiesManager.connectionProtocol
                 )
+                beginConnectingOverlay(&state, connectionSpec: intent.spec)
                 return .merge(
                     .cancel(id: CancelID.overlayDelay),
                     .run { send in
@@ -363,20 +437,30 @@ struct SidebarFeature {
                 )
 
             case let .connectionCommandReceived(.disconnect(trigger, completion)):
-                return .run { send in
-                    AppEvent.userInitiatedVPNChange.post(trigger)
-                    await send(.connection(.input(.disconnect)))
-                    await completion?()
-                }
-                .cancellable(id: CancelID.connectionDisconnectCommandEffect, cancelInFlight: true)
+                state.overlayState = .hidden
+                return .merge(
+                    .cancel(id: CancelID.connectionConnectCommandEffect),
+                    .cancel(id: CancelID.overlayDelay),
+                    .run { send in
+                        AppEvent.userInitiatedVPNChange.post(trigger)
+                        await send(.connection(.input(.disconnect)))
+                        await completion?()
+                    }
+                    .cancellable(id: CancelID.connectionDisconnectCommandEffect, cancelInFlight: true)
+                )
 
             case .connectionCommandReceived(.retry):
-                state.isLoadingOverlayVisible = true
                 let spec = propertiesManager.lastConnectionIntent
                 let intent = connectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: propertiesManager.connectionProtocol
                 )
+                log.info(
+                    "Reconnecting via retry command",
+                    category: .connectionConnect,
+                    metadata: ["spec.location": "\(spec.location)"]
+                )
+                beginConnectingOverlay(&state, connectionSpec: intent.spec)
                 return .merge(
                     .cancel(id: CancelID.overlayDelay),
                     .run { send in
@@ -387,12 +471,17 @@ struct SidebarFeature {
                 )
 
             case let .connectionCommandReceived(.reconnect(connectionProtocol)):
-                state.isLoadingOverlayVisible = true
                 let spec = propertiesManager.lastConnectionIntent
                 let intent = connectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: connectionProtocol ?? propertiesManager.connectionProtocol
                 )
+                log.info(
+                    "Reconnecting via reconnect command",
+                    category: .connectionConnect,
+                    metadata: ["spec.location": "\(spec.location)"]
+                )
+                beginConnectingOverlay(&state, connectionSpec: intent.spec)
                 return .merge(
                     .cancel(id: CancelID.overlayDelay),
                     .run { send in
@@ -403,15 +492,10 @@ struct SidebarFeature {
                 )
 
             case let .connectionCommandReceived(.applySettings(settings)):
-                let hasPortForwardingChange = settings.contains {
-                    if case .portForwarding = $0 {
-                        return true
-                    }
-                    return false
-                }
+                state.overlayState = .suppressed
                 return .merge(
-                    .send(.connection(.input(.applySettings(settings)))),
-                    hasPortForwardingChange ? .send(.syncNATPortMappingState) : .none
+                    .cancel(id: CancelID.overlayDelay),
+                    .send(.connection(.input(.applySettings(settings))))
                 )
 
             case let .connectionCommandReceived(.clearConnectionData(completion)):
@@ -424,14 +508,33 @@ struct SidebarFeature {
                 state.selectedTab = .profiles
                 return .none
 
-            case .countriesSection:
+            case .countriesSection(.quickSettings(.destination(.presented(.upsell(.optionalActionTapped))))):
+                guard let intent = state.pendingReconnectIntent else {
+                    return .none
+                }
+                state.pendingReconnectIntent = nil
+                beginConnectingOverlay(&state, connectionSpec: intent.spec)
+                return .merge(
+                    .cancel(id: CancelID.overlayDelay),
+                    .send(.connection(.input(.connect(intent))))
+                )
+
+            case .countriesSection(.quickSettings(.destination(.presented(.upsell(.continueTapped))))),
+                 .countriesSection(.quickSettings(.destination(.presented(.upsell(.upgradeTapped))))),
+                 .countriesSection(.quickSettings(.destination(.dismiss))):
+                state.pendingReconnectIntent = nil
+                return .none
+
+            case .countriesSection, .connectingOverlay:
+                return .none
+
+            case .alert:
                 return .none
 
             case let .connection(.delegate(.connectionFailed(error))):
                 SentryHelper.shared?.log(error: error)
-                return .run { [pushAlert] _ in
-                    pushAlert(connectionFailureAlert(for: error))
-                }
+                state.alert = connectionFailureAlert(for: error)
+                return .none
 
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
@@ -447,27 +550,59 @@ struct SidebarFeature {
                 )
 
             case let .connection(.delegate(.intentResolutionFailed(intent, resolutionError))):
+                log.warning(
+                    "Intent resolution failed; presenting upsell",
+                    category: .connection,
+                    metadata: [
+                        "intent.spec.location": "\(intent.spec.location)",
+                        "intent.spec.features": "\(intent.spec.features)",
+                        "intent.connectionProtocol": "\(intent.connectionProtocol)",
+                        "resolutionError": "\(resolutionError)",
+                        "overlayState": "\(state.overlayState)",
+                        "vpnConnectionStatus": "\(state.vpnConnectionStatus)",
+                    ]
+                )
                 SentryHelper.shared?.log(error: resolutionError)
-                return .run { [pushAlert] send in
-                    let alert: SystemAlert = switch resolutionError {
-                    case .secureCoreUnavailable:
-                        SecureCoreUpsellAlert()
-                    case let .specificCountryUnavailable(countryCode):
-                        CountryUpsellAlert(countryCode: countryCode)
-                    case let .serverChangeUnavailable(until, duration, exhaustedSkips):
-                        ConnectionCooldownAlert(until: until, duration: duration, longSkip: exhaustedSkips) {
-                            Task { [intent, send] in
-                                await send(.connection(.input(.connect(intent))))
-                            }
-                        }
+                switch resolutionError {
+                case .secureCoreUnavailable:
+                    state.pendingReconnectIntent = nil
+                    return .send(.countriesSection(.quickSettings(.presentUpsell(.secureCore))))
+                case let .specificCountryUnavailable(countryCode):
+                    state.pendingReconnectIntent = nil
+                    return .send(.countriesSection(.quickSettings(.presentUpsell(
+                        .country(
+                            countryCode: countryCode,
+                            numberOfDevices: DomainConstants.maxDeviceCount,
+                            numberOfCountries: serverRepository.countryCount()
+                        )
+                    ))))
+                case .serverChangeUnavailable:
+                    let availability = serverChangeAuthorizer.serverChangeAvailability()
+                    guard case let .unavailable(until, duration, exhaustedSkips) = availability else {
+                        state.pendingReconnectIntent = nil
+                        return .none
                     }
-                    pushAlert(alert)
+                    state.pendingReconnectIntent = intent
+                    return .send(.countriesSection(.quickSettings(.presentUpsell(
+                        .cantSkip(
+                            before: until,
+                            totalDuration: duration,
+                            longSkip: exhaustedSkips
+                        )
+                    ))))
                 }
+
+            case .connection(.core(.certAuth(.refreshFinished))):
+                return .none
 
             case .connection:
                 return .none
             }
         }
+        .ifLet(\.connectingOverlay, action: \.connectingOverlay) {
+            ConnectingOverlayFeature()
+        }
+        .ifLet(\.$alert, action: \.alert)
     }
 
     private enum CancelID {
@@ -475,7 +610,6 @@ struct SidebarFeature {
         case windowEndResize
         case windowEnterFullScreen
         case windowExitFullScreen
-        case occlusion
         case overlayDelay
         case connectionCommands
         case portForwardingSetting
@@ -488,12 +622,47 @@ struct SidebarFeature {
 }
 
 private extension SidebarFeature {
-    func connectionFailureAlert(for error: ConnectionError) -> SystemAlert {
-        switch error {
-        case .preparation(.networkUnreachable):
-            VpnNetworkUnreachableAlert()
-        default:
-            DomainErrorAlert(alert: error.alert)
+    func beginConnectingOverlay(_ state: inout State, connectionSpec: ConnectionSpec) {
+        var overlay = state.connectingOverlay ?? ConnectingOverlayFeature.State()
+        overlay.beginConnecting(
+            connectionSpec: connectionSpec,
+            selectedProtocol: propertiesManager.connectionProtocol,
+            killSwitchEnabled: propertiesManager.killSwitch,
+            intentionallyDisconnected: propertiesManager.intentionallyDisconnected
+        )
+        state.overlayState = .connecting(overlay)
+    }
+
+    func transitionToAutoDismiss(_ state: inout State, connectionStatus: VPNConnectionStatus) {
+        var overlay = state.connectingOverlay ?? ConnectingOverlayFeature.State()
+        overlay.sync(
+            connectionStatus: connectionStatus,
+            selectedProtocol: propertiesManager.connectionProtocol,
+            killSwitchEnabled: propertiesManager.killSwitch,
+            intentionallyDisconnected: propertiesManager.intentionallyDisconnected
+        )
+        state.overlayState = .autoDismiss(overlay)
+    }
+
+    func syncConnectingOverlayState(_ state: inout State, connectionStatus: VPNConnectionStatus) {
+        guard var overlay = state.connectingOverlay else {
+            return
+        }
+        overlay.sync(
+            connectionStatus: connectionStatus,
+            selectedProtocol: propertiesManager.connectionProtocol,
+            killSwitchEnabled: propertiesManager.killSwitch,
+            intentionallyDisconnected: propertiesManager.intentionallyDisconnected
+        )
+        state.connectingOverlay = overlay
+    }
+
+    func connectionFailureAlert(for error: ConnectionError) -> AlertState<Action.Alert> {
+        let alert = error.alert
+        return AlertState {
+            TextState(String(localized: alert.title))
+        } message: {
+            TextState(String(localized: alert.message))
         }
     }
 

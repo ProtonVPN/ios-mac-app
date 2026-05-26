@@ -90,6 +90,7 @@ public struct HomeView: View {
 
     private var contentWithSheets: some View {
         content
+            .alert($store.scope(state: \.alert, action: \.alert))
             .connectionDetailsSheet(store: $store)
             .changeServerSheet(store: $store)
             .defaultConnectionSheet(store: $store)

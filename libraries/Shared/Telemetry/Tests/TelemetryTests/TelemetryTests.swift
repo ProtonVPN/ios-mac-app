@@ -108,7 +108,7 @@ class TelemetryTests: XCTestCase {
         XCTAssertEqual(sut["MeasurementGroup"] as? String, "vpn.any.upsell")
         XCTAssertEqual(sut["Event"] as? String, event.rawValue)
         XCTAssertEqual(values.count, 0)
-        XCTAssertEqual(dimensions["modal_source"] as? String, "change_server")
+        XCTAssertEqual(dimensions["modal_source"] as? String, "allow_lan")
         XCTAssertEqual(dimensions["user_plan"] as? String, "free")
         XCTAssertEqual(dimensions["vpn_status"] as? String, "off")
         XCTAssertEqual(dimensions["user_country"] as? String, "ZZ")

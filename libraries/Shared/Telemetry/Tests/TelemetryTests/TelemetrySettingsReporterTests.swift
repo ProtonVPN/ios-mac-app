@@ -16,62 +16,60 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-@testable import Telemetry
-
-import Ergonomics
-import VPNAppCore
 import Dependencies
-import Sharing
-
+import Ergonomics
 import Foundation
+import Sharing
+@testable import Telemetry
 import Testing
+import VPNAppCore
 
 struct TelemetrySettingsReporterTests {
     #if os(macOS)
-    @Test
-    func `split tunneling enabled with exclusion telemetry settings heartbeat`() async {
-        @Shared(.telemetryUsageData) var telemetryUsageData
-        $telemetryUsageData.withLock {
-            $0 = String(false)
+        @Test
+        func `split tunneling enabled with exclusion telemetry settings heartbeat`() async {
+            @Shared(.telemetryUsageData) var telemetryUsageData
+            $telemetryUsageData.withLock {
+                $0 = String(false)
+            }
+            @Shared(.plutoniumFeatureApplied) var splitTunneling: PlutoniumFeatureToggle
+            $splitTunneling.withLock {
+                $0 = .enabled(.exclusion)
+            }
+            await withDependencies {
+                $0.continuousClock = .immediate
+                $0.date = .constant(.now)
+            } operation: {
+                let reporter = await TelemetrySettingsReporter(telemetryEventScheduler: .init(isBusiness: false))
+                await reporter.start()
+                #expect(reporter.lastHeartbeatEvent?.dimensions.splitTunnelingMode == .exclude)
+                #expect(reporter.lastHeartbeatEvent?.dimensions.isSplitTunnelingEnabled == .true)
+                #expect(reporter.lastHeartbeatEvent?.dimensions.splitTunnelingIpsCount == .zero)
+                #expect(reporter.lastHeartbeatEvent?.dimensions.splitTunnelingAppsCount == .zero)
+            }
         }
-        @Shared(.plutoniumFeatureApplied) var splitTunneling: PlutoniumFeatureToggle
-        $splitTunneling.withLock {
-            $0 = .enabled(.exclusion)
-        }
-        await withDependencies {
-            $0.continuousClock = .immediate
-            $0.date = .constant(.now)
-        } operation: {
-            let reporter = await TelemetrySettingsReporter(telemetryEventScheduler: .init(isBusiness: false))
-            await reporter.start()
-            #expect(reporter.lastHeartbeatEvent?.dimensions.splitTunnelingMode == .exclude)
-            #expect(reporter.lastHeartbeatEvent?.dimensions.isSplitTunnelingEnabled == .true)
-            #expect(reporter.lastHeartbeatEvent?.dimensions.splitTunnelingIpsCount == .zero)
-            #expect(reporter.lastHeartbeatEvent?.dimensions.splitTunnelingAppsCount == .zero)
-        }
-    }
 
-    @Test
-    func `split tunneling disabled with inclusion telemetry settings heartbeat`() async {
-        @Shared(.telemetryUsageData) var telemetryUsageData
-        $telemetryUsageData.withLock {
-            $0 = String(false)
+        @Test
+        func `split tunneling disabled with inclusion telemetry settings heartbeat`() async {
+            @Shared(.telemetryUsageData) var telemetryUsageData
+            $telemetryUsageData.withLock {
+                $0 = String(false)
+            }
+            @Shared(.plutoniumFeatureApplied) var splitTunneling: PlutoniumFeatureToggle
+            $splitTunneling.withLock {
+                $0 = .disabled(.inclusion)
+            }
+            await withDependencies {
+                $0.continuousClock = .immediate
+                $0.date = .constant(.now)
+            } operation: {
+                let reporter = await TelemetrySettingsReporter(telemetryEventScheduler: .init(isBusiness: false))
+                await reporter.start()
+                #expect(reporter.lastHeartbeatEvent?.dimensions.splitTunnelingMode == .include)
+                #expect(reporter.lastHeartbeatEvent?.dimensions.isSplitTunnelingEnabled == .false)
+                #expect(reporter.lastHeartbeatEvent?.dimensions.splitTunnelingIpsCount == .zero)
+                #expect(reporter.lastHeartbeatEvent?.dimensions.splitTunnelingAppsCount == .zero)
+            }
         }
-        @Shared(.plutoniumFeatureApplied) var splitTunneling: PlutoniumFeatureToggle
-        $splitTunneling.withLock {
-            $0 = .disabled(.inclusion)
-        }
-        await withDependencies {
-            $0.continuousClock = .immediate
-            $0.date = .constant(.now)
-        } operation: {
-            let reporter = await TelemetrySettingsReporter(telemetryEventScheduler: .init(isBusiness: false))
-            await reporter.start()
-            #expect(reporter.lastHeartbeatEvent?.dimensions.splitTunnelingMode == .include)
-            #expect(reporter.lastHeartbeatEvent?.dimensions.isSplitTunnelingEnabled == .false)
-            #expect(reporter.lastHeartbeatEvent?.dimensions.splitTunnelingIpsCount == .zero)
-            #expect(reporter.lastHeartbeatEvent?.dimensions.splitTunnelingAppsCount == .zero)
-        }
-    }
     #endif
 }

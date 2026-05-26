@@ -68,22 +68,13 @@ final class OsxUiAlertService: UIAlertService {
 
         currentAlerts.append(alert)
 
-        let modalVC: NSViewController
-
-        switch alert {
-        case let userAccountUpdateAlert as UserAccountUpdateAlert:
-            let userUpdateVC = UserAccountUpdateViewController(alert: userAccountUpdateAlert)
-            alert.dismiss = { [weak self] in self?.dismissCompletion(alert) }
-            modalVC = userUpdateVC
-        default:
-            let popUp = PopUpViewModel(
-                alert: alert,
-                inAppLinkManager: InAppLinkManager(navigationService: navigationService)
-            )
-            popUp.dismissCompletion = { [weak self] in self?.dismissCompletion(alert) }
-            alert.dismiss = { [weak popUp] in popUp?.close() }
-            modalVC = PopUpViewController(viewModel: popUp)
-        }
+        let popUp = PopUpViewModel(
+            alert: alert,
+            inAppLinkManager: InAppLinkManager(navigationService: navigationService)
+        )
+        popUp.dismissCompletion = { [weak self] in self?.dismissCompletion(alert) }
+        alert.dismiss = { [weak popUp] in popUp?.close() }
+        let modalVC: NSViewController = PopUpViewController(viewModel: popUp)
 
         if alert.displayOnActiveScreen, UserDefaults.standard.bool(forKey: AppConstants.UserDefaults.displayAlertsOnActiveScreen) {
             windowService.presentKeyModalOnActiveScreen(viewController: modalVC, activatingApp: alert.activatingApp)

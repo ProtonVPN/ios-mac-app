@@ -26,6 +26,7 @@ import Domain
 import Foundation
 import LegacyCommon
 @testable import LocalAgent
+import PaymentsShared
 @testable import ProtonVPN
 import Testing
 import VPNAppCore
@@ -41,7 +42,7 @@ struct SidebarFeatureTests {
         let store = makeStore()
 
         await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .quick))) {
-            $0.isLoadingOverlayVisible = true
+            $0.overlayState = .connecting(spec: spec)
         }
         await store.receive(\.connection.input.connect) {
             $0.connection.reconnectionIntent = ConnectionPreparationIntent(
@@ -92,7 +93,7 @@ struct SidebarFeatureTests {
             $0.connection.core.shouldDisconnectWhenAllowed = false
         }
         await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .quick))) {
-            $0.isLoadingOverlayVisible = true
+            $0.overlayState = .connecting(spec: spec)
         }
 
         await store.receive(\.connection.input.connect) {
@@ -117,12 +118,24 @@ struct SidebarFeatureTests {
         }
     }
 
+    @Test("disconnect command hides overlay immediately")
+    func disconnectCommandHidesOverlayImmediately() async {
+        let store = makeStore()
+        store.exhaustivity = .off
+        await store.send(.connectionCommandReceived(.connect(.defaultFastest, .vpnProtocol(.ike), .quick))) {
+            $0.overlayState = .connecting(spec: .defaultFastest)
+        }
+        await store.send(.connectionCommandReceived(.disconnect(.auto))) {
+            $0.overlayState = .hidden
+        }
+    }
+
     @Test("retry command forwards to connection feature")
     func retryCommandForwardsToConnectionFeature() async {
         let spec = ConnectionSpec(location: .any(.fastest), features: [])
         let store = makeStore()
         await store.send(.connectionCommandReceived(.retry)) {
-            $0.isLoadingOverlayVisible = true
+            $0.overlayState = .connecting(spec: spec)
         }
         await store.receive(\.connection.input.connect) {
             $0.connection.reconnectionIntent = ConnectionPreparationIntent(
@@ -157,7 +170,7 @@ struct SidebarFeatureTests {
         let store = makeStore(portForwardingEnabled: true)
 
         await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .quick))) {
-            $0.isLoadingOverlayVisible = true
+            $0.overlayState = .connecting(spec: p2pSpec)
         }
         await store.receive(\.connection.input.connect) {
             $0.connection.reconnectionIntent = ConnectionPreparationIntent(
@@ -190,11 +203,106 @@ struct SidebarFeatureTests {
         let store = makeStore()
         let settings: Set<ConnectionFeatureChange.AgentFeature> = [.vpnAccelerator(true)]
 
-        await store.send(.connectionCommandReceived(.applySettings(settings)))
+        await store.send(.connectionCommandReceived(.applySettings(settings))) {
+            $0.overlayState = .suppressed
+        }
         await store.receive(\.connection.input.applySettings)
         await store.receive(\.connection.core.localAgent.setFeatures)
         await store.receive(\.connection.core.certAuth.refreshCertificate)
         await store.receive(\.connection.core.certAuth.refreshFinished.failure.cancelled)
+    }
+
+    @Test("apply settings suppresses and clears connecting overlay state")
+    func applySettingsSuppressesAndClearsConnectingOverlayState() async {
+        let store = makeStore()
+        store.exhaustivity = .off
+        await store.send(.connectionCommandReceived(.connect(.defaultFastest, .vpnProtocol(.ike), .quick))) {
+            $0.overlayState = .connecting(spec: .defaultFastest)
+        }
+        await store.send(.connectionCommandReceived(.applySettings([.vpnAccelerator(true)]))) {
+            $0.overlayState = .suppressed
+        }
+    }
+
+    @Test("disconnect clears connecting overlay child state")
+    func disconnectClearsConnectingOverlayChildState() async {
+        let store = makeStore()
+        store.exhaustivity = .off
+        await store.send(.connectionCommandReceived(.connect(.defaultFastest, .vpnProtocol(.ike), .quick))) {
+            $0.overlayState = .connecting(spec: .defaultFastest)
+        }
+        await store.send(.connectionCommandReceived(.disconnect(.auto))) {
+            $0.overlayState = .hidden
+        }
+    }
+
+    @Test("in-place settings suppress connecting overlay, reconnect commands still show it")
+    func inPlaceSettingsSuppressOverlayUntilReconnectCommand() async {
+        let store = makeStore()
+        store.exhaustivity = .off
+        let settings: Set<ConnectionFeatureChange.AgentFeature> = [.portForwarding(true)]
+
+        await store.send(.connectionCommandReceived(.applySettings(settings))) {
+            $0.overlayState = .suppressed
+        }
+
+        await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
+            $0.$vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
+        }
+        #expect(store.state.overlayState == .suppressed)
+
+        await store.send(.connectionCommandReceived(.retry)) {
+            $0.overlayState = .connecting(spec: .defaultFastest)
+        }
+    }
+
+    @Test("refresh finished does not re-enable overlay for in-place updates")
+    func refreshFinishedDoesNotReEnableOverlayForInPlaceUpdates() async {
+        let store = makeStore()
+        store.exhaustivity = .off
+        let settings: Set<ConnectionFeatureChange.AgentFeature> = [.portForwarding(true)]
+
+        await store.send(.connectionCommandReceived(.applySettings(settings))) {
+            $0.overlayState = .suppressed
+        }
+        await store.receive(\.connection.input.applySettings)
+        await store.receive(\.connection.core.localAgent.setFeatures)
+        await store.receive(\.connection.core.certAuth.refreshCertificate)
+        await store.receive(\.connection.core.certAuth.refreshFinished.failure.cancelled)
+
+        await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
+            $0.$vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
+        }
+        #expect(store.state.overlayState == .suppressed)
+    }
+
+    @Test("successful in-place settings update lifts overlay suppression")
+    func successfulInPlaceSettingsUpdateLiftsOverlaySuppression() async {
+        let store = makeStore()
+        store.exhaustivity = .off
+        let connectedState = VPNConnectionActual.mock()
+
+        await store.send(.connectionCommandReceived(.applySettings([.portForwarding(true)]))) {
+            $0.overlayState = .suppressed
+        }
+
+        await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
+            $0.$vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
+        }
+        #expect(store.state.overlayState == .suppressed)
+
+        // .connected after suppress clears the suppression — no auto-dismiss overlay
+        // is shown for the in-place update, but the state goes back to .hidden.
+        await store.send(.vpnConnectionStatusUpdated(.connected(.defaultFastest, connectedState))) {
+            $0.$vpnConnectionStatus.withLock { $0 = .connected(.defaultFastest, connectedState) }
+            $0.overlayState = .hidden
+        }
+
+        // A subsequent passive reconnect is now visible.
+        await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
+            $0.$vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
+            $0.overlayState = .connecting(spec: .defaultFastest)
+        }
     }
 
     @Test("clear connection data command forwards to connection logout")
@@ -258,14 +366,15 @@ struct SidebarFeatureTests {
 
         await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
             $0.$vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
-            $0.isLoadingOverlayVisible = true
+            $0.overlayState = .connecting(spec: .defaultFastest)
         }
         await store.send(.vpnConnectionStatusUpdated(.connected(.defaultFastest, connectedState))) {
             $0.$vpnConnectionStatus.withLock { $0 = .connected(.defaultFastest, connectedState) }
+            $0.overlayState = .autoDismiss(for: .connected(.defaultFastest, connectedState))
         }
         await clock.advance(by: .seconds(3))
         await store.receive(\.connectedOverlayDelayElapsed) {
-            $0.isLoadingOverlayVisible = false
+            $0.overlayState = .hidden
         }
     }
 
@@ -278,21 +387,22 @@ struct SidebarFeatureTests {
 
         await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
             $0.$vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
-            $0.isLoadingOverlayVisible = true
+            $0.overlayState = .connecting(spec: .defaultFastest)
         }
         await store.send(.vpnConnectionStatusUpdated(.connected(.defaultFastest, connectedState))) {
             $0.$vpnConnectionStatus.withLock { $0 = .connected(.defaultFastest, connectedState) }
+            $0.overlayState = .autoDismiss(for: .connected(.defaultFastest, connectedState))
         }
 
         await store.send(.overlayDismissedByUser) {
-            $0.isLoadingOverlayVisible = false
+            $0.overlayState = .hidden
         }
 
         await clock.advance(by: .seconds(3))
 
         await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
             $0.$vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
-            $0.isLoadingOverlayVisible = true
+            $0.overlayState = .connecting(spec: .defaultFastest)
         }
     }
 
@@ -304,12 +414,137 @@ struct SidebarFeatureTests {
 
         await store.send(.overlayDismissedByUser)
         await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .quick))) {
-            $0.isLoadingOverlayVisible = true
+            $0.overlayState = .connecting(spec: spec)
         }
     }
 
-    @Test("fullscreen and occlusion flags")
-    func fullscreenAndOcclusionFlags() async {
+    @Test("connect command clears frozen connected overlay snapshot")
+    func connectCommandClearsFrozenConnectedOverlaySnapshot() async {
+        let spec = ConnectionSpec(location: .any(.fastest), features: [])
+        let connectedState = VPNConnectionActual.mock()
+        let clock = TestClock()
+        let store = makeStore(clock: clock)
+        store.exhaustivity = .off
+
+        await store.send(.vpnConnectionStatusUpdated(.connected(.defaultFastest, connectedState))) {
+            $0.$vpnConnectionStatus.withLock { $0 = .connected(.defaultFastest, connectedState) }
+            $0.overlayState = .autoDismiss(for: .connected(.defaultFastest, connectedState))
+        }
+
+        await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .changeServer))) {
+            $0.overlayState = .connecting(spec: spec)
+        }
+    }
+
+    @Test("change server cooldown shows cantSkip upsell without connecting overlay")
+    func changeServerCooldownShowsCantSkipUpsellWithoutOverlay() async {
+        let until = Date(timeIntervalSince1970: 1_800_000_000)
+        let duration: TimeInterval = 600
+        let spec = ConnectionSpec(location: .any(.random), features: [])
+        let store = makeStore(
+            serverChangeAuthorizer: .init(
+                serverChangeAvailability: {
+                    .unavailable(until: until, duration: duration, exhaustedSkips: true)
+                },
+                registerServerChangeAtDate: { _ in }
+            )
+        )
+
+        await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .changeServer))) {
+            $0.pendingReconnectIntent = ConnectionPreparationIntent(
+                spec: spec,
+                connectionProtocol: .vpnProtocol(.ike),
+                acceptableProtocols: .ikev2
+            )
+        }
+        await store.receive(\.countriesSection.quickSettings.presentUpsell) {
+            $0.countriesSection.quickSettings.destination = .upsell(
+                .init(modalType: .cantSkip(
+                    before: until,
+                    totalDuration: duration,
+                    longSkip: true
+                ))
+            )
+        }
+
+        #expect(!store.state.shouldPresentLoadingOverlay)
+    }
+
+    @Test("change server optional action reconnect shows connecting overlay")
+    func changeServerOptionalActionReconnectShowsConnectingOverlay() async {
+        var now = Date(timeIntervalSince1970: 1_800_000_000)
+        let until = now.addingTimeInterval(60)
+        let duration: TimeInterval = 600
+        let spec = ConnectionSpec(location: .any(.random), features: [])
+        let store = makeStore(
+            serverChangeAuthorizer: .init(
+                serverChangeAvailability: {
+                    if now < until {
+                        .unavailable(until: until, duration: duration, exhaustedSkips: true)
+                    } else {
+                        .available
+                    }
+                },
+                registerServerChangeAtDate: { _ in }
+            )
+        )
+
+        // First attempt: blocked, so cantSkip upsell is presented.
+        await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .changeServer))) {
+            $0.pendingReconnectIntent = ConnectionPreparationIntent(
+                spec: spec,
+                connectionProtocol: .vpnProtocol(.ike),
+                acceptableProtocols: .ikev2
+            )
+        }
+        await store.receive(\.countriesSection.quickSettings.presentUpsell) {
+            $0.countriesSection.quickSettings.destination = .upsell(
+                .init(modalType: .cantSkip(
+                    before: until,
+                    totalDuration: duration,
+                    longSkip: true
+                ))
+            )
+        }
+        #expect(!store.state.shouldPresentLoadingOverlay)
+
+        // Simulate timer elapsed before user taps "Change server".
+        now = until.addingTimeInterval(1)
+
+        await store.send(.countriesSection(.quickSettings(.destination(.presented(.upsell(.optionalActionTapped)))))) {
+            $0.countriesSection.quickSettings.destination = nil
+            $0.pendingReconnectIntent = nil
+            $0.overlayState = .connecting(spec: spec)
+            $0.$connectionState.withLock {
+                $0 = .connecting(.unresolved(ConnectionPreparationIntent(
+                    spec: spec,
+                    connectionProtocol: .vpnProtocol(.ike),
+                    acceptableProtocols: .ikev2
+                )))
+            }
+            $0.$vpnConnectionStatus.withLock { $0 = .connecting(spec, nil) }
+        }
+        await store.receive(\.connection.input.connect) {
+            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
+                spec: spec,
+                connectionProtocol: .vpnProtocol(.ike),
+                acceptableProtocols: .ikev2
+            )
+            $0.connection.connectionState = .connecting(.unresolved(ConnectionPreparationIntent(
+                spec: spec,
+                connectionProtocol: .vpnProtocol(.ike),
+                acceptableProtocols: .ikev2
+            )))
+        }
+        await store.receive(\.connection.delegate.stateChanged.connecting.unresolved)
+        await store.receive(\.vpnConnectionStatusUpdated.connecting)
+        await store.receive(\.syncNATPortMappingState)
+        await store.receive(\.syncPlutoniumState)
+        #expect(store.state.shouldPresentLoadingOverlay)
+    }
+
+    @Test("fullscreen flags")
+    func fullscreenFlags() async {
         let store = makeStore()
 
         await store.send(.windowWillEnterFullScreen) {
@@ -318,31 +553,25 @@ struct SidebarFeatureTests {
         await store.send(.windowWillExitFullScreen) {
             $0.isFullscreen = false
         }
-        await store.send(.occlusionStateChanged(isVisible: false)) {
-            $0.isOccludedVisible = false
-        }
     }
 
-    @Test("overlay presentation requires loading and visible app")
-    func overlayPresentationRequiresLoadingAndVisibleApp() async {
+    @Test("overlay presentation follows overlay state")
+    func overlayPresentationFollowsOverlayState() async {
         let store = makeStore()
         #expect(store.state.vpnConnectionStatus == .resolving(nil, nil))
+        #expect(!store.state.shouldPresentLoadingOverlay)
 
         await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
             $0.$vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
-            $0.isLoadingOverlayVisible = true
+            $0.overlayState = .connecting(spec: .defaultFastest)
         }
         #expect(store.state.shouldPresentLoadingOverlay)
 
-        await store.send(.occlusionStateChanged(isVisible: false)) {
-            $0.isOccludedVisible = false
+        await store.send(.vpnConnectionStatusUpdated(.disconnected)) {
+            $0.$vpnConnectionStatus.withLock { $0 = .disconnected }
+            $0.overlayState = .hidden
         }
         #expect(!store.state.shouldPresentLoadingOverlay)
-
-        await store.send(.occlusionStateChanged(isVisible: true)) {
-            $0.isOccludedVisible = true
-        }
-        #expect(store.state.shouldPresentLoadingOverlay)
     }
 
     @Test("expand button tapped toggles expand state")
@@ -420,6 +649,8 @@ struct SidebarFeatureTests {
         await store.receive(\.syncPlutoniumState)
     }
 
+    // MARK: - Private
+
     private func makeStore(
         environment: SidebarFeature.Environment = .init(
             sidebarWidth: 425,
@@ -429,7 +660,8 @@ struct SidebarFeatureTests {
         defaults: UserDefaults = UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)")!,
         clock: TestClock<Duration>? = nil,
         sidebarConnectionCommandClient: SidebarConnectionCommandClient = .testValue,
-        portForwardingEnabled: Bool = false
+        portForwardingEnabled: Bool = false,
+        serverChangeAuthorizer: ServerChangeAuthorizer = .availableValue
     ) -> TestStoreOf<SidebarFeature> {
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus
         @Shared(.connectionState) var connectionState
@@ -461,6 +693,40 @@ struct SidebarFeatureTests {
             $0.propertiesManager.lastConnectionIntent = ConnectionSpec(location: .any(.fastest), features: [])
             $0.sidebarConnectionCommandClient = sidebarConnectionCommandClient
             $0.portForwardingPropertyProvider.setPortForwarding(portForwardingEnabled)
+            $0.serverChangeAuthorizer = serverChangeAuthorizer
         }
+    }
+}
+
+private extension SidebarFeature.State.OverlayState {
+    static func connecting(
+        spec: ConnectionSpec,
+        selectedProtocol: ConnectionProtocol = .vpnProtocol(.ike),
+        killSwitchEnabled: Bool = false,
+        intentionallyDisconnected: Bool = false,
+        frozenStatus: VPNConnectionStatus? = nil
+    ) -> Self {
+        var overlay = ConnectingOverlayFeature.State()
+        overlay.vpnConnectionStatus = .connecting(spec, nil)
+        overlay.selectedProtocol = selectedProtocol
+        overlay.killSwitchEnabled = killSwitchEnabled
+        overlay.intentionallyDisconnected = intentionallyDisconnected
+        overlay.frozenStatus = frozenStatus
+        return .connecting(overlay)
+    }
+
+    static func autoDismiss(
+        for status: VPNConnectionStatus,
+        selectedProtocol: ConnectionProtocol = .vpnProtocol(.ike),
+        killSwitchEnabled: Bool = false,
+        intentionallyDisconnected: Bool = false
+    ) -> Self {
+        var overlay = ConnectingOverlayFeature.State()
+        overlay.vpnConnectionStatus = status
+        overlay.frozenStatus = status.is(\.connected) ? status : nil
+        overlay.selectedProtocol = selectedProtocol
+        overlay.killSwitchEnabled = killSwitchEnabled
+        overlay.intentionallyDisconnected = intentionallyDisconnected
+        return .autoDismiss(overlay)
     }
 }

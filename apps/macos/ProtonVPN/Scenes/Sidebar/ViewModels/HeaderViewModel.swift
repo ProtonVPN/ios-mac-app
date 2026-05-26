@@ -75,22 +75,14 @@ final class HeaderViewModel {
     }
 
     private var serverChangeTimer: Timer?
-    private var lastChangeServerAvailableState: ServerChangeAuthorizer.ServerChangeAvailability?
 
     var canChangeServer: ServerChangeAuthorizer.ServerChangeAvailability {
-        if let lastState = lastChangeServerAvailableState, case let .unavailable(until, _, _) = lastState, until.isFuture {
-            // Don't re-calculate server change availability if we know we don't need to
-            // (if we are already in time-out, this won't change unless we upgrade)
-            return lastState
-        }
-
         @Dependency(\.serverChangeAuthorizer) var authorizer
         let freshState = authorizer.serverChangeAvailability()
 
         if case .unavailable = freshState, serverChangeTimer == nil {
             serverChangeTimer = .scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerTicked), userInfo: nil, repeats: true)
         }
-        lastChangeServerAvailableState = freshState
         return freshState
     }
 
@@ -181,7 +173,8 @@ final class HeaderViewModel {
             log.debug("Connect requested by selecting Quick connect", category: .connectionConnect, event: .trigger)
             let spec = SecureCoreConnectionSpecResolver.fastestSpec(
                 secureCoreEnabled: secureCoreToggle,
-                connectedExitCountryCode: connectedCountryCode
+                connectedExitCountryCode: connectedCountryCode,
+                isFreeTier: credentials.tier.isFreeTier
             )
             sidebarConnectionCommandClient.send(.connect(spec, nil, .quick))
         }

@@ -25,7 +25,6 @@ struct SidebarEventsClient {
     var windowDidEndLiveResize: @Sendable () -> AsyncStream<(width: CGFloat, isFullscreen: Bool)>
     var windowWillEnterFullScreen: @Sendable () -> AsyncStream<Void>
     var windowWillExitFullScreen: @Sendable () -> AsyncStream<Void>
-    var occlusionStateChanged: @Sendable () -> AsyncStream<Bool>
 }
 
 @MainActor
@@ -74,16 +73,6 @@ extension SidebarEventsClient: DependencyKey {
                     .map { _ in () }
             )
             .eraseToStream()
-        },
-        occlusionStateChanged: {
-            UncheckedSendable(
-                NotificationCenter.default
-                    .notifications(named: NSWindow.didChangeOcclusionStateNotification)
-                    .compactMap { $0.object as? NSWindow }
-                    .filter { window in await MainActor.run { isPrimarySidebarWindow(window) } }
-                    .map { _ in await MainActor.run { NSApp.occlusionState.contains(.visible) } }
-            )
-            .eraseToStream()
         }
     )
 
@@ -91,8 +80,7 @@ extension SidebarEventsClient: DependencyKey {
         windowDidResize: { .finished },
         windowDidEndLiveResize: { .finished },
         windowWillEnterFullScreen: { .finished },
-        windowWillExitFullScreen: { .finished },
-        occlusionStateChanged: { .finished }
+        windowWillExitFullScreen: { .finished }
     )
 }
 

@@ -81,10 +81,10 @@ class TelemetryServiceTests: XCTestCase {
     @MainActor
     func testValueTimeouts() {
         let impl = service as TelemetryUpsellReporter
-        impl.previousModalSource = .changeServer
+        impl.previousModalSource = .countries
         impl.previousOfferReference = "foo bar"
 
-        XCTAssertEqual(impl.previousModalSource, .changeServer)
+        XCTAssertEqual(impl.previousModalSource, .countries)
         XCTAssertEqual(impl.previousOfferReference, "foo bar")
 
         impl._expireTimeouts()

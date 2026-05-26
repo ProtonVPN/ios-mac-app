@@ -87,22 +87,14 @@ final class StatusMenuViewModel {
     }
 
     private var serverChangeTimer: Timer?
-    private var lastChangeServerAvailableState: ServerChangeAuthorizer.ServerChangeAvailability?
 
     var canChangeServer: ServerChangeAuthorizer.ServerChangeAvailability {
-        if let lastState = lastChangeServerAvailableState, case let .unavailable(until, _, _) = lastState, until.isFuture {
-            // Don't re-calculate server change availability if we know we don't need to
-            // (if we are already in time-out, this won't change unless we upgrade)
-            return lastState
-        }
-
         @Dependency(\.serverChangeAuthorizer) var authorizer
         let freshState = authorizer.serverChangeAvailability()
 
         if case .unavailable = freshState, serverChangeTimer == nil {
             serverChangeTimer = .scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(serverChangeTimerFired), userInfo: nil, repeats: true)
         }
-        lastChangeServerAvailableState = freshState
         return freshState
     }
 
@@ -233,7 +225,8 @@ final class StatusMenuViewModel {
             log.debug("Connect requested by pressing Quick connect", category: .connectionConnect, event: .trigger)
             let spec = SecureCoreConnectionSpecResolver.fastestSpec(
                 secureCoreEnabled: secureCoreToggle,
-                connectedExitCountryCode: connectedCountryCode
+                connectedExitCountryCode: connectedCountryCode,
+                isFreeTier: credentials.tier.isFreeTier
             )
             sidebarConnectionCommandClient.send(.connect(spec, nil, .tray))
         }
@@ -415,7 +408,8 @@ final class StatusMenuViewModel {
             serverType = targetServerType
             let spec = SecureCoreConnectionSpecResolver.fastestSpec(
                 secureCoreEnabled: shouldUseSecureCore,
-                connectedExitCountryCode: reconnectCountryCode
+                connectedExitCountryCode: reconnectCountryCode,
+                isFreeTier: credentials.tier.isFreeTier
             )
             sidebarConnectionCommandClient.send(.connect(spec, connectionProtocol, .tray))
         }

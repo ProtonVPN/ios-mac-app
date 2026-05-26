@@ -30,11 +30,7 @@ public enum Asset {
   public static let whatsNewFreePlus = ImageAsset(name: "WhatsNewFreePlus")
   public static let bannerIcon = ImageAsset(name: "bannerIcon")
   public static let getStarted = ImageAsset(name: "getStarted")
-  public static let maximumDeviceLimitUpsell = ImageAsset(name: "maximum-device-limit-upsell")
-  public static let maximumDeviceLimitWarning = ImageAsset(name: "maximum-device-limit-warning")
   public static let welcomeRedesigned = ImageAsset(name: "welcomeRedesigned")
-  public static let worldwideCoverage = ImageAsset(name: "worldwide-coverage")
-  public static let wrongCountry = ImageAsset(name: "wrong-country")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

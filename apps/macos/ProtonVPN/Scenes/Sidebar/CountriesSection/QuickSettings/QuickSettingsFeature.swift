@@ -91,6 +91,7 @@ struct QuickSettingsFeature {
         case netShield(NetShieldQuickSettingFeature.Action)
         case killSwitch(KillSwitchQuickSettingFeature.Action)
         case portForwarding(PortForwardingQuickSettingFeature.Action)
+        case presentUpsell(UpsellModalType)
 
         case startObserving
         case refreshConnectionInfo
@@ -221,6 +222,11 @@ struct QuickSettingsFeature {
                 Self.syncSelection(&state)
                 return .none
 
+            case let .presentUpsell(modalType):
+                state.destination = .upsell(.init(modalType: modalType))
+                Self.syncSelection(&state)
+                return .none
+
             case .dismissDetails:
                 guard state.activeType != nil else { return .none }
                 state.destination = nil
@@ -268,6 +274,10 @@ struct QuickSettingsFeature {
                 }
 
             case .destination(.presented(.upsell(.continueTapped))):
+                state.destination = nil
+                return .none
+
+            case .destination(.presented(.upsell(.optionalActionTapped))):
                 state.destination = nil
                 return .none
 
@@ -365,13 +375,17 @@ struct QuickSettingsFeature {
     private func quickSettingsDisplayReconnectionFeedback() {
         guard connectionState.isConnected else { return }
         log.debug("Reconnection requested by changing quick setting", category: .connectionConnect, event: .trigger)
+        @SharedReader(.userTier) var userTier: Int?
+        let isFreeTier = userTier?.isFreeTier ?? true
         let connectedCountryCode = vpnConnectionStatus.mergedServer(using: connectionState)?.logical.exitCountryCode
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: secureCoreToggle,
-            connectedExitCountryCode: connectedCountryCode
+            connectedExitCountryCode: connectedCountryCode,
+            isFreeTier: isFreeTier
         )
         let intent = SecureCoreConnectionSpecResolver.reconnectTrigger(
-            connectedExitCountryCode: connectedCountryCode
+            connectedExitCountryCode: connectedCountryCode,
+            isFreeTier: isFreeTier
         )
         sidebarConnectionCommandClient.send(.connect(spec, nil, intent))
     }
