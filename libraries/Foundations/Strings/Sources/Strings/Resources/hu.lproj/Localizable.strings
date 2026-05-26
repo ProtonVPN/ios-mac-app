@@ -1163,13 +1163,16 @@
 "_plans_footer" = "A csomag megvásárlása után, a megjelenített összeg kerül elszámolásra az iTunes-fiókban, amely tartalmazza az adókat és a kiegészítő platformdíjakat (amelyeket nem a Proton számít fel közvetlenül). A vásárlás után automatikusan frissül a kiválasztott csomag egy évre, amely után megújítható vagy lemondható online vagy iOS-alkalmazásunkon keresztül.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ év";
+"_per_year" = " / year";
+
+/* Per month. Appended to plan price. */
+"_per_month" = " / month";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Csak weben";
 
-/* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Előfizetés automatikusan megújul %1$@-én, %2$@/év áron";
+/* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
+"_introductory_price_footer" = "Welcome offer. Auto-renews on %1$@ at %2$@%3$@.";
 
 /* iOS plan feature */
 "_feature_server_count" = "Csatlakozás a szerverhez itt";
@@ -2844,9 +2847,6 @@
 
 /* Main Button of paid plans list allowing user to start payments process. */
 "upsell_plans_list_validate_button" = "VPN Plus beszerzése";
-
-/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /hónap";
 
 "onboarding_usage_stats_title" = "Anonim használati statisztikák beküldése";
 

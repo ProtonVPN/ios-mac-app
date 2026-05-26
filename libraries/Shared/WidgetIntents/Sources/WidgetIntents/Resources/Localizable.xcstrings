@@ -211,7 +211,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "城市/区县"
+            "value" : "城市"
           }
         },
         "zh-Hant" : {
@@ -431,7 +431,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "城市/区县"
+            "value" : "城市"
           }
         },
         "zh-Hant" : {
@@ -622,6 +622,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "${country} içindeki ${city} ${specifyRegion} konumuna bağlantı kur"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Під'єднатися до ${city} ${specifyRegion} в ${country}"
           }
         },
         "vi" : {
@@ -826,6 +832,12 @@
             "value" : "${country} içindeki ${specifyRegion} konumuna bağlantı kur"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Під'єднатися до ${specifyRegion} в ${country}"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1026,6 +1038,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "${country} içindeki ${state} ${specifyRegion} konumuna bağlantı kur"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Під'єднатися до ${state} ${specifyRegion} в ${country}"
           }
         },
         "vi" : {
@@ -1378,6 +1396,12 @@
             "value" : "VPN bağlantısı kur"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Під'єднатися до VPN"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1578,6 +1602,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Parametrelerle VPN bağlantısı kur"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Під'єднатися до VPN з параметрами"
           }
         },
         "vi" : {
@@ -2148,6 +2178,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Varsayılan bağlantı ayarlarınızı kullanarak Proton VPN bağlantısı kurar."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Під'єднання до Proton VPN з використанням ваших типових налаштувань."
           }
         },
         "vi" : {
@@ -2792,6 +2828,12 @@
             "value" : "VPN bağlantısını kes"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Від'єднатися від VPN"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3362,6 +3404,12 @@
             "value" : "Etkin VPN bağlantınızı keser."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Від'єднання від активного VPN-з'єднання."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3782,6 +3830,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bağlantı durumunu al"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отримати стан з'єднання"
           }
         },
         "vi" : {
@@ -4372,6 +4426,12 @@
             "value" : "Son dizin"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нещодавній індекс"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4782,6 +4842,12 @@
             "value" : "Bölge türü"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RegionType"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4982,6 +5048,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Geçerli VPN bağlantı durumunu al"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отримати стан поточного VPN-з'єднання"
           }
         },
         "vi" : {
@@ -5186,6 +5258,12 @@
             "value" : "Geçerli VPN bağlantı durumunu alır"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отримання стану поточного VPN-з'єднання"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5388,6 +5466,12 @@
             "value" : "Bağlantı durumunu görüntüle"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показати стан з'єднання"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5588,6 +5672,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zaten bağlantı kurulmuşsa atla"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пропустити, якщо вже під'єднано"
           }
         },
         "vi" : {
@@ -6232,6 +6322,12 @@
             "value" : "Bu özellik, geçerli VPN bağlantı durumunu denetlemenizi sağlar"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Цей намір дозволяє перевірити стан поточного VPN-з'єднання"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6432,6 +6528,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bu özellik, seçilmiş bir ülke, il ya da eyalet konumuna bağlantı kurmanızı sağlar"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Цей намір дозволяє під'єднатися до вибраної країни, міста чи штату"
           }
         },
         "vi" : {
@@ -6784,6 +6886,12 @@
             "value" : "Hangi il?"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Яке місто?"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6986,6 +7094,12 @@
             "value" : "Hangi ülke?"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Яка країна?"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7186,6 +7300,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hangi eyalet?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Який штат?"
           }
         },
         "vi" : {
@@ -7608,6 +7728,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Korunuyorsunuz"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ви захищені"
           }
         },
         "vi" : {

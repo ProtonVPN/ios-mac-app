@@ -293,7 +293,7 @@
 "_location" = "位置";
 
 /* iOS status view */
-"_city" = "城市/区县";
+"_city" = "城市";
 
 /* iOS status view */
 "_technical_details" = "技术细节";
@@ -765,7 +765,7 @@
 "_error_decode" = "解码分类中的存档数据失败: %@";
 
 /* Internal application error */
-"_error_email_verification_disabled" = "电子邮件验证被暂时禁用";
+"_error_email_verification_disabled" = "邮箱验证被暂时禁用";
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton 无法与您的设备通信。请稍后再试。";
@@ -918,10 +918,10 @@
 "_delete_application_data_popup_body" = "所有 Proton VPN 数据将被删除，应用程序将退出。您想要继续吗？";
 
 /* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "禁用 Kill Switch";
+"_kill_switch_disable" = "禁用终止开关";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
-"_kill_switch_enable" = "启用 Kill Switch";
+"_kill_switch_enable" = "启用终止开关";
 
 /* MacOS: Settings screen title */
 "_preferences" = "设置";
@@ -950,13 +950,13 @@
 "_manage_subscription_on_web" = "在网页仪表盘上管理您的订阅";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Kill Switch";
+"_kill_switch" = "终止开关";
 
 /* Used in MacOS app for Kill switch button in quick settings to turn on */
-"_kill_switch_status_on" = "终止开关 已开启";
+"_kill_switch_status_on" = "终止开关已开启";
 
 /* Used in MacOS app for Kill switch button in quick settings to turn off */
-"_kill_switch_status_off" = "终止开关 已关闭";
+"_kill_switch_status_off" = "终止开关已关闭";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "当 VPN 隧道丢失时阻止所有网络流量。";
@@ -1074,12 +1074,12 @@
 
 "_allow_lan_info" = "允许跳过 VPN 并连接到您本地网络上的设备，如打印机。";
 
-"_allow_lan_description" = "如果允许访问LAN，Kill Switch 必须被关闭。\n\n继续吗？";
+"_allow_lan_description" = "为了允许访问局域网，必须关闭终止开关。\n\n继续吗？";
 
 "_allow_lan_note" = "您需要重新启动连接才能应用此更改。";
 
 /* Title of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
-"_turn_ks_on_title" = "启用 Kill Switch？";
+"_turn_ks_on_title" = "启用终止开关？";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
 "_turn_ks_on_description_macos_st_conflict" = "• 这将禁用拆分隧道";
@@ -1094,7 +1094,7 @@
 "turn_split_tunneling_on_title" = "启用拆分隧道？";
 
 /* Description text of alert shown if user tries to enable split tunneling when KillSwitch is on */
-"turn_split_tunneling_on_description" = "这将禁用 Kill Switch。";
+"turn_split_tunneling_on_description" = "此操作将禁用终止开关！";
 
 /* Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
 "split_tunneling_alert_title" = "无法启用拆分隧道";
@@ -1139,7 +1139,7 @@
 "_highest" = "最快";
 
 /* Features of account plan */
-"_plus_plan_features" = "Plus 服务器\nSecure Core\nTOR 服务器";
+"_plus_plan_features" = "Plus 服务器\nSecure Core\nTor 服务器";
 
 /* Used instead of price for free plans. */
 "_free" = "Free";
@@ -1163,13 +1163,16 @@
 "_plans_footer" = "确认订购后，您需要支付所显示的金额，其中包括税款和平台附加费用（并非 Proton 直接收取）。完成支付后，您的账户将自动转入所选等级，为期一年，到期后可在网站或 iOS 应用中续费或退订。";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/年";
+"_per_year" = " / 年";
+
+/* Per month. Appended to plan price. */
+"_per_month" = " / 月";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "仅限网页版";
 
-/* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "订阅于 %1$@ 自动续订，费用为 %2$@/ 年";
+/* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
+"_introductory_price_footer" = "迎新优惠，将于 %1$@ 的 %2$@%3$@ 自动续订。";
 
 /* iOS plan feature */
 "_feature_server_count" = "连接到服务器";
@@ -1337,7 +1340,7 @@
 
 "_subscription_description" = "您可以充值以便到期自动续费。订购期满后余额将自动用于续订业务。";
 
-"_subscription_button" = "延长1年订阅方案 %@";
+"_subscription_button" = "将套餐延长 1 年 \n%@";
 
 "_subscription_extended_success" = "您已成功充值并开启自动续订。";
 
@@ -1385,7 +1388,7 @@
 
 "_troubleshoot_item_other_title" = "仍未解决问题";
 
-"_troubleshoot_item_other_description" = "通过客服表单、邮箱（%@）或 Twitter 联系我们。";
+"_troubleshoot_item_other_description" = "请通过我们的支持表单、邮箱 (%@) 或 Twitter 直接联系我们。";
 
 "_troubleshoot_item_other_link1" = "客服表单";
 
@@ -1462,7 +1465,7 @@
 "_pf_copied" = "已复制";
 
 /* Text appears in port forwarding view during loading */
-"_pf_loading" = "加载中...";
+"_pf_loading" = "正在加载...";
 
 /* Text appears under active port number indicating relative date */
 "_pf_updated" = "最后更新：%@";
@@ -1485,7 +1488,7 @@
 
 "_quick_settings_netShield_note" = "若网页未载入，尝试停用 NetShield";
 
-"_quick_settings_killSwitch_note" = "如果您无法连接到本地网络上的设备，请尝试禁用 Kill Switch 。";
+"_quick_settings_killSwitch_note" = "如果您无法连接到本地网络上的设备，请尝试禁用终止开关。";
 
 "_quick_settings_portForwarding_note" = "将活动端口号输入到您的BitTorrent客户端中，以提升点对点（P2P）传输速度。";
 
@@ -1518,16 +1521,16 @@
 "_upgrade_required_securecore_description" = "Secure Core 需要 Plus 计划。 立即升级，以通过我们在隐私友好的国家/地区中最安全的服务器路由流量。";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection_header" = "Kill Switch 正在保护您的 IP";
+"_kill_switch_reconnection_header" = "终止开关正在保护您的 IP";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "一旦 ProtonVPN 重新连接到服务器，您的网络连接将立即恢复。\n若要在不使用 VPN 或 Kill Switch 的情况下使用互联网，请取消与服务器的重新连接。";
+"_kill_switch_reconnection" = "一旦 Proton VPN 重新连接到服务器，您的互联网连接将恢复。\n若要使用无 VPN 和终止开关保护的互联网，请取消重新连接服务器。";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "无";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold2" = "Kill Switch 保护";
+"_kill_switch_reconnection_bold2" = "终止开关保护";
 
 /* MacOS: connection screen - cancel button */
 "_kill_switch_reconnection_cancel" = "取消连接";
@@ -1667,7 +1670,7 @@
 
 "_subscription_upgrade_title" = "再次升级以享受所有功能:";
 
-"_subscription_upgrade_option3" = "高级功能：NetShield, Secure Core, Tor, P2P";
+"_subscription_upgrade_option3" = "高级功能：NetShield、Secure Core、Tor、P2P";
 
 "_tier_free" = "Free";
 
@@ -1681,7 +1684,7 @@
 
 "_performance_title" = "性能";
 
-"_smart_routing_title" = "Smart Routing";
+"_smart_routing_title" = "智能路由";
 
 "_streaming_title" = "串流中";
 
@@ -1828,7 +1831,7 @@
 "_plutonium_include_mode_ips" = "受保护的 IP 地址";
 
 /* macOS main menu: Help -> Split tunneling logs row */
-"_plutonium_logs" = "拆分隧道记录";
+"_plutonium_logs" = "拆分隧道日志";
 
 "_local_agent_server_error_title" = "服务器错误";
 
@@ -1853,15 +1856,15 @@
 "login_summary_button" = "开始使用 Proton VPN";
 
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
-"_wgks_ks_off" = "禁用 Kill Switch";
+"_wgks_ks_off" = "禁用终止开关";
 
 /* NetworkExtension + KillSwitch on T2 Macs */
-"_neks_t2_title" = "Kill Switch 稳定性警告";
+"_neks_t2_title" = "终止开关稳定性警告";
 
 /* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "T2安全芯片";
 
-"_neks_t2_description" = "在此设备上使用 Kill Switch 功能不稳定。\n\n您的设备装有 T2 安全芯片，若 Proton VPN 使用了 macOS 的 Kill Switch 功能，可能会导致系统稳定性问题。";
+"_neks_t2_description" = "在此设备上使用终止开关不稳定。\n\n您的设备配有 T2 安全芯片，如果 Proton VPN 使用 macOS 的终止开关功能，可能会导致系统稳定性问题。";
 
 "_neks_t2_connect" = "仍然开启";
 
@@ -2013,7 +2016,7 @@
 "_connection_card_last_connected_to" = "最后连接至";
 
 /* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
-"_connection_card_loading" = "加载中...";
+"_connection_card_loading" = "正在加载...";
 
 /* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
 "_connection_card_connecting_to" = "正在连接...";
@@ -2189,7 +2192,7 @@
 "_connection_details_feature_description_p2p" = "此服务器支持点对点(P2P)文件共享。";
 
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_title_smart_routing" = "Smart Routing";
+"_connection_details_feature_title_smart_routing" = "智能路由";
 
 /* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
 "_connection_details_feature_description_smart_routing" = "服务器实际位于 %1$@，但您似乎是在 %2$@ 进行浏览。";
@@ -2258,7 +2261,7 @@
 "_settings_title_netshield" = "NetShield";
 
 /* Title of the KillSwitch cell in the Settings tab [Redesign_2023] */
-"_settings_title_kill_switch" = "Kill Switch";
+"_settings_title_kill_switch" = "终止开关";
 
 /* Title of the Protocol cell in the Settings tab [Redesign_2023] */
 "_settings_title_protocol" = "协议";
@@ -2387,7 +2390,7 @@
 "_bad_interface_ip_range_alert_title" = "网络接口不良";
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
-"_prompt_kill_switch_due_to_bad_interface_ip_range" = "您的本地网络可能不安全（接口 \"%@\" 的 IP 和前缀为 “%@”）。您的数据可能会在未加密的情况下通过本地网络发送。启用 Kill Switch 将阻止这种流量。与本地外设的连接将被中断。";
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "您的本地网络可能不安全（接口 '%@' 的 IP 和前缀为 '%@'）。您的数据可能会在本地网络上以未加密的方式发送。启用终止开关将阻止此流量。与本地外围设备的连接将中断。";
 
 /* Section header with count */
 "cities_section_title" = "城市 (%@)";
@@ -2414,7 +2417,7 @@
 "search_states" = "州";
 
 /* Sample cities the user can search for */
-"search_cities_sample" = "纽约、伦敦、东京…";
+"search_cities_sample" = "纽约、伦敦、东京...";
 
 /* Section header in Search */
 "search_servers" = "服务器";
@@ -2426,7 +2429,7 @@
 "search_us_regions" = "美国地区";
 
 /* Sample US regions the user can search for */
-"search_us_regions_sample" = "加利福尼亚、弗罗里达、科罗拉多…";
+"search_us_regions_sample" = "加利福尼亚、佛罗里达、科罗拉多...";
 
 /* Title shown when nothing is found in search */
 "search_no_results_title" = "没有找到相关结果";
@@ -2456,7 +2459,7 @@
 "search_upsell_subtitle" = "更多地区 = 更多未受限内容 + 增强的安全性 + 更快的速度";
 
 /* Section header in search */
-"search_secure_core_countries" = "Secure Core国家";
+"search_secure_core_countries" = "Secure Core 国家/地区";
 
 /* Section header in search */
 "search_results_countries" = "国家";
@@ -2845,9 +2848,6 @@
 /* Main Button of paid plans list allowing user to start payments process. */
 "upsell_plans_list_validate_button" = "开通 VPN Plus";
 
-/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /月";
-
 "onboarding_usage_stats_title" = "分享匿名使用统计数据";
 
 "onboarding_usage_stats_description" = "使用数据帮助我们克服 VPN 障碍并提高应用程序性能。";
@@ -3047,7 +3047,7 @@
 "upsell_carousel_tor_subtitle" = "在您的 VPN 连接上使用 Tor 网络获取额外的隐私";
 
 /* Home upsell carousel card title */
-"upsell_carousel_more_title" = "还有更多...";
+"upsell_carousel_more_title" = "以及更多...";
 
 /* Home upsell carousel card subtitle */
 "upsell_carousel_more_subtitle" = "解锁高级性能和隐私功能";

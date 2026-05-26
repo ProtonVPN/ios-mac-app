@@ -1163,13 +1163,16 @@
 "_plans_footer" = "După confirmarea achiziției unui plan cu plată, contul dvs. iTunes va fi debitat cu suma afișată, care include taxe și comisioane de platformă suplimentare (care nu sunt percepute direct de către Proton). După efectuarea achiziției, planul selectat va fi actualizat automat pentru o perioadă de un an, după care puteți reînnoi sau anula, fie online, fie prin intermediul aplicației iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/an";
+"_per_year" = "/an";
+
+/* Per month. Appended to plan price. */
+"_per_month" = "/lună";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Doar web";
 
-/* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Abonamentul se autoreînnoiește %1$@ la %2$@/an";
+/* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
+"_introductory_price_footer" = "Ofertă de bun venit. Se autoreînnoiește cu %1$@ la %2$@%3$@.";
 
 /* iOS plan feature */
 "_feature_server_count" = "Conectare la servere în";
@@ -1417,7 +1420,7 @@
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
 
-"_netshield_title_tooltip" = "Blocare reclame, urmăritori și malware";
+"_netshield_title_tooltip" = "Blocare reclame, instrumente de urmărire și malware";
 
 /* Settings -> Netshield, Status -> NetShield: Off */
 "_netshield_off" = "Oprit";
@@ -1441,7 +1444,7 @@
 "_netshield_alert_upgrade_description" = "NetShield vă mărește intimitatea blocând reclamele și Instrumentele de urmărire.";
 
 /* Netshield section title in iOS connection screen */
-"_netshield_section_title" = "Blocare malware și reclame";
+"_netshield_section_title" = "Blocare programe malițioase și reclame";
 
 /* Title of the screen with news and offers. */
 "_news_title" = "Știri";
@@ -1507,10 +1510,10 @@
 "_quick_settings_netshield_option_off" = "Fără blocare";
 
 /* Quick Settings -> Netshield: Block malware only */
-"_quick_settings_netshield_option_level1" = "Blocare doar malware";
+"_quick_settings_netshield_option_level1" = "Blocare doar programe malițioase";
 
 /* Quick Settings -> Netshield: Block malware, ads, & trackers */
-"_quick_settings_netshield_option_level2" = "Blocare malware, reclame și instrumente de urmărire";
+"_quick_settings_netshield_option_level2" = "Blocare programe malițioase, reclame și instrumente de urmărire";
 
 /* Quick Settings -> Netshield: Block malware, ads, trackers, and adult content */
 "_quick_settings_netshield_option_level3" = "Blochează reclamele, monitorizarea, programele malițioase și conținutul pentru adulți.";
@@ -1717,11 +1720,11 @@
 
 "_performance_load_high" = "Mare";
 
-"_locations_all" = "Toate locurile (%@)";
+"_locations_all" = "Toate țările (%@)";
 
-"_locations_free" = "Locurile gratuite";
+"_locations_free" = "Țări gratuite";
 
-"_locations_plus" = "Locuri Plus";
+"_locations_plus" = "Țări din Plus";
 
 "_locations_gateways" = "Porți de acces";
 
@@ -1732,7 +1735,7 @@
 "_connections_free_with_count" = "Conexiuni gratuite (%@)";
 
 /* Header of the countries list for paid users */
-"_connections_paid_with_count" = "Locuri Plus (%@)";
+"_connections_paid_with_count" = "Țări din Plus (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Ce este o poartă de acces?";
@@ -2453,7 +2456,7 @@
 "search_bar_placeholder" = "Țara, oraș sau server";
 
 /* Subtitle for the upsell banner shown to free users in search */
-"search_upsell_subtitle" = "Mai multe locuri = mai mult conținut deblocat + extra securitate + viteze sporite";
+"search_upsell_subtitle" = "Mai multe țări = mai mult conținut deblocat + extra securitate + viteze sporite";
 
 /* Section header in search */
 "search_secure_core_countries" = "Țări cu Secure Core";
@@ -2844,9 +2847,6 @@
 
 /* Main Button of paid plans list allowing user to start payments process. */
 "upsell_plans_list_validate_button" = "Luați VPN Plus";
-
-/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = "/lună";
 
 "onboarding_usage_stats_title" = "Partajare anonimă statistici de utilizare";
 

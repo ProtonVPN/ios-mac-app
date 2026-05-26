@@ -42,7 +42,7 @@
 "_not_found" = "Не знайдено";
 
 /* Proton VPN Connected - used in Notifications */
-"_proton_vpn_connected" = "Proton VPN Connected";
+"_proton_vpn_connected" = "Proton VPN під'єднано";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Розгорнути список серверів";
@@ -193,10 +193,10 @@
 "_secure_core" = "Secure Core увімкнено";
 
 /* Used in MacOS app for Secure core button in quick settings to turn on */
-"_secure_core_status_on" = "Secure Core On";
+"_secure_core_status_on" = "Secure Core увімкнено";
 
 /* Used in MacOS app for Secure core button in quick settings to turn off */
-"_secure_core_status_off" = "Secure Core Off";
+"_secure_core_status_off" = "Secure Core вимкнено";
 
 /* %@ is a country e.g. Secure Core Switzerland */
 "_secure_core_country" = "Secure Core %@";
@@ -252,7 +252,7 @@
 "_not_connected" = "Не з'єднано";
 
 /* macOS overlay when reconnecting & text in main window */
-"_you_are_not_protected" = "You are not protected";
+"_you_are_not_protected" = "Ви не захищені";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Спробувати знову";
@@ -470,7 +470,7 @@
 "_terms_and_conditions" = "Умови та положення";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "By using Proton VPN, you agree to our\n%1$@ and %2$@";
+"_terms_and_conditions_disclaimer" = "Використовуючи Proton VPN, ви приймаєте наші\n%1$@ та %2$@";
 
 /* iOS: link inside text under sign-up form */
 "_privacy_policy" = "Політика приватності";
@@ -815,9 +815,9 @@
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Усі сервери в цій країні на обслуговуванні. Будь ласка, оберіть іншу країну.";
 
-"_all_servers_in_city_under_maintenance" = "All servers in this city are under maintenance. Please connect to another city.";
+"_all_servers_in_city_under_maintenance" = "Усі сервери в цьому місті на обслуговуванні. Виберіть інше місто.";
 
-"_all_servers_in_state_under_maintenance" = "All servers in this state are under maintenance. Please connect to another state.";
+"_all_servers_in_state_under_maintenance" = "Усі сервери в цьому штаті на обслуговуванні. Виберіть інший штат.";
 
 "_all_servers_in_gateway_under_maintenance" = "Усі сервери цього мережевого шлюзу перебувають на обслуговуванні.";
 
@@ -953,22 +953,22 @@
 "_kill_switch" = "Kill Switch";
 
 /* Used in MacOS app for Kill switch button in quick settings to turn on */
-"_kill_switch_status_on" = "Kill switch On";
+"_kill_switch_status_on" = "Kill Switch увімкнено";
 
 /* Used in MacOS app for Kill switch button in quick settings to turn off */
-"_kill_switch_status_off" = "Kill switch Off";
+"_kill_switch_status_off" = "Kill Switch вимкнено";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "Блокує весь мережевий трафік у випадку втрати VPN-тунелю.";
+"_kill_switch_tooltip" = "Блокування всього мережевого трафіку, якщо втрачено VPN-тунель.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "Переспрямування портів";
 
 /* Used in MacOS app for Port forwarding button in quick settings to turn on */
-"_port_forwarding_status_on" = "Port forwarding On";
+"_port_forwarding_status_on" = "Переспрямування портів увімкнено";
 
 /* Used in MacOS app for Port forwarding button in quick settings to turn off */
-"_port_forwarding_status_off" = "Port forwarding Off";
+"_port_forwarding_status_off" = "Переспрямування портів вимкнено";
 
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "Постійна VPN";
@@ -1065,14 +1065,14 @@
 "_wireguard_logs" = "Журнал WireGuard";
 
 /* iOS Settings: ProTUN logs row */
-"_protun_logs" = "ProTUN Logs";
+"_protun_logs" = "Журнали ProTUN";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Повідомити про проблему";
 
 "_allow_lan_title" = "Дозволити LAN-з'єднання";
 
-"_allow_lan_info" = "Дозволяє обійти VPN і з'єднатися з пристроями у вашій локальній мережі, наприклад принтером.";
+"_allow_lan_info" = "Можливість обходити VPN і з'єднуватися з пристроями у вашій локальній мережі, наприклад принтером.";
 
 "_allow_lan_description" = "Щоб дозволити LAN-доступ, необхідно вимкнути Kill Switch.\n\nПродовжити?";
 
@@ -1130,7 +1130,7 @@
 "_speed" = "%@ швидкість";
 
 /* Value of speed in _speed */
-"_medium" = "Середнє";
+"_medium" = "Середня";
 
 /* Value of speed in _speed */
 "_high" = "Висока";
@@ -1151,7 +1151,7 @@
 "_most_popular" = "Найпопулярніший";
 
 /* Button in plan selection */
-"_select_plan" = "Оберіть тарифний план";
+"_select_plan" = "Обрати план";
 
 /* Plan information */
 "_advanced_features" = "+ Розширені можливості";
@@ -1163,22 +1163,25 @@
 "_plans_footer" = "Одразу після підтвердження покупки тарифного плану, з вашого облікового запису iTunes буде списано вказану суму, що включає податки та додаткові платежі платформи (які не стягуються безпосередньо Proton). Після покупки вас автоматично буде переведено на вибраний тарифний план терміном на 1 рік, після чого ви можете продовжити чи скасувати передплату онлайн, або в програмі iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ рік";
+"_per_year" = " / рік";
+
+/* Per month. Appended to plan price. */
+"_per_month" = " / місяць";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Тільки веб";
 
-/* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Передплата автоматично поновлюється %1$@ за %2$@/рік";
+/* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
+"_introductory_price_footer" = "Пропозиція для нових користувачів. Автоматично поновлюється %1$@ за %2$@/%3$@.";
 
 /* iOS plan feature */
-"_feature_server_count" = "З'єднатися з серверами в";
+"_feature_server_count" = "З'єднання із серверами в";
 
 /* iOS plan feature */
 "_feature_speed" = "Швидкість";
 
 /* iOS plan feature */
-"_feature_connections" = "Одночасних VPN-з'єднань";
+"_feature_connections" = "Одночасні VPN-з'єднання";
 
 /* iOS plan feature */
 "_feature_secure_streaming" = "Захищена потокова трансляція";
@@ -1200,7 +1203,7 @@
 "_plus" = "Plus";
 
 /* MacOS: Used ir trial welcome and trial expired screens */
-"_p2p_servers" = "P2P сервери";
+"_p2p_servers" = "Сервери P2P";
 
 "_5_connections" = "5 з'єднань";
 
@@ -1214,16 +1217,16 @@
 "_free_trial_expired_title" = "Ваш безплатний пробний період %@";
 
 /* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Ваш обліковий запис було змінено на Proton VPN Free.\nОсь, що ви втратите в порівнянні з %@:";
+"_free_trial_expired_description" = "Ваш обліковий запис змінено на Proton VPN Free.\nОсь, що ви втратите в порівнянні з %@:";
 
 /* Cancel button in trial modals used in both iOS and MacOS */
 "_maybe_later" = "Можливо пізніше";
 
 /* Upgrade button in trial modals used in both iOS and MacOS */
-"_upgrade_now" = "Передплатити";
+"_upgrade_now" = "Покращити";
 
 /* MacOS: Button in Upgrade screen */
-"_upgrade_my_plan" = "Передплатити тарифний план";
+"_upgrade_my_plan" = "Покращити тарифний план";
 
 /* MacOS: \Trial about to expire\ screen title */
 "_free_trial_about_to_expire_title" = "Безплатний пробний період завершується!";
@@ -1260,7 +1263,7 @@
 /* iOS widget: text for not-logged-in user */
 "_log_in_to_use_widget" = "Увійдіть, щоб розпочати";
 
-"_vpnstatus_not_loggedin" = "Ви не увійшли в Proton VPN. Відкрийте програму Proton VPN і виконайте вхід.";
+"_vpnstatus_not_loggedin" = "Ви не ввійшли до системи. Відкрийте програму Proton VPN і виконайте вхід.";
 
 /* Bug report attachments */
 "_report_attachments" = "Вкладення";
@@ -1272,7 +1275,7 @@
 "_report_logs_description" = "Увімкнення додасть VPN-журнали вашої клієнтської програми";
 
 /* iOS bug report: Title before report bug form */
-"_report_report" = "Поскаржитися";
+"_report_report" = "Коментар до звіту";
 
 /* iOS bug report: Placeholder for email form field */
 "_report_placeholder_email" = "Контактна електронна пошта";
@@ -1287,10 +1290,10 @@
 "_report_success" = "Дякуємо за ваш звіт";
 
 /* Mac bug report: email field label */
-"_report_field_email" = "Адреса е-пошти:";
+"_report_field_email" = "Е-пошта:";
 
 /* Mac bug report: feedback field label */
-"_report_field_feedback" = "Що трапилося?";
+"_report_field_feedback" = "В чому проблема?";
 
 /* Mac bug report: steps field label */
 "_report_field_steps" = "Які саме дії ви виконували?";
@@ -1335,7 +1338,7 @@
 
 "_subscription_will_renew" = "Чинний тарифний план автоматично продовжиться %@.";
 
-"_subscription_description" = "Ви можете придбати більше кредитів для автоматичного продовження свого поточного тарифного плану. В кінці чинного періоду передплати ці кредити будуть використані для продовження тарифного плану.";
+"_subscription_description" = "Ви можете придбати більше кредитів, які будуть використані для автоматичного продовження вашого поточного тарифного плану після завершення чинного періоду передплати.";
 
 "_subscription_button" = "Продовжити план на 1 рік \n%@.";
 
@@ -1355,9 +1358,9 @@
 
 "_troubleshoot_item_nointernet_title" = "Немає з'єднання з інтернетом";
 
-"_troubleshoot_item_nointernet_description" = "Переконайтеся, що ваше з'єднання з інтернетом працює.";
+"_troubleshoot_item_nointernet_description" = "Переконайтеся, що ваше інтернет-з'єднання працює.";
 
-"_troubleshoot_item_isp_title" = "Проблема постачальника послуг інтернету (ISP)";
+"_troubleshoot_item_isp_title" = "Проблема інтернет-провайдера (ISP)";
 
 "_troubleshoot_item_isp_description" = "Спробуйте під'єднатися до Proton з іншої мережі (або Tor).";
 
@@ -1371,7 +1374,7 @@
 
 "_troubleshoot_item_antivirus_title" = "Перешкоджання антивірусу";
 
-"_troubleshoot_item_antivirus_description" = "Тимчасово вимкніть чи вилучіть свою антивірусну програму.";
+"_troubleshoot_item_antivirus_description" = "Тимчасово вимкніть або вилучіть свою антивірусну програму.";
 
 "_troubleshoot_item_proxy_title" = "Взаємодія з проксі та мережевим екраном";
 
@@ -1379,7 +1382,7 @@
 
 "_troubleshoot_item_proton_title" = "Proton зараз недоступний";
 
-"_troubleshoot_item_proton_description" = "Перевірте стан Proton, щоб дізнатися стан нашої системи.";
+"_troubleshoot_item_proton_description" = "Перевірте стан Proton, щоб перевірити стан нашої системи.";
 
 "_troubleshoot_item_proton_link1" = "Стан Proton";
 
@@ -1417,7 +1420,7 @@
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
 
-"_netshield_title_tooltip" = "Блокувати рекламу, стеження і зловмисні програми";
+"_netshield_title_tooltip" = "Блокування реклами, стеження і зловмисних програм";
 
 /* Settings -> Netshield, Status -> NetShield: Off */
 "_netshield_off" = "Вимкнено";
@@ -1432,7 +1435,7 @@
 "_netshield_level2" = "Блокувати зловмисні програми, рекламу і стеження";
 
 /* Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_netshield_level3" = "Block ads, trackers, malware, & adult content";
+"_netshield_level3" = "Блокувати рекламу, стеження, зловмисні програми та вміст для дорослих";
 
 "_netshield_alert_reconnect_description_on" = "Для зміни режиму NetShield ваше з'єднання буде перезапущено.\nПримітка: якщо деякі сайти не завантажуються, спробуйте вимкнути NetShield.";
 
@@ -1476,7 +1479,7 @@
 
 "_quick_settings_netShield_description" = "Користуйтеся інтернетом без реклами та зловмисних програм.";
 
-"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
+"_quick_settings_killSwitch_description" = "Вимкнення інтернету, якщо втрачено з'єднання з VPN, щоб запобігти випадковому витоку IP-адреси. На час перемикання серверів ваша IP-адреса може ставати видимою.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Покращення швидкості торентів та ігор, дозволяючи прямі P2P-з'єднання через визначений порт.";
@@ -1513,7 +1516,7 @@
 "_quick_settings_netshield_option_level2" = "Блокувати зловмисні програми, рекламу і стеження";
 
 /* Quick Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_quick_settings_netshield_option_level3" = "Block ads, trackers, malware, & adult content";
+"_quick_settings_netshield_option_level3" = "Блокувати рекламу, стеження, зловмисні програми та вміст для дорослих";
 
 "_upgrade_required_securecore_description" = "Функція Secure Core доступна з тарифним планом Plus. Передплатіть зараз, щоб спрямовувати трафік через наші найзахищеніші сервери в країнах, які цінують приватність.";
 
@@ -1539,7 +1542,7 @@
 "_smart_title" = "Smart";
 
 /* Description for Smart Protocol in Settings */
-"_smart_protocol_description" = "Увімкнути Smart Protocol для автоматичного застосування протоколу та порту, які забезпечують найкращу якість з'єднання.";
+"_smart_protocol_description" = "Увімкніть протокол Smart для автоматичного застосування протоколу й порту, які забезпечують найкращу якість з'єднання.";
 
 /* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_title" = "Необхідно повторно під'єднатися";
@@ -1626,7 +1629,7 @@
 "_sysex_error_description_subcase_authorization_required" = "Потрібна ваша авторизація для продовження.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "please contact our support.";
+"_sysex_error_description_subcase_default" = "зверніться до нашої служби підтримки.";
 
 "_vpnauth_certfail_title" = "Збій автопід'єднання";
 
@@ -1717,7 +1720,7 @@
 
 "_performance_load_high" = "Високе";
 
-"_locations_all" = "All locations (%@)";
+"_locations_all" = "Усі розташування (%@)";
 
 "_locations_free" = "Розташування Free";
 
@@ -2390,10 +2393,10 @@
 "_prompt_kill_switch_due_to_bad_interface_ip_range" = "Ваша локальна мережа може бути небезпечною (інтерфейс \"%@\" має IP і префікс \"%@\"). Ваші дані можуть надсилатися незашифрованими через локальну мережу. Ввімкнення Kill Switch заблокує цей трафік. З'єднання з локальними периферійними пристроями буде перервано.";
 
 /* Section header with count */
-"cities_section_title" = "Cities (%@)";
+"cities_section_title" = "Міста (%@)";
 
 /* Section header with count */
-"states_section_title" = "States (%@)";
+"states_section_title" = "Штати (%@)";
 
 /* Title of the search screen */
 "search_title" = "Пошук";
@@ -2471,19 +2474,19 @@
 "_plus_servers" = "Сервери Plus";
 
 /* Section header in search (RTL/LTR) */
-"search_results_countries_count" = "Countries (%d)";
+"search_results_countries_count" = "Країни (%d)";
 
 /* Section header in search (RTL/LTR) */
-"search_cities_count" = "Cities (%d)";
+"search_cities_count" = "Міста (%d)";
 
 /* Section header in search (RTL/LTR) */
-"search_secure_core_countries_count" = "Secure Core countries (%d)";
+"search_secure_core_countries_count" = "Країни Secure Core (%d)";
 
 /* Section header in search (RTL/LTR) */
-"_free_servers_count" = "Free Servers (%d)";
+"_free_servers_count" = "Сервери Free (%d)";
 
 /* Section header in search (RTL/LTR) */
-"_plus_servers_count" = "Plus Servers (%d)";
+"_plus_servers_count" = "Сервери Plus (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Покращити";
@@ -2845,9 +2848,6 @@
 /* Main Button of paid plans list allowing user to start payments process. */
 "upsell_plans_list_validate_button" = "Отримати VPN Plus";
 
-/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /місяць";
-
 "onboarding_usage_stats_title" = "Анонімна статистика використання";
 
 "onboarding_usage_stats_description" = "Дані про використання допомагають нам обходити блокування VPN і вдосконалювати швидкодію програми.";
@@ -2978,7 +2978,7 @@
 "_ike_deprecation_alert_continue_button_title" = "Продовжити з IKEv2";
 
 /* Button title for 'Enable Smart protocol' */
-"_ike_deprecation_alert_enable_smart_button_title" = "Увімкнути Smart Protocol";
+"_ike_deprecation_alert_enable_smart_button_title" = "Увімкнути протокол Smart";
 
 /* User is trying to connect to a server that is currently unavailable. (title) */
 "_location_not_available_title" = "Сервер недоступний";
@@ -3056,40 +3056,40 @@
 "_generic_error_title" = "Помилка";
 
 /* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(Error %2$@)";
+"_error_code_and_description" = "%1$@\n(Помилка %2$@)";
 
 /* Error message: Catch-all error description. */
-"_generic_error_description" = "The operation could not be completed.";
+"_generic_error_description" = "Не вдалося завершити операцію.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Помилка з'єднання";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.";
+"_connection_error_unexpected_protocol" = "Для вибраного з'єднання використовується протокол (%@), який більше не підтримується цією програмою. Виберіть інше з'єднання.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server.";
+"_connection_error_certificate_authentication" = "Виникла проблема під час автентифікації на сервері.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
-"_connection_error_tunnel_connection" = "There was an issue starting the VPN.";
+"_connection_error_tunnel_connection" = "Виникла проблема із запуском VPN.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "An unexpected error occurred while connecting.";
+"_connection_error_local_agent" = "Під час з'єднання сталася неочікувана помилка.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "We were unable to connect to the server..";
+"_connection_error_intent_missing" = "Не вдалося з'єднатися із сервером.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "There was a problem preparing the connection";
+"_connection_error_preparation" = "Виникла проблема під час підготовки з'єднання.";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";
+"_connection_error_server_missing" = "Вибраний сервер більше не доступний. Виберіть інший сервер.";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again.";
+"_connection_error_timeout" = "Під час спроби з'єднатися сталася помилка: сервер не відповів вчасно. Повторіть спробу.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
-"_provider_message_error" = "There was a problem with the connection.";
+"_provider_message_error" = "Виникла проблема зі з'єднанням.";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "Незахищено";
@@ -3278,13 +3278,13 @@
 "_transaction_recovered" = "Транзакції відновлено.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "No recoverable purchases could be found at this time.";
+"_payment_restoration_error" = "Наразі не вдається знайти покупки, які можна відновити.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "Платіж очікує на розгляд і стане доступним після схвалення.";
 
 /* There is no transaction log present */
-"_transaction_log_not_available_" = "Transaction log is not available";
+"_transaction_log_not_available_" = "Журнал транзакції недоступний.";
 
 /* Transaction log entry in logs */
-"_transaction_log_" = "Transaction Log";
+"_transaction_log_" = "Журнал транзакції";

@@ -1163,13 +1163,16 @@
 "_plans_footer" = "Bij de bevestiging van uw aankoop van een betaald abonnement wordt het getoonde bedrag, inclusief belastingen en extra platformkosten (die niet rechtstreeks door Proton in rekening worden gebracht), in rekening gebracht op uw iTunes account. Na de aankoop wordt u automatisch geüpgraded naar het geselecteerde abonnement voor een periode van 1 jaar, waarna u kunt verlengen of annuleren, online of via onze iOS app.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ jaar";
+"_per_year" = " / jaar";
+
+/* Per month. Appended to plan price. */
+"_per_month" = " / maand";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Alleen op de website";
 
-/* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Abonnement wordt automatisch verlengd op %1$@ voor %2$@ per jaar";
+/* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
+"_introductory_price_footer" = "Welkomstaanbieding, verlengt automatisch op %1$@ voor %2$@%3$@.";
 
 /* iOS plan feature */
 "_feature_server_count" = "Verbinden met servers in";
@@ -2844,9 +2847,6 @@
 
 /* Main Button of paid plans list allowing user to start payments process. */
 "upsell_plans_list_validate_button" = "Neem VPN Plus";
-
-/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /maand";
 
 "onboarding_usage_stats_title" = "Anonieme gebruiksstatistieken delen";
 

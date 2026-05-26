@@ -520,15 +520,15 @@ blocați</string>
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Locuri servere gratuite (%d)</string>
+        <string>Țări cu servere gratuite (%d)</string>
         <key>few</key>
-        <string>Locuri servere gratuite (%d)</string>
+        <string>Țări cu servere gratuite (%d)</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Locuri servere gratuite (%d)</string>
+        <string>Țări cu servere gratuite (%d)</string>
       </dict>
     </dict>
     <key>plan_duration_month</key>

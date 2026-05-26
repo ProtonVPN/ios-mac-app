@@ -1163,13 +1163,16 @@
 "_plans_footer" = "Μόλις επιβεβαιώσετε την αγορά ενός πακέτου, ο λογαριασμός σας στο iTunes θα χρεωθεί με το ποσό που εμφανίζεται, το οποίο περιλαμβάνει φόρους και πρόσθετα τέλη πλατφόρμας (τα οποία δεν χρεώνονται απευθείας από την Proton). Αφού πραγματοποιήσετε την αγορά, θα αναβαθμιστεί αυτόματα το πακέτο για περίοδο ενός έτους, μετά από την οποία μπορείτε να ανανεώσετε ή να το ακυρώσετε, είτε online είτε μέσω της εφαρμογής iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ χρ";
+"_per_year" = " / έτος";
+
+/* Per month. Appended to plan price. */
+"_per_month" = " / μήνα";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Μόνο στο web";
 
-/* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Η συνδρομή ανανεώνεται αυτόματα στις %1$@ στα %2$@/χρόνο";
+/* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
+"_introductory_price_footer" = "Προσφορά καλωσορίσματος. Αυτόματη ανανέωση στις %1$@ σε %2$@%3$@.";
 
 /* iOS plan feature */
 "_feature_server_count" = "Σύνδεση σε διακομιστές στο";
@@ -2844,9 +2847,6 @@
 
 /* Main Button of paid plans list allowing user to start payments process. */
 "upsell_plans_list_validate_button" = "Αποκτήστε το VPN Plus";
-
-/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /μήνα";
 
 "onboarding_usage_stats_title" = "Κοινοποιήστε ανώνυμα στατιστικά χρήσης";
 

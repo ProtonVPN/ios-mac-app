@@ -1163,13 +1163,16 @@
 "_plans_footer" = "Al confirmar la compra d'un pla de pagament, el teu compte d'iTunes se't cobrarà l'import mostrant-se, que inclou impostos i tarifes addicionals de la plataforma (que no són cobrades directament per Proton). Després de fer la compra, se't farà una actualització automàtica al pla seleccionat durant un període d'1 any, després del qual podràs renovar o cancel·lar, ja sigui en línia o a través de la nostra aplicació iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ any";
+"_per_year" = " / any";
+
+/* Per month. Appended to plan price. */
+"_per_month" = " / mes";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Només web";
 
-/* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "La subscripció es renova automàticament el %1$@ a %2$@/any.";
+/* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
+"_introductory_price_footer" = "Oferta de benvinguda. Es renovarà automàticament el dia %1$@ a %2$@%3$@.";
 
 /* iOS plan feature */
 "_feature_server_count" = "Connecta als servidors a";
@@ -2844,9 +2847,6 @@
 
 /* Main Button of paid plans list allowing user to start payments process. */
 "upsell_plans_list_validate_button" = "Obtingueu VPN Plus";
-
-/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /mes";
 
 "onboarding_usage_stats_title" = "Comparteix les estadístiques d'ús de forma anònima";
 
