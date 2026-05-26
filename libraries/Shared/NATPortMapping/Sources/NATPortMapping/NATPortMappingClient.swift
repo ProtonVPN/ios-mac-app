@@ -122,6 +122,7 @@ final class NATPortMappingClient: Sendable {
                 if let error {
                     log.error("Failed to send NAT-PMP request: \(error.localizedDescription)")
                     continuation.resume(throwing: error)
+                    return
                 }
                 continuation.resume()
             })
