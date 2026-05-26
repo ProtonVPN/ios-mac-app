@@ -65,6 +65,7 @@ public final class AppDelegateService: AppDelegateProtocol {
     private lazy var appSessionManager: AppSessionManager = container.makeAppSessionManager()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var pushNotificationService = container.makePushNotificationService()
+    private lazy var profileManager: ProfileManager = container.makeProfileManager()
     @Shared(.connectionState) private var connectionState: ConnectionState
 
     private var tokens: [NotificationToken] = []
@@ -278,12 +279,10 @@ public final class AppDelegateService: AppDelegateProtocol {
             // Action may only come from a trusted source
             guard verified else { return false }
 
-            // Extensions requesting a connection should set a connection request first
-            connectionCommandClient.send(.connect(
-                propertiesManager.lastConnectionIntent,
-                propertiesManager.connectionProtocol,
-                .widget
-            ))
+            // Mirror legacy `vpnGateway.quickConnect(trigger: .widget)`: prefer the user's saved
+            // Quick Connect profile, otherwise fall back to fastest. (Not `.lastConnectionIntent`,
+            // which would surface whatever the user last connected to instead of QC.)
+            connectionCommandClient.quickConnect(profileManager: profileManager, trigger: .widget)
             startListeningForDeepLinkConnectState()
             navigationService.presentStatusViewController()
 

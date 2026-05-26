@@ -47,6 +47,7 @@ let package = Package(
 
         .package(path: "../../Shared/CommonNetworking"),
         .package(path: "../../Shared/Connection"),
+        .package(path: "../../Shared/ConnectionInventory"),
         .package(path: "../../Shared/ExtensionIPC"),
         .package(path: "../../Shared/Localization"),
         .package(path: "../../Shared/Persistence"),
@@ -70,6 +71,7 @@ let package = Package(
                 // Local
                 "Domain",
                 "Connection",
+                "ConnectionInventory",
                 "Ergonomics",
                 "PMLogger",
                 "Strings",

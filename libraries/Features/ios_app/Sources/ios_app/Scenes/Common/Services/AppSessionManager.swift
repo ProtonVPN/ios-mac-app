@@ -189,7 +189,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         let properties: VpnProperties
         do {
             properties = try await vpnApiClient.vpnProperties(
-                isDisconnected: isDisconnectedForPropertiesRefresh,
+                isDisconnected: connectionState.isDisconnectedForPropertiesRefresh,
                 lastKnownLocation: propertiesManager.userLocation,
                 serversAccordingToTier: shouldRefreshServers
             )
@@ -278,7 +278,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         // Get VPN properties from API and save them
         do {
             let properties = try await vpnApiClient.vpnProperties(
-                isDisconnected: isDisconnectedForPropertiesRefresh,
+                isDisconnected: connectionState.isDisconnectedForPropertiesRefresh,
                 lastKnownLocation: propertiesManager.userLocation,
                 serversAccordingToTier: shouldRefreshServersAccordingToTier
             )
@@ -380,7 +380,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func resolveActiveSession() async throws {
         await MainActor.run { AppEvent.sessionManagerSessionRefreshed.post() }
 
-        guard isConnectedForSessionValidation else {
+        guard connectionState.isConnectedForSessionValidation else {
             return // Success
         }
 
@@ -598,18 +598,6 @@ extension AppSessionManagerImplementation {
         } catch {
             log.error("Data reload failed after plan purchase", category: .app, metadata: ["error": "\(error)"])
         }
-    }
-}
-
-// MARK: - Review
-
-extension AppSessionManagerImplementation {
-    private var isConnectedForSessionValidation: Bool {
-        connectionState.isConnectedForSessionValidation
-    }
-
-    private var isDisconnectedForPropertiesRefresh: Bool {
-        connectionState.isDisconnectedForPropertiesRefresh
     }
 }
 
