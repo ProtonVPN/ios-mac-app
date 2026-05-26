@@ -74,14 +74,6 @@ public enum VPNFeatureFlagType: String, CaseIterable, FeatureFlagTypeProtocol {
 }
 
 public extension FeatureFlagsRepository {
-    static var isConnectionFeatureEnabled: Bool = {
-        #if os(iOS)
-            return true
-        #else
-            return false
-        #endif
-    }()
-
     var isProTUNEnabled: Bool {
         #if os(iOS) && DEBUG
             isEnabled(VPNFeatureFlagType.protun)

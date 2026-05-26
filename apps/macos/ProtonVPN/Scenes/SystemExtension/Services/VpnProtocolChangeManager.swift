@@ -20,10 +20,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Connection
 import Dependencies
 import Domain
 import Foundation
 import LegacyCommon
+import Sharing
 import VPNAppCore
 import VPNShared
 
@@ -44,17 +46,15 @@ protocol VpnProtocolChangeManager {
 }
 
 final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
-    typealias Factory = AppStateManagerFactory
-        & CoreAlertServiceFactory
-        & VpnGatewayFactory
+    typealias Factory = CoreAlertServiceFactory
     private let factory: Factory
 
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
-    private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
+    @Shared(.connectionState) private var connectionState: ConnectionState
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     /// What to do after switching protocols
     enum ProtocolSwitchAction {
@@ -75,7 +75,8 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         userInitiated: Bool,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
-        guard vpnGateway.connection == .connected || vpnGateway.connection == .connecting else {
+        let isConnectedOrConnecting = vpnConnectionStatus.isConnected(using: connectionState) || vpnConnectionStatus.is(\.connecting)
+        guard isConnectedOrConnecting else {
             set(
                 vpnProtocol: vpnProtocol,
                 userInitiated: userInitiated,
@@ -85,7 +86,18 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             return
         }
 
-        guard appStateManager.activeConnection()?.server.supports(vpnProtocol: vpnProtocol) != false else {
+        // If the currently active tunnel already uses this protocol, avoid a redundant reconnect.
+        if vpnConnectionStatus.mergedVpnProtocol(using: connectionState) == vpnProtocol {
+            set(
+                vpnProtocol: vpnProtocol,
+                userInitiated: userInitiated,
+                and: .doNothing,
+                completion: completion
+            )
+            return
+        }
+
+        guard vpnConnectionStatus.mergedServer(using: connectionState)?.endpoint.supports(vpnProtocol: vpnProtocol) != false else {
             let alert = ProtocolNotAvailableForServerAlert(confirmHandler: { [weak self] in
                 self?.set(
                     vpnProtocol: vpnProtocol,

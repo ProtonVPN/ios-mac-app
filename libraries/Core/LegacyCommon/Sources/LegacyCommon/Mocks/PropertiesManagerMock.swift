@@ -47,13 +47,7 @@
             autoConnect = (enabled, profileId)
         }
 
-        public var hasConnected: Bool = false {
-            didSet {
-                Task { @MainActor in
-                    AppEvent.hasConnected.post(hasConnected)
-                }
-            }
-        }
+        public var hasConnected: Bool = false
 
         public var blockOneTimeAnnouncement: Bool = false
         public var blockUpdatePrompt: Bool = false
@@ -107,7 +101,6 @@
 
         #if os(macOS)
             public var forceExtensionUpgrade: Bool = false
-            public var connectedServerNameDoNotUse: String?
         #endif
 
         public var vpnProtocol: VpnProtocol = .ike {

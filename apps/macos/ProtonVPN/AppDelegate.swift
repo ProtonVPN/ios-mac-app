@@ -124,9 +124,6 @@ extension AppDelegate: NSApplicationDelegate {
         #endif
 
         Task {
-            prepareDependencies {
-                $0.telemetryService = .legacyValue
-            }
             // wait for feature flags to be fetched
             await setupCoreIntegration()
             await checkMigration()
@@ -173,7 +170,6 @@ extension AppDelegate: NSApplicationDelegate {
 
             // run it in a syncrhonous way
             await Task { @MainActor in
-                await self.container.makeVpnManager().prepareManagersTask?.value
                 await self.navigationService.launched()
             }.value
 
@@ -396,24 +392,6 @@ extension AppDelegate {
             try await migrationManager.migrate()
         } catch {
             log.error("Was unable to run upgrade step: \(error)")
-        }
-    }
-
-    private func reconnectWhenPossible() {
-        var appStateManager = container.makeAppStateManager()
-
-        appStateManager.onVpnStateChanged = { newState in
-            if newState != .invalid {
-                appStateManager.onVpnStateChanged = nil
-            }
-
-            guard case .connected = newState else {
-                return
-            }
-
-            appStateManager.disconnect {
-                self.container.makeVpnGateway().quickConnect(trigger: .auto)
-            }
         }
     }
 }

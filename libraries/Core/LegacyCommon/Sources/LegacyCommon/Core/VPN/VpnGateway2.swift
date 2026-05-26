@@ -30,10 +30,6 @@ public protocol VpnGatewayProtocol2 {
     func disconnect() async throws
 }
 
-public protocol VpnGateway2Factory {
-    func makeVpnGateway2() -> VpnGatewayProtocol2
-}
-
 /// More or less temporary class before we get to refactoring whole VPN connection management.
 /// It still uses `AppStateManager` but doesn't have complexity of original `VpnGateway`.
 /// Some of the features of `VpnGateway` should be moved to other places.

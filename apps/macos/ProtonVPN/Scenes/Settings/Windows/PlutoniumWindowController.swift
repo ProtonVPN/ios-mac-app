@@ -18,19 +18,22 @@
 
 import Cocoa
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
 import LegacyCommon
+import Sharing
 import Strings
 import VPNAppCore
 
 class PlutoniumWindowController: WindowController {
-    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & VpnGatewayFactory
+    typealias Factory = CoreAlertServiceFactory
 
     let store: StoreOf<PlutoniumFeature>
 
     private let alertService: CoreAlertService
-    private let vpnGateway: VpnGatewayProtocol
+    @Shared(.connectionState) private var connectionState: ConnectionState
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
     @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
 
     @available(*, unavailable)
@@ -40,11 +43,9 @@ class PlutoniumWindowController: WindowController {
 
     required init(factory: Factory) {
         self.alertService = factory.makeCoreAlertService()
-        let vpnGateway = factory.makeVpnGateway()
-        self.vpnGateway = vpnGateway
         let state = PlutoniumFeature.State()
         self.store = StoreOf<PlutoniumFeature>(initialState: state) {
-            PlutoniumFeature(appStateManager: factory.makeAppStateManager(), vpnGateway: vpnGateway)
+            PlutoniumFeature()
         }
         let viewController: NSViewController = .plutonium(store: store)
         let window = NSWindow(contentViewController: viewController)
@@ -67,17 +68,25 @@ class PlutoniumWindowController: WindowController {
     }
 
     override func windowWillClose(_: Notification) {
-        guard vpnGateway.connection != .disconnected,
-              store.requiresReconnection else {
+        guard store.requiresReconnection else {
             return
         }
+        guard !vpnConnectionStatus.isConnected(using: connectionState) else {
+            // connected/connecting/disconnecting/resolving
+            showReconnectAlert()
+            return
+        }
+    }
+
+    private func showReconnectAlert() {
         alertService.push(alert: ReconnectOnActionAlert(
             actionTitle: Localizable.changeSettings,
             confirmHandler: { [weak self] in
                 guard let self else { return }
-                if vpnGateway.connection != .disconnected {
-                    sidebarConnectionCommandClient.send(.retry)
+                if !vpnConnectionStatus.isConnected(using: connectionState) {
+                    return
                 }
+                sidebarConnectionCommandClient.send(.retry)
             },
             cancelHandler: {}
         ))

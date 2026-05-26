@@ -70,8 +70,6 @@ public class DoHVPN: DoH, ServerConfig {
         "http://protonstatus.com"
     }
 
-    public let isAppStateNotificationConnected: (Notification) -> Bool
-
     public var humanVerificationV3Host: String {
         if defaultHost == liveURL {
             return verifyHost
@@ -113,6 +111,7 @@ public class DoHVPN: DoH, ServerConfig {
     private let customApiHost: String
     private let verifyHost: String
     private let customHost: String?
+    private var connectionStatusTask: Task<Void, Never>?
 
     public let atlasSecret: String?
 
@@ -125,27 +124,55 @@ public class DoHVPN: DoH, ServerConfig {
         defaultHost != liveURL
     }
 
-    public init(
+    public init<S: AsyncSequence & Sendable>(
         apiHost: String,
         verifyHost: String,
         alternativeRouting: Bool,
         customHost: String? = nil,
         atlasSecret: String? = nil,
         isConnected: Bool,
-        isAppStateNotificationConnected: @escaping (Notification) -> Bool
-    ) {
+        connectionStatusStream: @escaping @Sendable () -> S
+    ) where S.Element == Bool {
         self.customApiHost = apiHost
         self.verifyHost = verifyHost
         self.customHost = customHost
         self.atlasSecret = atlasSecret
         self.alternativeRouting = alternativeRouting
         self.isConnected = isConnected
-        self.isAppStateNotificationConnected = isAppStateNotificationConnected
         super.init()
 
-        AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(stateChanged))
+        self.connectionStatusTask = Task { [weak self] in
+            guard let self else { return }
+            do {
+                for try await connected in connectionStatusStream() {
+                    self.isConnected = connected
+                }
+            } catch {
+                log.error("Connection status stream failed", category: .api, metadata: ["error": "\(error)"])
+            }
+        }
 
         status = alternativeRouting ? .on : .off
+    }
+
+    /// Convenience initializer used when a connection status stream isn't required (e.g. tests, mocks).
+    public convenience init(
+        apiHost: String,
+        verifyHost: String,
+        alternativeRouting: Bool,
+        customHost: String? = nil,
+        atlasSecret: String? = nil,
+        isConnected: Bool
+    ) {
+        self.init(
+            apiHost: apiHost,
+            verifyHost: verifyHost,
+            alternativeRouting: alternativeRouting,
+            customHost: customHost,
+            atlasSecret: atlasSecret,
+            isConnected: isConnected,
+            connectionStatusStream: { AsyncStream<Bool>.finished }
+        )
     }
 
     override public func getHumanVerificationV3Headers() -> [String: String] {
@@ -163,9 +190,8 @@ public class DoHVPN: DoH, ServerConfig {
             .merging(atlasHeader, uniquingKeysWith: { _, rhs in rhs })
     }
 
-    @objc
-    private func stateChanged(notification: Notification) {
-        isConnected = isAppStateNotificationConnected(notification)
+    deinit {
+        connectionStatusTask?.cancel()
     }
 
     private func settingsUpdated() {
@@ -188,8 +214,7 @@ public extension DoHVPN {
         apiHost: "",
         verifyHost: "",
         alternativeRouting: false,
-        isConnected: false,
-        isAppStateNotificationConnected: { _ in false }
+        isConnected: false
     )
 }
 

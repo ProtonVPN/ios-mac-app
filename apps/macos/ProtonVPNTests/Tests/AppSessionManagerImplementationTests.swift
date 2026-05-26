@@ -423,17 +423,12 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     private let appStateManager: AppStateManager
     private let updateChecker: UpdateChecker
 
-    let appCertificateRefreshManagerMock = AppCertificateRefreshManagerMock()
     let announcementRefresherMock = AnnouncementRefresherMock()
     let appSessionRefreshTimerMock = AppSessionRefreshTimerMock()
 
     let profileManager = ProfileManager(
         profileStorage: ProfileStorage()
     )
-
-    func makeAppCertificateRefreshManager() -> AppCertificateRefreshManager {
-        appCertificateRefreshManagerMock
-    }
 
     func makeAnnouncementRefresher() -> AnnouncementRefresher {
         announcementRefresherMock
@@ -457,10 +452,6 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
 
     func makeVpnAuthentication() -> VpnAuthentication {
         VpnAuthenticationMock()
-    }
-
-    func makeVpnGateway() -> VpnGatewayProtocol {
-        VpnGatewayMock()
     }
 
     func makeNetworking() -> Networking {

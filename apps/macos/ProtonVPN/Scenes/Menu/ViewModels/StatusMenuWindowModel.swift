@@ -21,9 +21,13 @@
 //
 
 import Cocoa
+import Combine
+import ComposableArchitecture
+import Connection
 import Domain
 import Ergonomics
 import LegacyCommon
+import VPNAppCore
 
 protocol StatusMenuWindowModelFactory {
     func makeStatusMenuWindowModel() -> StatusMenuWindowModel
@@ -36,15 +40,18 @@ extension DependencyContainer: StatusMenuWindowModelFactory {
 }
 
 class StatusMenuWindowModel {
-    typealias Factory = AppSessionManagerFactory & AppSessionRefreshTimerFactory & AppSessionRefresherFactory & StatusMenuViewModelFactory & VpnGatewayFactory
+    typealias Factory = AppSessionManagerFactory & AppSessionRefreshTimerFactory & AppSessionRefresherFactory & StatusMenuViewModelFactory
     private let factory: Factory
 
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
-    private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
+    @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
+    @Shared(.connectionState) private var connectionState: ConnectionState
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     var contentChanged: (() -> Void)?
 
     private var notificationTokens: [NotificationToken] = []
+    private var cancellables = Set<AnyCancellable>()
 
     init(factory: Factory) {
         self.factory = factory
@@ -56,7 +63,7 @@ class StatusMenuWindowModel {
     }
 
     var isConnected: Bool {
-        vpnGateway.connection == .connected
+        vpnConnectionStatus.isConnected(using: connectionState)
     }
 
     var statusMenuViewController: StatusMenuViewController {
@@ -66,10 +73,10 @@ class StatusMenuWindowModel {
 
     var statusIcon: StatusIcon {
         guard isSessionEstablished else { return .disconnected }
-        switch vpnGateway.connection {
+        switch vpnConnectionStatus {
         case .connected:
             return .connected
-        case .connecting:
+        case .connecting, .resolving:
             return .connecting
         case .disconnected, .disconnecting:
             return .disconnected
@@ -78,51 +85,48 @@ class StatusMenuWindowModel {
 
     var appIcon: AppIcon {
         guard isSessionEstablished else { return .disconnected }
-        switch vpnGateway.connection {
-        case .connected:
+        switch isConnected {
+        case true:
             return .active
-        default:
+        case false:
             return .disconnected
         }
     }
 
     var isStatusIconBlinking: Bool {
-        vpnGateway.connection == .connecting
+        vpnConnectionStatus.is(\.connecting) || vpnConnectionStatus.is(\.resolving)
     }
 
     // MARK: - Private functions
 
     private func startObserving() {
         notificationTokens.append(NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged))
+
+        $secureCoreToggle.publisher
+            .sink { [weak self] _ in
+                self?.contentChanged?()
+            }
+            .store(in: &cancellables)
+
+        $vpnConnectionStatus.publisher
+            .sink { [weak self] _ in
+                self?.contentChanged?()
+            }
+            .store(in: &cancellables)
+
+        $connectionState.publisher
+            .sink { [weak self] _ in
+                self?.contentChanged?()
+            }
+            .store(in: &cancellables)
     }
 
     private func sessionChanged(data: SessionChanged.T) {
-        if case let .established(vpnGateway) = data {
+        if case .established = data {
             if !isSessionEstablished {
                 log.error("Expected session to be established when receiving gateway")
             }
-            sessionEstablished(vpnGateway: vpnGateway)
-        } else {
-            sessionEnded()
         }
-
-        contentChanged?()
-    }
-
-    private func sessionEstablished(vpnGateway: VpnGatewayProtocol) {
-        self.vpnGateway = vpnGateway
-
-        AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(handleChange))
-        AppEvent.connectionStateChanged.subscribe(self, selector: #selector(handleChange))
-    }
-
-    private func sessionEnded() {
-        AppEvent.activeServerTypeChanged.unsubscribe(self)
-        AppEvent.connectionStateChanged.unsubscribe(self)
-    }
-
-    @objc
-    private func handleChange() {
         contentChanged?()
     }
 }

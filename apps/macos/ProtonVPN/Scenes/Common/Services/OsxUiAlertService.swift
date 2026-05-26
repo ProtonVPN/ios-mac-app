@@ -21,9 +21,12 @@
 //
 
 import AppKit
+import Combine
+import Connection
 import Domain
 import Foundation
 import LegacyCommon
+import Sharing
 import VPNAppCore
 
 protocol UIAlertServiceFactory {
@@ -37,12 +40,16 @@ final class OsxUiAlertService: UIAlertService {
     private let windowService: WindowService
 
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
+    @Shared(.connectionState) private var connectionState: ConnectionState
 
     private var currentAlerts = [SystemAlert]()
+    private var cancellables = Set<AnyCancellable>()
 
     init(factory: Factory) {
         self.factory = factory
         self.windowService = factory.makeWindowService()
+        startObservingConnectionState()
     }
 
     func displayAlert(_ alert: SystemAlert) {
@@ -80,10 +87,6 @@ final class OsxUiAlertService: UIAlertService {
             )
             popUp.dismissCompletion = { [weak self] in self?.dismissCompletion(alert) }
             alert.dismiss = { [weak popUp] in popUp?.close() }
-            if alert.canDismissAutomaticallyOnConnection {
-                AppEvent.appStateManagerDisplayStateChange.unsubscribe(self)
-                AppEvent.appStateManagerDisplayStateChange.subscribe(self, selector: #selector(appDisplayStateChanged))
-            }
             modalVC = PopUpViewController(viewModel: popUp)
         }
 
@@ -94,10 +97,8 @@ final class OsxUiAlertService: UIAlertService {
         }
     }
 
-    @objc
-    private func appDisplayStateChanged(_ notification: Notification) {
-        defer { AppEvent.appStateManagerDisplayStateChange.unsubscribe(self) }
-        guard let appDisplayStateChanged = notification.object as? AppDisplayState, case .connected = appDisplayStateChanged else { return }
+    private func dismissAutoConnectionAlertsIfNeeded() {
+        guard vpnConnectionStatus.isConnected(using: connectionState) else { return }
         currentAlerts.removeAll { alert in
             if alert.canDismissAutomaticallyOnConnection {
                 alert.dismiss?()
@@ -105,6 +106,24 @@ final class OsxUiAlertService: UIAlertService {
             }
             return false
         }
+    }
+
+    private func startObservingConnectionState() {
+        $vpnConnectionStatus
+            .publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.dismissAutoConnectionAlertsIfNeeded()
+            }
+            .store(in: &cancellables)
+
+        $connectionState
+            .publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.dismissAutoConnectionAlertsIfNeeded()
+            }
+            .store(in: &cancellables)
     }
 
     private func alertIsNew(_ alert: SystemAlert) -> Bool {

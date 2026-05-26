@@ -37,11 +37,7 @@ public struct ConnectionStatusFeature {
 
         fileprivate(set) var startingProtectionState: ProtectionState = .resolving
 
-        fileprivate(set) var isUsingConnectionPackage: Bool = true
-
-        package init(isUsingConnectionPackage: Bool = true) {
-            self.isUsingConnectionPackage = isUsingConnectionPackage
-        }
+        package init() {}
     }
 
     public enum Action: Equatable {
@@ -115,17 +111,15 @@ public struct ConnectionStatusFeature {
                         }.cancellable(id: IDs.watchConnectionStatus)
                     ),
                 ]
-                if !state.isUsingConnectionPackage {
-                    effects.append(
-                        .run { @MainActor send in
-                            let initialValue = await provider.getStats()
-                            send(.newNetShieldStats(initialValue))
-                            for await stats in provider.statsStream() {
-                                send(.newNetShieldStats(stats))
-                            }
+                effects.append(
+                    .run { @MainActor send in
+                        let initialValue = await provider.getStats()
+                        send(.newNetShieldStats(initialValue))
+                        for await stats in provider.statsStream() {
+                            send(.newNetShieldStats(stats))
                         }
-                    )
-                }
+                    }
+                )
                 return .merge(effects)
 
             case let .newConnectionStatus(status):

@@ -36,6 +36,7 @@
     import VPNShared
     import VPNSharedTesting
 
+    @Suite(.serialized)
     struct CoreConnectionFeatureTests {
         /// Happy path test. Uses mocked dependencies to verify that the `ExtensionManagerFeature` and `LocalAgentFeature`
         /// reducers are correctly coordinated by the `ConnectionFeature` reducer.
@@ -910,7 +911,6 @@
                     pushSelector: {}
                 )
             }
-
             await store.send(.startObserving)
             await store.receive(\.tunnel.startObservingStateChanges)
             await store.receive(\.localAgent.startObservingEvents)
@@ -1016,6 +1016,72 @@
             // `.cancelRefreshes` is normally sent on disconnection, but we finish this test while still connected
             // Let's manually send the action here to cancel the cert refresh effect to make the TCA test store happy
             await store.send(.certAuth(.cancelRefreshes))
+        }
+
+        @Test
+        @MainActor
+        func reconnectsLocalAgentWithCachedAuthWhenLocalAgentReportsConnectionErrorState() async {
+            let now = Date.now
+            let tomorrow = now.addingTimeInterval(.days(1))
+
+            let mockManager = MockTunnelManager(connection: .init(status: .connected, connectedDate: now))
+            let mockClock = TestClock()
+            let mockAgent = LocalAgentMock(state: .connected)
+
+            let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
+            let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
+            let features = VPNConnectionFeatures.mock
+            let mockStorage = VpnAuthenticationStorage.testStorage(
+                keys: mockKeys,
+                certificate: mockCertificate,
+                features: features
+            )
+
+            let connectedData = ConnectionData(
+                serverID: Server.mock.endpoint.id,
+                connectionDate: now,
+                protocolData: .wireGuardGo
+            )
+
+            let connected = CoreConnectionFeature.State(
+                tunnelState: .connected(.wireGuard(.go), connectedData),
+                certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate, features: features)),
+                localAgentState: .connected(nil)
+            )
+
+            let store = TestStore(initialState: connected) {
+                CoreConnectionFeature()
+            } withDependencies: {
+                $0.date = .constant(now)
+                $0.continuousClock = mockClock
+                $0.tunnelManager = mockManager
+                $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
+                $0.localAgent = mockAgent
+                $0.vpnAuthenticationStorage = mockStorage
+                $0.connectionFeatureProvider.connectionFeatures = { features }
+                $0.certificateRefreshClient = .init(
+                    refreshCertificateLocally: { _, _ in },
+                    refreshCertificate: { _ in },
+                    pushSelector: {}
+                )
+            }
+            store.exhaustivity = .off
+
+            await store.send(.localAgent(.event(.state(.connectionError))))
+            await mockClock.advance(by: .seconds(1))
+
+            let hasRestartedLocalAgentConnection =
+                store.state.localAgent.is(\.connecting) || store.state.localAgent.is(\.connected)
+            #expect(hasRestartedLocalAgentConnection)
+            let loadedCertificate: VpnCertificate? = if case let .loaded(data) = store.state.certAuth {
+                data.certificate
+            } else {
+                nil
+            }
+            #expect(loadedCertificate == mockCertificate)
+
+            // Cert auth loading schedules refresh effects. Drain them to avoid end-of-test flakiness.
+            await store.skipInFlightEffects()
         }
 
         @Test

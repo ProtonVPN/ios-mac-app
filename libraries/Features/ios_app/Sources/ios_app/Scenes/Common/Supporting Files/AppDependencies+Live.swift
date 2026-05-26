@@ -18,6 +18,7 @@
 
 import Combine
 import CommonNetworking
+import Connection
 import Dependencies
 import Domain
 import Ergonomics
@@ -70,15 +71,20 @@ extension DoHConfigurationKey: @retroactive DependencyKey {
 
 extension DoHVPN {
     convenience init(alternativeRouting: Bool, customHost: String?, atlasSecret: String?) {
+        @Shared(.connectionState) var connectionState
         self.init(
             apiHost: ObfuscatedConstants.apiHost,
             verifyHost: ObfuscatedConstants.humanVerificationV3Host,
             alternativeRouting: alternativeRouting,
             customHost: customHost,
             atlasSecret: atlasSecret,
-            // Will get updated once AppStateManager is initialized
-            isConnected: false,
-            isAppStateNotificationConnected: DoHVPN.isAppStateChangeNotificationInConnectedState
+            isConnected: connectionState.is(\.connected),
+            connectionStatusStream: { [$connectionState] in
+                $connectionState
+                    .publisher
+                    .map { $0.is(\.connected) }
+                    .values
+            }
         )
     }
 }

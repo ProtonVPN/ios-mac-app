@@ -42,8 +42,7 @@ extension DoHVPN {
             alternativeRouting: alternativeRouting,
             customHost: customHost,
             atlasSecret: atlasSecret,
-            isConnected: false, // we can refactor this to be more TCA friendly in the future
-            isAppStateNotificationConnected: { _ in false }
+            isConnected: false // tvOS currently has no shared connection-state feed for DoH
         )
     }
 }

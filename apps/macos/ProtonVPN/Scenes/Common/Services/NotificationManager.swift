@@ -23,20 +23,21 @@
 import AppKit
 import Combine
 import CommonNetworking
+import ComposableArchitecture
 import Dependencies
 import Domain
 import Foundation
 import LegacyCommon
 import Strings
 import UserNotifications
+import VPNAppCore
 import VPNShared
 
 final class NotificationManager: NSObject, NotificationManagerProtocol {
     private let delayBeforeDismissing: Duration = .seconds(5)
-    private let appStateManager: AppStateManager
     private let appSessionManager: AppSessionManager
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
-    private var nonTransientState: AppState = .disconnected
     private var cancellables = Set<AnyCancellable>()
 
     private var shouldShowNotification: Bool {
@@ -46,17 +47,20 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
             && provider.getDefaults().bool(forKey: AppConstants.UserDefaults.systemNotifications)
     }
 
-    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager) {
-        self.appStateManager = appStateManager
+    init(appSessionManager: AppSessionManager) {
         self.appSessionManager = appSessionManager
-
         super.init()
 
-        setNonTransientState(state: appStateManager.state)
         UNUserNotificationCenter.current().delegate = self
-        appStateManager.appStateUpdates
-            .sink { [weak self] newState in
-                self?.appStateChanged(newState)
+        $vpnConnectionStatus
+            .publisher
+            .compactMap { status -> VPNConnectionActual? in
+                guard case let .connected(_, actual?) = status else { return nil }
+                return actual
+            }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] actual in
+                self?.vpnConnectionChanged(actual)
             }
             .store(in: &cancellables)
         setupActions()
@@ -84,44 +88,33 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
         UNUserNotificationCenter.current().setNotificationCategories([portForwardingCategory])
     }
 
-    private func appStateChanged(_ newState: AppState) {
-        if case AppState.connected = newState, let server = appStateManager.activeConnection()?.server, shouldShowNotification {
-            postTransient(connectedNotification(for: server))
-        }
-
-        setNonTransientState(state: newState)
-    }
-
-    private func setNonTransientState(state: AppState) {
-        switch state {
-        case .connected, .disconnected, .aborted, .error:
-            nonTransientState = state
-        default:
-            break
+    private func vpnConnectionChanged(_ actual: VPNConnectionActual) {
+        if shouldShowNotification {
+            postTransient(connectedNotification(for: actual))
         }
     }
 
-    private func connectedNotification(for server: ServerModel) -> UNNotificationRequest {
+    private func connectedNotification(for connection: VPNConnectionActual) -> UNNotificationRequest {
         @Dependency(\.uuid) var uuidgen
 
         let content = UNMutableNotificationContent()
         content.title = Localizable.protonVpnConnected
-        content.subtitle = connectSubtitle(forServer: server)
-        content.body = connectInformativeText(forServer: server)
+        content.subtitle = connectSubtitle(forServer: connection.server)
+        content.body = connectInformativeText(for: connection)
         let identifier = "connected-\(uuidgen)"
         return UNNotificationRequest(identifier: identifier, content: content, trigger: nil)
     }
 
-    private func connectSubtitle(forServer server: ServerModel) -> String {
-        if server.isSecureCore {
-            server.entryCountry + " > " + server.exitCountry + " > " + server.name
+    private func connectSubtitle(forServer server: Server) -> String {
+        if server.logical.feature.contains(.secureCore) {
+            server.logical.entryCountry + " > " + server.logical.exitCountry + " > " + server.logical.name
         } else {
-            server.country + " > " + server.name
+            server.logical.exitCountry + " > " + server.logical.name
         }
     }
 
-    private func connectInformativeText(forServer _: ServerModel) -> String {
-        Localizable.ipValue(appStateManager.activeConnection()?.serverIp.exitIp ?? Localizable.unavailable)
+    private func connectInformativeText(for connection: VPNConnectionActual) -> String {
+        Localizable.ipValue(connection.server.endpoint.exitIp)
     }
 
     private func post(_ request: UNNotificationRequest) {

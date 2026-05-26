@@ -21,8 +21,8 @@
 //
 
 import Announcement
-import Combine
 import CommonNetworking
+import Connection
 import Countries
 import Dependencies
 import Domain
@@ -52,7 +52,6 @@ protocol AppSessionManagerFactory {
 }
 
 protocol AppSessionManager {
-    var vpnGateway: VpnGatewayProtocol { get }
     var sessionStatus: SessionStatus { get set }
     var loggedIn: Bool { get }
 
@@ -70,17 +69,14 @@ protocol AppSessionManager {
 final class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
     typealias Factory =
         AppSessionRefreshTimerFactory &
-        AppStateManagerFactory &
         CoreAlertServiceFactory &
         NavigationServiceFactory &
         ProfileManagerFactory &
         UpdateCheckerFactory &
-        VpnAuthenticationFactory &
-        VpnGatewayFactory
+        VpnAuthenticationFactory
 
     private let factory: Factory
 
-    lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private var navService: NavigationService? {
         factory.makeNavigationService()
     }
@@ -94,11 +90,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.unauthKeychain) private var unauthKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.vpnApiClient) private var vpnApiClient
-    lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
     @Dependency(\.paymentsPlanServiceV2) private var planServiceV2
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Shared(.connectionState) private var connectionState: ConnectionState
 
     var sessionStatus: SessionStatus = .undetermined {
         didSet {
@@ -109,7 +105,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     private var refreshUserInfoTask: Task<Void, Error>?
     private var paymentTransactionEvents: Task<Void, Never>?
-    private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Init
 
@@ -191,11 +186,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         log.info("Attempting to load data without login")
 
         let shouldRefreshServers = !serverManager.shouldFetchFullServerList
-        let appState = await appStateManager.stateThreadSafe
         let properties: VpnProperties
         do {
             properties = try await vpnApiClient.vpnProperties(
-                isDisconnected: appState.isDisconnected,
+                isDisconnected: isDisconnectedForPropertiesRefresh,
                 lastKnownLocation: propertiesManager.userLocation,
                 serversAccordingToTier: shouldRefreshServers
             )
@@ -265,7 +259,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                     // that new keys needed regenerating. VpnAuthentication has deleted the keys, and now
                     // we just need to attempt to reconnect, since that will generate new keys for us.
                     executeOnUIThread {
-                        AppEvent.needsReconnect.post()
                         continuation.resume()
                     }
                 case let .failure(error):
@@ -278,7 +271,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     // swiftlint:disable function_body_length
     private func retrievePropertiesAndLogIn() async throws {
         @Dependency(\.serverManager) var serverManager
-        let appState = await appStateManager.stateThreadSafe
         let shouldRefreshServersAccordingToTier = !serverManager.shouldFetchFullServerList
 
         async let status = try planServiceV2.fetchIAPStatus()
@@ -286,7 +278,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         // Get VPN properties from API and save them
         do {
             let properties = try await vpnApiClient.vpnProperties(
-                isDisconnected: appState.isDisconnected,
+                isDisconnected: isDisconnectedForPropertiesRefresh,
                 lastKnownLocation: propertiesManager.userLocation,
                 serversAccordingToTier: shouldRefreshServersAccordingToTier
             )
@@ -366,7 +358,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             }
         }
 
-        // In case we are connected to VPN, but can't get auth info from `appStateManager` nor
+        // In case we are connected to VPN, but can't get auth info from connection-aware state nor
         // from `vpnKeychain`, we fail miserably and log out.
         do {
             try await resolveActiveSession()
@@ -388,25 +380,13 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func resolveActiveSession() async throws {
         await MainActor.run { AppEvent.sessionManagerSessionRefreshed.post() }
 
-        guard await appStateManager.stateThreadSafe.isConnected else {
+        guard isConnectedForSessionValidation else {
             return // Success
         }
 
-        guard let activeUsername = await appStateManager.stateThreadSafe.descriptor?.username,
-              let vpnCredentials = try? vpnKeychain.fetch() else {
+        guard (try? vpnKeychain.fetch()) != nil else {
             throw CommonVpnError.fetchSession // Error
         }
-
-        let usernameFromAppStateManager = activeUsername.removeSubstring(startingWithCharacter: VpnManagerConfiguration.configConcatChar)
-        let usernameFromKeychain = vpnCredentials.name.removeSubstring(startingWithCharacter: VpnManagerConfiguration.configConcatChar)
-        if usernameFromAppStateManager == usernameFromKeychain {
-            return // Success
-        }
-        log.debug("VPN usernames don't match", category: .app, metadata: ["usernameFromAppStateManager": "\(usernameFromAppStateManager)", "usernameFromKeychain": "\(usernameFromKeychain)"])
-
-        // Info: Before refactoring, this method could finish without calling either a success
-        // or a failure. Now if finishes successfully in case ifs above haven't finished
-        // execution earlier.
     }
 
     func refreshUserInfo() {
@@ -514,7 +494,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     // MARK: -
 
-    // Updates the status of the app, including refreshing the VpnGateway object if the VPN creds change
+    // Updates the status of the app
     private func setAndNotify(for state: SessionStatus, reason: String?) {
         guard !loggedIn else { return }
 
@@ -522,7 +502,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         if state == .established {
             loggedIn = true
             propertiesManager.hasConnected = true
-            DispatchQueue.main.async { [weak self] in AppEvent.sessionManagerSessionChanged.post(self?.vpnGateway) }
+            DispatchQueue.main.async { AppEvent.sessionManagerSessionChanged.post() }
         } else if state == .notEstablished {
             // Clear auth token and vpn creds to ensure they won't be used
             logOutCleanup()
@@ -617,6 +597,28 @@ extension AppSessionManagerImplementation {
             AppEvent.sessionManagerDataReloaded.post()
         } catch {
             log.error("Data reload failed after plan purchase", category: .app, metadata: ["error": "\(error)"])
+        }
+    }
+}
+
+// MARK: - Review
+
+extension AppSessionManagerImplementation {
+    private var isConnectedForSessionValidation: Bool {
+        switch connectionState {
+        case .connected, .disconnecting:
+            true
+        case .resolving, .disconnected, .connecting:
+            false
+        }
+    }
+
+    private var isDisconnectedForPropertiesRefresh: Bool {
+        switch connectionState {
+        case .connected, .disconnecting:
+            false
+        case .resolving, .disconnected, .connecting:
+            true
         }
     }
 }

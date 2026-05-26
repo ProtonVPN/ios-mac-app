@@ -21,9 +21,9 @@ import Combine
 import ComposableArchitecture
 import Connection
 import ConnectionDetails
+import ConnectionDetailsShared
 import Dependencies
 import Foundation
-import ConnectionDetailsShared
 import LocalAgent
 import ModalsServices
 import NetShield
@@ -49,6 +49,7 @@ public struct HomeFeature {
     #endif
 
     @SharedReader(.userTier) private var userTier: Int?
+    @SharedReader(.killSwitch) var killSwitch
 
     @Reducer
     public enum Destination {
@@ -86,7 +87,7 @@ public struct HomeFeature {
         @Presents public var destination: Destination.State?
 
         public init() {
-            self.connectionStatus = .init(isUsingConnectionPackage: HomeFeature.shouldUseConnectionFeature)
+            self.connectionStatus = .init()
             self.connectionCard = .init()
             self.sharedProperties = .init()
             self.recents = .init()
@@ -115,6 +116,7 @@ public struct HomeFeature {
         case disconnect(UserInitiatedVPNChange.VPNTrigger)
 
         case incomingAlert(Alert)
+        case killSwitchSettingChanged(Bool)
 
         case connection(ConnectionFeature.Action)
         case map(HomeMapFeature.Action)
@@ -136,8 +138,6 @@ public struct HomeFeature {
 
         case destination(PresentationAction<Destination.Action>)
     }
-
-    private static let shouldUseConnectionFeature: Bool = FeatureFlagsRepository.isConnectionFeatureEnabled
 
     private static let whatsNewPresentationDelay: Duration = .seconds(3)
 
@@ -176,12 +176,10 @@ public struct HomeFeature {
     #endif
 
     public var body: some Reducer<State, Action> {
-        if Self.shouldUseConnectionFeature {
-            Scope(state: \.connection, action: \.connection) {
-                ConnectionFeature()
-                    ._printChanges()
-                    .logActions(.connectionLogger) // Logs actions to our usual logger, even outside of DEBUG.
-            }
+        Scope(state: \.connection, action: \.connection) {
+            ConnectionFeature()
+                ._printChanges()
+                .logActions(.connectionLogger) // Logs actions to our usual logger, even outside of DEBUG.
         }
         Scope(state: \.sharedProperties, action: \.sharedProperties) {
             SharedPropertiesFeature()
@@ -207,6 +205,19 @@ public struct HomeFeature {
         Scope(state: \.localAgentNotice, action: \.localAgentNotice) {
             LocalAgentNoticeFeature()
         }
+        lifecycleAndObservationReducer
+        recentsAndSharedPropertiesReducer
+        connectionCommandsReducer
+        connectionCardReducer
+        destinationReducer
+        connectionEventsReducer
+        miscReducer
+            .ifLet(\.$destination, action: \.destination)
+    }
+}
+
+private extension HomeFeature {
+    var lifecycleAndObservationReducer: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onStart:
@@ -222,9 +233,33 @@ public struct HomeFeature {
                         for await alert in await alertService.alerts() {
                             await send(.incomingAlert(alert))
                         }
+                    },
+                    .run { send in
+                        for await value in $killSwitch.publisher.removeDuplicates().values.dropFirst() {
+                            await send(.killSwitchSettingChanged(value))
+                        }
                     }
                 )
                 .cancellable(id: CancelID.connectionState)
+            case .killSwitchSettingChanged:
+                guard state.vpnConnectionStatus.isConnected(using: state.connectionState),
+                      let spec = state.vpnConnectionStatus.spec
+                else {
+                    return .none
+                }
+                return .send(.connection(.input(.connect(.init(spec: spec, acceptableProtocols: .all)))))
+            case let .incomingAlert(alert):
+                pushAlert(DomainErrorAlert(alert: alert))
+                return .none
+            default:
+                return .none
+            }
+        }
+    }
+
+    var recentsAndSharedPropertiesReducer: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
             case let .recents(.delegate(.connect(spec, pinned))):
                 return .send(.connect(spec, pinned ? .pin : .recent))
             case let .recents(.delegate(.upsellTapped(type))):
@@ -254,13 +289,18 @@ public struct HomeFeature {
                     pushAlert(alert)
                 #endif
                 return .none
-            case .recents:
-                return .none
             case .sharedProperties(.userLocation(.userLocationFetchFinished(.success(_)))):
                 // a bit unfortunate but map.pinOffset can only be updated via this action atm
                 return .send(.map(.connectionStateUpdated(state.vpnConnectionStatus)))
-            case .sharedProperties:
+            default:
                 return .none
+            }
+        }
+    }
+
+    var connectionCommandsReducer: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
             case let .connect(spec, trigger):
                 return .run { send in
                     try await connectToVPN(spec, nil, trigger)
@@ -276,9 +316,7 @@ public struct HomeFeature {
                     return .none
                 }
                 let randomConnectionSpec = ConnectionSpec(location: .any(.random), features: .init())
-                return .concatenate([
-                    .send(.connect(randomConnectionSpec, .changeServer)),
-                ])
+                return .send(.connect(randomConnectionSpec, .changeServer))
             case let .disconnect(trigger):
                 return .run { _ in
                     try await disconnectVPN(trigger)
@@ -305,12 +343,15 @@ public struct HomeFeature {
                     pushAlert(alert)
                 #endif
                 return .none
-            case .connectionStatus:
+            default:
                 return .none
-            case .connectionDetails:
-                return .none
-            case .helpButtonPressed:
-                return .none
+            }
+        }
+    }
+
+    var connectionCardReducer: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
             case let .connectionCard(.delegate(action)):
                 switch action {
                 case let .connect(spec):
@@ -345,8 +386,15 @@ public struct HomeFeature {
                     state.destination = .defaultConnection(.init())
                     return .none
                 }
-            case .connectionCard:
+            default:
                 return .none
+            }
+        }
+    }
+
+    var destinationReducer: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
             case let .destination(.presented(.changeServer(buttonAction))):
                 state.destination = nil
                 switch buttonAction {
@@ -356,7 +404,9 @@ public struct HomeFeature {
                 case .changeServerButtonTapped:
                     return .send(.changeServer)
                 }
-            case .destination(.presented(.freeConnectionsInfo(.dismissButtonTapped))):
+            case .destination(.presented(.freeConnectionsInfo(.dismissButtonTapped))),
+                 .destination(.presented(.defaultConnection(.preferenceSelected))),
+                 .destination(.presented(.whatsNew(.dismissItem))):
                 state.destination = nil
                 return .none
             case .destination(.presented(.freeConnectionsInfo(.upgradeButtonTapped))):
@@ -365,12 +415,6 @@ public struct HomeFeature {
                 #else
                     pushAlert(AllCountriesUpsellAlert())
                 #endif
-                return .none
-            case .destination(.presented(.defaultConnection(.preferenceSelected))):
-                state.destination = nil
-                return .none
-            case .destination(.presented(.whatsNew(.dismissItem))):
-                state.destination = nil
                 return .none
             case .destination(.presented(.localAgentNotice(.disconnect))):
                 state.destination = nil
@@ -388,28 +432,23 @@ public struct HomeFeature {
                         openCredentiallessSignUp()
                     }
             #endif
-            case .destination:
+            default:
                 return .none
-            case .map:
-                return .none
-            case .freeConnectionsInfo:
-                return .none
+            }
+        }
+    }
+
+    var connectionEventsReducer: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
             case let .connection(.core(.localAgent(.event(.stats(message))))):
                 return .send(.connectionStatus(.newNetShieldStats(message.netShield.toNetShieldModel)))
             case let .connection(.delegate(.connectionFailed(error))):
                 SentryHelper.shared?.log(error: error)
-                return .run { send in
+                return .run { [pushAlert] send in
                     await send(.sharedProperties(.connectionFailed(error)))
-                    await alertService.feed(error)
+                    pushAlert(connectionFailureAlert(for: error))
                 }
-            case let .whatsNewChecker(.show(items)):
-                state.destination = .whatsNew(.init(item: items[0]))
-                return .none
-            case .whatsNewChecker(_), .whatsNewPresenter:
-                return .none
-            case let .incomingAlert(alert):
-                pushAlert(DomainErrorAlert(alert: alert))
-                return .none
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
                 let status = connectionState.status
@@ -459,7 +498,17 @@ public struct HomeFeature {
             case let .connection(.delegate(.localAgentNotice(authenticationError))):
                 state.destination = .localAgentNotice(.init(code: authenticationError.charCode))
                 return .none
-            case .connection:
+            default:
+                return .none
+            }
+        }
+    }
+
+    var miscReducer: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
+            case let .whatsNewChecker(.show(items)):
+                state.destination = .whatsNew(.init(item: items[0]))
                 return .none
             case .didDismissChangeServer:
                 if state.shouldPushAlert {
@@ -473,13 +522,21 @@ public struct HomeFeature {
                     #endif
                 }
                 return .none
-            case .announcementBanner:
-                return .none
-            case .localAgentNotice:
+            default:
                 return .none
             }
         }
-        .ifLet(\.$destination, action: \.destination)
+    }
+}
+
+private extension HomeFeature {
+    func connectionFailureAlert(for error: ConnectionError) -> SystemAlert {
+        switch error {
+        case .preparation(.networkUnreachable):
+            VpnNetworkUnreachableAlert()
+        default:
+            DomainErrorAlert(alert: error.alert)
+        }
     }
 }
 

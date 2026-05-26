@@ -21,6 +21,7 @@ import Foundation
 @testable import ProtonVPN
 import Testing
 
+@MainActor
 struct SystemExtensionsServiceReducerTests {
     @Test("install emits approval once and then completion")
     func installEmitsApprovalAndCompletion() async {

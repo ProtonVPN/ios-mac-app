@@ -59,16 +59,18 @@ public final class AppDelegateService: AppDelegateProtocol {
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.connectToVPN) private var connectToVPN
+    @Dependency(\.disconnectVPN) private var disconnectVPN
 
     private let container: DependencyContainer
-    private lazy var vpnManager: VpnManagerProtocol = container.makeVpnManager()
     private lazy var appSessionManager: AppSessionManager = container.makeAppSessionManager()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
-    private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
     private lazy var pushNotificationService = container.makePushNotificationService()
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     private var tokens: [NotificationToken] = []
     private var cancellables = Set<AnyCancellable>()
+    private var deepLinkConnectStatusCancellable: AnyCancellable?
 
     public init() {
         prepareDependencies {
@@ -109,9 +111,6 @@ public final class AppDelegateService: AppDelegateProtocol {
 
             await setupCoreIntegration()
 
-            // Make sure AppStateManager is ready and is created on the main thread
-            _ = appStateManager
-
             await checkMigration()
 
             // Protocol check is placed here for parity with MacOS
@@ -130,7 +129,6 @@ public final class AppDelegateService: AppDelegateProtocol {
                 )
             }
 
-            await vpnManager.prepareManagersTask?.value
             await self.navigationService.launched()
         }
 
@@ -145,13 +143,10 @@ public final class AppDelegateService: AppDelegateProtocol {
         startObservingNetworkingEvents()
     }
 
-    public func applicationWillEnterForeground() {
-        appStateManager.refreshState()
-    }
+    public func applicationWillEnterForeground() {}
 
     public func applicationDidEnterBackground() {
         log.info("applicationDidEnterBackground", category: .os)
-        vpnManager.appBackgroundStateDidChange(isBackground: true)
     }
 
     public func applicationWillResignActive() {
@@ -180,8 +175,6 @@ public final class AppDelegateService: AppDelegateProtocol {
 
     public func applicationDidBecomeActive() {
         log.info("applicationDidBecomeActive", category: .os)
-        vpnManager.appBackgroundStateDidChange(isBackground: false)
-
         switchToHomeIfConnecting()
 
         // Refresh API announcements
@@ -287,18 +280,34 @@ public final class AppDelegateService: AppDelegateProtocol {
             guard verified else { return false }
 
             // Extensions requesting a connection should set a connection request first
-            navigationService.vpnGateway.quickConnect(trigger: .widget)
-            AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateDidUpdate))
+            Task {
+                do {
+                    try await connectToVPN(
+                        propertiesManager.lastConnectionIntent,
+                        propertiesManager.connectionProtocol,
+                        .widget
+                    )
+                } catch {
+                    log.error("Deep link connect failed", category: .connectionConnect, metadata: ["error": "\(error)"])
+                }
+            }
+            startListeningForDeepLinkConnectState()
             navigationService.presentStatusViewController()
 
         case URLConstants.deepLinkDisconnectAction:
             // Action may only come from a trusted source
             guard verified else { return false }
 
-            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.widget))
-            navigationService.vpnGateway.disconnect {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+            Task {
+                do {
+                    try await disconnectVPN(.widget)
+                } catch {
+                    log.error("Deep link disconnect failed", category: .connectionDisconnect, metadata: ["error": "\(error)"])
+                }
+                await MainActor.run {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+                    }
                 }
             }
 
@@ -328,21 +337,26 @@ public final class AppDelegateService: AppDelegateProtocol {
         return true
     }
 
-    @objc
-    private func stateDidUpdate() {
-        switch appStateManager.state {
-        case .connected:
-            NotificationCenter.default.removeObserver(self)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+    private func startListeningForDeepLinkConnectState() {
+        deepLinkConnectStatusCancellable?.cancel()
+        deepLinkConnectStatusCancellable = $vpnConnectionStatus
+            .publisher
+            .sink { [weak self] status in
+                guard let self else { return }
+                switch status {
+                case .connected:
+                    deepLinkConnectStatusCancellable?.cancel()
+                    deepLinkConnectStatusCancellable = nil
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+                    }
+                case .connecting, .resolving:
+                    return
+                case .disconnected, .disconnecting:
+                    deepLinkConnectStatusCancellable?.cancel()
+                    deepLinkConnectStatusCancellable = nil
+                }
             }
-        case .connecting, .preparingConnection:
-            // wait
-            return
-        default:
-            NotificationCenter.default.removeObserver(self)
-            return
-        }
     }
 
     private func isVerifiedUrl(_ components: URLComponents) -> Bool {

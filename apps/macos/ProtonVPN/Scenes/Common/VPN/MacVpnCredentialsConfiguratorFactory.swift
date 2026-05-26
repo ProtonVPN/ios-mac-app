@@ -14,11 +14,9 @@ import LegacyCommon
 import VPNShared
 
 final class MacVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory {
-    private let vpnAuthentication: VpnAuthentication
     private let appGroup: String
 
-    init(vpnAuthentication: VpnAuthentication, appGroup: String) {
-        self.vpnAuthentication = vpnAuthentication
+    init(appGroup: String) {
         self.appGroup = appGroup
     }
 

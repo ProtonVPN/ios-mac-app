@@ -104,9 +104,6 @@ public protocol PropertiesManagerProtocol: AnyObject {
         var forceExtensionUpgrade: Bool {
             get set
         }
-        var connectedServerNameDoNotUse: String? {
-            get set
-        }
     #endif
 
     var atlasSecret: String? { get set }
@@ -218,7 +215,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
         #if os(macOS)
             case forceExtensionUpgrade = "ForceExtensionUpgrade"
-            case connectedServerNameDoNotUse = "ConnectedServerNameDoNotUse"
         #endif
 
         case didShowDeprecationWarningForOSVersion = "DidShowDeprecationWarningForOSVersion"
@@ -259,14 +255,11 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     @BoolProperty(.firstLaunchReported) public var firstLaunchReported: Bool
 
     // Use to do first time connecting stuff if needed
-    @BoolProperty(.connectOnDemand, notifyChangesWith: .hasConnected)
-    public var hasConnected: Bool
+    @BoolProperty(.connectOnDemand) public var hasConnected: Bool
 
-    @Property(.lastIkeConnection, notifyChangesWith: .activeConnectionChanged)
-    public var lastIkeConnection: ConnectionConfiguration?
+    @Property(.lastIkeConnection) public var lastIkeConnection: ConnectionConfiguration?
 
-    @Property(.lastWireguardConnection, notifyChangesWith: .activeConnectionChanged)
-    public var lastWireguardConnection: ConnectionConfiguration?
+    @Property(.lastWireguardConnection) public var lastWireguardConnection: ConnectionConfiguration?
 
     @Property(.lastPreparingServer) public var lastPreparedServer: ServerModel?
     @Property(.lastConnectionRequest) public var lastConnectionRequest: ConnectionRequest?
@@ -315,11 +308,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
     #if os(macOS)
         @BoolProperty(.forceExtensionUpgrade) public var forceExtensionUpgrade: Bool
-
-        /// The name of the currently connected server. This is used by command line scripts. Don't use this in code.
-        ///
-        /// - Important: Really, don't use this. Anywhere.
-        @StringProperty(.connectedServerNameDoNotUse) public var connectedServerNameDoNotUse: String?
     #endif
 
     @InitializedProperty(.vpnProtocol, notifyChangesWith: .vpnProtocol)

@@ -28,7 +28,7 @@ import LegacyCommon
 
 final class OverviewViewModel {
     private let profileManager: ProfileManager
-    private let vpnGateway: VpnGatewayProtocol
+    @Dependency(\.vpnKeychain) private var vpnKeychain
 
     @Dependency(\.sessionService) private var sessionService: SessionService
 
@@ -36,8 +36,7 @@ final class OverviewViewModel {
     var createNewProfile: (() -> Void)?
     var editProfile: ((Profile) -> Void)?
 
-    init(vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager) {
-        self.vpnGateway = vpnGateway
+    init(profileManager: ProfileManager) {
         self.profileManager = profileManager
 
         AppEvent.profileContentChanged.subscribe(self, selector: #selector(profilesChanged))
@@ -54,7 +53,7 @@ final class OverviewViewModel {
 
     private var userTier: Int {
         do {
-            return try vpnGateway.userTier()
+            return try vpnKeychain.fetchCached().maxTier
         } catch {
             return .freeTier
         }

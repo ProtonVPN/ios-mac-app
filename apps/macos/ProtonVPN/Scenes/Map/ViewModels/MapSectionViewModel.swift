@@ -22,6 +22,7 @@
 
 import Combine
 import CommonNetworking
+import ComposableArchitecture
 import Dependencies
 import Domain
 import Ergonomics
@@ -47,8 +48,6 @@ protocol MapSectionViewModelFactory {
 extension DependencyContainer: MapSectionViewModelFactory {
     func makeMapSectionViewModel() -> MapSectionViewModel {
         MapSectionViewModel(
-            appStateManager: makeAppStateManager(),
-            vpnGateway: makeVpnGateway(),
             navService: makeNavigationService(),
             alertService: makeCoreAlertService()
         )
@@ -59,11 +58,11 @@ class MapSectionViewModel {
     private let countrySelected = Notification.Name("MapSectionViewModelCountrySelected")
     private let scEntryCountrySelected = Notification.Name("MapSectionViewModelScEntryCountrySelected")
     private let scExitCountrySelected = Notification.Name("MapSectionViewModelScExitCountrySelected")
-    private let appStateManager: AppStateManager
-    private let vpnGateway: VpnGatewayProtocol
     private let navService: NavigationService
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
     private let alertService: CoreAlertService
     private var cancellables = Set<AnyCancellable>()
 
@@ -75,28 +74,23 @@ class MapSectionViewModel {
     var annotations: [CountryAnnotationViewModel] = []
     var connections: [ConnectionViewModel] = []
 
-    init(
-        appStateManager: AppStateManager,
-        vpnGateway: VpnGatewayProtocol,
-        navService: NavigationService,
-        alertService: CoreAlertService
-    ) {
-        self.appStateManager = appStateManager
-        self.vpnGateway = vpnGateway
+    init(navService: NavigationService, alertService: CoreAlertService) {
         self.navService = navService
         self.alertService = alertService
 
-        appStateManager.appStateUpdates
-            .sink { [weak self] state in
-                self?.appStateChanged(state)
+        $vpnConnectionStatus
+            .publisher
+            .sink { [weak self] status in
+                self?.vpnConnectionStatusChanged(status)
             }
             .store(in: &cancellables)
-        // moved from Countries
-        let vpnConnectionChangedEvents: [AppEvent] = [
-            .activeServerTypeChanged,
-            .connectionStateChanged,
-        ]
-        vpnConnectionChangedEvents.subscribe(self, selector: #selector(viewToggled))
+        $secureCoreToggle
+            .publisher
+            .sink { [weak self] isSecureCore in
+                guard let self else { return }
+                setView(isSecureCore ? .secureCore : .standard)
+            }
+            .store(in: &cancellables)
         AppEvent.vpnProtocol.subscribe(self, selector: #selector(resetCurrentState))
 
         NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState), name: ServerListUpdateNotification.name, object: nil)
@@ -108,22 +102,46 @@ class MapSectionViewModel {
 
     // MARK: - Private functions
 
-    private func appStateChanged(_ state: AppState) {
-        if state.isConnected,
-           let serverType = appStateManager.activeConnection()?.server.serverType, serverType != activeView {
+    private func vpnConnectionStatusChanged(_ status: VPNConnectionStatus) {
+        if let serverType = connectedServerType(for: status), serverType != activeView {
             setView(serverType)
         }
 
         for annotation in annotations {
-            annotation.appStateChanged(to: state)
+            annotation.appStateChanged(to: status)
         }
 
         updateConnections()
     }
 
-    @objc
-    private func viewToggled() {
-        setView(propertiesManager.serverTypeToggle)
+    private func connectedServerType(for status: VPNConnectionStatus) -> ServerType? {
+        guard case let .connected(spec, actual) = status else {
+            return nil
+        }
+
+        if let actual {
+            if actual.server.logical.feature.contains(.secureCore) {
+                return .secureCore
+            }
+            if actual.server.logical.feature.contains(.tor) {
+                return .tor
+            }
+            if actual.server.logical.feature.contains(.p2p) {
+                return .p2p
+            }
+        }
+
+        if case .secureCore = spec.location {
+            return .secureCore
+        }
+        if spec.features.contains(.tor) {
+            return .tor
+        }
+        if spec.features.contains(.p2p) {
+            return .p2p
+        }
+
+        return .standard
     }
 
     @objc
@@ -200,7 +218,6 @@ class MapSectionViewModel {
                 return nil
             }
             return StandardCountryAnnotationViewModel(
-                appStateManager: appStateManager,
                 countryCode: code,
                 minTier: group.minTier,
                 userTier: userTier,
@@ -252,7 +269,6 @@ class MapSectionViewModel {
             let servers = secureCoreServers.filter { $0.logical.exitCountryCode == exitCountryCode }
 
             let annotation = SCExitCountryAnnotationViewModel(
-                appStateManager: appStateManager,
                 countryCode: exitCountryCode,
                 minTier: servers.map(\.logical.tier).min() ?? .freeTier,
                 servers: servers,
@@ -274,7 +290,6 @@ class MapSectionViewModel {
 
         let entryCountryAnnotations: [CountryAnnotationViewModel] = entryToExitCountryCodeMap.map { entry, exits in
             let annotation = SCEntryCountryAnnotationViewModel(
-                appStateManager: appStateManager,
                 countryCode: entry,
                 exitCountryCodes: exits,
                 coordinate: LocationUtility.coordinate(forCountry: entry)

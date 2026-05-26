@@ -23,12 +23,7 @@ import ProtonCoreFeatureFlags
 import VPNAppCore
 
 extension DisconnectVPNKey: @retroactive DependencyKey {
-    public static let liveValue = {
-        if FeatureFlagsRepository.isConnectionFeatureEnabled {
-            return newDisconnect
-        }
-        return legacyDisconnect
-    }()
+    public static let liveValue = newDisconnect
 
     public static let newDisconnect: @Sendable (UserInitiatedVPNChange.VPNTrigger) async throws -> Void = { trigger in
         @Dependency(\.connectionBridge) var bridge
@@ -37,9 +32,6 @@ extension DisconnectVPNKey: @retroactive DependencyKey {
 
         AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(trigger))
         propertiesManager.intentionallyDisconnected = true
-        #if os(macOS)
-            propertiesManager.connectedServerNameDoNotUse = nil
-        #endif
         await bridge.push(intent: .disconnect)
 
         // let's wait a bit to be disconnected, but no more than 3 seconds
@@ -48,19 +40,5 @@ extension DisconnectVPNKey: @retroactive DependencyKey {
         try? await $connectionState.when(willBe: \.disconnected, every: .milliseconds(200), deadline: .seconds(3)) {
             // no-op
         }
-    }
-
-    /// Bridges new disconnection dependency with the legacy connection layer
-    public static let legacyDisconnect: @Sendable (UserInitiatedVPNChange.VPNTrigger) async throws -> Void = { _ in
-        @Dependency(\.propertiesManager) var propertiesManager
-        propertiesManager.intentionallyDisconnected = true
-        #if os(macOS)
-            propertiesManager.connectedServerNameDoNotUse = nil
-        #endif
-        let gateway = Container.sharedContainer.makeVpnGateway2()
-        try await gateway.disconnect()
-
-        // TODO: old VpnGateway was reloading server info after disconnect. New one does not.
-        // Decide where to put this functionality and implement it!
     }
 }

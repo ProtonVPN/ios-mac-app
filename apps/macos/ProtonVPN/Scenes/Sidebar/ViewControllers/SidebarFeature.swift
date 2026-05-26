@@ -16,15 +16,25 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 import ComposableArchitecture
+import Connection
 import CoreGraphics
 import Domain
+import ExtensionManager
+import Foundation
 import LegacyCommon
+import ProtonCoreFeatureFlags
+import VPNAppCore
 
 @Reducer
 struct SidebarFeature {
     @ObservableState
     struct State: Equatable {
+        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+        @Shared(.connectionState) var connectionState: ConnectionState
+        var connection: ConnectionFeature.State = .initialState
+
         enum ExpandState: Equatable {
             case compact
             case expanded
@@ -37,6 +47,7 @@ struct SidebarFeature {
         var mapWidth: CGFloat = 600
         var isFullscreen = false
         var isOccludedVisible = true
+        var natPortMappingRunning = false
         var countriesSection = CountriesSectionFeature.State()
 
         var isExpandButtonHidden: Bool {
@@ -49,10 +60,13 @@ struct SidebarFeature {
     }
 
     enum Action {
+        case connection(ConnectionFeature.Action)
+
         case viewDidLoad
         case viewDidAppear
         case mouseDown
         case startObservingEvents
+        case stopObservingEvents
         case connectedOverlayDelayElapsed
         case overlayWindowPresentedChanged(Bool)
         case overlayDismissedByUser
@@ -62,7 +76,10 @@ struct SidebarFeature {
         case windowWillEnterFullScreen
         case windowWillExitFullScreen
         case occlusionStateChanged(isVisible: Bool)
-        case appStateChanged(AppState)
+        case killSwitchSettingChanged(Bool)
+        case vpnConnectionStatusUpdated(VPNConnectionStatus)
+        case syncNATPortMappingState
+        case syncPlutoniumState
 
         case tabChanged(SidebarTab)
         case expandButtonTapped
@@ -82,7 +99,6 @@ struct SidebarFeature {
     }
 
     struct Environment {
-        var appStateChanged: @Sendable () -> AsyncStream<AppState>
         var sidebarWidth: CGFloat
         var expandButtonWidth: CGFloat
         var defaultMapWidth: CGFloat
@@ -94,11 +110,20 @@ struct SidebarFeature {
     @Dependency(\.sidebarEventsClient) private var sidebarEventsClient
     @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
     @Dependency(\.continuousClock) private var clock
-    @Dependency(\.connectToVPN) private var connectToVPN
-    @Dependency(\.disconnectVPN) private var disconnectVPN
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
+    @Dependency(\.natPortMappingService) private var natPortMappingService
+    @Dependency(\.plutoniumManager) private var plutoniumManager
+    @Dependency(\.hermesClient) private var hermesClient
+    @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
+    @Dependency(\.pushAlert) private var pushAlert
 
     var body: some ReducerOf<Self> {
+        Scope(state: \.connection, action: \.connection) {
+            ConnectionFeature()
+                ._printChanges()
+        }
+
         Scope(state: \.countriesSection, action: \.countriesSection) {
             CountriesSectionFeature(quickSettingsEnvironment: quickSettingsEnvironment)
         }
@@ -109,16 +134,15 @@ struct SidebarFeature {
                 state.selectedTab = .countries
                 let loadedMapWidth = defaultsProvider.getDefaults().integer(forKey: AppConstants.UserDefaults.mapWidth)
                 state.mapWidth = loadedMapWidth > Int(environment.expandButtonWidth) ? CGFloat(loadedMapWidth) : environment.defaultMapWidth
-                return .send(.startObservingEvents)
+                return .merge(
+                    .send(.connection(.input(.onLaunch))),
+                    .send(.syncNATPortMappingState),
+                    .send(.syncPlutoniumState),
+                    .send(.startObservingEvents)
+                )
 
             case .startObservingEvents:
                 return .merge(
-                    .run { send in
-                        for await appState in environment.appStateChanged() {
-                            await send(.appStateChanged(appState))
-                        }
-                    }
-                    .cancellable(id: CancelID.appState),
                     .run { send in
                         for await resize in sidebarEventsClient.windowDidResize() {
                             await send(.windowDidResize(width: resize.width, height: resize.height))
@@ -155,7 +179,44 @@ struct SidebarFeature {
                             await send(.connectionCommandReceived(command))
                         }
                     }
-                    .cancellable(id: CancelID.connectionCommands)
+                    .cancellable(id: CancelID.connectionCommands),
+                    .run { send in
+                        for await _ in portForwardingPropertyProvider.portForwardingStream() {
+                            await send(.syncNATPortMappingState)
+                        }
+                    }
+                    .cancellable(id: CancelID.portForwardingSetting),
+                    .run { send in
+                        @SharedReader(.plutoniumFeature) var plutoniumFeature
+                        for await _ in $plutoniumFeature.publisher.values {
+                            await send(.syncPlutoniumState)
+                        }
+                    }
+                    .cancellable(id: CancelID.plutoniumSetting),
+                    .run { send in
+                        @SharedReader(.killSwitch) var killSwitch
+                        for await value in $killSwitch.publisher.removeDuplicates().values.dropFirst() {
+                            await send(.killSwitchSettingChanged(value))
+                        }
+                    }
+                    .cancellable(id: CancelID.killSwitchSetting)
+                )
+
+            case .stopObservingEvents:
+                return .merge(
+                    .cancel(id: CancelID.windowResize),
+                    .cancel(id: CancelID.windowEndResize),
+                    .cancel(id: CancelID.windowEnterFullScreen),
+                    .cancel(id: CancelID.windowExitFullScreen),
+                    .cancel(id: CancelID.occlusion),
+                    .cancel(id: CancelID.overlayDelay),
+                    .cancel(id: CancelID.connectionCommands),
+                    .cancel(id: CancelID.portForwardingSetting),
+                    .cancel(id: CancelID.plutoniumSetting),
+                    .cancel(id: CancelID.killSwitchSetting),
+                    .cancel(id: CancelID.connectionConnectCommandEffect),
+                    .cancel(id: CancelID.connectionDisconnectCommandEffect),
+                    .cancel(id: CancelID.plutoniumSync)
                 )
 
             case .viewDidAppear, .mouseDown:
@@ -187,9 +248,21 @@ struct SidebarFeature {
                 state.isOccludedVisible = isVisible
                 return .none
 
-            case let .appStateChanged(appState):
-                switch appState {
-                case .preparingConnection, .connecting:
+            case .killSwitchSettingChanged:
+                guard state.vpnConnectionStatus.isConnected(using: state.connectionState) else {
+                    return .none
+                }
+                let spec = propertiesManager.lastConnectionIntent
+                let intent = connectionPreparationIntent(
+                    spec: spec,
+                    connectionProtocol: propertiesManager.connectionProtocol
+                )
+                return .send(.connection(.input(.connect(intent))))
+
+            case let .vpnConnectionStatusUpdated(connectionStatus):
+                state.$vpnConnectionStatus.withLock { $0 = connectionStatus }
+                switch connectionStatus {
+                case .resolving, .connecting:
                     state.isLoadingOverlayVisible = true
                     return .cancel(id: CancelID.overlayDelay)
 
@@ -200,20 +273,62 @@ struct SidebarFeature {
                     }
                     .cancellable(id: CancelID.overlayDelay, cancelInFlight: true)
 
-                case .disconnected:
+                case .disconnecting, .disconnected:
                     state.isLoadingOverlayVisible = false
                     return .cancel(id: CancelID.overlayDelay)
+                }
 
-                case let .aborted(userInitiated):
-                    if userInitiated {
-                        state.isLoadingOverlayVisible = false
-                        return .cancel(id: CancelID.overlayDelay)
+            case .syncNATPortMappingState:
+                let shouldRunNatPortMapping = VPNFeatureFlagType.portForwarding.enabled
+                    && portForwardingPropertyProvider.getPortForwarding() == true
+                    && connectionStateSupportsNatPortMapping(state.connectionState)
+
+                guard shouldRunNatPortMapping != state.natPortMappingRunning else {
+                    return .none
+                }
+                state.natPortMappingRunning = shouldRunNatPortMapping
+
+                if shouldRunNatPortMapping {
+                    guard let gatewayAddress = natPortMappingGatewayAddress(from: state.connectionState) else {
+                        state.natPortMappingRunning = false
+                        log.error("Cannot start NAT port mapping - unable to determine gateway address", category: .connection)
+                        return .none
+                    }
+                    return .run { _ in
+                        natPortMappingService.startPortMapping(gatewayAddress: gatewayAddress)
+                        log.info("NAT port mapping service started", category: .connection)
+                    }
+                } else {
+                    return .run { _ in
+                        await natPortMappingService.cancelPortMapping()
+                        log.info("NAT port mapping service stopped", category: .connection)
+                    }
+                }
+
+            case .syncPlutoniumState:
+                let connectionState = state.connectionState
+                return .run { _ in
+                    @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
+                    guard FeatureFlagsRepository.shared
+                        .isEnabled(VPNFeatureFlagType.plutoniumMacOS, reloadValue: true), case .enabled = feature
+                    else {
+                        try await plutoniumManager.stop()
+                        return
                     }
 
-                default:
-                    break
+                    if connectionState.is(\.connected) {
+                        try await plutoniumManager.start()
+                    } else {
+                        try await plutoniumManager.stop()
+                    }
+                } catch: { error, _ in
+                    if case let PlutoniumManagerError.saveFailed(saveError) = error {
+                        log.error("Error while saving plutonium manager: \(saveError)")
+                    } else {
+                        log.error("Error while updating plutonium state: \(error.localizedDescription)")
+                    }
                 }
-                return .none
+                .cancellable(id: CancelID.plutoniumSync, cancelInFlight: true)
 
             case .connectedOverlayDelayElapsed:
                 state.isLoadingOverlayVisible = false
@@ -236,31 +351,77 @@ struct SidebarFeature {
                 return .none
 
             case let .connectionCommandReceived(.connect(spec, connectionProtocol, trigger)):
-                return .run { _ in
-                    try? await connectToVPN(spec, connectionProtocol, trigger)
-                }
-                .cancellable(id: CancelID.connectionCommandEffect, cancelInFlight: true)
+                state.isLoadingOverlayVisible = true
+                let intent = connectionPreparationIntent(
+                    spec: spec,
+                    connectionProtocol: connectionProtocol ?? propertiesManager.connectionProtocol
+                )
+                return .merge(
+                    .cancel(id: CancelID.overlayDelay),
+                    .run { send in
+                        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
+                        await send(.connection(.input(.connect(intent))))
+                    }
+                    .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
+                )
 
             case let .connectionCommandReceived(.disconnect(trigger, completion)):
-                return .run { _ in
-                    try? await disconnectVPN(trigger)
+                return .run { send in
+                    AppEvent.userInitiatedVPNChange.post(trigger)
+                    await send(.connection(.input(.disconnect)))
                     await completion?()
                 }
-                .cancellable(id: CancelID.connectionCommandEffect, cancelInFlight: true)
+                .cancellable(id: CancelID.connectionDisconnectCommandEffect, cancelInFlight: true)
 
             case .connectionCommandReceived(.retry):
-                let spec = propertiesManager.lastConnectionIntent ?? .defaultFastest
-                return .run { _ in
-                    try? await connectToVPN(spec, propertiesManager.connectionProtocol, .auto)
-                }
-                .cancellable(id: CancelID.connectionCommandEffect, cancelInFlight: true)
+                state.isLoadingOverlayVisible = true
+                let spec = propertiesManager.lastConnectionIntent
+                let intent = connectionPreparationIntent(
+                    spec: spec,
+                    connectionProtocol: propertiesManager.connectionProtocol
+                )
+                return .merge(
+                    .cancel(id: CancelID.overlayDelay),
+                    .run { send in
+                        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(.auto))
+                        await send(.connection(.input(.connect(intent))))
+                    }
+                    .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
+                )
 
             case let .connectionCommandReceived(.reconnect(connectionProtocol)):
-                let spec = propertiesManager.lastConnectionIntent ?? .defaultFastest
-                return .run { _ in
-                    try? await connectToVPN(spec, connectionProtocol ?? propertiesManager.connectionProtocol, .auto)
+                state.isLoadingOverlayVisible = true
+                let spec = propertiesManager.lastConnectionIntent
+                let intent = connectionPreparationIntent(
+                    spec: spec,
+                    connectionProtocol: connectionProtocol ?? propertiesManager.connectionProtocol
+                )
+                return .merge(
+                    .cancel(id: CancelID.overlayDelay),
+                    .run { send in
+                        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(.auto))
+                        await send(.connection(.input(.connect(intent))))
+                    }
+                    .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
+                )
+
+            case let .connectionCommandReceived(.applySettings(settings)):
+                let hasPortForwardingChange = settings.contains {
+                    if case .portForwarding = $0 {
+                        return true
+                    }
+                    return false
                 }
-                .cancellable(id: CancelID.connectionCommandEffect, cancelInFlight: true)
+                return .merge(
+                    .send(.connection(.input(.applySettings(settings)))),
+                    hasPortForwardingChange ? .send(.syncNATPortMappingState) : .none
+                )
+
+            case let .connectionCommandReceived(.clearConnectionData(completion)):
+                return .run { send in
+                    await send(.connection(.input(.onLogout)))
+                    await completion?()
+                }
 
             case .countriesSection(.delegate(.openProfilesTab)):
                 state.selectedTab = .profiles
@@ -268,12 +429,51 @@ struct SidebarFeature {
 
             case .countriesSection:
                 return .none
+
+            case let .connection(.delegate(.connectionFailed(error))):
+                SentryHelper.shared?.log(error: error)
+                return .run { [pushAlert] _ in
+                    pushAlert(connectionFailureAlert(for: error))
+                }
+
+            case let .connection(.delegate(.stateChanged(connectionState))):
+                log.debug("Connection layer state update \(connectionState)")
+                state.$connectionState.withLock { $0 = connectionState }
+                let fallbackSpec = state.vpnConnectionStatus.spec ?? propertiesManager.lastConnectionIntent
+                return .merge(
+                    .send(.vpnConnectionStatusUpdated(connectionState.vpnConnectionStatus(
+                        fallbackSpec: fallbackSpec,
+                        previousStatus: state.vpnConnectionStatus
+                    ))),
+                    .send(.syncNATPortMappingState),
+                    .send(.syncPlutoniumState)
+                )
+
+            case let .connection(.delegate(.intentResolutionFailed(intent, resolutionError))):
+                SentryHelper.shared?.log(error: resolutionError)
+                return .run { [pushAlert] send in
+                    let alert: SystemAlert = switch resolutionError {
+                    case .secureCoreUnavailable:
+                        SecureCoreUpsellAlert()
+                    case let .specificCountryUnavailable(countryCode):
+                        CountryUpsellAlert(countryCode: countryCode)
+                    case let .serverChangeUnavailable(until, duration, exhaustedSkips):
+                        ConnectionCooldownAlert(until: until, duration: duration, longSkip: exhaustedSkips) {
+                            Task { [intent, send] in
+                                await send(.connection(.input(.connect(intent))))
+                            }
+                        }
+                    }
+                    pushAlert(alert)
+                }
+
+            case .connection:
+                return .none
             }
         }
     }
 
     private enum CancelID {
-        case appState
         case windowResize
         case windowEndResize
         case windowEnterFullScreen
@@ -281,6 +481,93 @@ struct SidebarFeature {
         case occlusion
         case overlayDelay
         case connectionCommands
-        case connectionCommandEffect
+        case portForwardingSetting
+        case plutoniumSetting
+        case killSwitchSetting
+        case connectionConnectCommandEffect
+        case connectionDisconnectCommandEffect
+        case plutoniumSync
+    }
+}
+
+private extension SidebarFeature {
+    func connectionFailureAlert(for error: ConnectionError) -> SystemAlert {
+        switch error {
+        case .preparation(.networkUnreachable):
+            VpnNetworkUnreachableAlert()
+        default:
+            DomainErrorAlert(alert: error.alert)
+        }
+    }
+
+    func connectionPreparationIntent(
+        spec: ConnectionSpec,
+        connectionProtocol: ConnectionProtocol
+    ) -> ConnectionPreparationIntent {
+        let spec = enforceP2PIfPortForwardingEnabled(spec)
+        let acceptableProtocols: ProtocolSupport = switch connectionProtocol {
+        case let .vpnProtocol(vpnProtocol):
+            vpnProtocol.protocolSupport
+        case .smartProtocol:
+            propertiesManager.smartProtocolConfig.supportedProtocols
+                .reduce(.zero) { $0.union($1.protocolSupport) }
+        }
+        return ConnectionPreparationIntent(
+            spec: spec,
+            connectionProtocol: connectionProtocol,
+            acceptableProtocols: acceptableProtocols
+        )
+    }
+
+    func enforceP2PIfPortForwardingEnabled(_ spec: ConnectionSpec) -> ConnectionSpec {
+        guard portForwardingPropertyProvider.getPortForwarding() == true else {
+            return spec
+        }
+        switch spec.location {
+        case .any, .country, .city, .state:
+            if spec.features.contains(.p2p) {
+                return spec
+            }
+            var features = spec.features
+            features.insert(.p2p)
+            return ConnectionSpec(location: spec.location, features: features, profileId: spec.profileId)
+        case .exact, .secureCore, .gateway:
+            return spec
+        }
+    }
+
+    func connectionStateSupportsNatPortMapping(_ connectionState: ConnectionState) -> Bool {
+        connectionState.is(\.connected)
+    }
+
+    func natPortMappingGatewayAddress(from connectionState: ConnectionState) -> String? {
+        let activeVpnProtocol = connectionState.resolvedVpnProtocol ?? currentlySelectedVpnProtocol()
+        guard let activeVpnProtocol else {
+            return nil
+        }
+        switch activeVpnProtocol {
+        case .ike:
+            return "10.1.0.1"
+        case .wireGuard:
+            return wireGuardGatewayAddress()
+        }
+    }
+
+    func currentlySelectedVpnProtocol() -> VpnProtocol? {
+        switch propertiesManager.connectionProtocol {
+        case let .vpnProtocol(vpnProtocol):
+            vpnProtocol
+        case .smartProtocol:
+            nil
+        }
+    }
+
+    func wireGuardGatewayAddress() -> String {
+        let hermesIsEnabled = hermesClient.isEnabled().wrappedValue
+        let hermesIsAllowed = featureAuthorizerProvider.authorizer(for: HermesFeature.self)().isAllowed
+        if hermesIsEnabled, hermesIsAllowed {
+            return "10.2.0.1"
+        }
+        return propertiesManager.wireguardConfig.dnsServers?.first ?? "10.2.0.1"
     }
 }

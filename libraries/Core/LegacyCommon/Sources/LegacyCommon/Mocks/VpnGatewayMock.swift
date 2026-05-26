@@ -33,7 +33,6 @@
         }
 
         public static var connectionChanged: Notification.Name = .init("")
-        public static var activeServerTypeChanged: Notification.Name = .init("")
         public static var needsReconnectNotification: Notification.Name = .init("")
 
         public init(userTier: Int? = nil) {
@@ -49,11 +48,7 @@
             propertiesManager.secureCoreToggle = activeServerType == .secureCore
         }
 
-        public var connection: ConnectionStatus {
-            didSet {
-                AppEvent.connectionStateChanged.post(connection)
-            }
-        }
+        public var connection: ConnectionStatus
 
         public var activeIp: String?
         public var activeServer: ServerModel?
@@ -120,7 +115,5 @@
         public func reconnect(with _: NATType) {}
 
         public func reconnect(with _: ConnectionProtocol) {}
-
-        public func postConnectionInformation() {}
     }
 #endif

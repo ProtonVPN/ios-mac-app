@@ -28,10 +28,9 @@ import VPNAppCore
 import VPNShared
 
 final class AdvancedSettingsViewModel {
-    typealias Factory = CoreAlertServiceFactory & VpnManagerFactory
+    typealias Factory = CoreAlertServiceFactory
     private let factory: Factory
 
-    private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     @Dependency(\.propertiesManager) private var propertiesManager
@@ -181,8 +180,8 @@ final class AdvancedSettingsViewModel {
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .withConnectionUpdate:
                 // in-place change when connected and using local agent
-                self?.vpnManager.set(natType: natType)
                 self?.natTypePropertyProvider.setNATType(natType)
+                self?.sidebarConnectionCommandClient.send(.applySettings([.moderateNAT(natType)]))
                 completion(true)
             case .withReconnect:
                 self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.moderateNatTitle, confirmHandler: { [weak self] in
@@ -215,8 +214,8 @@ final class AdvancedSettingsViewModel {
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .withConnectionUpdate:
                 // in-place change when connected and using local agent
-                self?.vpnManager.set(safeMode: safeMode)
                 self?.safeModePropertyProvider.setSafeMode(safeMode)
+                self?.sidebarConnectionCommandClient.send(.applySettings([.safeMode(safeMode)]))
                 completion(true)
             case .withReconnect:
                 self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.nonStandardPortsTitle, confirmHandler: { [weak self] in

@@ -69,6 +69,7 @@ let package = Package(
             name: "CommonNetworkingTestSupport",
             dependencies: [
                 "CommonNetworking",
+                .product(name: "VPNSharedTesting", package: "NEHelper"),
             ]
         ),
         .testTarget(

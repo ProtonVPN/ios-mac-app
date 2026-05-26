@@ -147,8 +147,17 @@ public struct CertificateAuthenticationFeature {
                 let currentFeatures = featureProvider.connectionFeatures()
 
                 guard let storedFeatures else {
-                    log.info("Current certificate has been stored without features. Need refresh", category: .userCert)
-                    return .send(.refreshCertificate)
+                    #if os(macOS)
+                        log.debug(
+                            "Current certificate has been stored without features on macOS. Skipping feature-based refresh",
+                            category: .userCert
+                        )
+                        state = .loaded(data)
+                        return .send(.loadingFinished(.success(data)))
+                    #else
+                        log.info("Current certificate has been stored without features. Need refresh", category: .userCert)
+                        return .send(.refreshCertificate)
+                    #endif
                 }
 
                 switch ConnectionFeatureComparator.storedFeatures(storedFeatures, satisfy: currentFeatures) {
@@ -197,9 +206,8 @@ public struct CertificateAuthenticationFeature {
                     let refreshResult = await Result { () async throws(CertificateRefreshError) in
                         let keys = authenticationStorage.getKeys() // generates new keys if missing
                         if FeatureFlagsRepository.shared.isProTUNEnabled {
-                            @Dependency(\.localCertificateService) var service
                             do {
-                                try await service.refreshCertificate(keys.publicKey, features)
+                                try await refreshClient.refreshCertificateLocally(keys.publicKey, features)
                             } catch {
                                 log.error("Local certificate refresh failed: \(error)", category: .userCert)
                                 throw .sessionMissingOrExpired

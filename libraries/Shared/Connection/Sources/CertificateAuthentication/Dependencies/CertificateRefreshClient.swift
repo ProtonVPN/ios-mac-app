@@ -24,6 +24,7 @@ import Domain
 import Ergonomics
 import ExtensionIPC
 import Foundation
+import ProtonCoreFeatureFlags
 import VPNShared
 
 /// Errors that the network extension can report while processing our requests to refresh our certificate or consume a
@@ -133,12 +134,45 @@ extension CertificateRefreshClient {
     private static let pathStatusDeadline: Duration = .seconds(2)
     private static let forkingSessionRetriesCount: Int = 3
 
+    #if os(macOS)
+        private static func refreshCertificateWithLegacyWireGuardFlow() async throws(CertificateRefreshError) {
+            let vpnAuthentication: VpnAuthentication = VpnAuthenticationManager()
+            do {
+                _ = try await withCheckedThrowingContinuation { continuation in
+                    vpnAuthentication.refreshCertificates { result in
+                        continuation.resume(with: result)
+                    }
+                }
+            } catch let error as AuthenticationRemoteClientError {
+                switch error {
+                case .needNewKeys:
+                    throw .requiresNewKeys
+                case let .tooManyCertRequests(retryAfter):
+                    throw .tooManyCertRequests(retryAfter: retryAfter.map(Int.init))
+                }
+            } catch let error as CommonNetworking.CertificateRefreshError {
+                switch error {
+                case .canceled:
+                    throw .cancelled
+                }
+            } catch {
+                throw .ipcError(.unspecified(message: String(describing: error)))
+            }
+        }
+    #endif
+
     static let liveValue: CertificateRefreshClient = .init(
         refreshCertificateLocally: { publicKey, features in
             @Dependency(\.localCertificateService) var service
             try await service.refreshCertificate(publicKey, features)
         },
         refreshCertificate: { features throws(CertificateRefreshError) in
+            #if os(macOS)
+                if !FeatureFlagsRepository.shared.isProTUNEnabled {
+                    try await refreshCertificateWithLegacyWireGuardFlow()
+                    return
+                }
+            #endif
             let request = WireguardProviderRequest.refreshCertificate(features: features)
             let response = try await send(request: request)
             try parse(response: response) // if this doesn't throw, all is good

@@ -20,7 +20,6 @@ import CommonNetworking
 import ComposableArchitecture
 import Domain
 import Foundation
-import LegacyCommon
 @testable import ProtonVPN
 import Testing
 @testable import VPNAppCore
@@ -30,15 +29,17 @@ import VPNSharedTesting
 @MainActor
 struct PlutoniumFeatureTests {
     @Shared(.killSwitch) var killSwitch
+    @Shared(.vpnConnectionStatus) var vpnConnectionStatus
 
     init() {
         $killSwitch.withLock { $0 = false }
+        $vpnConnectionStatus.withLock { $0 = .disconnected }
     }
 
     @Test
     func onAppear() async {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
+            PlutoniumFeature()
         } withDependencies: {
             $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
             $0.propertiesManager.connectionProtocol = .smartProtocol
@@ -64,7 +65,7 @@ struct PlutoniumFeatureTests {
             $0 = true
         }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
+            PlutoniumFeature()
         } withDependencies: {
             $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
             $0.propertiesManager.connectionProtocol = .smartProtocol
@@ -90,7 +91,7 @@ struct PlutoniumFeatureTests {
             $0 = false
         }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
+            PlutoniumFeature()
         } withDependencies: {
             $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
             $0.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
@@ -103,15 +104,12 @@ struct PlutoniumFeatureTests {
 
     @Test
     func toggleModeIKEProfileConflict() async {
-        let gateway = VpnGatewayMock()
-        gateway.connection = .connected
-        let appStateManager = AppStateManagerMock()
-        appStateManager.mockActiveConnection = ConnectionConfiguration.ikev2ConnectionConfig
+        $vpnConnectionStatus.withLock { $0 = .connected(.defaultFastest, .mock(vpnProtocol: .ike)) }
         $killSwitch.withLock {
             $0 = true
         }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature(appStateManager: appStateManager, vpnGateway: gateway)
+            PlutoniumFeature()
         } withDependencies: {
             $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
             $0.propertiesManager.connectionProtocol = .smartProtocol
@@ -125,7 +123,7 @@ struct PlutoniumFeatureTests {
     @Test
     func toggleMode() async {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
+            PlutoniumFeature()
         } withDependencies: {
             $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
             $0.propertiesManager.connectionProtocol = .smartProtocol
@@ -170,7 +168,7 @@ struct PlutoniumFeatureTests {
         $featureApplied.withLock { $0 = .enabled(.exclusion) }
         $feature.withLock { $0 = .enabled(.exclusion) }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
+            PlutoniumFeature()
         } withDependencies: {
             $0.propertiesManager.connectionProtocol = .smartProtocol
         }
@@ -190,7 +188,7 @@ struct PlutoniumFeatureTests {
         $feature.withLock { $0 = .enabled(.exclusion) }
         $featureApplied.withLock { $0 = .enabled(.exclusion) }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
+            PlutoniumFeature()
         } withDependencies: {
             $0.propertiesManager.connectionProtocol = .smartProtocol
         }
@@ -214,7 +212,7 @@ struct PlutoniumFeatureTests {
         $feature.withLock { $0 = .enabled(.inclusion) }
         $featureApplied.withLock { $0 = .enabled(.inclusion) }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
+            PlutoniumFeature()
         } withDependencies: {
             $0.propertiesManager.connectionProtocol = .smartProtocol
         }
@@ -234,7 +232,7 @@ struct PlutoniumFeatureTests {
     @Test
     func modifyIPsList() async {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
+            PlutoniumFeature()
         } withDependencies: {
             $0.propertiesManager.connectionProtocol = .smartProtocol
         }
@@ -260,7 +258,7 @@ struct PlutoniumFeatureTests {
     @Test
     func modifyAppsList() async {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
+            PlutoniumFeature()
         } withDependencies: {
             $0.propertiesManager.connectionProtocol = .smartProtocol
         }
@@ -273,48 +271,5 @@ struct PlutoniumFeatureTests {
         await store.send(.entryClicked(.app(.huzza), .remove, .exclusion)) {
             $0.$exclusionActivated.withLock { $0.apps = [] }
         }
-    }
-}
-
-extension ConnectionConfiguration {
-    static var ikev2ConnectionConfig: ConnectionConfiguration {
-        let server = ServerModel(
-            id: "",
-            name: "",
-            domain: "",
-            load: 0,
-            entryCountryCode: "",
-            exitCountryCode: "",
-            tier: 1,
-            feature: .zero,
-            city: nil,
-            state: nil,
-            ips: [ServerIp](),
-            score: 0.0,
-            status: 0,
-            location: ServerLocation(lat: 0, long: 0),
-            hostCountry: nil,
-            translatedCity: nil,
-            gatewayName: nil
-        )
-        let serverIp = ServerIp(
-            id: "",
-            entryIp: "",
-            exitIp: "",
-            domain: "",
-            status: 0
-        )
-        return ConnectionConfiguration(
-            id: UUID(),
-            server: server,
-            serverIp: serverIp,
-            vpnProtocol: .ike,
-            netShieldType: .off,
-            natType: .default,
-            safeMode: true,
-            portForwarding: true,
-            ports: [500],
-            intent: .fastest
-        )
     }
 }

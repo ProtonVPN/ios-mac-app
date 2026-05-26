@@ -77,6 +77,8 @@ package struct ConnectionIntentResolver: DependencyKey {
         let specifiedProtocol = intent.connectionProtocol ?? connectionFeatureProvider.connectionProtocol()
         log.debug("Resolved connection protocol", category: .connection, metadata: ["protocol": "\(specifiedProtocol)"])
 
+        // IKE does not participate in app-side port selection. Keep this early return so WireGuard
+        // port checks (`ports.isEmpty`) are never applied to IKE intents.
         if case .vpnProtocol(.ike) = specifiedProtocol {
             return ServerConnectionIntent(
                 spec: intent.spec,

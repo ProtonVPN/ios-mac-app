@@ -25,12 +25,10 @@ import LegacyCommon
 
 class ProfilesContainerViewModel {
     let alertService: CoreAlertService
-    let vpnGateway: VpnGatewayProtocol
     let initialTab: ProfilesTab
 
-    init(initialTab: ProfilesTab, vpnGateway: VpnGatewayProtocol, alertService: CoreAlertService) {
+    init(initialTab: ProfilesTab, alertService: CoreAlertService) {
         self.initialTab = initialTab
-        self.vpnGateway = vpnGateway
         self.alertService = alertService
     }
 }

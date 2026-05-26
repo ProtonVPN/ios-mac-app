@@ -16,15 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 #if DEBUG
-
     import CoreConnectionTestSupport
     import Dependencies
     import Domain
     import DomainTestSupport
     import Ergonomics
     @testable import ExtensionManager
+    import Foundation
+    import NetworkExtension
     import VPNShared
     import VPNSharedTesting
     import XCTest
@@ -68,7 +68,78 @@ import Foundation
             XCTAssertEqual(manager.vpnProtocolConfiguration?.wgProtocol, "tls")
             XCTAssertEqual(manager.providerBundleIdentifier, bundleID)
 
-            await fulfillment(of: [keysGenerated, configStored], timeout: 0, enforceOrder: true)
+            #if os(macOS)
+                // On macOS, configuration data is sent via XPC to the extension instead of being stored through
+                // `tunnelKeychain.storeWireguardConfig`.
+                await fulfillment(of: [keysGenerated], timeout: 1)
+            #else
+                await fulfillment(of: [keysGenerated, configStored], timeout: 1, enforceOrder: true)
+            #endif
+        }
+
+        @MainActor
+        func testIkeConfigurationEncodesLegacyFeatureSuffixesAndEndpointID() async throws {
+            let configurator = ManagerConfigurator.wireGuardConfigurator
+            let session = VPNSessionMock(status: .disconnected, connectedDate: nil)
+            var manager: TunnelProviderManager = MockTunnelProviderManager(session: session, isOnDemandEnabled: false, isEnabled: false)
+
+            let features = VPNConnectionFeatures(
+                netshield: .level2,
+                vpnAccelerator: false,
+                bouncing: nil,
+                natType: .moderateNAT,
+                safeMode: false,
+                portForwarding: true
+            )
+            let server = Server.mock
+            let intent = ServerConnectionIntent.mock(server: server, protocolConfiguration: .ike, features: features)
+            let labelSuffix = server.endpoint.label.map { "+b:\($0)" } ?? ""
+            let expectedUsername = "username+pm+f2+nst\(labelSuffix)+nr+nsm+pmp+ep:\(server.endpoint.id)"
+
+            try await withDependencies {
+                $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .freeTier)
+            } operation: {
+                try await configurator.configure(&manager, for: .connection(intent))
+            }
+
+            let ikeConfig = try XCTUnwrap(manager.protocolConfiguration as? NEVPNProtocolIKEv2)
+            XCTAssertEqual(ikeConfig.username, expectedUsername)
+        }
+
+        @MainActor
+        func testIkeConfigurationThrowsWhenCredentialsCannotBeRead() async {
+            let configurator = ManagerConfigurator.wireGuardConfigurator
+            let session = VPNSessionMock(status: .disconnected, connectedDate: nil)
+            var manager: TunnelProviderManager = MockTunnelProviderManager(session: session, isOnDemandEnabled: false, isEnabled: false)
+            let intent = ServerConnectionIntent.mock(protocolConfiguration: .ike)
+
+            let failingKeychain = VpnKeychainMock(planName: "free", maxTier: .freeTier)
+            failingKeychain.throwsOnFetch = true
+
+            await XCTAssertThrowsErrorAsync {
+                try await withDependencies {
+                    $0.vpnKeychain = failingKeychain
+                } operation: {
+                    try await configurator.configure(&manager, for: .connection(intent))
+                }
+            } errorHandler: { error in
+                guard case .ikeCredentialsUnavailable = error as? WireguardConfiguratorError else {
+                    XCTFail("Expected ikeCredentialsUnavailable error, got \(error)")
+                    return
+                }
+            }
+        }
+    }
+
+    private func XCTAssertThrowsErrorAsync(
+        _ expression: @escaping () async throws -> Void,
+        errorHandler: (Error) -> Void
+    ) async {
+        do {
+            try await expression()
+            XCTFail("Expected expression to throw")
+        } catch {
+            errorHandler(error)
         }
     }
 #endif

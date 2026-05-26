@@ -34,15 +34,7 @@ extension ConnectToVPNKey: @retroactive DependencyKey {
         }
     }
 
-    private static var isEnabled: Bool {
-        FeatureFlagsRepository.isConnectionFeatureEnabled
-    }
-
-    public static let liveValue = if Self.isEnabled {
-        newConnect
-    } else {
-        legacyConnect
-    }
+    public static let liveValue = newConnect
 
     static let newConnect: @Sendable (
         ConnectionSpec,

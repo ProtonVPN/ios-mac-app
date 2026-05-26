@@ -75,11 +75,6 @@ public protocol VpnGatewayProtocol: AnyObject {
     func stopConnecting(userInitiated: Bool)
     func disconnect()
     func disconnect(completion: @escaping () -> Void)
-    func postConnectionInformation()
-}
-
-public protocol VpnGatewayFactory {
-    func makeVpnGateway() -> VpnGatewayProtocol
 }
 
 public class VpnGateway: VpnGatewayProtocol {
@@ -158,15 +153,16 @@ public class VpnGateway: VpnGatewayProtocol {
     var notificationCenter: NotificationCenter = .default
 
     public typealias Factory =
-        AppStateManagerFactory &
         AvailabilityCheckerResolverFactory &
         CoreAlertServiceFactory &
         ProfileManagerFactory &
-        VpnConnectionInterceptDelegate
+        VpnAuthenticationFactory &
+        VpnConnectionInterceptDelegate &
+        VpnManagerConfigurationPreparerFactory
 
     public convenience init(_ factory: Factory) {
         self.init(
-            appStateManager: factory.makeAppStateManager(),
+            appStateManager: AppStateManagerImplementation(factory),
             alertService: factory.makeCoreAlertService(),
             profileManager: factory.makeProfileManager(),
             availabilityCheckerResolverFactory: factory,
@@ -191,18 +187,13 @@ public class VpnGateway: VpnGatewayProtocol {
 
         let state = appStateManager.state
         self.connection = ConnectionStatus.forAppState(state)
-        /// Sometimes when launching the app, the `AppStateManager` will post `.AppStateManager.stateChange` notification
-        /// before `VPNGateway` has a chance of registering for that notification. For this event we're posting it here.
-        postConnectionInformation()
 
         if case .connected = state, let activeServer = appStateManager.activeConnection()?.server {
             changeActiveServerType(activeServer.serverType)
         }
 
-        AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged))
         AppEvent.planChanged.subscribe(self, selector: #selector(userPlanChanged))
         AppEvent.userDelinquent.subscribe(self, selector: #selector(userBecameDelinquent))
-        AppEvent.needsReconnect.subscribe(self, selector: #selector(reconnectOnNotification))
     }
 
     public func userTier() throws -> Int {
@@ -211,18 +202,8 @@ public class VpnGateway: VpnGatewayProtocol {
 
     public func changeActiveServerType(_ serverType: ServerType) {
         let isSecureCore = serverType == .secureCore
-
         guard propertiesManager.secureCoreToggle != isSecureCore else { return }
-
         propertiesManager.secureCoreToggle = isSecureCore
-
-        DispatchQueue.main.async { [weak self] in
-            guard let self else {
-                return
-            }
-
-            AppEvent.activeServerTypeChanged.post(connection)
-        }
     }
 
     public func autoConnect() {
@@ -430,76 +411,8 @@ public class VpnGateway: VpnGatewayProtocol {
         pushAlert(DomainErrorAlert(alert: alert))
     }
 
-    private var shouldUseNewConnectionFeature: Bool {
-        FeatureFlagsRepository.isConnectionFeatureEnabled
-    }
-
     public func connect(with request: ConnectionRequest?) {
-        if shouldUseNewConnectionFeature {
-            newConnect(with: request)
-            return
-        }
-
-        let `protocol` = request?.connectionProtocol ?? globalConnectionProtocol
-
-        if `protocol`.isDeprecated, propertiesManager.featureFlags.enforceDeprecatedProtocols {
-            showProtocolDeprecatedAlert(request: request)
-            return
-        }
-        propertiesManager.lastConnectionRequest = request
-
-        guard let request else {
-            gatherParametersAndConnect(
-                requestId: UUID(),
-                with: `protocol`,
-                server: appStateManager.activeConnection()?.server,
-                netShieldType: netShieldType,
-                natType: natType,
-                safeMode: safeMode,
-                portForwarding: portForwarding,
-                intent: nil
-            )
-            return
-        }
-        // If server type of the request is unspecified, we must update the server type
-        // according to whether SecureCore is toggled on or not
-        let serverType = request.serverType == .unspecified ? serverTypeToggle(checkPF: true) : request.serverType
-        let requestWithUpdatedServerType = request.withChanged(serverType: serverType)
-        usedServerTypeToggle = serverType
-
-        propertiesManager.lastConnectionIntent = ConnectionSpec(connectionRequest: requestWithUpdatedServerType)
-
-        @Dependency(\.connectionAuthorizer) var authorizer
-        switch authorizer.authorize(request: requestWithUpdatedServerType) {
-        case let .failure(.specificCountryUnavailable(countryCode)):
-            alertService?.push(alert: CountryUpsellAlert(countryCode: countryCode))
-            log.info("User is not authorized to connect to specific countries (\(countryCode))")
-            return
-        case .failure(let .serverChangeUnavailable(date, duration, longSkip)):
-            log.info("Change server requested, but random connection is still on cooldown until \(date)")
-            alertService?.push(alert: ConnectionCooldownAlert(
-                until: date,
-                duration: duration,
-                longSkip: longSkip,
-                reconnectClosure: { [weak self, requestWithUpdatedServerType] in
-                    self?.connect(with: requestWithUpdatedServerType)
-                }
-            ))
-            return
-        case .success:
-            break
-        }
-
-        gatherParametersAndConnect(
-            requestId: requestWithUpdatedServerType.id,
-            with: `protocol`,
-            server: selectServer(connectionRequest: requestWithUpdatedServerType),
-            netShieldType: requestWithUpdatedServerType.netShieldType,
-            natType: natType,
-            safeMode: safeMode,
-            portForwarding: portForwarding,
-            intent: requestWithUpdatedServerType.connectionType
-        )
+        newConnect(with: request)
     }
 
     private func selectServer(connectionRequest: ConnectionRequest) -> ServerModel? {
@@ -541,18 +454,14 @@ public class VpnGateway: VpnGatewayProtocol {
     }
 
     public func disconnect() {
-        if shouldUseNewConnectionFeature {
-            @Dependency(\.disconnectVPN) var disconnectVPN
+        @Dependency(\.disconnectVPN) var disconnectVPN
 
-            Task {
-                do {
-                    try await disconnectVPN(.auto)
-                } catch {
-                    log.error("An error occured while disconnecting: \(error.localizedDescription)")
-                }
+        Task {
+            do {
+                try await disconnectVPN(.auto)
+            } catch {
+                log.error("An error occured while disconnecting: \(error.localizedDescription)")
             }
-        } else {
-            disconnect {}
         }
     }
 
@@ -738,26 +647,12 @@ public class VpnGateway: VpnGatewayProtocol {
         return true
     }
 
-    public func postConnectionInformation() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else {
-                return
-            }
-
-            AppEvent.connectionStateChanged.post(
-                connection,
-                userInfo: [AppState.appStateKey: appStateManager.state]
-            )
-        }
-    }
-
     @objc
     private func appStateChanged(_ notification: Notification) {
         guard let state = notification.object as? AppState else {
             return
         }
         connection = ConnectionStatus.forAppState(state)
-        postConnectionInformation()
     }
 
     @objc

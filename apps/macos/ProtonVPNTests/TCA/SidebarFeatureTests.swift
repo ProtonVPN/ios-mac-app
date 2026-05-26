@@ -16,75 +16,200 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+@testable import CertificateAuthentication
 import Clocks
 import ComposableArchitecture
+@testable import Connection
+@testable import CoreConnection
 import Domain
+@testable import ExtensionManager
 import Foundation
 import LegacyCommon
+@testable import LocalAgent
 @testable import ProtonVPN
 import Testing
+import VPNAppCore
+import VPNShared
+import VPNSharedTesting
 
 @MainActor
+@Suite(.serialized)
 struct SidebarFeatureTests {
-    @Test("connect command forwards to connect dependency")
-    func connectCommandForwardsToDependency() async {
+    @Test("connect command forwards to connection feature")
+    func connectCommandForwardsToConnectionFeature() async {
         let spec = ConnectionSpec(location: .any(.fastest), features: [])
-        await confirmation("connectToVPN called once") { connectToVPNCalled in
-            let store = makeStore(
-                connectToVPN: { receivedSpec, receivedProtocol, receivedTrigger in
-                    #expect(receivedSpec == spec)
-                    #expect(receivedProtocol == .smartProtocol)
-                    #expect(receivedTrigger == .quick)
-                    connectToVPNCalled()
-                }
-            )
+        let store = makeStore()
 
-            await store.send(.connectionCommandReceived(.connect(spec, .smartProtocol, .quick)))
+        await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .quick))) {
+            $0.isLoadingOverlayVisible = true
         }
+        await store.receive(\.connection.input.connect) {
+            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
+                spec: spec,
+                connectionProtocol: .vpnProtocol(.ike),
+                acceptableProtocols: .ikev2
+            )
+            $0.connection.connectionState = .connecting(.unresolved(ConnectionPreparationIntent(
+                spec: spec,
+                connectionProtocol: .vpnProtocol(.ike),
+                acceptableProtocols: .ikev2
+            )))
+            $0.$connectionState.withLock {
+                $0 = .connecting(.unresolved(ConnectionPreparationIntent(
+                    spec: spec,
+                    connectionProtocol: .vpnProtocol(.ike),
+                    acceptableProtocols: .ikev2
+                )))
+            }
+            $0.$vpnConnectionStatus.withLock { $0 = .connecting(spec, nil) }
+        }
+        await store.receive(\.connection.delegate.stateChanged.connecting.unresolved)
+        await store.receive(\.vpnConnectionStatusUpdated.connecting)
+        await store.receive(\.syncNATPortMappingState)
+        await store.receive(\.syncPlutoniumState)
     }
 
-    @Test("disconnect command forwards to disconnect dependency and runs completion")
-    func disconnectCommandForwardsToDependencyAndRunsCompletion() async {
-        await confirmation("disconnect and completion called", expectedCount: 2) { called in
-            let store = makeStore(
-                disconnectVPN: { trigger in
-                    #expect(trigger == .tray)
-                    called()
-                }
-            )
-
+    @Test("disconnect command forwards to connection feature and runs completion")
+    func disconnectCommandForwardsToConnectionFeatureAndRunsCompletion() async {
+        await confirmation("completion called once") { called in
+            let store = makeStore()
             await store.send(.connectionCommandReceived(.disconnect(.tray, completion: {
                 called()
             })))
+            await store.receive(\.connection.input.disconnect) {
+                $0.connection.core.shouldDisconnectWhenAllowed = true
+            }
         }
     }
 
-    @Test("connection commands are latest-wins")
-    func connectionCommandsAreLatestWins() async {
+    @Test("disconnect command is not dropped by following connect command")
+    func disconnectCommandIsNotDroppedByFollowingConnectCommand() async {
         let spec = ConnectionSpec(location: .any(.fastest), features: [])
-        await confirmation("retry starts and previous connect effect exits", expectedCount: 2) { called in
-            let store = makeStore(
-                connectToVPN: { _, _, trigger in
-                    switch trigger {
-                    case .quick:
-                        do {
-                            try await Task.sleep(for: .seconds(10))
-                        } catch {
-                            #expect(error is CancellationError)
-                        }
-                        // Confirms the original effect fully exits after cancellation.
-                        called()
-                    case .auto:
-                        called()
-                    default:
-                        break
-                    }
-                }
-            )
+        let store = makeStore()
+        store.exhaustivity = .off
 
-            await store.send(.connectionCommandReceived(.connect(spec, nil, .quick)))
-            await store.send(.connectionCommandReceived(.retry))
+        await store.send(.connectionCommandReceived(.disconnect(.auto))) {
+            $0.connection.core.shouldDisconnectWhenAllowed = false
         }
+        await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .quick))) {
+            $0.isLoadingOverlayVisible = true
+        }
+
+        await store.receive(\.connection.input.connect) {
+            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
+                spec: spec,
+                connectionProtocol: .vpnProtocol(.ike),
+                acceptableProtocols: .ikev2
+            )
+            $0.connection.connectionState = .connecting(.unresolved(ConnectionPreparationIntent(
+                spec: spec,
+                connectionProtocol: .vpnProtocol(.ike),
+                acceptableProtocols: .ikev2
+            )))
+            $0.$connectionState.withLock {
+                $0 = .connecting(.unresolved(ConnectionPreparationIntent(
+                    spec: spec,
+                    connectionProtocol: .vpnProtocol(.ike),
+                    acceptableProtocols: .ikev2
+                )))
+            }
+            $0.$vpnConnectionStatus.withLock { $0 = .connecting(spec, nil) }
+        }
+    }
+
+    @Test("retry command forwards to connection feature")
+    func retryCommandForwardsToConnectionFeature() async {
+        let spec = ConnectionSpec(location: .any(.fastest), features: [])
+        let store = makeStore()
+        await store.send(.connectionCommandReceived(.retry)) {
+            $0.isLoadingOverlayVisible = true
+        }
+        await store.receive(\.connection.input.connect) {
+            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
+                spec: spec,
+                connectionProtocol: .vpnProtocol(.ike),
+                acceptableProtocols: .ikev2
+            )
+            $0.connection.connectionState = .connecting(.unresolved(ConnectionPreparationIntent(
+                spec: spec,
+                connectionProtocol: .vpnProtocol(.ike),
+                acceptableProtocols: .ikev2
+            )))
+            $0.$connectionState.withLock {
+                $0 = .connecting(.unresolved(ConnectionPreparationIntent(
+                    spec: spec,
+                    connectionProtocol: .vpnProtocol(.ike),
+                    acceptableProtocols: .ikev2
+                )))
+            }
+            $0.$vpnConnectionStatus.withLock { $0 = .connecting(spec, nil) }
+        }
+        await store.receive(\.connection.delegate.stateChanged.connecting.unresolved)
+        await store.receive(\.vpnConnectionStatusUpdated.connecting)
+        await store.receive(\.syncNATPortMappingState)
+        await store.receive(\.syncPlutoniumState)
+    }
+
+    @Test("connect command enforces p2p when port forwarding is enabled")
+    func connectCommandEnforcesP2PWhenPortForwardingEnabled() async {
+        let spec = ConnectionSpec(location: .any(.fastest), features: [])
+        let p2pSpec = ConnectionSpec(location: .any(.fastest), features: [.p2p])
+        let store = makeStore(portForwardingEnabled: true)
+
+        await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .quick))) {
+            $0.isLoadingOverlayVisible = true
+        }
+        await store.receive(\.connection.input.connect) {
+            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
+                spec: p2pSpec,
+                connectionProtocol: .vpnProtocol(.ike),
+                acceptableProtocols: .ikev2
+            )
+            $0.connection.connectionState = .connecting(.unresolved(ConnectionPreparationIntent(
+                spec: p2pSpec,
+                connectionProtocol: .vpnProtocol(.ike),
+                acceptableProtocols: .ikev2
+            )))
+            $0.$connectionState.withLock {
+                $0 = .connecting(.unresolved(ConnectionPreparationIntent(
+                    spec: p2pSpec,
+                    connectionProtocol: .vpnProtocol(.ike),
+                    acceptableProtocols: .ikev2
+                )))
+            }
+            $0.$vpnConnectionStatus.withLock { $0 = .connecting(p2pSpec, nil) }
+        }
+        await store.receive(\.connection.delegate.stateChanged.connecting.unresolved)
+        await store.receive(\.vpnConnectionStatusUpdated.connecting)
+        await store.receive(\.syncNATPortMappingState)
+        await store.receive(\.syncPlutoniumState)
+    }
+
+    @Test("apply settings command forwards to connection feature")
+    func applySettingsCommandForwardsToConnectionFeature() async {
+        let store = makeStore()
+        let settings: Set<ConnectionFeatureChange.AgentFeature> = [.vpnAccelerator(true)]
+
+        await store.send(.connectionCommandReceived(.applySettings(settings)))
+        await store.receive(\.connection.input.applySettings)
+        await store.receive(\.connection.core.localAgent.setFeatures)
+        await store.receive(\.connection.core.certAuth.refreshCertificate)
+        await store.receive(\.connection.core.certAuth.refreshFinished.failure.cancelled)
+    }
+
+    @Test("clear connection data command forwards to connection logout")
+    func clearConnectionDataCommandForwardsToConnectionLogout() async {
+        let store = makeStore()
+
+        await store.send(.connectionCommandReceived(.clearConnectionData()))
+        await store.receive(\.connection.input.onLogout)
+        await store.receive(\.connection.stopObserving)
+        await store.receive(\.connection.core.handleLogout)
+        await store.receive(\.connection.core.stopObserving)
+        await store.receive(\.connection.core.tunnel.cleanup)
+        await store.receive(\.connection.core.certAuth.clearEverything)
+        await store.receive(\.connection.core.tunnel.stopObservingStateChanges)
+        await store.receive(\.connection.core.localAgent.stopAllObservations)
     }
 
     @Test("command client broadcasts sent commands")
@@ -124,15 +249,20 @@ struct SidebarFeatureTests {
         #expect(defaults.integer(forKey: AppConstants.UserDefaults.mapWidth) == 575)
     }
 
-    @Test("app state changed updates overlay flag")
-    func appStateChangedUpdatesOverlayFlag() async {
+    @Test("vpn status updates overlay flag")
+    func vpnStatusUpdatesOverlayFlag() async {
         let clock = TestClock()
         let store = makeStore(clock: clock)
+        let connectedState = VPNConnectionActual.mock()
+        #expect(store.state.vpnConnectionStatus == .resolving(nil, nil))
 
-        await store.send(.appStateChanged(.preparingConnection)) {
+        await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
+            $0.$vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
             $0.isLoadingOverlayVisible = true
         }
-        await store.send(.appStateChanged(.connected(ServerDescriptor(username: "", address: ""))))
+        await store.send(.vpnConnectionStatusUpdated(.connected(.defaultFastest, connectedState))) {
+            $0.$vpnConnectionStatus.withLock { $0 = .connected(.defaultFastest, connectedState) }
+        }
         await clock.advance(by: .seconds(3))
         await store.receive(\.connectedOverlayDelayElapsed) {
             $0.isLoadingOverlayVisible = false
@@ -143,11 +273,16 @@ struct SidebarFeatureTests {
     func overlayDismissedByUserHidesOverlayAndAllowsNextConnectionOverlay() async {
         let clock = TestClock()
         let store = makeStore(clock: clock)
+        let connectedState = VPNConnectionActual.mock()
+        #expect(store.state.vpnConnectionStatus == .resolving(nil, nil))
 
-        await store.send(.appStateChanged(.preparingConnection)) {
+        await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
+            $0.$vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
             $0.isLoadingOverlayVisible = true
         }
-        await store.send(.appStateChanged(.connected(ServerDescriptor(username: "", address: ""))))
+        await store.send(.vpnConnectionStatusUpdated(.connected(.defaultFastest, connectedState))) {
+            $0.$vpnConnectionStatus.withLock { $0 = .connected(.defaultFastest, connectedState) }
+        }
 
         await store.send(.overlayDismissedByUser) {
             $0.isLoadingOverlayVisible = false
@@ -155,7 +290,20 @@ struct SidebarFeatureTests {
 
         await clock.advance(by: .seconds(3))
 
-        await store.send(.appStateChanged(.preparingConnection)) {
+        await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
+            $0.$vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
+            $0.isLoadingOverlayVisible = true
+        }
+    }
+
+    @Test("connect command immediately shows overlay even without status transition")
+    func connectCommandImmediatelyShowsOverlayEvenWithoutStatusTransition() async {
+        let spec = ConnectionSpec(location: .any(.fastest), features: [])
+        let store = makeStore()
+        store.exhaustivity = .off
+
+        await store.send(.overlayDismissedByUser)
+        await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .quick))) {
             $0.isLoadingOverlayVisible = true
         }
     }
@@ -178,8 +326,10 @@ struct SidebarFeatureTests {
     @Test("overlay presentation requires loading and visible app")
     func overlayPresentationRequiresLoadingAndVisibleApp() async {
         let store = makeStore()
+        #expect(store.state.vpnConnectionStatus == .resolving(nil, nil))
 
-        await store.send(.appStateChanged(.preparingConnection)) {
+        await store.send(.vpnConnectionStatusUpdated(.connecting(.defaultFastest, nil))) {
+            $0.$vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
             $0.isLoadingOverlayVisible = true
         }
         #expect(store.state.shouldPresentLoadingOverlay)
@@ -220,30 +370,73 @@ struct SidebarFeatureTests {
     func viewDidLoadLoadsInitialMapWidth() async throws {
         let defaults = try #require(UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)"))
         defaults.set(720, forKey: AppConstants.UserDefaults.mapWidth)
-        let store = makeStore(
-            defaults: defaults
-        )
+        let store = makeStore(defaults: defaults)
 
         await store.send(.viewDidLoad) {
             $0.mapWidth = 720
         }
+        await store.receive(\.connection.input.onLaunch)
+        await store.receive(\.syncNATPortMappingState)
+        await store.receive(\.syncPlutoniumState)
         await store.receive(\.startObservingEvents)
+        await store.receive(\.connection.core.startObserving)
+        await store.receive(\.connection.core.tunnel.startObservingStateChanges)
+        await store.receive(\.connection.core.localAgent.startObservingEvents)
+        await store.receive(\.connection.core.tunnel.tunnelStatusChanged.disconnected) {
+            $0.connection.core.tunnel = .disconnected(nil)
+        }
+        await store.receive(\.connection.core.delegate.stateChanged) {
+            $0.connection.connectionState = .disconnected
+        }
+        await store.receive(\.connection.delegate.stateChanged.disconnected)
+        await store.receive(\.connection.delegate.stateChanged.disconnected)
+        await store.receive(\.vpnConnectionStatusUpdated.disconnected)
+        await store.receive(\.syncNATPortMappingState)
+        await store.receive(\.syncPlutoniumState)
+        await store.receive(\.vpnConnectionStatusUpdated.disconnected)
+        await store.receive(\.syncNATPortMappingState)
+        await store.receive(\.syncPlutoniumState)
+        await store.receive(\.syncPlutoniumState)
+        await store.receive(\.syncNATPortMappingState)
+
+        await store.send(.stopObservingEvents)
+        await store.send(.connection(.stopObserving))
+        await store.receive(\.connection.core.stopObserving)
+        await store.receive(\.connection.core.tunnel.stopObservingStateChanges)
+        await store.receive(\.connection.core.localAgent.stopAllObservations)
+    }
+
+    @Test("connection delegate state updates shared connection and vpn status")
+    func connectionDelegateStateUpdatesSharedConnectionAndVpnStatus() async {
+        let store = makeStore()
+        #expect(store.state.vpnConnectionStatus == .resolving(nil, nil))
+
+        await store.send(.connection(.delegate(.stateChanged(.disconnected)))) {
+            $0.$connectionState.withLock { $0 = .disconnected }
+            $0.$vpnConnectionStatus.withLock { $0 = .disconnected }
+        }
+        await store.receive(\.vpnConnectionStatusUpdated.disconnected)
+        await store.receive(\.syncNATPortMappingState)
+        await store.receive(\.syncPlutoniumState)
     }
 
     private func makeStore(
         environment: SidebarFeature.Environment = .init(
-            appStateChanged: { AsyncStream { continuation in continuation.finish() } },
             sidebarWidth: 425,
             expandButtonWidth: 28,
             defaultMapWidth: 600
         ),
         defaults: UserDefaults = UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)")!,
         clock: TestClock<Duration>? = nil,
-        connectToVPN: @escaping @Sendable (ConnectionSpec, ConnectionProtocol?, UserInitiatedVPNChange.VPNTrigger?) async throws -> Void = { _, _, _ in },
-        disconnectVPN: @escaping @Sendable (UserInitiatedVPNChange.VPNTrigger) async throws -> Void = { _ in },
-        sidebarConnectionCommandClient: SidebarConnectionCommandClient = .testValue
+        sidebarConnectionCommandClient: SidebarConnectionCommandClient = .testValue,
+        portForwardingEnabled: Bool = false
     ) -> TestStoreOf<SidebarFeature> {
-        TestStore(initialState: SidebarFeature.State()) {
+        @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+        @Shared(.connectionState) var connectionState
+        $vpnConnectionStatus.withLock { $0 = .resolving(nil, nil) }
+        $connectionState.withLock { $0 = .resolving }
+
+        return TestStore(initialState: SidebarFeature.State()) {
             SidebarFeature(
                 quickSettingsEnvironment: .init(
                     performOptionSelection: { _, _, dismiss in dismiss() },
@@ -255,10 +448,23 @@ struct SidebarFeatureTests {
             if let clock {
                 $0.continuousClock = clock
             }
+            $0.localAgent = LocalAgentMock(state: .disconnected)
+            $0.tunnelManager = MockTunnelManager(connection: .init(status: .disconnected))
+            $0.tunnelKeychain = TunnelKeychain(
+                storeWireguardConfig: { _ in Data() },
+                loadWireguardConfig: { Data() },
+                clear: {}
+            )
+            $0.certificateRefreshClient = .init(
+                refreshCertificateLocally: { _, _ in },
+                refreshCertificate: { _ throws(CertificateRefreshError) in throw .cancelled },
+                pushSelector: {}
+            )
             $0.defaultsProvider = .init(getDefaults: { defaults })
-            $0.connectToVPN = connectToVPN
-            $0.disconnectVPN = disconnectVPN
+            $0.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
+            $0.propertiesManager.lastConnectionIntent = ConnectionSpec(location: .any(.fastest), features: [])
             $0.sidebarConnectionCommandClient = sidebarConnectionCommandClient
+            $0.portForwardingPropertyProvider.setPortForwarding(portForwardingEnabled)
         }
     }
 }

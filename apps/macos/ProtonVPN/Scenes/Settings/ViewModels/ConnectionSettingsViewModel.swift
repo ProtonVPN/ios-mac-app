@@ -22,6 +22,7 @@
 
 import Cocoa
 import CommonNetworking
+import Connection
 import Dependencies
 import Domain
 import LegacyCommon
@@ -43,12 +44,9 @@ final class ConnectionSettingsViewModel {
     @Dependency(\.featureAuthorizerProvider) var authorizerProvider
     @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
 
-    typealias Factory = AppStateManagerFactory
-        & CoreAlertServiceFactory
+    typealias Factory = CoreAlertServiceFactory
         & NavigationServiceFactory
         & ProfileManagerFactory
-        & VpnGatewayFactory
-        & VpnManagerFactory
         & VpnProtocolChangeManagerFactory
 
     private let factory: Factory
@@ -58,14 +56,14 @@ final class ConnectionSettingsViewModel {
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
-    private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
     @Dependency(\.vpnStateConfiguration) private var vpnStateConfiguration
     @Dependency(\.authKeychain) private var authKeychain
+    @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
-    private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
+    @Shared(.connectionState) private var connectionState: ConnectionState
+    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     var selectedProtocol: ConnectionProtocol {
         didSet {
@@ -317,13 +315,14 @@ final class ConnectionSettingsViewModel {
     }
 
     func confirmEnableSmartProtocol(_ completion: @escaping (Result<Void, Error>) -> Void) {
-        switch vpnGateway.connection {
+        switch vpnConnectionStatus {
         case .connected, .connecting:
             let config = propertiesManager.smartProtocolConfig
-            let supported = appStateManager.activeConnection()?.server.supports(
-                connectionProtocol: .smartProtocol,
-                smartProtocolConfig: config
-            ) == true
+            let supported = if let endpoint = vpnConnectionStatus.mergedServer(using: connectionState)?.endpoint {
+                endpoint.supports(protocolSet: ProtocolSupport(vpnProtocols: config.supportedProtocols))
+            } else {
+                false
+            }
 
             let alert: SystemAlert = if supported {
                 ReconnectOnSmartProtocolChangeAlert(confirmHandler: { [weak self] in
@@ -352,7 +351,7 @@ final class ConnectionSettingsViewModel {
             }
             alertService.push(alert: alert)
 
-        default:
+        case .resolving, .disconnected, .disconnecting:
             enableSmartProtocol(and: .doNothing, completion)
         }
     }
@@ -439,7 +438,7 @@ final class ConnectionSettingsViewModel {
             case .withConnectionUpdate:
                 // in-place change when connected and using local agent
                 self?.featurePropertyProvider.setValue(newValue)
-                self?.vpnManager.set(vpnAccelerator: enabled)
+                self?.sidebarConnectionCommandClient.send(.applySettings([.vpnAccelerator(enabled)]))
                 completion(true)
             case .withReconnect:
                 self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.vpnProtocol, confirmHandler: { [weak self] in
@@ -464,7 +463,7 @@ final class ConnectionSettingsViewModel {
     }
 
     func setAllowLANAccess(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
-        let isConnected = vpnGateway.connection == .connected || vpnGateway.connection == .connecting
+        let isConnected = vpnConnectionStatus.isConnected(using: connectionState) || vpnConnectionStatus.is(\.connected)
         let newValue: ExcludeLocalNetworks = enabled ? .on : .off
 
         if propertiesManager.killSwitch {
@@ -573,7 +572,7 @@ final class ConnectionSettingsViewModel {
 
     private var userTier: Int {
         do {
-            return try vpnGateway.userTier()
+            return try vpnKeychain.fetchCached().maxTier
         } catch {
             return .freeTier
         }

@@ -60,8 +60,6 @@ final class DependencyContainer: Container {
     // Manages app updates
     private lazy var updateManager = UpdateManager()
 
-    private lazy var appCertificateRefreshManager = AppCertificateRefreshManagerImplementation(factory: self)
-
     override init() {
         super.init()
         // Some classes depend on shared container from vpncore directly
@@ -79,10 +77,7 @@ final class DependencyContainer: Container {
     // MARK: VpnCredentialsConfiguratorFactoryCreator
 
     override func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory {
-        MacVpnCredentialsConfiguratorFactory(
-            vpnAuthentication: makeVpnAuthentication(),
-            appGroup: DomainConstants.AppGroups.main
-        )
+        MacVpnCredentialsConfiguratorFactory(appGroup: DomainConstants.AppGroups.main)
     }
 
     // MARK: VpnAuthentication
@@ -164,7 +159,6 @@ extension DependencyContainer: AppSessionManagerFactory {
 extension DependencyContainer: NotificationManagerFactory {
     func makeNotificationManager() -> NotificationManagerProtocol {
         NotificationManager(
-            appStateManager: makeAppStateManager(),
             appSessionManager: makeAppSessionManager()
         )
     }
@@ -199,14 +193,6 @@ extension DependencyContainer: AppSessionRefresherFactory {
 extension DependencyContainer: HeaderViewModelFactory {
     func makeHeaderViewModel() -> HeaderViewModel {
         HeaderViewModel(factory: self)
-    }
-}
-
-// MARK: AppCertificateRefreshManagerFactory
-
-extension DependencyContainer: AppCertificateRefreshManagerFactory {
-    func makeAppCertificateRefreshManager() -> AppCertificateRefreshManager {
-        appCertificateRefreshManager
     }
 }
 

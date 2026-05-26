@@ -24,8 +24,10 @@ import Announcement
 import Cocoa
 import Combine
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
+import Ergonomics
 import LegacyCommon
 import Strings
 import Theme
@@ -49,7 +51,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private var overlayWindowController: ConnectingWindowController?
     private var fadeOutOverlayTask: DispatchWorkItem?
     private var isAnimatingMapResize = false
-    private var loading = false
     private var overlayViewModel: ConnectingOverlayViewModel?
     // Retain header view model to set `changeServerStateUpdated` when needed
     private var headerViewModel: HeaderViewModel?
@@ -60,10 +61,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         & HeaderViewModelFactory
         & MapSectionViewModelFactory
         & ProfileManagerFactory
-        & VpnManagerFactory
 
-    private let appStateManager: AppStateManager
-    private let vpnGateway: VpnGatewayProtocol
     private let navService: NavigationService
     private let factory: Factory
     private let store: StoreOf<SidebarFeature>
@@ -81,7 +79,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
 
     private lazy var profileSectionViewController: ProfileSectionViewController = { [unowned self] in
         let viewModel = ProfilesSectionViewModel(
-            vpnGateway: vpnGateway,
             navService: navService,
             alertService: factory.makeCoreAlertService(),
             profileManager: factory.makeProfileManager()
@@ -90,7 +87,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     }()
 
     private lazy var mapHeaderViewModel: MapHeaderViewModel = { [unowned self] in
-        return MapHeaderViewModel(vpnGateway: vpnGateway, appStateManager: appStateManager)
+        return MapHeaderViewModel()
     }()
 
     private lazy var mapSectionViewModel: MapSectionViewModel = factory.makeMapSectionViewModel()
@@ -106,16 +103,10 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     // MARK: - Init
 
     init(
-        appStateManager: AppStateManager,
-        vpnGateway: VpnGatewayProtocol,
         navService: NavigationService,
         factory: Factory
     ) {
-        let quickSettingsHandler = CountriesSectionQuickSettingsHandler(
-            appStateManager: appStateManager,
-            vpnGateway: vpnGateway,
-            vpnManager: factory.makeVpnManager()
-        )
+        let quickSettingsHandler = CountriesSectionQuickSettingsHandler()
         let store = Store(initialState: .init()) {
             SidebarFeature(
                 quickSettingsEnvironment: .init(
@@ -131,25 +122,16 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                     }
                 ),
                 environment: .init(
-                    appStateChanged: {
-                        AsyncStream { continuation in
-                            let cancellable = appStateManager.appStateUpdates.sink { state in
-                                continuation.yield(state)
-                            }
-                            continuation.onTermination = { _ in
-                                cancellable.cancel()
-                            }
-                        }
-                    },
                     sidebarWidth: Dimensions.sidebarWidth,
                     expandButtonWidth: Dimensions.expandButtonWidth,
                     defaultMapWidth: Dimensions.defaultMapContainerWidth
                 )
             )
+        } withDependencies: {
+            $0.wasLaunchedAtLogin = { AppStartup.isLaunchedAtLogin }
+            $0.appProcessStartDate = { AppStartup.processStartDate }
         }
 
-        self.appStateManager = appStateManager
-        self.vpnGateway = vpnGateway
         self.navService = navService
         self.factory = factory
         self.store = store
@@ -195,12 +177,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             store.send(.windowDidResize(width: window.frame.width, height: window.frame.height))
         }
 
-        if let overlayViewModel, !appStateManager.state.isConnected {
-            showLoadingOverlay(with: overlayViewModel)
-        } else {
-            overlayViewModel = nil
-        }
-        vpnGateway.postConnectionInformation()
+        applyLoadingOverlayState()
     }
 
     override func viewDidLayout() {
@@ -234,11 +211,8 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         store.send(.overlayWindowPresentedChanged(true))
     }
 
-    private func loading(show: Bool, animateClose _: Bool = false) {
+    private func loading(show: Bool, animateClose: Bool = false) {
         guard let window = view.window else { return }
-
-        loading = show
-
         if show {
             removeConnectingOverlay()
             let cancellation: (() -> Void) = { [weak self] in
@@ -256,12 +230,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                 showLoadingOverlay(with: overlayViewModel!)
             }
         } else {
-            switch appStateManager.state {
-            case .connected:
-                removeConnectingOverlay(animated: true)
-            default:
-                removeConnectingOverlay()
-            }
+            removeConnectingOverlay(animated: animateClose)
         }
     }
 
@@ -299,6 +268,9 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                 self.overlayWindowController = nil
                 store.send(.overlayWindowPresentedChanged(false))
             }
+        } else if store.isOverlayWindowPresented {
+            // Keep reducer/UI state in sync if the overlay window disappeared unexpectedly.
+            store.send(.overlayWindowPresentedChanged(false))
         }
     }
 
@@ -517,12 +489,14 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         // CoreImage workaround and avoids main-thread stalls on sleep/user switch.
         if store.shouldPresentLoadingOverlay {
             fadeOutOverlayTask?.cancel()
-            if !store.isOverlayWindowPresented {
+            if overlayWindowController == nil {
                 loading(show: true)
             }
         } else {
-            if store.isOverlayWindowPresented {
+            if overlayWindowController != nil {
                 loading(show: false)
+            } else if store.isOverlayWindowPresented {
+                store.send(.overlayWindowPresentedChanged(false))
             }
         }
     }

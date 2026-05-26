@@ -31,7 +31,7 @@ extension SettingsClient: @retroactive DependencyKey {
         featureChangeAvailability: { feature in
             @Shared(.connectionState) var connectionState
 
-            if case .disconnected = connectionState {
+            if connectionState.is(\.disconnected) {
                 return .immediate
             }
 

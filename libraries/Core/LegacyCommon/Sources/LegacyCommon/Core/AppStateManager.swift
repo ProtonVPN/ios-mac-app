@@ -107,10 +107,6 @@ public class AppStateManagerImplementation: AppStateManager {
                 return
             }
             displayStateStreamContinuation.yield(displayState)
-
-            executeOnUIThread { [displayState] in
-                AppEvent.appStateManagerDisplayStateChange.post(displayState)
-            }
         }
     }
 
@@ -150,14 +146,13 @@ public class AppStateManagerImplementation: AppStateManager {
     public typealias Factory =
         CoreAlertServiceFactory &
         VpnAuthenticationFactory &
-        VpnManagerConfigurationPreparerFactory &
-        VpnManagerFactory
+        VpnManagerConfigurationPreparerFactory
 
     // MARK: - Init
 
     public convenience init(_ factory: Factory) {
         self.init(
-            vpnManager: factory.makeVpnManager(),
+            vpnManager: NoOpVpnManager(),
             alertService: factory.makeCoreAlertService(),
             configurationPreparer: factory.makeVpnManagerConfigurationPreparer(),
             vpnAuthentication: factory.makeVpnAuthentication()
@@ -308,11 +303,6 @@ public class AppStateManagerImplementation: AppStateManager {
     public func disconnect(completion: @escaping () -> Void) {
         log.info("VPN disconnect started", category: .connectionDisconnect)
         propertiesManager.intentionallyDisconnected = true
-
-        #if os(macOS)
-            propertiesManager.connectedServerNameDoNotUse = nil
-        #endif
-
         vpnManager.disconnect(completion: completion)
     }
 
@@ -407,7 +397,6 @@ public class AppStateManagerImplementation: AppStateManager {
     }
 
     private func handleConnectivity(with path: NWPath) {
-        AppEvent.reachabilityChanged.post(path)
         #if os(macOS)
             if path.status == .unsatisfied, let retryWork {
                 // if reachability changes within the time window, let's cancel the scheduling and retry calling the method
@@ -433,21 +422,6 @@ public class AppStateManagerImplementation: AppStateManager {
         $killSwitch.publisher.removeDuplicates().receive(on: RunLoop.main).sink { [weak self] _ in
             self?.killSwitchChanged()
         }.store(in: &cancellables)
-
-        #if os(macOS)
-            if VPNFeatureFlagType.portForwarding.enabled {
-                Task {
-                    for await displayState in displayStateStream {
-                        switch displayState {
-                        case .connected:
-                            vpnManager.startNATPortMappingService()
-                        default:
-                            vpnManager.stopNATPortMappingService()
-                        }
-                    }
-                }
-            }
-        #endif
     }
 
     private func vpnStateChanged() {
@@ -498,11 +472,6 @@ public class AppStateManagerImplementation: AppStateManager {
             state = .connecting(descriptor)
         case let .connected(descriptor):
             propertiesManager.intentionallyDisconnected = false
-
-            #if os(macOS)
-                propertiesManager.connectedServerNameDoNotUse = activeConnection()?.server.name
-            #endif
-
             startServiceChecker()
             attemptingConnection = false
             state = .connected(descriptor)
@@ -630,7 +599,6 @@ public class AppStateManagerImplementation: AppStateManager {
     private func notifyObservers() {
         executeOnUIThread {
             self.appStateUpdates.send(self.state)
-            AppEvent.appStateManagerStateChange.post(self.state)
         }
     }
 

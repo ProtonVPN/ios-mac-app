@@ -31,6 +31,10 @@ public struct ConnectionFeature: Sendable {
     @Dependency(\.connectionBridge) private var connectionBridge
     @Dependency(\.connectionIntentStorage) private var intentStorage
     @Dependency(\.connectionIntentResolver) private var intentResolver
+    @Dependency(\.continuousClock) private var clock
+    @Dependency(\.date) private var date
+    @Dependency(\.wasLaunchedAtLogin) private var wasLaunchedAtLogin
+    @Dependency(\.appProcessStartDate) private var appProcessStartDate
 
     public init() {}
 
@@ -40,6 +44,7 @@ public struct ConnectionFeature: Sendable {
         public internal(set) var reconnectionIntent: ConnectionPreparationIntent?
         var connectionState: ConnectionState
         var shouldRegisterServerChangeOnConnection: Bool
+        var reachabilityPendingIntent: ConnectionPreparationIntent?
         var core: CoreConnectionFeature.State
 
         package init(
@@ -47,12 +52,14 @@ public struct ConnectionFeature: Sendable {
             queuedIntent: ConnectionPreparationIntent?,
             connectionState: ConnectionState,
             shouldRegisterServerChangeOnConnection: Bool,
+            reachabilityPendingIntent: ConnectionPreparationIntent? = nil,
             core: CoreConnectionFeature.State
         ) {
             self.currentIntent = currentIntent
             self.reconnectionIntent = queuedIntent
             self.connectionState = connectionState
             self.shouldRegisterServerChangeOnConnection = shouldRegisterServerChangeOnConnection
+            self.reachabilityPendingIntent = reachabilityPendingIntent
             self.core = core
         }
     }
@@ -63,6 +70,7 @@ public struct ConnectionFeature: Sendable {
         case finishedPreparing(Result<ServerConnectionIntent, ProtocolSelectionError>)
         case core(CoreConnectionFeature.Action)
         case input(Input)
+        case reachabilityRetryDeadlineElapsed
         case delegate(Delegate)
         case stopObserving
 
@@ -94,6 +102,7 @@ public struct ConnectionFeature: Sendable {
         case preparation
         case connectionTimeout
         case observation
+        case reachabilityRetry
     }
 
     public var body: some Reducer<State, Action> {
@@ -107,20 +116,43 @@ public struct ConnectionFeature: Sendable {
                 ).cancellable(id: CancelID.observation, cancelInFlight: true)
 
             case .stopObserving:
-                return .merge(.send(.core(.stopObserving)), .cancel(id: CancelID.observation))
+                state.reachabilityPendingIntent = nil
+                return .merge(
+                    .send(.core(.stopObserving)),
+                    .cancel(id: CancelID.observation),
+                    .cancel(id: CancelID.reachabilityRetry)
+                )
 
             case let .input(.connect(intent)):
+                // Explicit user connect should clear any stale delayed-disconnect latch
+                // from previous cancelled attempts.
+                state.core.shouldDisconnectWhenAllowed = false
                 do throws(ConnectionIntentResolutionError) {
                     try intentResolver.authorize(intent, state.userTier ?? .freeTier)
                 } catch {
                     return .send(.delegate(.intentResolutionFailed(intent, with: error)))
                 }
 
+                if state.core.currentNwStatus == .unsatisfied {
+                    #if os(macOS)
+                        if shouldDelayConnectionFailureBecauseOfStartup {
+                            state.reachabilityPendingIntent = intent
+                            return .run { send in
+                                try await clock.sleep(for: .seconds(10))
+                                await send(.reachabilityRetryDeadlineElapsed)
+                            }.cancellable(id: CancelID.reachabilityRetry, cancelInFlight: true)
+                        }
+                    #endif
+                    return .send(.delegate(.connectionFailed(.preparation(.networkUnreachable))))
+                }
+
                 switch state.coreConnectionState {
                 case .unknown:
-                    // We're not ready to accept a connection request yet
-                    log.assertionFailure("Received a connection request before internal state was resolved")
-                    return .none
+                    // We are still resolving the startup state, so queue this intent and expose a connecting mask.
+                    // Once we transition to disconnected, the queued intent will be prepared automatically.
+                    state.reconnectionIntent = intent
+                    let maskedConnectionState = ConnectionState.connecting(.unresolved(intent))
+                    return updateStateSendingEffectIfNecessary(&state, to: maskedConnectionState)
 
                 case .disconnecting:
                     // Save the reconnection intent for once the disconnection process is finished
@@ -132,6 +164,16 @@ public struct ConnectionFeature: Sendable {
 
                 case .starting, .connecting, .connected:
                     state.reconnectionIntent = intent
+                    guard state.core.isInteractionAllowed else {
+                        log.debug(
+                            "Delaying reconnect disconnection until core is ready",
+                            category: .connection,
+                            metadata: ["coreState": "\(state.coreConnectionState)"]
+                        )
+                        state.core.shouldDisconnectWhenAllowed = true
+                        let maskedConnectionState = ConnectionState.connecting(.unresolved(intent))
+                        return updateStateSendingEffectIfNecessary(&state, to: maskedConnectionState)
+                    }
                     return .send(.core(.disconnect(.userIntent)))
 
                 case .disconnected:
@@ -151,10 +193,22 @@ public struct ConnectionFeature: Sendable {
                 return handleUserDisconnectionRequest(&state)
 
             case .input(.onLogout):
+                state.reachabilityPendingIntent = nil
                 return .merge(.send(.stopObserving), .send(.core(.handleLogout)))
 
             case .input(.onSessionChange):
+                state.reachabilityPendingIntent = nil
                 return .send(.core(.handleLogout))
+
+            case .reachabilityRetryDeadlineElapsed:
+                guard let pendingIntent = state.reachabilityPendingIntent else {
+                    return .none
+                }
+                state.reachabilityPendingIntent = nil
+                if state.core.currentNwStatus == .unsatisfied {
+                    return .send(.delegate(.connectionFailed(.preparation(.networkUnreachable))))
+                }
+                return .send(.input(.connect(pendingIntent)))
 
             case let .prepare(intent):
                 // protocol and port selection is only sensible while the tunnel is disconnected
@@ -213,6 +267,8 @@ public struct ConnectionFeature: Sendable {
                     state.reconnectionIntent = nil
                     return .send(.prepare(reconnectionIntent))
                 } else {
+                    // Fully disconnected with no queued reconnect; clear any stale lifecycle intent.
+                    state.currentIntent = nil
                     return .concatenate(
                         updateStateSendingEffectIfNecessary(&state, to: .disconnected),
                         .send(.delegate(.stateChanged(.disconnected)))
@@ -220,6 +276,21 @@ public struct ConnectionFeature: Sendable {
                 }
 
             case let .core(.delegate(.stateChanged(_, .connected(_, connectedAt, details)))):
+                if state.currentIntent?.is(\.disconnecting) == true, state.reconnectionIntent != nil {
+                    // During explicit disconnect we can transiently receive core .connected updates
+                    // while Local Agent and tunnel are racing to stop/start. Do not surface this
+                    // as a user-facing connected state; it hides the connecting/disconnecting overlay.
+                    log.debug("Ignoring spurious .connected transition while disconnecting", category: .connection)
+                    return .none
+                }
+                if state.reconnectionIntent != nil {
+                    // We can receive a late startup `.connected` after user already requested a new connection
+                    // while state was still `.unknown`. Enforce a disconnect so only one tunnel/protocol stays active.
+                    if state.core.isInteractionAllowed {
+                        return .send(.core(.disconnect(.userIntent)))
+                    }
+                    state.core.shouldDisconnectWhenAllowed = true
+                }
                 if state.shouldRegisterServerChangeOnConnection {
                     @Dependency(\.serverChangeAuthorizer) var authorizer
                     authorizer.registerServerChange(connectedAt: connectedAt)
@@ -261,10 +332,12 @@ public struct ConnectionFeature: Sendable {
                     state.currentIntent = .disconnecting(intent)
                 }
                 let queuedIntent = state.reconnectionIntent
+                if let reconnectionIntent = queuedIntent {
+                    // While reconnecting we already have the next unresolved intent and do not need
+                    // to resolve a stored active intent in order to expose user-facing state.
+                    return updateStateSendingEffectIfNecessary(&state, to: .connecting(.unresolved(reconnectionIntent)))
+                }
                 return updateStateWithStoredIntentOrDisconnect(&state) { intent in
-                    if let reconnectionIntent = queuedIntent {
-                        return .connecting(.unresolved(reconnectionIntent))
-                    }
                     assert(oldState, isNot: \.disconnected)
                     return .disconnecting(intent, intent.server)
                 }
@@ -277,6 +350,18 @@ public struct ConnectionFeature: Sendable {
 
             case let .core(.localAgent(.notice(authenticationError))):
                 return .send(.delegate(.localAgentNotice(authenticationError)))
+
+            case let .core(.connectivityChanged(nwStatus)):
+                guard nwStatus.shouldAttemptConnection,
+                      let pendingIntent = state.reachabilityPendingIntent
+                else {
+                    return .none
+                }
+                state.reachabilityPendingIntent = nil
+                return .merge(
+                    .cancel(id: CancelID.reachabilityRetry),
+                    .send(.input(.connect(pendingIntent)))
+                )
 
             case .core:
                 return .none
@@ -291,6 +376,11 @@ public struct ConnectionFeature: Sendable {
     /// Determine whether it is safe to disconnect. If so, proceed with internal disconnection logic. Otherwise, delay
     /// the disconnection request until the network extension state is stable and can be disconnected.
     private func handleUserDisconnectionRequest(_ state: inout State) -> Effect<Action> {
+        state.reachabilityPendingIntent = nil
+        if state.reconnectionIntent != nil {
+            log.debug("Clearing queued reconnection intent following explicit user disconnect", category: .connection)
+            state.reconnectionIntent = nil
+        }
         let internalDisconnectOrStateChangeEffect: Effect<Action>
         switch state.coreConnectionState {
         case .unknown:
@@ -313,22 +403,26 @@ public struct ConnectionFeature: Sendable {
             internalDisconnectOrStateChangeEffect = .send(.core(.disconnect(.userIntent)))
 
         case .disconnecting:
-            if state.reconnectionIntent != nil {
-                log.debug("Cancelling reconnection intent following disconnection intent from user", category: .connection)
-                state.reconnectionIntent = nil
-            } else {
-                log.debug("Ignoring disconnection intent, already internally disconnected.", category: .connection)
-            }
+            log.debug("Ignoring disconnection intent, already internally disconnected.", category: .connection)
             internalDisconnectOrStateChangeEffect = updateStateWithStoredIntentOrDisconnect(&state) { intent in
                 .disconnecting(intent, intent.server)
             }
 
         case .disconnected:
             log.info("Ignoring disconnection intent, already internally disconnected.", category: .connection)
-            internalDisconnectOrStateChangeEffect = updateStateSendingEffectIfNecessary(&state, to: .disconnected)
+            // Keep a delayed-disconnect latch so that if a late tunnel start arrives
+            // from a cancelled attempt, core will disconnect again as soon as possible.
+            state.core.shouldDisconnectWhenAllowed = true
+            internalDisconnectOrStateChangeEffect = .merge(
+                // A tunnel start can still be in flight while core reports disconnected.
+                // Forwarding a disconnect here ensures pending start effects are cancelled.
+                .send(.core(.disconnect(.userIntent))),
+                updateStateSendingEffectIfNecessary(&state, to: .disconnected)
+            )
         }
         return .merge(
             .cancel(id: CancelID.preparation),
+            .cancel(id: CancelID.reachabilityRetry),
             internalDisconnectOrStateChangeEffect
         )
     }
@@ -361,6 +455,17 @@ public struct ConnectionFeature: Sendable {
         state.connectionState = newValue
         return .send(.delegate(.stateChanged(newValue)))
     }
+
+    #if os(macOS)
+        private var shouldDelayConnectionFailureBecauseOfStartup: Bool {
+            guard wasLaunchedAtLogin(),
+                  let processStartDate = appProcessStartDate()
+            else {
+                return false
+            }
+            return abs(date.now.timeIntervalSince(processStartDate)) < 10
+        }
+    #endif
 
     private func assert<T: CasePathable>(
         _ value: T,
@@ -441,6 +546,7 @@ public extension ConnectionFeature.State {
         queuedIntent: nil,
         connectionState: .resolving,
         shouldRegisterServerChangeOnConnection: false,
+        reachabilityPendingIntent: nil,
         core: .initialCoreConnectionState
     )
 }
@@ -460,6 +566,8 @@ extension ConnectionFeature.Action: CustomDebugStringConvertible {
             ".delegate(\(delegate.debugDescription))"
         case .stopObserving:
             ".stopObserving"
+        case .reachabilityRetryDeadlineElapsed:
+            ".reachabilityRetryDeadlineElapsed"
         }
     }
 }

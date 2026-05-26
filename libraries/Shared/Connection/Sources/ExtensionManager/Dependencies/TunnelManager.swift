@@ -104,15 +104,23 @@ final class PacketTunnelManager: TunnelManager {
     }
 
     func stopTunnel() async throws {
-        guard let (proto, _) = try await activeManager() else {
+        @Dependency(\.vpnManagerRepository) var managerRepository
+        let managers = try await managerRepository.managers()
+        let activeProtocols = managers
+            .filter { $0.value.session.status != .disconnected && $0.value.session.status != .invalid }
+            .map(\.key)
+
+        guard !activeProtocols.isEmpty else {
             log.warning("stopTunnel: no active tunnel found", category: .connection)
             return
         }
 
-        // Disable on-demand before stopping, to prevent auto-reconnect
-        @Dependency(\.vpnManagerRepository) var managerRepository
-        let manager = try await managerRepository.prepareManager(proto, .disconnection)
-        manager.session.stopTunnel()
+        // Disable on-demand before stopping, to prevent auto-reconnect.
+        // Stop all active managers to avoid ending up with concurrent protocol sessions.
+        for proto in activeProtocols {
+            let manager = try await managerRepository.prepareManager(proto, .disconnection)
+            manager.session.stopTunnel()
+        }
     }
 
     func send(request: WireguardProviderRequest, to target: TunnelMessageTarget) async throws(ProviderMessageError) -> WireguardProviderRequest.Response {
@@ -166,17 +174,44 @@ final class PacketTunnelManager: TunnelManager {
 
     var statusStream: AsyncStream<TunnelState> {
         log.debug("Creating TunnelState stream for tunnel observation", category: .connection)
-        return NotificationCenter.default.notifications(named: .NEVPNStatusDidChange)
-            .compactMap { StatusChangePayload.from(statusDidChangeNotification: $0) }
-            .map { await self.tunnelState(from: $0) }
-            .eraseToStream()
+        return UncheckedSendable(
+            NotificationCenter.default
+                .notifications(named: .NEVPNStatusDidChange)
+                .compactMap { StatusChangePayload.from(statusDidChangeNotification: $0) }
+                .map { await self.currentTunnelState(after: $0) }
+        )
+        .eraseToStream()
     }
 
     private func activeManager() async throws -> (TunnelProtocol, any TunnelProviderManager)? {
         @Dependency(\.vpnManagerRepository) var managerRepository
-        return try await managerRepository.managers().first(where: {
-            $0.value.session.status != .disconnected && $0.value.session.status != .invalid
+        let managers = try await managerRepository.managers()
+        let activeManagers = managers.filter { _, manager in
+            manager.session.status != .disconnected && manager.session.status != .invalid
+        }
+        guard !activeManagers.isEmpty else {
+            return nil
+        }
+        return activeManagers.max(by: { lhs, rhs in
+            statusPriority(lhs.value.session.status) < statusPriority(rhs.value.session.status)
         })
+    }
+
+    private func statusPriority(_ status: NEVPNStatus) -> Int {
+        switch status {
+        case .connected:
+            4
+        case .reasserting:
+            3
+        case .connecting:
+            2
+        case .disconnecting:
+            1
+        case .invalid, .disconnected:
+            0
+        @unknown default:
+            0
+        }
     }
 
     private func tunnelState(from payload: StatusChangePayload) async -> TunnelState {
@@ -189,6 +224,15 @@ final class PacketTunnelManager: TunnelManager {
         } catch {
             log.error("Failed to determine connected state: \(error)", category: .connection)
             return .connected(payload.tunnelProtocol, nil)
+        }
+    }
+
+    private func currentTunnelState(after payload: StatusChangePayload) async -> TunnelState {
+        do {
+            return try await status
+        } catch {
+            log.error("Failed to resolve global tunnel status: \(error)", category: .connection)
+            return await tunnelState(from: payload)
         }
     }
 
@@ -226,10 +270,29 @@ final class PacketTunnelManager: TunnelManager {
             return .connected(tunnelProtocol, connectionData)
 
         case .wireGuard(.go):
-            guard case let .ok(data?) = try await session.send(.getCurrentServerId),
-                  let serverID = String(data: data, encoding: .utf8) else {
-                throw TunnelManagerError.ipc(.getCurrentServerId, nil)
-            }
+            let serverID: String = try await {
+                #if os(macOS)
+                    let configurationServerID = (configuration as? NETunnelProviderProtocol)?
+                        .connectedServerIpId
+                        .flatMap { $0.isEmpty ? nil : $0 }
+
+                    if let ipcServerID = try? await fetchServerIDViaIPC(session: session) {
+                        if let configurationServerID, configurationServerID != ipcServerID {
+                            log.debug(
+                                "Connected server ID mismatch between IPC and configuration; using IPC. configurationServerID: \(configurationServerID), ipcServerID: \(ipcServerID)",
+                                category: .connection
+                            )
+                        }
+                        return ipcServerID
+                    }
+                    if let configurationServerID {
+                        return configurationServerID
+                    }
+                    return try await fetchServerIDViaIPC(session: session)
+                #else
+                    return try await fetchServerIDViaIPC(session: session)
+                #endif
+            }()
 
             let connectionData = ConnectionData(
                 serverID: serverID,
@@ -257,6 +320,15 @@ final class PacketTunnelManager: TunnelManager {
                 throw TunnelManagerError.ipc(.getCurrentServerId, nil)
             }
         }
+    }
+
+    private func fetchServerIDViaIPC(session: any VPNSession) async throws -> String {
+        guard case let .ok(data?) = try await session.send(.getCurrentServerId),
+              let serverID = String(data: data, encoding: .utf8),
+              !serverID.isEmpty else {
+            throw TunnelManagerError.ipc(.getCurrentServerId, nil)
+        }
+        return serverID
     }
 
     func cleanup() async throws {
@@ -321,6 +393,10 @@ struct StatusChangePayload {
 
         @Dependency(\.bundleIDClient) var bundleIDClient
         guard let tunnelProtocol = bundleIDClient.tunnelProtocol(configuration) else {
+            if bundleIDClient.isNonCoreBundleIdentifier(configuration) {
+                log.debug("Ignoring status update for non-core bundle identifier", category: .connection)
+                return nil
+            }
             log.error("Unrecognised bundle identifier in configuration", category: .connection)
             return nil
         }
@@ -333,8 +409,11 @@ private extension NEVPNProtocol {
     var ikePeerID: String {
         get throws {
             // VPNAPPL-3466: Smarter way to encode the username, without conflicting with other features
-            guard let username, let index = username.lastIndex(of: "+") else {
+            guard let username, !username.isEmpty else {
                 throw TunnelManagerError.malformedConfiguration
+            }
+            guard let index = username.lastIndex(of: "+") else {
+                return username
             }
             return String(username.suffix(from: index))
         }
