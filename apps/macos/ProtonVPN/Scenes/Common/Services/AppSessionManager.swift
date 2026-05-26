@@ -26,6 +26,7 @@ import CommonNetworking
 import Dependencies
 import Domain
 import Ergonomics
+import ExtensionManager
 import LegacyCommon
 import ProtonCoreFeatureFlags
 import ProtonCoreUtilities
@@ -77,6 +78,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
+    @Dependency(\.activeTunnelInspector) private var activeTunnelInspector
     @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     var sessionStatus: SessionStatus = .notEstablished {
@@ -245,9 +247,44 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             return
         }
 
-        guard (try? vpnKeychain.fetch()) != nil else {
+        guard let vpnCredentials = try? vpnKeychain.fetch() else {
             alertService.push(alert: CannotAccessVpnCredentialsAlert())
             throw CommonVpnError.fetchSession
+        }
+
+        // IKEv2 is the only protocol that embeds a user identity in its tunnel configuration
+        // (`NEVPNProtocolIKEv2.username`). WireGuard tunnels carry no user identity, so the
+        // cross-user check is best-effort and only catches the IKE case.
+        guard let activeBaseUsername = await activeTunnelInspector.activeIKEBaseUsername() else {
+            return
+        }
+        if activeBaseUsername == vpnCredentials.name {
+            return
+        }
+        try await confirmAndDisconnectActiveSession()
+    }
+
+    private func confirmAndDisconnectActiveSession() async throws {
+        try await withCheckedThrowingContinuation { continuation in
+            let alert = ActiveSessionWarningAlert(
+                confirmHandler: { [weak self] in
+                    guard let self else {
+                        continuation.resume()
+                        return
+                    }
+                    if isConnected {
+                        connectionCommandClient.send(.disconnect(.signout, completion: {
+                            continuation.resume()
+                        }))
+                        return
+                    }
+                    continuation.resume()
+                },
+                cancelHandler: {
+                    continuation.resume(throwing: CommonVpnError.vpnSessionInProgress)
+                }
+            )
+            alertService.push(alert: alert)
         }
     }
 

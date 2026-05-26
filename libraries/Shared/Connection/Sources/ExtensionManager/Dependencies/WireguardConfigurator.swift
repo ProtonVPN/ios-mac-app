@@ -369,7 +369,7 @@ enum WireguardConfiguratorError: Error {
     case ikeCredentialsUnavailable(Error)
 }
 
-private enum IkeUsernameComponent {
+enum IkeUsernameComponent {
     static let concatChar: Character = "+"
 
     case iosClient
