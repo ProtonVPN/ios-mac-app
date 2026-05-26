@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
 import Foundation
@@ -40,7 +41,7 @@ public struct DefaultProfileFeature {
             serverOffering.description
         }
 
-        @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+        @SharedReader(.connectionState) var connectionState: ConnectionState
         @SharedReader(.userTier) var userTier: Int?
 
         // Computed properties
@@ -73,7 +74,7 @@ public struct DefaultProfileFeature {
         }
 
         var isConnected: Bool {
-            guard case .connected = vpnConnectionStatus else {
+            guard case .connected = connectionState else {
                 return false
             }
             @Dependency(\.propertiesManager) var propertiesManager
@@ -81,10 +82,10 @@ public struct DefaultProfileFeature {
         }
 
         var isConnecting: Bool {
-            guard case let .connecting(connectionSpec, _) = vpnConnectionStatus else {
+            guard let connectingSpec = connectionState.is(\.connecting) ? connectionState.resolvedSpec : nil else {
                 return false
             }
-            return connectionSpec == profile.connectionSpec(trigger: .profile)
+            return connectingSpec == profile.connectionSpec(trigger: .profile)
         }
 
         var isUsersTierTooLow: Bool {
@@ -136,7 +137,7 @@ public struct DefaultProfileFeature {
     public enum Action: BindableAction {
         case binding(BindingAction<State>)
         case connectTapped
-        case connectionStatusChanged(VPNConnectionStatus)
+        case connectionStateChanged(ConnectionState)
 
         case connectToProfile(Profile)
         case disconnectRequested
@@ -152,7 +153,7 @@ public struct DefaultProfileFeature {
             case .connectTapped:
                 handleConnect(state: state)
 
-            case .connectionStatusChanged:
+            case .connectionStateChanged:
                 .none
 
             case .binding:

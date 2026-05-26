@@ -56,7 +56,6 @@ final class SettingsViewModel {
     private let factory: Factory
 
     @Dependency(\.propertiesManager) private var propertiesManager
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
     @Shared(.connectionState) private var connectionState: ConnectionState
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
@@ -98,7 +97,7 @@ final class SettingsViewModel {
         self.factory = factory
         self.protocolService = protocolService
 
-        self.hermesSettingsViewModel = HermesSettingsViewModel(factory: factory)
+        self.hermesSettingsViewModel = HermesSettingsViewModel()
 
         self.isAccountRecoveryEnabled = AccountRecoveryModule.feature.enabled
 
@@ -175,7 +174,7 @@ final class SettingsViewModel {
         ]
         reloadEvents.subscribe(self, selector: #selector(reload))
 
-        $vpnConnectionStatus
+        $connectionState
             .publisher
             .sink { [weak self] _ in
                 self?.reloadNeeded?()
@@ -573,7 +572,7 @@ final class SettingsViewModel {
                     let currentSafeMode = safeModePropertyProvider.getSafeMode() ?? true
                     let newSafeMode = !currentSafeMode
 
-                    switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+                    switch VpnFeatureChangeState(connectionState: connectionState) {
                     case .withConnectionUpdate:
                         safeModePropertyProvider.setSafeMode(newSafeMode)
                         callback(toggleOn)

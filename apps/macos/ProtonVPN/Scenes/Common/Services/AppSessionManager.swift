@@ -23,6 +23,7 @@
 import Announcement
 import Cocoa
 import CommonNetworking
+import Connection
 import Dependencies
 import Domain
 import Ergonomics
@@ -79,7 +80,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.activeTunnelInspector) private var activeTunnelInspector
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
+    @Shared(.connectionState) private var connectionState: ConnectionState
 
     var sessionStatus: SessionStatus = .notEstablished {
         didSet {
@@ -295,7 +296,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     func logOut(force: Bool, reason: String?) {
-        switch vpnConnectionStatus {
+        switch connectionState {
         case .connected:
             confirmLogout(showAlert: !force) { [weak self] in
                 self?.connectionCommandClient.send(.disconnect(.signout, completion: {
@@ -426,25 +427,15 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     private var isConnected: Bool {
-        vpnConnectionStatus.is(\.connected)
+        connectionState.isConnected
     }
 
     private var isDisconnectedForPropertiesRefresh: Bool {
-        switch vpnConnectionStatus {
-        case .connected, .disconnecting:
-            false
-        case .resolving, .disconnected, .connecting:
-            true
-        }
+        connectionState.isDisconnectedForPropertiesRefresh
     }
 
     private var isSafeToEnd: Bool {
-        switch vpnConnectionStatus {
-        case .connected, .connecting, .disconnecting:
-            false
-        case .resolving, .disconnected:
-            true
-        }
+        connectionState.isSafeToEnd
     }
 }
 

@@ -50,7 +50,7 @@ public struct RecentsSectionView: View {
             DividedForEach(store.recentConnectionList) { item in
                 RecentRowItemView(
                     item: item,
-                    isConnected: store.vpnConnectionStatus.spec == item.connection,
+                    isConnected: store.connectionState.resolvedSpec == item.connection,
                     sendAction: { _ = store.send($0) }
                 )
             }

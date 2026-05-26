@@ -58,7 +58,6 @@ final class StatusMenuViewModel {
     @Dependency(\.linkOpener) var linkOpener
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
     @Shared(.connectionState) private var connectionState: ConnectionState
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -118,7 +117,7 @@ final class StatusMenuViewModel {
     }
 
     var isConnected: Bool {
-        vpnConnectionStatus.isConnected(using: connectionState)
+        connectionState.isConnected
     }
 
     private var isQuickConnectInDisconnectMode: Bool {
@@ -126,11 +125,11 @@ final class StatusMenuViewModel {
     }
 
     var connectedCountryCode: String? {
-        vpnConnectionStatus.mergedServer(using: connectionState)?.logical.exitCountryCode
+        connectionState.resolvedServer?.logical.exitCountryCode
     }
 
     var isStateStable: Bool {
-        switch vpnConnectionStatus {
+        switch connectionState {
         case .connected, .disconnected:
             true
         case .resolving, .connecting, .disconnecting:
@@ -145,7 +144,7 @@ final class StatusMenuViewModel {
     // MARK: - Connecting screen
 
     var isConnecting: Bool {
-        switch vpnConnectionStatus {
+        switch connectionState {
         case .connecting, .resolving:
             true
         case .connected, .disconnected, .disconnecting:
@@ -361,12 +360,6 @@ final class StatusMenuViewModel {
             }
             .store(in: &cancellables)
 
-        $vpnConnectionStatus.publisher
-            .sink { [weak self] _ in
-                self?.handleVpnStatusChanged()
-            }
-            .store(in: &cancellables)
-
         $connectionState.publisher
             .sink { [weak self] _ in
                 self?.handleVpnStatusChanged()
@@ -524,7 +517,7 @@ final class StatusMenuViewModel {
 
     private func getCurrentIp() -> String? {
         if isConnected {
-            vpnConnectionStatus.mergedServer(using: connectionState)?.endpoint.exitIp
+            connectionState.resolvedServer?.endpoint.exitIp
         } else {
             propertiesManager.userLocation?.ip
         }
@@ -535,7 +528,7 @@ final class StatusMenuViewModel {
             return Localizable.notConnected.styled(.danger)
         }
 
-        guard let server = vpnConnectionStatus.mergedServer(using: connectionState) else {
+        guard let server = connectionState.resolvedServer else {
             return Localizable.noDescriptionAvailable.styled()
         }
 
@@ -588,7 +581,7 @@ final class StatusMenuViewModel {
             return nil
         }
 
-        let description: String = switch vpnConnectionStatus {
+        let description: String = switch connectionState {
         case .connected:
             Localizable.disconnect
         case .disconnecting, .disconnected, .connecting, .resolving:

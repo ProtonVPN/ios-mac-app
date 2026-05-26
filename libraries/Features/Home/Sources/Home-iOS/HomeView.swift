@@ -170,8 +170,8 @@ public struct HomeView: View {
                         .background(Color(.background).padding(.bottom, -(proxy.size.height * 2))) // Extends the background color well below the scroll view content.
                     }
                     .frame(width: proxy.size.width)
-                    .onChange(of: store.vpnConnectionStatus) { vpnConnectionStatus in
-                        if case .connecting = vpnConnectionStatus {
+                    .onChange(of: store.connectionState) { connectionState in
+                        if case .connecting = connectionState {
                             scrollViewProxy.scrollTo(topID)
                         }
                     }

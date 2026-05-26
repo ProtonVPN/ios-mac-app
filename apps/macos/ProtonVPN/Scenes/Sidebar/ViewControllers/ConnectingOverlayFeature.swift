@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
 import LegacyCommon
@@ -34,8 +35,8 @@ struct ConnectingOverlayFeature {
 
     @ObservableState
     struct State: Equatable {
-        var vpnConnectionStatus: VPNConnectionStatus = .disconnected
-        var frozenStatus: VPNConnectionStatus?
+        var connectionState: ConnectionState = .disconnected
+        var frozenState: ConnectionState?
         var timedOut = false
         var intentionallyDisconnected = false
         var killSwitchEnabled = false
@@ -47,8 +48,8 @@ struct ConnectingOverlayFeature {
             case warning
         }
 
-        var displayStatus: VPNConnectionStatus {
-            frozenStatus ?? vpnConnectionStatus
+        var displayState: ConnectionState {
+            frozenState ?? connectionState
         }
 
         var isIkeWithKsEnabled: Bool {
@@ -56,7 +57,7 @@ struct ConnectingOverlayFeature {
         }
 
         var isReconnecting: Bool {
-            switch displayStatus {
+            switch displayState {
             case let .resolving(_, actual):
                 actual != nil
             case .connecting:
@@ -67,14 +68,14 @@ struct ConnectingOverlayFeature {
         }
 
         var hidePhase: Bool {
-            timedOut || displayStatus.is(\.disconnected)
+            timedOut || displayState.is(\.disconnected)
         }
 
         var graphicKind: GraphicKind {
             if timedOut {
                 return .warning
             }
-            if displayStatus.is(\.connected) {
+            if displayState.is(\.connected) {
                 return .connected
             }
             return .loading
@@ -99,7 +100,7 @@ struct ConnectingOverlayFeature {
             case let .buttonTapped(button):
                 switch button {
                 case .done, .cancel:
-                    if !state.displayStatus.is(\.connected) {
+                    if !state.displayState.is(\.connected) {
                         AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
                         connectionCommandClient.send(.disconnect(.auto))
                     }
@@ -126,13 +127,12 @@ struct ConnectingOverlayFeature {
 
 extension ConnectingOverlayFeature.State {
     mutating func beginConnecting(
-        connectionSpec: ConnectionSpec,
         selectedProtocol: ConnectionProtocol,
         killSwitchEnabled: Bool,
         intentionallyDisconnected: Bool
     ) {
-        vpnConnectionStatus = .connecting(connectionSpec, nil)
-        frozenStatus = nil
+        connectionState = .resolving(nil, nil)
+        frozenState = nil
         timedOut = false
         self.selectedProtocol = selectedProtocol
         self.killSwitchEnabled = killSwitchEnabled
@@ -140,19 +140,19 @@ extension ConnectingOverlayFeature.State {
     }
 
     mutating func sync(
-        connectionStatus: VPNConnectionStatus,
+        connectionState: ConnectionState,
         selectedProtocol: ConnectionProtocol,
         killSwitchEnabled: Bool,
         intentionallyDisconnected: Bool
     ) {
-        vpnConnectionStatus = connectionStatus
+        self.connectionState = connectionState
         self.selectedProtocol = selectedProtocol
         self.killSwitchEnabled = killSwitchEnabled
         self.intentionallyDisconnected = intentionallyDisconnected
-        if connectionStatus.is(\.connected) {
-            frozenStatus = connectionStatus
+        if connectionState.is(\.connected) {
+            frozenState = connectionState
         } else {
-            frozenStatus = nil
+            frozenState = nil
         }
     }
 }

@@ -89,7 +89,7 @@
                 initialState: .init(
                     currentIntent: nil,
                     queuedIntent: nil,
-                    connectionState: .resolving,
+                    connectionState: .resolving(nil, nil),
                     shouldRegisterServerChangeOnConnection: false,
                     core: .initialCoreConnectionState
                 ),

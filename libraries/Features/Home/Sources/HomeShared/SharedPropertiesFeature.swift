@@ -38,7 +38,6 @@ public struct SharedPropertiesFeature {
 
     @ObservableState
     public struct State: Equatable {
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
         @Shared(.connectionState) var connectionState: ConnectionState
         @Shared(.lastConnectionError) var lastConnectionError: ConnectionError?
 
@@ -51,8 +50,6 @@ public struct SharedPropertiesFeature {
         case userLocation(UserLocationFeature.Action)
         case review(ReviewFeature.Action)
 
-        // TODO: Rename those two actions below (& others if necessary) (VPNAPPL-2678)
-        case newConnectionStatus(VPNConnectionStatus)
         case newConnectionState(ConnectionState)
         case connectionFailed(ConnectionError)
         case newAnnouncementBanner(Notification)
@@ -61,19 +58,8 @@ public struct SharedPropertiesFeature {
     }
 
     private enum CancelId {
-        case watchConnectionStatus
         case watchAnnouncementBanner
     }
-
-    private static let connectionStatusStream: AsyncStream<VPNConnectionStatus> = Dependency(\.connectionBridge).wrappedValue.statusStream()
-
-    private let longLivingConnectionStatusEffect: Effect<Action> = .run { @MainActor send in
-        let actionStream = Self.connectionStatusStream.map { Action.newConnectionStatus($0) }
-        for await value in actionStream {
-            send(value)
-        }
-    }
-    .cancellable(id: CancelId.watchConnectionStatus)
 
     private let longLivingAnnouncementBannerEffect: Effect<Action> = .publisher {
         AppEvent.announcementStorageContent
@@ -96,7 +82,6 @@ public struct SharedPropertiesFeature {
                 return .merge(
                     .send(.userLocation(.listen)),
                     .send(.review(.listen)),
-                    longLivingConnectionStatusEffect,
                     longLivingAnnouncementBannerEffect
                 )
 
@@ -114,10 +99,6 @@ public struct SharedPropertiesFeature {
                 }
 
             case .userLocation, .review:
-                return .none
-
-            case let .newConnectionStatus(newValue):
-                state.$vpnConnectionStatus.withLock { $0 = newValue }
                 return .none
 
             case let .newConnectionState(newValue):

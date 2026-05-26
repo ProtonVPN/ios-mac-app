@@ -85,7 +85,6 @@ final class HeaderViewModel {
 
     private var natPmpCancellable: AnyCancellable?
     private var portForwardingObserverTask: Task<Void, Never>?
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
     @Shared(.connectionState) private var connectionState: ConnectionState
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
     private var cancellables = Set<AnyCancellable>()
@@ -110,7 +109,7 @@ final class HeaderViewModel {
     }
 
     var isConnected: Bool {
-        vpnConnectionStatus.isConnected(using: connectionState)
+        connectionState.isConnected
     }
 
     private var isQuickConnectInDisconnectMode: Bool {
@@ -142,7 +141,7 @@ final class HeaderViewModel {
     }
 
     var vpnProtocol: NSAttributedString? {
-        guard let vpnProtocol = vpnConnectionStatus.mergedVpnProtocol(using: connectionState) else {
+        guard let vpnProtocol = connectionState.resolvedVpnProtocol else {
             return nil
         }
 
@@ -235,12 +234,6 @@ final class HeaderViewModel {
     // MARK: - Private functions
 
     private func startObserving() {
-        $vpnConnectionStatus.publisher
-            .sink { [weak self] _ in
-                self?.vpnConnectionChanged()
-            }
-            .store(in: &cancellables)
-
         $connectionState.publisher
             .sink { [weak self] _ in
                 self?.vpnConnectionChanged()
@@ -446,6 +439,6 @@ final class HeaderViewModel {
     }
 
     private var connectedServer: Server? {
-        vpnConnectionStatus.mergedServer(using: connectionState)
+        connectionState.resolvedServer
     }
 }

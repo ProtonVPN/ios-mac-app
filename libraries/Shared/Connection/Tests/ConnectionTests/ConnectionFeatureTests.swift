@@ -41,6 +41,11 @@
             // Populate the user tier storage, since the intent resolver requires it for server selection
             @Shared(.userTier) var userTier
             $userTier.withLock { $0 = 2 }
+
+            // Reset cold-start hydration so `.input(.onLaunch)` does not surface a prior
+            // connection from disk between test runs.
+            @Shared(.lastConnection) var lastConnection
+            $lastConnection.withLock { $0 = nil }
         }
 
         /// Verifies that a connection can be queued up if the feature is in the disconnecting state and the user
@@ -83,7 +88,7 @@
             let initialState = ConnectionFeature.State(
                 currentIntent: .active(initialIntent),
                 queuedIntent: nil,
-                connectionState: .resolving,
+                connectionState: .resolving(nil, nil),
                 shouldRegisterServerChangeOnConnection: false,
                 core: coreState
             )
@@ -224,7 +229,7 @@
             let initialState = ConnectionFeature.State(
                 currentIntent: .active(initialIntent),
                 queuedIntent: nil,
-                connectionState: .resolving,
+                connectionState: .resolving(nil, nil),
                 shouldRegisterServerChangeOnConnection: false,
                 core: coreState
             )
@@ -689,6 +694,66 @@
             await store.send(.input(.onLaunch))
             await store.receive(coreStateChange(from: \.unknown, to: \.disconnected))
             await store.receive(stateChange(to: \.disconnected))
+        }
+
+        /// When a `LastConnection` is persisted in App Group storage, `.input(.onLaunch)` hydrates
+        /// the connection state with the prior intent/server so the cold-start UI can surface it
+        /// while the actual tunnel state is being observed.
+        @MainActor
+        func testColdStartHydrationFromLastConnection() async {
+            let priorIntent = ServerConnectionIntent.mock(
+                withSpecLocation: .country(code: "CA", order: .fastest),
+                server: .ca
+            )
+            @Shared(.lastConnection) var lastConnection
+            $lastConnection.withLock {
+                $0 = LastConnection(intent: priorIntent, connectedDate: .now)
+            }
+
+            let mockVPNSession = VPNSessionMock(status: .disconnected, connectedDate: nil, lastDisconnectError: nil)
+            let mockManager = MockTunnelManager(connection: mockVPNSession)
+            let mockAgent = LocalAgentMock(state: .disconnected)
+
+            let store = TestStore(initialState: .initialState) {
+                ConnectionFeature()
+            } withDependencies: {
+                $0.tunnelManager = mockManager
+                $0.localAgent = mockAgent
+            }
+
+            store.exhaustivity = .off
+
+            await store.send(.input(.onLaunch)) {
+                $0.connectionState = .resolving(priorIntent, priorIntent.server)
+            }
+            await store.receive(stateChange(to: \.resolving))
+            // Subsequent core observation discovers the real (disconnected) tunnel state
+            // and overwrites the hydrated value.
+            await store.receive(coreStateChange(from: \.unknown, to: \.disconnected))
+            await store.receive(stateChange(to: \.disconnected))
+        }
+
+        /// Logging out clears the persisted `LastConnection` so the next launch starts blank.
+        @MainActor
+        func testLogoutClearsLastConnection() async {
+            let priorIntent = ServerConnectionIntent.mock(withSpecLocation: .country(code: "CA", order: .fastest), server: .ca)
+            @Shared(.lastConnection) var lastConnection
+            $lastConnection.withLock {
+                $0 = LastConnection(intent: priorIntent, connectedDate: .now)
+            }
+
+            let environment = ConnectionEnvironment.disconnected()
+            let store = environment.createConnectionTestStore()
+            store.dependencies.tunnelKeychain = TunnelKeychain(
+                storeWireguardConfig: { _ in Data() },
+                loadWireguardConfig: { Data() },
+                clear: {}
+            )
+            store.exhaustivity = .off
+
+            await store.send(.input(.onLogout))
+
+            XCTAssertNil(lastConnection)
         }
 
         @MainActor

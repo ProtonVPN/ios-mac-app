@@ -18,6 +18,7 @@
 
 import CommonNetworking
 import ComposableArchitecture
+import Connection
 import Domain
 import Foundation
 @testable import ProtonVPN
@@ -29,11 +30,11 @@ import VPNSharedTesting
 @MainActor
 struct PlutoniumFeatureTests {
     @Shared(.killSwitch) var killSwitch
-    @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+    @Shared(.connectionState) var connectionState
 
     init() {
         $killSwitch.withLock { $0 = false }
-        $vpnConnectionStatus.withLock { $0 = .disconnected }
+        $connectionState.withLock { $0 = .disconnected }
     }
 
     @Test
@@ -104,7 +105,21 @@ struct PlutoniumFeatureTests {
 
     @Test
     func toggleModeIKEProfileConflict() async {
-        $vpnConnectionStatus.withLock { $0 = .connected(.defaultFastest, .mock(vpnProtocol: .ike)) }
+        let actual = VPNConnectionActual.mock(vpnProtocol: .ike)
+        let intent = ServerConnectionIntent(
+            spec: .defaultFastest,
+            server: actual.server,
+            protocolConfiguration: .ike,
+            features: VPNConnectionFeatures(
+                netshield: .off,
+                vpnAccelerator: true,
+                bouncing: nil,
+                natType: actual.natType,
+                safeMode: actual.safeMode,
+                portForwarding: nil
+            )
+        )
+        $connectionState.withLock { $0 = .connected(intent, actual.server, Date(), nil) }
         $killSwitch.withLock {
             $0 = true
         }

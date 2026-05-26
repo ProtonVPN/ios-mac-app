@@ -65,7 +65,7 @@ public final class AppDelegateService: AppDelegateProtocol {
     private lazy var appSessionManager: AppSessionManager = container.makeAppSessionManager()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var pushNotificationService = container.makePushNotificationService()
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
+    @Shared(.connectionState) private var connectionState: ConnectionState
 
     private var tokens: [NotificationToken] = []
     private var cancellables = Set<AnyCancellable>()
@@ -325,11 +325,11 @@ public final class AppDelegateService: AppDelegateProtocol {
 
     private func startListeningForDeepLinkConnectState() {
         deepLinkConnectStatusCancellable?.cancel()
-        deepLinkConnectStatusCancellable = $vpnConnectionStatus
+        deepLinkConnectStatusCancellable = $connectionState
             .publisher
-            .sink { [weak self] status in
+            .sink { [weak self] state in
                 guard let self else { return }
-                switch status {
+                switch state {
                 case .connected:
                     deepLinkConnectStatusCancellable?.cancel()
                     deepLinkConnectStatusCancellable = nil

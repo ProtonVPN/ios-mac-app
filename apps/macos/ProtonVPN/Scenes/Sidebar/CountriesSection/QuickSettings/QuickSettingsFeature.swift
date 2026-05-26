@@ -96,7 +96,7 @@ struct QuickSettingsFeature {
 
         case startObserving
         case refreshConnectionInfo
-        case vpnConnectionStatusUpdated(isConnected: Bool, supportsP2P: Bool)
+        case connectionStateUpdated(isConnected: Bool, supportsP2P: Bool)
         case buttonTapped(QuickSettingType)
         case dismissDetails
         case destination(PresentationAction<Destination.Action>)
@@ -111,7 +111,6 @@ struct QuickSettingsFeature {
     }
 
     @SharedReader(.discourageSecureCore) private var discourageSecureCore: Bool
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
     @Shared(.connectionState) private var connectionState: ConnectionState
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
 
@@ -158,11 +157,11 @@ struct QuickSettingsFeature {
                     .send(.netShield(.startObserving)),
                     .send(.portForwarding(.startObserving)),
                     .send(.refreshConnectionInfo),
-                    .run { [vpnConnectionStatus = $vpnConnectionStatus] send in
-                        for await status in vpnConnectionStatus.publisher.values {
-                            await send(.vpnConnectionStatusUpdated(
-                                isConnected: status.is(\.connected),
-                                supportsP2P: status.server?.logical.feature.contains(.p2p) == true
+                    .run { [connectionState = $connectionState] send in
+                        for await state in connectionState.publisher.values {
+                            await send(.connectionStateUpdated(
+                                isConnected: state.is(\.connected),
+                                supportsP2P: state.resolvedServer?.logical.feature.contains(.p2p) == true
                             ))
                         }
                     },
@@ -178,7 +177,7 @@ struct QuickSettingsFeature {
                     }
                 )
 
-            case let .vpnConnectionStatusUpdated(isConnected, supportsP2P):
+            case let .connectionStateUpdated(isConnected, supportsP2P):
                 state.portForwarding.connectionInfo = .portForwardingStatus(
                     enabled: state.portForwarding.isEnabled,
                     supportsP2P: supportsP2P,
@@ -378,7 +377,7 @@ struct QuickSettingsFeature {
         log.debug("Reconnection requested by changing quick setting", category: .connectionConnect, event: .trigger)
         @SharedReader(.userTier) var userTier: Int?
         let isFreeTier = userTier?.isFreeTier ?? true
-        let connectedCountryCode = vpnConnectionStatus.mergedServer(using: connectionState)?.logical.exitCountryCode
+        let connectedCountryCode = connectionState.resolvedServer?.logical.exitCountryCode
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: secureCoreToggle,
             connectedExitCountryCode: connectedCountryCode,
@@ -392,7 +391,7 @@ struct QuickSettingsFeature {
     }
 
     private func quickSettingsChangeNetShieldLevel(_ level: NetShieldType) {
-        switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+        switch VpnFeatureChangeState(connectionState: connectionState) {
         case .withConnectionUpdate:
             netShieldPropertyProvider.setNetShieldType(level)
             let features: Set<ConnectionFeatureChange.AgentFeature> = [.netShield(level)]
@@ -408,7 +407,7 @@ struct QuickSettingsFeature {
 
     private func quickSettingsChangePortForwarding(_ isEnabled: Bool) {
         portForwardingPropertyProvider.setPortForwarding(isEnabled)
-        switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+        switch VpnFeatureChangeState(connectionState: connectionState) {
         case .withConnectionUpdate:
             log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
             let features: Set<ConnectionFeatureChange.AgentFeature> = [.portForwarding(isEnabled)]
@@ -416,7 +415,7 @@ struct QuickSettingsFeature {
         case .withReconnect:
             if isConnectionActive {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                if let activeVpnProtocol = vpnConnectionStatus.mergedVpnProtocol(using: connectionState) {
+                if let activeVpnProtocol = connectionState.resolvedVpnProtocol {
                     connectionCommandClient.send(.reconnect(.vpnProtocol(activeVpnProtocol)))
                 } else {
                     connectionCommandClient.send(.retry)

@@ -28,8 +28,6 @@ import VPNAppCore
 
 @Observable
 final class HermesSettingsViewModel {
-    typealias Factory = CoreAlertServiceFactory
-
     enum LocationValidation {
         case empty
         case duplicate
@@ -72,12 +70,10 @@ final class HermesSettingsViewModel {
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     @ObservationIgnored
     @Shared(.connectionState) private var connectionState: ConnectionState
-    @ObservationIgnored
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     private var initialState: State
 
-    init(factory _: Factory) {
+    init() {
         @Dependency(\.hermesClient) var hermesClient
         let hermesIsEnabled = hermesClient.isEnabled()
         let resolvers = hermesClient.activeHermesResolvers()
@@ -108,7 +104,7 @@ final class HermesSettingsViewModel {
             completionHandler(false)
             return
         }
-        switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+        switch VpnFeatureChangeState(connectionState: connectionState) {
         case .immediate:
             completionHandler(false)
         case .withConnectionUpdate, .withReconnect:
@@ -118,7 +114,7 @@ final class HermesSettingsViewModel {
     }
 
     func isReconnectionNecessaryFromNetShieldChange(completionHandler: @escaping (_ reconnectionIsNecessary: Bool) -> Void) {
-        switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+        switch VpnFeatureChangeState(connectionState: connectionState) {
         case .immediate:
             completionHandler(false)
         case .withConnectionUpdate, .withReconnect:

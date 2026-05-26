@@ -52,7 +52,6 @@ final class SettingsAccountViewModel {
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.settingsClient) private var settingsClient
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
     @Shared(.connectionState) private var connectionState: ConnectionState
 
     var pushHandler: ((UIViewController) -> Void)?
@@ -304,16 +303,6 @@ final class SettingsAccountViewModel {
     }
 
     private var isSafeToEnd: Bool {
-        switch connectionState {
-        case .connected, .connecting, .disconnecting:
-            false
-        case .resolving, .disconnected:
-            switch vpnConnectionStatus {
-            case .connected, .connecting, .disconnecting:
-                false
-            case .resolving, .disconnected:
-                true
-            }
-        }
+        connectionState.isSafeToEnd
     }
 }

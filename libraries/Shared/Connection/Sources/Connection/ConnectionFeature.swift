@@ -114,7 +114,21 @@ public struct ConnectionFeature: Sendable {
         Reduce { state, action in
             switch action {
             case .input(.onLaunch):
+                // Cold-start hydration: surface the prior intent/server while the connection
+                // layer discovers the actual tunnel status, so the UI doesn't render an empty
+                // `.resolving(nil, nil)` flash. The actual tunnel state (when observed) will
+                // overwrite this.
+                @Shared(.lastConnection) var lastConnection
+                let coldStartHydration: Effect<Action> = if let lastConnection {
+                    updateStateSendingEffectIfNecessary(
+                        &state,
+                        to: .resolving(lastConnection.intent, lastConnection.server)
+                    )
+                } else {
+                    .none
+                }
                 return .merge(
+                    coldStartHydration,
                     .send(.core(.startObserving)),
                     .listen(to: connectionBridge.intentStream()) { .input($0) } // reinject intents from bridge into this feature
                 ).cancellable(id: CancelID.observation, cancelInFlight: true)
@@ -198,6 +212,8 @@ public struct ConnectionFeature: Sendable {
 
             case .input(.onLogout):
                 state.reachabilityPendingIntent = nil
+                @Shared(.lastConnection) var lastConnection
+                $lastConnection.withLock { $0 = nil }
                 return .merge(.send(.stopObserving), .send(.core(.handleLogout)))
 
             case .input(.onSessionChange):
@@ -347,7 +363,8 @@ public struct ConnectionFeature: Sendable {
                 }
 
             case .core(.delegate(.stateChanged(_, .unknown))):
-                return .send(.delegate(.stateChanged(.resolving)))
+                let priorIntent = state.currentIntent?.serverIntent
+                return .send(.delegate(.stateChanged(.resolving(priorIntent, priorIntent?.server))))
 
             case let .core(.delegate(.error(connectionError))):
                 return .send(.delegate(.connectionFailed(connectionError)))
@@ -457,6 +474,12 @@ public struct ConnectionFeature: Sendable {
             return .none
         }
         state.connectionState = newValue
+        // Persist the last-known good connection so cold-start UI can show prior context
+        // while the new layer is still in `.resolving`.
+        if case let .connected(intent, _, date, _) = newValue {
+            @Shared(.lastConnection) var lastConnection
+            $lastConnection.withLock { $0 = LastConnection(intent: intent, connectedDate: date) }
+        }
         if newValue.is(\.disconnected) {
             return .merge(
                 .send(.delegate(.stateChanged(newValue))),
@@ -536,7 +559,10 @@ public enum ActiveConnectionIntent: Equatable, Sendable {
 @DebugDescription
 @CasePathable
 public enum ConnectionState: Equatable, Sendable {
-    case resolving
+    /// Transitional state used while the connection layer is determining the actual tunnel
+    /// status (e.g. cold start, OS-level state change). Carries the prior intent and server
+    /// when known so UI can preserve continuity ("we were connected to X") during the window.
+    case resolving(ServerConnectionIntent?, Server?)
     case disconnected
     case disconnecting(ServerConnectionIntent, Server)
     case connecting(Intent)
@@ -554,7 +580,7 @@ public extension ConnectionFeature.State {
     static let initialState = ConnectionFeature.State(
         currentIntent: nil,
         queuedIntent: nil,
-        connectionState: .resolving,
+        connectionState: .resolving(nil, nil),
         shouldRegisterServerChangeOnConnection: false,
         reachabilityPendingIntent: nil,
         core: .initialCoreConnectionState
@@ -621,8 +647,8 @@ extension ConnectionFeature.Action.Delegate: CustomDebugStringConvertible {
 extension ConnectionState: CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
-        case .resolving:
-            ".resolving"
+        case let .resolving(intent, server):
+            ".resolving(intent: \(intent.map { "\($0)" } ?? "nil"), server: \(server.map { "\($0.logical.id)" } ?? "nil"))"
         case .disconnected:
             ".disconnected"
         case let .disconnecting(intent, server):

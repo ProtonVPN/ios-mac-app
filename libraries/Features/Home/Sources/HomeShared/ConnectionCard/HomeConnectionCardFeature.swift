@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
 import Foundation
@@ -30,13 +31,13 @@ public struct HomeConnectionCardFeature {
     @ObservableState
     public struct State: Equatable {
         @SharedReader(.userTier) public var userTier: Int?
-        @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
+        @SharedReader(.connectionState) public var connectionState: ConnectionState
         @SharedReader(.recents) public var recents: OrderedSet<RecentConnection>
         @SharedReader(.defaultConnectionPreference) var defaultConnectionPreference: DefaultConnectionPreference
         @SharedReader(.secureCoreToggle) var secureCoreToggle: Bool
 
         public var showChangeServerButton: Bool {
-            if case .connected = vpnConnectionStatus {
+            if case .connected = connectionState {
                 guard let userTier else { return true }
 
                 return userTier.isFreeTier
@@ -45,34 +46,33 @@ public struct HomeConnectionCardFeature {
         }
 
         package var headerModel: ConnectionCardHeaderModel {
-            ConnectionCardHeaderModel(connectionStatus: vpnConnectionStatus, userTier: userTier ?? .freeTier)
+            ConnectionCardHeaderModel(connectionState: connectionState, userTier: userTier ?? .freeTier)
         }
 
         public var serverChangeAvailability: ServerChangeAuthorizer.ServerChangeAvailability?
 
         public var presentedSpec: ConnectionSpec {
-            switch vpnConnectionStatus {
-            case .disconnected, .disconnecting, .resolving(.none, _):
-                @Dependency(\.defaultConnectionResolver) var resolver
-                return resolver.connectionSpec(
-                    preference: defaultConnectionPreference,
-                    recents: recents,
-                    secureCore: secureCoreToggle
-                )
-            case let .connected(connectionSpec, _),
-                 let .connecting(connectionSpec, _),
-                 let .resolving(.some(connectionSpec), _):
-                return connectionSpec
+            // Prefer the spec embedded in the current state (including prior intent during
+            // `.resolving` for cold-start continuity); fall back to the user's default
+            // connection only when we have nothing to show.
+            if let spec = connectionState.resolvedSpec {
+                return spec
             }
+            @Dependency(\.defaultConnectionResolver) var resolver
+            return resolver.connectionSpec(
+                preference: defaultConnectionPreference,
+                recents: recents,
+                secureCore: secureCoreToggle
+            )
         }
 
         public var presentedServer: Server? {
-            // Ignore the server object on vpnConnectionStatus when the connection is `disconnecting`,
+            // Ignore the server object on connectionState when the connection is `disconnecting`,
             // as the `disconnecting` state should look the same as the `disconnected` state.
-            if case .disconnecting = vpnConnectionStatus {
+            if case .disconnecting = connectionState {
                 return nil
             }
-            return vpnConnectionStatus.server
+            return connectionState.resolvedServer
         }
 
         public init() {
@@ -95,7 +95,7 @@ public struct HomeConnectionCardFeature {
 
         case delegate(Delegate)
         case watchConnectionStatus
-        case newConnectionStatus(VPNConnectionStatus)
+        case newConnectionState(ConnectionState)
     }
 
     private enum CancelId {
@@ -113,14 +113,14 @@ public struct HomeConnectionCardFeature {
             case .watchConnectionStatus:
                 return .publisher {
                     state
-                        .$vpnConnectionStatus
+                        .$connectionState
                         .publisher
                         .receive(on: UIScheduler.shared)
-                        .map(Action.newConnectionStatus)
+                        .map(Action.newConnectionState)
                 }
                 .cancellable(id: CancelId.watchConnectionStatus)
 
-            case .newConnectionStatus:
+            case .newConnectionState:
                 @Dependency(\.serverChangeAuthorizer) var authorizer
                 state.serverChangeAvailability = authorizer.serverChangeAvailability()
 
@@ -136,8 +136,8 @@ package enum ConnectionCardHeaderModel: Equatable {
     case connected
     case connecting
 
-    init(connectionStatus: VPNConnectionStatus, userTier: Int) {
-        switch connectionStatus {
+    init(connectionState: ConnectionState, userTier: Int) {
+        switch connectionState {
         case .resolving:
             self = .resolving
 

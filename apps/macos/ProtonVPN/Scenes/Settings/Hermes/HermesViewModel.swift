@@ -57,7 +57,6 @@ final class HermesViewModel {
     @Dependency(\.linkOpener) private var linkOpener
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Shared(.connectionState) private var connectionState: ConnectionState
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     private let alertService: any CoreAlertService
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
@@ -84,7 +83,7 @@ final class HermesViewModel {
             completion?()
             return
         }
-        switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+        switch VpnFeatureChangeState(connectionState: connectionState) {
         case .immediate:
             completion?()
         case .withConnectionUpdate, .withReconnect:

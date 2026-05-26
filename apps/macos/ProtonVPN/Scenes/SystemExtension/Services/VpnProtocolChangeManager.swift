@@ -54,7 +54,6 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Shared(.connectionState) private var connectionState: ConnectionState
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     /// What to do after switching protocols
     enum ProtocolSwitchAction {
@@ -75,7 +74,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         userInitiated: Bool,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
-        let isConnectedOrConnecting = vpnConnectionStatus.isConnected(using: connectionState) || vpnConnectionStatus.is(\.connecting)
+        let isConnectedOrConnecting = connectionState.isConnected || connectionState.is(\.connecting)
         guard isConnectedOrConnecting else {
             set(
                 vpnProtocol: vpnProtocol,
@@ -87,7 +86,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         }
 
         // If the currently active tunnel already uses this protocol, avoid a redundant reconnect.
-        if vpnConnectionStatus.mergedVpnProtocol(using: connectionState) == vpnProtocol {
+        if connectionState.resolvedVpnProtocol == vpnProtocol {
             set(
                 vpnProtocol: vpnProtocol,
                 userInitiated: userInitiated,
@@ -97,7 +96,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             return
         }
 
-        guard vpnConnectionStatus.mergedServer(using: connectionState)?.endpoint.supports(vpnProtocol: vpnProtocol) != false else {
+        guard connectionState.resolvedServer?.endpoint.supports(vpnProtocol: vpnProtocol) != false else {
             let alert = ProtocolNotAvailableForServerAlert(confirmHandler: { [weak self] in
                 self?.set(
                     vpnProtocol: vpnProtocol,

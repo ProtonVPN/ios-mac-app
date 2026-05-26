@@ -63,6 +63,7 @@ let package = Package(
         .target(
             name: "ConnectionDetails-iOS",
             dependencies: [
+                "Connection",
                 "ConnectionDetailsShared",
             ],
             resources: []

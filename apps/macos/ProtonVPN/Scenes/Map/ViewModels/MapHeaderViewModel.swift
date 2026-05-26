@@ -31,18 +31,11 @@ import VPNAppCore
 
 class MapHeaderViewModel {
     @Shared(.connectionState) private var connectionState: ConnectionState
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
     private var cancellables = Set<AnyCancellable>()
 
     var contentChanged: (() -> Void)?
 
     init() {
-        $vpnConnectionStatus.publisher
-            .sink { [weak self] _ in
-                self?.vpnConnectionChanged()
-            }
-            .store(in: &cancellables)
-
         $connectionState.publisher
             .sink { [weak self] _ in
                 self?.vpnConnectionChanged()
@@ -51,7 +44,7 @@ class MapHeaderViewModel {
     }
 
     var isConnected: Bool {
-        vpnConnectionStatus.isConnected(using: connectionState)
+        connectionState.isConnected
     }
 
     var description: NSAttributedString {
@@ -61,7 +54,7 @@ class MapHeaderViewModel {
     }
 
     var isSecureCore: Bool {
-        guard let server = vpnConnectionStatus.mergedServer(using: connectionState) else {
+        guard let server = connectionState.resolvedServer else {
             return false
         }
         if case .secureCore = server.logical.kind {

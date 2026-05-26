@@ -34,7 +34,6 @@ public struct CityFeature {
             "\(cityName)-\(countryCode)"
         }
 
-        @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.userTier) var userTier: Int?
 
         // Computed properties

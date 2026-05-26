@@ -105,7 +105,6 @@ public struct PlutoniumFeature {
 
     @Shared(.killSwitch) var killSwitch: Bool
     @Shared(.connectionState) var connectionState: ConnectionState
-    @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
     public init() {
         // Start the scanner when user first enters plutonium settings.
@@ -130,9 +129,9 @@ public struct PlutoniumFeature {
                     return .none
                 }
                 // Are we connected to vpn with an IKE profile? Can't enable Plutonium
-                let isConnectedOrConnecting = vpnConnectionStatus.isConnected(using: connectionState) || vpnConnectionStatus.is(\.connecting)
+                let isConnectedOrConnecting = connectionState.isConnected || connectionState.is(\.connecting)
                 if isConnectedOrConnecting,
-                   let vpnProtocol = vpnConnectionStatus.mergedVpnProtocol(using: connectionState),
+                   let vpnProtocol = connectionState.resolvedVpnProtocol,
                    vpnProtocol == .ike {
                     state.alert = Self.unsupportedProfileErrorAlert
                     return .none

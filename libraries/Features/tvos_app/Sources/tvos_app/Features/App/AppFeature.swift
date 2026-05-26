@@ -60,7 +60,7 @@ struct AppFeature {
         @Shared(.userDisplayName) var userDisplayName: String?
         @Shared(.userEmail) var userEmail: String?
         @Shared(.userTier) var userTier: Int?
-        @Shared(.connectionState) var connectionState: ConnectionState = .resolving
+        @Shared(.connectionState) var connectionState: ConnectionState = .resolving(nil, nil)
 
         var screen: Screen.State = .loading(.init())
         var connection = ConnectionFeature.State.initialState

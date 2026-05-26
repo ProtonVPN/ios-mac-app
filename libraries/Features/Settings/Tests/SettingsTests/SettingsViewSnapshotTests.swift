@@ -18,6 +18,7 @@
 
 #if os(iOS)
     import ComposableArchitecture
+    import Connection
     @testable import Settings_iOS
     @testable import SettingsShared
     import SnapshotTesting
@@ -37,7 +38,7 @@
                 initialState: SettingsFeature.State(
                     netShield: .on,
                     killSwitch: .off,
-                    protocolSettings: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
+                    protocolSettings: .init(protocol: .smartProtocol, connectionState: .disconnected, reconnectionAlert: nil),
                     theme: .light
                 ),
                 reducer: { SettingsFeature() }

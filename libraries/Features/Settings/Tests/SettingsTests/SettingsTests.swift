@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 @testable import Settings
 @testable import SettingsShared
 import Testing
@@ -30,7 +31,7 @@ struct SettingsTests {
             initialState: SettingsFeature.State(
                 netShield: .off,
                 killSwitch: .on,
-                protocolSettings: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
+                protocolSettings: .init(protocol: .smartProtocol, connectionState: .disconnected, reconnectionAlert: nil),
                 theme: .auto
             )
         ) {
@@ -51,7 +52,7 @@ struct SettingsTests {
                 ),
                 netShield: .on,
                 killSwitch: .on,
-                protocolSettings: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
+                protocolSettings: .init(protocol: .smartProtocol, connectionState: .disconnected, reconnectionAlert: nil),
                 theme: .auto
             )
         ) {

@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Connection
 import Domain
 import Localization
 import Strings
@@ -24,16 +25,23 @@ import VPNAppCore
 package struct ConnectionCardModel {
     package init() {}
 
-    package func accessibilityText(for vpnConnectionStatus: VPNConnectionStatus, countryName: String) -> String {
-        switch vpnConnectionStatus {
+    package func accessibilityText(for connectionState: ConnectionState, countryName: String) -> String {
+        switch connectionState {
         case .disconnected, .disconnecting:
             return Localizable.connectionCardAccessibilityLastConnectedTo(countryName)
-        case let .connected(_, actual):
-            if let parameters = actual?.accessibilityParameters {
+        case let .connected(intent, server, _, _):
+            if let browsingFrom = LocalizationUtility.default.countryName(forCode: server.logical.exitCountryCode),
+               let serverNumber = server.logical.serverNumber {
+                let vpnProtocol: VpnProtocol = switch intent.protocolConfiguration {
+                case .ike:
+                    .ike
+                case let .wireGuard(settings):
+                    .wireGuard(settings.transport)
+                }
                 return Localizable.connectionCardAccessibilityBrowsingFromFullDetails(
-                    parameters.browsingFrom,
-                    parameters.serverNumber,
-                    parameters.protocolDescription
+                    browsingFrom,
+                    serverNumber,
+                    vpnProtocol.apiDescription
                 )
             }
             return Localizable.connectionCardAccessibilityBrowsingFrom(countryName)
@@ -44,8 +52,8 @@ package struct ConnectionCardModel {
         }
     }
 
-    package func buttonText(for vpnConnectionStatus: VPNConnectionStatus) -> String {
-        switch vpnConnectionStatus {
+    package func buttonText(for connectionState: ConnectionState) -> String {
+        switch connectionState {
         case .disconnected, .disconnecting:
             Localizable.actionConnect
         case .connected:
@@ -53,19 +61,6 @@ package struct ConnectionCardModel {
         case .connecting, .resolving:
             Localizable.connectionCardActionCancel
         }
-    }
-}
-
-private extension VPNConnectionActual {
-    var accessibilityParameters: (browsingFrom: String, serverNumber: String, protocolDescription: String)? {
-        if let browsingFrom, let serverNumber = server.logical.serverNumber {
-            return (browsingFrom, serverNumber, vpnProtocol.apiDescription)
-        }
-        return nil
-    }
-
-    private var browsingFrom: String? {
-        LocalizationUtility.default.countryName(forCode: server.logical.exitCountryCode)
     }
 }
 

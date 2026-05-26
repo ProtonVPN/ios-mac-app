@@ -79,7 +79,11 @@ public struct HomeFeature {
         fileprivate var shouldPushAlert: Bool = false
 
         @SharedReader(.connectionState) public var connectionState: ConnectionState
-        @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
+        /// Widget-only shadow of `connectionState`. The widget extension cannot read
+        /// `connectionState` (in-memory, process-local), so we keep a file-backed projection
+        /// in App Group storage and write it from `connection.delegate.stateChanged`.
+        /// **In-process callers must read `connectionState` directly, not this.**
+        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
         @Presents public var destination: Destination.State?
         @Presents public var alert: AlertState<Action.HomeAlert>?
@@ -252,8 +256,8 @@ private extension HomeFeature {
                 )
                 .cancellable(id: CancelID.connectionState)
             case .killSwitchSettingChanged:
-                guard state.vpnConnectionStatus.isConnected(using: state.connectionState),
-                      let spec = state.vpnConnectionStatus.spec
+                guard state.connectionState.isConnected,
+                      let spec = state.connectionState.resolvedIntent?.spec
                 else {
                     return .none
                 }
@@ -279,7 +283,7 @@ private extension HomeFeature {
                 return .none
             case .sharedProperties(.userLocation(.userLocationFetchFinished(.success(_)))):
                 // a bit unfortunate but map.pinOffset can only be updated via this action atm
-                return .send(.map(.connectionStateUpdated(state.vpnConnectionStatus)))
+                return .send(.map(.connectionStateUpdated(state.connectionState)))
             default:
                 return .none
             }
@@ -405,8 +409,8 @@ private extension HomeFeature {
                     connectionCommandClient.send(.disconnect(.connectionCard))
                     return .none
                 case .tapAction:
-                    if let connectionState = state.vpnConnectionStatus.actual?.connectionScreenFeatureState() {
-                        state.destination = .connectionDetails(connectionState)
+                    if let detailsState = state.connectionState.connectionScreenFeatureState() {
+                        state.destination = .connectionDetails(detailsState)
                     } else if userTier == .freeTier {
                         let freeCountries = Array(Set(
                             serverRepository.getServers(
@@ -489,11 +493,8 @@ private extension HomeFeature {
                 return .send(.sharedProperties(.connectionFailed(error)))
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
-                let status = connectionState.status
-                return .concatenate(
-                    .send(.sharedProperties(.newConnectionState(connectionState))),
-                    .send(.sharedProperties(.newConnectionStatus(status)))
-                )
+                state.$vpnConnectionStatus.withLock { $0 = connectionState.status }
+                return .send(.sharedProperties(.newConnectionState(connectionState)))
             case .connection(.delegate(.disconnected)):
                 return .run { _ in
                     await pendingDisconnectCompletions.drainAndInvoke()
@@ -588,33 +589,6 @@ private extension FeatureStatisticsMessage.NetShieldStats {
             dataSaved: UInt64(bytesSaved),
             enabled: true
         )
-    }
-}
-
-extension ConnectionState {
-    var status: VPNConnectionStatus {
-        switch self {
-        case .resolving:
-            // While we are in the unknown state, we cannot yet be sure if the tunnel is active or not,
-            // So let's not even try to grab the original connection intent in case we are disconnected.
-            return .resolving(nil, nil)
-
-        case .disconnected:
-            return .disconnected
-
-        case let .connecting(.unresolved(intent)):
-            return .connecting(intent.spec, nil)
-
-        case let .connecting(.resolved(intent, server)):
-            return .connecting(intent.spec, server)
-
-        case let .disconnecting(intent, server):
-            return .disconnecting(intent.spec, VPNConnectionActual(server: server, intent: intent, connectedDate: nil))
-
-        case let .connected(intent, server, date, _):
-            let resolvedConnection = VPNConnectionActual(server: server, intent: intent, connectedDate: date)
-            return .connected(intent.spec, resolvedConnection)
-        }
     }
 }
 

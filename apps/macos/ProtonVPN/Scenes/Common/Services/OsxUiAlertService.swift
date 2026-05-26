@@ -40,7 +40,6 @@ final class OsxUiAlertService: UIAlertService {
     private let windowService: WindowService
 
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
     @Shared(.connectionState) private var connectionState: ConnectionState
 
     private var currentAlerts = [SystemAlert]()
@@ -84,7 +83,7 @@ final class OsxUiAlertService: UIAlertService {
     }
 
     private func dismissAutoConnectionAlertsIfNeeded() {
-        guard vpnConnectionStatus.isConnected(using: connectionState) else { return }
+        guard connectionState.isConnected else { return }
         currentAlerts.removeAll { alert in
             if alert.canDismissAutomaticallyOnConnection {
                 alert.dismiss?()
@@ -95,14 +94,6 @@ final class OsxUiAlertService: UIAlertService {
     }
 
     private func startObservingConnectionState() {
-        $vpnConnectionStatus
-            .publisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.dismissAutoConnectionAlertsIfNeeded()
-            }
-            .store(in: &cancellables)
-
         $connectionState
             .publisher
             .receive(on: DispatchQueue.main)

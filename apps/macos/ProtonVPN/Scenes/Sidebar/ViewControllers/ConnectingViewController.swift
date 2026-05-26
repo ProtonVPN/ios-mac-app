@@ -22,6 +22,7 @@
 
 import Cocoa
 import ComposableArchitecture
+import Connection
 import Strings
 import SwiftUI
 import Theme
@@ -111,14 +112,14 @@ private struct ConnectingOverlayContentView: View {
                 .init(kind: .cancel, title: Localizable.cancel, style: .normal),
             ]
         }
-        if store.displayStatus.is(\.connected) {
+        if store.displayState.is(\.connected) {
             return [.init(kind: .done, title: Localizable.done, style: .normal)]
         }
         return [.init(kind: .cancel, title: Localizable.cancel, style: .normal)]
     }
 
     private var firstString: NSAttributedString {
-        if store.displayStatus.is(\.connected) {
+        if store.displayState.is(\.connected) {
             return Localizable.successfullyConnected.styled(font: .themeFont(.small))
         }
         let value = store.isReconnecting ? Localizable.youAreNotProtected : Localizable.initializingConnection
@@ -130,11 +131,11 @@ private struct ConnectingOverlayContentView: View {
             return timedOutSecondString
         }
 
-        let resolvedServer = store.displayStatus.server
+        let resolvedServer = store.displayState.resolvedServer
         let boldString = resolvedServer.map { server in
             Self.styledServerName(country: server.logical.country, name: server.logical.name)
         } ?? ""
-        let string: String = switch store.displayStatus {
+        let string: String = switch store.displayState {
         case .connected:
             Localizable.connectedToVpn(boldString)
         case .disconnected:

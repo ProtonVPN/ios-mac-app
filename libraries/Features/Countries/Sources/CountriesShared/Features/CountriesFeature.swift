@@ -18,6 +18,7 @@
 
 import CommonNetworking
 import ComposableArchitecture
+import Connection
 import ConnectionInventory
 import Dependencies
 import Domain
@@ -60,18 +61,18 @@ public struct CountriesFeature {
 
         @Shared(.secureCoreToggle) public var isSecureCore: Bool
         @SharedReader(.userTier) var userTier: Int?
-        @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+        @SharedReader(.connectionState) var connectionState: ConnectionState
 
         public init(sections: IdentifiedArrayOf<CountrySectionFeature.State>) {
             self.sections = sections
         }
 
         public var isConnectedToVPN: Bool {
-            vpnConnectionStatus.is(\.connected)
+            connectionState.is(\.connected)
         }
 
         public var enableViewToggle: Bool {
-            !vpnConnectionStatus.is(\.connecting)
+            !connectionState.is(\.connecting)
         }
     }
 

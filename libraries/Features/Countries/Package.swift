@@ -31,6 +31,7 @@ let package = Package(
         .package(path: "../../Foundations/Ergonomics"),
 
         .package(path: "../../Shared/CommonNetworking"),
+        .package(path: "../../Shared/Connection"),
         .package(path: "../../Shared/ConnectionInventory"),
         .package(path: "../../Shared/Persistence"),
         .package(path: "../../Shared/Localization"),
@@ -56,6 +57,7 @@ let package = Package(
             name: "CountriesShared",
             dependencies: [
                 "Announcement",
+                "Connection",
                 "ConnectionInventory",
                 "LegacyCommon",
                 "Theme",
@@ -84,6 +86,7 @@ let package = Package(
             name: "Countries-iOS",
             dependencies: [
                 "CountriesShared",
+                "Connection",
                 "ConnectionInventory",
                 "Modals",
                 "SharedViews",
@@ -110,6 +113,7 @@ let package = Package(
         .testTarget(
             name: "CountriesTests",
             dependencies: [
+                "Connection",
                 "CountriesShared",
                 .target(name: "Countries-iOS", condition: .when(platforms: [.iOS])),
                 .target(name: "Countries-macOS", condition: .when(platforms: [.macOS])),

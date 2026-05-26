@@ -605,21 +605,11 @@ extension AppSessionManagerImplementation {
 
 extension AppSessionManagerImplementation {
     private var isConnectedForSessionValidation: Bool {
-        switch connectionState {
-        case .connected, .disconnecting:
-            true
-        case .resolving, .disconnected, .connecting:
-            false
-        }
+        connectionState.isConnectedForSessionValidation
     }
 
     private var isDisconnectedForPropertiesRefresh: Bool {
-        switch connectionState {
-        case .connected, .disconnecting:
-            false
-        case .resolving, .disconnected, .connecting:
-            true
-        }
+        connectionState.isDisconnectedForPropertiesRefresh
     }
 }
 

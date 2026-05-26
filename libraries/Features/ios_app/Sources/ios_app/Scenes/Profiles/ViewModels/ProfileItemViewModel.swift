@@ -23,6 +23,7 @@
 import Combine
 import CommonNetworking
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
 import Foundation
@@ -49,20 +50,20 @@ final class ProfileItemViewModel {
     private let lowestServerTier: Int
     private let underMaintenance: Bool
 
-    @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+    @SharedReader(.connectionState) var connectionState: ConnectionState
 
     var isConnected: Bool {
-        guard case .connected = vpnConnectionStatus else {
+        guard case .connected = connectionState else {
             return false
         }
         return propertiesManager.lastConnectionIntent == profileConnectionSpec
     }
 
     var isConnecting: Bool {
-        guard case let .connecting(connectionSpec, _) = vpnConnectionStatus else {
+        guard connectionState.is(\.connecting), let spec = connectionState.resolvedSpec else {
             return false
         }
-        return connectionSpec == profileConnectionSpec
+        return spec == profileConnectionSpec
     }
 
     private var connectedUiState: Bool {
@@ -225,7 +226,7 @@ final class ProfileItemViewModel {
     }
 
     private func startObserving() {
-        $vpnConnectionStatus
+        $connectionState
             .publisher
             .sink { [weak self] _ in
                 self?.stateChanged()

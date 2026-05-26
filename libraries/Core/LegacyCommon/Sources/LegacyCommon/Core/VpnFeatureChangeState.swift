@@ -30,10 +30,10 @@ import VPNShared
 public typealias VpnFeatureChangeState = FeatureChangeAvailability
 
 public extension VpnFeatureChangeState {
-    init(connectionState: ConnectionState, vpnConnectionStatus: VPNConnectionStatus) {
-        let vpnProtocol = vpnConnectionStatus.mergedVpnProtocol(using: connectionState)
-        let isConnected = vpnConnectionStatus.isConnected(using: connectionState)
-        let isConnecting = connectionState.is(\.connecting) || vpnConnectionStatus.is(\.connecting)
+    init(connectionState: ConnectionState) {
+        let vpnProtocol = connectionState.resolvedVpnProtocol
+        let isConnected = connectionState.isConnected
+        let isConnecting = connectionState.is(\.connecting)
 
         if isConnected, vpnProtocol?.authenticationType == .certificate {
             self = .withConnectionUpdate

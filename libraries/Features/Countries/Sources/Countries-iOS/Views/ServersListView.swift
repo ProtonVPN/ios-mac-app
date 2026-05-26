@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import CountriesShared
 import Domain
 import Persistence
@@ -29,7 +30,7 @@ import VPNAppCore
 
 public struct ServersListView: View {
     @Bindable var store: StoreOf<ServersListFeature>
-    @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus
+    @SharedReader(.connectionState) var connectionState
 
     @Environment(\.dismiss) private var dismiss
     @State var showingFeaturesInfo: Bool = false
@@ -152,7 +153,7 @@ public struct ServersListView: View {
             subregion: store.listType.name,
             regionCode: store.countryCode
         )
-        let shouldConnect = !vpnConnectionStatus.isConnectedTo(location)
+        let shouldConnect = !connectionState.isConnectedTo(location)
         Button {
             if server.logical.isUnderMaintenance {
                 store.send(.serversUnderMaintenance)
@@ -171,11 +172,8 @@ public struct ServersListView: View {
     }
 }
 
-private extension VPNConnectionStatus {
+private extension ConnectionState {
     func isConnectedTo(_ location: ConnectionSpec.Location) -> Bool {
-        if let locationConnected = spec?.location {
-            return locationConnected == location
-        }
-        return false
+        self.location == location
     }
 }

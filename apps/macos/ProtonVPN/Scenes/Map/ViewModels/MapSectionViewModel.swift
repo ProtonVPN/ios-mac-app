@@ -23,6 +23,7 @@
 import Combine
 import CommonNetworking
 import ComposableArchitecture
+import Connection
 import CoreLocation
 import Dependencies
 import Domain
@@ -63,7 +64,7 @@ class MapSectionViewModel {
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.propertiesManager) private var propertiesManager
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
+    @Shared(.connectionState) private var connectionState: ConnectionState
     private let alertService: CoreAlertService
     private var cancellables = Set<AnyCancellable>()
 
@@ -79,10 +80,10 @@ class MapSectionViewModel {
         self.navService = navService
         self.alertService = alertService
 
-        $vpnConnectionStatus
+        $connectionState
             .publisher
-            .sink { [weak self] status in
-                self?.vpnConnectionStatusChanged(status)
+            .sink { [weak self] state in
+                self?.connectionStateChanged(state)
             }
             .store(in: &cancellables)
         $secureCoreToggle
@@ -103,35 +104,34 @@ class MapSectionViewModel {
 
     // MARK: - Private functions
 
-    private func vpnConnectionStatusChanged(_ status: VPNConnectionStatus) {
-        if let serverType = connectedServerType(for: status), serverType != activeView {
+    private func connectionStateChanged(_ state: ConnectionState) {
+        if let serverType = connectedServerType(for: state), serverType != activeView {
             setView(serverType)
         }
 
         for annotation in annotations {
-            annotation.appStateChanged(to: status)
+            annotation.appStateChanged(to: state)
         }
 
         updateConnections()
     }
 
-    private func connectedServerType(for status: VPNConnectionStatus) -> ServerType? {
-        guard case let .connected(spec, actual) = status else {
+    private func connectedServerType(for state: ConnectionState) -> ServerType? {
+        guard case let .connected(intent, server, _, _) = state else {
             return nil
         }
 
-        if let actual {
-            if actual.server.logical.feature.contains(.secureCore) {
-                return .secureCore
-            }
-            if actual.server.logical.feature.contains(.tor) {
-                return .tor
-            }
-            if actual.server.logical.feature.contains(.p2p) {
-                return .p2p
-            }
+        if server.logical.feature.contains(.secureCore) {
+            return .secureCore
+        }
+        if server.logical.feature.contains(.tor) {
+            return .tor
+        }
+        if server.logical.feature.contains(.p2p) {
+            return .p2p
         }
 
+        let spec = intent.spec
         if case .secureCore = spec.location {
             return .secureCore
         }

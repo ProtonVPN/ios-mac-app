@@ -60,8 +60,12 @@ struct SidebarFeature {
             }
         }
 
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
         @Shared(.connectionState) var connectionState: ConnectionState
+        /// Widget-only shadow of `connectionState`. The widget extension cannot read
+        /// `connectionState` (in-memory, process-local), so we keep a file-backed projection
+        /// in App Group storage and write it from `connection.delegate.stateChanged`.
+        /// **In-process callers must read `connectionState` directly, not this.**
+        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
         var connection: ConnectionFeature.State = .initialState
 
         enum ExpandState: Equatable {
@@ -119,7 +123,7 @@ struct SidebarFeature {
         case windowWillEnterFullScreen
         case windowWillExitFullScreen
         case killSwitchSettingChanged(Bool)
-        case vpnConnectionStatusUpdated(VPNConnectionStatus)
+        case connectionStateChanged(ConnectionState)
         case syncNATPortMappingState
         case syncPlutoniumState
         case connectingOverlay(ConnectingOverlayFeature.Action)
@@ -325,7 +329,7 @@ private extension SidebarFeature {
         Reduce { state, action in
             switch action {
             case .killSwitchSettingChanged:
-                guard state.vpnConnectionStatus.isConnected(using: state.connectionState) else {
+                guard state.connectionState.isConnected else {
                     return .none
                 }
                 let spec = propertiesManager.lastConnectionIntent
@@ -338,21 +342,17 @@ private extension SidebarFeature {
                     category: .connectionConnect,
                     metadata: ["spec.location": "\(spec.location)"]
                 )
-                beginConnectingOverlay(&state, connectionSpec: intent.spec)
+                beginConnectingOverlay(&state)
                 return .merge(
                     .cancel(id: CancelID.overlayDelay),
                     .send(.connection(.input(.connect(intent))))
                 )
-            case let .vpnConnectionStatusUpdated(connectionStatus):
-                state.$vpnConnectionStatus.withLock { $0 = connectionStatus }
-                switch connectionStatus {
+            case let .connectionStateChanged(connectionState):
+                switch connectionState {
                 case .resolving, .connecting:
                     if state.overlayState != .suppressed {
-                        beginConnectingOverlay(
-                            &state,
-                            connectionSpec: connectionStatus.spec ?? propertiesManager.lastConnectionIntent
-                        )
-                        syncConnectingOverlayState(&state, connectionStatus: connectionStatus)
+                        beginConnectingOverlay(&state)
+                        syncConnectingOverlayState(&state, connectionState: connectionState)
                     }
                     return .cancel(id: CancelID.overlayDelay)
                 case .connected:
@@ -362,7 +362,7 @@ private extension SidebarFeature {
                         state.overlayState = .hidden
                         return .cancel(id: CancelID.overlayDelay)
                     }
-                    transitionToAutoDismiss(&state, connectionStatus: connectionStatus)
+                    transitionToAutoDismiss(&state, connectionState: connectionState)
                     return .run { send in
                         try await clock.sleep(for: .seconds(3))
                         await send(.connectedOverlayDelayElapsed)
@@ -426,7 +426,7 @@ private extension SidebarFeature {
                     spec: spec,
                     connectionProtocol: connectionProtocol ?? propertiesManager.connectionProtocol
                 )
-                beginConnectingOverlay(&state, connectionSpec: intent.spec)
+                beginConnectingOverlay(&state)
                 return .merge(
                     .cancel(id: CancelID.overlayDelay),
                     .run { send in
@@ -466,7 +466,7 @@ private extension SidebarFeature {
                     category: .connectionConnect,
                     metadata: ["spec.location": "\(spec.location)"]
                 )
-                beginConnectingOverlay(&state, connectionSpec: intent.spec)
+                beginConnectingOverlay(&state)
                 return .merge(
                     .cancel(id: CancelID.overlayDelay),
                     .run { send in
@@ -486,7 +486,7 @@ private extension SidebarFeature {
                     category: .connectionConnect,
                     metadata: ["spec.location": "\(spec.location)"]
                 )
-                beginConnectingOverlay(&state, connectionSpec: intent.spec)
+                beginConnectingOverlay(&state)
                 return .merge(
                     .cancel(id: CancelID.overlayDelay),
                     .run { send in
@@ -523,7 +523,7 @@ private extension SidebarFeature {
                     return .none
                 }
                 state.pendingReconnectIntent = nil
-                beginConnectingOverlay(&state, connectionSpec: intent.spec)
+                beginConnectingOverlay(&state)
                 return .merge(
                     .cancel(id: CancelID.overlayDelay),
                     .send(.connection(.input(.connect(intent))))
@@ -549,12 +549,9 @@ private extension SidebarFeature {
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
                 state.$connectionState.withLock { $0 = connectionState }
-                let fallbackSpec = state.vpnConnectionStatus.spec ?? propertiesManager.lastConnectionIntent
+                state.$vpnConnectionStatus.withLock { $0 = connectionState.status }
                 return .merge(
-                    .send(.vpnConnectionStatusUpdated(connectionState.vpnConnectionStatus(
-                        fallbackSpec: fallbackSpec,
-                        previousStatus: state.vpnConnectionStatus
-                    ))),
+                    .send(.connectionStateChanged(connectionState)),
                     .send(.syncNATPortMappingState),
                     .send(.syncPlutoniumState)
                 )
@@ -572,7 +569,7 @@ private extension SidebarFeature {
                         "intent.connectionProtocol": "\(intent.connectionProtocol)",
                         "resolutionError": "\(resolutionError)",
                         "overlayState": "\(state.overlayState)",
-                        "vpnConnectionStatus": "\(state.vpnConnectionStatus)",
+                        "connectionState": "\(state.connectionState)",
                     ]
                 )
                 SentryHelper.shared?.log(error: resolutionError)
@@ -663,6 +660,7 @@ private extension SidebarFeature {
                     } else {
                         log.error("Error while updating plutonium state: \(error.localizedDescription)")
                     }
+                    SentryHelper.shared?.log(error: error)
                 }
                 .cancellable(id: CancelID.plutoniumSync, cancelInFlight: true)
 
@@ -672,11 +670,10 @@ private extension SidebarFeature {
         }
     }
 
-    func beginConnectingOverlay(_ state: inout State, connectionSpec: ConnectionSpec) {
+    func beginConnectingOverlay(_ state: inout State) {
         @SharedReader(.intentionallyDisconnected) var intentionallyDisconnected
         var overlay = state.connectingOverlay ?? ConnectingOverlayFeature.State()
         overlay.beginConnecting(
-            connectionSpec: connectionSpec,
             selectedProtocol: propertiesManager.connectionProtocol,
             killSwitchEnabled: propertiesManager.killSwitch,
             intentionallyDisconnected: intentionallyDisconnected
@@ -684,11 +681,11 @@ private extension SidebarFeature {
         state.overlayState = .connecting(overlay)
     }
 
-    func transitionToAutoDismiss(_ state: inout State, connectionStatus: VPNConnectionStatus) {
+    func transitionToAutoDismiss(_ state: inout State, connectionState: ConnectionState) {
         @SharedReader(.intentionallyDisconnected) var intentionallyDisconnected
         var overlay = state.connectingOverlay ?? ConnectingOverlayFeature.State()
         overlay.sync(
-            connectionStatus: connectionStatus,
+            connectionState: connectionState,
             selectedProtocol: propertiesManager.connectionProtocol,
             killSwitchEnabled: propertiesManager.killSwitch,
             intentionallyDisconnected: intentionallyDisconnected
@@ -696,13 +693,13 @@ private extension SidebarFeature {
         state.overlayState = .autoDismiss(overlay)
     }
 
-    func syncConnectingOverlayState(_ state: inout State, connectionStatus: VPNConnectionStatus) {
+    func syncConnectingOverlayState(_ state: inout State, connectionState: ConnectionState) {
         guard var overlay = state.connectingOverlay else {
             return
         }
         @SharedReader(.intentionallyDisconnected) var intentionallyDisconnected
         overlay.sync(
-            connectionStatus: connectionStatus,
+            connectionState: connectionState,
             selectedProtocol: propertiesManager.connectionProtocol,
             killSwitchEnabled: propertiesManager.killSwitch,
             intentionallyDisconnected: intentionallyDisconnected

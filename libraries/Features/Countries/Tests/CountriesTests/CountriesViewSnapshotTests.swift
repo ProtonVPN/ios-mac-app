@@ -19,6 +19,7 @@
 #if os(iOS)
     import Clocks
     import ComposableArchitecture
+    import Connection
     @testable import Countries_iOS
     @testable import CountriesShared
     import Dependencies
@@ -38,7 +39,7 @@
         func countriesViewStandardMode() {
             @Shared(.secureCoreToggle) var secureCoreToggle = false
             @Shared(.userTier) var userTier: Int? = .paidTier
-            @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .disconnected
+            @Shared(.connectionState) var connectionState: ConnectionState = .disconnected
 
             withDependencies {
                 $0.continuousClock = TestClock()
@@ -59,7 +60,7 @@
         func countriesViewSecureCoreMode() {
             @Shared(.secureCoreToggle) var secureCoreToggle = true
             @Shared(.userTier) var userTier: Int? = .paidTier
-            @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .disconnected
+            @Shared(.connectionState) var connectionState: ConnectionState = .disconnected
 
             withDependencies {
                 $0.continuousClock = TestClock()
@@ -80,7 +81,7 @@
         func countriesViewWithBanners() {
             @Shared(.secureCoreToggle) var secureCoreToggle = false
             @Shared(.userTier) var userTier: Int? = .freeTier
-            @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .disconnected
+            @Shared(.connectionState) var connectionState: ConnectionState = .disconnected
 
             withDependencies {
                 $0.continuousClock = TestClock()
@@ -104,7 +105,7 @@
         func countriesViewFreeUser() {
             @Shared(.secureCoreToggle) var secureCoreToggle = false
             @Shared(.userTier) var userTier: Int? = .freeTier
-            @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .disconnected
+            @Shared(.connectionState) var connectionState: ConnectionState = .disconnected
 
             withDependencies {
                 $0.continuousClock = TestClock()

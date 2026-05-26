@@ -18,14 +18,70 @@
 
 import CommonNetworking
 import ComposableArchitecture
+import Connection
 @testable import CountriesShared
 import Domain
+import Foundation
 import Localization
 import PaymentsShared
 import PersistenceTestSupport
 import Strings
 import Testing
 import VPNAppCore
+
+private let _testLogical = Logical(
+    id: "test-logical",
+    name: "T#1",
+    domain: "test.example",
+    load: 0,
+    entryCountryCode: "EU",
+    exitCountryCode: "EU",
+    tier: 0,
+    score: 0,
+    status: 1,
+    feature: [],
+    city: nil,
+    state: nil,
+    hostCountry: nil,
+    translatedCity: nil,
+    latitude: 0,
+    longitude: 0,
+    gatewayName: nil
+)
+private let _testEndpoint = ServerEndpoint(
+    id: "test-endpoint",
+    entryIp: "1.1.1.1",
+    exitIp: "1.1.1.1",
+    domain: "test.example",
+    status: 1,
+    label: nil,
+    x25519PublicKey: nil,
+    protocolEntries: nil
+)
+private let _testServer = Server(logical: _testLogical, endpoint: _testEndpoint)
+private let _testIntent = ServerConnectionIntent(
+    spec: .defaultFastest,
+    server: _testServer,
+    protocolConfiguration: .ike,
+    features: VPNConnectionFeatures(
+        netshield: .off,
+        vpnAccelerator: true,
+        bouncing: nil,
+        natType: .moderateNAT,
+        safeMode: nil,
+        portForwarding: nil
+    )
+)
+
+private extension ConnectionState {
+    static var fakeConnected: ConnectionState {
+        .connected(_testIntent, _testServer, Date(), nil)
+    }
+
+    static var fakeConnecting: ConnectionState {
+        .connecting(.unresolved(ConnectionPreparationIntent(spec: .defaultFastest, acceptableProtocols: .ikev2)))
+    }
+}
 
 @Suite("Countries Feature Tests")
 @MainActor
@@ -36,7 +92,7 @@ struct CountriesFeatureTests {
     func secureCoreToggleWhenDisconnectedAndPaidUser() async {
         @Shared(.secureCoreToggle) var isSecureCore = false
         @Shared(.userTier) var userTier: Int? = 2
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .disconnected
+        @Shared(.connectionState) var connectionState: ConnectionState = .disconnected
         @Shared(.discourageSecureCore) var discourageSecureCore = false
 
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
@@ -51,7 +107,7 @@ struct CountriesFeatureTests {
     func secureCoreToggleShowsUpsellForFreeUser() async {
         @Shared(.secureCoreToggle) var isSecureCore = false
         @Shared(.userTier) var userTier: Int? = 0
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .disconnected
+        @Shared(.connectionState) var connectionState: ConnectionState = .disconnected
 
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
             CountriesFeature()
@@ -104,7 +160,7 @@ struct CountriesFeatureTests {
     func secureCoreToggleShowsDiscourageViewWhenEnabled() async {
         @Shared(.secureCoreToggle) var isSecureCore = false
         @Shared(.userTier) var userTier: Int? = 2
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .disconnected
+        @Shared(.connectionState) var connectionState: ConnectionState = .disconnected
         @Shared(.discourageSecureCore) var discourageSecureCore = true
 
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
@@ -120,7 +176,7 @@ struct CountriesFeatureTests {
     func secureCoreToggleShowsDisconnectAlertWhenConnected() async {
         @Shared(.secureCoreToggle) var isSecureCore = false
         @Shared(.userTier) var userTier: Int? = 2
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .connected(.defaultFastest, nil)
+        @Shared(.connectionState) var connectionState: ConnectionState = .fakeConnected
         @Shared(.discourageSecureCore) var discourageSecureCore = false
 
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
@@ -150,7 +206,7 @@ struct CountriesFeatureTests {
     func turningOffSecureCoreWhenConnectedShowsAlert() async {
         @Shared(.secureCoreToggle) var isSecureCore = true
         @Shared(.userTier) var userTier: Int? = 2
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .connected(.defaultFastest, nil)
+        @Shared(.connectionState) var connectionState: ConnectionState = .fakeConnected
 
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
             CountriesFeature()
@@ -179,7 +235,7 @@ struct CountriesFeatureTests {
     func turningOffSecureCoreWhenDisconnected() async {
         @Shared(.secureCoreToggle) var isSecureCore = true
         @Shared(.userTier) var userTier: Int? = 2
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .disconnected
+        @Shared(.connectionState) var connectionState: ConnectionState = .disconnected
 
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
             CountriesFeature()
@@ -207,7 +263,7 @@ struct CountriesFeatureTests {
 
     @Test("Alert disconnect and toggle when connected")
     func alertDisconnectAndToggleWhenConnected() async {
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .connected(.defaultFastest, nil)
+        @Shared(.connectionState) var connectionState: ConnectionState = .fakeConnected
 
         var state = CountriesFeature.State(sections: [])
         state.alert = AlertState(title: { TextState("Test") })
@@ -569,7 +625,7 @@ struct CountriesFeatureTests {
 
     @Test("Discourage secure core activate when disconnected applies toggle")
     func discourageSecureCoreActivateWhenDisconnected() async {
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .disconnected
+        @Shared(.connectionState) var connectionState: ConnectionState = .disconnected
 
         var state = CountriesFeature.State(sections: [])
         state.destination = .discourageSecureCoreView(.init())
@@ -585,7 +641,7 @@ struct CountriesFeatureTests {
 
     @Test("Discourage secure core activate when connected shows alert")
     func discourageSecureCoreActivateWhenConnectedShowsAlert() async {
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .connected(.defaultFastest, nil)
+        @Shared(.connectionState) var connectionState: ConnectionState = .fakeConnected
 
         var state = CountriesFeature.State(sections: [])
         state.destination = .discourageSecureCoreView(.init())
@@ -618,7 +674,7 @@ struct CountriesFeatureTests {
 
     @Test("isConnectedToVPN returns true when connected")
     func isConnectedToVPNWhenConnected() {
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .connected(.defaultFastest, nil)
+        @Shared(.connectionState) var connectionState: ConnectionState = .fakeConnected
 
         let state = CountriesFeature.State(sections: [])
         #expect(state.isConnectedToVPN)
@@ -626,7 +682,7 @@ struct CountriesFeatureTests {
 
     @Test("isConnectedToVPN returns false when disconnected")
     func isConnectedToVPNWhenDisconnected() {
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .disconnected
+        @Shared(.connectionState) var connectionState: ConnectionState = .disconnected
 
         let state = CountriesFeature.State(sections: [])
         #expect(!state.isConnectedToVPN)
@@ -634,7 +690,7 @@ struct CountriesFeatureTests {
 
     @Test("enableViewToggle returns false when connecting")
     func enableViewToggleWhenConnecting() {
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .connecting(.defaultFastest, nil)
+        @Shared(.connectionState) var connectionState: ConnectionState = .fakeConnecting
 
         let state = CountriesFeature.State(sections: [])
         #expect(!state.enableViewToggle)
@@ -642,7 +698,7 @@ struct CountriesFeatureTests {
 
     @Test("enableViewToggle returns true when not connecting")
     func enableViewToggleWhenNotConnecting() {
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus = .disconnected
+        @Shared(.connectionState) var connectionState: ConnectionState = .disconnected
 
         let state = CountriesFeature.State(sections: [])
         #expect(state.enableViewToggle)

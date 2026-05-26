@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
 import VPNAppCore
@@ -29,22 +30,22 @@ public struct ProtocolSettingsFeature: Sendable {
     @ObservableState
     public struct State: Equatable {
         public var connectionProtocol: ConnectionProtocol
-        public var vpnConnectionStatus: VPNConnectionStatus
+        public var connectionState: ConnectionState
         @Presents public var reconnectionAlert: AlertState<Action.Alert>?
 
         public init(
             protocol: ConnectionProtocol,
-            vpnConnectionStatus: VPNConnectionStatus,
+            connectionState: ConnectionState,
             reconnectionAlert: AlertState<Action.Alert>?
         ) {
             self.connectionProtocol = `protocol`
-            self.vpnConnectionStatus = vpnConnectionStatus
+            self.connectionState = connectionState
             self.reconnectionAlert = reconnectionAlert
         }
 
         public init() {
             self.connectionProtocol = .smartProtocol
-            self.vpnConnectionStatus = .disconnected
+            self.connectionState = .disconnected
             self.reconnectionAlert = nil
         }
     }
@@ -66,7 +67,7 @@ public struct ProtocolSettingsFeature: Sendable {
             if state.connectionProtocol == `protocol` {
                 return .none // Do nothing when the user taps on the currently selected protocol
             }
-            if state.vpnConnectionStatus == .disconnected {
+            if state.connectionState == .disconnected {
                 return .run { send in
                     await send(.setProtocol(TaskResult {
                         try await storage.setConnectionProtocol(`protocol`)

@@ -62,7 +62,6 @@ final class ConnectionSettingsViewModel {
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     private lazy var navService: NavigationService = factory.makeNavigationService()
     @Shared(.connectionState) private var connectionState: ConnectionState
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     var selectedProtocol: ConnectionProtocol {
         didSet {
@@ -314,14 +313,10 @@ final class ConnectionSettingsViewModel {
     }
 
     func confirmEnableSmartProtocol(_ completion: @escaping (Result<Void, Error>) -> Void) {
-        switch vpnConnectionStatus {
+        switch connectionState {
         case .connected, .connecting:
             let config = propertiesManager.smartProtocolConfig
-            let supported = if let endpoint = vpnConnectionStatus.mergedServer(using: connectionState)?.endpoint {
-                endpoint.supports(protocolSet: ProtocolSupport(vpnProtocols: config.supportedProtocols))
-            } else {
-                false
-            }
+            let supported = connectionState.resolvedServer?.endpoint.supports(protocolSet: ProtocolSupport(vpnProtocols: config.supportedProtocols)) ?? false
 
             let alert: SystemAlert = if supported {
                 ReconnectOnSmartProtocolChangeAlert(confirmHandler: { [weak self] in
@@ -432,7 +427,7 @@ final class ConnectionSettingsViewModel {
 
     func setVpnAccelerator(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
         let newValue: VPNAccelerator = enabled ? .on : .off
-        switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+        switch VpnFeatureChangeState(connectionState: connectionState) {
         case .withConnectionUpdate:
             // in-place change when connected and using local agent
             featurePropertyProvider.setValue(newValue)
@@ -460,7 +455,7 @@ final class ConnectionSettingsViewModel {
     }
 
     func setAllowLANAccess(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
-        let isConnected = vpnConnectionStatus.isConnected(using: connectionState) || vpnConnectionStatus.is(\.connected)
+        let isConnected = connectionState.isConnected
         let newValue: ExcludeLocalNetworks = enabled ? .on : .off
 
         if propertiesManager.killSwitch {
