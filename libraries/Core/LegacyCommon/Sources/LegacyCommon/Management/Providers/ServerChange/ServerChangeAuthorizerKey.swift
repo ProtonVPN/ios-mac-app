@@ -23,11 +23,58 @@ import VPNAppCore
 extension ServerChangeAuthorizer: @retroactive DependencyKey {
     public static var liveValue: ServerChangeAuthorizer = {
         let authorizer = ServerChangeAuthorizerImplementation()
+        let cache = ServerChangeAvailabilityCache()
         return ServerChangeAuthorizer(
-            serverChangeAvailability: authorizer.serverChangeAvailability,
-            registerServerChangeAtDate: authorizer.registerServerChange
+            serverChangeAvailability: {
+                @Dependency(\.date) var date
+                if let cached = cache.value(asOf: date.now) {
+                    return cached
+                }
+                let fresh = authorizer.serverChangeAvailability()
+                cache.store(fresh)
+                return fresh
+            },
+            registerServerChangeAtDate: { connectionDate in
+                authorizer.registerServerChange(connectedAt: connectionDate)
+                // A successful server change shifts the cooldown window — drop the cache so
+                // the next read recomputes from `serverChangeStorage`.
+                cache.invalidate()
+            }
         )
     }()
+}
+
+/// Process-wide cache for the most recent `ServerChangeAvailability` so that the StatusMenu,
+/// Header, SidebarFeature, and ConnectionStatusBannerFeature consumers don't each separately
+/// reach into `serverChangeStorage` on every read. Develop previously cached this per
+/// view-model; with multiple consumers reading the same persisted state, a single cache at
+/// the dependency layer is cheaper and avoids per-consumer drift.
+private final class ServerChangeAvailabilityCache: @unchecked Sendable {
+    private let lock = NSLock()
+    private var cached: ServerChangeAuthorizer.ServerChangeAvailability?
+
+    /// Returns the cached value only if it's still an active `.unavailable` cooldown at
+    /// `now`. `.available` or expired-cooldown caches return nil so the caller recomputes.
+    func value(asOf now: Date) -> ServerChangeAuthorizer.ServerChangeAvailability? {
+        lock.lock()
+        defer { lock.unlock() }
+        guard case let .unavailable(until, _, _) = cached, until > now else {
+            return nil
+        }
+        return cached
+    }
+
+    func store(_ value: ServerChangeAuthorizer.ServerChangeAvailability) {
+        lock.lock()
+        cached = value
+        lock.unlock()
+    }
+
+    func invalidate() {
+        lock.lock()
+        cached = nil
+        lock.unlock()
+    }
 }
 
 public enum ServerChangeViewState {
