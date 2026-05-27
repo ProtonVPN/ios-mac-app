@@ -509,7 +509,7 @@ private extension HomeFeature {
                 return .send(.connectionStatus(.newNetShieldStats(message.netShield.toNetShieldModel)))
             case let .connection(.delegate(.connectionFailed(error))):
                 SentryHelper.shared?.log(error: error)
-                state.alert = connectionFailureAlert(for: error)
+                state.alert = domainAlertState(from: error.alert)
                 return .send(.sharedProperties(.connectionFailed(error)))
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
@@ -579,17 +579,6 @@ private extension HomeFeature {
     /// `ConnectionFeature`; falls back to fastest when there's no prior intent.
     func lastConnectionSpec() -> ConnectionSpec {
         (try? connectionIntentStorage.getConnectionIntent().spec) ?? .defaultFastest
-    }
-
-    func connectionFailureAlert(for error: ConnectionError) -> AlertState<Action.HomeAlert> {
-        switch error {
-        case .preparation(.networkUnreachable):
-            AlertState {
-                TextState(Localizable.notConnectedToTheInternet)
-            }
-        default:
-            domainAlertState(from: error.alert)
-        }
     }
 
     func domainAlertState(from alert: Domain.Alert) -> AlertState<Action.HomeAlert> {

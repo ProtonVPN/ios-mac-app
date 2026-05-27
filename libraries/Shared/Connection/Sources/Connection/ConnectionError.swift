@@ -144,7 +144,7 @@ extension ConnectionError: AlertConvertibleError {
         case .preparation(.featureNotReady):
             break
         case .preparation(.networkUnreachable):
-            break
+            return .init(title: Localizable.networkUnreachable, message: Localizable.notConnectedToTheInternet)
         case .preparation(.protocolSelectionError(.cancelled)):
             break
         case .preparation(.protocolSelectionError(.portSelectionFailed)):
