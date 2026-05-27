@@ -138,6 +138,23 @@ struct QuickSettingsFeature {
             PortForwardingQuickSettingFeature()
         }
 
+        CombineReducers {
+            childSettingsReducer
+            observationReducer
+            detailNavigationReducer
+            alertReducer
+        }
+        .ifLet(\.$destination, action: \.destination)
+        .ifLet(\.$alert, action: \.alert)
+    }
+}
+
+// MARK: - Sub-reducers
+
+private extension QuickSettingsFeature {
+    /// Forwards child quick-setting `.delegate(.tapped)` to `.buttonTapped`, and keeps the
+    /// currently presented detail sheet in sync with any other child state changes.
+    var childSettingsReducer: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case let .secureCore(.delegate(.tapped(type))),
@@ -147,10 +164,21 @@ struct QuickSettingsFeature {
                 return .send(.buttonTapped(type))
 
             case .secureCore, .netShield, .killSwitch, .portForwarding:
-                // Keep currently presented detail view in sync with live quick-setting state changes.
                 Self.syncDetailState(&state)
                 return .none
 
+            default:
+                return .none
+            }
+        }
+    }
+
+    /// Lifecycle: wires the long-lived observation streams (connectionState, port-forwarding
+    /// pref, NAT-PMP results) and recomputes the `ConnectionInfo` exposed to the views from
+    /// the live property/service values.
+    var observationReducer: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
             case .startObserving:
                 state.netShield.stats = .zero(enabled: false)
                 return .merge(
@@ -190,10 +218,8 @@ struct QuickSettingsFeature {
             case .refreshConnectionInfo:
                 let isConnected = state.portForwarding.connectionInfo.isConnected
                 let supportsP2P: Bool = switch state.portForwarding.connectionInfo {
-                case let .portForwardingStatus(_, supportsP2P, _):
-                    supportsP2P
-                case .pfError:
-                    false
+                case let .portForwardingStatus(_, supportsP2P, _): supportsP2P
+                case .pfError: false
                 }
 
                 let portForwardingEnabled = portForwardingPropertyProvider.getPortForwarding() ?? false
@@ -212,13 +238,28 @@ struct QuickSettingsFeature {
                 Self.syncDetailState(&state)
                 return .none
 
+            default:
+                return .none
+            }
+        }
+    }
+
+    /// Owns the detail-sheet / upsell / discourage-secure-core modal lifecycle, including the
+    /// "user picked an option inside the detail sheet" branching that gates on alerts, upsells,
+    /// or the discourage modal before actually applying the change.
+    var detailNavigationReducer: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
             case let .buttonTapped(type):
+                // Toggle: tapping the active row dismisses, anything else swaps the detail body.
                 if state.activeType == type {
                     state.destination = nil
                     Self.syncSelection(&state)
                     return .none
                 }
-                state.destination = .quickSettingDetail(QuickSettingDetailFeature.State.makeDetailState(type: type, from: state))
+                state.destination = .quickSettingDetail(
+                    QuickSettingDetailFeature.State.makeDetailState(type: type, from: state)
+                )
                 Self.syncSelection(&state)
                 return .none
 
@@ -234,7 +275,11 @@ struct QuickSettingsFeature {
                 return .none
 
             case let .destination(.presented(.quickSettingDetail(.delegate(.option(type, option))))):
-                if type == .killSwitchDisplay, option == .killSwitchOn, Self.requiresKillSwitchConflictConfirmation(appFeaturePropertyProvider: appFeaturePropertyProvider) {
+                // Pre-flight gates before applying: Kill Switch conflict alert, NetShield/Hermes
+                // conflict alert, paywall upsell, Secure Core discourage modal. Only after all
+                // of these pass do we hand off to `applyQuickSettingOptionSelection`.
+                if type == .killSwitchDisplay, option == .killSwitchOn,
+                   Self.requiresKillSwitchConflictConfirmation(appFeaturePropertyProvider: appFeaturePropertyProvider) {
                     state.alert = Self.killSwitchConflictAlert
                     return .none
                 }
@@ -265,19 +310,12 @@ struct QuickSettingsFeature {
             case .destination(.presented(.upsell(.upgradeTapped))):
                 state.destination = nil
                 return .run { _ in
-                    guard let url = await sessionService.getPlanSession(mode: .upgrade) else {
-                        return
-                    }
-                    await MainActor.run {
-                        linkOpener.open(url)
-                    }
+                    guard let url = await sessionService.getPlanSession(mode: .upgrade) else { return }
+                    await MainActor.run { linkOpener.open(url) }
                 }
 
-            case .destination(.presented(.upsell(.continueTapped))):
-                state.destination = nil
-                return .none
-
-            case .destination(.presented(.upsell(.optionalActionTapped))):
+            case .destination(.presented(.upsell(.continueTapped))),
+                 .destination(.presented(.upsell(.optionalActionTapped))):
                 state.destination = nil
                 return .none
 
@@ -286,12 +324,19 @@ struct QuickSettingsFeature {
                 applyQuickSettingOptionSelection(type: .secureCoreDisplay, option: .secureCoreOn)
                 return .send(.dismissDetails)
 
-            case .destination(.dismiss):
-                return .none
-
             case .destination:
                 return .none
 
+            default:
+                return .none
+            }
+        }
+    }
+
+    /// Handles confirm/cancel from the conflict alerts surfaced by `detailNavigationReducer`.
+    var alertReducer: some ReducerOf<Self> {
+        Reduce { _, action in
+            switch action {
             case .alert(.presented(.cancelKillSwitchOn)):
                 return .send(.dismissDetails)
 
@@ -306,29 +351,42 @@ struct QuickSettingsFeature {
 
             case .alert:
                 return .none
+
+            default:
+                return .none
             }
         }
-        .ifLet(\.$destination, action: \.destination)
-        .ifLet(\.$alert, action: \.alert)
     }
+}
 
-    private static func syncDetailState(_ state: inout State) {
+// MARK: - Detail sheet sync helpers
+
+private extension QuickSettingsFeature {
+    /// Rebuilds the presented detail sheet from current state. Called whenever any input
+    /// that feeds into `QuickSettingDetailFeature.State.makeDetailState` may have changed.
+    static func syncDetailState(_ state: inout State) {
         guard case let .quickSettingDetail(detail) = state.destination else { return }
-        state.destination =
-            .quickSettingDetail(
-                QuickSettingDetailFeature.State
-                    .makeDetailState(type: detail.type, from: state)
-            )
+        state.destination = .quickSettingDetail(
+            QuickSettingDetailFeature.State.makeDetailState(type: detail.type, from: state)
+        )
     }
 
-    private static func syncSelection(_ state: inout State) {
+    /// Mirrors `state.activeType` to each child's `isSelected` so the tab-bar highlight stays
+    /// consistent without each child observing the parent's destination.
+    static func syncSelection(_ state: inout State) {
         state.secureCore.isSelected = state.activeType == .secureCoreDisplay
         state.netShield.isSelected = state.activeType == .netShieldDisplay
         state.killSwitch.isSelected = state.activeType == .killSwitchDisplay
         state.portForwarding.isSelected = state.activeType == .portForwardingDisplay
     }
+}
 
-    private func applyQuickSettingOptionSelection(
+// MARK: - Quick-setting option application
+
+private extension QuickSettingsFeature {
+    /// Persists the user's choice for the selected quick setting and either applies the change
+    /// live via local agent or triggers a reconnect, depending on the protocol/connection state.
+    func applyQuickSettingOptionSelection(
         type: QuickSettingType,
         option: QuickSettingOptionID
     ) {
@@ -349,6 +407,9 @@ struct QuickSettingsFeature {
             }
 
         case (.killSwitchDisplay, .killSwitchOn):
+            // KS is mutually exclusive with both ExcludeLocalNetworks (LAN) and Plutonium (Split
+            // Tunneling). Force them off here; the conflict-confirmation alert already informed
+            // the user before we got here.
             @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
             propertiesManager.killSwitch = true
             appFeaturePropertyProvider.setValue(ExcludeLocalNetworks.off)
@@ -372,7 +433,9 @@ struct QuickSettingsFeature {
         }
     }
 
-    private func quickSettingsDisplayReconnectionFeedback() {
+    /// Fires a passive reconnect when a Secure Core toggle change happens mid-connection.
+    /// No-op if not connected — the new toggle value will be picked up on the next connect.
+    func quickSettingsDisplayReconnectionFeedback() {
         guard connectionState.isConnected else { return }
         log.debug("Reconnection requested by changing quick setting", category: .connectionConnect, event: .trigger)
         @SharedReader(.userTier) var userTier: Int?
@@ -390,12 +453,11 @@ struct QuickSettingsFeature {
         connectionCommandClient.send(.connect(spec, nil, intent))
     }
 
-    private func quickSettingsChangeNetShieldLevel(_ level: NetShieldType) {
+    func quickSettingsChangeNetShieldLevel(_ level: NetShieldType) {
         switch VpnFeatureChangeState(connectionState: connectionState) {
         case .withConnectionUpdate:
             netShieldPropertyProvider.setNetShieldType(level)
-            let features: Set<ConnectionFeatureChange.AgentFeature> = [.netShield(level)]
-            connectionCommandClient.send(.applySettings(features))
+            connectionCommandClient.send(.applySettings([.netShield(level)]))
         case .withReconnect:
             netShieldPropertyProvider.setNetShieldType(level)
             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
@@ -405,50 +467,51 @@ struct QuickSettingsFeature {
         }
     }
 
-    private func quickSettingsChangePortForwarding(_ isEnabled: Bool) {
+    func quickSettingsChangePortForwarding(_ isEnabled: Bool) {
         portForwardingPropertyProvider.setPortForwarding(isEnabled)
         switch VpnFeatureChangeState(connectionState: connectionState) {
         case .withConnectionUpdate:
             log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-            let features: Set<ConnectionFeatureChange.AgentFeature> = [.portForwarding(isEnabled)]
-            connectionCommandClient.send(.applySettings(features))
+            connectionCommandClient.send(.applySettings([.portForwarding(isEnabled)]))
         case .withReconnect:
-            if isConnectionActive {
-                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                if let activeVpnProtocol = connectionState.resolvedVpnProtocol {
-                    connectionCommandClient.send(.reconnect(.vpnProtocol(activeVpnProtocol)))
-                } else {
-                    connectionCommandClient.send(.retry)
-                }
+            guard isConnectionActive else { return }
+            log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
+            // Port forwarding requires WireGuard. If the user is on IKE we force-switch protocols
+            // by issuing a `.reconnect(...)` with the active protocol; otherwise a plain retry.
+            if let activeVpnProtocol = connectionState.resolvedVpnProtocol {
+                connectionCommandClient.send(.reconnect(.vpnProtocol(activeVpnProtocol)))
+            } else {
+                connectionCommandClient.send(.retry)
             }
         case .immediate:
             break
         }
     }
 
-    private var isConnectionActive: Bool {
+    var isConnectionActive: Bool {
         switch connectionState {
-        case .disconnected, .resolving:
-            false
-        case .connecting, .connected, .disconnecting:
-            true
+        case .disconnected, .resolving: false
+        case .connecting, .connected, .disconnecting: true
         }
     }
+}
 
-    private static func upsellModalType(for type: QuickSettingType) -> UpsellModalType? {
+// MARK: - Upsell / conflict helpers
+
+private extension QuickSettingsFeature {
+    static func upsellModalType(for type: QuickSettingType) -> UpsellModalType? {
         switch type {
-        case .secureCoreDisplay:
-            .secureCore
-        case .netShieldDisplay:
-            .netShield
-        case .killSwitchDisplay:
-            nil
-        case .portForwardingDisplay:
-            .portForwarding
+        case .secureCoreDisplay: .secureCore
+        case .netShieldDisplay: .netShield
+        case .killSwitchDisplay: nil
+        case .portForwardingDisplay: .portForwarding
         }
     }
 
-    private static func optionRequiresUpsell(type: QuickSettingType, option: QuickSettingOptionID) -> Bool {
+    /// Whether tapping an option in the detail sheet should be intercepted by an upsell.
+    /// Free users hit the paywall for Secure Core, Port Forwarding, and any NetShield level
+    /// above their entitlement.
+    static func optionRequiresUpsell(type: QuickSettingType, option: QuickSettingOptionID) -> Bool {
         @SharedReader(.userTier) var userTier: Int?
         switch (type, option) {
         case (.secureCoreDisplay, .secureCoreOn):
@@ -462,16 +525,16 @@ struct QuickSettingsFeature {
         }
     }
 
-    private static func requiresKillSwitchConflictConfirmation(
+    /// Kill Switch conflicts with LAN access and with Plutonium split-tunneling. When neither
+    /// is on, enabling KS is uncontroversial — skip the confirmation alert.
+    static func requiresKillSwitchConflictConfirmation(
         appFeaturePropertyProvider: AppFeaturePropertyProvider
     ) -> Bool {
         @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
         let excludeLocalNetworksIsOff = appFeaturePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .off
         switch (excludeLocalNetworksIsOff, plutonium) {
-        case (true, .disabled):
-            return false
-        default:
-            return true
+        case (true, .disabled): return false
+        default: return true
         }
     }
 

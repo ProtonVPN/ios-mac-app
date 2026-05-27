@@ -383,6 +383,10 @@ class MapSectionViewModel {
 
 enum LocationUtility {
     static func coordinate(forCountry countryCode: String) -> CLLocationCoordinate2D {
-        MapConstants.countryCoordinates[countryCode.uppercased()] ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
+        guard let coordinate = MapConstants.countryCoordinates[countryCode.uppercased()] else {
+            log.warning("Missing map coordinate for country code: \(countryCode)")
+            return CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
+        }
+        return coordinate
     }
 }
