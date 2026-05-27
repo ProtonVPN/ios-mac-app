@@ -116,14 +116,15 @@ extension ManagerConfigurator {
         @Dependency(\.tunnelKeychain) var tunnelKeychain
         do {
             #if os(macOS)
-                let xpcUser = XPCServiceUser(
-                    withExtension: "\(DomainConstants.appIdentifierPrefix)group.\(DomainConstants.NetworkExtensions.wireguard)",
-                    logger: { log.debug("\($0)", category: .protocol) }
-                )
-                await withCheckedContinuation { continuation in
-                    xpcUser.setConfigData(configData) { _ in
-                        continuation.resume()
-                    }
+                // `pushConfig` returns `false` on any XPC failure (no remote object, failed
+                // connection, etc.). Surfacing the failure as a `WireguardConfiguratorError`
+                // means callers fail fast with an actionable error instead of producing a
+                // `NETunnelProviderProtocol` with no password reference that silently fails
+                // to start the tunnel.
+                @Dependency(\.wireguardExtensionConfigClient) var extensionConfigClient
+                let succeeded = await extensionConfigClient.pushConfig(configData)
+                guard succeeded else {
+                    throw WireguardConfiguratorError.configurationXPCWriteFailed
                 }
             #else
                 let passwordReference = try tunnelKeychain.store(wireguardConfigData: configData)
@@ -132,6 +133,8 @@ extension ManagerConfigurator {
             return protocolConfiguration
         } catch TunnelKeychainImplementationError.invalidDataFormatRetrievedFromKeychain {
             throw WireguardConfiguratorError.keychainImplementationError(.invalidDataFormatRetrievedFromKeychain)
+        } catch let error as WireguardConfiguratorError {
+            throw error
         } catch {
             throw WireguardConfiguratorError.keychainError(error)
         }
@@ -366,6 +369,10 @@ enum WireguardConfiguratorError: Error {
     case configurationEncodingError(Error)
     case keychainImplementationError(TunnelKeychainImplementationError)
     case keychainError(Error)
+    /// macOS-only: pushing the WireGuard config to the extension via XPC failed (no remote
+    /// object, broken connection, etc.). The resulting `NETunnelProviderProtocol` would have
+    /// no password reference and the tunnel would fail to start without an actionable error.
+    case configurationXPCWriteFailed
 }
 
 /// Errors raised while building an IKEv2 `NEVPNProtocolIKEv2` configuration. Kept separate

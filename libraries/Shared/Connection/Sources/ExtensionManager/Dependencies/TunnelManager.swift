@@ -382,7 +382,13 @@ struct StatusChangePayload {
 }
 
 private extension NEVPNProtocol {
-    /// Temporary helper for retrieving the peer ID from IKE configurations
+    /// Temporary helper for retrieving the peer ID from IKE configurations.
+    ///
+    /// The IKE username is built by `WireguardConfigurator.ikeUsername(...)` as
+    /// `<base>+<feature1>+<feature2>+...+ep:<serverID>`. The peer ID we want is the trailing
+    /// `ep:<serverID>` chunk (without the leading `+` separator). Earlier code returned
+    /// `String(username.suffix(from: lastIndex(of: "+")))`, which included the leading `+` and
+    /// produced peer IDs like `"+ep:abc"` — breaking server matching downstream.
     var ikePeerID: String {
         get throws {
             // VPNAPPL-3466: Smarter way to encode the username, without conflicting with other features
@@ -392,7 +398,7 @@ private extension NEVPNProtocol {
             guard let index = username.lastIndex(of: "+") else {
                 return username
             }
-            return String(username.suffix(from: index))
+            return String(username[username.index(after: index)...])
         }
     }
 }

@@ -303,10 +303,7 @@ public struct ConnectionFeature: Sendable {
                 } else {
                     // Fully disconnected with no queued reconnect; clear any stale lifecycle intent.
                     state.currentIntent = nil
-                    return .concatenate(
-                        updateStateSendingEffectIfNecessary(&state, to: .disconnected),
-                        .send(.delegate(.stateChanged(.disconnected)))
-                    )
+                    return updateStateSendingEffectIfNecessary(&state, to: .disconnected)
                 }
 
             case let .core(.delegate(.stateChanged(_, .connected(_, connectedAt, details)))):
@@ -491,8 +488,14 @@ public struct ConnectionFeature: Sendable {
         // Persist the last-known good connection so cold-start UI can show prior context
         // while the new layer is still in `.resolving`.
         if case let .connected(intent, _, date, _) = newValue {
-            @Shared(.lastConnection) var lastConnection
-            $lastConnection.withLock { $0 = LastConnection(intent: intent, connectedDate: date) }
+            let toPersist = LastConnection(intent: intent, connectedDate: date)
+            do {
+                _ = try JSONEncoder().encode(toPersist)
+                @Shared(.lastConnection) var lastConnection
+                $lastConnection.withLock { $0 = toPersist }
+            } catch {
+                log.error("Failed to persist last connection: \(error)", category: .connectionConnect)
+            }
         }
         if newValue.is(\.disconnected) {
             return .merge(
