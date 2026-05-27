@@ -226,12 +226,18 @@ public struct ConnectionFeature: Sendable {
 
             case .input(.onLogout):
                 state.reachabilityPendingIntent = nil
+                // Logout transitions clear any tunnel; drop the delayed-disconnect latch so it
+                // can't fire against a fresh post-logout connection attempt.
+                state.core.shouldDisconnectWhenAllowed = false
                 @Shared(.lastConnection) var lastConnection
                 $lastConnection.withLock { $0 = nil }
                 return .merge(.send(.stopObserving), .send(.core(.handleLogout)))
 
             case .input(.onSessionChange):
                 state.reachabilityPendingIntent = nil
+                // Session changes (logout, guest→authenticated, account switch) reset the
+                // tunnel; any latch from a prior cancelled connect would no longer apply.
+                state.core.shouldDisconnectWhenAllowed = false
                 return .send(.core(.handleLogout))
 
             case .reachabilityRetryDeadlineElapsed:
@@ -308,11 +314,15 @@ public struct ConnectionFeature: Sendable {
 
             case let .core(.delegate(.stateChanged(_, .connected(_, connectedAt, details)))):
                 if state.currentIntent?.is(\.disconnecting) == true, state.reconnectionIntent != nil {
-                    // During explicit disconnect we can transiently receive core .connected updates
-                    // while Local Agent and tunnel are racing to stop/start. Do not surface this
-                    // as a user-facing connected state; it hides the connecting/disconnecting overlay.
-                    log.debug("Ignoring spurious .connected transition while disconnecting", category: .connection)
-                    return .none
+                    // Protocol-switch race only: this guard fires when we're in the middle of
+                    // tearing down one tunnel while another reconnect intent is queued (e.g. the
+                    // user toggled a setting that requires reconnect mid-session). It does NOT
+                    // apply to the cancel-after-quick-connect path, where both `currentIntent`
+                    // and `reconnectionIntent` are cleared in `handleUserDisconnectionRequest`.
+                    // Suppress the transient `.connected` so the UI doesn't flash a connected
+                    // state for the soon-to-be-torn-down tunnel before the queued reconnect
+                    // takes over.
+                    log.debug("Ignoring spurious .connected during protocol-switch reconnect", category: .connection)
                 }
                 if state.reconnectionIntent != nil {
                     // We can receive a late startup `.connected` after user already requested a new connection

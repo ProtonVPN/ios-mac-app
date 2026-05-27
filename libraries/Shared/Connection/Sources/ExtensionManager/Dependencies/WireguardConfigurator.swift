@@ -413,7 +413,7 @@ enum IkeUsernameComponent {
         case .vpnAcceleratorDisabled:
             "nst"
         case let .label(label):
-            "b:\(label)"
+            "b:\(Self.sanitized(label, context: "bouncing label"))"
         case .moderateNAT:
             "nr"
         case let .safeMode(enabled):
@@ -421,8 +421,25 @@ enum IkeUsernameComponent {
         case .portForwardingEnabled:
             "pmp"
         case let .endpointID(endpointID):
-            "ep:\(endpointID)"
+            "ep:\(Self.sanitized(endpointID, context: "endpoint ID"))"
         }
+    }
+
+    /// Strips IKE-username reserved characters (`+` and `:`) from arbitrary string payloads
+    /// such as the bouncing label or endpoint ID. In DEBUG builds also fires an
+    /// `assertionFailure` so the offending input is caught during development; in release we
+    /// fall through with a sanitized value rather than producing a username that the server
+    /// can't parse unambiguously.
+    private static func sanitized(_ value: String, context: String) -> String {
+        let reserved: Set<Character> = [concatChar, ":"]
+        guard value.contains(where: { reserved.contains($0) }) else {
+            return value
+        }
+        assertionFailure(
+            "IKE username \(context) contains reserved character (`+` or `:`): '\(value)'. " +
+                "Server-side parser would receive an ambiguous suffix."
+        )
+        return String(value.filter { !reserved.contains($0) })
     }
 }
 
