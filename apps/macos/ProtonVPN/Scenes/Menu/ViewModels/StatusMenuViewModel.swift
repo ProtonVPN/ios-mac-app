@@ -234,12 +234,11 @@ final class StatusMenuViewModel {
     }
 
     func changeServerAction() {
-        let profile = ProfileConstants.randomProfile(
-            connectionProtocol: propertiesManager.connectionProtocol,
-            defaultProfileAccessTier: 0
-        )
-        let spec = makeConnectionSpec(for: profile)
-        connectionCommandClient.send(.connect(spec, profile.connectionProtocol, .changeServer))
+        let location: ConnectionSpec.Location = secureCoreToggle
+            ? .secureCore(.any(.random))
+            : .any(.random)
+        let spec = ConnectionSpec(location: location, features: [])
+        connectionCommandClient.send(.connect(spec, propertiesManager.connectionProtocol, .changeServer))
     }
 
     // MARK: - General section
@@ -588,61 +587,6 @@ final class StatusMenuViewModel {
             Localizable.quickConnect
         }
         return description
-    }
-
-    private func makeConnectionSpec(for profile: Profile) -> ConnectionSpec {
-        let location: ConnectionSpec.Location
-        var features: Set<ConnectionSpec.Feature> = []
-
-        switch profile.serverOffering {
-        case let .fastest(countryCode):
-            if let countryCode {
-                location = profile.serverType == .secureCore
-                    ? .secureCore(.anyHop(to: countryCode, .fastest))
-                    : .country(code: countryCode, order: .fastest)
-            } else {
-                location = profile.serverType == .secureCore
-                    ? .secureCore(.any(.fastest))
-                    : .any(.fastest)
-            }
-
-        case let .random(countryCode):
-            if let countryCode {
-                location = profile.serverType == .secureCore
-                    ? .secureCore(.anyHop(to: countryCode, .random))
-                    : .country(code: countryCode, order: .random)
-            } else {
-                location = profile.serverType == .secureCore
-                    ? .secureCore(.any(.random))
-                    : .any(.random)
-            }
-
-        case let .custom(serverWrapper):
-            let server = serverWrapper.server
-            if server.feature.contains(.streaming) {
-                features.insert(.streaming)
-            }
-            if server.feature.contains(.p2p) {
-                features.insert(.p2p)
-            }
-            if server.feature.contains(.tor) {
-                features.insert(.tor)
-            }
-
-            if server.feature.contains(.secureCore) {
-                location = .secureCore(.hop(to: server.exitCountryCode, via: server.entryCountryCode))
-            } else {
-                location = .exact(
-                    .paid,
-                    logicalID: server.id,
-                    number: server.serverNameComponents.sequence,
-                    subregion: server.city,
-                    regionCode: server.countryCode
-                )
-            }
-        }
-
-        return .init(location: location, features: features, profileId: profile.id)
     }
 }
 

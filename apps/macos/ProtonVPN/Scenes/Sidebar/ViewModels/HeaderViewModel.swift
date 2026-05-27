@@ -173,12 +173,11 @@ final class HeaderViewModel {
     }
 
     func changeServerAction() {
-        let profile = ProfileConstants.randomProfile(
-            connectionProtocol: propertiesManager.connectionProtocol,
-            defaultProfileAccessTier: 0
-        )
-        let spec = profile.connectionSpec(trigger: .changeServer)
-        connectionCommandClient.send(.connect(spec, profile.connectionProtocol, .changeServer))
+        let location: ConnectionSpec.Location = secureCoreToggle
+            ? .secureCore(.any(.random))
+            : .any(.random)
+        let spec = ConnectionSpec(location: location, features: [])
+        connectionCommandClient.send(.connect(spec, propertiesManager.connectionProtocol, .changeServer))
     }
 
     @objc

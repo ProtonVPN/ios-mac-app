@@ -51,6 +51,7 @@ public struct HomeFeature {
     #endif
 
     @SharedReader(.userTier) private var userTier: Int?
+    @SharedReader(.secureCoreToggle) private var secureCoreToggle: Bool
     @Shared(.killSwitch) var killSwitch: Bool
 
     @Reducer
@@ -315,7 +316,11 @@ private extension HomeFeature {
                     log.error("User is not authorized for server change, action should have been unavailable")
                     return .none
                 }
-                connectionCommandClient.send(.connect(.defaultRandom, nil, .changeServer))
+                let location: ConnectionSpec.Location = secureCoreToggle
+                    ? .secureCore(.any(.random))
+                    : .any(.random)
+                let spec = ConnectionSpec(location: location, features: [])
+                connectionCommandClient.send(.connect(spec, nil, .changeServer))
                 return .none
 
             case let .connectionCommandReceived(.connect(spec, connectionProtocol, trigger)):

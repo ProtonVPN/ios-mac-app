@@ -24,16 +24,20 @@ public enum SecureCoreConnectionSpecResolver {
         connectedExitCountryCode: String?,
         isFreeTier: Bool
     ) -> ConnectionSpec.Location {
-        if secureCoreEnabled {
-            // Match iOS/default quick-connect behavior:
-            // secure core toggle resolves to fastest secure core, not exit-country pinning.
-            return .secureCore(.any(.fastest))
-        }
-
         // Free users can only authorize `.any(.fastest)`. Pinning to a specific country
         // here would trip the intent resolver and pop the "specific country" upsell.
+        // (Free tier also can't use Secure Core, so the SC branch below is unreachable for them.)
         if isFreeTier {
             return .any(.fastest)
+        }
+
+        if secureCoreEnabled {
+            // Toggle-on-while-connected: target a Secure Core server exiting via the connected
+            // country to preserve the user's exit location. No connected country → global fastest.
+            if let countryCode = connectedExitCountryCode {
+                return .secureCore(.anyHop(to: countryCode, .fastest))
+            }
+            return .secureCore(.any(.fastest))
         }
 
         if let countryCode = connectedExitCountryCode {
