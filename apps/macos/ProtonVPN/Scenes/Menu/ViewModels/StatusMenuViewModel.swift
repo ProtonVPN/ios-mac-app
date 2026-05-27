@@ -234,10 +234,7 @@ final class StatusMenuViewModel {
     }
 
     func changeServerAction() {
-        let location: ConnectionSpec.Location = secureCoreToggle
-            ? .secureCore(.any(.random))
-            : .any(.random)
-        let spec = ConnectionSpec(location: location, features: [])
+        let spec = SecureCoreConnectionSpecResolver.randomSpec(secureCoreEnabled: secureCoreToggle)
         connectionCommandClient.send(.connect(spec, propertiesManager.connectionProtocol, .changeServer))
     }
 
@@ -269,26 +266,65 @@ final class StatusMenuViewModel {
 
     // MARK: - Connect section - Inputs
 
+    /// Implements the unified iOS/macOS Secure Core toggle matrix from the menu bar:
+    ///
+    /// **Off → On**: `(discourageSecureCore, isConnected)`
+    /// - `(true, false)`  → discourage screen → confirm flips toggle; no reconnect.
+    /// - `(true, true)`   → discourage screen with "will reconnect" notice → confirm flips +
+    ///                      reconnect (no extra warning popup).
+    /// - `(false, true)`  → short disconnect/reconnect warning → confirm flips + reconnect.
+    /// - `(false, false)` → apply silently.
+    ///
+    /// **On → Off** (discourage flag irrelevant):
+    /// - `connected`    → short warning → confirm flips + reconnect.
+    /// - `disconnected` → apply silently.
     func toggleSecureCore(_ state: ButtonState) {
-        let applyNewStateToSecureCore: () -> Void = { [weak self] in
-            self?.changeActiveServerType(state: state)
+        let turningOn = (state == .on)
+
+        if turningOn {
+            guard isSufficientTierLevel() else {
+                viewController?.secureCoreSwitch.setState(.off)
+                alertService.push(alert: SecureCoreUpsellAlert())
+                return
+            }
+            @SharedReader(.discourageSecureCore) var discourageSecureCore: Bool
+            if discourageSecureCore {
+                // Reset the switch so the UI doesn't get out of sync if the user cancels; on
+                // confirm we set it back via `applySecureCoreToggle`.
+                viewController?.secureCoreSwitch.setState(.off)
+                let notice = isConnected
+                    ? SecureCoreConnectionSpecResolver.toggleAlertMessage(
+                        turningOn: true,
+                        fallbackCountryName: fallbackCountryName(turningOn: true)
+                    )
+                    : nil
+                presentDiscourageSecureCoreAlert(
+                    reconnectNotice: notice,
+                    onActivate: { [weak self] in
+                        // Discourage screen already informed the user; apply directly.
+                        self?.applySecureCoreToggle(turningOn: true)
+                    }
+                )
+                return
+            }
         }
-        guard state == .on else {
-            applyNewStateToSecureCore()
-            return
+
+        if isConnected {
+            presentDisconnectOnStateToggleWarning(turningOn: turningOn)
+        } else {
+            applySecureCoreToggle(turningOn: turningOn)
         }
-        guard isSufficientTierLevel() else {
-            viewController?.secureCoreSwitch.setState(.off)
-            alertService.push(alert: SecureCoreUpsellAlert())
-            return
-        }
-        @SharedReader(.discourageSecureCore) var discourageSecureCore: Bool
-        guard discourageSecureCore == false else {
-            viewController?.secureCoreSwitch.setState(.off)
-            presentDiscourageSecureCoreAlert(onActivate: applyNewStateToSecureCore)
-            return
-        }
-        applyNewStateToSecureCore()
+    }
+
+    /// When turning Secure Core on, returns the localized name of the currently-connected exit
+    /// country if and only if no Secure Core server exits via that country. Returns nil for the
+    /// OFF direction, when not connected, or when an SC server is available in the connected
+    /// country.
+    private func fallbackCountryName(turningOn: Bool) -> String? {
+        guard turningOn, let cc = connectedCountryCode else { return nil }
+        @Dependency(\.serverRepository) var serverRepository
+        guard !serverRepository.hasServer(secureCore: true, exitCountryCode: cc) else { return nil }
+        return LocalizationUtility.default.countryName(forCode: cc) ?? cc
     }
 
     private func isSufficientTierLevel() -> Bool {
@@ -296,24 +332,13 @@ final class StatusMenuViewModel {
         return userTier.isPaidTier
     }
 
-    private func presentDiscourageSecureCoreAlert(onActivate: (() -> Void)?) {
+    private func presentDiscourageSecureCoreAlert(reconnectNotice: String?, onActivate: (() -> Void)?) {
         let viewController = ModalsFactory.discourageSecureCoreViewController(
+            reconnectNotice: reconnectNotice,
             onActivate: onActivate,
             onCancel: nil
         )
         windowService.presentKeyModalOnActiveScreen(viewController: viewController, activatingApp: true)
-    }
-
-    private func changeActiveServerType(state: ButtonState) {
-        let targetServerType: ServerType = state == .on ? .secureCore : .standard
-        guard !isConnected else {
-            presentDisconnectOnStateToggleWarning(targetServerType: targetServerType)
-            return
-        }
-
-        $secureCoreToggle.withLock { $0 = targetServerType == .secureCore }
-        serverType = targetServerType
-        contentChanged?()
     }
 
     // MARK: - Footer section - Inputs
@@ -390,30 +415,56 @@ final class StatusMenuViewModel {
         updateCountryList()
     }
 
-    private func presentDisconnectOnStateToggleWarning(targetServerType: ServerType) {
-        let confirmationClosure: () -> Void = { [weak self] in
-            log.debug("Disconnect requested by changing SecureCore", category: .connectionDisconnect, event: .trigger)
-            guard let self else { return }
-            let reconnectCountryCode = connectedCountryCode
-            let shouldUseSecureCore = targetServerType == .secureCore
-            let connectionProtocol = propertiesManager.lastConnectionRequest?.connectionProtocol
-            connectionCommandClient.send(.disconnect(.tray))
-            $secureCoreToggle.withLock { $0 = shouldUseSecureCore }
-            serverType = targetServerType
-            let spec = SecureCoreConnectionSpecResolver.fastestSpec(
-                secureCoreEnabled: shouldUseSecureCore,
-                connectedExitCountryCode: reconnectCountryCode,
-                isFreeTier: credentials.tier.isFreeTier
-            )
-            connectionCommandClient.send(.connect(spec, connectionProtocol, .tray))
-        }
-
+    private func presentDisconnectOnStateToggleWarning(turningOn: Bool) {
+        let description = SecureCoreConnectionSpecResolver.toggleAlertMessage(
+            turningOn: turningOn,
+            fallbackCountryName: fallbackCountryName(turningOn: turningOn)
+        )
         let viewModel = WarningPopupViewModel(
             title: Localizable.vpnConnectionActive,
-            description: Localizable.viewToggleWillCauseDisconnect,
-            onConfirm: confirmationClosure
+            description: description,
+            onConfirm: { [weak self] in
+                self?.applySecureCoreToggle(turningOn: turningOn)
+            }
         )
         disconnectWarning?(viewModel)
+    }
+
+    /// Flips the Secure Core toggle and, if currently connected, dispatches a reconnect via the
+    /// shared `toggleReconnectSpec` (which picks SC w/ same exit + fallback on ON, or random
+    /// standard in same country + fallback on OFF). Matches the iOS Countries/macOS QS flow so
+    /// all three SC-toggle surfaces behave consistently.
+    private func applySecureCoreToggle(turningOn: Bool) {
+        let targetServerType: ServerType = turningOn ? .secureCore : .standard
+        let wasConnected = isConnected
+        let reconnectCountryCode = connectedCountryCode
+        let connectionProtocol = propertiesManager.lastConnectionRequest?.connectionProtocol
+
+        $secureCoreToggle.withLock { $0 = turningOn }
+        serverType = targetServerType
+
+        guard wasConnected else {
+            contentChanged?()
+            return
+        }
+
+        log.debug("Reconnection requested by changing Secure Core from StatusMenu", category: .connectionConnect, event: .trigger)
+        @Dependency(\.serverRepository) var serverRepository
+        let resolvedExit = reconnectCountryCode.flatMap { cc in
+            serverRepository.hasServer(secureCore: turningOn, exitCountryCode: cc) ? cc : nil
+        }
+        let isFreeTier = credentials.tier.isFreeTier
+        let spec = SecureCoreConnectionSpecResolver.toggleReconnectSpec(
+            secureCoreEnabled: turningOn,
+            exitCountryCode: resolvedExit,
+            isFreeTier: isFreeTier
+        )
+        let trigger = SecureCoreConnectionSpecResolver.reconnectTrigger(
+            connectedExitCountryCode: resolvedExit,
+            isFreeTier: isFreeTier
+        )
+        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
+        connectionCommandClient.send(.connect(spec, connectionProtocol, trigger))
     }
 
     // MARK: - Present unsecure connection

@@ -172,8 +172,8 @@ struct CountriesFeatureTests {
         }
     }
 
-    @Test("Secure core toggle shows disconnect alert when connected")
-    func secureCoreToggleShowsDisconnectAlertWhenConnected() async {
+    @Test("Secure core ON + discourage=false + connected → short alert with same-country message")
+    func secureCoreToggleOnConnectedNoDiscourageShowsAlert() async {
         @Shared(.secureCoreToggle) var isSecureCore = false
         @Shared(.userTier) var userTier: Int? = 2
         @Shared(.connectionState) var connectionState: ConnectionState = .fakeConnected
@@ -181,29 +181,63 @@ struct CountriesFeatureTests {
 
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
             CountriesFeature()
+        } withDependencies: {
+            // Mock has an SC server for any country query → same-country message (no fallback).
+            $0.serverRepository = .notEmpty()
         }
 
         await store.send(.secureCoreToggleRequested) {
             $0.alert = AlertState(
                 title: { TextState(Localizable.warning) },
                 actions: {
-                    ButtonState(
-                        action: .send(.disconnectAndToggle),
-                        label: { TextState(Localizable.continue) }
-                    )
-                    ButtonState(
-                        role: .cancel,
-                        action: .send(.cancel),
-                        label: { TextState(Localizable.cancel) }
-                    )
+                    ButtonState(action: .send(.disconnectAndToggle), label: { TextState(Localizable.continue) })
+                    ButtonState(role: .cancel, action: .send(.cancel), label: { TextState(Localizable.cancel) })
                 },
-                message: { TextState(Localizable.viewToggleWillCauseDisconnect) }
+                message: { TextState(Localizable.viewToggleOnReconnectSameCountry) }
             )
         }
     }
 
-    @Test("Turning off secure core when connected shows alert")
-    func turningOffSecureCoreWhenConnectedShowsAlert() async {
+    @Test("Secure core ON + discourage=true + connected → discourage with same-country notice")
+    func secureCoreToggleOnConnectedWithDiscourageShowsViewWithNotice() async {
+        @Shared(.secureCoreToggle) var isSecureCore = false
+        @Shared(.userTier) var userTier: Int? = 2
+        @Shared(.connectionState) var connectionState: ConnectionState = .fakeConnected
+        @Shared(.discourageSecureCore) var discourageSecureCore = true
+
+        let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
+            CountriesFeature()
+        } withDependencies: {
+            // notEmpty() returns a mock server for any query → hasServer(secureCore:exitCountryCode:)
+            // is true → notice is the same-country variant (no country-name interpolation).
+            $0.serverRepository = .notEmpty()
+        }
+
+        await store.send(.secureCoreToggleRequested) {
+            $0.destination = .discourageSecureCoreView(
+                .init(reconnectNotice: Localizable.viewToggleOnReconnectSameCountry)
+            )
+        }
+    }
+
+    @Test("Secure core ON + discourage=true + not connected → discourage without notice")
+    func secureCoreToggleOnDisconnectedWithDiscourageShowsViewWithoutNotice() async {
+        @Shared(.secureCoreToggle) var isSecureCore = false
+        @Shared(.userTier) var userTier: Int? = 2
+        @Shared(.connectionState) var connectionState: ConnectionState = .disconnected
+        @Shared(.discourageSecureCore) var discourageSecureCore = true
+
+        let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
+            CountriesFeature()
+        }
+
+        await store.send(.secureCoreToggleRequested) {
+            $0.destination = .discourageSecureCoreView(.init(reconnectNotice: nil))
+        }
+    }
+
+    @Test("Secure core OFF + connected → short alert")
+    func secureCoreToggleOffConnectedShowsAlert() async {
         @Shared(.secureCoreToggle) var isSecureCore = true
         @Shared(.userTier) var userTier: Int? = 2
         @Shared(.connectionState) var connectionState: ConnectionState = .fakeConnected
@@ -216,19 +250,27 @@ struct CountriesFeatureTests {
             $0.alert = AlertState(
                 title: { TextState(Localizable.warning) },
                 actions: {
-                    ButtonState(
-                        action: .send(.disconnectAndToggle),
-                        label: { TextState(Localizable.continue) }
-                    )
-                    ButtonState(
-                        role: .cancel,
-                        action: .send(.cancel),
-                        label: { TextState(Localizable.cancel) }
-                    )
+                    ButtonState(action: .send(.disconnectAndToggle), label: { TextState(Localizable.continue) })
+                    ButtonState(role: .cancel, action: .send(.cancel), label: { TextState(Localizable.cancel) })
                 },
                 message: { TextState(Localizable.viewToggleWillCauseDisconnect) }
             )
         }
+    }
+
+    @Test("Alert disconnectAndToggle dismisses alert and sends applySecureCoreToggle")
+    func alertDisconnectAndToggleDispatchesApply() async {
+        var state = CountriesFeature.State(sections: [])
+        state.alert = AlertState(title: { TextState("Test") })
+
+        let store = TestStore(initialState: state) {
+            CountriesFeature()
+        }
+
+        await store.send(.alert(.presented(.disconnectAndToggle))) {
+            $0.alert = nil
+        }
+        await store.receive(\.applySecureCoreToggle)
     }
 
     @Test("Turning off secure core when disconnected applies toggle")
@@ -259,24 +301,6 @@ struct CountriesFeatureTests {
         await store.send(.alert(.presented(.cancel))) {
             $0.alert = nil
         }
-    }
-
-    @Test("Alert disconnect and toggle when connected")
-    func alertDisconnectAndToggleWhenConnected() async {
-        @Shared(.connectionState) var connectionState: ConnectionState = .fakeConnected
-
-        var state = CountriesFeature.State(sections: [])
-        state.alert = AlertState(title: { TextState("Test") })
-
-        let store = TestStore(initialState: state) {
-            CountriesFeature()
-        }
-
-        await store.send(.alert(.presented(.disconnectAndToggle))) {
-            $0.alert = nil
-        }
-        await store.receive(\.disconnectRequested)
-        await store.receive(\.applySecureCoreToggle)
     }
 
     // MARK: - Navigation Tests
@@ -639,35 +663,20 @@ struct CountriesFeatureTests {
         await store.receive(\.applySecureCoreToggle)
     }
 
-    @Test("Discourage secure core activate when connected shows alert")
-    func discourageSecureCoreActivateWhenConnectedShowsAlert() async {
+    @Test("Discourage secure core activate (while connected) dispatches applySecureCoreToggle")
+    func discourageSecureCoreActivateWhileConnectedDispatchesApply() async {
         @Shared(.connectionState) var connectionState: ConnectionState = .fakeConnected
 
         var state = CountriesFeature.State(sections: [])
-        state.destination = .discourageSecureCoreView(.init())
+        state.destination = .discourageSecureCoreView(.init(reconnectNotice: nil))
 
         let store = TestStore(initialState: state) {
             CountriesFeature()
         }
 
         await store.send(.destination(.presented(.discourageSecureCoreView(.activateTapped))))
-        await store.receive(\.destination.discourageSecureCoreView.delegate.activateTapped) {
-            $0.alert = AlertState(
-                title: { TextState(Localizable.warning) },
-                actions: {
-                    ButtonState(
-                        action: .send(.disconnectAndToggle),
-                        label: { TextState(Localizable.continue) }
-                    )
-                    ButtonState(
-                        role: .cancel,
-                        action: .send(.cancel),
-                        label: { TextState(Localizable.cancel) }
-                    )
-                },
-                message: { TextState(Localizable.viewToggleWillCauseDisconnect) }
-            )
-        }
+        await store.receive(\.destination.discourageSecureCoreView.delegate.activateTapped)
+        await store.receive(\.applySecureCoreToggle)
     }
 
     // MARK: - State Computed Properties Tests

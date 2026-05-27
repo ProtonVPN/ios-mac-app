@@ -89,6 +89,18 @@ public struct DiscourageSecureCoreView: View {
                 .foregroundStyle(Color(.white))
             #endif
                 .multilineTextAlignment(.center)
+
+            if let notice = store.reconnectNotice {
+                Text(notice)
+                #if os(iOS)
+                    .themeFont(.body1(.regular))
+                    .foregroundStyle(Color(.text, .weak))
+                #elseif os(macOS)
+                    .themeFont(.title2())
+                    .foregroundStyle(Color(.white))
+                #endif
+                    .multilineTextAlignment(.center)
+            }
         }
     }
 

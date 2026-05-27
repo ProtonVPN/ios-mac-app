@@ -18,10 +18,14 @@
 
 import CommonNetworking
 import ComposableArchitecture
+import Connection
+import ConnectionInventory
 import Dependencies
 import Domain
 import Foundation
+import LegacyCommon
 import Strings
+import VPNAppCore
 
 @Reducer
 public struct CountriesMainFeature {
@@ -51,6 +55,11 @@ public struct CountriesMainFeature {
     }
 
     @Shared(.secureCoreToggle) private var secureCoreToggle
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.userTier) private var userTier: Int?
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
+    @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.serverRepository) private var serverRepository
 
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -88,6 +97,7 @@ public struct CountriesMainFeature {
                  .secureCore(.applySecureCoreToggle):
                 let newSecureCoreToggle = !secureCoreToggle
                 $secureCoreToggle.withLock { $0 = newSecureCoreToggle }
+                dispatchSecureCoreToggleReconnect(secureCoreEnabled: newSecureCoreToggle)
                 return .send(.reloadContent)
 
             case .standard, .secureCore:
@@ -100,6 +110,30 @@ public struct CountriesMainFeature {
         .ifCaseLet(\.secureCore, action: \.secureCore) {
             CountriesFeature()
         }
+    }
+
+    /// Mirrors macOS QuickSettings: if the user is mid-connection when Secure Core is toggled,
+    /// dispatch a reconnect to the SC-aware fastest target (or country-pinned SC when toggling
+    /// on while connected to a specific exit). Off-connection toggles are no-ops here — the new
+    /// value will be picked up on the next connect.
+    private func dispatchSecureCoreToggleReconnect(secureCoreEnabled: Bool) {
+        guard connectionState.isConnected else { return }
+        let connectedCountryCode = connectionState.resolvedServer?.logical.exitCountryCode
+        let resolvedExit = connectedCountryCode.flatMap { cc in
+            serverRepository.hasServer(secureCore: secureCoreEnabled, exitCountryCode: cc) ? cc : nil
+        }
+        let isFreeTier = userTier?.isFreeTier ?? true
+        let spec = SecureCoreConnectionSpecResolver.toggleReconnectSpec(
+            secureCoreEnabled: secureCoreEnabled,
+            exitCountryCode: resolvedExit,
+            isFreeTier: isFreeTier
+        )
+        let trigger = SecureCoreConnectionSpecResolver.reconnectTrigger(
+            connectedExitCountryCode: resolvedExit,
+            isFreeTier: isFreeTier
+        )
+        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
+        connectionCommandClient.send(.connect(spec, propertiesManager.lastConnectionRequest?.connectionProtocol, trigger))
     }
 
     // MARK: - Private observe methods

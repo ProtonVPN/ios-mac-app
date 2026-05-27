@@ -22,6 +22,7 @@
     @testable import Modals_macOS
     import ModalsShared
     import SnapshotTesting
+    import Strings
     import SwiftUI
     import System
     import Testing
@@ -37,6 +38,20 @@
             let store = StoreOf<DiscourageSecureCoreFeature>(initialState: .init(), reducer: {
                 EmptyReducer()
             })
+            let view = DiscourageSecureCoreView(store: store)
+                .background(Color(.background))
+                .environment(\.colorScheme, .dark)
+
+            let nsView = NSHostingView(rootView: view)
+            assertSnapshot(of: nsView, as: .image(size: snapshotSize))
+        }
+
+        @Test("default dark appearance with same-country reconnect notice")
+        func defaultAppearanceWithSameCountryReconnectNotice() {
+            let store = StoreOf<DiscourageSecureCoreFeature>(
+                initialState: .init(reconnectNotice: Localizable.viewToggleOnReconnectSameCountry),
+                reducer: { EmptyReducer() }
+            )
             let view = DiscourageSecureCoreView(store: store)
                 .background(Color(.background))
                 .environment(\.colorScheme, .dark)

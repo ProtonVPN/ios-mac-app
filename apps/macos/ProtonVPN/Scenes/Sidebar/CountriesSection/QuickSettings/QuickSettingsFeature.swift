@@ -22,6 +22,7 @@ import ConnectionInventory
 import Domain
 import Ergonomics
 import LegacyCommon
+import Localization
 import Modals
 import NetShield
 import PaymentsShared
@@ -107,6 +108,7 @@ struct QuickSettingsFeature {
             case confirmKillSwitchOn
             case cancelKillSwitchOn
             case confirmDisableHermesAndSetNetShield(NetShieldType)
+            case confirmSecureCoreToggle
         }
     }
 
@@ -125,6 +127,7 @@ struct QuickSettingsFeature {
     @Dependency(\.hermesClient) var hermesClient
     @Dependency(\.connectionCommandClient) var connectionCommandClient
     @Dependency(\.propertiesManager) var propertiesManager
+    @Dependency(\.serverRepository) var serverRepository
 
     var body: some ReducerOf<Self> {
         Scope(state: \.secureCore, action: \.secureCore) {
@@ -295,10 +298,28 @@ private extension QuickSettingsFeature {
                     Self.syncSelection(&state)
                     return .none
                 }
-                if type == .secureCoreDisplay, option == .secureCoreOn, discourageSecureCore {
-                    state.destination = .discourageSecureCoreView(.init())
-                    Self.syncSelection(&state)
-                    return .none
+                if type == .secureCoreDisplay {
+                    let turningOn = (option == .secureCoreOn)
+                    let isConnected = connectionState.isConnected
+                    // Unified iOS/macOS matrix:
+                    //   ON  + discourageSecureCore → discourage screen (with reconnect notice if connected)
+                    //   ON  + connected            → short alert
+                    //   OFF + connected            → short alert
+                    //   else                       → apply silently
+                    let fallback = fallbackCountryName(turningOn: turningOn)
+                    if turningOn, discourageSecureCore {
+                        let notice = isConnected
+                            ? SecureCoreConnectionSpecResolver.toggleAlertMessage(turningOn: true, fallbackCountryName: fallback)
+                            : nil
+                        state.destination = .discourageSecureCoreView(.init(reconnectNotice: notice))
+                        Self.syncSelection(&state)
+                        return .none
+                    }
+                    if isConnected {
+                        state.alert = Self.secureCoreToggleAlert(turningOn: turningOn, fallbackCountryName: fallback)
+                        Self.syncSelection(&state)
+                        return .none
+                    }
                 }
                 applyQuickSettingOptionSelection(type: type, option: option)
                 return .send(.dismissDetails)
@@ -348,6 +369,11 @@ private extension QuickSettingsFeature {
             case let .alert(.presented(.confirmDisableHermesAndSetNetShield(level))):
                 hermesClient.setIsEnabled(false)
                 applyQuickSettingOptionSelection(type: .netShieldDisplay, option: .netShield(level))
+                return .send(.dismissDetails)
+
+            case .alert(.presented(.confirmSecureCoreToggle)):
+                let targetOption: QuickSettingOptionID = secureCoreToggle ? .secureCoreOff : .secureCoreOn
+                applyQuickSettingOptionSelection(type: .secureCoreDisplay, option: targetOption)
                 return .send(.dismissDetails)
 
             case .alert:
@@ -459,13 +485,16 @@ private extension QuickSettingsFeature {
         @SharedReader(.userTier) var userTier: Int?
         let isFreeTier = userTier?.isFreeTier ?? true
         let connectedCountryCode = connectionState.resolvedServer?.logical.exitCountryCode
-        let spec = SecureCoreConnectionSpecResolver.fastestSpec(
+        let resolvedExit = connectedCountryCode.flatMap { cc in
+            serverRepository.hasServer(secureCore: secureCoreToggle, exitCountryCode: cc) ? cc : nil
+        }
+        let spec = SecureCoreConnectionSpecResolver.toggleReconnectSpec(
             secureCoreEnabled: secureCoreToggle,
-            connectedExitCountryCode: connectedCountryCode,
+            exitCountryCode: resolvedExit,
             isFreeTier: isFreeTier
         )
         let intent = SecureCoreConnectionSpecResolver.reconnectTrigger(
-            connectedExitCountryCode: connectedCountryCode,
+            connectedExitCountryCode: resolvedExit,
             isFreeTier: isFreeTier
         )
         connectionCommandClient.send(.connect(spec, propertiesManager.lastConnectionRequest?.connectionProtocol, intent))
@@ -589,6 +618,42 @@ extension QuickSettingsFeature {
             },
             message: { TextState(Localizable.hermesConflictNetshieldOnDescription) }
         )
+    }
+
+    /// Short "you will be reconnected" confirmation shown before toggling Secure Core mid-session.
+    /// Message body is direction-aware (and falls back to the global-fastest copy when no SC
+    /// server exits via the currently-connected country).
+    static func secureCoreToggleAlert(turningOn: Bool, fallbackCountryName: String?) -> AlertState<Action.Alert> {
+        let message = SecureCoreConnectionSpecResolver.toggleAlertMessage(
+            turningOn: turningOn,
+            fallbackCountryName: fallbackCountryName
+        )
+        return AlertState(
+            title: { TextState(Localizable.warning) },
+            actions: {
+                ButtonState(
+                    action: .send(.confirmSecureCoreToggle),
+                    label: { TextState(Localizable.continue) }
+                )
+                ButtonState(
+                    role: .cancel,
+                    label: { TextState(Localizable.cancel) }
+                )
+            },
+            message: { TextState(message) }
+        )
+    }
+}
+
+private extension QuickSettingsFeature {
+    /// When turning Secure Core on, returns the localized name of the currently-connected exit
+    /// country if and only if no Secure Core server exits via that country (so the user sees
+    /// the fallback copy). Returns nil for the OFF direction, when not connected, or when an SC
+    /// server is available in the connected country.
+    func fallbackCountryName(turningOn: Bool) -> String? {
+        guard turningOn, let cc = connectionState.resolvedServer?.logical.exitCountryCode,
+              !serverRepository.hasServer(secureCore: true, exitCountryCode: cc) else { return nil }
+        return LocalizationUtility.default.countryName(forCode: cc) ?? cc
     }
 }
 

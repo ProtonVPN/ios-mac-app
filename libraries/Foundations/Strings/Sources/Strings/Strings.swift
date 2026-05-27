@@ -1956,6 +1956,12 @@ public enum Localizable {
   public static var viaSecureCore: String { return Localizable.tr("Localizable", "_via_secure_core", fallback: "via Secure Core") }
   /// MacOS menu item; iOS setting screen item
   public static var viewLogs: String { return Localizable.tr("Localizable", "_view_logs", fallback: "View Logs") }
+  /// Body of the Secure Core toggle warning/discourage notice when turning SC on and no Secure Core server exists in the currently-connected country (fallback). %@ is the localized country name.
+  public static func viewToggleOnReconnectFastestFallback(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_view_toggle_on_reconnect_fastest_fallback", String(describing: p1), fallback: "Secure Core isn't available in %@. Your VPN will reconnect through the fastest available Secure Core server.")
+  }
+  /// Body of the Secure Core toggle warning/discourage notice when turning SC on and a Secure Core server exists in the currently-connected country
+  public static var viewToggleOnReconnectSameCountry: String { return Localizable.tr("Localizable", "_view_toggle_on_reconnect_same_country", fallback: "Turning on Secure Core will end your current connection and try to reconnect to the same country.") }
   /// Text in warning screen before actions that will disconnect VPN
   public static var viewToggleWillCauseDisconnect: String { return Localizable.tr("Localizable", "_view_toggle_will_cause_disconnect", fallback: "Toggling Secure Core will end your current connection.") }
   /// Change VPN Accelerator

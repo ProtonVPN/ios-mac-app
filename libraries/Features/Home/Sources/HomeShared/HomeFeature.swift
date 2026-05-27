@@ -22,6 +22,7 @@ import ComposableArchitecture
 import Connection
 import ConnectionDetails
 import ConnectionDetailsShared
+import ConnectionInventory
 import Dependencies
 import Domain
 import Ergonomics
@@ -316,10 +317,7 @@ private extension HomeFeature {
                     log.error("User is not authorized for server change, action should have been unavailable")
                     return .none
                 }
-                let location: ConnectionSpec.Location = secureCoreToggle
-                    ? .secureCore(.any(.random))
-                    : .any(.random)
-                let spec = ConnectionSpec(location: location, features: [])
+                let spec = SecureCoreConnectionSpecResolver.randomSpec(secureCoreEnabled: secureCoreToggle)
                 connectionCommandClient.send(.connect(spec, nil, .changeServer))
                 return .none
 

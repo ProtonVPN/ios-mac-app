@@ -37,10 +37,12 @@ public enum ModalsFactory {
     }
 
     public static func discourageSecureCoreViewController(
+        reconnectNotice: String? = nil,
         onActivate: (() -> Void)?,
         onCancel: (() -> Void)?
     ) -> NSViewController {
         DiscourageSecureCoreViewController(
+            reconnectNotice: reconnectNotice,
             onActivate: onActivate,
             onCancel: onCancel
         )

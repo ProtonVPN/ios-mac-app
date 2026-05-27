@@ -173,10 +173,7 @@ final class HeaderViewModel {
     }
 
     func changeServerAction() {
-        let location: ConnectionSpec.Location = secureCoreToggle
-            ? .secureCore(.any(.random))
-            : .any(.random)
-        let spec = ConnectionSpec(location: location, features: [])
+        let spec = SecureCoreConnectionSpecResolver.randomSpec(secureCoreEnabled: secureCoreToggle)
         connectionCommandClient.send(.connect(spec, propertiesManager.connectionProtocol, .changeServer))
     }
 

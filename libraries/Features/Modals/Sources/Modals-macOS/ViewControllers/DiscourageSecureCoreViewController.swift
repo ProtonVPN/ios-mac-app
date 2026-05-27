@@ -23,16 +23,17 @@ import SwiftUI
 
 final class DiscourageSecureCoreViewController: NSHostingController<DiscourageSecureCoreView> {
     init(
+        reconnectNotice: String? = nil,
         onActivate: (() -> Void)? = nil,
         onCancel: (() -> Void)? = nil
     ) {
-        let initialStore = Store(initialState: DiscourageSecureCoreFeature.State()) {
+        let initialStore = Store(initialState: DiscourageSecureCoreFeature.State(reconnectNotice: reconnectNotice)) {
             DiscourageSecureCoreFeature()
         }
         super.init(rootView: DiscourageSecureCoreView(store: initialStore, dismissOnAction: false))
         preferredContentSize = .init(width: Dimensions.sheetWidth, height: Dimensions.sheetHeight)
 
-        let store = Store(initialState: DiscourageSecureCoreFeature.State()) {
+        let store = Store(initialState: DiscourageSecureCoreFeature.State(reconnectNotice: reconnectNotice)) {
             DiscourageSecureCoreFeature(
                 onActivate: { [weak self] in
                     onActivate?()
