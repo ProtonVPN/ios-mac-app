@@ -209,16 +209,13 @@ final class CoreLoginService {
             initialError: initialError,
             helpDecorator: helpDecorator
         )
-        let variant: WelcomeScreenVariant = if CoreFeatureFlagType.credentialLessAccount.enabled {
-            .vpnV2(WelcomeScreenTexts(body: Localizable.welcomeBody))
-        } else {
-            .vpn(WelcomeScreenTexts(body: Localizable.welcomeBody))
-        }
+
         let welcomeViewController = loginInterface.welcomeScreenForPresentingFlow(
-            variant: variant,
+            variant: .vpnV2(WelcomeScreenTexts(body: Localizable.welcomeBody)),
             customization: customization,
             updateBlock: loginResultCompletion
         )
+
         windowService.show(viewController: welcomeViewController)
         if initialError != nil {
             loginInterface.presentLoginFlow(over: welcomeViewController, customization: customization, updateBlock: loginResultCompletion)
