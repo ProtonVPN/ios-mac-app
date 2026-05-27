@@ -113,10 +113,11 @@ struct QuickSettingsFeature {
     @SharedReader(.discourageSecureCore) private var discourageSecureCore: Bool
     @Shared(.connectionState) private var connectionState: ConnectionState
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
+    @Shared(.killSwitch) private var killSwitch: Bool
+    @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
 
     @Dependency(\.sessionService) var sessionService
     @Dependency(\.linkOpener) var linkOpener
-    @Dependency(\.propertiesManager) var propertiesManager
     @Dependency(\.appFeaturePropertyProvider) var appFeaturePropertyProvider
     @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
     @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
@@ -384,52 +385,69 @@ private extension QuickSettingsFeature {
 // MARK: - Quick-setting option application
 
 private extension QuickSettingsFeature {
-    /// Persists the user's choice for the selected quick setting and either applies the change
-    /// live via local agent or triggers a reconnect, depending on the protocol/connection state.
+    /// Boundary between the loosely-typed `(QuickSettingType, QuickSettingOptionID)` pair
+    /// (which the detail-sheet delegate produces) and the strongly-typed apply path. The pair
+    /// can in principle hold inconsistent combinations like `(.killSwitchDisplay, .netShield(...))`;
+    /// validating into this enum once means `apply(_:)` is exhaustive and the type system
+    /// rejects new mismatched cases at compile time.
+    enum QuickSettingChange: Equatable {
+        case secureCore(enabled: Bool)
+        case killSwitch(enabled: Bool)
+        case netShield(NetShieldType)
+        case portForwarding(enabled: Bool)
+
+        init?(type: QuickSettingType, option: QuickSettingOptionID) {
+            switch (type, option) {
+            case (.secureCoreDisplay, .secureCoreOff): self = .secureCore(enabled: false)
+            case (.secureCoreDisplay, .secureCoreOn): self = .secureCore(enabled: true)
+            case (.killSwitchDisplay, .killSwitchOff): self = .killSwitch(enabled: false)
+            case (.killSwitchDisplay, .killSwitchOn): self = .killSwitch(enabled: true)
+            case let (.netShieldDisplay, .netShield(level)): self = .netShield(level)
+            case (.portForwardingDisplay, .portForwardingOff): self = .portForwarding(enabled: false)
+            case (.portForwardingDisplay, .portForwardingOn): self = .portForwarding(enabled: true)
+            default: return nil
+            }
+        }
+    }
+
     func applyQuickSettingOptionSelection(
         type: QuickSettingType,
         option: QuickSettingOptionID
     ) {
-        switch (type, option) {
-        case (.secureCoreDisplay, .secureCoreOff):
-            $secureCoreToggle.withLock { $0 = false }
+        guard let change = QuickSettingChange(type: type, option: option) else {
+            assertionFailure("Mismatched quick setting type/option pair: \(type), \(option)")
+            return
+        }
+        apply(change)
+    }
+
+    /// Persists the user's choice for the selected quick setting and either applies the change
+    /// live via local agent or triggers a reconnect, depending on the protocol/connection state.
+    func apply(_ change: QuickSettingChange) {
+        switch change {
+        case let .secureCore(enabled):
+            $secureCoreToggle.withLock { $0 = enabled }
             quickSettingsDisplayReconnectionFeedback()
 
-        case (.secureCoreDisplay, .secureCoreOn):
-            $secureCoreToggle.withLock { $0 = true }
-            quickSettingsDisplayReconnectionFeedback()
-
-        case (.killSwitchDisplay, .killSwitchOff):
-            propertiesManager.killSwitch = false
-            if connectionState.isConnected {
-                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
-                connectionCommandClient.send(.retry)
-            }
-
-        case (.killSwitchDisplay, .killSwitchOn):
+        case let .killSwitch(enabled):
             // KS is mutually exclusive with both ExcludeLocalNetworks (LAN) and Plutonium (Split
-            // Tunneling). Force them off here; the conflict-confirmation alert already informed
-            // the user before we got here.
-            @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
-            propertiesManager.killSwitch = true
-            appFeaturePropertyProvider.setValue(ExcludeLocalNetworks.off)
-            $plutonium.withLock { $0 = .disabled(plutonium.mode) }
+            // Tunneling). When enabling, force them off; the conflict-confirmation alert already
+            // informed the user before we got here.
+            $killSwitch.withLock { $0 = enabled }
+            if enabled {
+                appFeaturePropertyProvider.setValue(ExcludeLocalNetworks.off)
+                $plutonium.withLock { $0 = .disabled(plutonium.mode) }
+            }
             if connectionState.isConnected {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
                 connectionCommandClient.send(.retry)
             }
 
-        case let (.netShieldDisplay, .netShield(level)):
+        case let .netShield(level):
             quickSettingsChangeNetShieldLevel(level)
 
-        case (.portForwardingDisplay, .portForwardingOff):
-            quickSettingsChangePortForwarding(false)
-
-        case (.portForwardingDisplay, .portForwardingOn):
-            quickSettingsChangePortForwarding(true)
-
-        default:
-            break
+        case let .portForwarding(enabled):
+            quickSettingsChangePortForwarding(enabled)
         }
     }
 
@@ -484,7 +502,7 @@ private extension QuickSettingsFeature {
                 connectionCommandClient.send(.retry)
             }
         case .immediate:
-            break
+            portForwardingPropertyProvider.setPortForwarding(isEnabled)
         }
     }
 
