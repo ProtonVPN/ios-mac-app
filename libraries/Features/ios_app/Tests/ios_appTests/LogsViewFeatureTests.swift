@@ -44,6 +44,7 @@ struct LogsViewFeatureTests {
         await store.send(.onViewDidLoad)
         await store.receive(\.logsLoaded) {
             $0.logs = "app logs from test"
+            $0.isLoading = false
         }
     }
 

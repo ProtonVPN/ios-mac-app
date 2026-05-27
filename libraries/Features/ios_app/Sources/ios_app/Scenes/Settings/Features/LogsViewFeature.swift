@@ -26,6 +26,7 @@ struct LogsViewFeature {
     struct State: Equatable {
         let logSource: LogSource
         var logs = ""
+        var isLoading = true
 
         var title: String {
             logSource.title
@@ -68,6 +69,7 @@ struct LogsViewFeature {
                     #endif
                 }
             case let .logsLoaded(logs):
+                state.isLoading = false
                 state.logs = logs
                 return .none
             case .shareTapped:
