@@ -43,7 +43,7 @@ class ConnectingViewController: NSViewController {
     }
 
     override func loadView() {
-        let rootView = NSView(frame: NSRect(x: 0, y: 0, width: 444, height: 561))
+        let rootView = NSView(frame: NSRect(x: 0, y: 0, width: Dimensions.rootViewWidth, height: Dimensions.rootViewHeight))
         rootView.translatesAutoresizingMaskIntoConstraints = false
         view = rootView
 
@@ -62,6 +62,11 @@ class ConnectingViewController: NSViewController {
         super.viewDidLoad()
         view.setAccessibilityModal(true)
     }
+
+    private enum Dimensions {
+        static let rootViewWidth: CGFloat = 444
+        static let rootViewHeight: CGFloat = 561
+    }
 }
 
 private struct ConnectingOverlayContentView: View {
@@ -72,7 +77,7 @@ private struct ConnectingOverlayContentView: View {
 
         VStack(spacing: .themeSpacing32) {
             ConnectingOverlayGraphicView(graphicKind: store.graphicKind)
-                .frame(.square(120))
+                .frame(.square(Dimensions.graphicSize))
 
             if !store.hidePhase {
                 Text(AttributedString(firstString))
@@ -90,32 +95,20 @@ private struct ConnectingOverlayContentView: View {
                     ConnectingOverlayButtonView(title: button.title, style: button.style) {
                         store.send(.buttonTapped(button.kind))
                     }
-                    .frame(minWidth: 120)
-                    .frame(height: 40)
+                    .frame(minWidth: Dimensions.buttonMinWidth)
+                    .frame(height: Dimensions.buttonHeight)
                 }
             }
         }
-        .frame(width: 340)
+        .frame(width: Dimensions.contentWidth)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     private var overlayButtons: [ConnectingOverlayButtonModel] {
-        if store.timedOut, store.isIkeWithKsEnabled {
-            return [
-                .init(kind: .retryWithoutKillSwitch, title: Localizable.tryAgainWithoutKillswitch, style: .interactive),
-                .init(kind: .cancel, title: Localizable.cancel, style: .normal),
-            ]
-        }
         if store.timedOut {
-            return [
-                .init(kind: .retry, title: Localizable.tryAgain, style: .normal),
-                .init(kind: .cancel, title: Localizable.cancel, style: .normal),
-            ]
+            return store.isIkeWithKsEnabled ? [.retryWithoutKillSwitch, .cancel] : [.retry, .cancel]
         }
-        if store.displayState.is(\.connected) {
-            return [.init(kind: .done, title: Localizable.done, style: .normal)]
-        }
-        return [.init(kind: .cancel, title: Localizable.cancel, style: .normal)]
+        return store.displayState.is(\.connected) ? [.done] : [.cancel]
     }
 
     private var firstString: NSAttributedString {
@@ -189,6 +182,13 @@ private struct ConnectingOverlayContentView: View {
             .replacingOccurrences(of: " ", with: "\u{00A0}")
             .replacingOccurrences(of: "-", with: "\u{2011}")
     }
+
+    private enum Dimensions {
+        static let graphicSize: CGFloat = 120
+        static let contentWidth: CGFloat = 340
+        static let buttonMinWidth: CGFloat = 120
+        static let buttonHeight: CGFloat = 40
+    }
 }
 
 private struct ConnectingOverlayButtonView: View {
@@ -216,7 +216,7 @@ private struct ConnectingOverlayGraphicView: View {
             Image(nsImage: Theme.Asset.vpnResultConnected.image)
                 .resizable()
                 .interpolation(.high)
-                .frame(.square(105))
+                .frame(.square(Dimensions.connectedImageSize))
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         case .warning:
             Image(nsImage: Theme.Asset.vpnResultWarning.image)
@@ -224,6 +224,10 @@ private struct ConnectingOverlayGraphicView: View {
                 .scaledToFit()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+    }
+
+    private enum Dimensions {
+        static let connectedImageSize: CGFloat = 105
     }
 }
 
@@ -315,5 +319,21 @@ private struct ConnectingOverlayButtonModel: Identifiable {
 
     var id: ConnectingOverlayFeature.ButtonKind {
         kind
+    }
+
+    static var cancel: Self {
+        .init(kind: .cancel, title: Localizable.cancel, style: .normal)
+    }
+
+    static var done: Self {
+        .init(kind: .done, title: Localizable.done, style: .normal)
+    }
+
+    static var retry: Self {
+        .init(kind: .retry, title: Localizable.tryAgain, style: .normal)
+    }
+
+    static var retryWithoutKillSwitch: Self {
+        .init(kind: .retryWithoutKillSwitch, title: Localizable.tryAgainWithoutKillswitch, style: .interactive)
     }
 }

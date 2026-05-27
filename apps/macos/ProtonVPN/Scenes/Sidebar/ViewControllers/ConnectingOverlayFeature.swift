@@ -20,7 +20,7 @@ import ComposableArchitecture
 import Connection
 import Dependencies
 import Domain
-import LegacyCommon
+import Sharing
 import VPNAppCore
 import VPNShared
 
@@ -86,12 +86,13 @@ struct ConnectingOverlayFeature {
         case buttonTapped(ButtonKind)
         case delegate(Delegate)
 
+        @CasePathable
         enum Delegate: Equatable {
             case dismissRequested
         }
     }
 
-    @Dependency(\.propertiesManager) private var propertiesManager
+    @Shared(.killSwitch) private var killSwitch: Bool
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
     var body: some ReducerOf<Self> {
@@ -113,7 +114,7 @@ struct ConnectingOverlayFeature {
 
                 case .retryWithoutKillSwitch:
                     state.timedOut = false
-                    propertiesManager.killSwitch = false
+                    $killSwitch.withLock { $0 = false }
                     connectionCommandClient.send(.retry)
                     return .none
                 }

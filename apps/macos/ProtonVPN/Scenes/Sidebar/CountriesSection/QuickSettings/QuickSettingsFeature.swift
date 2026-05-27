@@ -516,7 +516,7 @@ private extension QuickSettingsFeature {
 
 // MARK: - Upsell / conflict helpers
 
-private extension QuickSettingsFeature {
+extension QuickSettingsFeature {
     static func upsellModalType(for type: QuickSettingType) -> UpsellModalType? {
         switch type {
         case .secureCoreDisplay: .secureCore
