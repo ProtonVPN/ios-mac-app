@@ -127,6 +127,48 @@ struct ConnectingOverlayFeature {
 }
 
 extension ConnectingOverlayFeature.State {
+    enum HeadlinePhase: Equatable {
+        case connected
+        case unprotected
+        case initializing
+    }
+
+    enum BodyPhase: Equatable {
+        case timedOut(isIkeWithKsEnabled: Bool)
+        case connected(serverName: ServerName)
+        case connecting(serverName: ServerName)
+        case reconnecting
+        case preparing
+    }
+
+    struct ServerName: Equatable {
+        let country: String
+        let name: String
+    }
+
+    var headlinePhase: HeadlinePhase {
+        if displayState.is(\.connected) { return .connected }
+        return isReconnecting ? .unprotected : .initializing
+    }
+
+    var bodyPhase: BodyPhase {
+        if timedOut {
+            return .timedOut(isIkeWithKsEnabled: isIkeWithKsEnabled)
+        }
+        let serverName = displayState.resolvedServer.map {
+            ServerName(country: $0.logical.country, name: $0.logical.name)
+        }
+        switch displayState {
+        case .connected:
+            return serverName.map { .connected(serverName: $0) } ?? .preparing
+        case .disconnected:
+            return isReconnecting ? .reconnecting : .preparing
+        case .resolving, .connecting, .disconnecting:
+            if isReconnecting { return .reconnecting }
+            return serverName.map { .connecting(serverName: $0) } ?? .preparing
+        }
+    }
+
     mutating func beginConnecting(
         selectedProtocol: ConnectionProtocol,
         killSwitchEnabled: Bool,

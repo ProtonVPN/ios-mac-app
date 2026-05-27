@@ -73,25 +73,23 @@ private struct ConnectingOverlayContentView: View {
     @Bindable var store: StoreOf<ConnectingOverlayFeature>
 
     var body: some View {
-        let buttons = overlayButtons
-
         VStack(spacing: .themeSpacing32) {
             ConnectingOverlayGraphicView(graphicKind: store.graphicKind)
                 .frame(.square(Dimensions.graphicSize))
 
             if !store.hidePhase {
-                Text(AttributedString(firstString))
+                Text(AttributedString(ConnectingOverlayPhaseFormatter.headline(for: store.headlinePhase)))
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
             }
 
-            Text(AttributedString(secondString))
+            Text(AttributedString(ConnectingOverlayPhaseFormatter.body(for: store.bodyPhase)))
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
                 .padding(.bottom, .themeSpacing8)
 
             VStack(spacing: .themeSpacing16) {
-                ForEach(buttons) { button in
+                ForEach(overlayButtons) { button in
                     ConnectingOverlayButtonView(title: button.title, style: button.style) {
                         store.send(.buttonTapped(button.kind))
                     }
@@ -109,78 +107,6 @@ private struct ConnectingOverlayContentView: View {
             return store.isIkeWithKsEnabled ? [.retryWithoutKillSwitch, .cancel] : [.retry, .cancel]
         }
         return store.displayState.is(\.connected) ? [.done] : [.cancel]
-    }
-
-    private var firstString: NSAttributedString {
-        if store.displayState.is(\.connected) {
-            return Localizable.successfullyConnected.styled(font: .themeFont(.small))
-        }
-        let value = store.isReconnecting ? Localizable.youAreNotProtected : Localizable.initializingConnection
-        return value.styled(font: .themeFont(.small))
-    }
-
-    private var secondString: NSAttributedString {
-        if store.timedOut {
-            return timedOutSecondString
-        }
-
-        let resolvedServer = store.displayState.resolvedServer
-        let boldString = resolvedServer.map { server in
-            Self.styledServerName(country: server.logical.country, name: server.logical.name)
-        } ?? ""
-        let string: String = switch store.displayState {
-        case .connected:
-            Localizable.connectedToVpn(boldString)
-        case .disconnected:
-            store.isReconnecting ? Localizable.reconnecting : Localizable.preparingConnection
-        case .resolving, .connecting, .disconnecting:
-            if store.isReconnecting {
-                Localizable.reconnecting
-            } else if boldString.isEmpty {
-                Localizable.preparingConnection
-            } else {
-                Localizable.connectingTo(boldString)
-            }
-        }
-
-        let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
-        if !boldString.isEmpty, let stringRange = string.range(of: boldString) {
-            let range = NSRange(stringRange, in: string)
-            attributedString.addAttribute(.font, value: NSFont.themeFont(.heading2, bold: true), range: range)
-        }
-        return attributedString
-    }
-
-    private var timedOutSecondString: NSAttributedString {
-        let boldString = Localizable.connectionTimedOutBold
-        if !store.isIkeWithKsEnabled {
-            let string = Localizable.connectionTimedOut
-            let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
-            if let stringRange = string.range(of: boldString) {
-                let range = NSRange(stringRange, in: string)
-                attributedString.addAttribute(.font, value: NSFont.themeFont(.heading2, bold: true), range: range)
-            }
-            return attributedString
-        }
-
-        let description = "\n\n" + Localizable.timeoutKsIkeDescritpion
-        let string = Localizable.connectionTimedOut + description
-        let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
-        if let stringRange = string.range(of: boldString) {
-            let range = NSRange(stringRange, in: string)
-            attributedString.addAttribute(.font, value: NSFont.themeFont(.heading2, bold: true), range: range)
-        }
-        if let descriptionRange = string.range(of: description) {
-            let range = NSRange(descriptionRange, in: string)
-            attributedString.addAttribute(.font, value: NSFont.themeFont(.small), range: range)
-        }
-        return attributedString
-    }
-
-    private static func styledServerName(country: String, name: String) -> String {
-        (country + " " + name)
-            .replacingOccurrences(of: " ", with: "\u{00A0}")
-            .replacingOccurrences(of: "-", with: "\u{2011}")
     }
 
     private enum Dimensions {
@@ -310,6 +236,69 @@ private struct ConnectingOverlayButtonStyle: ButtonStyle {
 private enum ConnectingOverlayButtonVisualStyle {
     case normal
     case interactive
+}
+
+private enum ConnectingOverlayPhaseFormatter {
+    static func headline(for phase: ConnectingOverlayFeature.State.HeadlinePhase) -> NSAttributedString {
+        let string: String = switch phase {
+        case .connected: Localizable.successfullyConnected
+        case .unprotected: Localizable.youAreNotProtected
+        case .initializing: Localizable.initializingConnection
+        }
+        return string.styled(font: .themeFont(.small))
+    }
+
+    static func body(for phase: ConnectingOverlayFeature.State.BodyPhase) -> NSAttributedString {
+        switch phase {
+        case let .timedOut(isIkeWithKsEnabled):
+            return timedOut(isIkeWithKsEnabled: isIkeWithKsEnabled)
+        case let .connected(serverName):
+            let bold = styled(serverName: serverName)
+            return body(string: Localizable.connectedToVpn(bold), bold: bold)
+        case let .connecting(serverName):
+            let bold = styled(serverName: serverName)
+            return body(string: Localizable.connectingTo(bold), bold: bold)
+        case .reconnecting:
+            return body(string: Localizable.reconnecting, bold: "")
+        case .preparing:
+            return body(string: Localizable.preparingConnection, bold: "")
+        }
+    }
+
+    private static func body(string: String, bold: String) -> NSAttributedString {
+        let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
+        if !bold.isEmpty, let stringRange = string.range(of: bold) {
+            let range = NSRange(stringRange, in: string)
+            attributedString.addAttribute(.font, value: NSFont.themeFont(.heading2, bold: true), range: range)
+        }
+        return attributedString
+    }
+
+    private static func timedOut(isIkeWithKsEnabled: Bool) -> NSAttributedString {
+        let boldString = Localizable.connectionTimedOutBold
+        if !isIkeWithKsEnabled {
+            return body(string: Localizable.connectionTimedOut, bold: boldString)
+        }
+
+        let description = "\n\n" + Localizable.timeoutKsIkeDescritpion
+        let string = Localizable.connectionTimedOut + description
+        let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
+        if let stringRange = string.range(of: boldString) {
+            let range = NSRange(stringRange, in: string)
+            attributedString.addAttribute(.font, value: NSFont.themeFont(.heading2, bold: true), range: range)
+        }
+        if let descriptionRange = string.range(of: description) {
+            let range = NSRange(descriptionRange, in: string)
+            attributedString.addAttribute(.font, value: NSFont.themeFont(.small), range: range)
+        }
+        return attributedString
+    }
+
+    private static func styled(serverName: ConnectingOverlayFeature.State.ServerName) -> String {
+        (serverName.country + " " + serverName.name)
+            .replacingOccurrences(of: " ", with: "\u{00A0}")
+            .replacingOccurrences(of: "-", with: "\u{2011}")
+    }
 }
 
 private struct ConnectingOverlayButtonModel: Identifiable {

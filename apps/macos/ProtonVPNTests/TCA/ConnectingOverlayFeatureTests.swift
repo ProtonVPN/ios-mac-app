@@ -218,6 +218,82 @@ struct ConnectingOverlayFeatureTests {
         #expect(!disconnected.isReconnecting)
     }
 
+    // MARK: - State.headlinePhase
+
+    @Test("headlinePhase: connected → .connected")
+    func headlinePhaseConnected() {
+        let state = ConnectingOverlayFeature.State(connectionState: .fakeConnected)
+        #expect(state.headlinePhase == .connected)
+    }
+
+    @Test("headlinePhase: resolving with prior server (reconnecting) → .unprotected")
+    func headlinePhaseUnprotected() {
+        let state = ConnectingOverlayFeature.State(
+            connectionState: .resolving(intent(), server())
+        )
+        #expect(state.headlinePhase == .unprotected)
+    }
+
+    @Test("headlinePhase: fresh user-initiated connect → .initializing")
+    func headlinePhaseInitializing() {
+        let state = ConnectingOverlayFeature.State(
+            connectionState: .testConnecting(.defaultFastest),
+            intentionallyDisconnected: true
+        )
+        #expect(state.headlinePhase == .initializing)
+    }
+
+    // MARK: - State.bodyPhase
+
+    @Test(
+        "bodyPhase: timedOut carries IKE+KS flag",
+        arguments: [
+            (ConnectionProtocol.vpnProtocol(.ike), true, true),
+            (.vpnProtocol(.wireGuard(.udp)), true, false),
+            (.vpnProtocol(.ike), false, false),
+        ] as [(ConnectionProtocol, Bool, Bool)]
+    )
+    func bodyPhaseTimedOutCarriesIkeKsFlag(proto: ConnectionProtocol, ks: Bool, expected: Bool) {
+        let state = ConnectingOverlayFeature.State(
+            timedOut: true,
+            killSwitchEnabled: ks,
+            selectedProtocol: proto
+        )
+        #expect(state.bodyPhase == .timedOut(isIkeWithKsEnabled: expected))
+    }
+
+    @Test("bodyPhase: connected → .connected(serverName:)")
+    func bodyPhaseConnected() throws {
+        let state = ConnectingOverlayFeature.State(connectionState: .fakeConnected)
+        let server = try #require(ConnectionState.fakeConnected.resolvedServer)
+        #expect(state.bodyPhase == .connected(
+            serverName: .init(country: server.logical.country, name: server.logical.name)
+        ))
+    }
+
+    @Test("bodyPhase: disconnected → .preparing")
+    func bodyPhaseDisconnected() {
+        let state = ConnectingOverlayFeature.State(connectionState: .disconnected)
+        #expect(state.bodyPhase == .preparing)
+    }
+
+    @Test("bodyPhase: resolving with prior server → .reconnecting")
+    func bodyPhaseReconnecting() {
+        let state = ConnectingOverlayFeature.State(
+            connectionState: .resolving(intent(), server())
+        )
+        #expect(state.bodyPhase == .reconnecting)
+    }
+
+    @Test("bodyPhase: connecting after a user disconnect (no server) → .preparing")
+    func bodyPhaseConnectingIntentional() {
+        let state = ConnectingOverlayFeature.State(
+            connectionState: .testConnecting(.defaultFastest),
+            intentionallyDisconnected: true
+        )
+        #expect(state.bodyPhase == .preparing)
+    }
+
     // MARK: - State.hidePhase
 
     @Test("hidePhase is true when timedOut OR when displayState is disconnected")
