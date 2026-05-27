@@ -315,8 +315,7 @@ private extension QuickSettingsFeature {
                     await MainActor.run { linkOpener.open(url) }
                 }
 
-            case .destination(.presented(.upsell(.continueTapped))),
-                 .destination(.presented(.upsell(.optionalActionTapped))):
+            case .destination(.presented(.upsell(.optionalActionTapped))):
                 state.destination = nil
                 return .none
 

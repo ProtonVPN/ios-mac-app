@@ -27,8 +27,7 @@ import Theme
 public struct UpsellViewController: View {
     public let modalType: UpsellModalType
     public let upgradeAction: (() -> Void)?
-    public let continueAction: (() -> Void)?
-    public let optionalAction: (() -> Void)?
+    public let skipAction: (() -> Void)?
     public let showsCloseButton: Bool
 
     @Dependency(\.date) private var date
@@ -39,14 +38,12 @@ public struct UpsellViewController: View {
     public init(
         modalType: UpsellModalType,
         upgradeAction: (() -> Void)?,
-        continueAction: (() -> Void)?,
-        optionalAction: (() -> Void)? = nil,
+        skipAction: (() -> Void)? = nil,
         showsCloseButton: Bool = true
     ) {
         self.modalType = modalType
         self.upgradeAction = upgradeAction
-        self.continueAction = continueAction
-        self.optionalAction = optionalAction
+        self.skipAction = skipAction
         self.showsCloseButton = showsCloseButton
     }
 
@@ -157,13 +154,13 @@ public struct UpsellViewController: View {
         return (now ?? date.now) < before
     }
 
+    private var isSkipMode: Bool {
+        if case .cantSkip = modalType, !isCantSkipCooldownActive { return true }
+        return false
+    }
+
     private var buttonTitle: String {
-        if case .cantSkip = modalType {
-            return isCantSkipCooldownActive
-                ? Localizable.modalsGetPlus
-                : Localizable.upsellSpecificLocationChangeServerButtonTitle
-        }
-        return Localizable.modalsGetPlus
+        isSkipMode ? Localizable.upsellSpecificLocationChangeServerButtonTitle : Localizable.modalsGetPlus
     }
 
     private var subtitleText: AttributedString? {
@@ -178,15 +175,7 @@ public struct UpsellViewController: View {
     }
 
     private func onPrimaryAction() {
-        if case .cantSkip = modalType {
-            if isCantSkipCooldownActive {
-                upgradeAction?()
-            } else {
-                optionalAction?() ?? continueAction?()
-            }
-            return
-        }
-        upgradeAction?()
+        isSkipMode ? skipAction?() : upgradeAction?()
     }
 }
 
@@ -210,8 +199,7 @@ extension UpsellViewController {
 #Preview {
     UpsellViewController(
         modalType: .allCountries(numberOfServers: 111, numberOfCountries: 4444),
-        upgradeAction: {},
-        continueAction: {}
+        upgradeAction: {}
     )
     .preferredColorScheme(.dark)
 }
@@ -220,15 +208,13 @@ public final class UpsellHostingViewController: NSHostingController<UpsellViewCo
     public init(
         modalType: UpsellModalType,
         upgradeAction: (() -> Void)?,
-        continueAction: (() -> Void)?,
-        optionalAction: (() -> Void)? = nil,
+        skipAction: (() -> Void)? = nil,
         showsCloseButton: Bool = true
     ) {
         super.init(rootView: UpsellViewController(
             modalType: modalType,
             upgradeAction: upgradeAction,
-            continueAction: continueAction,
-            optionalAction: optionalAction,
+            skipAction: skipAction,
             showsCloseButton: showsCloseButton
         ))
     }

@@ -337,7 +337,7 @@ extension MacAlertService: CoreAlertService {
         let upsellViewController = LegacyUpsellFactory.upsellViewController(
             upsellModalType: upsellModalType,
             upgradeAction: upgradeAction,
-            continueAction: alert.continueAction,
+            skipAction: alert.continueAction,
             showsCloseButton: false
         )
 

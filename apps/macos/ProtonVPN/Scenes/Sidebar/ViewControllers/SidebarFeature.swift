@@ -550,8 +550,7 @@ private extension SidebarFeature {
                     .cancel(id: CancelID.overlayDelay),
                     .send(.connection(.input(.connect(intent))))
                 )
-            case .countriesSection(.quickSettings(.destination(.presented(.upsell(.continueTapped))))),
-                 .countriesSection(.quickSettings(.destination(.presented(.upsell(.upgradeTapped))))),
+            case .countriesSection(.quickSettings(.destination(.presented(.upsell(.upgradeTapped))))),
                  .countriesSection(.quickSettings(.destination(.dismiss))):
                 state.pendingReconnectIntent = nil
                 return .none
