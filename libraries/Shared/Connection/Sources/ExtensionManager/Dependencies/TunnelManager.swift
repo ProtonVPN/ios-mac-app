@@ -374,10 +374,6 @@ struct StatusChangePayload {
 
         @Dependency(\.bundleIDClient) var bundleIDClient
         guard let tunnelProtocol = bundleIDClient.tunnelProtocol(configuration) else {
-            if bundleIDClient.isNonCoreBundleIdentifier(configuration) {
-                log.debug("Ignoring status update for non-core bundle identifier", category: .connection)
-                return nil
-            }
             log.error("Unrecognised bundle identifier in configuration", category: .connection)
             return nil
         }

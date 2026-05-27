@@ -54,7 +54,6 @@ package struct BundleIDClient {
     package private(set) var bundleIdentifier: @Sendable (_ protocol: TunnelProtocol) -> String = { _ in "" }
     package private(set) var allBundleIdentifiers: @Sendable () -> [String] = { [] }
     package private(set) var tunnelProtocol: @Sendable (_ configuration: NEVPNProtocol) -> TunnelProtocol?
-    package private(set) var isNonCoreBundleIdentifier: @Sendable (_ configuration: NEVPNProtocol) -> Bool = { _ in false }
 }
 
 enum BuildType {
@@ -157,16 +156,6 @@ extension BundleIDClient: DependencyKey {
                 SentryHelper.shared?.log(message: "Encountered unknown bundle identifier", extra: ["bundleIdentifier": bundleIdentifier])
                 return nil
             }
-        },
-        isNonCoreBundleIdentifier: { configuration in
-            guard let bundleIdentifier = (configuration as? NETunnelProviderProtocol)?.providerBundleIdentifier else {
-                return false
-            }
-            #if os(macOS)
-                return bundleIdentifier == BundleID.plutoniumMac
-            #else
-                return false
-            #endif
         }
     )
 
@@ -174,8 +163,7 @@ extension BundleIDClient: DependencyKey {
         BundleIDClient(
             bundleIdentifier: { _ in bundleID },
             allBundleIdentifiers: { allBundleIDs ?? [bundleID] },
-            tunnelProtocol: { _ in .wireGuard(.go) },
-            isNonCoreBundleIdentifier: { _ in false }
+            tunnelProtocol: { _ in .wireGuard(.go) }
         )
     }
 
