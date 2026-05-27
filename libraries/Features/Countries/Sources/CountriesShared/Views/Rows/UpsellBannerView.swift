@@ -77,7 +77,11 @@ public struct UpsellBannerView: View {
                 Image(variant.iconName, bundle: CountriesResources.bundle)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
+                #if os(iOS)
+                    .frame(.square(24))
+                #else
                     .frame(.square(48))
+                #endif
                     .foregroundColor(Color(.icon, .weak))
 
                 VStack(alignment: .leading, spacing: .themeSpacing8) {
