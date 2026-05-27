@@ -111,7 +111,7 @@ public struct CountriesListFeature: Sendable {
 
     @Dependency(\.mainQueue) var mainQueue
     @Dependency(\.serverRepository) var repository
-    @Dependency(\.connectToVPN) var connectToVPN
+    @Dependency(\.connectionCommandClient) var connectionCommandClient
     @Dependency(\.announcementManager) var announcementManager
     @Dependency(\.sessionService) var sessionService
     @Dependency(\.linkOpener) var linkOpener
@@ -127,9 +127,8 @@ public struct CountriesListFeature: Sendable {
             switch action {
             case .connectToFastest:
                 let spec = CityStateConnectionSpecFactory.makeSpec(location: .any(.fastest))
-                return .run { _ in
-                    try await connectToVPN(spec, nil, .quick)
-                }
+                connectionCommandClient.send(.connect(spec, nil, .quick))
+                return .none
             case .upsellBannerTapped:
                 state.destination = .allCountriesUpsell(.init(
                     modalType: .allCountries(

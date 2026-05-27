@@ -26,6 +26,7 @@ import Combine
 import CommonNetworking
 import ComposableArchitecture
 import Connection
+import ConnectionInventory
 import Dependencies
 import Domain
 import Ergonomics
@@ -49,11 +50,7 @@ protocol HeaderViewModelFactory {
 final class HeaderViewModel {
     @Dependency(\.featureFlagProvider) var featureFlags
     @Dependency(\.credentialsProvider) var credentials
-    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
-    @Dependency(\.specBuilder) private var specBuilder
-    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
-    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
-    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.serverRepository) private var serverRepository
 
@@ -168,7 +165,7 @@ final class HeaderViewModel {
     func quickConnectAction() {
         if isQuickConnectInDisconnectMode {
             log.debug("Disconnect requested by selecting Quick connect", category: .connectionDisconnect, event: .trigger)
-            sidebarConnectionCommandClient.send(.disconnect(.quick))
+            connectionCommandClient.send(.disconnect(.quick))
         } else {
             log.debug("Connect requested by selecting Quick connect", category: .connectionConnect, event: .trigger)
             let spec = SecureCoreConnectionSpecResolver.fastestSpec(
@@ -176,7 +173,7 @@ final class HeaderViewModel {
                 connectedExitCountryCode: connectedCountryCode,
                 isFreeTier: credentials.tier.isFreeTier
             )
-            sidebarConnectionCommandClient.send(.connect(spec, nil, .quick))
+            connectionCommandClient.send(.connect(spec, nil, .quick))
         }
     }
 
@@ -185,15 +182,8 @@ final class HeaderViewModel {
             connectionProtocol: propertiesManager.connectionProtocol,
             defaultProfileAccessTier: 0
         )
-        let request = profile.connectionRequest(
-            withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
-            withDefaultNATType: natTypePropertyProvider.getNATType(),
-            withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
-            withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
-            trigger: .changeServer
-        )
-        let spec = specBuilder.spec(request)
-        sidebarConnectionCommandClient.send(.connect(spec, profile.connectionProtocol, .changeServer))
+        let spec = profile.connectionSpec(trigger: .changeServer)
+        connectionCommandClient.send(.connect(spec, profile.connectionProtocol, .changeServer))
     }
 
     @objc

@@ -59,7 +59,7 @@ final class ConnectionSettingsViewModel {
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
     private lazy var navService: NavigationService = factory.makeNavigationService()
     @Shared(.connectionState) private var connectionState: ConnectionState
     @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
@@ -379,7 +379,7 @@ final class ConnectionSettingsViewModel {
                         event: .trigger,
                         metadata: ["feature": "smartProtocol"]
                     )
-                    sidebarConnectionCommandClient.send(.disconnect(.auto, completion: {
+                    connectionCommandClient.send(.disconnect(.auto, completion: {
                         completion(.success)
                     }))
                 case .reconnect:
@@ -389,7 +389,7 @@ final class ConnectionSettingsViewModel {
                         event: .trigger,
                         metadata: ["feature": "smartProtocol"]
                     )
-                    sidebarConnectionCommandClient.send(.reconnect(.smartProtocol))
+                    connectionCommandClient.send(.reconnect(.smartProtocol))
                     completion(.success)
                 case .doNothing:
                     log.info(
@@ -436,13 +436,13 @@ final class ConnectionSettingsViewModel {
         case .withConnectionUpdate:
             // in-place change when connected and using local agent
             featurePropertyProvider.setValue(newValue)
-            sidebarConnectionCommandClient.send(.applySettings([.vpnAccelerator(enabled)]))
+            connectionCommandClient.send(.applySettings([.vpnAccelerator(enabled)]))
             completion(true)
         case .withReconnect:
             alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.vpnProtocol, confirmHandler: { [weak self] in
                 self?.featurePropertyProvider.setValue(newValue)
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "vpnAccelerator"])
-                self?.sidebarConnectionCommandClient.send(.retry)
+                self?.connectionCommandClient.send(.retry)
                 completion(true)
             }, cancelHandler: {
                 completion(false)
@@ -469,7 +469,7 @@ final class ConnectionSettingsViewModel {
                 self.propertiesManager.killSwitch = false
                 if isConnected {
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks", "feature_additional": "killSwitch"])
-                    self.sidebarConnectionCommandClient.send(.retry)
+                    self.connectionCommandClient.send(.retry)
                 }
                 completion(true)
             } cancelHandler: {
@@ -489,7 +489,7 @@ final class ConnectionSettingsViewModel {
         alertService.push(alert: ReconnectOnSettingsChangeAlert(confirmHandler: {
             self.featurePropertyProvider.setValue(newValue)
             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])
-            self.sidebarConnectionCommandClient.send(.retry)
+            self.connectionCommandClient.send(.retry)
             completion(true)
         }, cancelHandler: {
             completion(false)

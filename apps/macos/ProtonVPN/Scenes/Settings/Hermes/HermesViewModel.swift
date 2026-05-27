@@ -55,7 +55,7 @@ final class HermesViewModel {
     @Dependency(\.hermesClient) private var hermesClient
     @Dependency(\.sessionService) private var sessionService: SessionService
     @Dependency(\.linkOpener) private var linkOpener
-    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Shared(.connectionState) private var connectionState: ConnectionState
     @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
@@ -112,7 +112,7 @@ final class HermesViewModel {
     }
 
     func userConfirmsReconnection() {
-        sidebarConnectionCommandClient.send(.retry)
+        connectionCommandClient.send(.retry)
     }
 
     func validate(location: String) -> LocationValidation {

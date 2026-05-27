@@ -34,7 +34,7 @@ class PlutoniumWindowController: WindowController {
     private let alertService: CoreAlertService
     @Shared(.connectionState) private var connectionState: ConnectionState
     @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
-    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
@@ -86,7 +86,7 @@ class PlutoniumWindowController: WindowController {
                 if !vpnConnectionStatus.isConnected(using: connectionState) {
                     return
                 }
-                sidebarConnectionCommandClient.send(.retry)
+                connectionCommandClient.send(.retry)
             },
             cancelHandler: {}
         ))

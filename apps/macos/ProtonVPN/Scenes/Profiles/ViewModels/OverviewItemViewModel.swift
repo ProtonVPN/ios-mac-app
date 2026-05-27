@@ -36,12 +36,7 @@ protocol OverviewItemViewModelDelegate: AnyObject {
 final class OverviewItemViewModel: AbstractProfileViewModel {
     private let editProfile: ((Profile) -> Void)?
     private let profileManager: ProfileManager
-    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
-    @Dependency(\.specBuilder) private var specBuilder
-    @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
-    @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
-    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
-    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
     @Dependency(\.sessionService) private var sessionService
 
@@ -93,15 +88,8 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
         }
 
         log.debug("Will connect to profile: \(profile.logDescription)", category: .connectionConnect, event: .trigger)
-        let request = profile.connectionRequest(
-            withDefaultNetshield: netShieldPropertyProvider.getNetShieldType(),
-            withDefaultNATType: natTypePropertyProvider.getNATType(),
-            withDefaultSafeMode: safeModePropertyProvider.getSafeMode(),
-            withDefaultPortForwarding: portForwardingPropertyProvider.getPortForwarding(),
-            trigger: .profile
-        )
-        let spec = specBuilder.spec(request)
-        sidebarConnectionCommandClient.send(.connect(spec, profile.connectionProtocol, .profile))
+        let spec = profile.connectionSpec(trigger: .profile)
+        connectionCommandClient.send(.connect(spec, profile.connectionProtocol, .profile))
         completion()
     }
 

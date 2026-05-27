@@ -39,26 +39,10 @@
         }
 
         var body: some ReducerOf<Self> {
-            Reduce { state, action in
+            Reduce { _, action in
                 switch action {
-                case let .home(.connect(specs)):
-                    return .run { _ in
-                        @Dependency(\.connectToVPN) var connectToVPN
-                        try? await connectToVPN(specs)
-                    }
-
-                case .home(.disconnect):
-                    return .run { _ in
-                        @Dependency(\.disconnectVPN) var disconnectVPN
-                        try? await disconnectVPN()
-                    }
-
-                case .home(.showConnectionDetails):
-                    state.connectionDetailsVisible.toggle()
-                    return .none
-
                 case .home:
-                    return .none
+                    .none
                 }
             }
             Scope(state: \.home, action: /Action.home) {

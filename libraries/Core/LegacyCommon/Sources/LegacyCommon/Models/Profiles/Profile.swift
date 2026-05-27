@@ -34,11 +34,18 @@ public extension Profile {
         ProfileConstants.defaultIds.contains(id)
     }
 
+    /// Convenience for callers that only need the spec (location + server features) and not the
+    /// session-level settings (NetShield / NAT / SafeMode / PortForwarding). The spec conversion
+    /// discards those fields anyway, so we pass safe defaults internally.
+    func connectionSpec(trigger: UserInitiatedVPNChange.VPNTrigger?) -> ConnectionSpec {
+        ConnectionSpec(connectionRequest: connectionRequest(trigger: trigger))
+    }
+
     func connectionRequest(
-        withDefaultNetshield netShield: NetShieldType,
-        withDefaultNATType natType: NATType,
-        withDefaultSafeMode safeMode: Bool?,
-        withDefaultPortForwarding portForwarding: Bool?,
+        withDefaultNetshield netShield: NetShieldType = .off,
+        withDefaultNATType natType: NATType = .default,
+        withDefaultSafeMode safeMode: Bool? = nil,
+        withDefaultPortForwarding portForwarding: Bool? = nil,
         trigger: UserInitiatedVPNChange.VPNTrigger?
     ) -> ConnectionRequest {
         switch serverOffering {

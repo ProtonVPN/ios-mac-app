@@ -21,7 +21,7 @@
 //
 
 import Cocoa
-import CommonNetworking
+import ConnectionInventory
 import Dependencies
 import Domain
 import LegacyCommon
@@ -32,7 +32,7 @@ import VPNAppCore
 class StatusMenuCountryItemViewModel {
     private let serverGroup: ServerGroupInfo
     private let type: ServerType
-    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
     var flag: NSImage {
         switch serverGroup.kind {
@@ -67,8 +67,8 @@ class StatusMenuCountryItemViewModel {
         } else {
             serverGroup.kind.locationWithOrder()
         }
-        let spec = ConnectionSpec(location: location, features: features)
-        sidebarConnectionCommandClient.send(.connect(spec, nil, .country))
+        let spec = CityStateConnectionSpecFactory.makeSpec(location: location, features: features)
+        connectionCommandClient.send(.connect(spec, nil, .country))
     }
 
     // MARK: - Private

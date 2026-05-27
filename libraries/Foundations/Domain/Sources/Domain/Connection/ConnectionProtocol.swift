@@ -88,6 +88,23 @@ public extension ConnectionProtocol {
             vpnProtocol.isDeprecated
         }
     }
+
+    /// Returns an array of all supported protocols on the current platform.
+    /// - Parameter wireguardTLSEnabled: Whether the WireGuard TLS feature flag is enabled. If `false`, WireGuard TCP
+    /// and TLS are removed from the list.
+    static func availableProtocols(wireguardTLSEnabled: Bool) -> [Self] {
+        allCases
+            .removing([.vpnProtocol(.wireGuard(.tcp)), .vpnProtocol(.wireGuard(.tls))], if: !wireguardTLSEnabled)
+            .removing(deprecatedProtocols)
+    }
+
+    /// Sort order for protocol pickers — Smart first, then by `VpnProtocol.uiSort`.
+    static func uiSort(lhs: Self, rhs: Self) -> Bool {
+        guard let lhsProtocol = lhs.vpnProtocol, let rhsProtocol = rhs.vpnProtocol else {
+            return lhs == .smartProtocol && rhs != .smartProtocol
+        }
+        return VpnProtocol.uiSort(lhs: lhsProtocol, rhs: rhsProtocol)
+    }
 }
 
 #if os(macOS)

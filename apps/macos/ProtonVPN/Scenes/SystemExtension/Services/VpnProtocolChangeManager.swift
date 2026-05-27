@@ -50,7 +50,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
     private let factory: Factory
 
     @Dependency(\.propertiesManager) private var propertiesManager
-    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Shared(.connectionState) private var connectionState: ConnectionState
@@ -138,9 +138,9 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
                     category: .connectionConnect,
                     event: .trigger
                 )
-                self?.sidebarConnectionCommandClient.send(.reconnect(.vpnProtocol(vpnProtocol)))
+                self?.connectionCommandClient.send(.reconnect(.vpnProtocol(vpnProtocol)))
             case .disconnect:
-                self?.sidebarConnectionCommandClient.send(.disconnect(.auto))
+                self?.connectionCommandClient.send(.disconnect(.auto))
             case .doNothing:
                 return
             }

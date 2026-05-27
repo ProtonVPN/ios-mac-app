@@ -18,6 +18,7 @@
 
 import CommonNetworking
 import Dependencies
+import Domain
 import Foundation
 
 /// Responsible for authorizing or denying connection requests based on the user's plan and available features

@@ -40,3 +40,12 @@ public extension SharedKey where Self == InMemoryKey<String?>.Default {
         Self[.inMemory("userPlan"), default: nil]
     }
 }
+
+public extension SharedKey where Self == InMemoryKey<Bool>.Default {
+    /// Set to `true` when the user deliberately disconnects the VPN.
+    /// Read by macOS UI to decide whether to show the connecting overlay during an
+    /// unexpected reconnection vs. a user-initiated disconnect. Reset on each app launch.
+    static var intentionallyDisconnected: Self {
+        Self[.inMemory("intentionallyDisconnected"), default: false]
+    }
+}

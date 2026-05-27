@@ -59,8 +59,7 @@ public final class AppDelegateService: AppDelegateProtocol {
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.propertiesManager) private var propertiesManager
-    @Dependency(\.connectToVPN) private var connectToVPN
-    @Dependency(\.disconnectVPN) private var disconnectVPN
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
     private let container: DependencyContainer
     private lazy var appSessionManager: AppSessionManager = container.makeAppSessionManager()
@@ -280,17 +279,11 @@ public final class AppDelegateService: AppDelegateProtocol {
             guard verified else { return false }
 
             // Extensions requesting a connection should set a connection request first
-            Task {
-                do {
-                    try await connectToVPN(
-                        propertiesManager.lastConnectionIntent,
-                        propertiesManager.connectionProtocol,
-                        .widget
-                    )
-                } catch {
-                    log.error("Deep link connect failed", category: .connectionConnect, metadata: ["error": "\(error)"])
-                }
-            }
+            connectionCommandClient.send(.connect(
+                propertiesManager.lastConnectionIntent,
+                propertiesManager.connectionProtocol,
+                .widget
+            ))
             startListeningForDeepLinkConnectState()
             navigationService.presentStatusViewController()
 
@@ -298,18 +291,11 @@ public final class AppDelegateService: AppDelegateProtocol {
             // Action may only come from a trusted source
             guard verified else { return false }
 
-            Task {
-                do {
-                    try await disconnectVPN(.widget)
-                } catch {
-                    log.error("Deep link disconnect failed", category: .connectionDisconnect, metadata: ["error": "\(error)"])
+            connectionCommandClient.send(.disconnect(.widget, completion: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
                 }
-                await MainActor.run {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
-                    }
-                }
-            }
+            }))
 
         case URLConstants.deepLinkRefresh, URLConstants.deepLinkRefreshAccount:
             guard authKeychain.username != nil else {

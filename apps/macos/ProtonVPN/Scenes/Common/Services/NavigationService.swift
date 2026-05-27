@@ -23,6 +23,7 @@
 import Cocoa
 import CommonNetworking
 import ComposableArchitecture
+import ConnectionInventory
 import Domain
 import Ergonomics
 import LegacyCommon
@@ -50,7 +51,7 @@ class NavigationService {
     private let factory: Factory
 
     @Dependency(\.propertiesManager) private var propertiesManager
-    @Dependency(\.sidebarConnectionCommandClient) private var sidebarConnectionCommandClient
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.credentialsProvider) private var credentials
     @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
     lazy var windowService: WindowService = factory.makeWindowService()
@@ -119,7 +120,7 @@ class NavigationService {
     @objc
     private func sessionSwitchedOut(_: NSNotification) {
         log.debug("User session did resign active", category: .app)
-        sidebarConnectionCommandClient.send(.disconnect(.exit))
+        connectionCommandClient.send(.disconnect(.exit))
     }
 
     @objc
@@ -234,16 +235,8 @@ class NavigationService {
     private func triggerAutoConnect() {
         let profileManager = factory.makeProfileManager()
         if let profile = profileManager.autoConnectProfile {
-            let defaultRequest = propertiesManager.lastConnectionRequest
-            let request = profile.connectionRequest(
-                withDefaultNetshield: defaultRequest?.netShieldType ?? .off,
-                withDefaultNATType: defaultRequest?.natType ?? .default,
-                withDefaultSafeMode: defaultRequest?.safeMode,
-                withDefaultPortForwarding: defaultRequest?.portForwarding,
-                trigger: .auto
-            )
-            let spec = ConnectionSpec(connectionRequest: request)
-            sidebarConnectionCommandClient.send(.connect(spec, request.connectionProtocol, .auto))
+            let spec = profile.connectionSpec(trigger: .auto)
+            connectionCommandClient.send(.connect(spec, profile.connectionProtocol, .auto))
             return
         }
 
@@ -252,7 +245,7 @@ class NavigationService {
             connectedExitCountryCode: nil,
             isFreeTier: credentials.tier.isFreeTier
         )
-        sidebarConnectionCommandClient.send(.connect(spec, nil, .auto))
+        connectionCommandClient.send(.connect(spec, nil, .auto))
     }
 
     private func showSidebar() {
@@ -417,7 +410,7 @@ extension NavigationService {
             return .terminateNow
         }
 
-        sidebarConnectionCommandClient.send(.disconnect(.exit, completion: { [weak self] in
+        connectionCommandClient.send(.disconnect(.exit, completion: { [weak self] in
             guard let self else { return }
             isSystemTeardown = false
             NSApp.reply(toApplicationShouldTerminate: true)

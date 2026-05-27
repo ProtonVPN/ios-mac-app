@@ -18,8 +18,8 @@
 
 import Domain
 
-enum SecureCoreConnectionSpecResolver {
-    static func fastestLocation(
+public enum SecureCoreConnectionSpecResolver {
+    public static func fastestLocation(
         secureCoreEnabled: Bool,
         connectedExitCountryCode: String?,
         isFreeTier: Bool
@@ -42,7 +42,7 @@ enum SecureCoreConnectionSpecResolver {
         return .any(.fastest)
     }
 
-    static func fastestSpec(
+    public static func fastestSpec(
         secureCoreEnabled: Bool,
         connectedExitCountryCode: String?,
         isFreeTier: Bool
@@ -57,7 +57,7 @@ enum SecureCoreConnectionSpecResolver {
         )
     }
 
-    static func reconnectTrigger(
+    public static func reconnectTrigger(
         connectedExitCountryCode: String?,
         isFreeTier: Bool
     ) -> UserInitiatedVPNChange.VPNTrigger {

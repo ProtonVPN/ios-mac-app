@@ -374,7 +374,7 @@ struct AppSessionManagerImplementationTests {
             $0.unauthKeychain = unauthKeychain
             $0.vpnKeychain = vpnKeychain
             $0.announcementRefresher = factory.announcementRefresherMock
-            $0.sidebarConnectionCommandClient = .init(
+            $0.connectionCommandClient = .init(
                 send: { command in
                     guard case let .disconnect(_, completion) = command else { return }
                     @Shared(.vpnConnectionStatus) var vpnConnectionStatus

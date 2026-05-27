@@ -55,8 +55,6 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var discourageSecureCore: Bool { get set }
     var showWhatsNewModal: Bool { get set }
 
-    // Distinguishes if kill switch should be disabled
-    var intentionallyDisconnected: Bool { get set }
     var userLocation: UserLocation? { get set }
     var userDataDisclaimerAgreed: Bool { get set }
     var userRole: UserRole { get set }
@@ -162,7 +160,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case lastConnectionRequest = "LastConnectionRequest"
         case lastUserAccountPlan = "LastUserAccountPlan"
         case quickConnectProfile = "QuickConnect_"
-        case intentionallyDisconnected = "IntentionallyDisconnected"
 
         case userRole
         case userLocation = "UserLocation"
@@ -279,9 +276,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     }
 
     @StringProperty(.lastBugReportEmail) public var reportBugEmail: String?
-
-    /// Distinguishes if kill switch should be disabled
-    @BoolProperty(.intentionallyDisconnected) public var intentionallyDisconnected: Bool
 
     @Property(.userLocation, notifyChangesWith: .userIp)
     public var userLocation: UserLocation?
