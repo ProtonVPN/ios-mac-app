@@ -8,6 +8,7 @@
 
 import Combine
 import CommonNetworking
+import Connection
 import Dependencies
 import Domain
 import Foundation
@@ -45,9 +46,8 @@ final class macOSNetworkingDelegate: NetworkingDelegate {
     }
 
     func onGuestToAuthenticatedTransition() async {
-        @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
-        authenticationStorage.deleteKeys()
-        authenticationStorage.deleteCertificate()
+        @Dependency(\.sessionChangeNotifier) var sessionChangeNotifier
+        await sessionChangeNotifier.notify()
         log.info("Cleared VPN authentication data during guest to authenticated transition", category: .net)
     }
 

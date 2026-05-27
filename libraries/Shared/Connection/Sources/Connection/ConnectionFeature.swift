@@ -28,7 +28,7 @@ import VPNAppCore
 
 @Reducer
 public struct ConnectionFeature: Sendable {
-    @Dependency(\.connectionBridge) private var connectionBridge
+    @Dependency(\.sessionChangeNotifier) private var sessionChangeNotifier
     @Dependency(\.connectionIntentStorage) private var intentStorage
     @Dependency(\.connectionIntentResolver) private var intentResolver
     @Dependency(\.continuousClock) private var clock
@@ -141,7 +141,10 @@ public struct ConnectionFeature: Sendable {
                 return .merge(
                     coldStartHydration,
                     .send(.core(.startObserving)),
-                    .listen(to: connectionBridge.intentStream()) { .input($0) } // reinject intents from bridge into this feature
+                    // Surface session-change events (logout / guest→authenticated transition)
+                    // as `.input(.onSessionChange)` so the connection layer can clean up
+                    // tunnel + auth state.
+                    .listen(to: sessionChangeNotifier.stream()) { _ in .input(.onSessionChange) }
                 ).cancellable(id: CancelID.observation, cancelInFlight: true)
 
             case .stopObserving:
