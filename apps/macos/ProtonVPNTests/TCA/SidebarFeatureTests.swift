@@ -450,6 +450,12 @@ struct SidebarFeatureTests {
         let store = makeStore(clock: clock)
         store.exhaustivity = .off
 
+        // Populate the autoDismiss snapshot via the normal app-initiated flow
+        // (.connecting → .connected). A direct .connected with no preceding .connecting
+        // would now be treated as an OS-initiated tunnel and skip the overlay entirely.
+        await store.send(.connectionStateChanged(.testConnecting(.defaultFastest))) {
+            $0.overlayState = .connecting(synced: .testConnecting(.defaultFastest))
+        }
         await store.send(.connectionStateChanged(.testConnected(.defaultFastest, connectedState))) {
             $0.overlayState = .autoDismiss(for: .testConnected(.defaultFastest, connectedState))
         }
@@ -457,6 +463,16 @@ struct SidebarFeatureTests {
         await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .changeServer))) {
             $0.overlayState = .connecting(spec: spec)
         }
+    }
+
+    @Test("OS-initiated .connected without preceding .connecting skips the overlay")
+    func osInitiatedConnectedSkipsOverlay() async {
+        let connectedState = VPNConnectionActual.mock()
+        let store = makeStore()
+        #expect(store.state.overlayState == .hidden)
+
+        await store.send(.connectionStateChanged(.testConnected(.defaultFastest, connectedState)))
+        #expect(store.state.overlayState == .hidden)
     }
 
     @Test("change server cooldown shows cantSkip upsell without connecting overlay")

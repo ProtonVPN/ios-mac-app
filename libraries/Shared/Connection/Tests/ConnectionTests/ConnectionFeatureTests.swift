@@ -41,11 +41,6 @@
             // Populate the user tier storage, since the intent resolver requires it for server selection
             @Shared(.userTier) var userTier
             $userTier.withLock { $0 = 2 }
-
-            // Reset cold-start hydration so `.input(.onLaunch)` does not surface a prior
-            // connection from disk between test runs.
-            @Shared(.lastConnection) var lastConnection
-            $lastConnection.withLock { $0 = nil }
         }
 
         /// Verifies that a connection can be queued up if the feature is in the disconnecting state and the user
@@ -480,6 +475,72 @@
             await store.receive(\.delegate.stateChanged.disconnected)
         }
 
+        /// When the OS reports the tunnel as `.connected` but the stored connection intent
+        /// disagrees with the actual tunnel protocol (e.g. previous in-app session was
+        /// WireGuard but the user started IKEv2 from System Settings), the feature must
+        /// synthesise a fresh intent from `ConnectionData` so the UI doesn't render stale
+        /// protocol/server information.
+        @MainActor
+        func testConnectedWithMismatchedStoredProtocolSynthesizesIntent() async {
+            let now = Date.now
+            let staleStoredIntent = ServerConnectionIntent.mock(
+                protocolConfiguration: .wireGuard(.init(
+                    backend: .go,
+                    transport: .udp,
+                    ports: [51820],
+                    features: .unimplementedFeatures
+                ))
+            )
+            let actualServer = Server.ca
+            let connectedData = ConnectionData(
+                serverID: actualServer.endpoint.id,
+                connectionDate: now,
+                protocolData: .ike
+            )
+
+            let state = ConnectionFeature.State(
+                currentIntent: nil,
+                queuedIntent: nil,
+                connectionState: .resolving(nil, nil),
+                shouldRegisterServerChangeOnConnection: false,
+                core: .init(
+                    tunnelState: .connected(.ike, connectedData),
+                    certAuthState: .idle,
+                    localAgentState: .disconnected(nil)
+                )
+            )
+
+            let store = TestStore(initialState: state) {
+                ConnectionFeature()
+            } withDependencies: {
+                $0.serverIdentifier = .init(fullServerInfo: { _ in actualServer })
+                $0.connectionIntentStorage = .init(getConnectionIntent: { staleStoredIntent }, set: { _ in })
+                $0.connectionFeatureProvider.connectionFeatures = { .unimplementedFeatures }
+                $0.connectionFeatureProvider.tunnelFeatures = { .unimplementedFeatures }
+            }
+            store.exhaustivity = .off
+
+            await store.send(.core(.delegate(.stateChanged(
+                .connecting(connectedData),
+                .connected(connectedData, now, nil)
+            ))))
+
+            // currentIntent should reflect the real tunnel: IKE on actualServer, not the
+            // stale WireGuard storedIntent.
+            guard case let .active(resolved) = store.state.currentIntent else {
+                XCTFail("Expected currentIntent to be .active after .connected")
+                return
+            }
+            XCTAssertEqual(resolved.protocolConfiguration, .ike)
+            XCTAssertEqual(resolved.server.endpoint.id, actualServer.endpoint.id)
+            guard case let .connected(intent, server, _, _) = store.state.connectionState else {
+                XCTFail("Expected connectionState to be .connected after .connected delegate")
+                return
+            }
+            XCTAssertEqual(intent.protocolConfiguration, .ike)
+            XCTAssertEqual(server.endpoint.id, actualServer.endpoint.id)
+        }
+
         @MainActor
         func testDisconnectingTransitionWithQueuedReconnectDoesNotRequireStoredIntent() async {
             let now = Date.now
@@ -694,66 +755,6 @@
             await store.send(.input(.onLaunch))
             await store.receive(coreStateChange(from: \.unknown, to: \.disconnected))
             await store.receive(stateChange(to: \.disconnected))
-        }
-
-        /// When a `LastConnection` is persisted in App Group storage, `.input(.onLaunch)` hydrates
-        /// the connection state with the prior intent/server so the cold-start UI can surface it
-        /// while the actual tunnel state is being observed.
-        @MainActor
-        func testColdStartHydrationFromLastConnection() async {
-            let priorIntent = ServerConnectionIntent.mock(
-                withSpecLocation: .country(code: "CA", order: .fastest),
-                server: .ca
-            )
-            @Shared(.lastConnection) var lastConnection
-            $lastConnection.withLock {
-                $0 = LastConnection(intent: priorIntent, connectedDate: .now)
-            }
-
-            let mockVPNSession = VPNSessionMock(status: .disconnected, connectedDate: nil, lastDisconnectError: nil)
-            let mockManager = MockTunnelManager(connection: mockVPNSession)
-            let mockAgent = LocalAgentMock(state: .disconnected)
-
-            let store = TestStore(initialState: .initialState) {
-                ConnectionFeature()
-            } withDependencies: {
-                $0.tunnelManager = mockManager
-                $0.localAgent = mockAgent
-            }
-
-            store.exhaustivity = .off
-
-            await store.send(.input(.onLaunch)) {
-                $0.connectionState = .resolving(priorIntent, priorIntent.server)
-            }
-            await store.receive(stateChange(to: \.resolving))
-            // Subsequent core observation discovers the real (disconnected) tunnel state
-            // and overwrites the hydrated value.
-            await store.receive(coreStateChange(from: \.unknown, to: \.disconnected))
-            await store.receive(stateChange(to: \.disconnected))
-        }
-
-        /// Logging out clears the persisted `LastConnection` so the next launch starts blank.
-        @MainActor
-        func testLogoutClearsLastConnection() async {
-            let priorIntent = ServerConnectionIntent.mock(withSpecLocation: .country(code: "CA", order: .fastest), server: .ca)
-            @Shared(.lastConnection) var lastConnection
-            $lastConnection.withLock {
-                $0 = LastConnection(intent: priorIntent, connectedDate: .now)
-            }
-
-            let environment = ConnectionEnvironment.disconnected()
-            let store = environment.createConnectionTestStore()
-            store.dependencies.tunnelKeychain = TunnelKeychain(
-                storeWireguardConfig: { _ in Data() },
-                loadWireguardConfig: { Data() },
-                clear: {}
-            )
-            store.exhaustivity = .off
-
-            await store.send(.input(.onLogout))
-
-            XCTAssertNil(lastConnection)
         }
 
         @MainActor

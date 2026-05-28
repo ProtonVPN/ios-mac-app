@@ -391,6 +391,15 @@ private extension SidebarFeature {
                         state.overlayState = .hidden
                         return .cancel(id: CancelID.overlayDelay)
                     }
+                    // Only run the auto-dismiss transition when the connect was app-initiated
+                    // (i.e. we were previously showing the connecting overlay). For
+                    // OS-initiated tunnels — started from System Settings, on-demand, etc. —
+                    // there is no overlay to gracefully tear down, so skip the brief
+                    // "connected" flash.
+                    guard state.overlayState.is(\.connecting) else {
+                        state.overlayState = .hidden
+                        return .cancel(id: CancelID.overlayDelay)
+                    }
                     transitionToAutoDismiss(&state, connectionState: connectionState)
                     return .run { send in
                         try await clock.sleep(for: .seconds(3))

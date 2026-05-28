@@ -21,6 +21,7 @@ import ComposableArchitecture
 import CoreConnection
 import Dependencies
 import Domain
+import ExtensionManager
 import Foundation
 import LocalAgent
 import Sharing
@@ -35,6 +36,8 @@ public struct ConnectionFeature: Sendable {
     @Dependency(\.date) private var date
     @Dependency(\.wasLaunchedAtLogin) private var wasLaunchedAtLogin
     @Dependency(\.appProcessStartDate) private var appProcessStartDate
+    @Dependency(\.serverIdentifier) private var serverIdentifier
+    @Dependency(\.connectionFeatureProvider) private var connectionFeatureProvider
 
     public init() {}
 
@@ -125,21 +128,7 @@ public struct ConnectionFeature: Sendable {
         Reduce { state, action in
             switch action {
             case .input(.onLaunch):
-                // Cold-start hydration: surface the prior intent/server while the connection
-                // layer discovers the actual tunnel status, so the UI doesn't render an empty
-                // `.resolving(nil, nil)` flash. The actual tunnel state (when observed) will
-                // overwrite this.
-                @Shared(.lastConnection) var lastConnection
-                let coldStartHydration: Effect<Action> = if let lastConnection {
-                    updateStateSendingEffectIfNecessary(
-                        &state,
-                        to: .resolving(lastConnection.intent, lastConnection.server)
-                    )
-                } else {
-                    .none
-                }
                 return .merge(
-                    coldStartHydration,
                     .send(.core(.startObserving)),
                     // Surface session-change events (logout / guest→authenticated transition)
                     // as `.input(.onSessionChange)` so the connection layer can clean up
@@ -229,8 +218,6 @@ public struct ConnectionFeature: Sendable {
                 // Logout transitions clear any tunnel; drop the delayed-disconnect latch so it
                 // can't fire against a fresh post-logout connection attempt.
                 state.core.shouldDisconnectWhenAllowed = false
-                @Shared(.lastConnection) var lastConnection
-                $lastConnection.withLock { $0 = nil }
                 return .merge(.send(.stopObserving), .send(.core(.handleLogout)))
 
             case .input(.onSessionChange):
@@ -312,7 +299,7 @@ public struct ConnectionFeature: Sendable {
                     return updateStateSendingEffectIfNecessary(&state, to: .disconnected)
                 }
 
-            case let .core(.delegate(.stateChanged(_, .connected(_, connectedAt, details)))):
+            case let .core(.delegate(.stateChanged(_, .connected(connectionData, connectedAt, details)))):
                 if state.currentIntent?.is(\.disconnecting) == true, state.reconnectionIntent != nil {
                     // Protocol-switch race only: this guard fires when we're in the middle of
                     // tearing down one tunnel while another reconnect intent is queued (e.g. the
@@ -336,9 +323,12 @@ public struct ConnectionFeature: Sendable {
                     @Dependency(\.serverChangeAuthorizer) var authorizer
                     authorizer.registerServerChange(connectedAt: connectedAt)
                 }
-                return updateStateWithStoredIntentOrDisconnect(&state) { intent in
-                    .connected(intent, intent.server, connectedAt, details)
-                }
+                return resolveAndSetConnected(
+                    &state,
+                    connectionData: connectionData,
+                    connectedAt: connectedAt,
+                    details: details
+                )
 
             case let .core(.delegate(.stateChanged(oldState, .starting))):
                 if oldState.is(\.unknown) {
@@ -486,6 +476,89 @@ public struct ConnectionFeature: Sendable {
         }
     }
 
+    /// Resolves the intent associated with a `.connected` event against the actual tunnel data.
+    /// The stored intent (either `state.currentIntent` or the legacy `intentStorage` fallback) is
+    /// used as-is only when its protocol and server identifier match what the OS reports;
+    /// otherwise a fresh `ServerConnectionIntent` is synthesised from `connectionData`. This
+    /// keeps the UI in sync with OS-initiated tunnels (e.g. the user starting a VPN from System
+    /// Settings) where the stored in-app intent is necessarily stale or absent.
+    private func resolveAndSetConnected(
+        _ state: inout State,
+        connectionData: ConnectionData,
+        connectedAt: Date,
+        details: ConnectionDetailsMessage?
+    ) -> Effect<Action> {
+        let actualTunnelProtocol = connectionData.protocolData.tunnelProtocol
+        let actualServer = serverIdentifier.fullServerInfo(connectionData.serverID)
+        let storedIntent = state.currentIntent?.serverIntent ?? (try? intentStorage.getConnectionIntent())
+
+        let resolvedIntent: ServerConnectionIntent? = if let storedIntent,
+                                                         tunnelProtocol(for: storedIntent.protocolConfiguration) == actualTunnelProtocol,
+                                                         storedIntent.server.endpoint.id == connectionData.serverID {
+            storedIntent
+        } else if let server = actualServer ?? storedIntent?.server {
+            ServerConnectionIntent(
+                spec: storedIntent?.spec ?? ConnectionSpec(),
+                server: server,
+                protocolConfiguration: synthesizedProtocolConfiguration(
+                    from: connectionData.protocolData,
+                    preserving: storedIntent?.protocolConfiguration
+                ),
+                features: storedIntent?.features ?? connectionFeatureProvider.connectionFeatures()
+            )
+        } else {
+            nil
+        }
+
+        guard let resolvedIntent else {
+            log.error("Failed to resolve connection intent for .connected", category: .connection)
+            return .concatenate(
+                .send(.delegate(.connectionFailed(.intentMissing))),
+                .send(.core(.disconnect(.connectionFailure(.intentMissing))))
+            )
+        }
+
+        state.currentIntent = .active(resolvedIntent)
+        return updateStateSendingEffectIfNecessary(
+            &state,
+            to: .connected(resolvedIntent, resolvedIntent.server, connectedAt, details)
+        )
+    }
+
+    private func tunnelProtocol(for configuration: ProtocolConfiguration) -> TunnelProtocol {
+        switch configuration {
+        case .ike:
+            .ike
+        case let .wireGuard(settings):
+            .wireGuard(settings.backend)
+        }
+    }
+
+    /// Builds a `ProtocolConfiguration` matching the actual tunnel's `ProtocolConnectionData`.
+    /// When the stored configuration's backend already matches the observed one (e.g. both WG
+    /// with the same backend), the stored configuration is reused so its transport/ports/features
+    /// are preserved; otherwise sensible defaults are filled in.
+    private func synthesizedProtocolConfiguration(
+        from protocolData: ProtocolConnectionData,
+        preserving stored: ProtocolConfiguration?
+    ) -> ProtocolConfiguration {
+        switch protocolData {
+        case .ike:
+            return .ike
+        case .wireGuardGo, .proTUN:
+            let backend: WGBackend = protocolData == .proTUN ? .proTUN : .go
+            if case let .wireGuard(storedSettings) = stored, storedSettings.backend == backend {
+                return .wireGuard(storedSettings)
+            }
+            return .wireGuard(WireGuardSettings(
+                backend: backend,
+                transport: .defaultValue,
+                ports: [],
+                features: connectionFeatureProvider.tunnelFeatures()
+            ))
+        }
+    }
+
     /// Prevents sending duplicate state change actions, e.g. connecting -> connecting
     private func updateStateSendingEffectIfNecessary(
         _ state: inout State,
@@ -495,18 +568,6 @@ public struct ConnectionFeature: Sendable {
             return .none
         }
         state.connectionState = newValue
-        // Persist the last-known good connection so cold-start UI can show prior context
-        // while the new layer is still in `.resolving`.
-        if case let .connected(intent, _, date, _) = newValue {
-            let toPersist = LastConnection(intent: intent, connectedDate: date)
-            do {
-                _ = try JSONEncoder().encode(toPersist)
-                @Shared(.lastConnection) var lastConnection
-                $lastConnection.withLock { $0 = toPersist }
-            } catch {
-                log.error("Failed to persist last connection: \(error)", category: .connectionConnect)
-            }
-        }
         if newValue.is(\.disconnected) {
             return .merge(
                 .send(.delegate(.stateChanged(newValue))),
