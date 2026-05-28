@@ -76,6 +76,6 @@ final class DiscourageSecureCoreViewController: NSHostingController<DiscourageSe
 private extension DiscourageSecureCoreViewController {
     enum Dimensions {
         static let sheetWidth: CGFloat = 520
-        static let sheetHeight: CGFloat = 600
+        static let sheetHeight: CGFloat = 620
     }
 }

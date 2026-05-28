@@ -226,9 +226,14 @@ final class HeaderViewModel {
     // MARK: - Private functions
 
     private func startObserving() {
+        // Use the published `newValue` for decisions inside the sink — see Reference.swift in
+        // swift-sharing: `value.willSet { subject.send(newValue) }` fires the publisher BEFORE
+        // the property assignment, so `self.connectionState` reads stale inside the sink.
+        // Outside-of-sink callers read via the synchronous `connectionState.X` accessors as
+        // usual; by then the assignment has completed.
         $connectionState.publisher
-            .sink { [weak self] _ in
-                self?.vpnConnectionChanged()
+            .sink { [weak self] newValue in
+                self?.vpnConnectionChanged(newValue)
             }
             .store(in: &cancellables)
 
@@ -260,23 +265,31 @@ final class HeaderViewModel {
 
     @objc
     private func vpnConnectionChanged() {
+        // Called from outside the publisher sink (e.g., the port-forwarding stream). It's
+        // safe to read `connectionState` synchronously here because we're not inside a willSet.
+        vpnConnectionChanged(connectionState)
+    }
+
+    private func vpnConnectionChanged(_: ConnectionState) {
         if isConnected {
             startNatPmpObservation()
-        } else {
-            natPmpCancellable = nil
-            delegate?.mappedPortChanged(to: nil)
-        }
-
-        if isConnected {
             if isVisible {
                 startBitrateStatistics()
             }
         } else {
+            natPmpCancellable = nil
+            delegate?.mappedPortChanged(to: nil)
             statistics?.stopGathering()
             statistics = nil
         }
 
-        contentChanged?()
+        // Defer the UI update one runloop tick so any in-flight `@Shared` `willSet` completes
+        // before the view layer reads via `viewModel.isConnected` and friends. swift-sharing
+        // fires its publisher inside the storage's `willSet`, so synchronous reads from
+        // accessors during a publisher-triggered call return the previous value.
+        DispatchQueue.main.async { [weak self] in
+            self?.contentChanged?()
+        }
     }
 
     @objc

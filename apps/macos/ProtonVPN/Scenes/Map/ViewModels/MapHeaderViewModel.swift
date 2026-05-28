@@ -36,9 +36,17 @@ class MapHeaderViewModel {
     var contentChanged: (() -> Void)?
 
     init() {
+        // Subscribe to publisher emissions to drive UI re-renders. We don't use `newValue` here
+        // because all decisions are made by accessors below, but the sink still must exist to
+        // notify the view. The `connectionState` accessors read freshest state by the time the
+        // view layer re-renders (post-willSet).
+        // Defer the UI update one runloop tick so the `@Shared` `willSet` completes before
+        // accessors are read by the view (see HeaderViewModel for the full rationale).
         $connectionState.publisher
             .sink { [weak self] _ in
-                self?.vpnConnectionChanged()
+                DispatchQueue.main.async { [weak self] in
+                    self?.contentChanged?()
+                }
             }
             .store(in: &cancellables)
     }
@@ -61,10 +69,5 @@ class MapHeaderViewModel {
             return true
         }
         return false
-    }
-
-    @objc
-    private func vpnConnectionChanged() {
-        contentChanged?()
     }
 }

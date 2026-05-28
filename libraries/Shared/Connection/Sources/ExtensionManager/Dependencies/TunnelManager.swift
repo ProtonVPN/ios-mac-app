@@ -174,19 +174,36 @@ final class PacketTunnelManager: TunnelManager {
 
     var statusStream: AsyncStream<TunnelState> {
         log.debug("Creating TunnelState stream for tunnel observation", category: .connection)
-        // The notification's payload is the source of truth — it represents the manager whose
-        // status just changed. We do not re-resolve the global "active manager" state here:
-        // doing so decouples each emit from its triggering event and can mask transitions
-        // during a protocol switch. Downstream `ConnectionFeature.updateStateSending...`
-        // already coalesces equivalent state changes. One-shot reads via `status` still apply
-        // activity-priority resolution across all managers.
+        // We resolve each emission through `currentTunnelState(after:)`, which prefers the
+        // global active-manager read (`try await status`) and falls back to the payload only
+        // on failure. The payload-only approach was tried previously but proved unreliable on
+        // macOS for IKE: `NEVPNManager.shared()` is a singleton whose `protocolConfiguration`
+        // can be transiently observed as nil during a `NEVPNStatusDidChange` for IKE — when
+        // that happens `StatusChangePayload.from` returns nil, `compactMap` drops the
+        // notification, and the user-facing state never advances to `.connected`.
+        // `activeManager()` reads from `vpnManagerRepository.managers()` which caches freshly-
+        // loaded managers, so the IKE configuration (and the username we encoded onto it) is
+        // stably available there.
         return UncheckedSendable(
             NotificationCenter.default
                 .notifications(named: .NEVPNStatusDidChange)
                 .compactMap { StatusChangePayload.from(statusDidChangeNotification: $0) }
-                .map { await self.tunnelState(from: $0) }
+                .map { await self.currentTunnelState(after: $0) }
         )
         .eraseToStream()
+    }
+
+    private func currentTunnelState(after payload: StatusChangePayload) async -> TunnelState {
+        do {
+            return try await status
+        } catch {
+            log.error(
+                "Failed to resolve global tunnel status; falling back to payload",
+                category: .connection,
+                metadata: ["error": "\(error)"]
+            )
+            return await tunnelState(from: payload)
+        }
     }
 
     private func activeManager() async throws -> (TunnelProtocol, any TunnelProviderManager)? {
@@ -243,8 +260,24 @@ final class PacketTunnelManager: TunnelManager {
 
         switch tunnelProtocol {
         case .ike:
-            let connectionData = try ConnectionData(
-                serverID: configuration.ikePeerID,
+            // IKE bypasses Local Agent, so tunnel-up is sufficient for the user-facing
+            // `.connected` state to advance. We still try to recover the server ID from the
+            // configuration (via `ikePeerID`) but tolerate failure: if the username has been
+            // dropped or malformed (e.g. macOS occasionally drops it across save/load for
+            // `.certificate` auth), we'd otherwise stall in `ExtensionManagerFeature`'s
+            // `guard let connectionData` (TunnelState `.connected(_, nil)` is rejected there).
+            // Falling back to an empty serverID lets the connection advance; downstream code
+            // that needs the server uses `currentIntent?.serverIntent.server` from
+            // `ConnectionFeature`, not this field.
+            let serverID = (try? configuration.ikePeerID) ?? ""
+            if serverID.isEmpty {
+                log.warning(
+                    "Could not recover IKE peer ID from configuration; advancing connected state with empty serverID",
+                    category: .connection
+                )
+            }
+            let connectionData = ConnectionData(
+                serverID: serverID,
                 connectionDate: connectionDate,
                 protocolData: .ike
             )

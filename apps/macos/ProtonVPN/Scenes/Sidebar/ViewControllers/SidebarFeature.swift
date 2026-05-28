@@ -370,7 +370,15 @@ private extension SidebarFeature {
                 )
             case let .connectionStateChanged(connectionState):
                 switch connectionState {
-                case .resolving, .connecting:
+                case .resolving:
+                    // `.resolving` is a transient app-startup state used to bridge cold-start
+                    // hydration with the real tunnel-status read. It is NOT a user-initiated
+                    // connect, so we don't show the connecting overlay — otherwise the user
+                    // sees a brief connecting flash at every launch before the resolved
+                    // (typically `.disconnected`) state arrives. `.connecting` (a real
+                    // user-initiated attempt) still shows the overlay.
+                    return .none
+                case .connecting:
                     if state.overlayState != .suppressed {
                         beginConnectingOverlay(&state)
                         syncConnectingOverlayState(&state, connectionState: connectionState)

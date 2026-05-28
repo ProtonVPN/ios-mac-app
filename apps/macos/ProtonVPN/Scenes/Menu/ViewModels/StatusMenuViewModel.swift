@@ -384,9 +384,13 @@ final class StatusMenuViewModel {
             }
             .store(in: &cancellables)
 
+        // Defer the UI update one runloop tick so the `@Shared` `willSet` completes before
+        // accessors are read by the view (see HeaderViewModel for the full rationale).
         $connectionState.publisher
             .sink { [weak self] _ in
-                self?.handleVpnStatusChanged()
+                DispatchQueue.main.async { [weak self] in
+                    self?.handleVpnStatusChanged()
+                }
             }
             .store(in: &cancellables)
     }
