@@ -31,6 +31,7 @@ import Theme
 class ConnectingViewController: NSViewController {
     private let store: StoreOf<ConnectingOverlayFeature>
     private var hostingView: NSHostingView<ConnectingOverlayContentView>!
+    private var mouseTrackingMonitor: Any?
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
@@ -40,6 +41,12 @@ class ConnectingViewController: NSViewController {
     required init(store: StoreOf<ConnectingOverlayFeature>) {
         self.store = store
         super.init(nibName: nil, bundle: nil)
+    }
+
+    deinit {
+        if let mouseTrackingMonitor {
+            NSEvent.removeMonitor(mouseTrackingMonitor)
+        }
     }
 
     override func loadView() {
@@ -61,6 +68,39 @@ class ConnectingViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.setAccessibilityModal(true)
+    }
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        installMouseTrackingBarrier()
+    }
+
+    override func viewWillDisappear() {
+        super.viewWillDisappear()
+        removeMouseTrackingBarrier()
+    }
+
+    /// SwiftUI's `.onHover` (used by sidebar/countries rows beneath the overlay) is backed by
+    /// `NSTrackingArea` with `.inVisibleRect` — which dispatches mouseEntered/mouseExited based
+    /// purely on the cursor's geometric position in the owning view's rect, regardless of view
+    /// occlusion or hit-testing. Subclassing `NSView`, claiming hit-tests, adding tracking areas,
+    /// or applying SwiftUI `.contentShape` modifiers on the overlay all leave that dispatch
+    /// untouched. The only way to stop it from inside the overlay is to drop the relevant
+    /// `NSEvent`s before AppKit dispatches them. Buttons inside the overlay forgo hover styling
+    /// while presented as a side effect — clicks still work.
+    private func installMouseTrackingBarrier() {
+        guard mouseTrackingMonitor == nil, let window = view.window else { return }
+        mouseTrackingMonitor = NSEvent.addLocalMonitorForEvents(
+            matching: [.mouseMoved, .mouseEntered, .mouseExited]
+        ) { [weak window] event in
+            event.window === window ? nil : event
+        }
+    }
+
+    private func removeMouseTrackingBarrier() {
+        guard let monitor = mouseTrackingMonitor else { return }
+        NSEvent.removeMonitor(monitor)
+        mouseTrackingMonitor = nil
     }
 
     private enum Dimensions {
