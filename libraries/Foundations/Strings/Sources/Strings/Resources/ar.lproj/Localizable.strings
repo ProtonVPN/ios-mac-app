@@ -1163,13 +1163,16 @@
 "_plans_footer" = "بمجرد الاشتراك في إحدى الباقات المدفوعة، سيتم خصم المبلغ من حساب iTunes الخاص بك شاملاً الضرائب ورسوم المنصة (وهي رسوم إضافية ليس لها علاقة بـ Proton). بعدها ستتغير فئة حسابك فوراً لتستمتع بالباقة لمدة سنة، مع احتفاظك بحرية تجديد أو إلغاء الاشتراك متى أردت عبر موقعنا أو تطبيق iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "سنوياً";
+"_per_year" = " سنوياً";
+
+/* Per month. Appended to plan price. */
+"_per_month" = " شهرياً";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "من الموقع فقط";
 
-/* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "سيتجدد اشتراكك تلقائياً في %1$@ بقيمة %2$@ سنوياً";
+/* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
+"_introductory_price_footer" = "عرض ترحيبي، يتجدد تلقائياً في %1$@ مقابل %2$@%3$@.";
 
 /* iOS plan feature */
 "_feature_server_count" = "خوادم تتوزع في";
@@ -1657,17 +1660,17 @@
 /* Description of user account update screen part 1 */
 "maximum_device_plan_limit_part_1" = "يُرجى قطع اتصال أحد الأجهزة لتوصيل هذا الجهاز أو الترقية إلى %@";
 
-"_reconnect_title" = "نحن نعيد الاتصال بأسرع خادم متاح.";
+"_reconnect_title" = "نعمل على إعادة توصيلك بأسرع خادم متاح لك الآن.";
 
-"_subscription_expired_title" = "انتهت صلاحية خطة اشتراك الـ VPN الخاصة بك";
+"_subscription_expired_title" = "انتهت صلاحية اشتراكك في الـ VPN";
 
-"_subscription_expired_description" = "تم تخفيض اشتراكك.";
+"_subscription_expired_description" = "تم تعديل فئة اشتراكك.";
 
-"_subscription_expired_reconnection_description" = "تم تخفيض اشتراكك، لذا نعيد الاتصال بأسرع خادم متاح.";
+"_subscription_expired_reconnection_description" = "تم تعديل فئة اشتراكك؛ لذا نعمل الآن على إعادة توصيلك بأسرع خادم متاح لك حالياً.";
 
-"_subscription_upgrade_title" = "قم بالترقية مرة أخرى للاستمتاع بجميع الميزات:";
+"_subscription_upgrade_title" = "جدد اشتراكك للاستمتاع بكامل إمكانيات التطبيق:";
 
-"_subscription_upgrade_option3" = "الميزات المتقدمة: NetShield، Secure Core، Tor، P2P";
+"_subscription_upgrade_option3" = "المزايا المتقدمة: NetShield ،Secure Core ،Tor ،P2P";
 
 "_tier_free" = "مجاني";
 
@@ -1677,39 +1680,39 @@
 
 "_information_title" = "المعلومات";
 
-"_features_title" = "الميزات";
+"_features_title" = "أدوات الحماية";
 
 "_performance_title" = "الأداء";
 
-"_smart_routing_title" = "Smart Routing";
+"_smart_routing_title" = "التوجيه الذكي";
 
-"_streaming_title" = "بث";
+"_streaming_title" = "منصات المشاهدة";
 
-"_p2p_title" = "P2P/BitTorrent";
+"_p2p_title" = "P2P أو BitTorrent";
 
 "_tor_title" = "Tor";
 
 "_server_load_title" = "ضغط الخادم";
 
-"_streaming_servers_description" = "اتصل بخادم Plus في هذا البلد لبدء البث.";
+"_streaming_servers_description" = "شاهد محتواك المفضل عبر الاتصال بأحد خوادم Plus في هذه الدولة.";
 
-"_streaming_servers_note" = "ملاحظة: قم بإيقاف تشغيل خدمة الموقع ومسح ذاكرة التخزين المؤقت لتطبيقات البث لضمان ظهور محتوى جديد.";
+"_streaming_servers_note" = "تلميح: لضمان وصولك إلى أحدث العروض، نوصي بتعطيل خدمات الموقع ومسح التخزين المؤقت لتطبيقات المشاهدة.";
 
-"_streaming_servers_extra" = "والمزيد";
+"_streaming_servers_extra" = "واكثر";
 
-"_feature_free_servers" = "خوادم مجانية";
+"_feature_free_servers" = "الخوادم المجانية";
 
-"_feature_free_servers_description" = "الأمن والخصوصية للجميع. لا توجد حدود للبيانات على الخوادم المجانية، ولن نبطئ سرعة تصفحك عمدًا أبدًا.";
+"_feature_free_servers_description" = "لأن الأمان والخصوصية حق للجميع، تمنحك خوادمنا المجانية سعة بيانات غير محدودة، مع التزامنا التام بعدم تقييد سرعة تصفحك تحت أي ظرف.";
 
-"_feature_smart_routing_description" = "تتيح هذه التقنية لـ Proton VPN توفير سرعة وأمان أعلى في البلدان التي يصعب خدمتها.";
+"_feature_smart_routing_description" = "بفضل هذه التقنية، يوفر Proton VPN مستويات أعلى من السرعة والأمان في الدول التي تواجه تحديات في الاتصال.";
 
-"_feature_streaming_description" = "تدعم خوادم Plus البث (Netflix، Disney+، إلخ) من أي مكان في العالم.";
+"_feature_streaming_description" = "تمنحك خوادم Plus وصولاً لمنصات المشاهدة (Netflix و Disney+ ..إلخ) لتستمتع بمحتواك المفضل أينما كنت.";
 
-"_feature_p2p_description" = "توفر هذه الخوادم أفضل أداء لـ BitTorrent ومشاركة الملفات.";
+"_feature_p2p_description" = "تمتع بالأداء الأمثل لتبادل الملفات واستخدم BitTorrent بسلاسة تامة عبر هذه الخوادم.";
 
-"_feature_tor_description" = "قم بتوجيه حركة مرور الإنترنت الخاصة بك عبر شبكة Tor. أبطأ، ولكن أكثر خصوصية.";
+"_feature_tor_description" = "عزز خصوصيتك بتمرير بياناتك عبر شبكة Tor، مع مراعاة أن سرعة ستكون أقل من المعتاد.";
 
-"_performance_load_description" = "الخوادم ذات الحمل العالي أبطأ من الخوادم ذات الحمل المنخفض.";
+"_performance_load_description" = "تنخفض السرعة في الخوادم ذات الضغط المرتفع، مقارنة بذات الضغط المنخفض.";
 
 "_performance_load_low" = "منخفض";
 
@@ -1729,7 +1732,7 @@
 "_connections_free" = "الخوادم المجانية";
 
 /* Header of the countries list for free users */
-"_connections_free_with_count" = "اتصالات مجانية (%@)";
+"_connections_free_with_count" = "الخوادم المجانية (%@)";
 
 /* Header of the countries list for paid users */
 "_connections_paid_with_count" = "مواقع Plus (%@)";
@@ -1738,28 +1741,28 @@
 "_gateways_modal_title" = "ما هي البوابة؟";
 
 /* Gateways info modals text (both iOS and macOS) */
-"_gateways_modal_text" = "بوابة الـ VPN هي اتصال آمن يوفر وصولاً متحكمًا فيه إلى بيانات وخدمات شركتك من خلال خوادم مخصصة";
+"_gateways_modal_text" = "تمثل بوابة الـ VPN قناة اتصال آمنة تمنحك وصولاً محكماً وموثوقاً لبيانات وخدمات شركتك عبر خوادم مخصصة.";
 
 "_vpn_accelerator_title" = "تحسين سرعة VPN";
 
-"_vpn_accelerator_change_title" = "تغيير VPN Accelerator";
+"_vpn_accelerator_change_title" = "تغيير محسن سرعة VPN";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
-"_vpn_accelerator_description" = "يُفعِّل VPN Accelerator مجموعة من التقنيات الفريدة لتحسين الأداء التي يمكن أن تزيد من سرعات VPN بنسبة تصل إلى 400%%.\nمعرفة المزيد";
+"_vpn_accelerator_description" = "تستند ميزة تحسين سرعة VPN على مجموعة من الابتكارات الفريدة التي ترفع سرعات الـ VPN بنسبة تصل إلى 400%%.\nمعرفة المزيد";
 
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "معرفة المزيد";
 
-"_action_requires_reconnect" = "يجب إعادة تشغيل اتصالك لتطبيق هذا التغيير";
+"_action_requires_reconnect" = "لتطبيق هذا التغيير، يُرجى قطع الاتصال بالخادم ثم إعادته";
 
 /* Settings page row title */
-"_plutonium_title" = "الانقسام النفقي (تجريبي)";
+"_plutonium_title" = "تقسيم الاتصال (تجريبي)";
 
 /* IP entry validation error */
-"_plutonium_validation_error" = "أدخل عنوان IPv4 صالح";
+"_plutonium_validation_error" = "يُرجى إدخال عنوان IPv4 صحيح";
 
 /* IP entry validation error */
-"_plutonium_address_exists" = "العنوان مضاف بالفعل";
+"_plutonium_address_exists" = "هذا العنوان موجود بالفعل";
 
 /* Button title for adding IP to the list */
 "_plutonium_add_button" = "إضافة";
@@ -1768,22 +1771,22 @@
 "_plutonium_all_apps" = "جميع التطبيقات";
 
 /* Empty list title, appears when no elements are present */
-"_plutonium_none" = "لا شيء";
+"_plutonium_none" = "بدون";
 
 /* Description when user didn't include any apps in the list */
-"_plutonium_no_apps" = "لم يتم تحديد أي تطبيقات";
+"_plutonium_no_apps" = "لم يتم تحديد تطبيقات بعد";
 
 /* Title of the split tunneling feature operation mode */
 "_plutonium_exclude_mode" = "وضع الاستبعاد";
 
 /* Title of the split tunneling feature operation mode */
-"_plutonium_include_mode" = "وضع التضمين";
+"_plutonium_include_mode" = "وضع الإدراج";
 
 /* Header of the excluded apps list */
 "_plutonium_exclusion_list_apps" = "التطبيقات المستبعدة";
 
 /* Header of the excluded apps list */
-"_plutonium_inclusion_list_apps" = "التطبيقات المحمية";
+"_plutonium_inclusion_list_apps" = "التطبيقات المدرجة";
 
 /* Text appears when user makes any configuration changes that require reconnection */
 "_plutonium_reconnection_notice" = "تُطبَّق التغييرات عند إعادة الاتصال";
@@ -2844,9 +2847,6 @@
 
 /* Main Button of paid plans list allowing user to start payments process. */
 "upsell_plans_list_validate_button" = "الحصول على VPN Plus";
-
-/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /شهر";
 
 "onboarding_usage_stats_title" = "مشاركة إحصاءات الاستخدام المجهولة";
 

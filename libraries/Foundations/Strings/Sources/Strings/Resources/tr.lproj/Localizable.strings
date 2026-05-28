@@ -1163,13 +1163,16 @@
 "_plans_footer" = "Ücretli bir tarife satın aldığınızı onayladıktan sonra, iTunes hesabınızdan vergiler ve ek platform ücretleri (doğrudan Proton tarafından ücretlendirilmeyen) ile birlikte görüntülenen tutar alınır. Satın alma işlemini tamamladıktan sonra, 1 yıllık bir dönem için otomatik olarak seçilmiş tarifeye geçersiniz. Bu sürenin sonunda aboneliğinizi çevrim içi olarak ya da iOS uygulamamız üzerinden yenileyebilir ya da iptal edebilirsiniz.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ yıl";
+"_per_year" = " / yıl";
+
+/* Per month. Appended to plan price. */
+"_per_month" = " / ay";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "İnternete özel";
 
-/* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Abonelik %1$@ tarihinde %2$@/yıl tutar ile otomatik olarak yenilenir";
+/* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
+"_introductory_price_footer" = "Karşılama teklifi. Otomatik olarak %1$@ tarihinde %2$@%3$@ ile yenilenir.";
 
 /* iOS plan feature */
 "_feature_server_count" = "Şuradaki sunuculara bağlan";
@@ -2844,9 +2847,6 @@
 
 /* Main Button of paid plans list allowing user to start payments process. */
 "upsell_plans_list_validate_button" = "VPN Plus edinin";
-
-/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /ay";
 
 "onboarding_usage_stats_title" = "Anonim kullanım istatistikleri paylaşılsın";
 

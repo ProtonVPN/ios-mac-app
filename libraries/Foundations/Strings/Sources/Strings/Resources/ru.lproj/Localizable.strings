@@ -753,7 +753,7 @@
 "_error_user_credentials_missing" = "Учетные данные пользователя отсутствуют. Не удается войти в систему";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "Истек срок действия учетных данных. Пожалуйста, войдите в систему";
+"_error_user_credentials_expired" = "Срок действия учётных данных истёк. Войдите в аккаунт";
 
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "Учетные данные VPN отсутствуют в связке ключей";
@@ -1163,13 +1163,16 @@
 "_plans_footer" = "При подтверждении покупки платной подписки, с вашего аккаунта в iTunes будет списана сумма, которая включает в себя налог и комиссию платформы (они определяются не компанией Proton). После покупки, ваша подписка будет улучшена до выбранного тарифа на 1 год. После этого вы сможете продлить или отменить подписку как через сайт, так и в нашем приложение для iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ год";
+"_per_year" = " / year";
+
+/* Per month. Appended to plan price. */
+"_per_month" = " / month";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Web only";
 
-/* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Subscription auto-renews on %1$@ at %2$@/year";
+/* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
+"_introductory_price_footer" = "Welcome offer. Auto-renews on %1$@ at %2$@%3$@.";
 
 /* iOS plan feature */
 "_feature_server_count" = "Подключение к серверам в";
@@ -1863,7 +1866,7 @@
 
 "_neks_t2_description" = "Использование Kill Switch нестабильно на этом устройстве.\n\nВаше устройство оснащено чипом безопасности T2, что может привести к проблемам со стабильностью системы, если функция Kill Switch в macOS используется Proton VPN.";
 
-"_neks_t2_connect" = "Все равно включить";
+"_neks_t2_connect" = "Всё равно включить";
 
 "_subuser_alert_description" = "Чтобы продолжить с Proton VPN, разрешите подключения к VPN. Также это нужно сделать для всех пользователей вашей организации.";
 
@@ -2228,7 +2231,7 @@
 "_alert_protocol_deprecated_enable_smart" = "Обновить";
 
 /* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser */
-"_alert_protocol_deprecated_learn_more" = "Узнать больше";
+"_alert_protocol_deprecated_learn_more" = "Подробнее";
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Закрыть";
@@ -2378,7 +2381,7 @@
 "_settings_protocol_alert_body" = "Изменение протоколов завершит вашу текущую сессию VPN.";
 
 /* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_button_cancel" = "Отмена";
+"_settings_protocol_alert_button_cancel" = "Отменить";
 
 /* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
 "_settings_protocol_alert_button_continue" = "Продолжить";
@@ -2444,7 +2447,7 @@
 "search_recent_clear_title" = "Ваша история поиска будет утеряна. Продолжить?";
 
 /* Cancel button title in the alert asking for confirmation before deleting recent searches */
-"search_recent_clear_cancel" = "Отмена";
+"search_recent_clear_cancel" = "Отменить";
 
 /* Confirmation button title in alert asking for confirmation before deleting recent searches */
 "search_recent_clear_continue" = "Продолжить";
@@ -2845,9 +2848,6 @@
 /* Main Button of paid plans list allowing user to start payments process. */
 "upsell_plans_list_validate_button" = "Получить VPN Plus";
 
-/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /месяц";
-
 "onboarding_usage_stats_title" = "Делиться анонимной статистикой использования";
 
 "onboarding_usage_stats_description" = "Данные об использовании помогают нам преодолевать блокировки VPN и повышать производительность приложения.";
@@ -2972,7 +2972,7 @@
 "_disable_plutonium_message" = "Это отключит раздельное туннелирование.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message_link_text" = "Узнать больше";
+"_ike_deprecation_alert_message_link_text" = "Подробнее";
 
 /* Button title for 'Continue with IKEv2' */
 "_ike_deprecation_alert_continue_button_title" = "Продолжить с IKEv2";
@@ -3179,13 +3179,13 @@
 "_hermes_upsell_button" = "Улучшить тариф";
 
 /* Hermes Feature Title within app settings screens */
-"_hermes_feature_title" = "Пользовательская DNS";
+"_hermes_feature_title" = "Пользовательский DNS";
 
 /* Hermes Feature Window Title within dedicated Hermes Settings view */
 "_hermes_feature_windowTitle" = "Настройки";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Пользовательская DNS";
+"_hermes_feature_description" = "Пользовательский DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
 "_hermes_feature_description" = "Подключайтесь к VPN с помощью собственной или сторонней системы доменных имён (DNS). Подробнее";

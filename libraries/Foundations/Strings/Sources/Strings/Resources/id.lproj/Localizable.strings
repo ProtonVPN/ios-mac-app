@@ -1163,13 +1163,16 @@
 "_plans_footer" = "Setelah pembelian paket berbayar Anda telah dikonfirmasi, akun iTunes Anda akan ditagih sesuai harga yang tertera, termasuk pajak dan biaya platform (tidak dikenakan oleh Proton secara langsung). Usai membeli, Anda akan secara otomatis ditingkatkan ke paket yang dipilih untuk periode 1 tahun. Setelah itu, Anda bisa memperpanjang atau membatalkan paket secara daring atau melalui aplikasi kami di iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/th";
+"_per_year" = " / year";
+
+/* Per month. Appended to plan price. */
+"_per_month" = " / month";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Khusus web";
 
-/* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Langganan diperpanjang secara otomatis pada %1$@ seharga %2$@/tahun";
+/* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
+"_introductory_price_footer" = "Welcome offer. Auto-renews on %1$@ at %2$@%3$@.";
 
 /* iOS plan feature */
 "_feature_server_count" = "Terhubung ke server dalam";
@@ -2844,9 +2847,6 @@
 
 /* Main Button of paid plans list allowing user to start payments process. */
 "upsell_plans_list_validate_button" = "Dapatkan VPN Plus";
-
-/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /bulan";
 
 "onboarding_usage_stats_title" = "Bagikan statistik pemakaian anonim";
 

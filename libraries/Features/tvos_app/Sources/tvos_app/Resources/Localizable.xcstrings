@@ -587,6 +587,12 @@
             "value" : "Bir günlük, soruna neden olan olayları görmemizi sağlayan bir dosya türüdür. Bunları yalnızca mühendislerimizin hataları gidermesine yardımcı olmaları için kullanacağız."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Журнал – це тип файлу, який показує виконані вами дії, що призвели до помилки. Наші інженери використовують ці дані винятково для усунення помилок."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3808,6 +3814,12 @@
             "value" : "E-posta"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Е-пошта"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4170,6 +4182,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bildirim gönderilemedi"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не вдалося надіслати звіт"
           }
         },
         "zh-Hans" : {
@@ -4748,6 +4766,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uygulama günlüklerini al"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отримати журнали програми"
           }
         },
         "zh-Hans" : {
@@ -6200,6 +6224,12 @@
             "value" : "Günlükler yükleniyor..."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завантаження журналів..."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6348,6 +6378,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Günlük kayıtları"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Журнали"
           }
         },
         "zh-Hans" : {
@@ -6716,6 +6752,12 @@
             "value" : "Günlük kaydı bulunamadı."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Немає доступних журналів."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6864,6 +6906,12 @@
             "value" : "Tamam"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7004,6 +7052,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lütfen yeniden deneyin."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Повторіть спробу."
           }
         },
         "zh-Hans" : {
@@ -8900,6 +8954,12 @@
             "value" : "Sorun bildireceğim"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Повідомити про проблему"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9040,6 +9100,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bildirim gönderildi"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Звіт надіслано"
           }
         },
         "zh-Hans" : {
@@ -9400,6 +9466,12 @@
             "value" : "Hata günlükleri gönderilsin"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Надіслати журнали помилок"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9542,6 +9614,12 @@
             "value" : "Bildirimi gönder"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Надіслати звіт"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9682,6 +9760,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bildirim gönderiliyor..."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Надсилання звіту..."
           }
         },
         "zh-Hans" : {
@@ -11223,7 +11307,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "正在登出账户…"
+            "value" : "正在登出..."
           }
         },
         "zh-Hant" : {
@@ -12664,6 +12748,12 @@
             "value" : "Yeniden dene"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Повторити спробу"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13460,6 +13550,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kullanıcı adı"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ім'я користувача"
           }
         },
         "zh-Hans" : {
@@ -14679,6 +14775,12 @@
             "value" : "Sorun neydi? Bir hata iletisi gördüyseniz, ne olduğunu bize yazın."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Що пішло не так? Якщо ви отримали повідомлення про помилку, повідомте нам його зміст."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15108,7 +15210,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "当要求您输入验证码时，请输入（检索中...）"
+            "value" : "当系统要求输入验证码时，请输入（正在获取...）"
           }
         },
         "zh-Hant" : {
@@ -15251,6 +15353,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hangi yayın akışı hizmetini kullanmaya çalışıyorsunuz?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Яким сервісом потокової трансляції ви намагаєтеся скористатися?"
           }
         },
         "zh-Hans" : {
@@ -15520,6 +15628,12 @@
             "value" : "Votre connexion n'a pas abouti"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La tua connessione non è riuscita"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15578,6 +15692,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bağlantınız kurulamadı"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Збій з'єднання"
           }
         },
         "zh-Hans" : {

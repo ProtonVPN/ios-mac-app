@@ -1163,13 +1163,16 @@
 "_plans_footer" = "Po potvrzení nákupu placeného tarifu bude z vašeho účtu iTunes stržena zobrazená částka, která zahrnuje daně a další poplatky platformy (které nejsou účtovány přímo společností Proton). Po provedení nákupu budete automaticky převedeni na vybraný plán na dobu 1 roku, po jejímž uplynutí můžete prodloužit nebo zrušit jeho platnost, a to buď online, nebo prostřednictvím naší aplikace pro iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ rok";
+"_per_year" = " / rok";
+
+/* Per month. Appended to plan price. */
+"_per_month" = " / měsíc";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Pouze web";
 
-/* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Předplatné je automaticky obnovováno %1$@ za %2$@/rok";
+/* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
+"_introductory_price_footer" = "Uvítací nabídka. Obnovuje se automaticky %1$@ za %2$@%3$@.";
 
 /* iOS plan feature */
 "_feature_server_count" = "Připojit k serverům v";
@@ -2844,9 +2847,6 @@
 
 /* Main Button of paid plans list allowing user to start payments process. */
 "upsell_plans_list_validate_button" = "Získat VPN Plus";
-
-/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /měsíc";
 
 "onboarding_usage_stats_title" = "Sdílejte anonymní statistiky o používání";
 

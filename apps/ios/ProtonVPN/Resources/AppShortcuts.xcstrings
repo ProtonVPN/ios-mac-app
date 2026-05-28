@@ -323,6 +323,17 @@
             ]
           }
         },
+        "uk" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Чи захищає мене ${applicationName}",
+              "Чи під'єднана ${applicationName}",
+              "Стан ${applicationName}",
+              "Показати стан ${applicationName}"
+            ]
+          }
+        },
         "vi" : {
           "stringSet" : {
             "state" : "translated",
@@ -734,6 +745,19 @@
               "${applicationName} ile bağlantı kurulsun mu",
               "${applicationName} uygulamasını aç",
               "${applicationName} bağlantısı kur"
+            ]
+          }
+        },
+        "uk" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Під'єднати ${applicationName}",
+              "З'єднатися з ${applicationName}",
+              "Захистити мене з ${applicationName}",
+              "З'єднатися з ${applicationName}",
+              "Запустити ${applicationName}",
+              "Під'єднання ${applicationName}"
             ]
           }
         },
@@ -1244,6 +1268,22 @@
             ]
           }
         },
+        "uk" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Під'єднатися до ${country} з ${applicationName}",
+              "Під'єднатися до ${city} з ${applicationName}",
+              "Під'єднатися до ${state} з ${applicationName}",
+              "Під'єднати ${applicationName} до ${country}",
+              "Під'єднати ${applicationName} до ${city}",
+              "Під'єднати ${applicationName} до ${state}",
+              "Захистити мене з ${applicationName}",
+              "З'єднатися з ${applicationName}",
+              "Під'єднання ${applicationName}"
+            ]
+          }
+        },
         "vi" : {
           "stringSet" : {
             "state" : "translated",
@@ -1641,6 +1681,18 @@
               "Beni ${applicationName} ile koruma",
               "${applicationName} bağlantısını kes",
               "${applicationName} uygulamasını kapat"
+            ]
+          }
+        },
+        "uk" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Від'єднати ${applicationName}",
+              "Від'єднатися від ${applicationName}",
+              "Не захищати мене з ${applicationName}",
+              "Від'єднання ${applicationName}",
+              "Вимкнути ${applicationName}"
             ]
           }
         },

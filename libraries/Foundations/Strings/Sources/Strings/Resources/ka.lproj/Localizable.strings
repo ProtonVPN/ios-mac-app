@@ -1163,13 +1163,16 @@
 "_plans_footer" = "როგორც კი ფასიანი ტარიფის შეძენა დადასტურდება, iTunes-ის თქვენი ანგარიშიდან ჩამოგეჭრებათ ნაჩვენები თანხა, რაც ბაჟს და დღგ-საც შეიცავს (რომელიც Proton-მდე ვერ აღწევს). შეძენის დასრულების შემდეგ თქვენი ანგარიში ავტომატურად განახლდება არჩეული გეგმისთვის ერთწლიანი პერიოდით, რომლის გასვლის შემდეგაც თქვენ შეგიძლიათ, გააგრძელოთ ის ან გააუქმოთ. ამის გაკეთება ონლაინ და iOS-ის აპშიც შეგიძლიათ.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ წ";
+"_per_year" = " / წელიწადი";
+
+/* Per month. Appended to plan price. */
+"_per_month" = " / თვე";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Web only";
 
-/* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Subscription auto-renews on %1$@ at %2$@/year";
+/* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
+"_introductory_price_footer" = "მისასალმების შეთავაზება. ავტომატურად განახლდება ყოველ: %1$@. ფასი: %2$@%3$@.";
 
 /* iOS plan feature */
 "_feature_server_count" = "მისაერთებელი სერვერების მდებარეობა";
@@ -2844,9 +2847,6 @@
 
 /* Main Button of paid plans list allowing user to start payments process. */
 "upsell_plans_list_validate_button" = "მიიღეთ VPN Pus";
-
-/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /თვე";
 
 "onboarding_usage_stats_title" = "გამოყენების ანონიმური სტატისტიკის გაზიარება";
 

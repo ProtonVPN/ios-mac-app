@@ -1163,13 +1163,16 @@
 "_plans_footer" = "유료 요금제 구매를 확인하면, iTunes 계정에 세금과 추가 플랫폼 수수료(Proton이 직접 청구하지 않음) 가 포함된 표시된 금액이 청구됩니다. 구매 후, 1년 동안 선택한 플랜으로 자동으로 업그레이드되며, 그 후 온라인 또는 iOS 앱을 통해 갱신하거나 취소할 수 있습니다.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ 년";
+"_per_year" = " / year";
+
+/* Per month. Appended to plan price. */
+"_per_month" = " / month";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Web 전용";
 
-/* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "구독이 매 %2$@년마다 %1$@(으)로 자동 갱신됩니다.";
+/* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
+"_introductory_price_footer" = "Welcome offer. Auto-renews on %1$@ at %2$@%3$@.";
 
 /* iOS plan feature */
 "_feature_server_count" = "서버에 연결";
@@ -2844,9 +2847,6 @@
 
 /* Main Button of paid plans list allowing user to start payments process. */
 "upsell_plans_list_validate_button" = "VPN Plus 구매하기";
-
-/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /월간";
 
 "onboarding_usage_stats_title" = "익명 사용 통계 공유";
 

@@ -1163,13 +1163,16 @@
 "_plans_footer" = "Пасля пацвярджэння куплі платнага тарыфнага плана з вашага ўліковага запісу iTunes будзе спагнана паказаная сума, якая ўключае падаткі і дадатковую плату платформе (яна не вызначаецца непасрэдна Proton). Пасля ажыццяўлення аплаты, вы будзеце аўтаматычна пераведзены на выбраны тарыфны план тэрмінам на 1 год. На працягу гэтага тэрміна вы зможаце падоўжыць падпіску, скасаваць яе праз вэб-сайт або праз праграму ў iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/год";
+"_per_year" = " / год";
+
+/* Per month. Appended to plan price. */
+"_per_month" = " / месяц";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Толькі ў вэб-праграме";
 
-/* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Падпіска будзе аўтаматычна падаўжацца %1$@ за %2$@/год";
+/* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
+"_introductory_price_footer" = "Вітальная прапанова. Аўтаматычнае падаўжэнне адбудзецца %1$@ за %2$@%3$@.";
 
 /* iOS plan feature */
 "_feature_server_count" = "Падключыцца да сервераў у";
@@ -2844,9 +2847,6 @@
 
 /* Main Button of paid plans list allowing user to start payments process. */
 "upsell_plans_list_validate_button" = "Атрымаць VPN Plus";
-
-/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /месяц";
 
 "onboarding_usage_stats_title" = "Абагульваць ананімную статыстыку выкарыстання";
 

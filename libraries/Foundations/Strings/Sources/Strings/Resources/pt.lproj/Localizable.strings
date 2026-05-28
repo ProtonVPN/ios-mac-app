@@ -1163,13 +1163,16 @@
 "_plans_footer" = "Após confirmação da sua compra de um plano pago, será cobrada à sua conta iTunes a quantia mostrada, que inclui impostos e taxas adicionais da plataforma (que não são cobradas pelo Proton directamente). Após finalizar a compra, é feita a actualização para o plano selecionado por 1 ano, após o qual pode renovar ou cancelar, seja online, seja pela nossa aplicação iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ano";
+"_per_year" = " / year";
+
+/* Per month. Appended to plan price. */
+"_per_month" = " / month";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Apenas web";
 
-/* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "A subscrição é renovada automaticamente em %1$@ por %2$@/ano.";
+/* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
+"_introductory_price_footer" = "Welcome offer. Auto-renews on %1$@ at %2$@%3$@.";
 
 /* iOS plan feature */
 "_feature_server_count" = "Ligar aos servidores em";
@@ -2844,9 +2847,6 @@
 
 /* Main Button of paid plans list allowing user to start payments process. */
 "upsell_plans_list_validate_button" = "Obter VPN Plus";
-
-/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /mês";
 
 "onboarding_usage_stats_title" = "Partilhar estatísticas anónimas de utilização";
 
