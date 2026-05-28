@@ -582,8 +582,15 @@ private extension SidebarFeature {
             switch action {
             case let .connection(.delegate(.connectionFailed(error))):
                 SentryHelper.shared?.log(error: error)
+                // Pre-connection failures (network unreachable, etc.) emit only the delegate
+                // and never transition `connectionState` to `.disconnected`, so the overlay
+                // reducer's normal dismissal path doesn't fire. Hide it explicitly when the
+                // connection layer is back at rest.
+                if state.connectionState.is(\.disconnected) {
+                    state.overlayState = .hidden
+                }
                 state.alert = connectionFailureAlert(for: error)
-                return .none
+                return .cancel(id: CancelID.overlayDelay)
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
                 state.$connectionState.withLock { $0 = connectionState }
@@ -611,33 +618,49 @@ private extension SidebarFeature {
                     ]
                 )
                 SentryHelper.shared?.log(error: resolutionError)
+                // Intent-resolution failures (e.g. unavailable country, secure core) reject the
+                // connect attempt *before* the connection state transitions to `.connecting`,
+                // so the overlay reducer never sees a `.disconnected` change to dismiss on.
+                // Hide the overlay here so the user only sees the upsell, not a stuck
+                // "Connecting…" overlay behind it.
+                state.overlayState = .hidden
+                let cancelOverlayDelay: Effect<Action> = .cancel(id: CancelID.overlayDelay)
                 switch resolutionError {
                 case .secureCoreUnavailable:
                     state.pendingReconnectIntent = nil
-                    return .send(.countriesSection(.quickSettings(.presentUpsell(.secureCore))))
+                    return .merge(
+                        cancelOverlayDelay,
+                        .send(.countriesSection(.quickSettings(.presentUpsell(.secureCore))))
+                    )
                 case let .specificCountryUnavailable(countryCode):
                     state.pendingReconnectIntent = nil
-                    return .send(.countriesSection(.quickSettings(.presentUpsell(
-                        .country(
-                            countryCode: countryCode,
-                            numberOfDevices: DomainConstants.maxDeviceCount,
-                            numberOfCountries: serverRepository.countryCount()
-                        )
-                    ))))
+                    return .merge(
+                        cancelOverlayDelay,
+                        .send(.countriesSection(.quickSettings(.presentUpsell(
+                            .country(
+                                countryCode: countryCode,
+                                numberOfDevices: DomainConstants.maxDeviceCount,
+                                numberOfCountries: serverRepository.countryCount()
+                            )
+                        ))))
+                    )
                 case .serverChangeUnavailable:
                     let availability = serverChangeAuthorizer.serverChangeAvailability()
                     guard case let .unavailable(until, duration, exhaustedSkips) = availability else {
                         state.pendingReconnectIntent = nil
-                        return .none
+                        return cancelOverlayDelay
                     }
                     state.pendingReconnectIntent = intent
-                    return .send(.countriesSection(.quickSettings(.presentUpsell(
-                        .cantSkip(
-                            before: until,
-                            totalDuration: duration,
-                            longSkip: exhaustedSkips
-                        )
-                    ))))
+                    return .merge(
+                        cancelOverlayDelay,
+                        .send(.countriesSection(.quickSettings(.presentUpsell(
+                            .cantSkip(
+                                before: until,
+                                totalDuration: duration,
+                                longSkip: exhaustedSkips
+                            )
+                        ))))
+                    )
                 }
             case .connection(.core(.certAuth(.refreshFinished))):
                 return .none
