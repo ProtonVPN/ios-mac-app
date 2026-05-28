@@ -103,10 +103,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
             return false
         }
 
-        switch connectionState {
-        case .connected, .connecting:
-            break
-        default:
+        guard connectionState.isConnectedOrConnecting else {
             log.info("VPN Not connected", category: .app)
             return false
         }

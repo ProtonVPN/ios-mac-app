@@ -32,12 +32,10 @@ public typealias VpnFeatureChangeState = FeatureChangeAvailability
 public extension VpnFeatureChangeState {
     init(connectionState: ConnectionState) {
         let vpnProtocol = connectionState.resolvedVpnProtocol
-        let isConnected = connectionState.isConnected
-        let isConnecting = connectionState.is(\.connecting)
 
-        if isConnected, vpnProtocol?.authenticationType == .certificate {
+        if connectionState.isConnected, vpnProtocol?.authenticationType == .certificate {
             self = .withConnectionUpdate
-        } else if isConnected || isConnecting {
+        } else if connectionState.isConnectedOrConnecting {
             self = .withReconnect
         } else {
             self = .immediate

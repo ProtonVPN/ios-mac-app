@@ -70,8 +70,7 @@ public struct ConnectionScreenFeature {
 public extension ConnectionState {
     /// Build a `ConnectionScreenFeature.State` for the active connection, if any.
     func connectionScreenFeatureState() -> ConnectionScreenFeature.State? {
-        guard case let .connected(intent, server, date, _) = self else { return nil }
-        let actual = VPNConnectionActual(server: server, intent: intent, connectedDate: date)
+        guard let actual = connectedActual, let server = resolvedServer else { return nil }
         return ConnectionScreenFeature.State(
             ipViewState: .init(),
             connectionDetailsState: .init(actual: actual),

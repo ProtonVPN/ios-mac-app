@@ -74,8 +74,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         userInitiated: Bool,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
-        let isConnectedOrConnecting = connectionState.isConnected || connectionState.is(\.connecting)
-        guard isConnectedOrConnecting else {
+        guard connectionState.isConnectedOrConnecting else {
             set(
                 vpnProtocol: vpnProtocol,
                 userInitiated: userInitiated,

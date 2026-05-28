@@ -29,6 +29,7 @@ import Domain
 import Ergonomics
 import ExtensionManager
 import LegacyCommon
+import os
 import ProtonCoreFeatureFlags
 import ProtonCoreUtilities
 import Sharing
@@ -256,36 +257,55 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         // IKEv2 is the only protocol that embeds a user identity in its tunnel configuration
         // (`NEVPNProtocolIKEv2.username`). WireGuard tunnels carry no user identity, so the
         // cross-user check is best-effort and only catches the IKE case.
-        guard let activeBaseUsername = await activeTunnelInspector.activeIKEBaseUsername() else {
-            return
-        }
-        if activeBaseUsername == vpnCredentials.name {
+        // TODO: Have wireguard check with ProTUN https://protonag.atlassian.net/browse/VPNAPPL-3544
+        guard
+            let activeBaseUsername = await activeTunnelInspector.activeIKEBaseUsername(),
+            activeBaseUsername != vpnCredentials.name
+        else {
             return
         }
         try await confirmAndDisconnectActiveSession()
     }
 
+    private static let activeSessionAlertTimeoutSeconds: TimeInterval = 60
     private func confirmAndDisconnectActiveSession() async throws {
-        try await withCheckedThrowingContinuation { continuation in
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            // `CheckedContinuation` requires a single resume. The alert has three exit
+            // paths (Continue, Cancel, and out-of-band dismissal via Cmd+W / window close
+            // / programmatic dismiss) — the last of which fires neither action handler and
+            // would otherwise leave this continuation unresumed, hanging the caller forever.
+            // Guard against that with a one-shot resume + produce an error if it hangs more than 60s
+            let didResume = OSAllocatedUnfairLock<Bool>(initialState: false)
+            let resumeOnce: @Sendable (Result<Void, Error>) -> Void = { result in
+                let shouldResume = didResume.withLock { resumed in
+                    guard !resumed else { return false }
+                    resumed = true
+                    return true
+                }
+                guard shouldResume else { return }
+                continuation.resume(with: result)
+            }
+
             let alert = ActiveSessionWarningAlert(
                 confirmHandler: { [weak self] in
-                    guard let self else {
-                        continuation.resume()
+                    guard let self, isConnected else {
+                        resumeOnce(.success(()))
                         return
                     }
-                    if isConnected {
-                        connectionCommandClient.send(.disconnect(.signout, completion: {
-                            continuation.resume()
-                        }))
-                        return
-                    }
-                    continuation.resume()
+                    connectionCommandClient.send(.disconnect(.signout, completion: {
+                        resumeOnce(.success(()))
+                    }))
                 },
                 cancelHandler: {
-                    continuation.resume(throwing: CommonVpnError.vpnSessionInProgress)
+                    resumeOnce(.failure(CommonVpnError.vpnSessionInProgress))
                 }
             )
             alertService.push(alert: alert)
+
+            Task {
+                try? await Task.sleep(for: .seconds(Self.activeSessionAlertTimeoutSeconds))
+                resumeOnce(.failure(CommonVpnError.vpnSessionInProgress))
+            }
         }
     }
 

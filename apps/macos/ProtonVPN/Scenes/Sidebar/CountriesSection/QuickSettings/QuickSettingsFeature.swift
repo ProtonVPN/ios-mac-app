@@ -108,7 +108,10 @@ struct QuickSettingsFeature {
             case confirmKillSwitchOn
             case cancelKillSwitchOn
             case confirmDisableHermesAndSetNetShield(NetShieldType)
-            case confirmSecureCoreToggle
+            /// Confirmed mid-session Secure Core toggle. `turningOn` is captured at the moment
+            /// the alert is presented so the apply path doesn't have to re-derive direction
+            /// from the (potentially mutated) `secureCoreToggle` shared value.
+            case confirmSecureCoreToggle(turningOn: Bool)
         }
     }
 
@@ -157,8 +160,6 @@ struct QuickSettingsFeature {
 // MARK: - Sub-reducers
 
 private extension QuickSettingsFeature {
-    /// Forwards child quick-setting `.delegate(.tapped)` to `.buttonTapped`, and keeps the
-    /// currently presented detail sheet in sync with any other child state changes.
     var childSettingsReducer: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -249,9 +250,7 @@ private extension QuickSettingsFeature {
         }
     }
 
-    /// Owns the detail-sheet / upsell / discourage-secure-core modal lifecycle, including the
-    /// "user picked an option inside the detail sheet" branching that gates on alerts, upsells,
-    /// or the discourage modal before actually applying the change.
+    /// Owns the detail-sheet / upsell / discourage-secure-core modal
     var detailNavigationReducer: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -337,7 +336,7 @@ private extension QuickSettingsFeature {
                     await MainActor.run { linkOpener.open(url) }
                 }
 
-            case .destination(.presented(.upsell(.optionalActionTapped))):
+            case .destination(.presented(.upsell(.skipActionTapped))):
                 state.destination = nil
                 return .none
 
@@ -371,9 +370,11 @@ private extension QuickSettingsFeature {
                 applyQuickSettingOptionSelection(type: .netShieldDisplay, option: .netShield(level))
                 return .send(.dismissDetails)
 
-            case .alert(.presented(.confirmSecureCoreToggle)):
-                let targetOption: QuickSettingOptionID = secureCoreToggle ? .secureCoreOff : .secureCoreOn
-                applyQuickSettingOptionSelection(type: .secureCoreDisplay, option: targetOption)
+            case let .alert(.presented(.confirmSecureCoreToggle(turningOn))):
+                applyQuickSettingOptionSelection(
+                    type: .secureCoreDisplay,
+                    option: turningOn ? .secureCoreOn : .secureCoreOff
+                )
                 return .send(.dismissDetails)
 
             case .alert:
@@ -442,6 +443,7 @@ private extension QuickSettingsFeature {
     ) {
         guard let change = QuickSettingChange(type: type, option: option) else {
             assertionFailure("Mismatched quick setting type/option pair: \(type), \(option)")
+            SentryHelper.shared?.log(message: "Mismatched quick setting type/option pair: \(type), \(option)")
             return
         }
         apply(change)
@@ -501,16 +503,16 @@ private extension QuickSettingsFeature {
     }
 
     func quickSettingsChangeNetShieldLevel(_ level: NetShieldType) {
+        netShieldPropertyProvider.setNetShieldType(level)
         switch VpnFeatureChangeState(connectionState: connectionState) {
         case .withConnectionUpdate:
-            netShieldPropertyProvider.setNetShieldType(level)
             connectionCommandClient.send(.applySettings([.netShield(level)]))
         case .withReconnect:
-            netShieldPropertyProvider.setNetShieldType(level)
             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
             connectionCommandClient.send(.retry)
         case .immediate:
-            netShieldPropertyProvider.setNetShieldType(level)
+            // we're in disconnected state, and netShield was set before switch
+            break
         }
     }
 
@@ -523,15 +525,14 @@ private extension QuickSettingsFeature {
         case .withReconnect:
             guard isConnectionActive else { return }
             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-            // Port forwarding requires WireGuard. If the user is on IKE we force-switch protocols
-            // by issuing a `.reconnect(...)` with the active protocol; otherwise a plain retry.
             if let activeVpnProtocol = connectionState.resolvedVpnProtocol {
                 connectionCommandClient.send(.reconnect(.vpnProtocol(activeVpnProtocol)))
             } else {
                 connectionCommandClient.send(.retry)
             }
         case .immediate:
-            portForwardingPropertyProvider.setPortForwarding(isEnabled)
+            // we're in disconnected state, and portForwarding was set before switch
+            break
         }
     }
 
@@ -579,10 +580,8 @@ extension QuickSettingsFeature {
     ) -> Bool {
         @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
         let excludeLocalNetworksIsOff = appFeaturePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .off
-        switch (excludeLocalNetworksIsOff, plutonium) {
-        case (true, .disabled): return false
-        default: return true
-        }
+        guard excludeLocalNetworksIsOff, case .disabled = plutonium else { return true }
+        return false
     }
 
     static var killSwitchConflictAlert: AlertState<Action.Alert> {
@@ -632,7 +631,7 @@ extension QuickSettingsFeature {
             title: { TextState(Localizable.warning) },
             actions: {
                 ButtonState(
-                    action: .send(.confirmSecureCoreToggle),
+                    action: .send(.confirmSecureCoreToggle(turningOn: turningOn)),
                     label: { TextState(Localizable.continue) }
                 )
                 ButtonState(

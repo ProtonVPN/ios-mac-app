@@ -182,7 +182,7 @@ private struct CountriesListSheetsModifier: ViewModifier {
                 UpsellViewController(
                     modalType: store.modalType,
                     upgradeAction: { store.send(.upgradeTapped) },
-                    skipAction: { store.send(.optionalActionTapped) }
+                    skipAction: { store.send(.skipActionTapped) }
                 )
                 .frame(width: Dimensions.Upsell.width, height: Dimensions.Upsell.height)
                 .background(Color(.background))

@@ -27,6 +27,7 @@ import Connection
 import ConnectionInventory
 import Domain
 import Ergonomics
+import Foundation
 import LegacyCommon
 import Network
 import os
@@ -54,7 +55,7 @@ class NavigationService {
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.credentialsProvider) private var credentials
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
     lazy var windowService: WindowService = factory.makeWindowService()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
@@ -144,8 +145,11 @@ class NavigationService {
         case .connected:
             log.debug("Skipping auto-connect: already connected", category: .app)
             return false
-        case .connecting, .resolving:
+        case .connecting:
             log.debug("Skipping auto-connect: already connecting", category: .app)
+            return false
+        case .resolving:
+            log.debug("Skipping auto-connect: connection state still unresolved", category: .app)
             return false
         case .disconnecting:
             log.debug("Skipping auto-connect: connection state is \(connectionState)", category: .app)
@@ -168,9 +172,30 @@ class NavigationService {
     }
 
     private func autoConnectIfEnabled() {
-        guard shouldAutoConnect else { return }
-        log.info("Initiating auto-connect", category: .app)
-        triggerAutoConnect()
+        Task { @MainActor [weak self] in
+            await self?.waitForConnectionStateToResolve()
+            guard let self, shouldAutoConnect else { return }
+            log.info("Initiating auto-connect", category: .app)
+            triggerAutoConnect()
+        }
+    }
+
+    private func waitForConnectionStateToResolve() async {
+        guard connectionState.is(\.resolving) else { return }
+        log.debug("Auto-connect deferred while connection state resolves", category: .app)
+        do {
+            try await $connectionState.when(
+                willMatch: { !$0.is(\.resolving) },
+                every: .milliseconds(200),
+                deadline: .seconds(3),
+                operation: { _ in }
+            )
+        } catch {
+            log.warning(
+                "Connection state did not leave .resolving in time; auto-connect proceeds with current state",
+                category: .app
+            )
+        }
     }
 
     @objc
@@ -408,7 +433,7 @@ extension NavigationService {
         // Do not show disconnect modal, because user asked for macOS logOff/shutdown
         // Make sure to disconnect the gateway and disable the firewall before logOff/shutdown
 
-        if case .disconnected = connectionState {
+        if connectionState.is(\.disconnected) {
             return .terminateNow
         }
 

@@ -234,7 +234,7 @@ final class StatusMenuViewModel {
     }
 
     func changeServerAction() {
-        let spec = SecureCoreConnectionSpecResolver.randomSpec(secureCoreEnabled: secureCoreToggle)
+        let spec = ConnectionSpec(location: .any(.random), features: [])
         connectionCommandClient.send(.connect(spec, propertiesManager.connectionProtocol, .changeServer))
     }
 

@@ -25,11 +25,9 @@ public extension ConnectionState {
     /// Includes the prior intent during `.resolving`.
     var resolvedIntent: ServerConnectionIntent? {
         switch self {
-        case let .connected(intent, _, _, _):
-            intent
-        case let .disconnecting(intent, _):
-            intent
-        case let .connecting(.resolved(intent, _)):
+        case let .connected(intent, _, _, _),
+             let .disconnecting(intent, _),
+             let .connecting(.resolved(intent, _)):
             intent
         case let .resolving(intent, _):
             intent
@@ -41,11 +39,9 @@ public extension ConnectionState {
     /// The active `Server`, when one is known. Includes the prior server during `.resolving`.
     var resolvedServer: Server? {
         switch self {
-        case let .connected(_, server, _, _):
-            server
-        case let .disconnecting(_, server):
-            server
-        case let .connecting(.resolved(_, server)):
+        case let .connected(_, server, _, _),
+             let .disconnecting(_, server),
+             let .connecting(.resolved(_, server)):
             server
         case let .resolving(_, server):
             server
@@ -78,10 +74,11 @@ public extension ConnectionState {
     }
 
     var isConnected: Bool {
-        if case .connected = self {
-            return true
-        }
-        return false
+        self.is(\.connected)
+    }
+
+    var isConnectedOrConnecting: Bool {
+        self.is(\.connected) || self.is(\.connecting)
     }
 
     /// Session-validation predicate: VPN tunnel is up (`.connected`) or being torn down (`.disconnecting`).
@@ -133,9 +130,13 @@ public extension ConnectionState {
         resolvedSpec?.location
     }
 
-    /// Projection of `ConnectionState` into the legacy `VPNConnectionStatus` shape.
-    /// Use this only at the widget-shadow boundary — in-process callers should consume
-    /// `ConnectionState` directly.
+    var connectedActual: VPNConnectionActual? {
+        guard case let .connected(intent, server, date, _) = self else { return nil }
+        return VPNConnectionActual(server: server, intent: intent, connectedDate: date)
+    }
+
+    /// Mapping of `ConnectionState` into the legacy `VPNConnectionStatus`.
+    /// Used only in the widget. DO NOT USE OTHERWISE
     var status: VPNConnectionStatus {
         switch self {
         case let .resolving(intent, server):

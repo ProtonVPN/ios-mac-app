@@ -385,6 +385,7 @@ enum LocationUtility {
     static func coordinate(forCountry countryCode: String) -> CLLocationCoordinate2D {
         guard let coordinate = MapConstants.countryCoordinates[countryCode.uppercased()] else {
             log.warning("Missing map coordinate for country code: \(countryCode)")
+            SentryHelper.shared?.log(message: "Missing map coordinate for country code: \(countryCode)")
             return CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
         }
         return coordinate

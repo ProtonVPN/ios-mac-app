@@ -74,16 +74,16 @@ public struct HomeView: View {
 
     public var body: some View {
         contentWithSheets
-            .onChange(of: store.recents.recentConnectionList) { _ in
+            .onChange(of: store.recents.recentConnectionList) {
                 calculateMapHeight()
             }
-            .onChange(of: userTier) { _ in
+            .onChange(of: userTier) {
                 calculateMapHeight()
             }
-            .onChange(of: connectionViewHeight) { _ in
+            .onChange(of: connectionViewHeight) {
                 calculateMapHeight()
             }
-            .onChange(of: viewHeight) { _ in
+            .onChange(of: viewHeight) {
                 calculateMapHeight()
             }
     }
@@ -170,10 +170,8 @@ public struct HomeView: View {
                         .background(Color(.background).padding(.bottom, -(proxy.size.height * 2))) // Extends the background color well below the scroll view content.
                     }
                     .frame(width: proxy.size.width)
-                    .onChange(of: store.connectionState) { connectionState in
-                        if case .connecting = connectionState {
-                            scrollViewProxy.scrollTo(topID)
-                        }
+                    .onChange(of: store.connectionState, to: \.connecting) { _ in
+                        scrollViewProxy.scrollTo(topID)
                     }
                 }
                 .zIndex(ZIndex.connectionCardAndRecents.rawValue)
@@ -182,7 +180,7 @@ public struct HomeView: View {
             .onAppear {
                 viewHeight = proxy.size.height
             }
-            .onChange(of: proxy.size.height) { height in
+            .onChange(of: proxy.size.height) { _, height in
                 viewHeight = height
             }
         }

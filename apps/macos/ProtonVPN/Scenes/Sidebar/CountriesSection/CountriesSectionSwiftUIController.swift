@@ -198,7 +198,7 @@ private struct QuickSettingsSheetsModifier: ViewModifier {
                 UpsellViewController(
                     modalType: store.modalType,
                     upgradeAction: { store.send(.upgradeTapped) },
-                    skipAction: { store.send(.optionalActionTapped) }
+                    skipAction: { store.send(.skipActionTapped) }
                 )
                 .frame(width: Dimensions.sheetWidth, height: Dimensions.sheetHeight)
                 .background(Color(.background))

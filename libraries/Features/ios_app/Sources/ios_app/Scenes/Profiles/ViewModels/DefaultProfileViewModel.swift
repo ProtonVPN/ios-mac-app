@@ -95,11 +95,10 @@ class DefaultProfileViewModel {
     @SharedReader(.connectionState) var connectionState: ConnectionState
 
     var isConnected: Bool {
-        guard case .connected = connectionState else {
+        guard connectionState.is(\.connected), let spec = connectionState.resolvedSpec else {
             return false
         }
-
-        return propertiesManager.lastConnectionIntent == profileConnectionSpec
+        return spec == profileConnectionSpec
     }
 
     var isConnecting: Bool {
@@ -250,18 +249,25 @@ class DefaultProfileViewModel {
             extraMargin: true
         )
 
-        // TODO: connectedMock/connectingMock — rewrite once ConnectionState mock helpers are available.
-        static var connectedMock: DefaultProfileViewModel = .init(
-            serverOffering: .fastest("Server"),
-            alertService: CoreAlertServiceDummy(),
-            connectionStatusService: ConnectionStatusServiceMock()
-        )
+        static var connectedMock: DefaultProfileViewModel {
+            @Shared(.connectionState) var connectionState
+            $connectionState.withLock { $0 = .previewConnected(for: .defaultFastest) }
+            return DefaultProfileViewModel(
+                serverOffering: .fastest("Server"),
+                alertService: CoreAlertServiceDummy(),
+                connectionStatusService: ConnectionStatusServiceMock()
+            )
+        }
 
-        static var connectingMock: DefaultProfileViewModel = .init(
-            serverOffering: .fastest("Server"),
-            alertService: CoreAlertServiceDummy(),
-            connectionStatusService: ConnectionStatusServiceMock()
-        )
+        static var connectingMock: DefaultProfileViewModel {
+            @Shared(.connectionState) var connectionState
+            $connectionState.withLock { $0 = .previewConnecting(for: .defaultFastest) }
+            return DefaultProfileViewModel(
+                serverOffering: .fastest("Server"),
+                alertService: CoreAlertServiceDummy(),
+                connectionStatusService: ConnectionStatusServiceMock()
+            )
+        }
     }
 
     private class ConnectionStatusServiceMock: ConnectionStatusService {

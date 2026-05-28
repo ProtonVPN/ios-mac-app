@@ -550,7 +550,7 @@ struct SidebarFeatureTests {
         // Simulate timer elapsed before user taps "Change server".
         now = until.addingTimeInterval(1)
 
-        await store.send(.countriesSection(.quickSettings(.destination(.presented(.upsell(.optionalActionTapped)))))) {
+        await store.send(.countriesSection(.quickSettings(.destination(.presented(.upsell(.skipActionTapped)))))) {
             $0.countriesSection.quickSettings.destination = nil
             $0.pendingReconnectIntent = nil
             $0.overlayState = .connecting(spec: spec)

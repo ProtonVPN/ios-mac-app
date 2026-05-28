@@ -434,6 +434,10 @@
 
             let store = TestStore(initialState: state) {
                 ConnectionFeature()
+            } withDependencies: {
+                $0.tunnelManager = MockTunnelManager(connection: VPNSessionMock(status: .connected))
+                $0.localAgent = LocalAgentMock(state: .disconnected)
+                $0.continuousClock = TestClock()
             }
             store.exhaustivity = .off
 

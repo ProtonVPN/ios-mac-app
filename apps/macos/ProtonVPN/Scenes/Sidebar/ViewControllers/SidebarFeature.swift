@@ -68,6 +68,7 @@ struct SidebarFeature {
         /// `connectionState` (in-memory, process-local), so we keep a file-backed projection
         /// in App Group storage and write it from `connection.delegate.stateChanged`.
         /// **In-process callers must read `connectionState` directly, not this.**
+        // TODO: https://protonag.atlassian.net/browse/VPNAPPL-3545
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
         var connection: ConnectionFeature.State = .initialState
 
@@ -150,12 +151,17 @@ struct SidebarFeature {
         }
     }
 
-    /// Captures the parameters of a `.connect` command paused while we await user input on an
-    /// intercept alert. Sized to be `Equatable` so it can ride inside `AlertState`.
+    /// Captures the parameters of a `.connect` command paused while we await user input on an intercept alert
     struct PendingConnect: Equatable {
         let spec: ConnectionSpec
         let connectionProtocol: ConnectionProtocol?
         let trigger: UserInitiatedVPNChange.VPNTrigger?
+        var resolvedIntercepts: Set<InterceptKind> = []
+    }
+
+    enum InterceptKind: Hashable {
+        case plutoniumIKE
+        case badLAN
     }
 
     // MARK: - Init
@@ -186,7 +192,7 @@ struct SidebarFeature {
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
-    @Dependency(\.misconfiguredLanInspector) private var misconfiguredLanInspector
+    @Dependency(\.networkInterfacePropertiesProvider) private var networkInterfacePropertiesProvider
 
     @Shared(.killSwitch) private var killSwitch: Bool
     @Shared(.plutoniumFeature) private var plutoniumFeature: PlutoniumFeatureToggle
@@ -228,6 +234,16 @@ struct SidebarFeature {
         case killSwitchSetting
         case connectionConnectCommandEffect
         case plutoniumSync
+    }
+}
+
+extension SidebarFeature.PendingConnect {
+    /// Returns a copy with `kind` added to `resolvedIntercepts`, so the next intercept
+    /// re-check (via `resolveAndPerformConnect`) skips it.
+    func resolving(_ kind: SidebarFeature.InterceptKind) -> Self {
+        var copy = self
+        copy.resolvedIntercepts.insert(kind)
+        return copy
     }
 }
 
@@ -461,11 +477,7 @@ private extension SidebarFeature {
                     }
                 }
                 let pending = PendingConnect(spec: spec, connectionProtocol: connectionProtocol, trigger: trigger)
-                if let alert = interceptAlert(for: pending) {
-                    state.alert = alert
-                    return .none
-                }
-                return performConnect(&state, pending: pending)
+                return resolveAndPerformConnect(&state, pending: pending)
             case let .connectionCommandReceived(.disconnect(trigger, completion)):
                 state.overlayState = .hidden
                 @Shared(.intentionallyDisconnected) var intentionallyDisconnected
@@ -539,12 +551,12 @@ private extension SidebarFeature {
                 }
             case let .alert(.presented(.enableKillSwitchAndConnect(pending))):
                 $killSwitch.withLock { $0 = true }
-                return performConnect(&state, pending: pending)
+                return resolveAndPerformConnect(&state, pending: pending.resolving(.badLAN))
             case let .alert(.presented(.connectAnywayDespiteBadLAN(pending))):
-                return performConnect(&state, pending: pending)
+                return resolveAndPerformConnect(&state, pending: pending.resolving(.badLAN))
             case let .alert(.presented(.disablePlutoniumAndConnect(pending))):
                 $plutoniumFeature.withLock { $0.disable() }
-                return performConnect(&state, pending: pending)
+                return resolveAndPerformConnect(&state, pending: pending.resolving(.plutoniumIKE))
             default:
                 return .none
             }
@@ -557,7 +569,7 @@ private extension SidebarFeature {
             case .countriesSection(.delegate(.openProfilesTab)):
                 state.selectedTab = .profiles
                 return .none
-            case .countriesSection(.quickSettings(.destination(.presented(.upsell(.optionalActionTapped))))):
+            case .countriesSection(.quickSettings(.destination(.presented(.upsell(.skipActionTapped))))):
                 guard let intent = state.pendingReconnectIntent else {
                     return .none
                 }
@@ -731,6 +743,18 @@ private extension SidebarFeature {
         }
     }
 
+    /// Single entry point for "user wants to connect with these parameters". Re-evaluates
+    /// `interceptAlert` against the current state every time it's called so that resolving
+    /// one intercept (e.g. disabling Plutonium) doesn't silently skip a later one (e.g. bad
+    /// LAN). Already-resolved intercepts are skipped via `pending.resolvedIntercepts`.
+    func resolveAndPerformConnect(_ state: inout State, pending: PendingConnect) -> Effect<Action> {
+        if let alert = interceptAlert(for: pending) {
+            state.alert = alert
+            return .none
+        }
+        return performConnect(&state, pending: pending)
+    }
+
     /// Encapsulates the side effects of dispatching a `.connect` command after intercept checks
     /// have been resolved (either none fired or the user confirmed via alert).
     func performConnect(_ state: inout State, pending: PendingConnect) -> Effect<Action> {
@@ -750,15 +774,20 @@ private extension SidebarFeature {
     }
 
     /// Returns an alert if any pre-connect intercept (e.g. misconfigured LAN, Plutonium+IKE)
-    /// applies to the pending connect; otherwise `nil`. Intercept policies are evaluated in
-    /// priority order — once one fires, later policies do not run.
+    /// applies to the pending connect; otherwise `nil`. Intercepts are evaluated in priority
+    /// order — once one fires, later policies do not run for this call. Intercepts the user
+    /// has already resolved (tracked in `pending.resolvedIntercepts`) are skipped so a
+    /// follow-up "Continue anyway" / "Connect" doesn't loop on its own alert and so later
+    /// intercepts further down the chain still get a chance to fire.
     func interceptAlert(for pending: PendingConnect) -> AlertState<Action.Alert>? {
         let effectiveProtocol = pending.connectionProtocol ?? propertiesManager.connectionProtocol
 
         // Plutonium + IKE conflict (macOS only). Fires when the user has Split Tunneling
         // enabled and tries to connect with IKEv2, which the Plutonium extension does not
         // support. Confirming the alert disables Plutonium for this connection.
-        if case .enabled = plutoniumFeature, effectiveProtocol == .vpnProtocol(.ike) {
+        if !pending.resolvedIntercepts.contains(.plutoniumIKE),
+           case .enabled = plutoniumFeature,
+           effectiveProtocol == .vpnProtocol(.ike) {
             // Title includes the profile name when the connect originates from a saved profile.
             let title: String = if let profileName = propertiesManager.lastConnectionRequest?.profileName {
                 Localizable.splitTunnelingConnectToProfileNameAlertTitle(profileName)
@@ -781,9 +810,10 @@ private extension SidebarFeature {
 
         // Misconfigured LAN. Fires when an interface uses a non-RFC1918 subnet that the OS
         // would otherwise route around the tunnel. Kill Switch fully mitigates the issue.
-        if propertiesManager.featureFlags.unsafeLanWarnings,
+        if !pending.resolvedIntercepts.contains(.badLAN),
+           propertiesManager.featureFlags.unsafeLanWarnings,
            !killSwitch,
-           let bad = misconfiguredLanInspector.firstBadInterface() {
+           let bad = networkInterfacePropertiesProvider.firstBadInterface() {
             return AlertState {
                 TextState(Localizable.badInterfaceIpRangeAlertTitle)
             } actions: {

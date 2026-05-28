@@ -22,6 +22,27 @@ import Network
 
 public struct NetworkInterfacePropertiesProvider: Sendable {
     public var withNetworkInterfaceInfo: @Sendable () throws -> [NetworkInterface]
+
+    /// Returns the first interface whose IPv4 range falls outside the RFC1918 / RFC3927
+    public func firstBadInterface() -> BadLanInterface? {
+        do {
+            let interfaces = try withNetworkInterfaceInfo()
+            guard let bad = interfaces.first(where: \.hasBadRanges) else { return nil }
+            return BadLanInterface(name: bad.name, subnetDescription: bad.ipv4SubnetDescription)
+        } catch {
+            return nil
+        }
+    }
+}
+
+public struct BadLanInterface: Equatable, Sendable {
+    public let name: String?
+    public let subnetDescription: String?
+
+    public init(name: String?, subnetDescription: String?) {
+        self.name = name
+        self.subnetDescription = subnetDescription
+    }
 }
 
 extension NetworkInterfacePropertiesProvider: DependencyKey {

@@ -22,18 +22,14 @@ import Network
 import Testing
 @testable import VPNNetworking
 
-@Suite("MisconfiguredLanInspector")
-struct MisconfiguredLanInspectorTests {
+@Suite("NetworkInterfacePropertiesProvider.firstBadInterface")
+struct FirstBadInterfaceTests {
     @Test("Properly configured networks return nil")
     func properlyConfiguredNetworksReturnNil() {
-        withDependencies {
-            $0.networkInterfacePropertiesProvider = .init(withNetworkInterfaceInfo: {
-                [.defaultLoopback]
-            })
-        } operation: {
-            let inspector = MisconfiguredLanInspector.liveValue
-            #expect(inspector.firstBadInterface() == nil)
-        }
+        let provider = NetworkInterfacePropertiesProvider(
+            withNetworkInterfaceInfo: { [.defaultLoopback] }
+        )
+        #expect(provider.firstBadInterface() == nil)
     }
 
     @Test(
@@ -45,27 +41,19 @@ struct MisconfiguredLanInspectorTests {
         ]
     )
     func weirdSubnetsAreFlagged(weirdInterface: NetworkInterface) {
-        withDependencies {
-            $0.networkInterfacePropertiesProvider = .init(withNetworkInterfaceInfo: {
-                [.defaultLoopback, weirdInterface]
-            })
-        } operation: {
-            let inspector = MisconfiguredLanInspector.liveValue
-            let bad = inspector.firstBadInterface()
-            #expect(bad?.name == weirdInterface.name)
-        }
+        let provider = NetworkInterfacePropertiesProvider(
+            withNetworkInterfaceInfo: { [.defaultLoopback, weirdInterface] }
+        )
+        let bad = provider.firstBadInterface()
+        #expect(bad?.name == weirdInterface.name)
     }
 
     @Test("Provider errors return nil")
     func providerErrorsReturnNil() {
-        withDependencies {
-            $0.networkInterfacePropertiesProvider = .init(withNetworkInterfaceInfo: {
-                throw NSError(domain: "test", code: 1)
-            })
-        } operation: {
-            let inspector = MisconfiguredLanInspector.liveValue
-            #expect(inspector.firstBadInterface() == nil)
-        }
+        let provider = NetworkInterfacePropertiesProvider(
+            withNetworkInterfaceInfo: { throw NSError(domain: "test", code: 1) }
+        )
+        #expect(provider.firstBadInterface() == nil)
     }
 }
 

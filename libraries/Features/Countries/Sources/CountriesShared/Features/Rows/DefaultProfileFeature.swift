@@ -74,18 +74,19 @@ public struct DefaultProfileFeature {
         }
 
         var isConnected: Bool {
-            guard case .connected = connectionState else {
+            guard connectionState.is(\.connected),
+                  let spec = connectionState.resolvedSpec else {
                 return false
             }
-            @Dependency(\.propertiesManager) var propertiesManager
-            return propertiesManager.lastConnectionIntent == profile.connectionSpec(trigger: .profile)
+            return spec == profile.connectionSpec(trigger: .profile)
         }
 
         var isConnecting: Bool {
-            guard let connectingSpec = connectionState.is(\.connecting) ? connectionState.resolvedSpec : nil else {
+            guard connectionState.is(\.connecting),
+                  let spec = connectionState.resolvedSpec else {
                 return false
             }
-            return connectingSpec == profile.connectionSpec(trigger: .profile)
+            return spec == profile.connectionSpec(trigger: .profile)
         }
 
         var isUsersTierTooLow: Bool {

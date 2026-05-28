@@ -114,14 +114,14 @@ public struct ConnectionFeature: Sendable {
 
     /// How long after process start we still consider the network potentially "warming up"
     /// (e.g. when the app was launched at login immediately following a device reboot, before
-    /// network interfaces have come up). While inside this window, a connect request that
+    /// network interfaces have come up). While inside this grace period, a connect request that
     /// finds the network unreachable is delayed rather than failed immediately.
-    private static let deviceRebootReachabilityWindow: Duration = .seconds(10)
+    private static let postLaunchReachabilityGracePeriod: Duration = .seconds(10)
 
     /// How long we wait for the network to become reachable before surfacing a
     /// `.networkUnreachable` failure to the user, when a connect was deferred because
-    /// the app is still inside ``deviceRebootReachabilityWindow``.
-    private static let deviceRebootReachabilityDelay: Duration = .seconds(10)
+    /// the app is still inside ``postLaunchReachabilityGracePeriod``.
+    private static let unreachableNetworkRetryTimeout: Duration = .seconds(10)
 
     public var body: some Reducer<State, Action> {
         Scope(state: \.core, action: \.core) { CoreConnectionFeature() } // Firstly, process internal connection events
@@ -130,9 +130,7 @@ public struct ConnectionFeature: Sendable {
             case .input(.onLaunch):
                 return .merge(
                     .send(.core(.startObserving)),
-                    // Surface session-change events (logout / guest→authenticated transition)
-                    // as `.input(.onSessionChange)` so the connection layer can clean up
-                    // tunnel + auth state.
+                    // logout or guest→authenticated transition
                     .listen(to: sessionChangeNotifier.stream()) { _ in .input(.onSessionChange) }
                 ).cancellable(id: CancelID.observation, cancelInFlight: true)
 
@@ -159,7 +157,7 @@ public struct ConnectionFeature: Sendable {
                         if shouldDelayConnectionFailureBecauseOfStartup {
                             state.reachabilityPendingIntent = intent
                             return .run { send in
-                                try await clock.sleep(for: Self.deviceRebootReachabilityDelay)
+                                try await clock.sleep(for: Self.unreachableNetworkRetryTimeout)
                                 await send(.reachabilityRetryDeadlineElapsed)
                             }.cancellable(id: CancelID.reachabilityRetry, cancelInFlight: true)
                         }
@@ -215,8 +213,8 @@ public struct ConnectionFeature: Sendable {
 
             case .input(.onLogout):
                 state.reachabilityPendingIntent = nil
-                // Logout transitions clear any tunnel; drop the delayed-disconnect latch so it
-                // can't fire against a fresh post-logout connection attempt.
+                // Logout tears down the tunnel; clear the pending-disconnect flag so it can't
+                // fire against a fresh post-logout connection attempt.
                 state.core.shouldDisconnectWhenAllowed = false
                 return .merge(.send(.stopObserving), .send(.core(.handleLogout)))
 
@@ -585,7 +583,7 @@ public struct ConnectionFeature: Sendable {
                 return false
             }
             let elapsed = Duration.seconds(abs(date.now.timeIntervalSince(processStartDate)))
-            return elapsed < Self.deviceRebootReachabilityWindow
+            return elapsed < Self.postLaunchReachabilityGracePeriod
         }
     #endif
 

@@ -22,7 +22,7 @@ import Domain
 import Sharing
 import VPNAppCore
 
-/// Mirrors the legacy `VpnGateway.quickConnect` semantics for the new connection layer.
+/// Migrated logic from `VpnGateway.quickConnect`into the new connection layer.
 ///
 /// Use this any time the app wants to issue a "Quick Connect" — i.e. a connection that should
 /// honour the user's saved Quick Connect profile when available, and otherwise fall back to
@@ -66,7 +66,7 @@ public extension ConnectionCommandClient {
     /// the legacy `vpnGateway.quickConnect(trigger:)` call.
     func quickConnect(
         profileManager: ProfileManager,
-        trigger: UserInitiatedVPNChange.VPNTrigger?
+        trigger: UserInitiatedVPNChange.VPNTrigger
     ) {
         let (spec, connectionProtocol) = QuickConnectIntent.resolve(profileManager: profileManager)
         send(.connect(spec, connectionProtocol, trigger))

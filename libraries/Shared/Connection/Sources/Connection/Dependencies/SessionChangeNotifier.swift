@@ -19,12 +19,8 @@
 import Dependencies
 import Foundation
 
-/// Channel for surfacing "the authenticated session has changed" events from non-TCA layers
-/// (NetworkingDelegate implementations on iOS/macOS/tvOS) to the TCA `ConnectionFeature`.
-///
-/// Triggers a partial logout in the connection layer — the tunnel is cleaned up and certs/keys
-/// are cleared, while observation remains active. Replaces the broader `ConnectionBridge`,
-/// which only ever carried this single event in practice.
+/// Forwards session-change events from networking delegates to `ConnectionFeature`,
+/// cleaning tunnel + clearing certs/keys
 public struct SessionChangeNotifier: Sendable {
     public var notify: @Sendable () async -> Void
     public var stream: @Sendable () -> AsyncStream<Void>
@@ -65,6 +61,7 @@ extension SessionChangeNotifier: DependencyKey {
     public static let testValue: SessionChangeNotifier = liveValue
 }
 
+// TODO: Refactor with Adam's AsyncStream broadcaster: https://protonag.atlassian.net/browse/VPNAPPL-3546
 private actor SessionChangeBroadcaster {
     private var continuations: [UUID: AsyncStream<Void>.Continuation] = [:]
 

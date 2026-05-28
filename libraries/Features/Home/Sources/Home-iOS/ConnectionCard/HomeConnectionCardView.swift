@@ -201,10 +201,9 @@ private extension ConnectionState {
             @available(iOS 18, *)
             #Preview("Change Server Available", traits: .sizeThatFitsLayout, .dependencies { $0.serverChangeAuthorizer = .availableValue }) {
                 @Shared(.userTier) var userTier
+                @Shared(.connectionState) var connectionState
                 $userTier.withLock { $0 = 0 }
-                // TODO: Set @Shared(.connectionState) to a .connected ConnectionState here
-                // once mock ServerConnectionIntent/Server fixtures are public outside the
-                // Connection test target.
+                $connectionState.withLock { $0 = .previewConnected(for: .secureCoreCountryHop) }
                 return HomeConnectionCardView(store: .init(initialState: .init(), reducer: {
                     HomeConnectionCardFeature()
                 }))
@@ -215,10 +214,9 @@ private extension ConnectionState {
             @available(iOS 18, *)
             #Preview("Change Server Unavailable", traits: .sizeThatFitsLayout, .dependencies { $0.serverChangeAuthorizer = .previewValue }) {
                 @Shared(.userTier) var userTier
+                @Shared(.connectionState) var connectionState
                 $userTier.withLock { $0 = 0 }
-                // TODO: Set @Shared(.connectionState) to a .connected ConnectionState here
-                // once mock ServerConnectionIntent/Server fixtures are public outside the
-                // Connection test target.
+                $connectionState.withLock { $0 = .previewConnected(for: .secureCoreCountryHop) }
                 return HomeConnectionCardView(store: .init(initialState: .init(), reducer: {
                     HomeConnectionCardFeature()
                 }))
@@ -297,12 +295,10 @@ private extension ConnectionState {
                 }
             }
 
-            // TODO: Construct a real ConnectionState.connected — needs ServerConnectionIntent/Server mocks
-            // not yet available outside Connection's test target. Previews disabled until then.
-            static func connectedStore(intentSpec _: ConnectionSpec, userTier: Int) -> Self {
+            static func connectedStore(intentSpec: ConnectionSpec, userTier: Int) -> Self {
                 .init(initialState: .constant(
-                    connectionState: .disconnected,
-                    defaultConnection: .defaultFastest,
+                    connectionState: .previewConnected(for: intentSpec),
+                    defaultConnection: intentSpec,
                     userTier: userTier
                 )) {
                     HomeConnectionCardFeature()

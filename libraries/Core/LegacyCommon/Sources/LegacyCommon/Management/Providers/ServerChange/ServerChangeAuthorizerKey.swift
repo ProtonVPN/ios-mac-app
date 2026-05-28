@@ -18,6 +18,7 @@
 
 import Dependencies
 import Foundation
+import os
 import VPNAppCore
 
 extension ServerChangeAuthorizer: @retroactive DependencyKey {
@@ -49,31 +50,28 @@ extension ServerChangeAuthorizer: @retroactive DependencyKey {
 /// reach into `serverChangeStorage` on every read. Develop previously cached this per
 /// view-model; with multiple consumers reading the same persisted state, a single cache at
 /// the dependency layer is cheaper and avoids per-consumer drift.
-private final class ServerChangeAvailabilityCache: @unchecked Sendable {
-    private let lock = NSLock()
-    private var cached: ServerChangeAuthorizer.ServerChangeAvailability?
+private final class ServerChangeAvailabilityCache: Sendable {
+    private let cached = OSAllocatedUnfairLock<ServerChangeAuthorizer.ServerChangeAvailability?>(
+        initialState: nil
+    )
 
     /// Returns the cached value only if it's still an active `.unavailable` cooldown at
     /// `now`. `.available` or expired-cooldown caches return nil so the caller recomputes.
     func value(asOf now: Date) -> ServerChangeAuthorizer.ServerChangeAvailability? {
-        lock.lock()
-        defer { lock.unlock() }
-        guard case let .unavailable(until, _, _) = cached, until > now else {
-            return nil
+        cached.withLock { current in
+            guard case let .unavailable(until, _, _) = current, until > now else {
+                return nil
+            }
+            return current
         }
-        return cached
     }
 
     func store(_ value: ServerChangeAuthorizer.ServerChangeAvailability) {
-        lock.lock()
-        cached = value
-        lock.unlock()
+        cached.withLock { $0 = value }
     }
 
     func invalidate() {
-        lock.lock()
-        cached = nil
-        lock.unlock()
+        cached.withLock { $0 = nil }
     }
 }
 

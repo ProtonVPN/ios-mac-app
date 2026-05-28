@@ -279,9 +279,6 @@ public final class AppDelegateService: AppDelegateProtocol {
             // Action may only come from a trusted source
             guard verified else { return false }
 
-            // Mirror legacy `vpnGateway.quickConnect(trigger: .widget)`: prefer the user's saved
-            // Quick Connect profile, otherwise fall back to fastest. (Not `.lastConnectionIntent`,
-            // which would surface whatever the user last connected to instead of QC.)
             connectionCommandClient.quickConnect(profileManager: profileManager, trigger: .widget)
             startListeningForDeepLinkConnectState()
             navigationService.presentStatusViewController()

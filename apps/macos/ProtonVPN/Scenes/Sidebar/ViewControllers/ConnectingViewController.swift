@@ -350,19 +350,11 @@ private struct ConnectingOverlayButtonModel: Identifiable {
         kind
     }
 
-    static var cancel: Self {
-        .init(kind: .cancel, title: Localizable.cancel, style: .normal)
-    }
+    static let cancel: Self = .init(kind: .cancel, title: Localizable.cancel, style: .normal)
 
-    static var done: Self {
-        .init(kind: .done, title: Localizable.done, style: .normal)
-    }
+    static let done: Self = .init(kind: .done, title: Localizable.done, style: .normal)
 
-    static var retry: Self {
-        .init(kind: .retry, title: Localizable.tryAgain, style: .normal)
-    }
+    static let retry: Self = .init(kind: .retry, title: Localizable.tryAgain, style: .normal)
 
-    static var retryWithoutKillSwitch: Self {
-        .init(kind: .retryWithoutKillSwitch, title: Localizable.tryAgainWithoutKillswitch, style: .interactive)
-    }
+    static let retryWithoutKillSwitch: Self = .init(kind: .retryWithoutKillSwitch, title: Localizable.tryAgainWithoutKillswitch, style: .interactive)
 }

@@ -46,13 +46,12 @@ public struct HomeFeature {
     @Dependency(\.alertService) private var alertService
     @Dependency(\.continuousClock) private var clock
     @Dependency(\.propertiesManager) private var propertiesManager
-    @Dependency(\.misconfiguredLanInspector) private var misconfiguredLanInspector
+    @Dependency(\.networkInterfacePropertiesProvider) private var networkInterfacePropertiesProvider
     #if os(iOS)
         @Dependency(\.openCredentiallessSignUp) private var openCredentiallessSignUp
     #endif
 
     @SharedReader(.userTier) private var userTier: Int?
-    @SharedReader(.secureCoreToggle) private var secureCoreToggle: Bool
     @Shared(.killSwitch) var killSwitch: Bool
 
     @Reducer
@@ -88,6 +87,7 @@ public struct HomeFeature {
         /// `connectionState` (in-memory, process-local), so we keep a file-backed projection
         /// in App Group storage and write it from `connection.delegate.stateChanged`.
         /// **In-process callers must read `connectionState` directly, not this.**
+        // TODO: https://protonag.atlassian.net/browse/VPNAPPL-3545
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
         @Presents public var destination: Destination.State?
@@ -317,7 +317,8 @@ private extension HomeFeature {
                     log.error("User is not authorized for server change, action should have been unavailable")
                     return .none
                 }
-                let spec = SecureCoreConnectionSpecResolver.randomSpec(secureCoreEnabled: secureCoreToggle)
+                // Change Server is a free tier only action
+                let spec = ConnectionSpec(location: .any(.random), features: [])
                 connectionCommandClient.send(.connect(spec, nil, .changeServer))
                 return .none
 
@@ -612,7 +613,7 @@ private extension HomeFeature {
     func interceptAlert(for pending: PendingConnect) -> AlertState<Action.HomeAlert>? {
         if propertiesManager.featureFlags.unsafeLanWarnings,
            !killSwitch,
-           let bad = misconfiguredLanInspector.firstBadInterface() {
+           let bad = networkInterfacePropertiesProvider.firstBadInterface() {
             return AlertState {
                 TextState(Localizable.badInterfaceIpRangeAlertTitle)
             } actions: {

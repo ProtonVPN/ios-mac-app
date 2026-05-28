@@ -385,6 +385,10 @@ enum IkeConfiguratorError: Error {
 
 enum IkeUsernameComponent {
     static let concatChar: Character = "+"
+    /// Token that prefixes the `endpointID(...)` chunk inside the encoded IKE username.
+    /// Defined once so the decode side (`TunnelManager.ikePeerID`) and the encode side
+    /// (`usernameSuffix`) can't drift apart.
+    static let endpointIDPrefix = "ep:"
 
     case iosClient
     case macClient
@@ -421,7 +425,7 @@ enum IkeUsernameComponent {
         case .portForwardingEnabled:
             "pmp"
         case let .endpointID(endpointID):
-            "ep:\(Self.sanitized(endpointID, context: "endpoint ID"))"
+            "\(Self.endpointIDPrefix)\(Self.sanitized(endpointID, context: "endpoint ID"))"
         }
     }
 

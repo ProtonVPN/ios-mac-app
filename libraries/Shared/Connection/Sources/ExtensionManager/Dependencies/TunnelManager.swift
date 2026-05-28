@@ -215,9 +215,8 @@ final class PacketTunnelManager: TunnelManager {
         guard !activeManagers.isEmpty else {
             return nil
         }
-        let priority: KeyPath<NEVPNStatus, Int> = \.activityPriority
         return activeManagers.max {
-            $0.value.session.status[keyPath: priority] < $1.value.session.status[keyPath: priority]
+            $0.value.session.status.activityPriority < $1.value.session.status.activityPriority
         }
     }
 
@@ -415,23 +414,30 @@ struct StatusChangePayload {
 }
 
 private extension NEVPNProtocol {
-    /// Temporary helper for retrieving the peer ID from IKE configurations.
+    /// Extracts the server ID from an IKE configuration's username.
     ///
-    /// The IKE username is built by `WireguardConfigurator.ikeUsername(...)` as
-    /// `<base>+<feature1>+<feature2>+...+ep:<serverID>`. The peer ID we want is the trailing
-    /// `ep:<serverID>` chunk (without the leading `+` separator). Earlier code returned
-    /// `String(username.suffix(from: lastIndex(of: "+")))`, which included the leading `+` and
-    /// produced peer IDs like `"+ep:abc"` — breaking server matching downstream.
+    /// The username is built by `WireguardConfigurator.ikeUsername(...)` as
+    /// `<base>+<feature1>+...+ep:<serverID>`. The endpoint chunk is identified by the
+    /// `ep:` token (`IkeUsernameComponent.endpointIDPrefix`) — locating it explicitly is more
+    /// robust than positional decoding ("everything after the last `+`") and keeps encode/
+    /// decode tied to the same constant.
     var ikePeerID: String {
         get throws {
-            // VPNAPPL-3466: Smarter way to encode the username, without conflicting with other features
             guard let username, !username.isEmpty else {
                 throw TunnelManagerError.malformedConfiguration
             }
-            guard let index = username.lastIndex(of: "+") else {
-                return username
+            let token = "\(IkeUsernameComponent.concatChar)\(IkeUsernameComponent.endpointIDPrefix)"
+            guard let range = username.range(of: token) else {
+                throw TunnelManagerError.malformedConfiguration
             }
-            return String(username[username.index(after: index)...])
+            let afterToken = username[range.upperBound...]
+            // The endpoint ID itself is sanitised to strip `+`, so anything up to the next
+            // `+` (if any) is the encoded server ID. In practice `endpointID` is the last
+            // component appended, so there is no further separator — the trim is defensive.
+            if let endIndex = afterToken.firstIndex(of: IkeUsernameComponent.concatChar) {
+                return String(afterToken[..<endIndex])
+            }
+            return String(afterToken)
         }
     }
 }

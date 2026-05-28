@@ -129,8 +129,7 @@ public struct PlutoniumFeature {
                     return .none
                 }
                 // Are we connected to vpn with an IKE profile? Can't enable Plutonium
-                let isConnectedOrConnecting = connectionState.isConnected || connectionState.is(\.connecting)
-                if isConnectedOrConnecting,
+                if connectionState.isConnectedOrConnecting,
                    let vpnProtocol = connectionState.resolvedVpnProtocol,
                    vpnProtocol == .ike {
                     state.alert = Self.unsupportedProfileErrorAlert
