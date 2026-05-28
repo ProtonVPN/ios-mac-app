@@ -270,7 +270,13 @@ final class HeaderViewModel {
         vpnConnectionChanged(connectionState)
     }
 
-    private func vpnConnectionChanged(_: ConnectionState) {
+    private func vpnConnectionChanged(_ state: ConnectionState) {
+        // Read `isConnected` from the `state` parameter rather than the `self.connectionState`
+        // accessor. swift-sharing fires the publisher inside the storage's `willSet`, so the
+        // synchronous accessor still returns the *previous* value at this point — using
+        // `state` ensures we react to the actual new value (e.g. starting NAT-PMP
+        // observation when transitioning into `.connected`).
+        let isConnected = state.isConnected
         if isConnected {
             startNatPmpObservation()
             if isVisible {
@@ -283,10 +289,8 @@ final class HeaderViewModel {
             statistics = nil
         }
 
-        // Defer the UI update one runloop tick so any in-flight `@Shared` `willSet` completes
-        // before the view layer reads via `viewModel.isConnected` and friends. swift-sharing
-        // fires its publisher inside the storage's `willSet`, so synchronous reads from
-        // accessors during a publisher-triggered call return the previous value.
+        // Defer the UI update one runloop tick so the view layer reads
+        // `viewModel.isConnected` and friends after the `@Shared` `willSet` commits.
         DispatchQueue.main.async { [weak self] in
             self?.contentChanged?()
         }

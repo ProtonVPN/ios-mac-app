@@ -31,7 +31,7 @@
     @MainActor
     @Suite(.serialized, .snapshots(record: .missing))
     struct DiscourageSecureCoreViewControllerSnapshotTests {
-        private let snapshotSize = CGSize(width: 520, height: 579)
+        private let snapshotSize = CGSize(width: 520, height: 630)
 
         @Test("default dark appearance")
         func defaultAppearance() {

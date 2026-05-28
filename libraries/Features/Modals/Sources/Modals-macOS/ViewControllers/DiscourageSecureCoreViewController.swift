@@ -31,6 +31,7 @@ final class DiscourageSecureCoreViewController: NSHostingController<DiscourageSe
             DiscourageSecureCoreFeature()
         }
         super.init(rootView: DiscourageSecureCoreView(store: initialStore, dismissOnAction: false))
+        sizingOptions = []
         preferredContentSize = .init(width: Dimensions.sheetWidth, height: Dimensions.sheetHeight)
 
         let store = Store(initialState: DiscourageSecureCoreFeature.State(reconnectNotice: reconnectNotice)) {
@@ -59,7 +60,6 @@ final class DiscourageSecureCoreViewController: NSHostingController<DiscourageSe
 
     override func viewWillAppear() {
         super.viewWillAppear()
-        view.window?.setContentSize(.init(width: Dimensions.sheetWidth, height: Dimensions.sheetHeight))
         view.window?.applyUpsellModalAppearance()
     }
 

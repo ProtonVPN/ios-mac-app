@@ -210,7 +210,6 @@ private struct QuickSettingsSheetsModifier: ViewModifier {
                 )
             ) { store in
                 DiscourageSecureCoreView(store: store)
-                    .frame(minWidth: Dimensions.sheetWidth, minHeight: Dimensions.sheetHeight)
             }
     }
 
