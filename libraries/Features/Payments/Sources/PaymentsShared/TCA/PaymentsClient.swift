@@ -77,26 +77,50 @@ extension PaymentsClient: DependencyKey {
             }
 
             liveContext.setAvailablePlans(composedPlans)
-            var options: [PlanOptionV2] = composedPlans.map { plan in
-                let offer = plan.product.subscription?.introductoryOffer
-                let offerDisplayPricePerMonth = offer.map { plan.product.priceFormatStyle.format($0.pricePerMonth) }
 
-                return PlanOptionV2(
-                    id: plan.product.id,
-                    storePricePerMonth: plan.storePricePerMonth,
-                    amountOfMonths: plan.amountOfMonths,
-                    durationLabel: plan.durationLabel,
-                    displayPrice: plan.product.displayPrice,
-                    introDisplayPrice: offer?.displayPrice,
-                    pricePerMonth: plan.pricePerMonthLabel,
-                    introPricePerMonth: offer?.pricePerMonth,
-                    introDisplayPricePerMonth: offerDisplayPricePerMonth
-                )
+            // Using a task group because of the `await` on intro offer eligibility, in the hopes of keeping plan
+            // loading fast.
+            return await withTaskGroup { group in
+                for plan in composedPlans {
+                    group.addTask {
+                        let offer: Product.SubscriptionOffer? =
+                            if let subscription = plan.product.subscription,
+                            let offer = subscription.introductoryOffer,
+                            await subscription.isEligibleForIntroOffer {
+                                offer
+                            } else {
+                                nil
+                            }
+
+                        let offerDisplayPricePerMonth = offer.map {
+                            plan.product.priceFormatStyle.format($0.pricePerMonth)
+                        }
+
+                        return PlanOptionV2(
+                            id: plan.product.id,
+                            storePricePerMonth: plan.storePricePerMonth,
+                            amountOfMonths: plan.amountOfMonths,
+                            durationLabel: plan.durationLabel,
+                            displayPrice: plan.product.displayPrice,
+                            introDisplayPrice: offer?.displayPrice,
+                            pricePerMonth: plan.pricePerMonthLabel,
+                            introPricePerMonth: offer?.pricePerMonth,
+                            introDisplayPricePerMonth: offerDisplayPricePerMonth
+                        )
+                    }
+                }
+
+                var result: [PlanOptionV2] = []
+                for await value in group {
+                    result.append(value)
+                }
+
+                if shouldShowTwoYearsWebPlan {
+                    result.append(.twoYearsWebPlan)
+                }
+
+                return result
             }
-            if shouldShowTwoYearsWebPlan {
-                options.append(.twoYearsWebPlan)
-            }
-            return options
         },
         availableDiscount: { planOption in
             let mostExpensivePlan = liveContext.cachedMostExpensivePlan
