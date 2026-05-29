@@ -284,8 +284,7 @@ final class HeaderViewModel {
             statistics = nil
         }
 
-        // Defer the UI update one runloop tick so the view layer reads
-        // `viewModel.isConnected` and friends after the `@Shared` `willSet` commits.
+        // Use UI runloop to re-read `connectionState`
         DispatchQueue.main.async { [weak self] in
             self?.contentChanged?()
         }

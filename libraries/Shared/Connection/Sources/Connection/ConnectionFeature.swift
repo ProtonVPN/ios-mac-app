@@ -299,15 +299,12 @@ public struct ConnectionFeature: Sendable {
 
             case let .core(.delegate(.stateChanged(_, .connected(connectionData, connectedAt, details)))):
                 if state.currentIntent?.is(\.disconnecting) == true, state.reconnectionIntent != nil {
-                    // Protocol-switch race only: this guard fires when we're in the middle of
-                    // tearing down one tunnel while another reconnect intent is queued (e.g. the
-                    // user toggled a setting that requires reconnect mid-session). It does NOT
-                    // apply to the cancel-after-quick-connect path, where both `currentIntent`
-                    // and `reconnectionIntent` are cleared in `handleUserDisconnectionRequest`.
-                    // Suppress the transient `.connected` so the UI doesn't flash a connected
-                    // state for the soon-to-be-torn-down tunnel before the queued reconnect
-                    // takes over.
+                    // Protocol-switch reconnect: suppress the transient `.connected` from the
+                    // outgoing tunnel so the UI doesn't flash connected before the queued
+                    // reconnect. User-initiated disconnects don't hit this branch
+                    // because `handleUserDisconnectionRequest` clears both intents.
                     log.debug("Ignoring spurious .connected during protocol-switch reconnect", category: .connection)
+                    return .none
                 }
                 if state.reconnectionIntent != nil {
                     // We can receive a late startup `.connected` after user already requested a new connection
@@ -474,12 +471,18 @@ public struct ConnectionFeature: Sendable {
         }
     }
 
-    /// Resolves the intent associated with a `.connected` event against the actual tunnel data.
-    /// The stored intent (either `state.currentIntent` or the legacy `intentStorage` fallback) is
-    /// used as-is only when its protocol and server identifier match what the OS reports;
-    /// otherwise a fresh `ServerConnectionIntent` is synthesised from `connectionData`. This
-    /// keeps the UI in sync with OS-initiated tunnels (e.g. the user starting a VPN from System
-    /// Settings) where the stored in-app intent is necessarily stale or absent.
+    /// Resolves the intent associated with a `.connected` event against the actual tunnel data
+    /// reported by the OS. `ConnectionData` carries only `serverID` + protocol family — the rest
+    /// of `ServerConnectionIntent` (spec.location/.features/.profileId, WG transport/ports,
+    /// VPN features like NetShield/PortForwarding) only exists in the stored in-app intent.
+    ///
+    ///   1. Exact match (protocol family AND serverID match stored ones): preserve `storedIntent`
+    ///   2. `serverID` resolves to a real `Server` but doesn't match a stored one: create a
+    ///      new intent with the real server. Spec / features / protocol details are inherited
+    ///       from `storedIntent` if its protocol  matches the actual tunnel , default otherwise.
+    ///   3. No `actualServer` (e.g. empty `serverID`) but `storedIntent` exists with a matching protocol
+    ///      family: fall back to `storedIntent`. Mostly for IKE recovery.
+    ///   4. No server and not stored intent: `.intentMissing` and disconnect.
     private func resolveAndSetConnected(
         _ state: inout State,
         connectionData: ConnectionData,
@@ -489,23 +492,36 @@ public struct ConnectionFeature: Sendable {
         let actualTunnelProtocol = connectionData.protocolData.tunnelProtocol
         let actualServer = serverIdentifier.fullServerInfo(connectionData.serverID)
         let storedIntent = state.currentIntent?.serverIntent ?? (try? intentStorage.getConnectionIntent())
+        let storedMatchesProtocol = storedIntent.map {
+            tunnelProtocol(for: $0.protocolConfiguration) == actualTunnelProtocol
+        } ?? false
 
-        let resolvedIntent: ServerConnectionIntent? = if let storedIntent,
-                                                         tunnelProtocol(for: storedIntent.protocolConfiguration) == actualTunnelProtocol,
-                                                         storedIntent.server.endpoint.id == connectionData.serverID {
-            storedIntent
-        } else if let server = actualServer ?? storedIntent?.server {
-            ServerConnectionIntent(
-                spec: storedIntent?.spec ?? ConnectionSpec(),
+        let resolvedIntent: ServerConnectionIntent?
+        if let storedIntent,
+           storedMatchesProtocol,
+           storedIntent.server.endpoint.id == connectionData.serverID {
+            // (1) Exact match
+            resolvedIntent = storedIntent
+        } else if let server = actualServer {
+            // (2) Create new intent with the real server
+            let canInheritFromStored = storedMatchesProtocol
+            resolvedIntent = ServerConnectionIntent(
+                spec: canInheritFromStored ? (storedIntent?.spec ?? ConnectionSpec()) : ConnectionSpec(),
                 server: server,
                 protocolConfiguration: synthesizedProtocolConfiguration(
                     from: connectionData.protocolData,
-                    preserving: storedIntent?.protocolConfiguration
+                    preserving: canInheritFromStored ? storedIntent?.protocolConfiguration : nil
                 ),
-                features: storedIntent?.features ?? connectionFeatureProvider.connectionFeatures()
+                features: canInheritFromStored
+                    ? (storedIntent?.features ?? connectionFeatureProvider.connectionFeatures())
+                    : connectionFeatureProvider.connectionFeatures()
             )
+        } else if let storedIntent, storedMatchesProtocol {
+            // (3) Only for IKE when serverID is empty
+            resolvedIntent = storedIntent
         } else {
-            nil
+            // (4) Error
+            resolvedIntent = nil
         }
 
         guard let resolvedIntent else {

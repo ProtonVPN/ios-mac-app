@@ -22,31 +22,24 @@ import DependenciesMacros
 import Domain
 import Foundation
 
-/// Pushes the WireGuard `configData` blob into the macOS WireGuard system extension via XPC.
-///
-/// On iOS the config is stored in the keychain through `tunnelKeychain` and this client is not
-/// used; the iOS default returns `false` and is unreachable in production paths.
-///
-/// Extracted into a dependency primarily so `WireGuardConfiguratorTests` can inject a success
-/// stub — without it, the macOS test path would attempt a real XPC connection (no extension
-/// running) and the configurator would now (correctly) throw `configurationXPCWriteFailed`.
-@DependencyClient
-public struct WireguardExtensionConfigClient: Sendable {
-    /// Pushes `configData` to the extension. Returns `true` on success, `false` if the XPC
-    /// channel couldn't be established or the extension reported failure.
-    public var pushConfig: @Sendable (_ configData: Data) async -> Bool = { _ in false }
-}
-
-extension WireguardExtensionConfigClient: TestDependencyKey {
-    /// Tests default to success so existing tests that don't care about the XPC path keep
-    /// passing. Tests that exercise the failure path should override with a closure returning
-    /// `false`.
-    public static let testValue = WireguardExtensionConfigClient(
-        pushConfig: { _ in true }
-    )
-}
-
 #if os(macOS)
+    /// Pushes the WireGuard `configData` blob into the macOS WireGuard system extension via XPC.
+    @DependencyClient
+    public struct WireguardExtensionConfigClient: Sendable {
+        /// Pushes `configData` to the extension. Returns `true` on success, `false` if the XPC
+        /// channel couldn't be established or the extension reported failure.
+        public var pushConfig: @Sendable (_ configData: Data) async -> Bool = { _ in false }
+    }
+
+    extension WireguardExtensionConfigClient: TestDependencyKey {
+        /// Tests default to success so existing tests that don't care about the XPC path keep
+        /// passing. Tests that exercise the failure path should override with a closure returning
+        /// `false`.
+        public static let testValue = WireguardExtensionConfigClient(
+            pushConfig: { _ in true }
+        )
+    }
+
     extension WireguardExtensionConfigClient: DependencyKey {
         public static let liveValue = WireguardExtensionConfigClient(
             pushConfig: { configData in
@@ -62,19 +55,11 @@ extension WireguardExtensionConfigClient: TestDependencyKey {
             }
         )
     }
-#else
-    extension WireguardExtensionConfigClient: DependencyKey {
-        // iOS doesn't push config via XPC; the keychain path in `WireguardConfigurator` is used
-        // instead. This branch is unreachable in production and intentionally fails closed.
-        public static let liveValue = WireguardExtensionConfigClient(
-            pushConfig: { _ in false }
-        )
+
+    public extension DependencyValues {
+        var wireguardExtensionConfigClient: WireguardExtensionConfigClient {
+            get { self[WireguardExtensionConfigClient.self] }
+            set { self[WireguardExtensionConfigClient.self] = newValue }
+        }
     }
 #endif
-
-public extension DependencyValues {
-    var wireguardExtensionConfigClient: WireguardExtensionConfigClient {
-        get { self[WireguardExtensionConfigClient.self] }
-        set { self[WireguardExtensionConfigClient.self] = newValue }
-    }
-}

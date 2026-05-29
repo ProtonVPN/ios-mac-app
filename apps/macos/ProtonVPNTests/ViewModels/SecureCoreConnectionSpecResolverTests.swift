@@ -23,7 +23,7 @@ import Testing
 
 struct SecureCoreConnectionSpecResolverTests {
     @Test
-    func fastestSpecUsesSecureCoreWhenEnabled() {
+    func fastestSpecUsesFastestSecureCoreWhenNoExitCountryCode() {
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: true,
             connectedExitCountryCode: nil,
@@ -34,7 +34,7 @@ struct SecureCoreConnectionSpecResolverTests {
     }
 
     @Test
-    func fastestSpecPinsToConnectedCountryWhenSecureCoreEnabledForPaidUser() {
+    func fastestSpecUsesExitCountryFromConnectedCountryWhenSecureCoreEnabledForPaidUser() {
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: true,
             connectedExitCountryCode: "CH",
@@ -68,8 +68,7 @@ struct SecureCoreConnectionSpecResolverTests {
 
     @Test
     func fastestSpecFallsBackToAnyFastestForFreeTierEvenWithSecureCoreEnabled() {
-        // Free tier can't authorize Secure Core or country pinning, so the resolver
-        // short-circuits to `.any(.fastest)` regardless of the SC toggle.
+        // Free tier can't use Secure Core
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: true,
             connectedExitCountryCode: "US",

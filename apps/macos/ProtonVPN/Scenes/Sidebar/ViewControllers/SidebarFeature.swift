@@ -64,11 +64,11 @@ struct SidebarFeature {
         }
 
         @Shared(.connectionState) var connectionState: ConnectionState
+        // TODO: VPNAPPL-3545
         /// Widget-only shadow of `connectionState`. The widget extension cannot read
         /// `connectionState` (in-memory, process-local), so we keep a file-backed projection
         /// in App Group storage and write it from `connection.delegate.stateChanged`.
         /// **In-process callers must read `connectionState` directly, not this.**
-        // TODO: https://protonag.atlassian.net/browse/VPNAPPL-3545
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
         var connection: ConnectionFeature.State = .initialState
 
@@ -387,8 +387,7 @@ private extension SidebarFeature {
             case let .connectionStateChanged(connectionState):
                 switch connectionState {
                 case .resolving:
-                    // `.resolving` is a transient app-startup state used to bridge cold-start
-                    // hydration with the real tunnel-status read. It is NOT a user-initiated
+                    // `.resolving` is a transient app-startup state. It is NOT a user-initiated
                     // connect, so we don't show the connecting overlay — otherwise the user
                     // sees a brief connecting flash at every launch before the resolved
                     // (typically `.disconnected`) state arrives. `.connecting` (a real

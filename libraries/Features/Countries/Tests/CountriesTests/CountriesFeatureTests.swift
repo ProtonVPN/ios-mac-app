@@ -182,7 +182,6 @@ struct CountriesFeatureTests {
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
             CountriesFeature()
         } withDependencies: {
-            // Mock has an SC server for any country query → same-country message (no fallback).
             $0.serverRepository = .notEmpty()
         }
 
@@ -208,8 +207,6 @@ struct CountriesFeatureTests {
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
             CountriesFeature()
         } withDependencies: {
-            // notEmpty() returns a mock server for any query → hasServer(secureCore:exitCountryCode:)
-            // is true → notice is the same-country variant (no country-name interpolation).
             $0.serverRepository = .notEmpty()
         }
 
@@ -256,21 +253,6 @@ struct CountriesFeatureTests {
                 message: { TextState(Localizable.viewToggleWillCauseDisconnect) }
             )
         }
-    }
-
-    @Test("Alert disconnectAndToggle dismisses alert and sends applySecureCoreToggle")
-    func alertDisconnectAndToggleDispatchesApply() async {
-        var state = CountriesFeature.State(sections: [])
-        state.alert = AlertState(title: { TextState("Test") })
-
-        let store = TestStore(initialState: state) {
-            CountriesFeature()
-        }
-
-        await store.send(.alert(.presented(.disconnectAndToggle))) {
-            $0.alert = nil
-        }
-        await store.receive(\.applySecureCoreToggle)
     }
 
     @Test("Turning off secure core when disconnected applies toggle")

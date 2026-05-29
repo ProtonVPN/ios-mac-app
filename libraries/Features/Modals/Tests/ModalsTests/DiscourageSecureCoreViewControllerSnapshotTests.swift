@@ -46,7 +46,7 @@
             assertSnapshot(of: nsView, as: .image(size: snapshotSize))
         }
 
-        @Test("default dark appearance with same-country reconnect notice")
+        @Test("default dark appearance with SC available (no reconnect notice)")
         func defaultAppearanceWithSameCountryReconnectNotice() {
             let store = StoreOf<DiscourageSecureCoreFeature>(
                 initialState: .init(reconnectNotice: Localizable.viewToggleOnReconnectSameCountry),

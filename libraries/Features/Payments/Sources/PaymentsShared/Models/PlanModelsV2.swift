@@ -71,7 +71,7 @@ public struct PlanOptionV2: Hashable, Sendable, Identifiable {
         let cycle: String
 
         if purchaseType == .web, amountOfMonths == 24 {
-            // TODO: https://protonag.atlassian.net/browse/VPNAPPL-3103
+            // TODO: VPNAPPL-3103
             cycle = Localizable.perYear
         } else {
             if amountOfMonths == 12 {
@@ -119,13 +119,12 @@ public struct PlanOptionV2: Hashable, Sendable, Identifiable {
 // MARK: - Helpers
 
 public extension PlanOptionV2 {
+    // - TODO: VPNAPPL-3103
     /// This value is hard-coded.
     ///
     /// It's also slightly different from the other offers because the introductory price is
     /// *higher*, since the introductory offer is for the first two years, while the plan
     /// renews on a 1-year cycle.
-    ///
-    /// - Todo: https://protonag.atlassian.net/browse/VPNAPPL-3103
     static let twoYearsWebPlan: Self = PlanOptionV2(
         id: "2YwebPlan",
         storePricePerMonth: 4.99,

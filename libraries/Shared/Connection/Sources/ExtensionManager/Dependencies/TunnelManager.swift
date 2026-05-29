@@ -174,16 +174,13 @@ final class PacketTunnelManager: TunnelManager {
 
     var statusStream: AsyncStream<TunnelState> {
         log.debug("Creating TunnelState stream for tunnel observation", category: .connection)
-        // We resolve each emission through `currentTunnelState(after:)`, which prefers the
-        // global active-manager read (`try await status`) and falls back to the payload only
-        // on failure. The payload-only approach was tried previously but proved unreliable on
-        // macOS for IKE: `NEVPNManager.shared()` is a singleton whose `protocolConfiguration`
-        // can be transiently observed as nil during a `NEVPNStatusDidChange` for IKE — when
-        // that happens `StatusChangePayload.from` returns nil, `compactMap` drops the
-        // notification, and the user-facing state never advances to `.connected`.
-        // `activeManager()` reads from `vpnManagerRepository.managers()` which caches freshly-
-        // loaded managers, so the IKE configuration (and the username we encoded onto it) is
-        // stably available there.
+        // Each notification resolves via `currentTunnelState(after:)`, which reads the
+        // active manager (`try await status`) and only falls back to the payload on
+        // failure. A payload-only approach is unreliable on macOS for IKE: the shared
+        // `NEVPNManager`'s `protocolConfiguration` can transiently be nil during a status
+        // change, causing the notification to be dropped and the state to never reach
+        // `.connected`. The cached managers from `vpnManagerRepository` expose the IKE
+        // configuration in a stable way.
         return UncheckedSendable(
             NotificationCenter.default
                 .notifications(named: .NEVPNStatusDidChange)
@@ -197,7 +194,7 @@ final class PacketTunnelManager: TunnelManager {
         do {
             return try await status
         } catch {
-            log.error(
+            log.debug(
                 "Failed to resolve global tunnel status; falling back to payload",
                 category: .connection,
                 metadata: ["error": "\(error)"]
@@ -418,9 +415,7 @@ private extension NEVPNProtocol {
     ///
     /// The username is built by `WireguardConfigurator.ikeUsername(...)` as
     /// `<base>+<feature1>+...+ep:<serverID>`. The endpoint chunk is identified by the
-    /// `ep:` token (`IkeUsernameComponent.endpointIDPrefix`) — locating it explicitly is more
-    /// robust than positional decoding ("everything after the last `+`") and keeps encode/
-    /// decode tied to the same constant.
+    /// `ep:` token (`IkeUsernameComponent.endpointIDPrefix`)
     var ikePeerID: String {
         get throws {
             guard let username, !username.isEmpty else {

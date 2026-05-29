@@ -104,10 +104,9 @@ class StatusMenuWindowModel {
         // Defer the UI update one runloop tick so the `@Shared` `willSet` completes before
         // accessors are read by the view (see HeaderViewModel for the full rationale).
         $connectionState.publisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                DispatchQueue.main.async { [weak self] in
-                    self?.contentChanged?()
-                }
+                self?.contentChanged?()
             }
             .store(in: &cancellables)
     }

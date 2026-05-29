@@ -257,7 +257,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         // IKEv2 is the only protocol that embeds a user identity in its tunnel configuration
         // (`NEVPNProtocolIKEv2.username`). WireGuard tunnels carry no user identity, so the
         // cross-user check is best-effort and only catches the IKE case.
-        // TODO: Have wireguard check with ProTUN https://protonag.atlassian.net/browse/VPNAPPL-3544
+        // TODO: Have wireguard check with ProTUN VPNAPPL-3544
         guard
             let activeBaseUsername = await activeTunnelInspector.activeIKEBaseUsername(),
             activeBaseUsername != vpnCredentials.name

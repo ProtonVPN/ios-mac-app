@@ -87,7 +87,7 @@ public struct HomeFeature {
         /// `connectionState` (in-memory, process-local), so we keep a file-backed projection
         /// in App Group storage and write it from `connection.delegate.stateChanged`.
         /// **In-process callers must read `connectionState` directly, not this.**
-        // TODO: https://protonag.atlassian.net/browse/VPNAPPL-3545
+        // TODO: VPNAPPL-3545
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
         @Presents public var destination: Destination.State?

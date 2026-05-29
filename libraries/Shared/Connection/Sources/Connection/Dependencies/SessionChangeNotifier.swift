@@ -61,7 +61,7 @@ extension SessionChangeNotifier: DependencyKey {
     public static let testValue: SessionChangeNotifier = liveValue
 }
 
-// TODO: Refactor with Adam's AsyncStream broadcaster: https://protonag.atlassian.net/browse/VPNAPPL-3546
+// TODO: Refactor with Adam's AsyncStream broadcaster: VPNAPPL-3546
 private actor SessionChangeBroadcaster {
     private var continuations: [UUID: AsyncStream<Void>.Continuation] = [:]
 

@@ -43,7 +43,7 @@
             assertSnapshot(of: view, as: .image(layout: .device(config: .iPhone13Mini)))
         }
 
-        @Test("DiscourageSecureCoreView with fallback-country reconnect notice")
+        @Test("DiscourageSecureCoreView with reconnect notice \"SC not available\"")
         func discourageSecureCoreViewWithFallbackCountryNotice() {
             let view = DiscourageSecureCoreView(
                 store: Store(

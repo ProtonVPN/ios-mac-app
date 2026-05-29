@@ -279,7 +279,7 @@ private extension QuickSettingsFeature {
                 return .none
 
             case let .destination(.presented(.quickSettingDetail(.delegate(.option(type, option))))):
-                // Pre-flight gates before applying: Kill Switch conflict alert, NetShield/Hermes
+                // Alerts before applying: Kill Switch conflict alert, NetShield/Hermes
                 // conflict alert, paywall upsell, Secure Core discourage modal. Only after all
                 // of these pass do we hand off to `applyQuickSettingOptionSelection`.
                 if type == .killSwitchDisplay, option == .killSwitchOn,
@@ -287,39 +287,58 @@ private extension QuickSettingsFeature {
                     state.alert = Self.killSwitchConflictAlert
                     return .none
                 }
+
                 if case let .netShield(level) = option, level != .off, hermesClient.isEnabled().wrappedValue {
                     state.alert = Self.hermesConflictAlert(level: level)
                     return .none
                 }
+
                 if Self.optionRequiresUpsell(type: type, option: option),
                    let modalType = Self.upsellModalType(for: type) {
                     state.destination = .upsell(.init(modalType: modalType))
                     Self.syncSelection(&state)
                     return .none
                 }
+
                 if type == .secureCoreDisplay {
                     let turningOn = (option == .secureCoreOn)
                     let isConnected = connectionState.isConnected
-                    // Unified iOS/macOS matrix:
-                    //   ON  + discourageSecureCore → discourage screen (with reconnect notice if connected)
-                    //   ON  + connected            → short alert
-                    //   OFF + connected            → short alert
-                    //   else                       → apply silently
                     let fallback = fallbackCountryName(turningOn: turningOn)
-                    if turningOn, discourageSecureCore {
-                        let notice = isConnected
-                            ? SecureCoreConnectionSpecResolver.toggleAlertMessage(turningOn: true, fallbackCountryName: fallback)
-                            : nil
+
+                    // Unified iOS/macOS matrix.
+                    //   switch (turningOn, discourageSecureCore, isConnected) {
+                    //   case (true,  true,  true ): discourage screen + reconnect notice
+                    //   case (true,  true,  false): discourage screen
+                    //   case (true,  false, true ): short alert
+                    //   case (false, _,     true ): short alert
+                    //   default:                    apply silently
+                    //   }
+
+                    switch (turningOn, discourageSecureCore, isConnected) {
+                    case (true, true, true):
+                        let notice = SecureCoreConnectionSpecResolver.toggleAlertMessage(
+                            turningOn: true,
+                            fallbackCountryName: fallback
+                        )
                         state.destination = .discourageSecureCoreView(.init(reconnectNotice: notice))
                         Self.syncSelection(&state)
                         return .none
-                    }
-                    if isConnected {
+
+                    case (true, true, false):
+                        state.destination = .discourageSecureCoreView(.init(reconnectNotice: nil))
+                        Self.syncSelection(&state)
+                        return .none
+
+                    case (true, false, true), (false, _, true):
                         state.alert = Self.secureCoreToggleAlert(turningOn: turningOn, fallbackCountryName: fallback)
                         Self.syncSelection(&state)
                         return .none
+
+                    default:
+                        break // apply silently
                     }
                 }
+
                 applyQuickSettingOptionSelection(type: type, option: option)
                 return .send(.dismissDetails)
 
@@ -487,9 +506,15 @@ private extension QuickSettingsFeature {
         @SharedReader(.userTier) var userTier: Int?
         let isFreeTier = userTier?.isFreeTier ?? true
         let connectedCountryCode = connectionState.resolvedServer?.logical.exitCountryCode
-        let resolvedExit = connectedCountryCode.flatMap { cc in
-            serverRepository.hasServer(secureCore: secureCoreToggle, exitCountryCode: cc) ? cc : nil
+        let canReuseCurrentExitCountry: Bool = if let connectedCountryCode {
+            serverRepository.hasServer(
+                secureCore: secureCoreToggle,
+                exitCountryCode: connectedCountryCode
+            )
+        } else {
+            false
         }
+        let resolvedExit = canReuseCurrentExitCountry ? connectedCountryCode : nil
         let spec = SecureCoreConnectionSpecResolver.toggleReconnectSpec(
             secureCoreEnabled: secureCoreToggle,
             exitCountryCode: resolvedExit,
@@ -619,9 +644,10 @@ extension QuickSettingsFeature {
         )
     }
 
-    /// Short "you will be reconnected" confirmation shown before toggling Secure Core mid-session.
-    /// Message body is direction-aware (and falls back to the global-fastest copy when no SC
-    /// server exits via the currently-connected country).
+    /// A confirmation alert warning that toggling Secure Core mid-session
+    /// will trigger a reconnect.
+    /// If no Secure Core server is available in the currently connected country, the
+    /// message falls back to the generic "global fastest" copy instead of naming a country.
     static func secureCoreToggleAlert(turningOn: Bool, fallbackCountryName: String?) -> AlertState<Action.Alert> {
         let message = SecureCoreConnectionSpecResolver.toggleAlertMessage(
             turningOn: turningOn,
@@ -645,10 +671,9 @@ extension QuickSettingsFeature {
 }
 
 private extension QuickSettingsFeature {
-    /// When turning Secure Core on, returns the localized name of the currently-connected exit
-    /// country if and only if no Secure Core server exits via that country (so the user sees
-    /// the fallback copy). Returns nil for the OFF direction, when not connected, or when an SC
-    /// server is available in the connected country.
+    /// Localized name of the connected exit country to show in the alert/discourage view when
+    /// no Secure Core server exits via it. Nil when turning off, disconnected, or an SC
+    /// server is available.
     func fallbackCountryName(turningOn: Bool) -> String? {
         guard turningOn, let cc = connectionState.resolvedServer?.logical.exitCountryCode,
               !serverRepository.hasServer(secureCore: true, exitCountryCode: cc) else { return nil }

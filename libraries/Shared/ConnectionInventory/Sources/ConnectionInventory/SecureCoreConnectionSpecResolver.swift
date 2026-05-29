@@ -62,20 +62,22 @@ public enum SecureCoreConnectionSpecResolver {
         )
     }
 
-    /// Location to use when the user toggles Secure Core mid-connection.
+    /// ConnectionSpec to use when toggling SC and connected.
     ///
-    /// Asymmetric by direction (matches the iOS/macOS unified UX):
-    /// - Turning **on**  + a non-nil `exitCountryCode` → fastest Secure Core exiting via that
-    ///   country. Nil → global fastest SC.
-    /// - Turning **off** + a non-nil `exitCountryCode` → random standard server in that country.
-    ///   Nil → any random server.
-    /// - Free tier: always `.any(.fastest)` (Secure Core unreachable, country-pinning would trip
-    ///   the upsell).
-    ///
-    /// **The caller is responsible for verifying server availability** in the requested mode +
-    /// exit country and passing `nil` if none exists. Use `ServerRepository.hasServer(secureCore:
-    /// exitCountryCode:)` for that check. Keeping the check at the call site is what lets this
-    /// module stay free of any Persistence dependency.
+    /// ```
+    /// switch (isFreeTier, secureCoreEnabled, exitCountryCode) {
+    /// case (true, _, _):
+    ///     return .any(.fastest) // upsell
+    /// case (false, true, .some(let country)):
+    ///     return .secureCore(.anyHop(to: country, .fastest)) // fastest Secure Core exiting via `country`
+    /// case (false, true, nil):
+    ///     return .secureCore(.any(.fastest)) // global fastest Secure Core
+    /// case (false, false, .some(let country)):
+    ///     return .country(code: country, order: .random) // random standard server in `country`
+    /// case (false, false, nil):
+    ///     return .any(.random) // any random server
+    /// }
+    /// ```
     public static func toggleReconnectLocation(
         secureCoreEnabled: Bool,
         exitCountryCode: String?,
@@ -83,10 +85,12 @@ public enum SecureCoreConnectionSpecResolver {
     ) -> ConnectionSpec.Location {
         if isFreeTier { return .any(.fastest) }
 
-        if secureCoreEnabled {
-            return exitCountryCode.map { .secureCore(.anyHop(to: $0, .fastest)) } ?? .secureCore(.any(.fastest))
+        if let exitCountryCode {
+            return secureCoreEnabled
+                ? .secureCore(.anyHop(to: exitCountryCode, .fastest))
+                : .country(code: exitCountryCode, order: .random)
         }
-        return exitCountryCode.map { .country(code: $0, order: .random) } ?? .any(.random)
+        return secureCoreEnabled ? .secureCore(.any(.fastest)) : .any(.random)
     }
 
     public static func toggleReconnectSpec(
@@ -104,10 +108,7 @@ public enum SecureCoreConnectionSpecResolver {
         )
     }
 
-    /// Random-server location respecting the Secure Core toggle. Used by change-server flows
-    /// where the user has explicitly asked for a new random server while connected. Both platforms
-    /// previously used `ProfileConstants.randomProfile(.unspecified) → ConnectionSpec` which
-    /// silently dropped Secure Core; this helper preserves the toggle.
+    /// Proper random ConnectionSpec.Location respecting SC.
     public static func randomLocation(secureCoreEnabled: Bool) -> ConnectionSpec.Location {
         secureCoreEnabled ? .secureCore(.any(.random)) : .any(.random)
     }
@@ -116,19 +117,19 @@ public enum SecureCoreConnectionSpecResolver {
         .init(location: randomLocation(secureCoreEnabled: secureCoreEnabled), features: [])
     }
 
-    /// User-facing body text for the Secure Core toggle disconnect/reconnect warning and for the
-    /// "will reconnect" notice on the discourage screen. Shape:
-    /// - Turning **off** → "Toggling Secure Core will end your current connection." (the base copy
-    ///   used by both alert and warning when SC is being disabled).
-    /// - Turning **on**  + `fallbackCountryName == nil` (SC server exists in connected country, or
-    ///   user not connected) → "Turning on Secure Core ... try to reconnect to the same country."
-    /// - Turning **on**  + `fallbackCountryName != nil` (no SC server in connected country) →
-    ///   "Secure Core isn't available in <country>. Your VPN will reconnect through the fastest
-    ///   available Secure Core server."
+    /// Text for the Secure Core toggle disconnect/reconnect warning.
     ///
-    /// Callers compute `fallbackCountryName` from `ServerRepository.hasServer(...)` +
-    /// `LocalizationUtility.countryName(forCode:)`. Nil-out when the fallback case doesn't apply
-    /// (turning off, not connected, or SC available in the connected country).
+    /// ```
+    /// switch (turningOn, fallbackCountryName) {
+    /// case (false, _):
+    ///     return "Toggling Secure Core will end your current connection."
+    /// case (true, nil):
+    ///     return "Turning on Secure Core ... try to reconnect to the same country."
+    /// case (true, .some(let country)):
+    ///     return "Secure Core isn't available in \(country). Your VPN will reconnect "
+    ///          + "through the fastest available Secure Core server."
+    /// }
+    /// ```
     public static func toggleAlertMessage(
         turningOn: Bool,
         fallbackCountryName: String?

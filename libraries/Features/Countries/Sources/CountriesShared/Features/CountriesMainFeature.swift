@@ -118,16 +118,22 @@ public struct CountriesMainFeature {
         }
     }
 
-    /// Mirrors macOS QuickSettings: if the user is mid-connection when Secure Core is toggled,
-    /// dispatch a reconnect to the SC-aware fastest target (or country-pinned SC when toggling
-    /// on while connected to a specific exit). Off-connection toggles are no-ops here — the new
-    /// value will be picked up on the next connect.
+    /// A confirmation alert warning that toggling Secure Core mid-session
+    /// will trigger a reconnect.
+    /// If no Secure Core server is available in the currently connected country, the
+    /// message falls back to the generic "global fastest" copy instead of naming a country.
     private func dispatchSecureCoreToggleReconnect(secureCoreEnabled: Bool) {
         guard connectionState.isConnected else { return }
         let connectedCountryCode = connectionState.resolvedServer?.logical.exitCountryCode
-        let resolvedExit = connectedCountryCode.flatMap { cc in
-            serverRepository.hasServer(secureCore: secureCoreEnabled, exitCountryCode: cc) ? cc : nil
+        let canReuseCurrentExitCountry: Bool = if let connectedCountryCode {
+            serverRepository.hasServer(
+                secureCore: secureCoreEnabled,
+                exitCountryCode: connectedCountryCode
+            )
+        } else {
+            false
         }
+        let resolvedExit = canReuseCurrentExitCountry ? connectedCountryCode : nil
         let isFreeTier = userTier?.isFreeTier ?? true
         let spec = SecureCoreConnectionSpecResolver.toggleReconnectSpec(
             secureCoreEnabled: secureCoreEnabled,

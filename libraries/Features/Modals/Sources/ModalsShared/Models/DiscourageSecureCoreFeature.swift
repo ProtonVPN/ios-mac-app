@@ -37,10 +37,8 @@ public struct DiscourageSecureCoreFeature {
     @ObservableState
     public struct State: Equatable {
         var dontShowAgain: Bool
-        /// Optional reconnect notice rendered under the subtitle. The caller computes the right
-        /// localized text (typically via `SecureCoreConnectionSpecResolver.toggleAlertMessage`)
-        /// depending on whether the user is currently connected and whether a Secure Core server
-        /// exists in their connected country. Nil → no extra line is shown.
+        /// An extra message shown below the subtitle to warn about reconnecting.
+        /// Nil hides this message.
         var reconnectNotice: String?
 
         public init(dontShowAgain: Bool = false, reconnectNotice: String? = nil) {

@@ -36,17 +36,13 @@ class MapHeaderViewModel {
     var contentChanged: (() -> Void)?
 
     init() {
-        // Subscribe to publisher emissions to drive UI re-renders. We don't use `newValue` here
-        // because all decisions are made by accessors below, but the sink still must exist to
-        // notify the view. The `connectionState` accessors read freshest state by the time the
-        // view layer re-renders (post-willSet).
-        // Defer the UI update one runloop tick so the `@Shared` `willSet` completes before
-        // accessors are read by the view (see HeaderViewModel for the full rationale).
+        // When using @Shared publisher in non-TCA env, publisher will emit a new value on `willSet`
+        // if we re-read the value in the sink we'll get a stale value.
+        // in contentChanged here we don't need/use connectionState, so we don't need to pass it
         $connectionState.publisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                DispatchQueue.main.async { [weak self] in
-                    self?.contentChanged?()
-                }
+                self?.contentChanged?()
             }
             .store(in: &cancellables)
     }

@@ -102,8 +102,8 @@ public extension ServerRepository {
     }
 
     /// Whether at least one server matching the requested mode exits via `exitCountryCode`.
-    /// Used by Secure Core toggle reconnect flows to decide whether to country-pin or fall back
-    /// to a global selection (see `SecureCoreConnectionSpecResolver.toggleReconnectLocation`).
+    /// Used by SC toggle reconnect flows to decide whether to use specific country (standard country, exit country in SC)
+    /// (see ``SecureCoreConnectionSpecResolver.toggleReconnectLocation``).
     func hasServer(secureCore: Bool, exitCountryCode: String) -> Bool {
         let filters: [VPNServerFilter] = [
             .features(secureCore ? .secureCore : .standard),

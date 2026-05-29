@@ -370,7 +370,7 @@ enum WireguardConfiguratorError: Error {
     case keychainImplementationError(TunnelKeychainImplementationError)
     case keychainError(Error)
     /// macOS-only: pushing the WireGuard config to the extension via XPC failed (no remote
-    /// object, broken connection, etc.). The resulting `NETunnelProviderProtocol` would have
+    /// object, broken connection, etc.). The resulting ``NETunnelProviderProtocol`` would have
     /// no password reference and the tunnel would fail to start without an actionable error.
     case configurationXPCWriteFailed
 }
