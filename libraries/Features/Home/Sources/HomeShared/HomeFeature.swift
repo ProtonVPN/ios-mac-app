@@ -614,21 +614,10 @@ private extension HomeFeature {
         if propertiesManager.featureFlags.unsafeLanWarnings,
            !killSwitch,
            let bad = networkInterfacePropertiesProvider.firstBadInterface() {
-            return AlertState {
-                TextState(Localizable.badInterfaceIpRangeAlertTitle)
-            } actions: {
-                ButtonState(action: .enableKillSwitchAndConnect(pending)) {
-                    TextState(Localizable.killSwitchEnable)
-                }
-                ButtonState(role: .destructive, action: .connectAnywayDespiteBadLAN(pending)) {
-                    TextState(Localizable.continue)
-                }
-            } message: {
-                TextState(Localizable.promptKillSwitchDueToBadInterfaceIpRange(
-                    bad.name ?? "Unknown Interface",
-                    bad.subnetDescription ?? "Unknown Subnet"
-                ))
-            }
+            return bad.interceptAlert(
+                enableKillSwitch: .enableKillSwitchAndConnect(pending),
+                connectAnyway: .connectAnywayDespiteBadLAN(pending)
+            )
         }
         return nil
     }
