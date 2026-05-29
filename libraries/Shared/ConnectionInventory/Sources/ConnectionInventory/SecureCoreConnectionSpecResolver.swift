@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Domain
+import Strings
 
 public enum SecureCoreConnectionSpecResolver {
     public static func fastestLocation(
@@ -24,16 +25,20 @@ public enum SecureCoreConnectionSpecResolver {
         connectedExitCountryCode: String?,
         isFreeTier: Bool
     ) -> ConnectionSpec.Location {
-        if secureCoreEnabled {
-            // Match iOS/default quick-connect behavior:
-            // secure core toggle resolves to fastest secure core, not exit-country pinning.
-            return .secureCore(.any(.fastest))
-        }
-
         // Free users can only authorize `.any(.fastest)`. Pinning to a specific country
         // here would trip the intent resolver and pop the "specific country" upsell.
+        // (Free tier also can't use Secure Core, so the SC branch below is unreachable for them.)
         if isFreeTier {
             return .any(.fastest)
+        }
+
+        if secureCoreEnabled {
+            // Toggle-on-while-connected: target a Secure Core server exiting via the connected
+            // country to preserve the user's exit location. No connected country → global fastest.
+            if let countryCode = connectedExitCountryCode {
+                return .secureCore(.anyHop(to: countryCode, .fastest))
+            }
+            return .secureCore(.any(.fastest))
         }
 
         if let countryCode = connectedExitCountryCode {
@@ -55,6 +60,87 @@ public enum SecureCoreConnectionSpecResolver {
             ),
             features: []
         )
+    }
+
+    /// ConnectionSpec to use when toggling SC and connected.
+    ///
+    /// ```
+    /// switch (isFreeTier, secureCoreEnabled, exitCountryCode) {
+    /// case (true, _, _):
+    ///     return .any(.fastest) // upsell
+    /// case (false, true, .some(let country)):
+    ///     return .secureCore(.anyHop(to: country, .fastest)) // fastest Secure Core exiting via `country`
+    /// case (false, true, nil):
+    ///     return .secureCore(.any(.fastest)) // global fastest Secure Core
+    /// case (false, false, .some(let country)):
+    ///     return .country(code: country, order: .random) // random standard server in `country`
+    /// case (false, false, nil):
+    ///     return .any(.random) // any random server
+    /// }
+    /// ```
+    public static func toggleReconnectLocation(
+        secureCoreEnabled: Bool,
+        exitCountryCode: String?,
+        isFreeTier: Bool
+    ) -> ConnectionSpec.Location {
+        if isFreeTier { return .any(.fastest) }
+
+        if let exitCountryCode {
+            return secureCoreEnabled
+                ? .secureCore(.anyHop(to: exitCountryCode, .fastest))
+                : .country(code: exitCountryCode, order: .random)
+        }
+        return secureCoreEnabled ? .secureCore(.any(.fastest)) : .any(.random)
+    }
+
+    public static func toggleReconnectSpec(
+        secureCoreEnabled: Bool,
+        exitCountryCode: String?,
+        isFreeTier: Bool
+    ) -> ConnectionSpec {
+        .init(
+            location: toggleReconnectLocation(
+                secureCoreEnabled: secureCoreEnabled,
+                exitCountryCode: exitCountryCode,
+                isFreeTier: isFreeTier
+            ),
+            features: []
+        )
+    }
+
+    /// Proper random ConnectionSpec.Location respecting SC.
+    public static func randomLocation(secureCoreEnabled: Bool) -> ConnectionSpec.Location {
+        secureCoreEnabled ? .secureCore(.any(.random)) : .any(.random)
+    }
+
+    public static func randomSpec(secureCoreEnabled: Bool) -> ConnectionSpec {
+        .init(location: randomLocation(secureCoreEnabled: secureCoreEnabled), features: [])
+    }
+
+    /// Text for the Secure Core toggle disconnect/reconnect warning.
+    ///
+    /// ```
+    /// switch (turningOn, fallbackCountryName) {
+    /// case (false, _):
+    ///     return "Toggling Secure Core will end your current connection."
+    /// case (true, nil):
+    ///     return "Turning on Secure Core ... try to reconnect to the same country."
+    /// case (true, .some(let country)):
+    ///     return "Secure Core isn't available in \(country). Your VPN will reconnect "
+    ///          + "through the fastest available Secure Core server."
+    /// }
+    /// ```
+    public static func toggleAlertMessage(
+        turningOn: Bool,
+        fallbackCountryName: String?
+    ) -> String {
+        if !turningOn {
+            return Localizable.viewToggleWillCauseDisconnect
+        }
+        if let countryName = fallbackCountryName {
+            return Localizable.viewToggleOnReconnectFastestFallback(countryName)
+        }
+        return Localizable.viewToggleOnReconnectSameCountry
     }
 
     public static func reconnectTrigger(

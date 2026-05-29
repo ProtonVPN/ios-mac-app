@@ -46,7 +46,6 @@ class StatusMenuWindowModel {
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
     @Shared(.connectionState) private var connectionState: ConnectionState
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     var contentChanged: (() -> Void)?
 
@@ -63,7 +62,7 @@ class StatusMenuWindowModel {
     }
 
     var isConnected: Bool {
-        vpnConnectionStatus.isConnected(using: connectionState)
+        connectionState.isConnected
     }
 
     var statusMenuViewController: StatusMenuViewController {
@@ -73,7 +72,7 @@ class StatusMenuWindowModel {
 
     var statusIcon: StatusIcon {
         guard isSessionEstablished else { return .disconnected }
-        switch vpnConnectionStatus {
+        switch connectionState {
         case .connected:
             return .connected
         case .connecting, .resolving:
@@ -84,17 +83,11 @@ class StatusMenuWindowModel {
     }
 
     var appIcon: AppIcon {
-        guard isSessionEstablished else { return .disconnected }
-        switch isConnected {
-        case true:
-            return .active
-        case false:
-            return .disconnected
-        }
+        isSessionEstablished && isConnected ? .active : .disconnected
     }
 
     var isStatusIconBlinking: Bool {
-        vpnConnectionStatus.is(\.connecting) || vpnConnectionStatus.is(\.resolving)
+        connectionState.is(\.connecting) || connectionState.is(\.resolving)
     }
 
     // MARK: - Private functions
@@ -108,13 +101,10 @@ class StatusMenuWindowModel {
             }
             .store(in: &cancellables)
 
-        $vpnConnectionStatus.publisher
-            .sink { [weak self] _ in
-                self?.contentChanged?()
-            }
-            .store(in: &cancellables)
-
+        // Defer the UI update one runloop tick so the `@Shared` `willSet` completes before
+        // accessors are read by the view (see HeaderViewModel for the full rationale).
         $connectionState.publisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.contentChanged?()
             }

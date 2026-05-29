@@ -23,7 +23,7 @@ import Testing
 
 struct SecureCoreConnectionSpecResolverTests {
     @Test
-    func fastestSpecUsesSecureCoreWhenEnabled() {
+    func fastestSpecUsesFastestSecureCoreWhenNoExitCountryCode() {
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: true,
             connectedExitCountryCode: nil,
@@ -34,14 +34,14 @@ struct SecureCoreConnectionSpecResolverTests {
     }
 
     @Test
-    func fastestSpecUsesSecureCoreFastestWhenEnabledAndCountryIsKnown() {
+    func fastestSpecUsesExitCountryFromConnectedCountryWhenSecureCoreEnabledForPaidUser() {
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: true,
             connectedExitCountryCode: "CH",
             isFreeTier: false
         )
 
-        #expect(spec.location == .secureCore(.any(.fastest)))
+        #expect(spec.location == .secureCore(.anyHop(to: "CH", .fastest)))
     }
 
     @Test
@@ -67,16 +67,15 @@ struct SecureCoreConnectionSpecResolverTests {
     }
 
     @Test
-    func fastestSpecPrefersSecureCoreOverFreeTierFallback() {
-        // Free user with secure core enabled would still hit the secureCore upsell at intent
-        // resolution, but the resolver itself should faithfully build a secure-core spec.
+    func fastestSpecFallsBackToAnyFastestForFreeTierEvenWithSecureCoreEnabled() {
+        // Free tier can't use Secure Core
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: true,
             connectedExitCountryCode: "US",
             isFreeTier: true
         )
 
-        #expect(spec.location == .secureCore(.any(.fastest)))
+        #expect(spec.location == .any(.fastest))
     }
 
     @Test

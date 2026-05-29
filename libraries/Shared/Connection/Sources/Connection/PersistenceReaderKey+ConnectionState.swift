@@ -17,10 +17,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Domain
+import Foundation
 
 public extension SharedKey where Self == InMemoryKey<ConnectionState>.Default {
     static var connectionState: Self {
-        Self[.inMemory("connectionState"), default: .resolving]
+        Self[.inMemory("connectionState"), default: .resolving(nil, nil)]
     }
 }
 

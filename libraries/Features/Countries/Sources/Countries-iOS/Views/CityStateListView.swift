@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import CountriesShared
 import Domain
 import SharedViews
@@ -28,7 +29,7 @@ import VPNAppCore
 
 public struct CityStateListView: View {
     @Bindable var store: StoreOf<CityStateListFeature>
-    @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus
+    @SharedReader(.connectionState) var connectionState
 
     public init(store: StoreOf<CityStateListFeature>) {
         self.store = store
@@ -103,7 +104,7 @@ public struct CityStateListView: View {
     }
 
     private func shouldConnect(location: ConnectionSpec.Location) -> Bool {
-        if let locationConnected = vpnConnectionStatus.spec?.location, locationConnected == location {
+        if let locationConnected = connectionState.location, locationConnected == location {
             false
         } else {
             true

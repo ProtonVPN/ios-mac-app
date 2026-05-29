@@ -65,7 +65,8 @@ public final class AppDelegateService: AppDelegateProtocol {
     private lazy var appSessionManager: AppSessionManager = container.makeAppSessionManager()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var pushNotificationService = container.makePushNotificationService()
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
+    private lazy var profileManager: ProfileManager = container.makeProfileManager()
+    @Shared(.connectionState) private var connectionState: ConnectionState
 
     private var tokens: [NotificationToken] = []
     private var cancellables = Set<AnyCancellable>()
@@ -278,12 +279,7 @@ public final class AppDelegateService: AppDelegateProtocol {
             // Action may only come from a trusted source
             guard verified else { return false }
 
-            // Extensions requesting a connection should set a connection request first
-            connectionCommandClient.send(.connect(
-                propertiesManager.lastConnectionIntent,
-                propertiesManager.connectionProtocol,
-                .widget
-            ))
+            connectionCommandClient.quickConnect(profileManager: profileManager, trigger: .widget)
             startListeningForDeepLinkConnectState()
             navigationService.presentStatusViewController()
 
@@ -325,11 +321,11 @@ public final class AppDelegateService: AppDelegateProtocol {
 
     private func startListeningForDeepLinkConnectState() {
         deepLinkConnectStatusCancellable?.cancel()
-        deepLinkConnectStatusCancellable = $vpnConnectionStatus
+        deepLinkConnectStatusCancellable = $connectionState
             .publisher
-            .sink { [weak self] status in
+            .sink { [weak self] state in
                 guard let self else { return }
-                switch status {
+                switch state {
                 case .connected:
                     deepLinkConnectStatusCancellable?.cancel()
                     deepLinkConnectStatusCancellable = nil

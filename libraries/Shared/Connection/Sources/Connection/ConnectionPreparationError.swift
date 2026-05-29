@@ -43,7 +43,7 @@ public enum ConnectionPreparationError: ProtonVPNError, Equatable {
         case .featureNotReady:
             "PRNR" // PReparation Not Ready
         case .networkUnreachable:
-            "NWRU" // NetWoRk Unreachable
+            "NWUN" // NetWork UNreachable
 
         case .protocolSelectionError(.cancelled):
             "PRCC"

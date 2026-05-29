@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import ConnectionDetailsShared
 import Domain
 import Persistence
@@ -43,11 +44,11 @@ public struct ConnectionScreenView: View {
     public var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
-                if let spec = store.vpnConnectionStatus.spec {
+                if let spec = store.connectionState.resolvedSpec {
                     ConnectionFlagInfoView(
                         intent: spec,
                         isPinned: false,
-                        server: store.vpnConnectionStatus.server,
+                        server: store.connectionState.resolvedServer,
                         isConnected: false,
                         images: .coreImages
                     )
@@ -128,14 +129,28 @@ public struct ConnectionScreenView: View {
             city: "City",
             coordinates: .mockPoland()
         )
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
-        $vpnConnectionStatus.withLock { $0 = .connected(spec, actual) }
+        let intent = ServerConnectionIntent(
+            spec: spec,
+            server: actual.server,
+            protocolConfiguration: .wireGuard(.init(backend: .go, transport: .udp, ports: [443], features: .init(killSwitch: false, excludeLocalNetworks: false))),
+            features: VPNConnectionFeatures(
+                netshield: .off,
+                vpnAccelerator: true,
+                bouncing: nil,
+                natType: actual.natType,
+                safeMode: actual.safeMode,
+                portForwarding: nil
+            )
+        )
+
+        @Shared(.connectionState) var connectionState: ConnectionState
+        $connectionState.withLock { $0 = .connected(intent, actual.server, Date(), nil) }
 
         @Shared(.userIP) var userIP: String?
         $userIP.withLock { $0 = "127.0.0.1" }
 
         let store: StoreOf<ConnectionScreenFeature> = .init(
-            initialState: vpnConnectionStatus.actual!.connectionScreenFeatureState(),
+            initialState: connectionState.connectionScreenFeatureState()!,
             reducer: { ConnectionScreenFeature() }
         )
         return ConnectionScreenView(store: store)

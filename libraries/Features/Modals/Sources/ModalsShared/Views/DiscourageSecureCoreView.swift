@@ -33,22 +33,24 @@ public struct DiscourageSecureCoreView: View {
 
     public var body: some View {
         VStack(spacing: .themeSpacing0) {
-            ScrollView {
-                VStack(spacing: .themeSpacing0) {
-                    artImage
-                        .padding(.bottom, .themeSpacing24)
+            VStack(spacing: .themeSpacing0) {
+                artImage
+                    .padding(.bottom, .themeSpacing24)
 
-                    titleSection
-                        .padding(.bottom, .themeSpacing16)
+                titleSection
+                    .padding(.bottom, .themeSpacing16)
 
-                    learnMoreButton
-                        .padding(.bottom, .themeSpacing24)
+                learnMoreButton
+                    .padding(.bottom, .themeSpacing24)
 
-                    dontShowAgainToggle
-                }
-                .padding(.horizontal, .themeSpacing24)
-                .padding(.top, .themeSpacing32)
+                dontShowAgainToggle
             }
+            .padding(.horizontal, .themeSpacing24)
+            .padding(.top, .themeSpacing32)
+
+            #if os(iOS)
+                Spacer()
+            #endif
 
             actionButtons
                 .padding(.horizontal, .themeSpacing24)
@@ -64,8 +66,8 @@ public struct DiscourageSecureCoreView: View {
         #if os(iOS)
             .resizable()
             .aspectRatio(contentMode: .fit)
-        #endif
             .frame(maxWidth: .infinity)
+        #endif
     }
 
     private var titleSection: some View {
@@ -79,6 +81,7 @@ public struct DiscourageSecureCoreView: View {
                 .foregroundStyle(Color(.white))
             #endif
                 .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
 
             Text(Localizable.modalsDiscourageSecureCoreSubtitle)
             #if os(iOS)
@@ -89,6 +92,20 @@ public struct DiscourageSecureCoreView: View {
                 .foregroundStyle(Color(.white))
             #endif
                 .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+
+            if let notice = store.reconnectNotice {
+                Text(notice)
+                #if os(iOS)
+                    .themeFont(.body1(.regular))
+                    .foregroundStyle(Color(.text, .weak))
+                #elseif os(macOS)
+                    .themeFont(.title2())
+                    .foregroundStyle(Color(.white))
+                #endif
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
     }
 

@@ -174,6 +174,13 @@ final class PacketTunnelManager: TunnelManager {
 
     var statusStream: AsyncStream<TunnelState> {
         log.debug("Creating TunnelState stream for tunnel observation", category: .connection)
+        // Each notification resolves via `currentTunnelState(after:)`, which reads the
+        // active manager (`try await status`) and only falls back to the payload on
+        // failure. A payload-only approach is unreliable on macOS for IKE: the shared
+        // `NEVPNManager`'s `protocolConfiguration` can transiently be nil during a status
+        // change, causing the notification to be dropped and the state to never reach
+        // `.connected`. The cached managers from `vpnManagerRepository` expose the IKE
+        // configuration in a stable way.
         return UncheckedSendable(
             NotificationCenter.default
                 .notifications(named: .NEVPNStatusDidChange)
@@ -181,6 +188,19 @@ final class PacketTunnelManager: TunnelManager {
                 .map { await self.currentTunnelState(after: $0) }
         )
         .eraseToStream()
+    }
+
+    private func currentTunnelState(after payload: StatusChangePayload) async -> TunnelState {
+        do {
+            return try await status
+        } catch {
+            log.debug(
+                "Failed to resolve global tunnel status; falling back to payload",
+                category: .connection,
+                metadata: ["error": "\(error)"]
+            )
+            return await tunnelState(from: payload)
+        }
     }
 
     private func activeManager() async throws -> (TunnelProtocol, any TunnelProviderManager)? {
@@ -192,25 +212,8 @@ final class PacketTunnelManager: TunnelManager {
         guard !activeManagers.isEmpty else {
             return nil
         }
-        return activeManagers.max(by: { lhs, rhs in
-            statusPriority(lhs.value.session.status) < statusPriority(rhs.value.session.status)
-        })
-    }
-
-    private func statusPriority(_ status: NEVPNStatus) -> Int {
-        switch status {
-        case .connected:
-            4
-        case .reasserting:
-            3
-        case .connecting:
-            2
-        case .disconnecting:
-            1
-        case .invalid, .disconnected:
-            0
-        @unknown default:
-            0
+        return activeManagers.max {
+            $0.value.session.status.activityPriority < $1.value.session.status.activityPriority
         }
     }
 
@@ -224,15 +227,6 @@ final class PacketTunnelManager: TunnelManager {
         } catch {
             log.error("Failed to determine connected state: \(error)", category: .connection)
             return .connected(payload.tunnelProtocol, nil)
-        }
-    }
-
-    private func currentTunnelState(after payload: StatusChangePayload) async -> TunnelState {
-        do {
-            return try await status
-        } catch {
-            log.error("Failed to resolve global tunnel status: \(error)", category: .connection)
-            return await tunnelState(from: payload)
         }
     }
 
@@ -262,8 +256,24 @@ final class PacketTunnelManager: TunnelManager {
 
         switch tunnelProtocol {
         case .ike:
-            let connectionData = try ConnectionData(
-                serverID: configuration.ikePeerID,
+            // IKE bypasses Local Agent, so tunnel-up is sufficient for the user-facing
+            // `.connected` state to advance. We still try to recover the server ID from the
+            // configuration (via `ikePeerID`) but tolerate failure: if the username has been
+            // dropped or malformed (e.g. macOS occasionally drops it across save/load for
+            // `.certificate` auth), we'd otherwise stall in `ExtensionManagerFeature`'s
+            // `guard let connectionData` (TunnelState `.connected(_, nil)` is rejected there).
+            // Falling back to an empty serverID lets the connection advance; downstream code
+            // that needs the server uses `currentIntent?.serverIntent.server` from
+            // `ConnectionFeature`, not this field.
+            let serverID = (try? configuration.ikePeerID) ?? ""
+            if serverID.isEmpty {
+                log.warning(
+                    "Could not recover IKE peer ID from configuration; advancing connected state with empty serverID",
+                    category: .connection
+                )
+            }
+            let connectionData = ConnectionData(
+                serverID: serverID,
                 connectionDate: connectionDate,
                 protocolData: .ike
             )
@@ -393,10 +403,6 @@ struct StatusChangePayload {
 
         @Dependency(\.bundleIDClient) var bundleIDClient
         guard let tunnelProtocol = bundleIDClient.tunnelProtocol(configuration) else {
-            if bundleIDClient.isNonCoreBundleIdentifier(configuration) {
-                log.debug("Ignoring status update for non-core bundle identifier", category: .connection)
-                return nil
-            }
             log.error("Unrecognised bundle identifier in configuration", category: .connection)
             return nil
         }
@@ -405,17 +411,44 @@ struct StatusChangePayload {
 }
 
 private extension NEVPNProtocol {
-    /// Temporary helper for retrieving the peer ID from IKE configurations
+    /// Extracts the server ID from an IKE configuration's username.
+    ///
+    /// The username is built by `WireguardConfigurator.ikeUsername(...)` as
+    /// `<base>+<feature1>+...+ep:<serverID>`. The endpoint chunk is identified by the
+    /// `ep:` token (`IkeUsernameComponent.endpointIDPrefix`)
     var ikePeerID: String {
         get throws {
-            // VPNAPPL-3466: Smarter way to encode the username, without conflicting with other features
             guard let username, !username.isEmpty else {
                 throw TunnelManagerError.malformedConfiguration
             }
-            guard let index = username.lastIndex(of: "+") else {
-                return username
+            let token = "\(IkeUsernameComponent.concatChar)\(IkeUsernameComponent.endpointIDPrefix)"
+            guard let range = username.range(of: token) else {
+                throw TunnelManagerError.malformedConfiguration
             }
-            return String(username.suffix(from: index))
+            let afterToken = username[range.upperBound...]
+            // The endpoint ID itself is sanitised to strip `+`, so anything up to the next
+            // `+` (if any) is the encoded server ID. In practice `endpointID` is the last
+            // component appended, so there is no further separator — the trim is defensive.
+            if let endIndex = afterToken.firstIndex(of: IkeUsernameComponent.concatChar) {
+                return String(afterToken[..<endIndex])
+            }
+            return String(afterToken)
+        }
+    }
+}
+
+private extension NEVPNStatus {
+    /// Ranks tunnel statuses by "how active the tunnel is", with `.connected` highest. Used to
+    /// pick the most-active manager when several `NETunnelProviderManager`s exist in parallel
+    /// (e.g. during a protocol switch).
+    var activityPriority: Int {
+        switch self {
+        case .connected: 4
+        case .reasserting: 3
+        case .connecting: 2
+        case .disconnecting: 1
+        case .invalid, .disconnected: 0
+        @unknown default: 0
         }
     }
 }

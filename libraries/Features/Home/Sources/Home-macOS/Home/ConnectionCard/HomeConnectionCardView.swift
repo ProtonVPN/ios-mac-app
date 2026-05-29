@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
 import Foundation
@@ -34,20 +35,20 @@ struct HomeConnectionCardView: View {
     let model = ConnectionCardModel()
 
     let item: RecentConnection
-    var vpnConnectionStatus: VPNConnectionStatus = .disconnected
+    var connectionState: ConnectionState = .disconnected
     let sendAction: HomeFeature.ActionSender
 
     var accessibilityText: String {
         let countryName = item.connection.location.text(locale: locale)
         return model.accessibilityText(
-            for: vpnConnectionStatus,
+            for: connectionState,
             countryName: countryName
         )
     }
 
     var header: some View {
         HStack(spacing: .themeSpacing4) {
-            Text(model.headerText(for: vpnConnectionStatus))
+            Text(model.headerText(for: connectionState))
                 .themeFont(.callout())
                 .foregroundColor(Color(.text, .weak))
             Spacer()
@@ -82,12 +83,7 @@ struct HomeConnectionCardView: View {
     }
 
     var showConnectionDetailsEnabled: Bool {
-        switch vpnConnectionStatus {
-        case .connected:
-            true
-        default:
-            false
-        }
+        connectionState.isConnected
     }
 
     var card: some View {
@@ -101,23 +97,19 @@ struct HomeConnectionCardView: View {
             .buttonStyle(ShowConnectionDetailsButtonStyle(enabled: showConnectionDetailsEnabled))
             .disabled(!showConnectionDetailsEnabled)
 
-            Button(model.buttonText(for: vpnConnectionStatus)) {
+            Button(model.buttonText(for: connectionState)) {
                 withAnimation(.easeInOut) {
-                    switch vpnConnectionStatus {
+                    switch connectionState {
                     case .disconnected:
                         sendAction(.connect(item.connection))
-                    case .connected:
-                        sendAction(.disconnect)
-                    case .connecting:
-                        sendAction(.disconnect)
-                    case .loadingConnectionInfo:
+                    case .connected, .connecting, .resolving:
                         sendAction(.disconnect)
                     case .disconnecting:
                         break
                     }
                 }
             }
-            .buttonStyle(ConnectButtonStyle(isActive: vpnConnectionStatus == .disconnected))
+            .buttonStyle(ConnectButtonStyle(isActive: connectionState.is(\.disconnected)))
             .padding(.trailing, .themeSpacing8)
         }
         .padding(.themeSpacing8)
@@ -150,7 +142,7 @@ struct ConnectionCard_Previews: PreviewProvider {
     static func card(_ store: StoreOf<HomeFeature>) -> HomeConnectionCardView {
         .init(
             item: store.connections.first!,
-            vpnConnectionStatus: store.vpnConnectionStatus,
+            connectionState: store.connectionState,
             sendAction: { store.send($0) }
         )
     }
@@ -187,8 +179,7 @@ private extension HomeFeature.State {
                     connection: .chrząszczyrzewoszczyce
                 ),
             ],
-            connectionStatus: .protected(),
-            vpnConnectionStatus: .connected
+            connectionStatus: .protected()
         )
     }
 
@@ -202,8 +193,7 @@ private extension HomeFeature.State {
                     connection: .dibba
                 ),
             ],
-            connectionStatus: .protecting(),
-            vpnConnectionStatus: .connecting
+            connectionStatus: .protecting()
         )
     }
 
@@ -217,8 +207,7 @@ private extension HomeFeature.State {
                     connection: .fastest
                 ),
             ],
-            connectionStatus: .unprotected(),
-            vpnConnectionStatus: .disconnected
+            connectionStatus: .unprotected()
         )
     }
 
@@ -232,8 +221,7 @@ private extension HomeFeature.State {
                     connection: .region
                 ),
             ],
-            connectionStatus: .protecting(),
-            vpnConnectionStatus: .loadingConnectionInfo
+            connectionStatus: .protecting()
         )
     }
 
@@ -247,8 +235,7 @@ private extension HomeFeature.State {
                     connection: .secureCoreFastest
                 ),
             ],
-            connectionStatus: .protected(),
-            vpnConnectionStatus: .connected
+            connectionStatus: .protected()
         )
     }
 
@@ -262,8 +249,7 @@ private extension HomeFeature.State {
                     connection: .secureCoreFastestHop
                 ),
             ],
-            connectionStatus: .unprotected(),
-            vpnConnectionStatus: .disconnected
+            connectionStatus: .unprotected()
         )
     }
 
@@ -277,8 +263,7 @@ private extension HomeFeature.State {
                     connection: .secureCoreHopToVia
                 ),
             ],
-            connectionStatus: .protected(),
-            vpnConnectionStatus: .connected
+            connectionStatus: .protected()
         )
     }
 }
@@ -343,24 +328,6 @@ private extension ConnectionSpec {
             location: .secureCore(.hop(to: "AE", via: "PL")),
             features: []
         )
-    }
-}
-
-private extension VPNConnectionStatus {
-    static var connected: Self {
-        .connected(.dibba, nil)
-    }
-
-    static var connecting: Self {
-        .connecting(.dibba, nil)
-    }
-
-    static var loadingConnectionInfo: Self {
-        .loadingConnectionInfo(.chrząszczyrzewoszczyce, nil)
-    }
-
-    static var disconnecting: Self {
-        .disconnecting(.chrząszczyrzewoszczyce, nil)
     }
 }
 

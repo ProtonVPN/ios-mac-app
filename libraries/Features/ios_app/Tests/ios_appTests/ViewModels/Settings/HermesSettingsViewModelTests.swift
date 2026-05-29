@@ -26,14 +26,6 @@ import LegacyCommon
 import ProtonCoreFeatureFlags
 import XCTest
 
-private final class HermesTestContainer: MockDependencyContainer {}
-
-extension HermesTestContainer: CoreAlertServiceFactory {
-    func makeCoreAlertService() -> any LegacyCommon.CoreAlertService {
-        alertService
-    }
-}
-
 final class HermesSettingsViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
@@ -45,8 +37,7 @@ final class HermesSettingsViewModelTests: XCTestCase {
         withDependencies {
             $0.netShieldPropertyProvider.getNetShieldType = { .off }
         } operation: {
-            let testContainer = HermesTestContainer()
-            let viewModel = HermesSettingsViewModel(factory: testContainer)
+            let viewModel = HermesSettingsViewModel()
 
             XCTAssertFalse(viewModel.isEnabled)
             viewModel.setIsEnabled(true)
@@ -58,8 +49,7 @@ final class HermesSettingsViewModelTests: XCTestCase {
         withDependencies {
             $0.netShieldPropertyProvider.getNetShieldType = { .level2 }
         } operation: {
-            let testContainer = HermesTestContainer()
-            let viewModel = HermesSettingsViewModel(factory: testContainer)
+            let viewModel = HermesSettingsViewModel()
 
             XCTAssertFalse(viewModel.isEnabled)
             viewModel.setIsEnabled(true) // this make an alert appear since NetShield is not off
@@ -70,7 +60,7 @@ final class HermesSettingsViewModelTests: XCTestCase {
     }
 
     func testResolverValidation() {
-        let viewModel = HermesSettingsViewModel(factory: HermesTestContainer())
+        let viewModel = HermesSettingsViewModel()
 
         // we'll not test extensively IPv4/IPv6/DOH/DOT validation, this is already done in Connection.Hermes tests
         for (input, expectedResult, _) in Self.resolversValidationSamples {
@@ -79,7 +69,7 @@ final class HermesSettingsViewModelTests: XCTestCase {
     }
 
     func testAddingRemovingReorderingResolvers() throws {
-        let viewModel = HermesSettingsViewModel(factory: HermesTestContainer())
+        let viewModel = HermesSettingsViewModel()
 
         // adding resolver should still go once more to validation
         for (input, _, addingResult) in Self.resolversValidationSamples {
@@ -119,7 +109,7 @@ final class HermesSettingsViewModelTests: XCTestCase {
     }
 
     func testHermesAppEventNotificationWhenEnablingDisabling() {
-        let viewModel = HermesSettingsViewModel(factory: HermesTestContainer())
+        let viewModel = HermesSettingsViewModel()
 
         let enabledExpectation = XCTNSNotificationExpectation(name: AppEvent.hermes.name, object: nil, notificationCenter: .default)
         enabledExpectation.expectedFulfillmentCount = 2
@@ -131,7 +121,7 @@ final class HermesSettingsViewModelTests: XCTestCase {
     }
 
     func testHermesAppEventNotificationWhenAddingResolvers() {
-        let viewModel = HermesSettingsViewModel(factory: HermesTestContainer())
+        let viewModel = HermesSettingsViewModel()
 
         let addingResolverExpectation = XCTNSNotificationExpectation(name: AppEvent.hermes.name, object: nil, notificationCenter: .default)
         addingResolverExpectation.expectedFulfillmentCount = 2
@@ -143,7 +133,7 @@ final class HermesSettingsViewModelTests: XCTestCase {
     }
 
     func testHermesAppEventNotificationWhenRemovingResolvers() throws {
-        let viewModel = HermesSettingsViewModel(factory: HermesTestContainer())
+        let viewModel = HermesSettingsViewModel()
 
         _ = viewModel.addResolver(with: "10.2.0.1")
         _ = viewModel.addResolver(with: "16.32.64.128")
@@ -158,7 +148,7 @@ final class HermesSettingsViewModelTests: XCTestCase {
     }
 
     func testHermesAppEventNotificationWhenMovingResolvers() throws {
-        let viewModel = HermesSettingsViewModel(factory: HermesTestContainer())
+        let viewModel = HermesSettingsViewModel()
 
         XCTAssertTrue(viewModel.addResolver(with: "20.4.0.2"))
         XCTAssertTrue(viewModel.addResolver(with: "32.64.128.255"))

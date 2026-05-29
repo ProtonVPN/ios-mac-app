@@ -18,6 +18,7 @@
 
 import CommonNetworking
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
 import Foundation
@@ -61,7 +62,7 @@ public struct CountryFeature {
             ].joined(separator: "|")
         }
 
-        @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+        @SharedReader(.connectionState) var connectionState: ConnectionState
         @SharedReader(.userTier) var userTier: Int?
 
         // Server sections (Free, Plus, etc.)
@@ -109,19 +110,17 @@ public struct CountryFeature {
         }
 
         var isConnected: Bool {
-            guard case let .connected(_, actual) = vpnConnectionStatus,
-                  let logical = actual?.server.logical else {
+            guard case let .connected(_, server, _, _) = connectionState else {
                 return false
             }
-            return serverGroup.matchesLogical(logical)
+            return serverGroup.matchesLogical(server.logical)
         }
 
         var isConnecting: Bool {
-            guard case let .connecting(_, server) = vpnConnectionStatus,
-                  let logical = server?.logical else {
+            guard case let .connecting(.resolved(_, server)) = connectionState else {
                 return false
             }
-            return serverGroup.matchesLogical(logical)
+            return serverGroup.matchesLogical(server.logical)
         }
 
         var isCurrentlyConnected: Bool {
@@ -145,7 +144,7 @@ public struct CountryFeature {
         case serverSection(IdentifiedActionOf<ServerSection>)
 
         // Connection actions
-        case connectionStatusChanged(VPNConnectionStatus)
+        case connectionStateChanged(ConnectionState)
 
         case connectRequested(ServerGroupInfo.Kind, ServerType)
         case disconnectRequested
@@ -176,8 +175,8 @@ public struct CountryFeature {
             case .rowTapped:
                 return .none
 
-            case .connectionStatusChanged:
-                // Connection status is automatically updated via @SharedReader
+            case .connectionStateChanged:
+                // Connection state is automatically updated via @SharedReader
                 return .none
 
             case .serverSection:

@@ -116,14 +116,15 @@ extension ManagerConfigurator {
         @Dependency(\.tunnelKeychain) var tunnelKeychain
         do {
             #if os(macOS)
-                let xpcUser = XPCServiceUser(
-                    withExtension: "\(DomainConstants.appIdentifierPrefix)group.\(DomainConstants.NetworkExtensions.wireguard)",
-                    logger: { log.debug("\($0)", category: .protocol) }
-                )
-                await withCheckedContinuation { continuation in
-                    xpcUser.setConfigData(configData) { _ in
-                        continuation.resume()
-                    }
+                // `pushConfig` returns `false` on any XPC failure (no remote object, failed
+                // connection, etc.). Surfacing the failure as a `WireguardConfiguratorError`
+                // means callers fail fast with an actionable error instead of producing a
+                // `NETunnelProviderProtocol` with no password reference that silently fails
+                // to start the tunnel.
+                @Dependency(\.wireguardExtensionConfigClient) var extensionConfigClient
+                let succeeded = await extensionConfigClient.pushConfig(configData)
+                guard succeeded else {
+                    throw WireguardConfiguratorError.configurationXPCWriteFailed
                 }
             #else
                 let passwordReference = try tunnelKeychain.store(wireguardConfigData: configData)
@@ -132,6 +133,8 @@ extension ManagerConfigurator {
             return protocolConfiguration
         } catch TunnelKeychainImplementationError.invalidDataFormatRetrievedFromKeychain {
             throw WireguardConfiguratorError.keychainImplementationError(.invalidDataFormatRetrievedFromKeychain)
+        } catch let error as WireguardConfiguratorError {
+            throw error
         } catch {
             throw WireguardConfiguratorError.keychainError(error)
         }
@@ -269,7 +272,7 @@ extension ManagerConfigurator {
             username = credentials.name
             passwordReference = try keychain.fetchOpenVpnPassword()
         } catch {
-            throw WireguardConfiguratorError.ikeCredentialsUnavailable(error)
+            throw IkeConfiguratorError.ikeCredentialsUnavailable(error)
         }
 
         config.username = ikeUsername(baseUsername: username, features: intent.features, endpointID: intent.server.endpoint.id)
@@ -366,11 +369,26 @@ enum WireguardConfiguratorError: Error {
     case configurationEncodingError(Error)
     case keychainImplementationError(TunnelKeychainImplementationError)
     case keychainError(Error)
+    /// macOS-only: pushing the WireGuard config to the extension via XPC failed (no remote
+    /// object, broken connection, etc.). The resulting ``NETunnelProviderProtocol`` would have
+    /// no password reference and the tunnel would fail to start without an actionable error.
+    case configurationXPCWriteFailed
+}
+
+/// Errors raised while building an IKEv2 `NEVPNProtocolIKEv2` configuration. Kept separate
+/// from `WireguardConfiguratorError` so callers can pattern-match on protocol-specific
+/// failures without conflating the two transports.
+enum IkeConfiguratorError: Error {
+    /// VPN keychain credentials could not be read while preparing the IKE configuration.
     case ikeCredentialsUnavailable(Error)
 }
 
-private enum IkeUsernameComponent {
+enum IkeUsernameComponent {
     static let concatChar: Character = "+"
+    /// Token that prefixes the `endpointID(...)` chunk inside the encoded IKE username.
+    /// Defined once so the decode side (`TunnelManager.ikePeerID`) and the encode side
+    /// (`usernameSuffix`) can't drift apart.
+    static let endpointIDPrefix = "ep:"
 
     case iosClient
     case macClient
@@ -399,7 +417,7 @@ private enum IkeUsernameComponent {
         case .vpnAcceleratorDisabled:
             "nst"
         case let .label(label):
-            "b:\(label)"
+            "b:\(Self.sanitized(label, context: "bouncing label"))"
         case .moderateNAT:
             "nr"
         case let .safeMode(enabled):
@@ -407,8 +425,25 @@ private enum IkeUsernameComponent {
         case .portForwardingEnabled:
             "pmp"
         case let .endpointID(endpointID):
-            "ep:\(endpointID)"
+            "\(Self.endpointIDPrefix)\(Self.sanitized(endpointID, context: "endpoint ID"))"
         }
+    }
+
+    /// Strips IKE-username reserved characters (`+` and `:`) from arbitrary string payloads
+    /// such as the bouncing label or endpoint ID. In DEBUG builds also fires an
+    /// `assertionFailure` so the offending input is caught during development; in release we
+    /// fall through with a sanitized value rather than producing a username that the server
+    /// can't parse unambiguously.
+    private static func sanitized(_ value: String, context: String) -> String {
+        let reserved: Set<Character> = [concatChar, ":"]
+        guard value.contains(where: { reserved.contains($0) }) else {
+            return value
+        }
+        assertionFailure(
+            "IKE username \(context) contains reserved character (`+` or `:`): '\(value)'. " +
+                "Server-side parser would receive an ambiguous suffix."
+        )
+        return String(value.filter { !reserved.contains($0) })
     }
 }
 

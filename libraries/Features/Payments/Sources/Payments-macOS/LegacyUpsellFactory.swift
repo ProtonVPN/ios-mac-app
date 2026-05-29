@@ -24,7 +24,7 @@ public enum LegacyUpsellFactory {
     public static func upsellViewController(
         upsellModalType: UpsellModalType,
         upgradeAction: (() -> Void)?,
-        continueAction: (() -> Void)?,
+        skipAction: (() -> Void)?,
         showsCloseButton: Bool = false
     ) -> NSViewController {
         weak var weakViewController: NSViewController?
@@ -42,7 +42,7 @@ public enum LegacyUpsellFactory {
         let viewController = UpsellHostingViewController(
             modalType: upsellModalType,
             upgradeAction: wrappedUpgradeAction,
-            continueAction: continueAction,
+            skipAction: skipAction,
             showsCloseButton: showsCloseButton
         )
         weakViewController = viewController

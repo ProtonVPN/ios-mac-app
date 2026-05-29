@@ -22,6 +22,7 @@ import ComposableArchitecture
 import Connection
 import ConnectionDetails
 import ConnectionDetailsShared
+import ConnectionInventory
 import Dependencies
 import Domain
 import Ergonomics
@@ -33,6 +34,7 @@ import Payments
 import ProtonCoreFeatureFlags
 import Strings
 import VPNAppCore
+import VPNNetworking
 
 @Reducer
 public struct HomeFeature {
@@ -43,12 +45,14 @@ public struct HomeFeature {
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.alertService) private var alertService
     @Dependency(\.continuousClock) private var clock
+    @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.networkInterfacePropertiesProvider) private var networkInterfacePropertiesProvider
     #if os(iOS)
         @Dependency(\.openCredentiallessSignUp) private var openCredentiallessSignUp
     #endif
 
     @SharedReader(.userTier) private var userTier: Int?
-    @SharedReader(.killSwitch) var killSwitch
+    @Shared(.killSwitch) var killSwitch: Bool
 
     @Reducer
     public enum Destination {
@@ -79,7 +83,12 @@ public struct HomeFeature {
         fileprivate var shouldPushAlert: Bool = false
 
         @SharedReader(.connectionState) public var connectionState: ConnectionState
-        @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
+        /// Widget-only shadow of `connectionState`. The widget extension cannot read
+        /// `connectionState` (in-memory, process-local), so we keep a file-backed projection
+        /// in App Group storage and write it from `connection.delegate.stateChanged`.
+        /// **In-process callers must read `connectionState` directly, not this.**
+        // TODO: VPNAPPL-3545
+        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
         @Presents public var destination: Destination.State?
         @Presents public var alert: AlertState<Action.HomeAlert>?
@@ -139,7 +148,21 @@ public struct HomeFeature {
         case alert(PresentationAction<HomeAlert>)
 
         @CasePathable
-        public enum HomeAlert: Equatable {}
+        public enum HomeAlert: Equatable {
+            /// User chose "Enable Kill Switch" on the bad-LAN alert. We flip the kill switch
+            /// (which suppresses the bad-LAN intercept on the re-issued connect) and retry.
+            case enableKillSwitchAndConnect(PendingConnect)
+            /// User chose "Continue" on the bad-LAN alert. We retry connect bypassing intercepts.
+            case connectAnywayDespiteBadLAN(PendingConnect)
+        }
+    }
+
+    /// Captures the parameters of a `.connect` command paused while we await user input on an
+    /// intercept alert.
+    public struct PendingConnect: Equatable, Sendable {
+        public let spec: ConnectionSpec
+        public let connectionProtocol: ConnectionProtocol?
+        public let trigger: UserInitiatedVPNChange.VPNTrigger?
     }
 
     private static let whatsNewPresentationDelay: Duration = .seconds(3)
@@ -237,8 +260,8 @@ private extension HomeFeature {
                             await send(.incomingAlert(alert))
                         }
                     },
-                    .run { send in
-                        for await value in $killSwitch.publisher.removeDuplicates().values.dropFirst() {
+                    .run { [killSwitch = $killSwitch] send in
+                        for await value in killSwitch.publisher.removeDuplicates().values.dropFirst() {
                             await send(.killSwitchSettingChanged(value))
                         }
                     },
@@ -252,8 +275,8 @@ private extension HomeFeature {
                 )
                 .cancellable(id: CancelID.connectionState)
             case .killSwitchSettingChanged:
-                guard state.vpnConnectionStatus.isConnected(using: state.connectionState),
-                      let spec = state.vpnConnectionStatus.spec
+                guard state.connectionState.isConnected,
+                      let spec = state.connectionState.resolvedIntent?.spec
                 else {
                     return .none
                 }
@@ -279,7 +302,7 @@ private extension HomeFeature {
                 return .none
             case .sharedProperties(.userLocation(.userLocationFetchFinished(.success(_)))):
                 // a bit unfortunate but map.pinOffset can only be updated via this action atm
-                return .send(.map(.connectionStateUpdated(state.vpnConnectionStatus)))
+                return .send(.map(.connectionStateUpdated(state.connectionState)))
             default:
                 return .none
             }
@@ -294,7 +317,9 @@ private extension HomeFeature {
                     log.error("User is not authorized for server change, action should have been unavailable")
                     return .none
                 }
-                connectionCommandClient.send(.connect(.defaultRandom, nil, .changeServer))
+                // Change Server is a free tier only action
+                let spec = ConnectionSpec(location: .any(.random), features: [])
+                connectionCommandClient.send(.connect(spec, nil, .changeServer))
                 return .none
 
             case let .connectionCommandReceived(.connect(spec, connectionProtocol, trigger)):
@@ -305,16 +330,12 @@ private extension HomeFeature {
                         return .none
                     }
                 }
-                let intent = ConnectionPreparationIntent(
-                    spec: spec,
-                    connectionProtocol: connectionProtocol,
-                    acceptableProtocols: .all
-                )
-                return .run { send in
-                    AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
-                    await send(.connection(.input(.connect(intent))))
+                let pending = PendingConnect(spec: spec, connectionProtocol: connectionProtocol, trigger: trigger)
+                if let alert = interceptAlert(for: pending) {
+                    state.alert = alert
+                    return .none
                 }
-                .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
+                return performConnect(pending: pending)
 
             case let .connectionCommandReceived(.disconnect(trigger, completion)):
                 let alreadyDisconnected = state.connectionState.is(\.disconnected)
@@ -377,6 +398,13 @@ private extension HomeFeature {
                     await completion?()
                 }
 
+            case let .alert(.presented(.enableKillSwitchAndConnect(pending))):
+                $killSwitch.withLock { $0 = true }
+                return performConnect(pending: pending)
+
+            case let .alert(.presented(.connectAnywayDespiteBadLAN(pending))):
+                return performConnect(pending: pending)
+
             case let .connectionStatus(.connectionStatusBanner(.delegate(.upsellTapped(mode)))):
                 let upsellModalType: UpsellModalType = switch mode {
                 case .netshield:
@@ -405,8 +433,8 @@ private extension HomeFeature {
                     connectionCommandClient.send(.disconnect(.connectionCard))
                     return .none
                 case .tapAction:
-                    if let connectionState = state.vpnConnectionStatus.actual?.connectionScreenFeatureState() {
-                        state.destination = .connectionDetails(connectionState)
+                    if let detailsState = state.connectionState.connectionScreenFeatureState() {
+                        state.destination = .connectionDetails(detailsState)
                     } else if userTier == .freeTier {
                         let freeCountries = Array(Set(
                             serverRepository.getServers(
@@ -485,15 +513,12 @@ private extension HomeFeature {
                 return .send(.connectionStatus(.newNetShieldStats(message.netShield.toNetShieldModel)))
             case let .connection(.delegate(.connectionFailed(error))):
                 SentryHelper.shared?.log(error: error)
-                state.alert = connectionFailureAlert(for: error)
+                state.alert = domainAlertState(from: error.alert)
                 return .send(.sharedProperties(.connectionFailed(error)))
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
-                let status = connectionState.status
-                return .concatenate(
-                    .send(.sharedProperties(.newConnectionState(connectionState))),
-                    .send(.sharedProperties(.newConnectionStatus(status)))
-                )
+                state.$vpnConnectionStatus.withLock { $0 = connectionState.status }
+                return .send(.sharedProperties(.newConnectionState(connectionState)))
             case .connection(.delegate(.disconnected)):
                 return .run { _ in
                     await pendingDisconnectCompletions.drainAndInvoke()
@@ -560,23 +585,52 @@ private extension HomeFeature {
         (try? connectionIntentStorage.getConnectionIntent().spec) ?? .defaultFastest
     }
 
-    func connectionFailureAlert(for error: ConnectionError) -> AlertState<Action.HomeAlert> {
-        switch error {
-        case .preparation(.networkUnreachable):
-            AlertState {
-                TextState(Localizable.notConnectedToTheInternet)
-            }
-        default:
-            domainAlertState(from: error.alert)
-        }
-    }
-
     func domainAlertState(from alert: Domain.Alert) -> AlertState<Action.HomeAlert> {
         AlertState {
             TextState(String(localized: alert.title))
         } message: {
             TextState(String(localized: alert.message))
         }
+    }
+
+    /// Encapsulates the side effects of dispatching a `.connect` command after intercept checks
+    /// have been resolved (either none fired or the user confirmed via alert).
+    func performConnect(pending: PendingConnect) -> Effect<Action> {
+        let intent = ConnectionPreparationIntent(
+            spec: pending.spec,
+            connectionProtocol: pending.connectionProtocol,
+            acceptableProtocols: .all
+        )
+        return .run { [trigger = pending.trigger] send in
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
+            await send(.connection(.input(.connect(intent))))
+        }
+        .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
+    }
+
+    /// Returns an alert if any pre-connect intercept (e.g. misconfigured LAN) applies to the
+    /// pending connect; otherwise `nil`.
+    func interceptAlert(for pending: PendingConnect) -> AlertState<Action.HomeAlert>? {
+        if propertiesManager.featureFlags.unsafeLanWarnings,
+           !killSwitch,
+           let bad = networkInterfacePropertiesProvider.firstBadInterface() {
+            return AlertState {
+                TextState(Localizable.badInterfaceIpRangeAlertTitle)
+            } actions: {
+                ButtonState(action: .enableKillSwitchAndConnect(pending)) {
+                    TextState(Localizable.killSwitchEnable)
+                }
+                ButtonState(role: .destructive, action: .connectAnywayDespiteBadLAN(pending)) {
+                    TextState(Localizable.continue)
+                }
+            } message: {
+                TextState(Localizable.promptKillSwitchDueToBadInterfaceIpRange(
+                    bad.name ?? "Unknown Interface",
+                    bad.subnetDescription ?? "Unknown Subnet"
+                ))
+            }
+        }
+        return nil
     }
 }
 
@@ -588,33 +642,6 @@ private extension FeatureStatisticsMessage.NetShieldStats {
             dataSaved: UInt64(bytesSaved),
             enabled: true
         )
-    }
-}
-
-extension ConnectionState {
-    var status: VPNConnectionStatus {
-        switch self {
-        case .resolving:
-            // While we are in the unknown state, we cannot yet be sure if the tunnel is active or not,
-            // So let's not even try to grab the original connection intent in case we are disconnected.
-            return .resolving(nil, nil)
-
-        case .disconnected:
-            return .disconnected
-
-        case let .connecting(.unresolved(intent)):
-            return .connecting(intent.spec, nil)
-
-        case let .connecting(.resolved(intent, server)):
-            return .connecting(intent.spec, server)
-
-        case let .disconnecting(intent, server):
-            return .disconnecting(intent.spec, VPNConnectionActual(server: server, intent: intent, connectedDate: nil))
-
-        case let .connected(intent, server, date, _):
-            let resolvedConnection = VPNConnectionActual(server: server, intent: intent, connectedDate: date)
-            return .connected(intent.spec, resolvedConnection)
-        }
     }
 }
 

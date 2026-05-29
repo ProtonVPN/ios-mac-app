@@ -33,7 +33,6 @@ class PlutoniumWindowController: WindowController {
 
     private let alertService: CoreAlertService
     @Shared(.connectionState) private var connectionState: ConnectionState
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
     @available(*, unavailable)
@@ -71,8 +70,7 @@ class PlutoniumWindowController: WindowController {
         guard store.requiresReconnection else {
             return
         }
-        guard !vpnConnectionStatus.isConnected(using: connectionState) else {
-            // connected/connecting/disconnecting/resolving
+        guard connectionState.is(\.disconnected) else {
             showReconnectAlert()
             return
         }
@@ -83,7 +81,7 @@ class PlutoniumWindowController: WindowController {
             actionTitle: Localizable.changeSettings,
             confirmHandler: { [weak self] in
                 guard let self else { return }
-                if !vpnConnectionStatus.isConnected(using: connectionState) {
+                if connectionState.is(\.disconnected) {
                     return
                 }
                 connectionCommandClient.send(.retry)

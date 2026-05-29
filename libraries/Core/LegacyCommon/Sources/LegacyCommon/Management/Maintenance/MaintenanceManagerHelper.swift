@@ -36,13 +36,15 @@ public class MaintenanceManagerHelper {
         .random(in: -jitterPercentage ... jitterPercentage)
     }
 
-    public typealias Factory = CoreAlertServiceFactory & MaintenanceManagerFactory
+    public typealias Factory = CoreAlertServiceFactory & MaintenanceManagerFactory & ProfileManagerFactory
     private let factory: Factory
 
     private lazy var maintenanceManager: MaintenanceManagerProtocol = factory.makeMaintenanceManager()
-    @Dependency(\.propertiesManager) private var propertiesManager
+    private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+
+    @Dependency(\.propertiesManager) private var propertiesManager
 
     public init(factory: Factory) {
         self.factory = factory
@@ -71,11 +73,10 @@ public class MaintenanceManagerHelper {
             log.info("The currently connected server will be going to maintenance soon, reconnecting", category: .connectionConnect)
             guard let self else { return }
             alertService.push(alert: VpnServerOnMaintenanceAlert())
-            connectionCommandClient.send(.connect(
-                propertiesManager.lastConnectionIntent,
-                propertiesManager.connectionProtocol,
-                .auto
-            ))
+            // Mirror legacy `vpnGateway.quickConnect(trigger: .auto)`: prefer the user's saved
+            // Quick Connect profile, otherwise fall back to fastest. (Not `.lastConnectionIntent`,
+            // which would reconnect to the maintenance server.)
+            connectionCommandClient.quickConnect(profileManager: profileManager, trigger: .auto)
         }, failure: { error in
             log.error("Checking for server maintenance failed", category: .app, metadata: ["error": "\(error)"])
         })

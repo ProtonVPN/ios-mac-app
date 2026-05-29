@@ -17,6 +17,9 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
+import CoreLocation
+import Domain
 import Home
 @testable import HomeShared
 import SnapshotTesting
@@ -57,9 +60,9 @@ struct MapCitiesScreenTests {
             $0.date = .constant(Date())
         } operation: {
             $userCountry.withLock { $0 = countryCode }
-            let actual: VPNConnectionActual = .mock(country: countryCode, coordinates: .init(latitude: city.lat, longitude: city.long))
+            let server: Server = .mock(country: countryCode, coordinates: .init(latitude: city.lat, longitude: city.long))
             store.send(.newMapState(.connectedCoordinates(.init(latitude: city.lat, longitude: city.long), countryCode)))
-            store.send(.connectionStateUpdated(.connected(.defaultFastest, actual)))
+            store.send(.connectionStateUpdated(.previewConnected(for: .defaultFastest, server: server)))
 
             assertSnapshot(
                 of: mapView,

@@ -28,7 +28,10 @@ import LegacyCommon
 import PaymentsShared
 import Persistence
 import ProtonCoreFeatureFlags
+import Sharing
+import Strings
 import VPNAppCore
+import VPNNetworking
 
 @Reducer
 struct SidebarFeature {
@@ -60,8 +63,13 @@ struct SidebarFeature {
             }
         }
 
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
         @Shared(.connectionState) var connectionState: ConnectionState
+        // TODO: VPNAPPL-3545
+        /// Widget-only shadow of `connectionState`. The widget extension cannot read
+        /// `connectionState` (in-memory, process-local), so we keep a file-backed projection
+        /// in App Group storage and write it from `connection.delegate.stateChanged`.
+        /// **In-process callers must read `connectionState` directly, not this.**
+        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
         var connection: ConnectionFeature.State = .initialState
 
         enum ExpandState: Equatable {
@@ -119,7 +127,7 @@ struct SidebarFeature {
         case windowWillEnterFullScreen
         case windowWillExitFullScreen
         case killSwitchSettingChanged(Bool)
-        case vpnConnectionStatusUpdated(VPNConnectionStatus)
+        case connectionStateChanged(ConnectionState)
         case syncNATPortMappingState
         case syncPlutoniumState
         case connectingOverlay(ConnectingOverlayFeature.Action)
@@ -132,7 +140,28 @@ struct SidebarFeature {
         case alert(PresentationAction<Alert>)
 
         @CasePathable
-        enum Alert: Equatable {}
+        enum Alert: Equatable {
+            /// User chose "Enable Kill Switch" on the bad-LAN alert. We flip the kill switch
+            /// (which suppresses the bad-LAN intercept on the re-issued connect) and retry.
+            case enableKillSwitchAndConnect(PendingConnect)
+            /// User chose "Continue" on the bad-LAN alert. We retry connect bypassing intercepts.
+            case connectAnywayDespiteBadLAN(PendingConnect)
+            /// User chose "Connect" on the Plutonium+IKE alert. We disable Plutonium and retry.
+            case disablePlutoniumAndConnect(PendingConnect)
+        }
+    }
+
+    /// Captures the parameters of a `.connect` command paused while we await user input on an intercept alert
+    struct PendingConnect: Equatable {
+        let spec: ConnectionSpec
+        let connectionProtocol: ConnectionProtocol?
+        let trigger: UserInitiatedVPNChange.VPNTrigger?
+        var resolvedIntercepts: Set<InterceptKind> = []
+    }
+
+    enum InterceptKind: Hashable {
+        case plutoniumIKE
+        case badLAN
     }
 
     // MARK: - Init
@@ -163,6 +192,10 @@ struct SidebarFeature {
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
+    @Dependency(\.networkInterfacePropertiesProvider) private var networkInterfacePropertiesProvider
+
+    @Shared(.killSwitch) private var killSwitch: Bool
+    @Shared(.plutoniumFeature) private var plutoniumFeature: PlutoniumFeatureToggle
 
     var body: some ReducerOf<Self> {
         Scope(state: \.connection, action: \.connection) {
@@ -201,6 +234,16 @@ struct SidebarFeature {
         case killSwitchSetting
         case connectionConnectCommandEffect
         case plutoniumSync
+    }
+}
+
+extension SidebarFeature.PendingConnect {
+    /// Returns a copy with `kind` added to `resolvedIntercepts`, so the next intercept
+    /// re-check (via `resolveAndPerformConnect`) skips it.
+    func resolving(_ kind: SidebarFeature.InterceptKind) -> Self {
+        var copy = self
+        copy.resolvedIntercepts.insert(kind)
+        return copy
     }
 }
 
@@ -257,16 +300,14 @@ private extension SidebarFeature {
                         }
                     }
                     .cancellable(id: CancelID.portForwardingSetting),
-                    .run { send in
-                        @SharedReader(.plutoniumFeature) var plutoniumFeature
-                        for await _ in $plutoniumFeature.publisher.values {
+                    .run { [plutoniumFeature = $plutoniumFeature] send in
+                        for await _ in plutoniumFeature.publisher.values {
                             await send(.syncPlutoniumState)
                         }
                     }
                     .cancellable(id: CancelID.plutoniumSetting),
-                    .run { send in
-                        @SharedReader(.killSwitch) var killSwitch
-                        for await value in $killSwitch.publisher.removeDuplicates().values.dropFirst() {
+                    .run { [killSwitch = $killSwitch] send in
+                        for await value in killSwitch.publisher.removeDuplicates().values.dropFirst() {
                             await send(.killSwitchSettingChanged(value))
                         }
                     }
@@ -325,7 +366,7 @@ private extension SidebarFeature {
         Reduce { state, action in
             switch action {
             case .killSwitchSettingChanged:
-                guard state.vpnConnectionStatus.isConnected(using: state.connectionState) else {
+                guard state.connectionState.isConnected else {
                     return .none
                 }
                 let spec = propertiesManager.lastConnectionIntent
@@ -338,21 +379,24 @@ private extension SidebarFeature {
                     category: .connectionConnect,
                     metadata: ["spec.location": "\(spec.location)"]
                 )
-                beginConnectingOverlay(&state, connectionSpec: intent.spec)
+                beginConnectingOverlay(&state)
                 return .merge(
                     .cancel(id: CancelID.overlayDelay),
                     .send(.connection(.input(.connect(intent))))
                 )
-            case let .vpnConnectionStatusUpdated(connectionStatus):
-                state.$vpnConnectionStatus.withLock { $0 = connectionStatus }
-                switch connectionStatus {
-                case .resolving, .connecting:
+            case let .connectionStateChanged(connectionState):
+                switch connectionState {
+                case .resolving:
+                    // `.resolving` is a transient app-startup state. It is NOT a user-initiated
+                    // connect, so we don't show the connecting overlay — otherwise the user
+                    // sees a brief connecting flash at every launch before the resolved
+                    // (typically `.disconnected`) state arrives. `.connecting` (a real
+                    // user-initiated attempt) still shows the overlay.
+                    return .none
+                case .connecting:
                     if state.overlayState != .suppressed {
-                        beginConnectingOverlay(
-                            &state,
-                            connectionSpec: connectionStatus.spec ?? propertiesManager.lastConnectionIntent
-                        )
-                        syncConnectingOverlayState(&state, connectionStatus: connectionStatus)
+                        beginConnectingOverlay(&state)
+                        syncConnectingOverlayState(&state, connectionState: connectionState)
                     }
                     return .cancel(id: CancelID.overlayDelay)
                 case .connected:
@@ -362,7 +406,16 @@ private extension SidebarFeature {
                         state.overlayState = .hidden
                         return .cancel(id: CancelID.overlayDelay)
                     }
-                    transitionToAutoDismiss(&state, connectionStatus: connectionStatus)
+                    // Only run the auto-dismiss transition when the connect was app-initiated
+                    // (i.e. we were previously showing the connecting overlay). For
+                    // OS-initiated tunnels — started from System Settings, on-demand, etc. —
+                    // there is no overlay to gracefully tear down, so skip the brief
+                    // "connected" flash.
+                    guard state.overlayState.is(\.connecting) else {
+                        state.overlayState = .hidden
+                        return .cancel(id: CancelID.overlayDelay)
+                    }
+                    transitionToAutoDismiss(&state, connectionState: connectionState)
                     return .run { send in
                         try await clock.sleep(for: .seconds(3))
                         await send(.connectedOverlayDelayElapsed)
@@ -422,19 +475,8 @@ private extension SidebarFeature {
                         ))))
                     }
                 }
-                let intent = connectionPreparationIntent(
-                    spec: spec,
-                    connectionProtocol: connectionProtocol ?? propertiesManager.connectionProtocol
-                )
-                beginConnectingOverlay(&state, connectionSpec: intent.spec)
-                return .merge(
-                    .cancel(id: CancelID.overlayDelay),
-                    .run { send in
-                        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
-                        await send(.connection(.input(.connect(intent))))
-                    }
-                    .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
-                )
+                let pending = PendingConnect(spec: spec, connectionProtocol: connectionProtocol, trigger: trigger)
+                return resolveAndPerformConnect(&state, pending: pending)
             case let .connectionCommandReceived(.disconnect(trigger, completion)):
                 state.overlayState = .hidden
                 @Shared(.intentionallyDisconnected) var intentionallyDisconnected
@@ -466,7 +508,7 @@ private extension SidebarFeature {
                     category: .connectionConnect,
                     metadata: ["spec.location": "\(spec.location)"]
                 )
-                beginConnectingOverlay(&state, connectionSpec: intent.spec)
+                beginConnectingOverlay(&state)
                 return .merge(
                     .cancel(id: CancelID.overlayDelay),
                     .run { send in
@@ -486,7 +528,7 @@ private extension SidebarFeature {
                     category: .connectionConnect,
                     metadata: ["spec.location": "\(spec.location)"]
                 )
-                beginConnectingOverlay(&state, connectionSpec: intent.spec)
+                beginConnectingOverlay(&state)
                 return .merge(
                     .cancel(id: CancelID.overlayDelay),
                     .run { send in
@@ -506,6 +548,14 @@ private extension SidebarFeature {
                     await send(.connection(.input(.onLogout)))
                     await completion?()
                 }
+            case let .alert(.presented(.enableKillSwitchAndConnect(pending))):
+                $killSwitch.withLock { $0 = true }
+                return resolveAndPerformConnect(&state, pending: pending.resolving(.badLAN))
+            case let .alert(.presented(.connectAnywayDespiteBadLAN(pending))):
+                return resolveAndPerformConnect(&state, pending: pending.resolving(.badLAN))
+            case let .alert(.presented(.disablePlutoniumAndConnect(pending))):
+                $plutoniumFeature.withLock { $0.disable() }
+                return resolveAndPerformConnect(&state, pending: pending.resolving(.plutoniumIKE))
             default:
                 return .none
             }
@@ -518,18 +568,17 @@ private extension SidebarFeature {
             case .countriesSection(.delegate(.openProfilesTab)):
                 state.selectedTab = .profiles
                 return .none
-            case .countriesSection(.quickSettings(.destination(.presented(.upsell(.optionalActionTapped))))):
+            case .countriesSection(.quickSettings(.destination(.presented(.upsell(.skipActionTapped))))):
                 guard let intent = state.pendingReconnectIntent else {
                     return .none
                 }
                 state.pendingReconnectIntent = nil
-                beginConnectingOverlay(&state, connectionSpec: intent.spec)
+                beginConnectingOverlay(&state)
                 return .merge(
                     .cancel(id: CancelID.overlayDelay),
                     .send(.connection(.input(.connect(intent))))
                 )
-            case .countriesSection(.quickSettings(.destination(.presented(.upsell(.continueTapped))))),
-                 .countriesSection(.quickSettings(.destination(.presented(.upsell(.upgradeTapped))))),
+            case .countriesSection(.quickSettings(.destination(.presented(.upsell(.upgradeTapped))))),
                  .countriesSection(.quickSettings(.destination(.dismiss))):
                 state.pendingReconnectIntent = nil
                 return .none
@@ -544,17 +593,21 @@ private extension SidebarFeature {
             switch action {
             case let .connection(.delegate(.connectionFailed(error))):
                 SentryHelper.shared?.log(error: error)
+                // Pre-connection failures (network unreachable, etc.) emit only the delegate
+                // and never transition `connectionState` to `.disconnected`, so the overlay
+                // reducer's normal dismissal path doesn't fire. Hide it explicitly when the
+                // connection layer is back at rest.
+                if state.connectionState.is(\.disconnected) {
+                    state.overlayState = .hidden
+                }
                 state.alert = connectionFailureAlert(for: error)
-                return .none
+                return .cancel(id: CancelID.overlayDelay)
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
                 state.$connectionState.withLock { $0 = connectionState }
-                let fallbackSpec = state.vpnConnectionStatus.spec ?? propertiesManager.lastConnectionIntent
+                state.$vpnConnectionStatus.withLock { $0 = connectionState.status }
                 return .merge(
-                    .send(.vpnConnectionStatusUpdated(connectionState.vpnConnectionStatus(
-                        fallbackSpec: fallbackSpec,
-                        previousStatus: state.vpnConnectionStatus
-                    ))),
+                    .send(.connectionStateChanged(connectionState)),
                     .send(.syncNATPortMappingState),
                     .send(.syncPlutoniumState)
                 )
@@ -572,37 +625,53 @@ private extension SidebarFeature {
                         "intent.connectionProtocol": "\(intent.connectionProtocol)",
                         "resolutionError": "\(resolutionError)",
                         "overlayState": "\(state.overlayState)",
-                        "vpnConnectionStatus": "\(state.vpnConnectionStatus)",
+                        "connectionState": "\(state.connectionState)",
                     ]
                 )
                 SentryHelper.shared?.log(error: resolutionError)
+                // Intent-resolution failures (e.g. unavailable country, secure core) reject the
+                // connect attempt *before* the connection state transitions to `.connecting`,
+                // so the overlay reducer never sees a `.disconnected` change to dismiss on.
+                // Hide the overlay here so the user only sees the upsell, not a stuck
+                // "Connecting…" overlay behind it.
+                state.overlayState = .hidden
+                let cancelOverlayDelay: Effect<Action> = .cancel(id: CancelID.overlayDelay)
                 switch resolutionError {
                 case .secureCoreUnavailable:
                     state.pendingReconnectIntent = nil
-                    return .send(.countriesSection(.quickSettings(.presentUpsell(.secureCore))))
+                    return .merge(
+                        cancelOverlayDelay,
+                        .send(.countriesSection(.quickSettings(.presentUpsell(.secureCore))))
+                    )
                 case let .specificCountryUnavailable(countryCode):
                     state.pendingReconnectIntent = nil
-                    return .send(.countriesSection(.quickSettings(.presentUpsell(
-                        .country(
-                            countryCode: countryCode,
-                            numberOfDevices: DomainConstants.maxDeviceCount,
-                            numberOfCountries: serverRepository.countryCount()
-                        )
-                    ))))
+                    return .merge(
+                        cancelOverlayDelay,
+                        .send(.countriesSection(.quickSettings(.presentUpsell(
+                            .country(
+                                countryCode: countryCode,
+                                numberOfDevices: DomainConstants.maxDeviceCount,
+                                numberOfCountries: serverRepository.countryCount()
+                            )
+                        ))))
+                    )
                 case .serverChangeUnavailable:
                     let availability = serverChangeAuthorizer.serverChangeAvailability()
                     guard case let .unavailable(until, duration, exhaustedSkips) = availability else {
                         state.pendingReconnectIntent = nil
-                        return .none
+                        return cancelOverlayDelay
                     }
                     state.pendingReconnectIntent = intent
-                    return .send(.countriesSection(.quickSettings(.presentUpsell(
-                        .cantSkip(
-                            before: until,
-                            totalDuration: duration,
-                            longSkip: exhaustedSkips
-                        )
-                    ))))
+                    return .merge(
+                        cancelOverlayDelay,
+                        .send(.countriesSection(.quickSettings(.presentUpsell(
+                            .cantSkip(
+                                before: until,
+                                totalDuration: duration,
+                                longSkip: exhaustedSkips
+                            )
+                        ))))
+                    )
                 }
             case .connection(.core(.certAuth(.refreshFinished))):
                 return .none
@@ -644,8 +713,8 @@ private extension SidebarFeature {
 
             case .syncPlutoniumState:
                 let connectionState = state.connectionState
+                let feature = plutoniumFeature
                 return .run { _ in
-                    @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
                     guard FeatureFlagsRepository.shared
                         .isEnabled(VPNFeatureFlagType.plutoniumMacOS, reloadValue: true), case .enabled = feature
                     else {
@@ -663,6 +732,7 @@ private extension SidebarFeature {
                     } else {
                         log.error("Error while updating plutonium state: \(error.localizedDescription)")
                     }
+                    SentryHelper.shared?.log(error: error)
                 }
                 .cancellable(id: CancelID.plutoniumSync, cancelInFlight: true)
 
@@ -672,11 +742,101 @@ private extension SidebarFeature {
         }
     }
 
-    func beginConnectingOverlay(_ state: inout State, connectionSpec: ConnectionSpec) {
+    /// Single entry point for "user wants to connect with these parameters". Re-evaluates
+    /// `interceptAlert` against the current state every time it's called so that resolving
+    /// one intercept (e.g. disabling Plutonium) doesn't silently skip a later one (e.g. bad
+    /// LAN). Already-resolved intercepts are skipped via `pending.resolvedIntercepts`.
+    func resolveAndPerformConnect(_ state: inout State, pending: PendingConnect) -> Effect<Action> {
+        if let alert = interceptAlert(for: pending) {
+            state.alert = alert
+            return .none
+        }
+        return performConnect(&state, pending: pending)
+    }
+
+    /// Encapsulates the side effects of dispatching a `.connect` command after intercept checks
+    /// have been resolved (either none fired or the user confirmed via alert).
+    func performConnect(_ state: inout State, pending: PendingConnect) -> Effect<Action> {
+        let intent = connectionPreparationIntent(
+            spec: pending.spec,
+            connectionProtocol: pending.connectionProtocol ?? propertiesManager.connectionProtocol
+        )
+        beginConnectingOverlay(&state)
+        return .merge(
+            .cancel(id: CancelID.overlayDelay),
+            .run { [trigger = pending.trigger] send in
+                AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
+                await send(.connection(.input(.connect(intent))))
+            }
+            .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
+        )
+    }
+
+    /// Returns an alert if any pre-connect intercept (e.g. misconfigured LAN, Plutonium+IKE)
+    /// applies to the pending connect; otherwise `nil`. Intercepts are evaluated in priority
+    /// order — once one fires, later policies do not run for this call. Intercepts the user
+    /// has already resolved (tracked in `pending.resolvedIntercepts`) are skipped so a
+    /// follow-up "Continue anyway" / "Connect" doesn't loop on its own alert and so later
+    /// intercepts further down the chain still get a chance to fire.
+    func interceptAlert(for pending: PendingConnect) -> AlertState<Action.Alert>? {
+        let effectiveProtocol = pending.connectionProtocol ?? propertiesManager.connectionProtocol
+
+        // Plutonium + IKE conflict (macOS only). Fires when the user has Split Tunneling
+        // enabled and tries to connect with IKEv2, which the Plutonium extension does not
+        // support. Confirming the alert disables Plutonium for this connection.
+        if !pending.resolvedIntercepts.contains(.plutoniumIKE),
+           case .enabled = plutoniumFeature,
+           effectiveProtocol == .vpnProtocol(.ike) {
+            // Title includes the profile name when the connect originates from a saved profile.
+            let title: String = if let profileName = propertiesManager.lastConnectionRequest?.profileName {
+                Localizable.splitTunnelingConnectToProfileNameAlertTitle(profileName)
+            } else {
+                Localizable.splitTunnelingConnectToProfileAlertTitle
+            }
+            return AlertState {
+                TextState(title)
+            } actions: {
+                ButtonState(action: .disablePlutoniumAndConnect(pending)) {
+                    TextState(Localizable.connect)
+                }
+                ButtonState(role: .cancel) {
+                    TextState(Localizable.cancel)
+                }
+            } message: {
+                TextState(Localizable.splitTunnelingConnectToProfileAlertDescription)
+            }
+        }
+
+        // Misconfigured LAN. Fires when an interface uses a non-RFC1918 subnet that the OS
+        // would otherwise route around the tunnel. Kill Switch fully mitigates the issue.
+        if !pending.resolvedIntercepts.contains(.badLAN),
+           propertiesManager.featureFlags.unsafeLanWarnings,
+           !killSwitch,
+           let bad = networkInterfacePropertiesProvider.firstBadInterface() {
+            return AlertState {
+                TextState(Localizable.badInterfaceIpRangeAlertTitle)
+            } actions: {
+                ButtonState(action: .enableKillSwitchAndConnect(pending)) {
+                    TextState(Localizable.killSwitchEnable)
+                }
+                ButtonState(role: .destructive, action: .connectAnywayDespiteBadLAN(pending)) {
+                    TextState(Localizable.continue)
+                }
+            } message: {
+                TextState(Localizable.promptKillSwitchDueToBadInterfaceIpRange(
+                    bad.name ?? "Unknown Interface",
+                    bad.subnetDescription ?? "Unknown Subnet"
+                ))
+            }
+        }
+
+        return nil
+    }
+
+    func beginConnectingOverlay(_ state: inout State) {
         @SharedReader(.intentionallyDisconnected) var intentionallyDisconnected
         var overlay = state.connectingOverlay ?? ConnectingOverlayFeature.State()
         overlay.beginConnecting(
-            connectionSpec: connectionSpec,
             selectedProtocol: propertiesManager.connectionProtocol,
             killSwitchEnabled: propertiesManager.killSwitch,
             intentionallyDisconnected: intentionallyDisconnected
@@ -684,11 +844,11 @@ private extension SidebarFeature {
         state.overlayState = .connecting(overlay)
     }
 
-    func transitionToAutoDismiss(_ state: inout State, connectionStatus: VPNConnectionStatus) {
+    func transitionToAutoDismiss(_ state: inout State, connectionState: ConnectionState) {
         @SharedReader(.intentionallyDisconnected) var intentionallyDisconnected
         var overlay = state.connectingOverlay ?? ConnectingOverlayFeature.State()
         overlay.sync(
-            connectionStatus: connectionStatus,
+            connectionState: connectionState,
             selectedProtocol: propertiesManager.connectionProtocol,
             killSwitchEnabled: propertiesManager.killSwitch,
             intentionallyDisconnected: intentionallyDisconnected
@@ -696,13 +856,13 @@ private extension SidebarFeature {
         state.overlayState = .autoDismiss(overlay)
     }
 
-    func syncConnectingOverlayState(_ state: inout State, connectionStatus: VPNConnectionStatus) {
+    func syncConnectingOverlayState(_ state: inout State, connectionState: ConnectionState) {
         guard var overlay = state.connectingOverlay else {
             return
         }
         @SharedReader(.intentionallyDisconnected) var intentionallyDisconnected
         overlay.sync(
-            connectionStatus: connectionStatus,
+            connectionState: connectionState,
             selectedProtocol: propertiesManager.connectionProtocol,
             killSwitchEnabled: propertiesManager.killSwitch,
             intentionallyDisconnected: intentionallyDisconnected
@@ -766,7 +926,7 @@ private extension SidebarFeature {
         }
         switch activeVpnProtocol {
         case .ike:
-            return "10.1.0.1"
+            return VpnProtocol.ikeGatewayAddress
         case .wireGuard:
             return wireGuardGatewayAddress()
         }
@@ -785,8 +945,8 @@ private extension SidebarFeature {
         let hermesIsEnabled = hermesClient.isEnabled().wrappedValue
         let hermesIsAllowed = featureAuthorizerProvider.authorizer(for: HermesFeature.self)().isAllowed
         if hermesIsEnabled, hermesIsAllowed {
-            return "10.2.0.1"
+            return VpnProtocol.wireGuardGatewayAddress
         }
-        return propertiesManager.wireguardConfig.dnsServers?.first ?? "10.2.0.1"
+        return propertiesManager.wireguardConfig.dnsServers?.first ?? VpnProtocol.wireGuardGatewayAddress
     }
 }

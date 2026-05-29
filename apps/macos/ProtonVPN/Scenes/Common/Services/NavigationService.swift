@@ -23,9 +23,11 @@
 import Cocoa
 import CommonNetworking
 import ComposableArchitecture
+import Connection
 import ConnectionInventory
 import Domain
 import Ergonomics
+import Foundation
 import LegacyCommon
 import Network
 import os
@@ -53,7 +55,7 @@ class NavigationService {
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.credentialsProvider) private var credentials
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
     lazy var windowService: WindowService = factory.makeWindowService()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
@@ -134,39 +136,66 @@ class NavigationService {
         autoConnectIfEnabled()
     }
 
-    private func autoConnectIfEnabled() {
-        if vpnConnectionStatus.is(\.connected) {
+    /// Whether the conditions are met to start an auto-connect:
+    ///   * VPN is fully disconnected,
+    ///   * a user is logged in,
+    ///   * that user has auto-connect enabled in their settings.
+    private var shouldAutoConnect: Bool {
+        switch connectionState {
+        case .connected:
             log.debug("Skipping auto-connect: already connected", category: .app)
-            return
-        }
-
-        if vpnConnectionStatus.is(\.connecting) {
+            return false
+        case .connecting:
             log.debug("Skipping auto-connect: already connecting", category: .app)
-            return
-        }
-
-        if vpnConnectionStatus.is(\.resolving) {
-            log.debug("Skipping auto-connect: already connecting", category: .app)
-            return
-        }
-
-        guard vpnConnectionStatus.is(\.disconnected) else {
-            log.debug("Skipping auto-connect: connection state is \(vpnConnectionStatus)", category: .app)
-            return
+            return false
+        case .resolving:
+            log.debug("Skipping auto-connect: connection state still unresolved", category: .app)
+            return false
+        case .disconnecting:
+            log.debug("Skipping auto-connect: connection state is \(connectionState)", category: .app)
+            return false
+        case .disconnected:
+            break
         }
 
         guard let username = authKeychain.username else {
             log.debug("Skipping auto-connect: no username in keychain", category: .app)
-            return
+            return false
         }
 
         guard propertiesManager.getAutoConnect(for: username).enabled else {
             log.debug("Skipping auto-connect: auto-connect disabled for user", category: .app)
-            return
+            return false
         }
 
-        log.info("Initiating auto-connect", category: .app)
-        triggerAutoConnect()
+        return true
+    }
+
+    private func autoConnectIfEnabled() {
+        Task { @MainActor [weak self] in
+            await self?.waitForConnectionStateToResolve()
+            guard let self, shouldAutoConnect else { return }
+            log.info("Initiating auto-connect", category: .app)
+            triggerAutoConnect()
+        }
+    }
+
+    private func waitForConnectionStateToResolve() async {
+        guard connectionState.is(\.resolving) else { return }
+        log.debug("Auto-connect deferred while connection state resolves", category: .app)
+        do {
+            try await $connectionState.when(
+                willMatch: { !$0.is(\.resolving) },
+                every: .milliseconds(200),
+                deadline: .seconds(3),
+                operation: { _ in }
+            )
+        } catch {
+            log.warning(
+                "Connection state did not leave .resolving in time; auto-connect proceeds with current state",
+                category: .app
+            )
+        }
     }
 
     @objc
@@ -199,9 +228,7 @@ class NavigationService {
                 log.error("Expected session to be established when receiving gateway")
             }
 
-            if vpnConnectionStatus.is(\.disconnected), let username = authKeychain.username, propertiesManager.getAutoConnect(for: username).enabled {
-                triggerAutoConnect()
-            }
+            autoConnectIfEnabled()
 
             if appHasPresented {
                 showSidebar()
@@ -406,7 +433,7 @@ extension NavigationService {
         // Do not show disconnect modal, because user asked for macOS logOff/shutdown
         // Make sure to disconnect the gateway and disable the firewall before logOff/shutdown
 
-        if case .disconnected = vpnConnectionStatus {
+        if connectionState.is(\.disconnected) {
             return .terminateNow
         }
 

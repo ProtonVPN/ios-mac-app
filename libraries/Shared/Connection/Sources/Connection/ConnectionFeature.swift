@@ -21,6 +21,7 @@ import ComposableArchitecture
 import CoreConnection
 import Dependencies
 import Domain
+import ExtensionManager
 import Foundation
 import LocalAgent
 import Sharing
@@ -28,13 +29,15 @@ import VPNAppCore
 
 @Reducer
 public struct ConnectionFeature: Sendable {
-    @Dependency(\.connectionBridge) private var connectionBridge
+    @Dependency(\.sessionChangeNotifier) private var sessionChangeNotifier
     @Dependency(\.connectionIntentStorage) private var intentStorage
     @Dependency(\.connectionIntentResolver) private var intentResolver
     @Dependency(\.continuousClock) private var clock
     @Dependency(\.date) private var date
     @Dependency(\.wasLaunchedAtLogin) private var wasLaunchedAtLogin
     @Dependency(\.appProcessStartDate) private var appProcessStartDate
+    @Dependency(\.serverIdentifier) private var serverIdentifier
+    @Dependency(\.connectionFeatureProvider) private var connectionFeatureProvider
 
     public init() {}
 
@@ -109,6 +112,17 @@ public struct ConnectionFeature: Sendable {
         case reachabilityRetry
     }
 
+    /// How long after process start we still consider the network potentially "warming up"
+    /// (e.g. when the app was launched at login immediately following a device reboot, before
+    /// network interfaces have come up). While inside this grace period, a connect request that
+    /// finds the network unreachable is delayed rather than failed immediately.
+    private static let postLaunchReachabilityGracePeriod: Duration = .seconds(10)
+
+    /// How long we wait for the network to become reachable before surfacing a
+    /// `.networkUnreachable` failure to the user, when a connect was deferred because
+    /// the app is still inside ``postLaunchReachabilityGracePeriod``.
+    private static let unreachableNetworkRetryTimeout: Duration = .seconds(10)
+
     public var body: some Reducer<State, Action> {
         Scope(state: \.core, action: \.core) { CoreConnectionFeature() } // Firstly, process internal connection events
         Reduce { state, action in
@@ -116,7 +130,8 @@ public struct ConnectionFeature: Sendable {
             case .input(.onLaunch):
                 return .merge(
                     .send(.core(.startObserving)),
-                    .listen(to: connectionBridge.intentStream()) { .input($0) } // reinject intents from bridge into this feature
+                    // logout or guest→authenticated transition
+                    .listen(to: sessionChangeNotifier.stream()) { _ in .input(.onSessionChange) }
                 ).cancellable(id: CancelID.observation, cancelInFlight: true)
 
             case .stopObserving:
@@ -142,7 +157,7 @@ public struct ConnectionFeature: Sendable {
                         if shouldDelayConnectionFailureBecauseOfStartup {
                             state.reachabilityPendingIntent = intent
                             return .run { send in
-                                try await clock.sleep(for: .seconds(10))
+                                try await clock.sleep(for: Self.unreachableNetworkRetryTimeout)
                                 await send(.reachabilityRetryDeadlineElapsed)
                             }.cancellable(id: CancelID.reachabilityRetry, cancelInFlight: true)
                         }
@@ -198,10 +213,16 @@ public struct ConnectionFeature: Sendable {
 
             case .input(.onLogout):
                 state.reachabilityPendingIntent = nil
+                // Logout tears down the tunnel; clear the pending-disconnect flag so it can't
+                // fire against a fresh post-logout connection attempt.
+                state.core.shouldDisconnectWhenAllowed = false
                 return .merge(.send(.stopObserving), .send(.core(.handleLogout)))
 
             case .input(.onSessionChange):
                 state.reachabilityPendingIntent = nil
+                // Session changes (logout, guest→authenticated, account switch) reset the
+                // tunnel; any latch from a prior cancelled connect would no longer apply.
+                state.core.shouldDisconnectWhenAllowed = false
                 return .send(.core(.handleLogout))
 
             case .reachabilityRetryDeadlineElapsed:
@@ -273,18 +294,16 @@ public struct ConnectionFeature: Sendable {
                 } else {
                     // Fully disconnected with no queued reconnect; clear any stale lifecycle intent.
                     state.currentIntent = nil
-                    return .concatenate(
-                        updateStateSendingEffectIfNecessary(&state, to: .disconnected),
-                        .send(.delegate(.stateChanged(.disconnected)))
-                    )
+                    return updateStateSendingEffectIfNecessary(&state, to: .disconnected)
                 }
 
-            case let .core(.delegate(.stateChanged(_, .connected(_, connectedAt, details)))):
+            case let .core(.delegate(.stateChanged(_, .connected(connectionData, connectedAt, details)))):
                 if state.currentIntent?.is(\.disconnecting) == true, state.reconnectionIntent != nil {
-                    // During explicit disconnect we can transiently receive core .connected updates
-                    // while Local Agent and tunnel are racing to stop/start. Do not surface this
-                    // as a user-facing connected state; it hides the connecting/disconnecting overlay.
-                    log.debug("Ignoring spurious .connected transition while disconnecting", category: .connection)
+                    // Protocol-switch reconnect: suppress the transient `.connected` from the
+                    // outgoing tunnel so the UI doesn't flash connected before the queued
+                    // reconnect. User-initiated disconnects don't hit this branch
+                    // because `handleUserDisconnectionRequest` clears both intents.
+                    log.debug("Ignoring spurious .connected during protocol-switch reconnect", category: .connection)
                     return .none
                 }
                 if state.reconnectionIntent != nil {
@@ -299,9 +318,12 @@ public struct ConnectionFeature: Sendable {
                     @Dependency(\.serverChangeAuthorizer) var authorizer
                     authorizer.registerServerChange(connectedAt: connectedAt)
                 }
-                return updateStateWithStoredIntentOrDisconnect(&state) { intent in
-                    .connected(intent, intent.server, connectedAt, details)
-                }
+                return resolveAndSetConnected(
+                    &state,
+                    connectionData: connectionData,
+                    connectedAt: connectedAt,
+                    details: details
+                )
 
             case let .core(.delegate(.stateChanged(oldState, .starting))):
                 if oldState.is(\.unknown) {
@@ -347,7 +369,8 @@ public struct ConnectionFeature: Sendable {
                 }
 
             case .core(.delegate(.stateChanged(_, .unknown))):
-                return .send(.delegate(.stateChanged(.resolving)))
+                let priorIntent = state.currentIntent?.serverIntent
+                return .send(.delegate(.stateChanged(.resolving(priorIntent, priorIntent?.server))))
 
             case let .core(.delegate(.error(connectionError))):
                 return .send(.delegate(.connectionFailed(connectionError)))
@@ -448,6 +471,108 @@ public struct ConnectionFeature: Sendable {
         }
     }
 
+    /// Resolves the intent associated with a `.connected` event against the actual tunnel data
+    /// reported by the OS. `ConnectionData` carries only `serverID` + protocol family — the rest
+    /// of `ServerConnectionIntent` (spec.location/.features/.profileId, WG transport/ports,
+    /// VPN features like NetShield/PortForwarding) only exists in the stored in-app intent.
+    ///
+    ///   1. Exact match (protocol family AND serverID match stored ones): preserve `storedIntent`
+    ///   2. `serverID` resolves to a real `Server` but doesn't match a stored one: create a
+    ///      new intent with the real server. Spec / features / protocol details are inherited
+    ///       from `storedIntent` if its protocol  matches the actual tunnel , default otherwise.
+    ///   3. No `actualServer` (e.g. empty `serverID`) but `storedIntent` exists with a matching protocol
+    ///      family: fall back to `storedIntent`. Mostly for IKE recovery.
+    ///   4. No server and not stored intent: `.intentMissing` and disconnect.
+    private func resolveAndSetConnected(
+        _ state: inout State,
+        connectionData: ConnectionData,
+        connectedAt: Date,
+        details: ConnectionDetailsMessage?
+    ) -> Effect<Action> {
+        let actualTunnelProtocol = connectionData.protocolData.tunnelProtocol
+        let actualServer = serverIdentifier.fullServerInfo(connectionData.serverID)
+        let storedIntent = state.currentIntent?.serverIntent ?? (try? intentStorage.getConnectionIntent())
+        let storedMatchesProtocol = storedIntent.map {
+            tunnelProtocol(for: $0.protocolConfiguration) == actualTunnelProtocol
+        } ?? false
+
+        let resolvedIntent: ServerConnectionIntent?
+        if let storedIntent,
+           storedMatchesProtocol,
+           storedIntent.server.endpoint.id == connectionData.serverID {
+            // (1) Exact match
+            resolvedIntent = storedIntent
+        } else if let server = actualServer {
+            // (2) Create new intent with the real server
+            let canInheritFromStored = storedMatchesProtocol
+            resolvedIntent = ServerConnectionIntent(
+                spec: canInheritFromStored ? (storedIntent?.spec ?? ConnectionSpec()) : ConnectionSpec(),
+                server: server,
+                protocolConfiguration: synthesizedProtocolConfiguration(
+                    from: connectionData.protocolData,
+                    preserving: canInheritFromStored ? storedIntent?.protocolConfiguration : nil
+                ),
+                features: canInheritFromStored
+                    ? (storedIntent?.features ?? connectionFeatureProvider.connectionFeatures())
+                    : connectionFeatureProvider.connectionFeatures()
+            )
+        } else if let storedIntent, storedMatchesProtocol {
+            // (3) Only for IKE when serverID is empty
+            resolvedIntent = storedIntent
+        } else {
+            // (4) Error
+            resolvedIntent = nil
+        }
+
+        guard let resolvedIntent else {
+            log.error("Failed to resolve connection intent for .connected", category: .connection)
+            return .concatenate(
+                .send(.delegate(.connectionFailed(.intentMissing))),
+                .send(.core(.disconnect(.connectionFailure(.intentMissing))))
+            )
+        }
+
+        state.currentIntent = .active(resolvedIntent)
+        return updateStateSendingEffectIfNecessary(
+            &state,
+            to: .connected(resolvedIntent, resolvedIntent.server, connectedAt, details)
+        )
+    }
+
+    private func tunnelProtocol(for configuration: ProtocolConfiguration) -> TunnelProtocol {
+        switch configuration {
+        case .ike:
+            .ike
+        case let .wireGuard(settings):
+            .wireGuard(settings.backend)
+        }
+    }
+
+    /// Builds a `ProtocolConfiguration` matching the actual tunnel's `ProtocolConnectionData`.
+    /// When the stored configuration's backend already matches the observed one (e.g. both WG
+    /// with the same backend), the stored configuration is reused so its transport/ports/features
+    /// are preserved; otherwise sensible defaults are filled in.
+    private func synthesizedProtocolConfiguration(
+        from protocolData: ProtocolConnectionData,
+        preserving stored: ProtocolConfiguration?
+    ) -> ProtocolConfiguration {
+        switch protocolData {
+        case .ike:
+            return .ike
+        case .wireGuardGo, .proTUN:
+            let backend: WGBackend = protocolData == .proTUN ? .proTUN : .go
+            if case let .wireGuard(storedSettings) = stored, storedSettings.backend == backend {
+                return .wireGuard(storedSettings)
+            }
+            return .wireGuard(WireGuardSettings(
+                backend: backend,
+                transport: .defaultValue,
+                ports: [],
+                features: connectionFeatureProvider.tunnelFeatures()
+            ))
+        }
+    }
+
     /// Prevents sending duplicate state change actions, e.g. connecting -> connecting
     private func updateStateSendingEffectIfNecessary(
         _ state: inout State,
@@ -473,7 +598,8 @@ public struct ConnectionFeature: Sendable {
             else {
                 return false
             }
-            return abs(date.now.timeIntervalSince(processStartDate)) < 10
+            let elapsed = Duration.seconds(abs(date.now.timeIntervalSince(processStartDate)))
+            return elapsed < Self.postLaunchReachabilityGracePeriod
         }
     #endif
 
@@ -536,7 +662,10 @@ public enum ActiveConnectionIntent: Equatable, Sendable {
 @DebugDescription
 @CasePathable
 public enum ConnectionState: Equatable, Sendable {
-    case resolving
+    /// Transitional state used while the connection layer is determining the actual tunnel
+    /// status (e.g. cold start, OS-level state change). Carries the prior intent and server
+    /// when known so UI can preserve continuity ("we were connected to X") during the window.
+    case resolving(ServerConnectionIntent?, Server?)
     case disconnected
     case disconnecting(ServerConnectionIntent, Server)
     case connecting(Intent)
@@ -554,7 +683,7 @@ public extension ConnectionFeature.State {
     static let initialState = ConnectionFeature.State(
         currentIntent: nil,
         queuedIntent: nil,
-        connectionState: .resolving,
+        connectionState: .resolving(nil, nil),
         shouldRegisterServerChangeOnConnection: false,
         reachabilityPendingIntent: nil,
         core: .initialCoreConnectionState
@@ -621,8 +750,8 @@ extension ConnectionFeature.Action.Delegate: CustomDebugStringConvertible {
 extension ConnectionState: CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
-        case .resolving:
-            ".resolving"
+        case let .resolving(intent, server):
+            ".resolving(intent: \(intent.map { "\($0)" } ?? "nil"), server: \(server.map { "\($0.logical.id)" } ?? "nil"))"
         case .disconnected:
             ".disconnected"
         case let .disconnecting(intent, server):

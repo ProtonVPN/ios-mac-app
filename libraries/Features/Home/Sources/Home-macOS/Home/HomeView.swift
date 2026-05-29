@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import HomeShared
 import Strings
 import SwiftUI
@@ -42,7 +43,7 @@ public struct HomeView: View {
             VStack {
                 HomeConnectionCardView(
                     item: item,
-                    vpnConnectionStatus: store.vpnConnectionStatus,
+                    connectionState: store.connectionState,
                     sendAction: { store.send($0) }
                 )
 
@@ -63,11 +64,7 @@ struct HomeView_Previews: PreviewProvider {
         HomeView(store: .init(
             initialState: .init(
                 connections: .init(),
-                connectionStatus: .init(protectionState: .protected(netShield: .random)),
-                vpnConnectionStatus: .connected(.init(
-                    location: .fastest,
-                    features: .init()
-                ), nil)
+                connectionStatus: .init(protectionState: .protected(netShield: .random))
             ),
             reducer: { HomeFeature() }
         ))

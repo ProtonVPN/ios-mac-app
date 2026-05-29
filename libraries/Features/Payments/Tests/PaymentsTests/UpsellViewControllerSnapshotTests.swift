@@ -73,8 +73,7 @@
         private func assertUpsellSnapshot(modalType: UpsellModalType) {
             let view = UpsellViewController(
                 modalType: modalType,
-                upgradeAction: nil,
-                continueAction: nil
+                upgradeAction: nil
             )
             .environment(\.colorScheme, .dark)
 

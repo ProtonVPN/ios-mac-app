@@ -83,7 +83,7 @@
             let initialState = ConnectionFeature.State(
                 currentIntent: .active(initialIntent),
                 queuedIntent: nil,
-                connectionState: .resolving,
+                connectionState: .resolving(nil, nil),
                 shouldRegisterServerChangeOnConnection: false,
                 core: coreState
             )
@@ -224,7 +224,7 @@
             let initialState = ConnectionFeature.State(
                 currentIntent: .active(initialIntent),
                 queuedIntent: nil,
-                connectionState: .resolving,
+                connectionState: .resolving(nil, nil),
                 shouldRegisterServerChangeOnConnection: false,
                 core: coreState
             )
@@ -434,6 +434,10 @@
 
             let store = TestStore(initialState: state) {
                 ConnectionFeature()
+            } withDependencies: {
+                $0.tunnelManager = MockTunnelManager(connection: VPNSessionMock(status: .connected))
+                $0.localAgent = LocalAgentMock(state: .disconnected)
+                $0.continuousClock = TestClock()
             }
             store.exhaustivity = .off
 
@@ -473,6 +477,72 @@
                 $0.connectionState = .disconnected
             }
             await store.receive(\.delegate.stateChanged.disconnected)
+        }
+
+        /// When the OS reports the tunnel as `.connected` but the stored connection intent
+        /// disagrees with the actual tunnel protocol (e.g. previous in-app session was
+        /// WireGuard but the user started IKEv2 from System Settings), the feature must
+        /// synthesise a fresh intent from `ConnectionData` so the UI doesn't render stale
+        /// protocol/server information.
+        @MainActor
+        func testConnectedWithMismatchedStoredProtocolSynthesizesIntent() async {
+            let now = Date.now
+            let staleStoredIntent = ServerConnectionIntent.mock(
+                protocolConfiguration: .wireGuard(.init(
+                    backend: .go,
+                    transport: .udp,
+                    ports: [51820],
+                    features: .unimplementedFeatures
+                ))
+            )
+            let actualServer = Server.ca
+            let connectedData = ConnectionData(
+                serverID: actualServer.endpoint.id,
+                connectionDate: now,
+                protocolData: .ike
+            )
+
+            let state = ConnectionFeature.State(
+                currentIntent: nil,
+                queuedIntent: nil,
+                connectionState: .resolving(nil, nil),
+                shouldRegisterServerChangeOnConnection: false,
+                core: .init(
+                    tunnelState: .connected(.ike, connectedData),
+                    certAuthState: .idle,
+                    localAgentState: .disconnected(nil)
+                )
+            )
+
+            let store = TestStore(initialState: state) {
+                ConnectionFeature()
+            } withDependencies: {
+                $0.serverIdentifier = .init(fullServerInfo: { _ in actualServer })
+                $0.connectionIntentStorage = .init(getConnectionIntent: { staleStoredIntent }, set: { _ in })
+                $0.connectionFeatureProvider.connectionFeatures = { .unimplementedFeatures }
+                $0.connectionFeatureProvider.tunnelFeatures = { .unimplementedFeatures }
+            }
+            store.exhaustivity = .off
+
+            await store.send(.core(.delegate(.stateChanged(
+                .connecting(connectedData),
+                .connected(connectedData, now, nil)
+            ))))
+
+            // currentIntent should reflect the real tunnel: IKE on actualServer, not the
+            // stale WireGuard storedIntent.
+            guard case let .active(resolved) = store.state.currentIntent else {
+                XCTFail("Expected currentIntent to be .active after .connected")
+                return
+            }
+            XCTAssertEqual(resolved.protocolConfiguration, .ike)
+            XCTAssertEqual(resolved.server.endpoint.id, actualServer.endpoint.id)
+            guard case let .connected(intent, server, _, _) = store.state.connectionState else {
+                XCTFail("Expected connectionState to be .connected after .connected delegate")
+                return
+            }
+            XCTAssertEqual(intent.protocolConfiguration, .ike)
+            XCTAssertEqual(server.endpoint.id, actualServer.endpoint.id)
         }
 
         @MainActor

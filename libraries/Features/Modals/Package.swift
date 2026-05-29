@@ -91,6 +91,7 @@ let package = Package(
             name: "ModalsTests",
             dependencies: [
                 "ModalsShared",
+                "Strings",
                 .target(name: "Modals-iOS", condition: .when(platforms: [.iOS])),
                 .target(name: "Modals-macOS", condition: .when(platforms: [.macOS])),
 

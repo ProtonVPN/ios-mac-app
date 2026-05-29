@@ -143,13 +143,6 @@ extension CertificateRefreshClient {
                         continuation.resume(with: result)
                     }
                 }
-            } catch let error as AuthenticationRemoteClientError {
-                switch error {
-                case .needNewKeys:
-                    throw .requiresNewKeys
-                case let .tooManyCertRequests(retryAfter):
-                    throw .tooManyCertRequests(retryAfter: retryAfter.map(Int.init))
-                }
             } catch let error as CommonNetworking.CertificateRefreshError {
                 switch error {
                 case .canceled:

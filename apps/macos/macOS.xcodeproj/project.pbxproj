@@ -111,6 +111,7 @@
 		A47335442FA0B36D00637F54 /* SystemExtensionsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47335432FA0B36D00637F54 /* SystemExtensionsCoordinator.swift */; };
 		A47335462FA0B3EC00637F54 /* SystemExtensionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47335452FA0B3E300637F54 /* SystemExtensionRequest.swift */; };
 		A473359D2FA0FA4500637F54 /* SystemExtensionsProfilesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A473359B2FA0FA4500637F54 /* SystemExtensionsProfilesClient.swift */; };
+		A48392E62FC6DEFC001F7EBC /* ConnectingOverlayFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48392E52FC6DEF6001F7EBC /* ConnectingOverlayFeatureTests.swift */; };
 		A48B18662F6B02BA004F385F /* CountriesSectionSwiftUIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48B18652F6B02BA004F385F /* CountriesSectionSwiftUIController.swift */; };
 		A48B18CE2F6B14FE004F385F /* QuickSettingsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48B18CD2F6B14FE004F385F /* QuickSettingsFeature.swift */; };
 		A48D80492E66F8DB00734EEA /* MenuManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48D80482E66F8DB00734EEA /* MenuManager.swift */; };
@@ -616,6 +617,7 @@
 		A47335432FA0B36D00637F54 /* SystemExtensionsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionsCoordinator.swift; sourceTree = "<group>"; };
 		A47335452FA0B3E300637F54 /* SystemExtensionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionRequest.swift; sourceTree = "<group>"; };
 		A473359B2FA0FA4500637F54 /* SystemExtensionsProfilesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionsProfilesClient.swift; sourceTree = "<group>"; };
+		A48392E52FC6DEF6001F7EBC /* ConnectingOverlayFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingOverlayFeatureTests.swift; sourceTree = "<group>"; };
 		A48B18652F6B02BA004F385F /* CountriesSectionSwiftUIController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesSectionSwiftUIController.swift; sourceTree = "<group>"; };
 		A48B18CD2F6B14FE004F385F /* QuickSettingsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsFeature.swift; sourceTree = "<group>"; };
 		A48D80482E66F8DB00734EEA /* MenuManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuManager.swift; sourceTree = "<group>"; };
@@ -1331,6 +1333,7 @@
 		A4E124022F966422008D0340 /* TCA */ = {
 			isa = PBXGroup;
 			children = (
+				A48392E52FC6DEF6001F7EBC /* ConnectingOverlayFeatureTests.swift */,
 				A4FD64822F7BB1D50071D13F /* CountriesQuickSettingDetailFeatureTests.swift */,
 				A4FD64A22F7BBB160071D13F /* CountriesQuickSettingsFeatureTests.swift */,
 				ADDB04AA2B7A533800211434 /* CountriesSectionFeatureTests.swift */,
@@ -3174,6 +3177,7 @@
 				E9AB88E7262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift in Sources */,
 				AD8C78AE29898403008AC0B5 /* AppSessionManagerImplementationTests.swift in Sources */,
 				A47335302FA0A74A00637F54 /* SystemExtensionsFeatureTests.swift in Sources */,
+				A48392E62FC6DEFC001F7EBC /* ConnectingOverlayFeatureTests.swift in Sources */,
 				E59B932F2DE99AB40029C115 /* PlutoniumFeatureTests.swift in Sources */,
 				E13F4CF920FC9E0F00D985C2 /* Dictionary+Extension.swift in Sources */,
 			);

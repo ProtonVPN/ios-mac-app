@@ -224,7 +224,7 @@ public struct SettingsView: View {
         initialState: SettingsFeature.State(
             netShield: .on,
             killSwitch: .off,
-            protocolSettings: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
+            protocolSettings: .init(protocol: .smartProtocol, connectionState: .disconnected, reconnectionAlert: nil),
             theme: .light
         ),
         reducer: { SettingsFeature() }

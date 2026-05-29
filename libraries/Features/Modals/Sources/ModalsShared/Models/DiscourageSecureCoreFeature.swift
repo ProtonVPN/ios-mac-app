@@ -37,9 +37,13 @@ public struct DiscourageSecureCoreFeature {
     @ObservableState
     public struct State: Equatable {
         var dontShowAgain: Bool
+        /// An extra message shown below the subtitle to warn about reconnecting.
+        /// Nil hides this message.
+        var reconnectNotice: String?
 
-        public init(dontShowAgain: Bool = false) {
+        public init(dontShowAgain: Bool = false, reconnectNotice: String? = nil) {
             self.dontShowAgain = dontShowAgain
+            self.reconnectNotice = reconnectNotice
         }
     }
 

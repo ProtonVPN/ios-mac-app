@@ -22,6 +22,7 @@
 
 import Cocoa
 import ComposableArchitecture
+import Connection
 import Strings
 import SwiftUI
 import Theme
@@ -30,6 +31,7 @@ import Theme
 class ConnectingViewController: NSViewController {
     private let store: StoreOf<ConnectingOverlayFeature>
     private var hostingView: NSHostingView<ConnectingOverlayContentView>!
+    private var mouseTrackingMonitor: Any?
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
@@ -41,8 +43,14 @@ class ConnectingViewController: NSViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    deinit {
+        if let mouseTrackingMonitor {
+            NSEvent.removeMonitor(mouseTrackingMonitor)
+        }
+    }
+
     override func loadView() {
-        let rootView = NSView(frame: NSRect(x: 0, y: 0, width: 444, height: 561))
+        let rootView = NSView(frame: NSRect(x: 0, y: 0, width: Dimensions.rootViewWidth, height: Dimensions.rootViewHeight))
         rootView.translatesAutoresizingMaskIntoConstraints = false
         view = rootView
 
@@ -61,132 +69,91 @@ class ConnectingViewController: NSViewController {
         super.viewDidLoad()
         view.setAccessibilityModal(true)
     }
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        installMouseTrackingBarrier()
+    }
+
+    override func viewWillDisappear() {
+        super.viewWillDisappear()
+        removeMouseTrackingBarrier()
+    }
+
+    /// SwiftUI's `.onHover` (used by sidebar/countries rows beneath the overlay) is backed by
+    /// `NSTrackingArea` with `.inVisibleRect` — which dispatches mouseEntered/mouseExited based
+    /// purely on the cursor's geometric position in the owning view's rect, regardless of view
+    /// occlusion or hit-testing. Subclassing `NSView`, claiming hit-tests, adding tracking areas,
+    /// or applying SwiftUI `.contentShape` modifiers on the overlay all leave that dispatch
+    /// untouched. The only way to stop it from inside the overlay is to drop the relevant
+    /// `NSEvent`s before AppKit dispatches them. Buttons inside the overlay forgo hover styling
+    /// while presented as a side effect — clicks still work.
+    private func installMouseTrackingBarrier() {
+        guard mouseTrackingMonitor == nil, let window = view.window else { return }
+        mouseTrackingMonitor = NSEvent.addLocalMonitorForEvents(
+            matching: [.mouseMoved, .mouseEntered, .mouseExited]
+        ) { [weak window] event in
+            event.window === window ? nil : event
+        }
+    }
+
+    private func removeMouseTrackingBarrier() {
+        guard let monitor = mouseTrackingMonitor else { return }
+        NSEvent.removeMonitor(monitor)
+        mouseTrackingMonitor = nil
+    }
+
+    private enum Dimensions {
+        static let rootViewWidth: CGFloat = 444
+        static let rootViewHeight: CGFloat = 561
+    }
 }
 
 private struct ConnectingOverlayContentView: View {
     @Bindable var store: StoreOf<ConnectingOverlayFeature>
 
     var body: some View {
-        let buttons = overlayButtons
-
         VStack(spacing: .themeSpacing32) {
             ConnectingOverlayGraphicView(graphicKind: store.graphicKind)
-                .frame(.square(120))
+                .frame(.square(Dimensions.graphicSize))
 
             if !store.hidePhase {
-                Text(AttributedString(firstString))
+                Text(AttributedString(ConnectingOverlayPhaseFormatter.headline(for: store.headlinePhase)))
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
             }
 
-            Text(AttributedString(secondString))
+            Text(AttributedString(ConnectingOverlayPhaseFormatter.body(for: store.bodyPhase)))
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
                 .padding(.bottom, .themeSpacing8)
 
             VStack(spacing: .themeSpacing16) {
-                ForEach(buttons) { button in
+                ForEach(overlayButtons) { button in
                     ConnectingOverlayButtonView(title: button.title, style: button.style) {
                         store.send(.buttonTapped(button.kind))
                     }
-                    .frame(minWidth: 120)
-                    .frame(height: 40)
+                    .frame(minWidth: Dimensions.buttonMinWidth)
+                    .frame(height: Dimensions.buttonHeight)
                 }
             }
         }
-        .frame(width: 340)
+        .frame(width: Dimensions.contentWidth)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     private var overlayButtons: [ConnectingOverlayButtonModel] {
-        if store.timedOut, store.isIkeWithKsEnabled {
-            return [
-                .init(kind: .retryWithoutKillSwitch, title: Localizable.tryAgainWithoutKillswitch, style: .interactive),
-                .init(kind: .cancel, title: Localizable.cancel, style: .normal),
-            ]
-        }
         if store.timedOut {
-            return [
-                .init(kind: .retry, title: Localizable.tryAgain, style: .normal),
-                .init(kind: .cancel, title: Localizable.cancel, style: .normal),
-            ]
+            return store.isIkeWithKsEnabled ? [.retryWithoutKillSwitch, .cancel] : [.retry, .cancel]
         }
-        if store.displayStatus.is(\.connected) {
-            return [.init(kind: .done, title: Localizable.done, style: .normal)]
-        }
-        return [.init(kind: .cancel, title: Localizable.cancel, style: .normal)]
+        return store.displayState.is(\.connected) ? [.done] : [.cancel]
     }
 
-    private var firstString: NSAttributedString {
-        if store.displayStatus.is(\.connected) {
-            return Localizable.successfullyConnected.styled(font: .themeFont(.small))
-        }
-        let value = store.isReconnecting ? Localizable.youAreNotProtected : Localizable.initializingConnection
-        return value.styled(font: .themeFont(.small))
-    }
-
-    private var secondString: NSAttributedString {
-        if store.timedOut {
-            return timedOutSecondString
-        }
-
-        let resolvedServer = store.displayStatus.server
-        let boldString = resolvedServer.map { server in
-            Self.styledServerName(country: server.logical.country, name: server.logical.name)
-        } ?? ""
-        let string: String = switch store.displayStatus {
-        case .connected:
-            Localizable.connectedToVpn(boldString)
-        case .disconnected:
-            store.isReconnecting ? Localizable.reconnecting : Localizable.preparingConnection
-        case .resolving, .connecting, .disconnecting:
-            if store.isReconnecting {
-                Localizable.reconnecting
-            } else if boldString.isEmpty {
-                Localizable.preparingConnection
-            } else {
-                Localizable.connectingTo(boldString)
-            }
-        }
-
-        let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
-        if !boldString.isEmpty, let stringRange = string.range(of: boldString) {
-            let range = NSRange(stringRange, in: string)
-            attributedString.addAttribute(.font, value: NSFont.themeFont(.heading2, bold: true), range: range)
-        }
-        return attributedString
-    }
-
-    private var timedOutSecondString: NSAttributedString {
-        let boldString = Localizable.connectionTimedOutBold
-        if !store.isIkeWithKsEnabled {
-            let string = Localizable.connectionTimedOut
-            let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
-            if let stringRange = string.range(of: boldString) {
-                let range = NSRange(stringRange, in: string)
-                attributedString.addAttribute(.font, value: NSFont.themeFont(.heading2, bold: true), range: range)
-            }
-            return attributedString
-        }
-
-        let description = "\n\n" + Localizable.timeoutKsIkeDescritpion
-        let string = Localizable.connectionTimedOut + description
-        let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
-        if let stringRange = string.range(of: boldString) {
-            let range = NSRange(stringRange, in: string)
-            attributedString.addAttribute(.font, value: NSFont.themeFont(.heading2, bold: true), range: range)
-        }
-        if let descriptionRange = string.range(of: description) {
-            let range = NSRange(descriptionRange, in: string)
-            attributedString.addAttribute(.font, value: NSFont.themeFont(.small), range: range)
-        }
-        return attributedString
-    }
-
-    private static func styledServerName(country: String, name: String) -> String {
-        (country + " " + name)
-            .replacingOccurrences(of: " ", with: "\u{00A0}")
-            .replacingOccurrences(of: "-", with: "\u{2011}")
+    private enum Dimensions {
+        static let graphicSize: CGFloat = 120
+        static let contentWidth: CGFloat = 340
+        static let buttonMinWidth: CGFloat = 120
+        static let buttonHeight: CGFloat = 40
     }
 }
 
@@ -215,7 +182,7 @@ private struct ConnectingOverlayGraphicView: View {
             Image(nsImage: Theme.Asset.vpnResultConnected.image)
                 .resizable()
                 .interpolation(.high)
-                .frame(.square(105))
+                .frame(.square(Dimensions.connectedImageSize))
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         case .warning:
             Image(nsImage: Theme.Asset.vpnResultWarning.image)
@@ -223,6 +190,10 @@ private struct ConnectingOverlayGraphicView: View {
                 .scaledToFit()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+    }
+
+    private enum Dimensions {
+        static let connectedImageSize: CGFloat = 105
     }
 }
 
@@ -307,6 +278,69 @@ private enum ConnectingOverlayButtonVisualStyle {
     case interactive
 }
 
+private enum ConnectingOverlayPhaseFormatter {
+    static func headline(for phase: ConnectingOverlayFeature.State.HeadlinePhase) -> NSAttributedString {
+        let string: String = switch phase {
+        case .connected: Localizable.successfullyConnected
+        case .unprotected: Localizable.youAreNotProtected
+        case .initializing: Localizable.initializingConnection
+        }
+        return string.styled(font: .themeFont(.small))
+    }
+
+    static func body(for phase: ConnectingOverlayFeature.State.BodyPhase) -> NSAttributedString {
+        switch phase {
+        case let .timedOut(isIkeWithKsEnabled):
+            return timedOut(isIkeWithKsEnabled: isIkeWithKsEnabled)
+        case let .connected(serverName):
+            let bold = styled(serverName: serverName)
+            return body(string: Localizable.connectedToVpn(bold), bold: bold)
+        case let .connecting(serverName):
+            let bold = styled(serverName: serverName)
+            return body(string: Localizable.connectingTo(bold), bold: bold)
+        case .reconnecting:
+            return body(string: Localizable.reconnecting, bold: "")
+        case .preparing:
+            return body(string: Localizable.preparingConnection, bold: "")
+        }
+    }
+
+    private static func body(string: String, bold: String) -> NSAttributedString {
+        let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
+        if !bold.isEmpty, let stringRange = string.range(of: bold) {
+            let range = NSRange(stringRange, in: string)
+            attributedString.addAttribute(.font, value: NSFont.themeFont(.heading2, bold: true), range: range)
+        }
+        return attributedString
+    }
+
+    private static func timedOut(isIkeWithKsEnabled: Bool) -> NSAttributedString {
+        let boldString = Localizable.connectionTimedOutBold
+        if !isIkeWithKsEnabled {
+            return body(string: Localizable.connectionTimedOut, bold: boldString)
+        }
+
+        let description = "\n\n" + Localizable.timeoutKsIkeDescritpion
+        let string = Localizable.connectionTimedOut + description
+        let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
+        if let stringRange = string.range(of: boldString) {
+            let range = NSRange(stringRange, in: string)
+            attributedString.addAttribute(.font, value: NSFont.themeFont(.heading2, bold: true), range: range)
+        }
+        if let descriptionRange = string.range(of: description) {
+            let range = NSRange(descriptionRange, in: string)
+            attributedString.addAttribute(.font, value: NSFont.themeFont(.small), range: range)
+        }
+        return attributedString
+    }
+
+    private static func styled(serverName: ConnectingOverlayFeature.State.ServerName) -> String {
+        (serverName.country + " " + serverName.name)
+            .replacingOccurrences(of: " ", with: "\u{00A0}")
+            .replacingOccurrences(of: "-", with: "\u{2011}")
+    }
+}
+
 private struct ConnectingOverlayButtonModel: Identifiable {
     let kind: ConnectingOverlayFeature.ButtonKind
     let title: String
@@ -315,4 +349,12 @@ private struct ConnectingOverlayButtonModel: Identifiable {
     var id: ConnectingOverlayFeature.ButtonKind {
         kind
     }
+
+    static let cancel: Self = .init(kind: .cancel, title: Localizable.cancel, style: .normal)
+
+    static let done: Self = .init(kind: .done, title: Localizable.done, style: .normal)
+
+    static let retry: Self = .init(kind: .retry, title: Localizable.tryAgain, style: .normal)
+
+    static let retryWithoutKillSwitch: Self = .init(kind: .retryWithoutKillSwitch, title: Localizable.tryAgainWithoutKillswitch, style: .interactive)
 }

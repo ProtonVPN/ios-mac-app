@@ -18,6 +18,7 @@
 
 import CommonNetworking
 import ComposableArchitecture
+import Connection
 import ConnectionInventory
 import Dependencies
 import Domain
@@ -60,18 +61,18 @@ public struct CountriesFeature {
 
         @Shared(.secureCoreToggle) public var isSecureCore: Bool
         @SharedReader(.userTier) var userTier: Int?
-        @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+        @SharedReader(.connectionState) var connectionState: ConnectionState
 
         public init(sections: IdentifiedArrayOf<CountrySectionFeature.State>) {
             self.sections = sections
         }
 
         public var isConnectedToVPN: Bool {
-            vpnConnectionStatus.is(\.connected)
+            connectionState.is(\.connected)
         }
 
         public var enableViewToggle: Bool {
-            !vpnConnectionStatus.is(\.connecting)
+            !connectionState.is(\.connecting)
         }
     }
 
@@ -151,13 +152,6 @@ public struct CountriesFeature {
 
             case .alert(.presented(.disconnectAndToggle)):
                 state.alert = nil
-                AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
-                if state.isConnectedToVPN {
-                    return .concatenate(
-                        .send(.disconnectRequested(.countriesCountry)),
-                        .send(.applySecureCoreToggle)
-                    )
-                }
                 return .send(.applySecureCoreToggle)
 
             case .secureCoreToggleRequested:
@@ -445,10 +439,6 @@ public struct CountriesFeature {
         Reduce { state, action in
             switch action {
             case .destination(.presented(.discourageSecureCoreView(.delegate(.activateTapped)))):
-                if state.isConnectedToVPN {
-                    state.alert = disconnectAlert
-                    return .none
-                }
                 return .send(.applySecureCoreToggle)
 
             case .destination(.presented(.cityStateList(.delegate(.dismissRequested)))):
@@ -480,48 +470,81 @@ public struct CountriesFeature {
 
     // MARK: - Private Helpers
 
+    /// Produces appropriate action when toggling secure core
+    ///
+    /// ```
+    /// switch (turningOn, discourageSecureCore, isConnected) {
+    /// case (true,  true,  false): // discourage screen → confirm flips toggle; no reconnect.
+    /// case (true,  true,  true):  // discourage screen w/ "will reconnect" notice →
+    ///                             // confirm flips + reconnect (no extra warning popup).
+    /// case (true,  false, true):  // short disconnect/reconnect warning →
+    ///                             // confirm flips + reconnect.
+    /// case (true,  false, false): // apply silently.
+    /// case (false, _,     true):  // short warning → confirm flips + reconnect.
+    /// case (false, _,     false): // apply silently.
+    /// }
+    /// ```
     private func handleSecureCoreToggleRequest(_ state: inout State) -> Effect<Action> {
         let turningOn = !state.isSecureCore
+        let isConnected = state.isConnectedToVPN
 
-        if turningOn {
-            // Turning Secure Core ON
+        // Free-tier users can't enable Secure Core: show upsell
+        if turningOn, state.userTier?.isFreeTier == true {
+            state.destination = .payments(.init(upsellModalType: .secureCore))
+            return .none
+        }
 
-            // Check user tier
-            if state.userTier?.isFreeTier == true {
-                state.destination = .payments(.init(upsellModalType: .secureCore))
-                return .none
-            }
+        let connectedCC = state.connectionState.resolvedServer?.logical.exitCountryCode
+        let fallback = fallbackCountryName(connectedCountryCode: connectedCC, turningOn: turningOn)
 
-            // Check if we should show discourage view
-            if discourageSecureCore {
-                state.destination = .discourageSecureCoreView(.init())
-                return .none
-            }
+        switch (turningOn, discourageSecureCore, isConnected) {
+        case (true, true, false):
+            state.destination = .discourageSecureCoreView(.init(reconnectNotice: nil))
+            return .none
 
-            // Check if connected - need to disconnect
-            if state.isConnectedToVPN {
-                state.alert = disconnectAlert
-                return .none
-            }
+        case (true, true, true):
+            let notice = SecureCoreConnectionSpecResolver.toggleAlertMessage(
+                turningOn: true,
+                fallbackCountryName: fallback
+            )
+            state.destination = .discourageSecureCoreView(.init(reconnectNotice: notice))
+            return .none
 
-            // All checks passed, apply toggle
+        case (true, false, true):
+            state.alert = disconnectAndToggleAlert(turningOn: true, fallbackCountryName: fallback)
+            return .none
+
+        case (true, false, false):
             return .send(.applySecureCoreToggle)
-        } else {
-            // Turning Secure Core OFF
 
-            // Check if connected - need to disconnect
-            if state.isConnectedToVPN {
-                state.alert = disconnectAlert
-                return .none
-            }
+        case (false, _, true):
+            state.alert = disconnectAndToggleAlert(turningOn: false, fallbackCountryName: fallback)
+            return .none
 
-            // Apply toggle directly
+        case (false, _, false):
             return .send(.applySecureCoreToggle)
         }
     }
 
-    private var disconnectAlert: AlertState<Action.Alert> {
-        AlertState(
+    /// When turning Secure Core on, returns the localized name of the currently-connected exit
+    /// country if and only if no Secure Core server exists in that country (i.e. the resolver
+    /// will fall back to global fastest SC). Returns nil for the OFF direction, when the user
+    /// isn't connected, or when an SC server is available in the connected country.
+    private func fallbackCountryName(connectedCountryCode: String?, turningOn: Bool) -> String? {
+        guard turningOn, let cc = connectedCountryCode,
+              !serverRepository.hasServer(secureCore: true, exitCountryCode: cc) else { return nil }
+        return LocalizationUtility.default.countryName(forCode: cc) ?? cc
+    }
+
+    private func disconnectAndToggleAlert(
+        turningOn: Bool,
+        fallbackCountryName: String?
+    ) -> AlertState<Action.Alert> {
+        let message = SecureCoreConnectionSpecResolver.toggleAlertMessage(
+            turningOn: turningOn,
+            fallbackCountryName: fallbackCountryName
+        )
+        return AlertState(
             title: { TextState(Localizable.warning) },
             actions: {
                 ButtonState(
@@ -534,7 +557,7 @@ public struct CountriesFeature {
                     label: { TextState(Localizable.cancel) }
                 )
             },
-            message: { TextState(Localizable.viewToggleWillCauseDisconnect) }
+            message: { TextState(message) }
         )
     }
 

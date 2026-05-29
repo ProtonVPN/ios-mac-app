@@ -18,6 +18,7 @@
 
 import Combine
 import CommonNetworking
+import Connection
 import Dependencies
 import Foundation
 import struct ProtonCoreNetworking.DeviceVerifyParameters
@@ -53,8 +54,8 @@ final class TVOSNetworkingDelegate: NetworkingDelegate {
     }
 
     func onGuestToAuthenticatedTransition() async {
-        @Dependency(\.connectionBridge) var bridge
-        await bridge.push(intent: .onSessionChange)
+        @Dependency(\.sessionChangeNotifier) var sessionChangeNotifier
+        await sessionChangeNotifier.notify()
     }
 
     func onForceUpgrade(message: String) {

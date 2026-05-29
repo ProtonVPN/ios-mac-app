@@ -121,23 +121,6 @@ public struct VPNConnectionActual: Equatable, Codable {
     }
 }
 
-// MARK: - Watch for changes
-
-@available(macOS 13, *)
-@available(tvOS, unavailable)
-public extension DependencyValues {
-    var vpnConnectionStatusPublisher: () -> AsyncStream<VPNConnectionStatus> {
-        get { self[VPNConnectionStatusPublisherKey.self] }
-        set { self[VPNConnectionStatusPublisherKey.self] = newValue }
-    }
-}
-
-@available(macOS 13, *)
-@available(tvOS, unavailable)
-public enum VPNConnectionStatusPublisherKey: TestDependencyKey {
-    public static let testValue: () -> AsyncStream<VPNConnectionStatus> = { .finished }
-}
-
 // MARK: - Mock for previews
 
 #if DEBUG || targetEnvironment(simulator)

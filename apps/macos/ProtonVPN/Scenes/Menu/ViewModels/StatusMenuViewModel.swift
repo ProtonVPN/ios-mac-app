@@ -58,7 +58,6 @@ final class StatusMenuViewModel {
     @Dependency(\.linkOpener) var linkOpener
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
     @Shared(.connectionState) private var connectionState: ConnectionState
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -118,7 +117,7 @@ final class StatusMenuViewModel {
     }
 
     var isConnected: Bool {
-        vpnConnectionStatus.isConnected(using: connectionState)
+        connectionState.isConnected
     }
 
     private var isQuickConnectInDisconnectMode: Bool {
@@ -126,11 +125,11 @@ final class StatusMenuViewModel {
     }
 
     var connectedCountryCode: String? {
-        vpnConnectionStatus.mergedServer(using: connectionState)?.logical.exitCountryCode
+        connectionState.resolvedServer?.logical.exitCountryCode
     }
 
     var isStateStable: Bool {
-        switch vpnConnectionStatus {
+        switch connectionState {
         case .connected, .disconnected:
             true
         case .resolving, .connecting, .disconnecting:
@@ -145,7 +144,7 @@ final class StatusMenuViewModel {
     // MARK: - Connecting screen
 
     var isConnecting: Bool {
-        switch vpnConnectionStatus {
+        switch connectionState {
         case .connecting, .resolving:
             true
         case .connected, .disconnected, .disconnecting:
@@ -225,22 +224,16 @@ final class StatusMenuViewModel {
             connectionCommandClient.send(.disconnect(.tray))
         } else {
             log.debug("Connect requested by pressing Quick connect", category: .connectionConnect, event: .trigger)
-            let spec = SecureCoreConnectionSpecResolver.fastestSpec(
-                secureCoreEnabled: secureCoreToggle,
-                connectedExitCountryCode: connectedCountryCode,
-                isFreeTier: credentials.tier.isFreeTier
+            connectionCommandClient.quickConnect(
+                profileManager: profileManager ?? factory.makeProfileManager(),
+                trigger: .tray
             )
-            connectionCommandClient.send(.connect(spec, nil, .tray))
         }
     }
 
     func changeServerAction() {
-        let profile = ProfileConstants.randomProfile(
-            connectionProtocol: propertiesManager.connectionProtocol,
-            defaultProfileAccessTier: 0
-        )
-        let spec = makeConnectionSpec(for: profile)
-        connectionCommandClient.send(.connect(spec, profile.connectionProtocol, .changeServer))
+        let spec = ConnectionSpec(location: .any(.random), features: [])
+        connectionCommandClient.send(.connect(spec, propertiesManager.connectionProtocol, .changeServer))
     }
 
     // MARK: - General section
@@ -271,26 +264,92 @@ final class StatusMenuViewModel {
 
     // MARK: - Connect section - Inputs
 
+    /// Implements the unified iOS/macOS Secure Core toggle matrix from the menu bar.
+    ///
+    /// ```
+    /// switch (turningOn, discourageSecureCore, isConnected) {
+    /// case (true,  true,  false): // discourage screen → confirm flips toggle; no reconnect.
+    /// case (true,  true,  true):  // discourage screen w/ "will reconnect" notice →
+    ///                             // confirm flips + reconnect (no extra warning popup).
+    /// case (true,  false, true):  // short disconnect/reconnect warning →
+    ///                             // confirm flips + reconnect.
+    /// case (true,  false, false): // apply silently.
+    /// case (false, _,     true):  // short warning → confirm flips + reconnect.
+    /// case (false, _,     false): // apply silently.
+    /// }
+    /// ```
     func toggleSecureCore(_ state: ButtonState) {
-        let applyNewStateToSecureCore: () -> Void = { [weak self] in
-            self?.changeActiveServerType(state: state)
-        }
-        guard state == .on else {
-            applyNewStateToSecureCore()
-            return
-        }
-        guard isSufficientTierLevel() else {
+        let turningOn = (state == .on)
+
+        // Upsell for free tier
+        if turningOn, !isSufficientTierLevel() {
             viewController?.secureCoreSwitch.setState(.off)
             alertService.push(alert: SecureCoreUpsellAlert())
             return
         }
+
         @SharedReader(.discourageSecureCore) var discourageSecureCore: Bool
-        guard discourageSecureCore == false else {
+        let connected = isConnected
+
+        switch (turningOn, discourageSecureCore, connected) {
+        case (true, true, false):
             viewController?.secureCoreSwitch.setState(.off)
-            presentDiscourageSecureCoreAlert(onActivate: applyNewStateToSecureCore)
-            return
+            presentDiscourageSecureCoreAlert(
+                reconnectNotice: nil,
+                onActivate: { [weak self] in
+                    self?.applySecureCoreToggle(turningOn: true)
+                }
+            )
+
+        case (true, true, true):
+            viewController?.secureCoreSwitch.setState(.off)
+            let notice = SecureCoreConnectionSpecResolver.toggleAlertMessage(
+                turningOn: true,
+                fallbackCountryName: fallbackCountryName(turningOn: true)
+            )
+            presentDiscourageSecureCoreAlert(
+                reconnectNotice: notice,
+                onActivate: { [weak self] in
+                    self?.applySecureCoreToggle(turningOn: true)
+                }
+            )
+
+        case (true, false, true):
+            presentDisconnectOnStateToggleWarning(turningOn: true)
+
+        case (true, false, false):
+            applySecureCoreToggle(turningOn: true)
+
+        case (false, _, true):
+            presentDisconnectOnStateToggleWarning(turningOn: false)
+
+        case (false, _, false):
+            applySecureCoreToggle(turningOn: false)
         }
-        applyNewStateToSecureCore()
+    }
+
+    /// Returns the localized name of the country we'd have to fall back to (i.e. away from the
+    /// currently-connected exit country) when toggling Secure Core, or `nil` if no fallback is
+    /// needed.
+    ///
+    /// - Parameter turningOn: `true` if Secure Core is being switched **on**, `false` if **off**.
+    ///   Only the ON direction can require a fallback — turning OFF always reuses the current
+    ///   exit country with a standard server — so this method returns `nil` when `turningOn`
+    ///   is `false`.
+    ///
+    /// - Returns: The localized country name when **all** of the following are true:
+    ///   - `turningOn` is `true`,
+    ///   - the user is currently connected (so there is an exit country to compare against),
+    ///   - no Secure Core server exits via that country (meaning the reconnect will land in a
+    ///     different country).
+    ///
+    ///   Returns `nil` otherwise (OFF direction, not connected, or an SC server is available
+    ///   in the current exit country so no fallback is required).
+    private func fallbackCountryName(turningOn: Bool) -> String? {
+        guard turningOn, let cc = connectedCountryCode else { return nil }
+        @Dependency(\.serverRepository) var serverRepository
+        guard !serverRepository.hasServer(secureCore: true, exitCountryCode: cc) else { return nil }
+        return LocalizationUtility.default.countryName(forCode: cc) ?? cc
     }
 
     private func isSufficientTierLevel() -> Bool {
@@ -298,24 +357,13 @@ final class StatusMenuViewModel {
         return userTier.isPaidTier
     }
 
-    private func presentDiscourageSecureCoreAlert(onActivate: (() -> Void)?) {
+    private func presentDiscourageSecureCoreAlert(reconnectNotice: String?, onActivate: (() -> Void)?) {
         let viewController = ModalsFactory.discourageSecureCoreViewController(
+            reconnectNotice: reconnectNotice,
             onActivate: onActivate,
             onCancel: nil
         )
         windowService.presentKeyModalOnActiveScreen(viewController: viewController, activatingApp: true)
-    }
-
-    private func changeActiveServerType(state: ButtonState) {
-        let targetServerType: ServerType = state == .on ? .secureCore : .standard
-        guard !isConnected else {
-            presentDisconnectOnStateToggleWarning(targetServerType: targetServerType)
-            return
-        }
-
-        $secureCoreToggle.withLock { $0 = targetServerType == .secureCore }
-        serverType = targetServerType
-        contentChanged?()
     }
 
     // MARK: - Footer section - Inputs
@@ -361,13 +409,10 @@ final class StatusMenuViewModel {
             }
             .store(in: &cancellables)
 
-        $vpnConnectionStatus.publisher
-            .sink { [weak self] _ in
-                self?.handleVpnStatusChanged()
-            }
-            .store(in: &cancellables)
-
+        // Defer the UI update one runloop tick so the `@Shared` `willSet` completes before
+        // accessors are read by the view (see HeaderViewModel for the full rationale).
         $connectionState.publisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.handleVpnStatusChanged()
             }
@@ -398,30 +443,63 @@ final class StatusMenuViewModel {
         updateCountryList()
     }
 
-    private func presentDisconnectOnStateToggleWarning(targetServerType: ServerType) {
-        let confirmationClosure: () -> Void = { [weak self] in
-            log.debug("Disconnect requested by changing SecureCore", category: .connectionDisconnect, event: .trigger)
-            guard let self else { return }
-            let reconnectCountryCode = connectedCountryCode
-            let shouldUseSecureCore = targetServerType == .secureCore
-            let connectionProtocol = propertiesManager.lastConnectionRequest?.connectionProtocol
-            connectionCommandClient.send(.disconnect(.tray))
-            $secureCoreToggle.withLock { $0 = shouldUseSecureCore }
-            serverType = targetServerType
-            let spec = SecureCoreConnectionSpecResolver.fastestSpec(
-                secureCoreEnabled: shouldUseSecureCore,
-                connectedExitCountryCode: reconnectCountryCode,
-                isFreeTier: credentials.tier.isFreeTier
-            )
-            connectionCommandClient.send(.connect(spec, connectionProtocol, .tray))
-        }
-
+    private func presentDisconnectOnStateToggleWarning(turningOn: Bool) {
+        let description = SecureCoreConnectionSpecResolver.toggleAlertMessage(
+            turningOn: turningOn,
+            fallbackCountryName: fallbackCountryName(turningOn: turningOn)
+        )
         let viewModel = WarningPopupViewModel(
             title: Localizable.vpnConnectionActive,
-            description: Localizable.viewToggleWillCauseDisconnect,
-            onConfirm: confirmationClosure
+            description: description,
+            onConfirm: { [weak self] in
+                self?.applySecureCoreToggle(turningOn: turningOn)
+            }
         )
         disconnectWarning?(viewModel)
+    }
+
+    /// Toggles the Secure Core setting. If we are connected, also dispatches a reconnect
+    /// using ``SecureCoreConnectionSpecResolver.toggleReconnectSpec`` to create the connection
+    /// spec, which will pick a Secure Core server with an exit in the same region if possible
+    /// when the new setting is `On`, or a random standard server in the same region if possible when
+    /// the new setting is `Off`. If no server can be found, the fallback behavior is to pick fastest server.
+    private func applySecureCoreToggle(turningOn: Bool) {
+        let targetServerType: ServerType = turningOn ? .secureCore : .standard
+        let wasConnected = isConnected
+        let reconnectCountryCode = connectedCountryCode
+        let connectionProtocol = propertiesManager.lastConnectionRequest?.connectionProtocol
+
+        $secureCoreToggle.withLock { $0 = turningOn }
+        serverType = targetServerType
+
+        guard wasConnected else {
+            contentChanged?()
+            return
+        }
+
+        log.debug("Reconnection requested by changing Secure Core from StatusMenu", category: .connectionConnect, event: .trigger)
+        @Dependency(\.serverRepository) var serverRepository
+        let canReuseCurrentExitCountry: Bool = if let reconnectCountryCode {
+            serverRepository.hasServer(
+                secureCore: turningOn,
+                exitCountryCode: reconnectCountryCode
+            )
+        } else {
+            false
+        }
+        let resolvedExit = canReuseCurrentExitCountry ? reconnectCountryCode : nil
+        let isFreeTier = credentials.tier.isFreeTier
+        let spec = SecureCoreConnectionSpecResolver.toggleReconnectSpec(
+            secureCoreEnabled: turningOn,
+            exitCountryCode: resolvedExit,
+            isFreeTier: isFreeTier
+        )
+        let trigger = SecureCoreConnectionSpecResolver.reconnectTrigger(
+            connectedExitCountryCode: resolvedExit,
+            isFreeTier: isFreeTier
+        )
+        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
+        connectionCommandClient.send(.connect(spec, connectionProtocol, trigger))
     }
 
     // MARK: - Present unsecure connection
@@ -524,7 +602,7 @@ final class StatusMenuViewModel {
 
     private func getCurrentIp() -> String? {
         if isConnected {
-            vpnConnectionStatus.mergedServer(using: connectionState)?.endpoint.exitIp
+            connectionState.resolvedServer?.endpoint.exitIp
         } else {
             propertiesManager.userLocation?.ip
         }
@@ -535,7 +613,7 @@ final class StatusMenuViewModel {
             return Localizable.notConnected.styled(.danger)
         }
 
-        guard let server = vpnConnectionStatus.mergedServer(using: connectionState) else {
+        guard let server = connectionState.resolvedServer else {
             return Localizable.noDescriptionAvailable.styled()
         }
 
@@ -588,68 +666,13 @@ final class StatusMenuViewModel {
             return nil
         }
 
-        let description: String = switch vpnConnectionStatus {
+        let description: String = switch connectionState {
         case .connected:
             Localizable.disconnect
         case .disconnecting, .disconnected, .connecting, .resolving:
             Localizable.quickConnect
         }
         return description
-    }
-
-    private func makeConnectionSpec(for profile: Profile) -> ConnectionSpec {
-        let location: ConnectionSpec.Location
-        var features: Set<ConnectionSpec.Feature> = []
-
-        switch profile.serverOffering {
-        case let .fastest(countryCode):
-            if let countryCode {
-                location = profile.serverType == .secureCore
-                    ? .secureCore(.anyHop(to: countryCode, .fastest))
-                    : .country(code: countryCode, order: .fastest)
-            } else {
-                location = profile.serverType == .secureCore
-                    ? .secureCore(.any(.fastest))
-                    : .any(.fastest)
-            }
-
-        case let .random(countryCode):
-            if let countryCode {
-                location = profile.serverType == .secureCore
-                    ? .secureCore(.anyHop(to: countryCode, .random))
-                    : .country(code: countryCode, order: .random)
-            } else {
-                location = profile.serverType == .secureCore
-                    ? .secureCore(.any(.random))
-                    : .any(.random)
-            }
-
-        case let .custom(serverWrapper):
-            let server = serverWrapper.server
-            if server.feature.contains(.streaming) {
-                features.insert(.streaming)
-            }
-            if server.feature.contains(.p2p) {
-                features.insert(.p2p)
-            }
-            if server.feature.contains(.tor) {
-                features.insert(.tor)
-            }
-
-            if server.feature.contains(.secureCore) {
-                location = .secureCore(.hop(to: server.exitCountryCode, via: server.entryCountryCode))
-            } else {
-                location = .exact(
-                    .paid,
-                    logicalID: server.id,
-                    number: server.serverNameComponents.sequence,
-                    subregion: server.city,
-                    regionCode: server.countryCode
-                )
-            }
-        }
-
-        return .init(location: location, features: features, profileId: profile.id)
     }
 }
 

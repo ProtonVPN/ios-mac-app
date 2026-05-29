@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import Domain
 import Ergonomics
 import Localization
@@ -31,7 +32,7 @@ public struct ConnectionStatusFeature {
         @Shared(.protectionState) package var protectionState: ProtectionState
         @SharedReader(.userCountry) package var userCountry: String?
         @SharedReader(.userIP) package var userIP: String?
-        @SharedReader(.vpnConnectionStatus) package var vpnConnectionStatus: VPNConnectionStatus
+        @SharedReader(.connectionState) package var connectionState: ConnectionState
 
         package var connectionStatusBanner: ConnectionStatusBannerFeature.State = .init()
 
@@ -45,7 +46,7 @@ public struct ConnectionStatusFeature {
         case maskLocationTick
 
         case watchConnectionStatus
-        case newConnectionStatus(VPNConnectionStatus)
+        case newConnectionState(ConnectionState)
         case newProtectionState(ProtectionState)
         case newNetShieldStats(NetShieldModel)
 
@@ -103,11 +104,11 @@ public struct ConnectionStatusFeature {
                         .cancel(id: IDs.watchConnectionStatus),
                         .publisher {
                             state
-                                .$vpnConnectionStatus
+                                .$connectionState
                                 .publisher
                                 .removeDuplicates()
                                 .receive(on: UIScheduler.shared)
-                                .map(Action.newConnectionStatus)
+                                .map(Action.newConnectionState)
                         }.cancellable(id: IDs.watchConnectionStatus)
                     ),
                 ]
@@ -122,13 +123,13 @@ public struct ConnectionStatusFeature {
                 )
                 return .merge(effects)
 
-            case let .newConnectionStatus(status):
+            case let .newConnectionState(connectionState):
                 let code = state.userCountry
                 let country = LocalizationUtility.default.countryName(forCode: code ?? "") ?? ""
                 let userIP = state.userIP ?? ""
                 let netShieldModel = state.protectionState.netShieldModel
                 // Determine protection state, defaulting to empty stats if necessary
-                let protectionState = status.protectionState(country: country, ip: userIP, netShieldModel: netShieldModel)
+                let protectionState = connectionState.protectionState(country: country, ip: userIP, netShieldModel: netShieldModel)
                 return .send(.newProtectionState(protectionState))
 
             case let .newProtectionState(protectionState):

@@ -168,9 +168,6 @@ public struct CountriesListFeature: Sendable {
                         linkOpener.open(url)
                     }
                 }
-            case .destination(.presented(.allCountriesUpsell(.continueTapped))):
-                state.destination = nil
-                return .none
             case .destination(.dismiss):
                 state.destination = nil
                 return .none

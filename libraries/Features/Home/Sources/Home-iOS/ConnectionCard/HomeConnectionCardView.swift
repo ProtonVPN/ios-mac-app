@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
 import Foundation
@@ -46,7 +47,7 @@ struct HomeConnectionCardView: View {
 
     private var accessibilityText: String {
         let countryName = store.presentedSpec.location.text(locale: locale)
-        return model.accessibilityText(for: store.vpnConnectionStatus, countryName: countryName)
+        return model.accessibilityText(for: store.connectionState, countryName: countryName)
     }
 
     private var header: some View {
@@ -63,10 +64,10 @@ struct HomeConnectionCardView: View {
 
     @ViewBuilder
     private var trailingIcon: some View {
-        if store.vpnConnectionStatus.connectionStatusAvailable {
+        if store.connectionState.connectionStatusAvailable {
             IconProvider.chevronRight
                 .foregroundColor(Color(.icon, .weak))
-        } else if store.vpnConnectionStatus == .disconnected, (store.userTier ?? .freeTier).isFreeTier {
+        } else if store.connectionState == .disconnected, (store.userTier ?? .freeTier).isFreeTier {
             IconProvider.infoCircle
                 .foregroundColor(Color(.icon, .weak))
         }
@@ -74,11 +75,11 @@ struct HomeConnectionCardView: View {
 
     @ViewBuilder
     private var connectionButton: some View {
-        let showingConnectButton = store.vpnConnectionStatus.showingConnectButton
-        let buttonContent = model.buttonText(for: store.vpnConnectionStatus)
+        let showingConnectButton = store.connectionState.showingConnectButton
+        let buttonContent = model.buttonText(for: store.connectionState)
         Button {
             withAnimation(.linear) {
-                switch store.vpnConnectionStatus {
+                switch store.connectionState {
                 case .disconnected, .disconnecting:
                     store.send(.delegate(.connect(store.presentedSpec)))
                 case .connected:
@@ -178,7 +179,7 @@ struct HomeConnectionCardView: View {
     }
 }
 
-private extension VPNConnectionStatus {
+private extension ConnectionState {
     var connectionStatusAvailable: Bool {
         guard case .connected = self else { return false }
         return true
@@ -200,9 +201,9 @@ private extension VPNConnectionStatus {
             @available(iOS 18, *)
             #Preview("Change Server Available", traits: .sizeThatFitsLayout, .dependencies { $0.serverChangeAuthorizer = .availableValue }) {
                 @Shared(.userTier) var userTier
-                @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+                @Shared(.connectionState) var connectionState
                 $userTier.withLock { $0 = 0 }
-                $vpnConnectionStatus.withLock { $0 = .connected(.secureCoreCountryHop, nil) }
+                $connectionState.withLock { $0 = .previewConnected(for: .secureCoreCountryHop) }
                 return HomeConnectionCardView(store: .init(initialState: .init(), reducer: {
                     HomeConnectionCardFeature()
                 }))
@@ -213,9 +214,9 @@ private extension VPNConnectionStatus {
             @available(iOS 18, *)
             #Preview("Change Server Unavailable", traits: .sizeThatFitsLayout, .dependencies { $0.serverChangeAuthorizer = .previewValue }) {
                 @Shared(.userTier) var userTier
-                @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+                @Shared(.connectionState) var connectionState
                 $userTier.withLock { $0 = 0 }
-                $vpnConnectionStatus.withLock { $0 = .connected(.secureCoreCountryHop, nil) }
+                $connectionState.withLock { $0 = .previewConnected(for: .secureCoreCountryHop) }
                 return HomeConnectionCardView(store: .init(initialState: .init(), reducer: {
                     HomeConnectionCardFeature()
                 }))
@@ -272,13 +273,13 @@ private extension VPNConnectionStatus {
 
         extension HomeConnectionCardFeature.State {
             static func constant(
-                status: VPNConnectionStatus,
+                connectionState: ConnectionState,
                 defaultConnection _: ConnectionSpec,
                 userTier: Int
             ) -> Self {
                 var state = HomeConnectionCardFeature.State()
                 state.$userTier = .constant(userTier)
-                state.$vpnConnectionStatus = .constant(status)
+                state.$connectionState = .constant(connectionState)
                 return state
             }
         }
@@ -286,7 +287,7 @@ private extension VPNConnectionStatus {
         extension StoreOf<HomeConnectionCardFeature> {
             static func disconnectedStore(defaultConnection: ConnectionSpec, userTier: Int) -> Self {
                 .init(initialState: .constant(
-                    status: .disconnected,
+                    connectionState: .disconnected,
                     defaultConnection: defaultConnection,
                     userTier: userTier
                 )) {
@@ -296,8 +297,8 @@ private extension VPNConnectionStatus {
 
             static func connectedStore(intentSpec: ConnectionSpec, userTier: Int) -> Self {
                 .init(initialState: .constant(
-                    status: .connected(intentSpec, nil),
-                    defaultConnection: .defaultFastest,
+                    connectionState: .previewConnected(for: intentSpec),
+                    defaultConnection: intentSpec,
                     userTier: userTier
                 )) {
                     HomeConnectionCardFeature()

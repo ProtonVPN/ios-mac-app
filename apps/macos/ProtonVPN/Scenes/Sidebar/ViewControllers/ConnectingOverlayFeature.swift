@@ -17,9 +17,10 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
-import LegacyCommon
+import Sharing
 import VPNAppCore
 import VPNShared
 
@@ -34,8 +35,8 @@ struct ConnectingOverlayFeature {
 
     @ObservableState
     struct State: Equatable {
-        var vpnConnectionStatus: VPNConnectionStatus = .disconnected
-        var frozenStatus: VPNConnectionStatus?
+        var connectionState: ConnectionState = .disconnected
+        var frozenState: ConnectionState?
         var timedOut = false
         var intentionallyDisconnected = false
         var killSwitchEnabled = false
@@ -47,8 +48,8 @@ struct ConnectingOverlayFeature {
             case warning
         }
 
-        var displayStatus: VPNConnectionStatus {
-            frozenStatus ?? vpnConnectionStatus
+        var displayState: ConnectionState {
+            frozenState ?? connectionState
         }
 
         var isIkeWithKsEnabled: Bool {
@@ -56,7 +57,7 @@ struct ConnectingOverlayFeature {
         }
 
         var isReconnecting: Bool {
-            switch displayStatus {
+            switch displayState {
             case let .resolving(_, actual):
                 actual != nil
             case .connecting:
@@ -67,14 +68,14 @@ struct ConnectingOverlayFeature {
         }
 
         var hidePhase: Bool {
-            timedOut || displayStatus.is(\.disconnected)
+            timedOut || displayState.is(\.disconnected)
         }
 
         var graphicKind: GraphicKind {
             if timedOut {
                 return .warning
             }
-            if displayStatus.is(\.connected) {
+            if displayState.is(\.connected) {
                 return .connected
             }
             return .loading
@@ -85,12 +86,13 @@ struct ConnectingOverlayFeature {
         case buttonTapped(ButtonKind)
         case delegate(Delegate)
 
+        @CasePathable
         enum Delegate: Equatable {
             case dismissRequested
         }
     }
 
-    @Dependency(\.propertiesManager) private var propertiesManager
+    @Shared(.killSwitch) private var killSwitch: Bool
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
     var body: some ReducerOf<Self> {
@@ -99,7 +101,7 @@ struct ConnectingOverlayFeature {
             case let .buttonTapped(button):
                 switch button {
                 case .done, .cancel:
-                    if !state.displayStatus.is(\.connected) {
+                    if !state.displayState.is(\.connected) {
                         AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
                         connectionCommandClient.send(.disconnect(.auto))
                     }
@@ -112,7 +114,7 @@ struct ConnectingOverlayFeature {
 
                 case .retryWithoutKillSwitch:
                     state.timedOut = false
-                    propertiesManager.killSwitch = false
+                    $killSwitch.withLock { $0 = false }
                     connectionCommandClient.send(.retry)
                     return .none
                 }
@@ -125,14 +127,55 @@ struct ConnectingOverlayFeature {
 }
 
 extension ConnectingOverlayFeature.State {
+    enum HeadlinePhase: Equatable {
+        case connected
+        case unprotected
+        case initializing
+    }
+
+    enum BodyPhase: Equatable {
+        case timedOut(isIkeWithKsEnabled: Bool)
+        case connected(serverName: ServerName)
+        case connecting(serverName: ServerName)
+        case reconnecting
+        case preparing
+    }
+
+    struct ServerName: Equatable {
+        let country: String
+        let name: String
+    }
+
+    var headlinePhase: HeadlinePhase {
+        if displayState.is(\.connected) { return .connected }
+        return isReconnecting ? .unprotected : .initializing
+    }
+
+    var bodyPhase: BodyPhase {
+        if timedOut {
+            return .timedOut(isIkeWithKsEnabled: isIkeWithKsEnabled)
+        }
+        let serverName = displayState.resolvedServer.map {
+            ServerName(country: $0.logical.country, name: $0.logical.name)
+        }
+        switch displayState {
+        case .connected:
+            return serverName.map { .connected(serverName: $0) } ?? .preparing
+        case .disconnected:
+            return isReconnecting ? .reconnecting : .preparing
+        case .resolving, .connecting, .disconnecting:
+            if isReconnecting { return .reconnecting }
+            return serverName.map { .connecting(serverName: $0) } ?? .preparing
+        }
+    }
+
     mutating func beginConnecting(
-        connectionSpec: ConnectionSpec,
         selectedProtocol: ConnectionProtocol,
         killSwitchEnabled: Bool,
         intentionallyDisconnected: Bool
     ) {
-        vpnConnectionStatus = .connecting(connectionSpec, nil)
-        frozenStatus = nil
+        connectionState = .resolving(nil, nil)
+        frozenState = nil
         timedOut = false
         self.selectedProtocol = selectedProtocol
         self.killSwitchEnabled = killSwitchEnabled
@@ -140,19 +183,19 @@ extension ConnectingOverlayFeature.State {
     }
 
     mutating func sync(
-        connectionStatus: VPNConnectionStatus,
+        connectionState: ConnectionState,
         selectedProtocol: ConnectionProtocol,
         killSwitchEnabled: Bool,
         intentionallyDisconnected: Bool
     ) {
-        vpnConnectionStatus = connectionStatus
+        self.connectionState = connectionState
         self.selectedProtocol = selectedProtocol
         self.killSwitchEnabled = killSwitchEnabled
         self.intentionallyDisconnected = intentionallyDisconnected
-        if connectionStatus.is(\.connected) {
-            frozenStatus = connectionStatus
+        if connectionState.is(\.connected) {
+            frozenState = connectionState
         } else {
-            frozenStatus = nil
+            frozenState = nil
         }
     }
 }

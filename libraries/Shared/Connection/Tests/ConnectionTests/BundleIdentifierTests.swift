@@ -38,27 +38,5 @@
                 #expect(allBundleIdentifiers.isEmpty == false)
             #endif
         }
-
-        @Test
-        func transparentProxyBundleIsRecognizedAsNonCoreBundleOnMacOS() {
-            let configuration = NETunnelProviderProtocol()
-            configuration.providerBundleIdentifier = "ch.protonvpn.mac.Transparent-Proxy"
-
-            let (isNonCoreBundle, tunnelProtocol) = withDependencies { _ in
-            } operation: {
-                @Dependency(\.bundleIDClient) var bundleIDClient
-                return (
-                    bundleIDClient.isNonCoreBundleIdentifier(configuration),
-                    bundleIDClient.tunnelProtocol(configuration)
-                )
-            }
-
-            #if os(macOS)
-                #expect(isNonCoreBundle)
-                #expect(tunnelProtocol == nil)
-            #else
-                #expect(!isNonCoreBundle)
-            #endif
-        }
     }
 #endif

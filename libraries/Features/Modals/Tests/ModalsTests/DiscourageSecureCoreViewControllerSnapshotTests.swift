@@ -22,6 +22,7 @@
     @testable import Modals_macOS
     import ModalsShared
     import SnapshotTesting
+    import Strings
     import SwiftUI
     import System
     import Testing
@@ -30,13 +31,27 @@
     @MainActor
     @Suite(.serialized, .snapshots(record: .missing))
     struct DiscourageSecureCoreViewControllerSnapshotTests {
-        private let snapshotSize = CGSize(width: 520, height: 579)
+        private let snapshotSize = CGSize(width: 520, height: 630)
 
         @Test("default dark appearance")
         func defaultAppearance() {
             let store = StoreOf<DiscourageSecureCoreFeature>(initialState: .init(), reducer: {
                 EmptyReducer()
             })
+            let view = DiscourageSecureCoreView(store: store)
+                .background(Color(.background))
+                .environment(\.colorScheme, .dark)
+
+            let nsView = NSHostingView(rootView: view)
+            assertSnapshot(of: nsView, as: .image(size: snapshotSize))
+        }
+
+        @Test("default dark appearance with SC available (no reconnect notice)")
+        func defaultAppearanceWithSameCountryReconnectNotice() {
+            let store = StoreOf<DiscourageSecureCoreFeature>(
+                initialState: .init(reconnectNotice: Localizable.viewToggleOnReconnectSameCountry),
+                reducer: { EmptyReducer() }
+            )
             let view = DiscourageSecureCoreView(store: store)
                 .background(Color(.background))
                 .environment(\.colorScheme, .dark)

@@ -36,7 +36,7 @@ actor TelemetryConnectionStatusReporter {
 
     var networkType: ConnectionDimensions.NetworkType = .other
     var previousConnectionStatus: ConnectionStatus?
-    var previousConnectionState: ConnectionState = .resolving
+    var previousConnectionState: ConnectionState = .resolving(nil, nil)
     var previousConnectionIntent: ServerConnectionIntent?
 
     var userInitiatedVPNChange: UserInitiatedVPNChange?

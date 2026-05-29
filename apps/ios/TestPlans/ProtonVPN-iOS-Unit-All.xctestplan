@@ -180,6 +180,13 @@
     },
     {
       "target": {
+        "containerPath": "container:../../libraries/Shared/VPNNetworking",
+        "identifier": "VPNNetworkingTests",
+        "name": "VPNNetworkingTests"
+      }
+    },
+    {
+      "target": {
         "containerPath": "container:../../libraries/Core/NEHelper",
         "identifier": "VPNSharedTests",
         "name": "VPNSharedTests"

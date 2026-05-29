@@ -31,27 +31,24 @@ import VPNAppCore
 
 class MapHeaderViewModel {
     @Shared(.connectionState) private var connectionState: ConnectionState
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
     private var cancellables = Set<AnyCancellable>()
 
     var contentChanged: (() -> Void)?
 
     init() {
-        $vpnConnectionStatus.publisher
-            .sink { [weak self] _ in
-                self?.vpnConnectionChanged()
-            }
-            .store(in: &cancellables)
-
+        // When using @Shared publisher in non-TCA env, publisher will emit a new value on `willSet`
+        // if we re-read the value in the sink we'll get a stale value.
+        // in contentChanged here we don't need/use connectionState, so we don't need to pass it
         $connectionState.publisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.vpnConnectionChanged()
+                self?.contentChanged?()
             }
             .store(in: &cancellables)
     }
 
     var isConnected: Bool {
-        vpnConnectionStatus.isConnected(using: connectionState)
+        connectionState.isConnected
     }
 
     var description: NSAttributedString {
@@ -61,17 +58,12 @@ class MapHeaderViewModel {
     }
 
     var isSecureCore: Bool {
-        guard let server = vpnConnectionStatus.mergedServer(using: connectionState) else {
+        guard let server = connectionState.resolvedServer else {
             return false
         }
         if case .secureCore = server.logical.kind {
             return true
         }
         return false
-    }
-
-    @objc
-    private func vpnConnectionChanged() {
-        contentChanged?()
     }
 }

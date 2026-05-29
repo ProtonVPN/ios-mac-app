@@ -22,6 +22,7 @@ let package = Package(
 
         .package(path: "../../Core/NEHelper"),
 
+        .package(path: "../../Shared/Connection"),
         .package(path: "../../Shared/Localization"),
         .package(path: "../../Shared/CommonNetworking"),
 
@@ -40,6 +41,7 @@ let package = Package(
         .target(
             name: "SettingsShared",
             dependencies: [
+                "Connection",
                 "Theme",
                 "Strings",
                 "Domain",
@@ -71,6 +73,7 @@ let package = Package(
         .testTarget(
             name: "SettingsTests",
             dependencies: [
+                "Connection",
                 "Settings",
                 "SettingsShared",
                 .target(name: "Settings-iOS", condition: .when(platforms: [.iOS])),

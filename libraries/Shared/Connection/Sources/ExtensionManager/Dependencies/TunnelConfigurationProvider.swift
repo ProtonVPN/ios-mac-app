@@ -65,10 +65,6 @@ actor VPNManagerRepositoryImplementation {
                 }
 
                 guard let tunnelProtocol = bundleIDClient.tunnelProtocol(configuration) else {
-                    if bundleIDClient.isNonCoreBundleIdentifier(configuration) {
-                        log.debug("Ignoring NEVPNConfigurationChange for non-core bundle identifier", category: .connection)
-                        continue
-                    }
                     log.warning("Unrecognised bundle identifier in configuration", category: .connection)
                     continue
                 }
@@ -106,10 +102,6 @@ actor VPNManagerRepositoryImplementation {
                     return
                 }
                 guard let proto = bundleIDClient.tunnelProtocol(config) else {
-                    if bundleIDClient.isNonCoreBundleIdentifier(config) {
-                        log.debug("Ignoring loaded manager for non-core bundle identifier", category: .connection)
-                        return
-                    }
                     log.warning("Loaded manager has unknown tunnel protocol", category: .connection, metadata: ["config": "\(config)"])
                     return
                 }

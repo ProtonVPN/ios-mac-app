@@ -274,7 +274,7 @@ struct AppSessionManagerImplementationTests {
     func logoutShowsNoAlertWhenConnecting() async throws {
         try await withTestContext { context in
             try await login(with: testAuthCredentials(), context: context)
-            setConnectionStatus(vpnStatus: .connecting(.defaultFastest, nil), connectionState: .resolving)
+            setConnectionStatus(vpnStatus: .connecting(.defaultFastest, nil), connectionState: .resolving(nil, nil))
 
             let notificationTask = makeNotificationTask(name: SessionChanged.name, object: context.manager)
             context.manager.logOut()

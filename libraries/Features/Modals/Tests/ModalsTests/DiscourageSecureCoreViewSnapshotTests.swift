@@ -21,6 +21,7 @@
     @testable import Modals_iOS
     @testable import ModalsShared
     import SnapshotTesting
+    import Strings
     import SwiftUI
     import System
     import Testing
@@ -33,6 +34,23 @@
         func discourageSecureCoreView() {
             let view = DiscourageSecureCoreView(
                 store: Store(initialState: .init()) {
+                    EmptyReducer()
+                }
+            )
+            .background(Color(.background, .weak))
+            .environment(\.colorScheme, .dark)
+
+            assertSnapshot(of: view, as: .image(layout: .device(config: .iPhone13Mini)))
+        }
+
+        @Test("DiscourageSecureCoreView with reconnect notice \"SC not available\"")
+        func discourageSecureCoreViewWithFallbackCountryNotice() {
+            let view = DiscourageSecureCoreView(
+                store: Store(
+                    initialState: .init(
+                        reconnectNotice: Localizable.viewToggleOnReconnectFastestFallback("Japan")
+                    )
+                ) {
                     EmptyReducer()
                 }
             )

@@ -103,6 +103,17 @@ public extension VpnProtocol {
     }
 }
 
+// MARK: - Tunnel gateway addresses
+
+public extension VpnProtocol {
+    /// The fixed by the kernel extension LAN-side gateway address. Used as the
+    /// NAT-PMP destination when no DNS-discovered gateway is available
+    static let ikeGatewayAddress = "10.1.0.1"
+    /// The default LAN-side gateway address the tunnel exposes to the host. Used as the
+    /// NAT-PMP destination when no DNS-discovered gateway is available
+    static let wireGuardGatewayAddress = "10.2.0.1"
+}
+
 // MARK: - API description
 
 public extension VpnProtocol {

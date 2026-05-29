@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
 import Foundation
@@ -56,13 +57,13 @@ public enum ProtectionState: Equatable {
     }
 }
 
-extension VPNConnectionStatus {
+extension ConnectionState {
     func protectionState(country: String, ip: String, netShieldModel: NetShieldModel? = nil) -> ProtectionState {
         switch self {
         case .disconnected:
             return .unprotected
-        case let .connected(spec, _):
-            if case .secureCore = spec.location {
+        case let .connected(intent, _, _, _):
+            if case .secureCore = intent.spec.location {
                 return .protectedSecureCore(netShield: netShieldModel?.copy(enabled: true))
             }
             return .protected(netShield: netShieldModel?.copy(enabled: true))

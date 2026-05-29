@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import Domain
 import Foundation
 import OrderedCollections
@@ -30,7 +31,7 @@ public struct RecentsFeature {
 
     @ObservableState
     public struct State: Equatable {
-        @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
+        @SharedReader(.connectionState) public var connectionState: ConnectionState
 
         @SharedReader(.defaultConnectionPreference) private var defaultConnectionPreference
         @Shared(.recents) fileprivate var recents: OrderedSet<RecentConnection>
@@ -41,7 +42,7 @@ public struct RecentsFeature {
             return presenter.recentConnectionList(
                 defaultConnectionPreference: defaultConnectionPreference,
                 recents: recents,
-                currentConnection: vpnConnectionStatus.spec
+                currentConnection: connectionState.resolvedIntent?.spec
             )
         }
 
@@ -59,7 +60,7 @@ public struct RecentsFeature {
         case unpin(RecentConnection)
         case remove(RecentConnection)
         case watchConnectionStatus
-        case newConnectionStatus(VPNConnectionStatus)
+        case newConnectionState(ConnectionState)
         case upsellTapped(BannerType)
 
         case delegate(Delegate)
@@ -86,24 +87,20 @@ public struct RecentsFeature {
             case .watchConnectionStatus:
                 return .publisher {
                     state
-                        .$vpnConnectionStatus
+                        .$connectionState
                         .publisher
                         .removeDuplicates()
                         .receive(on: UIScheduler.shared)
-                        .map(Action.newConnectionStatus)
+                        .map(Action.newConnectionState)
                 }
                 .cancellable(id: CancelId.watchConnectionStatus)
 
             case let .upsellTapped(type):
                 return .send(.delegate(.upsellTapped(type)))
 
-            case let .newConnectionStatus(connectionStatus):
-                guard case .connected = connectionStatus else { return .none }
-                guard let spec = connectionStatus.spec else {
-                    log.info("Unable to generate spec for connection status: \(connectionStatus)")
-                    return .none
-                }
-                return .send(.connectionEstablished(spec))
+            case let .newConnectionState(connectionState):
+                guard case let .connected(intent, _, _, _) = connectionState else { return .none }
+                return .send(.connectionEstablished(intent.spec))
 
             case let .connectionEstablished(spec):
                 withAnimation {

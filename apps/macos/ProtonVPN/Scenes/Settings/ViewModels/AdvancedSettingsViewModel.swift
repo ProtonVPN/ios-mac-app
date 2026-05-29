@@ -45,7 +45,6 @@ final class AdvancedSettingsViewModel {
     @Shared(.telemetryUsageData) var telemetryUsageData
     @Shared(.telemetryCrashReports) var telemetryCrashReports
     @Shared(.connectionState) private var connectionState: ConnectionState
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
 
     private var featureFlags: FeatureFlags {
         propertiesManager.featureFlags
@@ -178,7 +177,7 @@ final class AdvancedSettingsViewModel {
             return
         }
 
-        switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+        switch VpnFeatureChangeState(connectionState: connectionState) {
         case .withConnectionUpdate:
             // in-place change when connected and using local agent
             natTypePropertyProvider.setNATType(natType)
@@ -210,7 +209,7 @@ final class AdvancedSettingsViewModel {
             return
         }
 
-        switch VpnFeatureChangeState(connectionState: connectionState, vpnConnectionStatus: vpnConnectionStatus) {
+        switch VpnFeatureChangeState(connectionState: connectionState) {
         case .withConnectionUpdate:
             // in-place change when connected and using local agent
             safeModePropertyProvider.setSafeMode(safeMode)

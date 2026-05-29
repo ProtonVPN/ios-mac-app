@@ -198,11 +198,7 @@ private struct QuickSettingsSheetsModifier: ViewModifier {
                 UpsellViewController(
                     modalType: store.modalType,
                     upgradeAction: { store.send(.upgradeTapped) },
-                    continueAction: { store.send(.continueTapped) },
-                    optionalAction: {
-                        guard case .cantSkip = store.modalType else { return }
-                        store.send(.optionalActionTapped)
-                    }
+                    skipAction: { store.send(.skipActionTapped) }
                 )
                 .frame(width: Dimensions.sheetWidth, height: Dimensions.sheetHeight)
                 .background(Color(.background))
@@ -214,7 +210,6 @@ private struct QuickSettingsSheetsModifier: ViewModifier {
                 )
             ) { store in
                 DiscourageSecureCoreView(store: store)
-                    .frame(minWidth: Dimensions.sheetWidth, minHeight: Dimensions.sheetHeight)
             }
     }
 

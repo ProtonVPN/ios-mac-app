@@ -39,7 +39,6 @@ public struct IPViewFeature {
         public var localIpHidden = true
 
         @SharedReader(.userIP) public var userIP: String?
-        @SharedReader(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.connectionState) private var connectionState: ConnectionState
 
         public init() {}

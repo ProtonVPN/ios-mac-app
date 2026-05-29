@@ -43,7 +43,7 @@ public struct PaymentTransactionFinishedEvent: Sendable {
     }
 
     public static let webIntroFinishEvent: PaymentTransactionFinishedEvent = .init(
-        newPlanName: "vpn2024", // TODO: update it to be dynamic https://protonag.atlassian.net/browse/VPNAPPL-3103
+        newPlanName: "vpn2024", // TODO: update it to be dynamic VPNAPPL-3103
         cycle: 24,
         offerReference: "VPNINTROPRICE2024",
         flowType: .external

@@ -60,17 +60,16 @@ class CountryAnnotationViewModel: CustomStyleContext {
     var viewStateChange: (() -> Void)?
 
     @Shared(.connectionState) fileprivate var connectionState: ConnectionState
-    @Shared(.vpnConnectionStatus) fileprivate var vpnConnectionStatus: VPNConnectionStatus
 
     let available: Bool
     let countryCode: String
     let coordinate: CLLocationCoordinate2D
 
     fileprivate var connectedServer: Server? {
-        guard vpnConnectionStatus.isConnected(using: connectionState) else {
+        guard connectionState.isConnected else {
             return nil
         }
-        return vpnConnectionStatus.mergedServer(using: connectionState)
+        return connectionState.resolvedServer
     }
 
     var isConnected: Bool {
@@ -136,10 +135,10 @@ class CountryAnnotationViewModel: CustomStyleContext {
         self.state = state
     }
 
-    func appStateChanged(to status: VPNConnectionStatus) {
-        switch status {
+    func appStateChanged(to state: ConnectionState) {
+        switch state {
         case .resolving, .connecting, .disconnecting:
-            state = .idle
+            self.state = .idle
         case .connected, .disconnected:
             break
         }

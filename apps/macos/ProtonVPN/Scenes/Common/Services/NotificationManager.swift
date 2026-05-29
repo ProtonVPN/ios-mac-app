@@ -24,6 +24,7 @@ import AppKit
 import Combine
 import CommonNetworking
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
 import Foundation
@@ -36,7 +37,7 @@ import VPNShared
 final class NotificationManager: NSObject, NotificationManagerProtocol {
     private let delayBeforeDismissing: Duration = .seconds(5)
     private let appSessionManager: AppSessionManager
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
+    @Shared(.connectionState) private var connectionState: ConnectionState
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -52,15 +53,16 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
         super.init()
 
         UNUserNotificationCenter.current().delegate = self
-        $vpnConnectionStatus
+        $connectionState
             .publisher
-            .compactMap { status -> VPNConnectionActual? in
-                guard case let .connected(_, actual?) = status else { return nil }
-                return actual
+            .compactMap { state -> Server? in
+                guard case let .connected(_, server, _, _) = state else { return nil }
+                return server
             }
+            .removeDuplicates()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] actual in
-                self?.vpnConnectionChanged(actual)
+            .sink { [weak self] server in
+                self?.vpnConnectionChanged(server)
             }
             .store(in: &cancellables)
         setupActions()
@@ -88,19 +90,19 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
         UNUserNotificationCenter.current().setNotificationCategories([portForwardingCategory])
     }
 
-    private func vpnConnectionChanged(_ actual: VPNConnectionActual) {
+    private func vpnConnectionChanged(_ server: Server) {
         if shouldShowNotification {
-            postTransient(connectedNotification(for: actual))
+            postTransient(connectedNotification(for: server))
         }
     }
 
-    private func connectedNotification(for connection: VPNConnectionActual) -> UNNotificationRequest {
+    private func connectedNotification(for server: Server) -> UNNotificationRequest {
         @Dependency(\.uuid) var uuidgen
 
         let content = UNMutableNotificationContent()
         content.title = Localizable.protonVpnConnected
-        content.subtitle = connectSubtitle(forServer: connection.server)
-        content.body = connectInformativeText(for: connection)
+        content.subtitle = connectSubtitle(forServer: server)
+        content.body = Localizable.ipValue(server.endpoint.exitIp)
         let identifier = "connected-\(uuidgen)"
         return UNNotificationRequest(identifier: identifier, content: content, trigger: nil)
     }
@@ -111,10 +113,6 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
         } else {
             server.logical.exitCountry + " > " + server.logical.name
         }
-    }
-
-    private func connectInformativeText(for connection: VPNConnectionActual) -> String {
-        Localizable.ipValue(connection.server.endpoint.exitIp)
     }
 
     private func post(_ request: UNNotificationRequest) {

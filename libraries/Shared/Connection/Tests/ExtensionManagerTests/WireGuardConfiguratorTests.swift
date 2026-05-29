@@ -77,6 +77,41 @@
             #endif
         }
 
+        #if os(macOS)
+            /// On macOS, if pushing the WireGuard config to the extension via XPC fails (no
+            /// remote object, broken connection, etc.), the configurator must surface a typed
+            /// error instead of silently returning a `NETunnelProviderProtocol` with no
+            /// password reference (which would later fail to start with no actionable error).
+            @MainActor
+            func testMacOSXPCConfigWriteFailureSurfacesTypedError() async throws {
+                let configurator = ManagerConfigurator.wireGuardConfigurator
+                let session = VPNSessionMock(status: .disconnected, connectedDate: nil)
+                var manager: TunnelProviderManager = MockTunnelProviderManager(session: session, isOnDemandEnabled: false, isEnabled: false)
+                let intent = ServerConnectionIntent.mock(protocolConfiguration: .wireGuard(.init(backend: .go, transport: .tls, ports: [0], features: .mock)))
+
+                do {
+                    try await withDependencies {
+                        $0.date = .constant(.now)
+                        $0.bundleIDClient = .mock(bundleID: "big.bundle.id")
+                        $0.tunnelKeychain = .init(
+                            storeWireguardConfig: { _ in Data() },
+                            loadWireguardConfig: { Data() },
+                            clear: {}
+                        )
+                        $0.vpnAuthenticationStorage.getKeys = { .mock() }
+                        $0.wireguardExtensionConfigClient.pushConfig = { _ in false }
+                    } operation: {
+                        try await configurator.configure(&manager, for: .connection(intent))
+                    }
+                    XCTFail("Expected WireguardConfiguratorError.configurationXPCWriteFailed")
+                } catch WireguardConfiguratorError.configurationXPCWriteFailed {
+                    // Expected.
+                } catch {
+                    XCTFail("Expected configurationXPCWriteFailed, got \(error)")
+                }
+            }
+        #endif
+
         @MainActor
         func testIkeConfigurationEncodesLegacyFeatureSuffixesAndEndpointID() async throws {
             let configurator = ManagerConfigurator.wireGuardConfigurator
@@ -123,7 +158,7 @@
                     try await configurator.configure(&manager, for: .connection(intent))
                 }
             } errorHandler: { error in
-                guard case .ikeCredentialsUnavailable = error as? WireguardConfiguratorError else {
+                guard case .ikeCredentialsUnavailable = error as? IkeConfiguratorError else {
                     XCTFail("Expected ikeCredentialsUnavailable error, got \(error)")
                     return
                 }

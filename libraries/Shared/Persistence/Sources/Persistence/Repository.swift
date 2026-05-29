@@ -100,6 +100,17 @@ public extension ServerRepository {
     func deleteMetadata(for key: DatabaseMetadata.Key) {
         setMetadata(key, nil)
     }
+
+    /// Whether at least one server matching the requested mode exits via `exitCountryCode`.
+    /// Used by SC toggle reconnect flows to decide whether to use specific country (standard country, exit country in SC)
+    /// (see ``SecureCoreConnectionSpecResolver.toggleReconnectLocation``).
+    func hasServer(secureCore: Bool, exitCountryCode: String) -> Bool {
+        let filters: [VPNServerFilter] = [
+            .features(secureCore ? .secureCore : .standard),
+            .exitCountryCode(exitCountryCode),
+        ]
+        return getFirstServer(filteredBy: filters, orderedBy: .fastest) != nil
+    }
 }
 
 public extension ServerRepository {

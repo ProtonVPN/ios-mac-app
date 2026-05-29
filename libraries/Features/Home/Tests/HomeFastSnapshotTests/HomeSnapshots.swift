@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import Domain
 import DomainTestSupport
 import Ergonomics
@@ -33,29 +34,34 @@ import VPNAppCore
 
 @Suite("Home")
 struct HomeScreenTests {
+    private static let polandServer: Server = .mock(
+        country: "PL",
+        coordinates: .init(latitude: 52.229686, longitude: 21.012247)
+    )
+    private static let polandIntent = ServerConnectionIntent(
+        spec: .specificCountryServer,
+        server: polandServer,
+        protocolConfiguration: .ike,
+        features: .mock
+    )
+
     static let homeTestData = [
         (
             ProtectionState.unprotected,
-            VPNConnectionStatus.disconnected
+            ConnectionState.disconnected
         ),
         (
             ProtectionState.protecting(country: "Poland", ip: "1.2.3.4"),
-            VPNConnectionStatus.connecting(.specificCountryServer, .mock(
-                country: "PL",
-                coordinates: .init(latitude: 52.229686, longitude: 21.012247)
-            ))
+            ConnectionState.connecting(.resolved(polandIntent, polandServer))
         ),
         (
             ProtectionState.protected(netShield: .init(trackersCount: 432, adsCount: 12345, dataSaved: 123_456_789, enabled: true)),
-            VPNConnectionStatus.connected(.specificCountryServer, .mock(
-                country: "PL",
-                coordinates: .init(latitude: 52.229686, longitude: 21.012247)
-            ))
+            ConnectionState.connected(polandIntent, polandServer, Date(), nil)
         ),
     ]
 
     @Shared(.protectionState) var protectionState
-    @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+    @Shared(.connectionState) var connectionState
     @Shared(.userTier) var userTier
     @Shared(.userCountry) var userCountry
     @Shared(.userIP) var userIP
@@ -64,7 +70,7 @@ struct HomeScreenTests {
 
     @Test("Home screen", arguments: [Int.freeTier, Int.paidTier], homeTestData)
     @MainActor
-    func homeScreen(tier: Int, state: (protection: ProtectionState, connection: VPNConnectionStatus)) throws {
+    func homeScreen(tier: Int, state: (protection: ProtectionState, connection: ConnectionState)) throws {
         let store = Store(initialState: HomeFeature.State(), reducer: HomeFeature.init) {
             $0.serverChangeAuthorizer = .availableValue
             $0.locale = Locale(identifier: "en")
@@ -86,12 +92,12 @@ struct HomeScreenTests {
             $userIP.withLock { $0 = "1.2.3.4" }
             $userTier.withLock { $0 = tier }
             $protectionState.withLock { $0 = state.protection }
-            $vpnConnectionStatus.withLock { $0 = state.connection }
+            $connectionState.withLock { $0 = state.connection }
 
             let testName = [
                 tier.isFreeTier ? "Free" : "Paid",
                 protectionState.shortDescription(),
-                vpnConnectionStatus.shortDescription(),
+                connectionState.shortDescription(),
             ].joined(separator: "-")
 
             store.send(.map(.connectionStateUpdated(state.connection)))
@@ -100,7 +106,7 @@ struct HomeScreenTests {
 
             // reset SVG map highlight
             $userCountry.withLock { $0 = nil }
-            $vpnConnectionStatus.withLock { $0 = .disconnected }
+            $connectionState.withLock { $0 = .disconnected }
             store.send(.map(.connectionStateUpdated(state.connection)))
         }
     }
@@ -130,7 +136,7 @@ extension ProtectionState {
     }
 }
 
-extension VPNConnectionStatus {
+extension ConnectionState {
     func shortDescription() -> String {
         switch self {
         case .disconnected: "Disconnected"

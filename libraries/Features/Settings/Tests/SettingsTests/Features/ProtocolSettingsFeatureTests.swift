@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import Ergonomics
 @testable import Settings
 @testable import SettingsShared
@@ -29,7 +30,7 @@ struct ProtocolSettingsTests {
     func protocolSetWhenDisconnected() async {
         let store = TestStore(
             initialState: ProtocolSettingsFeature
-                .State(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil)
+                .State(protocol: .smartProtocol, connectionState: .disconnected, reconnectionAlert: nil)
         ) {
             ProtocolSettingsFeature()
         } withDependencies: {
@@ -49,7 +50,7 @@ struct ProtocolSettingsTests {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
-                vpnConnectionStatus: .disconnected,
+                connectionState: .disconnected,
                 reconnectionAlert: nil
             )
         ) {
@@ -68,7 +69,7 @@ struct ProtocolSettingsTests {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
-                vpnConnectionStatus: .connected(.init(location: .any(.fastest), features: Set()), nil),
+                connectionState: .resolving(nil, nil),
                 reconnectionAlert: nil
             )
         ) {
@@ -89,7 +90,7 @@ struct ProtocolSettingsTests {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
-                vpnConnectionStatus: .connected(.init(location: .any(.fastest), features: Set()), nil),
+                connectionState: .resolving(nil, nil),
                 reconnectionAlert: SettingsAlert.reconnectionAlertState(for: .vpnProtocol(.ike))
             )
         ) {
@@ -110,7 +111,7 @@ struct ProtocolSettingsTests {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
-                vpnConnectionStatus: .disconnected,
+                connectionState: .disconnected,
                 reconnectionAlert: SettingsAlert.reconnectionAlertState(for: .vpnProtocol(.ike))
             )
         ) {

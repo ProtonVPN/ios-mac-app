@@ -18,6 +18,7 @@
 
 import CommonNetworking
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
 import Foundation
@@ -38,7 +39,7 @@ public struct ServerItemFeature {
             serverInfo.logical.id
         }
 
-        @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+        @SharedReader(.connectionState) var connectionState: ConnectionState
         @SharedReader(.userTier) var userTier: Int?
 
         // Computed properties
@@ -57,16 +58,16 @@ public struct ServerItemFeature {
         }
 
         var isConnected: Bool {
-            guard case let .connected(_, actual) = vpnConnectionStatus,
-                  actual?.server.logical.id == serverInfo.logical.id else {
+            guard case let .connected(_, server, _, _) = connectionState,
+                  server.logical.id == serverInfo.logical.id else {
                 return false
             }
             return true
         }
 
         var isConnecting: Bool {
-            guard case let .connecting(_, server) = vpnConnectionStatus,
-                  server?.logical.id == serverInfo.logical.id else {
+            guard case let .connecting(.resolved(_, server)) = connectionState,
+                  server.logical.id == serverInfo.logical.id else {
                 return false
             }
             return true
@@ -91,7 +92,7 @@ public struct ServerItemFeature {
     public enum Action: BindableAction {
         case binding(BindingAction<State>)
         case connectTapped
-        case connectionStatusChanged(VPNConnectionStatus)
+        case connectionStateChanged(ConnectionState)
 
         case streamingInfoRequested
 
@@ -112,7 +113,7 @@ public struct ServerItemFeature {
             case .connectTapped:
                 handleConnect(state: state)
 
-            case .connectionStatusChanged:
+            case .connectionStateChanged:
                 .none
 
             case .binding:

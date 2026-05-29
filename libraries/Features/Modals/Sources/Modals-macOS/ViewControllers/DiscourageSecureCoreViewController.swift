@@ -23,16 +23,18 @@ import SwiftUI
 
 final class DiscourageSecureCoreViewController: NSHostingController<DiscourageSecureCoreView> {
     init(
+        reconnectNotice: String? = nil,
         onActivate: (() -> Void)? = nil,
         onCancel: (() -> Void)? = nil
     ) {
-        let initialStore = Store(initialState: DiscourageSecureCoreFeature.State()) {
+        let initialStore = Store(initialState: DiscourageSecureCoreFeature.State(reconnectNotice: reconnectNotice)) {
             DiscourageSecureCoreFeature()
         }
         super.init(rootView: DiscourageSecureCoreView(store: initialStore, dismissOnAction: false))
+        sizingOptions = []
         preferredContentSize = .init(width: Dimensions.sheetWidth, height: Dimensions.sheetHeight)
 
-        let store = Store(initialState: DiscourageSecureCoreFeature.State()) {
+        let store = Store(initialState: DiscourageSecureCoreFeature.State(reconnectNotice: reconnectNotice)) {
             DiscourageSecureCoreFeature(
                 onActivate: { [weak self] in
                     onActivate?()
@@ -58,7 +60,6 @@ final class DiscourageSecureCoreViewController: NSHostingController<DiscourageSe
 
     override func viewWillAppear() {
         super.viewWillAppear()
-        view.window?.setContentSize(.init(width: Dimensions.sheetWidth, height: Dimensions.sheetHeight))
         view.window?.applyUpsellModalAppearance()
     }
 
@@ -75,6 +76,6 @@ final class DiscourageSecureCoreViewController: NSHostingController<DiscourageSe
 private extension DiscourageSecureCoreViewController {
     enum Dimensions {
         static let sheetWidth: CGFloat = 520
-        static let sheetHeight: CGFloat = 600
+        static let sheetHeight: CGFloat = 620
     }
 }

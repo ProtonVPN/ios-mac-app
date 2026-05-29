@@ -22,6 +22,7 @@
 
 import Combine
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
 import LegacyCommon
@@ -91,22 +92,21 @@ class DefaultProfileViewModel {
 
     private let extraMargin: Bool
 
-    @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+    @SharedReader(.connectionState) var connectionState: ConnectionState
 
     var isConnected: Bool {
-        guard case .connected = vpnConnectionStatus else {
+        guard connectionState.is(\.connected), let spec = connectionState.resolvedSpec else {
             return false
         }
-
-        return propertiesManager.lastConnectionIntent == profileConnectionSpec
+        return spec == profileConnectionSpec
     }
 
     var isConnecting: Bool {
-        guard case let .connecting(connectionSpec, _) = vpnConnectionStatus else {
+        guard connectionState.is(\.connecting), let spec = connectionState.resolvedSpec else {
             return false
         }
 
-        return connectionSpec == profileConnectionSpec
+        return spec == profileConnectionSpec
     }
 
     private var connectedUiState: Bool {
@@ -204,7 +204,7 @@ class DefaultProfileViewModel {
     }
 
     private func startObserving() {
-        $vpnConnectionStatus
+        $connectionState
             .publisher
             .sink { [weak self] _ in
                 self?.stateChanged()
@@ -249,25 +249,25 @@ class DefaultProfileViewModel {
             extraMargin: true
         )
 
-        static var connectedMock: DefaultProfileViewModel = {
-            @Shared(.vpnConnectionStatus) var vpnConnectionStatus
-            $vpnConnectionStatus.withLock { $0 = .connected(.defaultFastest, nil) }
+        static var connectedMock: DefaultProfileViewModel {
+            @Shared(.connectionState) var connectionState
+            $connectionState.withLock { $0 = .previewConnected(for: .defaultFastest) }
             return DefaultProfileViewModel(
                 serverOffering: .fastest("Server"),
                 alertService: CoreAlertServiceDummy(),
                 connectionStatusService: ConnectionStatusServiceMock()
             )
-        }()
+        }
 
-        static var connectingMock: DefaultProfileViewModel = {
-            @Shared(.vpnConnectionStatus) var vpnConnectionStatus
-            $vpnConnectionStatus.withLock { $0 = .connecting(.defaultFastest, nil) }
+        static var connectingMock: DefaultProfileViewModel {
+            @Shared(.connectionState) var connectionState
+            $connectionState.withLock { $0 = .previewConnecting(for: .defaultFastest) }
             return DefaultProfileViewModel(
                 serverOffering: .fastest("Server"),
                 alertService: CoreAlertServiceDummy(),
                 connectionStatusService: ConnectionStatusServiceMock()
             )
-        }()
+        }
     }
 
     private class ConnectionStatusServiceMock: ConnectionStatusService {

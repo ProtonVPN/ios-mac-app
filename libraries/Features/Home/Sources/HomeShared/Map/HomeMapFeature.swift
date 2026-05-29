@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import CoreLocation
 import Domain
 import Ergonomics
@@ -35,7 +36,7 @@ public struct HomeMapFeature {
         public internal(set) var pinMode: MapPin.Mode = .disconnected
 
         var shouldShowPin: Bool {
-            if case .connected = vpnConnectionStatus { // we're connected to a known country
+            if case .connected = connectionState { // we're connected to a known country
                 return true
             }
             return userCountry != nil // or we know the user country
@@ -43,7 +44,7 @@ public struct HomeMapFeature {
 
         var pinOffset: CGSize = .zero
 
-        @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
+        @SharedReader(.connectionState) public var connectionState: ConnectionState
         @SharedReader(.userCountry) public var userCountry: String?
 
         public init() {}
@@ -55,8 +56,8 @@ public struct HomeMapFeature {
         case connectingCoordinates(CLLocationCoordinate2D, String?)
         case disconnected
 
-        init(_ connectionStatus: VPNConnectionStatus) {
-            switch connectionStatus {
+        init(_ connectionState: ConnectionState) {
+            switch connectionState {
             case .disconnected:
                 self = .disconnected
 
@@ -64,25 +65,23 @@ public struct HomeMapFeature {
                 // VPNAPPL-2654: Discrepancy between connection state and what we're showing in the map
                 self = .disconnected
 
-            case let .connected(_, actual):
-                if let actual {
-                    self = .connectedCoordinates(actual.server.logical.coordinates, actual.server.logical.exitCountryCode)
-                } else {
-                    self = .disconnected
-                }
+            case let .connected(_, server, _, _):
+                self = .connectedCoordinates(server.logical.coordinates, server.logical.exitCountryCode)
 
-            case let .connecting(_, .some(server)):
+            case let .connecting(.resolved(_, server)):
                 self = .connectingCoordinates(server.logical.coordinates, server.logical.exitCountryCode)
 
-            case let .connecting(spec, nil):
+            case let .connecting(.unresolved(intent)):
                 // We've started connecting according to a `ConnectionSpec`, but we've not yet chosen a specific server
                 // We *could* retrieve the coordinates for the country, but we want to avoid the pin moving once to the
                 // country, and then again to the specific location of the server
-                self = .connecting(spec.countryCode)
+                self = .connecting(intent.spec.countryCode)
 
-            case let .resolving(_, actual):
-                if let actual {
-                    self = .connectingCoordinates(actual.server.logical.coordinates, actual.server.logical.exitCountryCode)
+            case let .resolving(_, server):
+                // During the resolve window, if we have a prior server, keep the pin on it
+                // for UI continuity; otherwise fall back to disconnected.
+                if let server {
+                    self = .connectingCoordinates(server.logical.coordinates, server.logical.exitCountryCode)
                 } else {
                     self = .disconnected
                 }
@@ -142,7 +141,7 @@ public struct HomeMapFeature {
 
     public enum Action: Equatable {
         case observeConnectionState
-        case connectionStateUpdated(VPNConnectionStatus)
+        case connectionStateUpdated(ConnectionState)
         case newMapState(MapState)
         case newPinOffset(CGSize)
     }
@@ -163,15 +162,15 @@ public struct HomeMapFeature {
             case .observeConnectionState:
                 return .publisher {
                     state
-                        .$vpnConnectionStatus
+                        .$connectionState
                         .publisher
                         .receive(on: UIScheduler.shared)
                         .map(Action.connectionStateUpdated)
                 }
                 .cancellable(id: CancelId.connectionState)
 
-            case let .connectionStateUpdated(connectionStatus):
-                let mapState = MapState(connectionStatus)
+            case let .connectionStateUpdated(connectionState):
+                let mapState = MapState(connectionState)
                 let pinOffset = mapState.pinOffset(userCountry: state.userCountry)
                 let animation: Animation? = UIAccessibility.isReduceMotionEnabled ? nil : .default
                 let effect: Effect<Action> = .merge(

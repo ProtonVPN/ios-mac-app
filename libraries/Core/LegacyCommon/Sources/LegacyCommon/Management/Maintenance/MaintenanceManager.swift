@@ -21,6 +21,7 @@
 //
 
 import CommonNetworking
+import Connection
 import Dependencies
 import Domain
 import Ergonomics
@@ -47,7 +48,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
 
     @Dependency(\.vpnApiClient) private var vpnApiClient
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
+    @Shared(.connectionState) private var connectionState: ConnectionState
 
     private var observerTask: Task<Void, Error>?
     private var observerTimeInterval: TimeInterval?
@@ -97,15 +98,12 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
     private func checkServerAsync() async throws -> Bool {
         @Dependency(\.propertiesManager) var propertiesManager
         let location = propertiesManager.userLocation
-        guard let activeServer = vpnConnectionStatus.actual?.server ?? vpnConnectionStatus.server else {
+        guard let activeServer = connectionState.resolvedServer else {
             log.info("No active connection", category: .app)
             return false
         }
 
-        switch vpnConnectionStatus {
-        case .connected, .connecting:
-            break
-        default:
+        guard connectionState.isConnectedOrConnecting else {
             log.info("VPN Not connected", category: .app)
             return false
         }

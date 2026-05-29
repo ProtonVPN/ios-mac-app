@@ -23,10 +23,13 @@
 import Announcement
 import Cocoa
 import CommonNetworking
+import Connection
 import Dependencies
 import Domain
 import Ergonomics
+import ExtensionManager
 import LegacyCommon
+import os
 import ProtonCoreFeatureFlags
 import ProtonCoreUtilities
 import Sharing
@@ -77,7 +80,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
-    @Shared(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
+    @Dependency(\.activeTunnelInspector) private var activeTunnelInspector
+    @Shared(.connectionState) private var connectionState: ConnectionState
 
     var sessionStatus: SessionStatus = .notEstablished {
         didSet {
@@ -245,9 +249,63 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             return
         }
 
-        guard (try? vpnKeychain.fetch()) != nil else {
+        guard let vpnCredentials = try? vpnKeychain.fetch() else {
             alertService.push(alert: CannotAccessVpnCredentialsAlert())
             throw CommonVpnError.fetchSession
+        }
+
+        // IKEv2 is the only protocol that embeds a user identity in its tunnel configuration
+        // (`NEVPNProtocolIKEv2.username`). WireGuard tunnels carry no user identity, so the
+        // cross-user check is best-effort and only catches the IKE case.
+        // TODO: Have wireguard check with ProTUN VPNAPPL-3544
+        guard
+            let activeBaseUsername = await activeTunnelInspector.activeIKEBaseUsername(),
+            activeBaseUsername != vpnCredentials.name
+        else {
+            return
+        }
+        try await confirmAndDisconnectActiveSession()
+    }
+
+    private static let activeSessionAlertTimeoutSeconds: TimeInterval = 60
+    private func confirmAndDisconnectActiveSession() async throws {
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            // `CheckedContinuation` requires a single resume. The alert has three exit
+            // paths (Continue, Cancel, and out-of-band dismissal via Cmd+W / window close
+            // / programmatic dismiss) — the last of which fires neither action handler and
+            // would otherwise leave this continuation unresumed, hanging the caller forever.
+            // Guard against that with a one-shot resume + produce an error if it hangs more than 60s
+            let didResume = OSAllocatedUnfairLock<Bool>(initialState: false)
+            let resumeOnce: @Sendable (Result<Void, Error>) -> Void = { result in
+                let shouldResume = didResume.withLock { resumed in
+                    guard !resumed else { return false }
+                    resumed = true
+                    return true
+                }
+                guard shouldResume else { return }
+                continuation.resume(with: result)
+            }
+
+            let alert = ActiveSessionWarningAlert(
+                confirmHandler: { [weak self] in
+                    guard let self, isConnected else {
+                        resumeOnce(.success(()))
+                        return
+                    }
+                    connectionCommandClient.send(.disconnect(.signout, completion: {
+                        resumeOnce(.success(()))
+                    }))
+                },
+                cancelHandler: {
+                    resumeOnce(.failure(CommonVpnError.vpnSessionInProgress))
+                }
+            )
+            alertService.push(alert: alert)
+
+            Task {
+                try? await Task.sleep(for: .seconds(Self.activeSessionAlertTimeoutSeconds))
+                resumeOnce(.failure(CommonVpnError.vpnSessionInProgress))
+            }
         }
     }
 
@@ -258,7 +316,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     func logOut(force: Bool, reason: String?) {
-        switch vpnConnectionStatus {
+        switch connectionState {
         case .connected:
             confirmLogout(showAlert: !force) { [weak self] in
                 self?.connectionCommandClient.send(.disconnect(.signout, completion: {
@@ -389,25 +447,15 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     private var isConnected: Bool {
-        vpnConnectionStatus.is(\.connected)
+        connectionState.isConnected
     }
 
     private var isDisconnectedForPropertiesRefresh: Bool {
-        switch vpnConnectionStatus {
-        case .connected, .disconnecting:
-            false
-        case .resolving, .disconnected, .connecting:
-            true
-        }
+        connectionState.isDisconnectedForPropertiesRefresh
     }
 
     private var isSafeToEnd: Bool {
-        switch vpnConnectionStatus {
-        case .connected, .connecting, .disconnecting:
-            false
-        case .resolving, .disconnected:
-            true
-        }
+        connectionState.isSafeToEnd
     }
 }
 

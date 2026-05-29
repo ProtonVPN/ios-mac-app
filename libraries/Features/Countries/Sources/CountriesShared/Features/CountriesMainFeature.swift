@@ -18,10 +18,14 @@
 
 import CommonNetworking
 import ComposableArchitecture
+import Connection
+import ConnectionInventory
 import Dependencies
 import Domain
 import Foundation
+import LegacyCommon
 import Strings
+import VPNAppCore
 
 @Reducer
 public struct CountriesMainFeature {
@@ -51,6 +55,12 @@ public struct CountriesMainFeature {
     }
 
     @Shared(.secureCoreToggle) private var secureCoreToggle
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.userTier) private var userTier: Int?
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
+    @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.serverRepository) private var serverRepository
+    @Dependency(\.switchToPrimaryTab) private var switchToPrimaryTab
 
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -88,7 +98,13 @@ public struct CountriesMainFeature {
                  .secureCore(.applySecureCoreToggle):
                 let newSecureCoreToggle = !secureCoreToggle
                 $secureCoreToggle.withLock { $0 = newSecureCoreToggle }
-                return .send(.reloadContent)
+                dispatchSecureCoreToggleReconnect(secureCoreEnabled: newSecureCoreToggle)
+                return .merge(
+                    .send(.reloadContent),
+                    .run { [switchToPrimaryTab] _ in
+                        await switchToPrimaryTab()
+                    }
+                )
 
             case .standard, .secureCore:
                 return .none
@@ -100,6 +116,36 @@ public struct CountriesMainFeature {
         .ifCaseLet(\.secureCore, action: \.secureCore) {
             CountriesFeature()
         }
+    }
+
+    /// A confirmation alert warning that toggling Secure Core mid-session
+    /// will trigger a reconnect.
+    /// If no Secure Core server is available in the currently connected country, the
+    /// message falls back to the generic "global fastest" copy instead of naming a country.
+    private func dispatchSecureCoreToggleReconnect(secureCoreEnabled: Bool) {
+        guard connectionState.isConnected else { return }
+        let connectedCountryCode = connectionState.resolvedServer?.logical.exitCountryCode
+        let canReuseCurrentExitCountry: Bool = if let connectedCountryCode {
+            serverRepository.hasServer(
+                secureCore: secureCoreEnabled,
+                exitCountryCode: connectedCountryCode
+            )
+        } else {
+            false
+        }
+        let resolvedExit = canReuseCurrentExitCountry ? connectedCountryCode : nil
+        let isFreeTier = userTier?.isFreeTier ?? true
+        let spec = SecureCoreConnectionSpecResolver.toggleReconnectSpec(
+            secureCoreEnabled: secureCoreEnabled,
+            exitCountryCode: resolvedExit,
+            isFreeTier: isFreeTier
+        )
+        let trigger = SecureCoreConnectionSpecResolver.reconnectTrigger(
+            connectedExitCountryCode: resolvedExit,
+            isFreeTier: isFreeTier
+        )
+        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
+        connectionCommandClient.send(.connect(spec, propertiesManager.lastConnectionRequest?.connectionProtocol, trigger))
     }
 
     // MARK: - Private observe methods
