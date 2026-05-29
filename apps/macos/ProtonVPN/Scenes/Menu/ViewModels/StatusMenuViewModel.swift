@@ -224,12 +224,10 @@ final class StatusMenuViewModel {
             connectionCommandClient.send(.disconnect(.tray))
         } else {
             log.debug("Connect requested by pressing Quick connect", category: .connectionConnect, event: .trigger)
-            let spec = SecureCoreConnectionSpecResolver.fastestSpec(
-                secureCoreEnabled: secureCoreToggle,
-                connectedExitCountryCode: connectedCountryCode,
-                isFreeTier: credentials.tier.isFreeTier
+            connectionCommandClient.quickConnect(
+                profileManager: profileManager ?? factory.makeProfileManager(),
+                trigger: .tray
             )
-            connectionCommandClient.send(.connect(spec, nil, .tray))
         }
     }
 

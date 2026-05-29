@@ -54,8 +54,9 @@ final class HeaderViewModel {
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.serverRepository) private var serverRepository
 
-    typealias Factory = AnnouncementsViewModelFactory & NotificationManagerFactory
+    typealias Factory = AnnouncementsViewModelFactory & NotificationManagerFactory & ProfileManagerFactory
     private let factory: Factory
+    private lazy var profileManager: ProfileManager = factory.makeProfileManager()
 
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.announcementManager) var announcementManager
@@ -86,7 +87,6 @@ final class HeaderViewModel {
     private var natPmpCancellable: AnyCancellable?
     private var portForwardingObserverTask: Task<Void, Never>?
     @Shared(.connectionState) private var connectionState: ConnectionState
-    @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
     private var cancellables = Set<AnyCancellable>()
 
     var statistics: NetworkStatistics?
@@ -163,12 +163,7 @@ final class HeaderViewModel {
             connectionCommandClient.send(.disconnect(.quick))
         } else {
             log.debug("Connect requested by selecting Quick connect", category: .connectionConnect, event: .trigger)
-            let spec = SecureCoreConnectionSpecResolver.fastestSpec(
-                secureCoreEnabled: secureCoreToggle,
-                connectedExitCountryCode: connectedCountryCode,
-                isFreeTier: credentials.tier.isFreeTier
-            )
-            connectionCommandClient.send(.connect(spec, nil, .quick))
+            connectionCommandClient.quickConnect(profileManager: profileManager, trigger: .quick)
         }
     }
 

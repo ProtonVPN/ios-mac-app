@@ -95,6 +95,7 @@ final class ConnectionSettingsViewModel {
             .excludeLocalNetworks,
             .vpnAccelerator,
             .portForwardingNotifications,
+            .profileContentChanged,
         ]
         settingsChangedEvents.subscribe(self, selector: #selector(settingsChanged))
 
