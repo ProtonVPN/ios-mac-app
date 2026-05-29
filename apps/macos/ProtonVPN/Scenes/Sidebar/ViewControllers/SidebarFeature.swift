@@ -942,7 +942,7 @@ private extension SidebarFeature {
     }
 }
 
-// TODO: revisit after Profiles 2.0; most likely we'll have a proper profile dependency
+// TODO: refactor with Profiles 2.0 in VPNAPPL-3472; most likely we'll have a proper profile dependency
 @DependencyClient
 struct SidebarProfileNameResolver {
     var profileName: (String) -> String?
