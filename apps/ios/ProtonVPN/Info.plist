@@ -113,6 +113,11 @@
 	<string>Dark</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<!-- Send copies of winning postbacks to ourselves -->
+	<key>NSAdvertisingAttributionReportEndpoint</key>
+	<string>https://protonvpn.com/</string>
+	<key>AttributionCopyEndpoint</key>
+	<string>https://protonvpn.com/</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<!-- google -->
