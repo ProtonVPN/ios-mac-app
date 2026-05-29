@@ -52,7 +52,6 @@
         public var blockOneTimeAnnouncement: Bool = false
         public var blockUpdatePrompt: Bool = false
         public var lastPreparedServer: ServerModel?
-        public var lastConnectionRequest: ConnectionRequest?
 
         var lastUserAccountPlan: String?
         public func getLastAccountPlan(for _: String) -> String? {

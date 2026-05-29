@@ -467,7 +467,7 @@ final class StatusMenuViewModel {
         let targetServerType: ServerType = turningOn ? .secureCore : .standard
         let wasConnected = isConnected
         let reconnectCountryCode = connectedCountryCode
-        let connectionProtocol = propertiesManager.lastConnectionRequest?.connectionProtocol
+        let connectionProtocol = connectionState.resolvedVpnProtocol.map(ConnectionProtocol.vpnProtocol)
 
         $secureCoreToggle.withLock { $0 = turningOn }
         serverType = targetServerType
