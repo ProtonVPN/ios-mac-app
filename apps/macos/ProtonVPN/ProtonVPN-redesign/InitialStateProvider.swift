@@ -36,7 +36,7 @@
                         .connectionSecureCore,
                     ],
                     connectionStatus: .init(protectionState: .unprotected(country: "PL", ip: "192.168.1.0")),
-                    vpnConnectionStatus: .disconnected
+                    vpnConnectionStatusDoNotUse: .disconnected
                 ),
                 connectionDetailsVisible: true
             )

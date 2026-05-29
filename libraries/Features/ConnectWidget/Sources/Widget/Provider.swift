@@ -31,7 +31,7 @@ struct Provider: TimelineProvider {
     @Dependency(\.recentsStorage) var recentsStorage
     @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
     @Dependency(\.connectionInventory) var connectionInventory
-    @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+    @SharedReader(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse: VPNConnectionStatusDoNotUse
 
     func recentConnectionList() -> [RecentConnection] {
         let preference = try? defaultConnectionStorage.getPreference()
@@ -91,15 +91,15 @@ struct Provider: TimelineProvider {
 
         return ConnectWidgetEntry(
             date: .now,
-            connectionSpec: vpnConnectionStatus.connectionSpec ?? connectionSpec(),
-            currentServer: vpnConnectionStatus.server,
-            protectionState: vpnConnectionStatus.protectionState,
+            connectionSpec: vpnConnectionStatusDoNotUse.connectionSpec ?? connectionSpec(),
+            currentServer: vpnConnectionStatusDoNotUse.server,
+            protectionState: vpnConnectionStatusDoNotUse.protectionState,
             recentServers: recents
         )
     }
 }
 
-private extension VPNConnectionStatus {
+private extension VPNConnectionStatusDoNotUse {
     var protectionState: ConnectWidgetEntry.ProtectionState {
         switch self {
         case .resolving, .disconnected, .disconnecting:

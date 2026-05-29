@@ -135,9 +135,9 @@ public extension ConnectionState {
         return VPNConnectionActual(server: server, intent: intent, connectedDate: date)
     }
 
-    /// Mapping of `ConnectionState` into the legacy `VPNConnectionStatus`.
+    /// Mapping of `ConnectionState` into the legacy `VPNConnectionStatusDoNotUse`.
     /// Used only in the widget. DO NOT USE OTHERWISE
-    var status: VPNConnectionStatus {
+    var status: VPNConnectionStatusDoNotUse {
         switch self {
         case let .resolving(intent, server):
             let actual = intent.map { VPNConnectionActual(server: server ?? $0.server, intent: $0, connectedDate: nil) }

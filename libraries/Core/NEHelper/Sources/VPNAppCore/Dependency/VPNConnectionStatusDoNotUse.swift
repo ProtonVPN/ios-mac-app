@@ -33,7 +33,7 @@ import Sharing
 
 // This struct is still WIP
 @CasePathable
-public enum VPNConnectionStatus: Sendable, Equatable, Codable {
+public enum VPNConnectionStatusDoNotUse: Sendable, Equatable, Codable {
     case resolving(ConnectionSpec?, VPNConnectionActual?)
     case disconnected
     case connected(ConnectionSpec, VPNConnectionActual?)
@@ -77,13 +77,13 @@ private let persistentFileUrl: URL = (FileManager.default.containerURL(forSecuri
     "shared/vpnConnectionStatus.json"
 )
 
-public extension SharedKey where Self == FileStorageKey<VPNConnectionStatus>.Default {
-    static var vpnConnectionStatus: Self {
+public extension SharedKey where Self == FileStorageKey<VPNConnectionStatusDoNotUse>.Default {
+    static var vpnConnectionStatusDoNotUse: Self {
         Self[
             .fileStorage(
                 persistentFileUrl,
                 decode: { data in
-                    try JSONDecoder().decode(VPNConnectionStatus.self, from: data)
+                    try JSONDecoder().decode(VPNConnectionStatusDoNotUse.self, from: data)
                 },
                 encode: { status in
                     #if canImport(WidgetKit)

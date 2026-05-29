@@ -377,9 +377,9 @@ struct AppSessionManagerImplementationTests {
             $0.connectionCommandClient = .init(
                 send: { command in
                     guard case let .disconnect(_, completion) = command else { return }
-                    @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+                    @Shared(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse
                     @Shared(.connectionState) var connectionState
-                    $vpnConnectionStatus.withLock { $0 = .disconnected }
+                    $vpnConnectionStatusDoNotUse.withLock { $0 = .disconnected }
                     $connectionState.withLock { $0 = .disconnected }
                     Task { @MainActor in completion?() }
                 },
@@ -489,10 +489,10 @@ struct AppSessionManagerImplementationTests {
         }
     }
 
-    private func setConnectionStatus(vpnStatus: VPNConnectionStatus, connectionState: ConnectionState) {
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+    private func setConnectionStatus(vpnStatus: VPNConnectionStatusDoNotUse, connectionState: ConnectionState) {
+        @Shared(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse
         @Shared(.connectionState) var sharedConnectionState
-        $vpnConnectionStatus.withLock { $0 = vpnStatus }
+        $vpnConnectionStatusDoNotUse.withLock { $0 = vpnStatus }
         $sharedConnectionState.withLock { $0 = connectionState }
     }
 
@@ -526,19 +526,19 @@ struct AppSessionManagerImplementationTests {
     }
 
     private func assertConnectedStatus(_ message: String = "Expected connection status to be connected") {
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus
-        if case .connected = vpnConnectionStatus {
+        @Shared(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse
+        if case .connected = vpnConnectionStatusDoNotUse {
             return
         }
-        Issue.record("\(message), actual: \(vpnConnectionStatus)")
+        Issue.record("\(message), actual: \(vpnConnectionStatusDoNotUse)")
     }
 
     private func assertDisconnectedStatus(_ message: String = "Expected connection status to be disconnected") {
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus
-        if case .disconnected = vpnConnectionStatus {
+        @Shared(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse
+        if case .disconnected = vpnConnectionStatusDoNotUse {
             return
         }
-        Issue.record("\(message), actual: \(vpnConnectionStatus)")
+        Issue.record("\(message), actual: \(vpnConnectionStatusDoNotUse)")
     }
 }
 

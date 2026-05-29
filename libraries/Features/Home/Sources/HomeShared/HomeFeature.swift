@@ -88,7 +88,7 @@ public struct HomeFeature {
         /// in App Group storage and write it from `connection.delegate.stateChanged`.
         /// **In-process callers must read `connectionState` directly, not this.**
         // TODO: VPNAPPL-3545
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+        @Shared(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse: VPNConnectionStatusDoNotUse
 
         @Presents public var destination: Destination.State?
         @Presents public var alert: AlertState<Action.HomeAlert>?
@@ -517,7 +517,7 @@ private extension HomeFeature {
                 return .send(.sharedProperties(.connectionFailed(error)))
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
-                state.$vpnConnectionStatus.withLock { $0 = connectionState.status }
+                state.$vpnConnectionStatusDoNotUse.withLock { $0 = connectionState.status }
                 return .send(.sharedProperties(.newConnectionState(connectionState)))
             case .connection(.delegate(.disconnected)):
                 return .run { _ in
