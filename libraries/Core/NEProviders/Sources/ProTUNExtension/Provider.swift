@@ -23,141 +23,137 @@ import os.log
 import enum VPNCoreCommon.ProTUNConfigurationCoder
 import struct VPNCoreTypes.ProTUNConfiguration
 
-#if os(iOS) && DEBUG
-    open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
-        lazy var adapter = ProTUNAdapter(packetTunnelProvider: self)
+open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
+    lazy var adapter = ProTUNAdapter(packetTunnelProvider: self)
 
-        let loggingMode: LoggingMode = .singleOutputFile
+    let loggingMode: LoggingMode = .singleOutputFile
 
-        private let protunLogger: ProTUNLogger = .init()
+    private let protunLogger: ProTUNLogger = .init()
 
-        override init() {
-            let pid = ProcessInfo.processInfo.processIdentifier
-            Logger.provider.info("Starting ProTUNPacketTunnelProvider with pid \(pid)")
-            initLogger(level: .info, logger: protunLogger)
-        }
+    override init() {
+        let pid = ProcessInfo.processInfo.processIdentifier
+        Logger.provider.info("Starting ProTUNPacketTunnelProvider with pid \(pid)")
+        initLogger(level: .info, logger: protunLogger)
+    }
 
-        #if swift(>=6.2)
-            override open func startTunnel(
-                options: [String: NSObject]? = nil,
-                completionHandler: @escaping ((any Error)?) -> Void
-            ) {
-                _startTunnel(options: options, completionHandler: completionHandler)
-            }
-        #else
-            override open func startTunnel(options: [String: NSObject]? = nil) async throws {
-                try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
-                    _startTunnel(options: options) { error in
-                        if let error {
-                            continuation.resume(throwing: error)
-                        } else {
-                            continuation.resume()
-                        }
-                    }
-                }
-            }
-        #endif
-
-        private func _startTunnel(
+    #if swift(>=6.2)
+        override open func startTunnel(
             options: [String: NSObject]? = nil,
             completionHandler: @escaping ((any Error)?) -> Void
         ) {
-            if let options {
-                Logger.provider.info("Starting tunnel with options: \(options, privacy: .public)...")
-            } else {
-                Logger.provider.info("Starting tunnel...")
-            }
-
-            do {
-                let uncheckedCompletion = UncheckedCompletion(completionHandler)
-                let config = try decodeConfiguration()
-
-                Task { [adapter] in
-                    do {
-                        try await adapter.start(config: config)
-                        Logger.provider.info("Adapter start finished")
-                        uncheckedCompletion(nil)
-                    } catch {
-                        Logger.provider.error("Failed to start adapter: \(error, privacy: .public)")
-                        uncheckedCompletion(error)
+            _startTunnel(options: options, completionHandler: completionHandler)
+        }
+    #else
+        override open func startTunnel(options: [String: NSObject]? = nil) async throws {
+            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+                _startTunnel(options: options) { error in
+                    if let error {
+                        continuation.resume(throwing: error)
+                    } else {
+                        continuation.resume()
                     }
                 }
-
-                adapter.listenToPathUpdates()
-            } catch {
-                Logger.provider.error("Failed to start tunnel: \(error, privacy: .public)")
-                completionHandler(error)
             }
         }
+    #endif
 
-        override open func stopTunnel(with reason: NEProviderStopReason) async {
-            Logger.provider.info("Stopping tunnel with reason: \(reason, privacy: .public)")
-
-            adapter.stop(with: reason)
-
-            if case .perSession = loggingMode {
-                _ = try? Logger.flushSession()
-            }
+    private func _startTunnel(
+        options: [String: NSObject]? = nil,
+        completionHandler: @escaping ((any Error)?) -> Void
+    ) {
+        if let options {
+            Logger.provider.info("Starting tunnel with options: \(options, privacy: .public)...")
+        } else {
+            Logger.provider.info("Starting tunnel...")
         }
 
-        override open func sleep() async {
-            Logger.provider.info("Sleeping...")
-            await super.sleep()
-        }
+        do {
+            let uncheckedCompletion = UncheckedCompletion(completionHandler)
+            let config = try decodeConfiguration()
 
-        override open func wake() {
-            Logger.provider.info("Waking up!")
-            super.wake()
-        }
-
-        @Dependency(\.ipcCoder) private var ipcCoder
-
-        override open func handleAppMessage(_ messageData: Data) async -> Data? {
-            Logger.provider.info("Received incoming message from app of \(messageData.count) bytes")
-
-            do {
-                let request = try ipcCoder.request(from: messageData)
-                Logger.provider.info("Received request of type: \(request.payload, privacy: .public)")
-                let response = await MessageRouter.route(request, with: adapter)
-                return try ipcCoder.responseData(for: response)
-            } catch {
-                Logger.provider.error("Error at decoding/routing stage: \(error)")
+            Task { [adapter] in
                 do {
-                    let incomingVersion = try ipcCoder.version(of: messageData)
-                    if incomingVersion > .current {
-                        return try ipcCoder.responseData(for: .requestVersionMismatchResponse(from: incomingVersion))
-                    }
-                    // If version is supposed to be recognized, let's send an error response
-                    return try ipcCoder.responseData(for: .genericError(error.localizedDescription))
+                    try await adapter.start(config: config)
+                    Logger.provider.info("Adapter start finished")
+                    uncheckedCompletion(nil)
                 } catch {
-                    Logger.provider.critical("Unable to even form a response message: \(error)")
-                    return nil
+                    Logger.provider.error("Failed to start adapter: \(error, privacy: .public)")
+                    uncheckedCompletion(error)
                 }
             }
-        }
 
-        private func decodeConfiguration() throws(ProTUNConfigurationCoder.CodingError) -> ProTUNConfiguration {
+            adapter.listenToPathUpdates()
+        } catch {
+            Logger.provider.error("Failed to start tunnel: \(error, privacy: .public)")
+            completionHandler(error)
+        }
+    }
+
+    override open func stopTunnel(with reason: NEProviderStopReason) async {
+        Logger.provider.info("Stopping tunnel with reason: \(reason, privacy: .public)")
+
+        adapter.stop(with: reason)
+
+        if case .perSession = loggingMode {
+            _ = try? Logger.flushSession()
+        }
+    }
+
+    override open func sleep() async {
+        Logger.provider.info("Sleeping...")
+        await super.sleep()
+    }
+
+    override open func wake() {
+        Logger.provider.info("Waking up!")
+        super.wake()
+    }
+
+    @Dependency(\.ipcCoder) private var ipcCoder
+
+    override open func handleAppMessage(_ messageData: Data) async -> Data? {
+        Logger.provider.info("Received incoming message from app of \(messageData.count) bytes")
+
+        do {
+            let request = try ipcCoder.request(from: messageData)
+            Logger.provider.info("Received request of type: \(request.payload, privacy: .public)")
+            let response = await MessageRouter.route(request, with: adapter)
+            return try ipcCoder.responseData(for: response)
+        } catch {
+            Logger.provider.error("Error at decoding/routing stage: \(error)")
             do {
-                return try ProTUNConfigurationCoder.decode(from: protocolConfiguration)
-            } catch .providerConfigurationMissing, .proTUNConfigurationMissing {
-                Logger.provider.info("ProTUN configuration not found in providerConfiguration; falling back to legacy WireGuard keychain entry")
-                return try ProTUNConfigurationCoder.legacyDecode(from: protocolConfiguration)
+                let incomingVersion = try ipcCoder.version(of: messageData)
+                if incomingVersion > .current {
+                    return try ipcCoder.responseData(for: .requestVersionMismatchResponse(from: incomingVersion))
+                }
+                // If version is supposed to be recognized, let's send an error response
+                return try ipcCoder.responseData(for: .genericError(error.localizedDescription))
+            } catch {
+                Logger.provider.critical("Unable to even form a response message: \(error)")
+                return nil
             }
         }
     }
 
-    extension ProTUNMessage.Response {
-        /// In cases where app has been updated, but extension was still running, we might receive requests with a version we don't know yet.
-        static func requestVersionMismatchResponse(from incomingVersion: ProTUNMessage.Version) -> ProTUNMessage.Response {
-            .init(payload: .error(
-                .unsupported(
-                    incoming: incomingVersion,
-                    supported: .current,
-                    reason: "Provider supports up to v\(ProTUNMessage.Version.current.rawValue)"
-                )
-            ))
+    private func decodeConfiguration() throws(ProTUNConfigurationCoder.CodingError) -> ProTUNConfiguration {
+        do {
+            return try ProTUNConfigurationCoder.decode(from: protocolConfiguration)
+        } catch .providerConfigurationMissing, .proTUNConfigurationMissing {
+            Logger.provider.info("ProTUN configuration not found in providerConfiguration; falling back to legacy WireGuard keychain entry")
+            return try ProTUNConfigurationCoder.legacyDecode(from: protocolConfiguration)
         }
     }
-#else
-    open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {}
-#endif
+}
+
+extension ProTUNMessage.Response {
+    /// In cases where app has been updated, but extension was still running, we might receive requests with a version we don't know yet.
+    static func requestVersionMismatchResponse(from incomingVersion: ProTUNMessage.Version) -> ProTUNMessage.Response {
+        .init(payload: .error(
+            .unsupported(
+                incoming: incomingVersion,
+                supported: .current,
+                reason: "Provider supports up to v\(ProTUNMessage.Version.current.rawValue)"
+            )
+        ))
+    }
+}

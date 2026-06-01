@@ -43,24 +43,28 @@ public enum ProTUNMessage {
 
 public extension ProTUNMessage.Request {
     enum Payload: Codable {
-        case ping // used for tests, let's remove those one day
         case flushLogsToFile
         case retrieveLogsArchive
         case getCurrentPeerID
         case pcapRequest(PcapRequest)
         case pushSelector(String)
         case updateConfiguration
+        #if DEBUG
+            case ping
+        #endif
     }
 }
 
 public extension ProTUNMessage.Response {
     enum Payload: Codable {
-        case pong // used for tests, let's remove those one day
         case ack
         case currentPeerID(CodableResult<String, Error>)
         case logs(CodableResult<URL, Error>)
         case pcapUpdate(PcapUpdate)
         case error(GenericError)
+        #if DEBUG
+            case pong
+        #endif
     }
 }
 
@@ -109,7 +113,9 @@ public extension ProTUNMessage.Response {
 extension ProTUNMessage.Request.Payload: CustomStringConvertible {
     public var description: String {
         switch self {
-        case .ping: "ping"
+        #if DEBUG
+            case .ping: "ping"
+        #endif
         case .flushLogsToFile: "flushLogsToFile"
         case .retrieveLogsArchive: "retrieveLogsArchive"
         case .getCurrentPeerID: "getCurrentPeerID"

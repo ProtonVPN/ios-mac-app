@@ -16,112 +16,89 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if os(iOS) && DEBUG
-    import ConnectionShared
-    import CryptoKit
-    import Foundation
-    import os
-    import VPNCoreTypes
+import ConnectionShared
+import CryptoKit
+import Dependencies
+import Foundation
+import os
+import VPNCoreTypes
 
-    final class SecurePersistentCache: PersistentCache {
-        private let service: String
+final class SecurePersistentCache: PersistentCache {
+    private let service: String
 
-        init() {
-            self.service = "ProTUN"
-        }
+    init() {
+        self.service = "ProTUN"
+    }
 
-        init(config _: ProTUNConfiguration, clientPrivateKey: String) {
-            let digest = SHA256.hash(data: Data(clientPrivateKey.utf8))
-            let suffix = digest.prefix(8).map { String(format: "%02x", $0) }.joined()
-            self.service = "ProTUN_\(suffix)"
-        }
+    init(clientPrivateKey: String) {
+        let digest = SHA256.hash(data: Data(clientPrivateKey.utf8))
+        let suffix = digest.prefix(8).map { String(format: "%02x", $0) }.joined()
+        self.service = "ProTUN_\(suffix)"
+    }
 
-        func put(key: CacheKey, bytes: Data) {
-            let query = [
-                kSecClass: kSecClassGenericPassword,
-                kSecAttrService: service,
-                kSecAttrAccount: key.keychainAccount,
-            ] as CFDictionary
+    func put(key: CacheKey, bytes: Data) {
+        @Dependency(\.lightKeychain) var lightKeychain
 
-            let updateStatus = SecItemUpdate(query, [kSecValueData: bytes] as CFDictionary)
-            switch updateStatus {
-            case errSecSuccess:
-                Logger.adapter.debug("Updated Keychain item for \(key, privacy: .public)")
-            case errSecItemNotFound:
-                let addStatus = SecItemAdd(
-                    [
-                        kSecClass: kSecClassGenericPassword,
-                        kSecAttrService: service,
-                        kSecAttrAccount: key.keychainAccount,
-                        kSecValueData: bytes,
-                        kSecAttrAccessible: kSecAttrAccessibleAfterFirstUnlock,
-                    ] as CFDictionary,
-                    nil
-                )
-                if addStatus == errSecSuccess {
-                    Logger.adapter.debug("Added Keychain item for \(key, privacy: .public)")
-                } else {
-                    Logger.adapter.error("Failed to add Keychain item for \(key, privacy: .public): \(describe(addStatus), privacy: .public)")
-                }
-            default:
-                Logger.adapter.error("Failed to update Keychain item for \(key, privacy: .public): \(describe(updateStatus), privacy: .public)")
+        let updateStatus = lightKeychain.updateStatus(service: service, account: key.keychainAccount, bytes: bytes)
+        switch updateStatus {
+        case errSecSuccess:
+            Logger.adapter.debug("Updated Keychain item for \(key, privacy: .public)")
+        case errSecItemNotFound:
+            let addStatus = lightKeychain.addPassword(service: service, account: key.keychainAccount, bytes: bytes)
+            if addStatus == errSecSuccess {
+                Logger.adapter.debug("Added Keychain item for \(key, privacy: .public)")
+            } else {
+                Logger.adapter.error("Failed to add Keychain item for \(key, privacy: .public): \(describe(addStatus), privacy: .public)")
             }
+        default:
+            Logger.adapter.error("Failed to update Keychain item for \(key, privacy: .public): \(describe(updateStatus), privacy: .public)")
         }
+    }
 
-        func get(key: CacheKey) -> Data? {
-            var result: AnyObject?
-            let status = SecItemCopyMatching(
-                [
-                    kSecClass: kSecClassGenericPassword,
-                    kSecAttrService: service,
-                    kSecAttrAccount: key.keychainAccount,
-                    kSecReturnData: true,
-                ] as CFDictionary,
-                &result
-            )
+    func get(key: CacheKey) -> Data? {
+        @Dependency(\.lightKeychain) var lightKeychain
 
-            if status == errSecSuccess {
-                return result as? Data
-            } else if status != errSecItemNotFound {
-                Logger.adapter.error("Failed to retrieve Keychain item for \(key, privacy: .public): \(describe(status), privacy: .public)")
-            }
+        let (status, data) = lightKeychain.getPassword(service: service, account: key.keychainAccount)
+
+        guard status == errSecSuccess, let data else {
+            Logger.adapter.error("Failed to retrieve Keychain item for \(key, privacy: .public): \(describe(status), privacy: .public)")
             return nil
         }
 
-        func clear() {
-            let status = SecItemDelete(
-                [
-                    kSecClass: kSecClassGenericPassword,
-                    kSecAttrService: service,
-                ] as CFDictionary
-            )
-            if status != errSecSuccess, status != errSecItemNotFound {
-                Logger.adapter.error("Failed to clear Keychain items: \(describe(status), privacy: .public)")
-            }
-        }
+        return data
     }
 
-    private func describe(_ status: OSStatus) -> String {
-        let message = SecCopyErrorMessageString(status, nil) as String? ?? "unknown error"
-        return "\(message) (OSStatus \(status))"
-    }
+    func clear() {
+        @Dependency(\.lightKeychain) var lightKeychain
 
-    extension CacheKey {
-        var keychainAccount: String {
-            description
+        let status = lightKeychain.clear(service: service)
+
+        if status != errSecSuccess, status != errSecItemNotFound {
+            Logger.adapter.error("Failed to clear Keychain items: \(describe(status), privacy: .public)")
         }
     }
+}
 
-    extension CacheKey: CustomStringConvertible {
-        public var description: String {
-            switch self {
-            case .certificate:
-                "certificate"
-            case .privateKey:
-                "privateKey"
-            case .apiSession:
-                "apiSession"
-            }
+private func describe(_ status: OSStatus) -> String {
+    let message = SecCopyErrorMessageString(status, nil) as String? ?? "unknown error"
+    return "\(message) (OSStatus \(status))"
+}
+
+extension CacheKey {
+    var keychainAccount: String {
+        description
+    }
+}
+
+extension CacheKey: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .certificate:
+            "certificate"
+        case .privateKey:
+            "privateKey"
+        case .apiSession:
+            "apiSession"
         }
     }
-#endif
+}

@@ -214,10 +214,8 @@ public struct CoreConnectionFeature: Sendable {
 
             case .tunnel(.tunnelReasserting(.forkSelectorRequest)):
                 return .run { _ in
-                    #if os(iOS) && DEBUG
-                        @Dependency(\.forkSelectorClient) var forkSelectorClient
-                        try await forkSelectorClient.pushSelector()
-                    #endif
+                    @Dependency(\.forkSelectorClient) var forkSelectorClient
+                    try await forkSelectorClient.pushSelector()
                 } catch: { error, send in
                     await send(.tunnel(.tunnelStartRequestFinished(.failure(error))))
                 }
@@ -267,6 +265,8 @@ public struct CoreConnectionFeature: Sendable {
             return .send(.delegate(.featuresChanged(features)))
 
         case let .error(error):
+            SentryHelper.shared?.log(error: error)
+
             switch error {
             case .certificateRefreshFatalError:
                 log.error("Local Agent reported a fatal certificate refresh error", category: .connection)

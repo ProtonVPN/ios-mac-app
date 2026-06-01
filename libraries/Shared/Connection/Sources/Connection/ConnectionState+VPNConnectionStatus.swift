@@ -67,7 +67,7 @@ public extension ConnectionState {
         case .ike:
             .ike
         case let .wireGuard(settings):
-            settings.transport.map { VpnProtocol.wireGuard($0) }
+            settings.transport.map(VpnProtocol.wireGuard)
         case nil:
             nil
         }

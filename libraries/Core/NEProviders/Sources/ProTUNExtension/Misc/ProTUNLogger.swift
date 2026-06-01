@@ -16,23 +16,21 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if os(iOS) && DEBUG
-    import OSLog
+import OSLog
 
-    final class ProTUNLogger: ClientLogger {
-        func log(level: LogLevel, message: String) {
-            switch level {
-            case .trace:
-                Logger.library.trace("\(message, privacy: .public)")
-            case .debug:
-                Logger.library.debug("\(message, privacy: .public)")
-            case .info:
-                Logger.library.info("\(message, privacy: .public)")
-            case .warn:
-                Logger.library.warning("\(message, privacy: .public)")
-            case .error:
-                Logger.library.error("\(message, privacy: .public)")
-            }
+final class ProTUNLogger: ClientLogger {
+    func log(level: LogLevel, message: String) {
+        switch level {
+        case .trace:
+            Logger.library.trace("\(message, privacy: .public)")
+        case .debug:
+            Logger.library.debug("\(message, privacy: .public)")
+        case .info:
+            Logger.library.info("\(message, privacy: .public)")
+        case .warn:
+            Logger.library.warning("\(message, privacy: .public)")
+        case .error:
+            Logger.library.error("\(message, privacy: .public)")
         }
     }
-#endif
+}

@@ -16,105 +16,107 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if os(iOS) && DEBUG
-    import CommonNetworking
-    import CoreConnection
-    import Dependencies
-    import DependenciesMacros
+import CommonNetworking
+import CoreConnection
+import Dependencies
+import DependenciesMacros
+import VPNAppCore
 
-    public enum ForkSelectorClientError: Error {
-        case cancelled
-        case sessionForkingFailed(Error)
-        case ipcInvalidResponse
+public enum ForkSelectorClientError: Error {
+    case cancelled
+    case sessionForkingFailed(Error)
+    case ipcInvalidResponse
+}
+
+@DependencyClient
+public struct ForkSelectorClient: DependencyKey {
+    public internal(set) var pushSelector: () async throws -> Void
+}
+
+public extension DependencyValues {
+    var forkSelectorClient: ForkSelectorClient {
+        get { self[ForkSelectorClient.self] }
+        set { self[ForkSelectorClient.self] = newValue }
     }
+}
 
-    @DependencyClient
-    public struct ForkSelectorClient: DependencyKey {
-        public internal(set) var pushSelector: () async throws -> Void
-    }
+extension ForkSelectorClient {
+    private static let pathStatusCheckingInterval: Duration = .milliseconds(250)
+    private static let pathStatusDeadline: Duration = .seconds(2)
+    private static let forkingSessionRetriesCount: Int = 3
 
-    public extension DependencyValues {
-        var forkSelectorClient: ForkSelectorClient {
-            get { self[ForkSelectorClient.self] }
-            set { self[ForkSelectorClient.self] = newValue }
-        }
-    }
+    struct ForkingExhaustedRetriesError: Swift.Error {}
 
-    extension ForkSelectorClient {
-        private static let pathStatusCheckingInterval: Duration = .milliseconds(250)
-        private static let pathStatusDeadline: Duration = .seconds(2)
-        private static let forkingSessionRetriesCount: Int = 3
+    private static func retry<Output>(
+        count: Int,
+        retryDelay: Duration,
+        operation: () async throws -> Output
+    ) async throws -> Output {
+        @Dependency(\.continuousClock) var clock
 
-        struct ForkingExhaustedRetriesError: Swift.Error {}
+        var lastError: Error?
 
-        private static func retry<Output>(
-            count: Int,
-            retryDelay: Duration,
-            operation: () async throws -> Output
-        ) async throws -> Output {
-            @Dependency(\.continuousClock) var clock
-
-            var lastError: Error?
-
-            for _ in 0 ..< count {
-                try Task.checkCancellation()
-                do {
-                    return try await operation()
-                } catch is CancellationError {
-                    throw CancellationError()
-                } catch {
-                    lastError = error
-                    try await clock.sleep(for: retryDelay)
-                    continue
-                }
-            }
-
-            throw lastError ?? ForkingExhaustedRetriesError()
-        }
-
-        private static func forkSession(retries: Int) async throws(ForkSelectorClientError) -> String {
-            @Dependency(\.sessionService) var sessionService
-
+        for _ in 0 ..< count {
+            try Task.checkCancellation()
             do {
-                return try await retry(count: retries, retryDelay: .seconds(1)) {
-                    try await sessionService.selector(.appContext(.proTUNExtension))
-                }
+                return try await operation()
             } catch is CancellationError {
-                throw .cancelled
+                throw CancellationError()
             } catch {
-                throw .sessionForkingFailed(error)
+                lastError = error
+                try await clock.sleep(for: retryDelay)
+                continue
             }
         }
 
-        public static let liveValue: ForkSelectorClient = .init {
-            do {
-                @Dependency(\.tunnelMessageSender) var messageSender
-                @Dependency(\.continuousClock) var clock
-                @Dependency(\.sessionService) var sessionService
-                @Dependency(\.nwStatusStream) var nwStatusStream
+        throw lastError ?? ForkingExhaustedRetriesError()
+    }
 
-                try await nwStatusStream()
-                    .when(
-                        equals: .satisfied,
-                        every: Self.pathStatusCheckingInterval,
-                        on: AnyClock(clock),
-                        deadline: Self.pathStatusDeadline
-                    ) {
-                        let selector = try await forkSession(retries: Self.forkingSessionRetriesCount)
-                        let response = try await messageSender.sendProTUN(.init(payload: .pushSelector(selector)))
-                        guard case .ack = response.payload else {
-                            throw ForkSelectorClientError.ipcInvalidResponse
-                        }
-                    }
-            } catch _ as CancellationError {
-                throw ForkSelectorClientError.cancelled
-            } catch let error as ForkSelectorClientError {
-                throw error
-            } catch {
-                assertionFailure("Pushing selector failed with an unhandled error: \(error)")
-                log.error("Pushing selector failed with an unhandled error: \(error)")
-                throw ForkSelectorClientError.sessionForkingFailed(error)
+    private static func forkSession(retries: Int) async throws(ForkSelectorClientError) -> String {
+        @Dependency(\.sessionService) var sessionService
+
+        do {
+            return try await retry(count: retries, retryDelay: .seconds(1)) {
+                try await sessionService.selector(.appContext(.proTUNExtension))
             }
+        } catch is CancellationError {
+            throw .cancelled
+        } catch {
+            throw .sessionForkingFailed(error)
         }
     }
-#endif
+
+    public static let liveValue: ForkSelectorClient = .init {
+        do {
+            @Dependency(\.tunnelMessageSender) var messageSender
+            @Dependency(\.continuousClock) var clock
+            @Dependency(\.sessionService) var sessionService
+            @Dependency(\.nwStatusStream) var nwStatusStream
+
+            // Shortly after tunnel bringup, the network path may not yet be satisfied.
+            // Wait for a satisfied path before issuing the fork request.
+            try await nwStatusStream()
+                .when(
+                    equals: .satisfied,
+                    every: Self.pathStatusCheckingInterval,
+                    on: AnyClock(clock),
+                    deadline: Self.pathStatusDeadline
+                ) {
+                    let selector = try await forkSession(retries: Self.forkingSessionRetriesCount)
+                    let response = try await messageSender.sendProTUN(.init(payload: .pushSelector(selector)))
+                    guard case .ack = response.payload else {
+                        throw ForkSelectorClientError.ipcInvalidResponse
+                    }
+                }
+        } catch _ as CancellationError {
+            throw ForkSelectorClientError.cancelled
+        } catch let error as ForkSelectorClientError {
+            throw error
+        } catch {
+            assertionFailure("Pushing selector failed with an unhandled error: \(error)")
+            log.error("Pushing selector failed with an unhandled error: \(error)")
+            SentryHelper.shared?.log(error: error)
+            throw ForkSelectorClientError.sessionForkingFailed(error)
+        }
+    }
+}

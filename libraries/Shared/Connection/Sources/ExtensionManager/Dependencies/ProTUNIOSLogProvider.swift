@@ -16,78 +16,76 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if DEBUG && os(iOS)
-    import let CoreConnection.log
-    import Dependencies
-    import ExtensionIPC
-    import Foundation
-    import PMLogger
+import let CoreConnection.log
+import Dependencies
+import ExtensionIPC
+import Foundation
+import PMLogger
 
-    public struct ProTUNIOSLogProvider {
-        public let logContentForAppGroup: (_ appGroup: String) -> LogArchiveContent
+public struct ProTUNIOSLogProvider {
+    public let logContentForAppGroup: (_ appGroup: String) -> LogArchiveContent
+}
+
+extension ProTUNIOSLogProvider: DependencyKey {
+    public static let liveValue: ProTUNIOSLogProvider = .init(
+        logContentForAppGroup: { appGroup in
+            ProTUNIOSLogContent(appGroup: appGroup)
+        }
+    )
+}
+
+public extension DependencyValues {
+    var protunIOSLogProvider: ProTUNIOSLogProvider {
+        get { self[ProTUNIOSLogProvider.self] }
+        set { self[ProTUNIOSLogProvider.self] = newValue }
+    }
+}
+
+private struct ProTUNIOSLogContent: LogArchiveContent {
+    private let appGroup: String
+
+    fileprivate init(appGroup: String) {
+        self.appGroup = appGroup
     }
 
-    extension ProTUNIOSLogProvider: DependencyKey {
-        public static let liveValue: ProTUNIOSLogProvider = .init(
-            logContentForAppGroup: { appGroup in
-                ProTUNIOSLogContent(appGroup: appGroup)
-            }
-        )
-    }
-
-    public extension DependencyValues {
-        var protunIOSLogProvider: ProTUNIOSLogProvider {
-            get { self[ProTUNIOSLogProvider.self] }
-            set { self[ProTUNIOSLogProvider.self] = newValue }
+    func loadContent(callback: @escaping (String) -> Void) {
+        Task(priority: .userInitiated) {
+            let content = await getLogContents()
+            callback(content)
         }
     }
 
-    private struct ProTUNIOSLogContent: LogArchiveContent {
-        private let appGroup: String
-
-        fileprivate init(appGroup: String) {
-            self.appGroup = appGroup
-        }
-
-        func loadContent(callback: @escaping (String) -> Void) {
-            Task(priority: .userInitiated) {
-                let content = await getLogContents()
-                callback(content)
-            }
-        }
-
-        func loadContent() async -> String {
-            await getLogContents()
-        }
-
-        private func getLogContents() async -> String {
-            @Dependency(\.tunnelMessageSender) var messageSender
-
-            guard let response = try? await messageSender.sendProTUN(.init(payload: .flushLogsToFile)) else {
-                return ""
-            }
-            guard case let .logs(.success(url)) = response.payload else {
-                return ""
-            }
-            guard let contents = try? String(contentsOf: url), !contents.isEmpty else {
-                log.error("No content in ProTUN log file with url: \(url)")
-                return ""
-            }
-
-            return contents
-        }
-
-        func loadArchive() async -> URL? {
-            @Dependency(\.tunnelMessageSender) var messageSender
-
-            guard let response = try? await messageSender.sendProTUN(.init(payload: .retrieveLogsArchive)) else {
-                return nil
-            }
-            guard case let .logs(.success(url)) = response.payload else {
-                return nil
-            }
-
-            return url
-        }
+    func loadContent() async -> String {
+        await getLogContents()
     }
-#endif
+
+    private func getLogContents() async -> String {
+        @Dependency(\.tunnelMessageSender) var messageSender
+
+        guard let response = try? await messageSender.sendProTUN(.init(payload: .flushLogsToFile)) else {
+            return ""
+        }
+        guard case let .logs(.success(url)) = response.payload else {
+            return ""
+        }
+        guard let contents = try? String(contentsOf: url), !contents.isEmpty else {
+            log.error("No content in ProTUN log file with url: \(url)")
+            return ""
+        }
+
+        return contents
+    }
+
+    func loadArchive() async -> URL? {
+        @Dependency(\.tunnelMessageSender) var messageSender
+
+        guard let response = try? await messageSender.sendProTUN(.init(payload: .retrieveLogsArchive)) else {
+            return nil
+        }
+        guard case let .logs(.success(url)) = response.payload else {
+            return nil
+        }
+
+        return url
+    }
+}

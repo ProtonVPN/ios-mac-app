@@ -16,71 +16,69 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if os(iOS) && DEBUG
-    import Domain
-    import LocalAgent
-    import LocalAgentIPC
+import Domain
+import LocalAgent
+import LocalAgentIPC
 
-    extension NetshieldLevel {
-        var toNetShieldType: NetShieldType {
-            switch self {
-            case .none: .off
-            case .malwareFilter: .level1
-            case .adsAndMalwareFilter: .level2
-            }
-        }
-
-        var toPayload: IPCLANetshieldLevel {
-            switch self {
-            case .none: .off
-            case .malwareFilter: .malware
-            case .adsAndMalwareFilter: .adsAndMalware
-            }
+extension NetshieldLevel {
+    var toNetShieldType: NetShieldType {
+        switch self {
+        case .none: .off
+        case .malwareFilter: .level1
+        case .adsAndMalwareFilter: .level2
         }
     }
 
-    extension LocalAgentSettingType: CustomStringConvertible {
-        public var description: String {
-            switch self {
-            case .netshieldLevel:
-                "netshieldLevel"
-            case .bouncing:
-                "bouncing"
-            case .portForwarding:
-                "portForwarding"
-            case .splitTcp:
-                "splitTcp"
-            case .safeMode:
-                "safeMode"
-            case .randomNat:
-                "randomNat"
-            }
+    var toPayload: IPCLANetshieldLevel {
+        switch self {
+        case .none: .off
+        case .malwareFilter: .malware
+        case .adsAndMalwareFilter: .adsAndMalware
         }
     }
+}
 
-    extension LocalAgentSettingType {
-        var toAgentSetting: LocalAgent.SettingType {
-            switch self {
-            case .netshieldLevel: .netshieldLevel
-            case .bouncing: .bouncing
-            case .portForwarding: .portForwarding
-            case .splitTcp: .splitTcp
-            case .safeMode: .safeMode
-            case .randomNat: .randomNat
-            }
+extension LocalAgentSettingType: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .netshieldLevel:
+            "netshieldLevel"
+        case .bouncing:
+            "bouncing"
+        case .portForwarding:
+            "portForwarding"
+        case .splitTcp:
+            "splitTcp"
+        case .safeMode:
+            "safeMode"
+        case .randomNat:
+            "randomNat"
         }
     }
+}
 
-    extension LocalAgentSettings {
-        var toVPNConnectionFeatures: VPNConnectionFeatures {
-            .init(
-                netshield: netshieldLevel?.toNetShieldType ?? .off,
-                vpnAccelerator: splitTcp ?? false,
-                bouncing: nil, // TODO: what should we do here?
-                natType: randomNat.flatMap { NATType(flag: $0) } ?? .default,
-                safeMode: softJail ?? false,
-                portForwarding: portForwarding
-            )
+extension LocalAgentSettingType {
+    var toAgentSetting: LocalAgent.SettingType {
+        switch self {
+        case .netshieldLevel: .netshieldLevel
+        case .bouncing: .bouncing
+        case .portForwarding: .portForwarding
+        case .splitTcp: .splitTcp
+        case .safeMode: .safeMode
+        case .randomNat: .randomNat
         }
     }
-#endif
+}
+
+extension LocalAgentSettings {
+    var toVPNConnectionFeatures: VPNConnectionFeatures {
+        .init(
+            netshield: netshieldLevel?.toNetShieldType ?? .off,
+            vpnAccelerator: splitTcp ?? false,
+            bouncing: nil, // TODO: what should we do here?
+            natType: randomNat.flatMap { NATType(flag: $0) } ?? .default,
+            safeMode: softJail ?? false,
+            portForwarding: portForwarding
+        )
+    }
+}

@@ -16,73 +16,71 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if os(iOS) && DEBUG
-    import Ergonomics
-    import os.log
+import Ergonomics
+import os.log
 
-    final class ProTUNAdapterStateDelegate: Sendable {
-        private enum StateDelegateError: Error {
-            case streamTerminated
-        }
+final class ProTUNAdapterStateDelegate: Sendable {
+    private enum StateDelegateError: Error {
+        case streamTerminated
+    }
 
-        let stateSource: StreamSource<VpnState>
+    let stateSource: StreamSource<VpnState>
 
-        var state: VpnState {
-            get async throws {
-                if let state = await coordinator.state {
-                    return state
-                }
-                for await state in stateSource.newStream {
-                    return state
-                }
-                throw StateDelegateError.streamTerminated
+    var state: VpnState {
+        get async throws {
+            if let state = await coordinator.state {
+                return state
             }
-        }
-
-        private let coordinator: StateCoordinator
-        private let continuation: AsyncStream<VpnState>.Continuation
-
-        private let task: Task<Void, Never>
-
-        init() {
-            let (stream, continuation) = AsyncStream<VpnState>.makeStream()
-            self.continuation = continuation
-            self.stateSource = StreamSource.source(for: stream)
-            self.coordinator = StateCoordinator()
-            self.task = Task { [unowned coordinator, stateSource] in
-                await coordinator.startListening(to: stateSource)
+            for await state in stateSource.newStream {
+                return state
             }
-        }
-
-        deinit {
-            task.cancel()
+            throw StateDelegateError.streamTerminated
         }
     }
 
-    extension ProTUNAdapterStateDelegate: StateChangedCallback {
-        func onStateChanged(state: VpnState) {
-            continuation.yield(state)
+    private let coordinator: StateCoordinator
+    private let continuation: AsyncStream<VpnState>.Continuation
+
+    private let task: Task<Void, Never>
+
+    init() {
+        let (stream, continuation) = AsyncStream<VpnState>.makeStream()
+        self.continuation = continuation
+        self.stateSource = StreamSource.source(for: stream)
+        self.coordinator = StateCoordinator()
+        self.task = Task { [unowned coordinator, stateSource] in
+            await coordinator.startListening(to: stateSource)
         }
     }
 
-    extension ProTUNAdapterStateDelegate {
-        private actor StateCoordinator {
-            enum Error: Swift.Error {
-                case listeningFailed
-            }
+    deinit {
+        task.cancel()
+    }
+}
 
-            private(set) var state: VpnState? {
-                didSet {
-                    let stateDescription = state?.description ?? "nil"
-                    Logger.adapter.info("Internal ProTUN state changed: \(stateDescription, privacy: .public)")
-                }
-            }
+extension ProTUNAdapterStateDelegate: StateChangedCallback {
+    func onStateChanged(state: VpnState) {
+        continuation.yield(state)
+    }
+}
 
-            func startListening(to stateSource: StreamSource<VpnState>) async {
-                for await newState in stateSource.newStream {
-                    state = newState
-                }
+extension ProTUNAdapterStateDelegate {
+    private actor StateCoordinator {
+        enum Error: Swift.Error {
+            case listeningFailed
+        }
+
+        private(set) var state: VpnState? {
+            didSet {
+                let stateDescription = state?.description ?? "nil"
+                Logger.adapter.info("Internal ProTUN state changed: \(stateDescription, privacy: .public)")
+            }
+        }
+
+        func startListening(to stateSource: StreamSource<VpnState>) async {
+            for await newState in stateSource.newStream {
+                state = newState
             }
         }
     }
-#endif
+}

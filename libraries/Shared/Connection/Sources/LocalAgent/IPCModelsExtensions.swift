@@ -77,7 +77,7 @@ private extension NetShieldType {
         case .off: .off
         case .level1: .malware
         case .level2: .adsAndMalware
-        case .level3: .adsAndMalware // TODO: Handle this specific level when Rust supports it as well
+        case .level3: .adsAndMalwareAndAdultContent
         }
     }
 }

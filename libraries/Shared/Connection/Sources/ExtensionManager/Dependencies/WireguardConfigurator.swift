@@ -367,7 +367,7 @@ extension Server {
         try [peerWithDefaultIP(with: wgConfig)].compactMap { $0 } + peersWithOverriddenIPs(with: wgConfig)
     }
 
-    private func peerWithDefaultIP(with config: WireguardConfig) throws -> ProTUNConfiguration.Peer? {
+    private func peerWithDefaultIP(with config: WireguardConfig) throws(ManagerConfigurationError) -> ProTUNConfiguration.Peer? {
         let perTransportPortOverrides: [Domain.WireGuardTransport: [UInt16]] = Domain.WireGuardTransport.allCases
             .reduce(into: [:]) { overrides, transport in
                 let usesDefaultIp = endpoint.entryIp(using: .wireGuard(transport)) == endpoint.entryIp
@@ -382,7 +382,10 @@ extension Server {
             return nil
         }
         guard let entryIp = endpoint.entryIp else {
-            throw ManagerConfigurationError.entryIpMissing
+            throw .entryIpMissing
+        }
+        guard let serverPublicKey = endpoint.x25519PublicKey else {
+            throw .emptyServerPublicKey
         }
         return ProTUNConfiguration.Peer(
             id: endpoint.id,
@@ -395,7 +398,7 @@ extension Server {
         )
     }
 
-    private func peersWithOverriddenIPs(with config: WireguardConfig) throws -> [ProTUNConfiguration.Peer] {
+    private func peersWithOverriddenIPs(with config: WireguardConfig) -> [ProTUNConfiguration.Peer] {
         Domain.WireGuardTransport.allCases
             .compactMap { transport in
                 guard let customIp = endpoint.entryIp(using: .wireGuard(transport)) else {
@@ -439,4 +442,5 @@ extension WireguardConfig {
 
 enum ManagerConfigurationError: Error {
     case entryIpMissing
+    case emptyServerPublicKey
 }

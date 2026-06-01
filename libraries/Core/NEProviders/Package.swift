@@ -83,7 +83,7 @@ let package = Package(
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "NetworkingErgonomics", package: "Ergonomics"),
-                .target(name: "protunFFI", condition: .when(platforms: [.iOS])),
+                .target(name: "protunFFI"),
             ],
             plugins: protunExtensionPlugins
         ),

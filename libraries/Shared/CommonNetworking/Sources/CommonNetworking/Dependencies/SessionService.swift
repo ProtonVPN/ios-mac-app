@@ -103,10 +103,10 @@ public struct SessionService: DependencyKey {
         @Dependency(\.networking) var networking
 
         return SessionService(
-            selector: { _ in
+            selector: { context in
                 let forkRequest = ForkSessionRequest(
                     useCase: .getSelector(
-                        clientId: "ios-vpn", // TODO: is `context.clientId` (ios-protunextension) accepted here?
+                        clientId: context.clientId,
                         independent: false
                     )
                 )

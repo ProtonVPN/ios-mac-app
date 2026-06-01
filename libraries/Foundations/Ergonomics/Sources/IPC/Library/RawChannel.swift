@@ -98,7 +98,7 @@ public extension IPCNotifications.RawChannel {
 
     /// Reads a consistent snapshot.
     /// - Parameter retries: the amount of retries if seqlock doesn't match.
-    /// - Returns: An optional `Payload` value, or `nil` if write contention prevented a clean read.
+    /// - Returns: A `Payload` value, or throws if it wasn't able to extract a value from the buffer.
     func read(retries: Int = 20) throws -> Payload {
         let offset = payloadOffset
         return try buffer.withUnsafeMutableBytes { base in

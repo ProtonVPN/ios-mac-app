@@ -1,5 +1,5 @@
 //
-//  Created on 18/02/2026 by adam.
+//  Created on 18/02/2026.
 //
 //  Copyright (c) 2026 Proton AG
 //
@@ -16,161 +16,158 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if DEBUG && os(iOS)
-    import Domain
-    import Foundation
-    import NetworkExtension // for updating the provider configuration
-    import OSLog
+import Dependencies
+import Domain
+import Foundation
+import NetworkExtension // for updating the provider configuration
+import OSLog
 
-    enum MessageRouter {
-        typealias Request = ProTUNMessage.Request
-        typealias Response = ProTUNMessage.Response
+enum MessageRouter {
+    typealias Request = ProTUNMessage.Request
+    typealias Response = ProTUNMessage.Response
 
-        static func route(_ request: Request, with adapter: ProTUNAdapter) async -> Response {
-            guard request.version <= ProTUNMessage.Version.current else {
-                return .requestVersionMismatchResponse(from: request.version)
+    static func route(_ request: Request, with adapter: ProTUNAdapter) async -> Response {
+        guard request.version <= ProTUNMessage.Version.current else {
+            return .requestVersionMismatchResponse(from: request.version)
+        }
+        switch request.payload {
+        case .ping:
+            return .init(payload: .pong)
+        case .flushLogsToFile:
+            return handleFlushLogsToFile()
+        case .retrieveLogsArchive:
+            return handleRetrieveLogsArchive()
+        case .getCurrentPeerID:
+            return await handleGetCurrentPeerID(from: adapter)
+        case let .pcapRequest(request):
+            return handlePacketCaptureRequest(request, with: adapter)
+        case let .pushSelector(selector):
+            return handlePushSelector(selector, with: adapter)
+        case .updateConfiguration:
+            return await handleConfigurationUpdate(with: adapter)
+        }
+    }
+}
+
+private extension MessageRouter {
+    static func handleGetCurrentPeerID(from adapter: ProTUNAdapter) async -> Response {
+        do {
+            let currentState = try await adapter.stateDelegate.state.connectionState
+            switch currentState {
+            case let .connected(peer, _), let .connectingToLocalAgent(peer, _):
+                return .init(payload: .currentPeerID(.success(peer.peerId)))
+            default:
+                Logger.provider.error("Received getCurrentPeerID but currently in \(currentState) state")
+                return .init(payload: .currentPeerID(.failure(.init(failureReason: "Received getCurrentPeerID but currently in \(currentState) state"))))
             }
-            switch request.payload {
-            case .ping:
-                return .init(payload: .pong)
-            case .flushLogsToFile:
-                return handleFlushLogsToFile()
-            case .retrieveLogsArchive:
-                return handleRetrieveLogsArchive()
-            case .getCurrentPeerID:
-                return await handleGetCurrentPeerID(from: adapter)
-            case let .pcapRequest(request):
-                return handlePacketCaptureRequest(request, with: adapter)
-            case let .pushSelector(selector):
-                return handlePushSelector(selector, with: adapter)
-            case .updateConfiguration:
-                return await handleConfigurationUpdate(with: adapter)
-            }
+        } catch {
+            Logger.provider.error("Failed to retrieve ProTUN state")
+            return .init(payload: .currentPeerID(.failure(.init(failureReason: "Failed to retrieve ProTUN state"))))
         }
     }
 
-    private extension MessageRouter {
-        static func handleGetCurrentPeerID(from adapter: ProTUNAdapter) async -> Response {
-            do {
-                let currentState = try await adapter.stateDelegate.state.connectionState
-                switch currentState {
-                case let .connected(peer, _), let .connectingToLocalAgent(peer, _):
-                    return .init(payload: .currentPeerID(.success(peer.peerId)))
-                default:
-                    Logger.provider.error("Received getCurrentPeerID but currently in \(currentState) state")
-                    return .init(payload: .currentPeerID(.failure(.init(failureReason: "Received getCurrentPeerID but currently in \(currentState) state"))))
-                }
-            } catch {
-                Logger.provider.error("Failed to retrieve ProTUN state")
-                return .init(payload: .currentPeerID(.failure(.init(failureReason: "Failed to retrieve ProTUN state"))))
+    static func handleFlushLogsToFile() -> Response {
+        do {
+            let logsURL = try Logger.flushToSingleFile()
+            return .init(payload: .logs(.success(logsURL)))
+        } catch {
+            return .init(payload: .logs(.failure(.init(failureReason: error.localizedDescription))))
+        }
+    }
+
+    static func handleRetrieveLogsArchive() -> Response {
+        do {
+            let logsURL = try Logger.retrieveSessionArchive()
+            return .init(payload: .logs(.success(logsURL)))
+        } catch {
+            return .init(payload: .logs(.failure(.init(failureReason: error.localizedDescription))))
+        }
+    }
+
+    static func handlePacketCaptureRequest(
+        _ request: ProTUNMessage.Request.PcapRequest,
+        with adapter: ProTUNAdapter
+    ) -> ProTUNMessage.Response {
+        switch request {
+        case .fileURL:
+            handlePacketCaptureFileURL()
+        case .toggleCapture:
+            handlePacketCaptureToggle(with: adapter)
+        case .isRecording:
+            handlePacketCaptureIsRecording(with: adapter)
+        case .cleanup:
+            handlePacketCaptureCleanup()
+        }
+    }
+
+    static func handlePacketCaptureFileURL() -> ProTUNMessage.Response {
+        let fileURL = PacketCaptureSession.retrieveLastPcapFileURL()
+        return .init(payload: .pcapUpdate(.fileURL(fileURL)))
+    }
+
+    static func handlePacketCaptureCleanup() -> ProTUNMessage.Response {
+        do {
+            let didCleanup = try PacketCaptureSession.cleanUpLastPcapFile()
+            return .init(payload: .pcapUpdate(.cleanupResult(.success(didCleanup))))
+        } catch {
+            return .init(payload: .pcapUpdate(.cleanupResult(.failure(.init(failureReason: error.localizedDescription)))))
+        }
+    }
+
+    static func handlePacketCaptureToggle(with adapter: ProTUNAdapter) -> ProTUNMessage.Response {
+        do {
+            if adapter.isPacketCaptureSessionRecording {
+                let (pcapFileURL, fileSize) = try adapter.stopPacketCapture(reason: .explicitStop)
+                return .init(payload: .pcapUpdate(.captureFinished(pcapFileURL, fileSize)))
+            } else {
+                let url = try adapter.startPacketCapture()
+                return .init(payload: .pcapUpdate(.captureStartResult(.success(url))))
             }
+        } catch {
+            let reason = error.localizedDescription
+            return .init(payload: .pcapUpdate(.captureStartResult(.failure(.init(failureReason: reason)))))
         }
+    }
 
-        static func handleFlushLogsToFile() -> Response {
-            do {
-                let logsURL = try Logger.flushToSingleFile()
-                return .init(payload: .logs(.success(logsURL)))
-            } catch {
-                return .init(payload: .logs(.failure(.init(failureReason: error.localizedDescription))))
-            }
+    static func handlePacketCaptureIsRecording(with adapter: ProTUNAdapter) -> ProTUNMessage.Response {
+        .init(payload: .pcapUpdate(.isRecording(adapter.isPacketCaptureSessionRecording)))
+    }
+
+    static func handlePushSelector(_ selector: String, with adapter: ProTUNAdapter) -> Response {
+        adapter.handleForkSelector(selector)
+        return .init(payload: .ack)
+    }
+
+    static func handleConfigurationUpdate(with adapter: ProTUNAdapter) async -> Response {
+        guard let provider = adapter.packetTunnelProvider else {
+            return .genericError("Missing reference to provider")
         }
+        provider.reasserting = true
 
-        static func handleRetrieveLogsArchive() -> Response {
-            do {
-                let logsURL = try Logger.retrieveSessionArchive()
-                return .init(payload: .logs(.success(logsURL)))
-            } catch {
-                return .init(payload: .logs(.failure(.init(failureReason: error.localizedDescription))))
-            }
-        }
-
-        static func handlePacketCaptureRequest(
-            _ request: ProTUNMessage.Request.PcapRequest,
-            with adapter: ProTUNAdapter
-        ) -> ProTUNMessage.Response {
-            switch request {
-            case .fileURL:
-                handlePacketCaptureFileURL()
-            case .toggleCapture:
-                handlePacketCaptureToggle(with: adapter)
-            case .isRecording:
-                handlePacketCaptureIsRecording(with: adapter)
-            case .cleanup:
-                handlePacketCaptureCleanup()
-            }
-        }
-
-        static func handlePacketCaptureFileURL() -> ProTUNMessage.Response {
-            let fileURL = PacketCaptureSession.retrieveLastPcapFileURL()
-            return .init(payload: .pcapUpdate(.fileURL(fileURL)))
-        }
-
-        static func handlePacketCaptureCleanup() -> ProTUNMessage.Response {
-            do {
-                let didCleanup = try PacketCaptureSession.cleanUpLastPcapFile()
-                return .init(payload: .pcapUpdate(.cleanupResult(.success(didCleanup))))
-            } catch {
-                return .init(payload: .pcapUpdate(.cleanupResult(.failure(.init(failureReason: error.localizedDescription)))))
-            }
-        }
-
-        static func handlePacketCaptureToggle(with adapter: ProTUNAdapter) -> ProTUNMessage.Response {
-            do {
-                if adapter.isPacketCaptureSessionRecording {
-                    let (pcapFileURL, fileSize) = try adapter.stopPacketCapture(reason: .explicitStop)
-                    return .init(payload: .pcapUpdate(.captureFinished(pcapFileURL, fileSize)))
-                } else {
-                    let url = try adapter.startPacketCapture()
-                    return .init(payload: .pcapUpdate(.captureStartResult(.success(url))))
-                }
-            } catch {
-                let reason = error.localizedDescription
-                return .init(payload: .pcapUpdate(.captureStartResult(.failure(.init(failureReason: reason)))))
-            }
-        }
-
-        static func handlePacketCaptureIsRecording(with adapter: ProTUNAdapter) -> ProTUNMessage.Response {
-            .init(payload: .pcapUpdate(.isRecording(adapter.isPacketCaptureSessionRecording)))
-        }
-
-        static func handlePushSelector(_ selector: String, with adapter: ProTUNAdapter) -> Response {
-            adapter.handleForkSelector(selector)
-            return .init(payload: .ack)
-        }
-
-        static func handleConfigurationUpdate(with adapter: ProTUNAdapter) async -> Response {
-            guard let provider = adapter.packetTunnelProvider else {
-                return .genericError("Missing reference to provider")
-            }
-            provider.reasserting = true
-
+        @Dependency(\.date.now) var now
+        do {
             // TODO: do this cleanly AND TEST IF IT WORKS PROPERLY IN RELEASE MODE
-            let managers = try! await NETunnelProviderManager.loadAllFromPreferences()
-            let proTUNManager = managers.first {
-                ($0.protocolConfiguration as? NETunnelProviderProtocol)?
-                    .providerBundleIdentifier == "ch.protonmail.vpn.ProTUN-Extension-Mobile"
-            }!
-            proTUNManager.localizedDescription = "\(Date.now)"
-            // proTUNManager.isOnDemandEnabled = false
-            try! await proTUNManager.saveToPreferences()
+            try await ConfigurationUpdater.setLocalizedDescriptionToProTUNConfiguration("\(now)")
+        } catch {
+            Logger.adapter.error("Unable to update configuration from extension with error: \(error)")
+        }
 
-            provider.reasserting = false
-            return .init(payload: .ack)
+        provider.reasserting = false
+        return .init(payload: .ack)
+    }
+}
+
+extension ConnectionState: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case let .disconnected(error):
+            "disconnected(\(String(describing: error)))"
+        case let .connecting(peers, waitReasons):
+            "connecting(\(peers), \(waitReasons)))"
+        case let .connectingToLocalAgent(peer, waitReason):
+            "connectingToLocalAgent(\(peer), \(String(describing: waitReason))))"
+        case let .connected(peer, agentInfo):
+            "connected(\(peer), \(String(describing: agentInfo))))"
         }
     }
-
-    extension ConnectionState: CustomStringConvertible {
-        public var description: String {
-            switch self {
-            case let .disconnected(error):
-                "disconnected(\(String(describing: error)))"
-            case let .connecting(peers, waitReasons):
-                "connecting(\(peers), \(waitReasons)))"
-            case let .connectingToLocalAgent(peer, waitReason):
-                "connectingToLocalAgent(\(peer), \(String(describing: waitReason))))"
-            case let .connected(peer, agentInfo):
-                "connected(\(peer), \(String(describing: agentInfo))))"
-            }
-        }
-    }
-#endif
+}

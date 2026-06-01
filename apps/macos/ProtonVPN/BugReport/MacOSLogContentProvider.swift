@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import Domain
 import Foundation
 import LegacyCommon
 import PMLogger
@@ -47,7 +48,21 @@ extension LogContentProvider {
             case .plutonium:
                 @Dependency(\.plutoniumMacLogProvider) var plutoniumMacLogProvider
                 return NELogContent(neLogProvider: plutoniumMacLogProvider)
+
+            case .protun, .protunArchive:
+                let appGroup: String = DomainConstants.AppGroups.main
+                @Dependency(\.protunIOSLogProvider) var protunIOSLogProvider
+                return protunIOSLogProvider.logContentForAppGroup(appGroup)
             }
+        },
+        getArchive: { source in
+            let appGroup: String = DomainConstants.AppGroups.main
+            @Dependency(\.protunIOSLogProvider) var protunIOSLogProvider
+            guard case .protunArchive = source else {
+                assertionFailure("Logs source available only for ProTUN")
+                return protunIOSLogProvider.logContentForAppGroup(appGroup)
+            }
+            return protunIOSLogProvider.logContentForAppGroup(appGroup)
         }
     )
 }

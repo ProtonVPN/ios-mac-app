@@ -16,25 +16,23 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if DEBUG && os(iOS)
-    import Foundation
-    import struct VPNCoreTypes.ProTUNConfiguration
+import Foundation
+import struct VPNCoreTypes.ProTUNConfiguration
 
-    extension PeerInfo {
-        init(from peer: ProTUNConfiguration.Peer) throws(ProTUNAdapter.Error) {
-            guard let serverPublicKeyData = Data(base64Encoded: peer.serverPublicKey) else {
-                throw .invalidKeys
-            }
-            self.init(
-                peerId: peer.id,
-                serverIp: peer.serverIP,
-                serverPublicKey: serverPublicKeyData,
-                udpPorts: peer.udpPorts,
-                tcpPorts: peer.tcpPorts,
-                tlsPorts: peer.tlsPorts,
-                priority: Int32(peer.priority),
-                exitLabel: nil
-            )
+extension PeerInfo {
+    init(from peer: ProTUNConfiguration.Peer) throws(ProTUNAdapter.Error) {
+        guard let serverPublicKeyData = Data(base64Encoded: peer.serverPublicKey) else {
+            throw .invalidKeys
         }
+        self.init(
+            peerId: peer.id,
+            serverIp: peer.serverIP,
+            serverPublicKey: serverPublicKeyData,
+            udpPorts: peer.udpPorts,
+            tcpPorts: peer.tcpPorts,
+            tlsPorts: peer.tlsPorts,
+            priority: Int32(peer.priority),
+            exitLabel: nil
+        )
     }
-#endif
+}
