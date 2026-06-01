@@ -48,9 +48,8 @@ extension LogContentProvider {
                 return wireguardIOSLogProvider.logContentForAppGroup(appGroup)
 
             case .protun, .protunArchive:
-                let appGroup: String = DomainConstants.AppGroups.main
-                @Dependency(\.protunIOSLogProvider) var protunIOSLogProvider
-                return protunIOSLogProvider.logContentForAppGroup(appGroup)
+                @Dependency(\.protunLogProvider) var protunLogProvider
+                return protunLogProvider.logContentForAppGroup()
 
             case .transactionLog:
                 @Dependency(\.paymentsPlanServiceV2) var paymentsPlanServiceV2
@@ -61,13 +60,13 @@ extension LogContentProvider {
             }
         },
         getArchive: { source in
-            let appGroup: String = DomainConstants.AppGroups.main
-            @Dependency(\.protunIOSLogProvider) var protunIOSLogProvider
+            // Not exposed for now, defaulting to returning classic log content
+            @Dependency(\.protunLogProvider) var protunLogProvider
             guard case .protunArchive = source else {
                 assertionFailure("Logs source available only for ProTUN")
-                return protunIOSLogProvider.logContentForAppGroup(appGroup)
+                return protunLogProvider.logContentForAppGroup()
             }
-            return protunIOSLogProvider.logContentForAppGroup(appGroup)
+            return protunLogProvider.logContentForAppGroup()
         }
     )
 }

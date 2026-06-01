@@ -99,7 +99,6 @@
                             clear: {}
                         )
                         $0.vpnAuthenticationStorage.getKeys = { .mock() }
-                        $0.wireguardExtensionConfigClient.pushConfig = { _ in false }
                     } operation: {
                         try await configurator.configure(&manager, for: .connection(intent))
                     }

@@ -22,32 +22,26 @@ import ExtensionIPC
 import Foundation
 import PMLogger
 
-public struct ProTUNIOSLogProvider {
-    public let logContentForAppGroup: (_ appGroup: String) -> LogArchiveContent
+public struct ProTUNLogProvider {
+    public let logContentForAppGroup: () -> LogArchiveContent
 }
 
-extension ProTUNIOSLogProvider: DependencyKey {
-    public static let liveValue: ProTUNIOSLogProvider = .init(
-        logContentForAppGroup: { appGroup in
-            ProTUNIOSLogContent(appGroup: appGroup)
+extension ProTUNLogProvider: DependencyKey {
+    public static let liveValue: ProTUNLogProvider = .init(
+        logContentForAppGroup: {
+            ProTUNLogContent()
         }
     )
 }
 
 public extension DependencyValues {
-    var protunIOSLogProvider: ProTUNIOSLogProvider {
-        get { self[ProTUNIOSLogProvider.self] }
-        set { self[ProTUNIOSLogProvider.self] = newValue }
+    var protunLogProvider: ProTUNLogProvider {
+        get { self[ProTUNLogProvider.self] }
+        set { self[ProTUNLogProvider.self] = newValue }
     }
 }
 
-private struct ProTUNIOSLogContent: LogArchiveContent {
-    private let appGroup: String
-
-    fileprivate init(appGroup: String) {
-        self.appGroup = appGroup
-    }
-
+private struct ProTUNLogContent: LogArchiveContent {
     func loadContent(callback: @escaping (String) -> Void) {
         Task(priority: .userInitiated) {
             let content = await getLogContents()
