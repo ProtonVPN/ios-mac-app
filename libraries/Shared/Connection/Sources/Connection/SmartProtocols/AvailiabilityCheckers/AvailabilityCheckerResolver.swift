@@ -18,7 +18,7 @@
 
 import Domain
 
-public final class AvailabilityCheckerResolver {
+public final class AvailabilityCheckerResolver: Sendable {
     let wireguardConfig: WireguardConfig
 
     public init(wireguardConfig: WireguardConfig) {

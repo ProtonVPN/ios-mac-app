@@ -7,7 +7,6 @@
 //
 
 import CoreConnection
-import Dispatch
 import Domain
 import Foundation
 import VPNAppCore

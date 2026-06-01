@@ -19,6 +19,7 @@
 import Combine
 import ComposableArchitecture
 import Connection
+import CoreConnection
 import CoreGraphics
 import Domain
 import Ergonomics
@@ -31,7 +32,6 @@ import ProtonCoreFeatureFlags
 import Sharing
 import Strings
 import VPNAppCore
-import VPNNetworking
 
 @Reducer
 struct SidebarFeature {

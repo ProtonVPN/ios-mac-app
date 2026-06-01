@@ -23,7 +23,7 @@
 import Ergonomics
 import Foundation
 
-public struct WireguardConfig: Codable, Equatable, DefaultableProperty {
+public struct WireguardConfig: Codable, Equatable, Sendable {
     public let defaultUdpPorts: [Int]
     public let defaultTcpPorts: [Int]
     public let defaultTlsPorts: [Int]
