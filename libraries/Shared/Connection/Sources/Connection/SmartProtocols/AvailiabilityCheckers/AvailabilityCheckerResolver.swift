@@ -17,18 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Domain
-import Foundation
-import VPNShared
 
-public protocol AvailabilityCheckerResolverFactory {
-    func makeAvailabilityCheckerResolver(wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver
-}
-
-public protocol AvailabilityCheckerResolver {
-    func availabilityChecker(for: VpnProtocol) -> SmartProtocolAvailabilityChecker
-}
-
-public final class AvailabilityCheckerResolverImplementation: AvailabilityCheckerResolver, Sendable {
+public final class AvailabilityCheckerResolver {
     let wireguardConfig: WireguardConfig
 
     public init(wireguardConfig: WireguardConfig) {

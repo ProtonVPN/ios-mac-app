@@ -316,8 +316,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             }
             if let clientConfig = properties.clientConfig {
                 // Apply Hermes DNS configuration when storing WireGuard config
-                propertiesManager.wireguardConfig = clientConfig.wireGuardConfig.refreshConfig()
-                propertiesManager.smartProtocolConfig = clientConfig.smartProtocolConfig
+                @Shared(.wireguardConfig) var wireguardConfig
+                $wireguardConfig.withLock { $0 = clientConfig.wireGuardConfig.refreshConfig() }
+                @Shared(.smartProtocolConfig) var smartProtocolConfig
+                $smartProtocolConfig.withLock { $0 = clientConfig.smartProtocolConfig }
                 propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
                 propertiesManager.featureFlags = clientConfig.featureFlags
 
@@ -629,6 +631,7 @@ private extension WireguardConfig {
 extension AppSessionManagerImplementation {
     @objc
     private func updateWiregardConfig(_: Notification) {
-        propertiesManager.wireguardConfig = propertiesManager.wireguardConfig.refreshConfig()
+        @Shared(.wireguardConfig) var wireguardConfig
+        $wireguardConfig.withLock { $0 = $0.refreshConfig() }
     }
 }

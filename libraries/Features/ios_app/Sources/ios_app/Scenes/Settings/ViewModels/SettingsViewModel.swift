@@ -825,9 +825,10 @@ final class SettingsViewModel {
     }
 
     private func pushProtocolViewController() {
+        @Shared(.smartProtocolConfig) var smartProtocolConfig
         let vpnProtocolViewModel = VpnProtocolViewModel(
             connectionProtocol: propertiesManager.connectionProtocol,
-            smartProtocolConfig: propertiesManager.smartProtocolConfig,
+            smartProtocolConfig: smartProtocolConfig,
             featureFlags: propertiesManager.featureFlags
         )
         vpnProtocolViewModel.protocolChangeConfirmation = { [unowned self] newProtocol, completion in

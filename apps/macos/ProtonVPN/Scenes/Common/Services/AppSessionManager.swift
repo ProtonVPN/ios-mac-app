@@ -185,8 +185,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         $userTier.withLock { $0 = credentials.maxTier }
 
         if let clientConfig = properties.clientConfig {
-            propertiesManager.wireguardConfig = clientConfig.wireGuardConfig
-            propertiesManager.smartProtocolConfig = clientConfig.smartProtocolConfig
+            @Shared(.wireguardConfig) var wireguardConfig
+            $wireguardConfig.withLock { $0 = clientConfig.wireGuardConfig }
+            @Shared(.smartProtocolConfig) var smartProtocolConfig
+            $smartProtocolConfig.withLock { $0 = clientConfig.smartProtocolConfig }
             propertiesManager.featureFlags = clientConfig.featureFlags
             propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
             @Dependency(\.serverChangeStorage) var storage
@@ -497,6 +499,7 @@ private extension WireguardConfig {
 extension AppSessionManagerImplementation {
     @objc
     private func updateWiregardConfig(_: Notification) {
-        propertiesManager.wireguardConfig = propertiesManager.wireguardConfig.refreshConfig()
+        @Shared(.wireguardConfig) var wireguardConfig
+        $wireguardConfig.withLock { $0 = $0.refreshConfig() }
     }
 }

@@ -20,9 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Dispatch
 import Domain
 import Foundation
-import VPNShared
 
 final class WireguardUDPAvailabilityChecker {
     let vpnProtocol: VpnProtocol = .wireGuard(.udp)

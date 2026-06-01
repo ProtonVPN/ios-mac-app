@@ -875,11 +875,12 @@ private extension SidebarFeature {
         connectionProtocol: ConnectionProtocol
     ) -> ConnectionPreparationIntent {
         let spec = enforceP2PIfPortForwardingEnabled(spec)
+        @Shared(.smartProtocolConfig) var smartProtocolConfig
         let acceptableProtocols: ProtocolSupport = switch connectionProtocol {
         case let .vpnProtocol(vpnProtocol):
             vpnProtocol.protocolSupport
         case .smartProtocol:
-            propertiesManager.smartProtocolConfig.supportedProtocols
+            smartProtocolConfig.supportedProtocols
                 .reduce(.zero) { $0.union($1.protocolSupport) }
         }
         return ConnectionPreparationIntent(
@@ -938,7 +939,8 @@ private extension SidebarFeature {
         if hermesIsEnabled, hermesIsAllowed {
             return VpnProtocol.wireGuardGatewayAddress
         }
-        return propertiesManager.wireguardConfig.dnsServers?.first ?? VpnProtocol.wireGuardGatewayAddress
+        @Shared(.wireguardConfig) var wireguardConfig
+        return wireguardConfig.dnsServers?.first ?? VpnProtocol.wireGuardGatewayAddress
     }
 }
 

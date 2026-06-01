@@ -29,7 +29,6 @@ import ProtonCorePushNotifications
 import Telemetry
 import Timer
 import VPNAppCore
-import VPNNetworking
 import VPNShared
 
 typealias PropertiesToOverride =
@@ -108,14 +107,6 @@ open class Container: PropertiesToOverride {
 extension Container: ProfileManagerFactory {
     public func makeProfileManager() -> ProfileManager {
         profileManager
-    }
-}
-
-// MARK: AvailabilityCheckerResolverFactory
-
-extension Container: AvailabilityCheckerResolverFactory {
-    public func makeAvailabilityCheckerResolver(wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
-        AvailabilityCheckerResolverImplementation(wireguardConfig: wireguardConfig)
     }
 }
 
