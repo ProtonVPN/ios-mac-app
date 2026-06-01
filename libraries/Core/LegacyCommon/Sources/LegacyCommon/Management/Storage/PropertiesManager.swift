@@ -41,7 +41,6 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var isSubsequentLaunch: Bool { get set }
     var firstLaunchReported: Bool { get set }
     var lastPreparedServer: ServerModel? { get set }
-    var lastConnectionRequest: ConnectionRequest? { get set }
 
     func getLastAccountPlan(for username: String) -> String?
     func setLastAccountPlan(for username: String, plan: String?)
@@ -157,7 +156,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case autoConnectProfile = "AutoConnect_"
         case connectOnDemand = "ConnectOnDemand"
         case lastPreparingServer = "LastPreparingServer"
-        case lastConnectionRequest = "LastConnectionRequest"
         case lastUserAccountPlan = "LastUserAccountPlan"
         case quickConnectProfile = "QuickConnect_"
 
@@ -251,7 +249,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     @BoolProperty(.connectOnDemand) public var hasConnected: Bool
 
     @Property(.lastPreparingServer) public var lastPreparedServer: ServerModel?
-    @Property(.lastConnectionRequest) public var lastConnectionRequest: ConnectionRequest?
 
     public func getLastAccountPlan(for username: String) -> String? {
         defaults.string(forKey: Keys.lastUserAccountPlan.rawValue + username)
@@ -613,12 +610,12 @@ extension SettingsStorageKey: @retroactive DependencyKey {
             propertiesManager.connectionProtocol = $0
         },
         getNetShield: {
-            @Dependency(\.propertiesManager) var propertiesManager
-            return propertiesManager.lastConnectionRequest?.netShieldType ?? .off
+            @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
+            return netShieldPropertyProvider.getNetShieldType()
         },
         setNetShield: {
-            @Dependency(\.propertiesManager) var propertiesManager
-            propertiesManager.lastConnectionRequest = propertiesManager.lastConnectionRequest?.withChanged(netShieldType: $0)
+            @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
+            netShieldPropertyProvider.setNetShieldType($0)
         },
         getEnvironment: {
             @Dependency(\.propertiesManager) var propertiesManager

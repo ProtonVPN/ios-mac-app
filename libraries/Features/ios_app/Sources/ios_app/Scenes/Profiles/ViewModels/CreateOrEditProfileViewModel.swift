@@ -156,7 +156,7 @@ class CreateOrEditProfileViewModel: NSObject {
         }
 
         // If not connected to current profile, just save it
-        guard !isSafeToEnd, let editedProfile, propertiesManager.lastConnectionRequest?.profileId == editedProfile.id else {
+        guard !isSafeToEnd, let editedProfile, connectionState.resolvedSpec?.profileId == editedProfile.id else {
             finishSaveProfile(completion: completion)
             return
         }

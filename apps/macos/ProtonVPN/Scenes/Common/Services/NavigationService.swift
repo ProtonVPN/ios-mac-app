@@ -180,14 +180,17 @@ class NavigationService {
         }
     }
 
+    private static let checkInterval: Duration = .milliseconds(200)
+    private static let timeOut: Duration = .seconds(10)
+
     private func waitForConnectionStateToResolve() async {
         guard connectionState.is(\.resolving) else { return }
         log.debug("Auto-connect deferred while connection state resolves", category: .app)
         do {
             try await $connectionState.when(
                 willMatch: { !$0.is(\.resolving) },
-                every: .milliseconds(200),
-                deadline: .seconds(3),
+                every: Self.checkInterval,
+                deadline: Self.timeOut,
                 operation: { _ in }
             )
         } catch {

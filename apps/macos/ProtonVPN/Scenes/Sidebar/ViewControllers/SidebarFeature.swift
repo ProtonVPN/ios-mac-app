@@ -69,7 +69,7 @@ struct SidebarFeature {
         /// `connectionState` (in-memory, process-local), so we keep a file-backed projection
         /// in App Group storage and write it from `connection.delegate.stateChanged`.
         /// **In-process callers must read `connectionState` directly, not this.**
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+        @Shared(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse: VPNConnectionStatusDoNotUse
         var connection: ConnectionFeature.State = .initialState
 
         enum ExpandState: Equatable {
@@ -193,6 +193,7 @@ struct SidebarFeature {
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
     @Dependency(\.networkInterfacePropertiesProvider) private var networkInterfacePropertiesProvider
+    @Dependency(\.sidebarProfileNameResolver) private var sidebarProfileNameResolver
 
     @Shared(.killSwitch) private var killSwitch: Bool
     @Shared(.plutoniumFeature) private var plutoniumFeature: PlutoniumFeatureToggle
@@ -605,7 +606,7 @@ private extension SidebarFeature {
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
                 state.$connectionState.withLock { $0 = connectionState }
-                state.$vpnConnectionStatus.withLock { $0 = connectionState.status }
+                state.$vpnConnectionStatusDoNotUse.withLock { $0 = connectionState.status }
                 return .merge(
                     .send(.connectionStateChanged(connectionState)),
                     .send(.syncNATPortMappingState),
@@ -788,7 +789,8 @@ private extension SidebarFeature {
            case .enabled = plutoniumFeature,
            effectiveProtocol == .vpnProtocol(.ike) {
             // Title includes the profile name when the connect originates from a saved profile.
-            let title: String = if let profileName = propertiesManager.lastConnectionRequest?.profileName {
+            let title: String = if let profileID = pending.spec.profileId,
+                                   let profileName = sidebarProfileNameResolver.profileName(profileID) {
                 Localizable.splitTunnelingConnectToProfileNameAlertTitle(profileName)
             } else {
                 Localizable.splitTunnelingConnectToProfileAlertTitle
@@ -813,21 +815,10 @@ private extension SidebarFeature {
            propertiesManager.featureFlags.unsafeLanWarnings,
            !killSwitch,
            let bad = networkInterfacePropertiesProvider.firstBadInterface() {
-            return AlertState {
-                TextState(Localizable.badInterfaceIpRangeAlertTitle)
-            } actions: {
-                ButtonState(action: .enableKillSwitchAndConnect(pending)) {
-                    TextState(Localizable.killSwitchEnable)
-                }
-                ButtonState(role: .destructive, action: .connectAnywayDespiteBadLAN(pending)) {
-                    TextState(Localizable.continue)
-                }
-            } message: {
-                TextState(Localizable.promptKillSwitchDueToBadInterfaceIpRange(
-                    bad.name ?? "Unknown Interface",
-                    bad.subnetDescription ?? "Unknown Subnet"
-                ))
-            }
+            return bad.interceptAlert(
+                enableKillSwitch: .enableKillSwitchAndConnect(pending),
+                connectAnyway: .connectAnywayDespiteBadLAN(pending)
+            )
         }
 
         return nil
@@ -948,5 +939,22 @@ private extension SidebarFeature {
             return VpnProtocol.wireGuardGatewayAddress
         }
         return propertiesManager.wireguardConfig.dnsServers?.first ?? VpnProtocol.wireGuardGatewayAddress
+    }
+}
+
+// TODO: refactor with Profiles 2.0 in VPNAPPL-3472; most likely we'll have a proper profile dependency
+@DependencyClient
+struct SidebarProfileNameResolver {
+    var profileName: (String) -> String?
+}
+
+extension SidebarProfileNameResolver: DependencyKey {
+    static let liveValue = SidebarProfileNameResolver(profileName: { _ in nil })
+}
+
+extension DependencyValues {
+    var sidebarProfileNameResolver: SidebarProfileNameResolver {
+        get { self[SidebarProfileNameResolver.self] }
+        set { self[SidebarProfileNameResolver.self] = newValue }
     }
 }

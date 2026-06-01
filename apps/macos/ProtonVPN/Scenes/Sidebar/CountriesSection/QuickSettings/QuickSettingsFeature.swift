@@ -129,7 +129,6 @@ struct QuickSettingsFeature {
     @Dependency(\.natPortMappingService) var natPortMappingService
     @Dependency(\.hermesClient) var hermesClient
     @Dependency(\.connectionCommandClient) var connectionCommandClient
-    @Dependency(\.propertiesManager) var propertiesManager
     @Dependency(\.serverRepository) var serverRepository
 
     var body: some ReducerOf<Self> {
@@ -524,7 +523,8 @@ private extension QuickSettingsFeature {
             connectedExitCountryCode: resolvedExit,
             isFreeTier: isFreeTier
         )
-        connectionCommandClient.send(.connect(spec, propertiesManager.lastConnectionRequest?.connectionProtocol, intent))
+        let connectionProtocol = connectionState.resolvedVpnProtocol.map(ConnectionProtocol.vpnProtocol)
+        connectionCommandClient.send(.connect(spec, connectionProtocol, intent))
     }
 
     func quickSettingsChangeNetShieldLevel(_ level: NetShieldType) {

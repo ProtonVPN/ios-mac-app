@@ -38,6 +38,7 @@ package struct ConnectionCardModel {
                 case let .wireGuard(settings):
                     .wireGuard(settings.transport)
                 }
+                // TODO: replace vpnProtocol.apiDescription, VPNAPPL-3550
                 return Localizable.connectionCardAccessibilityBrowsingFromFullDetails(
                     browsingFrom,
                     serverNumber,

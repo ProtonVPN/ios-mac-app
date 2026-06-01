@@ -23,7 +23,6 @@ import ConnectionInventory
 import Dependencies
 import Domain
 import Foundation
-import LegacyCommon
 import Strings
 import VPNAppCore
 
@@ -58,7 +57,6 @@ public struct CountriesMainFeature {
     @SharedReader(.connectionState) private var connectionState: ConnectionState
     @SharedReader(.userTier) private var userTier: Int?
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.switchToPrimaryTab) private var switchToPrimaryTab
 
@@ -144,8 +142,9 @@ public struct CountriesMainFeature {
             connectedExitCountryCode: resolvedExit,
             isFreeTier: isFreeTier
         )
+        let connectionProtocol = connectionState.resolvedVpnProtocol.map(ConnectionProtocol.vpnProtocol)
         AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
-        connectionCommandClient.send(.connect(spec, propertiesManager.lastConnectionRequest?.connectionProtocol, trigger))
+        connectionCommandClient.send(.connect(spec, connectionProtocol, trigger))
     }
 
     // MARK: - Private observe methods

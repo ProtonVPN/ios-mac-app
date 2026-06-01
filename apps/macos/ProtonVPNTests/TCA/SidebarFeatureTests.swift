@@ -62,7 +62,7 @@ struct SidebarFeatureTests {
                     acceptableProtocols: .ikev2
                 )))
             }
-            $0.$vpnConnectionStatus.withLock { $0 = .connecting(spec, nil) }
+            $0.$vpnConnectionStatusDoNotUse.withLock { $0 = .connecting(spec, nil) }
         }
         await store.receive(\.connection.delegate.stateChanged.connecting.unresolved)
         await store.receive(\.connectionStateChanged.connecting) {
@@ -139,7 +139,7 @@ struct SidebarFeatureTests {
                     acceptableProtocols: .ikev2
                 )))
             }
-            $0.$vpnConnectionStatus.withLock { $0 = .connecting(spec, nil) }
+            $0.$vpnConnectionStatusDoNotUse.withLock { $0 = .connecting(spec, nil) }
         }
     }
 
@@ -180,7 +180,7 @@ struct SidebarFeatureTests {
                     acceptableProtocols: .ikev2
                 )))
             }
-            $0.$vpnConnectionStatus.withLock { $0 = .connecting(spec, nil) }
+            $0.$vpnConnectionStatusDoNotUse.withLock { $0 = .connecting(spec, nil) }
         }
         await store.receive(\.connection.delegate.stateChanged.connecting.unresolved)
         await store.receive(\.connectionStateChanged.connecting) {
@@ -221,7 +221,7 @@ struct SidebarFeatureTests {
                     acceptableProtocols: .ikev2
                 )))
             }
-            $0.$vpnConnectionStatus.withLock { $0 = .connecting(p2pSpec, nil) }
+            $0.$vpnConnectionStatusDoNotUse.withLock { $0 = .connecting(p2pSpec, nil) }
         }
         await store.receive(\.connection.delegate.stateChanged.connecting.unresolved)
         await store.receive(\.connectionStateChanged.connecting) {
@@ -561,7 +561,7 @@ struct SidebarFeatureTests {
                     acceptableProtocols: .ikev2
                 )))
             }
-            $0.$vpnConnectionStatus.withLock { $0 = .connecting(spec, nil) }
+            $0.$vpnConnectionStatusDoNotUse.withLock { $0 = .connecting(spec, nil) }
         }
         await store.receive(\.connection.input.connect) {
             $0.connection.reconnectionIntent = ConnectionPreparationIntent(
@@ -663,7 +663,7 @@ struct SidebarFeatureTests {
 
         await store.send(.connection(.delegate(.stateChanged(.disconnected)))) {
             $0.$connectionState.withLock { $0 = .disconnected }
-            $0.$vpnConnectionStatus.withLock { $0 = .disconnected }
+            $0.$vpnConnectionStatusDoNotUse.withLock { $0 = .disconnected }
         }
         await store.receive(\.connectionStateChanged.disconnected)
         await store.receive(\.syncNATPortMappingState)
@@ -685,10 +685,10 @@ struct SidebarFeatureTests {
         portForwardingEnabled: Bool = false,
         serverChangeAuthorizer: ServerChangeAuthorizer = .availableValue
     ) -> TestStoreOf<SidebarFeature> {
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+        @Shared(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse
         @Shared(.connectionState) var connectionState
         @Shared(.intentionallyDisconnected) var intentionallyDisconnected
-        $vpnConnectionStatus.withLock { $0 = .resolving(nil, nil) }
+        $vpnConnectionStatusDoNotUse.withLock { $0 = .resolving(nil, nil) }
         $connectionState.withLock { $0 = .resolving(nil, nil) }
         $intentionallyDisconnected.withLock { $0 = false }
 
@@ -774,13 +774,13 @@ private extension SidebarFeature.State.OverlayState {
 }
 
 private extension ConnectionState {
-    /// Build a `.connecting(.unresolved)` state from a spec, mirroring `VPNConnectionStatus.connecting(spec, nil)`.
+    /// Build a `.connecting(.unresolved)` state from a spec, mirroring `VPNConnectionStatusDoNotUse.connecting(spec, nil)`.
     static func testConnecting(_ spec: ConnectionSpec) -> ConnectionState {
         .connecting(.unresolved(ConnectionPreparationIntent(spec: spec, acceptableProtocols: .ikev2)))
     }
 
     /// Build a `.connected` state from a spec and a `VPNConnectionActual`, mirroring
-    /// `VPNConnectionStatus.connected(spec, actual)`.
+    /// `VPNConnectionStatusDoNotUse.connected(spec, actual)`.
     static func testConnected(_ spec: ConnectionSpec, _ actual: VPNConnectionActual) -> ConnectionState {
         let intent = ServerConnectionIntent(
             spec: spec,
