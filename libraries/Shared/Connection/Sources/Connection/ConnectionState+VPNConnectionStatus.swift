@@ -51,7 +51,7 @@ public extension ConnectionState {
         case let .connecting(.resolved(intent)):
             intent.resolvedServer
         case .resolving:
-            nil // TODO: ProTUN, check if this makes sense
+            nil // TODO: ProTUN: check if this makes sense
         case .disconnected, .connecting(.unresolved):
             nil
         }
@@ -141,7 +141,7 @@ public extension ConnectionState {
     var status: VPNConnectionStatusDoNotUse {
         switch self {
         case .resolving:
-            .resolving(nil, nil) // TODO: ProTUN, check what we can do to restore the code below somehow without associated values
+            .resolving(nil, nil) // TODO: ProTUN: check what we can do to restore the code below somehow without associated values
 //            let actual = intent.map { VPNConnectionActual(server: server ?? $0.server, intent: $0, connectedDate: nil) }
 //            return .resolving(intent?.spec, actual)
 //        case .disconnected:

@@ -81,7 +81,7 @@ public struct HomeMapFeature {
                 // During the resolve window, if we have a prior server, keep the pin on it
                 // for UI continuity; otherwise fall back to disconnected.
 
-                // TODO: ProTUN, think about how to restore the code below so we may have server data available
+                // TODO: ProTUN: think about how to restore the code below so we may have server data available
                 self = .disconnected
 //                if let server {
 //                    self = .connectingCoordinates(server.logical.coordinates, server.logical.exitCountryCode)

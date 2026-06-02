@@ -612,7 +612,7 @@ private extension SidebarFeature {
                     .send(.syncNATPortMappingState),
                     .send(.syncPlutoniumState)
                 )
-            // TODO: ProTUN, is it still needed?
+            // TODO: ProTUN: is it still needed?
 //            case .connection(.delegate(.disconnected)):
 //                return .run { _ in
 //                    await pendingDisconnectCompletions.drainAndInvoke()

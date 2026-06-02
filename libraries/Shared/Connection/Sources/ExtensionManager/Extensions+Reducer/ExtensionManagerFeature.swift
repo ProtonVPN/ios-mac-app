@@ -98,7 +98,7 @@ public struct ExtensionFeature: Sendable {
                     let changes = configurator.changes(intent)
                     _ = try await tunnelManager.sendProTUN(request: .init(payload: .updateConfiguration(changes)))
                 } catch: { _, _ in
-                    // TODO: What's the best way to handle failure here?
+                    // TODO: ProTUN: What's the best way to handle failure here?
                 }
 
             case let .connect(intent):

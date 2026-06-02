@@ -26,7 +26,7 @@ extension NetshieldLevel {
         case .none: .off
         case .malwareFilter: .level1
         case .adsAndMalwareFilter: .level2
-            // TODO: ProTUN, handle level3 once it's available in ProTUN
+            // TODO: ProTUN: handle level3 once it's available in ProTUN
         }
     }
 
@@ -35,7 +35,7 @@ extension NetshieldLevel {
         case .none: .off
         case .malwareFilter: .malware
         case .adsAndMalwareFilter: .adsAndMalware
-            // TODO: ProTUN, handle level3 once it's available in ProTUN
+            // TODO: ProTUN: handle level3 once it's available in ProTUN
         }
     }
 }
@@ -77,7 +77,7 @@ extension LocalAgentSettings {
         .init(
             netshield: netshieldLevel?.toNetShieldType ?? .off,
             vpnAccelerator: splitTcp ?? false,
-            bouncing: nil, // TODO: ProTUN, remove this from the VPNConnectionFeatures?
+            bouncing: nil, // TODO: ProTUN: remove this from the VPNConnectionFeatures?
             natType: randomNat.flatMap { NATType(flag: $0) } ?? .default,
             safeMode: softJail ?? false,
             portForwarding: portForwarding

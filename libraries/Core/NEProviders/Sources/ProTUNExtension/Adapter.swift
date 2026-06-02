@@ -135,7 +135,7 @@ final class ProTUNAdapter: @unchecked Sendable {
             stateChangeCallback: stateDelegate,
             eventCallback: eventDelegate,
             socketFdAvailableCallback: nil,
-            cache: SecurePersistentCache()
+            cache: SecurePersistentCache(keychainServiceSuffix: "user") // TODO: ProTUN: Pass a value identifying the user
         )
 
         try await stateDelegate.stateSource.newStream
@@ -330,9 +330,9 @@ extension VpnState: CustomStringConvertible {
     }
 }
 
-// TODO: Properly inject this
+// TODO: ProTUN: Properly inject this
 private extension String {
-    static let appVersion: String = "ios-vpn@8.0.0"
+    static let appVersion: String = "ios-wireguardextension@8.0.0"
     static let userAgent: String = "ProtonVPN/8.0.0 (iOS 26.4.0; iPhone16,1)"
 }
 

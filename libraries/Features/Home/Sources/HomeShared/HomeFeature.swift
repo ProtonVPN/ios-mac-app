@@ -23,12 +23,7 @@ import Connection
 import ConnectionDetails
 import ConnectionDetailsShared
 import ConnectionInventory
-<<<<<<< HEAD
-import CoreConnection
-||||||| parent of 4b9cbed9e4 (chore(ios): ProTUN LA v2 support + global IPC rework)
-=======
 import CoreConnection // LocalAgent
->>>>>>> 4b9cbed9e4 (chore(ios): ProTUN LA v2 support + global IPC rework)
 import Dependencies
 import Domain
 import Foundation
@@ -232,38 +227,16 @@ public struct HomeFeature {
         Scope(state: \.localAgentNotice, action: \.localAgentNotice) {
             LocalAgentNoticeFeature()
         }
-<<<<<<< HEAD
         CombineReducers {
             lifecycleAndObservationReducer
             recentsAndSharedPropertiesReducer
             connectionCommandsReducer
             connectionCardReducer
             destinationReducer
-            connectionEventsReducer
             miscReducer
         }
         .ifLet(\.$destination, action: \.destination)
         .ifLet(\.$alert, action: \.alert)
-||||||| parent of 4b9cbed9e4 (chore(ios): ProTUN LA v2 support + global IPC rework)
-        lifecycleAndObservationReducer
-        recentsAndSharedPropertiesReducer
-        connectionCommandsReducer
-        connectionCardReducer
-        destinationReducer
-        connectionEventsReducer
-        miscReducer
-            .ifLet(\.$destination, action: \.destination)
-            .ifLet(\.$alert, action: \.alert)
-=======
-        lifecycleAndObservationReducer
-        recentsAndSharedPropertiesReducer
-        connectionCommandsReducer
-        connectionCardReducer
-        destinationReducer
-        miscReducer
-            .ifLet(\.$destination, action: \.destination)
-            .ifLet(\.$alert, action: \.alert)
->>>>>>> 4b9cbed9e4 (chore(ios): ProTUN LA v2 support + global IPC rework)
     }
 }
 

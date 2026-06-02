@@ -117,7 +117,7 @@ private extension LocalAgentCoordinator {
                 continuation.yield(.forkSelectorRequest)
             case .error(.certificateRefreshFatalError):
                 sendError(error: .certificateRefreshFatalError)
-            // TODO: ProTUN, enable ZeroPeer KS here once it is available
+            // TODO: ProTUN: enable ZeroPeer KS here once it is available
             // + adapter?.connection?.disconnectAndWait()
             case let .error(.localAgentSettingPolicyRefused(setting)):
                 Logger.localAgent.info("Policy refused to set \(setting)")

@@ -40,11 +40,12 @@ public enum ConnectionPreparationError: ProtonVPNError, Equatable {
         switch self {
         case .featureNotReady:
             "PRNR" // PReparation Not Ready
+
         case .networkUnreachable:
             "NWUN" // NetWork UNreachable
 
         case .intentResolution(.cancelled):
-            "PRCC"
+            "IRCC"
 
         case .intentResolution(.unexpectedProtocol(.ike)):
             "UXIK"

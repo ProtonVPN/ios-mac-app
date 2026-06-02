@@ -796,7 +796,7 @@
 //
 //            await mockClock.advance(by: .seconds(1))
 //
-//            // TODO: ProTUN, Revisit
+//            // TODO: ProTUN: Revisit
     ////            let hasRestartedLocalAgentConnection =
     ////                store.state.localAgent.is(\.connecting) || store.state.localAgent.is(\.connected)
     ////            #expect(hasRestartedLocalAgentConnection)
@@ -965,7 +965,7 @@
 //
 //            // Now we're in a fully connected state. Simulate network path change from unsatisfied to satisfied
 //
-//            // TODO: ProTUN, Revisit
+//            // TODO: ProTUN: Revisit
     ////            // First, send unsatisfied status
     ////            await store.send(.connectivityChanged(.unsatisfied)) {
     ////                $0.currentNwStatus = .unsatisfied

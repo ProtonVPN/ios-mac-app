@@ -260,14 +260,13 @@ public struct CoreConnectionFeature: Sendable {
             return .send(.delegate(.featuresChanged(features)))
 
         case let .error(error):
-            SentryHelper.shared?.log(error: error)
-
             switch error {
             case .certificateRefreshFatalError:
                 log.error("Local Agent reported a fatal certificate refresh error", category: .connection)
                 return .send(.disconnect(.connectionFailure(.tunnel(.tunnelAborted))))
             case let .localAgentSettingPolicyRefused(setting):
                 log.warning("Local Agent policy refused setting: \(setting)", category: .connection)
+                SentryHelper.shared?.log(error: error)
                 return .none
             }
         }
@@ -333,7 +332,7 @@ extension TunnelState {
     var canUpdateConfiguration: Bool {
         switch self {
         case .unknown:
-            // TODO: better way to handle this? Should we even remove this state?
+            // TODO: ProTUN: better way to handle this? Should we even remove this state?
             false
 
         case .invalid:

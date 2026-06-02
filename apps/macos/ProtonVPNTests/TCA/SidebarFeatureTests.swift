@@ -44,7 +44,7 @@ struct SidebarFeatureTests {
             $0.overlayState = .connecting(spec: spec)
         }
         await store.receive(\.connection.input.connect) {
-            // TODO: ProTUN, Revisit
+            // TODO: ProTUN: Revisit
 //            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
 //                spec: spec,
 //                connectionProtocol: .vpnProtocol(.ike),
@@ -85,7 +85,7 @@ struct SidebarFeatureTests {
             await store.send(.connectionCommandReceived(.disconnect(.tray, completion: {
                 called()
             })))
-            // TODO: ProTUN, Revisit
+            // TODO: ProTUN: Revisit
 //            await store.receive(\.connection.input.disconnect) {
 //                $0.connection.core.shouldDisconnectWhenAllowed = true
 //            }
@@ -101,7 +101,7 @@ struct SidebarFeatureTests {
             await store.send(.connectionCommandReceived(.disconnect(.tray, completion: {
                 called()
             })))
-            // TODO: ProTUN, Revisit
+            // TODO: ProTUN: Revisit
 //            await store.receive(\.connection.input.disconnect) {
 //                $0.connection.core.shouldDisconnectWhenAllowed = true
 //            }
@@ -116,7 +116,7 @@ struct SidebarFeatureTests {
         let store = makeStore()
         store.exhaustivity = .off
 
-        // TODO: ProTUN, Revisit
+        // TODO: ProTUN: Revisit
 //        await store.send(.connectionCommandReceived(.disconnect(.auto))) {
 //            $0.connection.core.shouldDisconnectWhenAllowed = false
 //        }
@@ -125,7 +125,7 @@ struct SidebarFeatureTests {
         }
 
         await store.receive(\.connection.input.connect) {
-            // TODO: ProTUN, Revisit
+            // TODO: ProTUN: Revisit
 //            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
 //                spec: spec,
 //                connectionProtocol: .vpnProtocol(.ike),
@@ -167,7 +167,7 @@ struct SidebarFeatureTests {
             $0.overlayState = .connecting(spec: spec)
         }
         await store.receive(\.connection.input.connect) {
-            // TODO: ProTUN, Revisit
+            // TODO: ProTUN: Revisit
 //            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
 //                spec: spec,
 //                connectionProtocol: .vpnProtocol(.ike),
@@ -209,7 +209,7 @@ struct SidebarFeatureTests {
             $0.overlayState = .connecting(spec: p2pSpec)
         }
         await store.receive(\.connection.input.connect) {
-            // TODO: ProTUN, Revisit
+            // TODO: ProTUN: Revisit
 //            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
 //                spec: p2pSpec,
 //                connectionProtocol: .vpnProtocol(.ike),
@@ -561,7 +561,7 @@ struct SidebarFeatureTests {
             $0.$vpnConnectionStatusDoNotUse.withLock { $0 = .connecting(spec, nil) }
         }
         await store.receive(\.connection.input.connect) {
-            // TODO: ProTUN, Revisit
+            // TODO: ProTUN: Revisit
 //            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
 //                spec: spec,
 //                connectionProtocol: .vpnProtocol(.ike),

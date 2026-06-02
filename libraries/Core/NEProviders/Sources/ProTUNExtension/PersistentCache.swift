@@ -26,14 +26,8 @@ import VPNCoreTypes
 final class SecurePersistentCache: PersistentCache {
     private let service: String
 
-    init() {
-        self.service = "ProTUN"
-    }
-
-    init(clientPrivateKey: String) {
-        let digest = SHA256.hash(data: Data(clientPrivateKey.utf8))
-        let suffix = digest.prefix(8).map { String(format: "%02x", $0) }.joined()
-        self.service = "ProTUN_\(suffix)"
+    init(keychainServiceSuffix: String) {
+        self.service = "ProTUN_" + keychainServiceSuffix
     }
 
     func put(key: CacheKey, bytes: Data) {

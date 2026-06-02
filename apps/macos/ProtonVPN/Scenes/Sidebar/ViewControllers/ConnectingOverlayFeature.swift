@@ -59,7 +59,7 @@ struct ConnectingOverlayFeature {
         var isReconnecting: Bool {
             switch displayState {
             case .resolving:
-                // TODO: ProTUN, find a way to fix the code below
+                // TODO: ProTUN: find a way to fix the code below
                 // actual != nil
                 false
             case .connecting:
