@@ -52,7 +52,6 @@ let package = Package(
         .package(path: "../../Shared/Localization"),
         .package(path: "../../Shared/Persistence"),
         .package(path: "../../Shared/Telemetry"),
-        .package(path: "../../Shared/VPNNetworking"),
 
         .package(path: "../../Features/Settings"),
 
@@ -78,7 +77,6 @@ let package = Package(
                 "Theme",
                 "Timer",
                 "Telemetry",
-                "VPNNetworking",
                 .product(name: "Persistence", package: "Persistence"),
                 "Localization",
 

@@ -85,10 +85,6 @@ public protocol PropertiesManagerProtocol: AnyObject {
 
     var connectionProtocol: ConnectionProtocol { get }
 
-    var wireguardConfig: WireguardConfig { get set }
-
-    var smartProtocolConfig: SmartProtocolConfig { get set }
-
     var serverChangeConfig: ServerChangeConfig { get set }
 
     var lastConnectionIntent: ConnectionSpec { get set }
@@ -138,10 +134,11 @@ public extension PropertiesManagerProtocol {
     var currentProtocolSupport: ProtocolSupport {
         switch connectionProtocol {
         case .smartProtocol:
-            ProtocolSupport(vpnProtocols: smartProtocolConfig.supportedProtocols)
+            @Shared(.smartProtocolConfig) var smartProtocolConfig
+            return ProtocolSupport(vpnProtocols: smartProtocolConfig.supportedProtocols)
 
         case let .vpnProtocol(vpnProtocol):
-            vpnProtocol.protocolSupport
+            return vpnProtocol.protocolSupport
         }
     }
 }
@@ -199,8 +196,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case partnerTypes
         case streamingResourcesUrl
 
-        case wireguardConfig = "WireguardConfig"
-        case smartProtocolConfig = "SmartProtocolConfig"
         case lastConnectionIntent = "LastConnectionIntent"
         case serverChangeConfig = "ServerChangeConfig"
 
@@ -284,8 +279,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
     @StringProperty(.apiEndpoint) public var apiEndpoint: String?
 
-    @InitializedProperty(.wireguardConfig) public var wireguardConfig: WireguardConfig
-    @InitializedProperty(.smartProtocolConfig) public var smartProtocolConfig: SmartProtocolConfig
     @InitializedProperty(.lastConnectionIntent) public var lastConnectionIntent: ConnectionSpec
     @InitializedProperty(.serverChangeConfig) public var serverChangeConfig: ServerChangeConfig
 

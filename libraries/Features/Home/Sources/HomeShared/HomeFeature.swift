@@ -23,6 +23,7 @@ import Connection
 import ConnectionDetails
 import ConnectionDetailsShared
 import ConnectionInventory
+import CoreConnection
 import Dependencies
 import Domain
 import Ergonomics
@@ -34,7 +35,6 @@ import Payments
 import ProtonCoreFeatureFlags
 import Strings
 import VPNAppCore
-import VPNNetworking
 
 @Reducer
 public struct HomeFeature {

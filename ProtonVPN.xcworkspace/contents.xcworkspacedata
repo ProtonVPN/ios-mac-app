@@ -55,9 +55,6 @@
             location = "group:libraries/Shared/CommonNetworking">
          </FileRef>
          <FileRef
-            location = "group:libraries/Shared/VPNNetworking">
-         </FileRef>
-         <FileRef
             location = "group:libraries/Shared/Connection">
          </FileRef>
          <FileRef

@@ -89,8 +89,6 @@
         public var warnedTrialExpired: Bool = false
         public var reportBugEmail: String?
         public var discourageSecureCore: Bool = false
-        public var wireguardConfig: WireguardConfig = .init()
-        public var smartProtocolConfig: SmartProtocolConfig = .init()
         public var ratingSettings: RatingSettings = .init()
         public var lastConnectionIntent: ConnectionSpec = .init()
         public var serverChangeConfig: ServerChangeConfig = .init()

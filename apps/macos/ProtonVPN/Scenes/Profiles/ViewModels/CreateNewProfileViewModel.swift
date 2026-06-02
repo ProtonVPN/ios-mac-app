@@ -26,6 +26,7 @@ import Dependencies
 import Domain
 import LegacyCommon
 import Persistence
+import Sharing
 import Strings
 import Theme
 import VPNAppCore
@@ -64,6 +65,7 @@ class CreateNewProfileViewModel {
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Shared(.smartProtocolConfig) private var smartProtocolConfig: SmartProtocolConfig
     @Dependency(\.serverRepository) private var serverRepository
 
     let colorPickerViewModel = ColorPickerViewModel()
@@ -108,7 +110,7 @@ class CreateNewProfileViewModel {
                 serverType: defaultServerType,
                 newTypeGrouping: serverGroups(for: defaultServerType),
                 selectedCountryGroup: nil,
-                smartProtocolConfig: propertiesManager.smartProtocolConfig
+                smartProtocolConfig: smartProtocolConfig
             )
             .updating(connectionProtocol: connectionProtocol)
     }
@@ -173,7 +175,7 @@ class CreateNewProfileViewModel {
         }
         let supportedProtocols = state.connectionProtocol?.vpnProtocol != nil
             ? [state.connectionProtocol!.vpnProtocol!]
-            : propertiesManager.smartProtocolConfig.supportedProtocols
+            : smartProtocolConfig.supportedProtocols
 
         return serverRepository.getServers(
             filteredBy: [
@@ -259,7 +261,7 @@ class CreateNewProfileViewModel {
                 state.serverOffering?.supports(
                     connectionProtocol: `protocol`,
                     withCountryGroup: state.selectedGroup,
-                    smartProtocolConfig: propertiesManager.smartProtocolConfig
+                    smartProtocolConfig: smartProtocolConfig
                 ) != false
             }.map { `protocol` in
                 PopUpButtonItemViewModel(
@@ -331,7 +333,7 @@ class CreateNewProfileViewModel {
             serverType: type,
             newTypeGrouping: serverGroups(for: type),
             selectedCountryGroup: state.selectedGroup,
-            smartProtocolConfig: propertiesManager.smartProtocolConfig
+            smartProtocolConfig: smartProtocolConfig
         )
     }
 
@@ -339,7 +341,7 @@ class CreateNewProfileViewModel {
         state = state.updating(
             countryIndex: countryIndex,
             selectedCountryGroup: state.selectedGroup,
-            smartProtocolConfig: propertiesManager.smartProtocolConfig
+            smartProtocolConfig: smartProtocolConfig
         )
     }
 
@@ -347,7 +349,7 @@ class CreateNewProfileViewModel {
         state = state.updating(
             serverOffering: serverOffering,
             selectedCountryGroup: state.selectedGroup,
-            smartProtocolConfig: propertiesManager.smartProtocolConfig
+            smartProtocolConfig: smartProtocolConfig
         )
     }
 
@@ -454,7 +456,7 @@ class CreateNewProfileViewModel {
                !profile.serverOffering.supports(
                    connectionProtocol: connectionProtocol!,
                    withCountryGroup: grouping[countryIndex],
-                   smartProtocolConfig: propertiesManager.smartProtocolConfig
+                   smartProtocolConfig: smartProtocolConfig
                ) {
                 connectionProtocol = nil
             }

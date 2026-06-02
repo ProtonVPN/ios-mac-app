@@ -22,7 +22,6 @@
 
 import Domain
 import Foundation
-import VPNShared
 
 final class WireguardUDPAvailabilityChecker {
     let vpnProtocol: VpnProtocol = .wireGuard(.udp)

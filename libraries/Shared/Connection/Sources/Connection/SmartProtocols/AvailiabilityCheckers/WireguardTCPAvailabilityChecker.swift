@@ -18,9 +18,8 @@
 
 import Domain
 import Foundation
-import VPNShared
 
-class WireguardTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {
+final class WireguardTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {
     let transport: WireGuardTransport
 
     var vpnProtocol: VpnProtocol {

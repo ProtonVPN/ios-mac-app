@@ -20,11 +20,12 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import CoreConnection
 import Domain
 import Foundation
 import GoLibs
 import Localization
-import VPNShared
+import VPNAppCore
 
 public enum SmartProtocolAvailabilityCheckerResult {
     case unavailable
@@ -52,7 +53,7 @@ extension SmartProtocolAvailabilityChecker {
     }
 
     func checkAvailability(server: ServerIp, ports: [Int], completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
-        log.debug("Checking \(protocolName) availability for \(server)", category: .connectionConnect, event: .scan)
+        log.debug("Checking \(protocolName) availability for \(server)", category: .connection)
 
         // Ports can be overridden for a given protocol and server
         let ports = server.protocolEntries?.overridePorts(using: vpnProtocol) ?? ports
@@ -84,7 +85,7 @@ extension SmartProtocolAvailabilityChecker {
 
     /// Pings all the ports and returns on the first successful try.
     func getFirstToRespondPort(server: ServerIp, completion: @escaping (Int?) -> Void) {
-        log.debug("Getting best port for \(server) on \(vpnProtocol.localizedDescription)", category: .connectionConnect, event: .scan)
+        log.debug("Getting best port for \(server) on \(vpnProtocol.localizedDescription)", category: .connection)
 
         DispatchQueue.global().async { [unowned self] in
             let group = DispatchGroup()
@@ -102,7 +103,7 @@ extension SmartProtocolAvailabilityChecker {
                             return false
                         }
                         portAlreadyFound = true
-                        log.debug("First port to respond is \(port). Returning this port to be used on \(self.vpnProtocol.localizedDescription).", category: .connectionConnect, event: .scan)
+                        log.debug("First port to respond is \(port). Returning this port to be used on \(self.vpnProtocol.localizedDescription).", category: .connection)
                         return true
                     }
 
@@ -115,7 +116,7 @@ extension SmartProtocolAvailabilityChecker {
             // when execution leaves this scope
             group.wait()
             if !portAlreadyFound {
-                log.error("No working port found on Wireguard", category: .connectionConnect, event: .scan)
+                log.error("No working port found on Wireguard", category: .connection)
                 completion(nil)
             }
         }
@@ -127,15 +128,15 @@ protocol SharedLibraryUDPAvailabilityChecker: SmartProtocolAvailabilityChecker {
 extension SharedLibraryUDPAvailabilityChecker {
     func ping(protocolName: String, server: ServerIp, port: Int, timeout: TimeInterval, completion: @escaping (Bool) -> Void) {
         guard let entryIp = server.entryIp(using: vpnProtocol) else {
-            log.error("Cannot find a valid entry IP for \(vpnProtocol).", category: .connectionConnect, event: .scan)
+            log.error("Cannot find a valid entry IP for \(vpnProtocol).", category: .connection)
             completion(false)
             return
         }
 
-        log.debug("Checking \(protocolName) availability for \(entryIp) on port \(port)", category: .connectionConnect, event: .scan)
+        log.debug("Checking \(protocolName) availability for \(entryIp) on port \(port)", category: .connection)
 
         guard let key = server.x25519PublicKey else {
-            log.error("Cannot check \(protocolName) availability for \(entryIp) on port \(port) because of missing public key", category: .connectionConnect, event: .scan)
+            log.error("Cannot check \(protocolName) availability for \(entryIp) on port \(port) because of missing public key", category: .connection)
             completion(false)
             return
         }
@@ -146,12 +147,12 @@ extension SharedLibraryUDPAvailabilityChecker {
             let result = VpnPingPingSyncWithError(entryIp, port, key, Int(timeout * 1000), &ret, &error)
 
             if let error {
-                log.error("\(protocolName) NOT available for \(entryIp) on port \(port) (Error: \(error))", category: .connectionConnect, event: .scan)
+                log.error("\(protocolName) NOT available for \(entryIp) on port \(port) (Error: \(error))", category: .connection)
                 completion(false)
                 return
             }
 
-            log.debug("\(protocolName)\(result ? "" : " NOT") available for \(entryIp) on port \(port)", category: .connectionConnect, event: .scan)
+            log.debug("\(protocolName)\(result ? "" : " NOT") available for \(entryIp) on port \(port)", category: .connection)
             completion(result)
         }
     }

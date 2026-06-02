@@ -23,7 +23,7 @@
 import Ergonomics
 import Foundation
 
-public struct SmartProtocolConfig: Codable, Equatable, DefaultableProperty {
+public struct SmartProtocolConfig: Codable, Equatable, Sendable {
     public let iKEv2: Bool
     public let wireGuardUdp: Bool
     @Default<BoolDefaultTrue> public var wireGuardTcp: Bool

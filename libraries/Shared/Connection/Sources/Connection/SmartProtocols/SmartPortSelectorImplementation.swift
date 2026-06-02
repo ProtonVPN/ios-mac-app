@@ -1,14 +1,15 @@
 //
-//  SmartPortSelectorBridge.swift
+//  SmartPortSelectorImplementation.swift
 //  Core
 //
 //  Created by Jaroslav Oo on 2021-08-30.
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
+import CoreConnection
 import Domain
 import Foundation
-import VPNShared
+import VPNAppCore
 
 public typealias SmartPortSelectorCompletion = ([Int]) -> Void
 
@@ -50,18 +51,18 @@ public final class SmartPortSelectorImplementation: SmartPortSelector {
                     return
                 }
 
-                log.debug("No Wireguard ports responded when trying to get the best port, waiting a bit and trying one more time.", category: .connectionConnect, event: .scan)
+                log.debug("No Wireguard ports responded when trying to get the best port, waiting a bit and trying one more time.", category: .connection)
 
                 // In case no Wireguard ports respon we wait a bit and try again just to be sure
                 // If no port respond on the second attempt we return an empty array which will cause a connection failure
                 // This is better than returning shuffled port for the app to connect with a random one
                 // because it might cause the app to think it is connected even if it is not and result in various local agent failures
                 DispatchQueue.global().asyncAfter(deadline: .now() + 1) { [weak self] in
-                    log.debug("Retrying port selection", category: .connectionConnect)
+                    log.debug("Retrying port selection", category: .connection)
                     guard let self else {
                         // VPNAPPL-3034 prevent self from being deallocated until retries are completed.
                         // Converting this class to a struct and removing [weak self] causes a SIGABRT.
-                        log.debug("\(Self.self) deallocated before the retry attempt", category: .connectionConnect)
+                        log.debug("\(Self.self) deallocated before the retry attempt", category: .connection)
                         completion(fallbackPorts)
                         return
                     }
@@ -71,7 +72,7 @@ public final class SmartPortSelectorImplementation: SmartPortSelector {
                             return
                         }
 
-                        log.debug("No Wireguard ports responded even on second attempt, returning ports at random", category: .connectionConnect, event: .scan)
+                        log.debug("No Wireguard ports responded even on second attempt, returning ports at random", category: .connection)
                         completion(fallbackPorts)
                     }
                 }

@@ -40,6 +40,7 @@ class CreateOrEditProfileViewModel: NSObject {
     private let factory: Factory
     private lazy var alertService = factory.makeCoreAlertService()
     @Shared(.connectionState) private var connectionState: ConnectionState
+    @Shared(.smartProtocolConfig) private var smartProtocolConfig: SmartProtocolConfig
 
     private let username: String?
     private let profileService: ProfileService
@@ -362,7 +363,7 @@ class CreateOrEditProfileViewModel: NSObject {
         return selectedServerOffering.supports(
             connectionProtocol: connectionProtocol,
             withCountryGroup: countryGroup,
-            smartProtocolConfig: propertiesManager.smartProtocolConfig
+            smartProtocolConfig: smartProtocolConfig
         )
     }
 
@@ -447,7 +448,7 @@ class CreateOrEditProfileViewModel: NSObject {
 
         let vpnProtocolViewModel = VpnProtocolViewModel(
             connectionProtocol: selectedProtocol,
-            smartProtocolConfig: propertiesManager.smartProtocolConfig,
+            smartProtocolConfig: smartProtocolConfig,
             supportedProtocols: supportedProtocols,
             featureFlags: propertiesManager.featureFlags
         )
@@ -517,7 +518,7 @@ extension CreateOrEditProfileViewModel {
         }
         let selected = [selectedProtocol.vpnProtocol].compactMap { $0 }
         let supportedProtocols = selected.isEmpty
-            ? propertiesManager.smartProtocolConfig.supportedProtocols
+            ? smartProtocolConfig.supportedProtocols
             : selected
 
         return serverRepository.getServers(

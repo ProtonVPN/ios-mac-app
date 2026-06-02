@@ -20,11 +20,13 @@ import Dependencies
 import Domain
 import LegacyCommon
 import Persistence
+import Sharing
 
 package struct ProtocolFilters {
     // MARK: - Server and Group query filters
 
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Shared(.smartProtocolConfig) private var smartProtocolConfig: SmartProtocolConfig
 
     package init() {}
 
@@ -37,7 +39,7 @@ package struct ProtocolFilters {
         case let .vpnProtocol(vpnProtocol):
             [vpnProtocol]
         case .smartProtocol:
-            propertiesManager.smartProtocolConfig.supportedProtocols
+            smartProtocolConfig.supportedProtocols
         }
     }
 
