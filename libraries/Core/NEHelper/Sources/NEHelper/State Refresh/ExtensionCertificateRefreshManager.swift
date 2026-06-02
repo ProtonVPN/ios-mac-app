@@ -40,6 +40,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
     }
 
     fileprivate static var intervals = Intervals()
+    private static let workQueueKey = DispatchSpecificKey<Void>()
 
     @Dependency(\.vpnAuthenticationStorage) private var vpnAuthenticationStorage
     private let apiService: ExtensionAPIService
@@ -63,6 +64,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
         let workQueue = DispatchQueue(label: "ch.protonvpn.extension.wireguard.certificate-refresh")
 
         self.apiService = apiService
+        workQueue.setSpecific(key: Self.workQueueKey, value: ())
 
         operationQueue.maxConcurrentOperationCount = 1
         semaphore.signal()
@@ -77,11 +79,14 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
     }
 
     deinit {
-        guard state == .stopped else {
-            fatalError("Attempted to free refresh manager before stopping it")
+        if state != .stopped {
+            // In production we can be torn down by the OS before our owner calls stop(). Force a local shutdown
+            // rather than crashing here.
+            log.assertionFailure("Refresh manager deinitialized while still running; forcing shutdown", category: .userCert)
+            forceStopForDeinit()
         }
 
-        // Make sure we have our turn on the semaphore (should be ok if we're in the stopped state)
+        // Make sure we have our turn on the semaphore before releasing, to avoid unowned access in operations.
         semaphore.wait()
     }
 
@@ -289,6 +294,20 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
     override func stopTimer() {
         operationQueue.cancelAllOperations()
         super.stopTimer()
+    }
+
+    private func forceStopForDeinit() {
+        let stopWork = { [self] in
+            operationQueue.cancelAllOperations()
+            operationQueue.isSuspended = true
+            stopTimer()
+        }
+
+        if DispatchQueue.getSpecific(key: Self.workQueueKey) != nil {
+            stopWork()
+        } else {
+            workQueue.sync(execute: stopWork)
+        }
     }
 }
 
