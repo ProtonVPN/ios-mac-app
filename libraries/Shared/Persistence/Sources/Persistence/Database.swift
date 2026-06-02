@@ -168,6 +168,22 @@ extension DatabaseWriter {
             )
         }
 
-        preconditionFailure("Unable to initialize fallback database writer")
+        // Last option: return a bare, unmigrated in-memory database.
+        do {
+            log.error(
+                "All migrated fallback databases failed; returning un-migrated in-memory database",
+                category: .persistence,
+                metadata: ["schemaVersion": "\(schemaVersion)"]
+            )
+            return try DatabaseQueue(configuration: configuration)
+        } catch {
+            log.error(
+                "Un-migrated in-memory fallback database initialization failed",
+                category: .persistence,
+                metadata: ["error": "\(error)"]
+            )
+        }
+
+        preconditionFailure("Unable to initialize any fallback database writer")
     }
 }

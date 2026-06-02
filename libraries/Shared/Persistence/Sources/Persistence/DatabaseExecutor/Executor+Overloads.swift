@@ -62,7 +62,7 @@ public extension DatabaseExecutor {
         operation: (Database) throws -> T,
         fallback: T? = nil
     ) -> T {
-        let readOperation = { try dbWriter.write { try operation($0) } }
+        let readOperation = { try dbWriter.read { try operation($0) } }
 
         return execute(operation: readOperation, fallback: fallback)
     }

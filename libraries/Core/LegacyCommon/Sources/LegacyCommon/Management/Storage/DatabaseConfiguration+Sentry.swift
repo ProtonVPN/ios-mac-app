@@ -48,6 +48,7 @@ public extension DatabaseConfiguration {
                 ]
             )
             assertionFailure("Failed to initialise app DB directory: \(error)")
+            SentryHelper.shared?.log(message: "Failed to initialise app DB directory", extra: ["error": "\(error)"])
             databaseType = .ephemeral
         }
 
