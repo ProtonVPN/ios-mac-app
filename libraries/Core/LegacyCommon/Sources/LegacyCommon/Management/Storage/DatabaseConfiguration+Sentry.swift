@@ -26,19 +26,30 @@ public extension DatabaseConfiguration {
     ///  - Errors during database operations after initialisation are caught, logged, reported with sentry
     ///  - Operations resulting in an error fall back to returning default values
     static var live: DatabaseConfiguration {
-        let directoryURLs = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-        guard let directoryURL = directoryURLs.first else {
-            fatalError("Failed to initialise app DB: cannot find URL for application support directory")
-        }
+        let fileManager = FileManager.default
+        let directoryURL = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+            ?? URL.cachesDirectory
 
-        if !FileManager.default.fileExists(atPath: directoryURL.absolutePath) {
-            try! FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true)
+        let databaseType: DatabaseType
+        do {
+            try fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
+            let databasePath = directoryURL
+                .appendingPathComponent("database")
+                .appendingPathExtension("sqlite")
+                .absolutePath
+            databaseType = .physical(filePath: databasePath)
+        } catch {
+            log.error(
+                "Failed to initialise app DB directory, falling back to ephemeral database",
+                category: .persistence,
+                metadata: [
+                    "path": "\(directoryURL.absolutePath)",
+                    "error": "\(error)",
+                ]
+            )
+            assertionFailure("Failed to initialise app DB directory: \(error)")
+            databaseType = .ephemeral
         }
-
-        let databasePath = directoryURL
-            .appendingPathComponent("database")
-            .appendingPathExtension("sqlite")
-            .absolutePath
 
         let executor = ErrorHandlingAndLoggingDatabaseExecutor(
             logError: { message, error in
@@ -49,7 +60,7 @@ public extension DatabaseConfiguration {
 
         return DatabaseConfiguration(
             executor: executor,
-            databaseType: .physical(filePath: databasePath),
+            databaseType: databaseType,
             schemaVersion: .latest
         )
     }

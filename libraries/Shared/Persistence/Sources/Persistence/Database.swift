@@ -114,11 +114,60 @@ extension DatabaseWriter {
             db.add(function: localizedCountryName.createFunctionForRegistration())
         }
 
-        let queue = try! createWriter(databaseType: databaseType, configuration: config)
-
         let schemaVersion = databaseConfiguration.schemaVersion
-        try! Migrator.default.migrate(queue, upTo: schemaVersion)
+        do {
+            let queue = try createWriter(databaseType: databaseType, configuration: config)
+            try Migrator.default.migrate(queue, upTo: schemaVersion)
+            return queue
+        } catch {
+            log.error(
+                "Database writer initialization failed, falling back to in-memory database",
+                category: .persistence,
+                metadata: [
+                    "requestedType": "\(databaseType)",
+                    "schemaVersion": "\(schemaVersion)",
+                    "error": "\(error)",
+                ]
+            )
+            assertionFailure("Database writer initialization failed: \(error)")
+        }
 
-        return queue
+        return fallbackWriter(configuration: config, schemaVersion: schemaVersion)
+    }
+
+    private static func fallbackWriter(configuration: Configuration, schemaVersion: SchemaVersion) -> DatabaseWriter {
+        do {
+            let fallbackQueue = try DatabaseQueue(configuration: configuration)
+            try Migrator.default.migrate(fallbackQueue, upTo: schemaVersion)
+            return fallbackQueue
+        } catch {
+            log.error(
+                "Fallback in-memory database initialization failed",
+                category: .persistence,
+                metadata: [
+                    "schemaVersion": "\(schemaVersion)",
+                    "error": "\(error)",
+                ]
+            )
+            assertionFailure("Fallback in-memory database initialization failed: \(error)")
+        }
+
+        let temporaryPath = URL.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString)
+            .appendingPathExtension("sqlite")
+            .path
+        do {
+            let temporaryPool = try DatabasePool(path: temporaryPath, configuration: configuration)
+            try Migrator.default.migrate(temporaryPool, upTo: schemaVersion)
+            return temporaryPool
+        } catch {
+            log.error(
+                "Temp-file fallback database initialization failed",
+                category: .persistence,
+                metadata: ["error": "\(error)"]
+            )
+        }
+
+        preconditionFailure("Unable to initialize fallback database writer")
     }
 }
