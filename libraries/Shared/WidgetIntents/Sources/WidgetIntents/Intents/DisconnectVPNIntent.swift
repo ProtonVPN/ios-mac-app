@@ -62,17 +62,4 @@ public struct DisconnectVPNIntent: AppIntent {
         log.debug("Finished waiting for connection state to update to <disconnected>, actual state: \(connectionState), will return value: \(value)", category: .connectionDisconnect)
         return .result(value: value)
     }
-
-    private func suspendAppIfSupported() async {
-        try? await Task.sleep(for: .seconds(1))
-        await MainActor.run {
-            let suspendSelector = #selector(URLSessionTask.suspend)
-            let app = UIApplication.shared
-            guard app.responds(to: suspendSelector) else {
-                log.error("UIApplication does not respond to suspend selector; skipping app suspension", category: .app)
-                return
-            }
-            _ = app.perform(suspendSelector)
-        }
-    }
 }

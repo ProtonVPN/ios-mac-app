@@ -91,19 +91,6 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
         })
     }
 
-    private func suspendAppIfSupported() async {
-        try? await Task.sleep(for: .seconds(1))
-        await MainActor.run {
-            let suspendSelector = #selector(URLSessionTask.suspend)
-            let app = UIApplication.shared
-            guard app.responds(to: suspendSelector) else {
-                log.error("UIApplication does not respond to suspend selector; skipping app suspension", category: .app)
-                return
-            }
-            _ = app.perform(suspendSelector)
-        }
-    }
-
     public func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
         guard let spec else {
             return .result(value: false)
