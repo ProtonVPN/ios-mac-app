@@ -43,7 +43,13 @@ extension LogContentProvider {
             let appGroup: String = DomainConstants.AppGroups.main
             @Dependency(\.wireguardIOSLogProvider) var wireguardIOSLogProvider
             return wireguardIOSLogProvider.logContentForAppGroup(appGroup)
+
+        case .protun, .protunArchive:
+            @Dependency(\.protunLogProvider) var protunLogProvider
+            return protunLogProvider.logContentForAppGroup()
         }
+    } getArchive: { _ in
+        fatalError("Not implemented fr now")
     }
 }
 

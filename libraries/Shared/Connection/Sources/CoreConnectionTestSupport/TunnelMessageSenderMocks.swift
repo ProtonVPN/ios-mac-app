@@ -57,6 +57,9 @@ public extension TunnelMessageSender {
             let requestErrorMessage = "Did not expect to send \(request) at this time"
             reportIssue(requestErrorMessage)
             return .error(message: requestErrorMessage)
+        }, sendProTUN: { _ in
+            reportIssue("Not implemented")
+            return .genericError("Not implemented")
         })
 
         static func sender(
@@ -74,6 +77,9 @@ public extension TunnelMessageSender {
                 operation()
 
                 return response
+            }, sendProTUN: { _ in
+                reportIssue("Not implemented")
+                return .genericError("Not implemented")
             })
         }
     #endif

@@ -29,9 +29,14 @@ struct LogsFeatureTests {
         let store = TestStore(initialState: LogsFeature.State(logSource: .app)) {
             LogsFeature()
         } withDependencies: {
-            $0.logContentProvider = .init(getLogData: { _ in
-                TestLogContent(result: "app logs")
-            })
+            $0.logContentProvider = .init(
+                getLogData: { _ in
+                    TestLogContent(result: "app logs")
+                },
+                getArchive: { _ in
+                    fatalError("Unimplemented")
+                }
+            )
         }
         store.exhaustivity = .off
         await store.send(.onAppear) {
@@ -48,9 +53,14 @@ struct LogsFeatureTests {
         let store = TestStore(initialState: LogsFeature.State(logSource: .wireguard)) {
             LogsFeature()
         } withDependencies: {
-            $0.logContentProvider = .init(getLogData: { _ in
-                TestLogContent(result: "wireguard logs")
-            })
+            $0.logContentProvider = .init(
+                getLogData: { _ in
+                    TestLogContent(result: "app logs")
+                },
+                getArchive: { _ in
+                    fatalError("Unimplemented")
+                }
+            )
         }
         store.exhaustivity = .off
         await store.send(.onAppear) {

@@ -117,14 +117,17 @@ final class ProTUNAdapter: @unchecked Sendable {
 
         let tunFd = try await prepare(with: config)
         let rawTunFd = try tunFd.dup().take()
-        let isNetworkAvailable = networkPath.withLock { $0.status == .satisfied }
         let localAgentSettings = LocalAgentSettings.current
-        let proTunInitialConfig = try config.initialConnectionConfig(
-            networkAvailable: isNetworkAvailable,
-            localAgentSettings: localAgentSettings
-        )
 
         startLocalAgentRunLoop(with: localAgentSettings)
+
+        let proTunInitialConfig = try networkPath.withLock { networkPath in
+            let isNetworkAvailable = networkPath.status == .satisfied
+            return try config.initialConnectionConfig(
+                networkAvailable: isNetworkAvailable,
+                localAgentSettings: localAgentSettings
+            )
+        }
 
         connection = .unixConnect(
             config: proTunInitialConfig,

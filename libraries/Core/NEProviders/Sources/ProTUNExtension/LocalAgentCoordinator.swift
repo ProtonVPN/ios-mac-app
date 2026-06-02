@@ -117,9 +117,8 @@ private extension LocalAgentCoordinator {
                 continuation.yield(.forkSelectorRequest)
             case .error(.certificateRefreshFatalError):
                 sendError(error: .certificateRefreshFatalError)
-            // Should we disconnect here with
-            // Or should we notify it to the app, and let the app trigger the disconnect?
-            // adapter?.connection?.disconnectAndWait()
+            // TODO: ProTUN, enable ZeroPeer KS here once it is available
+            // + adapter?.connection?.disconnectAndWait()
             case let .error(.localAgentSettingPolicyRefused(setting)):
                 Logger.localAgent.info("Policy refused to set \(setting)")
                 sendError(error: .localAgentSettingPolicyRefused(setting.toAgentSetting))

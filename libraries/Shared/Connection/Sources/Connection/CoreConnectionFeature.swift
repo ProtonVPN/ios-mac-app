@@ -134,6 +134,7 @@ public struct CoreConnectionFeature: Sendable {
                             }
                         } catch {
                             log.error("Error retrieving initial Local Agent settings: \(error)")
+                            SentryHelper.shared?.log(error: error)
                         }
                         let stream = localAgent.settingsStream().filter(\.hasValues)
                         for await payload in stream {
