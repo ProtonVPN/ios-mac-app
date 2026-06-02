@@ -253,7 +253,7 @@ public struct LocalAgentFeature: Sendable {
                 return .timer(interval: Self.netShieldTimerInterval, tolerance: Self.netShieldTimerTolerance) { _ in
                     localAgent.retrieveNetShieldStats()
                 }
-                .cancellable(id: CancelIDs.netshieldStatsObservation)
+                .cancellable(id: CancelIDs.netshieldStatsObservation, cancelInFlight: true)
 
             case .notice:
                 return .none // Will be handled by parents
@@ -271,7 +271,7 @@ public struct LocalAgentFeature: Sendable {
         .listen(
             to: localAgent.createEventStream(),
             reinjecting: { Action.event($0) }
-        ).cancellable(id: CancelIDs.eventObservation)
+        ).cancellable(id: CancelIDs.eventObservation, cancelInFlight: true)
     }
 
     private let longLivingDidBecomeActiveEffect: Effect<Action> = .publisher {
@@ -280,7 +280,7 @@ public struct LocalAgentFeature: Sendable {
             .debounce(for: 1.0, scheduler: UIScheduler.shared)
             .receive(on: UIScheduler.shared)
             .map { _ in Action.didBecomeActive }
-    }.cancellable(id: CancelIDs.didBecomeActiveObservation)
+    }.cancellable(id: CancelIDs.didBecomeActiveObservation, cancelInFlight: true)
 }
 
 @CasePathable

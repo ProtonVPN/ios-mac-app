@@ -144,9 +144,11 @@ public struct CoreConnectionFeature: Sendable {
     private func reduceCore(state: inout State, oldState: State, action: Action) -> Effect<Action> {
         switch action {
         case .startObserving:
-            return .merge(
-                .send(.tunnel(.startObservingStateChanges)),
-                .send(.localAgent(.startObservingEvents)),
+            return .concatenate(
+                .merge(
+                    .send(.tunnel(.startObservingStateChanges)),
+                    .send(.localAgent(.startObservingEvents))
+                ),
                 .run { send in
                     for await status in nwStatusStream() {
                         await send(.connectivityChanged(status))
