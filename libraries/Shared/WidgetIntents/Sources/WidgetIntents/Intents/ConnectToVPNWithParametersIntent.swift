@@ -83,7 +83,7 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
             if case .connected = state {
                 if connectionSpec == nil { // don't close the app when connecting with a spec
                     // VPN connection established, now suspending the app.
-                    await suspendApp()
+                    await suspendAppIfSupported()
                 }
             } else {
                 throw IntentConnectionError()
@@ -91,10 +91,16 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
         })
     }
 
-    private func suspendApp() async {
+    private func suspendAppIfSupported() async {
         try? await Task.sleep(for: .seconds(1))
         await MainActor.run {
-            UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+            let suspendSelector = #selector(URLSessionTask.suspend)
+            let app = UIApplication.shared
+            guard app.responds(to: suspendSelector) else {
+                log.error("UIApplication does not respond to suspend selector; skipping app suspension", category: .app)
+                return
+            }
+            _ = app.perform(suspendSelector)
         }
     }
 
@@ -120,7 +126,7 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
             /// For now just compare the exact specs, so the same shortcut launched multiple times will not re-trigger a connection
             if case let .connected(intent, _, _, _) = connectionState {
                 if intent.spec == spec {
-                    await suspendApp()
+                    await suspendAppIfSupported()
                     return .result(value: true)
                 }
             }
