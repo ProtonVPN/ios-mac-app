@@ -87,7 +87,9 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
         }
 
         // Make sure we have our turn on the semaphore before releasing, to avoid unowned access in operations.
-        semaphore.wait()
+        if semaphore.wait(timeout: .now() + .seconds(5)) == .timedOut {
+            log.error("Timed out waiting for semaphore during deinit; proceeding with teardown", category: .userCert)
+        }
     }
 
     /// Check the refresh conditions for certificate refresh, and refresh it if necessary.
@@ -296,17 +298,19 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
         super.stopTimer()
     }
 
-    private func forceStopForDeinit() {
-        let stopWork = { [self] in
-            operationQueue.cancelAllOperations()
-            operationQueue.isSuspended = true
-            stopTimer()
-        }
+    /// Cancel and suspend the operation queue before the superclass stops the timer and transition `state` to `.stopped`.
+    override func forceStop() {
+        operationQueue.cancelAllOperations()
+        operationQueue.isSuspended = true
+        super.forceStop()
+    }
 
+    /// Calls `forceStop()` on `workQueue` from `deinit`.
+    private func forceStopForDeinit() {
         if DispatchQueue.getSpecific(key: Self.workQueueKey) != nil {
-            stopWork()
+            forceStop()
         } else {
-            workQueue.sync(execute: stopWork)
+            workQueue.sync { [self] in forceStop() }
         }
     }
 }
