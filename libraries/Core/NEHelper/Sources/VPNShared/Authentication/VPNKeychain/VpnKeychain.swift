@@ -107,9 +107,13 @@ public class VpnKeychain: VpnKeychainProtocol {
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
 
+    private let lock = NSRecursiveLock()
+
     private var cached: CachedVpnCredentials?
 
     public func fetch() throws -> VpnCredentials {
+        lock.lock(); defer { lock.unlock() }
+
         let key = StorageKey.vpnCredentials
         guard let data = try appKeychain.getData(key) else {
             throw KeychainError.credentialsMissing(key)
@@ -130,7 +134,8 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
 
     public func fetchCached() throws -> CachedVpnCredentials {
-        try cached ?? CachedVpnCredentials(credentials: fetch())
+        lock.lock(); defer { lock.unlock() }
+        return try cached ?? CachedVpnCredentials(credentials: fetch())
     }
 
     public func fetchOpenVpnPassword() throws -> Data {
@@ -143,6 +148,8 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
 
     public func storeAndDetectDowngrade(vpnCredentials: VpnCredentials) {
+        lock.lock(); defer { lock.unlock() }
+
         // TODO: Refactor to make it obvious that code posting notifications is
         // being run AFTER storing credentials to the keychain.
         if let currentCredentials = fetch() {
@@ -171,6 +178,8 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
 
     private func store(vpnCredentials: VpnCredentials) {
+        lock.lock(); defer { lock.unlock() }
+
         do {
             let data = try encoder.encode(vpnCredentials)
             try appKeychain.set(data, key: StorageKey.vpnCredentials)
@@ -191,6 +200,8 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
 
     public func clear() {
+        lock.lock(); defer { lock.unlock() }
+
         log.debug("Clearing vpn credentials from keychain", category: .keychain)
         cached = nil
         appKeychain[data: StorageKey.vpnCredentials] = nil
