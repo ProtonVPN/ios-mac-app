@@ -85,13 +85,13 @@ public struct UserLocationFeature {
             .debounce(for: 1.0, scheduler: UIScheduler.shared)
             .receive(on: UIScheduler.shared)
             .map(Action.didBecomeActive)
-    }.cancellable(id: CancelID.didBecomeActive)
+    }.cancellable(id: CancelID.didBecomeActive, cancelInFlight: true)
 
     private let longLivingUserLocationTimerEffect: Effect<Action> = .timer(
         interval: .seconds(Self.locationCooldownInterval)
     ) { send in
         send(.fetchUserLocation)
-    }.cancellable(id: CancelID.userLocationTimer)
+    }.cancellable(id: CancelID.userLocationTimer, cancelInFlight: true)
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -135,6 +135,9 @@ public struct UserLocationFeature {
             case let .userLocationFetchFinished(.success(location)):
                 let userIP = location.ip
                 let lowercasedUserCountry = location.country.lowercased()
+                // Refresh cooldown on every successful fetch, even if location is unchanged.
+                // Otherwise, repeated triggers can bypass throttling once the initial cooldown passes.
+                state.$lastLocationRetrieval.withLock { $0 = date.now }
 
                 if userIP == state.userIP, lowercasedUserCountry == state.userCountry?.lowercased() {
                     log.debug("User Location unchanged from last fetch", category: .api)
@@ -145,7 +148,6 @@ public struct UserLocationFeature {
                 state.$userCountry.withLock { $0 = lowercasedUserCountry }
                 state.$userISP.withLock { $0 = location.isp }
                 state.$userIP.withLock { $0 = userIP }
-                state.$lastLocationRetrieval.withLock { $0 = date.now }
                 return .send(.delegate(.userLocationChanged(location)))
 
             case let .userLocationFetchFinished(.failure(error)):
