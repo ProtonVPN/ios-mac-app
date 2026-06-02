@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "Ακύρωση";
 
 /* Common word */
@@ -554,6 +553,12 @@
 
 /* Text in warning screen before actions that will disconnect VPN */
 "_view_toggle_will_cause_disconnect" = "Η εναλλαγή του Secure Core θα τερματίσει την τρέχουσα σύνδεσή σας.";
+
+/* Body of the Secure Core toggle warning/discourage notice when turning SC on and a Secure Core server exists in the currently-connected country */
+"_view_toggle_on_reconnect_same_country" = "Ενεργοποιώντας το Secure Core θα τερματιστεί η τρέχουσα σύνδεσή σας και θα γίνει προσπάθεια επανασύνδεσης στην ίδια χώρα.";
+
+/* Body of the Secure Core toggle warning/discourage notice when turning SC on and no Secure Core server exists in the currently-connected country (fallback). %@ is the localized country name. */
+"_view_toggle_on_reconnect_fastest_fallback" = "Το Secure Core δεν είναι διαθέσιμο σε %@. Το VPN σας θα επανασυνδεθεί διαμέσου του ταχύτερου διαθέσιμου διακομιστή Secure Core.";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Φορτίο Διακομιστή:";

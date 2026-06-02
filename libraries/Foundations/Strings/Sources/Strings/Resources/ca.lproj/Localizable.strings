@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "Cancel·la";
 
 /* Common word */
@@ -554,6 +553,12 @@
 
 /* Text in warning screen before actions that will disconnect VPN */
 "_view_toggle_will_cause_disconnect" = "Passar a Secure Corre finalitzarà la vostra connexió actual.";
+
+/* Body of the Secure Core toggle warning/discourage notice when turning SC on and a Secure Core server exists in the currently-connected country */
+"_view_toggle_on_reconnect_same_country" = "Activant Secure Core, es tallarà la connexió actual i s'intentarà tornar a connectar al mateix país.";
+
+/* Body of the Secure Core toggle warning/discourage notice when turning SC on and no Secure Core server exists in the currently-connected country (fallback). %@ is the localized country name. */
+"_view_toggle_on_reconnect_fastest_fallback" = "El Secure Core no està disponible a %@. La vostra VPN es tornarà a connectar a través del servidor de Secure Core més ràpid disponible.";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Càrrega del servidor:";

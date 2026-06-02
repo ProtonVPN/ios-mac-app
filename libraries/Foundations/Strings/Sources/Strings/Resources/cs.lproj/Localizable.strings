@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "Zrušit";
 
 /* Common word */
@@ -554,6 +553,12 @@
 
 /* Text in warning screen before actions that will disconnect VPN */
 "_view_toggle_will_cause_disconnect" = "Přepnutím Secure Core ukončíte aktuální připojení.";
+
+/* Body of the Secure Core toggle warning/discourage notice when turning SC on and a Secure Core server exists in the currently-connected country */
+"_view_toggle_on_reconnect_same_country" = "Zapnutím Secure Core dojde k ukončení aktuálního připojení a bude proveden pokus o opětovné připojení ve stejné zemi.";
+
+/* Body of the Secure Core toggle warning/discourage notice when turning SC on and no Secure Core server exists in the currently-connected country (fallback). %@ is the localized country name. */
+"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core není k dispozici v %@. Vaše VPN se znovu připojí přes nejrychlejší dostupný server Secure Core.";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Vytížení serveru:";

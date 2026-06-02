@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "Cancelar";
 
 /* Common word */
@@ -554,6 +553,12 @@
 
 /* Text in warning screen before actions that will disconnect VPN */
 "_view_toggle_will_cause_disconnect" = "A ativação do Secure Core encerrará sua conexão atual.";
+
+/* Body of the Secure Core toggle warning/discourage notice when turning SC on and a Secure Core server exists in the currently-connected country */
+"_view_toggle_on_reconnect_same_country" = "Turning on Secure Core will end your current connection and try to reconnect to the same country.";
+
+/* Body of the Secure Core toggle warning/discourage notice when turning SC on and no Secure Core server exists in the currently-connected country (fallback). %@ is the localized country name. */
+"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core isn't available in %@. Your VPN will reconnect through the fastest available Secure Core server.";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Carga do servidor:";
@@ -1172,7 +1177,7 @@
 "_web_only_feature" = "Apenas na web";
 
 /* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
-"_introductory_price_footer" = "Welcome offer. Auto-renews on %1$@ at %2$@%3$@.";
+"_introductory_price_footer" = "Oferta de boas-vindas. Renovação automática em %1$@ às %2$@%3$@.";
 
 /* iOS plan feature */
 "_feature_server_count" = "Conecte-se aos servidores em";

@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "Скасувати";
 
 /* Common word */
@@ -554,6 +553,12 @@
 
 /* Text in warning screen before actions that will disconnect VPN */
 "_view_toggle_will_cause_disconnect" = "Перемкнувши Secure Core, ваше поточне з'єднання завершиться.";
+
+/* Body of the Secure Core toggle warning/discourage notice when turning SC on and a Secure Core server exists in the currently-connected country */
+"_view_toggle_on_reconnect_same_country" = "Turning on Secure Core will end your current connection and try to reconnect to the same country.";
+
+/* Body of the Secure Core toggle warning/discourage notice when turning SC on and no Secure Core server exists in the currently-connected country (fallback). %@ is the localized country name. */
+"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core isn't available in %@. Your VPN will reconnect through the fastest available Secure Core server.";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Навантаження сервера:";
@@ -1441,7 +1446,7 @@
 
 "_netshield_alert_reconnect_description_off" = "Для зміни режиму NetShield ваше з'єднання буде перезапущено.";
 
-"_netshield_alert_upgrade_description" = "NetShield покращує вашу приватність, блокуючи рекламу та елементи стеження.";
+"_netshield_alert_upgrade_description" = "NetShield покращує вашу приватність, блокуючи рекламу і стеження.";
 
 /* Netshield section title in iOS connection screen */
 "_netshield_section_title" = "Блокування зловмисних програм і реклами";
@@ -1502,9 +1507,9 @@
 
 "_reestablish_vpn_connection_" = "Повторне встановлення VPN-з'єднання.";
 
-"_ip_will_not_be_exposed" = "Ваш IP не буде викрито.";
+"_ip_will_not_be_exposed" = "Вашу IP-адресу не буде викрито.";
 
-"_cancel_reconnection" = "Це скасує всі спроби повторного з'єднання і залишить вас від'єднаними";
+"_cancel_reconnection" = "Ця дія скасує всі спроби повторного з'єднання і залишить вас від'єднаними";
 
 /* Quick Settings -> Netshield: Don't block */
 "_quick_settings_netshield_option_off" = "Не блокувати";
@@ -1626,7 +1631,7 @@
 "_sysex_error_description_subcase_forbidden_by_system_policy" = "Поточна системна політика забороняє активацію розширень на вашому пристрої.";
 
 /* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
-"_sysex_error_description_subcase_authorization_required" = "Потрібна ваша авторизація для продовження.";
+"_sysex_error_description_subcase_authorization_required" = "Щоб продовжити, потрібна ваша авторизація.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
 "_sysex_error_description_subcase_default" = "зверніться до нашої служби підтримки.";
@@ -1649,9 +1654,9 @@
 
 "_delinquent_title" = "У вашому обліковому записі VPN є несплачені рахунки";
 
-"_delinquent_description" = "Ви зможете знову отримати доступ до преміальних функцій після оплати.";
+"_delinquent_description" = "Ви зможете відновити доступ до преміальних функцій після оплати.";
 
-"_delinquent_reconnection_description" = "Після оплати ви зможете знову отримати доступ до преміальних функцій. А зараз ми встановлюємо з'єднання з найшвидшим сервером Free.";
+"_delinquent_reconnection_description" = "Ви зможете відновити доступ до преміальних функцій після оплати. А зараз ми встановлюємо з'єднання з найшвидшим сервером Free.";
 
 "_maximum_device_title" = "Ви досягли обмеження кількості пристроїв";
 
@@ -1660,13 +1665,13 @@
 /* Description of user account update screen part 1 */
 "maximum_device_plan_limit_part_1" = "Від'єднайте інший пристрій, щоб під'єднатися до цього, або передплатіть %@";
 
-"_reconnect_title" = "Триває перепідключення до найшвидшого доступного сервера.";
+"_reconnect_title" = "Триває повторне під'єднання до найшвидшого доступного сервера.";
 
 "_subscription_expired_title" = "Ваша передплата тарифного плану VPN завершилась";
 
-"_subscription_expired_description" = "Ваша передплата була понижена.";
+"_subscription_expired_description" = "Ви перейшли на нижчий рівень передплати.";
 
-"_subscription_expired_reconnection_description" = "Ваша передплата була понижена, тому ми повторно з'єднуємось із найшвидшим доступним сервером.";
+"_subscription_expired_reconnection_description" = "Ви перейшли на нижчий рівень передплати, тому ми повторно під'єднуємось до найшвидшого доступного сервера.";
 
 "_subscription_upgrade_title" = "Передплатіть тарифний план знову, щоб користуватись усіма можливостями:";
 

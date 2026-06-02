@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "Скасаваць";
 
 /* Common word */
@@ -554,6 +553,12 @@
 
 /* Text in warning screen before actions that will disconnect VPN */
 "_view_toggle_will_cause_disconnect" = "Пераключэнне на Secure Core завершыць ваша бягучае падключэнне.";
+
+/* Body of the Secure Core toggle warning/discourage notice when turning SC on and a Secure Core server exists in the currently-connected country */
+"_view_toggle_on_reconnect_same_country" = "Уключэнне функцыі Secure Core завершыць ваша бягучае падключэнне і паспрабуе перападключыць да той жа краіны.";
+
+/* Body of the Secure Core toggle warning/discourage notice when turning SC on and no Secure Core server exists in the currently-connected country (fallback). %@ is the localized country name. */
+"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core недаступна ў краіне %@. Ваш VPN будзе перападключаны праз найхутчэйшы даступны сервер Secure Core.";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Загружанасць сервера:";
