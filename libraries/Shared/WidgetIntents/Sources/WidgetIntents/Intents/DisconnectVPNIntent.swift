@@ -43,20 +43,21 @@ public struct DisconnectVPNIntent: AppIntent {
 
         log.debug("Waiting for connection state to update to <disconnected>", category: .connectionDisconnect)
 
-        try await $connectionState.when(
-            willMatch: { $0.is(\.disconnected) },
-            every: .milliseconds(200),
-            deadline: Self.timeOut,
-            operation: { state in
-                // VPN connection aborted, now suspending the app.
-                if case .disconnected = state {
-                    try? await Task.sleep(for: .seconds(1))
-                    await MainActor.run {
-                        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+        do {
+            try await $connectionState.when(
+                willMatch: { $0.is(\.disconnected) },
+                every: .milliseconds(200),
+                deadline: Self.timeOut,
+                operation: { state in
+                    // VPN connection aborted, now suspending the app.
+                    if state.is(\.disconnected) {
+                        await suspendAppIfSupported()
                     }
                 }
-            }
-        )
+            )
+        } catch {
+            log.error("Timed out waiting for disconnected state after widget action", category: .connectionDisconnect, metadata: ["error": "\(error)"])
+        }
         let value = connectionState.is(\.disconnected)
         log.debug("Finished waiting for connection state to update to <disconnected>, actual state: \(connectionState), will return value: \(value)", category: .connectionDisconnect)
         return .result(value: value)

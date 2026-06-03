@@ -107,9 +107,17 @@ public class VpnKeychain: VpnKeychainProtocol {
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
 
+    /// Serializes access to `appKeychain` and `cached`.
+    private let lock = NSRecursiveLock()
+
     private var cached: CachedVpnCredentials?
 
     public func fetch() throws -> VpnCredentials {
+        lock.lock(); defer { lock.unlock() }
+        return try fetchWhileLocked()
+    }
+
+    private func fetchWhileLocked() throws -> VpnCredentials {
         let key = StorageKey.vpnCredentials
         guard let data = try appKeychain.getData(key) else {
             throw KeychainError.credentialsMissing(key)
@@ -130,7 +138,8 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
 
     public func fetchCached() throws -> CachedVpnCredentials {
-        try cached ?? CachedVpnCredentials(credentials: fetch())
+        lock.lock(); defer { lock.unlock() }
+        return try cached ?? CachedVpnCredentials(credentials: fetchWhileLocked())
     }
 
     public func fetchOpenVpnPassword() throws -> Data {
@@ -143,9 +152,10 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
 
     public func storeAndDetectDowngrade(vpnCredentials: VpnCredentials) {
-        // TODO: Refactor to make it obvious that code posting notifications is
-        // being run AFTER storing credentials to the keychain.
-        if let currentCredentials = fetch() {
+        lock.lock(); defer { lock.unlock() }
+
+        // Read the existing credentials (if any) and store the new ones
+        if let currentCredentials = try? fetchWhileLocked() {
             log.debug(
                 "Comparing vpn credentials to detect possible plan change",
                 category: .keychain,
@@ -156,6 +166,8 @@ public class VpnKeychain: VpnKeychainProtocol {
                     "newTier": "\(vpnCredentials.maxTier)",
                 ]
             )
+            // Posted from inside the lock, must remain `async`. The block executes only after the lock has
+            // been released. Changing it to `sync` would deadlock
             DispatchQueue.main.async {
                 let downgradeInfo = VpnDowngradeInfo(currentCredentials, vpnCredentials)
                 if !currentCredentials.isDelinquent, vpnCredentials.isDelinquent {
@@ -167,10 +179,10 @@ public class VpnKeychain: VpnKeychainProtocol {
                 }
             }
         }
-        store(vpnCredentials: vpnCredentials)
+        storeWhileLocked(vpnCredentials: vpnCredentials)
     }
 
-    private func store(vpnCredentials: VpnCredentials) {
+    private func storeWhileLocked(vpnCredentials: VpnCredentials) {
         do {
             let data = try encoder.encode(vpnCredentials)
             try appKeychain.set(data, key: StorageKey.vpnCredentials)
@@ -185,12 +197,15 @@ public class VpnKeychain: VpnKeychainProtocol {
             log.error("Error occurred during OpenVPN password storage", category: .keychain, metadata: ["error": "\(error)"])
         }
 
+        // Posted under the lock — must stay `async` for the same reason as in `storeAndDetectDowngrade`.
         DispatchQueue.main.async {
             AppEvent.credentialsChanged.post(vpnCredentials)
         }
     }
 
     public func clear() {
+        lock.lock(); defer { lock.unlock() }
+
         log.debug("Clearing vpn credentials from keychain", category: .keychain)
         cached = nil
         appKeychain[data: StorageKey.vpnCredentials] = nil

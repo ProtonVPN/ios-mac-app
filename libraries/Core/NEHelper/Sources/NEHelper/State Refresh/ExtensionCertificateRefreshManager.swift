@@ -40,6 +40,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
     }
 
     fileprivate static var intervals = Intervals()
+    private static let workQueueKey = DispatchSpecificKey<Void>()
 
     @Dependency(\.vpnAuthenticationStorage) private var vpnAuthenticationStorage
     private let apiService: ExtensionAPIService
@@ -63,6 +64,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
         let workQueue = DispatchQueue(label: "ch.protonvpn.extension.wireguard.certificate-refresh")
 
         self.apiService = apiService
+        workQueue.setSpecific(key: Self.workQueueKey, value: ())
 
         operationQueue.maxConcurrentOperationCount = 1
         semaphore.signal()
@@ -77,12 +79,17 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
     }
 
     deinit {
-        guard state == .stopped else {
-            fatalError("Attempted to free refresh manager before stopping it")
+        if state != .stopped {
+            // In production we can be torn down by the OS before our owner calls stop(). Force a local shutdown
+            // rather than crashing here.
+            log.assertionFailure("Refresh manager deinitialized while still running; forcing shutdown", category: .userCert)
+            forceStopForDeinit()
         }
 
-        // Make sure we have our turn on the semaphore (should be ok if we're in the stopped state)
-        semaphore.wait()
+        // Make sure we have our turn on the semaphore before releasing, to avoid unowned access in operations.
+        if semaphore.wait(timeout: .now() + .seconds(5)) == .timedOut {
+            log.error("Timed out waiting for semaphore during deinit; proceeding with teardown", category: .userCert)
+        }
     }
 
     /// Check the refresh conditions for certificate refresh, and refresh it if necessary.
@@ -272,7 +279,19 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
 
     override public func stop(completion: @escaping (() -> Void)) {
         super.stop { [weak self] in
-            self?.operationQueue.addBarrierBlock {
+            guard let self else {
+                // The manager was deallocated before
+                completion()
+                return
+            }
+
+            guard !operationQueue.isSuspended else {
+                // The queue is already suspended
+                completion()
+                return
+            }
+
+            operationQueue.addBarrierBlock { [weak self] in
                 self?.operationQueue.isSuspended = true
                 completion()
             }
@@ -289,6 +308,22 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
     override func stopTimer() {
         operationQueue.cancelAllOperations()
         super.stopTimer()
+    }
+
+    /// Cancel and suspend the operation queue before the superclass stops the timer and transition `state` to `.stopped`.
+    override func forceStop() {
+        operationQueue.cancelAllOperations()
+        operationQueue.isSuspended = true
+        super.forceStop()
+    }
+
+    /// Calls `forceStop()` on `workQueue` from `deinit`.
+    private func forceStopForDeinit() {
+        if DispatchQueue.getSpecific(key: Self.workQueueKey) != nil {
+            forceStop()
+        } else {
+            workQueue.sync { [self] in forceStop() }
+        }
     }
 }
 

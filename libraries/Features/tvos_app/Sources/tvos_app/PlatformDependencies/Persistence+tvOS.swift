@@ -31,15 +31,20 @@ extension DatabaseConfiguration {
     ///  - Note: duplicates DatabaseConfiguration.live from LegacyCommon, with the omission
     ///     of logging and Sentry error reporting.
     static var live: DatabaseConfiguration {
+        let fileManager = FileManager.default
         let directoryURL = URL.cachesDirectory
-        if !FileManager.default.fileExists(atPath: directoryURL.absolutePath) {
-            try! FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true)
+        let databaseType: DatabaseType
+        do {
+            try fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
+            let databasePath = directoryURL
+                .appendingPathComponent("database")
+                .appendingPathExtension("sqlite")
+                .absolutePath
+            databaseType = .physical(filePath: databasePath)
+        } catch {
+            assertionFailure("Failed to initialise app DB directory: \(error)")
+            databaseType = .ephemeral
         }
-
-        let databasePath = directoryURL
-            .appendingPathComponent("database")
-            .appendingPathExtension("sqlite")
-            .absolutePath
 
         let executor = ErrorHandlingAndLoggingDatabaseExecutor(
             logError: { message, error in
@@ -51,7 +56,7 @@ extension DatabaseConfiguration {
 
         return DatabaseConfiguration(
             executor: executor,
-            databaseType: .physical(filePath: databasePath),
+            databaseType: databaseType,
             schemaVersion: .latest
         )
     }

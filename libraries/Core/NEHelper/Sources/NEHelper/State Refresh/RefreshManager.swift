@@ -63,6 +63,17 @@ public class RefreshManager {
         }
     }
 
+    /// Synchronously tears the manager down and transitions `state` to `.stopped`.
+    ///
+    /// - Note: Must be called on `workQueue`.
+    func forceStop() {
+        #if DEBUG
+            dispatchPrecondition(condition: .onQueue(workQueue))
+        #endif
+        stopTimer()
+        state = .stopped
+    }
+
     /// Pause manager in case when phone goes to sleep.
     ///
     /// This saves the time when timer was planned to run so after manager is resumed

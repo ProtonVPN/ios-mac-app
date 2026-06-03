@@ -246,8 +246,9 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
 
     override open func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         wg_log(.info, message: "Stopping tunnel with reason: \(reason)")
-
-        completionHandler()
+        certificateRefreshManager.stop {
+            completionHandler()
+        }
     }
 
     override open func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)?) {
