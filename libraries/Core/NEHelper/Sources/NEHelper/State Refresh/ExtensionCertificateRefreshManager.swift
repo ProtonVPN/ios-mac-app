@@ -279,7 +279,19 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
 
     override public func stop(completion: @escaping (() -> Void)) {
         super.stop { [weak self] in
-            self?.operationQueue.addBarrierBlock {
+            guard let self else {
+                // The manager was deallocated before
+                completion()
+                return
+            }
+
+            guard !operationQueue.isSuspended else {
+                // The queue is already suspended
+                completion()
+                return
+            }
+
+            operationQueue.addBarrierBlock { [weak self] in
                 self?.operationQueue.isSuspended = true
                 completion()
             }

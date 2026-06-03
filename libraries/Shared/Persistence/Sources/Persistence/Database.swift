@@ -168,7 +168,8 @@ extension DatabaseWriter {
             )
         }
 
-        // Last option: return a bare, unmigrated in-memory database.
+        // Last option: skip migration and return a bare, un-migrated in-memory database. The app degrades to an
+        // empty schema without data, but no crashing
         do {
             log.error(
                 "All migrated fallback databases failed; returning un-migrated in-memory database",
@@ -178,12 +179,25 @@ extension DatabaseWriter {
             return try DatabaseQueue(configuration: configuration)
         } catch {
             log.error(
-                "Un-migrated in-memory fallback database initialization failed",
+                "Un-migrated in-memory fallback failed; retrying with a default configuration",
                 category: .persistence,
                 metadata: ["error": "\(error)"]
             )
         }
 
-        preconditionFailure("Unable to initialize any fallback database writer")
+        // When previous attempt with `configuration` failed.
+        // Open an in-memory database with GRDB's default configuration
+        do {
+            return try DatabaseQueue()
+        } catch {
+            log.error(
+                "Bare in-memory fallback database initialization failed",
+                category: .persistence,
+                metadata: ["error": "\(error)"]
+            )
+        }
+
+        // Reaching here means SQLite cannot open even a bare in-memory database
+        preconditionFailure("Unable to initialize any fallback database writer, including a bare in-memory database")
     }
 }
