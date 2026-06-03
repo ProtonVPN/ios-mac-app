@@ -37,32 +37,44 @@ enum MessageRouter {
             return handleFlushLogsToFile()
         case .retrieveLogsArchive:
             return handleRetrieveLogsArchive()
-        case .getCurrentPeerID:
-            return await handleGetCurrentPeerID(from: adapter)
+        case .getCurrentPeer:
+            return await handleGetCurrentPeer(from: adapter)
         case let .pcapRequest(request):
             return handlePacketCaptureRequest(request, with: adapter)
         case let .pushSelector(selector):
             return handlePushSelector(selector, with: adapter)
-        case .updateConfiguration:
-            return await handleConfigurationUpdate(with: adapter)
+        case let .updateConfiguration(changes):
+            return await handleConfigurationUpdate(changes: changes, with: adapter)
         }
     }
 }
 
 private extension MessageRouter {
-    static func handleGetCurrentPeerID(from adapter: ProTUNAdapter) async -> Response {
+    static func handleGetCurrentPeer(from adapter: ProTUNAdapter) async -> Response {
         do {
             let currentState = try await adapter.stateDelegate.state.connectionState
             switch currentState {
-            case let .connected(peer, _), let .connectingToLocalAgent(peer, _):
-                return .init(payload: .currentPeerID(.success(peer.peerId)))
+            case let .connected(peer, agent):
+                let peer = CurrentPeer(
+                    peerID: peer.peerId,
+                    transport: .from(protocol: peer.protocol),
+                    serverExitV4: agent?.serverExitV4,
+                    userISP: agent?.userIspName,
+                    userIP: agent?.userIspIp
+                )
+                return .init(payload: .currentPeer(.success(peer)))
+
+            case let .connectingToLocalAgent(peer, _):
+                let peer = CurrentPeer(peerID: peer.peerId, transport: .from(protocol: peer.protocol), serverExitV4: nil, userISP: nil, userIP: nil)
+                return .init(payload: .currentPeer(.success(peer)))
+
             default:
                 Logger.provider.error("Received getCurrentPeerID but currently in \(currentState) state")
-                return .init(payload: .currentPeerID(.failure(.init(failureReason: "Received getCurrentPeerID but currently in \(currentState) state"))))
+                return .init(payload: .currentPeer(.failure(.init(failureReason: "Received getCurrentPeerID but currently in \(currentState) state"))))
             }
         } catch {
             Logger.provider.error("Failed to retrieve ProTUN state")
-            return .init(payload: .currentPeerID(.failure(.init(failureReason: "Failed to retrieve ProTUN state"))))
+            return .init(payload: .currentPeer(.failure(.init(failureReason: "Failed to retrieve ProTUN state"))))
         }
     }
 
@@ -138,18 +150,17 @@ private extension MessageRouter {
         return .init(payload: .ack)
     }
 
-    static func handleConfigurationUpdate(with adapter: ProTUNAdapter) async -> Response {
+    static func handleConfigurationUpdate(changes: Set<ConnectionChange>, with adapter: ProTUNAdapter) async -> Response {
         guard let provider = adapter.packetTunnelProvider else {
             return .genericError("Missing reference to provider")
         }
         provider.reasserting = true
 
-        @Dependency(\.date.now) var now
         do {
-            // TODO: do this cleanly AND TEST IF IT WORKS PROPERLY IN RELEASE MODE
-            try await ConfigurationUpdater.setLocalizedDescriptionToProTUNConfiguration("\(now)")
+            try await ConfigurationUpdater.updateConfiguration(changes: changes, adapter: adapter)
         } catch {
             Logger.adapter.error("Unable to update configuration from extension with error: \(error)")
+            return .genericError("Configuration update failed: \(error)")
         }
 
         provider.reasserting = false
@@ -168,6 +179,19 @@ extension ConnectionState: CustomStringConvertible {
             "connectingToLocalAgent(\(peer), \(String(describing: waitReason))))"
         case let .connected(peer, agentInfo):
             "connected(\(peer), \(String(describing: agentInfo))))"
+        }
+    }
+}
+
+public extension WireGuardTransport {
+    static func from(protocol: Protocol) -> Self {
+        switch `protocol` {
+        case .wireguardUdp:
+            .udp
+        case .wireguardTcp:
+            .tcp
+        case .stealth:
+            .tls
         }
     }
 }

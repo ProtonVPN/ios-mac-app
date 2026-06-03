@@ -100,25 +100,6 @@ public struct HomeView: View {
             .paymentsSheet(store: $store)
     }
 
-    @ViewBuilder
-    private var debugText: some View {
-        #if DEBUG
-            if isConnectedWithProTUN {
-                Text(verbatim: "Connected with ProTUN 🚀")
-            }
-        #endif
-    }
-
-    private var isConnectedWithProTUN: Bool {
-        guard case let .connected(intent, _, _, _) = store.connectionState else {
-            return false
-        }
-        guard case let .wireGuard(configuration) = intent.protocolConfiguration else {
-            return false
-        }
-        return configuration.backend == .proTUN
-    }
-
     private var content: some View {
         GeometryReader { proxy in
             ZStack(alignment: .top) {
@@ -133,7 +114,6 @@ public struct HomeView: View {
 
                 ConnectionStatusView(store: store.scope(state: \.connectionStatus, action: \.connectionStatus))
                     .zIndex(connectionStatusZIndex.rawValue)
-                debugText
 
                 ScrollViewReader { scrollViewProxy in
                     ScrollView(showsIndicators: false) {

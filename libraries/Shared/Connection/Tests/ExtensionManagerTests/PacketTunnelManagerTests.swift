@@ -24,6 +24,7 @@
     import DomainTestSupport
     @testable import ExtensionManager
     import Foundation
+    @testable import LocalAgent
     import class NetworkExtension.NETunnelProviderProtocol
     import XCTest
 
@@ -35,12 +36,18 @@
             inactiveManager.session = VPNSessionMock(status: .disconnected)
             activeManager.session = VPNSessionMock(status: .connecting)
 
+            let config = NETunnelProviderProtocol()
+            let specData = try JSONEncoder().encode(ConnectionSpec.defaultFastest)
+            config.setProviderConfiguration(value: specData, forKey: "connectionSpec")
+            inactiveManager.protocolConfiguration = config
+            activeManager.protocolConfiguration = config
+
             try await withDependencies {
                 // $0.continuousClock = clock
                 $0.vpnManagerRepository.managers = { [.ike: inactiveManager, .wireGuard(.go): activeManager] }
             } operation: {
                 let status = try await PacketTunnelManager().status
-                XCTAssertEqual(status, .connecting)
+                XCTAssertEqual(status, .connecting(StaticTunnelData(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard(.go), peerIDs: [])))
             }
         }
 
@@ -53,20 +60,24 @@
             disconnectingManager.session = VPNSessionMock(status: .disconnecting)
             (connectedManager.session as? VPNSessionMock)?.connectedServerID = "server-id"
             (connectedManager.session as? VPNSessionMock)?.messageHandler = MessageHandler.full
-            connectedManager.protocolConfiguration = NETunnelProviderProtocol()
+            let config = NETunnelProviderProtocol()
+            let specData = try JSONEncoder().encode(ConnectionSpec.defaultFastest)
+            config.setProviderConfiguration(value: specData, forKey: "connectionSpec")
+            connectedManager.protocolConfiguration = config
 
             try await withDependencies {
                 $0.date = .constant(now)
                 $0.vpnManagerRepository.managers = {
-                    [.ike: disconnectingManager, .wireGuard(.go): connectedManager]
+                    [.ike: disconnectingManager, .wireGuard(.proTUN): connectedManager]
                 }
+                $0.localAgent.postRequestToExtension = { _ in }
             } operation: {
                 let status = try await PacketTunnelManager().status
                 XCTAssertEqual(
                     status,
                     .connected(
-                        .wireGuard(.go),
-                        ConnectionData(serverID: "server-id", connectionDate: now, protocolData: .wireGuardGo)
+                        StaticTunnelData(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard(.proTUN), peerIDs: []),
+                        DynamicConnectionData(currentPeerId: "peer-id", connectionDate: now, protocolConnectionData: .proTUN(.init(transport: .udp)))
                     )
                 )
             }

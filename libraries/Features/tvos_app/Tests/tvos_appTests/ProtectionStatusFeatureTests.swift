@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import Connection
+import Domain
 import DomainTestSupport
 @testable import tvos_app
 import XCTest
@@ -63,7 +64,10 @@ final class ProtectionStatusFeatureTests: XCTestCase {
             ProtectionStatusFeature()
         }
         @Shared(.connectionState) var connectionState: ConnectionState
-        $connectionState.withLock { $0 = .connected(.init(spec: .defaultFastest, server: .mock, protocolConfiguration: .ike, features: .defaultFeatures), .mock, .now, nil) }
+        $connectionState.withLock { $0 = .connected(
+            .init(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: []),
+            .init(currentPeer: .ca, connectionDate: .now, protocolConnectionData: .ike)
+        ) }
 
         await store.send(.userTappedButton)
         await store.receive(\.delegate.userClickedDisconnect)
@@ -75,7 +79,7 @@ final class ProtectionStatusFeatureTests: XCTestCase {
             ProtectionStatusFeature()
         }
         @Shared(.connectionState) var connectionState: ConnectionState
-        $connectionState.withLock { $0 = .disconnecting(.init(spec: .defaultFastest, server: .mock, protocolConfiguration: .ike, features: .defaultFeatures), .mock) }
+        $connectionState.withLock { $0 = .disconnecting(.ike, .defaultFastest) }
 
         await store.send(.userTappedButton)
         await store.receive(\.delegate.userClickedConnect)

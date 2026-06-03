@@ -418,20 +418,10 @@ private extension ConnectionState {
     // builds a fresh `.connected(..., Date(), ...)` and equality checks across two reads fail.
     static let fakeConnected: ConnectionState = {
         let actual = VPNConnectionActual.mock()
-        let intent = ServerConnectionIntent(
-            spec: .defaultFastest,
-            server: actual.server,
-            protocolConfiguration: .ike,
-            features: VPNConnectionFeatures(
-                netshield: .off,
-                vpnAccelerator: true,
-                bouncing: nil,
-                natType: actual.natType,
-                safeMode: actual.safeMode,
-                portForwarding: nil
-            )
+        return .connected(
+            .init(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+            .init(currentPeer: actual.server, connectionDate: .now, protocolConnectionData: .ike)
         )
-        return .connected(intent, actual.server, Date(), nil)
     }()
 
     static func testConnecting(_ spec: ConnectionSpec) -> ConnectionState {

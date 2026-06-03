@@ -20,6 +20,7 @@ import Connection
 import CoreConnectionTestSupport
 import Domain
 import DomainTestSupport
+import ExtensionManager
 import Foundation
 import VPNShared
 
@@ -31,13 +32,18 @@ public extension ConnectionFeature.State {
         let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let certificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
 
-        let intent = ServerConnectionIntent(spec: .defaultFastest, server: .mock, protocolConfiguration: .wireGuard(.mock), features: .mock)
-
         return ConnectionFeature.State(
-            connectionState: .connected(intent, .mock, .now, nil),
+            connectionState: .connected(
+                StaticTunnelData(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+                .init(currentPeer: .mock, connectionDate: now, protocolConnectionData: .ike)
+
+            ),
             shouldRegisterServerChangeOnConnection: false,
             core: .init(
-                tunnelState: .connected(.wireGuard(.go), .init(serverID: "abc", connectionDate: .now, protocolData: .wireGuardGo))
+                tunnelState: .connected(
+                    StaticTunnelData(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+                    DynamicConnectionData(currentPeerId: "peer-id", connectionDate: now, protocolConnectionData: .ike)
+                )
             )
         )
     }()

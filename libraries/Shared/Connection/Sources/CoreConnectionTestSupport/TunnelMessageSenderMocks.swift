@@ -22,65 +22,9 @@ import Foundation
 import IssueReporting
 
 public extension TunnelMessageSender {
-    #if DEBUG && os(iOS)
-        static let unimplemented: TunnelMessageSender = .init { request in
-            let requestErrorMessage = "Did not expect to send \(request) at this time"
-            reportIssue(requestErrorMessage)
-            return .error(message: requestErrorMessage)
-        } sendProTUN: { request in
-            let requestErrorMessage = "Did not expect to send \(request) at this time"
-            reportIssue(requestErrorMessage)
-            return .init(payload: .error(.other(reason: requestErrorMessage)))
-        }
-
-        static func sender(
-            forRequest request: WireguardProviderRequest,
-            withResponse response: WireguardProviderRequest.Response,
-            andOperation operation: @escaping () -> Void = {}
-        ) -> TunnelMessageSender {
-            .init { outgoingRequest in
-                guard outgoingRequest == request else {
-                    let requestErrorMessage = "Did not expect to send \(request) at this time"
-                    reportIssue(requestErrorMessage)
-                    return .error(message: requestErrorMessage)
-                }
-
-                operation()
-
-                return response
-            } sendProTUN: { _ in
-                fatalError("Unimplemented")
-            }
-        }
-    #else
-        static let unimplemented: TunnelMessageSender = .init(send: { request in
-            let requestErrorMessage = "Did not expect to send \(request) at this time"
-            reportIssue(requestErrorMessage)
-            return .error(message: requestErrorMessage)
-        }, sendProTUN: { _ in
-            reportIssue("Not implemented")
-            return .genericError("Not implemented")
-        })
-
-        static func sender(
-            forRequest request: WireguardProviderRequest,
-            withResponse response: WireguardProviderRequest.Response,
-            andOperation operation: @escaping () -> Void = {}
-        ) -> TunnelMessageSender {
-            .init(send: { outgoingRequest in
-                guard outgoingRequest == request else {
-                    let requestErrorMessage = "Did not expect to send \(request) at this time"
-                    reportIssue(requestErrorMessage)
-                    return .error(message: requestErrorMessage)
-                }
-
-                operation()
-
-                return response
-            }, sendProTUN: { _ in
-                reportIssue("Not implemented")
-                return .genericError("Not implemented")
-            })
-        }
-    #endif
+    static let unimplemented: TunnelMessageSender = .init { request in
+        let requestErrorMessage = "Did not expect to send \(request) at this time"
+        reportIssue(requestErrorMessage)
+        return .init(payload: .error(.other(reason: requestErrorMessage)))
+    }
 }

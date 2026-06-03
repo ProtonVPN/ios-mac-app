@@ -91,10 +91,6 @@ extension VPNSession {
 
 extension TunnelMessageSender: DependencyKey {
     public static let liveValue: TunnelMessageSender = .init(
-        send: { message throws(ProviderMessageError) in
-            @Dependency(\.tunnelManager) var tunnelManager
-            return try await tunnelManager.send(request: message, to: .specific(.wireGuard(.go)))
-        },
         sendProTUN: { request throws(ProviderMessageError) in
             @Dependency(\.tunnelManager) var tunnelManager
             return try await tunnelManager.sendProTUN(request: request)

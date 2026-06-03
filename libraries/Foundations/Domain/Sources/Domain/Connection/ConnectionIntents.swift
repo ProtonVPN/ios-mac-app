@@ -34,6 +34,18 @@ public struct ConnectionPreparationIntent: Equatable, Sendable, Codable {
     }
 }
 
+public struct ResolvedConnectionIntent: Equatable, Sendable {
+    public let spec: ConnectionSpec
+    public let tunnelProtocol: TunnelProtocol
+    public let resolvedServer: Server
+
+    public init(spec: ConnectionSpec, tunnelProtocol: TunnelProtocol, resolvedServer: Server) {
+        self.spec = spec
+        self.tunnelProtocol = tunnelProtocol
+        self.resolvedServer = resolvedServer
+    }
+}
+
 public struct ServerConnectionIntent: Equatable, Sendable, Codable {
     public let spec: ConnectionSpec
     public let server: Server

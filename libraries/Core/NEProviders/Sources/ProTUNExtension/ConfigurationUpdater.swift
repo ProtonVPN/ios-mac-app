@@ -17,18 +17,96 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import Domain
 import NetworkExtension
+import VPNCoreCommon
 
 enum ConfigurationUpdater {
-    // TODO: do this cleanly AND TEST IF IT WORKS PROPERLY IN RELEASE MODE
-    static func setLocalizedDescriptionToProTUNConfiguration(_: String) async throws {
-        let managers = try await NETunnelProviderManager.loadAllFromPreferences()
-        let proTUNManager = managers.first {
-            ($0.protocolConfiguration as? NETunnelProviderProtocol)?
-                .providerBundleIdentifier == "ch.protonmail.vpn.ProTUN-Extension-Mobile"
-        }!
-        proTUNManager.localizedDescription = "\(Date.now)"
-        // proTUNManager.isOnDemandEnabled = false
-        try await proTUNManager.saveToPreferences()
+    static var proTUNManager: NETunnelProviderManager {
+        get async throws(Failure) {
+            let manager: NETunnelProviderManager?
+            do {
+                let managers = try await NETunnelProviderManager.loadAllFromPreferences()
+                manager = managers.first {
+                    ($0.protocolConfiguration as? NETunnelProviderProtocol)?
+                        .providerBundleIdentifier == "ch.protonmail.vpn.ProTUN-Extension-Mobile"
+                }
+            } catch {
+                throw .missingManager
+            }
+            guard let manager else {
+                throw .missingManager
+            }
+            return manager
+        }
+    }
+
+    // TODO: ProTUN: Test this behaviour in RELEASE mode
+    static func updateConfiguration(
+        changes: Set<ConnectionChange>,
+        adapter: ProTUNAdapter
+    ) async throws(Failure) {
+        let manager = try await proTUNManager
+        guard let config = manager.protocolConfiguration as? NETunnelProviderProtocol else {
+            throw .badConfiguration
+        }
+
+        for change in changes {
+            switch change {
+            case let .location(spec, peers):
+                // This also allows transport restrictions - e.g. passing only UDP peers/ports to restrict to UDP
+                guard let connection = adapter.connection else {
+                    throw .location(.noConnection)
+                }
+                do {
+                    let peers: [PeerInfo] = try peers.map { try .init(from: $0) }
+                    let specData = try JSONEncoder().encode(spec)
+                    config.setProviderConfiguration(value: specData, forKey: "connectionSpec")
+                    connection.updatePeers(peers: peers)
+                } catch {
+                    throw .location(.badPeers)
+                }
+
+            case .feature(.agent):
+                // Features applied through local agent are not persisted via the configuration.
+                continue
+
+            case let .feature(.tunnel(.allowLAN(allowed))):
+                config.excludeLocalNetworks = !allowed
+
+            case let .feature(.tunnel(.killSwitch(enabled))):
+                config.includeAllNetworks = enabled
+
+            case .feature(.tunnel(.connectionProtocol)):
+                // TODO: ProTUN: update peers accordingly to what ports they specify, or remove in favour of .location
+                throw .unhandledChange(change)
+
+            case .feature(.tunnel(.customDNS)):
+                // TODO: ProTUN: Custom DNS support
+                throw .unhandledChange(change)
+
+            case let .feature(.tunnel(.onDemand(enabled))):
+                manager.isOnDemandEnabled = enabled
+            }
+        }
+
+        do {
+            try await proTUNManager.saveToPreferences()
+        } catch {
+            throw .saveFailure(error)
+        }
+    }
+
+    enum Failure: Error {
+        case badConfiguration
+        case location(Location)
+        case missingManager
+        case saveFailure(Error)
+        case unhandledChange(ConnectionChange)
+
+        enum Location: Error {
+            case badPeers
+            case noConnection
+        }
     }
 }

@@ -77,26 +77,27 @@ actor TelemetryConnectionStatusReporter {
         var eventType: ConnectionEvent.Event?
         var connection: ServerConnectionIntent?
         switch connectionState {
-        case let .connected(connectionIntent, _, connectedDate, _):
-            connection = connectionIntent
-            timer.updateConnectionStarted(connectedDate)
+        case let .connected(_, dynamicData):
+            // connection = connectionIntent
+            timer.updateConnectionStarted(dynamicData.connectionDate)
             timer.markFinishedConnecting()
             eventType = try connectionEventType(state: connectionState)
         case let .connecting(intent):
             switch intent {
-            case let .resolved(resolvedConnectionIntent, _):
-                connection = resolvedConnectionIntent
+            case .resolved:
+                // connection = resolvedConnectionIntent
+                break
             case .unresolved:
                 timer.markConnectionStopped()
                 timer.markStartedConnecting()
             }
             eventType = try connectionEventType(state: connectionState)
         case .disconnected:
-            connection = previousConnectionIntent
+            // connection = previousConnectionIntent
             timer.markConnectionStopped()
             eventType = try connectionEventType(state: connectionState)
-        case let .disconnecting(connectionIntent, _):
-            previousConnectionIntent = connectionIntent
+        case .disconnecting:
+            // previousConnectionIntent = connectionIntent
             // Ignoring the `disconnecting` status
             return
         case .resolving:
@@ -159,7 +160,7 @@ actor TelemetryConnectionStatusReporter {
             // VPNAPPL-3466: Confirm empty string for the port is acceptable for ike
             port = ""
         case .wireGuard:
-            // TODO: fetch active port and transport from ProTUN ConnectionData
+            // TODO: ProTUN: fetch active port and transport from ProTUN ConnectionData
             connectionProtocol = .wireGuard(.udp)
             //            guard let wgPort = wgSettings.ports.first else {
             //                throw ConnectionEventError.missingPort

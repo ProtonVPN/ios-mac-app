@@ -24,19 +24,22 @@
         /// A `.connected` state matching `spec` — derives exit country / Secure Core / gateway
         /// from `spec.location` so the rendered UI reflects the intent.
         static func previewConnected(for spec: ConnectionSpec) -> ConnectionState {
-            let intent = ServerConnectionIntent.preview(for: spec)
-            return .connected(intent, intent.server, Date(), nil)
+            .connected(
+                .init(connectionSpec: spec, tunnelProtocol: .ike, peerIDs: []),
+                .init(currentPeer: .preview(for: spec.location), connectionDate: Date(), protocolConnectionData: .ike)
+            )
         }
 
         static func previewConnected(for spec: ConnectionSpec, server: Server) -> ConnectionState {
-            let intent = ServerConnectionIntent.preview(for: spec, server: server)
-            return .connected(intent, server, Date(), nil)
+            .connected(
+                .init(connectionSpec: spec, tunnelProtocol: .ike, peerIDs: []),
+                .init(currentPeer: server, connectionDate: Date(), protocolConnectionData: .ike)
+            )
         }
 
         /// A `.connecting(.resolved(...))` state matching `spec`.
         static func previewConnecting(for spec: ConnectionSpec) -> ConnectionState {
-            let intent = ServerConnectionIntent.preview(for: spec)
-            return .connecting(.resolved(intent, intent.server))
+            .connecting(.resolved(.init(spec: spec, tunnelProtocol: .ike, resolvedServer: .preview(for: spec.location))))
         }
     }
 

@@ -28,19 +28,11 @@ public enum TunnelConfigurationOperation {
     case reconfiguration([ConnectionChange])
 }
 
-public enum ConnectionChange {
-    case location(ServerConnectionIntent)
-    case feature(ConnectionFeatureChange)
-}
-
 struct ManagerConfigurator {
     typealias ConfigurationHandler = @Sendable (inout TunnelProviderManager, TunnelConfigurationOperation) async throws -> Void
 
-    private var configure: ConfigurationHandler
-
-    init(configure: @escaping ConfigurationHandler) {
-        self.configure = configure
-    }
+    private(set) var changes: @Sendable (ServerConnectionIntent) -> Set<ConnectionChange>
+    private(set) var configure: ConfigurationHandler
 }
 
 /// Convenience API with labels

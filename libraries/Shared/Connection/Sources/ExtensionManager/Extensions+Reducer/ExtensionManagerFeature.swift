@@ -85,11 +85,8 @@ public struct ExtensionFeature: Sendable {
                 // and `stopTunnel` commands to the other, resulting in failure to connect.
                 return .concatenate(
                     initial,
-                    .merge(
-                        observation,
-                        forkObservation
-                    )
-                    .cancellable(id: CancelID.observation, cancelInFlight: true)
+                    .merge(observation, forkObservation)
+                        .cancellable(id: CancelID.observation, cancelInFlight: true)
                 )
 
             case .stopObserving:
@@ -97,7 +94,9 @@ public struct ExtensionFeature: Sendable {
 
             case let .updateConfiguration(intent):
                 return .run { _ in
-                    _ = try await tunnelManager.sendProTUN(request: .init(payload: .updateConfiguration))
+                    @Dependency(\.tunnelProviderConfigurator) var configurator
+                    let changes = configurator.changes(intent)
+                    _ = try await tunnelManager.sendProTUN(request: .init(payload: .updateConfiguration(changes)))
                 } catch: { _, _ in
                     // TODO: What's the best way to handle failure here?
                 }
@@ -118,16 +117,6 @@ public struct ExtensionFeature: Sendable {
 
             case .tunnelReasserting:
                 // handled by parents
-                return .none
-
-            case let .tunnelStatusChanged(.connected(tunnelProtocol, connectionData)):
-                guard let connectionData else {
-                    // This can happen transiently if status notifications race with manager/configuration reloads.
-                    // Do not force-disconnect; wait for the next status update with resolved connection data.
-                    log.warning("Connected tunnel status without connection data", category: .connection)
-                    return .none
-                }
-                state = .connected(tunnelProtocol, connectionData)
                 return .none
 
             case .tunnelStatusChanged(.invalid):
@@ -222,31 +211,6 @@ extension TunnelConnectionError: ProtonVPNError {
             error
         default:
             nil
-        }
-    }
-}
-
-package extension TunnelState {
-    /// The network extension process has a mind of its own. If we've previously invoked `startTunnel`, and we invoke
-    /// `stopTunnel` before waiting for the extension to actually transition to `.connected` or `.disconnected`, we
-    /// may get unexpected results. For now, the parent feature should delay disconnection until this feature is ready
-    /// to accept such events.
-    var isInteractionAllowed: Bool {
-        switch self {
-        case .connected, .disconnected:
-            true
-
-        case .connecting:
-            // Technically, the network extension could be ready for interaction in this state. Currently, the
-            // extension enters this state when we receive a `NEVPNStatusDidChange.connecting` notification, but we
-            // don't leave it for `.connected` after we receive `NEVPNStatusDidChange.connected`, until we also
-            // complete an ipc round trip to determine what server we are connected to. As a result, we will take
-            // slightly longer to cancel our connection.
-            // This could be improved by storing the last `NEVPNStatus` received in our state.
-            false
-
-        case .unknown, .invalid, .reasserting, .disconnecting:
-            false
         }
     }
 }

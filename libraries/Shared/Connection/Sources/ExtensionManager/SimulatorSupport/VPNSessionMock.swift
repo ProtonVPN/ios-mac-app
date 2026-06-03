@@ -49,7 +49,7 @@
         var disconnectionDuration: Duration? = .seconds(1)
         var disconnectionTask: Task<Void, Error>?
         var lastDisconnectError: Error?
-        var messageHandler: ((VPNSessionMock, WireguardProviderRequest) async throws(ProviderMessageError) -> WireguardProviderRequest.Response)?
+        var messageHandler: ((VPNSessionMock, ProTUNMessage.Request) async throws(ProviderMessageError) -> ProTUNMessage.Response)?
         var internalMessageSender: (Data) async throws -> Data?
 
         init(
@@ -114,54 +114,27 @@
 
         // MARK: ProviderMessageSender conformance
 
-        func send(_ message: WireguardProviderRequest) async throws(ProviderMessageError) -> WireguardProviderRequest.Response {
-            guard let messageHandler else {
-                reportIssue("Unimplemented message handler")
-                return .error(message: "unimplemented message handler")
-            }
-            return try await messageHandler(self, message)
-        }
-
         func _sendProviderMessage(_ messageData: Data) async throws -> Data? {
             try await internalMessageSender(messageData)
         }
 
-        func sendProTUNRequest(_: Domain.ProTUNMessage.Request) async throws -> Domain.ProTUNMessage.Response {
-            throw ProviderMessageError.notSupported
+        func sendProTUNRequest(_ message: Domain.ProTUNMessage.Request) async throws -> Domain.ProTUNMessage.Response {
+            guard let messageHandler else {
+                reportIssue("Unimplemented message handler")
+                throw ProviderMessageError.notSupported
+            }
+            return try await messageHandler(self, message)
         }
     }
 
     enum MessageHandler {
-        static let usingInternalSend: (VPNSessionMock, WireguardProviderRequest) async throws(ProviderMessageError) -> WireguardProviderRequest.Response = { session, message throws(ProviderMessageError) in
-            let data = try await session.send(message, withRetries: 5, retryInterval: .seconds(1))
-            do {
-                return try WireguardProviderRequest.Response.decode(data: data)
-            } catch {
-                throw ProviderMessageError.decodingError
-            }
-        }
-
-        static let full: (VPNSessionMock, WireguardProviderRequest) async throws(ProviderMessageError) -> WireguardProviderRequest.Response = { session, message in
-            switch message {
-            case .getCurrentServerId:
-                return .ok(data: session.connectedServerID.data(using: .utf8)!)
-
-            case let .refreshCertificate(features):
-                @Dependency(\.date) var date
-                @Dependency(\.vpnAuthenticationStorage) var keychain
-                let tomorrow = date.now.addingTimeInterval(.days(1))
-                let cert = VpnCertificate(certificate: "abcd", validUntil: tomorrow, refreshTime: tomorrow)
-                let certWithFeatures = VpnCertificateWithFeatures(certificate: cert, features: features)
-                keychain.store(certWithFeatures)
-
-                return .ok(data: nil)
-
-            case .setApiSelector:
-                return .ok(data: nil)
-
+        static let full: (VPNSessionMock, ProTUNMessage.Request) async throws(ProviderMessageError) -> ProTUNMessage.Response = { _, message in
+            switch message.payload {
+            case .getCurrentPeer:
+                let currentPeer = CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, userISP: nil, userIP: nil)
+                return .init(payload: .currentPeer(.success(currentPeer)))
             default:
-                reportIssue("Unimplemented message handler for \(message)")
-                return .error(message: "")
+                return .genericError("Unimplemented message handler for \(message)")
             }
         }
     }

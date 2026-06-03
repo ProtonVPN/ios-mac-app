@@ -24,6 +24,7 @@
     @testable import CoreConnection
     import Domain
     @testable import ExtensionManager
+    @testable import LocalAgent
     import Network
     @testable import tvos_app
     import VPNShared
@@ -56,6 +57,9 @@
                 AppFeature()._printChanges()
             } withDependencies: {
                 $0.continuousClock = clock
+                $0.serverIdentifier.fullServerInfo = { _ in .mock }
+                $0.localAgent.postRequestToExtension = { _ in }
+                $0.connectionFeatureProvider.setConnectionFeatures = { _ in }
                 $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
                 $0.networking = VPNNetworkingMock()
                 $0.vpnAuthenticationStorage = VpnAuthenticationStorage.testStorage()

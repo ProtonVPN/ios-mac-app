@@ -29,14 +29,14 @@ package struct ConnectionCardModel {
         switch connectionState {
         case .disconnected, .disconnecting:
             return Localizable.connectionCardAccessibilityLastConnectedTo(countryName)
-        case let .connected(intent, server, _, _):
-            if let browsingFrom = LocalizationUtility.default.countryName(forCode: server.logical.exitCountryCode),
-               let serverNumber = server.logical.serverNumber {
-                let vpnProtocol: VpnProtocol = switch intent.protocolConfiguration {
+        case let .connected(_, dynamicData):
+            if let browsingFrom = LocalizationUtility.default.countryName(forCode: dynamicData.currentPeer.logical.exitCountryCode),
+               let serverNumber = dynamicData.currentPeer.logical.serverNumber {
+                let vpnProtocol: VpnProtocol = switch dynamicData.protocolConnectionData {
                 case .ike:
                     .ike
-                case let .wireGuard(settings):
-                    .wireGuard(settings.transport ?? .defaultValue)
+                case let .proTUN(proTUNData):
+                    .wireGuard(proTUNData.transport)
                 }
                 // TODO: replace vpnProtocol.apiDescription, VPNAPPL-3550
                 return Localizable.connectionCardAccessibilityBrowsingFromFullDetails(

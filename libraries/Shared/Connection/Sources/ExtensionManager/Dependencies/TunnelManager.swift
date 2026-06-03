@@ -23,7 +23,11 @@ import Domain
 import ExtensionIPC
 import Foundation
 import IPCErgonomics
+import LocalAgent
+import LocalAgentIPC
 import NetworkExtension
+import VPNCoreCommon
+import VPNCoreTypes
 
 enum TunnelMessageTarget {
     /// Send to whichever extension is currently active.
@@ -35,8 +39,6 @@ enum TunnelMessageTarget {
 protocol TunnelManager {
     func startTunnel(with intent: ServerConnectionIntent) async throws
     func stopTunnel() async throws
-
-    func send(request: WireguardProviderRequest, to target: TunnelMessageTarget) async throws(ProviderMessageError) -> WireguardProviderRequest.Response
 
     func sendProTUN(request: ProTUNMessage.Request) async throws(ProviderMessageError) -> ProTUNMessage.Response
 
@@ -53,31 +55,71 @@ public enum TunnelState: Equatable, Sendable {
     case unknown // Initial state — not yet read from the system
     case invalid // VPN configuration not yet approved by the user
     case disconnected(TunnelConnectionError?)
-    case connecting
-    case connected(TunnelProtocol, ConnectionData?)
-    case reasserting // Briefly re-establishing an existing connection
-    case disconnecting(TunnelConnectionError?)
+    case connecting(StaticTunnelData)
+    case connected(StaticTunnelData, DynamicConnectionData)
+    case reasserting(StaticTunnelData) // Briefly re-establishing an existing connection
+    case disconnecting(StaticTunnelData)
 }
 
-public struct ConnectionData: Equatable, Sendable {
-    public let serverID: String
-    public let connectionDate: Date
-    public let protocolData: ProtocolConnectionData
+/// Data relating to the connection that is strongly tied to the tunnel's configuration.
+/// This data can only change when the configuration is written to, and reloaded
+public struct StaticTunnelData: Equatable, Sendable {
+    /// The spec represents the user's original intent when initiating this connection
+    /// The tunnel configuration must be updated accordingly whenever a change is applied
+    public let connectionSpec: ConnectionSpec
+    public let tunnelProtocol: TunnelProtocol
+    public let peerIDs: [String]
 
-    package init(serverID: String, connectionDate: Date, protocolData: ProtocolConnectionData) {
-        self.serverID = serverID
+    public init(connectionSpec: ConnectionSpec, tunnelProtocol: TunnelProtocol, peerIDs: [String]) {
+        self.connectionSpec = connectionSpec
+        self.tunnelProtocol = tunnelProtocol
+        self.peerIDs = peerIDs
+    }
+}
+
+/// Runtime data that becomes available once the tunnel is connected.
+public struct DynamicConnectionData: Equatable, Sendable {
+    /// The ID of the peer we are connected to
+    public let currentPeerId: String
+
+    /// The date at which the tunnel first entered the `connected` state.
+    public let connectionDate: Date
+
+    /// Protocol specific data
+    public let protocolConnectionData: ProtocolConnectionData
+
+    public init(currentPeerId: String, connectionDate: Date, protocolConnectionData: ProtocolConnectionData) {
+        self.currentPeerId = currentPeerId
         self.connectionDate = connectionDate
-        self.protocolData = protocolData
+        self.protocolConnectionData = protocolConnectionData
     }
 }
 
 /// Extra information reported by the tunnel.
 /// Type of data depends on the connection protocol.
-/// Notably, `proTUN` case will be expanded to contain much more information following local agent integration
+@CasePathable
 public enum ProtocolConnectionData: Equatable, Sendable {
     case ike
-    case wireGuardGo
-    case proTUN
+    case proTUN(ProTUNConnectionData)
+
+    public struct ProTUNConnectionData: Equatable, Sendable {
+        public let transport: Domain.WireGuardTransport
+        public let serverExitV4: String?
+        public let userISP: String?
+        public let userIP: String?
+
+        public init(
+            transport: Domain.WireGuardTransport,
+            serverExitV4: String? = nil,
+            userISP: String? = nil,
+            userIP: String? = nil
+        ) {
+            self.transport = transport
+            self.serverExitV4 = serverExitV4
+            self.userISP = userISP
+            self.userIP = userIP
+        }
+    }
 }
 
 enum TunnelManagerKey: DependencyKey {
@@ -127,7 +169,7 @@ final class PacketTunnelManager: TunnelManager {
             .filter { $0.value.session.status != .disconnected && $0.value.session.status != .invalid }
             .map(\.key)
 
-        guard !activeProtocols.isEmpty else {
+        if activeProtocols.isEmpty {
             log.warning("stopTunnel: no active tunnel found", category: .connection)
             return
         }
@@ -138,27 +180,6 @@ final class PacketTunnelManager: TunnelManager {
             let onDemand = TunnelConfigurationOperation.reconfiguration([.feature(.tunnel(.onDemand(false)))])
             let manager = try await managerRepository.prepareManager(proto, onDemand)
             manager.session.stopTunnel()
-        }
-    }
-
-    func send(request: WireguardProviderRequest, to target: TunnelMessageTarget) async throws(ProviderMessageError) -> WireguardProviderRequest.Response {
-        do {
-            let manager: TunnelProviderManager?
-            switch target {
-            case .active:
-                manager = try await activeManager().map(\.1)
-            case let .specific(tunnelProtocol):
-                @Dependency(\.vpnManagerRepository) var managerRepository
-                manager = try await managerRepository.managers()[tunnelProtocol]
-            }
-            guard let manager else {
-                throw TunnelManagerError.noManagerFound
-            }
-            return try await manager.session.send(request)
-        } catch let error as ProviderMessageError {
-            throw error
-        } catch {
-            throw .sendingError(.managerUnavailable(error))
         }
     }
 
@@ -244,32 +265,73 @@ final class PacketTunnelManager: TunnelManager {
             )
         } catch {
             log.error("Failed to determine connected state: \(error)", category: .connection)
-            return .connected(payload.tunnelProtocol, nil)
+            return .unknown
         }
     }
 
-    // We have to consult the network extension to supplement the connected state with additional info
-    private func tunnelState(session: VPNSession, tunnelProtocol: TunnelProtocol, configuration: NEVPNProtocol?) async throws -> TunnelState {
+    private func tunnelState(after payload: StatusChangePayload) async -> TunnelState {
+        do {
+            return try await status
+        } catch {
+            log.error("Failed to resolve global tunnel status: \(error)", category: .connection)
+            return await tunnelState(from: payload)
+        }
+    }
+
+    private func staticTunnelData(
+        tunnelProtocol: TunnelProtocol,
+        configuration: NEVPNProtocol?
+    ) throws -> StaticTunnelData {
+        guard let connectionSpec = configuration?.connectionSpec else {
+            throw TunnelDataError.missingConnectionSpec
+        }
+        return StaticTunnelData(
+            connectionSpec: connectionSpec,
+            tunnelProtocol: tunnelProtocol,
+            peerIDs: configuration?.peerIDs ?? []
+        )
+    }
+
+    private func tunnelState(
+        session: VPNSession,
+        tunnelProtocol: TunnelProtocol,
+        configuration: NEVPNProtocol?
+    ) async throws -> TunnelState {
         switch session.status {
-        case .connected, .reasserting:
-            guard let configuration else {
-                log.error("Connected manager has no protocol configuration", category: .connection)
-                return .disconnected(nil)
-            }
-            return try await connectedState(session: session, tunnelProtocol: tunnelProtocol, configuration: configuration)
-        case .invalid: return .invalid
-        case .disconnected: return .disconnected(nil)
-        case .connecting: return .connecting
-        case .disconnecting: return .disconnecting(nil)
+        case .invalid:
+            return .invalid
+
+        case .disconnected:
+            return .disconnected(nil)
+
+        case .reasserting:
+            return try .reasserting(staticTunnelData(tunnelProtocol: tunnelProtocol, configuration: configuration))
+
+        case .connecting:
+            return try .connecting(staticTunnelData(tunnelProtocol: tunnelProtocol, configuration: configuration))
+
+        case .disconnecting:
+            return try .disconnecting(staticTunnelData(tunnelProtocol: tunnelProtocol, configuration: configuration))
+
+        case .connected:
+            let staticData = try staticTunnelData(tunnelProtocol: tunnelProtocol, configuration: configuration)
+            return try await .connected(
+                staticData,
+                dynamicConnectionData(session: session, tunnelProtocol: tunnelProtocol, configuration: configuration)
+            )
+
         @unknown default:
             log.error("Unknown NEVPNStatus: \(session.status)", category: .connection)
             return .disconnected(nil)
         }
     }
 
-    private func connectedState(session: any VPNSession, tunnelProtocol: TunnelProtocol, configuration: NEVPNProtocol) async throws -> TunnelState {
+    private func dynamicConnectionData(
+        session: any VPNSession,
+        tunnelProtocol: TunnelProtocol,
+        configuration: NEVPNProtocol?
+    ) async throws -> DynamicConnectionData {
         @Dependency(\.date) var date
-
         let connectionDate = session.connectedDate ?? date.now
 
         switch tunnelProtocol {
@@ -283,63 +345,41 @@ final class PacketTunnelManager: TunnelManager {
             // Falling back to an empty serverID lets the connection advance; downstream code
             // that needs the server uses `currentIntent?.serverIntent.server` from
             // `ConnectionFeature`, not this field.
-            let serverID = (try? configuration.ikePeerID) ?? ""
+            guard let serverID = try configuration?.ikePeerID else {
+                throw TunnelDataError.missingPeerID
+            }
             if serverID.isEmpty {
                 log.warning(
                     "Could not recover IKE peer ID from configuration; advancing connected state with empty serverID",
                     category: .connection
                 )
             }
-            let connectionData = ConnectionData(
-                serverID: serverID,
+            return DynamicConnectionData(
+                currentPeerId: serverID,
                 connectionDate: connectionDate,
-                protocolData: .ike
+                protocolConnectionData: .ike
             )
-            return .connected(tunnelProtocol, connectionData)
 
         case .wireGuard(.go):
-            let serverID: String = try await {
-                #if os(macOS)
-                    let configurationServerID = (configuration as? NETunnelProviderProtocol)?
-                        .connectedServerIpId
-                        .flatMap { $0.isEmpty ? nil : $0 }
-
-                    if let ipcServerID = try? await fetchServerIDViaIPC(session: session) {
-                        if let configurationServerID, configurationServerID != ipcServerID {
-                            log.debug(
-                                "Connected server ID mismatch between IPC and configuration; using IPC. configurationServerID: \(configurationServerID), ipcServerID: \(ipcServerID)",
-                                category: .connection
-                            )
-                        }
-                        return ipcServerID
-                    }
-                    if let configurationServerID {
-                        return configurationServerID
-                    }
-                    return try await fetchServerIDViaIPC(session: session)
-                #else
-                    return try await fetchServerIDViaIPC(session: session)
-                #endif
-            }()
-
-            let connectionData = ConnectionData(
-                serverID: serverID,
-                connectionDate: connectionDate,
-                protocolData: .wireGuardGo
-            )
-            return .connected(tunnelProtocol, connectionData)
+            throw TunnelDataError.unsupportedBackend
 
         case .wireGuard(.proTUN):
-            let response: ProTUNMessage.Response = try await session.sendProTUNRequest(.init(payload: .getCurrentPeerID))
+            @Dependency(\.localAgent) var localAgent
+            try localAgent.postRequestToExtension(.getFeatures)
+            let response: ProTUNMessage.Response = try await session.sendProTUNRequest(.init(payload: .getCurrentPeer))
             switch response.payload {
-            case let .currentPeerID(.success(peerId)):
-                let connectionData = ConnectionData(
-                    serverID: peerId,
+            case let .currentPeer(.success(peer)):
+                return DynamicConnectionData(
+                    currentPeerId: peer.peerID,
                     connectionDate: connectionDate,
-                    protocolData: .proTUN // This case will be extended in the future to hold proTUN specific data & local agent state
+                    protocolConnectionData: .proTUN(.init(
+                        transport: peer.transport,
+                        serverExitV4: peer.serverExitV4,
+                        userISP: peer.userISP,
+                        userIP: peer.userIP
+                    ))
                 )
-                return .connected(tunnelProtocol, connectionData)
-            case let .currentPeerID(.failure(error)):
+            case let .currentPeer(.failure(error)):
                 log.error("ProTUN-Extension denied getCurrentPeerID: \(error)", category: .connection)
                 throw TunnelManagerError.protunIPC(error.localizedDescription)
             case let .error(.unsupported(_, _, reason)):
@@ -348,15 +388,6 @@ final class PacketTunnelManager: TunnelManager {
                 throw TunnelManagerError.ipc(.getCurrentServerId, nil)
             }
         }
-    }
-
-    private func fetchServerIDViaIPC(session: any VPNSession) async throws -> String {
-        guard case let .ok(data?) = try await session.send(.getCurrentServerId),
-              let serverID = String(data: data, encoding: .utf8),
-              !serverID.isEmpty else {
-            throw TunnelManagerError.ipc(.getCurrentServerId, nil)
-        }
-        return serverID
     }
 
     func cleanup() async throws {
@@ -370,8 +401,6 @@ public extension ProtocolConnectionData {
         switch self {
         case .ike:
             .ike
-        case .wireGuardGo:
-            .wireGuard(.go)
         case .proTUN:
             .wireGuard(.proTUN)
         }
@@ -469,4 +498,39 @@ private extension NEVPNStatus {
         @unknown default: 0
         }
     }
+}
+
+extension NEVPNProtocol {
+    /// The user's connection intent, decoded from the provider configuration written by `WireguardConfigurator.encodeProTUNConfiguration`.
+    /// Not available for IKE configurations, which use `NEVPNProtocolIKEv2` and carry no provider dictionary.
+    var connectionSpec: ConnectionSpec? {
+        guard let providerProtocol = self as? NETunnelProviderProtocol,
+              let data = providerProtocol.providerConfiguration?["connectionSpec"] as? Data
+        else { return nil }
+        return try? JSONDecoder().decode(ConnectionSpec.self, from: data)
+    }
+
+    var peerIDs: [String] {
+        guard let tunnelProviderProtocol = self as? NETunnelProviderProtocol else {
+            guard let ikePeerId = try? ikePeerID else {
+                log.error("Failed to decode IKE Peer ID", category: .connection)
+                return []
+            }
+            return [ikePeerId]
+        }
+
+        do {
+            let config = try ProTUNConfigurationCoder.decode(from: self)
+            return config.peers.map(\.id)
+        } catch {
+            log.error("Failed to decode ProTUN peer IDs", category: .connection, metadata: ["error": "\(error)"])
+            return []
+        }
+    }
+}
+
+enum TunnelDataError: Error {
+    case unsupportedBackend
+    case missingConnectionSpec
+    case missingPeerID
 }

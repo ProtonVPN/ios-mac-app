@@ -49,13 +49,13 @@ struct LogsFeatureTests {
     }
 
     @Test
-    func loadsWireguardLogs() async {
-        let store = TestStore(initialState: LogsFeature.State(logSource: .wireguard)) {
+    func loadsProTUNLogs() async {
+        let store = TestStore(initialState: LogsFeature.State(logSource: .protun)) {
             LogsFeature()
         } withDependencies: {
             $0.logContentProvider = .init(
                 getLogData: { _ in
-                    TestLogContent(result: "app logs")
+                    TestLogContent(result: "ProTUN logs")
                 },
                 getArchive: { _ in
                     fatalError("Unimplemented")
@@ -68,7 +68,7 @@ struct LogsFeatureTests {
         }
         await store.receive(\.logsLoaded) {
             $0.isLoading = false
-            $0.logs = "wireguard logs"
+            $0.logs = "ProTUN logs"
         }
     }
 }

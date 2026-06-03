@@ -77,18 +77,8 @@ import PMLogger
         }
 
         private func getLogContents() async -> String {
-            @Dependency(\.tunnelMessageSender) var messageSender
-            _ = try? await messageSender.send(WireguardProviderRequest.flushLogsToFile)
-
-            guard let url = WireGuardLogPaths.textLogURL(appGroup: appGroup) else {
-                log.warning("Couldn't get URL for WireGuard log file with appGroup: \(appGroup)")
-                return ""
-            }
-            guard let contents = try? String(contentsOf: url), !contents.isEmpty else {
-                log.info("No content in WireGuard log file with url: \(url)")
-                return ""
-            }
-            return contents
+            // WireGuard-Go has been superceded by ProTUN
+            "..."
         }
     }
 #endif

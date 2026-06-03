@@ -110,17 +110,23 @@ public struct CountryFeature {
         }
 
         var isConnected: Bool {
-            guard case let .connected(_, server, _, _) = connectionState else {
+            guard case let .connected(_, dynamicData) = connectionState else {
                 return false
             }
-            return serverGroup.matchesLogical(server.logical)
+            return serverGroup.matchesLogical(dynamicData.currentPeer.logical)
         }
 
         var isConnecting: Bool {
-            guard case let .connecting(.resolved(_, server)) = connectionState else {
-                return false
+            switch connectionState {
+            case let .connecting(.resolved(intent)):
+                serverGroup.matches(location: intent.spec.location, logical: nil)
+
+            case let .connecting(.unresolved(intent)):
+                serverGroup.matches(location: intent.spec.location, logical: nil)
+
+            default:
+                false
             }
-            return serverGroup.matchesLogical(server.logical)
         }
 
         var isCurrentlyConnected: Bool {
@@ -355,6 +361,37 @@ private extension ServerGroupInfo {
             }
         default:
             false
+        }
+    }
+
+    func matches(location: ConnectionSpec.Location, logical: Logical?) -> Bool {
+        switch location {
+        case let .gateway(name):
+            kind == .gateway(name: name)
+
+        case .any:
+            logical.map { matchesLogical($0) } ?? false
+
+        case let .country(code, _):
+            kind == .country(code: code)
+
+        case let .city(name, code, _):
+            kind == .city(name: name, code: code)
+
+        case let .state(name, code, order):
+            kind == .state(name: name, code: code)
+
+        case let .exact(_, logicalID, number, subregion, regionCode):
+            logical.map { matchesLogical($0) } ?? false
+
+        case .secureCore(.any):
+            logical.map { matchesLogical($0) } ?? false
+
+        case let .secureCore(.anyHop(to, _)):
+            kind == .country(code: to)
+
+        case let .secureCore(.hop(to, via)):
+            kind == .country(code: to)
         }
     }
 }

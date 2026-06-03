@@ -42,7 +42,7 @@ public struct RecentsFeature {
             return presenter.recentConnectionList(
                 defaultConnectionPreference: defaultConnectionPreference,
                 recents: recents,
-                currentConnection: connectionState.resolvedIntent?.spec
+                currentConnection: connectionState.resolvedSpec
             )
         }
 
@@ -99,8 +99,8 @@ public struct RecentsFeature {
                 return .send(.delegate(.upsellTapped(type)))
 
             case let .newConnectionState(connectionState):
-                guard case let .connected(intent, _, _, _) = connectionState else { return .none }
-                return .send(.connectionEstablished(intent.spec))
+                guard case let .connected(staticData, _) = connectionState else { return .none }
+                return .send(.connectionEstablished(staticData.connectionSpec))
 
             case let .connectionEstablished(spec):
                 withAnimation {

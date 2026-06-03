@@ -106,20 +106,10 @@ struct PlutoniumFeatureTests {
     @Test
     func toggleModeIKEProfileConflict() async {
         let actual = VPNConnectionActual.mock(vpnProtocol: .ike)
-        let intent = ServerConnectionIntent(
-            spec: .defaultFastest,
-            server: actual.server,
-            protocolConfiguration: .ike,
-            features: VPNConnectionFeatures(
-                netshield: .off,
-                vpnAccelerator: true,
-                bouncing: nil,
-                natType: actual.natType,
-                safeMode: actual.safeMode,
-                portForwarding: nil
-            )
-        )
-        $connectionState.withLock { $0 = .connected(intent, actual.server, Date(), nil) }
+        $connectionState.withLock { $0 = .connected(
+            .init(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+            .init(currentPeer: actual.server, connectionDate: .now, protocolConnectionData: .ike)
+        ) }
         $killSwitch.withLock {
             $0 = true
         }

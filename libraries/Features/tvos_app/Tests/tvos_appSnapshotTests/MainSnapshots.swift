@@ -97,14 +97,11 @@ final class MainFeatureSnapshotTests {
             mainBackground: .connected,
             connectionState: .connected(
                 .init(
-                    spec: .init(location: .country(code: "CA", order: .fastest), features: []),
-                    server: .ca,
-                    protocolConfiguration: .ike,
-                    features: .defaultFeatures
+                    connectionSpec: .init(location: .country(code: "CA", order: .fastest), features: []),
+                    tunnelProtocol: .ike,
+                    peerIDs: []
                 ),
-                .ca,
-                .now,
-                nil
+                .init(currentPeer: .ca, connectionDate: .now, protocolConnectionData: .ike)
             )
         )
         let connectedView = MainView(store: connectedStore)

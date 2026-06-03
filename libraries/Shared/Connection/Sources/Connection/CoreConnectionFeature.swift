@@ -42,12 +42,6 @@ public struct CoreConnectionFeature: Sendable {
 
     public init() {}
 
-    /// In an effort to prevent duplicating state, we don't hold any state besides child feature state.
-    /// There exists a `CoreConnectionState` enum which consolidates this information into a single piece of state,
-    /// but it is not explicitly stored as part of this feature's state, or its parent's. Every time this reducer
-    /// reduces an action (or set of actions, if they are returned immediately and not through an asynchronous effect),
-    /// and the state has changed, a `Delegate.stateChanged` event is sent and should be handled appropriately by the
-    /// parent.
     public struct State: Equatable, Sendable {
         public internal(set) var tunnel: ExtensionFeature.State
 
@@ -182,16 +176,16 @@ public struct CoreConnectionFeature: Sendable {
                     .send(.tunnel(.disconnect(nil)))
                 )
 
-            case let .tunnel(.tunnelStatusChanged(.connected(config, connectionData?))):
+            case let .tunnel(.tunnelStatusChanged(.connected(staticData, dynamicData))):
                 log.info(
                     "Tunnel connection finished",
                     category: .connection,
-                    metadata: ["date": "\(connectionData.connectionDate)", "serverID": "\(connectionData.serverID)"]
+                    metadata: ["date": "\(dynamicData.connectionDate)", "serverID": "\(dynamicData.currentPeerId)"]
                 )
 
                 return .merge(
                     .cancel(id: CancelID.connectionTimeout),
-                    .send(.delegate(.stateChanged(.connected(config, connectionData)))),
+                    .send(.delegate(.stateChanged(.connected(staticData, dynamicData)))),
                     .run { _ in
                         // Pull the freshly-applied LA features from the extension so the UI reflects what
                         // is actually in effect (e.g. after a setting was policy-refused). The response

@@ -74,8 +74,12 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
         // Wait until the connection state either goes into .connected or .disconnecting.
         try await $connectionState.when(willMatch: { state in
             switch state {
-            case let .connected(intent, _, _, _), let .disconnecting(intent, _):
-                intent.spec == spec
+            case let .connected(staticData, _):
+                staticData.connectionSpec == spec
+
+            case .disconnecting(_, connectionSpec):
+                connectionSpec == spec
+
             default:
                 false
             }
@@ -111,8 +115,8 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
             /// So if current spec is Sydney and user wants to connect to Australia, which is a different spec,
             /// but the current spec falls under it - we can skip the reconnect.
             /// For now just compare the exact specs, so the same shortcut launched multiple times will not re-trigger a connection
-            if case let .connected(intent, _, _, _) = connectionState {
-                if intent.spec == spec {
+            if case let .connected(staticData, _) = connectionState {
+                if staticData.connectionSpec == spec {
                     await suspendAppIfSupported()
                     return .result(value: true)
                 }

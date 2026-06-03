@@ -84,6 +84,7 @@ let package = Package(
         .target(
             name: "ExtensionManager",
             dependencies: [
+                "LocalAgent",
                 "CoreConnection",
                 "Domain",
                 "ExtensionIPC",

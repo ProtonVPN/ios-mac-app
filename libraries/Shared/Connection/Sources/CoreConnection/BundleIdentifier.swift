@@ -24,19 +24,6 @@ import class NetworkExtension.NETunnelProviderProtocol
 import class NetworkExtension.NEVPNProtocol
 import VPNAppCore
 
-public enum TunnelProtocol: Equatable, Hashable, Sendable {
-    case ike
-    case wireGuard(WGBackend)
-
-    package static var availableProtocols: [Self] {
-        #if os(macOS)
-            [.ike, .wireGuard(.go), .wireGuard(.proTUN)]
-        #else
-            [.wireGuard(.go), .wireGuard(.proTUN)]
-        #endif
-    }
-}
-
 @DependencyClient
 package struct BundleIDClient {
     package private(set) var bundleIdentifier: @Sendable (_ protocol: TunnelProtocol) -> String = { _ in "" }

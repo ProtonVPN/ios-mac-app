@@ -30,53 +30,6 @@
     import XCTest
 
     final class WireGuardConfiguratorTests: XCTestCase {
-        /// The user's private key is required to complete tunnel configuration.
-        /// Let's test that if keys aren't found in the keychain, they are generated.
-        @MainActor
-        func testGeneratesKeysIfMissing() async throws {
-            let configurator = ManagerConfigurator.wireGuardConfigurator
-            let session = VPNSessionMock(status: .disconnected, connectedDate: nil)
-            var manager: TunnelProviderManager = MockTunnelProviderManager(session: session, isOnDemandEnabled: true, isEnabled: false)
-
-            let intent = ServerConnectionIntent.mock(protocolConfiguration: .wireGuard(.init(backend: .go, transport: .tls, features: .mock)))
-            let bundleID = "big.bundle.id"
-
-            let keysGenerated = XCTestExpectation(description: "Keys should have been generated")
-            let configStored = XCTestExpectation(description: "WG Config should have been stored in the keychain")
-
-            try await withDependencies {
-                $0.date = .constant(.now)
-                $0.bundleIDClient = .mock(bundleID: bundleID)
-                $0.tunnelKeychain = .init(
-                    storeWireguardConfig: { _ in
-                        configStored.fulfill()
-                        return Data()
-                    },
-                    loadWireguardConfig: { Data() },
-                    clear: unimplemented("Tunnel keychain should not have been cleared")
-                )
-                $0.vpnAuthenticationStorage.getKeys = {
-                    keysGenerated.fulfill()
-                    return .mock()
-                }
-            } operation: {
-                try await configurator.configure(&manager, for: .connection(intent))
-            }
-
-            XCTAssertEqual(manager.isEnabled, true)
-            XCTAssertEqual(manager.isOnDemandEnabled, true)
-            XCTAssertEqual(manager.vpnProtocolConfiguration?.wgProtocol, "tls")
-            XCTAssertEqual(manager.providerBundleIdentifier, bundleID)
-
-            #if os(macOS)
-                // On macOS, configuration data is sent via XPC to the extension instead of being stored through
-                // `tunnelKeychain.storeWireguardConfig`.
-                await fulfillment(of: [keysGenerated], timeout: 1)
-            #else
-                await fulfillment(of: [keysGenerated, configStored], timeout: 1, enforceOrder: true)
-            #endif
-        }
-
         #if os(macOS)
             /// On macOS, if pushing the WireGuard config to the extension via XPC fails (no
             /// remote object, broken connection, etc.), the configurator must surface a typed

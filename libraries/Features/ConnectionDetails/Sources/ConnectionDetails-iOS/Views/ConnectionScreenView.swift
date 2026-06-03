@@ -114,46 +114,38 @@ public struct ConnectionScreenView: View {
 
 #if DEBUG
     #Preview {
-        let spec = ConnectionSpec(location: .secureCore(.hop(to: "US", via: "CH")), features: [])
-        let actual = VPNConnectionActual.mock(
-            connectedDate: .now,
-            serverModelId: "server-id",
-            serverExitIP: "102.107.197.6",
-            vpnProtocol: .wireGuard(.udp),
-            natType: .moderateNAT,
-            safeMode: false,
-            feature: .p2p,
-            serverName: "SER#123",
-            country: "US",
-            entryCountry: nil,
-            city: "City",
-            coordinates: .mockPoland()
-        )
-        let intent = ServerConnectionIntent(
-            spec: spec,
-            server: actual.server,
-            protocolConfiguration: .wireGuard(.init(backend: .go, transport: .udp, features: .init(killSwitch: false, excludeLocalNetworks: false))),
-            features: VPNConnectionFeatures(
-                netshield: .off,
-                vpnAccelerator: true,
-                bouncing: nil,
-                natType: actual.natType,
-                safeMode: actual.safeMode,
-                portForwarding: nil
+        let store = {
+            let spec = ConnectionSpec(location: .secureCore(.hop(to: "US", via: "CH")), features: [])
+            let server = Server.mock(
+                serverModelId: "server-id",
+                serverExitIP: "102.107.197.6",
+                serverName: "SER#123",
+                country: "US",
+                city: "City",
+                coordinates: .mockPoland()
             )
-        )
+            let connectedState = ConnectionState.connected(
+                .init(connectionSpec: spec, tunnelProtocol: .wireGuard(.proTUN), peerIDs: []),
+                .init(currentPeer: server, connectionDate: .now, protocolConnectionData: .proTUN(.init(
+                    transport: .udp,
+                    serverExitV4: nil,
+                    userISP: nil,
+                    userIP: nil
+                )))
+            )
 
-        @Shared(.connectionState) var connectionState: ConnectionState
-        $connectionState.withLock { $0 = .connected(intent, actual.server, Date(), nil) }
+            @Shared(.connectionState) var connectionState: ConnectionState
+            $connectionState.withLock { $0 = connectedState }
 
-        @Shared(.userIP) var userIP: String?
-        $userIP.withLock { $0 = "127.0.0.1" }
+            @Shared(.userIP) var userIP: String?
+            $userIP.withLock { $0 = "127.0.0.1" }
 
-        let store: StoreOf<ConnectionScreenFeature> = .init(
-            initialState: connectionState.connectionScreenFeatureState()!,
-            reducer: { ConnectionScreenFeature() }
-        )
-        return ConnectionScreenView(store: store)
+            return StoreOf<ConnectionScreenFeature>(
+                initialState: connectionState.connectionScreenFeatureState()!,
+                reducer: { ConnectionScreenFeature() }
+            )
+        }()
+        ConnectionScreenView(store: store)
             .background(Color(.background, .strong))
             .preferredColorScheme(.dark)
     }

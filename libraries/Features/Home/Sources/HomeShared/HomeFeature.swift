@@ -302,7 +302,7 @@ private extension HomeFeature {
                 .cancellable(id: CancelID.connectionState)
             case .killSwitchSettingChanged:
                 guard state.connectionState.isConnected,
-                      let spec = state.connectionState.resolvedIntent?.spec
+                      let spec = state.connectionState.resolvedSpec
                 else {
                     return .none
                 }

@@ -774,20 +774,11 @@ private extension ConnectionState {
 
     /// Build a `.connected` state from a spec and a `VPNConnectionActual`, mirroring
     /// `VPNConnectionStatusDoNotUse.connected(spec, actual)`.
-    static func testConnected(_ spec: ConnectionSpec, _ actual: VPNConnectionActual) -> ConnectionState {
-        let intent = ServerConnectionIntent(
-            spec: spec,
-            server: actual.server,
-            protocolConfiguration: .ike,
-            features: VPNConnectionFeatures(
-                netshield: .off,
-                vpnAccelerator: true,
-                bouncing: nil,
-                natType: actual.natType,
-                safeMode: actual.safeMode,
-                portForwarding: nil
-            )
+    static func testConnected(_ spec: ConnectionSpec, _: VPNConnectionActual) -> ConnectionState {
+        let actual = VPNConnectionActual.mock()
+        return .connected(
+            .init(connectionSpec: spec, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+            .init(currentPeer: actual.server, connectionDate: actual.connectedDate ?? .now, protocolConnectionData: .ike)
         )
-        return .connected(intent, actual.server, actual.connectedDate ?? Date(), nil)
     }
 }

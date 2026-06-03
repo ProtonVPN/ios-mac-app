@@ -36,6 +36,19 @@ public struct WireGuardSettings: Equatable, Sendable, Codable {
     }
 }
 
+public enum TunnelProtocol: Equatable, Hashable, Sendable {
+    case ike
+    case wireGuard(WGBackend)
+
+    package static var availableProtocols: [Self] {
+        #if os(macOS)
+            [.ike, .wireGuard(.go), .wireGuard(.proTUN)]
+        #else
+            [.wireGuard(.go), .wireGuard(.proTUN)]
+        #endif
+    }
+}
+
 public enum WGBackend: Equatable, Sendable, Codable {
     case go
     case proTUN

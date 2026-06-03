@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 @testable import Connection
+import Domain
 import DomainTestSupport
 @testable import ExtensionManager
 import Network
@@ -151,8 +152,17 @@ final class MainFeatureTests: XCTestCase {
     }
 }
 
-#if DEBUG
+extension ConnectionState {
+    /// Helper to translate between the old and new associated values of `ConnectionState.connected`
+    static func connected(_ intent: ServerConnectionIntent, _ server: Server, _ date: Date, _: ConnectionDetailsMessage? = nil) -> Self {
+        .connected(
+            .init(connectionSpec: intent.spec, tunnelProtocol: .ike, peerIDs: []),
+            .init(currentPeer: server, connectionDate: date, protocolConnectionData: .ike)
+        )
+    }
+}
 
+#if DEBUG
     extension ConnectableItem {
         static func country(code: String) -> Self {
             ConnectableItem(countryCode: code, cityName: nil, supportsStreaming: true)
