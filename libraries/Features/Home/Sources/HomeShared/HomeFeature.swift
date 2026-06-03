@@ -229,15 +229,17 @@ public struct HomeFeature {
         Scope(state: \.localAgentNotice, action: \.localAgentNotice) {
             LocalAgentNoticeFeature()
         }
-        lifecycleAndObservationReducer
-        recentsAndSharedPropertiesReducer
-        connectionCommandsReducer
-        connectionCardReducer
-        destinationReducer
-        connectionEventsReducer
-        miscReducer
-            .ifLet(\.$destination, action: \.destination)
-            .ifLet(\.$alert, action: \.alert)
+        CombineReducers {
+            lifecycleAndObservationReducer
+            recentsAndSharedPropertiesReducer
+            connectionCommandsReducer
+            connectionCardReducer
+            destinationReducer
+            connectionEventsReducer
+            miscReducer
+        }
+        .ifLet(\.$destination, action: \.destination)
+        .ifLet(\.$alert, action: \.alert)
     }
 }
 
