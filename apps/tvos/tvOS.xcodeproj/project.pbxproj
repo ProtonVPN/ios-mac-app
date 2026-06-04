@@ -290,6 +290,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1520;
 				LastUpgradeCheck = 2610;
+				ORGANIZATIONNAME = "Proton Technologies AG";
 				TargetAttributes = {
 					4C54B0162BC027FD00315A3B = {
 						CreatedOnToolsVersion = 15.2;
