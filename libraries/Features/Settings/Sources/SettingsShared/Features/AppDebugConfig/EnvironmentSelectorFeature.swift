@@ -341,6 +341,9 @@
                 case .useAndContinueButtonTapped, .alert(.presented(.proceed)):
                     continueHandler?()
                 case .alert(.presented(.killApp)):
+                    // Unauth sessions leftover from different environments can softlock the user.
+                    @Dependency(\.unauthKeychain) var unauthKeychain
+                    unauthKeychain.clear()
                     exit(EXIT_SUCCESS)
                 case .alert(.dismiss):
                     state.alert = nil
