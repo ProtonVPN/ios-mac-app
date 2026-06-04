@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "Peruuta";
 
 /* Common word */
@@ -554,6 +553,12 @@
 
 /* Text in warning screen before actions that will disconnect VPN */
 "_view_toggle_will_cause_disconnect" = "Secure Coren kytkentä katkaisee nykyisen yhteyden.";
+
+/* Body of the Secure Core toggle warning/discourage notice when turning SC on and a Secure Core server exists in the currently-connected country */
+"_view_toggle_on_reconnect_same_country" = "Secure Coren päälle kytkeminen katkaisee nykyisen yhteytesi ja yrittää muodostaa yhteyden uudelleen samaan maahan.";
+
+/* Body of the Secure Core toggle warning/discourage notice when turning SC on and no Secure Core server exists in the currently-connected country (fallback). %@ is the localized country name. */
+"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core ei ole käytettävissä %@. VPN-yhteytesi muodostetaan uudelleen nopeimman saatavilla olevan Secure Core -palvelimen kautta.";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Palvelimen kuormitus:";

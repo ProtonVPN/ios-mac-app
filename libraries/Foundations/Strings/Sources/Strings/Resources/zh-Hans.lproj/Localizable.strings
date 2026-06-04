@@ -1,5 +1,4 @@
 /* Common word */
-
 "_cancel" = "取消";
 
 /* Common word */
@@ -554,6 +553,12 @@
 
 /* Text in warning screen before actions that will disconnect VPN */
 "_view_toggle_will_cause_disconnect" = "切换 Secure Core 连接将中断当前 VPN 连接";
+
+/* Body of the Secure Core toggle warning/discourage notice when turning SC on and a Secure Core server exists in the currently-connected country */
+"_view_toggle_on_reconnect_same_country" = "开启 Secure Core 将断开当前连接，并尝试重新连接到相同国家/地区。";
+
+/* Body of the Secure Core toggle warning/discourage notice when turning SC on and no Secure Core server exists in the currently-connected country (fallback). %@ is the localized country name. */
+"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core 在 %@ 中不可用！您的 VPN 将通过最快的可用 Secure Core 服务器重新连接。";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "服务器负载：";
