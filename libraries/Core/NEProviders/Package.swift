@@ -6,8 +6,8 @@ import PackageDescription
 enum ProTUNFFITargetKind {
     // TODO: ProTUN: support uploads to S3 for public release
     static let current: Self = .remote(
-        url: "https://nexus.protontech.ch/repository/vpn-protun/apple-feat-protun-debug/protunFFI-debug.xcframework.zip",
-        checksum: "9074469c80bfcbb805ac69a1cd0713b51ac30921e45957f742e51131cfd4fee5"
+        url: "https://nexus.protontech.ch/repository/vpn-protun/apple-protun-merged-debug/protunFFI-debug.xcframework.zip",
+        checksum: "615d615efd39e05b92786c301d15b422a5580a9b57955e5a2cd8f76f9a6f9d16"
     )
 
     case local

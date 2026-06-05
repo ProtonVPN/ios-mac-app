@@ -202,17 +202,14 @@ extension LocalAgentSettings {
 private extension IPCLANetshieldLevel {
     var toLocalAgentNetshieldLevel: NetshieldLevel {
         switch self {
-        case .unset:
-            return .none
-        case .off:
+        case .unset, .off:
             return .none
         case .malware:
             return .malwareFilter
         case .adsAndMalware:
             return .adsAndMalwareFilter
-        case .adsAndMalwareAndAdultContent:
-            assertionFailure("NetShield level mapping not handled")
-            return .adsAndMalwareFilter
+        case .adultContentAndAdsAndMalware:
+            return .adultAndAdsAndMalwareFilter
         @unknown default:
             assertionFailure("NetShield level mapping not handled")
             return .none

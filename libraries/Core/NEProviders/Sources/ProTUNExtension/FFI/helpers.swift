@@ -26,7 +26,7 @@ extension NetshieldLevel {
         case .none: .off
         case .malwareFilter: .level1
         case .adsAndMalwareFilter: .level2
-            // TODO: ProTUN: handle level3 once it's available in ProTUN
+        case .adultAndAdsAndMalwareFilter: .level3
         }
     }
 
@@ -35,7 +35,7 @@ extension NetshieldLevel {
         case .none: .off
         case .malwareFilter: .malware
         case .adsAndMalwareFilter: .adsAndMalware
-            // TODO: ProTUN: handle level3 once it's available in ProTUN
+        case .adultAndAdsAndMalwareFilter: .adultContentAndAdsAndMalware
         }
     }
 }
