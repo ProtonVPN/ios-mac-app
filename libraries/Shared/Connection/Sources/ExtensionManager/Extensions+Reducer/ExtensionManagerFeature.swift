@@ -57,6 +57,13 @@ public struct ExtensionFeature: Sendable {
         case tunnelReasserting(ReassertionReason?)
         case disconnect(TunnelConnectionError?)
         case cleanup
+
+        case delegate(Delegate)
+
+        @DebugDescription
+        public enum Delegate: Sendable {
+            case reconfigurationFailed(Error)
+        }
     }
 
     public var body: some Reducer<State, Action> {
@@ -95,10 +102,13 @@ public struct ExtensionFeature: Sendable {
             case let .updateConfiguration(intent):
                 return .run { _ in
                     @Dependency(\.tunnelProviderConfigurator) var configurator
-                    let changes = configurator.changes(intent)
+                    let changes = try configurator.changes(intent)
                     _ = try await tunnelManager.sendProTUN(request: .init(payload: .updateConfiguration(changes)))
-                } catch: { _, _ in
-                    // TODO: ProTUN: What's the best way to handle failure here?
+                } catch: { error, send in
+                    log.error("Failed to apply connection configuration changes", category: .connection, metadata: ["error": "\(error)"])
+                    SentryHelper.shared?.log(error: error)
+                    // TODO: ProTUN: Raise the derived set of (failed) configuration changes using the error
+                    await send(.delegate(.reconfigurationFailed(error)))
                 }
 
             case let .connect(intent):
@@ -151,6 +161,9 @@ public struct ExtensionFeature: Sendable {
                 } catch: { error, _ in
                     log.assertionFailure("Failed to remove managers: \(error)")
                 }
+
+            case .delegate:
+                return .none
             }
         }
     }
@@ -165,6 +178,8 @@ public enum TunnelConnectionError: Error, Equatable {
     /// The tunnel is in the incorrect state because it was prematurely disconnected
     case tunnelAborted
 
+    case reconfigurationFailure(Error)
+
     public static func == (lhs: TunnelConnectionError, rhs: TunnelConnectionError) -> Bool {
         switch lhs {
         case .tunnelStartFailed:
@@ -173,6 +188,8 @@ public enum TunnelConnectionError: Error, Equatable {
             rhs.is(\.unknownServer)
         case .tunnelAborted:
             rhs.is(\.tunnelAborted)
+        case .reconfigurationFailure:
+            rhs.is(\.reconfigurationFailure)
         }
     }
 }
@@ -188,6 +205,8 @@ extension TunnelConnectionError: ProtonVPNError {
             "UNKS"
         case .tunnelAborted:
             "TNAB"
+        case .reconfigurationFailure:
+            "TNRF"
         }
     }
 
@@ -236,6 +255,8 @@ extension ExtensionFeature.Action: CustomDebugStringConvertible {
             ".cleanup"
         case let .updateConfiguration(serverConnectionIntent):
             ".updateConfiguration(\(serverConnectionIntent))"
+        case let .delegate(action):
+            ".delegate(\(action)"
         }
     }
 }

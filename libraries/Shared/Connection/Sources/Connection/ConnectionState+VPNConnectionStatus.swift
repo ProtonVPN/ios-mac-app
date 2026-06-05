@@ -26,8 +26,8 @@ public extension ConnectionState {
     /// remembered.
     var resolvedSpec: ConnectionSpec? {
         switch self {
-        case let .connected(staticData, _):
-            staticData.connectionSpec
+        case let .connected(tunnelConfig, _):
+            tunnelConfig.connectionSpec
         case let .disconnecting(_, connectionSpec):
             connectionSpec
         case let .connecting(.resolved(intent)):
@@ -44,9 +44,9 @@ public extension ConnectionState {
     /// The active `Server`, when one is known. Includes the prior server during `.resolving`.
     var resolvedServer: Server? {
         switch self {
-        case let .connected(_, dynamicData):
-            dynamicData.currentPeer
-        case let .disconnecting(_, spec):
+        case let .connected(_, connectionData):
+            connectionData.currentPeer
+        case .disconnecting:
             nil // If spec specifies `exact` server, we could return that
         case let .connecting(.resolved(intent)):
             intent.resolvedServer
@@ -59,8 +59,8 @@ public extension ConnectionState {
 
     var resolvedVpnProtocol: VpnProtocol? {
         switch self {
-        case let .connected(_, dynamicData):
-            switch dynamicData.protocolConnectionData {
+        case let .connected(_, connectionData):
+            switch connectionData.protocolConnectionData {
             case .ike:
                 .ike
             case let .proTUN(proTUNConnectionData):
@@ -112,18 +112,18 @@ public extension ConnectionState {
 
     /// Date the active tunnel finished connecting. `nil` outside of `.connected`.
     var connectedDate: Date? {
-        if case let .connected(_, dynamicData) = self { return dynamicData.connectionDate }
+        if case let .connected(_, connectionData) = self { return connectionData.connectionDate }
         return nil
     }
 
     var natType: NATType? {
+        // TODO: ProTUN: expose current NAT type via ConnectionState or mmap
         nil
-        // resolvedIntent?.features.natType
     }
 
     var safeMode: Bool? {
+        // TODO: ProTUN: Remove safe mode.
         nil
-        // resolvedIntent?.features.safeMode
     }
 
     /// The current spec's location, when known.
@@ -132,8 +132,8 @@ public extension ConnectionState {
     }
 
     var connectedActual: VPNConnectionActual? {
-        guard case let .connected(staticData, dynamicData) = self else { return nil }
-        return VPNConnectionActual(data: dynamicData)
+        guard case let .connected(_, connectionData) = self else { return nil }
+        return VPNConnectionActual(data: connectionData)
     }
 
     /// Mapping of `ConnectionState` into the legacy `VPNConnectionStatusDoNotUse`.
@@ -167,15 +167,14 @@ public extension ConnectionState {
         case let .disconnecting(_, spec):
             .disconnecting(spec, nil)
 
-        case let .connected(staticData, _):
-            .connected(staticData.connectionSpec, connectedActual)
+        case let .connected(tunnelConfig, _):
+            .connected(tunnelConfig.connectionSpec, connectedActual)
         }
     }
 }
 
 public extension VPNConnectionActual {
     init(data: ConnectionState.ResolvedDynamicConnectionData) {
-        // TODO: get from connectiondata
         let vpnProtocol: VpnProtocol = switch data.protocolConnectionData {
         case .ike:
             .ike
@@ -183,6 +182,7 @@ public extension VPNConnectionActual {
             .wireGuard(proTUNData.transport)
         }
 
+        // TODO: ProTUN: make NATType available in dynamic connection data
         self.init(
             connectedDate: data.connectionDate,
             vpnProtocol: vpnProtocol,

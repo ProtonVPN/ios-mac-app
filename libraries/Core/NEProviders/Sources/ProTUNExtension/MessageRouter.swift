@@ -65,16 +65,23 @@ private extension MessageRouter {
                 return .init(payload: .currentPeer(.success(peer)))
 
             case let .connectingToLocalAgent(peer, _):
-                let peer = CurrentPeer(peerID: peer.peerId, transport: .from(protocol: peer.protocol), serverExitV4: nil, userISP: nil, userIP: nil)
+                let peer = CurrentPeer(
+                    peerID: peer.peerId,
+                    transport: .from(protocol: peer.protocol),
+                    serverExitV4: peer.entryIp,
+                    userISP: nil,
+                    userIP: nil
+                )
                 return .init(payload: .currentPeer(.success(peer)))
 
             default:
                 Logger.provider.error("Received getCurrentPeerID but currently in \(currentState) state")
-                return .init(payload: .currentPeer(.failure(.init(failureReason: "Received getCurrentPeerID but currently in \(currentState) state"))))
+                let badStateError = ProTUNMessage.Response.Error(failureReason: "Received getCurrentPeerID but currently in \(currentState) state")
+                return .init(payload: .currentPeer(.failure(badStateError)))
             }
         } catch {
-            Logger.provider.error("Failed to retrieve ProTUN state")
-            return .init(payload: .currentPeer(.failure(.init(failureReason: "Failed to retrieve ProTUN state"))))
+            Logger.provider.error("Failed to retrieve ProTUN state \(error, privacy: .public)")
+            return .init(payload: .currentPeer(.failure(.init(failureReason: "Failed to retrieve ProTUN state: \(error)"))))
         }
     }
 

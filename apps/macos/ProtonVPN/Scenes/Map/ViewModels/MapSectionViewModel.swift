@@ -117,10 +117,10 @@ class MapSectionViewModel {
     }
 
     private func connectedServerType(for state: ConnectionState) -> ServerType? {
-        guard case let .connected(staticData, dynamicData) = state else {
+        guard case let .connected(tunnelConfig, connectionData) = state else {
             return nil
         }
-        let server = dynamicData.currentPeer
+        let server = connectionData.currentPeer
 
         if server.logical.feature.contains(.secureCore) {
             return .secureCore
@@ -132,7 +132,7 @@ class MapSectionViewModel {
             return .p2p
         }
 
-        let spec = staticData.connectionSpec
+        let spec = tunnelConfig.connectionSpec
         if case .secureCore = spec.location {
             return .secureCore
         }

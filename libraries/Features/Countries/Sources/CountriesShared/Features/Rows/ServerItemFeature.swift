@@ -58,8 +58,8 @@ public struct ServerItemFeature {
         }
 
         var isConnected: Bool {
-            guard case let .connected(_, dynamicData) = connectionState,
-                  dynamicData.currentPeer.logical.id == serverInfo.logical.id else {
+            guard case let .connected(_, connectionData) = connectionState,
+                  connectionData.currentPeer.logical.id == serverInfo.logical.id else {
                 return false
             }
             return true

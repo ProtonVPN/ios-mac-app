@@ -66,11 +66,11 @@ extension SettingsClient: @retroactive DependencyKey {
 
                 return serverSupportsNewProtocol ? .immediate : .protocolUnavailable
 
-            case let .connected(_, dynamicData):
+            case let .connected(_, connectionData):
                 @Shared(.smartProtocolConfig) var smartProtocolConfig
                 let supportedProtocols = smartProtocolConfig.supportedProtocols
 
-                let serverSupportsNewProtocol = dynamicData.currentPeer.endpoint
+                let serverSupportsNewProtocol = connectionData.currentPeer.endpoint
                     .supports(protocolSet: .init(vpnProtocols: supportedProtocols))
                 return serverSupportsNewProtocol ? .immediate : .protocolUnavailable
             }

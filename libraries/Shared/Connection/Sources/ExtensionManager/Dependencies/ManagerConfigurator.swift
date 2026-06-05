@@ -25,13 +25,13 @@ import class NetworkExtension.NETunnelProviderProtocol
 public enum TunnelConfigurationOperation {
     case connection(ServerConnectionIntent)
     // This could be a set, but involves plumbing a lot of types to be Hashable
-    case reconfiguration([ConnectionChange])
+    case reconfiguration(Set<ConnectionChange>)
 }
 
 struct ManagerConfigurator {
     typealias ConfigurationHandler = @Sendable (inout TunnelProviderManager, TunnelConfigurationOperation) async throws -> Void
 
-    private(set) var changes: @Sendable (ServerConnectionIntent) -> Set<ConnectionChange>
+    private(set) var changes: @Sendable (ServerConnectionIntent) throws -> Set<ConnectionChange>
     private(set) var configure: ConfigurationHandler
 }
 

@@ -88,8 +88,8 @@ struct CountryListItemView: View {
 
     private var connectedCode: String? {
         switch connectionState {
-        case let .connected(staticData, _):
-            staticData.connectionSpec.countryCode
+        case let .connected(tunnelConfig, _):
+            tunnelConfig.connectionSpec.countryCode
         case let .connecting(.unresolved(intent)):
             intent.spec.countryCode
         case let .connecting(.resolved(intent)):

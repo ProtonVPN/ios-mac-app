@@ -29,10 +29,10 @@ package struct ConnectionCardModel {
         switch connectionState {
         case .disconnected, .disconnecting:
             return Localizable.connectionCardAccessibilityLastConnectedTo(countryName)
-        case let .connected(_, dynamicData):
-            if let browsingFrom = LocalizationUtility.default.countryName(forCode: dynamicData.currentPeer.logical.exitCountryCode),
-               let serverNumber = dynamicData.currentPeer.logical.serverNumber {
-                let vpnProtocol: VpnProtocol = switch dynamicData.protocolConnectionData {
+        case let .connected(_, connectionData):
+            if let browsingFrom = LocalizationUtility.default.countryName(forCode: connectionData.currentPeer.logical.exitCountryCode),
+               let serverNumber = connectionData.currentPeer.logical.serverNumber {
+                let vpnProtocol: VpnProtocol = switch connectionData.protocolConnectionData {
                 case .ike:
                     .ike
                 case let .proTUN(proTUNData):

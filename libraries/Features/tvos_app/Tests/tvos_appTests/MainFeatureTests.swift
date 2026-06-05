@@ -80,7 +80,7 @@ final class MainFeatureTests: XCTestCase {
 
     @MainActor
     func testUserClickedCityItemWhileConnectedToThatCityShouldDisconnect() async {
-        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now, nil)
+        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now)
         let store = TestStore(initialState: MainFeature.State(connectionState: connectionState)) {
             MainFeature()
         } withDependencies: {
@@ -92,7 +92,7 @@ final class MainFeatureTests: XCTestCase {
 
     @MainActor
     func testUserClickedCityItemWhileConnectedToAnotherCityInTheSameCountryShouldConnect() async {
-        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now, nil)
+        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now)
         let store = TestStore(initialState: MainFeature.State(connectionState: connectionState)) {
             MainFeature()
         } withDependencies: {
@@ -105,7 +105,7 @@ final class MainFeatureTests: XCTestCase {
 
     @MainActor
     func testUserClickedCountryItemWhileConnectedToCityInAnotherCountryShouldConnect() async {
-        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now, nil)
+        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now)
         let store = TestStore(initialState: MainFeature.State(connectionState: connectionState)) {
             MainFeature()
         } withDependencies: {
@@ -118,7 +118,7 @@ final class MainFeatureTests: XCTestCase {
 
     @MainActor
     func testUserClickedCountryItemWhileConnectedToCityInThatCountryShouldDisconnect() async {
-        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now, nil)
+        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now)
         let store = TestStore(initialState: MainFeature.State(connectionState: connectionState)) {
             MainFeature()
         } withDependencies: {
@@ -154,7 +154,7 @@ final class MainFeatureTests: XCTestCase {
 
 extension ConnectionState {
     /// Helper to translate between the old and new associated values of `ConnectionState.connected`
-    static func connected(_ intent: ServerConnectionIntent, _ server: Server, _ date: Date, _: ConnectionDetailsMessage? = nil) -> Self {
+    static func connected(_ intent: ServerConnectionIntent, _ server: Server, _ date: Date) -> Self {
         .connected(
             .init(connectionSpec: intent.spec, tunnelProtocol: .ike, peerIDs: []),
             .init(currentPeer: server, connectionDate: date, protocolConnectionData: .ike)

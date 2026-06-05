@@ -65,8 +65,8 @@ public struct HomeMapFeature {
                 // VPNAPPL-2654: Discrepancy between connection state and what we're showing in the map
                 self = .disconnected
 
-            case let .connected(_, dynamicData):
-                self = .connectedCoordinates(dynamicData.currentPeer.logical.coordinates, dynamicData.currentPeer.logical.exitCountryCode)
+            case let .connected(_, connectionData):
+                self = .connectedCoordinates(connectionData.currentPeer.logical.coordinates, connectionData.currentPeer.logical.exitCountryCode)
 
             case let .connecting(.resolved(intent)):
                 self = .connectingCoordinates(intent.resolvedServer.logical.coordinates, intent.resolvedServer.logical.exitCountryCode)

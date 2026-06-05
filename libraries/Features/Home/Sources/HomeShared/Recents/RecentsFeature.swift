@@ -99,8 +99,8 @@ public struct RecentsFeature {
                 return .send(.delegate(.upsellTapped(type)))
 
             case let .newConnectionState(connectionState):
-                guard case let .connected(staticData, _) = connectionState else { return .none }
-                return .send(.connectionEstablished(staticData.connectionSpec))
+                guard case let .connected(tunnelConfig, _) = connectionState else { return .none }
+                return .send(.connectionEstablished(tunnelConfig.connectionSpec))
 
             case let .connectionEstablished(spec):
                 withAnimation {

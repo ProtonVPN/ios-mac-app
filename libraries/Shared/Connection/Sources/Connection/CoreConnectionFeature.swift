@@ -176,16 +176,16 @@ public struct CoreConnectionFeature: Sendable {
                     .send(.tunnel(.disconnect(nil)))
                 )
 
-            case let .tunnel(.tunnelStatusChanged(.connected(staticData, dynamicData))):
+            case let .tunnel(.tunnelStatusChanged(.connected(tunnelConfig, connectionData))):
                 log.info(
                     "Tunnel connection finished",
                     category: .connection,
-                    metadata: ["date": "\(dynamicData.connectionDate)", "serverID": "\(dynamicData.currentPeerId)"]
+                    metadata: ["date": "\(connectionData.connectionDate)", "serverID": "\(connectionData.currentPeerId)"]
                 )
 
                 return .merge(
                     .cancel(id: CancelID.connectionTimeout),
-                    .send(.delegate(.stateChanged(.connected(staticData, dynamicData)))),
+                    .send(.delegate(.stateChanged(.connected(tunnelConfig, connectionData)))),
                     .run { _ in
                         // Pull the freshly-applied LA features from the extension so the UI reflects what
                         // is actually in effect (e.g. after a setting was policy-refused). The response
@@ -225,6 +225,9 @@ public struct CoreConnectionFeature: Sendable {
                 // Let's inspect the state of the child features to determine what stage we have reached and disconnect.
                 let currentConnectionStage = getConnectionStage(state)
                 return .send(.disconnect(.connectionFailure(.timeout(currentConnectionStage ?? .connectingToLocalAgentServer))))
+
+            case let .tunnel(.delegate(.reconfigurationFailed(error))):
+                return .send(.delegate(.error(.tunnel(.reconfigurationFailure(error)))))
 
             case .tunnel:
                 return .none
@@ -274,16 +277,16 @@ public struct CoreConnectionFeature: Sendable {
 
     /// Returns the connection stage which the tunnel is currently in, or nil if fully connected.
     private func getConnectionStage(_ state: State) -> ConnectionStage? {
-        // TODO: ProTUN will have more information about what went wrong during the connection.
         switch state.tunnel {
         case .connected:
             nil
         case .connecting:
             .tunnel(.connection)
+        // TODO: ProTUN: More connection stages, depending on internal ProTUN state
         case .disconnected:
             .tunnel(.start)
         case .invalid, .reasserting, .disconnecting, .unknown:
-            // TODO: Add more connection stages for these states
+            // TODO: ProTUN: Error reporting - more connection stages
             nil
         }
     }

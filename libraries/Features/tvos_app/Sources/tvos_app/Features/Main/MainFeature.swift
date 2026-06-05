@@ -195,8 +195,8 @@ struct MainFeature {
 
     private func activeLocation(from connectionState: ConnectionState) -> ConnectionSpec.Location? {
         switch connectionState {
-        case let .connected(staticData, _):
-            staticData.connectionSpec.location
+        case let .connected(tunnelConfig, _):
+            tunnelConfig.connectionSpec.location
         case let .connecting(.unresolved(intent)):
             intent.spec.location
         case let .connecting(.resolved(intent)):

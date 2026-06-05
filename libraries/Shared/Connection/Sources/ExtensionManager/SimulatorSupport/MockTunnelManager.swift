@@ -85,11 +85,11 @@
         }
 
         private func state(from _: NEVPNStatus) -> TunnelState {
-            let staticData = StaticTunnelData(connectionSpec: ConnectionSpec(), tunnelProtocol: .wireGuard(.proTUN), peerIDs: ["peer-id"])
+            let tunnelConfig = TunnelConfiguration(connectionSpec: ConnectionSpec(), tunnelProtocol: .wireGuard(.proTUN), peerIDs: ["peer-id"])
             switch connection.status {
             case .connected:
                 @Dependency(\.date) var date
-                let dynamicData = DynamicConnectionData(
+                let connectionData = DynamicConnectionData(
                     currentPeerId: "peer-id",
                     connectionDate: date.now,
                     protocolConnectionData: .proTUN(.init(
@@ -99,12 +99,12 @@
                         userIP: nil
                     ))
                 )
-                return .connected(staticData, dynamicData)
+                return .connected(tunnelConfig, connectionData)
             case .invalid: return .invalid
             case .disconnected: return .disconnected(nil)
-            case .connecting: return .connecting(staticData)
-            case .reasserting: return .reasserting(staticData)
-            case .disconnecting: return .disconnecting(staticData)
+            case .connecting: return .connecting(tunnelConfig)
+            case .reasserting: return .reasserting(tunnelConfig)
+            case .disconnecting: return .disconnecting(tunnelConfig)
             @unknown default: return .disconnected(nil)
             }
         }

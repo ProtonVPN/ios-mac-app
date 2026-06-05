@@ -117,10 +117,10 @@ struct ProtectionStatusView: View {
         let ip: String?
 
         switch store.connectionState {
-        case let .connected(_, dynamicData):
-            let server = dynamicData.currentPeer
+        case let .connected(_, connectionData):
+            let server = connectionData.currentPeer
             country = server.logical.exitCountryCode
-            if case let .proTUN(proTUNData) = dynamicData.protocolConnectionData {
+            if case let .proTUN(proTUNData) = connectionData.protocolConnectionData {
                 ip = proTUNData.serverExitV4 ?? server.endpoint.exitIp
             } else {
                 ip = server.endpoint.exitIp

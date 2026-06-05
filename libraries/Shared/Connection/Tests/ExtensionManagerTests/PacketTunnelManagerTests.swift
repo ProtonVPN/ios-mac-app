@@ -26,6 +26,7 @@
     import Foundation
     @testable import LocalAgent
     import class NetworkExtension.NETunnelProviderProtocol
+    import VPNCoreCommon
     import XCTest
 
     final class PacketTunnelManagerTests: XCTestCase {
@@ -39,15 +40,15 @@
             let config = NETunnelProviderProtocol()
             let specData = try JSONEncoder().encode(ConnectionSpec.defaultFastest)
             config.setProviderConfiguration(value: specData, forKey: "connectionSpec")
+            try ProTUNConfigurationCoder.encode(configuration: .init(preferredTransport: .udp, peers: [], dnsServers: []), to: config)
             inactiveManager.protocolConfiguration = config
             activeManager.protocolConfiguration = config
 
             try await withDependencies {
-                // $0.continuousClock = clock
                 $0.vpnManagerRepository.managers = { [.ike: inactiveManager, .wireGuard(.go): activeManager] }
             } operation: {
                 let status = try await PacketTunnelManager().status
-                XCTAssertEqual(status, .connecting(StaticTunnelData(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard(.go), peerIDs: [])))
+                XCTAssertEqual(status, .connecting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard(.go), peerIDs: [])))
             }
         }
 
@@ -63,6 +64,7 @@
             let config = NETunnelProviderProtocol()
             let specData = try JSONEncoder().encode(ConnectionSpec.defaultFastest)
             config.setProviderConfiguration(value: specData, forKey: "connectionSpec")
+            try ProTUNConfigurationCoder.encode(configuration: .init(preferredTransport: .udp, peers: [], dnsServers: []), to: config)
             connectedManager.protocolConfiguration = config
 
             try await withDependencies {
@@ -76,7 +78,7 @@
                 XCTAssertEqual(
                     status,
                     .connected(
-                        StaticTunnelData(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard(.proTUN), peerIDs: []),
+                        TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard(.proTUN), peerIDs: []),
                         DynamicConnectionData(currentPeerId: "peer-id", connectionDate: now, protocolConnectionData: .proTUN(.init(transport: .udp)))
                     )
                 )

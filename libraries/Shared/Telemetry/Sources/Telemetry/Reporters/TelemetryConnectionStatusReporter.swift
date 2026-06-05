@@ -77,9 +77,9 @@ actor TelemetryConnectionStatusReporter {
         var eventType: ConnectionEvent.Event?
         var connection: ServerConnectionIntent?
         switch connectionState {
-        case let .connected(_, dynamicData):
+        case let .connected(_, connectionData):
             // connection = connectionIntent
-            timer.updateConnectionStarted(dynamicData.connectionDate)
+            timer.updateConnectionStarted(connectionData.connectionDate)
             timer.markFinishedConnecting()
             eventType = try connectionEventType(state: connectionState)
         case let .connecting(intent):

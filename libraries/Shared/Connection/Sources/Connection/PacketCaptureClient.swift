@@ -59,7 +59,7 @@ extension PacketCaptureClient: DependencyKey {
             return pcapUpdate
         }
 
-        // TODO: To test with the `pendingConnection`
+        // TODO: ProTUN(pcap): To test with the `pendingConnection`
         IPCNotifications.observe(.pcapSessionChanged) {
             @Shared(.captureSession) var captureSession
             let data = UserDefaults.domainUserDefaults.data(forKey: "PcapSession")

@@ -27,10 +27,10 @@ public struct IPViewFeature {
     @ObservableState
     public struct State: Equatable {
         public var vpnIp: String? {
-            guard case let .connected(staticData, dynamicData) = connectionState else {
+            guard case let .connected(tunnelConfig, connectionData) = connectionState else {
                 return nil
             }
-            return dynamicData.currentPeer.endpoint.exitIp
+            return connectionData.currentPeer.endpoint.exitIp
         }
 
         public var localIpHidden = true

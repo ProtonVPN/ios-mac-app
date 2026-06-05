@@ -39,7 +39,7 @@ public struct ConnectionFeature: Sendable {
     public struct State: Equatable, Sendable {
         @SharedReader(.userTier) public var userTier: Int?
         var connectionState: ConnectionState
-        var shouldRegisterServerChangeOnConnection: Bool // TODO: post connection events that some other component can hook into to do this
+        var shouldRegisterServerChangeOnConnection: Bool // TODO: ProTUN: post connection events that some other component can hook into to do this, similarly to Telemetry
         var core: CoreConnectionFeature.State
 
         package init(
@@ -168,10 +168,10 @@ public struct ConnectionFeature: Sendable {
                 state.connectionState = .disconnected
                 return .send(.delegate(.connectionFailed(.tunnel(error))))
 
-            case let .core(.delegate(.stateChanged(.connected(_, dynamicData)))):
+            case let .core(.delegate(.stateChanged(.connected(_, connectionData)))):
                 if state.shouldRegisterServerChangeOnConnection {
                     @Dependency(\.serverChangeAuthorizer) var authorizer
-                    authorizer.registerServerChange(connectedAt: dynamicData.connectionDate)
+                    authorizer.registerServerChange(connectedAt: connectionData.connectionDate)
                 }
                 state.connectionState = ConnectionState(tunnel: state.core.tunnel)
                 return .none
@@ -212,9 +212,9 @@ public enum ConnectionState: Equatable, Sendable {
     case disconnected
     case disconnecting(TunnelProtocol, ConnectionSpec)
     case connecting(Intent)
-    /// The connected state is split across `StaticTunnelData` (which is unlikely to change without user interaction),
+    /// The connected state is split across ``TunnelConfiguration`` (which is unlikely to change without user interaction),
     /// and `ResolvedDynamicConnectionData` which is the more transient/dynamic data.
-    case connected(StaticTunnelData, ResolvedDynamicConnectionData)
+    case connected(TunnelConfiguration, ResolvedDynamicConnectionData)
 
     @DebugDescription
     @CasePathable
@@ -319,8 +319,8 @@ extension ConnectionState: CustomDebugStringConvertible {
             ".disconnecting(intent: \(intent), server: \(server))"
         case let .connecting(intent):
             ".connecting(\(intent))"
-        case let .connected(staticData, dynamicData):
-            ".connected (\(staticData), \(dynamicData))"
+        case let .connected(tunnelConfig, connectionData):
+            ".connected (\(tunnelConfig), \(connectionData))"
         }
     }
 }
@@ -357,15 +357,15 @@ extension ConnectionState {
         case .unknown:
             self = .resolving
 
-        case let .connecting(staticData):
+        case let .connecting(tunnelConfig):
             @Dependency(\.serverIdentifier) var identifier
-            guard let peerID = staticData.peerIDs.first, let server = identifier.fullServerInfo(peerID) else {
+            guard let peerID = tunnelConfig.peerIDs.first, let server = identifier.fullServerInfo(peerID) else {
                 self = .resolving
                 return
             }
             let intent = ResolvedConnectionIntent(
-                spec: staticData.connectionSpec,
-                tunnelProtocol: staticData.tunnelProtocol,
+                spec: tunnelConfig.connectionSpec,
+                tunnelProtocol: tunnelConfig.tunnelProtocol,
                 resolvedServer: server
             )
             self = .connecting(.resolved(intent))
@@ -374,25 +374,25 @@ extension ConnectionState {
             // TODO: ProTUN: Expand connecting state with information from provider config/mmap
             self = .resolving
 
-        case let .connected(staticData, dynamicData):
+        case let .connected(tunnelConfig, connectionData):
             @Dependency(\.serverIdentifier) var identifier
-            guard let server = identifier.fullServerInfo(dynamicData.currentPeerId) else {
-                log.error("Server with id \(dynamicData.currentPeerId) not found")
+            guard let server = identifier.fullServerInfo(connectionData.currentPeerId) else {
+                log.error("Server with id \(connectionData.currentPeerId) not found")
                 self = .resolving
                 return
             }
             let connectionData = ResolvedDynamicConnectionData(
                 currentPeer: server,
-                connectionDate: dynamicData.connectionDate,
-                protocolConnectionData: dynamicData.protocolConnectionData
+                connectionDate: connectionData.connectionDate,
+                protocolConnectionData: connectionData.protocolConnectionData
             )
-            self = .connected(staticData, connectionData)
+            self = .connected(tunnelConfig, connectionData)
 
-        case let .disconnecting(staticData):
+        case let .disconnecting(tunnelConfig):
             // TODO: ProTUN: Expand disconnecting state with information from provider config/mmap
-            self = .disconnecting(staticData.tunnelProtocol, staticData.connectionSpec)
+            self = .disconnecting(tunnelConfig.tunnelProtocol, tunnelConfig.connectionSpec)
 
-        case let .disconnected(error):
+        case .disconnected:
             self = .disconnected
 
         case .invalid:

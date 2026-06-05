@@ -34,14 +34,14 @@ public extension ConnectionFeature.State {
 
         return ConnectionFeature.State(
             connectionState: .connected(
-                StaticTunnelData(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+                TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
                 .init(currentPeer: .mock, connectionDate: now, protocolConnectionData: .ike)
 
             ),
             shouldRegisterServerChangeOnConnection: false,
             core: .init(
                 tunnelState: .connected(
-                    StaticTunnelData(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+                    TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
                     DynamicConnectionData(currentPeerId: "peer-id", connectionDate: now, protocolConnectionData: .ike)
                 )
             )

@@ -111,7 +111,6 @@ let package = Package(
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "IPCErgonomics", package: "Ergonomics"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
-                "LocalAgent",
             ]
         ),
         .target(

@@ -119,11 +119,11 @@ extension ManagerConfigurator {
     static var wireGuardConfigurator: ManagerConfigurator {
         ManagerConfigurator(
             changes: { intent in
-                // TODO: tunnel and agent features
+                // TODO: ProTUN: Implement missing tunnel/agent feature changes
                 @Dependency(\.connectionConfiguration) var configurationProvider
                 let wireguardConfig = configurationProvider.configuration().wireguardConfig
-                let peers = try! intent.server.peerInfo(using: wireguardConfig, protocolConfiguration: intent.protocolConfiguration)
-                let locationChange = try! ConnectionChange.location(intent.spec, peers)
+                let peers = try intent.server.peerInfo(using: wireguardConfig, protocolConfiguration: intent.protocolConfiguration)
+                let locationChange = try ConnectionChange.location(intent.spec, peers)
                 return Set(arrayLiteral: locationChange)
             },
             configure: { manager, operation in
@@ -143,7 +143,8 @@ extension ManagerConfigurator {
                     manager.isOnDemandEnabled = true
                     manager.isEnabled = true
 
-                case let .reconfiguration(changes):
+                case .reconfiguration:
+                    // TODO: ProTUN: Distinguish between changes and only apply on-demand when disconnecting
                     manager.isOnDemandEnabled = false
                     manager.isEnabled = true
                 }

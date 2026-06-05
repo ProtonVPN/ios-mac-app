@@ -110,19 +110,19 @@ public struct CountryFeature {
         }
 
         var isConnected: Bool {
-            guard case let .connected(_, dynamicData) = connectionState else {
+            guard case let .connected(_, connectionData) = connectionState else {
                 return false
             }
-            return serverGroup.matchesLogical(dynamicData.currentPeer.logical)
+            return serverGroup.matchesLogical(connectionData.currentPeer.logical)
         }
 
         var isConnecting: Bool {
             switch connectionState {
-            case let .connecting(.resolved(intent)):
-                serverGroup.matches(location: intent.spec.location, logical: nil)
+            case let .connecting(.resolved(resolvedIntent)):
+                serverGroup.matches(location: resolvedIntent.spec.location, logical: nil)
 
-            case let .connecting(.unresolved(intent)):
-                serverGroup.matches(location: intent.spec.location, logical: nil)
+            case let .connecting(.unresolved(unresolvedIntent)):
+                serverGroup.matches(location: unresolvedIntent.spec.location, logical: nil)
 
             default:
                 false

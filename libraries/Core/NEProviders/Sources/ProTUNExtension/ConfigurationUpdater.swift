@@ -19,6 +19,7 @@
 import Dependencies
 import Domain
 import NetworkExtension
+import os.log
 import VPNCoreCommon
 
 enum ConfigurationUpdater {
@@ -32,6 +33,7 @@ enum ConfigurationUpdater {
                         .providerBundleIdentifier == "ch.protonmail.vpn.ProTUN-Extension-Mobile"
                 }
             } catch {
+                Logger.adapter.error("Failed to find ProTUN manager: \(error, privacy: .public)")
                 throw .missingManager
             }
             guard let manager else {
@@ -64,6 +66,7 @@ enum ConfigurationUpdater {
                     config.setProviderConfiguration(value: specData, forKey: "connectionSpec")
                     connection.updatePeers(peers: peers)
                 } catch {
+                    Logger.adapter.error("Failed to encode connection spec/peers: \(error, privacy: .public)")
                     throw .location(.badPeers)
                 }
 
@@ -97,7 +100,24 @@ enum ConfigurationUpdater {
         }
     }
 
-    enum Failure: Error {
+    enum Failure: ProtonVPNError {
+        var charCode: FourCharCode {
+            switch self {
+            case .badConfiguration:
+                "CUBC"
+            case .location(.badPeers):
+                "CULP"
+            case .location(.noConnection):
+                "CUNC"
+            case .missingManager:
+                "CUMM"
+            case .saveFailure:
+                "CUSF"
+            case .unhandledChange:
+                "CUUC"
+            }
+        }
+
         case badConfiguration
         case location(Location)
         case missingManager
