@@ -31,8 +31,10 @@ enum MessageRouter {
             return .requestVersionMismatchResponse(from: request.version)
         }
         switch request.payload {
-        case .ping:
-            return .init(payload: .pong)
+        #if DEBUG
+            case .ping:
+                return .init(payload: .pong)
+        #endif
         case .flushLogsToFile:
             return handleFlushLogsToFile()
         case .retrieveLogsArchive:

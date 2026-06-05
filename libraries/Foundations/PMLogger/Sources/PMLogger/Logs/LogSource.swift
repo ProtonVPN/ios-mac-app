@@ -13,7 +13,9 @@ public enum LogSource: CaseIterable {
     case app
     case wireguard
     case protun
-    case protunArchive
+    #if DEBUG
+        case protunArchive
+    #endif
     #if os(iOS)
         case transactionLog
     #endif

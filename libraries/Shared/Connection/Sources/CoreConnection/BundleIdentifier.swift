@@ -49,13 +49,17 @@ enum BuildType {
 
 extension BundleIDClient: DependencyKey {
     private enum BundleID {
-        static let wireGuardiOS = "ch.protonmail.vpn.WireGuardiOS-Extension"
-        static let wireGuardiOSStaging = "ch.protonmail.vpn.debug.WireGuardiOS-Extension"
-        static let proTUNiOS = "ch.protonmail.vpn.ProTUN-Extension-Mobile"
-        static let proTUNiOSStaging = "ch.protonmail.vpn.debug.ProTUN-Extension-Mobile"
+        static let proTUNiOS = "ch.protonmail.vpn.WireGuardiOS-Extension"
+        static let proTUNiOSStaging = "ch.protonmail.vpn.debug.WireGuardiOS-Extension"
         static let wireGuardMac = "ch.protonvpn.mac.WireGuard-Extension"
         static let plutoniumMac = "ch.protonvpn.mac.Transparent-Proxy"
         static let wireGuardtvOS = "ch.protonmail.vpn.WireGuard-tvOS"
+
+        /// In development, we used distinct bundle identifiers for ProTUN targets.
+        /// However, we are locked in to using the old `WireGuardiOS-Extension` identifiers due to these being
+        /// already pre-approved on users' systems.
+        /// static let legacyProTUNiOS = "ch.protonmail.vpn.ProTUN-Extension-Mobile"
+        /// static let legacyProTUNiOSStaging = "ch.protonmail.vpn.debug.ProTUN-Extension-Mobile"
     }
 
     package static let liveValue = BundleIDClient(
@@ -71,14 +75,12 @@ extension BundleIDClient: DependencyKey {
                 case (.wireGuard(.proTUN), .production):
                     fatalError("ProTUN is not available in production yet")
 
-                case (.wireGuard(.go), .local), (.wireGuard(.go), .production):
-                    return BundleID.wireGuardiOS
-
-                case (.wireGuard(.go), .staging):
-                    return BundleID.wireGuardiOSStaging
-
                 case (.ike, _):
                     log.assertionFailure("IKE is not referenced through a bundle identifier.")
+                    return ""
+
+                case (.wireGuard(.go), _):
+                    log.assertionFailure("WireGuard Go has been deprecated")
                     return ""
                 }
             #elseif os(macOS)
@@ -91,11 +93,11 @@ extension BundleIDClient: DependencyKey {
             #if os(iOS)
                 switch BuildType.buildType {
                 case .production:
-                    return [BundleID.wireGuardiOS]
+                    return [BundleID.proTUNiOS]
                 case .staging:
-                    return [BundleID.wireGuardiOSStaging, BundleID.proTUNiOSStaging]
+                    return [BundleID.proTUNiOS, BundleID.proTUNiOSStaging]
                 case .local:
-                    return [BundleID.wireGuardiOS, BundleID.proTUNiOS]
+                    return [BundleID.proTUNiOS, BundleID.proTUNiOSStaging]
                 }
             #elseif os(macOS)
                 // Transparent Proxy must not be treated as a regular VPN tunnel provider manager.
@@ -110,17 +112,14 @@ extension BundleIDClient: DependencyKey {
                 return .ike
             }
             switch bundleIdentifier {
-            case BundleID.wireGuardiOS, BundleID.wireGuardiOSStaging:
-                return .wireGuard(.go)
+            case BundleID.proTUNiOS, BundleID.proTUNiOSStaging:
+                return .wireGuard(.proTUN)
 
             case BundleID.wireGuardMac:
                 return .wireGuard(.go)
 
             case BundleID.wireGuardtvOS:
                 return .wireGuard(.go)
-
-            case BundleID.proTUNiOS, BundleID.proTUNiOSStaging:
-                return .wireGuard(.proTUN)
 
             case BundleID.plutoniumMac:
                 // Transparent Proxy notifications can be observed via shared NEVPN notifications.

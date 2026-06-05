@@ -319,23 +319,6 @@ final class SettingsViewModel {
             self?.pushProtocolViewController()
         }))
 
-        #if DEBUG
-            if Self.shouldShowProTUN {
-                let ffRepository = FeatureFlagsRepository.shared
-                cells.append(
-                    .upsellableToggle(
-                        title: "ProTUN",
-                        state: { .available(enabled: ffRepository.isEnabled(VPNFeatureFlagType.protun, reloadValue: true), interactive: true) },
-                        upsell: {},
-                        handler: { isOn, callback in
-                            ffRepository.setFlagOverride(VPNFeatureFlagType.protun, isOn)
-                            callback(isOn)
-                        }
-                    )
-                )
-            }
-        #endif
-
         cells.append(.tooltip(text: Localizable.smartProtocolDescription))
 
         cells.append(contentsOf: netShieldCells)

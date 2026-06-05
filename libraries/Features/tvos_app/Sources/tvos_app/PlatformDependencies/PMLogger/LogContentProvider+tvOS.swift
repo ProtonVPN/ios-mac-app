@@ -44,12 +44,18 @@ extension LogContentProvider {
             @Dependency(\.wireguardIOSLogProvider) var wireguardIOSLogProvider
             return wireguardIOSLogProvider.logContentForAppGroup(appGroup)
 
-        case .protun, .protunArchive:
+        #if DEBUG
+            case .protunArchive:
+                fallthrough
+        #endif
+
+        case .protun:
             @Dependency(\.protunLogProvider) var protunLogProvider
             return protunLogProvider.logContentForAppGroup()
         }
     } getArchive: { _ in
-        fatalError("Not implemented fr now")
+        // TODO: ProTUN: log archive for tvOS
+        fatalError("Not implemented for now")
     }
 }
 

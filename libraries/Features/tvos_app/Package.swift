@@ -53,7 +53,6 @@ let package = Package(
                 .product(name: "ModalsServices", package: "Modals"),
                 .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain
 
-                .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
                 .product(name: "ProtonCoreChallenge", package: "protoncore"),
                 .product(name: "ProtonCoreForceUpgrade", package: "protoncore"),
                 .product(name: "ProtonCoreFoundations", package: "protoncore"),
