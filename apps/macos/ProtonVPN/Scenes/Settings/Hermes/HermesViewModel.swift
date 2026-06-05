@@ -25,6 +25,7 @@ import Domain
 import Hermes
 import LegacyCommon
 import Observation
+import Settings
 import Sharing
 import VPNAppCore
 
