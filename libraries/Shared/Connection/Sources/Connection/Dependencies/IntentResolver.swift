@@ -57,7 +57,6 @@ package struct ConnectionIntentResolver: DependencyKey {
 
     package static let liveValue: ConnectionIntentResolver = .init { intent throws(IntentResolutionError) in
         @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
-        @Dependency(\.smartPortSelector) var portSelector
         @Dependency(\.serverSelector) var serverSelector
         @SharedReader(.userTier) var userTier: Int?
 
