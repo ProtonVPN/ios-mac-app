@@ -52,16 +52,27 @@ extension SettingsClient: @retroactive DependencyKey {
 
             case .resolving:
                 log.warning("Protocol change availability requested before connection layer state was resolved")
-                return .withReconnect
+                return .immediate
 
             case .connecting(.unresolved):
-                return .withReconnect
+                return .immediate
 
-            case let .connected(_, server, _, _), let .connecting(.resolved(_, server)):
+            case let .connecting(.resolved(intent)):
                 @Shared(.smartProtocolConfig) var smartProtocolConfig
                 let supportedProtocols = smartProtocolConfig.supportedProtocols
-                let serverSupportsNewProtocol = server.endpoint.supports(protocolSet: .init(vpnProtocols: supportedProtocols))
-                return serverSupportsNewProtocol ? .withReconnect : .protocolUnavailable
+
+                let serverSupportsNewProtocol = intent.resolvedServer.endpoint
+                    .supports(protocolSet: .init(vpnProtocols: supportedProtocols))
+
+                return serverSupportsNewProtocol ? .immediate : .protocolUnavailable
+
+            case let .connected(_, connectionData):
+                @Shared(.smartProtocolConfig) var smartProtocolConfig
+                let supportedProtocols = smartProtocolConfig.supportedProtocols
+
+                let serverSupportsNewProtocol = connectionData.currentPeer.endpoint
+                    .supports(protocolSet: .init(vpnProtocols: supportedProtocols))
+                return serverSupportsNewProtocol ? .immediate : .protocolUnavailable
             }
         },
         disconnect: {
@@ -71,6 +82,7 @@ extension SettingsClient: @retroactive DependencyKey {
         reconnect: { _ in
             @Dependency(\.connectionCommandClient) var connectionCommandClient
             connectionCommandClient.send(.reconnect(nil)) // Caused by feature change
+            log.assertionFailure("With ProTUN, there is no need to explicitly reconnect")
         },
         update: { agentFeatures in
             @Dependency(\.connectionCommandClient) var connectionCommandClient

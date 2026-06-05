@@ -274,7 +274,7 @@ struct AppSessionManagerImplementationTests {
     func logoutShowsNoAlertWhenConnecting() async throws {
         try await withTestContext { context in
             try await login(with: testAuthCredentials(), context: context)
-            setConnectionStatus(vpnStatus: .connecting(.defaultFastest, nil), connectionState: .resolving(nil, nil))
+            setConnectionStatus(vpnStatus: .connecting(.defaultFastest, nil), connectionState: .resolving)
 
             let notificationTask = makeNotificationTask(name: SessionChanged.name, object: context.manager)
             context.manager.logOut()
@@ -501,7 +501,6 @@ struct AppSessionManagerImplementationTests {
         let wireGuardSettings = WireGuardSettings(
             backend: .go,
             transport: .udp,
-            ports: [443],
             features: TunnelFeatures(killSwitch: false, excludeLocalNetworks: false)
         )
         let connectionFeatures = VPNConnectionFeatures(
@@ -512,16 +511,13 @@ struct AppSessionManagerImplementationTests {
             safeMode: false,
             portForwarding: false
         )
-        let intent = ServerConnectionIntent(
-            spec: .defaultFastest,
-            server: server,
-            protocolConfiguration: .wireGuard(wireGuardSettings),
-            features: connectionFeatures
-        )
-        let actual = VPNConnectionActual(server: server, intent: intent, connectedDate: Date())
+        let actual = VPNConnectionActual(data: .init(currentPeer: server, connectionDate: .now, protocolConnectionData: .ike))
         setConnectionStatus(
             vpnStatus: .connected(.defaultFastest, actual),
-            connectionState: .connected(intent, server, Date(), nil)
+            connectionState: .connected(
+                .init(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+                .init(currentPeer: server, connectionDate: .now, protocolConnectionData: .ike)
+            )
         )
     }
 

@@ -31,6 +31,10 @@ let package = Package(
             name: "TestingErgonomics",
             targets: ["TestingErgonomics"]
         ),
+        .library(
+            name: "IPCSeqlockHelpers",
+            targets: ["IPCSeqlockHelpers"]
+        ),
     ],
     dependencies: [
         .package(path: "../../../external/protoncore"),

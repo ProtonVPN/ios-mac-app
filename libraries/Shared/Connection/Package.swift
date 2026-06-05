@@ -11,8 +11,8 @@ let package = Package(
         .tvOS(.v17),
     ],
     products: [
-        .library(name: "CertificateAuthentication", targets: ["CertificateAuthentication"]),
         .library(name: "LocalAgent", targets: ["LocalAgent"]),
+        .library(name: "LocalAgentIPC", targets: ["LocalAgentIPC"]),
         .library(name: "Connection", targets: ["Connection"]),
         .library(name: "CoreConnection", targets: ["CoreConnection"]),
         .library(name: "ConnectionShared", targets: ["ConnectionShared"]), // Models shared between network extension and app targets
@@ -21,21 +21,19 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../external/vpn-core-apple"),
-        .package(path: "../../../external/protoncore"), // GoLibs
+        .package(path: "../../../external/protoncore"),
 
         .package(path: "../CommonNetworking"),
 
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/PMLogger"),
-        .package(path: "../../Foundations/Strings"),
         .package(path: "../../Shared/ExtensionIPC"),
         .package(path: "../../Shared/Localization"),
         .package(path: "../../Core/NEHelper"),
 
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
         .package(url: "https://github.com/pointfreeco/swift-custom-dump", .upToNextMajor(from: "1.5.0")),
-        .package(url: "https://github.com/pointfreeco/swift-case-paths", .upToNextMajor(from: "1.5.6")),
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.9.0")),
     ],
@@ -65,33 +63,28 @@ let package = Package(
             ]
         ),
         .target(
-            name: "CertificateAuthentication",
-            dependencies: [
-                "CoreConnection",
-                "ExtensionIPC",
-                "CommonNetworking",
-                "Localization",
-                "Strings",
-                .product(name: "VPNAppCore", package: "NEHelper"), // VpnAuthKeychain
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "CasePaths", package: "swift-case-paths"),
-                .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
-            ]
-        ),
-        .target(
             name: "LocalAgent",
             dependencies: [
                 "CoreConnection",
+                "LocalAgentIPC",
+                .product(name: "IPCErgonomics", package: "Ergonomics"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
-                .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "CasePaths", package: "swift-case-paths"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         ),
         .target(
+            name: "LocalAgentIPC",
+            dependencies: [
+                .product(name: "IPCSeqlockHelpers", package: "Ergonomics"),
+            ],
+            path: "Sources/LocalAgentIPC",
+            publicHeadersPath: "include"
+        ),
+        .target(
             name: "ExtensionManager",
             dependencies: [
+                "LocalAgent",
                 "CoreConnection",
                 "Domain",
                 "ExtensionIPC",
@@ -108,7 +101,6 @@ let package = Package(
         .target(
             name: "Connection",
             dependencies: [
-                "CertificateAuthentication",
                 "ExtensionManager",
                 "LocalAgent",
                 "Domain",
@@ -160,22 +152,6 @@ let package = Package(
                 "CoreConnectionTestSupport",
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
-            ]
-        ),
-        .testTarget(
-            name: "CertificateAuthenticationTests",
-            dependencies: [
-                "CertificateAuthentication",
-                "CoreConnectionTestSupport",
-                .product(name: "VPNSharedTesting", package: "NEHelper"),
-            ]
-        ),
-        .testTarget(
-            name: "LocalAgentTests",
-            dependencies: [
-                "LocalAgent",
-                "Connection",
-                .product(name: "DomainTestSupport", package: "Domain"),
             ]
         ),
         .testTarget(

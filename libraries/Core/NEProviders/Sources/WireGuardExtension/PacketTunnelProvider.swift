@@ -75,11 +75,6 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         let activationAttemptId = options?["activationAttemptId"] as? String
         let errorNotifier = ErrorNotifier(activationAttemptId: activationAttemptId)
 
-        #if DEBUG
-            let extendedProTUNCertificates = UserDefaultsClient.getUserDefaults?.bool(forKey: "ProTUN_ExtendedCertificates") ?? false
-            CertificateConstants.certificateDuration = extendedProTUNCertificates ? "12 hours" : "10 minutes"
-        #endif
-
         let activationSourceDetail = activationAttemptId.map { "app with activation attempt \($0)" } ?? "OS directly"
         wg_log(.info, message: "Starting tunnel from the \(activationSourceDetail)")
         flushLogsToFile() // Prevents empty logs in the app during the first WG connection

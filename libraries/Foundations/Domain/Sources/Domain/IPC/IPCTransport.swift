@@ -21,7 +21,7 @@ import DependenciesMacros
 import Foundation
 import NetworkExtension
 
-struct IPCChannel {
+struct IPCNEChannel {
     enum Error: Swift.Error {
         case exhaustedRetries
         /// IPC is not supported for this connection type (can be removed post-IKE deprecation)
@@ -121,7 +121,7 @@ private extension NEVPNConnection {
     // We're intentionally not using the overload allowing to pass `nil` as the `responseHandler` of the `NETunnelProviderSession`
     func sendProviderMessageWithResponse(messageData: Data) async throws -> Data? {
         guard let session = self as? NETunnelProviderSession else {
-            throw IPCChannel.Error.notSupported
+            throw IPCNEChannel.Error.notSupported
         }
         return try await withCheckedThrowingContinuation { continuation in
             do {
@@ -137,6 +137,6 @@ private extension NEVPNConnection {
 
 public extension NEVPNConnection {
     func sendProTUNRequest(_ request: ProTUNMessage.Request) async throws -> ProTUNMessage.Response {
-        try await IPCChannel(self).sendWithResponse(request)
+        try await IPCNEChannel(self).sendWithResponse(request)
     }
 }

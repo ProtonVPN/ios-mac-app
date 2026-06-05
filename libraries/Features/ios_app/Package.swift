@@ -109,7 +109,6 @@ let package = Package(
                 .product(name: "ProtonCoreServices", package: "protoncore"),
                 .product(name: "ProtonCoreTelemetry", package: "protoncore"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
-                .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
 
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Logging", package: "swift-log"),

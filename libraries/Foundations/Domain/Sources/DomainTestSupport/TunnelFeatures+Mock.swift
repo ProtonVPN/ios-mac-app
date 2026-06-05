@@ -26,6 +26,6 @@ public extension TunnelFeatures {
             excludeLocalNetworks: false
         )
     #else
-        static let mock = TunnelFeatures()
+        static let mock = TunnelFeatures.tvFeatures
     #endif
 }

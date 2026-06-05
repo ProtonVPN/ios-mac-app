@@ -62,8 +62,8 @@ extension ConnectionState {
         switch self {
         case .disconnected:
             return .unprotected
-        case let .connected(intent, _, _, _):
-            if case .secureCore = intent.spec.location {
+        case let .connected(tunnelConfig, _):
+            if case .secureCore = tunnelConfig.connectionSpec.location {
                 return .protectedSecureCore(netShield: netShieldModel?.copy(enabled: true))
             }
             return .protected(netShield: netShieldModel?.copy(enabled: true))

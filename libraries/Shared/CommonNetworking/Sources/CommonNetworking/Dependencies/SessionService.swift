@@ -114,7 +114,9 @@ public struct SessionService: DependencyKey {
                 let response: ForkSessionResponse = try await networking.perform(request: forkRequest)
                 return response.selector
             },
-            sessionCookie: { networking.sessionCookie }
+            sessionCookie: {
+                networking.sessionCookie
+            }
         )
     }()
 

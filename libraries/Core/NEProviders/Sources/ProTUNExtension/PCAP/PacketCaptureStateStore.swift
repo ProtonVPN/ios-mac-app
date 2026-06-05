@@ -16,63 +16,61 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if os(iOS) && DEBUG
-    import Domain
-    import Foundation
-    import IPCErgonomics
+import Domain
+import Foundation
+import IPCErgonomics
 
-    struct PcapStateStore {
-        private let defaults: UserDefaults
-        private let encoder = JSONEncoder()
-        private let decoder = JSONDecoder()
+struct PcapStateStore {
+    private let defaults: UserDefaults
+    private let encoder = JSONEncoder()
+    private let decoder = JSONDecoder()
 
-        init(defaults: UserDefaults = .domainUserDefaults) {
-            self.defaults = defaults
-        }
+    init(defaults: UserDefaults = .domainUserDefaults) {
+        self.defaults = defaults
+    }
 
-        var current: CaptureSession {
-            get {
-                guard let session = try? defaults.captureSession(with: decoder) else {
-                    return .noSession
-                }
-                return session
+    var current: CaptureSession {
+        get {
+            guard let session = try? defaults.captureSession(with: decoder) else {
+                return .noSession
             }
-            nonmutating set {
-                do {
-                    try defaults.store(newValue, with: encoder)
-                    IPCNotifications.post(.pcapSessionChanged)
-                } catch {}
-            }
+            return session
         }
-
-        @discardableResult
-        func mutate(_ transform: (inout CaptureSession) -> Void) -> Bool {
-            var next = current
-            let before = next
-            transform(&next)
-            guard next != before else { return false }
-            current = next
-            return true
-        }
-
-        func observe(_ handler: @escaping @MainActor (CaptureSession) -> Void) {
-            IPCNotifications.observe(.pcapSessionChanged) {
-                handler(current)
-            }
+        nonmutating set {
+            do {
+                try defaults.store(newValue, with: encoder)
+                IPCNotifications.post(.pcapSessionChanged)
+            } catch {}
         }
     }
 
-    private extension UserDefaults {
-        func captureSession(with decoder: JSONDecoder) throws -> CaptureSession? {
-            guard let data = data(forKey: CaptureSession.storageKey) else {
-                return nil
-            }
-            return try decoder.decode(CaptureSession.self, from: data)
-        }
+    @discardableResult
+    func mutate(_ transform: (inout CaptureSession) -> Void) -> Bool {
+        var next = current
+        let before = next
+        transform(&next)
+        guard next != before else { return false }
+        current = next
+        return true
+    }
 
-        func store(_ session: CaptureSession, with encoder: JSONEncoder) throws {
-            let data = try encoder.encode(session)
-            set(data, forKey: CaptureSession.storageKey)
+    func observe(_ handler: @escaping @MainActor (CaptureSession) -> Void) {
+        IPCNotifications.observe(.pcapSessionChanged) {
+            handler(current)
         }
     }
-#endif
+}
+
+private extension UserDefaults {
+    func captureSession(with decoder: JSONDecoder) throws -> CaptureSession? {
+        guard let data = data(forKey: CaptureSession.storageKey) else {
+            return nil
+        }
+        return try decoder.decode(CaptureSession.self, from: data)
+    }
+
+    func store(_ session: CaptureSession, with encoder: JSONEncoder) throws {
+        let data = try encoder.encode(session)
+        set(data, forKey: CaptureSession.storageKey)
+    }
+}

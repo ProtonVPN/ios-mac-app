@@ -21,6 +21,7 @@ import ComposableArchitecture
 import Connection
 @testable import CountriesShared
 import Domain
+import DomainTestSupport
 import Foundation
 import Localization
 import PaymentsShared
@@ -75,7 +76,10 @@ private let _testIntent = ServerConnectionIntent(
 
 private extension ConnectionState {
     static var fakeConnected: ConnectionState {
-        .connected(_testIntent, _testServer, Date(), nil)
+        .connected(
+            .init(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+            .init(currentPeer: .ca, connectionDate: .now, protocolConnectionData: .ike)
+        )
     }
 
     static var fakeConnecting: ConnectionState {

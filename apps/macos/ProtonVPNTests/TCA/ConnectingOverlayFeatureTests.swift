@@ -180,15 +180,13 @@ struct ConnectingOverlayFeatureTests {
 
     @Test("isReconnecting: resolving with a prior server is a reconnect")
     func isReconnectingResolvingWithServer() {
-        let state = ConnectingOverlayFeature.State(
-            connectionState: .resolving(intent(), server())
-        )
+        let state = ConnectingOverlayFeature.State(connectionState: .resolving)
         #expect(state.isReconnecting)
     }
 
     @Test("isReconnecting: resolving from cold start (no prior server) is not a reconnect")
     func isReconnectingResolvingNoServer() {
-        let state = ConnectingOverlayFeature.State(connectionState: .resolving(nil, nil))
+        let state = ConnectingOverlayFeature.State(connectionState: .resolving)
         #expect(!state.isReconnecting)
     }
 
@@ -228,9 +226,7 @@ struct ConnectingOverlayFeatureTests {
 
     @Test("headlinePhase: resolving with prior server (reconnecting) → .unprotected")
     func headlinePhaseUnprotected() {
-        let state = ConnectingOverlayFeature.State(
-            connectionState: .resolving(intent(), server())
-        )
+        let state = ConnectingOverlayFeature.State(connectionState: .resolving)
         #expect(state.headlinePhase == .unprotected)
     }
 
@@ -279,9 +275,7 @@ struct ConnectingOverlayFeatureTests {
 
     @Test("bodyPhase: resolving with prior server → .reconnecting")
     func bodyPhaseReconnecting() {
-        let state = ConnectingOverlayFeature.State(
-            connectionState: .resolving(intent(), server())
-        )
+        let state = ConnectingOverlayFeature.State(connectionState: .resolving)
         #expect(state.bodyPhase == .reconnecting)
     }
 
@@ -350,7 +344,7 @@ struct ConnectingOverlayFeatureTests {
             intentionallyDisconnected: true
         )
 
-        #expect(state.connectionState == .resolving(nil, nil))
+        #expect(state.connectionState == .resolving)
         #expect(state.frozenState == nil)
         #expect(state.timedOut == false)
         #expect(state.intentionallyDisconnected == true)
@@ -424,20 +418,10 @@ private extension ConnectionState {
     // builds a fresh `.connected(..., Date(), ...)` and equality checks across two reads fail.
     static let fakeConnected: ConnectionState = {
         let actual = VPNConnectionActual.mock()
-        let intent = ServerConnectionIntent(
-            spec: .defaultFastest,
-            server: actual.server,
-            protocolConfiguration: .ike,
-            features: VPNConnectionFeatures(
-                netshield: .off,
-                vpnAccelerator: true,
-                bouncing: nil,
-                natType: actual.natType,
-                safeMode: actual.safeMode,
-                portForwarding: nil
-            )
+        return .connected(
+            .init(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+            .init(currentPeer: actual.server, connectionDate: .now, protocolConnectionData: .ike)
         )
-        return .connected(intent, actual.server, Date(), nil)
     }()
 
     static func testConnecting(_ spec: ConnectionSpec) -> ConnectionState {

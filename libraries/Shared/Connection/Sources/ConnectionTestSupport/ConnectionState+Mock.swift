@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CertificateAuthentication
 import Connection
 import CoreConnectionTestSupport
 import Domain
 import DomainTestSupport
+import ExtensionManager
 import Foundation
 import VPNShared
 
@@ -32,17 +32,18 @@ public extension ConnectionFeature.State {
         let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let certificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
 
-        let intent = ServerConnectionIntent(spec: .defaultFastest, server: .mock, protocolConfiguration: .wireGuard(.mock), features: .mock)
-
         return ConnectionFeature.State(
-            currentIntent: .active(intent),
-            queuedIntent: nil,
-            connectionState: .connected(intent, .mock, .now, nil),
+            connectionState: .connected(
+                TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+                .init(currentPeer: .mock, connectionDate: now, protocolConnectionData: .ike)
+
+            ),
             shouldRegisterServerChangeOnConnection: false,
             core: .init(
-                tunnelState: .connected(.wireGuard(.go), .init(serverID: "abc", connectionDate: .now, protocolData: .wireGuardGo)),
-                certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate, features: .mock)),
-                localAgentState: .connected(nil)
+                tunnelState: .connected(
+                    TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+                    DynamicConnectionData(currentPeerId: "peer-id", connectionDate: now, protocolConnectionData: .ike)
+                )
             )
         )
     }()

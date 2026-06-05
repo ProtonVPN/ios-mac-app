@@ -18,6 +18,7 @@
 
 import CoreConnection
 import Dependencies
+import Domain
 import Foundation
 
 extension TunnelProviderManager {

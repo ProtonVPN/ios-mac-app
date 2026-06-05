@@ -612,10 +612,11 @@ private extension SidebarFeature {
                     .send(.syncNATPortMappingState),
                     .send(.syncPlutoniumState)
                 )
-            case .connection(.delegate(.disconnected)):
-                return .run { _ in
-                    await pendingDisconnectCompletions.drainAndInvoke()
-                }
+            // TODO: ProTUN: is it still needed?
+//            case .connection(.delegate(.disconnected)):
+//                return .run { _ in
+//                    await pendingDisconnectCompletions.drainAndInvoke()
+//                }
             case let .connection(.delegate(.intentResolutionFailed(intent, resolutionError))):
                 log.warning(
                     "Intent resolution failed; presenting upsell",
@@ -674,8 +675,6 @@ private extension SidebarFeature {
                         ))))
                     )
                 }
-            case .connection(.core(.certAuth(.refreshFinished))):
-                return .none
             case .connection:
                 return .none
             default:

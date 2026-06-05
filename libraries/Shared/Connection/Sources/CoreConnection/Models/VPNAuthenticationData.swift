@@ -28,6 +28,8 @@ public struct VPNAuthenticationData: Sendable {
     }
 }
 
+extension VPNAuthenticationData: Codable {}
+
 #if DEBUG
     // Can be moved to a separate target if there are more things we'd like mocks of in the future
     public extension VPNAuthenticationData {

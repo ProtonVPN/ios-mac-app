@@ -12,10 +12,8 @@ import Strings
 public enum LogSource: CaseIterable {
     case app
     case wireguard
-    #if os(iOS) && DEBUG
-        case protun
-        case protunArchive
-    #endif
+    case protun
+    case protunArchive
     #if os(iOS)
         case transactionLog
     #endif
@@ -26,10 +24,8 @@ public enum LogSource: CaseIterable {
     case osLog
 
     // osLog source is used only for bug reports
-    #if os(iOS) && DEBUG
+    #if os(iOS)
         public static let visibleAppSources: [LogSource] = [.app, .wireguard, .protun, .transactionLog]
-    #elseif os(iOS)
-        public static let visibleAppSources: [LogSource] = [.app, .wireguard, .transactionLog]
     #else
         public static let visibleAppSources: [LogSource] = [.app, .wireguard]
     #endif
@@ -38,8 +34,8 @@ public enum LogSource: CaseIterable {
         switch self {
         case .app: Localizable.applicationLogs
         case .wireguard: Localizable.wireguardLogs
-        #if os(iOS) && DEBUG
-            case .protun: Localizable.protunLogs
+        case .protun: Localizable.protunLogs
+        #if DEBUG
             case .protunArchive: Localizable.protunLogs + " Archive (Experimental)"
         #endif
         #if os(iOS)

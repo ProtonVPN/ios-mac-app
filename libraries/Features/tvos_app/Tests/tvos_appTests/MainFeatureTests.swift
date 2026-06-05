@@ -18,9 +18,9 @@
 
 import ComposableArchitecture
 @testable import Connection
+import Domain
 import DomainTestSupport
 @testable import ExtensionManager
-@testable import LocalAgent
 import Network
 import PersistenceTestSupport
 @testable import tvos_app
@@ -80,7 +80,7 @@ final class MainFeatureTests: XCTestCase {
 
     @MainActor
     func testUserClickedCityItemWhileConnectedToThatCityShouldDisconnect() async {
-        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now, nil)
+        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now)
         let store = TestStore(initialState: MainFeature.State(connectionState: connectionState)) {
             MainFeature()
         } withDependencies: {
@@ -92,7 +92,7 @@ final class MainFeatureTests: XCTestCase {
 
     @MainActor
     func testUserClickedCityItemWhileConnectedToAnotherCityInTheSameCountryShouldConnect() async {
-        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now, nil)
+        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now)
         let store = TestStore(initialState: MainFeature.State(connectionState: connectionState)) {
             MainFeature()
         } withDependencies: {
@@ -105,7 +105,7 @@ final class MainFeatureTests: XCTestCase {
 
     @MainActor
     func testUserClickedCountryItemWhileConnectedToCityInAnotherCountryShouldConnect() async {
-        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now, nil)
+        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now)
         let store = TestStore(initialState: MainFeature.State(connectionState: connectionState)) {
             MainFeature()
         } withDependencies: {
@@ -118,7 +118,7 @@ final class MainFeatureTests: XCTestCase {
 
     @MainActor
     func testUserClickedCountryItemWhileConnectedToCityInThatCountryShouldDisconnect() async {
-        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now, nil)
+        let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now)
         let store = TestStore(initialState: MainFeature.State(connectionState: connectionState)) {
             MainFeature()
         } withDependencies: {
@@ -141,10 +141,6 @@ final class MainFeatureTests: XCTestCase {
             $0.continuousClock = clock
             $0.smartPortSelector = .init(select: { _, _ in .init(chosenProtocol: .wireGuard(.udp), ports: [80]) })
             $0.userLocationService = UserLocationServiceMock()
-            $0.connectionIntentStorage = .init(
-                getConnectionIntent: { .init(spec: .defaultFastest, server: .mock, protocolConfiguration: .ike, features: .mock) },
-                set: { _ in }
-            )
         }
         @Shared(.connectionState) var connectionState: ConnectionState
 
@@ -156,8 +152,17 @@ final class MainFeatureTests: XCTestCase {
     }
 }
 
-#if DEBUG
+extension ConnectionState {
+    /// Helper to translate between the old and new associated values of `ConnectionState.connected`
+    static func connected(_ intent: ServerConnectionIntent, _ server: Server, _ date: Date) -> Self {
+        .connected(
+            .init(connectionSpec: intent.spec, tunnelProtocol: .ike, peerIDs: []),
+            .init(currentPeer: server, connectionDate: date, protocolConnectionData: .ike)
+        )
+    }
+}
 
+#if DEBUG
     extension ConnectableItem {
         static func country(code: String) -> Self {
             ConnectableItem(countryCode: code, cityName: nil, supportsStreaming: true)

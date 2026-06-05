@@ -24,31 +24,6 @@ import class NetworkExtension.NETunnelProviderProtocol
 import class NetworkExtension.NEVPNProtocol
 import VPNAppCore
 
-public enum TunnelProtocol: Equatable, Hashable, Sendable {
-    case ike
-    case wireGuard(WGBackend)
-
-    package static var availableProtocols: [Self] {
-        #if os(macOS)
-            [.ike, .wireGuard(.go), .wireGuard(.proTUN)]
-        #else
-            [.wireGuard(.go), .wireGuard(.proTUN)]
-        #endif
-    }
-
-    /// Whether this protocol relies on app-side certificate authentication and a Local Agent connection.
-    /// IKE (and eventually ProTUN V2) handle authentication natively in the tunnel extension.
-    public var requiresLocalCertificateAuthentication: Bool {
-        switch self {
-        case .ike:
-            false
-        case .wireGuard:
-            // With ProTUN V2, certificate auth will eventually be handled within the extension
-            true
-        }
-    }
-}
-
 @DependencyClient
 package struct BundleIDClient {
     package private(set) var bundleIdentifier: @Sendable (_ protocol: TunnelProtocol) -> String = { _ in "" }

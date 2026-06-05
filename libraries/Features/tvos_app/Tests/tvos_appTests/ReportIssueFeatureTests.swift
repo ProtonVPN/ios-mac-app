@@ -59,9 +59,14 @@ struct ReportIssueFeatureTests {
         let store = TestStore(initialState: initialState) {
             ReportIssueFeature()
         } withDependencies: {
-            $0.logContentProvider = .init(getLogData: { _ in
-                TestLogContent(result: "app logs")
-            })
+            $0.logContentProvider = .init(
+                getLogData: { _ in
+                    TestLogContent(result: "app logs")
+                },
+                getArchive: { _ in
+                    fatalError("Unimplemented")
+                }
+            )
             $0.fileManagerClient.removeItem = { url in removedFileURL.setValue(url) }
             $0.fileManagerClient.fileExists = { _ in true }
             $0.reportIssueAPIClient.send = { report in

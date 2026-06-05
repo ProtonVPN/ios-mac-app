@@ -18,30 +18,31 @@
 
 import let CoreConnection.log
 import Dependencies
-import struct Domain.ConnectionSpec
-import struct Domain.ServerConnectionIntent
+import Domain
 import Foundation
 import class NetworkExtension.NETunnelProviderProtocol
 
 public enum TunnelConfigurationOperation {
     case connection(ServerConnectionIntent)
-    case disconnection
+    // This could be a set, but involves plumbing a lot of types to be Hashable
+    case reconfiguration(Set<ConnectionChange>)
 }
 
 struct ManagerConfigurator {
     typealias ConfigurationHandler = @Sendable (inout TunnelProviderManager, TunnelConfigurationOperation) async throws -> Void
 
-    private var configure: ConfigurationHandler
-
-    init(configure: @escaping ConfigurationHandler) {
-        self.configure = configure
-    }
+    private(set) var changes: @Sendable (ServerConnectionIntent) throws -> Set<ConnectionChange>
+    private(set) var configure: ConfigurationHandler
 }
 
 /// Convenience API with labels
 extension ManagerConfigurator {
     func configure(_ manager: inout TunnelProviderManager, for operation: TunnelConfigurationOperation) async throws {
-        log.debug("Configuring manager", category: .connection, metadata: ["manager": "\(manager)", "operation": ["\(operation)"]])
+        log.debug(
+            "Configuring manager",
+            category: .connection,
+            metadata: ["manager": "\(manager)", "operation": ["\(operation)"]]
+        )
         try await configure(&manager, operation)
     }
 }

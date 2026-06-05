@@ -333,17 +333,6 @@ final class SettingsViewModel {
                         }
                     )
                 )
-                cells.append(
-                    .upsellableToggle(
-                        title: "Extended Certificates",
-                        state: { .available(enabled: UserDefaultsClient.getUserDefaults?.bool(forKey: "ProTUN_ExtendedCertificates") ?? false, interactive: true) },
-                        upsell: {},
-                        handler: { isOn, callback in
-                            UserDefaultsClient.getUserDefaults?.set(isOn, forKey: "ProTUN_ExtendedCertificates")
-                            callback(isOn)
-                        }
-                    )
-                )
             }
         #endif
 
@@ -932,7 +921,7 @@ final class SettingsViewModel {
                 log.assertionFailure("NetShield should never require a reconnect on iOS")
                 fallthrough
             case .withConnectionUpdate:
-                let setNetShieldValue = { [weak self] newValue in
+                let setNetShieldValue: (NetShieldType) -> Void = { [weak self] newValue in
                     self?.netShieldPropertyProvider.setNetShieldType(newValue)
                     self?.apply(agentFeatureChange: .netShield(newValue))
                 }
@@ -940,13 +929,10 @@ final class SettingsViewModel {
                     setNetShieldValue(type)
                     completion(true)
                 } else {
-                    self?.showHermesNetshieldOnConflictAlertIfNecessary { enable, shouldReconnect in
+                    self?.showHermesNetshieldOnConflictAlertIfNecessary { enable in
                         if enable {
                             self?.hermesSettingsViewModel.setIsEnabled(false, force: true)
                             setNetShieldValue(type)
-                            if shouldReconnect {
-                                self?.reconnect(with: .netShield, showStatusViewController: true)
-                            }
                         }
                         completion(enable)
                     }
@@ -956,13 +942,10 @@ final class SettingsViewModel {
                     self?.netShieldPropertyProvider.setNetShieldType(type)
                     completion(true)
                 } else {
-                    self?.showHermesNetshieldOnConflictAlertIfNecessary { enable, shouldReconnect in
+                    self?.showHermesNetshieldOnConflictAlertIfNecessary { enable in
                         if enable {
                             self?.hermesSettingsViewModel.setIsEnabled(false, force: true)
                             self?.netShieldPropertyProvider.setNetShieldType(type)
-                            if shouldReconnect {
-                                self?.reconnect(with: .netShield, showStatusViewController: true)
-                            }
                         }
                         completion(enable)
                     }
@@ -971,21 +954,17 @@ final class SettingsViewModel {
         }
     }
 
-    private func showHermesNetshieldOnConflictAlertIfNecessary(completionHandler: @escaping (_ shouldEnableNetShield: Bool, _ shouldReconnect: Bool) -> Void) {
+    private func showHermesNetshieldOnConflictAlertIfNecessary(completionHandler: @escaping (_ shouldEnableNetShield: Bool) -> Void) {
         guard hermesSettingsViewModel.isEnabled else {
-            completionHandler(true, false)
+            completionHandler(true)
             return
         }
 
-        hermesSettingsViewModel.isReconnectionNecessaryFromNetShieldChange { [weak self] reconnectionIsNecessary in
-            guard let self else { return }
-            let alertController: UIAlertController = if reconnectionIsNecessary {
-                hermesSettingsViewModel.netShieldOnConflictAndShouldReconnectAlertController(completionHandler: completionHandler)
-            } else {
-                hermesSettingsViewModel.netShieldOnConflictAlertController { completionHandler($0, false) }
-            }
-            showModalController?(alertController)
+        let alertController = hermesSettingsViewModel.netShieldOnConflictAlertController {
+            completionHandler($0)
         }
+
+        showModalController?(alertController)
     }
 
     private func showHermesReconnectionAlertIfNecessary() {

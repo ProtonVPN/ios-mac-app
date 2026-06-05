@@ -22,7 +22,7 @@ import Foundation
 
 public extension SharedKey where Self == InMemoryKey<ConnectionState>.Default {
     static var connectionState: Self {
-        Self[.inMemory("connectionState"), default: .resolving(nil, nil)]
+        Self[.inMemory("connectionState"), default: .resolving]
     }
 }
 

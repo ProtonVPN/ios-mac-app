@@ -29,9 +29,14 @@ struct LogsFeatureTests {
         let store = TestStore(initialState: LogsFeature.State(logSource: .app)) {
             LogsFeature()
         } withDependencies: {
-            $0.logContentProvider = .init(getLogData: { _ in
-                TestLogContent(result: "app logs")
-            })
+            $0.logContentProvider = .init(
+                getLogData: { _ in
+                    TestLogContent(result: "app logs")
+                },
+                getArchive: { _ in
+                    fatalError("Unimplemented")
+                }
+            )
         }
         store.exhaustivity = .off
         await store.send(.onAppear) {
@@ -44,13 +49,18 @@ struct LogsFeatureTests {
     }
 
     @Test
-    func loadsWireguardLogs() async {
-        let store = TestStore(initialState: LogsFeature.State(logSource: .wireguard)) {
+    func loadsProTUNLogs() async {
+        let store = TestStore(initialState: LogsFeature.State(logSource: .protun)) {
             LogsFeature()
         } withDependencies: {
-            $0.logContentProvider = .init(getLogData: { _ in
-                TestLogContent(result: "wireguard logs")
-            })
+            $0.logContentProvider = .init(
+                getLogData: { _ in
+                    TestLogContent(result: "ProTUN logs")
+                },
+                getArchive: { _ in
+                    fatalError("Unimplemented")
+                }
+            )
         }
         store.exhaustivity = .off
         await store.send(.onAppear) {
@@ -58,7 +68,7 @@ struct LogsFeatureTests {
         }
         await store.receive(\.logsLoaded) {
             $0.isLoading = false
-            $0.logs = "wireguard logs"
+            $0.logs = "ProTUN logs"
         }
     }
 }

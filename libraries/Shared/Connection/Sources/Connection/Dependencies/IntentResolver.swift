@@ -33,31 +33,29 @@ public enum ConnectionIntentResolutionError: Error, Equatable {
 }
 
 @CasePathable
-public enum ProtocolSelectionError: Error, Equatable {
+public enum IntentResolutionError: Error, Equatable {
     case cancelled
     /// Asked to connect with a protocol that is no longer supported, such as OpenVPN.
     ///
     /// This error (should be) quite rare and will only happen when the user has stale configuration data from a
     /// previous version of the app.
     case unexpectedProtocol(VpnProtocol)
-    /// The server did not respond to our pings on every port we tried.
-    case portSelectionFailed
     case serverSelectionFailed(ServerSelector.SelectionError)
 }
 
 package struct ConnectionIntentResolver: DependencyKey {
-    package internal(set) var resolve: @Sendable (ConnectionPreparationIntent) async throws(ProtocolSelectionError) -> ServerConnectionIntent
+    package internal(set) var resolve: @Sendable (ConnectionPreparationIntent) async throws(IntentResolutionError) -> ServerConnectionIntent
     package internal(set) var authorize: @Sendable (ConnectionPreparationIntent, Int) throws(ConnectionIntentResolutionError) -> Void
 
     package init(
-        resolve: @escaping @Sendable (ConnectionPreparationIntent) async throws(ProtocolSelectionError) -> ServerConnectionIntent,
+        resolve: @escaping @Sendable (ConnectionPreparationIntent) async throws(IntentResolutionError) -> ServerConnectionIntent,
         authorize: @escaping @Sendable (ConnectionPreparationIntent, Int) throws(ConnectionIntentResolutionError) -> Void
     ) {
         self.resolve = resolve
         self.authorize = authorize
     }
 
-    package static let liveValue: ConnectionIntentResolver = .init { intent throws(ProtocolSelectionError) in
+    package static let liveValue: ConnectionIntentResolver = .init { intent throws(IntentResolutionError) in
         @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
         @Dependency(\.smartPortSelector) var portSelector
         @Dependency(\.serverSelector) var serverSelector
@@ -77,49 +75,20 @@ package struct ConnectionIntentResolver: DependencyKey {
         let specifiedProtocol = intent.connectionProtocol ?? connectionFeatureProvider.connectionProtocol()
         log.debug("Resolved connection protocol", category: .connection, metadata: ["protocol": "\(specifiedProtocol)"])
 
-        // IKE does not participate in app-side port selection. Keep this early return so WireGuard
-        // port checks (`ports.isEmpty`) are never applied to IKE intents.
-        if case .vpnProtocol(.ike) = specifiedProtocol {
-            return ServerConnectionIntent(
-                spec: intent.spec,
-                server: server,
-                protocolConfiguration: .ike,
-                features: connectionFeatureProvider.connectionFeatures()
-            )
+        let protocolConfiguration: ProtocolConfiguration = switch specifiedProtocol {
+        case .vpnProtocol(.ike):
+            .ike
+        case let .vpnProtocol(.wireGuard(transport)):
+            try proTUNProtocolConfiguration(transport: transport)
+        case .smartProtocol:
+            try proTUNProtocolConfiguration(transport: nil)
         }
-
-        // This is the point at which we decide whether to use ProTUN or not
-        if case let .vpnProtocol(.wireGuard(transport)) = specifiedProtocol, FeatureFlagsRepository.shared.isProTUNEnabled {
-            return try ServerConnectionIntent(
-                spec: intent.spec,
-                server: server,
-                protocolConfiguration: proTUNProtocolConfiguration(server: server, transport: transport),
-                features: connectionFeatureProvider.connectionFeatures()
-            )
-        }
-
-        let portSelectionResult = await portSelector.select(server.endpoint, specifiedProtocol)
-        if Task.isCancelled { throw .cancelled }
-
-        guard case let .wireGuard(transport) = portSelectionResult.chosenProtocol else {
-            throw .unexpectedProtocol(portSelectionResult.chosenProtocol)
-        }
-
-        let ports = portSelectionResult.ports
-        log.debug("WG transport and ports selected", category: .connection, metadata: ["transport": "\(transport)", "port": "\(ports)"])
-
-        if ports.isEmpty {
-            throw .portSelectionFailed
-        }
-
-        let features = connectionFeatureProvider.connectionFeatures()
-        let tunnelFeatures = connectionFeatureProvider.tunnelFeatures()
 
         return ServerConnectionIntent(
             spec: intent.spec,
             server: server,
-            protocolConfiguration: .wireGuard(TunnelSettings(backend: .go, transport: transport, ports: ports, features: tunnelFeatures)),
-            features: features
+            protocolConfiguration: protocolConfiguration,
+            features: connectionFeatureProvider.connectionFeatures()
         )
     } authorize: { intent, userTier throws(ConnectionIntentResolutionError) in
         // Paid users can always change servers.
@@ -168,20 +137,10 @@ extension DependencyValues {
 /// ProTUN does not require port selection — server port overrides are returned immediately, falling back
 /// to default ports from the wireguard config when the server provides no overrides.
 private func proTUNProtocolConfiguration(
-    server: Server,
-    transport: WireGuardTransport
-) throws(ProtocolSelectionError) -> ProtocolConfiguration {
+    transport: WireGuardTransport?
+) throws(IntentResolutionError) -> ProtocolConfiguration {
     @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
     @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
 
-    let wireguardConfig = connectionConfigurationProvider.configuration().wireguardConfig
-    let ports = server.endpoint.overridePorts(using: .wireGuard(transport))
-        ?? wireguardConfig.defaultPorts(transport: transport)
-    log.debug("ProTUN: using ports", category: .connection, metadata: ["transport": "\(transport)", "ports": "\(ports)"])
-
-    if ports.isEmpty {
-        throw .portSelectionFailed
-    }
-
-    return .wireGuard(TunnelSettings(backend: .proTUN, transport: transport, ports: ports, features: connectionFeatureProvider.tunnelFeatures()))
+    return .wireGuard(TunnelSettings(backend: .proTUN, transport: transport, features: connectionFeatureProvider.tunnelFeatures()))
 }

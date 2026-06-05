@@ -102,7 +102,6 @@ let package = Package(
                 .product(name: "ProtonCorePushNotifications", package: "protoncore"),
                 .product(name: "ProtonCoreServices", package: "protoncore"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
-                .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
 
                 // External
                 .product(name: "Clocks", package: "swift-clocks"),

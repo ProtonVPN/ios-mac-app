@@ -32,20 +32,13 @@ class LogFilesTemporaryStorageTests: XCTestCase {
         } archiveHandler: {
             URL(string: "/some/path/that/does/not/exists")!
         }
-        #if os(iOS)
-            let provider = LogContentProvider { source in
-                let data = [LogSource.app: content]
-                return data[source]!
-            } getArchive: { source in
-                let data = [LogSource.app: content]
-                return data[source]!
-            }
-        #else
-            let provider = LogContentProvider { source in
-                let data = [LogSource.app: content]
-                return data[source]!
-            }
-        #endif
+        let provider = LogContentProvider { source in
+            let data = [LogSource.app: content]
+            return data[source]!
+        } getArchive: { source in
+            let data = [LogSource.app: content]
+            return data[source]!
+        }
 
         withDependencies {
             $0.logContentProvider = provider
@@ -75,20 +68,13 @@ class LogFilesTemporaryStorageTests: XCTestCase {
         } archiveHandler: {
             URL(string: "/some/path/that/does/not/exists")!
         }
-        #if os(iOS)
-            let provider = LogContentProvider { source in
-                let data = [LogSource.app: content]
-                return data[source]!
-            } getArchive: { source in
-                let data = [LogSource.app: content]
-                return data[source]!
-            }
-        #else
-            let provider = LogContentProvider { source in
-                let data = [LogSource.app: content]
-                return data[source]!
-            }
-        #endif
+        let provider = LogContentProvider { source in
+            let data = [LogSource.app: content]
+            return data[source]!
+        } getArchive: { source in
+            let data = [LogSource.app: content]
+            return data[source]!
+        }
 
         withDependencies {
             $0.logContentProvider = provider

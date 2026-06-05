@@ -65,11 +65,11 @@ public struct HomeMapFeature {
                 // VPNAPPL-2654: Discrepancy between connection state and what we're showing in the map
                 self = .disconnected
 
-            case let .connected(_, server, _, _):
-                self = .connectedCoordinates(server.logical.coordinates, server.logical.exitCountryCode)
+            case let .connected(_, connectionData):
+                self = .connectedCoordinates(connectionData.currentPeer.logical.coordinates, connectionData.currentPeer.logical.exitCountryCode)
 
-            case let .connecting(.resolved(_, server)):
-                self = .connectingCoordinates(server.logical.coordinates, server.logical.exitCountryCode)
+            case let .connecting(.resolved(intent)):
+                self = .connectingCoordinates(intent.resolvedServer.logical.coordinates, intent.resolvedServer.logical.exitCountryCode)
 
             case let .connecting(.unresolved(intent)):
                 // We've started connecting according to a `ConnectionSpec`, but we've not yet chosen a specific server
@@ -77,14 +77,17 @@ public struct HomeMapFeature {
                 // country, and then again to the specific location of the server
                 self = .connecting(intent.spec.countryCode)
 
-            case let .resolving(_, server):
+            case .resolving:
                 // During the resolve window, if we have a prior server, keep the pin on it
                 // for UI continuity; otherwise fall back to disconnected.
-                if let server {
-                    self = .connectingCoordinates(server.logical.coordinates, server.logical.exitCountryCode)
-                } else {
-                    self = .disconnected
-                }
+
+                // TODO: ProTUN: think about how to restore the code below so we may have server data available
+                self = .disconnected
+//                if let server {
+//                    self = .connectingCoordinates(server.logical.coordinates, server.logical.exitCountryCode)
+//                } else {
+//                    self = .disconnected
+//                }
             }
         }
 

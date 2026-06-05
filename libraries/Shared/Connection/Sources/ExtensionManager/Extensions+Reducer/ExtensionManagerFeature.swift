@@ -41,42 +41,75 @@ public struct ExtensionFeature: Sendable {
 
     public typealias State = TunnelState
 
+    public enum ReassertionReason: Sendable {
+        case forkSelectorRequest
+    }
+
     @DebugDescription
     public enum Action: Sendable {
-        case startObservingStateChanges
-        case stopObservingStateChanges
+        case startObserving
+        case stopObserving
+        case updateConfiguration(ServerConnectionIntent)
         case connect(ServerConnectionIntent)
         case tunnelStartRequestFinished(Result<Bool, Error>)
         /// The internal state of the network extension has changed
         case tunnelStatusChanged(TunnelState)
+        case tunnelReasserting(ReassertionReason?)
         case disconnect(TunnelConnectionError?)
         case cleanup
+
+        case delegate(Delegate)
+
+        @DebugDescription
+        public enum Delegate: Sendable {
+            case reconfigurationFailed(Error)
+        }
     }
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .startObservingStateChanges:
+            case .startObserving:
                 // Subscribe to state changes
                 let initial: Effect<ExtensionFeature.Action> = .run { send in
                     let status = try await tunnelManager.status
                     return await send(.tunnelStatusChanged(status))
                 }
                 let observation: Effect<ExtensionFeature.Action> = .run { send in
-                    for await status in try await tunnelManager.statusStream {
+                    for await status in tunnelManager.statusStream {
                         await send(.tunnelStatusChanged(status))
                     }
                 }
-                .cancellable(id: CancelID.observation, cancelInFlight: true)
+                let forkObservation: Effect<ExtensionFeature.Action> = .run { send in
+                    for await _ in tunnelManager.forkRequestsStream {
+                        await send(.tunnelReasserting(.forkSelectorRequest))
+                    }
+                }
 
                 // These effects must not be executed concurrently until we make `PacketTunnelManager` concurrency safe.
                 // Doing so has the potential to create a duplicate set of `NETunnelProviderManager` and `NEVPNSession`
                 // objects, with us potentially observing the status changes of one pair, while sending `startTunnel`
                 // and `stopTunnel` commands to the other, resulting in failure to connect.
-                return .concatenate(initial, observation)
+                return .concatenate(
+                    initial,
+                    .merge(observation, forkObservation)
+                        .cancellable(id: CancelID.observation, cancelInFlight: true)
+                )
 
-            case .stopObservingStateChanges:
+            case .stopObserving:
                 return .cancel(id: CancelID.observation)
+
+            case let .updateConfiguration(intent):
+                return .run { _ in
+                    @Dependency(\.tunnelProviderConfigurator) var configurator
+                    let changes = try configurator.changes(intent)
+                    _ = try await tunnelManager.sendProTUN(request: .init(payload: .updateConfiguration(changes)))
+                } catch: { error, send in
+                    log.error("Failed to apply connection configuration changes", category: .connection, metadata: ["error": "\(error)"])
+                    SentryHelper.shared?.log(error: error)
+                    // TODO: ProTUN: Raise the derived set of (failed) configuration changes using the error
+                    await send(.delegate(.reconfigurationFailed(error)))
+                }
 
             case let .connect(intent):
                 return .run { send in
@@ -92,14 +125,8 @@ public struct ExtensionFeature: Sendable {
                 // Tunnel has started, but we may still need to wait for connection to be established
                 return .none
 
-            case let .tunnelStatusChanged(.connected(tunnelProtocol, connectionData)):
-                guard let connectionData else {
-                    // This can happen transiently if status notifications race with manager/configuration reloads.
-                    // Do not force-disconnect; wait for the next status update with resolved connection data.
-                    log.warning("Connected tunnel status without connection data", category: .connection)
-                    return .none
-                }
-                state = .connected(tunnelProtocol, connectionData)
+            case .tunnelReasserting:
+                // handled by parents
                 return .none
 
             case .tunnelStatusChanged(.invalid):
@@ -134,6 +161,9 @@ public struct ExtensionFeature: Sendable {
                 } catch: { error, _ in
                     log.assertionFailure("Failed to remove managers: \(error)")
                 }
+
+            case .delegate:
+                return .none
             }
         }
     }
@@ -148,6 +178,8 @@ public enum TunnelConnectionError: Error, Equatable {
     /// The tunnel is in the incorrect state because it was prematurely disconnected
     case tunnelAborted
 
+    case reconfigurationFailure(Error)
+
     public static func == (lhs: TunnelConnectionError, rhs: TunnelConnectionError) -> Bool {
         switch lhs {
         case .tunnelStartFailed:
@@ -156,6 +188,8 @@ public enum TunnelConnectionError: Error, Equatable {
             rhs.is(\.unknownServer)
         case .tunnelAborted:
             rhs.is(\.tunnelAborted)
+        case .reconfigurationFailure:
+            rhs.is(\.reconfigurationFailure)
         }
     }
 }
@@ -171,6 +205,8 @@ extension TunnelConnectionError: ProtonVPNError {
             "UNKS"
         case .tunnelAborted:
             "TNAB"
+        case .reconfigurationFailure:
+            "TNRF"
         }
     }
 
@@ -198,48 +234,29 @@ extension TunnelConnectionError: ProtonVPNError {
     }
 }
 
-package extension TunnelState {
-    /// The network extension process has a mind of its own. If we've previously invoked `startTunnel`, and we invoke
-    /// `stopTunnel` before waiting for the extension to actually transition to `.connected` or `.disconnected`, we
-    /// may get unexpected results. For now, the parent feature should delay disconnection until this feature is ready
-    /// to accept such events.
-    var isInteractionAllowed: Bool {
-        switch self {
-        case .connected, .disconnected:
-            true
-
-        case .connecting:
-            // Technically, the network extension could be ready for interaction in this state. Currently, the
-            // extension enters this state when we receive a `NEVPNStatusDidChange.connecting` notification, but we
-            // don't leave it for `.connected` after we receive `NEVPNStatusDidChange.connected`, until we also
-            // complete an ipc round trip to determine what server we are connected to. As a result, we will take
-            // slightly longer to cancel our connection.
-            // This could be improved by storing the last `NEVPNStatus` received in our state.
-            false
-
-        case .unknown, .invalid, .reasserting, .disconnecting:
-            false
-        }
-    }
-}
-
 extension ExtensionFeature.Action: CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
-        case .startObservingStateChanges:
-            ".startObservingStateChanges"
-        case .stopObservingStateChanges:
-            ".stopObservingStateChanges"
+        case .startObserving:
+            ".startObserving"
+        case .stopObserving:
+            ".stopObserving"
         case let .connect(serverConnectionIntent):
             ".connect(\(serverConnectionIntent))"
         case let .tunnelStartRequestFinished(result):
             ".tunnelStartRequestFinished(\(result))"
         case let .tunnelStatusChanged(tunnelState):
             ".tunnelStatusChanged(\(tunnelState))"
+        case let .tunnelReasserting(reason):
+            ".tunnelReasserting(\(String(describing: reason)))"
         case let .disconnect(tunnelConnectionError):
             ".disconnect(\(String(describing: tunnelConnectionError))"
         case .cleanup:
             ".cleanup"
+        case let .updateConfiguration(serverConnectionIntent):
+            ".updateConfiguration(\(serverConnectionIntent))"
+        case let .delegate(action):
+            ".delegate(\(action)"
         }
     }
 }

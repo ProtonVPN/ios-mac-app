@@ -29,13 +29,15 @@ enum LoggingMode {
 extension Logger {
     static let provider = Logger(subsystem: Subsystem.protun.rawValue, category: Category.provider.rawValue)
     static let adapter = Logger(subsystem: Subsystem.protun.rawValue, category: Category.adapter.rawValue)
+    static let localAgent = Logger(subsystem: Subsystem.protun.rawValue, category: Category.localAgent.rawValue)
+    static let library = Logger(subsystem: Subsystem.protun.rawValue, category: Category.library.rawValue)
 }
 
 extension Logger {
     static let lastFlushDate: OSAllocatedUnfairLock<Date?> = .init(uncheckedState: nil)
 }
 
-private enum LogFilter {
+private enum LogFilter: Sendable {
     case subsystem(Subsystem)
     case category(Category)
     indirect case or(LogFilter, LogFilter)
@@ -59,6 +61,8 @@ private enum Subsystem: String, CaseIterable {
 private enum Category: String, CaseIterable {
     case provider = "Provider"
     case adapter = "Adapter"
+    case localAgent = "LocalAgent"
+    case library = "Library"
 }
 
 extension Logger {

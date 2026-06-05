@@ -23,10 +23,9 @@ import Connection
 import ConnectionDetails
 import ConnectionDetailsShared
 import ConnectionInventory
-import CoreConnection
+import CoreConnection // LocalAgent
 import Dependencies
 import Domain
-import Ergonomics
 import Foundation
 import LocalAgent
 import ModalsServices
@@ -40,7 +39,6 @@ import VPNAppCore
 public struct HomeFeature {
     @Dependency(\.serverChangeAuthorizer) private var authorizer
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
-    @Dependency(\.connectionIntentStorage) private var connectionIntentStorage
     @Dependency(\.pendingDisconnectCompletions) private var pendingDisconnectCompletions
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.alertService) private var alertService
@@ -235,7 +233,6 @@ public struct HomeFeature {
             connectionCommandsReducer
             connectionCardReducer
             destinationReducer
-            connectionEventsReducer
             miscReducer
         }
         .ifLet(\.$destination, action: \.destination)
@@ -278,7 +275,7 @@ private extension HomeFeature {
                 .cancellable(id: CancelID.connectionState)
             case .killSwitchSettingChanged:
                 guard state.connectionState.isConnected,
-                      let spec = state.connectionState.resolvedIntent?.spec
+                      let spec = state.connectionState.resolvedSpec
                 else {
                     return .none
                 }
@@ -357,7 +354,7 @@ private extension HomeFeature {
                 )
 
             case .connectionCommandReceived(.retry):
-                let spec = lastConnectionSpec()
+                let spec = ConnectionSpec.defaultFastest // TODO: ProTUN: Fix this!
                 let intent = ConnectionPreparationIntent(
                     spec: spec,
                     acceptableProtocols: .all
@@ -374,7 +371,7 @@ private extension HomeFeature {
                 .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
 
             case let .connectionCommandReceived(.reconnect(connectionProtocol)):
-                let spec = lastConnectionSpec()
+                let spec = ConnectionSpec.defaultFastest // TODO: ProTUN: Fix this!
                 let intent = ConnectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: connectionProtocol,
@@ -502,17 +499,8 @@ private extension HomeFeature {
                         openCredentiallessSignUp()
                     }
             #endif
-            default:
-                return .none
-            }
-        }
-    }
-
-    var connectionEventsReducer: some ReducerOf<Self> {
-        Reduce { state, action in
-            switch action {
-            case let .connection(.core(.localAgent(.event(.stats(message))))):
-                return .send(.connectionStatus(.newNetShieldStats(message.netShield.toNetShieldModel)))
+            case let .connection(.core(.localAgentEvent(.stats(stats)))):
+                return .send(.connectionStatus(.newNetShieldStats(stats.toNetShieldModel)))
             case let .connection(.delegate(.connectionFailed(error))):
                 SentryHelper.shared?.log(error: error)
                 state.alert = domainAlertState(from: error.alert)
@@ -520,11 +508,16 @@ private extension HomeFeature {
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
                 state.$vpnConnectionStatusDoNotUse.withLock { $0 = connectionState.status }
-                return .send(.sharedProperties(.newConnectionState(connectionState)))
-            case .connection(.delegate(.disconnected)):
-                return .run { _ in
-                    await pendingDisconnectCompletions.drainAndInvoke()
-                }
+                // ProTUN's `ConnectionFeature` no longer emits `.delegate(.disconnected)`; drain
+                // any queued disconnect completions when the layer reports a disconnected state.
+                return .merge(
+                    .send(.sharedProperties(.newConnectionState(connectionState))),
+                    .run { _ in
+                        if connectionState.is(\.disconnected) {
+                            await pendingDisconnectCompletions.drainAndInvoke()
+                        }
+                    }
+                )
             case let .connection(.delegate(.intentResolutionFailed(intent, resolutionError))):
                 SentryHelper.shared?.log(error: resolutionError)
                 switch resolutionError {
@@ -581,12 +574,6 @@ private extension HomeFeature {
 }
 
 private extension HomeFeature {
-    /// Spec for `.retry` / `.reconnect`. Reads the last resolved intent persisted by
-    /// `ConnectionFeature`; falls back to fastest when there's no prior intent.
-    func lastConnectionSpec() -> ConnectionSpec {
-        (try? connectionIntentStorage.getConnectionIntent().spec) ?? .defaultFastest
-    }
-
     func domainAlertState(from alert: Domain.Alert) -> AlertState<Action.HomeAlert> {
         AlertState {
             TextState(String(localized: alert.title))
@@ -625,12 +612,12 @@ private extension HomeFeature {
     }
 }
 
-private extension FeatureStatisticsMessage.NetShieldStats {
+private extension LocalAgent.Stats {
     var toNetShieldModel: NetShield.NetShieldModel {
         NetShieldModel(
-            trackersCount: trackersBlocked ?? 0,
-            adsCount: adsBlocked ?? 0,
-            dataSaved: UInt64(bytesSaved),
+            trackersCount: Int(trackersBlocked ?? 0),
+            adsCount: Int(adsBlocked ?? 0),
+            dataSaved: dataSaved ?? 0,
             enabled: true
         )
     }

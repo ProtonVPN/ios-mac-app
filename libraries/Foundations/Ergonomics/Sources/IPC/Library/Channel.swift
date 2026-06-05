@@ -25,19 +25,13 @@ extension IPCNotifications.Channel {
 }
 
 public extension IPCNotifications {
-    final class Channel<Payload: Codable> {
+    final class Channel<Payload: Codable>: Sendable {
         let buffer: SharedBuffer
         let notification: Notification
-
-        private let encoder: PropertyListEncoder
-        private let decoder: PropertyListDecoder
 
         public init(notification: Notification, fileURL: URL) throws {
             self.buffer = try .init(url: fileURL)
             self.notification = notification
-            self.encoder = PropertyListEncoder()
-            encoder.outputFormat = .binary
-            self.decoder = PropertyListDecoder()
         }
     }
 }
@@ -53,6 +47,8 @@ public extension IPCNotifications.Channel {
     /// Encodes `payload` into the shared buffer and fires the Darwin
     /// notification so the reader wakes immediately.
     func post(_ payload: Payload) throws {
+        let encoder = PropertyListEncoder()
+        encoder.outputFormat = .binary
         let data = try encoder.encode(Box(value: payload))
         let seqNumber = try buffer.write(data)
         IPCNotifications.postRawState(notification, state: seqNumber)
@@ -76,12 +72,14 @@ public extension IPCNotifications.Channel {
         includingCurrentValue: Bool = false,
         handler: @escaping (Result<Payload, any Swift.Error>) -> Void
     ) -> IPCNotifications.Token {
+        let decoder = PropertyListDecoder()
+
         let token = IPCNotifications.observeRawState(notification, queue: queue) { sequence in
             guard let data = self.buffer.read(expectedSequence: sequence) else {
                 handler(.failure(Error.inconsistentRead)); return
             }
             do {
-                let payload = try self.decoder.decode(Box<Payload>.self, from: data)
+                let payload = try decoder.decode(Box<Payload>.self, from: data)
                 handler(.success(payload.value))
             } catch {
                 handler(.failure(error))

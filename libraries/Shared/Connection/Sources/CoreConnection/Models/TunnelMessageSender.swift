@@ -17,43 +17,21 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import enum Domain.ProTUNMessage
 import enum ExtensionIPC.ProviderMessageError
-import enum ExtensionIPC.WireguardProviderRequest
-
-#if DEBUG && os(iOS)
-    import enum Domain.ProTUNMessage
-#endif
 
 public struct TunnelMessageSender: TestDependencyKey {
-    public var send: (WireguardProviderRequest) async throws(ProviderMessageError) -> WireguardProviderRequest.Response
-    #if DEBUG && os(iOS)
-        public var sendProTUN: (ProTUNMessage.Request) async throws(ProviderMessageError) -> ProTUNMessage.Response
-    #endif
+    public internal(set) var sendProTUN: (ProTUNMessage.Request) async throws(ProviderMessageError) -> ProTUNMessage.Response
 
-    #if DEBUG && os(iOS)
-        public init(
-            send: @escaping (WireguardProviderRequest) async throws(ProviderMessageError) -> WireguardProviderRequest.Response,
-            sendProTUN: @escaping (ProTUNMessage.Request) async throws(ProviderMessageError) -> ProTUNMessage.Response
-        ) {
-            self.send = send
-            self.sendProTUN = sendProTUN
-        }
+    public init(
+        sendProTUN: @escaping (ProTUNMessage.Request) async throws(ProviderMessageError) -> ProTUNMessage.Response
+    ) {
+        self.sendProTUN = sendProTUN
+    }
 
-        public static let testValue = TunnelMessageSender(
-            send: unimplemented(throwing: .noDataReceived),
-            sendProTUN: unimplemented(throwing: .noDataReceived)
-        )
-    #else
-        public init(
-            send: @escaping (WireguardProviderRequest) async throws(ProviderMessageError) -> WireguardProviderRequest.Response
-        ) {
-            self.send = send
-        }
-
-        public static let testValue = TunnelMessageSender(
-            send: unimplemented(throwing: .noDataReceived)
-        )
-    #endif
+    public static let testValue = TunnelMessageSender(
+        sendProTUN: unimplemented(throwing: .noDataReceived)
+    )
 }
 
 public extension DependencyValues {

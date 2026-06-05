@@ -51,17 +51,17 @@
                 $0.date = .constant(now)
             }
 
-            await store.send(.startObservingStateChanges)
+            await store.send(.startObserving)
             await store.receive(\.tunnelStatusChanged.disconnected)
 
             await store.send(.connect(intent))
             await store.receive(\.tunnelStatusChanged.connecting) {
-                $0 = .connecting
+                $0 = .connecting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard(.proTUN), peerIDs: ["peer-id"]))
             }
 
             await store.receive(\.tunnelStartRequestFinished.success)
 
-            await store.send(.stopObservingStateChanges)
+            await store.send(.stopObserving)
         }
 
         @MainActor
@@ -72,10 +72,8 @@
                 connectedDate: nil,
                 lastDisconnectError: nil
             )
-            mockManager.connection.connectedServerID = "previousServerID"
+            mockManager.connection.connectedServerID = "peer-id"
             let now = Date.now
-
-            let expectedConnectionData = ConnectionData(serverID: "previousServerID", connectionDate: now, protocolData: .wireGuardGo)
 
             let store = TestStore(initialState: TunnelState.disconnected(nil)) {
                 ExtensionFeature()
@@ -84,12 +82,15 @@
                 $0.date = .constant(now)
             }
 
-            await store.send(.startObservingStateChanges)
+            await store.send(.startObserving)
             await store.receive(\.tunnelStatusChanged.connected) {
-                $0 = .connected(.wireGuard(.go), expectedConnectionData)
+                $0 = .connected(
+                    TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard(.proTUN), peerIDs: ["peer-id"]),
+                    DynamicConnectionData(currentPeerId: "peer-id", connectionDate: now, protocolConnectionData: .proTUN(.init(transport: .udp)))
+                )
             }
 
-            await store.send(.stopObservingStateChanges)
+            await store.send(.stopObserving)
         }
 
         @MainActor
@@ -114,7 +115,7 @@
             let tunnelSettings = TunnelSettings.mock
             let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, protocolConfiguration: .wireGuard(tunnelSettings), features: features)
 
-            await store.send(.startObservingStateChanges)
+            await store.send(.startObserving)
             await store.receive(\.tunnelStatusChanged.invalid) {
                 $0 = .invalid
             }
@@ -127,21 +128,7 @@
                 $0 = .disconnected(.tunnelStartFailed(permissionDenied))
             }
 
-            await store.send(.stopObservingStateChanges)
-        }
-
-        @MainActor
-        func testConnectedWithoutConnectionDataDoesNotForceDisconnect() async {
-            let now = Date.now
-            let connectionData = ConnectionData(serverID: "server-id", connectionDate: now, protocolData: .wireGuardGo)
-            let store = TestStore(initialState: TunnelState.connecting) {
-                ExtensionFeature()
-            }
-
-            await store.send(.tunnelStatusChanged(.connected(.wireGuard(.go), nil)))
-            await store.send(.tunnelStatusChanged(.connected(.wireGuard(.go), connectionData))) {
-                $0 = .connected(.wireGuard(.go), connectionData)
-            }
+            await store.send(.stopObserving)
         }
     }
 #endif

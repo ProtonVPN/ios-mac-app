@@ -1,5 +1,5 @@
 //
-//  Created on 17/02/2026 by adam.
+//  Created on 17/02/2026.
 //
 //  Copyright (c) 2026 Proton AG
 //
@@ -43,21 +43,50 @@ public enum ProTUNMessage {
 
 public extension ProTUNMessage.Request {
     enum Payload: Codable {
-        case ping
         case flushLogsToFile
         case retrieveLogsArchive
-        case getCurrentPeerID
+        case getCurrentPeer
         case pcapRequest(PcapRequest)
+        case pushSelector(String)
+        case updateConfiguration(Set<ConnectionChange>)
+        #if DEBUG
+            case ping
+        #endif
     }
 }
 
 public extension ProTUNMessage.Response {
     enum Payload: Codable {
-        case pong
-        case currentPeerID(CodableResult<String, Error>)
+        case ack
+        case currentPeer(CodableResult<CurrentPeer, Error>)
         case logs(CodableResult<URL, Error>)
         case pcapUpdate(PcapUpdate)
         case error(GenericError)
+        #if DEBUG
+            case pong
+        #endif
+    }
+}
+
+public struct CurrentPeer: Codable, Sendable, Equatable {
+    public let peerID: String
+    public let transport: WireGuardTransport
+    public let serverExitV4: String?
+    public let userISP: String?
+    public let userIP: String?
+
+    public init(
+        peerID: String,
+        transport: WireGuardTransport,
+        serverExitV4: String?,
+        userISP: String?,
+        userIP: String?
+    ) {
+        self.peerID = peerID
+        self.transport = transport
+        self.serverExitV4 = serverExitV4
+        self.userISP = userISP
+        self.userIP = userIP
     }
 }
 
@@ -106,11 +135,15 @@ public extension ProTUNMessage.Response {
 extension ProTUNMessage.Request.Payload: CustomStringConvertible {
     public var description: String {
         switch self {
-        case .ping: "ping"
+        #if DEBUG
+            case .ping: "ping"
+        #endif
         case .flushLogsToFile: "flushLogsToFile"
         case .retrieveLogsArchive: "retrieveLogsArchive"
-        case .getCurrentPeerID: "getCurrentPeerID"
+        case .getCurrentPeer: "getCurrentPeer"
         case let .pcapRequest(request): "pcapRequest(\(request))"
+        case .pushSelector: "pushSelector"
+        case .updateConfiguration: "updateConfiguration"
         }
     }
 }

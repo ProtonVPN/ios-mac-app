@@ -17,8 +17,20 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import VPNCoreTypes
 
-public enum ConnectionFeatureChange: Hashable, Sendable {
+public enum ConnectionChange: Sendable, Hashable, Codable {
+    case location(ConnectionSpec, [ProTUNConfiguration.Peer])
+    case feature(ConnectionFeatureChange)
+}
+
+extension ProTUNConfiguration.Peer: Sendable, Hashable, Codable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
+public enum ConnectionFeatureChange: Hashable, Sendable, Codable {
     case tunnel(TunnelFeature)
     case agent(AgentFeature)
 
@@ -35,6 +47,9 @@ public enum ConnectionFeatureChange: Hashable, Sendable {
         case killSwitch(Bool)
         case allowLAN(Bool)
         case customDNS(Bool)
-        case netShield
+        case onDemand(Bool)
     }
 }
+
+extension ConnectionFeatureChange.TunnelFeature: Codable {}
+extension ConnectionFeatureChange.AgentFeature: Codable {}

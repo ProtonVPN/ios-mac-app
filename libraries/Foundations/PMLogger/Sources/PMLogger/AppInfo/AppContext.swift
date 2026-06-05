@@ -22,6 +22,7 @@ import Foundation
 public enum AppContext: String {
     case mainApp
     case wireGuardExtension
+    case proTUNExtension
 
     public var clientIdKey: String {
         switch self {
@@ -29,6 +30,8 @@ public enum AppContext: String {
             "Id"
         case .wireGuardExtension:
             "WireGuardId"
+        case .proTUNExtension:
+            "ProTUNId"
         }
     }
 }

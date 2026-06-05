@@ -24,11 +24,11 @@ import Foundation
 package extension ConnectionIntentResolver {
     static func mock(
         server: Server,
-        tunnelSettings: TunnelSettings = TunnelSettings(backend: .go, transport: .udp, ports: [80], features: .mock),
+        tunnelSettings: TunnelSettings = TunnelSettings(backend: .go, transport: .udp, features: .mock),
         features: VPNConnectionFeatures = .mock
     ) -> ConnectionIntentResolver {
         ConnectionIntentResolver(
-            resolve: { intent throws(ProtocolSelectionError) in
+            resolve: { intent throws(IntentResolutionError) in
                 ServerConnectionIntent(
                     spec: intent.spec,
                     server: server,

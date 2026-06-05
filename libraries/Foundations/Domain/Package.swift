@@ -16,6 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../external/protoncore"), // Heavy dependency - logic that requires ProtonCore could live as extensions in another package
+        .package(path: "../../../external/vpn-core-apple"),
 
         .package(path: "../Strings"),
         .package(path: "../Ergonomics"),
@@ -31,6 +32,7 @@ let package = Package(
             dependencies: [
                 "Strings",
                 "Ergonomics",
+                .product(name: "VPNCoreTypes", package: "vpn-core-apple"),
                 .product(name: "IPCErgonomics", package: "Ergonomics"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "Dependencies", package: "swift-dependencies"),

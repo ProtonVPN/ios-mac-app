@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if targetEnvironment(simulator)
-
     @testable import CommonNetworking
     import ComposableArchitecture
     @testable import Connection
@@ -58,18 +57,16 @@
                 AppFeature()._printChanges()
             } withDependencies: {
                 $0.continuousClock = clock
+                $0.serverIdentifier.fullServerInfo = { _ in .mock }
+                $0.localAgent.postRequestToExtension = { _ in }
+                $0.connectionFeatureProvider.setConnectionFeatures = { _ in }
                 $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
-                $0.localAgent = LocalAgentMock(state: .connected)
                 $0.networking = VPNNetworkingMock()
                 $0.vpnAuthenticationStorage = VpnAuthenticationStorage.testStorage()
                 $0.tunnelKeychain = TunnelKeychain(
                     storeWireguardConfig: { _ in Data() },
                     loadWireguardConfig: { Data() },
                     clear: { tunnelConfigurationCleared.fulfill() }
-                )
-                $0.connectionIntentStorage = .init(
-                    getConnectionIntent: { .init(spec: .defaultFastest, server: .mock, protocolConfiguration: .ike, features: .mock) },
-                    set: { _ in }
                 )
                 $0.nwPathStream = { nwPathStream }
                 $0.logFileManager.dump = { _, _ in }
@@ -121,16 +118,11 @@
                 $0.continuousClock = clock
                 $0.networkingDelegate = networkingDelegateMock
                 $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
-                $0.localAgent = LocalAgentMock(state: .connected)
                 $0.networking = VPNNetworkingMock()
                 $0.tunnelKeychain = TunnelKeychain(
                     storeWireguardConfig: { _ in Data() },
                     loadWireguardConfig: { Data() },
                     clear: { tunnelConfigurationCleared.fulfill() }
-                )
-                $0.connectionIntentStorage = .init(
-                    getConnectionIntent: { .init(spec: .defaultFastest, server: .mock, protocolConfiguration: .ike, features: .mock) },
-                    set: { _ in }
                 )
                 $0.nwPathStream = { nwPathStream }
                 $0.logFileManager.dump = { _, _ in }

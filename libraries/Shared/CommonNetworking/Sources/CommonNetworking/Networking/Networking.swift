@@ -326,10 +326,7 @@ extension CoreNetworking: APIServiceDelegate {
         appInfo.userAgent
     }
 
-    public func onUpdate(serverTime: Int64) {
-        @Dependency(\.cryptoService) var cryptoService
-        cryptoService.updateTime(serverTime)
-    }
+    public func onUpdate(serverTime _: Int64) {}
 
     public func isReachable() -> Bool {
         true

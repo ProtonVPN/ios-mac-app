@@ -113,8 +113,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                 )
             )
         } withDependencies: {
-            $0.wasLaunchedAtLogin = { AppStartup.isLaunchedAtLogin }
-            $0.appProcessStartDate = { AppStartup.processStartDate }
             $0.sidebarProfileNameResolver = SidebarProfileNameResolver(
                 profileName: { profileID in
                     profileManager.profile(withId: profileID)?.name

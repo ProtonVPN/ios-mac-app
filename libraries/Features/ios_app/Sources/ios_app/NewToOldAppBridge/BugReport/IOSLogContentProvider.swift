@@ -29,77 +29,46 @@ extension LogContentProvider: @retroactive DependencyKey {
 
 extension LogContentProvider {
     /// Create and return a proper LogData implementation for a given log source
-    #if os(iOS) && DEBUG
-        static let IOSLogContentProvider: LogContentProvider = .init(
-            getLogData: { source in
-                switch source {
-                case .app:
-                    @Dependency(\.logFileManager) var logFileManager
-                    let folder: URL = logFileManager
-                        .getFileUrl(named: appLogFilename)
-                        .deletingLastPathComponent()
-                    return AppLogContent(folder: folder)
+    static let IOSLogContentProvider: LogContentProvider = .init(
+        getLogData: { source in
+            switch source {
+            case .app:
+                @Dependency(\.logFileManager) var logFileManager
+                let folder: URL = logFileManager
+                    .getFileUrl(named: appLogFilename)
+                    .deletingLastPathComponent()
+                return AppLogContent(folder: folder)
 
-                case .osLog:
-                    return OSLogContent()
+            case .osLog:
+                return OSLogContent()
 
-                case .wireguard:
-                    let appGroup: String = DomainConstants.AppGroups.main
-                    @Dependency(\.wireguardIOSLogProvider) var wireguardIOSLogProvider
-                    return wireguardIOSLogProvider.logContentForAppGroup(appGroup)
-
-                case .protun, .protunArchive:
-                    let appGroup: String = DomainConstants.AppGroups.main
-                    @Dependency(\.protunIOSLogProvider) var protunIOSLogProvider
-                    return protunIOSLogProvider.logContentForAppGroup(appGroup)
-
-                case .transactionLog:
-                    @Dependency(\.paymentsPlanServiceV2) var paymentsPlanServiceV2
-                    guard let transactionLogURL = paymentsPlanServiceV2.generateTransactionLog() else {
-                        return EmptyLogContent()
-                    }
-                    return FileLogContent(file: transactionLogURL)
-                }
-            },
-            getArchive: { source in
+            case .wireguard:
                 let appGroup: String = DomainConstants.AppGroups.main
-                @Dependency(\.protunIOSLogProvider) var protunIOSLogProvider
-                guard case .protunArchive = source else {
-                    assertionFailure("Logs source available only for ProTUN")
-                    return protunIOSLogProvider.logContentForAppGroup(appGroup)
+                @Dependency(\.wireguardIOSLogProvider) var wireguardIOSLogProvider
+                return wireguardIOSLogProvider.logContentForAppGroup(appGroup)
+
+            case .protun, .protunArchive:
+                @Dependency(\.protunLogProvider) var protunLogProvider
+                return protunLogProvider.logContentForAppGroup()
+
+            case .transactionLog:
+                @Dependency(\.paymentsPlanServiceV2) var paymentsPlanServiceV2
+                guard let transactionLogURL = paymentsPlanServiceV2.generateTransactionLog() else {
+                    return EmptyLogContent()
                 }
-                return protunIOSLogProvider.logContentForAppGroup(appGroup)
+                return FileLogContent(file: transactionLogURL)
             }
-        )
-    #else
-        static let IOSLogContentProvider: LogContentProvider = .init(
-            getLogData: { source in
-                switch source {
-                case .app:
-                    @Dependency(\.logFileManager) var logFileManager
-                    let folder: URL = logFileManager
-                        .getFileUrl(named: appLogFilename)
-                        .deletingLastPathComponent()
-                    return AppLogContent(folder: folder)
-
-                case .osLog:
-                    return OSLogContent()
-
-                case .wireguard:
-                    let appGroup: String = DomainConstants.AppGroups.main
-                    @Dependency(\.wireguardIOSLogProvider) var wireguardIOSLogProvider
-                    return wireguardIOSLogProvider.logContentForAppGroup(appGroup)
-
-                case .transactionLog:
-                    @Dependency(\.paymentsPlanServiceV2) var paymentsPlanServiceV2
-                    guard let transactionLogURL = paymentsPlanServiceV2.generateTransactionLog() else {
-                        return EmptyLogContent()
-                    }
-                    return FileLogContent(file: transactionLogURL)
-                }
+        },
+        getArchive: { source in
+            // Not exposed for now, defaulting to returning classic log content
+            @Dependency(\.protunLogProvider) var protunLogProvider
+            guard case .protunArchive = source else {
+                assertionFailure("Logs source available only for ProTUN")
+                return protunLogProvider.logContentForAppGroup()
             }
-        )
-    #endif
+            return protunLogProvider.logContentForAppGroup()
+        }
+    )
 }
 
 let appLogFilename = "ProtonVPN.log"

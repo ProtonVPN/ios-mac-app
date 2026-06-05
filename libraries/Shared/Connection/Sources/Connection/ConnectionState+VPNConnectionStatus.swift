@@ -21,54 +21,53 @@ import Foundation
 import VPNAppCore
 
 public extension ConnectionState {
-    /// The `ServerConnectionIntent` associated with this state, when one is known.
-    /// Includes the prior intent during `.resolving`.
-    var resolvedIntent: ServerConnectionIntent? {
+    /// The user-intended `ConnectionSpec`, when known. Covers every case that carries a spec:
+    /// connected, disconnecting, both connecting variants, and resolving when a prior intent is
+    /// remembered.
+    var resolvedSpec: ConnectionSpec? {
         switch self {
-        case let .connected(intent, _, _, _),
-             let .disconnecting(intent, _),
-             let .connecting(.resolved(intent, _)):
-            intent
-        case let .resolving(intent, _):
-            intent
-        case .disconnected, .connecting(.unresolved):
+        case let .connected(tunnelConfig, _):
+            tunnelConfig.connectionSpec
+        case let .disconnecting(_, connectionSpec):
+            connectionSpec
+        case let .connecting(.resolved(intent)):
+            intent.spec
+        case .resolving:
             nil
+        case .disconnected:
+            nil
+        case let .connecting(.unresolved(intent)):
+            intent.spec
         }
     }
 
     /// The active `Server`, when one is known. Includes the prior server during `.resolving`.
     var resolvedServer: Server? {
         switch self {
-        case let .connected(_, server, _, _),
-             let .disconnecting(_, server),
-             let .connecting(.resolved(_, server)):
-            server
-        case let .resolving(_, server):
-            server
+        case let .connected(_, connectionData):
+            connectionData.currentPeer
+        case .disconnecting:
+            nil // If spec specifies `exact` server, we could return that
+        case let .connecting(.resolved(intent)):
+            intent.resolvedServer
+        case .resolving:
+            nil // TODO: ProTUN: check if this makes sense
         case .disconnected, .connecting(.unresolved):
             nil
         }
     }
 
-    /// The user-intended `ConnectionSpec`, when known. Covers every case that carries a spec:
-    /// connected, disconnecting, both connecting variants, and resolving when a prior intent is
-    /// remembered.
-    var resolvedSpec: ConnectionSpec? {
-        switch self {
-        case let .connecting(.unresolved(intent)):
-            intent.spec
-        default:
-            resolvedIntent?.spec
-        }
-    }
-
     var resolvedVpnProtocol: VpnProtocol? {
-        switch resolvedIntent?.protocolConfiguration {
-        case .ike:
-            .ike
-        case let .wireGuard(settings):
-            .wireGuard(settings.transport)
-        case nil:
+        switch self {
+        case let .connected(_, connectionData):
+            switch connectionData.protocolConnectionData {
+            case .ike:
+                .ike
+            case let .proTUN(proTUNConnectionData):
+                .wireGuard(proTUNConnectionData.transport)
+            }
+        default:
+            // If we adopt `StaticTunnelData`, in the connecting.resolved state, we *could* recognise IKE early
             nil
         }
     }
@@ -113,16 +112,18 @@ public extension ConnectionState {
 
     /// Date the active tunnel finished connecting. `nil` outside of `.connected`.
     var connectedDate: Date? {
-        if case let .connected(_, _, date, _) = self { return date }
+        if case let .connected(_, connectionData) = self { return connectionData.connectionDate }
         return nil
     }
 
     var natType: NATType? {
-        resolvedIntent?.features.natType
+        // TODO: ProTUN: expose current NAT type via ConnectionState or mmap
+        nil
     }
 
     var safeMode: Bool? {
-        resolvedIntent?.features.safeMode
+        // TODO: ProTUN: Remove safe mode.
+        nil
     }
 
     /// The current spec's location, when known.
@@ -131,45 +132,63 @@ public extension ConnectionState {
     }
 
     var connectedActual: VPNConnectionActual? {
-        guard case let .connected(intent, server, date, _) = self else { return nil }
-        return VPNConnectionActual(server: server, intent: intent, connectedDate: date)
+        guard case let .connected(_, connectionData) = self else { return nil }
+        return VPNConnectionActual(data: connectionData)
     }
 
     /// Mapping of `ConnectionState` into the legacy `VPNConnectionStatusDoNotUse`.
     /// Used only in the widget. DO NOT USE OTHERWISE
     var status: VPNConnectionStatusDoNotUse {
         switch self {
-        case let .resolving(intent, server):
-            let actual = intent.map { VPNConnectionActual(server: server ?? $0.server, intent: $0, connectedDate: nil) }
-            return .resolving(intent?.spec, actual)
+        case .resolving:
+            .resolving(nil, nil) // TODO: ProTUN: check what we can do to restore the code below somehow without associated values
+//            let actual = intent.map { VPNConnectionActual(server: server ?? $0.server, intent: $0, connectedDate: nil) }
+//            return .resolving(intent?.spec, actual)
+//        case .disconnected:
+//            .disconnected
+//        case let .connecting(.unresolved(intent)):
+//            .connecting(intent.spec, nil)
+//        case let .connecting(.resolved(intent, server)):
+//            .connecting(intent.spec, server)
+//        case let .disconnecting(intent, server):
+//            .disconnecting(intent.spec, VPNConnectionActual(server: server, intent: intent, connectedDate: nil))
+//        case let .connected(intent, server, date, _):
+//            .connected(intent.spec, VPNConnectionActual(server: server, intent: intent, connectedDate: date))
+
         case .disconnected:
-            return .disconnected
+            .disconnected
+
         case let .connecting(.unresolved(intent)):
-            return .connecting(intent.spec, nil)
-        case let .connecting(.resolved(intent, server)):
-            return .connecting(intent.spec, server)
-        case let .disconnecting(intent, server):
-            return .disconnecting(intent.spec, VPNConnectionActual(server: server, intent: intent, connectedDate: nil))
-        case let .connected(intent, server, date, _):
-            return .connected(intent.spec, VPNConnectionActual(server: server, intent: intent, connectedDate: date))
+            .connecting(intent.spec, nil)
+
+        case let .connecting(.resolved(intent)):
+            .connecting(intent.spec, nil)
+
+        case let .disconnecting(_, spec):
+            .disconnecting(spec, nil)
+
+        case let .connected(tunnelConfig, _):
+            .connected(tunnelConfig.connectionSpec, connectedActual)
         }
     }
 }
 
 public extension VPNConnectionActual {
-    init(server: Server, intent: ServerConnectionIntent, connectedDate: Date?) {
-        let vpnProtocol: VpnProtocol = switch intent.protocolConfiguration {
+    init(data: ConnectionState.ResolvedDynamicConnectionData) {
+        let vpnProtocol: VpnProtocol = switch data.protocolConnectionData {
         case .ike:
             .ike
-        case let .wireGuard(wgSettings):
-            .wireGuard(wgSettings.transport)
+        case let .proTUN(proTUNData):
+            .wireGuard(proTUNData.transport)
         }
+
+        // TODO: ProTUN: make NATType available in dynamic connection data
         self.init(
-            connectedDate: connectedDate,
+            connectedDate: data.connectionDate,
             vpnProtocol: vpnProtocol,
-            natType: intent.features.natType,
-            safeMode: intent.features.safeMode,
-            server: server
+            natType: .moderateNAT, // spec.features.natType,
+            safeMode: false, // spec.features.safeMode,
+            server: data.currentPeer
         )
     }
 }

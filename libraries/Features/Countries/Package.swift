@@ -118,6 +118,7 @@ let package = Package(
                 .target(name: "Countries-iOS", condition: .when(platforms: [.iOS])),
                 .target(name: "Countries-macOS", condition: .when(platforms: [.macOS])),
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
+                .product(name: "DomainTestSupport", package: "Domain"),
 
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),

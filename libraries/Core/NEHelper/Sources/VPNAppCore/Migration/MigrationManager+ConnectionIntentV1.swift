@@ -136,7 +136,7 @@ private extension WireGuardSettings {
     }
 
     init(migrating v1: V1) {
-        self = .init(backend: .go, transport: v1.transport, ports: v1.ports, features: v1.features)
+        self = .init(backend: .go, transport: v1.transport, features: v1.features)
     }
 }
 

@@ -17,14 +17,12 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CasePaths
-import CertificateAuthentication
 import CoreConnection
 import Dependencies
 import Domain
 import Ergonomics
 import ExtensionManager
 import Foundation
-import LocalAgent
 import Localization
 import Strings
 
@@ -33,7 +31,7 @@ public enum ConnectionPreparationError: ProtonVPNError, Equatable {
     /// We found the feature in an unexpected non-disconnected state upon finishing preparation
     case featureNotReady
     case networkUnreachable
-    case protocolSelectionError(ProtocolSelectionError)
+    case intentResolution(IntentResolutionError)
     case wrapped(ConnectionError.WrappedError)
 
     public static let errorDomain = "ConnectionPreparationErrorDomain"
@@ -42,28 +40,26 @@ public enum ConnectionPreparationError: ProtonVPNError, Equatable {
         switch self {
         case .featureNotReady:
             "PRNR" // PReparation Not Ready
+
         case .networkUnreachable:
             "NWUN" // NetWork UNreachable
 
-        case .protocolSelectionError(.cancelled):
-            "PRCC"
+        case .intentResolution(.cancelled):
+            "IRCC"
 
-        case .protocolSelectionError(.portSelectionFailed):
-            "PRPS"
-
-        case .protocolSelectionError(.unexpectedProtocol(.ike)):
+        case .intentResolution(.unexpectedProtocol(.ike)):
             "UXIK"
 
-        case .protocolSelectionError(.unexpectedProtocol(.wireGuard(.udp))):
+        case .intentResolution(.unexpectedProtocol(.wireGuard(.udp))):
             "UXWU"
 
-        case .protocolSelectionError(.unexpectedProtocol(.wireGuard(.tcp))):
+        case .intentResolution(.unexpectedProtocol(.wireGuard(.tcp))):
             "UXWT"
 
-        case .protocolSelectionError(.unexpectedProtocol(.wireGuard(.tls))):
+        case .intentResolution(.unexpectedProtocol(.wireGuard(.tls))):
             "UXWS"
 
-        case let .protocolSelectionError(.serverSelectionFailed(error)):
+        case let .intentResolution(.serverSelectionFailed(error)):
             error.charCode
 
         case .wrapped:
@@ -75,10 +71,8 @@ public enum ConnectionPreparationError: ProtonVPNError, Equatable {
         switch self {
         case .networkUnreachable:
             includeCode(inside: Localizable.networkUnreachable)
-        case let .protocolSelectionError(.unexpectedProtocol(vpnProtocol)):
+        case let .intentResolution(.unexpectedProtocol(vpnProtocol)):
             includeCode(inside: Localizable.connectionErrorUnexpectedProtocol(vpnProtocol.localizedDescription))
-        case .protocolSelectionError(.portSelectionFailed):
-            includeCode(inside: Localizable.connectionErrorTimeout)
         default:
             includeCode(inside: Localizable.connectionErrorPreparation)
         }

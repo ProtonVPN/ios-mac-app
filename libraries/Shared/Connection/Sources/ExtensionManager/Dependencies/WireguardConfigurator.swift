@@ -80,16 +80,12 @@ extension ManagerConfigurator {
             throw WireguardConfiguratorError.incorrectProtocolConfiguration
         }
 
-        guard let entryIP = server.endpoint.entryIp(using: .wireGuard(wgSettings.transport)) else {
-            throw WireguardConfiguratorError.entryUnavailableForTransport(wgSettings.transport)
-        }
         // Required for old wireguard extension:
         protocolConfiguration.connectedLogicalId = server.logical.id
         protocolConfiguration.connectedServerIpId = server.endpoint.id
 
         protocolConfiguration.serverAddress = "" // entryIP. If nil, start fails. Empty string prevents config
         protocolConfiguration.username = nil // Only required for IKEv2.
-        protocolConfiguration.wgProtocol = wgSettings.transport.rawValue
 
         @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
         @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
@@ -99,122 +95,37 @@ extension ManagerConfigurator {
             protocolConfiguration.excludeLocalNetworks = wgSettings.features.excludeLocalNetworks
         #endif
 
-        // Future: remove this flag and the plumbing that goes all the way to CertificateRefreshRequest.withPublicKey
-        // in the NEHelper module and in `parameters` in the CertificateRequest struct in LegacyCommon. (VPNAPPL-2134)
-        // Don't remove this FF until we fix the root cause! (VPNAPPL-2766)
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.certificateRefreshForceRenew, reloadValue: true) {
-            protocolConfiguration.unleashFeatureFlagShouldForceConflictRefresh = true
-        }
-
-        let configData: Data? = try secureConfigurationData(intent: connectionIntent, entryIP: entryIP)
-        if case .proTUN = wgSettings.backend {
-            try encodeProTUNConfiguration(connectionIntent: connectionIntent, on: protocolConfiguration)
-        }
-        guard let configData else {
-            return protocolConfiguration
-        }
-        @Dependency(\.tunnelKeychain) var tunnelKeychain
-        do {
-            #if os(macOS)
-                // `pushConfig` returns `false` on any XPC failure (no remote object, failed
-                // connection, etc.). Surfacing the failure as a `WireguardConfiguratorError`
-                // means callers fail fast with an actionable error instead of producing a
-                // `NETunnelProviderProtocol` with no password reference that silently fails
-                // to start the tunnel.
-                @Dependency(\.wireguardExtensionConfigClient) var extensionConfigClient
-                let succeeded = await extensionConfigClient.pushConfig(configData)
-                guard succeeded else {
-                    throw WireguardConfiguratorError.configurationXPCWriteFailed
-                }
-            #else
-                let passwordReference = try tunnelKeychain.store(wireguardConfigData: configData)
-                protocolConfiguration.passwordReference = passwordReference
-            #endif
-            return protocolConfiguration
-        } catch TunnelKeychainImplementationError.invalidDataFormatRetrievedFromKeychain {
-            throw WireguardConfiguratorError.keychainImplementationError(.invalidDataFormatRetrievedFromKeychain)
-        } catch let error as WireguardConfiguratorError {
-            throw error
-        } catch {
-            throw WireguardConfiguratorError.keychainError(error)
-        }
-    }
-
-    static func secureConfigurationData(intent: ServerConnectionIntent, entryIP: String) throws -> Data? {
-        guard case let .wireGuard(settings) = intent.protocolConfiguration else {
-            // We don't need to store any additional data for IKE
-            return nil
-        }
-        switch settings.backend {
-        case .go:
-            return try secureWGConfigurationData(connectionIntent: intent, entryIP: entryIP)
-        case .proTUN:
-            // We're able to encode the whole configuration into the `NETunnelProviderProtocol` for ProTUN
-            return nil
-        }
-    }
-
-    static func secureWGConfigurationData(
-        connectionIntent: ServerConnectionIntent,
-        entryIP: String
-    ) throws -> Data {
-        @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
-        @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
-        @Dependency(\.date) var date
-
-        guard case let .wireGuard(wgSettings) = connectionIntent.protocolConfiguration else {
-            throw WireguardConfiguratorError.incorrectProtocolConfiguration
-        }
-
-        let encoder = JSONEncoder()
-        let version: StoredWireguardConfig.Version = .v1
-        let storedConfig = StoredWireguardConfig(
-            wireguardConfig: connectionConfigurationProvider.configuration().wireguardConfig,
-            clientPrivateKey: authenticationStorage.getKeys().privateKey.base64X25519Representation,
-            serverPublicKey: connectionIntent.server.endpoint.x25519PublicKey,
-            entryServerAddress: entryIP,
-            ports: wgSettings.ports,
-            timestamp: date.now
-        )
-        var data = Data([UInt8(version.rawValue)])
-        let encodedConfig = try encoder.encode(storedConfig)
-        data.append(encodedConfig)
-        return data
+        try encodeProTUNConfiguration(connectionIntent: connectionIntent, on: protocolConfiguration)
+        return protocolConfiguration
     }
 
     static func encodeProTUNConfiguration(connectionIntent: ServerConnectionIntent, on protocolConfiguration: NETunnelProviderProtocol) throws {
         @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
-        @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
-        @Dependency(\.date) var date
         let wgConfig = connectionConfigurationProvider.configuration().wireguardConfig
 
-        let privateKey = authenticationStorage.getKeys().privateKey.base64X25519Representation
-        // VPNAPPL-3344: accept multiple peers, and provide appropriate ports
+        let peers = try connectionIntent.server.peerInfo(using: wgConfig, protocolConfiguration: connectionIntent.protocolConfiguration)
+        log.debug("Peers: \(peers)")
         let config = ProTUNConfiguration(
             preferredTransport: .udp,
-            peers: [
-                ProTUNConfiguration.Peer(
-                    id: connectionIntent.server.endpoint.id,
-                    serverIP: connectionIntent.server.endpoint.entryIp ?? "",
-                    serverPublicKey: connectionIntent.server.endpoint.x25519PublicKey ?? "",
-                    udpPorts: wgConfig.defaultUdpPorts.map { UInt16($0) },
-                    tcpPorts: wgConfig.defaultTcpPorts.map { UInt16($0) },
-                    tlsPorts: wgConfig.defaultTlsPorts.map { UInt16($0) },
-                    priority: 0
-                ),
-            ],
+            peers: peers,
             dnsServers: wgConfig.dnsServers ?? []
         )
         try ProTUNConfigurationCoder.encode(configuration: config, to: protocolConfiguration)
-        #if DEBUG
-            // Temporary hack for DEBUG: pass the private key via the protocol configuration
-            // This will be removed when ProTUN V2 lands with key management
-            protocolConfiguration.setProviderConfiguration(value: privateKey, forKey: "privateKey")
-        #endif
+
+        let specData = try JSONEncoder().encode(connectionIntent.spec)
+        protocolConfiguration.setProviderConfiguration(value: specData, forKey: "connectionSpec")
     }
 
     static var wireGuardConfigurator: ManagerConfigurator {
         ManagerConfigurator(
+            changes: { intent in
+                // TODO: ProTUN: Implement missing tunnel/agent feature changes
+                @Dependency(\.connectionConfiguration) var configurationProvider
+                let wireguardConfig = configurationProvider.configuration().wireguardConfig
+                let peers = try intent.server.peerInfo(using: wireguardConfig, protocolConfiguration: intent.protocolConfiguration)
+                let locationChange = try ConnectionChange.location(intent.spec, peers)
+                return Set(arrayLiteral: locationChange)
+            },
             configure: { manager, operation in
                 manager.onDemandRules = [NEOnDemandRuleConnect()]
 
@@ -224,7 +135,6 @@ extension ManagerConfigurator {
                     case .ike:
                         manager.protocolConfiguration = try ikeConfiguration(with: connectionIntent)
                     case .wireGuard:
-                        // also persists the configuration to the keychain.
                         let protocolConfig = try await providerConfiguration(with: connectionIntent)
                         manager.vpnProtocolConfiguration = protocolConfig
                     }
@@ -233,7 +143,8 @@ extension ManagerConfigurator {
                     manager.isOnDemandEnabled = true
                     manager.isEnabled = true
 
-                case .disconnection:
+                case .reconfiguration:
+                    // TODO: ProTUN: Distinguish between changes and only apply on-demand when disconnecting
                     manager.isOnDemandEnabled = false
                     manager.isEnabled = true
                 }
@@ -250,9 +161,13 @@ extension ManagerConfigurator {
             case let .wireGuard(wgSettings):
                 switch wgSettings.backend {
                 case .go:
-                    VpnProtocol.wireGuard(wgSettings.transport).localizedDescription
+                    wgSettings.transport.map { VpnProtocol.wireGuard($0).localizedDescription } ?? "Smart"
                 case .proTUN:
-                    "ProTUN"
+                    if let transport = wgSettings.transport {
+                        "ProTUN (\(transport))"
+                    } else {
+                        "ProTUN"
+                    }
                 }
             }
             return "\(serverName) - \(connectionProtocol)"
@@ -451,4 +366,118 @@ private extension NETunnelProviderProtocol {
     var isProTUN: Bool {
         providerBundleIdentifier?.contains("ProTUN") ?? false
     }
+}
+
+extension Server {
+    /// Returns an array of peers with distinct serverIP values.
+    ///
+    /// Usually, this will contain just one peer with ports defined for each transport.
+    /// But, if the IP address of the server has been overridden for any of the transports, the array will include an
+    /// additional peer for each. If the IP is overridden for each transport, there will **not** be a fourth peer with
+    /// the default IP.
+    func peerInfo(
+        using wgConfig: WireguardConfig,
+        protocolConfiguration: ProtocolConfiguration
+    ) throws -> [ProTUNConfiguration.Peer] {
+        try [peerWithDefaultIP(with: wgConfig, protocolConfiguration: protocolConfiguration)].compactMap { $0 }
+            + peersWithOverriddenIPs(with: wgConfig, protocolConfiguration: protocolConfiguration)
+    }
+
+    private func peerWithDefaultIP(
+        with config: WireguardConfig,
+        protocolConfiguration: ProtocolConfiguration
+    ) throws(ManagerConfigurationError) -> ProTUNConfiguration.Peer? {
+        let acceptableTransports = protocolConfiguration.acceptableTransports
+        let perTransportPortOverrides: [Domain.WireGuardTransport: [UInt16]] = acceptableTransports
+            .reduce(into: [:]) { overrides, transport in
+                let usesDefaultIp = endpoint.entryIp(using: .wireGuard(transport)) == endpoint.entryIp
+                guard usesDefaultIp else {
+                    // Skip this transport if it uses a custom IP
+                    return
+                }
+                overrides[transport] = ports(for: transport, with: config)
+            }
+        if perTransportPortOverrides.isEmpty {
+            // No transports use the default IP, so we shouldn't return the default peer
+            return nil
+        }
+        guard let entryIp = endpoint.entryIp else {
+            throw .entryIpMissing
+        }
+        guard let serverPublicKey = endpoint.x25519PublicKey else {
+            throw .emptyServerPublicKey
+        }
+        return ProTUNConfiguration.Peer(
+            id: endpoint.id,
+            serverIP: entryIp,
+            serverPublicKey: serverPublicKey,
+            udpPorts: perTransportPortOverrides[.udp] ?? [],
+            tcpPorts: perTransportPortOverrides[.tcp] ?? [],
+            tlsPorts: perTransportPortOverrides[.tls] ?? [],
+            priority: 0
+        )
+    }
+
+    private func peersWithOverriddenIPs(
+        with config: WireguardConfig,
+        protocolConfiguration: ProtocolConfiguration
+    ) throws -> [ProTUNConfiguration.Peer] {
+        protocolConfiguration.acceptableTransports
+            .compactMap { transport in
+                guard let customIp = endpoint.entryIp(using: .wireGuard(transport)) else {
+                    // Skip this transport if no custom IP is defined
+                    return nil
+                }
+                if customIp == endpoint.entryIp {
+                    // Sanity check
+                    return nil
+                }
+                return ProTUNConfiguration.Peer(
+                    id: endpoint.id,
+                    serverIP: customIp,
+                    serverPublicKey: endpoint.x25519PublicKey ?? "",
+                    udpPorts: transport == .udp ? ports(for: .udp, with: config) : [],
+                    tcpPorts: transport == .tcp ? ports(for: .tcp, with: config) : [],
+                    tlsPorts: transport == .tls ? ports(for: .tls, with: config) : [],
+                    priority: 0
+                )
+            }
+    }
+
+    private func ports(for transport: Domain.WireGuardTransport, with config: WireguardConfig) -> [UInt16] {
+        let ports = endpoint.overridePorts(using: .wireGuard(transport)) ?? config.defaultPorts(for: transport)
+        return ports.map { UInt16($0) }
+    }
+}
+
+extension ProtocolConfiguration {
+    var acceptableTransports: [Domain.WireGuardTransport] {
+        switch self {
+        case .ike:
+            return []
+        case let .wireGuard(config):
+            if let transport = config.transport {
+                return [transport]
+            }
+            return Domain.WireGuardTransport.allCases
+        }
+    }
+}
+
+extension WireguardConfig {
+    func defaultPorts(for transport: Domain.WireGuardTransport) -> [Int] {
+        switch transport {
+        case .udp:
+            defaultUdpPorts
+        case .tcp:
+            defaultTcpPorts
+        case .tls:
+            defaultTlsPorts
+        }
+    }
+}
+
+enum ManagerConfigurationError: Error {
+    case entryIpMissing
+    case emptyServerPublicKey
 }

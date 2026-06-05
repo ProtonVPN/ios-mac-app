@@ -35,7 +35,7 @@ public extension IPCNotifications {
     ///   caller, then releases the seqlock and posts a Darwin notification.
     /// - ``read()`` takes a consistent snapshot of the payload via the seqlock read
     ///   protocol, retrying on write contention.
-    final class RawChannel<Payload: BitwiseCopyable> {
+    final class RawChannel<Payload: BitwiseCopyable>: Sendable {
         public let notification: Notification
         let payloadOffset: Int
         private let buffer: MmapBuffer
@@ -93,13 +93,12 @@ public extension IPCNotifications.RawChannel {
 
 // MARK: - Read
 
-/// Reads a consistent snapshot.
-/// - Parameter retries: the amount of retries if seqlock doesn't match.
-/// - Returns: An optional `Payload` value, or `nil` if write contention prevented a clean read.
-
 public extension IPCNotifications.RawChannel {
     struct SeqlockContention: Swift.Error {}
 
+    /// Reads a consistent snapshot.
+    /// - Parameter retries: the amount of retries if seqlock doesn't match.
+    /// - Returns: A `Payload` value, or throws if it wasn't able to extract a value from the buffer.
     func read(retries: Int = 20) throws -> Payload {
         let offset = payloadOffset
         return try buffer.withUnsafeMutableBytes { base in

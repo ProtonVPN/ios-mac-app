@@ -16,101 +16,71 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if os(iOS) && DEBUG
-    import AsyncAlgorithms
-    import Ergonomics
-    import os.log
+import Ergonomics
+import os.log
 
-    final class ProTUNAdapterStateDelegate: Sendable {
-        enum StateSource {
-            typealias StreamFactory = @Sendable () -> AsyncStream<State>
+final class ProTUNAdapterStateDelegate: Sendable {
+    private enum StateDelegateError: Error {
+        case streamTerminated
+    }
 
-            case sharedStream(SharedAsyncStream<State>) // our own backported SharedStream
-            case asyncAlgorithms(StreamFactory) // the one from Apple swift-async-algorithms package
-        }
+    let stateSource: StreamSource<VpnState>
 
-        private enum StateDelegateError: Error {
-            case streamTerminated
-        }
-
-        let stateSource: StateSource
-
-        var state: State {
-            get async throws {
-                if let state = await coordinator.state {
-                    return state
-                }
-                for await state in stateSource.newStream {
-                    return state
-                }
-                throw StateDelegateError.streamTerminated
+    var state: VpnState {
+        get async throws {
+            if let state = await coordinator.state {
+                return state
             }
-        }
-
-        private let coordinator: StateCoordinator
-        private let continuation: AsyncStream<State>.Continuation
-
-        private let task: Task<Void, Never>
-
-        init() {
-            let (stream, continuation) = AsyncStream<State>.makeStream()
-            self.continuation = continuation
-            self.coordinator = StateCoordinator()
-
-            if #available(iOS 18.0, *) {
-                let shared = stream.share()
-                self.stateSource = .asyncAlgorithms { shared.eraseToStream() }
-                self.task = Task { [unowned coordinator, stateSource] in
-                    await coordinator.startListening(to: stateSource)
-                }
-            } else {
-                self.stateSource = .sharedStream(stream.sharedStream)
-                self.task = Task { [unowned coordinator, stateSource] in
-                    await coordinator.startListening(to: stateSource)
-                }
+            for await state in stateSource.newStream {
+                return state
             }
-        }
-
-        deinit {
-            task.cancel()
+            throw StateDelegateError.streamTerminated
         }
     }
 
-    extension ProTUNAdapterStateDelegate: StateChangedCallback {
-        func onStateChanged(state: State) {
-            continuation.yield(state)
+    private let coordinator: StateCoordinator
+    private let continuation: AsyncStream<VpnState>.Continuation
+
+    private let task: Task<Void, Never>
+
+    init() {
+        let (stream, continuation) = AsyncStream<VpnState>.makeStream()
+        self.continuation = continuation
+        self.stateSource = StreamSource.source(for: stream)
+        self.coordinator = StateCoordinator()
+        self.task = Task { [unowned coordinator, stateSource] in
+            await coordinator.startListening(to: stateSource)
         }
     }
 
-    extension ProTUNAdapterStateDelegate {
-        private actor StateCoordinator {
-            enum Error: Swift.Error {
-                case listeningFailed
-            }
+    deinit {
+        task.cancel()
+    }
+}
 
-            private(set) var state: State? {
-                didSet {
-                    let stateDescription = state?.description ?? "nil"
-                    Logger.adapter.info("Internal ProTUN state changed: \(stateDescription, privacy: .public)")
-                }
-            }
+extension ProTUNAdapterStateDelegate: StateChangedCallback {
+    func onStateChanged(state: VpnState) {
+        continuation.yield(state)
+    }
+}
 
-            func startListening(to stateSource: StateSource) async {
-                for await newState in stateSource.newStream {
-                    state = newState
-                }
+extension ProTUNAdapterStateDelegate {
+    private actor StateCoordinator {
+        enum Error: Swift.Error {
+            case listeningFailed
+        }
+
+        private(set) var state: VpnState? {
+            didSet {
+                let stateDescription = state?.description ?? "nil"
+                Logger.adapter.info("Internal ProTUN state changed: \(stateDescription, privacy: .public)")
+            }
+        }
+
+        func startListening(to stateSource: StreamSource<VpnState>) async {
+            for await newState in stateSource.newStream {
+                state = newState
             }
         }
     }
-
-    extension ProTUNAdapterStateDelegate.StateSource {
-        var newStream: AsyncStream<State> {
-            switch self {
-            case let .sharedStream(sharedStream):
-                sharedStream.subscribe()
-            case let .asyncAlgorithms(factory):
-                factory()
-            }
-        }
-    }
-#endif
+}

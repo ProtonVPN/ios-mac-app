@@ -39,7 +39,7 @@ struct MainFeature {
         var homeLoading = HomeLoadingFeature.State.loading
         var settings = SettingsFeature.State()
 
-        @Shared(.connectionState) var connectionState: ConnectionState = .resolving(nil, nil)
+        @Shared(.connectionState) var connectionState: ConnectionState = .resolving
         @Shared(.userLocation) var userLocation: UserLocation?
         @Shared(.mainBackground) var mainBackground: MainBackground = .clear
     }
@@ -195,11 +195,11 @@ struct MainFeature {
 
     private func activeLocation(from connectionState: ConnectionState) -> ConnectionSpec.Location? {
         switch connectionState {
-        case let .connected(intent, _, _, _):
-            intent.spec.location
+        case let .connected(tunnelConfig, _):
+            tunnelConfig.connectionSpec.location
         case let .connecting(.unresolved(intent)):
             intent.spec.location
-        case let .connecting(.resolved(intent, _)):
+        case let .connecting(.resolved(intent)):
             intent.spec.location
         case .disconnected, .disconnecting, .resolving:
             nil

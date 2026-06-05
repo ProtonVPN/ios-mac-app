@@ -56,8 +56,8 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
         $connectionState
             .publisher
             .compactMap { state -> Server? in
-                guard case let .connected(_, server, _, _) = state else { return nil }
-                return server
+                guard case let .connected(_, data) = state else { return nil }
+                return data.currentPeer
             }
             .removeDuplicates()
             .receive(on: DispatchQueue.main)

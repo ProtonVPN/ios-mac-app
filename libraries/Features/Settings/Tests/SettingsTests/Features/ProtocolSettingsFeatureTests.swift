@@ -69,7 +69,7 @@ struct ProtocolSettingsTests {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
-                connectionState: .resolving(nil, nil),
+                connectionState: .resolving,
                 reconnectionAlert: nil
             )
         ) {
@@ -90,7 +90,7 @@ struct ProtocolSettingsTests {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
-                connectionState: .resolving(nil, nil),
+                connectionState: .resolving,
                 reconnectionAlert: SettingsAlert.reconnectionAlertState(for: .vpnProtocol(.ike))
             )
         ) {

@@ -21,6 +21,7 @@
     @testable import Domain
     import Foundation
     import Testing
+    import VPNCoreTypes
 
     @Suite("IPCCoder")
     struct IPCCoderTests {
@@ -38,7 +39,7 @@
 
         @Test("Request getCurrentPeerID Encoding/Decoding assertions")
         func getCurrentPeerIDRequestRoundTrip() throws {
-            let original = ProTUNMessage.Request(payload: .getCurrentPeerID)
+            let original = ProTUNMessage.Request(payload: .getCurrentPeer)
             let data = try live.requestData(for: original)
             let decoded = try live.request(from: data)
 
@@ -58,14 +59,15 @@
 
         @Test("Response getCurrentPeerID Encoding/Decoding assertions for various cases")
         func currentPeerIDCasesRoundTrip() throws {
-            let success = ProTUNMessage.Response(payload: .currentPeerID(.success("proton-peer-abc123")))
+            let currentPeer = CurrentPeer(peerID: "proton-peer-abc123", transport: .udp, serverExitV4: nil, userISP: nil, userIP: nil)
+            let success = ProTUNMessage.Response(payload: .currentPeer(.success(currentPeer)))
             let successData = try live.responseData(for: success)
             let successDecoded = try live.handleResponse(from: successData)
 
             #expect(successDecoded.version == success.version)
             #expect(successDecoded.payload == success.payload)
 
-            let failure = ProTUNMessage.Response(payload: .currentPeerID(.failure(.init(failureReason: "State not connected"))))
+            let failure = ProTUNMessage.Response(payload: .currentPeer(.failure(.init(failureReason: "State not connected"))))
             let failureData = try live.responseData(for: failure)
             let failureDecoded = try live.handleResponse(from: failureData)
 
@@ -120,14 +122,15 @@
             let requestBytes = try live.requestData(for: .init(payload: .ping))
             #expect(!requestBytes.isEmpty)
 
-            let getCurrentPeerIDBytes = try live.requestData(for: .init(payload: .getCurrentPeerID))
-            #expect(!getCurrentPeerIDBytes.isEmpty)
+            let getCurrentPeerBytes = try live.requestData(for: .init(payload: .getCurrentPeer))
+            #expect(!getCurrentPeerBytes.isEmpty)
 
             let pongBytes = try live.responseData(for: .init(payload: .pong))
             #expect(!pongBytes.isEmpty)
 
-            let currentPeerIDBytes = try live.responseData(for: .init(payload: .currentPeerID(.success("Proton"))))
-            #expect(!currentPeerIDBytes.isEmpty)
+            let currentPeer = CurrentPeer(peerID: "proton-peer-abc123", transport: .udp, serverExitV4: nil, userISP: nil, userIP: nil)
+            let currentPeerBytes = try live.responseData(for: .init(payload: .currentPeer(.success(currentPeer))))
+            #expect(!currentPeerBytes.isEmpty)
 
             let errorBytes = try live.responseData(for: .init(payload: .error(.other(reason: "oops"))))
             #expect(!errorBytes.isEmpty)
