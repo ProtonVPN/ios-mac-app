@@ -38,7 +38,7 @@ IPC_ENUM(int8_t, IPCLANetshieldLevel) {
     IPCLANetshieldLevelOff                          = 1,
     IPCLANetshieldLevelMalware                      = 2,
     IPCLANetshieldLevelAdsAndMalware                = 3,
-    IPCLANetshieldLevelAdsAndMalwareAndAdultContent = 4,
+    IPCLANetshieldLevelAdultContentAndAdsAndMalware = 4,
 };
 
 IPC_ENUM(int8_t, IPCLASettingsToggle) {

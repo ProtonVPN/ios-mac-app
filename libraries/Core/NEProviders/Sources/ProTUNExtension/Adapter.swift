@@ -121,6 +121,7 @@ final class ProTUNAdapter: @unchecked Sendable {
 
         startLocalAgentRunLoop(with: localAgentSettings)
 
+        // TODO: ProTUN: rework this so we're TOCTOU resilient
         let proTunInitialConfig = try networkPath.withLock { networkPath in
             let isNetworkAvailable = networkPath.status == .satisfied
             return try config.initialConnectionConfig(

@@ -77,7 +77,7 @@ private extension NetShieldType {
         case .off: .off
         case .level1: .malware
         case .level2: .adsAndMalware
-        case .level3: .adsAndMalwareAndAdultContent
+        case .level3: .adultContentAndAdsAndMalware
         }
     }
 }
