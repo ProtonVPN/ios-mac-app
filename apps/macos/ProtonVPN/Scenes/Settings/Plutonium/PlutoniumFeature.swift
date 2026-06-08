@@ -149,7 +149,7 @@ public struct PlutoniumFeature {
                     let outcome = await systemExtensionsCoordinator.installOrUpdate(
                         origin: .plutonium,
                         shouldStartTour: true,
-                        includedTypes: [.wireGuard, .plutonium]
+                        includedTypes: [.proTUN, .plutonium]
                     )
                     await send(.extensionInstallationCompleted(outcome.accumulated))
                 }

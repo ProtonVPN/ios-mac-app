@@ -70,7 +70,7 @@ class HelpMenuViewModel {
 
     func openWGVpnLogsFolderAction() {
         // Save log to file
-        logContentProvider.getLogData(for: .wireguard).loadContent { logContent in
+        logContentProvider.getLogData(for: .protun).loadContent { logContent in
             self.logFileManager.dump(logs: logContent, toFile: AppConstants.Filenames.wireGuardLogFilename)
             self.navService.openLogsFolder(filename: AppConstants.Filenames.wireGuardLogFilename)
         }

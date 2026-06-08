@@ -271,7 +271,7 @@ final class LoginViewModel: ObservableObject {
     /// - Parameter shouldDefaultToSmartIfPossible: If system extensions are approved, sets default protocol to smart.
     /// - Parameter shouldStartTour: Controls whether the sysex tour is shown, if approval is required.
     private func checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: Bool, shouldStartTour: Bool) {
-        let includedExtensionTypes: [SystemExtensionType] = propertiesManager.isSubsequentLaunch ? [.wireGuard] : [.wireGuard, .plutonium]
+        let includedExtensionTypes: [SystemExtensionType] = propertiesManager.isSubsequentLaunch ? [.proTUN] : [.proTUN, .plutonium]
         Task { @MainActor [weak self] in
             guard let self else { return }
             let outcome = await systemExtensionsCoordinator.installOrUpdate(

@@ -359,7 +359,7 @@ final class ConnectionSettingsViewModel {
             let outcome = await systemExtensionsCoordinator.installOrUpdate(
                 origin: .connectionSettings,
                 shouldStartTour: true,
-                includedTypes: [.wireGuard]
+                includedTypes: [.proTUN]
             )
             let result = outcome.accumulated
             sysexPending = false
@@ -418,7 +418,7 @@ final class ConnectionSettingsViewModel {
             let outcome = await systemExtensionsCoordinator.checkAndInstallOrUpdate(
                 origin: .connectionSettings,
                 shouldStartTour: false,
-                includedTypes: [.wireGuard]
+                includedTypes: [.proTUN]
             )
             let result = outcome.accumulated
             sysexPending = false

@@ -499,7 +499,7 @@ struct AppSessionManagerImplementationTests {
     private func setConnectedStatus() {
         let server = Server.mock()
         let wireGuardSettings = WireGuardSettings(
-            backend: .go,
+            backend: .proTUN,
             transport: .udp,
             features: TunnelFeatures(killSwitch: false, excludeLocalNetworks: false)
         )

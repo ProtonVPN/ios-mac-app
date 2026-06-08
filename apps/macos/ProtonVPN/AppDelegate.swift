@@ -272,7 +272,7 @@ extension AppDelegate: NSApplicationDelegate {
         }
 
         // For new installations, we also ask for plutonium extension installation.
-        let includedExtensionTypes: [SystemExtensionType] = propertiesManager.isSubsequentLaunch ? [.wireGuard] : [.wireGuard, .plutonium]
+        let includedExtensionTypes: [SystemExtensionType] = propertiesManager.isSubsequentLaunch ? [.proTUN] : [.proTUN, .plutonium]
 
         Task { [weak self] in
             guard let self else { return }
@@ -282,13 +282,13 @@ extension AppDelegate: NSApplicationDelegate {
                 includedTypes: includedExtensionTypes
             )
             let individualResults = outcome.individualResults
-            // Check WireGuard installation for protocol fallback logic
-            if let wireGuardResult = individualResults[.wireGuard] {
-                switch wireGuardResult {
+            // Check ProTUN installation for protocol fallback logic
+            if let proTUNResult = individualResults[.proTUN] {
+                switch proTUNResult {
                 case let .success(success):
                     switch success {
                     case .installed, .upgraded:
-                        // Switch away from ike to smart protocol if wireGuard succeeded.
+                        // Switch away from ike to smart protocol if ProTUN succeeded.
                         if propertiesManager.connectionProtocol == .vpnProtocol(.ike) {
                             propertiesManager.connectionProtocol = .smartProtocol
                         }
@@ -297,10 +297,10 @@ extension AppDelegate: NSApplicationDelegate {
                     }
                 case .failure:
                     // Either we lost sysex approval, or are upgrading from an earlier version which didn't have this check
-                    log.warning("\(propertiesManager.connectionProtocol) requires sysex (WireGuard not installed), reverting to IKEv2", category: .sysex)
+                    log.warning("\(propertiesManager.connectionProtocol) requires sysex (ProTUN not installed), reverting to IKEv2", category: .sysex)
                     propertiesManager.connectionProtocol = .vpnProtocol(.ike)
                     @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
-                    log.debug("Disabling Plutonium feature because the WireGuard extension is not installed.")
+                    log.debug("Disabling Plutonium feature because the ProTUN extension is not installed.")
                     $feature.withLock {
                         $0.disable()
                     }

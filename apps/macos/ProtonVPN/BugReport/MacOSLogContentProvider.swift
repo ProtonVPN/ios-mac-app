@@ -41,10 +41,6 @@ extension LogContentProvider {
             case .osLog:
                 return OSLogContent()
 
-            case .wireguard:
-                @Dependency(\.wireguardMacLogProvider) var wireguardMacLogProvider
-                return NELogContent(neLogProvider: wireguardMacLogProvider)
-
             case .plutonium:
                 @Dependency(\.plutoniumMacLogProvider) var plutoniumMacLogProvider
                 return NELogContent(neLogProvider: plutoniumMacLogProvider)

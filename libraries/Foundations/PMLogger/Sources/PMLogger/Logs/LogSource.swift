@@ -28,6 +28,8 @@ public enum LogSource: CaseIterable {
     // osLog source is used only for bug reports
     #if os(iOS)
         public static let visibleAppSources: [LogSource] = [.app, .wireguard, .protun, .transactionLog]
+    #elseif os(macOS)
+        public static let visibleAppSources: [LogSource] = [.app, .protun]
     #else
         public static let visibleAppSources: [LogSource] = [.app, .wireguard]
     #endif

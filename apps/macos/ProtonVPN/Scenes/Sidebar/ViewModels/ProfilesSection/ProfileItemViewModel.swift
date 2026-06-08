@@ -96,7 +96,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
             let outcome = await systemExtensionsCoordinator.installOrUpdate(
                 origin: .profileConnection,
                 shouldStartTour: true,
-                includedTypes: [.wireGuard]
+                includedTypes: [.proTUN]
             )
             let result = outcome.accumulated
             switch result {

@@ -42,9 +42,9 @@ public enum TunnelProtocol: Equatable, Hashable, Sendable {
 
     package static var availableProtocols: [Self] {
         #if os(macOS)
-            [.ike, .wireGuard(.go), .wireGuard(.proTUN)]
+            [.ike, .wireGuard(.proTUN)]
         #else
-            [.wireGuard(.go), .wireGuard(.proTUN)]
+            [.wireGuard(.proTUN)]
         #endif
     }
 }

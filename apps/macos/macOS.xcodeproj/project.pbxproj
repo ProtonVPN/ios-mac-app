@@ -24,7 +24,6 @@
 
 /* Begin PBXBuildFile section */
 		00812A4F085892E5DCCEE741 /* SysexGuideWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */; };
-		09A7611B37870D3AFF300CF6 /* WireguardMacLogProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9284811B4C31B0BCAC0918BC /* WireguardMacLogProvider.swift */; };
 		119C351666130ADA97AB491F /* SubuserAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C9A83FB783483559C8FE68 /* SubuserAlertWindowController.swift */; };
 		3328A24484BCAA8F674140DC /* XPCConnectionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */; };
 		42082651256BB78600A621EC /* NSView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082650256BB78600A621EC /* NSView+Children.swift */; };
@@ -561,7 +560,6 @@
 		77951E372C6357E000B6E381 /* AutoConnectOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoConnectOptions.swift; sourceTree = "<group>"; };
 		77B1B6142CB5AC8F002D76B0 /* MacOSMainMeasurementsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacOSMainMeasurementsTests.swift; sourceTree = "<group>"; };
 		77B1B6192CB5ACE7002D76B0 /* ProtonVPN-macOS-SLI-All.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ProtonVPN-macOS-SLI-All.xctestplan"; sourceTree = "<group>"; };
-		9284811B4C31B0BCAC0918BC /* WireguardMacLogProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireguardMacLogProvider.swift; sourceTree = "<group>"; };
 		9FDB93D66CF4A7DB23EE7AA8 /* AnnouncementFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementFeatureView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Announcement/Views/AnnouncementFeatureView.swift; sourceTree = "<group>"; };
 		A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SysexGuideWindowController.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Windows/SysexGuideWindowController.swift; sourceTree = "<group>"; };
 		A44463CB2ECF178E0008288D /* ProtonVPN_ike_root.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = ProtonVPN_ike_root.der; path = ../../libraries/Core/LegacyCommon/Sources/LegacyCommon/Resources/ProtonVPN_ike_root.der; sourceTree = SOURCE_ROOT; };
@@ -1525,7 +1523,6 @@
 			isa = PBXGroup;
 			children = (
 				EB4E2CA42E535C31003EA83C /* PlutoniumMacLogProvider.swift */,
-				9284811B4C31B0BCAC0918BC /* WireguardMacLogProvider.swift */,
 			);
 			path = VPN;
 			sourceTree = "<group>";
@@ -3258,7 +3255,6 @@
 				EEA556341F1F48F20061F43F /* ColorPickerItemView.swift in Sources */,
 				E187022220E27801000521AC /* StatusMenuProfilesListViewModel.swift in Sources */,
 				3328A24484BCAA8F674140DC /* XPCConnectionsRepository.swift in Sources */,
-				09A7611B37870D3AFF300CF6 /* WireguardMacLogProvider.swift in Sources */,
 				00812A4F085892E5DCCEE741 /* SysexGuideWindowController.swift in Sources */,
 				A4DB98732FBDC46E00186A29 /* ConnectingOverlayFeature.swift in Sources */,
 				E5085BCE2DC22F0B00C22ABC /* PlutoniumWindowController.swift in Sources */,

@@ -156,7 +156,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             let outcome = await systemExtensionsCoordinator.installOrUpdate(
                 origin: .protocolSwitch,
                 shouldStartTour: true,
-                includedTypes: [.wireGuard]
+                includedTypes: [.proTUN]
             )
             let result = outcome.accumulated
             switch result {

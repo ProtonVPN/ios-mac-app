@@ -158,7 +158,7 @@ public extension VpnProtocol { // Authentication
     }
 }
 
-extension VpnProtocol: @retroactive DefaultableProperty {
+extension VpnProtocol: DefaultableProperty {
     public init() {
         self = .defaultValue
     }
