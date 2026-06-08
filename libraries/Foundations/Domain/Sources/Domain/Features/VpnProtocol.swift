@@ -16,6 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Ergonomics
+
 public enum WireGuardTransport: String, Codable, Equatable, CaseIterable, Sendable {
     case udp
     case tcp
@@ -139,5 +141,25 @@ public extension VpnProtocol {
         default:
             return nil
         }
+    }
+}
+
+public extension VpnProtocol { // Authentication
+    enum AuthenticationType {
+        case credentials
+        case certificate
+    }
+
+    var authenticationType: AuthenticationType {
+        switch self {
+        case .ike: .credentials
+        case .wireGuard: .certificate
+        }
+    }
+}
+
+extension VpnProtocol: @retroactive DefaultableProperty {
+    public init() {
+        self = .defaultValue
     }
 }

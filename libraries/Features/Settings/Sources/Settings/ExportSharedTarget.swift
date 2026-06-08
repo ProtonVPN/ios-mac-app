@@ -19,6 +19,7 @@
 import SettingsShared
 
 public typealias FeatureChangeAvailability = SettingsShared.FeatureChangeAvailability
+public typealias VpnFeatureChangeState = SettingsShared.VpnFeatureChangeState
 public typealias ProtocolChangeAvailability = SettingsShared.ProtocolChangeAvailability
 public typealias SettingsClient = SettingsShared.SettingsClient
 

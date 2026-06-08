@@ -26,6 +26,7 @@ import Localization
 import Modals
 import NetShield
 import PaymentsShared
+import Settings
 import Strings
 import SwiftUI
 import Theme

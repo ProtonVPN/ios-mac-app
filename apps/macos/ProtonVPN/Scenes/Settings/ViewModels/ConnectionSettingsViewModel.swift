@@ -26,6 +26,7 @@ import Connection
 import Dependencies
 import Domain
 import LegacyCommon
+import Settings
 import Sharing
 import Strings
 import Theme

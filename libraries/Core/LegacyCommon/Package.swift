@@ -53,8 +53,6 @@ let package = Package(
         .package(path: "../../Shared/Persistence"),
         .package(path: "../../Shared/Telemetry"),
 
-        .package(path: "../../Features/Settings"),
-
         // External dependencies
 
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.9.0")),
@@ -86,8 +84,6 @@ let package = Package(
                 "CommonNetworking",
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
-
-                "Settings",
 
                 // TODO: move these to LegacyCommonTestSupport, if we ever can
                 .product(name: "CommonNetworkingTestSupport", package: "CommonNetworking"),

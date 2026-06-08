@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Connection
 import Dependencies
 import DependenciesMacros
 import Domain
@@ -72,4 +73,20 @@ public enum ProtocolChangeAvailability: Sendable, Equatable {
     case immediate
     case withReconnect
     case protocolUnavailable // currently connected server doesn't support the new protocol
+}
+
+public typealias VpnFeatureChangeState = FeatureChangeAvailability
+
+public extension VpnFeatureChangeState {
+    init(connectionState: ConnectionState) {
+        let vpnProtocol = connectionState.resolvedVpnProtocol
+
+        if connectionState.isConnected, vpnProtocol?.authenticationType == .certificate {
+            self = .withConnectionUpdate
+        } else if connectionState.isConnectedOrConnecting {
+            self = .withReconnect
+        } else {
+            self = .immediate
+        }
+    }
 }

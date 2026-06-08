@@ -21,6 +21,7 @@ import Dependencies
 import Domain
 import Hermes
 import LegacyCommon
+import Settings
 import Sharing
 import Strings
 import SwiftUI
