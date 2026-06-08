@@ -116,7 +116,7 @@ extension BundleIDClient: DependencyKey {
                 return .wireGuard(.proTUN)
 
             case BundleID.wireGuardMac:
-                return .wireGuard(.go)
+                return .wireGuard(.proTUN)
 
             case BundleID.wireGuardtvOS:
                 return .wireGuard(.go)

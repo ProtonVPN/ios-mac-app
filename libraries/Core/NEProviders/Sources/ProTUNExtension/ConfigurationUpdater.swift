@@ -30,7 +30,7 @@ enum ConfigurationUpdater {
                 let managers = try await NETunnelProviderManager.loadAllFromPreferences()
                 manager = managers.first {
                     ($0.protocolConfiguration as? NETunnelProviderProtocol)?
-                        .providerBundleIdentifier == "ch.protonmail.vpn.ProTUN-Extension-Mobile"
+                        .providerBundleIdentifier == Bundle.main.bundleIdentifier
                 }
             } catch {
                 Logger.adapter.error("Failed to find ProTUN manager: \(error, privacy: .public)")
