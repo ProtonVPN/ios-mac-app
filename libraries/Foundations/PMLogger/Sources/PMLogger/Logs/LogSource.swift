@@ -35,9 +35,7 @@ public enum LogSource: CaseIterable {
         case .app: Localizable.applicationLogs
         case .wireguard: Localizable.wireguardLogs
         case .protun: Localizable.protunLogs
-        #if DEBUG
-            case .protunArchive: Localizable.protunLogs + " Archive (Experimental)"
-        #endif
+        case .protunArchive: Localizable.protunLogs + " Archive (Experimental)"
         #if os(iOS)
             case .transactionLog: Localizable.transactionLog
         #endif

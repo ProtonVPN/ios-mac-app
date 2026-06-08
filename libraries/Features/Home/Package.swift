@@ -82,7 +82,6 @@ let package = Package(
                 .product(name: "Payments", package: "Payments", condition: .when(platforms: [.iOS])),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
-                .product(name: "LocalAgent", package: "Connection"),
                 .product(name: "CoreConnection", package: "Connection"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
