@@ -42,11 +42,6 @@ extension LogContentProvider {
             case .osLog:
                 return OSLogContent()
 
-            case .wireguard:
-                let appGroup: String = DomainConstants.AppGroups.main
-                @Dependency(\.wireguardIOSLogProvider) var wireguardIOSLogProvider
-                return wireguardIOSLogProvider.logContentForAppGroup(appGroup)
-
             #if DEBUG
                 case .protunArchive:
                     fallthrough

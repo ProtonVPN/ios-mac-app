@@ -49,7 +49,8 @@ extension LogContentProvider {
                 case .protunArchive:
                     fallthrough
             #endif
-            case .wireguard, .protun:
+
+            case .protun:
                 @Dependency(\.protunLogProvider) var protunLogProvider
                 return protunLogProvider.logContentForAppGroup()
             }

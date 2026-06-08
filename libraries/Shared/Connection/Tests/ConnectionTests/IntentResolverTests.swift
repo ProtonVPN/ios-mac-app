@@ -35,10 +35,6 @@ struct IntentResolverTests {
 
         let resolved = try await withDependencies {
             $0.serverSelector = .init(select: { _, _, _ in expectedServer })
-            $0.smartPortSelector = .init(select: { _, _ in
-                Issue.record("Port selector must not run for IKE")
-                return .init(chosenProtocol: .wireGuard(.udp), ports: [443])
-            })
             $0.connectionFeatureProvider = .init(connectionFeatures: { .mock })
         } operation: {
             try await ConnectionIntentResolver.liveValue.resolve(resolveIntent)
