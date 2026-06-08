@@ -1,6 +1,7 @@
 --disable wrapMultilineStatementBraces
 --disable docComments
 --disable redundantSendable
+--disable redundantBackticks
 
 --enable isEmpty
 

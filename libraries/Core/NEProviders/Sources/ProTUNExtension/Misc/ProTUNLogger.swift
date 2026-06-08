@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import OSLog
+import protun
 
 final class ProTUNLogger: ClientLogger {
     func log(level: LogLevel, message: String) {
@@ -31,6 +32,8 @@ final class ProTUNLogger: ClientLogger {
             Logger.library.warning("\(message, privacy: .public)")
         case .error:
             Logger.library.error("\(message, privacy: .public)")
+        @unknown default:
+            Logger.library.info("\(message, privacy: .public)")
         }
     }
 }

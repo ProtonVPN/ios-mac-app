@@ -20,6 +20,7 @@ import Dependencies
 import Domain
 import NetworkExtension
 import os.log
+import protun
 import VPNCoreCommon
 
 enum ConfigurationUpdater {

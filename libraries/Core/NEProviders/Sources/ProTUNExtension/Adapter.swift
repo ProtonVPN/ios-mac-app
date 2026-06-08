@@ -28,6 +28,7 @@ import NEHelper
 import NetworkExtension
 import NetworkingErgonomics
 import os.log
+import protun
 import SharedErgonomics
 import VPNCoreTypes
 
@@ -303,7 +304,7 @@ extension ProTUNConfiguration {
     }
 }
 
-extension VpnState: CustomStringConvertible {
+extension VpnState {
     // For now (until we have a better solution), we consider `.connectingToLocalAgent` to be enough
     // to complete the `startTunnel` lifecycle method of the Packet Tunnel Provider.
     // We need this because otherwise network calls made by the app (such as the fork selector call)
@@ -314,19 +315,6 @@ extension VpnState: CustomStringConvertible {
             true
         default:
             false
-        }
-    }
-
-    public var description: String {
-        switch connectionState {
-        case let .disconnected(reason):
-            ".disconnected(\(reason.stringForLog))"
-        case let .connecting(peers, waitReasons):
-            ".connecting(\(peers), \(waitReasons))"
-        case let .connectingToLocalAgent(peers, waitReason):
-            ".connectingToLocalAgent(\(peers), \(waitReason.stringForLog))"
-        case let .connected(peers, agentInfo):
-            ".connected(\(peers), \(agentInfo.stringForLog))"
         }
     }
 }

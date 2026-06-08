@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import os.log
+import protun
 
 final class ProTUNAdapterEventDelegate: Sendable {
     let eventSource: StreamSource<Event>
@@ -36,45 +37,5 @@ extension ProTUNAdapterEventDelegate: EventCallback {
     func onEvent(event: Event) {
         Logger.adapter.info("Received internal event: \(event, privacy: .public)")
         continuation.yield(event)
-    }
-}
-
-extension Event: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case let .connectionStats(_, rx, tx, idle, el, rtt):
-            "connectionStats(rx:\(rx), tx:\(tx), idle:\(idle), eloss:\(el), rtt:\(rtt))"
-        case let .packetCaptureStarted(info: info):
-            String(describing: info)
-        case let .packetCaptureStopped(reason: reason):
-            String(describing: reason)
-        case let .localAgentStats(rx, tx, malwb, adsb, trckb, adcob, ds):
-            """
-            localAgentStats(
-                rx:\(rx, default: "0"),
-                tx:\(tx, default: "0"),
-                malwb:\(malwb, default: "0"),
-                adsb:\(adsb, default: "0"),
-                trckb:\(trckb, default: "0"),
-                adcob:\(adcob, default: "0"),
-                ds:\(ds, default: "0")
-            )
-            """
-        case let .error(error: error):
-            error.debugDescription
-        }
-    }
-}
-
-extension ErrorEvent: CustomDebugStringConvertible {
-    public var debugDescription: String {
-        switch self {
-        case .apiSessionExpired:
-            "apiSessionExpired"
-        case let .localAgentSettingPolicyRefused(setting):
-            "localAgentSettingPolicyRefused\(setting)"
-        case .certificateRefreshFatalError:
-            "certificateRefreshFatalError"
-        }
     }
 }

@@ -5,10 +5,17 @@ import PackageDescription
 
 enum ProTUNFFITargetKind {
     // TODO: ProTUN: support uploads to S3 for public release
-    static let current: Self = .remote(
-        url: "https://nexus.protontech.ch/repository/vpn-protun/apple-protun-merged-debug/protunFFI-debug.xcframework.zip",
-        checksum: "615d615efd39e05b92786c301d15b422a5580a9b57955e5a2cd8f76f9a6f9d16"
-    )
+    #if false
+        static let current: Self = .remote(
+            url: "https://nexus.protontech.ch/repository/vpn-protun/master/protun-debug.xcframework.zip",
+            checksum: "dd73fc3df940a5d1b48fb6438d03799e0f2fac732a0a8a4668b664396778f464"
+        )
+    #else
+        static let current: Self = .remote(
+            url: "https://nexus.protontech.ch/repository/vpn-protun/master/protun-release.xcframework.zip",
+            checksum: "3f3dc97d4d4b0c8ca4de10b2e251fbaa5e4e88b81b5f4f9aba6a01b177ccded5"
+        )
+    #endif
 
     case local
     case remote(url: String, checksum: String)
@@ -16,9 +23,9 @@ enum ProTUNFFITargetKind {
     var target: PackageDescription.Target {
         switch self {
         case .local:
-            .binaryTarget(name: "protunFFI", path: "Frameworks/protunFFI.xcframework")
+            .binaryTarget(name: "protun", path: "Frameworks/protun.xcframework")
         case let .remote(url, checksum):
-            .binaryTarget(name: "protunFFI", url: url, checksum: checksum)
+            .binaryTarget(name: "protun", url: url, checksum: checksum)
         }
     }
 }
@@ -84,7 +91,7 @@ let package = Package(
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "NetworkingErgonomics", package: "Ergonomics"),
-                .target(name: "protunFFI", condition: .when(platforms: [.iOS, .macOS])),
+                .target(name: "protun", condition: .when(platforms: [.iOS, .macOS])),
             ],
             plugins: protunExtensionPlugins
         ),

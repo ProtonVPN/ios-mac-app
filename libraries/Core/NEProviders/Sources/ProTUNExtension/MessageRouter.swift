@@ -21,6 +21,7 @@ import Domain
 import Foundation
 import NetworkExtension // for updating the provider configuration
 import OSLog
+import protun
 
 enum MessageRouter {
     typealias Request = ProTUNMessage.Request
@@ -172,33 +173,5 @@ private extension MessageRouter {
 
         provider.reasserting = false
         return .init(payload: .ack)
-    }
-}
-
-extension ConnectionState: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case let .disconnected(error):
-            "disconnected(\(String(describing: error)))"
-        case let .connecting(peers, waitReasons):
-            "connecting(\(peers), \(waitReasons)))"
-        case let .connectingToLocalAgent(peer, waitReason):
-            "connectingToLocalAgent(\(peer), \(String(describing: waitReason))))"
-        case let .connected(peer, agentInfo):
-            "connected(\(peer), \(String(describing: agentInfo))))"
-        }
-    }
-}
-
-public extension WireGuardTransport {
-    static func from(protocol: Protocol) -> Self {
-        switch `protocol` {
-        case .wireguardUdp:
-            .udp
-        case .wireguardTcp:
-            .tcp
-        case .stealth:
-            .tls
-        }
     }
 }
