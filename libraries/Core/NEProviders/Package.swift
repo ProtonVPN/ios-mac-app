@@ -45,30 +45,13 @@ let package = Package(
             name: "ProTUNExtension",
             targets: ["ProTUNExtension"]
         ),
-        .library(
-            name: "WireGuardExtension",
-            targets: ["WireGuardExtension"]
-        ),
-        .library(
-            name: "WireGuardLogging",
-            targets: ["WireGuardLogging"]
-        ),
-        .library(
-            name: "WireGuardLoggingC",
-            targets: ["WireGuardLoggingC"]
-        ),
     ],
     dependencies: [
-        .package(name: "WireGuardKit", path: "../../../external/wireguard-apple"),
         .package(name: "vpn-core-apple", path: "../../../external/vpn-core-apple"),
-
-        .package(path: "../NEHelper"),
 
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/Domain"),
-        .package(path: "../../Foundations/PMLogger"),
 
-        .package(path: "../../Shared/ExtensionIPC"),
         .package(path: "../../Shared/Connection"),
 
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
@@ -81,56 +64,19 @@ let package = Package(
             name: "ProTUNExtension",
             dependencies: [
                 "Domain",
-                .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "ConnectionShared", package: "Connection"),
                 .product(name: "VPNCoreTypes", package: "vpn-core-apple"),
                 .product(name: "VPNCoreExtension", package: "vpn-core-apple"),
                 .product(name: "LocalAgent", package: "Connection"),
                 .product(name: "LocalAgentIPC", package: "Connection"),
-                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
-                .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "NetworkingErgonomics", package: "Ergonomics"),
                 .target(name: "protun", condition: .when(platforms: [.iOS, .macOS])),
-            ],
-            plugins: protunExtensionPlugins
-        ),
-        .target(
-            name: "WireGuardLoggingC",
-            dependencies: [],
-            swiftSettings: [
-                .swiftLanguageMode(.v5),
-            ]
-        ),
-        .target(
-            name: "WireGuardLogging",
-            dependencies: [
-                "WireGuardLoggingC",
-                "PMLogger",
+
+                .product(name: "Clocks", package: "swift-clocks"),
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ],
-            swiftSettings: [
-                .swiftLanguageMode(.v5),
-            ]
-        ),
-        .target(
-            name: "WireGuardExtension",
-            dependencies: [
-                "WireGuardKit",
-                "WireGuardLogging",
-                "ExtensionIPC",
-                "Ergonomics",
-                "Domain",
-                .product(name: "VPNShared", package: "NEHelper"),
-                .product(name: "ConnectionShared", package: "Connection"),
-                .product(name: "CoreConnection", package: "Connection"),
-            ],
-            swiftSettings: [
-                .swiftLanguageMode(.v5),
-            ]
-        ),
-        .testTarget(
-            name: "WireGuardExtensionTests",
-            dependencies: ["WireGuardExtension"]
+            plugins: protunExtensionPlugins
         ),
         ProTUNFFITargetKind.current.target,
     ]
