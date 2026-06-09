@@ -26,8 +26,8 @@ import LocalAgent
 import LocalAgentIPC
 import NetworkExtension
 import NetworkingErgonomics
-import protun
 import OSLog
+import protun
 import SharedErgonomics
 import VPNCoreTypes
 
@@ -333,7 +333,7 @@ extension VpnState {
 
 // TODO: ProTUN: Properly inject this
 private extension String {
-    static let appVersion: String = "ios-wireguardextension@8.0.0"
+    static let appVersion: String = "ios-vpn@8.0.0"
     static let userAgent: String = "ProtonVPN/8.0.0 (iOS 26.4.0; iPhone16,1)"
 }
 

@@ -19,6 +19,7 @@
 import let CoreConnection.log
 import Foundation
 import class NetworkExtension.NETunnelProviderManager
+import struct NetworkExtension.NEVPNError
 import class NetworkExtension.NEVPNManager
 
 extension TunnelProviderManagerFactory {
@@ -41,13 +42,18 @@ extension TunnelProviderManagerFactory {
                     do {
                         try await manager.removeFromPreferences()
                     } catch {
-                        errors.append(error)
+                        if !error.isConfigurationDoesNotExist {
+                            errors.append(error)
+                        }
                     }
                 }
                 do {
                     try await NEVPNManager.shared().removeFromPreferences()
                 } catch {
-                    errors.append(error)
+                    // On a clean install there's no config to remove
+                    if !error.isConfigurationDoesNotExist {
+                        errors.append(error)
+                    }
                 }
 
                 guard errors.isEmpty else {
@@ -65,4 +71,11 @@ extension TunnelProviderManagerFactory {
 
 enum TunnelProviderManagerError: Error {
     case removalFailure(errors: [Error])
+}
+
+private extension Error {
+    /// `true` when removing a VPN configuration failed only because none exists.
+    var isConfigurationDoesNotExist: Bool {
+        (self as? NEVPNError)?.code == .configurationInvalid
+    }
 }

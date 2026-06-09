@@ -27,7 +27,7 @@ enum StreamSource<T: Sendable> {
     case asyncAlgorithms(StreamFactory) // the one from Apple swift-async-algorithms package
 
     static func source(for stream: AsyncStream<T>) -> Self {
-        if #available(iOS 18.0, macOS 15.0, *) {
+        if #available(iOS 18.0, macOS 15.0, tvOS 18.0, *) {
             let shared = stream.share()
             return .asyncAlgorithms { shared.eraseToStream() }
         } else {

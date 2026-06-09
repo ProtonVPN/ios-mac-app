@@ -46,7 +46,7 @@ extension NetworkPathMonitor: DependencyKey {
         let (stream, continuation) = AsyncStream<NetworkPath>.makeStream()
 
         let streamSource: StreamSource<NetworkPath>
-        if #available(macOS 15, iOS 18.0, *) {
+        if #available(macOS 15, iOS 18.0, tvOS 18.0, *) {
             let shared = stream.removeDuplicates().share()
             streamSource = .asyncAlgorithms { shared.eraseToStream() }
         } else {

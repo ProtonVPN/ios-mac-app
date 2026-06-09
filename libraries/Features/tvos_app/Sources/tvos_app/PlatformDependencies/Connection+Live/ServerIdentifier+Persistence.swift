@@ -28,6 +28,7 @@ extension ServerIdentifier: @retroactive DependencyKey {
             @Dependency(\.serverRepository) var repository
             let idFilter = VPNServerFilter.endpointID(serverID)
             guard let server = repository.getFirstServer(filteredBy: [idFilter], orderedBy: .none) else {
+                log.debug("Server not found", category: .persistence, metadata: ["serverID": "\(serverID)"])
                 return nil
             }
             guard let endpoint = server.endpoints.first(where: { $0.id == serverID }) else {

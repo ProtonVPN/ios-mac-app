@@ -47,7 +47,7 @@ private enum LogFilter: Sendable {
 private enum Subsystem: String, CaseIterable {
     #if os(macOS)
         case protun = "ch.protonvpn.mac.ProTUN-Extension"
-    #elseif os(iOS)
+    #elseif os(iOS) || os(tvOS)
         case protun = "ch.protonmail.vpn.ProTUN-Extension"
     #endif
     case networkExtension = "com.apple.networkextension"

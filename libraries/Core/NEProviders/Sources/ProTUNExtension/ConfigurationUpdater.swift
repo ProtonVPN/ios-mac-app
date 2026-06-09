@@ -76,10 +76,18 @@ enum ConfigurationUpdater {
                 continue
 
             case let .feature(.tunnel(.allowLAN(allowed))):
-                config.excludeLocalNetworks = !allowed
+                #if os(tvOS)
+                    continue
+                #else
+                    config.excludeLocalNetworks = !allowed
+                #endif
 
             case let .feature(.tunnel(.killSwitch(enabled))):
-                config.includeAllNetworks = enabled
+                #if os(tvOS)
+                    continue
+                #else
+                    config.includeAllNetworks = enabled
+                #endif
 
             case .feature(.tunnel(.connectionProtocol)):
                 // TODO: ProTUN: update peers accordingly to what ports they specify, or remove in favour of .location
