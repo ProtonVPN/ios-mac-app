@@ -159,13 +159,9 @@ actor TelemetryConnectionStatusReporter {
             connectionProtocol = .ike
             // VPNAPPL-3466: Confirm empty string for the port is acceptable for ike
             port = ""
-        case .wireGuard:
-            // TODO: ProTUN: fetch active port and transport from ProTUN ConnectionData
-            connectionProtocol = .wireGuard(.udp)
-            //            guard let wgPort = wgSettings.ports.first else {
-            //                throw ConnectionEventError.missingPort
-            //            }
-            //            port = String(wgPort)
+        case let .wireGuard(settings):
+            connectionProtocol = .wireGuard(settings.transport ?? .udp)
+            // TODO: ProTUN: fetch active port from ProTUN ConnectionData
             port = ""
         }
         let dimensions = ConnectionDimensions(

@@ -161,7 +161,7 @@ public struct ConnectionFeature: Sendable {
             case let .finishedPreparing(.failure(error)):
                 log.error("Failed to preparing connection with error: \(error)")
                 // Revert state to actual tunnel state
-                state.connectionState = ConnectionState(tunnel: state.core.tunnel)
+                state.connectionState = ConnectionState(tunnel: state.core.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
                 return .send(.delegate(.connectionFailed(.preparation(.intentResolution(error)))))
 
             case let .core(.delegate(.stateChanged(.disconnected(.some(error))))):
@@ -173,11 +173,11 @@ public struct ConnectionFeature: Sendable {
                     @Dependency(\.serverChangeAuthorizer) var authorizer
                     authorizer.registerServerChange(connectedAt: connectionData.connectionDate)
                 }
-                state.connectionState = ConnectionState(tunnel: state.core.tunnel)
+                state.connectionState = ConnectionState(tunnel: state.core.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
                 return .none
 
             case let .core(.delegate(.stateChanged(newState))):
-                state.connectionState = ConnectionState(tunnel: newState)
+                state.connectionState = ConnectionState(tunnel: newState, fallbackSpec: state.connectionState.resolvedSpec)
                 return .none
 
             case let .core(.delegate(.error(connectionError))):
@@ -352,7 +352,15 @@ public enum LocalAgentTwoFactorAuthenticationError: FourCharCode, ProtonVPNError
 }
 
 extension ConnectionState {
-    init(tunnel: ExtensionFeature.State) {
+    /// IKE configurations have no `connectionSpec`, that's why we need a `fallbackSpec` for IKE.
+    init(tunnel: ExtensionFeature.State, fallbackSpec: ConnectionSpec? = nil) {
+        func resolvedSpec(for tunnelConfig: TunnelConfiguration) -> ConnectionSpec {
+            guard tunnelConfig.tunnelProtocol == .ike, let fallbackSpec else {
+                return tunnelConfig.connectionSpec
+            }
+            return fallbackSpec
+        }
+
         switch tunnel {
         case .unknown:
             self = .resolving
@@ -364,7 +372,7 @@ extension ConnectionState {
                 return
             }
             let intent = ResolvedConnectionIntent(
-                spec: tunnelConfig.connectionSpec,
+                spec: resolvedSpec(for: tunnelConfig),
                 tunnelProtocol: tunnelConfig.tunnelProtocol,
                 resolvedServer: server
             )
@@ -381,16 +389,22 @@ extension ConnectionState {
                 self = .resolving
                 return
             }
-            let connectionData = ResolvedDynamicConnectionData(
+            let resolvedData = ResolvedDynamicConnectionData(
                 currentPeer: server,
                 connectionDate: connectionData.connectionDate,
                 protocolConnectionData: connectionData.protocolConnectionData
             )
-            self = .connected(tunnelConfig, connectionData)
+
+            let resolvedConfig = TunnelConfiguration(
+                connectionSpec: resolvedSpec(for: tunnelConfig),
+                tunnelProtocol: tunnelConfig.tunnelProtocol,
+                peerIDs: tunnelConfig.peerIDs
+            )
+            self = .connected(resolvedConfig, resolvedData)
 
         case let .disconnecting(tunnelConfig):
             // TODO: ProTUN: Expand disconnecting state with information from provider config/mmap
-            self = .disconnecting(tunnelConfig.tunnelProtocol, tunnelConfig.connectionSpec)
+            self = .disconnecting(tunnelConfig.tunnelProtocol, resolvedSpec(for: tunnelConfig))
 
         case .disconnected:
             self = .disconnected

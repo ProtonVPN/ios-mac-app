@@ -301,7 +301,6 @@
 		E9AF94B426B450E600AA1A5F /* ExtensionInfoComparisonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94B326B450E600AA1A5F /* ExtensionInfoComparisonTests.swift */; };
 		E9F88DE727B544E0003E5179 /* Colors+BugReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F88DE627B544E0003E5179 /* Colors+BugReport.swift */; };
 		E9F8B6CF26206DE900B72549 /* VpnProtocolChangeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */; };
-		E9FE72EB26FC995A00966404 /* CABasicAnimation+Pulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FE72EA26FC995A00966404 /* CABasicAnimation+Pulse.swift */; };
 		EB29024B2E3129E400C200E7 /* ch.protonvpn.mac.Transparent-Proxy.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = EBB751C42DA7D4C800F79994 /* ch.protonvpn.mac.Transparent-Proxy.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EB4E2CA52E535C31003EA83C /* PlutoniumMacLogProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4E2CA42E535C31003EA83C /* PlutoniumMacLogProvider.swift */; };
 		EB4E2CAC2E5369A1003EA83C /* IPCServerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641C227D261FB00EEFB1D /* IPCServerConnection.swift */; };
@@ -771,7 +770,6 @@
 		E9AF94B326B450E600AA1A5F /* ExtensionInfoComparisonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExtensionInfoComparisonTests.swift; path = ../../../macos/ProtonVPNTests/Extensions/ExtensionInfoComparisonTests.swift; sourceTree = "<group>"; };
 		E9F88DE627B544E0003E5179 /* Colors+BugReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Colors+BugReport.swift"; path = "../../../../macos/ProtonVPN/Scenes/ReportBug/Colors+BugReport.swift"; sourceTree = "<group>"; };
 		E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolChangeManager.swift; sourceTree = "<group>"; };
-		E9FE72EA26FC995A00966404 /* CABasicAnimation+Pulse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CABasicAnimation+Pulse.swift"; path = "../../macos/ProtonVPN/CABasicAnimation+Pulse.swift"; sourceTree = "<group>"; };
 		EB4E2CA42E535C31003EA83C /* PlutoniumMacLogProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlutoniumMacLogProvider.swift; sourceTree = "<group>"; };
 		EBB751C42DA7D4C800F79994 /* ch.protonvpn.mac.Transparent-Proxy.systemextension */ = {isa = PBXFileReference; explicitFileType = "wrapper.system-extension"; includeInIndex = 0; path = "ch.protonvpn.mac.Transparent-Proxy.systemextension"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE01DCFE1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCEntryCountryAnnotationView.swift; sourceTree = "<group>"; };
@@ -1531,7 +1529,6 @@
 			isa = PBXGroup;
 			children = (
 				4C7CAEC028006E5C0008778E /* LoadingAnimationFrames */,
-				E9FE72EA26FC995A00966404 /* CABasicAnimation+Pulse.swift */,
 			);
 			name = Animations;
 			sourceTree = "<group>";
@@ -3119,7 +3116,6 @@
 				F3F48B1D2806D76500E0B814 /* BannerView.swift in Sources */,
 				EE2C46321F5570A700BA34B8 /* CellSurfaceButton.swift in Sources */,
 				A4E247872F72E98800733E7B /* SidebarFeature.swift in Sources */,
-				E9FE72EB26FC995A00966404 /* CABasicAnimation+Pulse.swift in Sources */,
 				E13C63FA2038A08400D9E40C /* ExpandMapButton.swift in Sources */,
 				EE9BFBCC1F30F9CA00EDA295 /* HelpMenuController.swift in Sources */,
 				EEA1C8DD1F27B13B00B2036E /* CreateNewProfileViewModel+Descriptors.swift in Sources */,
@@ -3402,7 +3398,6 @@
 				PRODUCT_NAME = ProtonVPN;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN/ProtonVPN-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Profile;
@@ -3926,7 +3921,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Application Developer ID PP";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG TLS_PIN_DISABLE STAGING";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN/ProtonVPN-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = "Debug-Staging";
@@ -4532,7 +4526,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG TLS_PIN_DISABLE";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN/ProtonVPN-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -4572,7 +4565,6 @@
 				PRODUCT_NAME = ProtonVPN;
 				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Application Developer ID PP";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN/ProtonVPN-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
