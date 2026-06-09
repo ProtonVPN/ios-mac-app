@@ -107,7 +107,6 @@ let package = Package(
                 "Localization",
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
-                .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "IPCErgonomics", package: "Ergonomics"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),

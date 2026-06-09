@@ -145,8 +145,8 @@ struct SettingsFeatureTests {
             $0.$mainBackground.withLock { $0 = .settingsDrillDown }
         }
         let id = try #require(store.state.path.ids.first)
-        await store.send(.path(.element(id: id, action: .logSelection(.logSelected(.wireguard))))) {
-            $0.path.append(.logs(.init(logSource: .wireguard)))
+        await store.send(.path(.element(id: id, action: .logSelection(.logSelected(.protun))))) {
+            $0.path.append(.logs(.init(logSource: .protun)))
         }
     }
 }

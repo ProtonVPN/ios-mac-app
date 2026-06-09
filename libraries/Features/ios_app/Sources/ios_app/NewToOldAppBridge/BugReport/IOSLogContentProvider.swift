@@ -42,12 +42,12 @@ extension LogContentProvider {
             case .osLog:
                 return OSLogContent()
 
-            case .wireguard:
-                let appGroup: String = DomainConstants.AppGroups.main
-                @Dependency(\.wireguardIOSLogProvider) var wireguardIOSLogProvider
-                return wireguardIOSLogProvider.logContentForAppGroup(appGroup)
+            #if DEBUG
+                case .protunArchive:
+                    fallthrough
+            #endif
 
-            case .protun, .protunArchive:
+            case .protun:
                 @Dependency(\.protunLogProvider) var protunLogProvider
                 return protunLogProvider.logContentForAppGroup()
 
@@ -62,10 +62,12 @@ extension LogContentProvider {
         getArchive: { source in
             // Not exposed for now, defaulting to returning classic log content
             @Dependency(\.protunLogProvider) var protunLogProvider
-            guard case .protunArchive = source else {
-                assertionFailure("Logs source available only for ProTUN")
-                return protunLogProvider.logContentForAppGroup()
-            }
+            #if DEBUG
+                guard case .protunArchive = source else {
+                    assertionFailure("Logs source available only for ProTUN")
+                    return protunLogProvider.logContentForAppGroup()
+                }
+            #endif
             return protunLogProvider.logContentForAppGroup()
         }
     )

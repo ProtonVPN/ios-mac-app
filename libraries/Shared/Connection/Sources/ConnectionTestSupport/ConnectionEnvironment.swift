@@ -108,9 +108,6 @@
                     connectionProtocol: { .vpnProtocol(.wireGuard(.tcp)) }
                 )
                 $0.serverSelector = .init(select: { _, _, _ in .ca })
-                $0.smartPortSelector = .init(select: { _, _ in
-                    ServerEndpointPortResolution(chosenProtocol: .wireGuard(.tcp), ports: [80])
-                })
             }
         }
 

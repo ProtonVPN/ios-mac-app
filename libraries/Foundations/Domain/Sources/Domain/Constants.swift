@@ -70,10 +70,14 @@ public extension FileManager {
 
     var mainContainerURL: URL {
         get throws(NoContainerFoundError) {
-            let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: DomainConstants.AppGroups.main)
-            guard let url else {
-                throw NoContainerFoundError()
-            }
+            #if os(macOS)
+                let url = FileManager.default.temporaryDirectory
+            #else
+                let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: DomainConstants.AppGroups.main)
+                guard let url else {
+                    throw NoContainerFoundError()
+                }
+            #endif
             return url
         }
     }

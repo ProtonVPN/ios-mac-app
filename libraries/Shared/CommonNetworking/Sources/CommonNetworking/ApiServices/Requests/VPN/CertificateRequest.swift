@@ -75,7 +75,7 @@ public final class CertificateRequest: Request {
             params["Renew"] = true
         }
 
-        if isProTUN, FeatureFlagsRepository.shared.isProTUNEnabled {
+        if isProTUN {
             params["Experiments"] = ["Experiments": ["ProTUN": 1]]
         }
 

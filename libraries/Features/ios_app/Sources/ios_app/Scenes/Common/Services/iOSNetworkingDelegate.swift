@@ -12,7 +12,6 @@ import Connection
 import Dependencies
 import Domain
 import Foundation
-import GoLibs
 import LegacyCommon
 import ProtonCoreDataModel
 import ProtonCoreFeatureFlags

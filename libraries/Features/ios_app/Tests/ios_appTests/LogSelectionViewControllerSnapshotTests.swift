@@ -33,7 +33,7 @@ struct LogSelectionViewControllerSnapshotTests {
         let state = LogSelectionFeature.State(
             rows: [
                 .logSource(.app),
-                .logSource(.wireguard),
+                .logSource(.protun),
             ]
         )
         let store = StoreOf<LogSelectionFeature>(initialState: state) {

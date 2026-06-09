@@ -48,19 +48,20 @@ struct LogsViewFeature {
             case .onViewDidLoad:
                 let source = state.logSource
                 return .run { send in
-                    if case .protunArchive = source {
-                        let contentArchive = logContentProvider.getArchive(for: .protun)
-                        if let archiveURL = await contentArchive.loadArchive() {
-                            await send(.shareFilePrepared(archiveURL))
-                        } else {
-                            let logs = await contentArchive.loadContent()
-                            await send(.logsLoaded(logs))
+                    #if DEBUG
+                        if case .protunArchive = source {
+                            let contentArchive = logContentProvider.getArchive(for: .protun)
+                            if let archiveURL = await contentArchive.loadArchive() {
+                                return await send(.shareFilePrepared(archiveURL))
+                            } else {
+                                let logs = await contentArchive.loadContent()
+                                return await send(.logsLoaded(logs))
+                            }
                         }
-                    } else {
-                        let content = logContentProvider.getLogData(for: source)
-                        let logs = await content.loadContent()
-                        await send(.logsLoaded(logs))
-                    }
+                    #endif
+                    let content = logContentProvider.getLogData(for: source)
+                    let logs = await content.loadContent()
+                    await send(.logsLoaded(logs))
                 }
             case let .logsLoaded(logs):
                 state.isLoading = false

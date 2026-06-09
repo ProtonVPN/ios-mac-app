@@ -403,7 +403,7 @@ class CreateNewProfileViewModel {
             let outcome = await systemExtensionsCoordinator.installOrUpdate(
                 origin: .profileEditing,
                 shouldStartTour: shouldStartTour,
-                includedTypes: [.wireGuard]
+                includedTypes: [.proTUN]
             )
             let result = outcome.accumulated
 

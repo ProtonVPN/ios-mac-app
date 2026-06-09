@@ -36,11 +36,11 @@ struct SystemExtensionsFeatureTests {
         }
         let firstRequest = SystemExtensionsRequest(
             origin: .connectionSettings,
-            kind: .installOrUpdate(shouldStartTour: true, includedTypes: [.wireGuard])
+            kind: .installOrUpdate(shouldStartTour: true, includedTypes: [.proTUN])
         )
         let secondRequest = SystemExtensionsRequest(
             origin: .plutonium,
-            kind: .installOrUpdate(shouldStartTour: true, includedTypes: [.wireGuard, .plutonium])
+            kind: .installOrUpdate(shouldStartTour: true, includedTypes: [.proTUN, .plutonium])
         )
 
         await store.send(.enqueue(firstRequest)) {
@@ -51,17 +51,17 @@ struct SystemExtensionsFeatureTests {
             $0.queuedRequests = []
             $0.installRequestContext = .init(
                 requestID: firstRequest.id,
-                includedTypes: [.wireGuard],
+                includedTypes: [.proTUN],
                 shouldStartTour: true
             )
         }
         await store.receive(\.service.startInstall) {
             $0.service.currentOperation = .install
-            $0.service.pendingTypes = [.wireGuard]
+            $0.service.pendingTypes = [.proTUN]
         }
 
         await store.receive(\.service.requestTransitioned) {
-            $0.service.states[.wireGuard] = .succeeded(.completed)
+            $0.service.states[.proTUN] = .succeeded(.completed)
             $0.service.pendingTypes = []
         }
         await store.receive(\.service.delegate.installCompleted) {
@@ -88,16 +88,16 @@ struct SystemExtensionsFeatureTests {
             $0.queuedRequests = []
             $0.installRequestContext = .init(
                 requestID: secondRequest.id,
-                includedTypes: [.wireGuard, .plutonium],
+                includedTypes: [.proTUN, .plutonium],
                 shouldStartTour: true
             )
         }
         await store.receive(\.service.startInstall) {
             $0.service.currentOperation = .install
-            $0.service.pendingTypes = [.wireGuard, .plutonium]
+            $0.service.pendingTypes = [.proTUN, .plutonium]
         }
         await store.receive(\.service.requestTransitioned) {
-            $0.service.states[.wireGuard] = .succeeded(.completed)
+            $0.service.states[.proTUN] = .succeeded(.completed)
             $0.service.pendingTypes = [.plutonium]
         }
         await store.receive(\.service.requestTransitioned) {
@@ -133,7 +133,7 @@ struct SystemExtensionsFeatureTests {
 
         let request = SystemExtensionsRequest(
             origin: .connectionSettings,
-            kind: .checkAndInstallOrUpdate(shouldStartTour: false, includedTypes: [.wireGuard])
+            kind: .checkAndInstallOrUpdate(shouldStartTour: false, includedTypes: [.proTUN])
         )
 
         await store.send(.enqueue(request)) {
@@ -154,7 +154,7 @@ struct SystemExtensionsFeatureTests {
     func interpretsApprovalPathCancellationAsTourCancelled() async {
         let request = SystemExtensionsRequest(
             origin: .connectionSettings,
-            kind: .installOrUpdate(shouldStartTour: true, includedTypes: [.wireGuard])
+            kind: .installOrUpdate(shouldStartTour: true, includedTypes: [.proTUN])
         )
 
         let observedResponse = LockIsolated<SystemExtensionsRequestResponse?>(nil)
@@ -166,7 +166,7 @@ struct SystemExtensionsFeatureTests {
                     completedRequestIDs: [],
                     installRequestContext: .init(
                         requestID: request.id,
-                        includedTypes: [.wireGuard],
+                        includedTypes: [.proTUN],
                         shouldStartTour: true
                     )
                 )
@@ -190,7 +190,7 @@ struct SystemExtensionsFeatureTests {
                         .installCompleted(
                             result: .init(
                                 accumulated: .success(.alreadyThere),
-                                individualResults: [.wireGuard: .success(.alreadyThere)],
+                                individualResults: [.proTUN: .success(.alreadyThere)],
                                 didRequireUserApproval: true
                             )
                         )

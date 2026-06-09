@@ -120,7 +120,6 @@ let package = Package(
                     .product(name: "VPNShared", package: "NEHelper"),
                     .product(name: "VPNSharedTesting", package: "NEHelper"),
 
-                    .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
                     .product(name: "ProtonCoreAuthentication", package: "protoncore"),
                     .product(name: "ProtonCoreDataModel", package: "protoncore"),
                     .product(name: "ProtonCoreFoundations", package: "protoncore"),

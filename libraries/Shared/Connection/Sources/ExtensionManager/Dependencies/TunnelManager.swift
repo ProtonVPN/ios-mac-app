@@ -153,11 +153,12 @@ final class PacketTunnelManager: TunnelManager {
     }
 
     func startTunnel(with intent: ServerConnectionIntent) async throws {
-        log.debug("Starting tunnel with configuration: \(intent.protocolConfiguration)")
+        log.debug("Starting tunnel with configuration: \(intent.protocolConfiguration)", category: .connection)
         @Dependency(\.vpnManagerRepository) var managerRepository
         // Prepare the configuration - this may prompt the user for VPN permissions
         let manager = try await managerRepository.prepareManager(intent.tunnelProtocol, .connection(intent))
 
+        log.debug("Starting tunnel with bundle identifier: \(optional: manager.providerBundleIdentifier)", category: .connection)
         try Task.checkCancellation()
         try manager.session.startTunnel()
     }
@@ -179,6 +180,7 @@ final class PacketTunnelManager: TunnelManager {
         for proto in activeProtocols {
             let onDemand = TunnelConfigurationOperation.reconfiguration([.feature(.tunnel(.onDemand(false)))])
             let manager = try await managerRepository.prepareManager(proto, onDemand)
+            log.debug("Stopping tunnel for protocol \(proto)")
             manager.session.stopTunnel()
         }
     }

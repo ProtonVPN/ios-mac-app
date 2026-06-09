@@ -41,15 +41,16 @@ extension LogContentProvider {
             case .osLog:
                 return OSLogContent()
 
-            case .wireguard:
-                @Dependency(\.wireguardMacLogProvider) var wireguardMacLogProvider
-                return NELogContent(neLogProvider: wireguardMacLogProvider)
-
             case .plutonium:
                 @Dependency(\.plutoniumMacLogProvider) var plutoniumMacLogProvider
                 return NELogContent(neLogProvider: plutoniumMacLogProvider)
 
-            case .protun, .protunArchive:
+            #if DEBUG
+                case .protunArchive:
+                    fallthrough
+            #endif
+
+            case .protun:
                 @Dependency(\.protunLogProvider) var protunLogProvider
                 return protunLogProvider.logContentForAppGroup()
             }
@@ -57,10 +58,12 @@ extension LogContentProvider {
         getArchive: { source in
             // Not exposed for now, defaulting to returning classic log content
             @Dependency(\.protunLogProvider) var protunLogProvider
-            guard case .protunArchive = source else {
-                assertionFailure("Logs source available only for ProTUN")
-                return protunLogProvider.logContentForAppGroup()
-            }
+            #if DEBUG
+                guard case .protunArchive = source else {
+                    assertionFailure("Logs source available only for ProTUN")
+                    return protunLogProvider.logContentForAppGroup()
+                }
+            #endif
             return protunLogProvider.logContentForAppGroup()
         }
     )

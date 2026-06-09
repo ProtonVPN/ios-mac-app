@@ -139,7 +139,6 @@ final class MainFeatureTests: XCTestCase {
             $0.serverIdentifier = .init(fullServerInfo: { _ in nil })
             $0.serverRepository = .notEmpty()
             $0.continuousClock = clock
-            $0.smartPortSelector = .init(select: { _, _ in .init(chosenProtocol: .wireGuard(.udp), ports: [80]) })
             $0.userLocationService = UserLocationServiceMock()
         }
         @Shared(.connectionState) var connectionState: ConnectionState

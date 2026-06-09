@@ -20,7 +20,7 @@ import Domain
 import VPNAppCore
 
 public enum SystemExtensionType: String, CaseIterable, Sendable, Equatable {
-    case wireGuard = "ch.protonvpn.mac.WireGuard-Extension"
+    case proTUN = "ch.protonvpn.mac.WireGuard-Extension"
     case plutonium = "ch.protonvpn.mac.Transparent-Proxy"
 
     public var machServiceName: String {
@@ -29,7 +29,7 @@ public enum SystemExtensionType: String, CaseIterable, Sendable, Equatable {
 
     public var featureEnabled: Bool {
         switch self {
-        case .wireGuard:
+        case .proTUN:
             true
         case .plutonium:
             VPNFeatureFlagType.plutoniumMacOS.enabled
@@ -41,7 +41,7 @@ extension SystemExtensionType {
     var tourFeature: SystemExtensionTourAlert.Feature {
         switch self {
         case .plutonium: .splitTunneling
-        case .wireGuard: .wireguard
+        case .proTUN: .wireguard
         }
     }
 }

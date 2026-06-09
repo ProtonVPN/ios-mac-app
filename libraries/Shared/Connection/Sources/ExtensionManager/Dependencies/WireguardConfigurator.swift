@@ -362,12 +362,6 @@ enum IkeUsernameComponent {
     }
 }
 
-private extension NETunnelProviderProtocol {
-    var isProTUN: Bool {
-        providerBundleIdentifier?.contains("ProTUN") ?? false
-    }
-}
-
 extension Server {
     /// Returns an array of peers with distinct serverIP values.
     ///

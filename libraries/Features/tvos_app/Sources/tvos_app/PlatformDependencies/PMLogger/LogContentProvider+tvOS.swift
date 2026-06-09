@@ -39,17 +39,18 @@ extension LogContentProvider {
         case .osLog:
             return OSLogContent()
 
-        case .wireguard:
-            let appGroup: String = DomainConstants.AppGroups.main
-            @Dependency(\.wireguardIOSLogProvider) var wireguardIOSLogProvider
-            return wireguardIOSLogProvider.logContentForAppGroup(appGroup)
+        #if DEBUG
+            case .protunArchive:
+                fallthrough
+        #endif
 
-        case .protun, .protunArchive:
+        case .protun:
             @Dependency(\.protunLogProvider) var protunLogProvider
             return protunLogProvider.logContentForAppGroup()
         }
     } getArchive: { _ in
-        fatalError("Not implemented fr now")
+        // TODO: ProTUN: log archive for tvOS
+        fatalError("Not implemented for now")
     }
 }
 
