@@ -303,8 +303,16 @@ final class PacketTunnelManager: TunnelManager {
             log.warning("Could not recover IKE peer IDs from configuration", category: .connection)
             peerIDs = []
         }
-        // IKEv2 can't provide `configuration.connectionSpec`, we need to pass `fallbackSpec`
-        let connectionSpec = try configuration.connectionSpec ?? ConnectionSpec()
+        let connectionSpec: ConnectionSpec
+        if let spec = try configuration.connectionSpec {
+            connectionSpec = spec
+        } else if tunnelProtocol == .ike {
+            // IKEv2 can't provide `configuration.connectionSpec`, we need to pass a `fallbackSpec`
+            connectionSpec = ConnectionSpec()
+        } else {
+            throw TunnelDataError.missingConnectionSpec
+        }
+
         return TunnelConfiguration(
             connectionSpec: connectionSpec,
             tunnelProtocol: tunnelProtocol,
@@ -545,4 +553,5 @@ extension NEVPNProtocol {
 
 enum TunnelDataError: Error {
     case unsupportedBackend
+    case missingConnectionSpec
 }

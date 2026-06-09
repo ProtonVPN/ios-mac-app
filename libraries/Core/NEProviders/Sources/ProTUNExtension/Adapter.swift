@@ -27,8 +27,8 @@ import LocalAgentIPC
 import NEHelper
 import NetworkExtension
 import NetworkingErgonomics
-import os.log
 import protun
+import OSLog
 import SharedErgonomics
 import VPNCoreTypes
 
@@ -67,6 +67,8 @@ final class ProTUNAdapter: @unchecked Sendable {
     private let networkPath: OSAllocatedUnfairLock<NetworkPath> = .init(uncheckedState: .init(status: .unsatisfied))
     private var localAgentTask: Task<Void, Never>?
     private var pathUpdatesTask: Task<Void, Never>?
+
+    private let signposter = OSSignposter(logger: .adapter)
 
     init(packetTunnelProvider: NEPacketTunnelProvider) {
         self.packetTunnelProvider = packetTunnelProvider
@@ -114,13 +116,21 @@ final class ProTUNAdapter: @unchecked Sendable {
     }
 
     func start(config: ProTUNConfiguration) async throws {
+        // Measures the whole start sequence
+        let signpostID = signposter.makeSignpostID()
+        let startState = signposter.beginInterval("Start Tunnel", id: signpostID)
+        defer { signposter.endInterval("Start Tunnel", startState) }
+
         Logger.adapter.info("Starting Adapter")
 
         let tunFd = try await prepare(with: config)
+        signposter.emitEvent("Tunnel prepared", id: signpostID)
+
         let rawTunFd = try tunFd.dup().take()
         let localAgentSettings = LocalAgentSettings.current
 
         startLocalAgentRunLoop(with: localAgentSettings)
+        signposter.emitEvent("Local agent run loop started", id: signpostID)
 
         // TODO: ProTUN: rework this so we're TOCTOU resilient
         let proTunInitialConfig = try networkPath.withLock { networkPath in
@@ -139,6 +149,7 @@ final class ProTUNAdapter: @unchecked Sendable {
             socketFdAvailableCallback: nil,
             cache: SecurePersistentCache(keychainServiceSuffix: "user") // TODO: ProTUN: Pass a value identifying the user
         )
+        signposter.emitEvent("Connection established", id: signpostID)
 
         try await stateDelegate.stateSource.newStream
             .debounce(for: Self.protunStateDebounceInterval)
@@ -147,6 +158,8 @@ final class ProTUNAdapter: @unchecked Sendable {
                 every: Self.protunStateCheckInterval,
                 deadline: Self.waitConnectedStateDuration
             ) {
+                // Reached `.connected` / `.connectingToLocalAgent`: the tunnel is up.
+                self.signposter.emitEvent("Connected", id: signpostID)
                 Logger.adapter.debug("Adapter is started, `startTunnel` can complete")
             }
     }
