@@ -96,6 +96,7 @@
 		A458E2E32F6C1533006205D7 /* NetShieldQuickSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A458E2E22F6C1533006205D7 /* NetShieldQuickSettingFeature.swift */; };
 		A458E2E52F6C156B006205D7 /* KillSwitchQuickSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A458E2E42F6C156B006205D7 /* KillSwitchQuickSettingFeature.swift */; };
 		A458E2E72F6C1580006205D7 /* PortForwardingQuickSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A458E2E62F6C1580006205D7 /* PortForwardingQuickSettingFeature.swift */; };
+		A468180E2FD883E500901B14 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = A468180D2FD883E500901B14 /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
 		A473352E2F9FBD0100637F54 /* SystemExtensionsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A473352D2F9FBD0100637F54 /* SystemExtensionsFeature.swift */; };
 		A47335302FA0A74A00637F54 /* SystemExtensionsFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A473352F2FA0A74A00637F54 /* SystemExtensionsFeatureTests.swift */; };
 		A47335342FA0AF6B00637F54 /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47335322FA0AF6B00637F54 /* ExtensionInfo.swift */; };
@@ -1020,6 +1021,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CD1F7892A72BEE700E8AB01 /* ProtonCoreUIFoundations in Frameworks */,
+				A468180E2FD883E500901B14 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */,
 				4C0930F42A3868340069323E /* Ergonomics in Frameworks */,
 				A4C29CDF2FACCD6300980288 /* Connection in Frameworks */,
 				4C0930EC2A3863AD0069323E /* Theme in Frameworks */,
@@ -2576,6 +2578,7 @@
 				E5D1A5A12F43292100A26EA8 /* Countries */,
 				A405F25F2F61A26D00953E7B /* Payments */,
 				A4C29CDE2FACCD6300980288 /* Connection */,
+				A468180D2FD883E500901B14 /* ProtonCoreCryptoVPNPatchedGoImplementation */,
 			);
 			productName = ProtonVPN;
 			productReference = EED534811EEC112000013607 /* ProtonVPN.app */;
@@ -4871,6 +4874,10 @@
 		A456C8BB2ECF7FE1006438F7 /* PlutoniumExtension */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PlutoniumExtension;
+		};
+		A468180D2FD883E500901B14 /* ProtonCoreCryptoVPNPatchedGoImplementation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreCryptoVPNPatchedGoImplementation;
 		};
 		A4B9A7352E38FC2600A21B35 /* Atlantis */ = {
 			isa = XCSwiftPackageProductDependency;

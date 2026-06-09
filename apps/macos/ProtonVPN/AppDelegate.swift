@@ -35,6 +35,7 @@ import Announcement
 import Dependencies
 import Domain
 import Ergonomics
+import ProtonCoreCryptoVPNPatchedGoImplementation
 import ProtonCoreEnvironment
 import ProtonCoreFeatureFlags
 import ProtonCoreLog
@@ -105,6 +106,7 @@ extension AppDelegate: NSApplicationDelegate {
         log.debug("applicationDidFinishLaunching", category: .app)
 
         NSApp.appearance = .init(named: .darkAqua)
+        injectDefaultCryptoImplementation()
 
         #if DEBUG
             Atlantis.start()
