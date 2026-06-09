@@ -81,7 +81,6 @@ let package = Package(
             name: "ProTUNExtension",
             dependencies: [
                 "Domain",
-                "NEHelper",
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "ConnectionShared", package: "Connection"),
                 .product(name: "VPNCoreTypes", package: "vpn-core-apple"),
@@ -119,7 +118,6 @@ let package = Package(
                 "WireGuardKit",
                 "WireGuardLogging",
                 "ExtensionIPC",
-                "NEHelper",
                 "Ergonomics",
                 "Domain",
                 .product(name: "VPNShared", package: "NEHelper"),

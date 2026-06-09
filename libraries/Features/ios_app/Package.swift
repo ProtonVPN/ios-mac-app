@@ -76,7 +76,6 @@ let package = Package(
                 "Home",
                 "Localization",
                 "Connection",
-                "NEHelper",
                 "Countries",
                 "WidgetIntents",
                 "Payments",

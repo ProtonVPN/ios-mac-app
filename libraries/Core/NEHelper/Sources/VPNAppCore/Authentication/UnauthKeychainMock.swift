@@ -18,7 +18,7 @@
 
 import Dependencies
 import Foundation
-import ProtonCoreNetworking
+import class ProtonCoreNetworking.AuthCredential
 
 public class UnauthKeychainMock: UnauthKeychainHandle {
     public init() {}

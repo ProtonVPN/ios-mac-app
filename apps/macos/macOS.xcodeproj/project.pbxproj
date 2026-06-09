@@ -49,8 +49,6 @@
 		4CD1F7872A72BEDA00E8AB01 /* BugReport in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7862A72BEDA00E8AB01 /* BugReport */; };
 		4CD1F7892A72BEE700E8AB01 /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7882A72BEE700E8AB01 /* ProtonCoreUIFoundations */; };
 		4CD1F78B2A72BF0100E8AB01 /* LegacyCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F78A2A72BF0100E8AB01 /* LegacyCommon */; };
-		4CD1F7932A72DCAD00E8AB01 /* GoLibsCryptoVPNPatchedGo in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7922A72DCAD00E8AB01 /* GoLibsCryptoVPNPatchedGo */; };
-		4CD1F7952A72DE0400E8AB01 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7942A72DE0400E8AB01 /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
 		4CD1F7972A72DF2700E8AB01 /* DictionaryCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7962A72DF2700E8AB01 /* DictionaryCoder */; };
 		4CE2F42227ECA7B000B21A00 /* GIFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2F42127ECA7B000B21A00 /* GIFView.swift */; };
 		4CEBB4092CDA68DE00AB5556 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 4CEBB4082CDA68DE00AB5556 /* Sparkle */; };
@@ -1048,13 +1046,11 @@
 				A443C5732E3B76BC003D91FA /* NATPMPUI in Frameworks */,
 				E5E48D012A4C37F000B09111 /* PMLogger in Frameworks */,
 				4C9FF48A2D64967A004DBF89 /* Announcement in Frameworks */,
-				4CD1F7932A72DCAD00E8AB01 /* GoLibsCryptoVPNPatchedGo in Frameworks */,
 				E5C384662D96AAA5003494D5 /* Settings in Frameworks */,
 				4CEBB4092CDA68DE00AB5556 /* Sparkle in Frameworks */,
 				A405F2602F61A26D00953E7B /* Payments in Frameworks */,
 				D5F65F9E28A14E190062CF85 /* Timer in Frameworks */,
 				E5E48D032A4C3D7100B09111 /* Logging in Frameworks */,
-				4CD1F7952A72DE0400E8AB01 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */,
 				E5E48CF72A4C363700B09111 /* ComposableArchitecture in Frameworks */,
 				E5D1A5A22F43292100A26EA8 /* Countries in Frameworks */,
 			);
@@ -1074,10 +1070,10 @@
 		4CCD3DCA2B72412B0002DA4A /* TestPlans */ = {
 			isa = PBXGroup;
 			children = (
-				77B1B6192CB5ACE7002D76B0 /* ProtonVPN-macOS-SLI-All.xctestplan */,
 				B2E466D5298055380026ED26 /* ProtonVPN-macOS-Unit-All.xctestplan */,
-				B2E466D6298055750026ED26 /* ProtonVPN-macOS-UI-All.xctestplan */,
 				B2E466D7298055920026ED26 /* ProtonVPN-macOS-UI-Smoke.xctestplan */,
+				B2E466D6298055750026ED26 /* ProtonVPN-macOS-UI-All.xctestplan */,
+				77B1B6192CB5ACE7002D76B0 /* ProtonVPN-macOS-SLI-All.xctestplan */,
 				7707F8EA2C5107D400668B11 /* ProtonVPN-macOS-UI-Connections.xctestplan */,
 			);
 			path = TestPlans;
@@ -2562,8 +2558,6 @@
 				4CD1F7862A72BEDA00E8AB01 /* BugReport */,
 				4CD1F7882A72BEE700E8AB01 /* ProtonCoreUIFoundations */,
 				4CD1F78A2A72BF0100E8AB01 /* LegacyCommon */,
-				4CD1F7922A72DCAD00E8AB01 /* GoLibsCryptoVPNPatchedGo */,
-				4CD1F7942A72DE0400E8AB01 /* ProtonCoreCryptoVPNPatchedGoImplementation */,
 				4CD1F7962A72DF2700E8AB01 /* DictionaryCoder */,
 				4C25999B2A7AA29800A31895 /* Dependencies */,
 				4C8571DB2A7CEC5B0057FED6 /* TrustKit */,
@@ -4818,14 +4812,6 @@
 		4CD1F78A2A72BF0100E8AB01 /* LegacyCommon */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LegacyCommon;
-		};
-		4CD1F7922A72DCAD00E8AB01 /* GoLibsCryptoVPNPatchedGo */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = GoLibsCryptoVPNPatchedGo;
-		};
-		4CD1F7942A72DE0400E8AB01 /* ProtonCoreCryptoVPNPatchedGoImplementation */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ProtonCoreCryptoVPNPatchedGoImplementation;
 		};
 		4CD1F7962A72DF2700E8AB01 /* DictionaryCoder */ = {
 			isa = XCSwiftPackageProductDependency;

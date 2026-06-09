@@ -17,10 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import DependenciesMacros
 import Domain
-import IssueReporting
 import VPNShared
 
+@DependencyClient
 public struct SettingsStorage: Sendable {
     public var getConnectionProtocol: @Sendable () async throws -> ConnectionProtocol
     public var setConnectionProtocol: @Sendable (ConnectionProtocol) async throws -> Void
@@ -52,24 +53,8 @@ public struct SettingsStorage: Sendable {
         }
     }
 
-    public var getEnvironment: @Sendable () -> EnvironmentSettings
+    public var getEnvironment: @Sendable () -> EnvironmentSettings = { .empty }
     public var setEnvironment: @Sendable (EnvironmentSettings) throws -> Void
-
-    public init(
-        getConnectionProtocol: @Sendable @escaping () async throws -> ConnectionProtocol = unimplemented(placeholder: .smartProtocol),
-        setConnectionProtocol: @Sendable @escaping (ConnectionProtocol) async throws -> Void = unimplemented(),
-        getNetShield: @Sendable @escaping () async throws -> NetShieldType = unimplemented(placeholder: .off),
-        setNetShield: @Sendable @escaping (NetShieldType) async throws -> Void = unimplemented(),
-        getEnvironment: @Sendable @escaping () -> EnvironmentSettings = unimplemented(placeholder: .empty),
-        setEnvironment: @Sendable @escaping (EnvironmentSettings) throws -> Void = unimplemented()
-    ) {
-        self.getConnectionProtocol = getConnectionProtocol
-        self.setConnectionProtocol = setConnectionProtocol
-        self.getNetShield = getNetShield
-        self.setNetShield = setNetShield
-        self.getEnvironment = getEnvironment
-        self.setEnvironment = setEnvironment
-    }
 
     static let mock: Self = .init()
 }

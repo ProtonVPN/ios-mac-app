@@ -10,7 +10,6 @@
 		4C54B0222BC027FE00315A3B /* PreviewAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C54B0212BC027FE00315A3B /* PreviewAssets.xcassets */; };
 		4C54B0382BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B0372BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift */; };
 		4C54B04C2BC02AB200315A3B /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C54B04B2BC02AB200315A3B /* NetworkExtension.framework */; };
-		4C54B04F2BC02AB200315A3B /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */; };
 		66465B782BFF9112002232B3 /* WireGuard-tvOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4C54B0492BC02AB200315A3B /* WireGuard-tvOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		667C97BE2C08848F001AB9D6 /* WireGuardExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 667C97BD2C08848F001AB9D6 /* WireGuardExtension */; };
 		A41555342ECDC46100794B1A /* tvos_app in Frameworks */ = {isa = PBXBuildFile; productRef = A41555332ECDC46100794B1A /* tvos_app */; };
@@ -68,7 +67,6 @@
 		4C54B0442BC0288F00315A3B /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		4C54B0492BC02AB200315A3B /* WireGuard-tvOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WireGuard-tvOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C54B04B2BC02AB200315A3B /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
-		4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
 		4C54B0502BC02AB200315A3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C8AB2862C33F4EC00879600 /* ProtonVPN-tvOS-UI-All.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-tvOS-UI-All.xctestplan"; sourceTree = "<group>"; };
 		4C8AB2872C33F4EC00879600 /* ProtonVPN-tvOS-UI-Smoke.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-tvOS-UI-Smoke.xctestplan"; sourceTree = "<group>"; };
@@ -172,7 +170,6 @@
 			isa = PBXGroup;
 			children = (
 				66EB74B02C08D8760025A115 /* WireGuard_tvOS.entitlements */,
-				4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */,
 				4C54B0502BC02AB200315A3B /* Info.plist */,
 				AD8181632C10C42300E59BD4 /* Dependencies.swift */,
 			);
@@ -415,7 +412,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD8643F42C24D45B001024CF /* Dependencies.swift in Sources */,
-				4C54B04F2BC02AB200315A3B /* PacketTunnelProvider.swift in Sources */,
 				AD6253FF2C3C023F00A38AF9 /* SharedDependencies+Live.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

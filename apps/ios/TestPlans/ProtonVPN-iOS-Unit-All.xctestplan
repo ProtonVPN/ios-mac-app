@@ -97,16 +97,6 @@
       }
     },
     {
-      "skippedTests": [
-        "CertificateRefreshTests/testManagerStopAfterSchedulingRetryDueToNetworkTimeoutResultsInOperationBeingCancelled()"
-      ],
-      "target": {
-        "containerPath": "container:../../libraries/Core/NEHelper",
-        "identifier": "NEHelperTests",
-        "name": "NEHelperTests"
-      }
-    },
-    {
       "target": {
         "containerPath": "container:../../libraries/Features/NetShield",
         "identifier": "NetShieldTests",

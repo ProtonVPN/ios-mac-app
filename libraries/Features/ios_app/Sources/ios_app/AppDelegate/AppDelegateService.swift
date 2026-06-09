@@ -399,9 +399,6 @@ public final class AppDelegateService: AppDelegateProtocol {
     // MARK: - Core Integration
 
     private func setupCoreIntegration() async {
-        // Note: injectDefaultCryptoImplementation() is called in the main app target
-        // because it depends on binary frameworks that can only be linked in the final app target
-
         ProtonCoreLog.PMLog.callback = { message, level in
             switch level {
             case .debug, .info, .trace, .warn:

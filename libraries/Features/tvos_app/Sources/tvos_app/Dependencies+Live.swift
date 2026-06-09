@@ -19,7 +19,6 @@
 import CommonNetworking
 import Dependencies
 import Foundation
-import NEHelper
 
 extension CustomHostValidator: @retroactive DependencyKey {
     /// By default, `testValue` defined in `CommonNetworking` uses release host validation.

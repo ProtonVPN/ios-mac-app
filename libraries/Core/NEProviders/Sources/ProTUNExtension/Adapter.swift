@@ -24,7 +24,6 @@ import Ergonomics
 import IPCErgonomics
 import LocalAgent
 import LocalAgentIPC
-import NEHelper
 import NetworkExtension
 import NetworkingErgonomics
 import protun

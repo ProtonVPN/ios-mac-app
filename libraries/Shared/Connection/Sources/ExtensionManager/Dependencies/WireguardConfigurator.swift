@@ -24,7 +24,6 @@ import Domain
 import Foundation
 import Hermes
 import Localization
-import NEHelper
 import NetworkExtension
 import ProtonCoreFeatureFlags
 import VPNCoreCommon

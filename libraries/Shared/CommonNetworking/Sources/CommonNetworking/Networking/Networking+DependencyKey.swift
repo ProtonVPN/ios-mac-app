@@ -20,7 +20,6 @@ import Dependencies
 import Ergonomics
 import Foundation
 import IssueReporting
-import NEHelper
 import ProtonCoreAuthentication
 import ProtonCoreDataModel
 import ProtonCoreNetworking

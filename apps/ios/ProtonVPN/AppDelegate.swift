@@ -30,7 +30,6 @@ import UIKit
 #endif
 
 import ios_app
-import ProtonCoreCryptoVPNPatchedGoImplementation
 
 final class AppDelegate: UIResponder {
     private let appDelegateService: AppDelegateProtocol = AppDelegateService()
@@ -41,9 +40,6 @@ final class AppDelegate: UIResponder {
         #if DEBUG
             Atlantis.start()
         #endif
-
-        // Inject crypto implementation (binary framework, must be in app target)
-        injectDefaultCryptoImplementation()
 
         appDelegateService.performEarlySetup()
     }
