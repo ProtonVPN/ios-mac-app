@@ -60,7 +60,6 @@
                 features: VPNConnectionFeatures(
                     netshield: .off,
                     vpnAccelerator: true,
-                    bouncing: nil,
                     natType: .default,
                     safeMode: nil,
                     portForwarding: nil

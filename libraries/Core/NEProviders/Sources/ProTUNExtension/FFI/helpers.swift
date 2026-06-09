@@ -96,7 +96,6 @@ public extension LocalAgentSettings {
         .init(
             netshield: netshieldLevel?.toNetShieldType ?? .off,
             vpnAccelerator: splitTcp ?? false,
-            bouncing: nil, // TODO: ProTUN: remove this from the VPNConnectionFeatures?
             natType: randomNat.flatMap { NATType(flag: $0) } ?? .default,
             safeMode: softJail ?? false,
             portForwarding: portForwarding

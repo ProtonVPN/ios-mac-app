@@ -70,7 +70,6 @@ class ProviderMessageTests: XCTestCase {
             .refreshCertificate(features: .init(
                 netshield: .level1,
                 vpnAccelerator: true,
-                bouncing: "bouncing",
                 natType: .moderateNAT,
                 safeMode: true,
                 portForwarding: nil

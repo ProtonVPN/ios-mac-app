@@ -255,10 +255,6 @@ extension ManagerConfigurator {
             components += [.vpnAcceleratorDisabled]
         }
 
-        if let label = features.bouncing, !label.isEmpty {
-            components += [.label(label)]
-        }
-
         if features.natType == .moderateNAT {
             components += [.moderateNAT]
         }

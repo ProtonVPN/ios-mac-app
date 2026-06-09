@@ -365,7 +365,7 @@ extension LocalAgentSettings {
             case let .portForwarding(enabled):
                 portForwarding = enabled
             case .safeMode:
-                break // TODO: ProTUN: Remove safe mode (and bouncing) from VPNConnectionFeatures
+                break // TODO: ProTUN: Remove safe mode from VPNConnectionFeatures
             }
         }
     }

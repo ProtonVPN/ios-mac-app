@@ -23,7 +23,6 @@ public extension VPNConnectionFeatures {
     static let mock = VPNConnectionFeatures(
         netshield: .level1,
         vpnAccelerator: true,
-        bouncing: "1",
         natType: .moderateNAT,
         safeMode: false,
         portForwarding: false

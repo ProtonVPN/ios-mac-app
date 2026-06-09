@@ -35,7 +35,6 @@ extension ConnectionFeatureProvider: @retroactive DependencyKey {
             return .init(
                 netshield: netShieldPropertyProvider.getNetShieldType(),
                 vpnAccelerator: featurePropertyProvider.getValue(for: VPNAccelerator.self).isOn,
-                bouncing: nil, // VPNAPPL-2561: how to properly handle this?
                 natType: natTypePropertyProvider.getNATType(),
                 safeMode: safeModePropertyProvider.getSafeMode(),
                 portForwarding: portForwardingPropertyProvider.getPortForwarding()
