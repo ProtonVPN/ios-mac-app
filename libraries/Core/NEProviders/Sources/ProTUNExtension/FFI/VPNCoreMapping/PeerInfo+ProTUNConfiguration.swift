@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import protun
 import struct VPNCoreTypes.ProTUNConfiguration
 
 extension PeerInfo {

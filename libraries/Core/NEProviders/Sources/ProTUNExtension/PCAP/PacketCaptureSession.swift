@@ -21,6 +21,7 @@ import Clocks
 import Dependencies
 import Foundation
 import os
+import protun
 
 struct PacketCaptureSession {
     static let pcapPathExtension: String = "pcap"

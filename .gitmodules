@@ -10,9 +10,6 @@
 	path = external/wireguard-apple
 	url = ../wireguard-apple
 	branch = release/ios
-[submodule "external/swift-cargo"]
-	path = external/swift-cargo
-	url = ../swift-cargo
 [submodule "external/vpn-core-apple"]
 	path = external/vpn-core-apple
 	url = ../vpn-core-apple

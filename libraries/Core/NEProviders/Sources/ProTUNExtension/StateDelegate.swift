@@ -18,6 +18,7 @@
 
 import Ergonomics
 import os.log
+import protun
 
 final class ProTUNAdapterStateDelegate: Sendable {
     private enum StateDelegateError: Error {

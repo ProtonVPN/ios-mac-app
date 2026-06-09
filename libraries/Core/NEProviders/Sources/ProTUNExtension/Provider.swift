@@ -20,6 +20,7 @@ import Domain
 import Ergonomics
 import NetworkExtension
 import os.log
+import protun
 import enum VPNCoreCommon.ProTUNConfigurationCoder
 import struct VPNCoreTypes.ProTUNConfiguration
 

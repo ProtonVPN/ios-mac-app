@@ -24,6 +24,7 @@ import LocalAgent
 import LocalAgentIPC
 import os
 import OSLog
+import protun
 
 final class LocalAgentCoordinator: @unchecked Sendable {
     enum Event {
@@ -124,6 +125,8 @@ private extension LocalAgentCoordinator {
                 sendError(error: .localAgentSettingPolicyRefused(setting.toAgentSetting))
             case .packetCaptureStarted, .packetCaptureStopped:
                 break
+            @unknown default:
+                assertionFailure("Unknown value encountered in \(#function)")
             }
         }
     }

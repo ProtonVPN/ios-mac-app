@@ -21,6 +21,7 @@ import CryptoKit
 import Dependencies
 import Foundation
 import os
+import protun
 import VPNCoreTypes
 
 final class SecurePersistentCache: PersistentCache {
@@ -81,18 +82,5 @@ private func describe(_ status: OSStatus) -> String {
 extension CacheKey {
     var keychainAccount: String {
         description
-    }
-}
-
-extension CacheKey: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .certificate:
-            "certificate"
-        case .privateKey:
-            "privateKey"
-        case .apiSession:
-            "apiSession"
-        }
     }
 }
