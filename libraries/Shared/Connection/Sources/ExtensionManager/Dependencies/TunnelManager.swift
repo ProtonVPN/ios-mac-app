@@ -66,6 +66,8 @@ public enum TunnelState: Equatable, Sendable {
 public struct TunnelConfiguration: Equatable, Sendable {
     /// The spec represents the user's original intent when initiating this connection
     /// The tunnel configuration must be updated accordingly whenever a change is applied
+    ///
+    /// Connection layer overrides it with a `fallbackSpec` for IKEv2
     public let connectionSpec: ConnectionSpec
     public let tunnelProtocol: TunnelProtocol
     public let peerIDs: [String]
@@ -292,13 +294,21 @@ final class PacketTunnelManager: TunnelManager {
         tunnelProtocol: TunnelProtocol,
         configuration: NEVPNProtocol
     ) throws -> TunnelConfiguration {
-        guard let connectionSpec = try configuration.connectionSpec else {
-            throw TunnelDataError.missingConnectionSpec
+        let peerIDs: [String]
+        do {
+            peerIDs = try configuration.peerIDs
+        } catch {
+            // For IKEv2 we can still advance here
+            guard tunnelProtocol == .ike else { throw error }
+            log.warning("Could not recover IKE peer IDs from configuration", category: .connection)
+            peerIDs = []
         }
-        return try TunnelConfiguration(
+        // IKEv2 can't provide `configuration.connectionSpec`, we need to pass `fallbackSpec`
+        let connectionSpec = try configuration.connectionSpec ?? ConnectionSpec()
+        return TunnelConfiguration(
             connectionSpec: connectionSpec,
             tunnelProtocol: tunnelProtocol,
-            peerIDs: configuration.peerIDs
+            peerIDs: peerIDs
         )
     }
 
@@ -347,17 +357,12 @@ final class PacketTunnelManager: TunnelManager {
         switch tunnelProtocol {
         case .ike:
             // IKE bypasses Local Agent, so tunnel-up is sufficient for the user-facing
-            // `.connected` state to advance. We still try to recover the server ID from the
-            // configuration (via `ikePeerID`) but tolerate failure: if the username has been
-            // dropped or malformed (e.g. macOS occasionally drops it across save/load for
-            // `.certificate` auth), we'd otherwise stall in `ExtensionManagerFeature`'s
-            // `guard let connectionData` (TunnelState `.connected(_, nil)` is rejected there).
-            // Falling back to an empty serverID lets the connection advance; downstream code
-            // that needs the server uses `currentIntent?.serverIntent.server` from
-            // `ConnectionFeature`, not this field.
-            guard let serverID = try configuration?.ikePeerID else {
-                throw TunnelDataError.missingPeerID
-            }
+            // `.connected` state to advance. We try to recover the server ID from the
+            // configuration (via `ikePeerID`) but tolerate failure: macOS occasionally drops the
+            // username across save/load for `.certificate` auth. Falling back to an empty serverID
+            // lets the connection advance; the Connection layer resolves the server and spec from
+            // the in-app intent (`ConnectionState.init(tunnel:fallbackSpec:)`) when this is empty.
+            let serverID = (try? configuration?.ikePeerID) ?? ""
             if serverID.isEmpty {
                 log.warning(
                     "Could not recover IKE peer ID from configuration; advancing connected state with empty serverID",
@@ -540,6 +545,4 @@ extension NEVPNProtocol {
 
 enum TunnelDataError: Error {
     case unsupportedBackend
-    case missingConnectionSpec
-    case missingPeerID
 }
