@@ -28,13 +28,6 @@
 			remoteGlobalIDString = 4C54B0162BC027FD00315A3B;
 			remoteInfo = ProtonVPN;
 		};
-		66302D482C00E92600C220A3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C54B00F2BC027FD00315A3B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 66302D442C00E8EB00C220A3;
-			remoteInfo = WireGuardGoBridgetvOS;
-		};
 		66465B792BFF9112002232B3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4C54B00F2BC027FD00315A3B /* Project object */;
@@ -266,7 +259,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				66302D492C00E92600C220A3 /* PBXTargetDependency */,
 			);
 			name = "WireGuard-tvOS";
 			packageProductDependencies = (
@@ -420,11 +412,6 @@
 			isa = PBXTargetDependency;
 			target = 4C54B0162BC027FD00315A3B /* ProtonVPN-tvOS */;
 			targetProxy = 4C54B0322BC027FF00315A3B /* PBXContainerItemProxy */;
-		};
-		66302D492C00E92600C220A3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 66302D442C00E8EB00C220A3 /* WireGuardGoBridgetvOS */;
-			targetProxy = 66302D482C00E92600C220A3 /* PBXContainerItemProxy */;
 		};
 		66465B7A2BFF9112002232B3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
