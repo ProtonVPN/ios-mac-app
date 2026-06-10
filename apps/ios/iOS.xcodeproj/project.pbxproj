@@ -181,11 +181,6 @@
 			path = "ProTUN-Extension-Mobile";
 			sourceTree = "<group>";
 		};
-		A46819182FD95AC000901B14 /* Shared */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Shared;
-			sourceTree = "<group>";
-		};
 		A46819202FD95AC600901B14 /* TestPlans */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = TestPlans;
@@ -297,12 +292,10 @@
 			isa = PBXGroup;
 			children = (
 				EB7804852D6CF6DF00E75937 /* ConnectWidgetExtensionProfile.entitlements */,
-				A44463C72ECF17200008288D /* ProtonVPN_ike_root.der */,
 				F38BB450265C0CF600329619 /* Config.xcconfig */,
 				ADA595EC2F34C0670087E150 /* Version.xcconfig */,
 				A4681A6F2FD95E5700901B14 /* External */,
 				A4681A8A2FD95ECA00901B14 /* ProtonVPN */,
-				A46819182FD95AC000901B14 /* Shared */,
 				A46819202FD95AC600901B14 /* TestPlans */,
 				A46819252FD95AD000901B14 /* ProtonVPNTests */,
 				A4681A262FD95CF900901B14 /* ProtonVPNUITests */,
@@ -344,6 +337,7 @@
 			children = (
 				A41554D12ECC84B400794B1A /* VPNLaunchScreen.storyboard */,
 				E5CE8CDF2F73F37800AE36BD /* Localizable.xcstrings */,
+				A44463C72ECF17200008288D /* ProtonVPN_ike_root.der */,
 			);
 			path = External;
 			sourceTree = "<group>";
@@ -393,7 +387,6 @@
 				6640FF312ED5B09B004A4A9A /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				A46819182FD95AC000901B14 /* Shared */,
 				A4681A8A2FD95ECA00901B14 /* ProtonVPN */,
 			);
 			name = ProtonVPN;
@@ -1517,7 +1510,7 @@
 				INFOPLIST_FILE = ConnectWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ConnectWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1556,7 +1549,7 @@
 				INFOPLIST_FILE = ConnectWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ConnectWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1593,7 +1586,7 @@
 				INFOPLIST_FILE = ConnectWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ConnectWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1621,7 +1614,7 @@
 				INFOPLIST_FILE = ConnectWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ConnectWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.ConnectWidget;
 				PRODUCT_NAME = ConnectWidgetExtension;
 			};

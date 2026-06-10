@@ -2,4 +2,4 @@ xcassets:
   inputs: ProtonVPN/Assets.xcassets
   outputs:
     templateName: swift5
-    output: ProtonVPN/Assets.swift
+    output: ProtonVPN/Assets/Assets.swift
