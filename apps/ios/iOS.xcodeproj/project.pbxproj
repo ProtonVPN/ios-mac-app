@@ -50,9 +50,9 @@
 		80C4A4EB2BCFBCDA00DA1A80 /* MainMeasurements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C4A4EA2BCFBCDA00DA1A80 /* MainMeasurements.swift */; };
 		89926E3756CED95AB662D371 /* PasswordRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */; };
 		A41554992ECB965000794B1A /* ios_app in Frameworks */ = {isa = PBXBuildFile; productRef = A41554982ECB965000794B1A /* ios_app */; };
-		A415549B2ECBA50500794B1A /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = A415549A2ECBA50500794B1A /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
 		A41554D22ECC84B400794B1A /* VPNLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A41554D12ECC84B400794B1A /* VPNLaunchScreen.storyboard */; };
 		A44463C82ECF17200008288D /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = A44463C72ECF17200008288D /* ProtonVPN_ike_root.der */; };
+		A468180C2FD882BF00901B14 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = A468180B2FD882BF00901B14 /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
 		A489832A2DD4D2BF00ADA828 /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = A48983292DD4D2BF00ADA828 /* ProtonCoreUIFoundations */; };
 		A48BE9B42E05AEA300B891DA /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A48BE9B32E05AEA300B891DA /* Atlantis */; };
 		A48FC3422DCBAD210042759B /* WidgetIntents in Frameworks */ = {isa = PBXBuildFile; productRef = A48FC3412DCBAD210042759B /* WidgetIntents */; };
@@ -322,11 +322,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4A30E642EE2F1200086D938 /* OHHTTPStubs in Frameworks */,
+				A468180C2FD882BF00901B14 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */,
 				A4A30E662EE2F1200086D938 /* OHHTTPStubsSwift in Frameworks */,
 				A48BE9B42E05AEA300B891DA /* Atlantis in Frameworks */,
 				A48FC3422DCBAD210042759B /* WidgetIntents in Frameworks */,
 				A41554992ECB965000794B1A /* ios_app in Frameworks */,
-				A415549B2ECBA50500794B1A /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -780,9 +780,9 @@
 				A48BE9B32E05AEA300B891DA /* Atlantis */,
 				A48FC3412DCBAD210042759B /* WidgetIntents */,
 				A41554982ECB965000794B1A /* ios_app */,
-				A415549A2ECBA50500794B1A /* ProtonCoreCryptoVPNPatchedGoImplementation */,
 				A4A30E632EE2F1200086D938 /* OHHTTPStubs */,
 				A4A30E652EE2F1200086D938 /* OHHTTPStubsSwift */,
+				A468180B2FD882BF00901B14 /* ProtonCoreCryptoVPNPatchedGoImplementation */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -2217,7 +2217,7 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = ios_app;
 		};
-		A415549A2ECBA50500794B1A /* ProtonCoreCryptoVPNPatchedGoImplementation */ = {
+		A468180B2FD882BF00901B14 /* ProtonCoreCryptoVPNPatchedGoImplementation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreCryptoVPNPatchedGoImplementation;
 		};

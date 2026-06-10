@@ -18,8 +18,9 @@
 
 import CommonNetworking
 import Dependencies
+import Domain
 import Foundation
-import NEHelper
+import SharedErgonomics
 
 extension CustomHostValidator: @retroactive DependencyKey {
     /// By default, `testValue` defined in `CommonNetworking` uses release host validation.
@@ -47,4 +48,8 @@ extension VPNNetworkingKey: @retroactive DependencyKey {
 
         return CoreNetworkingWrapper(wrapped: networking)
     }()
+}
+
+extension DefaultsProvider: @retroactive DependencyKey {
+    public static let liveValue: DefaultsProvider = .init(getDefaults: { .domainUserDefaults })
 }

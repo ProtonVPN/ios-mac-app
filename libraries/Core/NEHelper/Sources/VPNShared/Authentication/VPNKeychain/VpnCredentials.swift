@@ -20,7 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import ProtonCoreNetworking
+import typealias ProtonCoreNetworking.JSONDictionary
 import Strings
 
 public struct NetShieldFeatureSettings: Codable, Equatable {

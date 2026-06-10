@@ -24,7 +24,6 @@ import Combine
 import Domain
 import Ergonomics
 import LegacyCommon
-import NEHelper
 import ProtonCoreFeatureFlags
 import SharedViews
 import Sharing

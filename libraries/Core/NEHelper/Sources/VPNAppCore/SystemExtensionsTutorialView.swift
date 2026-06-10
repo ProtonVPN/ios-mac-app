@@ -22,7 +22,6 @@
     import Dependencies
     import Domain
     import Ergonomics
-    import ProtonCoreUIFoundations
     import Strings
     import SwiftUI
     import Theme
@@ -64,7 +63,8 @@
                 Text(feature.title)
                     .themeFont(.body(emphasised: true))
                     .foregroundStyle(Color(.text))
-                IconProvider.infoCircleFilled
+                Theme.Asset.Icons.infoCircleFilled
+                    .swiftUIImage
                     .resizable()
                     .frame(.square(.themeSpacing16))
                     .foregroundStyle(Color(.icon, .weak))

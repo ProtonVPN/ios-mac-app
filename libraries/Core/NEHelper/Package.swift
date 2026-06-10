@@ -11,7 +11,6 @@ let package = Package(
         .tvOS(.v17),
     ],
     products: [
-        .library(name: "NEHelper", targets: ["NEHelper"]),
         .library(name: "VPNAppCore", targets: ["VPNAppCore"]),
         .library(name: "VPNShared", targets: ["VPNShared"]),
         .library(name: "VPNCrypto", targets: ["VPNCrypto"]),
@@ -35,7 +34,6 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-async-algorithms", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "4.2.2"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
-        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.9.0")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
         .package(url: "https://github.com/pointfreeco/swift-case-paths", .upToNextMajor(from: "1.6.1")),
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
@@ -62,16 +60,6 @@ let package = Package(
             ]
         ),
         .target(
-            name: "NEHelper",
-            dependencies: [
-                "ExtensionIPC",
-                "VPNShared",
-                .product(name: "Timer", package: "Timer"),
-                .product(name: "Logging", package: "swift-log"),
-                .product(name: "ProtonCoreUtilities", package: "protoncore"),
-            ]
-        ),
-        .target(
             name: "VPNAppCore",
             dependencies: [
                 "Domain",
@@ -85,7 +73,6 @@ let package = Package(
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),
                 .product(name: "ProtonCoreNetworking", package: "protoncore"), // AuthCredential
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "Sentry", package: "sentry-cocoa"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "OrderedCollections", package: "swift-collections"),
@@ -115,14 +102,6 @@ let package = Package(
             ]
         ),
         .testTarget(name: "VPNSharedTests", dependencies: ["VPNShared"]),
-        .testTarget(
-            name: "NEHelperTests",
-            dependencies: [
-                "NEHelper",
-                "VPNSharedTesting",
-                .product(name: "TimerMock", package: "Timer"),
-            ]
-        ),
         .testTarget(name: "VPNCryptoTests", dependencies: ["VPNCrypto"]),
     ]
 )

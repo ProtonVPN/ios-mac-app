@@ -49,8 +49,6 @@
 		4CD1F7872A72BEDA00E8AB01 /* BugReport in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7862A72BEDA00E8AB01 /* BugReport */; };
 		4CD1F7892A72BEE700E8AB01 /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7882A72BEE700E8AB01 /* ProtonCoreUIFoundations */; };
 		4CD1F78B2A72BF0100E8AB01 /* LegacyCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F78A2A72BF0100E8AB01 /* LegacyCommon */; };
-		4CD1F7932A72DCAD00E8AB01 /* GoLibsCryptoVPNPatchedGo in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7922A72DCAD00E8AB01 /* GoLibsCryptoVPNPatchedGo */; };
-		4CD1F7952A72DE0400E8AB01 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7942A72DE0400E8AB01 /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
 		4CD1F7972A72DF2700E8AB01 /* DictionaryCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7962A72DF2700E8AB01 /* DictionaryCoder */; };
 		4CE2F42227ECA7B000B21A00 /* GIFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2F42127ECA7B000B21A00 /* GIFView.swift */; };
 		4CEBB4092CDA68DE00AB5556 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 4CEBB4082CDA68DE00AB5556 /* Sparkle */; };
@@ -98,6 +96,7 @@
 		A458E2E32F6C1533006205D7 /* NetShieldQuickSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A458E2E22F6C1533006205D7 /* NetShieldQuickSettingFeature.swift */; };
 		A458E2E52F6C156B006205D7 /* KillSwitchQuickSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A458E2E42F6C156B006205D7 /* KillSwitchQuickSettingFeature.swift */; };
 		A458E2E72F6C1580006205D7 /* PortForwardingQuickSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A458E2E62F6C1580006205D7 /* PortForwardingQuickSettingFeature.swift */; };
+		A468180E2FD883E500901B14 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = A468180D2FD883E500901B14 /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
 		A473352E2F9FBD0100637F54 /* SystemExtensionsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A473352D2F9FBD0100637F54 /* SystemExtensionsFeature.swift */; };
 		A47335302FA0A74A00637F54 /* SystemExtensionsFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A473352F2FA0A74A00637F54 /* SystemExtensionsFeatureTests.swift */; };
 		A47335342FA0AF6B00637F54 /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47335322FA0AF6B00637F54 /* ExtensionInfo.swift */; };
@@ -1022,6 +1021,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CD1F7892A72BEE700E8AB01 /* ProtonCoreUIFoundations in Frameworks */,
+				A468180E2FD883E500901B14 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */,
 				4C0930F42A3868340069323E /* Ergonomics in Frameworks */,
 				A4C29CDF2FACCD6300980288 /* Connection in Frameworks */,
 				4C0930EC2A3863AD0069323E /* Theme in Frameworks */,
@@ -1048,13 +1048,11 @@
 				A443C5732E3B76BC003D91FA /* NATPMPUI in Frameworks */,
 				E5E48D012A4C37F000B09111 /* PMLogger in Frameworks */,
 				4C9FF48A2D64967A004DBF89 /* Announcement in Frameworks */,
-				4CD1F7932A72DCAD00E8AB01 /* GoLibsCryptoVPNPatchedGo in Frameworks */,
 				E5C384662D96AAA5003494D5 /* Settings in Frameworks */,
 				4CEBB4092CDA68DE00AB5556 /* Sparkle in Frameworks */,
 				A405F2602F61A26D00953E7B /* Payments in Frameworks */,
 				D5F65F9E28A14E190062CF85 /* Timer in Frameworks */,
 				E5E48D032A4C3D7100B09111 /* Logging in Frameworks */,
-				4CD1F7952A72DE0400E8AB01 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */,
 				E5E48CF72A4C363700B09111 /* ComposableArchitecture in Frameworks */,
 				E5D1A5A22F43292100A26EA8 /* Countries in Frameworks */,
 			);
@@ -1074,10 +1072,10 @@
 		4CCD3DCA2B72412B0002DA4A /* TestPlans */ = {
 			isa = PBXGroup;
 			children = (
-				77B1B6192CB5ACE7002D76B0 /* ProtonVPN-macOS-SLI-All.xctestplan */,
 				B2E466D5298055380026ED26 /* ProtonVPN-macOS-Unit-All.xctestplan */,
-				B2E466D6298055750026ED26 /* ProtonVPN-macOS-UI-All.xctestplan */,
 				B2E466D7298055920026ED26 /* ProtonVPN-macOS-UI-Smoke.xctestplan */,
+				B2E466D6298055750026ED26 /* ProtonVPN-macOS-UI-All.xctestplan */,
+				77B1B6192CB5ACE7002D76B0 /* ProtonVPN-macOS-SLI-All.xctestplan */,
 				7707F8EA2C5107D400668B11 /* ProtonVPN-macOS-UI-Connections.xctestplan */,
 			);
 			path = TestPlans;
@@ -2562,8 +2560,6 @@
 				4CD1F7862A72BEDA00E8AB01 /* BugReport */,
 				4CD1F7882A72BEE700E8AB01 /* ProtonCoreUIFoundations */,
 				4CD1F78A2A72BF0100E8AB01 /* LegacyCommon */,
-				4CD1F7922A72DCAD00E8AB01 /* GoLibsCryptoVPNPatchedGo */,
-				4CD1F7942A72DE0400E8AB01 /* ProtonCoreCryptoVPNPatchedGoImplementation */,
 				4CD1F7962A72DF2700E8AB01 /* DictionaryCoder */,
 				4C25999B2A7AA29800A31895 /* Dependencies */,
 				4C8571DB2A7CEC5B0057FED6 /* TrustKit */,
@@ -2582,6 +2578,7 @@
 				E5D1A5A12F43292100A26EA8 /* Countries */,
 				A405F25F2F61A26D00953E7B /* Payments */,
 				A4C29CDE2FACCD6300980288 /* Connection */,
+				A468180D2FD883E500901B14 /* ProtonCoreCryptoVPNPatchedGoImplementation */,
 			);
 			productName = ProtonVPN;
 			productReference = EED534811EEC112000013607 /* ProtonVPN.app */;
@@ -4819,14 +4816,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = LegacyCommon;
 		};
-		4CD1F7922A72DCAD00E8AB01 /* GoLibsCryptoVPNPatchedGo */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = GoLibsCryptoVPNPatchedGo;
-		};
-		4CD1F7942A72DE0400E8AB01 /* ProtonCoreCryptoVPNPatchedGoImplementation */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ProtonCoreCryptoVPNPatchedGoImplementation;
-		};
 		4CD1F7962A72DF2700E8AB01 /* DictionaryCoder */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */;
@@ -4885,6 +4874,10 @@
 		A456C8BB2ECF7FE1006438F7 /* PlutoniumExtension */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PlutoniumExtension;
+		};
+		A468180D2FD883E500901B14 /* ProtonCoreCryptoVPNPatchedGoImplementation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreCryptoVPNPatchedGoImplementation;
 		};
 		A4B9A7352E38FC2600A21B35 /* Atlantis */ = {
 			isa = XCSwiftPackageProductDependency;

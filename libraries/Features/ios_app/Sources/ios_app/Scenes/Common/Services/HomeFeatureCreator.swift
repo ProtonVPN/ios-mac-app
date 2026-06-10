@@ -21,7 +21,6 @@ import Dependencies
 import Domain
 import Home
 import LegacyCommon
-import NEHelper
 import Payments
 import ProtonCoreUIFoundations
 import Strings

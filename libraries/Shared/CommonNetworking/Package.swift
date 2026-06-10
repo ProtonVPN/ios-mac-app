@@ -43,7 +43,6 @@ let package = Package(
                 "Persistence",
                 "Strings",
                 "ExtensionIPC",
-                .product(name: "NEHelper", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"), // UnauthKeychain
                 .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain
 

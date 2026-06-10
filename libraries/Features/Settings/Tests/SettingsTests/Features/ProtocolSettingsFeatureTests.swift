@@ -34,7 +34,7 @@ struct ProtocolSettingsTests {
         ) {
             ProtocolSettingsFeature()
         } withDependencies: {
-            $0.settingsStorage = .init(setConnectionProtocol: { _ in })
+            $0.settingsStorage.setConnectionProtocol = { _ in }
         }
 
         await store.send(.protocolTapped(.vpnProtocol(.ike)))
@@ -56,7 +56,7 @@ struct ProtocolSettingsTests {
         ) {
             ProtocolSettingsFeature()
         } withDependencies: {
-            $0.settingsStorage = .init(setConnectionProtocol: { _ in throw error })
+            $0.settingsStorage.setConnectionProtocol = { _ in throw error }
         }
 
         await store.send(.protocolTapped(.vpnProtocol(.ike)))
@@ -75,7 +75,7 @@ struct ProtocolSettingsTests {
         ) {
             ProtocolSettingsFeature()
         } withDependencies: {
-            $0.settingsStorage = .init(setConnectionProtocol: { _ in })
+            $0.settingsStorage.setConnectionProtocol = { _ in }
         }
 
         await store.send(.protocolTapped(.vpnProtocol(.ike)))
@@ -96,7 +96,7 @@ struct ProtocolSettingsTests {
         ) {
             ProtocolSettingsFeature()
         } withDependencies: {
-            $0.settingsStorage = .init(setConnectionProtocol: { _ in })
+            $0.settingsStorage.setConnectionProtocol = { _ in }
         }
 
         await store.send(.reconnectionAlert(.presented(.reconnectWith(.vpnProtocol(.ike)))))
@@ -117,7 +117,7 @@ struct ProtocolSettingsTests {
         ) {
             ProtocolSettingsFeature()
         } withDependencies: {
-            $0.settingsStorage = .init(setConnectionProtocol: { _ in })
+            $0.settingsStorage.setConnectionProtocol = { _ in }
         }
 
         await store.send(.reconnectionAlert(.dismiss)) { resultState in
