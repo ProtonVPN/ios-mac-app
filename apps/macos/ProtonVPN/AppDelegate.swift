@@ -158,10 +158,6 @@ extension AppDelegate: NSApplicationDelegate {
                 _ = container.makeUpdateManager() // Load update manager so it has a chance to update xml url
                 _ = container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.
 
-                if startedAtLogin() {
-                    DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
-                }
-
                 // Check sysex approval and protocol deprecation and revert to Smart or IKE if necessary, but only if we're logged in
                 if (try? vpnKeychain.fetchCached()) != nil {
                     checkSysexAndAdjustGlobalProtocol()
@@ -322,14 +318,6 @@ extension AppDelegate: NSApplicationDelegate {
                 }
             }
         }
-    }
-
-    private func startedAtLogin() -> Bool {
-        let launcherAppIdentifier = "ch.protonvpn.ProtonVPNStarter"
-        for app in NSWorkspace.shared.runningApplications where app.bundleIdentifier == launcherAppIdentifier {
-            return true
-        }
-        return false
     }
 
     private func setupLogsForApp() {
