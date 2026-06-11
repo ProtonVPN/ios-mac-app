@@ -399,7 +399,8 @@ extension Server {
             udpPorts: perTransportPortOverrides[.udp] ?? [],
             tcpPorts: perTransportPortOverrides[.tcp] ?? [],
             tlsPorts: perTransportPortOverrides[.tls] ?? [],
-            priority: 0
+            priority: 0,
+            exitLabel: endpoint.label
         )
     }
 
@@ -424,7 +425,8 @@ extension Server {
                     udpPorts: transport == .udp ? ports(for: .udp, with: config) : [],
                     tcpPorts: transport == .tcp ? ports(for: .tcp, with: config) : [],
                     tlsPorts: transport == .tls ? ports(for: .tls, with: config) : [],
-                    priority: 0
+                    priority: 0,
+                    exitLabel: endpoint.label
                 )
             }
     }
