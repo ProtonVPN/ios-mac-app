@@ -20,9 +20,11 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Combine
 import Dependencies
 import Domain
 import Foundation
+import Sharing
 import VPNAppCore
 
 public protocol MaintenanceManagerHelperFactory {
@@ -46,19 +48,23 @@ public class MaintenanceManagerHelper {
 
     @Dependency(\.propertiesManager) private var propertiesManager
 
+    @Shared(.featureFlags) private var featureFlags: FeatureFlags
+    private var featureFlagsObservation: AnyCancellable?
+
     public init(factory: Factory) {
         self.factory = factory
 
-        AppEvent.featureFlags.subscribe(self, selector: #selector(featureFlagsChanged))
+        self.featureFlagsObservation = $featureFlags.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.featureFlagsChanged() }
     }
 
-    @objc
     func featureFlagsChanged() {
         startMaintenanceManager()
     }
 
     public func startMaintenanceManager() {
-        guard propertiesManager.featureFlags.serverRefresh else {
+        guard featureFlags.serverRefresh else {
             maintenanceManager.stopObserving()
             return // Feature is disabled
         }

@@ -22,6 +22,7 @@ import Ergonomics
 import ExtensionIPC
 import Foundation
 import PMLogger
+import Sharing
 import VPNShared
 
 #if os(iOS)
@@ -323,8 +324,8 @@ import VPNShared
         }
 
         private func isValid(authData: FullAuthData) -> Bool {
-            @Dependency(\.featureFlagProvider) var featureFlags
-            guard featureFlags[\.mismatchedCertificateRecovery] else {
+            @Shared(.featureFlags) var featureFlags
+            guard featureFlags.mismatchedCertificateRecovery else {
                 log.debug("Skipping certificate validation, Mismatched Certificate Recovery is off", category: .userCert)
                 return true
             }

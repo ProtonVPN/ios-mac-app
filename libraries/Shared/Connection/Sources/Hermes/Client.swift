@@ -21,6 +21,7 @@ import Dependencies
 import Domain
 import Foundation
 import Sharing
+import VPNAppCore
 
 private import Network
 private import Synchronization
@@ -85,55 +86,90 @@ public extension DependencyValues {
     }
 }
 
-// MARK: - Testing
-
-private extension SharedKey where Self == InMemoryKey<Bool>.Default {
-    static var hermesEnabled: Self {
-        self[.inMemory("HermesFeatureEnabled"), default: false]
-    }
-}
-
-private extension SharedKey where Self == InMemoryKey<[HermesResolver]>.Default {
+private extension SharedKey where Self == FileStorageKey<[HermesResolver]>.Default {
     static var hermesResolvers: Self {
-        self[.inMemory("HermesResolvers"), default: []]
+        self[.fileStorage(.documentsDirectory.appending(component: HermesResolver.storagePathComponent)), default: []]
     }
 }
 
-extension HermesClient: TestDependencyKey {
-    public static let testValue: HermesClient = {
-        @Shared(.hermesEnabled) var enabled
+private extension SharedKey where Self == AuthorizedFeatureSharedKey<HermesFeature> {
+    static var hermesEnabled: Self {
+        AuthorizedFeatureSharedKey()
+    }
+}
 
-        return .init {
-            SharedReader(wrappedValue: false, .hermesEnabled)
+#if DEBUG
+
+    // MARK: - Testing
+
+    private extension SharedKey where Self == InMemoryKey<Bool>.Default {
+        static var testHermesEnabled: Self {
+            self[.inMemory("HermesFeatureEnabled"), default: false]
+        }
+    }
+
+    private extension SharedKey where Self == InMemoryKey<[HermesResolver]>.Default {
+        static var testHermesResolvers: Self {
+            self[.inMemory("HermesResolvers"), default: []]
+        }
+    }
+#endif
+
+extension HermesClient: DependencyKey {
+    @Shared(.hermesResolvers) private static var hermesResolvers
+    @Shared(.hermesEnabled) private static var hermesEnabled = .defaultValue
+
+    public static let liveValue: HermesClient = .init {
+        $hermesEnabled.read { $0.boolValue }
+    } setIsEnabled: { newValue in
+        $hermesEnabled.withLock { $0 = .fromBoolValue(newValue) }
+    } activeHermesResolvers: {
+        $hermesResolvers.read { $0 }
+    } validateHermesLocation: { location in
+        HermesResolverLocationValidator.isValidIPv4(location) != nil
+    } addHermesResolver: { newResolver in
+        let newResolvers = hermesResolvers + [newResolver]
+        $hermesResolvers.withLock { $0 = newResolvers }
+        return true
+    } removeHermesResolver: { index in
+        var copy = hermesResolvers
+        copy.remove(at: index)
+        $hermesResolvers.withLock { $0 = copy }
+        return true
+    } applyDiff: { diff in
+        var copy = hermesResolvers
+        copy = copy.applying(diff) ?? copy
+        $hermesResolvers.withLock { $0 = copy }
+    }
+
+    #if DEBUG
+        public static let testValue: HermesClient = .init {
+            SharedReader(wrappedValue: false, .testHermesEnabled)
         } setIsEnabled: { newValue in
-            @Shared(.hermesEnabled) var hermesEnabled: Bool
+            @Shared(.testHermesEnabled) var hermesEnabled: Bool
             $hermesEnabled.withLock { $0 = newValue }
-            AppEvent.hermes.post()
         } activeHermesResolvers: {
-            SharedReader(wrappedValue: [], .hermesResolvers)
+            SharedReader(wrappedValue: [], .testHermesResolvers)
         } validateHermesLocation: { location in
             HermesResolverLocationValidator.isValidIPv4(location) != nil
         } addHermesResolver: { newResolver in
-            @Shared(.hermesResolvers) var hermesResolvers
+            @Shared(.testHermesResolvers) var hermesResolvers
             let newResolvers = hermesResolvers + [newResolver]
             $hermesResolvers.withLock { $0 = newResolvers }
-            AppEvent.hermes.post()
             return true
         } removeHermesResolver: { index in
-            @Shared(.hermesResolvers) var hermesResolvers
+            @Shared(.testHermesResolvers) var hermesResolvers
             var copy = hermesResolvers
             copy.remove(at: index)
             $hermesResolvers.withLock { $0 = copy }
-            AppEvent.hermes.post()
             return true
         } applyDiff: { diff in
-            @Shared(.hermesResolvers) var hermesResolvers
+            @Shared(.testHermesResolvers) var hermesResolvers
             var copy = hermesResolvers
             copy = copy.applying(diff) ?? copy
             $hermesResolvers.withLock { $0 = copy }
-            AppEvent.hermes.post()
         }
-    }()
+    #endif
 }
 
 // MARK: - Definitions
@@ -152,6 +188,21 @@ public extension HermesClient {
         }
 
         return hermesResolvers
+    }
+}
+
+private extension HermesFeature {
+    static func fromBoolValue(_ value: Bool) -> HermesFeature {
+        value ? .on : .off
+    }
+
+    var boolValue: Bool {
+        switch self {
+        case .off:
+            false
+        case .on:
+            true
+        }
     }
 }
 

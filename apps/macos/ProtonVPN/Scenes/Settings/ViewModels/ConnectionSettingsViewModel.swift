@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Combine
 import CommonNetworking
 import Connection
 import Dependencies
@@ -43,7 +44,6 @@ enum ConnectionSettingsError: FourCharCode, ProtonVPNError {
 final class ConnectionSettingsViewModel {
     @Dependency(\.profileAuthorizer) var profileAuthorizer
     @Dependency(\.featureAuthorizerProvider) var authorizerProvider
-    @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
 
     typealias Factory = CoreAlertServiceFactory
         & NavigationServiceFactory
@@ -78,9 +78,16 @@ final class ConnectionSettingsViewModel {
         }
     }
 
-    private var featureFlags: FeatureFlags {
-        propertiesManager.featureFlags
-    }
+    @Shared(.featureFlags) private var featureFlags: FeatureFlags
+    @Shared(.connectionProtocol) private var sharedConnectionProtocol: ConnectionProtocol
+    @Shared(.smartProtocol) private var sharedSmartProtocol: Bool
+    @Shared(.killSwitch) private var killSwitch: Bool
+
+    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
+    private let vpnAcceleratorReader = AuthorizedFeatureValue<VPNAccelerator>().sharedReader()
+    private let excludeLocalNetworksReader = AuthorizedFeatureValue<ExcludeLocalNetworks>().sharedReader()
+    private var observations = Set<AnyCancellable>()
+    private var portForwardingObservationTask: Task<Void, Never>?
 
     var reloadNeeded: (() -> Void)?
     var protocolPendingChanged: ((Bool) -> Void)?
@@ -88,17 +95,33 @@ final class ConnectionSettingsViewModel {
     init(factory: Factory) {
         self.factory = factory
         self.sysexPending = true
-        self.selectedProtocol = .smartProtocol // dummy value must be assigned before we can access `propertiesManager`
-        self.selectedProtocol = propertiesManager.connectionProtocol
+        self.selectedProtocol = .smartProtocol // dummy value must be assigned before we can access stored settings
+        self.selectedProtocol = sharedConnectionProtocol
 
-        let settingsChangedEvents: [AppEvent] = [
-            .vpnProtocol,
-            .excludeLocalNetworks,
-            .vpnAccelerator,
-            .portForwardingNotifications,
-            .profileContentChanged,
-        ]
-        settingsChangedEvents.subscribe(self, selector: #selector(settingsChanged))
+        AppEvent.profileContentChanged.subscribe(self, selector: #selector(settingsChanged))
+
+        // Refresh the screen when settings backed by `@Shared` / property providers change. These no
+        // longer post `AppEvent`s, so observe their publishers/streams directly.
+        $sharedConnectionProtocol.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.settingsChanged() }
+            .store(in: &observations)
+
+        vpnAcceleratorReader.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.settingsChanged() }
+            .store(in: &observations)
+
+        excludeLocalNetworksReader.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.settingsChanged() }
+            .store(in: &observations)
+
+        self.portForwardingObservationTask = Task { [weak self] in
+            for await _ in portForwardingPropertyProvider.portForwardingStream() {
+                await MainActor.run { self?.settingsChanged() }
+            }
+        }
 
         AppEvent.systemExtensionTourCancelled.subscribe(self, selector: #selector(tourCancelled))
 
@@ -106,12 +129,13 @@ final class ConnectionSettingsViewModel {
     }
 
     deinit {
+        portForwardingObservationTask?.cancel()
         NotificationCenter.default.removeObserver(self)
     }
 
     // MARK: - Available protocols and Profiles
 
-    lazy var availableConnectionProtocols: [ConnectionProtocol] = ConnectionProtocol.availableProtocols(wireguardTLSEnabled: propertiesManager.featureFlags.wireGuardTls)
+    lazy var availableConnectionProtocols: [ConnectionProtocol] = ConnectionProtocol.availableProtocols(wireguardTLSEnabled: featureFlags.wireGuardTls)
         .appending(selectedProtocol) // Edge case - user's protocol has been deprecated. Show it as disabled
         .uniqued
         .sorted(by: ConnectionProtocol.uiSort)
@@ -120,7 +144,7 @@ final class ConnectionSettingsViewModel {
         guard profileAuthorizer.canUseProfiles else {
             // On the free plan, post-rescope, we should only show the 'fastest' auto-connect option
             return [ProfileConstants.fastestProfile(
-                connectionProtocol: propertiesManager.connectionProtocol,
+                connectionProtocol: sharedConnectionProtocol,
                 defaultProfileAccessTier: .freeTier
             )]
         }
@@ -178,11 +202,11 @@ final class ConnectionSettingsViewModel {
         return profileIndex
     }
 
-    func displayState(for feature: (some ProvidableFeature & ToggleableFeature).Type) -> PaidFeatureDisplayState {
+    func displayState(for feature: (some ProvidableFeature & ToggleableFeature & Sendable).Type) -> PaidFeatureDisplayState {
         let authorizer: () -> FeatureAuthorizationResult = authorizerProvider.authorizer(for: feature)
         switch authorizer() {
         case .success:
-            return .available(enabled: featurePropertyProvider.getValue(for: feature) == .on, interactive: true)
+            return .available(enabled: featureValue(for: feature) == .on, interactive: true)
         case .failure(.featureDisabled):
             return .disabled
         case .failure(.requiresUpgrade):
@@ -266,7 +290,7 @@ final class ConnectionSettingsViewModel {
             let changeCompletionHandler: (Result<Void, Error>) -> Void = { [weak self] result in
                 self?.sysexPending = false
                 if case .success = result {
-                    self?.propertiesManager.smartProtocol = false
+                    self?.$sharedSmartProtocol.withLock { $0 = false }
                     self?.selectedProtocol = connectionProtocol
                 }
                 completion(result)
@@ -366,7 +390,7 @@ final class ConnectionSettingsViewModel {
 
             switch result {
             case .success:
-                propertiesManager.smartProtocol = true
+                $sharedSmartProtocol.withLock { $0 = true }
                 selectedProtocol = .smartProtocol
 
                 switch then {
@@ -433,12 +457,12 @@ final class ConnectionSettingsViewModel {
         switch VpnFeatureChangeState(connectionState: connectionState) {
         case .withConnectionUpdate:
             // in-place change when connected and using local agent
-            featurePropertyProvider.setValue(newValue)
+            setFeatureValue(newValue)
             connectionCommandClient.send(.applySettings([.vpnAccelerator(enabled)]))
             completion(true)
         case .withReconnect:
             alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.vpnProtocol, confirmHandler: { [weak self] in
-                self?.featurePropertyProvider.setValue(newValue)
+                setFeatureValue(newValue)
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "vpnAccelerator"])
                 self?.connectionCommandClient.send(.retry)
                 completion(true)
@@ -446,14 +470,14 @@ final class ConnectionSettingsViewModel {
                 completion(false)
             }))
         case .immediate:
-            featurePropertyProvider.setValue(newValue)
+            setFeatureValue(newValue)
             completion(true)
         }
     }
 
     func setPortForwardingNotifications(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
         let newValue: PortForwardingNotifications = enabled ? .on : .off
-        featurePropertyProvider.setValue(newValue)
+        setFeatureValue(newValue)
         completion(true)
     }
 
@@ -461,10 +485,10 @@ final class ConnectionSettingsViewModel {
         let isConnected = connectionState.isConnected
         let newValue: ExcludeLocalNetworks = enabled ? .on : .off
 
-        if propertiesManager.killSwitch {
+        if killSwitch {
             let alert = LANConnectionsKillSwitchConflictAlert(connected: isConnected) {
-                self.featurePropertyProvider.setValue(newValue)
-                self.propertiesManager.killSwitch = false
+                setFeatureValue(newValue)
+                self.$killSwitch.withLock { $0 = false }
                 if isConnected {
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks", "feature_additional": "killSwitch"])
                     self.connectionCommandClient.send(.retry)
@@ -479,13 +503,13 @@ final class ConnectionSettingsViewModel {
         }
 
         guard isConnected else {
-            featurePropertyProvider.setValue(newValue)
+            setFeatureValue(newValue)
             completion(true)
             return
         }
 
         alertService.push(alert: ReconnectOnSettingsChangeAlert(confirmHandler: {
-            self.featurePropertyProvider.setValue(newValue)
+            setFeatureValue(newValue)
             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])
             self.connectionCommandClient.send(.retry)
             completion(true)

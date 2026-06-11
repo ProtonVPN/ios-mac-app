@@ -25,8 +25,6 @@ import VPNShared
 
 @Reducer
 public struct ProtocolSettingsFeature: Sendable {
-    @Dependency(\.settingsStorage) var storage
-
     @ObservableState
     public struct State: Equatable {
         public var connectionProtocol: ConnectionProtocol
@@ -69,10 +67,9 @@ public struct ProtocolSettingsFeature: Sendable {
             }
             if state.connectionState == .disconnected {
                 return .run { send in
-                    await send(.setProtocol(TaskResult {
-                        try await storage.setConnectionProtocol(`protocol`)
-                        return `protocol`
-                    }))
+                    @Shared(.connectionProtocol) var connectionProtocol
+                    $connectionProtocol.withLock { $0 = `protocol` }
+                    await send(.setProtocol(.success(`protocol`)))
                 }
             } else {
                 return .run { send in
@@ -99,10 +96,9 @@ public struct ProtocolSettingsFeature: Sendable {
             return .run { send in
                 // let status = await connectionStatus()
                 // disconnectVPN()
-                await send(.setProtocol(TaskResult {
-                    try await storage.setConnectionProtocol(`protocol`)
-                    return `protocol`
-                }))
+                @Shared(.connectionProtocol) var connectionProtocol
+                $connectionProtocol.withLock { $0 = `protocol` }
+                await send(.setProtocol(.success(`protocol`)))
                 // guard case let .connected(specs) = status else { return }
                 // connectVPN(specs)
             }

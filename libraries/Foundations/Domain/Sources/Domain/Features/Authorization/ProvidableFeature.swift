@@ -16,13 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CommonNetworking
-import Domain
 import Foundation
 
-/// Defines the requirements for a feature that can be managed by the generic `AppFeaturePropertyProviderProtocol`
+/// Defines the requirements for a feature that can be stored, defaulted and authorized generically.
 ///
-/// Implement `AppFeature`'s interace to control whether the feature should be hidden from the user, displayed
+/// Implement `AppFeature`'s interface to control whether the feature should be hidden from the user, displayed
 /// as requiring an upgrade, or interactive, based on the static `canUse` function.
 ///
 /// Implementation of `ModularAppFeature` along with `StorableFeature` define how the feature's value will be stored.
@@ -37,10 +35,10 @@ public protocol DefaultableFeature {
 }
 
 public protocol StorableFeature: Codable {
-    /// Backwards compatibility allowing `AppFeaturePropertyProviderProtocol` to load global settings values (as
-    /// opposed user-specific) for this feature stored with a potentially different representation by older app
-    /// versions. This old value should be deleted after being loaded for the first user it is requested for,
-    /// otherwise it will act as an incorrect default value for other users.
+    /// Backwards compatibility allowing feature value loading of global settings values (as opposed user-specific) for
+    /// this feature stored with a potentially different representation by older app versions. This old value should be
+    /// deleted after being loaded for the first user it is requested for, otherwise it will act as an incorrect default
+    /// value for other users.
     ///
     /// By default, `LegacyStorageType` is set to `Void`, where no attempt is made to migrate using legacy values from
     /// storage.
@@ -51,9 +49,6 @@ public protocol StorableFeature: Codable {
     static var legacyConversion: ((LegacyStorageType) -> Self)? { get }
 
     static var storageKey: String { get }
-
-    /// notification sent whenever the current value changes
-    static var event: AppEvent? { get }
 }
 
 public extension StorableFeature where LegacyStorageType == Void {

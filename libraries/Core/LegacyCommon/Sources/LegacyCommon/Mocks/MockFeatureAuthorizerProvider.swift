@@ -18,6 +18,7 @@
 
 #if DEBUG
     import Dependencies
+    import Domain
     import Foundation
     import IssueReporting
 

@@ -18,7 +18,9 @@
 
 import CommonNetworking
 import Dependencies
+import Domain
 @testable import LegacyCommon
+import Sharing
 import VPNShared
 import XCTest
 
@@ -54,7 +56,6 @@ class FeatureAuthorizerProviderTests: XCTestCase {
     func testAuthorizationOfFeatureWithNoSubFeatures() {
         let provider = withDependencies {
             $0.credentialsProvider = .constant(credentials: .tier(.paidTier))
-            $0.featureFlagProvider = .constant(flags: .allDisabled)
         } operation: {
             LiveFeatureAuthorizerProvider()
         }
@@ -71,44 +72,45 @@ class FeatureAuthorizerProviderTests: XCTestCase {
     }
 
     func testAuthorizationBasedOnFeatureFlags() {
-        let provider = withDependencies {
-            $0.credentialsProvider = .constant(credentials: .tier(.paidTier))
-            $0.featureFlagProvider = .constant(flags: .allDisabled)
-        } operation: {
-            LiveFeatureAuthorizerProvider()
-        }
-
-        let authorizer = provider.authorizer(for: TestNetShieldType.self)
-
-        XCTAssertEqual(authorizer.canUseAnySubFeature, .failure(.featureDisabled))
-
         withDependencies {
-            $0.featureFlagProvider = .constant(flags: .allEnabled)
+            $0.defaultAppStorage = UserDefaults(suiteName: "FeatureAuthorizerTests-\(UUID().uuidString)")!
+            $0.credentialsProvider = .constant(credentials: .tier(.paidTier))
         } operation: {
+            @Shared(.featureFlags) var featureFlags
+            $featureFlags.withLock { $0 = .allDisabled }
+
+            let provider = LiveFeatureAuthorizerProvider()
+            let authorizer = provider.authorizer(for: TestNetShieldType.self)
+
+            XCTAssertEqual(authorizer.canUseAnySubFeature, .failure(.featureDisabled))
+
+            $featureFlags.withLock { $0 = .allEnabled }
             XCTAssertEqual(authorizer.canUseAnySubFeature, .success)
         }
     }
 
     func testSubFeatureAuthorization() {
-        let provider = withDependencies {
-            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-            $0.featureFlagProvider = .constant(flags: .allEnabled)
-        } operation: {
-            LiveFeatureAuthorizerProvider()
-        }
-
-        let authorizer = provider.authorizer(for: TestNetShieldType.self)
-
-        XCTAssertEqual(authorizer.canUseAnySubFeature, .success)
-        XCTAssertEqual(authorizer.canUseAllSubFeatures, .failure(.requiresUpgrade))
-        XCTAssertEqual(authorizer.canUse(.off), .success)
-        XCTAssertEqual(authorizer.canUse(.level1), .failure(.requiresUpgrade))
-
         withDependencies {
-            $0.credentialsProvider = .constant(credentials: .tier(.paidTier))
+            $0.defaultAppStorage = UserDefaults(suiteName: "FeatureAuthorizerTests-\(UUID().uuidString)")!
+            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
         } operation: {
-            XCTAssertEqual(authorizer.canUseAllSubFeatures, .success)
-            XCTAssertEqual(authorizer.canUse(.level1), .success)
+            @Shared(.featureFlags) var featureFlags
+            $featureFlags.withLock { $0 = .allEnabled }
+
+            let provider = LiveFeatureAuthorizerProvider()
+            let authorizer = provider.authorizer(for: TestNetShieldType.self)
+
+            XCTAssertEqual(authorizer.canUseAnySubFeature, .success)
+            XCTAssertEqual(authorizer.canUseAllSubFeatures, .failure(.requiresUpgrade))
+            XCTAssertEqual(authorizer.canUse(.off), .success)
+            XCTAssertEqual(authorizer.canUse(.level1), .failure(.requiresUpgrade))
+
+            withDependencies {
+                $0.credentialsProvider = .constant(credentials: .tier(.paidTier))
+            } operation: {
+                XCTAssertEqual(authorizer.canUseAllSubFeatures, .success)
+                XCTAssertEqual(authorizer.canUse(.level1), .success)
+            }
         }
     }
 

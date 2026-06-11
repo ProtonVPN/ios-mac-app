@@ -1,42 +1,44 @@
 //
-//  Created on 2025-05-19 by Pawel Jurczyk.
+//  Created on 18/08/2023.
 //
-//  Copyright (c) 2025 Proton AG
+//  Copyright (c) 2023 Proton AG
 //
-//  Proton VPN is free software: you can redistribute it and/or modify
+//  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
 //
-//  Proton VPN is distributed in the hope that it will be useful,
+//  ProtonVPN is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
+//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CommonNetworking
-import Domain
+import Foundation
 
-public enum Plutonium {
-    public static let defaultValue: Plutonium = .off
-
+/// Also known as `split-tcp`.
+public enum VPNAccelerator: String, Codable, ToggleableFeature {
     case off
     case on
 }
 
-extension Plutonium: Codable {}
+extension VPNAccelerator: PaidAppFeature {
+    public static let featureFlag: KeyPath<FeatureFlags, Bool>? = \.vpnAccelerator
 
-extension Plutonium: PaidAppFeature {
     public static func minTier(featureFlags _: FeatureFlags) -> Int {
         .paidTier
     }
 }
 
-extension Plutonium: ToggleableFeature {}
+extension VPNAccelerator: ModularAppFeature, DefaultableFeature, StorableFeature {
+    public static func defaultValue(userTier _: Int, featureFlags _: FeatureFlags) -> VPNAccelerator {
+        .on
+    }
 
-extension Plutonium: ModularAppFeature {
+    public static let storageKey: String = "VpnAcceleratorEnabled"
+
     public func canUse(userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         switch self {
         case .off:
@@ -49,16 +51,6 @@ extension Plutonium: ModularAppFeature {
             return .success
         }
     }
-}
 
-extension Plutonium: DefaultableFeature {
-    public static func defaultValue(userTier _: Int, featureFlags _: FeatureFlags) -> Plutonium {
-        .defaultValue
-    }
-}
-
-extension Plutonium: StorableFeature {
-    public static let storageKey: String = "PlutoniumEnabled"
-
-    public static let event: Domain.AppEvent? = .plutonium
+    public static let legacyConversion: ((Bool) -> Self)? = { $0 ? .on : .off }
 }

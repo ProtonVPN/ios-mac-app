@@ -54,7 +54,7 @@ public struct ServerItemFeature {
         public var underMaintenance: Bool {
             @Dependency(\.propertiesManager) var propertiesManager
             return serverInfo.logical.isUnderMaintenance
-                || serverInfo.protocolSupport.isDisjoint(with: propertiesManager.currentProtocolSupport)
+                || serverInfo.protocolSupport.isDisjoint(with: currentProtocolSupport())
         }
 
         var isConnected: Bool {

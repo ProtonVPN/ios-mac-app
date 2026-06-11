@@ -23,6 +23,7 @@ import CommonNetworking
 import Dependencies
 import Domain
 import Foundation
+import Sharing
 import VPNShared
 
 public enum ProfileManagerOperationOutcome {
@@ -48,7 +49,8 @@ public final class ProfileManager {
 
     public var customProfiles: [Profile] = []
     public var defaultProfiles: [Profile] {
-        ProfileConstants.defaultProfiles(connectionProtocol: propertiesManager.connectionProtocol)
+        @Shared(.connectionProtocol) var connectionProtocol
+        return ProfileConstants.defaultProfiles(connectionProtocol: connectionProtocol)
     }
 
     private var servers: [ServerModel] = []

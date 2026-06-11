@@ -94,8 +94,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         self.factory = factory
         super.init(factory: factory)
         propertiesManager.restoreStartOnBootStatus()
-
-        AppEvent.hermes.subscribe(self, selector: #selector(updateWiregardConfig))
     }
 
     // MARK: public log in interface (completion handlers)
@@ -189,7 +187,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             $wireguardConfig.withLock { $0 = clientConfig.wireGuardConfig }
             @Shared(.smartProtocolConfig) var smartProtocolConfig
             $smartProtocolConfig.withLock { $0 = clientConfig.smartProtocolConfig }
-            propertiesManager.featureFlags = clientConfig.featureFlags
+            @Shared(.featureFlags) var featureFlags
+            $featureFlags.withLock { $0 = clientConfig.featureFlags }
             propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
             @Dependency(\.serverChangeStorage) var storage
             storage.config = clientConfig.serverChangeConfig
@@ -198,7 +197,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             propertiesManager.streamingServices = streamingServices.streamingServices
             propertiesManager.streamingResourcesUrl = streamingServices.resourceBaseURL
         }
-        if propertiesManager.featureFlags.pollNotificationAPI {
+        @Shared(.featureFlags) var pollFeatureFlags
+        if pollFeatureFlags.pollNotificationAPI {
             Task { @MainActor in
                 self.announcementRefresher.tryRefreshing()
             }
@@ -493,13 +493,5 @@ private extension WireguardConfig {
             defaultTlsPorts: defaultTlsPorts,
             dns: hermesResolvers.map(\.location)
         )
-    }
-}
-
-extension AppSessionManagerImplementation {
-    @objc
-    private func updateWiregardConfig(_: Notification) {
-        @Shared(.wireguardConfig) var wireguardConfig
-        $wireguardConfig.withLock { $0 = $0.refreshConfig() }
     }
 }

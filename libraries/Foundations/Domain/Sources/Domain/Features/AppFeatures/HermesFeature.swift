@@ -1,5 +1,5 @@
 //
-//  Created on 07/08/2025 by Max Kupetskyi.
+//  Created on 04/04/2025 by adam.
 //
 //  Copyright (c) 2025 Proton AG
 //
@@ -16,27 +16,24 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CommonNetworking
-import Domain
-
-public enum PortForwardingNotifications {
-    public static let defaultValue: PortForwardingNotifications = .off
+public enum HermesFeature {
+    public static let defaultValue: HermesFeature = .off
 
     case off
     case on
 }
 
-extension PortForwardingNotifications: Codable {}
+extension HermesFeature: Codable {}
 
-extension PortForwardingNotifications: PaidAppFeature {
+extension HermesFeature: PaidAppFeature {
     public static func minTier(featureFlags _: FeatureFlags) -> Int {
         .paidTier
     }
 }
 
-extension PortForwardingNotifications: ToggleableFeature {}
+extension HermesFeature: ToggleableFeature {}
 
-extension PortForwardingNotifications: ModularAppFeature {
+extension HermesFeature: ModularAppFeature {
     public func canUse(userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         switch self {
         case .off:
@@ -51,14 +48,12 @@ extension PortForwardingNotifications: ModularAppFeature {
     }
 }
 
-extension PortForwardingNotifications: DefaultableFeature {
-    public static func defaultValue(userTier _: Int, featureFlags _: FeatureFlags) -> PortForwardingNotifications {
+extension HermesFeature: DefaultableFeature {
+    public static func defaultValue(userTier _: Int, featureFlags _: FeatureFlags) -> HermesFeature {
         .defaultValue
     }
 }
 
-extension PortForwardingNotifications: StorableFeature {
-    public static let storageKey: String = "PortForwardingNotificationsEnabled"
-
-    public static let event: Domain.AppEvent? = .portForwardingNotifications
+extension HermesFeature: StorableFeature {
+    public static let storageKey: String = "HermesFeatureEnabled"
 }

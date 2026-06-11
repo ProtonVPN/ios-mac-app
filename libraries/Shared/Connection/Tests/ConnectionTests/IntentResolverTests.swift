@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 @testable import Connection
+@testable import CoreConnection
 import Dependencies
 import Domain
 import DomainTestSupport
@@ -35,7 +36,7 @@ struct IntentResolverTests {
 
         let resolved = try await withDependencies {
             $0.serverSelector = .init(select: { _, _, _ in expectedServer })
-            $0.connectionFeatureProvider = .init(connectionFeatures: { .mock })
+            $0.connectionFeatureProvider.connectionFeatures = { .mock }
         } operation: {
             try await ConnectionIntentResolver.liveValue.resolve(resolveIntent)
         }

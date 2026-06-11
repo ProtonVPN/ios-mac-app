@@ -106,7 +106,7 @@ public struct CountryFeature {
         var underMaintenance: Bool {
             @Dependency(\.propertiesManager) var propertiesManager
             return serverGroup.isUnderMaintenance
-                || serverGroup.protocolSupport.isDisjoint(with: propertiesManager.currentProtocolSupport)
+                || serverGroup.protocolSupport.isDisjoint(with: currentProtocolSupport())
         }
 
         var isConnected: Bool {
@@ -231,8 +231,8 @@ public struct CountryFeature {
 
     private func loadServerSections(for state: State) -> IdentifiedArrayOf<ServerSection.State> {
         let kindFilter = state.serverGroup.kind.filter
-        let protocolFilter = VPNServerFilter.supports(protocol: propertiesManager.currentProtocolSupport)
-        let featureFilter = VPNServerFilter.features(propertiesManager.secureCoreToggle ? .secureCore : .standard)
+        let protocolFilter = VPNServerFilter.supports(protocol: currentProtocolSupport())
+        let featureFilter = VPNServerFilter.features(ServerType.current == .secureCore ? .secureCore : .standard)
         let filters = [kindFilter, featureFilter, protocolFilter]
 
         let servers = serverRepository.getServers(filteredBy: filters, orderedBy: .loadAscending)

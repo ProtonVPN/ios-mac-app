@@ -1,5 +1,5 @@
 //
-//  Created on 04/04/2025 by adam.
+//  Created on 2025-05-19 by Pawel Jurczyk.
 //
 //  Copyright (c) 2025 Proton AG
 //
@@ -16,27 +16,24 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CommonNetworking
-import Domain
-
-public enum HermesFeature {
-    public static let defaultValue: HermesFeature = .off
+public enum Plutonium {
+    public static let defaultValue: Plutonium = .off
 
     case off
     case on
 }
 
-extension HermesFeature: Codable {}
+extension Plutonium: Codable {}
 
-extension HermesFeature: PaidAppFeature {
+extension Plutonium: PaidAppFeature {
     public static func minTier(featureFlags _: FeatureFlags) -> Int {
         .paidTier
     }
 }
 
-extension HermesFeature: ToggleableFeature {}
+extension Plutonium: ToggleableFeature {}
 
-extension HermesFeature: ModularAppFeature {
+extension Plutonium: ModularAppFeature {
     public func canUse(userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         switch self {
         case .off:
@@ -51,14 +48,12 @@ extension HermesFeature: ModularAppFeature {
     }
 }
 
-extension HermesFeature: DefaultableFeature {
-    public static func defaultValue(userTier _: Int, featureFlags _: FeatureFlags) -> HermesFeature {
+extension Plutonium: DefaultableFeature {
+    public static func defaultValue(userTier _: Int, featureFlags _: FeatureFlags) -> Plutonium {
         .defaultValue
     }
 }
 
-extension HermesFeature: StorableFeature {
-    public static let storageKey: String = "HermesFeatureEnabled"
-
-    public static let event: Domain.AppEvent? = .hermes
+extension Plutonium: StorableFeature {
+    public static let storageKey: String = "PlutoniumEnabled"
 }

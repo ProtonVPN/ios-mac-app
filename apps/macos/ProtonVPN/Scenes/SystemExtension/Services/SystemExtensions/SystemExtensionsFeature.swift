@@ -305,9 +305,10 @@ struct SystemExtensionsFeature {
     }
 
     private func shouldPerformInstallCheck() -> Bool {
-        vpnKeychain.userIsLoggedIn &&
+        @Shared(.connectionProtocol) var connectionProtocol
+        return vpnKeychain.userIsLoggedIn &&
             (
-                propertiesManager.connectionProtocol.requiresSystemExtension ||
+                connectionProtocol.requiresSystemExtension ||
                     profilesClient.hasCustomProfilesRequiringSystemExtension()
             )
     }

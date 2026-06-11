@@ -20,10 +20,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Combine
 import Dependencies
 import Domain
 import Foundation
 import LegacyCommon
+import Sharing
 import VPNAppCore
 
 enum ProfilesSectionListCell {
@@ -37,6 +39,12 @@ class ProfilesSectionViewModel {
     private let profileManager: ProfileManager
     private let navService: NavigationService
     private let alertService: CoreAlertService
+
+    @Shared(.featureFlags) private var featureFlags: FeatureFlags
+    private var featureFlagsObservation: AnyCancellable?
+
+    @Shared(.connectionProtocol) private var connectionProtocol: ConnectionProtocol
+    private var connectionProtocolObservation: AnyCancellable?
 
     var contentChanged: (() -> Void)?
 
@@ -64,11 +72,16 @@ class ProfilesSectionViewModel {
         let events: [AppEvent] = [
             .profileContentChanged,
             .planChanged,
-            .featureFlags,
-            .vpnProtocol,
-            .smartProtocol,
         ]
         events.subscribe(self, selector: #selector(profilesChanged))
+
+        self.featureFlagsObservation = $featureFlags.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.profilesChanged() }
+
+        self.connectionProtocolObservation = $connectionProtocol.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.profilesChanged() }
     }
 
     func cellHeight(forRow index: Int) -> CGFloat {

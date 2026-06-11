@@ -104,7 +104,8 @@ class CreateOrEditProfileViewModel: NSObject {
         self.profileService = profileService
         self.protocolService = protocolSelectionService
         self.profileManager = profileManager
-        self.selectedProtocol = propertiesManager.connectionProtocol
+        @Shared(.connectionProtocol) var connectionProtocol
+        self.selectedProtocol = connectionProtocol
 
         if case let .circle(color) = profile?.profileIcon {
             self.colorPickerViewModel = ColorPickerViewModel(with: UIColor(rgbHex: color))
@@ -428,7 +429,7 @@ class CreateOrEditProfileViewModel: NSObject {
             return
         }
 
-        let preferredProtocol = propertiesManager.connectionProtocol
+        @Shared(.connectionProtocol) var preferredProtocol
         if selectedProtocol != preferredProtocol,
            selectedServerOfferingSupports(connectionProtocol: preferredProtocol) {
             selectedProtocol = preferredProtocol
@@ -446,11 +447,12 @@ class CreateOrEditProfileViewModel: NSObject {
         let supportedProtocols = ConnectionProtocol.allCases
             .filter { !$0.isDeprecated && selectedServerOfferingSupports(connectionProtocol: $0) }
 
+        @Shared(.featureFlags) var featureFlags
         let vpnProtocolViewModel = VpnProtocolViewModel(
             connectionProtocol: selectedProtocol,
             smartProtocolConfig: smartProtocolConfig,
             supportedProtocols: supportedProtocols,
-            featureFlags: propertiesManager.featureFlags
+            featureFlags: featureFlags
         )
 
         vpnProtocolViewModel.protocolChanged = { [self] connectionProtocol, _ in

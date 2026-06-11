@@ -32,6 +32,7 @@ import ModalsServices
 import NetShield
 import Payments
 import ProtonCoreFeatureFlags
+import Sharing
 import Strings
 import VPNAppCore
 
@@ -43,7 +44,6 @@ public struct HomeFeature {
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.alertService) private var alertService
     @Dependency(\.continuousClock) private var clock
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.networkInterfacePropertiesProvider) private var networkInterfacePropertiesProvider
     #if os(iOS)
         @Dependency(\.openCredentiallessSignUp) private var openCredentiallessSignUp
@@ -600,7 +600,8 @@ private extension HomeFeature {
     /// Returns an alert if any pre-connect intercept (e.g. misconfigured LAN) applies to the
     /// pending connect; otherwise `nil`.
     func interceptAlert(for pending: PendingConnect) -> AlertState<Action.HomeAlert>? {
-        if propertiesManager.featureFlags.unsafeLanWarnings,
+        @Shared(.featureFlags) var featureFlags
+        if featureFlags.unsafeLanWarnings,
            !killSwitch,
            let bad = networkInterfacePropertiesProvider.firstBadInterface() {
             return bad.interceptAlert(

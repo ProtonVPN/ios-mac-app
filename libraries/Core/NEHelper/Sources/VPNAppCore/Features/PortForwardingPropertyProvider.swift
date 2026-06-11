@@ -21,6 +21,7 @@ import Dependencies
 import Domain
 import Ergonomics
 import Foundation
+import Sharing
 
 public struct PortForwardingPropertyProvider {
     /// Get the current port forwarding state
@@ -32,50 +33,67 @@ public struct PortForwardingPropertyProvider {
     /// Stream of port forwarding changes
     public var portForwardingStream: () -> AsyncStream<Bool?>
 
-    /// Adjust settings after plan change
-    public var adjustAfterPlanChangeClosure: (_ from: Int, _ to: Int) -> Void
-
     public init(
         getPortForwarding: @escaping () -> Bool?,
         setPortForwarding: @escaping (Bool?) -> Void,
-        portForwardingStream: @escaping () -> AsyncStream<Bool?>,
-        adjustAfterPlanChange: @escaping (Int, Int) -> Void
+        portForwardingStream: @escaping () -> AsyncStream<Bool?>
     ) {
         self.getPortForwarding = getPortForwarding
         self.setPortForwarding = setPortForwarding
         self.portForwardingStream = portForwardingStream
-        self.adjustAfterPlanChangeClosure = adjustAfterPlanChange
     }
 }
 
 // MARK: - Dependency Key
 
-extension PortForwardingPropertyProvider: TestDependencyKey {
+extension PortForwardingPropertyProvider: DependencyKey {
     private static let key = "PortForwarding_"
 
-    public static let testValue: Self = {
-        let changeSubject = CurrentValueSubject<Bool?, Never>(false)
+    public static let liveValue: Self = {
+        let storage: UserScopedAppStorageKey<Bool?> = .bool(key)
 
-        return .init(
-            getPortForwarding: { changeSubject.value },
-            setPortForwarding: { newValue in
-                changeSubject.send(newValue)
-            },
-            portForwardingStream: {
-                AsyncStream { continuation in
-                    let cancellable = changeSubject
-                        .removeDuplicates()
-                        .sink { value in
-                            continuation.yield(value)
-                        }
-                    continuation.onTermination = { _ in
-                        cancellable.cancel()
-                    }
-                }
-            },
-            adjustAfterPlanChange: { _, _ in }
+        let canUse: () -> Bool = {
+            @SharedReader(.userTier) var userTier: Int?
+            @Shared(.featureFlags) var featureFlags: FeatureFlags
+            return PortForwardingFeature.canUse(userTier: userTier ?? .freeTier, featureFlags: featureFlags).isAllowed
+        }
+
+        let getPortForwarding: () -> Bool? = {
+            guard canUse() else { return nil }
+            return storage.currentValue() ?? false // false is the default value
+        }
+
+        return Self(
+            getPortForwarding: getPortForwarding,
+            setPortForwarding: { storage.setCurrentValue($0) },
+            portForwardingStream: { storage.mappedStream { _ in getPortForwarding() } }
         )
     }()
+
+    #if DEBUG
+        public static let testValue: Self = {
+            let changeSubject = CurrentValueSubject<Bool?, Never>(false)
+
+            return .init(
+                getPortForwarding: { changeSubject.value },
+                setPortForwarding: { newValue in
+                    changeSubject.send(newValue)
+                },
+                portForwardingStream: {
+                    AsyncStream { continuation in
+                        let cancellable = changeSubject
+                            .removeDuplicates()
+                            .sink { value in
+                                continuation.yield(value)
+                            }
+                        continuation.onTermination = { _ in
+                            cancellable.cancel()
+                        }
+                    }
+                }
+            )
+        }()
+    #endif
 }
 
 public extension DependencyValues {

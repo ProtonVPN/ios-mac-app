@@ -20,10 +20,8 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Dependencies
 import Ergonomics
 import Foundation
-import VPNShared
 
 public struct FeatureFlags: Codable, DefaultableProperty {
     public let smartReconnect: Bool
@@ -114,45 +112,5 @@ public struct FeatureFlags: Codable, DefaultableProperty {
 
     private mutating func enable(_ keyPath: WritableKeyPath<FeatureFlags, Bool>) {
         self[keyPath: keyPath] = true
-    }
-}
-
-public struct FeatureFlagProvider {
-    public var getFeatureFlags: () -> FeatureFlags
-    public var setFeatureFlags: (FeatureFlags) -> Void
-
-    public init(getFeatureFlags: @escaping () -> FeatureFlags, setFeatureFlags: @escaping (FeatureFlags) -> Void) {
-        self.getFeatureFlags = getFeatureFlags
-        self.setFeatureFlags = setFeatureFlags
-    }
-}
-
-extension FeatureFlagProvider: TestDependencyKey {
-    #if DEBUG
-        public static var testValue: FeatureFlagProvider = .constant(flags: .allEnabled)
-    #else
-        public static let testValue: FeatureFlagProvider = {
-            fatalError("\(Self.self) must have a implementation")
-        }()
-    #endif
-
-    public static func constant(flags: FeatureFlags) -> FeatureFlagProvider {
-        FeatureFlagProvider(
-            getFeatureFlags: { flags },
-            setFeatureFlags: { _ in }
-        )
-    }
-}
-
-public extension FeatureFlagProvider {
-    subscript(_ keyPath: KeyPath<FeatureFlags, Bool>) -> Bool {
-        getFeatureFlags()[keyPath: keyPath]
-    }
-}
-
-public extension DependencyValues {
-    var featureFlagProvider: FeatureFlagProvider {
-        get { self[FeatureFlagProvider.self] }
-        set { self[FeatureFlagProvider.self] = newValue }
     }
 }

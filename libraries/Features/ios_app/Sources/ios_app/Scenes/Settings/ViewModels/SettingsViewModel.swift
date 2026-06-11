@@ -57,6 +57,9 @@ final class SettingsViewModel {
 
     @Dependency(\.propertiesManager) private var propertiesManager
     @Shared(.connectionState) private var connectionState: ConnectionState
+    @Shared(.featureFlags) private var featureFlags: Domain.FeatureFlags
+    @Shared(.connectionProtocol) private var sharedConnectionProtocol: Domain.ConnectionProtocol
+    @Shared(.killSwitch) private var killSwitch: Bool
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
@@ -76,7 +79,6 @@ final class SettingsViewModel {
 
     @Dependency(\.settingsClient) var settingsClient
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
-    @Dependency(\.appFeaturePropertyProvider) private var featurePropertyProvider
     lazy var netShieldTypeAuthorizer = featureAuthorizerProvider.authorizer(forSubFeatureOf: NetShieldType.self)
 
     @Dependency(\.hermesClient) private var hermesClient
@@ -167,11 +169,25 @@ final class SettingsViewModel {
 
         let reloadEvents: [AppEvent] = [
             .sessionManagerDataReloaded,
-            .featureFlags,
             .credentialsChanged,
-            .smartProtocol,
         ]
         reloadEvents.subscribe(self, selector: #selector(reload))
+
+        $featureFlags
+            .publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.reload()
+            }
+            .store(in: &cancellables)
+
+        $sharedConnectionProtocol
+            .publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.reload()
+            }
+            .store(in: &cancellables)
 
         $connectionState
             .publisher
@@ -309,11 +325,14 @@ final class SettingsViewModel {
     }
 
     private var securitySection: TableViewSection {
-        let vpnProtocol = propertiesManager.vpnProtocol
-
         var cells: [TableViewCellModel] = []
 
-        let protocolValue = propertiesManager.smartProtocol ? Localizable.smartTitle : vpnProtocol.localizedDescription
+        let protocolValue: String = switch sharedConnectionProtocol {
+        case .smartProtocol:
+            Localizable.smartTitle
+        case let .vpnProtocol(vpnProtocol):
+            vpnProtocol.localizedDescription
+        }
         cells.append(.pushKeyValue(key: Localizable.protocol, value: protocolValue, handler: { [weak self] in
             self?.pushProtocolViewController()
         }))
@@ -332,7 +351,7 @@ final class SettingsViewModel {
 
         cells.append(.upsellableToggle(
             title: Localizable.killSwitch,
-            state: { [unowned self] in .available(enabled: propertiesManager.killSwitch, interactive: true) },
+            state: { [unowned self] in .available(enabled: killSwitch, interactive: true) },
             upsell: {
                 // No Upsell: Kill Switch is a free feature
             },
@@ -385,11 +404,11 @@ final class SettingsViewModel {
                             log.assertionFailure("VPNAccelerator should never require a reconnect on iOS")
                             fallthrough
                         case .withConnectionUpdate:
-                            self.featurePropertyProvider.setValue(acceleratorValue)
+                            setFeatureValue(acceleratorValue)
                             self.apply(agentFeatureChange: .vpnAccelerator(toggleOn))
                             callback(toggleOn)
                         case .immediate:
-                            self.featurePropertyProvider.setValue(toggleOn ? VPNAccelerator.on : VPNAccelerator.off)
+                            setFeatureValue(toggleOn ? VPNAccelerator.on : VPNAccelerator.off)
                             callback(toggleOn)
                         }
                     }
@@ -399,11 +418,11 @@ final class SettingsViewModel {
         ]
     }
 
-    func displayState(for feature: (some ProvidableFeature & ToggleableFeature).Type) -> PaidFeatureDisplayState {
+    func displayState(for feature: (some ProvidableFeature & ToggleableFeature & Sendable).Type) -> PaidFeatureDisplayState {
         let authorizer: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: feature)
         switch authorizer() {
         case .success:
-            return .available(enabled: featurePropertyProvider.getValue(for: feature) == .on, interactive: true)
+            return .available(enabled: featureValue(for: feature) == .on, interactive: true)
         case .failure(.featureDisabled):
             return .disabled
         case .failure(.requiresUpgrade):
@@ -550,7 +569,7 @@ final class SettingsViewModel {
     private var connectionSection: TableViewSection? {
         var cells: [TableViewCellModel] = []
 
-        if propertiesManager.featureFlags.vpnAccelerator {
+        if featureFlags.vpnAccelerator {
             cells.append(contentsOf: vpnAcceleratorSection)
         }
 
@@ -564,14 +583,14 @@ final class SettingsViewModel {
     private func switchLANCallback() -> ((Bool, @escaping (Bool) -> Void) -> Void) {
         { toggleOn, callback in
             let isActive = self.isActive()
-            let excludeLAN = self.featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self)
+            let excludeLAN = featureValue(for: ExcludeLocalNetworks.self)
 
             var alert: SystemAlert
 
-            if self.propertiesManager.killSwitch, excludeLAN == .off {
+            if self.killSwitch, excludeLAN == .off {
                 alert = LANConnectionsKillSwitchConflictAlert(connected: isActive) {
-                    self.featurePropertyProvider.setValue(ExcludeLocalNetworks.on)
-                    self.propertiesManager.killSwitch = false
+                    setFeatureValue(ExcludeLocalNetworks.on)
+                    self.$killSwitch.withLock { $0 = false }
                     if isActive {
                         log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks", "feature_additional": "killSwitch"])
                         self.reconnect(with: .allowLAN(false))
@@ -583,15 +602,15 @@ final class SettingsViewModel {
                 }
             } else if isActive {
                 alert = ReconnectOnSettingsChangeAlert(confirmHandler: {
-                    self.featurePropertyProvider.setValue(toggleOn ? ExcludeLocalNetworks.on : .off)
+                    setFeatureValue(toggleOn ? ExcludeLocalNetworks.on : .off)
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])
                     self.reconnect(with: .allowLAN(false))
                     callback(toggleOn)
                 }, cancelHandler: {
-                    callback(self.featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on)
+                    callback(featureValue(for: ExcludeLocalNetworks.self) == .on)
                 })
             } else {
-                self.featurePropertyProvider.setValue(toggleOn ? ExcludeLocalNetworks.on : .off)
+                setFeatureValue(toggleOn ? ExcludeLocalNetworks.on : .off)
                 callback(toggleOn)
                 return
             }
@@ -606,10 +625,10 @@ final class SettingsViewModel {
 
             var alert: SystemAlert
 
-            if self.featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on, !self.propertiesManager.killSwitch {
+            if featureValue(for: ExcludeLocalNetworks.self) == .on, !self.killSwitch {
                 alert = KillSwitchConflictAlert {
-                    self.featurePropertyProvider.setValue(ExcludeLocalNetworks.off)
-                    self.propertiesManager.killSwitch = true
+                    setFeatureValue(ExcludeLocalNetworks.off)
+                    self.$killSwitch.withLock { $0 = true }
                     if isActive {
                         log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch", "feature_additional": "excludeLocalNetworks"])
                         self.reconnect(with: .killSwitch(toggleOn))
@@ -621,16 +640,16 @@ final class SettingsViewModel {
                 }
             } else if isActive {
                 alert = ReconnectOnSettingsChangeAlert(confirmHandler: {
-                    self.propertiesManager.killSwitch.toggle()
+                    self.$killSwitch.withLock { $0.toggle() }
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
                     self.reconnect(with: .killSwitch(toggleOn))
-                    callback(self.propertiesManager.killSwitch)
+                    callback(self.killSwitch)
                 }, cancelHandler: {
-                    callback(self.propertiesManager.killSwitch)
+                    callback(self.killSwitch)
                 })
             } else {
-                self.propertiesManager.killSwitch.toggle()
-                callback(self.propertiesManager.killSwitch)
+                self.$killSwitch.withLock { $0.toggle() }
+                callback(self.killSwitch)
                 return
             }
 
@@ -740,9 +759,9 @@ final class SettingsViewModel {
     private func pushProtocolViewController() {
         @Shared(.smartProtocolConfig) var smartProtocolConfig
         let vpnProtocolViewModel = VpnProtocolViewModel(
-            connectionProtocol: propertiesManager.connectionProtocol,
+            connectionProtocol: sharedConnectionProtocol,
             smartProtocolConfig: smartProtocolConfig,
-            featureFlags: propertiesManager.featureFlags
+            featureFlags: featureFlags
         )
         vpnProtocolViewModel.protocolChangeConfirmation = { [unowned self] newProtocol, completion in
             switch getProtocolChangeAvailability(for: newProtocol) {
@@ -780,13 +799,7 @@ final class SettingsViewModel {
         }
 
         vpnProtocolViewModel.protocolChanged = { [self] newProtocol, shouldReconnect in
-            switch newProtocol {
-            case .smartProtocol:
-                propertiesManager.smartProtocol = true
-            case let .vpnProtocol(vpnProtocol):
-                propertiesManager.smartProtocol = false
-                propertiesManager.vpnProtocol = vpnProtocol
-            }
+            $sharedConnectionProtocol.withLock { $0 = newProtocol }
 
             switch getProtocolChangeAvailability(for: newProtocol) {
             case .immediate:
@@ -983,7 +996,8 @@ final class SettingsViewModel {
         // KS and LAN features are applied by the viewmodel.
         // We only need to worry about updating the protocol here.
         if case let .connectionProtocol(connectionProtocol) = tunnelFeatureChange {
-            propertiesManager.connectionProtocol = connectionProtocol
+            @Shared(.connectionProtocol) var sharedConnectionProtocol
+            $sharedConnectionProtocol.withLock { $0 = connectionProtocol }
         }
         if showStatusViewController {
             connectionStatusService.presentStatusViewController()
@@ -998,7 +1012,7 @@ final class SettingsViewModel {
     }
 
     private func retryConnection() {
-        let connectionProtocol = propertiesManager.connectionProtocol
+        @Shared(.connectionProtocol) var connectionProtocol
         connectionCommandClient.send(.reconnect(connectionProtocol))
     }
 

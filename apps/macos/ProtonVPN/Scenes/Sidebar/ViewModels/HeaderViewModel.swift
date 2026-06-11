@@ -32,6 +32,7 @@ import Domain
 import Ergonomics
 import LegacyCommon
 import Localization
+import Sharing
 import Strings
 import Theme
 import VPNAppCore
@@ -48,7 +49,6 @@ protocol HeaderViewModelFactory {
 }
 
 final class HeaderViewModel {
-    @Dependency(\.featureFlagProvider) var featureFlags
     @Dependency(\.credentialsProvider) var credentials
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
@@ -169,7 +169,8 @@ final class HeaderViewModel {
 
     func changeServerAction() {
         let spec = ConnectionSpec(location: .any(.random), features: [])
-        connectionCommandClient.send(.connect(spec, propertiesManager.connectionProtocol, .changeServer))
+        @Shared(.connectionProtocol) var connectionProtocol
+        connectionCommandClient.send(.connect(spec, connectionProtocol, .changeServer))
     }
 
     @objc
@@ -186,7 +187,8 @@ final class HeaderViewModel {
     // MARK: - Announcements bell
 
     var showAnnouncements: Bool {
-        guard propertiesManager.featureFlags.pollNotificationAPI else {
+        @Shared(.featureFlags) var featureFlags
+        guard featureFlags.pollNotificationAPI else {
             return false
         }
         return announcementManager.fetchCurrentAnnouncementsFromStorage().contains(where: { $0.knownType == .default })
@@ -361,8 +363,7 @@ final class HeaderViewModel {
     }
 
     private func sendPortForwardingNotificationIfNeeded(portNumber: UInt16) {
-        @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
-        if featurePropertyProvider.getValue(for: PortForwardingNotifications.self) == .on {
+        if AuthorizedFeatureValue<PortForwardingNotifications>().value() == .on {
             DispatchQueue.main.async {
                 self.notificationManager.displayPFChange(portNumber: portNumber)
             }
@@ -370,8 +371,7 @@ final class HeaderViewModel {
     }
 
     private func sendPortForwardingNotificationErrorIfNeeded() {
-        @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
-        if featurePropertyProvider.getValue(for: PortForwardingNotifications.self) == .on {
+        if AuthorizedFeatureValue<PortForwardingNotifications>().value() == .on {
             DispatchQueue.main.async {
                 self.notificationManager.displayPFError()
             }

@@ -25,7 +25,6 @@ import Domain
 import Ergonomics
 import ExtensionManager
 import Foundation
-import LegacyCommon
 import PaymentsShared
 import Persistence
 import ProtonCoreFeatureFlags
@@ -184,7 +183,6 @@ struct SidebarFeature {
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.pendingDisconnectCompletions) private var pendingDisconnectCompletions
     @Dependency(\.continuousClock) private var clock
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.natPortMappingService) private var natPortMappingService
     @Dependency(\.plutoniumManager) private var plutoniumManager
@@ -196,6 +194,7 @@ struct SidebarFeature {
     @Dependency(\.sidebarProfileNameResolver) private var sidebarProfileNameResolver
 
     @Shared(.killSwitch) private var killSwitch: Bool
+    @Shared(.connectionProtocol) private var sharedConnectionProtocol: ConnectionProtocol
     @Shared(.plutoniumFeature) private var plutoniumFeature: PlutoniumFeatureToggle
 
     var body: some ReducerOf<Self> {
@@ -370,10 +369,10 @@ private extension SidebarFeature {
                 guard state.connectionState.isConnected else {
                     return .none
                 }
-                let spec = propertiesManager.lastConnectionIntent
+                let spec = ConnectionSpec()
                 let intent = connectionPreparationIntent(
                     spec: spec,
-                    connectionProtocol: propertiesManager.connectionProtocol
+                    connectionProtocol: sharedConnectionProtocol
                 )
                 log.info(
                     "Reconnecting due to killSwitch setting change",
@@ -464,7 +463,7 @@ private extension SidebarFeature {
                     if case let .unavailable(until, duration, exhaustedSkips) = availability {
                         let intent = connectionPreparationIntent(
                             spec: spec,
-                            connectionProtocol: connectionProtocol ?? propertiesManager.connectionProtocol
+                            connectionProtocol: connectionProtocol ?? sharedConnectionProtocol
                         )
                         state.pendingReconnectIntent = intent
                         return .send(.countriesSection(.quickSettings(.presentUpsell(
@@ -499,10 +498,10 @@ private extension SidebarFeature {
                     }
                 )
             case .connectionCommandReceived(.retry):
-                let spec = propertiesManager.lastConnectionIntent
+                let spec = ConnectionSpec()
                 let intent = connectionPreparationIntent(
                     spec: spec,
-                    connectionProtocol: propertiesManager.connectionProtocol
+                    connectionProtocol: sharedConnectionProtocol
                 )
                 log.info(
                     "Reconnecting via retry command",
@@ -519,10 +518,10 @@ private extension SidebarFeature {
                     .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
                 )
             case let .connectionCommandReceived(.reconnect(connectionProtocol)):
-                let spec = propertiesManager.lastConnectionIntent
+                let spec = ConnectionSpec()
                 let intent = connectionPreparationIntent(
                     spec: spec,
-                    connectionProtocol: connectionProtocol ?? propertiesManager.connectionProtocol
+                    connectionProtocol: connectionProtocol ?? sharedConnectionProtocol
                 )
                 log.info(
                     "Reconnecting via reconnect command",
@@ -759,7 +758,7 @@ private extension SidebarFeature {
     func performConnect(_ state: inout State, pending: PendingConnect) -> Effect<Action> {
         let intent = connectionPreparationIntent(
             spec: pending.spec,
-            connectionProtocol: pending.connectionProtocol ?? propertiesManager.connectionProtocol
+            connectionProtocol: pending.connectionProtocol ?? sharedConnectionProtocol
         )
         beginConnectingOverlay(&state)
         return .merge(
@@ -779,7 +778,7 @@ private extension SidebarFeature {
     /// follow-up "Continue anyway" / "Connect" doesn't loop on its own alert and so later
     /// intercepts further down the chain still get a chance to fire.
     func interceptAlert(for pending: PendingConnect) -> AlertState<Action.Alert>? {
-        let effectiveProtocol = pending.connectionProtocol ?? propertiesManager.connectionProtocol
+        let effectiveProtocol = pending.connectionProtocol ?? sharedConnectionProtocol
 
         // Plutonium + IKE conflict (macOS only). Fires when the user has Split Tunneling
         // enabled and tries to connect with IKEv2, which the Plutonium extension does not
@@ -810,8 +809,9 @@ private extension SidebarFeature {
 
         // Misconfigured LAN. Fires when an interface uses a non-RFC1918 subnet that the OS
         // would otherwise route around the tunnel. Kill Switch fully mitigates the issue.
+        @Shared(.featureFlags) var featureFlags
         if !pending.resolvedIntercepts.contains(.badLAN),
-           propertiesManager.featureFlags.unsafeLanWarnings,
+           featureFlags.unsafeLanWarnings,
            !killSwitch,
            let bad = networkInterfacePropertiesProvider.firstBadInterface() {
             return bad.interceptAlert(
@@ -827,8 +827,8 @@ private extension SidebarFeature {
         @SharedReader(.intentionallyDisconnected) var intentionallyDisconnected
         var overlay = state.connectingOverlay ?? ConnectingOverlayFeature.State()
         overlay.beginConnecting(
-            selectedProtocol: propertiesManager.connectionProtocol,
-            killSwitchEnabled: propertiesManager.killSwitch,
+            selectedProtocol: sharedConnectionProtocol,
+            killSwitchEnabled: killSwitch,
             intentionallyDisconnected: intentionallyDisconnected
         )
         state.overlayState = .connecting(overlay)
@@ -839,8 +839,8 @@ private extension SidebarFeature {
         var overlay = state.connectingOverlay ?? ConnectingOverlayFeature.State()
         overlay.sync(
             connectionState: connectionState,
-            selectedProtocol: propertiesManager.connectionProtocol,
-            killSwitchEnabled: propertiesManager.killSwitch,
+            selectedProtocol: sharedConnectionProtocol,
+            killSwitchEnabled: killSwitch,
             intentionallyDisconnected: intentionallyDisconnected
         )
         state.overlayState = .autoDismiss(overlay)
@@ -853,8 +853,8 @@ private extension SidebarFeature {
         @SharedReader(.intentionallyDisconnected) var intentionallyDisconnected
         overlay.sync(
             connectionState: connectionState,
-            selectedProtocol: propertiesManager.connectionProtocol,
-            killSwitchEnabled: propertiesManager.killSwitch,
+            selectedProtocol: sharedConnectionProtocol,
+            killSwitchEnabled: killSwitch,
             intentionallyDisconnected: intentionallyDisconnected
         )
         state.connectingOverlay = overlay
@@ -924,7 +924,7 @@ private extension SidebarFeature {
     }
 
     func currentlySelectedVpnProtocol() -> VpnProtocol? {
-        switch propertiesManager.connectionProtocol {
+        switch sharedConnectionProtocol {
         case let .vpnProtocol(vpnProtocol):
             vpnProtocol
         case .smartProtocol:

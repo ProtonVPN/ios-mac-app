@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 import CommonNetworking
 import ComposableArchitecture
 import Connection
@@ -34,9 +35,7 @@ final class AdvancedSettingsViewModel {
     private let factory: Factory
 
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    @Dependency(\.propertiesManager) private var propertiesManager
 
-    @Dependency(\.appFeaturePropertyProvider) private var featurePropertyProvider
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
     @Dependency(\.hermesClient) private var hermesClient
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
@@ -46,22 +45,22 @@ final class AdvancedSettingsViewModel {
     @Shared(.telemetryCrashReports) var telemetryCrashReports
     @Shared(.connectionState) private var connectionState: ConnectionState
 
-    private var featureFlags: FeatureFlags {
-        propertiesManager.featureFlags
-    }
+    @Shared(.featureFlags) private var featureFlags: FeatureFlags
 
     var reloadNeeded: (() -> Void)?
 
     lazy var hermesViewModel = HermesViewModel(factory: factory)
 
     private var natTypeObserverTask: Task<Void, Never>?
+    private var featureFlagsObservation: AnyCancellable?
 
     init(factory: Factory) {
         self.factory = factory
 
-        // Observe feature flags changes via NotificationCenter (legacy)
-        let events: [AppEvent] = [.featureFlags]
-        events.subscribe(self, selector: #selector(settingsChanged))
+        // Observe feature flags changes via the @Shared(.featureFlags) publisher
+        self.featureFlagsObservation = $featureFlags.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.settingsChanged() }
 
         // Observe NAT type changes via AsyncStream
         self.natTypeObserverTask = Task { [weak self] in
@@ -120,11 +119,11 @@ final class AdvancedSettingsViewModel {
         }
     }
 
-    func displayState(for feature: (some ProvidableFeature & ToggleableFeature).Type) -> PaidFeatureDisplayState {
+    func displayState(for feature: (some ProvidableFeature & ToggleableFeature & Sendable).Type) -> PaidFeatureDisplayState {
         let authorizer: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: feature)
         switch authorizer() {
         case .success:
-            return .available(enabled: featurePropertyProvider.getValue(for: feature) == .on, interactive: true)
+            return .available(enabled: featureValue(for: feature) == .on, interactive: true)
         case .failure(.featureDisabled):
             return .disabled
         case .failure(.requiresUpgrade):

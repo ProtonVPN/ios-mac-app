@@ -24,6 +24,7 @@ import NetShield
 import Strings
 import SwiftUI
 import Theme
+import VPNAppCore
 import VPNShared
 
 @Reducer

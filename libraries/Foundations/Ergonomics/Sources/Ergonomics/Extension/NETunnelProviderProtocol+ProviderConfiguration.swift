@@ -19,7 +19,6 @@
 import Foundation
 import NetworkExtension
 
-@available(tvOS 17.0, *)
 public extension NETunnelProviderProtocol {
     fileprivate enum CustomKeys: String, CaseIterable {
         case connectedLogicalIdKey = "PVPNLogicalID"
@@ -111,7 +110,6 @@ public extension NETunnelProviderProtocol {
     }
 }
 
-@available(tvOS 17.0, *)
 private extension [String: Any] {
     subscript(_ customKey: NETunnelProviderProtocol.CustomKeys) -> Any? {
         get {

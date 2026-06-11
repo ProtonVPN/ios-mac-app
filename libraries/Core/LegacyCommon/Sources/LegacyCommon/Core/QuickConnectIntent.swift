@@ -40,8 +40,8 @@ public enum QuickConnectIntent {
     public static func resolve(
         profileManager: ProfileManager
     ) -> (spec: ConnectionSpec, connectionProtocol: ConnectionProtocol?) {
-        @Dependency(\.propertiesManager) var propertiesManager
         @Dependency(\.profileAuthorizer) var profileAuthorizer
+        @Shared(.connectionProtocol) var connectionProtocol
         @SharedReader(.userTier) var userTier
         @SharedReader(.secureCoreToggle) var secureCoreToggle
 
@@ -57,7 +57,7 @@ public enum QuickConnectIntent {
             connectedExitCountryCode: nil,
             isFreeTier: isFreeTier
         )
-        return (spec, propertiesManager.connectionProtocol)
+        return (spec, connectionProtocol)
     }
 }
 

@@ -179,7 +179,8 @@ public final class AppDelegateService: AppDelegateProtocol {
 
         // Refresh API announcements
         @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
-        if propertiesManager.featureFlags.pollNotificationAPI, authKeychain.username != nil {
+        @Shared(.featureFlags) var featureFlags
+        if featureFlags.pollNotificationAPI, authKeychain.username != nil {
             announcementRefresher.tryRefreshing()
         }
     }
@@ -380,8 +381,9 @@ public final class AppDelegateService: AppDelegateProtocol {
     }
 
     private func adjustGlobalProtocolIfNecessary() {
-        if propertiesManager.connectionProtocol.isDeprecated {
-            propertiesManager.connectionProtocol = .smartProtocol
+        @Shared(.connectionProtocol) var connectionProtocol
+        if connectionProtocol.isDeprecated {
+            $connectionProtocol.withLock { $0 = .smartProtocol }
         }
     }
 

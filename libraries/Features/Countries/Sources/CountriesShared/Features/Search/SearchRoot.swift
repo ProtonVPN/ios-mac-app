@@ -142,7 +142,7 @@ public struct SearchRoot {
 
             // Get servers for this country
             let kindFilter = country.serverGroup.kind.filter
-            let protocolFilter = VPNServerFilter.supports(protocol: propertiesManager.currentProtocolSupport)
+            let protocolFilter = VPNServerFilter.supports(protocol: currentProtocolSupport())
             let featureFilter = VPNServerFilter.features(isSecureCore ? .secureCore : .standard)
             let filters = [kindFilter, featureFilter, protocolFilter]
 
@@ -154,7 +154,7 @@ public struct SearchRoot {
                     serverType: country.serverType,
                     userTier: userTier ?? Int.freeTier,
                     underMaintenance: serverInfo.logical.isUnderMaintenance
-                        || serverInfo.protocolSupport.isDisjoint(with: propertiesManager.currentProtocolSupport)
+                        || serverInfo.protocolSupport.isDisjoint(with: currentProtocolSupport())
                 )
 
                 if server.tier == .free {

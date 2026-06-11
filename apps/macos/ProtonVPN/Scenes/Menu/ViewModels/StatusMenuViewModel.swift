@@ -233,7 +233,8 @@ final class StatusMenuViewModel {
 
     func changeServerAction() {
         let spec = ConnectionSpec(location: .any(.random), features: [])
-        connectionCommandClient.send(.connect(spec, propertiesManager.connectionProtocol, .changeServer))
+        @Shared(.connectionProtocol) var connectionProtocol
+        connectionCommandClient.send(.connect(spec, connectionProtocol, .changeServer))
     }
 
     // MARK: - General section
@@ -538,7 +539,7 @@ final class StatusMenuViewModel {
     }
 
     private func sessionEstablished() {
-        serverType = propertiesManager.serverTypeToggle
+        serverType = ServerType.current
 
         profileManager = factory.makeProfileManager()
 
@@ -563,7 +564,7 @@ final class StatusMenuViewModel {
     }
 
     private func handleVpnStatusChanged() {
-        serverType = propertiesManager.serverTypeToggle
+        serverType = ServerType.current
         contentChanged?()
     }
 
@@ -573,7 +574,7 @@ final class StatusMenuViewModel {
             let tier = try vpnKeychain.fetchCached().maxTier
 
             // if Secure Core was enabled but the tier no longer allows its use
-            if propertiesManager.secureCoreToggle, tier.isFreeTier {
+            if secureCoreToggle, tier.isFreeTier {
                 log.debug("Disabling Secure Core because the changed plan does not allow its use anymore", category: .app)
                 $secureCoreToggle.withLock { $0 = false }
                 serverType = .standard

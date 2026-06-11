@@ -21,7 +21,6 @@
     import SwiftUI
 
     public extension View {
-        @available(macOS 14.0, iOS 17.0, tvOS 17.0, *)
         func onChange<V: Equatable>(
             of value: V,
             to checkValue: V,
@@ -34,19 +33,6 @@
             }
         }
 
-        func onChange<V: Equatable>(
-            of value: V,
-            to checkValue: V,
-            _ action: @escaping (_ newValue: V) -> Void
-        ) -> some View {
-            onChange(of: value) { newValue in
-                if newValue == checkValue {
-                    action(newValue)
-                }
-            }
-        }
-
-        @available(macOS 14.0, iOS 17.0, tvOS 17.0, *)
         func onChange<V: Equatable & CasePathable>(
             of value: V,
             to caseKeyPath: PartialCaseKeyPath<V>,
@@ -55,18 +41,6 @@
             onChange(of: value) { oldValue, newValue in
                 if newValue.is(caseKeyPath) {
                     action(oldValue, newValue)
-                }
-            }
-        }
-
-        func onChange<V: Equatable & CasePathable>(
-            of value: V,
-            to caseKeyPath: PartialCaseKeyPath<V>,
-            _ action: @escaping (_ newValue: V) -> Void
-        ) -> some View {
-            onChange(of: value) { newValue in
-                if newValue.is(caseKeyPath) {
-                    action(newValue)
                 }
             }
         }

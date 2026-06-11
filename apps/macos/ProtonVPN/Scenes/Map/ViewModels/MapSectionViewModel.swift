@@ -33,6 +33,7 @@ import LegacyCommon
 import Localization
 import MapKit
 import Persistence
+import Sharing
 import VPNAppCore
 
 // Refactor annotation O(n^2) grouping logic when number of secure core servers ever exceed this value
@@ -62,9 +63,9 @@ class MapSectionViewModel {
     private let scExitCountrySelected = Notification.Name("MapSectionViewModelScExitCountrySelected")
     private let navService: NavigationService
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
     @Shared(.connectionState) private var connectionState: ConnectionState
+    @Shared(.connectionProtocol) private var connectionProtocol: ConnectionProtocol
     private let alertService: CoreAlertService
     private var cancellables = Set<AnyCancellable>()
 
@@ -93,11 +94,14 @@ class MapSectionViewModel {
                 setView(isSecureCore ? .secureCore : .standard)
             }
             .store(in: &cancellables)
-        AppEvent.vpnProtocol.subscribe(self, selector: #selector(resetCurrentState))
+        $connectionProtocol.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.resetCurrentState() }
+            .store(in: &cancellables)
 
         NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState), name: ServerListUpdateNotification.name, object: nil)
 
-        self.activeView = propertiesManager.serverTypeToggle
+        self.activeView = ServerType.current
         self.annotations = annotations(forView: activeView)
         self.connections = connections(forView: activeView)
     }

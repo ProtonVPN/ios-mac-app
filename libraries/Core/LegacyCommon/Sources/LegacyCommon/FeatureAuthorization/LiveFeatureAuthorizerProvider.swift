@@ -19,11 +19,15 @@
 import Dependencies
 import Domain
 import Foundation
+import Sharing
+import VPNAppCore
 import VPNShared
 
 public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
+    @Shared(.featureFlags) private var featureFlags: FeatureFlags
     @Dependency(\.credentialsProvider) var credentialsProvider
-    @Dependency(\.featureFlagProvider) var featureFlagProvider
+
+    public init() {}
 
     private var maxTier: Int {
         credentialsProvider.credentials?.maxTier ?? .freeTier
@@ -43,7 +47,7 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
         {
             Feature.canUse(
                 userTier: maxTier,
-                featureFlags: featureFlagProvider.getFeatureFlags()
+                featureFlags: featureFlags
             )
         }
     }
@@ -55,14 +59,14 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
             if let netshieldLevel = feature as? NetShieldType {
                 return netshieldLevel.canUse(
                     userTier: maxTier,
-                    featureFlags: featureFlagProvider.getFeatureFlags(),
+                    featureFlags: featureFlags,
                     netshieldSettings: netshieldSettings,
                     isBusiness: isBusiness
                 )
             }
             return feature.canUse(
                 userTier: maxTier,
-                featureFlags: featureFlagProvider.getFeatureFlags()
+                featureFlags: featureFlags
             )
         }
     }

@@ -16,8 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CommonNetworking
-import Domain
 import Foundation
 
 /// Controls whether traffic destined for local networks will be excluded from the tunnel
@@ -41,8 +39,6 @@ public enum ExcludeLocalNetworks: String, Codable, ToggleableFeature {
 }
 
 extension ExcludeLocalNetworks: ProvidableFeature {
-    public static let event: AppEvent? = .excludeLocalNetworks
-
     public static let legacyConversion: ((Bool) -> Self)? = { $0 ? .on : .off }
 
     public static func canUse(userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {

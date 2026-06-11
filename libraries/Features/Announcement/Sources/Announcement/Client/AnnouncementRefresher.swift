@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Combine
 import CommonNetworking
 import Dependencies
 import Domain
@@ -51,10 +52,15 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
 
     @Shared(.lastAnnouncementRefreshDate) public var lastRefreshDate
 
+    @Shared(.featureFlags) private var featureFlags: Domain.FeatureFlags
+    private var featureFlagsObservation: AnyCancellable?
+
     public init(refreshInterval: TimeInterval = AnnouncementRefresherImplementation.defaultRefreshInterval) {
         self.refreshInterval = refreshInterval
 
-        AppEvent.featureFlags.subscribe(self, selector: #selector(featureFlagsChanged))
+        self.featureFlagsObservation = $featureFlags.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] flags in self?.featureFlagsChanged(flags) }
         AppEvent.urlActivationRefresh.subscribe(self, selector: #selector(tryRefreshing))
     }
 
@@ -105,9 +111,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         announcementStorage.clear()
     }
 
-    @objc
-    func featureFlagsChanged(_ notification: NSNotification) {
-        guard let featureFlags = notification.object as? CommonNetworking.FeatureFlags else { return }
+    func featureFlagsChanged(_ featureFlags: Domain.FeatureFlags) {
         if featureFlags.pollNotificationAPI {
             tryRefreshing()
         } else { // Hide announcements

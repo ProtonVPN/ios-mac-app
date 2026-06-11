@@ -20,8 +20,10 @@ import ComposableArchitecture
 import Domain
 import Foundation
 import NetShield
+import Sharing
 import SwiftUI
 import Theme
+import VPNAppCore
 
 @Reducer
 struct NetShieldQuickSettingFeature {
@@ -88,8 +90,8 @@ struct NetShieldQuickSettingFeature {
         }
     }
 
-    @Dependency(\.propertiesManager) var propertiesManager
     @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
+    @Shared(.featureFlags) var featureFlags
 
     private enum CancelID { case netShieldObservations }
 
@@ -98,8 +100,8 @@ struct NetShieldQuickSettingFeature {
             switch action {
             case .startObserving:
                 state.type = netShieldPropertyProvider.getNetShieldType()
-                state.isVisible = propertiesManager.featureFlags.netShield
-                state.isStatsEnabled = propertiesManager.featureFlags.netShieldStats
+                state.isVisible = featureFlags.netShield
+                state.isStatsEnabled = featureFlags.netShieldStats
                 return .merge(
                     .run { send in
                         let stream: AsyncStream<NetShieldModel> = NotificationCenter.default.notifications(NetShieldStatsNotification.self)
@@ -115,7 +117,7 @@ struct NetShieldQuickSettingFeature {
                 ).cancellable(id: CancelID.netShieldObservations)
             case .updateNetShield:
                 state.type = netShieldPropertyProvider.getNetShieldType()
-                state.isVisible = propertiesManager.featureFlags.netShield
+                state.isVisible = featureFlags.netShield
                 return .none
             case let .netShieldStatsUpdated(stats):
                 state.stats = stats

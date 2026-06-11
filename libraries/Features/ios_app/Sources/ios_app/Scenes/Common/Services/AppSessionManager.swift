@@ -113,7 +113,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         super.init(factory: factory)
 
         AppEvent.userEngagedWithUpsellAlert.subscribe(self, selector: #selector(userEngagedWithUpsell))
-        AppEvent.hermes.subscribe(self, selector: #selector(updateWiregardConfig))
     }
 
     // MARK: - Beginning of the login logic.
@@ -239,7 +238,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             return
         }
 
-        guard case .certificate = propertiesManager.vpnProtocol.authenticationType else {
+        @Shared(.vpnProtocol) var vpnProtocol
+        guard case .certificate = vpnProtocol.authenticationType else {
             log.info("Not refreshing vpn certificate - cert auth not in use")
             return
         }
@@ -321,7 +321,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 @Shared(.smartProtocolConfig) var smartProtocolConfig
                 $smartProtocolConfig.withLock { $0 = clientConfig.smartProtocolConfig }
                 propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
-                propertiesManager.featureFlags = clientConfig.featureFlags
+                @Shared(.featureFlags) var featureFlags
+                $featureFlags.withLock { $0 = clientConfig.featureFlags }
 
                 @Shared(.ratingSettings) var ratingSettings
                 $ratingSettings.withLock { $0 = clientConfig.ratingSettings }
@@ -333,7 +334,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 propertiesManager.streamingServices = streamingServices.streamingServices
                 propertiesManager.streamingResourcesUrl = streamingServices.resourceBaseURL
             }
-            if propertiesManager.featureFlags.pollNotificationAPI {
+            @Shared(.featureFlags) var pollFeatureFlags
+            if pollFeatureFlags.pollNotificationAPI {
                 announcementRefresher.tryRefreshing()
             }
 
@@ -625,13 +627,5 @@ private extension WireguardConfig {
             defaultTlsPorts: defaultTlsPorts,
             dns: hermesResolvers.map(\.location)
         )
-    }
-}
-
-extension AppSessionManagerImplementation {
-    @objc
-    private func updateWiregardConfig(_: Notification) {
-        @Shared(.wireguardConfig) var wireguardConfig
-        $wireguardConfig.withLock { $0 = $0.refreshConfig() }
     }
 }

@@ -23,12 +23,6 @@ import VPNShared
 
 @DependencyClient
 public struct SettingsStorage: Sendable {
-    public var getConnectionProtocol: @Sendable () async throws -> ConnectionProtocol
-    public var setConnectionProtocol: @Sendable (ConnectionProtocol) async throws -> Void
-
-    public var getNetShield: @Sendable () async throws -> NetShieldType
-    public var setNetShield: @Sendable (NetShieldType) async throws -> Void
-
     public struct EnvironmentSettings {
         public let apiEndpoint: String
         public let atlasSecret: String

@@ -64,28 +64,29 @@ class DefaultProfileViewModel {
     private let defaultAccessTier: Int
 
     private var profile: Profile {
+        @Shared(.connectionProtocol) var connectionProtocol
         switch serverOffering {
         case .random:
-            Profile(
+            return Profile(
                 id: "st_r",
                 accessTier: defaultAccessTier,
                 profileIcon: .arrowsSwapRight,
                 profileType: .system,
-                serverType: propertiesManager.serverTypeToggle,
+                serverType: ServerType.current,
                 serverOffering: serverOffering,
                 name: Localizable.random,
-                connectionProtocol: propertiesManager.connectionProtocol
+                connectionProtocol: connectionProtocol
             )
         default:
-            Profile(
+            return Profile(
                 id: "st_f",
                 accessTier: defaultAccessTier,
                 profileIcon: .bolt,
                 profileType: .system,
-                serverType: propertiesManager.serverTypeToggle,
+                serverType: ServerType.current,
                 serverOffering: serverOffering,
                 name: Localizable.fastest,
-                connectionProtocol: propertiesManager.connectionProtocol
+                connectionProtocol: connectionProtocol
             )
         }
     }

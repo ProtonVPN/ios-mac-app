@@ -33,8 +33,6 @@ struct ProtocolSettingsTests {
                 .State(protocol: .smartProtocol, connectionState: .disconnected, reconnectionAlert: nil)
         ) {
             ProtocolSettingsFeature()
-        } withDependencies: {
-            $0.settingsStorage.setConnectionProtocol = { _ in }
         }
 
         await store.send(.protocolTapped(.vpnProtocol(.ike)))
@@ -42,26 +40,6 @@ struct ProtocolSettingsTests {
         await store.receive(.setProtocol(.success(.vpnProtocol(.ike)))) { resultState in
             resultState.connectionProtocol = .vpnProtocol(.ike)
         }
-    }
-
-    @Test("Protocol is not set when storage throws an error")
-    func protocolNotSetWhenStorageThrowsError() async {
-        let error = GenericError(message: "Something went wrong")
-        let store = TestStore(
-            initialState: ProtocolSettingsFeature.State(
-                protocol: .smartProtocol,
-                connectionState: .disconnected,
-                reconnectionAlert: nil
-            )
-        ) {
-            ProtocolSettingsFeature()
-        } withDependencies: {
-            $0.settingsStorage.setConnectionProtocol = { _ in throw error }
-        }
-
-        await store.send(.protocolTapped(.vpnProtocol(.ike)))
-
-        await store.receive(.setProtocol(.failure(error)))
     }
 
     @Test("Reconnection alert is shown when connected")
@@ -74,8 +52,6 @@ struct ProtocolSettingsTests {
             )
         ) {
             ProtocolSettingsFeature()
-        } withDependencies: {
-            $0.settingsStorage.setConnectionProtocol = { _ in }
         }
 
         await store.send(.protocolTapped(.vpnProtocol(.ike)))
@@ -95,8 +71,6 @@ struct ProtocolSettingsTests {
             )
         ) {
             ProtocolSettingsFeature()
-        } withDependencies: {
-            $0.settingsStorage.setConnectionProtocol = { _ in }
         }
 
         await store.send(.reconnectionAlert(.presented(.reconnectWith(.vpnProtocol(.ike)))))
@@ -116,8 +90,6 @@ struct ProtocolSettingsTests {
             )
         ) {
             ProtocolSettingsFeature()
-        } withDependencies: {
-            $0.settingsStorage.setConnectionProtocol = { _ in }
         }
 
         await store.send(.reconnectionAlert(.dismiss)) { resultState in

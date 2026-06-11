@@ -124,7 +124,6 @@ struct QuickSettingsFeature {
 
     @Dependency(\.sessionService) var sessionService
     @Dependency(\.linkOpener) var linkOpener
-    @Dependency(\.appFeaturePropertyProvider) var appFeaturePropertyProvider
     @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
     @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
     @Dependency(\.natPortMappingService) var natPortMappingService
@@ -283,7 +282,7 @@ private extension QuickSettingsFeature {
                 // conflict alert, paywall upsell, Secure Core discourage modal. Only after all
                 // of these pass do we hand off to `applyQuickSettingOptionSelection`.
                 if type == .killSwitchDisplay, option == .killSwitchOn,
-                   Self.requiresKillSwitchConflictConfirmation(appFeaturePropertyProvider: appFeaturePropertyProvider) {
+                   Self.requiresKillSwitchConflictConfirmation() {
                     state.alert = Self.killSwitchConflictAlert
                     return .none
                 }
@@ -482,7 +481,7 @@ private extension QuickSettingsFeature {
             // informed the user before we got here.
             $killSwitch.withLock { $0 = enabled }
             if enabled {
-                appFeaturePropertyProvider.setValue(ExcludeLocalNetworks.off)
+                setFeatureValue(ExcludeLocalNetworks.off)
                 $plutonium.withLock { $0 = .disabled(plutonium.mode) }
             }
             if connectionState.isConnected {
@@ -601,11 +600,9 @@ extension QuickSettingsFeature {
 
     /// Kill Switch conflicts with LAN access and with Plutonium split-tunneling. When neither
     /// is on, enabling KS is uncontroversial — skip the confirmation alert.
-    static func requiresKillSwitchConflictConfirmation(
-        appFeaturePropertyProvider: AppFeaturePropertyProvider
-    ) -> Bool {
+    static func requiresKillSwitchConflictConfirmation() -> Bool {
         @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
-        let excludeLocalNetworksIsOff = appFeaturePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .off
+        let excludeLocalNetworksIsOff = featureValue(for: ExcludeLocalNetworks.self) == .off
         guard excludeLocalNetworksIsOff, case .disabled = plutonium else { return true }
         return false
     }
