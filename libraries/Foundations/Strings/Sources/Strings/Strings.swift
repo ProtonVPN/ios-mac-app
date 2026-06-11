@@ -1002,14 +1002,6 @@ public enum Localizable {
   public static var noServersToShow: String { return Localizable.tr("Localizable", "_no_servers_to_show", fallback: "There are currently no servers to show here.") }
   /// No thanks
   public static var noThanks: String { return Localizable.tr("Localizable", "_no_thanks", fallback: "No thanks") }
-  /// Title for alert shown when enabling Non-standard ports requires reconnection
-  public static var nonStandardPortsChangeTitle: String { return Localizable.tr("Localizable", "_non_standard_ports_change_title", fallback: "Enable Non-standard ports") }
-  /// Explanation for the Non-standard ports feature shown next to the feature in Settings
-  public static var nonStandardPortsExplanation: String { return Localizable.tr("Localizable", "_non_standard_ports_explanation", fallback: "Use Proton VPN for any special need by allowing traffic to non-standard ports through the VPN network. \nLearn more") }
-  /// Link at the end of Non-standard ports feature explanation. Must match the explanation value
-  public static var nonStandardPortsExplanationLink: String { return Localizable.tr("Localizable", "_non_standard_ports_explanation_link", fallback: "Learn more") }
-  /// Non-standard ports feature title in Settings
-  public static var nonStandardPortsTitle: String { return Localizable.tr("Localizable", "_non_standard_ports_title", fallback: "Non-standard ports") }
   /// iOS: connection bar; Main mac app menu item;
   public static var notConnected: String { return Localizable.tr("Localizable", "_not_connected", fallback: "Not Connected") }
   /// Title in no internet alert
@@ -2190,8 +2182,6 @@ public enum Localizable {
   public static var modalsUpsellFeaturesModerateNatDirectConnections: String { return Localizable.tr("Localizable", "modals_upsell_features_moderate_nat_direct_connections", fallback: "NAT type 2 (moderate) optimizes speed and stability by enabling direct connections between devices") }
   /// Feature of the Moderate NAT upsell screen
   public static var modalsUpsellFeaturesModerateNatGaming: String { return Localizable.tr("Localizable", "modals_upsell_features_moderate_nat_gaming", fallback: "Improve online gaming and video call performance") }
-  /// Subtitle of the Safe Mode upsell screen
-  public static var modalsUpsellFeaturesSafeModeSubtitle: String { return Localizable.tr("Localizable", "modals_upsell_features_safe_mode_subtitle", fallback: "Have advanced or professional computing needs that require non-standard ports?\n\nUpgrade to VPN Plus to access this and other premium features.") }
   /// Subtitle of All Countries, NetShield and Secure Core upsell screens
   public static var modalsUpsellFeaturesSubtitle: String { return Localizable.tr("Localizable", "modals_upsell_features_subtitle", fallback: "When you upgrade to Plus") }
   /// Subtitle of Moderate NAT upsell screens
@@ -2208,8 +2198,6 @@ public enum Localizable {
   public static var modalsUpsellNetShieldMalware: String { return Localizable.tr("Localizable", "modals_upsell_net_shield_malware", fallback: "Protect your device from malware") }
   /// Title of the NetShield upsell screen
   public static var modalsUpsellNetShieldTitle: String { return Localizable.tr("Localizable", "modals_upsell_net_shield_title", fallback: "Enjoy ad-free browsing with NetShield") }
-  /// Title of the Safe Mode upsell screen
-  public static var modalsUpsellSafeModeTitle: String { return Localizable.tr("Localizable", "modals_upsell_safe_mode_title", fallback: "Allow traffic to non-standard ports") }
   /// Feature of the Secure Core upsell screen
   public static var modalsUpsellSecureCoreAttacks: String { return Localizable.tr("Localizable", "modals_upsell_secure_core_attacks", fallback: "Protect yourself from network attacks") }
   /// Feature of the Secure Core upsell screen
