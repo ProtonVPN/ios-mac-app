@@ -51,6 +51,21 @@ public struct ServerEndpoint: Codable, Equatable, Identifiable, Sendable {
     public var isUnderMaintenance: Bool {
         status == 0
     }
+
+    /// The actual exit IP is offset by the bouncing/label, if present.
+    /// This value is plumbed through to local agent to distinguish between different physical exits.
+    /// The offset e.g. `185.159.157.10` + label `5` -> `185.159.157.15`
+    public var offsetExitIp: String {
+        guard let label, let offset = Int(label) else {
+            return exitIp
+        }
+        var octets = exitIp.split(separator: ".", omittingEmptySubsequences: false)
+        guard octets.count == 4, let lastOctet = Int(octets[3]) else {
+            return exitIp
+        }
+        octets[3] = Substring(String(lastOctet + offset))
+        return octets.joined(separator: ".")
+    }
 }
 
 typealias ProtocolOverrides = [VpnProtocol: ServerProtocolEntry]

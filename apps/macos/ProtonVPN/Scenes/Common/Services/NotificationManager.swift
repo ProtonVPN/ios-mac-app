@@ -102,7 +102,7 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
         let content = UNMutableNotificationContent()
         content.title = Localizable.protonVpnConnected
         content.subtitle = connectSubtitle(forServer: server)
-        content.body = Localizable.ipValue(server.endpoint.exitIp)
+        content.body = Localizable.ipValue(server.endpoint.offsetExitIp)
         let identifier = "connected-\(uuidgen)"
         return UNNotificationRequest(identifier: identifier, content: content, trigger: nil)
     }

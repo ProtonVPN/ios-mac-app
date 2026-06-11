@@ -602,7 +602,7 @@ final class StatusMenuViewModel {
 
     private func getCurrentIp() -> String? {
         if isConnected {
-            connectionState.resolvedServer?.endpoint.exitIp
+            connectionState.resolvedServer?.endpoint.offsetExitIp
         } else {
             propertiesManager.userLocation?.ip
         }
