@@ -183,8 +183,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         $userTier.withLock { $0 = credentials.maxTier }
 
         if let clientConfig = properties.clientConfig {
-            @Shared(.wireguardConfig) var wireguardConfig
-            $wireguardConfig.withLock { $0 = clientConfig.wireGuardConfig }
             @Shared(.smartProtocolConfig) var smartProtocolConfig
             $smartProtocolConfig.withLock { $0 = clientConfig.smartProtocolConfig }
             @Shared(.featureFlags) var featureFlags
@@ -468,30 +466,5 @@ struct SessionChanged: TypedNotification {
     enum SessionChangeData {
         case established
         case lost(reason: String?)
-    }
-}
-
-// MARK: - Hermes
-
-import Hermes
-
-private extension WireguardConfig {
-    func refreshConfig() -> WireguardConfig {
-        @Dependency(\.hermesClient) var hermesClient
-        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
-
-        let hermesIsEnabled: Bool = hermesClient.isEnabled().wrappedValue
-        let hermesIsAllowed = featureAuthorizerProvider.authorizer(for: HermesFeature.self)().isAllowed
-
-        var hermesResolvers: [HermesResolver] = [.proton]
-        if hermesIsEnabled, hermesIsAllowed {
-            hermesResolvers.insert(contentsOf: hermesClient.activeHermesResolvers().wrappedValue, at: 0)
-        }
-        return .init(
-            defaultUdpPorts: defaultUdpPorts,
-            defaultTcpPorts: defaultTcpPorts,
-            defaultTlsPorts: defaultTlsPorts,
-            dns: hermesResolvers.map(\.location)
-        )
     }
 }

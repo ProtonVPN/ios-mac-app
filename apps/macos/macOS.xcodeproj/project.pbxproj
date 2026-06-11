@@ -432,7 +432,7 @@
 			children = (
 				A44463CB2ECF178E0008288D /* ProtonVPN_ike_root.der */,
 			);
-			path = External;
+			name = External;
 			sourceTree = "<group>";
 		};
 		EED534781EEC112000013607 = {

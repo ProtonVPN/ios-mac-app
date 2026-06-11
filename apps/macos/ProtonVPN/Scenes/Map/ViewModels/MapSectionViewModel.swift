@@ -95,6 +95,7 @@ class MapSectionViewModel {
             }
             .store(in: &cancellables)
         $connectionProtocol.publisher
+            .dropFirst()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.resetCurrentState() }
             .store(in: &cancellables)

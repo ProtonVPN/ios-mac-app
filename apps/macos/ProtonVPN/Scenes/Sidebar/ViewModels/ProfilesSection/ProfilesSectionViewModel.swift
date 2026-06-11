@@ -76,10 +76,12 @@ class ProfilesSectionViewModel {
         events.subscribe(self, selector: #selector(profilesChanged))
 
         self.featureFlagsObservation = $featureFlags.publisher
+            .dropFirst()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.profilesChanged() }
 
         self.connectionProtocolObservation = $connectionProtocol.publisher
+            .dropFirst()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.profilesChanged() }
     }

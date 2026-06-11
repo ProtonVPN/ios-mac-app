@@ -103,22 +103,25 @@ final class ConnectionSettingsViewModel {
         // Refresh the screen when settings backed by `@Shared` / property providers change. These no
         // longer post `AppEvent`s, so observe their publishers/streams directly.
         $sharedConnectionProtocol.publisher
+            .dropFirst()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.settingsChanged() }
             .store(in: &observations)
 
         vpnAcceleratorReader.publisher
+            .dropFirst()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.settingsChanged() }
             .store(in: &observations)
 
         excludeLocalNetworksReader.publisher
+            .dropFirst()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.settingsChanged() }
             .store(in: &observations)
 
         self.portForwardingObservationTask = Task { [weak self] in
-            for await _ in portForwardingPropertyProvider.portForwardingStream() {
+            for await _ in portForwardingPropertyProvider.portForwardingStream().dropFirst() {
                 await MainActor.run { self?.settingsChanged() }
             }
         }

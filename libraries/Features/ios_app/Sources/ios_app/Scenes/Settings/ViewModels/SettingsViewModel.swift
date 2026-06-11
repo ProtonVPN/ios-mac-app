@@ -175,6 +175,7 @@ final class SettingsViewModel {
 
         $featureFlags
             .publisher
+            .dropFirst()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.reload()
@@ -183,6 +184,7 @@ final class SettingsViewModel {
 
         $sharedConnectionProtocol
             .publisher
+            .dropFirst()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.reload()

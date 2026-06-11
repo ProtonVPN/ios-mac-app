@@ -71,6 +71,7 @@ class ProfilesMenuViewModel {
         ]
 
         self.featureFlagsObservation = $featureFlags.publisher
+            .dropFirst()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.contentChanged?() }
     }

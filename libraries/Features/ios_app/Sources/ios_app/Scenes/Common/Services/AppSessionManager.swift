@@ -315,9 +315,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 propertiesManager.userInfo?.apply(userSettings)
             }
             if let clientConfig = properties.clientConfig {
-                // Apply Hermes DNS configuration when storing WireGuard config
-                @Shared(.wireguardConfig) var wireguardConfig
-                $wireguardConfig.withLock { $0 = clientConfig.wireGuardConfig.refreshConfig() }
                 @Shared(.smartProtocolConfig) var smartProtocolConfig
                 $smartProtocolConfig.withLock { $0 = clientConfig.smartProtocolConfig }
                 propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
@@ -602,30 +599,5 @@ extension AppSessionManagerImplementation {
         } catch {
             log.error("Data reload failed after plan purchase", category: .app, metadata: ["error": "\(error)"])
         }
-    }
-}
-
-// MARK: - WireGuard config
-
-import Hermes
-
-private extension WireguardConfig {
-    func refreshConfig() -> WireguardConfig {
-        @Dependency(\.hermesClient) var hermesClient
-        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
-
-        let hermesIsEnabled: Bool = hermesClient.isEnabled().wrappedValue
-        let hermesIsAllowed = featureAuthorizerProvider.authorizer(for: HermesFeature.self)().isAllowed
-
-        var hermesResolvers: [HermesResolver] = [.proton]
-        if hermesIsEnabled, hermesIsAllowed {
-            hermesResolvers.insert(contentsOf: hermesClient.activeHermesResolvers().wrappedValue, at: 0)
-        }
-        return .init(
-            defaultUdpPorts: defaultUdpPorts,
-            defaultTcpPorts: defaultTcpPorts,
-            defaultTlsPorts: defaultTlsPorts,
-            dns: hermesResolvers.map(\.location)
-        )
     }
 }

@@ -59,6 +59,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         self.refreshInterval = refreshInterval
 
         self.featureFlagsObservation = $featureFlags.publisher
+            .dropFirst()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] flags in self?.featureFlagsChanged(flags) }
         AppEvent.urlActivationRefresh.subscribe(self, selector: #selector(tryRefreshing))

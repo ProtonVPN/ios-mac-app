@@ -25,6 +25,7 @@ import Domain
 import Ergonomics
 import ExtensionManager
 import Foundation
+import Hermes
 import PaymentsShared
 import Persistence
 import ProtonCoreFeatureFlags
@@ -186,8 +187,6 @@ struct SidebarFeature {
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.natPortMappingService) private var natPortMappingService
     @Dependency(\.plutoniumManager) private var plutoniumManager
-    @Dependency(\.hermesClient) private var hermesClient
-    @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
     @Dependency(\.networkInterfacePropertiesProvider) private var networkInterfacePropertiesProvider
@@ -933,13 +932,20 @@ private extension SidebarFeature {
     }
 
     func wireGuardGatewayAddress() -> String {
-        let hermesIsEnabled = hermesClient.isEnabled().wrappedValue
+        firstHermesDnsServer ?? VpnProtocol.wireGuardGatewayAddress
+    }
+
+    private var firstHermesDnsServer: String? {
+        @Dependency(\.hermesClient) var hermesClient
+        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
+
+        let hermesIsEnabled: Bool = hermesClient.isEnabled().wrappedValue
         let hermesIsAllowed = featureAuthorizerProvider.authorizer(for: HermesFeature.self)().isAllowed
-        if hermesIsEnabled, hermesIsAllowed {
-            return VpnProtocol.wireGuardGatewayAddress
-        }
-        @Shared(.wireguardConfig) var wireguardConfig
-        return wireguardConfig.dnsServers?.first ?? VpnProtocol.wireGuardGatewayAddress
+
+        guard hermesIsEnabled, hermesIsAllowed else { return nil }
+
+        let hermesResolvers: [HermesResolver] = hermesClient.activeHermesResolvers().wrappedValue + [.proton]
+        return hermesResolvers.map(\.location).first
     }
 }
 

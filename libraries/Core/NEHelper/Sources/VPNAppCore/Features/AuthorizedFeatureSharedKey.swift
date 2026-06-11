@@ -58,14 +58,3 @@ public final class AuthorizedFeatureSharedKey<Value: ProvidableFeature & Sendabl
         continuation.resume()
     }
 }
-
-public extension SharedKey {
-    /// A `SharedKey` for a `ProvidableFeature`'s effective value.
-    ///
-    /// Example: `@Shared(.authorizedFeature(HermesFeature.self)) var hermes = .off`
-    static func authorizedFeature<Feature: ProvidableFeature & Sendable>(
-        _: Feature.Type
-    ) -> Self where Self == AuthorizedFeatureSharedKey<Feature> {
-        AuthorizedFeatureSharedKey()
-    }
-}

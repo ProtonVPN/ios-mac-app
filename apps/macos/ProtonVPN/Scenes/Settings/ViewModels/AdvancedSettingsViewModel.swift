@@ -59,6 +59,7 @@ final class AdvancedSettingsViewModel {
 
         // Observe feature flags changes via the @Shared(.featureFlags) publisher
         self.featureFlagsObservation = $featureFlags.publisher
+            .dropFirst()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.settingsChanged() }
 
