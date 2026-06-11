@@ -110,8 +110,7 @@ extension PropertiesManagerProtocol {
 
     private func registerLoginItem() {
         do {
-            let service = SMAppService()
-            try service.register()
+            try SMAppService.mainApp.register()
         } catch {
             log.error("Failed to register login item: \(error)", category: .app)
         }
@@ -119,8 +118,7 @@ extension PropertiesManagerProtocol {
 
     private func unregisterLoginItem() {
         do {
-            let service = SMAppService()
-            try service.unregister()
+            try SMAppService.mainApp.unregister()
         } catch {
             log.error("Failed to unregister login item: \(error)", category: .app)
         }
