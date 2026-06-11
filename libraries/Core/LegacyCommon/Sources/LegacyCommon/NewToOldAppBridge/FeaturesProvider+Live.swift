@@ -30,13 +30,11 @@ extension ConnectionFeatureProvider: @retroactive DependencyKey {
             @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
             @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
             @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
-            @Dependency(\.safeModePropertyProvider) var safeModePropertyProvider
 
             return .init(
                 netshield: netShieldPropertyProvider.getNetShieldType(),
                 vpnAccelerator: featurePropertyProvider.getValue(for: VPNAccelerator.self).isOn,
                 natType: natTypePropertyProvider.getNATType(),
-                safeMode: safeModePropertyProvider.getSafeMode(),
                 portForwarding: portForwardingPropertyProvider.getPortForwarding()
             )
         },
@@ -45,12 +43,10 @@ extension ConnectionFeatureProvider: @retroactive DependencyKey {
             @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
             @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
             @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
-            @Dependency(\.safeModePropertyProvider) var safeModePropertyProvider
 
             natTypePropertyProvider.setNATType(newFeatures.natType)
             netShieldPropertyProvider.setNetShieldType(newFeatures.netshield)
             portForwardingPropertyProvider.setPortForwarding(newFeatures.portForwarding)
-            safeModePropertyProvider.setSafeMode(newFeatures.safeMode)
         },
         tunnelFeatures: {
             @Dependency(\.propertiesManager) var propertiesManager

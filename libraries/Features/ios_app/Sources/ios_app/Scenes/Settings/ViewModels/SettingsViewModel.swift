@@ -65,7 +65,6 @@ final class SettingsViewModel {
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
-    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
     @Dependency(\.appInfo) private var appInfo
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.networking) private var networking
@@ -520,59 +519,6 @@ final class SettingsViewModel {
         ]
     }
 
-    private var safeModeState: PaidFeatureDisplayState {
-        let canUse: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: SafeModeFeature.self)
-        switch canUse() {
-        case .success:
-            return .available(enabled: safeModePropertyProvider.getSafeMode() == false, interactive: true)
-        case .failure(.requiresUpgrade):
-            return .upsell
-        case .failure(.featureDisabled):
-            return .disabled
-        }
-    }
-
-    private var safeModeSection: [TableViewCellModel] {
-        // the UI shows the "opposite" value of the safe mode flag
-        // if safe mode is enabled the moderate nat checkbox is unchecked and vice versa
-        [
-            .upsellableToggle(
-                title: Localizable.nonStandardPortsTitle,
-                state: { [unowned self] in safeModeState },
-                upsell: { [weak self] in self?.alertService.push(alert: SafeModeUpsellAlert()) },
-                handler: { [unowned self] toggleOn, callback in
-                    let currentSafeMode = safeModePropertyProvider.getSafeMode() ?? true
-                    let newSafeMode = !currentSafeMode
-
-                    switch VpnFeatureChangeState(connectionState: connectionState) {
-                    case .withConnectionUpdate:
-                        safeModePropertyProvider.setSafeMode(newSafeMode)
-                        callback(toggleOn)
-                    case .withReconnect:
-                        alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.nonStandardPortsChangeTitle, confirmHandler: {
-                            self.safeModePropertyProvider.setSafeMode(newSafeMode)
-                            callback(toggleOn)
-                            log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
-                            self.retryConnection()
-                        }))
-                    case .immediate:
-                        safeModePropertyProvider.setSafeMode(newSafeMode)
-                        callback(toggleOn)
-                    }
-                }
-            ),
-            .attributedTooltip(
-                text: NSMutableAttributedString(
-                    attributedString: Localizable.nonStandardPortsExplanation.attributed(
-                        withColor: UIColor.weakTextColor(),
-                        fontSize: 13
-                    )
-                )
-                .add(link: Localizable.nonStandardPortsExplanationLink, withUrl: VPNLink.safeMode.urlString)
-            ),
-        ]
-    }
-
     private var alternativeRoutingSection: [TableViewCellModel] {
         @Shared(.alternativeRouting) var alternativeRouting
         return [
@@ -593,11 +539,6 @@ final class SettingsViewModel {
 
     private var advancedSection: TableViewSection {
         var cells: [TableViewCellModel] = alternativeRoutingSection
-
-        let authorizer = featureAuthorizerProvider.authorizer(for: SafeModeFeature.self)
-        if !authorizer().featureDisabled {
-            cells.append(contentsOf: safeModeSection)
-        }
 
         if propertiesManager.featureFlags.moderateNAT {
             cells.append(contentsOf: moderateNATSection)

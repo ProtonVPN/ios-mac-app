@@ -121,11 +121,6 @@ public extension ConnectionState {
         nil
     }
 
-    var safeMode: Bool? {
-        // TODO: ProTUN: Remove safe mode.
-        nil
-    }
-
     /// The current spec's location, when known.
     var location: ConnectionSpec.Location? {
         resolvedSpec?.location
@@ -187,7 +182,6 @@ public extension VPNConnectionActual {
             connectedDate: data.connectionDate,
             vpnProtocol: vpnProtocol,
             natType: .moderateNAT, // spec.features.natType,
-            safeMode: false, // spec.features.safeMode,
             server: data.currentPeer
         )
     }

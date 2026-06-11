@@ -30,7 +30,6 @@ import Theme
 final class AdvancedSettingsViewController: NSViewController, ReloadableViewController {
     @IBOutlet private var alternativeRoutingView: SettingsTickboxView!
     @IBOutlet private var natTypeView: SettingsTickboxView!
-    @IBOutlet private var safeModeView: SettingsTickboxView!
     @IBOutlet private var usageDataView: SettingsTickboxView!
     @IBOutlet private var crashReportsView: SettingsTickboxView!
     @IBOutlet private var hermesView: SettingsTickboxView!
@@ -112,18 +111,6 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
         crashReportsView.setupItem(model: model, delegate: self)
     }
 
-    private func setupSafeModeItem() {
-        safeModeView.isHidden = !viewModel.isSafeModeFeatureEnabled
-        let tooltip = Localizable.nonStandardPortsExplanation
-            .replacingOccurrences(of: Localizable.nonStandardPortsExplanationLink, with: "")
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-
-        // Non-standars ports are enabled when Safe Mode is disabled
-        let model = SettingsTickboxView.ViewModel(labelText: Localizable.nonStandardPortsTitle, buttonState: !viewModel.safeMode, toolTip: String(tooltip))
-
-        safeModeView.setupItem(model: model, delegate: self)
-    }
-
     private func setupHermesItem() {
         @Dependency(\.hermesClient) var hermesClient
 
@@ -162,7 +149,6 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
         setupView()
         setupAlternativeRoutingItem()
         setupNatTypeItem()
-        setupSafeModeItem()
         setupUsageDataTypeItem()
         setupCrashReportsTypeItem()
         setupHermesItem()
@@ -177,10 +163,6 @@ extension AdvancedSettingsViewController: TickboxViewDelegate {
                 executeOnUIThread {
                     self?.setupNatTypeItem()
                 }
-            }
-        case safeModeView:
-            viewModel.setSafeMode(safeMode: value == .off) { [weak self] _ in
-                self?.setupSafeModeItem()
             }
         case alternativeRoutingView:
             viewModel.setAlternatveRouting(value == .on)
@@ -200,8 +182,6 @@ extension AdvancedSettingsViewController: TickboxViewDelegate {
         switch tickboxView {
         case natTypeView:
             viewModel.showNATUpsell()
-        case safeModeView:
-            viewModel.showSafeModeUpsell()
         case hermesView:
             viewModel.hermesViewModel.upsellButtonTapped()
         default:

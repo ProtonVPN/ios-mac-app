@@ -35,7 +35,6 @@
             netshield: .level1,
             vpnAccelerator: true,
             natType: .moderateNAT,
-            safeMode: false,
             portForwarding: false
         )
     }

@@ -35,7 +35,7 @@ public extension Profile {
     }
 
     /// Convenience for callers that only need the spec (location + server features) and not the
-    /// session-level settings (NetShield / NAT / SafeMode / PortForwarding). The spec conversion
+    /// session-level settings (NetShield / NAT / PortForwarding). The spec conversion
     /// discards those fields anyway, so we pass safe defaults internally.
     func connectionSpec(trigger: UserInitiatedVPNChange.VPNTrigger?) -> ConnectionSpec {
         ConnectionSpec(connectionRequest: connectionRequest(trigger: trigger))
@@ -44,7 +44,6 @@ public extension Profile {
     func connectionRequest(
         withDefaultNetshield netShield: NetShieldType = .off,
         withDefaultNATType natType: NATType = .default,
-        withDefaultSafeMode safeMode: Bool? = nil,
         withDefaultPortForwarding portForwarding: Bool? = nil,
         trigger: UserInitiatedVPNChange.VPNTrigger?
     ) -> ConnectionRequest {
@@ -57,7 +56,6 @@ public extension Profile {
                 connectionProtocol: connectionProtocol,
                 netShieldType: netShield,
                 natType: natType,
-                safeMode: safeMode,
                 portForwarding: portForwarding,
                 profileId: id,
                 profileName: name,
@@ -71,7 +69,6 @@ public extension Profile {
                 connectionProtocol: connectionProtocol,
                 netShieldType: netShield,
                 natType: natType,
-                safeMode: safeMode,
                 portForwarding: portForwarding,
                 profileId: id,
                 profileName: name,
@@ -84,7 +81,6 @@ public extension Profile {
                 connectionProtocol: connectionProtocol,
                 netShieldType: netShield,
                 natType: natType,
-                safeMode: safeMode,
                 portForwarding: portForwarding,
                 profileId: id,
                 profileName: name,

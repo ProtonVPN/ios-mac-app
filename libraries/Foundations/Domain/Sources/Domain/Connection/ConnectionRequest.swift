@@ -32,7 +32,6 @@ public struct ConnectionRequest: Identifiable {
     public let connectionProtocol: ConnectionProtocol
     public let netShieldType: NetShieldType
     public let natType: NATType
-    public let safeMode: Bool?
     public let portForwarding: Bool?
     public let profileId: String?
     public let profileName: String?
@@ -44,7 +43,6 @@ public struct ConnectionRequest: Identifiable {
         connectionProtocol: ConnectionProtocol,
         netShieldType: NetShieldType,
         natType: NATType,
-        safeMode: Bool?,
         portForwarding: Bool?,
         profileId: String?,
         profileName: String?,
@@ -57,7 +55,6 @@ public struct ConnectionRequest: Identifiable {
         self.profileId = profileId
         self.profileName = profileName
         self.natType = natType
-        self.safeMode = safeMode
         self.portForwarding = portForwarding
         self.trigger = trigger
     }
@@ -69,7 +66,6 @@ public struct ConnectionRequest: Identifiable {
             connectionProtocol: connectionProtocol,
             netShieldType: netShieldType,
             natType: natType,
-            safeMode: safeMode,
             portForwarding: portForwarding,
             profileId: profileId,
             profileName: profileName,
@@ -84,7 +80,6 @@ public struct ConnectionRequest: Identifiable {
             connectionProtocol: connectionProtocol,
             netShieldType: netShieldType,
             natType: natType,
-            safeMode: safeMode,
             portForwarding: portForwarding,
             profileId: profileId,
             profileName: profileName,
@@ -99,22 +94,6 @@ public struct ConnectionRequest: Identifiable {
             connectionProtocol: connectionProtocol,
             netShieldType: netShieldType,
             natType: natType,
-            safeMode: safeMode,
-            portForwarding: portForwarding,
-            profileId: profileId,
-            profileName: profileName,
-            trigger: trigger
-        )
-    }
-
-    public func withChanged(safeMode: Bool) -> ConnectionRequest {
-        ConnectionRequest(
-            serverType: serverType,
-            connectionType: connectionType,
-            connectionProtocol: connectionProtocol,
-            netShieldType: netShieldType,
-            natType: natType,
-            safeMode: safeMode,
             portForwarding: portForwarding,
             profileId: profileId,
             profileName: profileName,
@@ -129,7 +108,6 @@ public struct ConnectionRequest: Identifiable {
             connectionProtocol: connectionProtocol,
             netShieldType: netShieldType,
             natType: natType,
-            safeMode: safeMode,
             portForwarding: portForwarding,
             profileId: profileId,
             profileName: profileName,
@@ -144,7 +122,6 @@ public struct ConnectionRequest: Identifiable {
             connectionProtocol: connectionProtocol,
             netShieldType: netShieldType,
             natType: natType,
-            safeMode: safeMode,
             portForwarding: portForwarding,
             profileId: profileId,
             profileName: profileName,
@@ -161,7 +138,6 @@ public struct ConnectionRequest: Identifiable {
         case profileName
         case vpnProtocol
         case natType
-        case safeMode
         case portForwarding
         case trigger
     }
@@ -190,7 +166,6 @@ extension ConnectionRequest: Codable {
             self.natType = .default
         }
 
-        self.safeMode = try container.decodeIfPresent(Bool.self, forKey: .safeMode)
         self.portForwarding = try container.decodeIfPresent(Bool.self, forKey: .portForwarding)
         self.trigger = try container.decodeIfPresent(UserInitiatedVPNChange.VPNTrigger.self, forKey: .trigger)
     }

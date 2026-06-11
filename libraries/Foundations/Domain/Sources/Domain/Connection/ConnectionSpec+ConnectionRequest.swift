@@ -20,7 +20,7 @@ import Foundation
 
 public extension ConnectionSpec {
     /// Converts a high-level `ConnectionRequest` into the lower-level `ConnectionSpec` used by the
-    /// connection layer. Session-level flags on the request (`netShieldType`, `natType`, `safeMode`,
+    /// connection layer. Session-level flags on the request (`netShieldType`, `natType`,
     /// `portForwarding`, `trigger`, `connectionProtocol`) are intentionally discarded — they do not
     /// belong to `ConnectionSpec`'s concerns (location + feature flags from the chosen server).
     init(connectionRequest: ConnectionRequest) {

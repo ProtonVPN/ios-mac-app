@@ -56,7 +56,6 @@ public enum ConnectionFeatureComparator {
         case netshield
         case vpnAccelerator
         case natType
-        case safeMode
         case portForwarding
 
         var erasedKeyPath: AnyEquatableKeyPath {
@@ -67,8 +66,6 @@ public enum ConnectionFeatureComparator {
                 AnyEquatableKeyPath(\.vpnAccelerator)
             case .natType:
                 AnyEquatableKeyPath(\.natType)
-            case .safeMode:
-                AnyEquatableKeyPath(\.safeMode)
             case .portForwarding:
                 AnyEquatableKeyPath(\.portForwarding)
             }
@@ -82,8 +79,6 @@ public enum ConnectionFeatureComparator {
                 "vpnAccelerator"
             case .natType:
                 "natType"
-            case .safeMode:
-                "safeMode"
             case .portForwarding:
                 "portForwarding"
             }

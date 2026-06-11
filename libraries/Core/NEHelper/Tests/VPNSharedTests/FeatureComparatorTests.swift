@@ -26,7 +26,6 @@ private let concreteFeaturesOff = VPNConnectionFeatures(
     netshield: .off,
     vpnAccelerator: false,
     natType: .strictNAT,
-    safeMode: nil,
     portForwarding: nil
 )
 
@@ -34,7 +33,6 @@ private let allOff = VPNConnectionFeatures(
     netshield: .off,
     vpnAccelerator: false,
     natType: .strictNAT,
-    safeMode: false,
     portForwarding: false
 )
 
@@ -42,7 +40,6 @@ private let withPortForwardingDisabled = VPNConnectionFeatures(
     netshield: .off,
     vpnAccelerator: false,
     natType: .strictNAT,
-    safeMode: nil,
     portForwarding: false // Our stored certificate has the feature turned off explicitly
 )
 
@@ -50,7 +47,6 @@ private let concreteFeaturesOn = VPNConnectionFeatures(
     netshield: .level2,
     vpnAccelerator: true,
     natType: .moderateNAT,
-    safeMode: nil,
     portForwarding: nil
 )
 
@@ -58,7 +54,6 @@ private let optionalFeaturesOn = VPNConnectionFeatures(
     netshield: .off,
     vpnAccelerator: false,
     natType: .strictNAT,
-    safeMode: true,
     portForwarding: true
 )
 
@@ -100,7 +95,7 @@ func returnsFailureWhenOptionalFeaturesAreDifferent() async throws {
         return
     }
 
-    #expect(features == [.safeMode, .portForwarding])
+    #expect(features == [.portForwarding])
 }
 
 @Test

@@ -24,7 +24,6 @@ import Theme
 
 public enum UpsellModalType: Sendable, Equatable {
     case subscription
-    case safeMode
     case netShield
     case secureCore
     case moderateNAT
@@ -75,7 +74,7 @@ public extension UpsellModalType {
 
     var hasNewUpsellScreen: Bool {
         switch self {
-        case .safeMode, .cantSkip:
+        case .cantSkip:
             false
         default:
             true
@@ -86,8 +85,6 @@ public extension UpsellModalType {
         switch self {
         case .subscription, .streaming:
             return Localizable.upsellPlansListTitle
-        case .safeMode:
-            return Localizable.modalsUpsellSafeModeTitle
         case .netShield:
             return Localizable.modalsNewUpsellNetshieldTitle
         // Localizable.modalsUpsellNetShieldTitle
@@ -133,8 +130,6 @@ public extension UpsellModalType {
         switch self {
         case .subscription:
             return .init(text: Localizable.upsellPlansListSubtitle)
-        case .safeMode:
-            return .init(text: Localizable.modalsUpsellFeaturesSafeModeSubtitle)
         case .netShield:
             return .init(
                 text: Localizable.modalsNewUpsellNetshieldSubtitle,
@@ -199,10 +194,6 @@ public extension UpsellModalType {
         switch self {
         case .subscription:
             Image(.welcomePlus)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .safeMode:
-            Image(.safeMode)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
         case .netShield:
@@ -302,7 +293,7 @@ public extension UpsellModalType {
             [.accessLAN, .profiles, .quickConnect]
         case .profiles:
             [.location, .profilesProtocols, .autoConnect]
-        case .safeMode, .streaming, .p2pSupport, .portForwarding, .devices, .torOverVPN, .hermes, .plutonium:
+        case .streaming, .p2pSupport, .portForwarding, .devices, .torOverVPN, .hermes, .plutonium:
             []
         case .subscription:
             []

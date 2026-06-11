@@ -68,7 +68,6 @@ private let _testIntent = ServerConnectionIntent(
         netshield: .off,
         vpnAccelerator: true,
         natType: .moderateNAT,
-        safeMode: nil,
         portForwarding: nil
     )
 )

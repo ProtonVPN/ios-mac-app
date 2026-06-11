@@ -395,7 +395,6 @@ struct ConnectingOverlayFeatureTests {
                 netshield: .off,
                 vpnAccelerator: true,
                 natType: .moderateNAT,
-                safeMode: nil,
                 portForwarding: nil
             )
         )

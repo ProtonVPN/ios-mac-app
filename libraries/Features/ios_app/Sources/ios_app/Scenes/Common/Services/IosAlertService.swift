@@ -157,9 +157,6 @@ extension IosAlertService: CoreAlertService {
 
         // Upsell related
 
-        case let safeModeUpsell as SafeModeUpsellAlert:
-            showUpsell(alert: safeModeUpsell, upsellModalType: .safeMode)
-
         case let netShieldUpsell as NetShieldUpsellAlert:
             showUpsell(alert: netShieldUpsell, upsellModalType: .netShield)
 

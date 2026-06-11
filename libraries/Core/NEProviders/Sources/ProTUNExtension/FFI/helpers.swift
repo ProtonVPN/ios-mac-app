@@ -97,7 +97,6 @@ public extension LocalAgentSettings {
             netshield: netshieldLevel?.toNetShieldType ?? .off,
             vpnAccelerator: splitTcp ?? false,
             natType: randomNat.flatMap { NATType(flag: $0) } ?? .default,
-            safeMode: softJail ?? false,
             portForwarding: portForwarding
         )
     }

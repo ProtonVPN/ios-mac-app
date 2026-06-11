@@ -61,7 +61,6 @@
                     netshield: .off,
                     vpnAccelerator: true,
                     natType: .default,
-                    safeMode: nil,
                     portForwarding: nil
                 )
             )
