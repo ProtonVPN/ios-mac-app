@@ -109,27 +109,11 @@ final class AdvancedSettingsViewModel {
     }
 
     var natDisplayState: PaidFeatureDisplayState {
-        let canUseNat = featureAuthorizerProvider.authorizer(for: NATFeature.self)
-        switch canUseNat() {
-        case .success:
-            return .available(enabled: natTypePropertyProvider.getNATType() == .moderateNAT, interactive: true)
-        case .failure(.featureDisabled):
-            return .disabled
-        case .failure(.requiresUpgrade):
-            return .upsell
-        }
+        paidFeatureDisplayState(for: NATFeature.self, isEnabled: natTypePropertyProvider.getNATType() == .moderateNAT)
     }
 
     func displayState(for feature: (some ProvidableFeature & ToggleableFeature & Sendable).Type) -> PaidFeatureDisplayState {
-        let authorizer: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: feature)
-        switch authorizer() {
-        case .success:
-            return .available(enabled: featureValue(for: feature) == .on, interactive: true)
-        case .failure(.featureDisabled):
-            return .disabled
-        case .failure(.requiresUpgrade):
-            return .upsell
-        }
+        paidFeatureDisplayState(for: feature)
     }
 
     // MARK: - Upsell Modals

@@ -20,6 +20,7 @@ import CommonNetworking
 import Dependencies
 import Foundation
 @testable import LegacyCommon
+@testable import VPNAppCore
 import XCTest
 
 public class ServerChangeAuthorizerTests: XCTestCase {

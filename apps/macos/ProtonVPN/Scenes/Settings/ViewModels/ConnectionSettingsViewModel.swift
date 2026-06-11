@@ -206,15 +206,7 @@ final class ConnectionSettingsViewModel {
     }
 
     func displayState(for feature: (some ProvidableFeature & ToggleableFeature & Sendable).Type) -> PaidFeatureDisplayState {
-        let authorizer: () -> FeatureAuthorizationResult = authorizerProvider.authorizer(for: feature)
-        switch authorizer() {
-        case .success:
-            return .available(enabled: featureValue(for: feature) == .on, interactive: true)
-        case .failure(.featureDisabled):
-            return .disabled
-        case .failure(.requiresUpgrade):
-            return .upsell
-        }
+        paidFeatureDisplayState(for: feature)
     }
 
     // MARK: - Item counts

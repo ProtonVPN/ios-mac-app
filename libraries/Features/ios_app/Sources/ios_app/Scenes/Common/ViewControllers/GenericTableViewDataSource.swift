@@ -23,6 +23,7 @@
 import LegacyCommon
 import SwiftUI
 import UIKit
+import VPNAppCore
 
 enum TableViewCellModel {
     case pushStandard(title: String, handler: () -> Void)

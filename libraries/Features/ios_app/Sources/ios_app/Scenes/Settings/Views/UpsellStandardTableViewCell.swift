@@ -24,6 +24,7 @@ import LegacyCommon
 import Strings
 import Theme
 import UIKit
+import VPNAppCore
 
 final class UpsellStandardTableViewCell: UITableViewCell {
     @IBOutlet var titleLabel: UILabel!

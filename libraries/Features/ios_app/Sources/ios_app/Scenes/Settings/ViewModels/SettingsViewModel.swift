@@ -421,15 +421,7 @@ final class SettingsViewModel {
     }
 
     func displayState(for feature: (some ProvidableFeature & ToggleableFeature & Sendable).Type) -> PaidFeatureDisplayState {
-        let authorizer: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: feature)
-        switch authorizer() {
-        case .success:
-            return .available(enabled: featureValue(for: feature) == .on, interactive: true)
-        case .failure(.featureDisabled):
-            return .disabled
-        case .failure(.requiresUpgrade):
-            return .upsell
-        }
+        paidFeatureDisplayState(for: feature)
     }
 
     private var allowLanSection: [TableViewCellModel] {
@@ -488,15 +480,7 @@ final class SettingsViewModel {
     }
 
     private var moderateNATState: PaidFeatureDisplayState {
-        let canUse: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: NATFeature.self)
-        switch canUse() {
-        case .success:
-            return .available(enabled: natTypePropertyProvider.getNATType() == .moderateNAT, interactive: true)
-        case .failure(.requiresUpgrade):
-            return .upsell
-        case .failure(.featureDisabled):
-            return .disabled
-        }
+        paidFeatureDisplayState(for: NATFeature.self, isEnabled: natTypePropertyProvider.getNATType() == .moderateNAT)
     }
 
     private var moderateNATSection: [TableViewCellModel] {
@@ -561,7 +545,7 @@ final class SettingsViewModel {
     private var advancedSection: TableViewSection {
         var cells: [TableViewCellModel] = alternativeRoutingSection
 
-        if propertiesManager.featureFlags.moderateNAT {
+        if featureFlags.moderateNAT {
             cells.append(contentsOf: moderateNATSection)
         }
 

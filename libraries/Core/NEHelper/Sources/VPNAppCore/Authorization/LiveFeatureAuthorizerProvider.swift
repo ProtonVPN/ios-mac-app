@@ -20,7 +20,6 @@ import Dependencies
 import Domain
 import Foundation
 import Sharing
-import VPNAppCore
 import VPNShared
 
 public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {

@@ -20,7 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-@testable import LegacyCommon
+import VPNAppCore
 @testable import VPNShared
 import XCTest
 

@@ -18,6 +18,7 @@
 
 import Dependencies
 import Foundation
+import VPNAppCore
 
 public struct ProfileAuthorizer {
     var shouldAllowProfiles: () -> Bool

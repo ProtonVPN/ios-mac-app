@@ -20,10 +20,6 @@ import Foundation
 
 public struct NATFeature: PaidAppFeature {}
 
-public struct SafeModeFeature: PaidAppFeature {
-    public static let featureFlag: KeyPath<FeatureFlags, Bool>? = \.safeMode
-}
-
 public struct PortForwardingFeature: PaidAppFeature {
     public static func canUse(userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         guard userTier.isPaidTier else { return .failure(.requiresUpgrade) }

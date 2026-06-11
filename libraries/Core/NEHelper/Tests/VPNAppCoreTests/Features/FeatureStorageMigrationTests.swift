@@ -57,8 +57,8 @@ struct FeatureStorageMigrationTests {
     }
 
     @Test("Legacy raw-Int value (NetShield/NAT) is read transparently")
-    func legacyRawIntValueIsRead() throws {
-        try withFreshStorage { defaults in
+    func legacyRawIntValueIsRead() {
+        withFreshStorage { defaults in
             // Legacy `UserDefaults.setUserValue(rawValue)` wrote a native Int under `key + username`.
             defaults.set(NetShieldType.level2.rawValue, forKey: "NetShield" + Self.username)
 
@@ -67,27 +67,27 @@ struct FeatureStorageMigrationTests {
         }
     }
 
-    @Test("Legacy native Bool value (SafeMode/PortForwarding) is read transparently")
-    func legacyBoolValueIsRead() throws {
-        try withFreshStorage { defaults in
-            defaults.set(false, forKey: "SafeMode" + Self.username)
+    @Test("Legacy native Bool value (PortForwarding) is read transparently")
+    func legacyBoolValueIsRead() {
+        withFreshStorage { defaults in
+            defaults.set(false, forKey: "PortForwarding_" + Self.username)
 
-            let key: UserScopedAppStorageKey<Bool?> = .bool("SafeMode")
+            let key: UserScopedAppStorageKey<Bool?> = .bool("PortForwarding_")
             #expect(key.currentValue() == false)
         }
     }
 
     @Test("Absent value reads as nil")
-    func absentValueIsNil() throws {
-        try withFreshStorage { _ in
+    func absentValueIsNil() {
+        withFreshStorage { _ in
             let key: UserScopedAppStorageKey<VPNAccelerator?> = .json("VpnAcceleratorEnabled")
             #expect(key.currentValue() == nil)
         }
     }
 
     @Test("Round-trips through the same per-user key")
-    func roundTrips() throws {
-        try withFreshStorage { defaults in
+    func roundTrips() {
+        withFreshStorage { defaults in
             let key: UserScopedAppStorageKey<NetShieldType?> = .rawInt("NetShield")
             key.setCurrentValue(.level1)
             #expect(key.currentValue() == .level1)
@@ -97,8 +97,8 @@ struct FeatureStorageMigrationTests {
     }
 
     @Test("effectiveValue returns the stored value when authorized")
-    func effectiveValueAuthorized() throws {
-        try withFreshStorage { _ in
+    func effectiveValueAuthorized() {
+        withFreshStorage { _ in
             let feature = AuthorizedFeatureValue<VPNAccelerator>()
             feature.setValue(.off)
             // Paid tier, flag on: `.off` is allowed, so the stored `.off` is returned.
@@ -107,8 +107,8 @@ struct FeatureStorageMigrationTests {
     }
 
     @Test("effectiveValue clamps to default when the stored value is not authorized")
-    func effectiveValueClamps() throws {
-        try withFreshStorage { _ in
+    func effectiveValueClamps() {
+        withFreshStorage { _ in
             let feature = AuthorizedFeatureValue<VPNAccelerator>()
             feature.setValue(.off)
             // Free tier: `.off` requires upgrade, so the default `.on` is returned instead.
@@ -117,8 +117,8 @@ struct FeatureStorageMigrationTests {
     }
 
     @Test("effectiveValue returns default when nothing is stored")
-    func effectiveValueDefaultWhenAbsent() throws {
-        try withFreshStorage { _ in
+    func effectiveValueDefaultWhenAbsent() {
+        withFreshStorage { _ in
             let feature = AuthorizedFeatureValue<VPNAccelerator>()
             #expect(feature.effectiveValue(userTier: .paidTier, featureFlags: .allEnabled) == .on)
         }

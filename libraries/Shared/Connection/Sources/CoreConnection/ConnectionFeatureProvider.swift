@@ -38,14 +38,11 @@ extension ConnectionFeatureProvider: DependencyKey {
                 @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
                 @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
                 @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
-                @Dependency(\.safeModePropertyProvider) var safeModePropertyProvider
 
                 return .init(
                     netshield: netShieldPropertyProvider.getNetShieldType(),
                     vpnAccelerator: AuthorizedFeatureValue<VPNAccelerator>().value() == .on,
-                    bouncing: nil, // VPNAPPL-2561: how to properly handle this?
                     natType: natTypePropertyProvider.getNATType(),
-                    safeMode: safeModePropertyProvider.getSafeMode(),
                     portForwarding: portForwardingPropertyProvider.getPortForwarding()
                 )
             },
@@ -53,12 +50,10 @@ extension ConnectionFeatureProvider: DependencyKey {
                 @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
                 @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
                 @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
-                @Dependency(\.safeModePropertyProvider) var safeModePropertyProvider
 
                 natTypePropertyProvider.setNATType(newFeatures.natType)
                 netShieldPropertyProvider.setNetShieldType(newFeatures.netshield)
                 portForwardingPropertyProvider.setPortForwarding(newFeatures.portForwarding)
-                safeModePropertyProvider.setSafeMode(newFeatures.safeMode)
             },
             tunnelFeatures: {
                 @Shared(.killSwitch) var killSwitch
@@ -102,9 +97,7 @@ extension VPNConnectionFeatures {
     @usableFromInline static let defaultFeatures: VPNConnectionFeatures = .init(
         netshield: .level1,
         vpnAccelerator: true,
-        bouncing: nil, // This is set to the target server's `label` property during connection
         natType: .moderateNAT,
-        safeMode: false,
         portForwarding: false
     )
 }
