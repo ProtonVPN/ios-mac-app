@@ -72,6 +72,8 @@ public extension FileManager {
         get throws(NoContainerFoundError) {
             #if os(macOS)
                 let url = FileManager.default.temporaryDirectory
+            #elseif os(tvOS)
+                let url = URL.cachesDirectory
             #else
                 let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: DomainConstants.AppGroups.main)
                 guard let url else {

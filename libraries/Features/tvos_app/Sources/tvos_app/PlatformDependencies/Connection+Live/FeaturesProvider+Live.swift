@@ -24,7 +24,7 @@
     extension ConnectionFeatureProvider: @retroactive DependencyKey {
         public static let liveValue: ConnectionFeatureProvider = .init(
             connectionFeatures: { .defaultFeatures },
-            setConnectionFeatures: { _ in log.assertionFailure("Nothing to do on tvOS yet") },
+            setConnectionFeatures: { _ in log.warning("Nothing to do on tvOS yet") },
             tunnelFeatures: { .tvFeatures },
             connectionProtocol: { .vpnProtocol(.wireGuard(.udp)) }
         )

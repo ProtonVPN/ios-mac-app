@@ -1,5 +1,5 @@
 //
-//  Created on 02/05/2024.
+//  Created on 05/06/2024.
 //
 //  Copyright (c) 2024 Proton AG
 //
@@ -16,8 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
+import Domain
+import Ergonomics
 import Foundation
-import Logging
 import PMLogger
+import SharedErgonomics
 
-let log: Logging.Logger = .init(label: "ProtonVPN.logger")
+extension AppInfoKey: @retroactive DependencyKey {
+    public static let liveValue: AppInfo = .live(context: .proTUNExtension, beta: Bundle.isTestflight)
+}
+
+extension DefaultsProvider: @retroactive DependencyKey {
+    public static let liveValue: DefaultsProvider = .init(getDefaults: { .domainUserDefaults })
+}

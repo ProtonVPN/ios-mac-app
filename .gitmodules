@@ -6,10 +6,6 @@
 	path = external/apple-fusion
 	url = ../../../tpe/apple-fusion
 	tag = 2.1.2
-[submodule "external/wireguard-apple"]
-	path = external/wireguard-apple
-	url = ../wireguard-apple
-	branch = release/ios
 [submodule "external/vpn-core-apple"]
 	path = external/vpn-core-apple
 	url = ../vpn-core-apple

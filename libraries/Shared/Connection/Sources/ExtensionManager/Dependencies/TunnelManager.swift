@@ -26,6 +26,7 @@ import IPCErgonomics
 import LocalAgent
 import LocalAgentIPC
 import NetworkExtension
+import VPNAppCore
 import VPNCoreCommon
 import VPNCoreTypes
 
@@ -376,6 +377,7 @@ final class PacketTunnelManager: TunnelManager {
                     "Could not recover IKE peer ID from configuration; advancing connected state with empty serverID",
                     category: .connection
                 )
+                SentryHelper.shared?.log(message: "Could not recover IKE peer ID from configuration; advancing connected state with empty serverID")
             }
             return DynamicConnectionData(
                 currentPeerId: serverID,

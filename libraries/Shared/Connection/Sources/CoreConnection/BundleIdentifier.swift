@@ -116,7 +116,7 @@ extension BundleIDClient: DependencyKey {
                 return .wireGuard(.proTUN)
 
             case BundleID.wireGuardtvOS:
-                return .wireGuard(.go)
+                return .wireGuard(.proTUN)
 
             case BundleID.plutoniumMac:
                 // Transparent Proxy notifications can be observed via shared NEVPN notifications.

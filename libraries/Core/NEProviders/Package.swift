@@ -70,7 +70,7 @@ let package = Package(
                 .product(name: "LocalAgent", package: "Connection"),
                 .product(name: "LocalAgentIPC", package: "Connection"),
                 .product(name: "NetworkingErgonomics", package: "Ergonomics"),
-                .target(name: "protun", condition: .when(platforms: [.iOS, .macOS])),
+                .target(name: "protun"),
 
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),

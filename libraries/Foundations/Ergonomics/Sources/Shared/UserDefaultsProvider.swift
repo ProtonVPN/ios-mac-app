@@ -19,16 +19,18 @@
 import Dependencies
 import Foundation
 
+public struct DefaultsProvider: Sendable {
+    public var getDefaults: @Sendable () -> UserDefaults
+
+    public init(getDefaults: @Sendable @escaping () -> UserDefaults) {
+        self.getDefaults = getDefaults
+    }
+}
+
 /// Conformance to TestDependencyKey as opposed to DependencyKey allow us to only define the interface, test and preview
 /// values here, and leave it up to the App targets to provide their own, different live implementations.
 /// This allows MacOS to use the standard UserDefaults, while iOS uses the container shared across the app suite.
-public struct DefaultsProvider: TestDependencyKey {
-    public var getDefaults: () -> UserDefaults
-
-    public init(getDefaults: @escaping () -> UserDefaults) {
-        self.getDefaults = getDefaults
-    }
-
+extension DefaultsProvider: TestDependencyKey {
     public static var testValue: DefaultsProvider {
         #if DEBUG
             return DefaultsProvider(

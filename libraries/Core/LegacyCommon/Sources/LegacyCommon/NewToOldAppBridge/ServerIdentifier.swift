@@ -18,25 +18,27 @@
 
 import Connection
 import Dependencies
-import DependenciesMacros
-import Domain
-import Ergonomics
+import struct Domain.Server
+import Foundation
 import Persistence
 
 extension ServerIdentifier: @retroactive DependencyKey {
     public static let liveValue: ServerIdentifier = .init(
-        fullServerInfo: { endpointID in
+        fullServerInfo: { serverID in
             @Dependency(\.serverRepository) var repository
-            let idFilter = VPNServerFilter.endpointID(endpointID)
+            let idFilter = VPNServerFilter.endpointID(serverID)
             guard let server = repository.getFirstServer(filteredBy: [idFilter], orderedBy: .none) else {
-                log.debug("Server not found", category: .persistence, metadata: ["serverID": "\(endpointID)"])
+                log.debug("Server not found", category: .persistence, metadata: ["serverID": "\(serverID)"])
                 return nil
             }
-            guard let endpoint = server.endpoints[id: endpointID] else {
+            guard let endpoint = server.endpoints.first(where: { $0.id == serverID }) else {
                 log.error(
                     "Unable to identify server - missing endpoint",
                     category: .persistence,
-                    metadata: ["serverID": "\(endpointID)"]
+                    metadata: [
+                        "logicalID": "\(server.logical.id)",
+                        "serverID": "\(serverID)",
+                    ]
                 )
                 return nil
             }
