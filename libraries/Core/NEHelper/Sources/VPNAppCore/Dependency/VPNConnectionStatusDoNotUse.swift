@@ -103,20 +103,17 @@ public struct VPNConnectionActual: Equatable, Codable {
     public let connectedDate: Date?
     public let vpnProtocol: VpnProtocol
     public let natType: NATType
-    public let safeMode: Bool?
     public let server: Server
 
     public init(
         connectedDate: Date?,
         vpnProtocol: VpnProtocol,
         natType: NATType,
-        safeMode: Bool?,
         server: Server
     ) {
         self.connectedDate = connectedDate
         self.vpnProtocol = vpnProtocol
         self.natType = natType
-        self.safeMode = safeMode
         self.server = server
     }
 }
@@ -137,7 +134,6 @@ public struct VPNConnectionActual: Equatable, Codable {
             serverExitIP: String = "188.12.32.12",
             vpnProtocol: VpnProtocol = .wireGuard(.tcp),
             natType: NATType = .moderateNAT,
-            safeMode: Bool? = nil,
             feature: ServerFeature = [],
             serverName: String = "SRV#12",
             country: String = "CH",
@@ -149,7 +145,6 @@ public struct VPNConnectionActual: Equatable, Codable {
                 connectedDate: connectedDate,
                 vpnProtocol: vpnProtocol,
                 natType: natType,
-                safeMode: safeMode,
                 server: Server.mock(
                     serverModelId: serverModelId,
                     serverExitIP: serverExitIP,

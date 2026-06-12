@@ -57,7 +57,6 @@ extension VPNConnectionFeatures {
         netshield: .off,
         vpnAccelerator: false,
         natType: .moderateNAT,
-        safeMode: false,
         portForwarding: false
     )
 }

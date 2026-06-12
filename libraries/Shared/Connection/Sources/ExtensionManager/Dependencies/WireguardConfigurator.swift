@@ -259,10 +259,6 @@ extension ManagerConfigurator {
             components += [.moderateNAT]
         }
 
-        if let safeMode = features.safeMode {
-            components += [.safeMode(safeMode)]
-        }
-
         if features.portForwarding == true {
             components += [.portForwardingEnabled]
         }
@@ -304,7 +300,6 @@ enum IkeUsernameComponent {
     case vpnAcceleratorDisabled
     case label(String)
     case moderateNAT
-    case safeMode(Bool)
     case portForwardingEnabled
     case endpointID(String)
 
@@ -326,8 +321,6 @@ enum IkeUsernameComponent {
             "b:\(Self.sanitized(label, context: "bouncing label"))"
         case .moderateNAT:
             "nr"
-        case let .safeMode(enabled):
-            enabled ? "sm" : "nsm"
         case .portForwardingEnabled:
             "pmp"
         case let .endpointID(endpointID):

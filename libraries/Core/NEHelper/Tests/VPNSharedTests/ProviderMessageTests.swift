@@ -71,7 +71,6 @@ class ProviderMessageTests: XCTestCase {
                 netshield: .level1,
                 vpnAccelerator: true,
                 natType: .moderateNAT,
-                safeMode: true,
                 portForwarding: nil
             )),
             .refreshCertificate(features: nil),

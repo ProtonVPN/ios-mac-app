@@ -27,7 +27,6 @@ enum ModalType {
     case welcomeUnlimited
     case welcomeFallback
     case welcomeToProton
-    case safeMode
     case moderateNAT
     case vpnAccelerator
     case customization

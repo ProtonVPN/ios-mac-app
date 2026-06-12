@@ -36,7 +36,6 @@ public struct FeatureFlags: Codable, DefaultableProperty {
     public let pollNotificationAPI: Bool
     public let serverRefresh: Bool
     public let guestHoles: Bool
-    public let safeMode: Bool
     @Default<Bool> public var promoCode: Bool
     @Default<BoolDefaultTrue> public var wireGuardTls: Bool
     @Default<Bool> public var enforceDeprecatedProtocols: Bool
@@ -54,7 +53,6 @@ public struct FeatureFlags: Codable, DefaultableProperty {
         pollNotificationAPI: Bool,
         serverRefresh: Bool,
         guestHoles: Bool,
-        safeMode: Bool,
         promoCode: Bool,
         wireGuardTls: Bool,
         enforceDeprecatedProtocols: Bool,
@@ -71,7 +69,6 @@ public struct FeatureFlags: Codable, DefaultableProperty {
         self.pollNotificationAPI = pollNotificationAPI
         self.serverRefresh = serverRefresh
         self.guestHoles = guestHoles
-        self.safeMode = safeMode
         self.promoCode = promoCode
         self.wireGuardTls = wireGuardTls
         self.enforceDeprecatedProtocols = enforceDeprecatedProtocols
@@ -91,7 +88,6 @@ public struct FeatureFlags: Codable, DefaultableProperty {
             pollNotificationAPI: true,
             serverRefresh: true,
             guestHoles: false,
-            safeMode: false,
             promoCode: false,
             wireGuardTls: true,
             enforceDeprecatedProtocols: false,

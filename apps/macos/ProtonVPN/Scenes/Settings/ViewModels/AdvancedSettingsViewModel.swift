@@ -39,7 +39,6 @@ final class AdvancedSettingsViewModel {
     @Dependency(\.appFeaturePropertyProvider) private var featurePropertyProvider
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
     @Dependency(\.hermesClient) private var hermesClient
-    @Dependency(\.safeModePropertyProvider) private var safeModePropertyProvider
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
@@ -56,7 +55,6 @@ final class AdvancedSettingsViewModel {
     lazy var hermesViewModel = HermesViewModel(factory: factory)
 
     private var natTypeObserverTask: Task<Void, Never>?
-    private var safeModeObserverTask: Task<Void, Never>?
 
     init(factory: Factory) {
         self.factory = factory
@@ -76,24 +74,11 @@ final class AdvancedSettingsViewModel {
                 }
             }
         }
-
-        // Observe safe mode changes via AsyncStream
-        self.safeModeObserverTask = Task { [weak self] in
-            guard let self else { return }
-            let stream = safeModePropertyProvider.safeModeStream()
-            for await _ in stream {
-                try? Task.checkCancellation()
-                await MainActor.run {
-                    self.settingsChanged()
-                }
-            }
-        }
     }
 
     deinit {
         NotificationCenter.default.removeObserver(self)
         natTypeObserverTask?.cancel()
-        safeModeObserverTask?.cancel()
     }
 
     var alternativeRouting: Bool {
@@ -135,14 +120,6 @@ final class AdvancedSettingsViewModel {
         }
     }
 
-    var isSafeModeFeatureEnabled: Bool {
-        featureFlags.safeMode
-    }
-
-    var safeMode: Bool {
-        safeModePropertyProvider.getSafeMode() ?? true
-    }
-
     func displayState(for feature: (some ProvidableFeature & ToggleableFeature).Type) -> PaidFeatureDisplayState {
         let authorizer: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: feature)
         switch authorizer() {
@@ -159,10 +136,6 @@ final class AdvancedSettingsViewModel {
 
     func showNATUpsell() {
         alertService.push(alert: ModerateNATUpsellAlert())
-    }
-
-    func showSafeModeUpsell() {
-        alertService.push(alert: SafeModeUpsellAlert())
     }
 
     // MARK: - Setters
@@ -195,38 +168,6 @@ final class AdvancedSettingsViewModel {
             }))
         case .immediate:
             natTypePropertyProvider.setNATType(natType)
-            completion(true)
-        }
-    }
-
-    func setSafeMode(safeMode: Bool, completion: @escaping ((Bool) -> Void)) {
-        let canUseSafeMode = featureAuthorizerProvider.authorizer(for: SafeModeFeature.self)
-        let result = canUseSafeMode()
-        guard case .success = result else {
-            if result.requiresUpgrade {
-                alertService.push(alert: SafeModeUpsellAlert())
-            }
-            completion(false)
-            return
-        }
-
-        switch VpnFeatureChangeState(connectionState: connectionState) {
-        case .withConnectionUpdate:
-            // in-place change when connected and using local agent
-            safeModePropertyProvider.setSafeMode(safeMode)
-            connectionCommandClient.send(.applySettings([.safeMode(safeMode)]))
-            completion(true)
-        case .withReconnect:
-            alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.nonStandardPortsTitle, confirmHandler: { [weak self] in
-                self?.safeModePropertyProvider.setSafeMode(safeMode)
-                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
-                self?.connectionCommandClient.send(.retry)
-                completion(true)
-            }, cancelHandler: {
-                completion(false)
-            }))
-        case .immediate:
-            safeModePropertyProvider.setSafeMode(safeMode)
             completion(true)
         }
     }

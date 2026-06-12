@@ -52,7 +52,6 @@ public enum UpsellModalSource: Sendable {
     case splitTunneling
     case allowLan
     case moderateNat
-    case safeMode
     case promoOffer
     case hermes
 }
@@ -102,12 +101,6 @@ public final class CustomizationUpsellAlert: UpsellAlert {
 public final class ProfilesUpsellAlert: UpsellAlert {
     override public var modalSource: UpsellModalSource {
         .profiles
-    }
-}
-
-public final class SafeModeUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellModalSource? {
-        .safeMode
     }
 }
 

@@ -143,7 +143,6 @@ extension UpsellModalSource: @retroactive Encodable {
         case .splitTunneling: try container.encode("split_tunneling")
         case .allowLan: try container.encode("allow_lan")
         case .moderateNat: try container.encode("moderate_nat")
-        case .safeMode: try container.encode("safe_mode")
         case .promoOffer: try container.encode("promo_offer")
         case .tor: try container.encode("tor")
         case .hermes: try container.encode("hermes")

@@ -40,12 +40,11 @@
                 netshield: .level2,
                 vpnAccelerator: false,
                 natType: .moderateNAT,
-                safeMode: false,
                 portForwarding: true
             )
             let server = Server.mock
             let intent = ServerConnectionIntent.mock(server: server, protocolConfiguration: .ike, features: features)
-            let expectedUsername = "username+pm+f2+nst+nr+nsm+pmp+ep:\(server.endpoint.id)"
+            let expectedUsername = "username+pm+f2+nst+nr+pmp+ep:\(server.endpoint.id)"
 
             try await withDependencies {
                 $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .freeTier)

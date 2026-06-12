@@ -507,7 +507,6 @@ struct AppSessionManagerImplementationTests {
             netshield: .off,
             vpnAccelerator: false,
             natType: .moderateNAT,
-            safeMode: false,
             portForwarding: false
         )
         let actual = VPNConnectionActual(data: .init(currentPeer: server, connectionDate: .now, protocolConnectionData: .ike))

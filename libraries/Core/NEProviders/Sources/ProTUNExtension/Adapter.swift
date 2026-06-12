@@ -364,8 +364,6 @@ extension LocalAgentSettings {
                 randomNat = NATType.flag
             case let .portForwarding(enabled):
                 portForwarding = enabled
-            case .safeMode:
-                break // TODO: ProTUN: Remove safe mode from VPNConnectionFeatures
             }
         }
     }

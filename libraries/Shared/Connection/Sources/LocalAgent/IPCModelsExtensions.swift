@@ -24,7 +24,6 @@ public extension IPCLASettingsPayload {
         netshield: .off,
         vpnAccelerator: false,
         natType: .moderateNAT,
-        safeMode: false,
         portForwarding: false
     )
 
@@ -33,7 +32,6 @@ public extension IPCLASettingsPayload {
             netshield: netshield_level == .unset ? Self.fallbackFeatures.netshield : netShieldType,
             vpnAccelerator: vpn_accelerator == .unset ? Self.fallbackFeatures.vpnAccelerator : vpn_accelerator == .enabled,
             natType: random_nat == .unset ? Self.fallbackFeatures.natType : NATType(flag: random_nat == .strict),
-            safeMode: soft_jail == .unset ? Self.fallbackFeatures.safeMode : soft_jail == .enabled,
             portForwarding: port_forwarding == .unset ? Self.fallbackFeatures.portForwarding : port_forwarding == .enabled
         )
     }
@@ -63,7 +61,7 @@ public extension IPCLASettingsPayload {
             vpn_accelerator: features.vpnAccelerator ? .enabled : .disabled,
             port_forwarding: features.portForwarding.map { $0 ? .enabled : .disabled } ?? .unset,
             random_nat: features.natType.flag ? .strict : .moderate,
-            soft_jail: features.safeMode.map { $0 ? .enabled : .disabled } ?? .unset,
+            soft_jail: .unset,
             circumvention_routing: .unset
         )
     }

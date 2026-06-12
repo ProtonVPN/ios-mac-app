@@ -103,9 +103,6 @@ extension MacAlertService: CoreAlertService {
         case let alert as ModerateNATUpsellAlert:
             show(alert: alert, upsellModalType: .moderateNAT)
 
-        case let alert as SafeModeUpsellAlert:
-            show(alert: alert, upsellModalType: .safeMode)
-
         case let alert as SecureCoreUpsellAlert:
             show(alert: alert, upsellModalType: .secureCore)
 

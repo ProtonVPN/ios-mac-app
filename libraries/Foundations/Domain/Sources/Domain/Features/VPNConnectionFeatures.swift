@@ -22,14 +22,12 @@ public struct VPNConnectionFeatures: Equatable, Sendable {
     public private(set) var netshield: NetShieldType
     public private(set) var vpnAccelerator: Bool
     public private(set) var natType: NATType
-    public private(set) var safeMode: Bool?
     public private(set) var portForwarding: Bool?
 
-    public init(netshield: NetShieldType, vpnAccelerator: Bool, natType: NATType, safeMode: Bool?, portForwarding: Bool?) {
+    public init(netshield: NetShieldType, vpnAccelerator: Bool, natType: NATType, portForwarding: Bool?) {
         self.netshield = netshield
         self.vpnAccelerator = vpnAccelerator
         self.natType = natType
-        self.safeMode = safeMode
         self.portForwarding = portForwarding
     }
 
@@ -39,9 +37,6 @@ public struct VPNConnectionFeatures: Equatable, Sendable {
         result[CodingKeys.netshield.rawValue] = netshield.rawValue
         result[CodingKeys.vpnAccelerator.rawValue] = vpnAccelerator
         result[CodingKeys.natType.rawValue] = natType.flag
-        if let safeMode {
-            result[CodingKeys.safeMode.rawValue] = safeMode
-        }
         if let portForwarding {
             result[CodingKeys.portForwarding.rawValue] = portForwarding
         }
@@ -60,7 +55,6 @@ extension VPNConnectionFeatures: Codable {
         case netshield = "NetShieldLevel"
         case vpnAccelerator = "SplitTCP"
         case natType = "RandomNAT"
-        case safeMode = "SafeMode"
         case portForwarding = "PortForwarding"
     }
 
@@ -73,22 +67,12 @@ extension VPNConnectionFeatures: Codable {
         } else {
             self.natType = .default
         }
-        self.safeMode = try values.decodeIfPresent(Bool.self, forKey: .safeMode)
         self.portForwarding = try values.decodeIfPresent(Bool.self, forKey: .portForwarding)
     }
 }
 
 public extension VPNConnectionFeatures {
-    func equals(other: VPNConnectionFeatures?, safeModeFeatureEnabled: Bool) -> Bool {
-        let equalsWithoutSafeMode = netshield == other?.netshield && vpnAccelerator == other?.vpnAccelerator && natType == other?.natType && portForwarding == other?.portForwarding
-
-        // if Safe Mode is disabled by feature flag ignore it when doing the comparison
-        // this is needed for the situation when Safe Mode is set to nil because of the feature flag but the Local Agent sends back false (the default value),
-        // without this check it would cause the certificate to be regenerated for no good reason
-        guard safeModeFeatureEnabled else {
-            return equalsWithoutSafeMode
-        }
-
-        return equalsWithoutSafeMode && safeMode == other?.safeMode
+    func equals(other: VPNConnectionFeatures?) -> Bool {
+        netshield == other?.netshield && vpnAccelerator == other?.vpnAccelerator && natType == other?.natType && portForwarding == other?.portForwarding
     }
 }
