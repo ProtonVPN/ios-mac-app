@@ -368,7 +368,7 @@ private extension SidebarFeature {
                 guard state.connectionState.isConnected else {
                     return .none
                 }
-                let spec = ConnectionSpec()
+                let spec = state.connectionState.resolvedSpec ?? ConnectionSpec()
                 let intent = connectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: sharedConnectionProtocol
@@ -497,7 +497,7 @@ private extension SidebarFeature {
                     }
                 )
             case .connectionCommandReceived(.retry):
-                let spec = ConnectionSpec()
+                let spec = state.connectionState.resolvedSpec ?? ConnectionSpec()
                 let intent = connectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: sharedConnectionProtocol
@@ -517,7 +517,7 @@ private extension SidebarFeature {
                     .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
                 )
             case let .connectionCommandReceived(.reconnect(connectionProtocol)):
-                let spec = ConnectionSpec()
+                let spec = state.connectionState.resolvedSpec ?? ConnectionSpec()
                 let intent = connectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: connectionProtocol ?? sharedConnectionProtocol
