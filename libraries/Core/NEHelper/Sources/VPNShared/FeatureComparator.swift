@@ -55,7 +55,6 @@ public enum ConnectionFeatureComparator {
     public enum Feature: Equatable, CustomStringConvertible, CaseIterable {
         case netshield
         case vpnAccelerator
-        case bouncing
         case natType
         case safeMode
         case portForwarding
@@ -66,8 +65,6 @@ public enum ConnectionFeatureComparator {
                 AnyEquatableKeyPath(\.netshield)
             case .vpnAccelerator:
                 AnyEquatableKeyPath(\.vpnAccelerator)
-            case .bouncing:
-                AnyEquatableKeyPath(\.bouncing)
             case .natType:
                 AnyEquatableKeyPath(\.natType)
             case .safeMode:
@@ -83,8 +80,6 @@ public enum ConnectionFeatureComparator {
                 "netshield"
             case .vpnAccelerator:
                 "vpnAccelerator"
-            case .bouncing:
-                "bouncing"
             case .natType:
                 "natType"
             case .safeMode:

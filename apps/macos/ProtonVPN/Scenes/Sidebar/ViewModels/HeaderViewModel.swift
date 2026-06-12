@@ -427,7 +427,7 @@ final class HeaderViewModel {
 
     private func getCurrentIp() -> String? {
         if isConnected {
-            connectedServer?.endpoint.exitIp
+            connectedServer?.endpoint.offsetExitIp
         } else {
             propertiesManager.userLocation?.ip
         }

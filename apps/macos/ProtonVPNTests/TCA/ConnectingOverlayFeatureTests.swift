@@ -394,7 +394,6 @@ struct ConnectingOverlayFeatureTests {
             features: VPNConnectionFeatures(
                 netshield: .off,
                 vpnAccelerator: true,
-                bouncing: nil,
                 natType: .moderateNAT,
                 safeMode: nil,
                 portForwarding: nil

@@ -93,7 +93,8 @@ private extension ProTUNConfiguration {
                     udpPorts: wgConfig.defaultUdpPorts.map { UInt16($0) },
                     tcpPorts: wgConfig.defaultTcpPorts.map { UInt16($0) },
                     tlsPorts: wgConfig.defaultTlsPorts.map { UInt16($0) },
-                    priority: 0
+                    priority: 0,
+                    exitLabel: nil
                 ),
             ],
             dnsServers: wgConfig.dnsServers ?? []

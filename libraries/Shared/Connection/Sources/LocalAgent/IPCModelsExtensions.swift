@@ -23,7 +23,6 @@ public extension IPCLASettingsPayload {
     private static let fallbackFeatures: VPNConnectionFeatures = .init(
         netshield: .off,
         vpnAccelerator: false,
-        bouncing: nil,
         natType: .moderateNAT,
         safeMode: false,
         portForwarding: false
@@ -33,7 +32,6 @@ public extension IPCLASettingsPayload {
         .init(
             netshield: netshield_level == .unset ? Self.fallbackFeatures.netshield : netShieldType,
             vpnAccelerator: vpn_accelerator == .unset ? Self.fallbackFeatures.vpnAccelerator : vpn_accelerator == .enabled,
-            bouncing: nil,
             natType: random_nat == .unset ? Self.fallbackFeatures.natType : NATType(flag: random_nat == .strict),
             safeMode: soft_jail == .unset ? Self.fallbackFeatures.safeMode : soft_jail == .enabled,
             portForwarding: port_forwarding == .unset ? Self.fallbackFeatures.portForwarding : port_forwarding == .enabled

@@ -21,15 +21,13 @@ import Foundation
 public struct VPNConnectionFeatures: Equatable, Sendable {
     public private(set) var netshield: NetShieldType
     public private(set) var vpnAccelerator: Bool
-    public private(set) var bouncing: String?
     public private(set) var natType: NATType
     public private(set) var safeMode: Bool?
     public private(set) var portForwarding: Bool?
 
-    public init(netshield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool?, portForwarding: Bool?) {
+    public init(netshield: NetShieldType, vpnAccelerator: Bool, natType: NATType, safeMode: Bool?, portForwarding: Bool?) {
         self.netshield = netshield
         self.vpnAccelerator = vpnAccelerator
-        self.bouncing = bouncing
         self.natType = natType
         self.safeMode = safeMode
         self.portForwarding = portForwarding
@@ -40,9 +38,6 @@ public struct VPNConnectionFeatures: Equatable, Sendable {
         var result = [String: Any]()
         result[CodingKeys.netshield.rawValue] = netshield.rawValue
         result[CodingKeys.vpnAccelerator.rawValue] = vpnAccelerator
-        if let bouncing {
-            result[CodingKeys.bouncing.rawValue] = bouncing
-        }
         result[CodingKeys.natType.rawValue] = natType.flag
         if let safeMode {
             result[CodingKeys.safeMode.rawValue] = safeMode
@@ -58,17 +53,12 @@ public struct VPNConnectionFeatures: Equatable, Sendable {
         changes.forEach { copy[keyPath: $0.field] = $0.newValue }
         return copy
     }
-
-    public func copyWithChanged(bouncing: String?) -> Self {
-        copy(with: (field: \.bouncing, newValue: bouncing))
-    }
 }
 
 extension VPNConnectionFeatures: Codable {
     enum CodingKeys: String, CodingKey {
         case netshield = "NetShieldLevel"
         case vpnAccelerator = "SplitTCP"
-        case bouncing = "Bouncing"
         case natType = "RandomNAT"
         case safeMode = "SafeMode"
         case portForwarding = "PortForwarding"
@@ -78,7 +68,6 @@ extension VPNConnectionFeatures: Codable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.netshield = try values.decode(NetShieldType.self, forKey: .netshield)
         self.vpnAccelerator = try values.decode(Bool.self, forKey: .vpnAccelerator)
-        self.bouncing = try values.decodeIfPresent(String.self, forKey: .bouncing)
         if let natTypeValue = try values.decodeIfPresent(NATType.self, forKey: .natType) {
             self.natType = natTypeValue
         } else {
@@ -91,7 +80,7 @@ extension VPNConnectionFeatures: Codable {
 
 public extension VPNConnectionFeatures {
     func equals(other: VPNConnectionFeatures?, safeModeFeatureEnabled: Bool) -> Bool {
-        let equalsWithoutSafeMode = netshield == other?.netshield && vpnAccelerator == other?.vpnAccelerator && bouncing == other?.bouncing && natType == other?.natType && portForwarding == other?.portForwarding
+        let equalsWithoutSafeMode = netshield == other?.netshield && vpnAccelerator == other?.vpnAccelerator && natType == other?.natType && portForwarding == other?.portForwarding
 
         // if Safe Mode is disabled by feature flag ignore it when doing the comparison
         // this is needed for the situation when Safe Mode is set to nil because of the feature flag but the Local Agent sends back false (the default value),

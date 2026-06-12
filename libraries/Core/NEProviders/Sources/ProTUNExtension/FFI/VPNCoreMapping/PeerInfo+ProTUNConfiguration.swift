@@ -33,7 +33,7 @@ extension PeerInfo {
             tcpPorts: peer.tcpPorts,
             tlsPorts: peer.tlsPorts,
             priority: Int32(peer.priority),
-            exitLabel: nil
+            exitLabel: peer.exitLabel
         )
     }
 }

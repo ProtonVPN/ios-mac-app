@@ -121,9 +121,9 @@ struct ProtectionStatusView: View {
             let server = connectionData.currentPeer
             country = server.logical.exitCountryCode
             if case let .proTUN(proTUNData) = connectionData.protocolConnectionData {
-                ip = proTUNData.serverExitV4 ?? server.endpoint.exitIp
+                ip = proTUNData.serverExitV4 ?? server.endpoint.offsetExitIp
             } else {
-                ip = server.endpoint.exitIp
+                ip = server.endpoint.offsetExitIp
             }
         default:
             country = store.userLocation?.country

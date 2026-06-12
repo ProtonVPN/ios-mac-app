@@ -224,7 +224,6 @@
                 row(key: "NetShield", value: "\(optional: NetShieldType(rawValue: features.netshield.rawValue))")
                 row(key: "VPN Accelerator", value: "\(features.vpnAccelerator)")
                 row(key: "Moderate NAT", value: "\(optional: NATType(rawValue: features.natType.rawValue))")
-                row(key: "Bouncing", value: "\(optional: features.bouncing)")
                 row(key: "Safe Mode", value: "\(optional: features.safeMode)")
             }
         }

@@ -56,7 +56,6 @@ extension VPNConnectionFeatures {
     @usableFromInline static let unimplementedFeatures: VPNConnectionFeatures = .init(
         netshield: .off,
         vpnAccelerator: false,
-        bouncing: nil, // This is set to the target server's `label` property during connection
         natType: .moderateNAT,
         safeMode: false,
         portForwarding: false

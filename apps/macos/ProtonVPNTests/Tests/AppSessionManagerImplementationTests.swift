@@ -506,7 +506,6 @@ struct AppSessionManagerImplementationTests {
         let connectionFeatures = VPNConnectionFeatures(
             netshield: .off,
             vpnAccelerator: false,
-            bouncing: nil,
             natType: .moderateNAT,
             safeMode: false,
             portForwarding: false

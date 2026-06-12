@@ -56,6 +56,6 @@ public struct ServerConnectionIntent: Equatable, Sendable, Codable {
         self.spec = spec
         self.server = server
         self.protocolConfiguration = protocolConfiguration
-        self.features = features.copyWithChanged(bouncing: server.endpoint.label)
+        self.features = features
     }
 }
