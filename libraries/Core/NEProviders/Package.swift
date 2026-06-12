@@ -51,6 +51,7 @@ let package = Package(
 
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/Domain"),
+        .package(path: "../../Foundations/PMLogger"),
 
         .package(path: "../../Shared/Connection"),
 
@@ -64,6 +65,7 @@ let package = Package(
             name: "ProTUNExtension",
             dependencies: [
                 "Domain",
+                "PMLogger",
                 .product(name: "ConnectionShared", package: "Connection"),
                 .product(name: "VPNCoreTypes", package: "vpn-core-apple"),
                 .product(name: "VPNCoreExtension", package: "vpn-core-apple"),

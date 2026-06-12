@@ -8,5 +8,7 @@
 	<string>appletv-vpn</string>
 	<key>WireGuardId</key>
 	<string>appletv-wireguardextension</string>
+	<key>ProTUNId</key>
+	<string>appletv-wireguardextension</string>
 </dict>
 </plist>
