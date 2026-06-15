@@ -206,9 +206,13 @@ final class ProTUNAdapter: @unchecked Sendable {
 }
 
 extension ProTUNAdapter {
-    func handleForkSelector(_ selector: String) {
+    func handleForkSelector(_ selector: String, cookieName: String, cookieValue: String) {
         Logger.localAgent.info("Received fork selector from app")
-        connection?.provideApiForkSelector(forkSelector: selector)
+        let forkSelectorInfo = ForkSelectorInfo(
+            selector: selector,
+            cookies: .init(cookies: [.init(name: cookieName, value: cookieValue)])
+        )
+        connection?.provideApiForkSelector(forkSelectorInfo: forkSelectorInfo)
     }
 }
 
@@ -312,7 +316,8 @@ extension ProTUNConfiguration {
             connectionMode: .localAgent(
                 userAgent: appInfo.userAgent,
                 appVersion: appInfo.appVersion,
-                settings: localAgentSettings
+                settings: localAgentSettings,
+                muonEnv: .prod
             )
         )
     }

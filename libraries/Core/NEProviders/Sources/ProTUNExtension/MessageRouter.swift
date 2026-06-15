@@ -44,8 +44,8 @@ enum MessageRouter {
             return await handleGetCurrentPeer(from: adapter)
         case let .pcapRequest(request):
             return handlePacketCaptureRequest(request, with: adapter)
-        case let .pushSelector(selector):
-            return handlePushSelector(selector, with: adapter)
+        case let .pushForkInfo(selector, cookieName, cookieValue):
+            return handlePushSelector(selector, cookieName: cookieName, cookieValue: cookieValue, with: adapter)
         case let .updateConfiguration(changes):
             return await handleConfigurationUpdate(changes: changes, with: adapter)
         }
@@ -155,8 +155,8 @@ private extension MessageRouter {
         .init(payload: .pcapUpdate(.isRecording(adapter.isPacketCaptureSessionRecording)))
     }
 
-    static func handlePushSelector(_ selector: String, with adapter: ProTUNAdapter) -> Response {
-        adapter.handleForkSelector(selector)
+    static func handlePushSelector(_ selector: String, cookieName: String, cookieValue: String, with adapter: ProTUNAdapter) -> Response {
+        adapter.handleForkSelector(selector, cookieName: cookieName, cookieValue: cookieValue)
         return .init(payload: .ack)
     }
 

@@ -20,6 +20,7 @@ import CommonNetworking
 import CoreConnection
 import Dependencies
 import DependenciesMacros
+import class Foundation.HTTPCookie
 import VPNAppCore
 
 public enum ForkSelectorClientError: Error {
@@ -72,12 +73,14 @@ extension ForkSelectorClient {
         throw lastError ?? ForkingExhaustedRetriesError()
     }
 
-    private static func forkSession(retries: Int) async throws(ForkSelectorClientError) -> String {
+    private static func forkSession(retries: Int) async throws(ForkSelectorClientError) -> (selector: String, cookie: HTTPCookie) {
         @Dependency(\.sessionService) var sessionService
 
         do {
             return try await retry(count: retries, retryDelay: .seconds(1)) {
-                try await sessionService.selector(.appContext(.proTUNExtension))
+                let selector = try await sessionService.selector(.appContext(.proTUNExtension))
+                let cookie = sessionService.sessionCookie()
+                return (selector: selector, cookie: cookie ?? .init())
             }
         } catch is CancellationError {
             throw .cancelled
@@ -102,8 +105,10 @@ extension ForkSelectorClient {
                     on: AnyClock(clock),
                     deadline: Self.pathStatusDeadline
                 ) {
-                    let selector = try await forkSession(retries: Self.forkingSessionRetriesCount)
-                    let response = try await messageSender.sendProTUN(.init(payload: .pushSelector(selector)))
+                    let (selector, cookie) = try await forkSession(retries: Self.forkingSessionRetriesCount)
+                    let response = try await messageSender.sendProTUN(
+                        .init(payload: .pushForkInfo(selector: selector, cookieName: cookie.name, cookieValue: cookie.value))
+                    )
                     guard case .ack = response.payload else {
                         throw ForkSelectorClientError.ipcInvalidResponse
                     }
