@@ -34,12 +34,6 @@ public extension SharedKey where Self == AppStorageKey<Int?>.Default {
     }
 }
 
-public extension SharedKey where Self == AppStorageKey<WireguardConfig>.Default {
-    static var wireguardConfig: Self {
-        Self[.appStorage("WireguardConfig"), default: .init()]
-    }
-}
-
 public extension SharedKey where Self == AppStorageKey<SmartProtocolConfig>.Default {
     static var smartProtocolConfig: Self {
         Self[.appStorage("SmartProtocolConfig"), default: .init()]

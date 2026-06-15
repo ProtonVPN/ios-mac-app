@@ -224,7 +224,8 @@ extension AppDelegate: NSApplicationDelegate {
 
         // Refresh API announcements
         @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
-        if propertiesManager.featureFlags.pollNotificationAPI, authKeychain.username != nil {
+        @Shared(.featureFlags) var featureFlags
+        if featureFlags.pollNotificationAPI, authKeychain.username != nil {
             announcementRefresher.tryRefreshing()
         }
     }
@@ -260,11 +261,11 @@ extension AppDelegate: NSApplicationDelegate {
     }
 
     private func checkSysexAndAdjustGlobalProtocol() {
-        let connectionProtocol = propertiesManager.connectionProtocol
+        @Shared(.connectionProtocol) var connectionProtocol
         if connectionProtocol.isDeprecated {
             // At this time on MacOS, OpenVPN is the only deprecated protocol, and it requires sysex approval, so can
             // safely fall back to smart protocol.
-            propertiesManager.connectionProtocol = .smartProtocol
+            $connectionProtocol.withLock { $0 = .smartProtocol }
         }
 
         // For new installations, we also ask for plutonium extension installation.
@@ -285,16 +286,16 @@ extension AppDelegate: NSApplicationDelegate {
                     switch success {
                     case .installed, .upgraded:
                         // Switch away from ike to smart protocol if ProTUN succeeded.
-                        if propertiesManager.connectionProtocol == .vpnProtocol(.ike) {
-                            propertiesManager.connectionProtocol = .smartProtocol
+                        if connectionProtocol == .vpnProtocol(.ike) {
+                            $connectionProtocol.withLock { $0 = .smartProtocol }
                         }
                     case .alreadyThere:
                         break
                     }
                 case .failure:
                     // Either we lost sysex approval, or are upgrading from an earlier version which didn't have this check
-                    log.warning("\(propertiesManager.connectionProtocol) requires sysex (ProTUN not installed), reverting to IKEv2", category: .sysex)
-                    propertiesManager.connectionProtocol = .vpnProtocol(.ike)
+                    log.warning("\(connectionProtocol) requires sysex (ProTUN not installed), reverting to IKEv2", category: .sysex)
+                    $connectionProtocol.withLock { $0 = .vpnProtocol(.ike) }
                     @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
                     log.debug("Disabling Plutonium feature because the ProTUN extension is not installed.")
                     $feature.withLock {

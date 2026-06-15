@@ -21,7 +21,6 @@ import Connection
 import Dependencies
 import Domain
 import Foundation
-import LegacyCommon
 import Strings
 import VPNAppCore
 import VPNShared
@@ -46,7 +45,7 @@ public struct DefaultProfileFeature {
 
         // Computed properties
         var profile: Profile {
-            @Dependency(\.propertiesManager) var propertiesManager
+            @Shared(.connectionProtocol) var connectionProtocol
             switch serverOffering {
             case .random:
                 return Profile(
@@ -54,10 +53,10 @@ public struct DefaultProfileFeature {
                     accessTier: defaultAccessTier,
                     profileIcon: .arrowsSwapRight,
                     profileType: .system,
-                    serverType: propertiesManager.serverTypeToggle,
+                    serverType: ServerType.current,
                     serverOffering: serverOffering,
                     name: Localizable.random,
-                    connectionProtocol: propertiesManager.connectionProtocol
+                    connectionProtocol: connectionProtocol
                 )
             default:
                 return Profile(
@@ -65,10 +64,10 @@ public struct DefaultProfileFeature {
                     accessTier: defaultAccessTier,
                     profileIcon: .bolt,
                     profileType: .system,
-                    serverType: propertiesManager.serverTypeToggle,
+                    serverType: ServerType.current,
                     serverOffering: serverOffering,
                     name: Localizable.fastest,
-                    connectionProtocol: propertiesManager.connectionProtocol
+                    connectionProtocol: connectionProtocol
                 )
             }
         }

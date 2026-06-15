@@ -94,8 +94,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         self.factory = factory
         super.init(factory: factory)
         propertiesManager.restoreStartOnBootStatus()
-
-        AppEvent.hermes.subscribe(self, selector: #selector(updateWiregardConfig))
     }
 
     // MARK: public log in interface (completion handlers)
@@ -185,11 +183,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         $userTier.withLock { $0 = credentials.maxTier }
 
         if let clientConfig = properties.clientConfig {
-            @Shared(.wireguardConfig) var wireguardConfig
-            $wireguardConfig.withLock { $0 = clientConfig.wireGuardConfig }
             @Shared(.smartProtocolConfig) var smartProtocolConfig
             $smartProtocolConfig.withLock { $0 = clientConfig.smartProtocolConfig }
-            propertiesManager.featureFlags = clientConfig.featureFlags
+            @Shared(.featureFlags) var featureFlags
+            $featureFlags.withLock { $0 = clientConfig.featureFlags }
             propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
             @Dependency(\.serverChangeStorage) var storage
             storage.config = clientConfig.serverChangeConfig
@@ -198,7 +195,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             propertiesManager.streamingServices = streamingServices.streamingServices
             propertiesManager.streamingResourcesUrl = streamingServices.resourceBaseURL
         }
-        if propertiesManager.featureFlags.pollNotificationAPI {
+        @Shared(.featureFlags) var pollFeatureFlags
+        if pollFeatureFlags.pollNotificationAPI {
             Task { @MainActor in
                 self.announcementRefresher.tryRefreshing()
             }
@@ -468,38 +466,5 @@ struct SessionChanged: TypedNotification {
     enum SessionChangeData {
         case established
         case lost(reason: String?)
-    }
-}
-
-// MARK: - Hermes
-
-import Hermes
-
-private extension WireguardConfig {
-    func refreshConfig() -> WireguardConfig {
-        @Dependency(\.hermesClient) var hermesClient
-        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
-
-        let hermesIsEnabled: Bool = hermesClient.isEnabled().wrappedValue
-        let hermesIsAllowed = featureAuthorizerProvider.authorizer(for: HermesFeature.self)().isAllowed
-
-        var hermesResolvers: [HermesResolver] = [.proton]
-        if hermesIsEnabled, hermesIsAllowed {
-            hermesResolvers.insert(contentsOf: hermesClient.activeHermesResolvers().wrappedValue, at: 0)
-        }
-        return .init(
-            defaultUdpPorts: defaultUdpPorts,
-            defaultTcpPorts: defaultTcpPorts,
-            defaultTlsPorts: defaultTlsPorts,
-            dns: hermesResolvers.map(\.location)
-        )
-    }
-}
-
-extension AppSessionManagerImplementation {
-    @objc
-    private func updateWiregardConfig(_: Notification) {
-        @Shared(.wireguardConfig) var wireguardConfig
-        $wireguardConfig.withLock { $0 = $0.refreshConfig() }
     }
 }

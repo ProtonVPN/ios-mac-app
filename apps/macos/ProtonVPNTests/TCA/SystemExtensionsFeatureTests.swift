@@ -124,10 +124,11 @@ struct SystemExtensionsFeatureTests {
 
     @Test("Check and install requests short-circuit when check is false")
     func checkAndInstallShortCircuitsWhenCheckIsFalse() async {
+        @Shared(.connectionProtocol) var connectionProtocol
+        $connectionProtocol.withLock { $0 = .vpnProtocol(.ike) }
         let store = TestStore(initialState: SystemExtensionsFeature.State()) {
             SystemExtensionsFeature()
         } withDependencies: {
-            $0.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
             $0.systemExtensionsProfilesClient = .init(hasCustomProfilesRequiringSystemExtension: { false })
         }
 

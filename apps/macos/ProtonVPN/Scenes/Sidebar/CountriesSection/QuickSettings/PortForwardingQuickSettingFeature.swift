@@ -20,6 +20,7 @@ import ComposableArchitecture
 import Domain
 import SwiftUI
 import Theme
+import VPNAppCore
 
 @Reducer
 struct PortForwardingQuickSettingFeature {

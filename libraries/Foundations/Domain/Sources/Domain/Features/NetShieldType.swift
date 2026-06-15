@@ -21,12 +21,26 @@
 //
 
 import Foundation
+import Strings
 
 public enum NetShieldType: Int, CaseIterable, Codable, Sendable {
     case off = 0
     case level1
     case level2
     case level3
+
+    public var name: String {
+        switch self {
+        case .off:
+            Localizable.netshieldOff
+        case .level1:
+            Localizable.netshieldLevel1
+        case .level2:
+            Localizable.netshieldLevel2
+        case .level3:
+            Localizable.netshieldLevel3
+        }
+    }
 }
 
 public extension NetShieldType {

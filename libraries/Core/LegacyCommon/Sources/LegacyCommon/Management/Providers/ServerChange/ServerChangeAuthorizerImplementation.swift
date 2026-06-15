@@ -23,7 +23,6 @@ import VPNAppCore
 public struct ServerChangeAuthorizerImplementation {
     func serverChangeAvailability() -> ServerChangeAuthorizer.ServerChangeAvailability {
         @Dependency(\.credentialsProvider) var credentials
-        @Dependency(\.featureFlagProvider) var featureFlags
 
         guard credentials.tier.isFreeTier else {
             return .available

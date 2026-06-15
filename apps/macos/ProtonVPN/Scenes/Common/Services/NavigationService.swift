@@ -270,8 +270,9 @@ class NavigationService {
             return
         }
 
+        @Shared(.secureCoreToggle) var secureCoreToggle
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
-            secureCoreEnabled: propertiesManager.secureCoreToggle,
+            secureCoreEnabled: secureCoreToggle,
             connectedExitCountryCode: nil,
             isFreeTier: credentials.tier.isFreeTier
         )

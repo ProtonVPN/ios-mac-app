@@ -77,3 +77,10 @@ public extension SharedKey where Self == AppStorageKey<Bool>.Default {
         Self[.appStorage(#function), default: false]
     }
 }
+
+public extension ServerType {
+    static var current: ServerType {
+        @Shared(.secureCoreToggle) var secureCoreToggle
+        return secureCoreToggle ? .secureCore : .standard
+    }
+}

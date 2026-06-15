@@ -49,7 +49,6 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
     typealias Factory = CoreAlertServiceFactory
     private let factory: Factory
 
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
@@ -128,6 +127,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         and then: ProtocolSwitchAction,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
+        @Shared(.vpnProtocol) var sharedVpnProtocol
         let performSwitchAction = { [weak self] in
             switch then {
             case .reconnect:
@@ -145,7 +145,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         }
 
         guard vpnProtocol.requiresSystemExtension else {
-            propertiesManager.vpnProtocol = vpnProtocol
+            $sharedVpnProtocol.withLock { $0 = vpnProtocol }
             performSwitchAction()
             completion(.success)
             return
@@ -161,7 +161,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             let result = outcome.accumulated
             switch result {
             case .success:
-                propertiesManager.vpnProtocol = vpnProtocol
+                $sharedVpnProtocol.withLock { $0 = vpnProtocol }
                 performSwitchAction()
                 completion(.success)
             case let .failure(error):

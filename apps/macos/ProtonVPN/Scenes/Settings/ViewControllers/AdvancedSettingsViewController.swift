@@ -26,6 +26,7 @@ import ProtonCoreFeatureFlags
 import SharedViews
 import Strings
 import Theme
+import VPNAppCore
 
 final class AdvancedSettingsViewController: NSViewController, ReloadableViewController {
     @IBOutlet private var alternativeRoutingView: SettingsTickboxView!

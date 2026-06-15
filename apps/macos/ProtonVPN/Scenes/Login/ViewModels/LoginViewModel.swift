@@ -32,6 +32,7 @@ import ProtonCoreLogin
 import ProtonCoreNetworking
 import ProtonCoreObservability
 import ProtonCoreServices
+import Sharing
 import Strings
 import VPNAppCore
 import VPNShared
@@ -285,17 +286,18 @@ final class LoginViewModel: ObservableObject {
                 if shouldDefaultToSmartIfPossible {
                     switch success {
                     case .installed, .upgraded:
-                        propertiesManager.smartProtocol = true
+                        @Shared(.smartProtocol) var smartProtocol
+                        $smartProtocol.withLock { $0 = true }
                     case .alreadyThere:
                         break
                     }
                 }
             case .failure:
-                let currentProtocol = propertiesManager.connectionProtocol
-                if currentProtocol.requiresSystemExtension {
+                @Shared(.connectionProtocol) var connectionProtocol
+                if connectionProtocol.requiresSystemExtension {
                     // Forcefully revert default protocol to IKE - current protocol is unusable
-                    log.warning("\(currentProtocol) requires sysex (not installed), reverting to IKEv2", category: .sysex)
-                    propertiesManager.connectionProtocol = .vpnProtocol(.ike)
+                    log.warning("\(connectionProtocol) requires sysex (not installed), reverting to IKEv2", category: .sysex)
+                    $connectionProtocol.withLock { $0 = .vpnProtocol(.ike) }
                 }
             }
         }

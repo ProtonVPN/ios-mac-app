@@ -28,6 +28,7 @@ import ProtonCoreFeatureFlags
 import SharedViews
 import Sharing
 import Strings
+import VPNAppCore
 
 final class ConnectionSettingsViewController: NSViewController, ReloadableViewController {
     fileprivate enum SwitchButtonOption: Int {

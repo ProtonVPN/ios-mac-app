@@ -26,6 +26,7 @@
     import ProtonCoreDataModel
     import ProtonCoreLogin
     import ProtonCoreServices
+    import Sharing
     import VPNAppCore
     import VPNShared
 
@@ -71,11 +72,6 @@
             self.quickConnect = quickConnect
         }
 
-        public var secureCoreToggle: Bool = false
-        public var serverTypeToggle: ServerType {
-            secureCoreToggle ? .secureCore : .standard
-        }
-
         public var userLocation: UserLocation? {
             didSet {
                 AppEvent.userIp.post(userLocation)
@@ -90,47 +86,24 @@
         public var reportBugEmail: String?
         public var discourageSecureCore: Bool = false
         public var ratingSettings: RatingSettings = .init()
-        public var lastConnectionIntent: ConnectionSpec = .init()
         public var serverChangeConfig: ServerChangeConfig = .init()
 
         #if os(macOS)
             public var forceExtensionUpgrade: Bool = false
         #endif
 
-        public var vpnProtocol: VpnProtocol = .ike {
-            didSet {
-                AppEvent.vpnProtocol.post(vpnProtocol)
-            }
-        }
-
         public var apiEndpoint: String?
         public var lastAppVersion = "0.0.0"
-        public var featureFlags: FeatureFlags = .init() {
-            didSet {
-                AppEvent.featureFlags.post(featureFlags)
-            }
-        }
 
         public var maintenanceServerRefreshIntereval: Int = 1
-        public var vpnAcceleratorEnabled: Bool = false {
-            didSet {
-                AppEvent.vpnAccelerator.post(vpnAcceleratorEnabled)
-            }
-        }
+        public var vpnAcceleratorEnabled: Bool = false
 
-        public var killSwitch: Bool = false
         public var portForwarding: Bool = false
 
         public var humanValidationFailed: Bool = false
         public var alternativeRouting: Bool = false {
             didSet {
                 onAlternativeRoutingChange?(alternativeRouting)
-            }
-        }
-
-        public var smartProtocol: Bool = false {
-            didSet {
-                AppEvent.smartProtocol.post(smartProtocol)
             }
         }
 
@@ -142,11 +115,7 @@
 
         public var userAccountRecovery: ProtonCoreDataModel.AccountRecovery?
         public var userRole: UserRole = .noOrganization
-        public var excludeLocalNetworks: Bool = true {
-            didSet {
-                AppEvent.excludeLocalNetworks.post(excludeLocalNetworks)
-            }
-        }
+        public var excludeLocalNetworks: Bool = true
 
         public var userInfo: UserInfo?
         public var userSettings: UserSettings?
@@ -163,10 +132,6 @@
                     AppEvent.earlyAccess.post(earlyAccess)
                 #endif
             }
-        }
-
-        public var connectionProtocol: ConnectionProtocol {
-            smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
         }
 
         public var didShowDeprecationWarningForOSVersion: String?
@@ -191,7 +156,8 @@
 
         public func logoutCleanup() {
             hasConnected = false
-            secureCoreToggle = false
+            @Shared(.secureCoreToggle) var secureCoreToggle
+            $secureCoreToggle.withLock { $0 = false }
             reportBugEmail = nil
         }
 

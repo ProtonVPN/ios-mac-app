@@ -29,26 +29,12 @@ import IssueReporting
 public enum AppEvent: String {
     // MARK: User settings
 
-    /// The user's "exclude local networks" setting has changed.
-    case excludeLocalNetworks
-    /// The user's VPN protocol setting has changed.
-    case vpnProtocol
-    /// The user's smart protocol setting has changed.
-    case smartProtocol
-    /// The user's VPN accelerator setting has changed.
-    case vpnAccelerator
     /// The user's IP (outside of the VPN) has changed.
     case userIp
     /// The visible content in the profile settings has changed.
     case profileContentChanged
     /// The content on disk of profiles settings has changed.
     case profileStorageChanged
-    /// The user's NAT type setting changed.
-    case hermes
-    /// The Plutonium settings changed.
-    case plutonium
-    /// The Port Forwarding Notification setting changed
-    case portForwardingNotifications
     /// The user's Auth credentials changed.
     case authCredentialsChanged
 
@@ -62,8 +48,6 @@ public enum AppEvent: String {
     case userDelinquent
     /// The user's VPN plan changed on the backend.
     case planChanged
-    /// Some feature flags have changed from the backend.
-    case featureFlags
     /// Session manager data was reloaded.
     case sessionManagerDataReloaded
     /// Session manager data has changed.

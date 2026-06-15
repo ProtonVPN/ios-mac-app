@@ -18,20 +18,19 @@
 
 import Dependencies
 import Domain
-import LegacyCommon
 import Persistence
 import Sharing
 
 package struct ProtocolFilters {
     // MARK: - Server and Group query filters
 
-    @Dependency(\.propertiesManager) private var propertiesManager
+    @Shared(.connectionProtocol) private var connectionProtocol: ConnectionProtocol
     @Shared(.smartProtocolConfig) private var smartProtocolConfig: SmartProtocolConfig
 
     package init() {}
 
     private var currentConnectionProtocol: ConnectionProtocol {
-        propertiesManager.connectionProtocol
+        connectionProtocol
     }
 
     private var supportedProtocols: [VpnProtocol] {

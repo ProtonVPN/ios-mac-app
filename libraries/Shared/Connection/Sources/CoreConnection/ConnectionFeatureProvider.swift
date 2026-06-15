@@ -20,28 +20,62 @@ import Dependencies
 import DependenciesMacros
 import Domain
 import Foundation
+import Sharing
+import VPNAppCore
 
-@available(tvOS 17, *)
+@DependencyClient
 public struct ConnectionFeatureProvider: Sendable {
-    public internal(set) var connectionFeatures: @Sendable () -> VPNConnectionFeatures
+    public internal(set) var connectionFeatures: @Sendable () -> VPNConnectionFeatures = { .unimplementedFeatures }
     public internal(set) var setConnectionFeatures: @Sendable (_: VPNConnectionFeatures) -> Void
-    public internal(set) var tunnelFeatures: @Sendable () -> TunnelFeatures
-    public internal(set) var connectionProtocol: @Sendable () -> ConnectionProtocol
-
-    public init(
-        connectionFeatures: @escaping @Sendable () -> VPNConnectionFeatures = { .unimplementedFeatures },
-        setConnectionFeatures: @escaping @Sendable (_: VPNConnectionFeatures) -> Void = { _ in reportIssue() },
-        tunnelFeatures: @escaping @Sendable () -> TunnelFeatures = { .unimplementedFeatures },
-        connectionProtocol: @escaping @Sendable () -> ConnectionProtocol = { .smartProtocol }
-    ) {
-        self.connectionFeatures = connectionFeatures
-        self.setConnectionFeatures = setConnectionFeatures
-        self.tunnelFeatures = tunnelFeatures
-        self.connectionProtocol = connectionProtocol
-    }
+    public internal(set) var tunnelFeatures: @Sendable () -> TunnelFeatures = { .unimplementedFeatures }
+    public internal(set) var connectionProtocol: @Sendable () -> ConnectionProtocol = { .smartProtocol }
 }
 
-extension ConnectionFeatureProvider: TestDependencyKey {
+extension ConnectionFeatureProvider: DependencyKey {
+    #if !os(tvOS)
+        public static let liveValue: ConnectionFeatureProvider = .init(
+            connectionFeatures: {
+                @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
+                @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
+                @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
+
+                return .init(
+                    netshield: netShieldPropertyProvider.getNetShieldType(),
+                    vpnAccelerator: AuthorizedFeatureValue<VPNAccelerator>().value() == .on,
+                    natType: natTypePropertyProvider.getNATType(),
+                    portForwarding: portForwardingPropertyProvider.getPortForwarding()
+                )
+            },
+            setConnectionFeatures: { newFeatures in
+                @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
+                @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
+                @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
+
+                natTypePropertyProvider.setNATType(newFeatures.natType)
+                netShieldPropertyProvider.setNetShieldType(newFeatures.netshield)
+                portForwardingPropertyProvider.setPortForwarding(newFeatures.portForwarding)
+            },
+            tunnelFeatures: {
+                @Shared(.killSwitch) var killSwitch
+                return TunnelFeatures(
+                    killSwitch: killSwitch,
+                    excludeLocalNetworks: AuthorizedFeatureValue<ExcludeLocalNetworks>().value() == .on
+                )
+            },
+            connectionProtocol: {
+                @Shared(.connectionProtocol) var connectionProtocol
+                return connectionProtocol
+            }
+        )
+    #else
+        public static let liveValue: ConnectionFeatureProvider = .init(
+            connectionFeatures: { .defaultFeatures },
+            setConnectionFeatures: { _ in log.warning("Nothing to do on tvOS yet") },
+            tunnelFeatures: { .tvFeatures },
+            connectionProtocol: { .vpnProtocol(.wireGuard(.udp)) }
+        )
+    #endif
+
     public static let testValue: ConnectionFeatureProvider = .init()
 }
 
@@ -56,6 +90,13 @@ extension VPNConnectionFeatures {
     @usableFromInline static let unimplementedFeatures: VPNConnectionFeatures = .init(
         netshield: .off,
         vpnAccelerator: false,
+        natType: .moderateNAT,
+        portForwarding: false
+    )
+
+    @usableFromInline static let defaultFeatures: VPNConnectionFeatures = .init(
+        netshield: .level1,
+        vpnAccelerator: true,
         natType: .moderateNAT,
         portForwarding: false
     )

@@ -113,7 +113,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         super.init(factory: factory)
 
         AppEvent.userEngagedWithUpsellAlert.subscribe(self, selector: #selector(userEngagedWithUpsell))
-        AppEvent.hermes.subscribe(self, selector: #selector(updateWiregardConfig))
     }
 
     // MARK: - Beginning of the login logic.
@@ -239,7 +238,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             return
         }
 
-        guard case .certificate = propertiesManager.vpnProtocol.authenticationType else {
+        @Shared(.vpnProtocol) var vpnProtocol
+        guard case .certificate = vpnProtocol.authenticationType else {
             log.info("Not refreshing vpn certificate - cert auth not in use")
             return
         }
@@ -315,13 +315,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 propertiesManager.userInfo?.apply(userSettings)
             }
             if let clientConfig = properties.clientConfig {
-                // Apply Hermes DNS configuration when storing WireGuard config
-                @Shared(.wireguardConfig) var wireguardConfig
-                $wireguardConfig.withLock { $0 = clientConfig.wireGuardConfig.refreshConfig() }
                 @Shared(.smartProtocolConfig) var smartProtocolConfig
                 $smartProtocolConfig.withLock { $0 = clientConfig.smartProtocolConfig }
                 propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
-                propertiesManager.featureFlags = clientConfig.featureFlags
+                @Shared(.featureFlags) var featureFlags
+                $featureFlags.withLock { $0 = clientConfig.featureFlags }
 
                 @Shared(.ratingSettings) var ratingSettings
                 $ratingSettings.withLock { $0 = clientConfig.ratingSettings }
@@ -333,7 +331,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 propertiesManager.streamingServices = streamingServices.streamingServices
                 propertiesManager.streamingResourcesUrl = streamingServices.resourceBaseURL
             }
-            if propertiesManager.featureFlags.pollNotificationAPI {
+            @Shared(.featureFlags) var pollFeatureFlags
+            if pollFeatureFlags.pollNotificationAPI {
                 announcementRefresher.tryRefreshing()
             }
 
@@ -600,38 +599,5 @@ extension AppSessionManagerImplementation {
         } catch {
             log.error("Data reload failed after plan purchase", category: .app, metadata: ["error": "\(error)"])
         }
-    }
-}
-
-// MARK: - WireGuard config
-
-import Hermes
-
-private extension WireguardConfig {
-    func refreshConfig() -> WireguardConfig {
-        @Dependency(\.hermesClient) var hermesClient
-        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
-
-        let hermesIsEnabled: Bool = hermesClient.isEnabled().wrappedValue
-        let hermesIsAllowed = featureAuthorizerProvider.authorizer(for: HermesFeature.self)().isAllowed
-
-        var hermesResolvers: [HermesResolver] = [.proton]
-        if hermesIsEnabled, hermesIsAllowed {
-            hermesResolvers.insert(contentsOf: hermesClient.activeHermesResolvers().wrappedValue, at: 0)
-        }
-        return .init(
-            defaultUdpPorts: defaultUdpPorts,
-            defaultTcpPorts: defaultTcpPorts,
-            defaultTlsPorts: defaultTlsPorts,
-            dns: hermesResolvers.map(\.location)
-        )
-    }
-}
-
-extension AppSessionManagerImplementation {
-    @objc
-    private func updateWiregardConfig(_: Notification) {
-        @Shared(.wireguardConfig) var wireguardConfig
-        $wireguardConfig.withLock { $0 = $0.refreshConfig() }
     }
 }

@@ -48,8 +48,6 @@ public protocol PropertiesManagerProtocol: AnyObject {
     func getQuickConnect(for username: String) -> String? // profile + username (incase multiple users are using the app)
     func setQuickConnect(for username: String, quickConnect: String?)
 
-    var secureCoreToggle: Bool { get set }
-    var serverTypeToggle: ServerType { get }
     var reportBugEmail: String? { get set }
     var discourageSecureCore: Bool { get set }
     var showWhatsNewModal: Bool { get set }
@@ -66,11 +64,7 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var warnedTrialExpiring: Bool { get set }
     var warnedTrialExpired: Bool { get set }
 
-    var vpnProtocol: VpnProtocol { get set }
-
-    var featureFlags: FeatureFlags { get set }
     var maintenanceServerRefreshIntereval: Int { get set }
-    var killSwitch: Bool { get set }
 
     // Development properties
     var apiEndpoint: String? { get set }
@@ -78,16 +72,11 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var lastAppVersion: String { get set }
 
     var humanValidationFailed: Bool { get set }
-    var smartProtocol: Bool { get set }
 
     var streamingServices: StreamingDictServices { get set }
     var streamingResourcesUrl: String? { get set }
 
-    var connectionProtocol: ConnectionProtocol { get }
-
     var serverChangeConfig: ServerChangeConfig { get set }
-
-    var lastConnectionIntent: ConnectionSpec { get set }
 
     var didShowDeprecationWarningForOSVersion: String? { get set }
 
@@ -109,38 +98,6 @@ public protocol PropertiesManagerProtocol: AnyObject {
 
     /// Logs all the properties with their current values
     func logCurrentState()
-}
-
-public extension PropertiesManagerProtocol {
-    var connectionProtocol: ConnectionProtocol {
-        get {
-            smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
-        }
-        set {
-            switch newValue {
-            case .smartProtocol:
-                smartProtocol = true
-            case let .vpnProtocol(newVpnProtocol):
-                smartProtocol = false
-                vpnProtocol = newVpnProtocol
-            }
-        }
-    }
-
-    /// All protocols which should be considered for connection.
-    ///
-    /// This depends on the user's protocol choice, and, if they have chosen smart protocol, the smart protocol
-    /// configuration that comes from the API.
-    var currentProtocolSupport: ProtocolSupport {
-        switch connectionProtocol {
-        case .smartProtocol:
-            @Shared(.smartProtocolConfig) var smartProtocolConfig
-            return ProtocolSupport(vpnProtocols: smartProtocolConfig.supportedProtocols)
-
-        case let .vpnProtocol(vpnProtocol):
-            return vpnProtocol.protocolSupport
-        }
-    }
 }
 
 public final class PropertiesManager: PropertiesManagerProtocol {
@@ -173,8 +130,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case warnedTrialExpiring = "WarnedTrialExpiring"
         case warnedTrialExpired = "WarnedTrialExpired"
 
-        case vpnProtocol = "VpnProtocol"
-
         case apiEndpoint = "ApiEndpoint"
 
         // Migration
@@ -191,12 +146,10 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case maintenanceServerRefreshIntereval = "MaintenanceServerRefreshIntereval"
 
         case humanValidationFailed
-        case smartProtocol
         case streamingServices
         case partnerTypes
         case streamingResourcesUrl
 
-        case lastConnectionIntent = "LastConnectionIntent"
         case serverChangeConfig = "ServerChangeConfig"
 
         #if os(macOS)
@@ -261,12 +214,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         storage.setValue(quickConnect, forKey: Keys.quickConnectProfile.rawValue + username)
     }
 
-    @Shared(.secureCoreToggle) public var secureCoreToggle: Bool
-
-    public var serverTypeToggle: ServerType {
-        secureCoreToggle ? .secureCore : .standard
-    }
-
     @StringProperty(.lastBugReportEmail) public var reportBugEmail: String?
 
     @Property(.userLocation, notifyChangesWith: .userIp)
@@ -279,24 +226,17 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
     @StringProperty(.apiEndpoint) public var apiEndpoint: String?
 
-    @InitializedProperty(.lastConnectionIntent) public var lastConnectionIntent: ConnectionSpec
     @InitializedProperty(.serverChangeConfig) public var serverChangeConfig: ServerChangeConfig
 
     #if os(macOS)
         @BoolProperty(.forceExtensionUpgrade) public var forceExtensionUpgrade: Bool
     #endif
 
-    @InitializedProperty(.vpnProtocol, notifyChangesWith: .vpnProtocol)
-    public var vpnProtocol: VpnProtocol
-
     @StringProperty(.lastAppVersion) private var _lastAppVersion: String?
     public var lastAppVersion: String {
         get { _lastAppVersion ?? "0.0.0" }
         set { _lastAppVersion = newValue }
     }
-
-    @InitializedProperty(.featureFlags, notifyChangesWith: .featureFlags)
-    public var featureFlags: FeatureFlags
 
     public var maintenanceServerRefreshIntereval: Int {
         get {
@@ -315,16 +255,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
     @BoolProperty(.showWhatsNewModal) public var showWhatsNewModal: Bool
 
-    @Shared(.killSwitch) private var sharedKillSwitch: Bool
-    public var killSwitch: Bool {
-        get { sharedKillSwitch }
-        set { $sharedKillSwitch.withLock { $0 = newValue } }
-    }
-
     @BoolProperty(.humanValidationFailed) public var humanValidationFailed: Bool
-
-    @BoolProperty(.smartProtocol, notifyChangesWith: .smartProtocol)
-    public var smartProtocol: Bool
 
     @InitializedProperty(.streamingServices) public var streamingServices: StreamingDictServices
     @InitializedProperty(.userRole) public var userRole: UserRole
@@ -349,7 +280,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         self.defaults = defaultsProvider.getDefaults()
 
         defaults.register(defaults: [
-            Keys.smartProtocol.rawValue: ConnectionProtocol.smartProtocol.shouldBeEnabledByDefault,
             Keys.discourageSecureCore.rawValue: true,
             Keys.showWhatsNewModal.rawValue: true,
         ])
@@ -357,6 +287,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
     public func logoutCleanup() {
         hasConnected = false
+        @Shared(.secureCoreToggle) var secureCoreToggle
         $secureCoreToggle.withLock { $0 = false }
         discourageSecureCore = true
         trialWelcomed = false
@@ -365,8 +296,10 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         reportBugEmail = nil
         @Shared(.alternativeRouting) var alternativeRouting
         $alternativeRouting.withLock { $0 = true }
-        smartProtocol = ConnectionProtocol.smartProtocol.shouldBeEnabledByDefault
-        killSwitch = false
+        @Shared(.smartProtocol) var smartProtocol
+        $smartProtocol.withLock { $0 = ConnectionProtocol.smartProtocol.shouldBeEnabledByDefault }
+        @Shared(.killSwitch) var killSwitch
+        $killSwitch.withLock { $0 = false }
         userInfo = nil
         userSettings = nil
     }
@@ -590,26 +523,8 @@ public class DateProperty {
     }
 }
 
-extension ConnectionSpec: @retroactive DefaultableProperty {}
-
 extension SettingsStorageKey: @retroactive DependencyKey {
     public static let liveValue: SettingsStorage = .init(
-        getConnectionProtocol: {
-            @Dependency(\.propertiesManager) var propertiesManager
-            return propertiesManager.connectionProtocol
-        },
-        setConnectionProtocol: {
-            @Dependency(\.propertiesManager) var propertiesManager
-            propertiesManager.connectionProtocol = $0
-        },
-        getNetShield: {
-            @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
-            return netShieldPropertyProvider.getNetShieldType()
-        },
-        setNetShield: {
-            @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
-            netShieldPropertyProvider.setNetShieldType($0)
-        },
         getEnvironment: {
             @Dependency(\.propertiesManager) var propertiesManager
             return .init(

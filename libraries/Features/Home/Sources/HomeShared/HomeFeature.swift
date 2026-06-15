@@ -32,6 +32,7 @@ import ModalsServices
 import NetShield
 import Payments
 import ProtonCoreFeatureFlags
+import Sharing
 import Strings
 import VPNAppCore
 
@@ -39,11 +40,11 @@ import VPNAppCore
 public struct HomeFeature {
     @Dependency(\.serverChangeAuthorizer) private var authorizer
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
+    @Dependency(\.planChangeClient) private var planChangeClient
     @Dependency(\.pendingDisconnectCompletions) private var pendingDisconnectCompletions
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.alertService) private var alertService
     @Dependency(\.continuousClock) private var clock
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.networkInterfacePropertiesProvider) private var networkInterfacePropertiesProvider
     #if os(iOS)
         @Dependency(\.openCredentiallessSignUp) private var openCredentiallessSignUp
@@ -108,6 +109,7 @@ public struct HomeFeature {
         case connectionState
         case connectionCommands
         case connectionConnectCommandEffect
+        case planChange
     }
 
     public enum Action {
@@ -123,6 +125,7 @@ public struct HomeFeature {
 
         case incomingAlert(Alert)
         case killSwitchSettingChanged(Bool)
+        case planChanged(PlanChange)
 
         case connection(ConnectionFeature.Action)
         case map(HomeMapFeature.Action)
@@ -270,7 +273,13 @@ private extension HomeFeature {
                             await send(.connectionCommandReceived(command))
                         }
                     }
-                    .cancellable(id: CancelID.connectionCommands)
+                    .cancellable(id: CancelID.connectionCommands),
+                    .run { send in
+                        for await planChange in planChangeClient.events() {
+                            await send(.planChanged(planChange))
+                        }
+                    }
+                    .cancellable(id: CancelID.planChange)
                 )
                 .cancellable(id: CancelID.connectionState)
             case .killSwitchSettingChanged:
@@ -280,6 +289,10 @@ private extension HomeFeature {
                     return .none
                 }
                 return .send(.connection(.input(.connect(.init(spec: spec, acceptableProtocols: .all)))))
+            case let .planChanged(planChange):
+                // update the persisted feature settings so a downgrade clears paid features
+                // and an upgrade re-enables NetShield
+                return .run { _ in applyPlanChangeFeatureResets(planChange) }
             case let .incomingAlert(alert):
                 state.alert = domainAlertState(from: alert)
                 return .none
@@ -600,7 +613,8 @@ private extension HomeFeature {
     /// Returns an alert if any pre-connect intercept (e.g. misconfigured LAN) applies to the
     /// pending connect; otherwise `nil`.
     func interceptAlert(for pending: PendingConnect) -> AlertState<Action.HomeAlert>? {
-        if propertiesManager.featureFlags.unsafeLanWarnings,
+        @Shared(.featureFlags) var featureFlags
+        if featureFlags.unsafeLanWarnings,
            !killSwitch,
            let bad = networkInterfacePropertiesProvider.firstBadInterface() {
             return bad.interceptAlert(

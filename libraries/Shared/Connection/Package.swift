@@ -117,6 +117,7 @@ let package = Package(
             dependencies: [
                 "Domain",
                 "Ergonomics",
+                .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Sharing", package: "swift-sharing"),
             ]

@@ -32,10 +32,6 @@ public struct DefaultConnectionPreferenceStorage: DependencyKey {
     enum StorageKeys: String {
         /// Defined here
         case defaultConnection = "DefaultConnectionPreference"
-        /// Also defined in PropertiesManager.Keys
-        case smartProtocol
-        /// Also defined in PropertiesManager.Keys
-        case vpnProtocol = "VpnProtocol"
     }
 }
 
@@ -53,14 +49,7 @@ public extension DefaultConnectionPreferenceStorage {
                 try storage.getForUser(DefaultConnectionPreference.self, forKey: StorageKeys.defaultConnection.rawValue)
             },
             getDefaultProtocol: {
-                let smartProtocol = defaultsProvider.getDefaults().bool(forKey: StorageKeys.smartProtocol.rawValue)
-                let vpnProtocol = try? storage.get(VpnProtocol.self, forKey: StorageKeys.vpnProtocol.rawValue)
-
-                if let vpnProtocol {
-                    return smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
-                }
-
-                return .smartProtocol
+                ConnectionProtocolSharedKey.read(from: defaultsProvider.getDefaults())
             }
         )
     }()

@@ -123,8 +123,8 @@ public struct PlutoniumFeature {
                 }
 
                 // is IKEv2 selected in general settings? We need to disable it
-                @Dependency(\.propertiesManager) var propertiesManager
-                if propertiesManager.connectionProtocol == .vpnProtocol(.ike) {
+                @Shared(.connectionProtocol) var connectionProtocol
+                if connectionProtocol == .vpnProtocol(.ike) {
                     state.alert = Self.unsupportedProtocolErrorAlert
                     return .none
                 }

@@ -94,7 +94,7 @@ struct HermesView: ExplicitlySizedView {
         .onTapGesture {
             locationTextFieldIsFocused = false
         }
-        .onChange(of: isEnabledBinding.wrappedValue, to: true) { _ in
+        .onChange(of: isEnabledBinding.wrappedValue, to: true) { _, _ in
             resolverLocation = ""
             resolverLocationValidation = .valid
         }

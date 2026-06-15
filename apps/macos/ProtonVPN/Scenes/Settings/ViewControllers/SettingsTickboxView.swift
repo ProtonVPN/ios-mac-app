@@ -24,6 +24,7 @@ import ProtonCoreUIFoundations
 import SharedViews
 import Strings
 import Theme
+import VPNAppCore
 
 protocol TickboxViewDelegate: AnyObject {
     func toggleTickbox(_ tickboxView: SettingsTickboxView, to value: ButtonState)

@@ -21,10 +21,12 @@
 //
 
 import Cocoa
+import Combine
 import Dependencies
 import Domain
 import Ergonomics
 import LegacyCommon
+import Sharing
 import VPNAppCore
 
 protocol ProfilesMenuViewModelFactory {
@@ -51,6 +53,9 @@ class ProfilesMenuViewModel {
 
     private var notificationTokens: [NotificationToken] = []
 
+    @Shared(.featureFlags) private var featureFlags: FeatureFlags
+    private var featureFlagsObservation: AnyCancellable?
+
     init(
         appSessionManager: AppSessionManager,
         navService: NavigationService,
@@ -63,8 +68,12 @@ class ProfilesMenuViewModel {
         self.notificationTokens = [
             NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged),
             NotificationCenter.default.addObserver(for: AppEvent.planChanged.name, object: nil, handler: planChanged),
-            NotificationCenter.default.addObserver(for: AppEvent.featureFlags.name, object: nil, handler: featureFlagsChanged),
         ]
+
+        self.featureFlagsObservation = $featureFlags.publisher
+            .dropFirst()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.contentChanged?() }
     }
 
     var areProfilesEnabled: Bool {
@@ -100,10 +109,6 @@ class ProfilesMenuViewModel {
     // MARK: - Private functions
 
     private func sessionChanged(data _: SessionChanged.T) {
-        contentChanged?()
-    }
-
-    private func featureFlagsChanged(notification _: Notification) {
         contentChanged?()
     }
 

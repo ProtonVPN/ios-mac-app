@@ -38,8 +38,6 @@ public struct ServersStreamingFeaturesFeature {
         case onAppear
     }
 
-    @Dependency(\.propertiesManager) private var propertiesManager
-
     public init() {}
 
     public var body: some ReducerOf<Self> {

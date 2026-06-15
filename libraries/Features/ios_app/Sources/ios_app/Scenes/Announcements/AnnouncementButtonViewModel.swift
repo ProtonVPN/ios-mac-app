@@ -22,8 +22,10 @@
 
 import Announcement
 import Dependencies
+import Domain
 import Foundation
 import LegacyCommon
+import Sharing
 
 protocol AnnouncementButtonViewModelFactory {
     func makeAnnouncementButtonViewModel() -> AnnouncementButtonViewModel
@@ -42,7 +44,6 @@ final class AnnouncementButtonViewModel {
     typealias Factory = AnnouncementsViewModelFactory
     private let factory: Factory
 
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.announcementManager) var announcementManager
     // The announcementsViewModel property can't be lazy because we depend on the behaviour in its init method.
     private let announcementsViewModel: AnnouncementsViewModel
@@ -62,7 +63,8 @@ final class AnnouncementButtonViewModel {
     }
 
     var showAnnouncements: Bool {
-        guard propertiesManager.featureFlags.pollNotificationAPI else {
+        @Shared(.featureFlags) var featureFlags
+        guard featureFlags.pollNotificationAPI else {
             return false
         }
         return announcementManager.shouldShowAnnouncementsIcon()

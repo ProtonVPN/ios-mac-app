@@ -686,10 +686,12 @@ struct SidebarFeatureTests {
         @Shared(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse
         @Shared(.connectionState) var connectionState
         @Shared(.intentionallyDisconnected) var intentionallyDisconnected
+        @Shared(.connectionProtocol) var connectionProtocol
 
         $vpnConnectionStatusDoNotUse.withLock { $0 = .resolving(nil, nil) }
         $connectionState.withLock { $0 = .resolving }
         $intentionallyDisconnected.withLock { $0 = false }
+        $connectionProtocol.withLock { $0 = .vpnProtocol(.ike) }
 
         return TestStore(initialState: SidebarFeature.State()) {
             SidebarFeature(
@@ -706,8 +708,6 @@ struct SidebarFeatureTests {
                 clear: {}
             )
             $0.defaultsProvider = .init(getDefaults: { defaults })
-            $0.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
-            $0.propertiesManager.lastConnectionIntent = ConnectionSpec(location: .any(.fastest), features: [])
             $0.connectionCommandClient = connectionCommandClient
             $0.pendingDisconnectCompletions = pendingDisconnectCompletions
             $0.portForwardingPropertyProvider.setPortForwarding(portForwardingEnabled)

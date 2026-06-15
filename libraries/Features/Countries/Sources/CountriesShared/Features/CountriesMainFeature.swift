@@ -57,6 +57,7 @@ public struct CountriesMainFeature {
     @SharedReader(.connectionState) private var connectionState: ConnectionState
     @SharedReader(.userTier) private var userTier: Int?
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
+    @Dependency(\.planChangeClient) private var planChangeClient
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.switchToPrimaryTab) private var switchToPrimaryTab
 
@@ -150,8 +151,8 @@ public struct CountriesMainFeature {
     // MARK: - Private observe methods
 
     private func observePlanChangedEvent() -> Effect<Action> {
-        .run { send in
-            for await _ in NotificationCenter.default.notifications(named: AppEvent.planChanged.name) {
+        .run { [planChangeClient] send in
+            for await _ in planChangeClient.events() {
                 await send(.planChanged)
             }
         }

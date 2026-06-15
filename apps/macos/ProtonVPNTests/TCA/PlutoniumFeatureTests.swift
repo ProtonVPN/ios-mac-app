@@ -31,10 +31,12 @@ import VPNSharedTesting
 struct PlutoniumFeatureTests {
     @Shared(.killSwitch) var killSwitch
     @Shared(.connectionState) var connectionState
+    @Shared(.connectionProtocol) var connectionProtocol
 
     init() {
         $killSwitch.withLock { $0 = false }
         $connectionState.withLock { $0 = .disconnected }
+        $connectionProtocol.withLock { $0 = .smartProtocol }
     }
 
     @Test
@@ -43,7 +45,7 @@ struct PlutoniumFeatureTests {
             PlutoniumFeature()
         } withDependencies: {
             $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
-            $0.propertiesManager.connectionProtocol = .smartProtocol
+            $connectionProtocol.withLock { $0 = .smartProtocol }
         }
         #expect(store.state.requiresReconnection == false)
 
@@ -69,7 +71,7 @@ struct PlutoniumFeatureTests {
             PlutoniumFeature()
         } withDependencies: {
             $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
-            $0.propertiesManager.connectionProtocol = .smartProtocol
+            $connectionProtocol.withLock { $0 = .smartProtocol }
         }
 
         await store.send(.toggleModeClicked) {
@@ -95,7 +97,7 @@ struct PlutoniumFeatureTests {
             PlutoniumFeature()
         } withDependencies: {
             $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
-            $0.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
+            $connectionProtocol.withLock { $0 = .vpnProtocol(.ike) }
         }
 
         await store.send(.toggleModeClicked) {
@@ -106,10 +108,12 @@ struct PlutoniumFeatureTests {
     @Test
     func toggleModeIKEProfileConflict() async {
         let actual = VPNConnectionActual.mock(vpnProtocol: .ike)
-        $connectionState.withLock { $0 = .connected(
-            .init(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
-            .init(currentPeer: actual.server, connectionDate: .now, protocolConnectionData: .ike)
-        ) }
+        $connectionState.withLock {
+            $0 = .connected(
+                .init(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+                .init(currentPeer: actual.server, connectionDate: .now, protocolConnectionData: .ike)
+            )
+        }
         $killSwitch.withLock {
             $0 = true
         }
@@ -117,7 +121,7 @@ struct PlutoniumFeatureTests {
             PlutoniumFeature()
         } withDependencies: {
             $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
-            $0.propertiesManager.connectionProtocol = .smartProtocol
+            $connectionProtocol.withLock { $0 = .smartProtocol }
         }
 
         await store.send(.toggleModeClicked) {
@@ -131,7 +135,7 @@ struct PlutoniumFeatureTests {
             PlutoniumFeature()
         } withDependencies: {
             $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
-            $0.propertiesManager.connectionProtocol = .smartProtocol
+            $connectionProtocol.withLock { $0 = .smartProtocol }
         }
         #expect(store.state.requiresReconnection == false)
 
@@ -174,8 +178,8 @@ struct PlutoniumFeatureTests {
         $feature.withLock { $0 = .enabled(.exclusion) }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature()
-        } withDependencies: {
-            $0.propertiesManager.connectionProtocol = .smartProtocol
+        } withDependencies: { _ in
+            $connectionProtocol.withLock { $0 = .smartProtocol }
         }
         #expect(store.state.requiresReconnection == false)
         await store.send(.toggleModeClicked) {
@@ -194,8 +198,8 @@ struct PlutoniumFeatureTests {
         $featureApplied.withLock { $0 = .enabled(.exclusion) }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature()
-        } withDependencies: {
-            $0.propertiesManager.connectionProtocol = .smartProtocol
+        } withDependencies: { _ in
+            $connectionProtocol.withLock { $0 = .smartProtocol }
         }
         #expect(store.state.requiresReconnection == false)
         // modify the activated list
@@ -218,8 +222,8 @@ struct PlutoniumFeatureTests {
         $featureApplied.withLock { $0 = .enabled(.inclusion) }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature()
-        } withDependencies: {
-            $0.propertiesManager.connectionProtocol = .smartProtocol
+        } withDependencies: { _ in
+            $connectionProtocol.withLock { $0 = .smartProtocol }
         }
         #expect(store.state.requiresReconnection == false)
         // modify the activated list
@@ -238,8 +242,8 @@ struct PlutoniumFeatureTests {
     func modifyIPsList() async {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature()
-        } withDependencies: {
-            $0.propertiesManager.connectionProtocol = .smartProtocol
+        } withDependencies: { _ in
+            $connectionProtocol.withLock { $0 = .smartProtocol }
         }
         await store.send(.entryClicked(.ip("1.1.1.1"), .add, .exclusion)) {
             $0.$exclusionActivated.withLock { $0.ips = ["1.1.1.1"] }
@@ -264,8 +268,8 @@ struct PlutoniumFeatureTests {
     func modifyAppsList() async {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature()
-        } withDependencies: {
-            $0.propertiesManager.connectionProtocol = .smartProtocol
+        } withDependencies: { _ in
+            $connectionProtocol.withLock { $0 = .smartProtocol }
         }
         await store.send(.entryClicked(.app(.huzza), .add, .exclusion)) {
             $0.$exclusionActivated.withLock { $0.apps = [.huzza] }

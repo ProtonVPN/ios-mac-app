@@ -23,6 +23,7 @@ import NetShield
 @testable import ProtonVPN
 import Sharing
 import Testing
+import VPNAppCore
 
 @MainActor
 struct CountriesQuickSettingsFeatureTests {

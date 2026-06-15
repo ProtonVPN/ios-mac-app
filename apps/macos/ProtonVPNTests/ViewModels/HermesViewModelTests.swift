@@ -23,6 +23,7 @@ import Domain
 import Hermes
 import LegacyCommon
 @testable import ProtonVPN
+import VPNAppCore
 import XCTest
 
 private final class HermesTestContainer: MockDependencyContainer {}
@@ -157,71 +158,6 @@ final class HermesViewModelTests: XCTestCase {
         ]))
         viewModel.applyDiff(secondDiff)
         XCTAssertEqual(viewModel.activeHermesResolvers, [.quadNine, .google, .cloudFlare])
-    }
-
-    func testHermesAppEventNotification() throws {
-        let viewModel = HermesViewModel(factory: HermesTestContainer())
-
-        let enabledExpectation = expectation(description: "Hermes AppEvent received when enabling/disabling")
-        enabledExpectation.expectedFulfillmentCount = 2
-
-        AppEvent.hermes.publisher.sink { _ in enabledExpectation.fulfill() }.store(in: &cancellables)
-
-        viewModel.setIsEnabled(true)
-        viewModel.setIsEnabled(false)
-
-        wait(for: [enabledExpectation], timeout: 1.0)
-
-        cancellables.removeAll()
-
-        let addingResolverExpectation = expectation(description: "Hermes AppEvent received when adding resolvers")
-        addingResolverExpectation.expectedFulfillmentCount = 2
-
-        AppEvent.hermes.publisher.sink { _ in addingResolverExpectation.fulfill() }.store(in: &cancellables)
-
-        _ = viewModel.addResolver(with: "10.2.0.1")
-        _ = viewModel.addResolver(with: "16.32.64.128")
-
-        wait(for: [addingResolverExpectation], timeout: 1.0)
-
-        cancellables.removeAll()
-
-        let removingResolverExpectation = expectation(description: "Hermes AppEvent received when removing resolvers")
-        removingResolverExpectation.expectedFulfillmentCount = 2
-
-        AppEvent.hermes.publisher.sink { _ in removingResolverExpectation.fulfill() }.store(in: &cancellables)
-
-        _ = try viewModel.removeResolver(.init(ipAddress: "16.32.64.128"))
-        _ = try viewModel.removeResolver(.init(ipAddress: "10.2.0.1"))
-
-        wait(for: [removingResolverExpectation], timeout: 1.0)
-
-        cancellables.removeAll()
-
-        _ = viewModel.addResolver(with: "10.2.0.1")
-        _ = viewModel.addResolver(with: "16.32.64.128")
-
-        let movingResolverExpectation = expectation(description: "Hermes AppEvent received when moving around resolvers")
-        movingResolverExpectation.expectedFulfillmentCount = 2
-
-        AppEvent.hermes.publisher.sink { _ in movingResolverExpectation.fulfill() }.store(in: &cancellables)
-
-        let firstDiffElement = viewModel.activeHermesResolvers[0]
-        let firstDiff: CollectionDifference<HermesResolver> = try XCTUnwrap(.init([
-            .insert(offset: 1, element: firstDiffElement, associatedWith: nil),
-            .remove(offset: 0, element: firstDiffElement, associatedWith: nil),
-        ]))
-        viewModel.applyDiff(firstDiff)
-
-        let secondDiffElement = viewModel.activeHermesResolvers[0]
-        let secondDiff: CollectionDifference<HermesResolver> = try XCTUnwrap(.init([
-            .insert(offset: 1, element: secondDiffElement, associatedWith: nil),
-            .remove(offset: 0, element: secondDiffElement, associatedWith: nil),
-        ]))
-        viewModel.applyDiff(secondDiff)
-
-        wait(for: [movingResolverExpectation], timeout: 1.0)
-        cancellables.removeAll()
     }
 }
 
