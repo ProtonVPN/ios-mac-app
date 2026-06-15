@@ -77,17 +77,17 @@ public final class UserScopedAppStorageKey<Value: Sendable>: SharedKey {
         subscriber: SharedSubscriber<Value>
     ) -> SharedSubscription {
         @Dependency(\.defaultAppStorage) var store
+        let gate = ChangeGate(initial: currentValue())
         let observer = NotificationCenter.default.addObserver(
             forName: UserDefaults.didChangeNotification,
             object: store,
             queue: nil
         ) { [weak self] _ in
             guard let self else { return }
-            guard let key = resolvedKey() else {
-                subscriber.yield(valueWhenNoUser)
-                return
-            }
-            subscriber.yield(decode(store, key))
+            // `didChangeNotification` fires for *any* key in the suite; forward only on real changes.
+            let newValue = currentValue()
+            guard gate.isChange(newValue) else { return }
+            subscriber.yield(newValue)
         }
         return SharedSubscription {
             NotificationCenter.default.removeObserver(observer)
@@ -125,18 +125,23 @@ public final class UserScopedAppStorageKey<Value: Sendable>: SharedKey {
 
     /// An `AsyncStream` of value changes, replacing the per-provider `CurrentValueSubject`s. Emits
     /// the current value immediately, then re-reads on every `UserDefaults` change (the same signal
-    /// `@Shared` app storage observes).
+    /// `@Shared` app storage observes), suppressing consecutive duplicates so a write to an
+    /// unrelated key in the suite doesn't produce a redundant emission.
     public func valuesStream() -> AsyncStream<Value> {
         @Dependency(\.defaultAppStorage) var store
         return AsyncStream { continuation in
-            continuation.yield(currentValue())
+            let initial = currentValue()
+            continuation.yield(initial)
+            let gate = ChangeGate(initial: initial)
             let observer = NotificationCenter.default.addObserver(
                 forName: UserDefaults.didChangeNotification,
                 object: store,
                 queue: nil
             ) { [weak self] _ in
                 guard let self else { return }
-                continuation.yield(currentValue())
+                let newValue = currentValue()
+                guard gate.isChange(newValue) else { return }
+                continuation.yield(newValue)
             }
             continuation.onTermination = { _ in
                 NotificationCenter.default.removeObserver(observer)

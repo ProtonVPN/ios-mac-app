@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ConcurrencyExtras
 import Dependencies
 import Domain
 import Foundation
@@ -122,5 +123,111 @@ struct FeatureStorageMigrationTests {
             let feature = AuthorizedFeatureValue<VPNAccelerator>()
             #expect(feature.effectiveValue(userTier: .paidTier, featureFlags: .allEnabled) == .on)
         }
+    }
+
+    @Test("valuesStream suppresses duplicate and unrelated-key writes")
+    func valuesStreamSuppressesRedundantEmissions() async throws {
+        let suiteName = "FeatureStorageMigrationTests-\(Self.username)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defaults.removePersistentDomain(forName: suiteName)
+        let keychain = MockAuthKeychain()
+        keychain.setMockUsername(Self.username)
+
+        await withDependencies {
+            $0.defaultAppStorage = defaults
+            $0.authKeychain = keychain
+        } operation: {
+            let key: UserScopedAppStorageKey<NetShieldType?> = .rawInt("NetShield")
+            key.setCurrentValue(.level1)
+
+            var iterator = key.valuesStream().makeAsyncIterator()
+
+            // The current value is emitted immediately on subscription.
+            #expect(await iterator.next() == .level1)
+
+            // A re-write of the same value and a write to an unrelated key in the suite both fire
+            // `didChangeNotification` but must NOT emit; the next value the stream produces should be
+            // the genuinely-changed one. (If the gate is broken, `next()` will return a stale
+            // `.level1` here instead)
+            key.setCurrentValue(.level1)
+            defaults.set("unrelated", forKey: "SomeOtherKey")
+            key.setCurrentValue(.level2)
+
+            #expect(await iterator.next() == .level2)
+        }
+    }
+
+    private struct PlanChangeSpies {
+        let nat = LockIsolated<[NATType]>([])
+        let netShield = LockIsolated<[NetShieldType]>([])
+        let portForwarding = LockIsolated<[Bool?]>([])
+
+        func install(_ values: inout DependencyValues) {
+            var natProvider = NATTypePropertyProvider.testValue
+            natProvider.setNATType = { value in nat.withValue { $0.append(value) } }
+            var netShieldProvider = NetShieldPropertyProvider.testValue
+            netShieldProvider.setNetShieldType = { value in netShield.withValue { $0.append(value) } }
+            var portForwardingProvider = PortForwardingPropertyProvider.testValue
+            portForwardingProvider.setPortForwarding = { value in portForwarding.withValue { $0.append(value) } }
+            values.natTypePropertyProvider = natProvider
+            values.netShieldPropertyProvider = netShieldProvider
+            values.portForwardingPropertyProvider = portForwardingProvider
+        }
+    }
+
+    @Test("Plan downgrade to free turns paid features off and disables Secure Core")
+    func planDowngradeResetsFeatures() throws {
+        let spies = PlanChangeSpies()
+        let defaults = try #require(UserDefaults(suiteName: "PlanChangeTests-\(UUID().uuidString)"))
+        defaults.set(true, forKey: "secureCoreToggle")
+
+        withDependencies {
+            spies.install(&$0)
+            $0.defaultAppStorage = defaults
+        } operation: {
+            applyPlanChangeFeatureResets(PlanChange(oldTier: .paidTier, newTier: .freeTier))
+        }
+
+        #expect(spies.nat.withValue { $0 } == [.default])
+        #expect(spies.netShield.withValue { $0 } == [.off])
+        #expect(spies.portForwarding.withValue { $0 } == [false])
+        #expect(defaults.bool(forKey: "secureCoreToggle") == false)
+    }
+
+    @Test("Plan upgrade from free enables NetShield and leaves other features untouched")
+    func planUpgradeEnablesNetShield() throws {
+        let spies = PlanChangeSpies()
+        let defaults = try #require(UserDefaults(suiteName: "PlanChangeTests-\(UUID().uuidString)"))
+        defaults.set(true, forKey: "secureCoreToggle")
+
+        withDependencies {
+            spies.install(&$0)
+            $0.defaultAppStorage = defaults
+        } operation: {
+            applyPlanChangeFeatureResets(PlanChange(oldTier: .freeTier, newTier: .paidTier))
+        }
+
+        #expect(spies.netShield.withValue { $0 } == [.level2])
+        #expect(spies.nat.withValue { $0 }.isEmpty)
+        #expect(spies.portForwarding.withValue { $0 }.isEmpty)
+        // Secure Core is only reset on downgrade — an upgrade must leave it untouched.
+        #expect(defaults.bool(forKey: "secureCoreToggle") == true)
+    }
+
+    @Test("ChangeGate dedupes nil -> nil for Optional values")
+    func changeGateHandlesOptionalNil() {
+        let gate = ChangeGate<Bool?>(initial: nil)
+        #expect(gate.isChange(nil) == false) // nil -> nil: not a change
+        #expect(gate.isChange(true) == true) // nil -> some: change
+        #expect(gate.isChange(true) == false) // some -> same some: not a change
+        #expect(gate.isChange(nil) == true) // some -> nil: change
+        #expect(gate.isChange(nil) == false) // nil -> nil: not a change
+    }
+
+    @Test("ChangeGate dedupes equal non-optional values")
+    func changeGateHandlesNonOptional() {
+        let gate = ChangeGate<NATType>(initial: .strictNAT)
+        #expect(gate.isChange(.strictNAT) == false)
+        #expect(gate.isChange(.moderateNAT) == true)
     }
 }

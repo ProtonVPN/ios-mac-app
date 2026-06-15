@@ -92,17 +92,22 @@ public struct AuthorizedFeatureValue<Feature: ProvidableFeature & Sendable>: Sen
     }
 
     /// A stream of effective values: the current value immediately, then re-derived on every
-    /// `UserDefaults` change (the signal `@Shared` app storage observes).
+    /// `UserDefaults` change (the signal `@Shared` app storage observes), suppressing consecutive
+    /// duplicates so a write to an unrelated key in the suite doesn't produce a redundant emission.
     public func valueStream() -> AsyncStream<Feature> {
         @Dependency(\.defaultAppStorage) var store
         return AsyncStream { continuation in
-            continuation.yield(value())
+            let initial = value()
+            continuation.yield(initial)
+            let gate = ChangeGate(initial: initial)
             let observer = NotificationCenter.default.addObserver(
                 forName: UserDefaults.didChangeNotification,
                 object: store,
                 queue: nil
             ) { _ in
-                continuation.yield(value())
+                let newValue = value()
+                guard gate.isChange(newValue) else { return }
+                continuation.yield(newValue)
             }
             continuation.onTermination = { _ in
                 NotificationCenter.default.removeObserver(observer)

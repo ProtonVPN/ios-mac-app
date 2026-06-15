@@ -127,6 +127,7 @@ struct SidebarFeature {
         case windowWillEnterFullScreen
         case windowWillExitFullScreen
         case killSwitchSettingChanged(Bool)
+        case planChanged(PlanChange)
         case connectionStateChanged(ConnectionState)
         case syncNATPortMappingState
         case syncPlutoniumState
@@ -185,6 +186,7 @@ struct SidebarFeature {
     @Dependency(\.pendingDisconnectCompletions) private var pendingDisconnectCompletions
     @Dependency(\.continuousClock) private var clock
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
+    @Dependency(\.planChangeClient) private var planChangeClient
     @Dependency(\.natPortMappingService) private var natPortMappingService
     @Dependency(\.plutoniumManager) private var plutoniumManager
     @Dependency(\.serverRepository) private var serverRepository
@@ -233,6 +235,7 @@ struct SidebarFeature {
         case killSwitchSetting
         case connectionConnectCommandEffect
         case plutoniumSync
+        case planChange
     }
 }
 
@@ -310,7 +313,13 @@ private extension SidebarFeature {
                             await send(.killSwitchSettingChanged(value))
                         }
                     }
-                    .cancellable(id: CancelID.killSwitchSetting)
+                    .cancellable(id: CancelID.killSwitchSetting),
+                    .run { send in
+                        for await planChange in planChangeClient.events() {
+                            await send(.planChanged(planChange))
+                        }
+                    }
+                    .cancellable(id: CancelID.planChange)
                 )
             case .stopObservingEvents:
                 return .merge(
@@ -324,8 +333,13 @@ private extension SidebarFeature {
                     .cancel(id: CancelID.plutoniumSetting),
                     .cancel(id: CancelID.killSwitchSetting),
                     .cancel(id: CancelID.connectionConnectCommandEffect),
-                    .cancel(id: CancelID.plutoniumSync)
+                    .cancel(id: CancelID.plutoniumSync),
+                    .cancel(id: CancelID.planChange)
                 )
+            case let .planChanged(planChange):
+                // update the persisted feature settings so a downgrade clears paid features
+                // and an upgrade re-enables NetShield
+                return .run { _ in applyPlanChangeFeatureResets(planChange) }
             case .viewDidAppear, .mouseDown:
                 return .none
             default:
