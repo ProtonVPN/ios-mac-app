@@ -51,7 +51,6 @@ protocol AppSessionManager {
     var loggedIn: Bool { get }
 
     func attemptSilentLogIn() async throws
-    func refreshVpnAuthCertificate() async throws
     func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func logOut(force: Bool, reason: String?)
     func logOut()
@@ -64,12 +63,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         AppSessionRefreshTimerFactory &
         CoreAlertServiceFactory &
         ProfileManagerFactory &
-        UpdateCheckerFactory &
-        VpnAuthenticationFactory
+        UpdateCheckerFactory
     private let factory: Factory
 
     private lazy var appSessionRefreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
-    private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Dependency(\.networking) private var networking
@@ -128,7 +125,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @MainActor
     private func finishLogin() async throws {
         try await retrieveProperties()
-        try await refreshVpnAuthCertificate()
         checkIfOSIsSupportedInNextUpdateAndAlertIfNeeded()
 
         if sessionStatus == .notEstablished {
@@ -139,17 +135,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         appSessionRefreshTimer.startTimers()
         profileManager.refreshProfiles()
-    }
-
-    @MainActor
-    func refreshVpnAuthCertificate() async throws {
-        if !loggedIn {
-            return
-        }
-
-        _ = try await withCheckedThrowingContinuation { [weak self] continuation in
-            self?.vpnAuthentication.refreshCertificates(completion: continuation.resume(with:))
-        }
     }
 
     private func retrieveProperties() async throws {
@@ -352,7 +337,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     private func logOutCleanup() {
-        let group = DispatchGroup()
         appSessionRefreshTimer.stopTimers()
 
         if let userId = authKeychain.userId {
@@ -366,14 +350,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         @Dependency(\.serverManager) var serverManager
         serverManager.purgeAllServers()
-
-        let vpnAuthenticationTimeoutInSeconds = 2
-
-        group.enter()
-        vpnAuthentication.clearEverything {
-            group.leave()
-        }
-        _ = group.wait(timeout: .now() + .seconds(vpnAuthenticationTimeoutInSeconds))
 
         propertiesManager.logoutCleanup()
 

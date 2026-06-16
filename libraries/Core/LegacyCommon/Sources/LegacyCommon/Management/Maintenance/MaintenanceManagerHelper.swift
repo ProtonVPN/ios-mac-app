@@ -38,14 +38,14 @@ public class MaintenanceManagerHelper {
         .random(in: -jitterPercentage ... jitterPercentage)
     }
 
-    public typealias Factory = CoreAlertServiceFactory & MaintenanceManagerFactory & ProfileManagerFactory
+    public typealias Factory = CoreAlertServiceFactory & ProfileManagerFactory
     private let factory: Factory
 
-    private lazy var maintenanceManager: MaintenanceManagerProtocol = factory.makeMaintenanceManager()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
-    @Dependency(\.connectionCommandClient) private var connectionCommandClient
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
 
+    private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager()
+    @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.propertiesManager) private var propertiesManager
 
     @Shared(.featureFlags) private var featureFlags: FeatureFlags

@@ -18,36 +18,24 @@
 
 import CommonNetworking
 import Dependencies
-import Domain
-import Ergonomics
 import Foundation
-import Localization
-import NetworkExtension
-import PMLogger
-import ProtonCoreFeatureFlags
 import ProtonCorePushNotifications
 import Telemetry
-import Timer
-import VPNAppCore
 import VPNShared
 
-typealias PropertiesToOverride =
-    CoreAlertServiceFactory &
-    UpdateCheckerFactory &
-    VpnAuthenticationFactory
+typealias PropertiesToOverride = CoreAlertServiceFactory & UpdateCheckerFactory
 
 open class Container: PropertiesToOverride {
     @Dependency(\.date) var date
 
     // Lazy instances - get allocated once, and stay allocated
-    @Dependency(\.storage) var storage
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.networking) var networking
     private lazy var profileManager = ProfileManager(self)
 
     private lazy var pushNotificationService: PushNotificationServiceProtocol = PushNotificationService(apiService: networking.apiService)
 
-    private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager(factory: self)
+    private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager()
     private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = .init(factory: self)
 
     // Should be set in apps to the Container object
@@ -91,11 +79,7 @@ open class Container: PropertiesToOverride {
         shouldHaveOverridden()
     }
 
-    // MARK: VpnAuthentication
-
-    open func makeVpnAuthentication() -> VpnAuthentication {
-        shouldHaveOverridden()
-    }
+    // MARK: UpdateChecker
 
     open func makeUpdateChecker() -> UpdateChecker {
         shouldHaveOverridden()
@@ -110,6 +94,14 @@ extension Container: ProfileManagerFactory {
     }
 }
 
+// MARK: ProfileStorageFactory
+
+extension Container: ProfileStorageFactory {
+    public func makeProfileStorage() -> ProfileStorage {
+        ProfileStorage()
+    }
+}
+
 // MARK: PushNotificationsServiceFactory
 
 extension Container: PushNotificationServiceFactory {
@@ -118,26 +110,10 @@ extension Container: PushNotificationServiceFactory {
     }
 }
 
-// MARK: MaintenanceManagerFactory
-
-extension Container: MaintenanceManagerFactory {
-    public func makeMaintenanceManager() -> MaintenanceManagerProtocol {
-        maintenanceManager
-    }
-}
-
 // MARK: MaintenanceManagerHelperFactory
 
 extension Container: MaintenanceManagerHelperFactory {
     public func makeMaintenanceManagerHelper() -> MaintenanceManagerHelper {
         maintenanceManagerHelper
-    }
-}
-
-// MARK: ProfileStorageFactory
-
-extension Container: ProfileStorageFactory {
-    public func makeProfileStorage() -> ProfileStorage {
-        ProfileStorage()
     }
 }

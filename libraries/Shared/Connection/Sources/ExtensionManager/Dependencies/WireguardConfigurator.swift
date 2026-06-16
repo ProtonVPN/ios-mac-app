@@ -87,7 +87,6 @@ extension ManagerConfigurator {
         protocolConfiguration.username = nil // Only required for IKEv2.
 
         @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
-        @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
 
         #if os(iOS)
             protocolConfiguration.includeAllNetworks = wgSettings.features.killSwitch

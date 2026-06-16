@@ -36,7 +36,6 @@ final class DependencyContainer: Container {
     private lazy var navigationService = NavigationService(self)
 
     private lazy var windowService: WindowService = WindowServiceImplementation(factory: self)
-    private lazy var vpnAuthentication: VpnAuthentication = VpnAuthenticationManager()
 
     private lazy var appSessionManager: AppSessionManagerImplementation = .init(factory: self)
     private lazy var macAlertService: MacAlertService = .init(factory: self)
@@ -72,12 +71,6 @@ final class DependencyContainer: Container {
 
     override func makeCoreAlertService() -> CoreAlertService {
         macAlertService
-    }
-
-    // MARK: VpnAuthentication
-
-    override func makeVpnAuthentication() -> VpnAuthentication {
-        vpnAuthentication
     }
 
     // MARK: UpdateManagerFactory

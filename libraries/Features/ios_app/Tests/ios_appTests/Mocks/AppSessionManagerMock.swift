@@ -86,7 +86,5 @@ class AppSessionManagerMock: AppSessionManager {
         callbackCanPreviewApp?() ?? true
     }
 
-    func refreshVpnAuthCertificate() async throws {}
-
     func refreshUserInfo() {}
 }

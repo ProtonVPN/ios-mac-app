@@ -51,12 +51,6 @@
         public lazy var vpnKeychain = VpnKeychainMock()
         public lazy var dohVpn = DoHVPN.mock
 
-        #if os(iOS)
-            public lazy var vpnAuthentication = VpnAuthenticationRemoteClient()
-        #elseif os(macOS)
-            public lazy var vpnAuthentication = VpnAuthenticationManager()
-        #endif
-
         public lazy var profileManager = ProfileManager(profileStorage: ProfileStorage())
 
         public init() {}
