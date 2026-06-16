@@ -18,7 +18,6 @@
 
 import Strings
 import SwiftUI
-import Theme
 import WidgetKit
 
 @main

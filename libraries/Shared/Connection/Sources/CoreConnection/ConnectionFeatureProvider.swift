@@ -94,12 +94,14 @@ extension VPNConnectionFeatures {
         portForwarding: false
     )
 
-    @usableFromInline static let defaultFeatures: VPNConnectionFeatures = .init(
-        netshield: .level1,
-        vpnAccelerator: true,
-        natType: .moderateNAT,
-        portForwarding: false
-    )
+    #if os(tvOS)
+        @usableFromInline static let defaultFeatures: VPNConnectionFeatures = .init(
+            netshield: .level1,
+            vpnAccelerator: true,
+            natType: .moderateNAT,
+            portForwarding: false
+        )
+    #endif
 }
 
 extension TunnelFeatures {
