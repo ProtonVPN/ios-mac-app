@@ -77,16 +77,15 @@ public struct CountriesListView: View {
 
     private var countriesSection: some View {
         Section {
-            if store.isFreeTier {
-                if let offer = store.offerBannerViewModel {
-                    OfferBannerView(viewModel: offer, onDismiss: {
-                        store.send(.loadOfferBanner)
-                    })
+            if case .banner = store.announcementBanner {
+                AnnouncementBannerView(store: store.scope(state: \.announcementBanner, action: \.announcementBanner))
                     .padding(.horizontal, .themeSpacing12)
-                } else {
-                    upsellBanner
-                        .padding(.horizontal, .themeSpacing8)
-                }
+                    .padding(.top, .themeSpacing16)
+                    .padding(.bottom, .themeSpacing8)
+            }
+            if store.isFreeTier {
+                upsellBanner
+                    .padding(.horizontal, .themeSpacing8)
             }
             ForEach(store.scope(state: \.countries, action: \.countries)) { store in
                 CityStateListView(store: store)

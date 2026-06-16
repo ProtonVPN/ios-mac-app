@@ -55,7 +55,7 @@ public struct CountriesListFeature: Sendable {
         public var searchText: String = ""
         var isFreeTier: Bool {
             @SharedReader(.userTier) var userTier: Int?
-            return userTier?.isFreeTier ?? false
+            return userTier?.isFreeTier ?? true
         }
 
         // Stored so that we can collapse the previously expanded section
@@ -63,7 +63,7 @@ public struct CountriesListFeature: Sendable {
 
         var listState: ListState = .loading
 
-        var offerBannerViewModel: OfferBannerViewModel?
+        var announcementBanner: AnnouncementBannerFeature.State = .noBanner
 
         @SharedReader(.secureCoreToggle) var secureCore: Bool
         @Presents public var destination: Destination.State?
@@ -103,7 +103,9 @@ public struct CountriesListFeature: Sendable {
         case upsellBannerTapped
         case connectToFastest
         case listenForSecureCoreUpdates
-        case loadOfferBanner
+        /// Re-reads the current offer banner from storage into the shared `announcementBanner` key.
+        case refreshOfferBanner
+        case announcementBanner(AnnouncementBannerFeature.Action)
         case destination(PresentationAction<Destination.Action>)
     }
 
@@ -113,16 +115,33 @@ public struct CountriesListFeature: Sendable {
     @Dependency(\.serverRepository) var repository
     @Dependency(\.connectionCommandClient) var connectionCommandClient
     @Dependency(\.announcementManager) var announcementManager
+    @Dependency(\.imagePrefetcher) var imagePrefetcher
     @Dependency(\.sessionService) var sessionService
     @Dependency(\.linkOpener) var linkOpener
+
+    @Shared(.announcementBanner) var announcementBannerStorage: Announcement?
 
     private enum CancelID {
         case debounceRequest
         case watchSecureCoreToggle
+        case watchAnnouncementBanner
+    }
+
+    private var longLivingAnnouncementBannerEffect: Effect<Action> {
+        .publisher {
+            AppEvent.announcementStorageContent
+                .publisher
+                .receive(on: UIScheduler.shared)
+                .map { _ in Action.refreshOfferBanner }
+        }
+        .cancellable(id: CancelID.watchAnnouncementBanner)
     }
 
     public var body: some Reducer<State, Action> {
         BindingReducer()
+        Scope(state: \.announcementBanner, action: \.announcementBanner) {
+            AnnouncementBannerFeature()
+        }
         Reduce { state, action in
             switch action {
             case .connectToFastest:
@@ -174,24 +193,31 @@ public struct CountriesListFeature: Sendable {
             case .destination:
                 return .none
             case .listenForSecureCoreUpdates:
-                return .publisher {
-                    state.$secureCore
-                        .publisher
-                        .receive(on: UIScheduler.shared)
-                        .removeDuplicates()
-                        .map(Action.getGroups)
+                return .merge(
+                    .publisher {
+                        state.$secureCore
+                            .publisher
+                            .receive(on: UIScheduler.shared)
+                            .removeDuplicates()
+                            .map(Action.getGroups)
+                    }
+                    .cancellable(id: CancelID.watchSecureCoreToggle),
+                    .send(.announcementBanner(.onStart)),
+                    .send(.refreshOfferBanner),
+                    longLivingAnnouncementBannerEffect
+                )
+            case .refreshOfferBanner:
+                return .run { _ in
+                    let urls = announcementManager.fetchCurrentAnnouncementsFromStorage().compactMap(\.prefetchableImage)
+                    await imagePrefetcher.prefetchURLs(urls)
+                    let offerBanner = announcementManager.fetchCurrentOfferBannerFromStorage()
+                    $announcementBannerStorage.withLock { $0 = offerBanner }
                 }
-                .cancellable(id: CancelID.watchSecureCoreToggle)
-            case .loadOfferBanner:
-                state.offerBannerViewModel = announcementManager.offerBannerViewModel { announcement in
-                    announcementManager.markAsRead(notificationID: announcement.notificationID)
-                }
+            case .announcementBanner:
                 return .none
             case let .getGroups(secureCore):
                 state.listState = .loading
                 return .run { [search = state.searchText, expandedCode = state.expandedCountryCode] send in
-                    await send(.loadOfferBanner)
-
                     let countries = groups(
                         with: .country,
                         search: search,
@@ -328,7 +354,7 @@ public extension CountriesListFeature.State {
             lhs.searchText == rhs.searchText &&
             lhs.expandedCountryCode == rhs.expandedCountryCode &&
             lhs.listState == rhs.listState &&
-            lhs.offerBannerViewModel == rhs.offerBannerViewModel &&
+            lhs.announcementBanner == rhs.announcementBanner &&
             lhs.secureCore == rhs.secureCore &&
             lhs.destination == rhs.destination
     }
