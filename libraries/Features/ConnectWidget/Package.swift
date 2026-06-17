@@ -17,8 +17,6 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../../../external/protoncore"),
-
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/Strings"),
         .package(path: "../../Foundations/Domain"),
@@ -48,7 +46,6 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "OrderedCollections", package: "swift-collections"),
-                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
             ],
             resources: [
                 .process("Resources"),

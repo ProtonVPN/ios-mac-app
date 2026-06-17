@@ -18,11 +18,17 @@
 
 import Dependencies
 import Domain
+import Ergonomics
 import Foundation
+import PMLogger
 import SharedErgonomics
 
 // MARK: Live implementations of dependencies required by the iOS app AND its extensions
 
 extension DefaultsProvider: @retroactive DependencyKey {
     public static let liveValue: DefaultsProvider = .init(getDefaults: { .domainUserDefaults })
+}
+
+extension AppInfoKey: @retroactive DependencyKey {
+    public static let liveValue: AppInfo = .live(context: .proTUNExtension, beta: Bundle.isTestflight)
 }

@@ -45,7 +45,7 @@ public extension SharedKey where Self == ConnectionProtocolSharedKey.Default {
     }
 }
 
-/// All protocols that supported
+/// All protocols that are supported
 public func currentProtocolSupport() -> ProtocolSupport {
     @Shared(.connectionProtocol) var connectionProtocol
     switch connectionProtocol {

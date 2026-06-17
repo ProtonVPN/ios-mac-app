@@ -27,6 +27,7 @@ import LocalAgentIPC
 import NetworkExtension
 import NetworkingErgonomics
 import OSLog
+import PMLogger
 import protun
 import SharedErgonomics
 import VPNCoreTypes
@@ -302,14 +303,15 @@ extension ProTUNConfiguration {
         let peers = try peers.map { peer throws(ProTUNAdapter.Error) in
             try PeerInfo(from: peer)
         }
+        @Dependency(\.appInfo) var appInfo
 
         return .init(
             peers: peers,
             networkAvailable: networkAvailable,
             pcapFile: nil,
             connectionMode: .localAgent(
-                userAgent: .userAgent,
-                appVersion: .appVersion,
+                userAgent: appInfo.userAgent,
+                appVersion: appInfo.appVersion,
                 settings: localAgentSettings
             )
         )
@@ -329,12 +331,6 @@ extension VpnState {
             false
         }
     }
-}
-
-// TODO: ProTUN: Properly inject this
-private extension String {
-    static let appVersion: String = "ios-vpn@8.0.0"
-    static let userAgent: String = "ProtonVPN/8.0.0 (iOS 26.4.0; iPhone16,1)"
 }
 
 extension LocalAgentSettings {

@@ -12,8 +12,8 @@ enum ProTUNFFITargetKind {
         )
     #else
         static let current: Self = .remote(
-            url: "https://nexus.protontech.ch/repository/vpn-protun/master/protun-release.xcframework.zip",
-            checksum: "3f3dc97d4d4b0c8ca4de10b2e251fbaa5e4e88b81b5f4f9aba6a01b177ccded5"
+            url: "https://nexus.protontech.ch/repository/vpn-release-candidates/protun/2.0.1_3235503.2606170957.3/protun-release.xcframework.zip",
+            checksum: "faab4276ab625bbb10203ce5ed11d4eff98c7d284f29d30f92b81d3919881e6f"
         )
     #endif
 
@@ -51,6 +51,7 @@ let package = Package(
 
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/Domain"),
+        .package(path: "../../Foundations/PMLogger"),
 
         .package(path: "../../Shared/Connection"),
 
@@ -64,6 +65,7 @@ let package = Package(
             name: "ProTUNExtension",
             dependencies: [
                 "Domain",
+                "PMLogger",
                 .product(name: "ConnectionShared", package: "Connection"),
                 .product(name: "VPNCoreTypes", package: "vpn-core-apple"),
                 .product(name: "VPNCoreExtension", package: "vpn-core-apple"),

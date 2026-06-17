@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import Domain
-import ProtonCoreUIFoundations
 import SharedViews
 import Strings
 import SwiftUI
@@ -60,13 +59,13 @@ public struct ConnectWidgetView: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .containerBackground(for: .widget) {
-                ZStack {
-                    Color(.background)
-                    LinearGradient.forProtectionState(entry.protectionState)
-                }
-                .environment(\.colorScheme, .dark) // we need both colorScheme overrides because of the `containerBackground(for: .widget)`
+        }
+        .containerBackground(for: .widget) {
+            ZStack {
+                Color(.background)
+                LinearGradient.forProtectionState(entry.protectionState)
             }
+            .environment(\.colorScheme, .dark) // we need both colorScheme overrides because of the `containerBackground(for: .widget)`
         }
         .environment(\.colorScheme, .dark) // we need both colorScheme overrides because of the `containerBackground(for: .widget)`
     }
@@ -95,7 +94,7 @@ private struct HeaderView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
                         HStack {
-                            IconProvider.lockFilled
+                            Theme.Asset.Icons.lockFilled.swiftUIImage
                             Text(Localizable.connectionStatusProtected)
                                 .font(.body2(emphasised: true))
                                 .offset(y: 2)
@@ -110,7 +109,7 @@ private struct HeaderView: View {
                         .foregroundStyle(Color(.text, .normal))
                 case .unprotected:
                     Group {
-                        IconProvider.lockOpenFilled2
+                        Theme.Asset.Icons.lockOpenFilled2.swiftUIImage
                         Text(Localizable.widgetUnprotectedHeader)
                             .font(.body2(emphasised: true))
                             .offset(y: 2)
@@ -185,7 +184,7 @@ private struct RecentsView: View {
         return Button(intent: ConnectToVPNWithParametersIntent(recentIndex: index)) {
             VStack(alignment: .center, spacing: .themeSpacing8) {
                 if recentConnection.underMaintenance {
-                    IconProvider.wrench
+                    Theme.Asset.Icons.wrench.swiftUIImage
                         .foregroundStyle(Color(.icon, .weak))
                 } else {
                     FlagView(location: location, flagSize: .widgetRecentsSize)

@@ -8,5 +8,7 @@
 	<string>31e7dcced342f546df6edc7146577090</string>
 	<key>WireGuardId</key>
 	<string>macos-wireguardextension</string>
+	<key>ProTUNId</key>
+	<string>macos-wireguardextension</string>
 </dict>
 </plist>
