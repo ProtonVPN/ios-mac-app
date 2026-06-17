@@ -93,6 +93,7 @@ let package = Package(
                 "CommonNetworking",
                 .product(name: "VPNCore", package: "vpn-core-apple"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
+                .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),

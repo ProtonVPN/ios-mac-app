@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ConnectionShared
 import Dependencies
 import Domain
 import NetworkExtension
@@ -63,8 +64,7 @@ enum ConfigurationUpdater {
                 }
                 do {
                     let peers: [PeerInfo] = try peers.map { try .init(from: $0) }
-                    let specData = try JSONEncoder().encode(spec)
-                    config.setProviderConfiguration(value: specData, forKey: "connectionSpec")
+                    try config.setConnectionSpec(spec)
                     connection.updatePeers(peers: peers)
                 } catch {
                     Logger.adapter.error("Failed to encode connection spec/peers: \(error, privacy: .public)")

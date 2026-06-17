@@ -28,6 +28,7 @@ import NetworkExtension
 import ProtonCoreFeatureFlags
 import VPNCoreCommon
 import VPNCoreTypes
+import VPNShared
 
 public struct ConnectionConfiguration {
     /// Needed to detect connections started from another user (see AppSessionManager.resolveActiveSession)
@@ -102,7 +103,6 @@ extension ManagerConfigurator {
         let wgConfig = connectionConfigurationProvider.configuration().wireguardConfig
 
         let peers = try connectionIntent.server.peerInfo(using: wgConfig, protocolConfiguration: connectionIntent.protocolConfiguration)
-        log.debug("Peers: \(peers)")
         let config = ProTUNConfiguration(
             preferredTransport: .udp,
             peers: peers,
@@ -110,8 +110,14 @@ extension ManagerConfigurator {
         )
         try ProTUNConfigurationCoder.encode(configuration: config, to: protocolConfiguration)
 
-        let specData = try JSONEncoder().encode(connectionIntent.spec)
-        protocolConfiguration.setProviderConfiguration(value: specData, forKey: "connectionSpec")
+        try protocolConfiguration.setConnectionSpec(connectionIntent.spec)
+
+        // The userID is used by ProTUN to store credentials (certs, tokens) in a distinct bucket per user
+        @Dependency(\.authKeychain) var authKeychain
+        guard let userID = authKeychain.userId else {
+            throw ManagerConfigurationError.userIdMissing
+        }
+        protocolConfiguration.userID = userID
     }
 
     static var wireGuardConfigurator: ManagerConfigurator {
@@ -459,4 +465,5 @@ extension WireguardConfig {
 enum ManagerConfigurationError: Error {
     case entryIpMissing
     case emptyServerPublicKey
+    case userIdMissing
 }

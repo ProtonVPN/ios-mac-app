@@ -39,6 +39,7 @@ final class ProTUNAdapter: @unchecked Sendable {
         case failedToSetToNonBlocking(FileDescriptorError)
         case noPeers
         case invalidKeys
+        case missingUserID
     }
 
     private(set) weak var packetTunnelProvider: NEPacketTunnelProvider?
@@ -115,7 +116,7 @@ final class ProTUNAdapter: @unchecked Sendable {
         connection?.onConnectivityChange(event: .networkSwitch)
     }
 
-    func start(config: ProTUNConfiguration) async throws {
+    func start(config: Configuration) async throws {
         // Measures the whole start sequence
         let signpostID = signposter.makeSignpostID()
         let startState = signposter.beginInterval("Start Tunnel", id: signpostID)
@@ -123,7 +124,7 @@ final class ProTUNAdapter: @unchecked Sendable {
 
         Logger.adapter.info("Starting Adapter")
 
-        let tunFd = try await prepare(with: config)
+        let tunFd = try await prepare(with: config.proTUN)
         signposter.emitEvent("Tunnel prepared", id: signpostID)
 
         let rawTunFd = try tunFd.dup().take()
@@ -135,7 +136,8 @@ final class ProTUNAdapter: @unchecked Sendable {
         // TODO: ProTUN: rework this so we're TOCTOU resilient
         let proTunInitialConfig = try networkPath.withLock { networkPath in
             let isNetworkAvailable = networkPath.status == .satisfied
-            return try config.initialConnectionConfig(
+            return try initialConnectionConfig(
+                proTUNConfig: config.proTUN,
                 networkAvailable: isNetworkAvailable,
                 localAgentSettings: localAgentSettings
             )
@@ -147,7 +149,7 @@ final class ProTUNAdapter: @unchecked Sendable {
             stateChangeCallback: stateDelegate,
             eventCallback: eventDelegate,
             socketFdAvailableCallback: nil,
-            cache: SecurePersistentCache(keychainServiceSuffix: "user") // TODO: ProTUN: Pass a value identifying the user
+            cache: SecurePersistentCache(userID: config.userID)
         )
         signposter.emitEvent("Connection established", id: signpostID)
 
@@ -295,16 +297,22 @@ extension ProTUNAdapter {
         }
         IPCNotifications.postState(.pcapInterrupted, state: reason)
     }
+
+    struct Configuration {
+        let userID: String
+        let proTUN: ProTUNConfiguration
+    }
 }
 
 // MARK: - Helpers
 
-extension ProTUNConfiguration {
+extension ProTUNAdapter {
     func initialConnectionConfig(
+        proTUNConfig: ProTUNConfiguration,
         networkAvailable: Bool,
         localAgentSettings: LocalAgentSettings
     ) throws(ProTUNAdapter.Error) -> InitialConnectionConfig {
-        let peers = try peers.map { peer throws(ProTUNAdapter.Error) in
+        let peers = try proTUNConfig.peers.map { peer throws(ProTUNAdapter.Error) in
             try PeerInfo(from: peer)
         }
         @Dependency(\.appInfo) var appInfo

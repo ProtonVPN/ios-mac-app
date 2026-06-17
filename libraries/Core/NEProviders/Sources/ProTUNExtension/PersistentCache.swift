@@ -27,8 +27,17 @@ import VPNCoreTypes
 final class SecurePersistentCache: PersistentCache {
     private let service: String
 
-    init(keychainServiceSuffix: String) {
-        self.service = "ProTUN_" + keychainServiceSuffix
+    init(userID: String) {
+        let suffix = Self.cacheSuffix(for: userID)
+        Logger.adapter.debug("Initialising SecurePersistentCache with suffix: \"\(suffix, privacy: .public)\"")
+        self.service = "ProTUN_" + suffix
+    }
+
+    private static func cacheSuffix(for userID: String) -> String {
+        let digest = SHA256.hash(data: Data(userID.utf8))
+        // 16 bytes is enough to prevent collisions for users sharing one device
+        let prefix = Data(digest.prefix(16))
+        return prefix.base64EncodedString()
     }
 
     func put(key: CacheKey, bytes: Data) {
