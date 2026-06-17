@@ -20,7 +20,7 @@ import Cocoa
 import Foundation
 
 class ClickthroughTextField: NSTextField {
-    @IBInspectable private var isUserInteractive: Bool = true
+    @IBInspectable var isUserInteractive: Bool = true
 
     override func hitTest(_ point: NSPoint) -> NSView? {
         guard isUserInteractive else { return nil }
