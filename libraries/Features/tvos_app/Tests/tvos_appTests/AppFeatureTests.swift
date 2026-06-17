@@ -233,11 +233,6 @@ final class AppFeatureTests: XCTestCase {
             $0.logFileManager.dump = { _, _ in }
             $0.wireguardIOSLogProvider.clearLogsForAppGroup = { _ in }
             $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
-            $0.tunnelKeychain = TunnelKeychain(
-                storeWireguardConfig: { _ in Data() },
-                loadWireguardConfig: { Data() },
-                clear: {}
-            )
         }
         store.exhaustivity = .off
 
