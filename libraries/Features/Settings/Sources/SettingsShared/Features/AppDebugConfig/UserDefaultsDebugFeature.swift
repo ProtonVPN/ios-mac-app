@@ -17,136 +17,136 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-import ComposableArchitecture
-import Domain
-import Foundation
+    import ComposableArchitecture
+    import Domain
+    import Foundation
 
-@Reducer
-public struct UserDefaultsDebugFeature: Sendable {
-    @Dependency(\.userDefaultsClient) var client
+    @Reducer
+    public struct UserDefaultsDebugFeature: Sendable {
+        @Dependency(\.userDefaultsClient) var client
 
-    @ObservableState
-    public struct State: Equatable, Sendable {
-        @Presents package var alert: AlertState<Action.Alert>?
-        package var isStandard: Bool
-        package var content: Content
-    }
-
-    public enum Action {
-        case flipBool(UserDefaultsEntry)
-        case resetDefaultsTapped
-        case resetDefaults
-        case resetDefaultsFinished(Result<Void, Error>)
-        case loadDefaults
-        case loadDefaultsFinished(Result<[UserDefaultsEntry], Error>)
-        case loadStandardDefaults
-        case loadStandardDefaultsFinished(Result<[UserDefaultsEntry], Error>)
-        case delegate(Delegate)
-        case alert(PresentationAction<Alert>)
-
-        public enum Alert: Sendable {
-            case cancel
-            case confirmReset
+        @ObservableState
+        public struct State: Equatable, Sendable {
+            @Presents package var alert: AlertState<Action.Alert>?
+            package var isStandard: Bool
+            package var content: Content
         }
 
-        public enum Delegate {
-            case dismiss
-        }
-    }
+        public enum Action {
+            case flipBool(UserDefaultsEntry)
+            case resetDefaultsTapped
+            case resetDefaults
+            case resetDefaultsFinished(Result<Void, Error>)
+            case loadDefaults
+            case loadDefaultsFinished(Result<[UserDefaultsEntry], Error>)
+            case loadStandardDefaults
+            case loadStandardDefaultsFinished(Result<[UserDefaultsEntry], Error>)
+            case delegate(Delegate)
+            case alert(PresentationAction<Alert>)
 
-    public var body: some Reducer<State, Action> {
-        Reduce { state, action in
-            switch action {
-            case let .flipBool(entry):
-                client.flipBool(entry)
-                return .send(.loadDefaults)
+            public enum Alert: Sendable {
+                case cancel
+                case confirmReset
+            }
 
-            case .loadDefaults:
-                state.alert = nil
-                state.content = .loading
-                return .run { send in
-                    let result = await Result { try await (
-                        client.entries()
-                    ) }
-                    return await send(.loadDefaultsFinished(result))
-                }
-
-            case .loadStandardDefaults:
-                state.alert = nil
-                state.content = .loading
-                return .run { send in
-                    let result = await Result { try await (
-                        client.standardEntries()
-                    ) }
-                    return await send(.loadDefaultsFinished(result))
-                }
-
-            case let .loadDefaultsFinished(.success(entries)):
-                state.content = .loadedDefaults(entries)
-                return .none
-
-            case let .loadStandardDefaultsFinished(.success(standardEntries)):
-                state.content = .loadedStandardDefaults(standardEntries)
-                return .none
-
-            case let .loadDefaultsFinished(.failure(error)), let .loadStandardDefaultsFinished(.failure(error)):
-                state.content = .failed("\(error)")
-                return .none
-
-            case .resetDefaults:
-                state.content = .loading
-                return .run { send in
-                    let result = await Result { try await client.reset() }
-                    return await send(.resetDefaultsFinished(result))
-                }
-
-            case .resetDefaultsFinished(.success):
-                return .send(.loadDefaults)
-
-            case let .resetDefaultsFinished(.failure(error)):
-                state.content = .failed("\(error)")
-                return .none
-
-            case .resetDefaultsTapped:
-                state.alert = confirmResetAlert
-                return .none
-
-            case .alert(.presented(.confirmReset)):
-                return .send(.resetDefaults)
-
-            case .alert(.presented(.cancel)):
-                return .none
-
-            case .alert(.dismiss):
-                state.alert = nil
-                return .none
-
-            case .delegate:
-                return .none
+            public enum Delegate {
+                case dismiss
             }
         }
+
+        public var body: some Reducer<State, Action> {
+            Reduce { state, action in
+                switch action {
+                case let .flipBool(entry):
+                    client.flipBool(entry)
+                    return .send(.loadDefaults)
+
+                case .loadDefaults:
+                    state.alert = nil
+                    state.content = .loading
+                    return .run { send in
+                        let result = await Result { try await (
+                            client.entries()
+                        ) }
+                        return await send(.loadDefaultsFinished(result))
+                    }
+
+                case .loadStandardDefaults:
+                    state.alert = nil
+                    state.content = .loading
+                    return .run { send in
+                        let result = await Result { try await (
+                            client.standardEntries()
+                        ) }
+                        return await send(.loadDefaultsFinished(result))
+                    }
+
+                case let .loadDefaultsFinished(.success(entries)):
+                    state.content = .loadedDefaults(entries)
+                    return .none
+
+                case let .loadStandardDefaultsFinished(.success(standardEntries)):
+                    state.content = .loadedStandardDefaults(standardEntries)
+                    return .none
+
+                case let .loadDefaultsFinished(.failure(error)), let .loadStandardDefaultsFinished(.failure(error)):
+                    state.content = .failed("\(error)")
+                    return .none
+
+                case .resetDefaults:
+                    state.content = .loading
+                    return .run { send in
+                        let result = await Result { try await client.reset() }
+                        return await send(.resetDefaultsFinished(result))
+                    }
+
+                case .resetDefaultsFinished(.success):
+                    return .send(.loadDefaults)
+
+                case let .resetDefaultsFinished(.failure(error)):
+                    state.content = .failed("\(error)")
+                    return .none
+
+                case .resetDefaultsTapped:
+                    state.alert = confirmResetAlert
+                    return .none
+
+                case .alert(.presented(.confirmReset)):
+                    return .send(.resetDefaults)
+
+                case .alert(.presented(.cancel)):
+                    return .none
+
+                case .alert(.dismiss):
+                    state.alert = nil
+                    return .none
+
+                case .delegate:
+                    return .none
+                }
+            }
+        }
+
+        private var confirmResetAlert: AlertState<Action.Alert> {
+            AlertState(
+                title: { TextState("Reset User Defaults?") },
+                actions: {
+                    ButtonState(role: .cancel, action: .send(.cancel), label: { TextState("Cancel") })
+                    ButtonState(role: .destructive, action: .send(.confirmReset), label: { TextState("Reset") })
+                },
+                message: { TextState("All entries will be removed. This is irreversible.\n\nAre you sure you want to continue?") }
+            )
+        }
     }
 
-    private var confirmResetAlert: AlertState<Action.Alert> {
-        AlertState(
-            title: { TextState("Reset User Defaults?") },
-            actions: {
-                ButtonState(role: .cancel, action: .send(.cancel), label: { TextState("Cancel") })
-                ButtonState(role: .destructive, action: .send(.confirmReset), label: { TextState("Reset") })
-            },
-            message: { TextState("All entries will be removed. This is irreversible.\n\nAre you sure you want to continue?") }
-        )
+    public extension UserDefaultsDebugFeature.State {
+        @CasePathable
+        enum Content: Equatable, Sendable {
+            case none
+            case loading
+            case loadedDefaults([UserDefaultsEntry])
+            case loadedStandardDefaults([UserDefaultsEntry])
+            case failed(String)
+        }
     }
-}
-
-public extension UserDefaultsDebugFeature.State {
-    @CasePathable
-    enum Content: Equatable, Sendable {
-        case none
-        case loading
-        case loadedDefaults([UserDefaultsEntry])
-        case loadedStandardDefaults([UserDefaultsEntry])
-        case failed(String)
-    }
-}
 #endif

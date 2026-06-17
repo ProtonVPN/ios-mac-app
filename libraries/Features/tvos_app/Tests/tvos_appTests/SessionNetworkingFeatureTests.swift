@@ -114,7 +114,6 @@ final class SessionNetworkingFeatureTests: XCTestCase {
         } withDependencies: {
             $0.authKeychain = keychainMock
             $0.networking = VPNNetworkingMock()
-            $0.vpnAuthenticationStorage = VpnAuthenticationStorage.testStorage()
             $0.logFileManager.dump = { _, _ in }
             $0.wireguardIOSLogProvider.clearLogsForAppGroup = { _ in }
         }

@@ -36,7 +36,6 @@
         func testWaitsUntilTunnelDisconnectedBeforeSigningOut() async {
             let clock = TestClock()
             let mockVPNSession = VPNSessionMock(status: .connected)
-            let tunnelConfigurationCleared = XCTestExpectation(description: "Saved WG config should be removed from the keychain")
 
             let state = AppFeature.State(
                 screen: .main(.init(
@@ -62,12 +61,6 @@
                 $0.connectionFeatureProvider.setConnectionFeatures = { _ in }
                 $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
                 $0.networking = VPNNetworkingMock()
-                $0.vpnAuthenticationStorage = VpnAuthenticationStorage.testStorage()
-                $0.tunnelKeychain = TunnelKeychain(
-                    storeWireguardConfig: { _ in Data() },
-                    loadWireguardConfig: { Data() },
-                    clear: { tunnelConfigurationCleared.fulfill() }
-                )
                 $0.nwPathStream = { nwPathStream }
                 $0.logFileManager.dump = { _, _ in }
                 $0.wireguardIOSLogProvider.clearLogsForAppGroup = { _ in }
@@ -85,8 +78,6 @@
             await store.receive(\.connection.input.disconnect)
 
             await clock.advance(by: .seconds(1)) // Wait until disconnect is finished
-
-            await fulfillment(of: [tunnelConfigurationCleared], timeout: .init(seconds: 10))
             await store.send(.networking(.stopObserving))
         }
 
@@ -95,7 +86,6 @@
             let clock = TestClock()
             let mockVPNSession = VPNSessionMock(status: .disconnected)
             let networkingDelegateMock = CoreNetworkingDelegateMock()
-            let tunnelConfigurationCleared = XCTestExpectation(description: "Saved WG config should be removed from the keychain")
 
             let state = AppFeature.State(
                 screen: .main(.init(
@@ -120,11 +110,6 @@
                 $0.networkingDelegate = networkingDelegateMock
                 $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
                 $0.networking = VPNNetworkingMock()
-                $0.tunnelKeychain = TunnelKeychain(
-                    storeWireguardConfig: { _ in Data() },
-                    loadWireguardConfig: { Data() },
-                    clear: { tunnelConfigurationCleared.fulfill() }
-                )
                 $0.nwPathStream = { nwPathStream }
                 $0.logFileManager.dump = { _, _ in }
                 $0.wireguardIOSLogProvider.clearLogsForAppGroup = { _ in }
@@ -147,7 +132,6 @@
 
             // Wait until disconnect is finished
             await clock.advance(by: .seconds(1))
-            await fulfillment(of: [tunnelConfigurationCleared], timeout: .init(seconds: 10))
             await store.send(.networking(.stopObserving))
         }
     }

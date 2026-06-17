@@ -43,7 +43,6 @@
         }
 
         var didStopTunnelCallback: (() -> Void)?
-        var shouldGenerateKeysIfMissing: Bool = false
 
         var connection: VPNSessionMock
 
@@ -60,12 +59,6 @@
             try Task.checkCancellation()
             if let tunnelStartErrorToThrow {
                 throw tunnelStartErrorToThrow
-            }
-
-            if shouldGenerateKeysIfMissing {
-                // The real implementation configures the wireguard tunnel configuration with the user's private key.
-                // It generates one if it's not present in the keychain. Let's do that same in this mock.
-                try generateKeysIfNecessary()
             }
 
             let server = intent.server
@@ -129,16 +122,5 @@
         }
 
         func cleanup() async throws {}
-
-        private func generateKeysIfNecessary() throws {
-            @Dependency(\.vpnAuthenticationStorage) var keychain
-            @Dependency(\.vpnKeysGenerator) var generator
-            if keychain.getStoredKeys() == nil {
-                log.info("VPN auth storage doesn't contain keys", category: .connection)
-                let keys = try generator.generateKeys()
-                keychain.store(keys: keys)
-                log.info("Generated new keys", category: .connection, metadata: ["keys": "\(keys)"])
-            }
-        }
     }
 #endif

@@ -56,7 +56,6 @@ protocol AppSessionManager {
     var loggedIn: Bool { get }
 
     func attemptSilentLogIn() async throws
-    func refreshVpnAuthCertificate() async throws
     func finishLogin(authCredentials: AuthCredentials) async throws
     func logOut(force: Bool, reason: String?)
 
@@ -72,8 +71,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         CoreAlertServiceFactory &
         NavigationServiceFactory &
         ProfileManagerFactory &
-        UpdateCheckerFactory &
-        VpnAuthenticationFactory
+        UpdateCheckerFactory
 
     private let factory: Factory
 
@@ -82,7 +80,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
-    private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     @Dependency(\.searchStorageNew) private var searchStorage
     @Dependency(\.networking) private var networking
@@ -200,7 +197,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 throw error
             }
 
-            try await refreshVpnAuthCertificate()
             serverRepository.setMetadata("0", for: .consecutiveSuccessfulRefreshes)
             return
         }
@@ -227,44 +223,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         } catch {
             logOutCleanup()
             throw error
-        }
-        try await refreshVpnAuthCertificate()
-    }
-
-    @MainActor
-    func refreshVpnAuthCertificate() async throws {
-        guard loggedIn else {
-            log.info("Not refreshing vpn certificate - client not logged in")
-            return
-        }
-
-        @Shared(.vpnProtocol) var vpnProtocol
-        guard case .certificate = vpnProtocol.authenticationType else {
-            log.info("Not refreshing vpn certificate - cert auth not in use")
-            return
-        }
-        try await withCheckedThrowingContinuation { continuation in
-            self.vpnAuthentication.refreshCertificates { result in
-                switch result {
-                case .success:
-                    continuation.resume()
-                case let .failure(error) where error is ProviderMessageError:
-                    // The vpn isn't connected yet, which means the extension hasn't been
-                    // launched (if it's used at all for the user's preferred protocol)
-                    // and the provider can't refresh the certificate.
-                    // Fake success and the extension can handle refresh itself once we're connected.
-                    continuation.resume()
-                case .failure(AuthenticationRemoteClientError.needNewKeys):
-                    // The network extension tried to refresh certificates, but the server responded saying
-                    // that new keys needed regenerating. VpnAuthentication has deleted the keys, and now
-                    // we just need to attempt to reconnect, since that will generate new keys for us.
-                    executeOnUIThread {
-                        continuation.resume()
-                    }
-                case let .failure(error):
-                    continuation.resume(throwing: error)
-                }
-            }
         }
     }
 
@@ -371,9 +329,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             setAndNotify(for: .established, reason: nil)
         }
         profileManager.refreshProfiles()
-
-        // Refresh certificate but don't log out in case of an error.
-        try await refreshVpnAuthCertificate()
     }
 
     // swiftlint:enable function_body_length
@@ -454,7 +409,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     private func logOutCleanup() {
-        let group = DispatchGroup()
         refreshTimer.stopTimers()
         loggedIn = false
 
@@ -476,13 +430,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         @Dependency(\.serverManager) var serverManager
         serverManager.purgeAllServers()
-
-        let vpnAuthenticationTimeoutInSeconds = 2
-        group.enter()
-        vpnAuthentication.clearEverything {
-            group.leave()
-        }
-        _ = group.wait(timeout: .now() + .seconds(vpnAuthenticationTimeoutInSeconds))
 
         propertiesManager.logoutCleanup()
 

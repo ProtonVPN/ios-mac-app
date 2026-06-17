@@ -45,7 +45,6 @@ class HelpMenuViewModel {
         & WindowServiceFactory
     private var factory: Factory
 
-    @Dependency(\.vpnAuthenticationStorage) private var vpnAuthenticationStorage
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var navService: NavigationService = factory.makeNavigationService()
@@ -136,9 +135,6 @@ class HelpMenuViewModel {
         let sharedConfigURL = FileManager.default
             .containerURL(forSecurityApplicationGroupIdentifier: DomainConstants.AppGroups.main)!
         try? FileManager.default.removeItem(at: sharedConfigURL)
-
-        vpnAuthenticationStorage.deleteCertificate()
-        vpnAuthenticationStorage.deleteKeys()
 
         // app data
         if let bundleIdentifier = Bundle.main.bundleIdentifier {

@@ -29,10 +29,6 @@ import Foundation
 import Sharing
 import VPNAppCore
 
-public protocol MaintenanceManagerFactory {
-    func makeMaintenanceManager() -> MaintenanceManagerProtocol
-}
-
 public typealias BoolCallback = GenericCallback<Bool>
 
 public protocol MaintenanceManagerProtocol {
@@ -41,11 +37,6 @@ public protocol MaintenanceManagerProtocol {
 }
 
 public class MaintenanceManager: MaintenanceManagerProtocol {
-    public typealias Factory = CoreAlertServiceFactory
-
-    private let factory: Factory
-    private lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
-
     @Dependency(\.vpnApiClient) private var vpnApiClient
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Shared(.connectionState) private var connectionState: ConnectionState
@@ -53,9 +44,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
     private var observerTask: Task<Void, Error>?
     private var observerTimeInterval: TimeInterval?
 
-    public init(factory: Factory) {
-        self.factory = factory
-    }
+    public init() {}
 
     // MARK: - MaintenanceManagerProtocol
 

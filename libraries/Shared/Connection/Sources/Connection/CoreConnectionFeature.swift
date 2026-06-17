@@ -34,7 +34,6 @@ import VPNAppCore
 public struct CoreConnectionFeature: Sendable {
     @Dependency(\.continuousClock) private var clock
     @Dependency(\.serverIdentifier) private var serverIdentifier
-    @Dependency(\.tunnelKeychain) private var tunnelConfigKeychain
     @Dependency(\.nwStatusStream) private var nwStatusStream
 
     private static let defaultConnectionTimeout = Duration.seconds(30)
@@ -236,12 +235,6 @@ public struct CoreConnectionFeature: Sendable {
                 return handleLocalAgentEvent(event)
 
             case .handleLogout:
-                do {
-                    try tunnelConfigKeychain.clear()
-                } catch {
-                    // An error will be thrown if we haven't made any connections and there is nothing to clear.
-                    log.debug("Error clearing VPN keychain: \(error)")
-                }
                 return .send(.tunnel(.cleanup))
 
             case .delegate:

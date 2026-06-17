@@ -54,8 +54,6 @@ final class DependencyContainer: Container {
         delegate: self
     )
 
-    private lazy var vpnAuthentication: VpnAuthentication = VpnAuthenticationRemoteClient()
-
     // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
     private lazy var dynamicBugReportManager = DynamicBugReportManager(self)
 
@@ -75,11 +73,7 @@ final class DependencyContainer: Container {
         iosAlertService
     }
 
-    // MARK: VpnAuthentication
-
-    override func makeVpnAuthentication() -> VpnAuthentication {
-        vpnAuthentication
-    }
+    // MARK: UpdateChecker
 
     override func makeUpdateChecker() -> UpdateChecker {
         iOSUpdateManager()

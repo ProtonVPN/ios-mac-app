@@ -65,14 +65,6 @@
                     } header: {
                         Text("Unauth Keychain")
                     }
-                    Section {
-                        vpnKeysCell(keys: data.vpnAuthKeychainData.keys)
-                        certificateCell(certificate: data.vpnAuthKeychainData.certificate)
-                    } header: {
-                        Text("VPN Authentication Keychain")
-                    } footer: {
-                        Text("Tap on any value to copy it to the clipboard.")
-                    }
                 }
 
             case let .failed(error):
@@ -121,60 +113,6 @@
             } else {
                 HStack {
                     Text("No Data")
-                    Spacer()
-                    Image(systemName: "nosign")
-                }
-            }
-        }
-
-        @ViewBuilder
-        private func vpnKeysCell(keys: KeychainDebugFeature.VPNAuthKeychainData.Keys?) -> some View {
-            if let keys {
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text("Private Key")
-                        Spacer()
-                        Button {
-                            store.send(.generateNewKeysTapped)
-                        } label: {
-                            Image(systemName: "arrow.clockwise")
-                        }
-                    }
-                    copyableText(keys.privateKey)
-
-                    Divider()
-
-                    Text("Public Key")
-                    copyableText(keys.publicKey)
-                }
-            } else {
-                HStack {
-                    Text("No VPN Keys")
-                    Spacer()
-                    Image(systemName: "nosign")
-                }
-            }
-        }
-
-        @ViewBuilder
-        private func certificateCell(certificate: KeychainDebugFeature.VPNAuthKeychainData.Certificate?) -> some View {
-            if let certificate {
-                VStack(alignment: .leading) {
-                    Text("Certificate")
-                    copyableText(certificate.pem)
-
-                    Divider()
-
-                    Text("Expiry")
-                    copyableText(certificate.expiry.formatted())
-
-                    Divider()
-
-                    featuresCell(features: certificate.features)
-                }
-            } else {
-                HStack {
-                    Text("No Certificate")
                     Spacer()
                     Image(systemName: "nosign")
                 }

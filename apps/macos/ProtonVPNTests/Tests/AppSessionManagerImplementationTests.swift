@@ -568,10 +568,6 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
         profileManager
     }
 
-    func makeVpnAuthentication() -> VpnAuthentication {
-        VpnAuthenticationMock()
-    }
-
     func makeNetworking() -> Networking {
         NetworkingMock()
     }
