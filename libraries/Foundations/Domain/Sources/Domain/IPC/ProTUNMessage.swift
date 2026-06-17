@@ -47,7 +47,7 @@ public extension ProTUNMessage.Request {
         case retrieveLogsArchive
         case getCurrentPeer
         case pcapRequest(PcapRequest)
-        case pushSelector(String)
+        case pushForkInfo(selector: String, cookieName: String, cookieValue: String)
         case updateConfiguration(Set<ConnectionChange>)
         #if DEBUG
             case ping
@@ -142,7 +142,7 @@ extension ProTUNMessage.Request.Payload: CustomStringConvertible {
         case .retrieveLogsArchive: "retrieveLogsArchive"
         case .getCurrentPeer: "getCurrentPeer"
         case let .pcapRequest(request): "pcapRequest(\(request))"
-        case .pushSelector: "pushSelector"
+        case .pushForkInfo: "pushForkInfo"
         case .updateConfiguration: "updateConfiguration"
         }
     }
