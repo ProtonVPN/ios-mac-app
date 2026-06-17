@@ -27,8 +27,6 @@
 
     @Reducer
     public struct KeychainDebugFeature: Sendable {
-        @Dependency(\.vpnKeysGenerator) var generator
-        @Dependency(\.vpnAuthenticationStorage) var authStorage
         @Dependency(\.unauthKeychain) var unauthKeychain
         @Dependency(\.authKeychain) var authKeychain
 
@@ -43,8 +41,6 @@
         public enum Action {
             case loadKeychainData
             case loadKeychainDataFinished(Result<KeychainData, Error>)
-            case generateNewKeysTapped
-            case generateNewKeys
             case delegate(Delegate)
             case clearKeychainsTapped
             case clearKeychains
@@ -53,7 +49,6 @@
             public enum Alert: Sendable {
                 case cancel
                 case confirmClear
-                case confirmGenerate
             }
 
             public enum Delegate {
@@ -79,22 +74,6 @@
                     state.content = .failed("\(error)")
                     return .none
 
-                case .generateNewKeysTapped:
-                    state.alert = confirmGenerateKeysAlert
-                    return .none
-
-                case .generateNewKeys:
-                    do {
-                        let keys = try generator.generateKeys()
-
-                        // This method being non-throwing and simply logging on failure does not inspire confidence
-                        authStorage.store(keys: keys)
-                    } catch {
-                        state.alert = errorAlert(error: error)
-                    }
-
-                    return .send(.loadKeychainData)
-
                 case .clearKeychainsTapped:
                     state.alert = confirmClearKeychains
                     return .none
@@ -102,13 +81,8 @@
                 case .clearKeychains:
                     unauthKeychain.clear()
                     authKeychain.clear(.clearApplicationData)
-                    authStorage.deleteCertificate()
-                    authStorage.deleteKeys()
                     exit(0)
                     return .none
-
-                case .alert(.presented(.confirmGenerate)):
-                    return .send(.generateNewKeys)
 
                 case .alert(.presented(.confirmClear)):
                     return .send(.clearKeychains)
@@ -127,25 +101,6 @@
         }
 
         private func fetchKeychainData() throws -> KeychainData {
-            let keysValue = authStorage.getStoredKeys()
-            let certificateValue = authStorage.getStoredCertificate()
-            let features = authStorage.getStoredCertificateFeatures()
-
-            let keys = keysValue.map { value in
-                VPNAuthKeychainData.Keys(
-                    privateKey: value.privateKey.derRepresentation,
-                    publicKey: value.publicKey.derRepresentation
-                )
-            }
-            let certificate = certificateValue.map { value in
-                VPNAuthKeychainData.Certificate(
-                    pem: value.certificate,
-                    expiry: value.validUntil,
-                    features: features
-                )
-            }
-            let vpnAuthKeychainData = VPNAuthKeychainData(keys: keys, certificate: certificate)
-
             let authCredentials: AuthCredentials? = authKeychain.fetch(forContext: .mainApp)
             let unauthCredentials: AuthCredential? = unauthKeychain.fetch()
 
@@ -171,7 +126,6 @@
             }
 
             return KeychainData(
-                vpnAuthKeychainData: vpnAuthKeychainData,
                 authKeychainData: authKeychainData,
                 unauthKeychainData: unauthKeychainData
             )
@@ -187,27 +141,6 @@
                 message: { TextState("Are you sure?") }
             )
         }
-
-        private var confirmGenerateKeysAlert: AlertState<Action.Alert> {
-            AlertState(
-                title: { TextState("Generate new keys?") },
-                actions: {
-                    ButtonState(role: .cancel, action: .send(.cancel), label: { TextState("Cancel") })
-                    ButtonState(role: .destructive, action: .send(.confirmGenerate), label: { TextState("Generate") })
-                },
-                message: { TextState("Are you sure? This is irreversible and will not clear any existing certificates.") }
-            )
-        }
-
-        private func errorAlert(error: Error) -> AlertState<Action.Alert> {
-            AlertState(
-                title: { TextState("Key generation failed") },
-                actions: {
-                    ButtonState(role: .none, action: .send(.cancel), label: { TextState("Cancel") })
-                },
-                message: { TextState(String(describing: error)) }
-            )
-        }
     }
 
     public extension KeychainDebugFeature {
@@ -220,7 +153,6 @@
         }
 
         struct KeychainData: Equatable, Sendable {
-            public let vpnAuthKeychainData: VPNAuthKeychainData
             public let authKeychainData: AuthKeychainData?
             public let unauthKeychainData: AuthKeychainData?
         }
@@ -232,22 +164,6 @@
             public let sessionId: String
             public let userId: String?
             public let scopes: [String]
-        }
-
-        struct VPNAuthKeychainData: Equatable, Sendable {
-            public let keys: Keys?
-            public let certificate: Certificate?
-
-            public struct Keys: Equatable, Sendable {
-                public let privateKey: String
-                public let publicKey: String
-            }
-
-            public struct Certificate: Equatable, Sendable {
-                public let pem: String
-                public let expiry: Date
-                public let features: VPNConnectionFeatures?
-            }
         }
     }
 #endif

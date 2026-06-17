@@ -39,7 +39,6 @@
 
         public let vpnSession: VPNSessionMock
         public let tunnelManager: MockTunnelManager
-        public let vpnAuthStorage: VpnAuthenticationStorage
 
         init(
             startDate: Date = Date.now,
@@ -47,8 +46,7 @@
             storedIntent: ServerConnectionIntent?,
             initialState: ConnectionFeature.State,
             vpnSession: VPNSessionMock,
-            tunnelManager: MockTunnelManager,
-            vpnAuthStorage: VpnAuthenticationStorage
+            tunnelManager: MockTunnelManager
         ) {
             self.startDate = startDate
             self.clock = clock
@@ -56,7 +54,6 @@
             self.initialState = initialState
             self.vpnSession = vpnSession
             self.tunnelManager = tunnelManager
-            self.vpnAuthStorage = vpnAuthStorage
         }
 
         public static func disconnected(certificateState: CertificateState = .valid) -> ConnectionEnvironment {
@@ -64,19 +61,6 @@
             let certExpiryDate = now.addingTimeInterval(.days(certificateState == .valid ? 1 : -1))
 
             let vpnSession = VPNSessionMock(status: .disconnected, connectedDate: nil, lastDisconnectError: nil)
-
-            let certificate = VpnCertificate(
-                certificate: "1234",
-                validUntil: certExpiryDate,
-                refreshTime: certExpiryDate
-            )
-            let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
-
-            let mockStorage = VpnAuthenticationStorage.testStorage(
-                keys: keys,
-                certificate: certificate,
-                features: .mock
-            )
 
             return ConnectionEnvironment(
                 startDate: now,
@@ -87,8 +71,7 @@
                     core: .initialCoreConnectionState
                 ),
                 vpnSession: vpnSession,
-                tunnelManager: MockTunnelManager(connection: vpnSession),
-                vpnAuthStorage: mockStorage
+                tunnelManager: MockTunnelManager(connection: vpnSession)
             )
         }
 
@@ -99,7 +82,6 @@
                 $0.date = .constant(startDate)
                 $0.continuousClock = clock
                 $0.tunnelManager = tunnelManager
-                $0.vpnAuthenticationStorage = vpnAuthStorage
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
                 $0.connectionFeatureProvider = .init(
                     connectionFeatures: { .mock },

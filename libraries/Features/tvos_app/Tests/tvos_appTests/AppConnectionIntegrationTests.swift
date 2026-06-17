@@ -62,7 +62,6 @@
                 $0.connectionFeatureProvider.setConnectionFeatures = { _ in }
                 $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
                 $0.networking = VPNNetworkingMock()
-                $0.vpnAuthenticationStorage = VpnAuthenticationStorage.testStorage()
                 $0.tunnelKeychain = TunnelKeychain(
                     storeWireguardConfig: { _ in Data() },
                     loadWireguardConfig: { Data() },

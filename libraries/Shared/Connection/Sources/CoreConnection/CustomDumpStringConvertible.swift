@@ -21,7 +21,6 @@ import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
 import Ergonomics
 import Foundation
-import struct VPNShared.VpnCertificate
 
 // For now, let's override the dump descriptions with minimal info so `_printChanges` reducer is easier to read
 extension Domain.Server: @retroactive CustomDumpStringConvertible {
@@ -33,37 +32,5 @@ extension Domain.Server: @retroactive CustomDumpStringConvertible {
 extension Domain.VPNConnectionFeatures: @retroactive CustomDumpStringConvertible {
     public var customDumpDescription: String {
         "VPNConnectionFeatures(netShield: \(netshield), vpnAccelerator: \(vpnAccelerator), natType: \(natType))"
-    }
-}
-
-extension VPNKeys: CustomDumpStringConvertible {
-    public var customDumpDescription: String {
-        "VPNKeys"
-    }
-}
-
-extension VpnCertificate: @retroactive CustomDumpStringConvertible {
-    public var customDumpDescription: String {
-        "VPNCertificate(validUntil: \(validUntil))"
-    }
-}
-
-extension PrivateKey: CustomDumpStringConvertible {
-    public var customDumpDescription: String {
-        #if DEBUG
-            return "PrivateKey(fingerprint: \(rawRepresentation.fingerprint))"
-        #else
-            return "PrivateKey"
-        #endif
-    }
-}
-
-extension PublicKey: CustomDumpStringConvertible {
-    public var customDumpDescription: String {
-        #if DEBUG
-            return "PublicKey(fingerprint: \(rawRepresentation.fingerprint))"
-        #else
-            return "PublicKey"
-        #endif
     }
 }

@@ -29,9 +29,6 @@ public extension ConnectionFeature.State {
         let now = Date.now
         let tomorrow = now.addingTimeInterval(.days(1))
 
-        let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
-        let certificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
-
         return ConnectionFeature.State(
             connectionState: .connected(
                 TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),

@@ -131,9 +131,7 @@ enum TunnelManagerKey: DependencyKey {
             log.debug("Simulator: using mocked VPN internals", category: .connection)
             let mockSession = VPNSessionMock(status: .disconnected)
             mockSession.messageHandler = MessageHandler.full
-            let manager = MockTunnelManager(connection: mockSession)
-            manager.shouldGenerateKeysIfMissing = true
-            return manager
+            return MockTunnelManager(connection: mockSession)
         }()
     #else
         static let liveValue: TunnelManager = PacketTunnelManager()
