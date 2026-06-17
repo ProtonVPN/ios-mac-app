@@ -42,17 +42,6 @@ extension NetshieldLevel {
             unknownDefault(value: .level1)
         }
     }
-
-    var toPayload: IPCLANetshieldLevel {
-        switch self {
-        case .none: .off
-        case .malwareFilter: .malware
-        case .adsAndMalwareFilter: .adsAndMalware
-        case .adultAndAdsAndMalwareFilter: .adultContentAndAdsAndMalware
-        @unknown default:
-            unknownDefault(value: .malware)
-        }
-    }
 }
 
 extension LocalAgentSettingType: @retroactive CustomStringConvertible {

@@ -50,6 +50,7 @@ public struct ExtensionFeature: Sendable {
         case startObserving
         case stopObserving
         case updateConfiguration(ServerConnectionIntent)
+        case applyConnectionUpdate(ConnectionUpdate)
         case connect(ServerConnectionIntent)
         case tunnelStartRequestFinished(Result<Bool, Error>)
         /// The internal state of the network extension has changed
@@ -63,6 +64,7 @@ public struct ExtensionFeature: Sendable {
         @DebugDescription
         public enum Delegate: Sendable {
             case reconfigurationFailed(Error)
+            case featuresChanged(VPNConnectionFeatures)
         }
     }
 
@@ -85,6 +87,11 @@ public struct ExtensionFeature: Sendable {
                         await send(.tunnelReasserting(.forkSelectorRequest))
                     }
                 }
+                let featuresObservation: Effect<ExtensionFeature.Action> = .run { send in
+                    for await features in tunnelManager.connectionFeaturesStream {
+                        await send(.delegate(.featuresChanged(features)))
+                    }
+                }
 
                 // These effects must not be executed concurrently until we make `PacketTunnelManager` concurrency safe.
                 // Doing so has the potential to create a duplicate set of `NETunnelProviderManager` and `NEVPNSession`
@@ -92,7 +99,7 @@ public struct ExtensionFeature: Sendable {
                 // and `stopTunnel` commands to the other, resulting in failure to connect.
                 return .concatenate(
                     initial,
-                    .merge(observation, forkObservation)
+                    .merge(observation, forkObservation, featuresObservation)
                         .cancellable(id: CancelID.observation, cancelInFlight: true)
                 )
 
@@ -108,6 +115,15 @@ public struct ExtensionFeature: Sendable {
                     log.error("Failed to apply connection configuration changes", category: .connection, metadata: ["error": "\(error)"])
                     SentryHelper.shared?.log(error: error)
                     // TODO: ProTUN: Raise the derived set of (failed) configuration changes using the error
+                    await send(.delegate(.reconfigurationFailed(error)))
+                }
+
+            case let .applyConnectionUpdate(update):
+                return .run { _ in
+                    _ = try await tunnelManager.sendProTUN(request: .init(payload: .updateConfiguration(update)))
+                } catch: { error, send in
+                    log.error("Failed to apply connection update", category: .connection, metadata: ["error": "\(error)"])
+                    SentryHelper.shared?.log(error: error)
                     await send(.delegate(.reconfigurationFailed(error)))
                 }
 
@@ -255,6 +271,8 @@ extension ExtensionFeature.Action: CustomDebugStringConvertible {
             ".cleanup"
         case let .updateConfiguration(serverConnectionIntent):
             ".updateConfiguration(\(serverConnectionIntent))"
+        case let .applyConnectionUpdate(update):
+            ".applyConnectionUpdate(\(update))"
         case let .delegate(action):
             ".delegate(\(action)"
         }

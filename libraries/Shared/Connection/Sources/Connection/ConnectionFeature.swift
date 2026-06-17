@@ -32,12 +32,13 @@ import VPNAppCore
 public struct ConnectionFeature: Sendable {
     @Dependency(\.sessionChangeNotifier) private var sessionChangeNotifier
     @Dependency(\.connectionIntentResolver) private var intentResolver
-    @Dependency(\.connectionFeatureProvider) private var connectionFeatureProvider
 
     public init() {}
 
     public struct State: Equatable, Sendable {
         @SharedReader(.userTier) public var userTier: Int?
+        /// The server-applied Local Agent settings for the current session.
+        @Shared(.effectiveConnectionFeatures) public var effectiveConnectionFeatures: VPNConnectionFeatures?
         var connectionState: ConnectionState
         var shouldRegisterServerChangeOnConnection: Bool // TODO: ProTUN: post connection events that some other component can hook into to do this, similarly to Telemetry
         var core: CoreConnectionFeature.State
@@ -83,6 +84,7 @@ public struct ConnectionFeature: Sendable {
             case connectionFailed(ConnectionError)
             case intentResolutionFailed(ConnectionPreparationIntent, with: ConnectionIntentResolutionError)
             case localAgentNotice(LocalAgentTwoFactorAuthenticationError)
+            case settingChangeFailed(reason: String)
         }
     }
 
@@ -98,17 +100,10 @@ public struct ConnectionFeature: Sendable {
             switch action {
             case .input(.onLaunch):
                 return .merge(
-                    .merge(
-                        .send(.core(.startObserving)),
-                        // logout or guest→authenticated transition
-                        .listen(to: sessionChangeNotifier.stream()) { _ in .input(.onSessionChange) }
-                    ).cancellable(id: CancelID.observation, cancelInFlight: true),
-                    .run { _ in
-                        @Dependency(\.localAgent) var localAgentClient
-                        let features = connectionFeatureProvider.connectionFeatures()
-                        localAgentClient.writeSettings { $0 = IPCLASettingsPayload(features) }
-                    }
-                )
+                    .send(.core(.startObserving)),
+                    // Listen for session changes (logout or guest --> authenticated transitions)
+                    .listen(to: sessionChangeNotifier.stream()) { _ in .input(.onSessionChange) }
+                ).cancellable(id: CancelID.observation, cancelInFlight: true)
 
             case .stopObserving:
                 return .merge(.send(.core(.stopObserving)), .cancel(id: CancelID.observation))
@@ -126,10 +121,9 @@ public struct ConnectionFeature: Sendable {
                 return .send(.prepare(intent))
 
             case let .input(.applySettings(agentFeatures)):
-                return .run { _ in
-                    @Dependency(\.localAgent) var localAgentClient
-                    try localAgentClient.postRequestToExtension(.setFeatures(agentFeatures))
-                }
+                // Input goes directly to the tunnel IPC which requests the new features.
+                log.info("applySettings", category: .connection, metadata: ["features": "\(agentFeatures)"])
+                return .send(.core(.tunnel(.applyConnectionUpdate(ConnectionUpdate(agentFeatures: agentFeatures)))))
 
             case .input(.disconnect):
                 return .merge(
@@ -184,9 +178,16 @@ public struct ConnectionFeature: Sendable {
                 return .send(.delegate(.connectionFailed(connectionError)))
 
             case let .core(.delegate(.featuresChanged(features))):
-                return .run { _ in
-                    connectionFeatureProvider.setConnectionFeatures(features)
-                }
+                // Record the applied server settings for the UI to surface, should they differ from those requested
+                // by the user.
+                state.$effectiveConnectionFeatures.withLock { $0 = features }
+                return .none
+
+            case let .core(.delegate(.featureChangeFailed(reason))):
+                // Nothing to revert: no optimistic value was ever applied. The effective settings remain whatever
+                // ProTUN last reported, so we just surface the failure to the user.
+                log.warning("Settings change failed/refused", category: .connection, metadata: ["reason": "\(reason)"])
+                return .send(.delegate(.settingChangeFailed(reason: reason)))
 
             case .core:
                 return .none
@@ -197,8 +198,12 @@ public struct ConnectionFeature: Sendable {
             }
         }
         .onChange(of: \.connectionState) { _, newValue in
-            Reduce { _, _ in
-                .send(.delegate(.stateChanged(newValue)))
+            Reduce { state, _ in
+                // Clear applied server settings once disconnected.
+                if case .disconnected = newValue {
+                    state.$effectiveConnectionFeatures.withLock { $0 = nil }
+                }
+                return .send(.delegate(.stateChanged(newValue)))
             }
         }
     }
@@ -304,6 +309,8 @@ extension ConnectionFeature.Action.Delegate: CustomDebugStringConvertible {
             ".intentResolutionFailed(\(intent), \(resolutionError))"
         case let .localAgentNotice(error):
             ".localAgentNotice(\(error.errorCodeString))"
+        case let .settingChangeFailed(reason):
+            ".settingChangeFailed(\(reason))"
         }
     }
 }
@@ -384,8 +391,9 @@ extension ConnectionState {
 
         case let .connected(tunnelConfig, connectionData):
             @Dependency(\.serverIdentifier) var identifier
-            guard let server = identifier.fullServerInfo(connectionData.currentPeerId) else {
-                log.error("Server with id \(connectionData.currentPeerId) not found")
+            guard let peerID = connectionData.currentPeerId,
+                  let server = identifier.fullServerInfo(peerID) else {
+                log.error("Server with id \(optional: connectionData.currentPeerId) not found")
                 self = .resolving
                 return
             }

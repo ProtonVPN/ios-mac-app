@@ -23,3 +23,10 @@ public extension SharedKey where Self == AppStorageKey<FeatureFlags>.Default {
         Self[.appStorage("FeatureFlags"), default: FeatureFlags()]
     }
 }
+
+public extension SharedKey where Self == InMemoryKey<VPNConnectionFeatures?> {
+    /// The "actual" features according to the VPN server, which can be different from what's in user defaults.
+    static var effectiveConnectionFeatures: Self {
+        .inMemory("effectiveConnectionFeatures")
+    }
+}

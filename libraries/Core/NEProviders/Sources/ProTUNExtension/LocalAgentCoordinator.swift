@@ -22,7 +22,6 @@ import Foundation
 import IPCErgonomics
 import LocalAgent
 import LocalAgentIPC
-import os
 import OSLog
 import protun
 
@@ -35,8 +34,6 @@ final class LocalAgentCoordinator: @unchecked Sendable {
 
     let streamSource: StreamSource<Event>
 
-    let settings: OSAllocatedUnfairLock<LocalAgentSettings>
-
     private static let statsFetchingInterval: Duration = .seconds(30)
     private static let statsFetchingTolerance: Duration = .seconds(1)
 
@@ -44,21 +41,20 @@ final class LocalAgentCoordinator: @unchecked Sendable {
     private weak var adapter: ProTUNAdapter!
     private let continuation: AsyncStream<Event>.Continuation
 
-    init(adapter: ProTUNAdapter, initialSettings: LocalAgentSettings) {
+    init(adapter: ProTUNAdapter) {
         self.adapter = adapter
         let (stream, continuation) = AsyncStream<Event>.makeStream()
         self.streamSource = StreamSource.source(for: stream)
         self.continuation = continuation
-        self.settings = .init(initialState: initialSettings)
     }
 
     func start() async {
         await withTaskGroup(of: Void.self) { group in
             group.addTask {
-                await self.listenForRequests()
+                await self.listenToEvents()
             }
             group.addTask {
-                await self.listenToEvents()
+                await self.listenToConnectionState()
             }
             group.addTask {
                 await self.startStatsRunLoop()
@@ -68,26 +64,6 @@ final class LocalAgentCoordinator: @unchecked Sendable {
 }
 
 private extension LocalAgentCoordinator {
-    func listenForRequests() async {
-        let stream = localAgentClient.requestsStream()
-        for await request in stream {
-            Logger.localAgent.info("Received request \(request, privacy: .public)")
-
-            switch request {
-            case .getFeatures:
-                sendFeatures()
-            case let .setFeatures(features):
-                let settings = settings.withLock { settings in
-                    settings.update(with: features)
-                    return settings
-                }
-                adapter?.connection?.updateLocalAgentSettings(settings: settings)
-                // Maybe we should write instead when we receive an ack from ProTUN Rust lib?
-                localAgentClient.writeSettings { $0 = IPCLASettingsPayload(settings) }
-            }
-        }
-    }
-
     func listenToEvents() async {
         for await event in adapter.eventDelegate.eventSource.newStream {
             switch event {
@@ -131,6 +107,39 @@ private extension LocalAgentCoordinator {
         }
     }
 
+    /// Listen for connection-state updates from ProTUN and dispatch updates to the raw channels and protocol config.
+    func listenToConnectionState() async {
+        for await state in adapter.stateDelegate.stateSource.newStream {
+            switch state.connectionState {
+            case let .connected(peer, agent):
+                let currentPeer = CurrentPeer(
+                    peerID: peer.peerId,
+                    transport: .from(protocol: peer.protocol),
+                    serverExitV4: agent?.serverExitV4,
+                    userISP: agent?.userIspName,
+                    userIP: agent?.userIspIp
+                )
+                localAgentClient.writeConnectionData { $0 = IPCConnectionDataPayload(currentPeer) }
+                Logger.localAgent.info("Published peer to connectionData channel (connected): id=\(peer.peerId, privacy: .public) transport=\(String(describing: currentPeer.transport), privacy: .public) exitV4=\(currentPeer.serverExitV4 ?? "nil", privacy: .public)")
+                if let agent {
+                    await adapter?.enqueueEffectiveLocalAgentSettings(agent.settings)
+                }
+            case let .connectingToLocalAgent(peer, _):
+                let currentPeer = CurrentPeer(
+                    peerID: peer.peerId,
+                    transport: .from(protocol: peer.protocol),
+                    serverExitV4: peer.entryIp,
+                    userISP: nil,
+                    userIP: nil
+                )
+                localAgentClient.writeConnectionData { $0 = IPCConnectionDataPayload(currentPeer) }
+                Logger.localAgent.info("Published peer to connectionData channel (connectingToLocalAgent): id=\(peer.peerId, privacy: .public) transport=\(String(describing: currentPeer.transport), privacy: .public)")
+            default:
+                break
+            }
+        }
+    }
+
     func startStatsRunLoop() async {
         @Dependency(\.continuousClock) var clock
 
@@ -141,81 +150,15 @@ private extension LocalAgentCoordinator {
 }
 
 private extension LocalAgentCoordinator {
-    func sendFeatures() {
-        do {
-            let currentSettings = settings.withLock { $0 }
-            localAgentClient.writeSettings { $0 = IPCLASettingsPayload(currentSettings) }
-            try localAgentClient.postEventFromExtension(event: .features(currentSettings.toVPNConnectionFeatures))
-        } catch {
-            Logger.localAgent.error("Failed to broadcast features (\(error))")
-        }
-    }
-
     func sendLocalAgentStats(stats: LocalAgent.Stats) {
-        do {
-            try localAgentClient.postEventFromExtension(event: .stats(stats))
-        } catch {
-            Logger.localAgent.error("Failed to broadcast local agent stats (\(error))")
-        }
+        localAgentClient.writeTrafficStats { $0 = IPCStatsPayload(stats) }
     }
 
     func sendConnectionStats(stats: LocalAgent.ConnectionStats) {
-        do {
-            try localAgentClient.postEventFromExtension(event: .connectionStats(stats))
-        } catch {
-            Logger.localAgent.error("Failed to broadcast connection stats (\(error))")
-        }
+        localAgentClient.writeConnectionStats { $0 = IPCConnectionStatsPayload(stats) }
     }
 
     func sendError(error: LocalAgent.Error) {
-        do {
-            try localAgentClient.postEventFromExtension(event: .error(error))
-        } catch {
-            Logger.localAgent.error("Failed to broadcast error \(error)")
-        }
-    }
-}
-
-private extension IPCLASettingsPayload {
-    init(_ settings: LocalAgentSettings) {
-        self = .init(
-            netshield_level: settings.netshieldLevel?.toPayload ?? .unset,
-            vpn_accelerator: settings.splitTcp.map { $0 ? .enabled : .disabled } ?? .unset,
-            port_forwarding: settings.portForwarding.map { $0 ? .enabled : .disabled } ?? .unset,
-            random_nat: settings.randomNat.map { $0 ? .strict : .moderate } ?? .unset,
-            soft_jail: settings.softJail.map { $0 ? .enabled : .disabled } ?? .unset,
-            circumvention_routing: settings.circumventionRouting.map { $0 ? .enabled : .disabled } ?? .unset
-        )
-    }
-}
-
-extension LocalAgentSettings {
-    init(_ payload: IPCLASettingsPayload) {
-        self.init(
-            splitTcp: payload.vpn_accelerator == .unset ? nil : payload.vpn_accelerator == .enabled,
-            netshieldLevel: payload.netshield_level == .unset ? nil : payload.netshield_level.toLocalAgentNetshieldLevel,
-            softJail: payload.soft_jail == .unset ? nil : payload.soft_jail == .enabled,
-            portForwarding: payload.port_forwarding == .unset ? nil : payload.port_forwarding == .enabled,
-            randomNat: payload.random_nat == .unset ? nil : payload.random_nat == .strict,
-            circumventionRouting: payload.circumvention_routing == .unset ? nil : payload.circumvention_routing == .enabled
-        )
-    }
-}
-
-private extension IPCLANetshieldLevel {
-    var toLocalAgentNetshieldLevel: NetshieldLevel {
-        switch self {
-        case .unset, .off:
-            return .none
-        case .malware:
-            return .malwareFilter
-        case .adsAndMalware:
-            return .adsAndMalwareFilter
-        case .adultContentAndAdsAndMalware:
-            return .adultAndAdsAndMalwareFilter
-        @unknown default:
-            assertionFailure("NetShield level mapping not handled")
-            return .none
-        }
+        localAgentClient.reportError(error)
     }
 }

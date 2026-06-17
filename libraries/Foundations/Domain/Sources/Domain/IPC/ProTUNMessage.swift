@@ -45,10 +45,9 @@ public extension ProTUNMessage.Request {
     enum Payload: Codable {
         case flushLogsToFile
         case retrieveLogsArchive
-        case getCurrentPeer
         case pcapRequest(PcapRequest)
         case pushForkInfo(selector: String, cookieName: String, cookieValue: String)
-        case updateConfiguration(Set<ConnectionChange>)
+        case updateConfiguration(ConnectionUpdate)
         #if DEBUG
             case ping
         #endif
@@ -58,7 +57,6 @@ public extension ProTUNMessage.Request {
 public extension ProTUNMessage.Response {
     enum Payload: Codable {
         case ack
-        case currentPeer(CodableResult<CurrentPeer, Error>)
         case logs(CodableResult<URL, Error>)
         case pcapUpdate(PcapUpdate)
         case error(GenericError)
@@ -140,7 +138,6 @@ extension ProTUNMessage.Request.Payload: CustomStringConvertible {
         #endif
         case .flushLogsToFile: "flushLogsToFile"
         case .retrieveLogsArchive: "retrieveLogsArchive"
-        case .getCurrentPeer: "getCurrentPeer"
         case let .pcapRequest(request): "pcapRequest(\(request))"
         case .pushForkInfo: "pushForkInfo"
         case .updateConfiguration: "updateConfiguration"

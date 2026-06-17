@@ -120,6 +120,40 @@ struct RawChannelTests {
     }
 
     @Test(.ipcContext(mmapFileURL: tmpURL(), notification: uniqueNotification()))
+    func generationCountsCompletedWrites() throws {
+        let channel = try IPCHelperContext.rawChannel(ofType: IPCTestPayload.self)
+        #expect(channel.generation == 0)
+
+        channel.mutate { ptr in ptr.timestamp = 1 }
+        #expect(channel.generation == 1)
+
+        try channel.mutate(\.peer_migrations, to: 2)
+        #expect(channel.generation == 2)
+
+        channel.zero()
+        #expect(channel.generation == 3)
+    }
+
+    @Test(.ipcContext(mmapFileURL: tmpURL(), notification: uniqueNotification()))
+    func zeroClearsPayload() throws {
+        let channel = try IPCHelperContext.rawChannel(ofType: IPCTestPayload.self)
+
+        channel.mutate { ptr in
+            ptr.bytes_transferred = 1024.5
+            ptr.timestamp = 42
+            ptr.peer_migrations = 7
+        }
+        #expect(try channel.read().peer_migrations == 7)
+
+        channel.zero()
+
+        let snapshot = try channel.read()
+        #expect(snapshot.bytes_transferred == 0)
+        #expect(snapshot.timestamp == 0)
+        #expect(snapshot.peer_migrations == 0)
+    }
+
+    @Test(.ipcContext(mmapFileURL: tmpURL(), notification: uniqueNotification()))
     func payloadOffsetMatchesCLayout() throws {
         // RawChannel.payloadOffset must equal C's offsetof(IPCTestRegion, payload).
         // Both sides must agree or reads/writes will target the wrong memory.

@@ -19,6 +19,7 @@
 import Ergonomics
 import Foundation
 import IPCSeqlockHelpers
+import os
 
 // MARK: - RawChannel
 
@@ -40,6 +41,10 @@ public extension IPCNotifications {
         let payloadOffset: Int
         private let buffer: MmapBuffer
 
+        /// Seqlock only protects cross-process readers from one writer. `writeLock` exists to make sure only one
+        /// *in-process* writer is mutating the channel at any given time.
+        private let writeLock = OSAllocatedUnfairLock()
+
         public init(notification: Notification, fileURL: URL) throws {
             let headerSize = MemoryLayout<IPCSharedHeader>.size
             let alignment = MemoryLayout<Payload>.alignment
@@ -59,11 +64,13 @@ public extension IPCNotifications.RawChannel {
     /// - Parameter body: a closure with an instance you can modify.
     func mutate(_ body: (inout Payload) -> Void) {
         let offset = payloadOffset
+        writeLock.lock()
         buffer.withUnsafeMutableBytes { base in
             ipc_seqlock_begin_write(base)
             body(&base.advanced(by: offset).assumingMemoryBound(to: Payload.self).pointee)
             ipc_seqlock_end_write(base)
         }
+        writeLock.unlock()
         IPCNotifications.post(notification)
     }
 
@@ -78,16 +85,40 @@ public extension IPCNotifications.RawChannel {
             throw FieldNotFound()
         }
         let offset = payloadOffset + fieldOffset
+        writeLock.lock()
         buffer.withUnsafeMutableBytes { base in
             ipc_seqlock_begin_write(base)
             base.advanced(by: offset).assumingMemoryBound(to: T.self).pointee = value
             ipc_seqlock_end_write(base)
         }
+        writeLock.unlock()
         // We leverage the UInt64 token to use the upper 4 bytes for the field offset,
         // and the remaining 4 bytes for the size of the field
         let sizeOfField = MemoryLayout<T>.size
         let payload = (UInt64(UInt32(bitPattern: Int32(fieldOffset))) << 32) | UInt64(UInt32(bitPattern: Int32(sizeOfField)))
         IPCNotifications.postRawState(notification, state: payload)
+    }
+}
+
+// MARK: - Generation & teardown
+
+public extension IPCNotifications.RawChannel {
+    /// Uses the atomic seqlock as a generation counter, to detect any missed reads.
+    var generation: UInt64 {
+        buffer.withUnsafeMutableBytes { ipc_seqlock_read_begin($0) } / 2
+    }
+
+    /// Takes the seqlock and zero-fills the payload. Does *not* send a notification.
+    func zero() {
+        let offset = payloadOffset
+        let size = MemoryLayout<Payload>.size
+        writeLock.lock()
+        buffer.withUnsafeMutableBytes { base in
+            ipc_seqlock_begin_write(base)
+            memset(base.advanced(by: offset), 0, size)
+            ipc_seqlock_end_write(base)
+        }
+        writeLock.unlock()
     }
 }
 

@@ -27,49 +27,80 @@ import LocalAgentIPC
 
 @DependencyClient
 public struct LocalAgentClient {
-    public internal(set) var settings: () throws -> IPCLASettingsPayload
-    public internal(set) var settingsStream: () -> AsyncStream<IPCLASettingsPayload> = { .finished }
-    public internal(set) var eventStream: () -> AsyncStream<LocalAgent.Event> = { .finished }
-    public internal(set) var requestsStream: () -> AsyncStream<LocalAgent.Request> = { .finished }
-    public internal(set) var postEventFromExtension: (_ event: LocalAgent.Event) throws -> Void
-    public internal(set) var postRequestToExtension: (_ request: LocalAgent.Request) throws -> Void
     public internal(set) var listenToForkSelectorRequests: (_ callback: @escaping () -> Void) -> Void
-    public internal(set) var writeSettings: (_ body: (inout IPCLASettingsPayload) -> Void) -> Void
+
+    public internal(set) var connectionData: () throws -> IPCConnectionDataPayload
+    public internal(set) var connectionDataStream: () -> AsyncStream<IPCConnectionDataPayload> = { .finished }
+    public internal(set) var writeConnectionData: (_ body: (inout IPCConnectionDataPayload) -> Void) -> Void
+
+    public internal(set) var trafficStats: () throws -> IPCStatsPayload
+    public internal(set) var trafficStatsStream: () -> AsyncStream<IPCStatsPayload> = { .finished }
+    public internal(set) var writeTrafficStats: (_ body: (inout IPCStatsPayload) -> Void) -> Void
+
+    public internal(set) var connectionStats: () throws -> IPCConnectionStatsPayload
+    public internal(set) var connectionStatsStream: () -> AsyncStream<IPCConnectionStatsPayload> = { .finished }
+    public internal(set) var writeConnectionStats: (_ body: (inout IPCConnectionStatsPayload) -> Void) -> Void
+
+    public internal(set) var lastError: () throws -> IPCErrorPayload
+    public internal(set) var errorStream: () -> AsyncStream<IPCErrorPayload> = { .finished }
+    public internal(set) var reportError: (_ error: any Error) -> Void
+
+    /// Clears all shared memory regions.
+    public internal(set) var zeroConnectionTelemetry: () -> Void
 }
 
 extension LocalAgentClient: DependencyKey {
     public static let liveValue: LocalAgentClient = {
         let containerURL = try! FileManager.default.mainContainerURL
 
-        let fromExtensionChannel = try! IPCNotifications.Channel<LocalAgent.Event>(
-            notification: .localAgentFromExtensionEvents,
-            fileURL: containerURL.appending(component: "la_from_ext_events")
+        let connectionDataChannel = try! IPCNotifications.RawChannel<IPCConnectionDataPayload>(
+            notification: .connectionData,
+            fileURL: containerURL.appending(component: "connection_data")
         )
-        let toExtensionChannel = try! IPCNotifications.Channel<LocalAgent.Request>(
-            notification: .localAgentToExtensionRequests,
-            fileURL: containerURL.appending(component: "la_to_ext_requests")
+        let trafficStatsChannel = try! IPCNotifications.RawChannel<IPCStatsPayload>(
+            notification: .localAgentStats,
+            fileURL: containerURL.appending(component: "la_stats")
         )
-        let settingsChannel = try! IPCNotifications.RawChannel<IPCLASettingsPayload>(
-            notification: .localAgentSettings,
-            fileURL: containerURL.appending(component: "la_settings")
+        let connectionStatsChannel = try! IPCNotifications.RawChannel<IPCConnectionStatsPayload>(
+            notification: .localAgentConnectionStats,
+            fileURL: containerURL.appending(component: "la_connection_stats")
+        )
+        let errorChannel = try! IPCNotifications.RawChannel<IPCErrorPayload>(
+            notification: .localAgentError,
+            fileURL: containerURL.appending(component: "la_error")
         )
 
-        return LocalAgentClient {
-            try settingsChannel.read()
-        } settingsStream: {
-            settingsChannel.stream()
-        } eventStream: {
-            fromExtensionChannel.stream()
-        } requestsStream: {
-            toExtensionChannel.stream(includingCurrentValue: true)
-        } postEventFromExtension: { event in
-            try fromExtensionChannel.post(event)
-        } postRequestToExtension: { request in
-            try toExtensionChannel.post(request)
-        } listenToForkSelectorRequests: { callback in
+        return LocalAgentClient { callback in
             IPCNotifications.observe(.extensionForkSelectorRequest, callback: callback)
-        } writeSettings: { body in
-            settingsChannel.mutate(body)
+        } connectionData: {
+            try connectionDataChannel.read()
+        } connectionDataStream: {
+            connectionDataChannel.stream()
+        } writeConnectionData: { body in
+            connectionDataChannel.mutate(body)
+        } trafficStats: {
+            try trafficStatsChannel.read()
+        } trafficStatsStream: {
+            trafficStatsChannel.stream()
+        } writeTrafficStats: { body in
+            trafficStatsChannel.mutate(body)
+        } connectionStats: {
+            try connectionStatsChannel.read()
+        } connectionStatsStream: {
+            connectionStatsChannel.stream()
+        } writeConnectionStats: { body in
+            connectionStatsChannel.mutate(body)
+        } lastError: {
+            try errorChannel.read()
+        } errorStream: {
+            errorChannel.stream()
+        } reportError: { error in
+            errorChannel.mutate { $0 = IPCErrorPayload(error) }
+        } zeroConnectionTelemetry: {
+            connectionDataChannel.zero()
+            trafficStatsChannel.zero()
+            connectionStatsChannel.zero()
+            errorChannel.zero()
         }
     }()
 }

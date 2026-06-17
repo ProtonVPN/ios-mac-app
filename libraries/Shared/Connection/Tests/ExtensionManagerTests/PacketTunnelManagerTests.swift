@@ -25,6 +25,7 @@
     @testable import ExtensionManager
     import Foundation
     @testable import LocalAgent
+    import LocalAgentIPC
     import class NetworkExtension.NETunnelProviderProtocol
     import VPNCoreCommon
     import XCTest
@@ -72,7 +73,9 @@
                 $0.vpnManagerRepository.managers = {
                     [.ike: disconnectingManager, .wireGuard(.proTUN): connectedManager]
                 }
-                $0.localAgent.postRequestToExtension = { _ in }
+                $0.localAgent.connectionData = {
+                    .init(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, userISP: nil, userIP: nil))
+                }
             } operation: {
                 let status = try await PacketTunnelManager().status
                 XCTAssertEqual(

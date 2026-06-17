@@ -69,6 +69,9 @@ final class ProTUNAdapter: @unchecked Sendable {
     private var localAgentTask: Task<Void, Never>?
     private var pathUpdatesTask: Task<Void, Never>?
 
+    /// Serializes every write to the provider configuration.
+    private let configurationStore = ConfigurationStore()
+
     private let signposter = OSSignposter(logger: .adapter)
 
     init(packetTunnelProvider: NEPacketTunnelProvider) {
@@ -123,14 +126,19 @@ final class ProTUNAdapter: @unchecked Sendable {
         defer { signposter.endInterval("Start Tunnel", startState) }
 
         Logger.adapter.info("Starting Adapter")
+        @Dependency(\.localAgent) var localAgentClient
+        localAgentClient.zeroConnectionTelemetry()
 
         let tunFd = try await prepare(with: config.proTUN)
         signposter.emitEvent("Tunnel prepared", id: signpostID)
 
         let rawTunFd = try tunFd.dup().take()
-        let localAgentSettings = LocalAgentSettings.current
 
-        startLocalAgentRunLoop(with: localAgentSettings)
+        // Initial Local Agent settings come from the app, while the extension manages all protocol settings
+        // once it's running.
+        let localAgentSettings = LocalAgentSettings(config.proTUN)
+
+        startLocalAgentRunLoop()
         signposter.emitEvent("Local agent run loop started", id: signpostID)
 
         // TODO: ProTUN: rework this so we're TOCTOU resilient
@@ -166,8 +174,8 @@ final class ProTUNAdapter: @unchecked Sendable {
             }
     }
 
-    private func startLocalAgentRunLoop(with settings: LocalAgentSettings) {
-        let coordinator = LocalAgentCoordinator(adapter: self, initialSettings: settings)
+    private func startLocalAgentRunLoop() {
+        let coordinator = LocalAgentCoordinator(adapter: self)
 
         localAgentTask = Task {
             await withTaskGroup(of: Void.self) { group in
@@ -204,6 +212,10 @@ final class ProTUNAdapter: @unchecked Sendable {
         pathUpdatesTask = nil
         localAgentTask?.cancel()
         localAgentTask = nil
+
+        // Clear the shared memory regions just before stopping.
+        @Dependency(\.localAgent) var localAgentClient
+        localAgentClient.zeroConnectionTelemetry()
     }
 }
 
@@ -215,6 +227,27 @@ extension ProTUNAdapter {
             cookies: .init(cookies: [.init(name: cookieName, value: cookieValue)])
         )
         connection?.provideApiForkSelector(forkSelectorInfo: forkSelectorInfo)
+    }
+
+    /// Single entry point for updating LocalAgentSettings.
+    func applyLocalAgentSettings(_ settings: LocalAgentSettings) {
+        connection?.updateLocalAgentSettings(settings: settings)
+    }
+
+    func enqueueConfigurationUpdate(_ update: ConnectionUpdate) async {
+        await configurationStore.apply(update, adapter: self)
+    }
+
+    /// Enqueue a write of the server-applied Local Agent settings ProTUN reported. Serialized with user-initiated
+    /// configuration updates so the two can't race on the provider configuration.
+    func enqueueEffectiveLocalAgentSettings(_ settings: LocalAgentSettings) async {
+        await configurationStore.persistEffective(settings, adapter: self)
+    }
+
+    func whileReasserting<T>(_ closure: () async throws -> T) async rethrows -> T {
+        packetTunnelProvider?.reasserting = true
+        defer { packetTunnelProvider?.reasserting = false }
+        return try await closure()
     }
 }
 
@@ -347,33 +380,80 @@ extension VpnState {
 }
 
 extension LocalAgentSettings {
-    static var current: Self {
-        @Dependency(\.localAgent) var localAgentClient
-        return (try? localAgentClient.settings())
-            .flatMap { $0.hasValues ? LocalAgentSettings($0) : nil } ?? .default
+    init(_ config: ProTUNConfiguration) {
+        self.init(
+            splitTcp: config.vpnAccelerator,
+            netshieldLevel: config.netShieldLevel.flatMap { NetShieldType(rawValue: $0)?.toRustNetShieldLevel },
+            softJail: config.softJail,
+            portForwarding: config.portForwarding,
+            randomNat: config.randomNat,
+            circumventionRouting: config.circumventionRouting
+        )
     }
 
-    private static let `default`: Self = .init(
-        splitTcp: nil,
-        netshieldLevel: nil,
-        softJail: nil,
-        portForwarding: nil,
-        randomNat: nil,
-        circumventionRouting: nil
-    )
+    /// Overrides LocalAgent settings according to an update, leaving the rest unchanged. Used to build the
+    /// settings forwarded to ProTUN from a partial update without persisting them to the configuration.
+    mutating func apply(_ update: ConnectionUpdate) {
+        if let netShield = update.netShield { netshieldLevel = netShield.toRustNetShieldLevel }
+        if let vpnAccelerator = update.vpnAccelerator { splitTcp = vpnAccelerator }
+        if let moderateNAT = update.moderateNAT { randomNat = moderateNAT.flag }
+        if let portForwarding = update.portForwarding { self.portForwarding = portForwarding }
+    }
+}
 
-    mutating func update(with featureChanges: Set<ConnectionFeatureChange.AgentFeature>) {
-        for feature in featureChanges {
-            switch feature {
-            case let .netShield(netShieldType):
-                netshieldLevel = netShieldType.toRustNetShieldLevel
-            case let .vpnAccelerator(enabled):
-                splitTcp = enabled
-            case let .moderateNAT(NATType):
-                randomNat = NATType.flag
-            case let .portForwarding(enabled):
-                portForwarding = enabled
-            }
+extension ProTUNConfiguration {
+    func with(
+        peers: [Peer]? = nil,
+        netShieldLevel: Int? = nil,
+        vpnAccelerator: Bool? = nil,
+        portForwarding: Bool? = nil,
+        randomNat: Bool? = nil
+    ) -> ProTUNConfiguration {
+        ProTUNConfiguration(
+            preferredTransport: preferredTransport ?? .udp,
+            peers: peers ?? self.peers,
+            dnsServers: dnsServers,
+            netShieldLevel: netShieldLevel ?? self.netShieldLevel,
+            vpnAccelerator: vpnAccelerator ?? self.vpnAccelerator,
+            portForwarding: portForwarding ?? self.portForwarding,
+            randomNat: randomNat ?? self.randomNat,
+            softJail: softJail,
+            circumventionRouting: circumventionRouting
+        )
+    }
+
+    /// Merges the ``LocalAgentSettings`` reported by ProTUN with the existing provider configuration.
+    func merging(effectiveSettings settings: LocalAgentSettings) -> ProTUNConfiguration {
+        with(
+            netShieldLevel: settings.netshieldLevel.map(\.netShieldType.rawValue),
+            vpnAccelerator: settings.splitTcp,
+            portForwarding: settings.portForwarding,
+            randomNat: settings.randomNat
+        )
+    }
+
+    /// Whether the applied server settings differ from what this configuration requested for any
+    /// user-facing Local Agent setting, and therefore need persisting so the app can observe the change.
+    func localAgentSettingsDiffer(from effective: LocalAgentSettings) -> Bool {
+        func differs<Value: Equatable>(_ requested: Value?, _ applied: Value?) -> Bool {
+            guard let requested, let applied else { return false }
+            return requested != applied
+        }
+        return differs(netShieldLevel, effective.netshieldLevel.map(\.netShieldType.rawValue))
+            || differs(vpnAccelerator, effective.splitTcp)
+            || differs(portForwarding, effective.portForwarding)
+            || differs(randomNat, effective.randomNat)
+    }
+}
+
+private extension NetshieldLevel {
+    var netShieldType: NetShieldType {
+        switch self {
+        case .none: .off
+        case .malwareFilter: .level1
+        case .adsAndMalwareFilter: .level2
+        case .adultAndAdsAndMalwareFilter: .level3
+        @unknown default: .off
         }
     }
 }
@@ -382,14 +462,13 @@ private extension NetShieldType {
     var toRustNetShieldLevel: NetshieldLevel {
         switch self {
         case .off:
-            return .none
+            .none
         case .level1:
-            return .malwareFilter
+            .malwareFilter
         case .level2:
-            return .adsAndMalwareFilter
+            .adsAndMalwareFilter
         case .level3:
-            assertionFailure("Not handled yet")
-            return .adsAndMalwareFilter
+            .adultAndAdsAndMalwareFilter
         }
     }
 }

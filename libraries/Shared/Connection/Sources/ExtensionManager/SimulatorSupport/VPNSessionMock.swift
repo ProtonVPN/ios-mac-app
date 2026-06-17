@@ -129,13 +129,7 @@
 
     enum MessageHandler {
         static let full: (VPNSessionMock, ProTUNMessage.Request) async throws(ProviderMessageError) -> ProTUNMessage.Response = { _, message in
-            switch message.payload {
-            case .getCurrentPeer:
-                let currentPeer = CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, userISP: nil, userIP: nil)
-                return .init(payload: .currentPeer(.success(currentPeer)))
-            default:
-                return .genericError("Unimplemented message handler for \(message)")
-            }
+            .genericError("Unimplemented message handler for \(message)")
         }
     }
 #endif

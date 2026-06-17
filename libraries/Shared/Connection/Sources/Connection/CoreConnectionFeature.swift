@@ -24,6 +24,7 @@ import Domain
 import ExtensionManager
 import Foundation
 import LocalAgent
+import LocalAgentIPC
 import Network
 import enum NetworkExtension.NEVPNStatus
 import VPNAppCore
@@ -70,8 +71,8 @@ public struct CoreConnectionFeature: Sendable {
         case handleLogout
         /// Tunnel/NetworkExtension child reducer action
         case tunnel(ExtensionFeature.Action)
-        /// Forwarded from the Local Agent coordinator running inside the network extension.
-        case localAgentEvent(LocalAgent.Event)
+        /// Traffic / NetShield stats posted from the extension.
+        case statsReceived(LocalAgent.Stats)
         /// Delegate action expected to be handled by the parent
         case delegate(Delegate)
 
@@ -82,7 +83,10 @@ public struct CoreConnectionFeature: Sendable {
         public enum Delegate: Sendable {
             case error(ConnectionError)
             case stateChanged(TunnelState)
+            /// A feature change was confirmed by the extension. The new effective features are attached.
             case featuresChanged(VPNConnectionFeatures)
+            /// A feature change failed with an error.
+            case featureChangeFailed(reason: String)
         }
     }
 
@@ -94,8 +98,8 @@ public struct CoreConnectionFeature: Sendable {
 
     private enum CancelID {
         case connectionTimeout
-        case localAgentEvents
-        case localAgentSettings
+        case localAgentStats
+        case connectionErrors
     }
 
     /// The order of reducers here is important.
@@ -114,34 +118,42 @@ public struct CoreConnectionFeature: Sendable {
                     .send(.tunnel(.startObserving)),
                     .run { send in
                         @Dependency(\.localAgent) var localAgent
-                        for await event in localAgent.eventStream() {
-                            await send(.localAgentEvent(event))
+                        for await payload in localAgent.trafficStatsStream() {
+                            await send(.statsReceived(payload.localAgentStats))
                         }
-                    }.cancellable(id: CancelID.localAgentEvents),
+                    }.cancellable(id: CancelID.localAgentStats),
                     .run { send in
+                        // The error stream from the network extension, communicated via RawChannel.
                         @Dependency(\.localAgent) var localAgent
-                        do {
-                            let payload = try localAgent.settings()
-                            if payload.hasValues {
-                                await send(.localAgentEvent(.features(payload.toVPNConnectionFeatures)))
+                        for await payload in localAgent.errorStream() {
+                            guard payload.hasError else { continue }
+                            let localAgentError = payload.localAgentError
+                            if case .certificateRefreshFatalError? = localAgentError {
+                                log.error("Local Agent fatal certificate refresh error (error channel)", category: .connection)
+                                await send(.disconnect(.connectionFailure(.tunnel(.tunnelAborted))))
+                                continue
                             }
-                        } catch {
-                            log.error("Error retrieving initial Local Agent settings: \(error)")
-                            SentryHelper.shared?.log(error: error)
+                            let reason = if case let .localAgentSettingPolicyRefused(setting)? = localAgentError {
+                                "Local Agent refused setting: \(setting)"
+                            } else {
+                                "\(payload.errorDomain) (code \(payload.code))"
+                            }
+                            log.warning(
+                                "Connection error received",
+                                category: .connection,
+                                metadata: ["reason": "\(reason)"]
+                            )
+                            await send(.delegate(.featureChangeFailed(reason: reason)))
                         }
-                        let stream = localAgent.settingsStream().filter(\.hasValues)
-                        for await payload in stream {
-                            await send(.localAgentEvent(.features(payload.toVPNConnectionFeatures)))
-                        }
-                    }.cancellable(id: CancelID.localAgentSettings)
+                    }.cancellable(id: CancelID.connectionErrors)
                 )
 
             case .stopObserving:
                 return .merge(
                     .send(.tunnel(.stopObserving)),
                     .cancel(id: CancelID.connectionTimeout),
-                    .cancel(id: CancelID.localAgentEvents),
-                    .cancel(id: CancelID.localAgentSettings)
+                    .cancel(id: CancelID.localAgentStats),
+                    .cancel(id: CancelID.connectionErrors)
                 )
 
             case let .connect(intent):
@@ -179,21 +191,12 @@ public struct CoreConnectionFeature: Sendable {
                 log.info(
                     "Tunnel connection finished",
                     category: .connection,
-                    metadata: ["date": "\(connectionData.connectionDate)", "serverID": "\(connectionData.currentPeerId)"]
+                    metadata: ["date": "\(connectionData.connectionDate)", "serverID": "\(optional: connectionData.currentPeerId)"]
                 )
 
                 return .merge(
                     .cancel(id: CancelID.connectionTimeout),
-                    .send(.delegate(.stateChanged(.connected(tunnelConfig, connectionData)))),
-                    .run { _ in
-                        // Pull the freshly-applied LA features from the extension so the UI reflects what
-                        // is actually in effect (e.g. after a setting was policy-refused). The response
-                        // arrives asynchronously as a `LocalAgent.Event.features` event.
-                        @Dependency(\.localAgent) var localAgent
-                        try localAgent.postRequestToExtension(.getFeatures)
-                    } catch: { error, _ in
-                        log.warning("Failed to request features from extension: \(error)", category: .connection)
-                    }
+                    .send(.delegate(.stateChanged(.connected(tunnelConfig, connectionData))))
                 )
 
             case let .tunnel(.tunnelStatusChanged(.disconnected(error))):
@@ -228,41 +231,19 @@ public struct CoreConnectionFeature: Sendable {
             case let .tunnel(.delegate(.reconfigurationFailed(error))):
                 return .send(.delegate(.error(.tunnel(.reconfigurationFailure(error)))))
 
+            case let .tunnel(.delegate(.featuresChanged(features))):
+                return .send(.delegate(.featuresChanged(features)))
+
             case .tunnel:
                 return .none
 
-            case let .localAgentEvent(event):
-                return handleLocalAgentEvent(event)
+            case .statsReceived:
+                return .none
 
             case .handleLogout:
                 return .send(.tunnel(.cleanup))
 
             case .delegate:
-                return .none
-            }
-        }
-    }
-
-    private func handleLocalAgentEvent(_ event: LocalAgent.Event) -> Effect<Action> {
-        switch event {
-        case .stats:
-            return .none
-
-        case .connectionStats:
-            return .none
-
-        case let .features(features):
-            log.debug("Received features from extension: \(features)", category: .connection)
-            return .send(.delegate(.featuresChanged(features)))
-
-        case let .error(error):
-            switch error {
-            case .certificateRefreshFatalError:
-                log.error("Local Agent reported a fatal certificate refresh error", category: .connection)
-                return .send(.disconnect(.connectionFailure(.tunnel(.tunnelAborted))))
-            case let .localAgentSettingPolicyRefused(setting):
-                log.warning("Local Agent policy refused setting: \(setting)", category: .connection)
-                SentryHelper.shared?.log(error: error)
                 return .none
             }
         }
@@ -371,8 +352,8 @@ extension CoreConnectionFeature.Action: CustomDebugStringConvertible {
             ".handleLogout"
         case let .tunnel(action):
             ".tunnel(\(action.debugDescription))"
-        case let .localAgentEvent(event):
-            ".localAgentEvent(\(event))"
+        case let .statsReceived(stats):
+            ".statsReceived(\(stats))"
         case let .delegate(delegate):
             ".delegate(\(delegate.debugDescription))"
         }
@@ -388,6 +369,8 @@ extension CoreConnectionFeature.Action.Delegate: CustomDebugStringConvertible {
             ".stateChanged(\(newState))"
         case let .featuresChanged(features):
             ".featuresChanged(\(features))"
+        case let .featureChangeFailed(reason):
+            ".featureChangeFailed(\(reason))"
         }
     }
 }

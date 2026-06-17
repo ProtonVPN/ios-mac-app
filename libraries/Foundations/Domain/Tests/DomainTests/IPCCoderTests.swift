@@ -37,16 +37,6 @@
             #expect(decoded.payload == original.payload)
         }
 
-        @Test("Request getCurrentPeerID Encoding/Decoding assertions")
-        func getCurrentPeerIDRequestRoundTrip() throws {
-            let original = ProTUNMessage.Request(payload: .getCurrentPeer)
-            let data = try live.requestData(for: original)
-            let decoded = try live.request(from: data)
-
-            #expect(decoded.version == original.version)
-            #expect(decoded.payload == original.payload)
-        }
-
         @Test("Response pong Encoding/Decoding assertions")
         func pongRoundTrip() throws {
             let original = ProTUNMessage.Response(payload: .pong)
@@ -55,24 +45,6 @@
 
             #expect(decoded.version == original.version)
             #expect(decoded.payload == original.payload)
-        }
-
-        @Test("Response getCurrentPeerID Encoding/Decoding assertions for various cases")
-        func currentPeerIDCasesRoundTrip() throws {
-            let currentPeer = CurrentPeer(peerID: "proton-peer-abc123", transport: .udp, serverExitV4: nil, userISP: nil, userIP: nil)
-            let success = ProTUNMessage.Response(payload: .currentPeer(.success(currentPeer)))
-            let successData = try live.responseData(for: success)
-            let successDecoded = try live.handleResponse(from: successData)
-
-            #expect(successDecoded.version == success.version)
-            #expect(successDecoded.payload == success.payload)
-
-            let failure = ProTUNMessage.Response(payload: .currentPeer(.failure(.init(failureReason: "State not connected"))))
-            let failureData = try live.responseData(for: failure)
-            let failureDecoded = try live.handleResponse(from: failureData)
-
-            #expect(failureDecoded.version == success.version)
-            #expect(failureDecoded.payload == failureDecoded.payload)
         }
 
         @Test("Other error responses preserves reason string")
@@ -122,15 +94,14 @@
             let requestBytes = try live.requestData(for: .init(payload: .ping))
             #expect(!requestBytes.isEmpty)
 
-            let getCurrentPeerBytes = try live.requestData(for: .init(payload: .getCurrentPeer))
-            #expect(!getCurrentPeerBytes.isEmpty)
+            let flushLogsBytes = try live.requestData(for: .init(payload: .flushLogsToFile))
+            #expect(!flushLogsBytes.isEmpty)
 
             let pongBytes = try live.responseData(for: .init(payload: .pong))
             #expect(!pongBytes.isEmpty)
 
-            let currentPeer = CurrentPeer(peerID: "proton-peer-abc123", transport: .udp, serverExitV4: nil, userISP: nil, userIP: nil)
-            let currentPeerBytes = try live.responseData(for: .init(payload: .currentPeer(.success(currentPeer))))
-            #expect(!currentPeerBytes.isEmpty)
+            let ackBytes = try live.responseData(for: .init(payload: .ack))
+            #expect(!ackBytes.isEmpty)
 
             let errorBytes = try live.responseData(for: .init(payload: .error(.other(reason: "oops"))))
             #expect(!errorBytes.isEmpty)

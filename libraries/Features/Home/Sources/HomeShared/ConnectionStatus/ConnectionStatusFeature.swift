@@ -20,6 +20,8 @@ import ComposableArchitecture
 import Connection
 import Domain
 import Ergonomics
+import LocalAgent
+import LocalAgentIPC
 import Localization
 import NetShield
 import SwiftUI
@@ -70,7 +72,6 @@ public struct ConnectionStatusFeature {
         case protectionState
     }
 
-    @Dependency(\.netShieldStatsProvider) private var provider
     @Dependency(\.continuousClock) private var clock
 
     public var body: some Reducer<State, Action> {
@@ -99,7 +100,7 @@ public struct ConnectionStatusFeature {
                 return .none
 
             case .watchConnectionStatus:
-                var effects: [Effect<Action>] = [
+                return .merge(
                     .concatenate(
                         .cancel(id: IDs.watchConnectionStatus),
                         .publisher {
@@ -111,17 +112,13 @@ public struct ConnectionStatusFeature {
                                 .map(Action.newConnectionState)
                         }.cancellable(id: IDs.watchConnectionStatus)
                     ),
-                ]
-                effects.append(
-                    .run { @MainActor send in
-                        let initialValue = await provider.getStats()
-                        send(.newNetShieldStats(initialValue))
-                        for await stats in provider.statsStream() {
-                            send(.newNetShieldStats(stats))
+                    .run { send in
+                        @Dependency(\.localAgent) var localAgent
+                        if let stats = (try? localAgent.trafficStats())?.localAgentStats.toNetShieldModel {
+                            await send(.newNetShieldStats(stats))
                         }
                     }
                 )
-                return .merge(effects)
 
             case let .newConnectionState(connectionState):
                 let code = state.userCountry

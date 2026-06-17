@@ -49,7 +49,23 @@ protocol TunnelManager {
     var status: TunnelState { get async throws }
     var statusStream: AsyncStream<TunnelState> { get }
 
+    var connectionFeaturesStream: AsyncStream<VPNConnectionFeatures> { get }
+
     var forkRequestsStream: AsyncStream<Void> { get }
+}
+
+private extension ProTUNConfiguration {
+    /// The effective connection features encoded in this configuration, or `nil` until the extension has
+    /// populated the Local Agent settings (which it does once ProTUN reports the server-applied values).
+    var effectiveConnectionFeatures: VPNConnectionFeatures? {
+        guard let netShieldLevel, let vpnAccelerator, let randomNat else { return nil }
+        return VPNConnectionFeatures(
+            netshield: NetShieldType(rawValue: netShieldLevel) ?? .off,
+            vpnAccelerator: vpnAccelerator,
+            natType: NATType(flag: randomNat),
+            portForwarding: portForwarding
+        )
+    }
 }
 
 @CasePathable
@@ -83,8 +99,8 @@ public struct TunnelConfiguration: Equatable, Sendable {
 
 /// Runtime data that becomes available once the tunnel is connected.
 public struct DynamicConnectionData: Equatable, Sendable {
-    /// The ID of the peer we are connected to
-    public let currentPeerId: String
+    /// The ID of the peer we are connected to, or `nil` when the tunnel is up but the peer isn't yet confirmed
+    public let currentPeerId: String?
 
     /// The date at which the tunnel first entered the `connected` state.
     public let connectionDate: Date
@@ -92,7 +108,7 @@ public struct DynamicConnectionData: Equatable, Sendable {
     /// Protocol specific data
     public let protocolConnectionData: ProtocolConnectionData
 
-    public init(currentPeerId: String, connectionDate: Date, protocolConnectionData: ProtocolConnectionData) {
+    public init(currentPeerId: String?, connectionDate: Date, protocolConnectionData: ProtocolConnectionData) {
         self.currentPeerId = currentPeerId
         self.connectionDate = connectionDate
         self.protocolConnectionData = protocolConnectionData
@@ -218,6 +234,7 @@ final class PacketTunnelManager: TunnelManager {
                 )
             } catch {
                 print(error)
+                // TODO: John: this should use ProtonVPNError + FourCharCode
                 throw NSError(domain: "failed to fetch status", code: 2334)
             }
         }
@@ -225,20 +242,45 @@ final class PacketTunnelManager: TunnelManager {
 
     var statusStream: AsyncStream<TunnelState> {
         log.debug("Creating TunnelState stream for tunnel observation", category: .connection)
-        // Each notification resolves via `currentTunnelState(after:)`, which reads the
-        // active manager (`try await status`) and only falls back to the payload on
-        // failure. A payload-only approach is unreliable on macOS for IKE: the shared
-        // `NEVPNManager`'s `protocolConfiguration` can transiently be nil during a status
-        // change, causing the notification to be dropped and the state to never reach
-        // `.connected`. The cached managers from `vpnManagerRepository` expose the IKE
-        // configuration in a stable way.
-        return UncheckedSendable(
-            NotificationCenter.default
-                .notifications(named: .NEVPNStatusDidChange)
-                .compactMap { StatusChangePayload.from(statusDidChangeNotification: $0) }
-                .map { await self.currentTunnelState(after: $0) }
-        )
-        .eraseToStream()
+        // Tunnel state is driven by both `NEVPNStatusDidChange` and updates to the `RawChannel` containing the peer ID.
+        return AsyncStream { continuation in
+            let statusTask = Task {
+                let notifications = NotificationCenter.default
+                    .notifications(named: .NEVPNStatusDidChange)
+                    .compactMap { StatusChangePayload.from(statusDidChangeNotification: $0) }
+                for await payload in notifications {
+                    await continuation.yield(self.currentTunnelState(after: payload))
+                }
+            }
+            let connectionDataTask = Task {
+                @Dependency(\.localAgent) var localAgent
+                for await _ in localAgent.connectionDataStream() {
+                    // Updates to the connection data over the `RawChannel`.
+                    guard let state = try? await self.status else { continue }
+                    continuation.yield(state)
+                }
+            }
+            continuation.onTermination = { _ in
+                statusTask.cancel()
+                connectionDataTask.cancel()
+            }
+        }
+    }
+
+    var connectionFeaturesStream: AsyncStream<VPNConnectionFeatures> {
+        AsyncStream { continuation in
+            let task = Task {
+                for await notification in NotificationCenter.default.notifications(named: .NEVPNConfigurationChange) {
+                    guard let manager = notification.object as? NEVPNManager,
+                          let configuration = manager.protocolConfiguration,
+                          let features = try? ProTUNConfigurationCoder.decode(from: configuration).effectiveConnectionFeatures
+                    else { continue }
+                    log.debug("connectionFeaturesStream emit", category: .connection, metadata: ["features": "\(features)"])
+                    continuation.yield(features)
+                }
+            }
+            continuation.onTermination = { _ in task.cancel() }
+        }
     }
 
     private func currentTunnelState(after payload: StatusChangePayload) async -> TunnelState {
@@ -343,10 +385,18 @@ final class PacketTunnelManager: TunnelManager {
 
         case .connected:
             let tunnelConfig = try staticTunnelData(tunnelProtocol: tunnelProtocol, configuration: configuration)
-            return try await .connected(
-                tunnelConfig,
-                dynamicConnectionData(session: session, tunnelProtocol: tunnelProtocol, configuration: configuration)
+            let dynamicData = try await dynamicConnectionData(
+                session: session,
+                tunnelProtocol: tunnelProtocol,
+                configuration: configuration
             )
+
+            // ProTUN has brought the tunnel up, but we aren't technically connected until it reports a peer ID.
+            guard dynamicData.currentPeerId != nil else {
+                return .connecting(tunnelConfig)
+            }
+
+            return .connected(tunnelConfig, dynamicData)
 
         @unknown default:
             log.error("Unknown NEVPNStatus: \(session.status)", category: .connection)
@@ -354,6 +404,10 @@ final class PacketTunnelManager: TunnelManager {
         }
     }
 
+    /// Resolve the runtime connection data for a tunnel that is connected.
+    ///
+    /// For ProTUN, `currentPeerId` is `nil` until the extension publishes the peer. This shows up as the tunnel still
+    /// connecting.
     private func dynamicConnectionData(
         session: any VPNSession,
         tunnelProtocol: TunnelProtocol,
@@ -389,30 +443,18 @@ final class PacketTunnelManager: TunnelManager {
 
         case .wireGuard(.proTUN):
             @Dependency(\.localAgent) var localAgent
-            // The response arrives asynchronously as a `LocalAgent.Event.features` event
-            // TODO: ProTUN: use mmap to pull features immediately
-            try localAgent.postRequestToExtension(.getFeatures)
-            let response: ProTUNMessage.Response = try await session.sendProTUNRequest(.init(payload: .getCurrentPeer))
-            switch response.payload {
-            case let .currentPeer(.success(peer)):
-                return DynamicConnectionData(
-                    currentPeerId: peer.peerID,
-                    connectionDate: connectionDate,
-                    protocolConnectionData: .proTUN(.init(
-                        transport: peer.transport,
-                        serverExitV4: peer.serverExitV4,
-                        userISP: peer.userISP,
-                        userIP: peer.userIP
-                    ))
-                )
-            case let .currentPeer(.failure(error)):
-                log.error("ProTUN-Extension denied getCurrentPeerID: \(error)", category: .connection)
-                throw TunnelManagerError.protunIPC(error.localizedDescription)
-            case let .error(.unsupported(_, _, reason)):
-                throw TunnelManagerError.protunIPC("Unsupported message with version mismatch: \(reason)")
-            default:
-                throw TunnelManagerError.ipc(.getCurrentServerId, nil)
-            }
+            // `currentPeer` is nil until the extension publishes the peer to the raw channel.
+            let peer = try localAgent.connectionData().currentPeer
+            return DynamicConnectionData(
+                currentPeerId: peer?.peerID,
+                connectionDate: connectionDate,
+                protocolConnectionData: .proTUN(.init(
+                    transport: peer?.transport ?? .udp,
+                    serverExitV4: peer?.serverExitV4,
+                    userISP: peer?.userISP,
+                    userIP: peer?.userIP
+                ))
+            )
         }
     }
 

@@ -34,17 +34,6 @@ struct IPCHelperContext {
         return context.mmapFileURL
     }
 
-    static func sharedBuffer() throws -> IPCNotifications.SharedBuffer {
-        guard let context = current else { throw Error.noContextProvided }
-        return try IPCNotifications.SharedBuffer(url: context.mmapFileURL)
-    }
-
-    static func channel<T>(ofType _: T.Type) throws -> IPCNotifications.Channel<T> {
-        guard let context = current else { throw Error.noContextProvided }
-        guard let notification = context.notification else { throw Error.noNotificationProvided }
-        return try IPCNotifications.Channel<T>(notification: notification, fileURL: context.mmapFileURL)
-    }
-
     static func rawChannel<T>(ofType _: T.Type) throws -> IPCNotifications.RawChannel<T> {
         guard let context = current else { throw Error.noContextProvided }
         guard let notification = context.notification else { throw Error.noNotificationProvided }

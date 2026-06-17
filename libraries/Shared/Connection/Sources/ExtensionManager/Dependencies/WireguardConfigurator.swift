@@ -100,13 +100,20 @@ extension ManagerConfigurator {
 
     static func encodeProTUNConfiguration(connectionIntent: ServerConnectionIntent, on protocolConfiguration: NETunnelProviderProtocol) throws {
         @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
+        @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
         let wgConfig = connectionConfigurationProvider.configuration().wireguardConfig
+        // Initial connection features created from user defaults.
+        let features = connectionFeatureProvider.connectionFeatures()
 
         let peers = try connectionIntent.server.peerInfo(using: wgConfig, protocolConfiguration: connectionIntent.protocolConfiguration)
         let config = ProTUNConfiguration(
             preferredTransport: .udp,
             peers: peers,
-            dnsServers: wgConfig.dnsServers ?? []
+            dnsServers: wgConfig.dnsServers ?? [],
+            netShieldLevel: features.netshield.rawValue,
+            vpnAccelerator: features.vpnAccelerator,
+            portForwarding: features.portForwarding,
+            randomNat: features.natType.flag
         )
         try ProTUNConfigurationCoder.encode(configuration: config, to: protocolConfiguration)
 
@@ -123,12 +130,10 @@ extension ManagerConfigurator {
     static var wireGuardConfigurator: ManagerConfigurator {
         ManagerConfigurator(
             changes: { intent in
-                // TODO: ProTUN: Implement missing tunnel/agent feature changes
                 @Dependency(\.connectionConfiguration) var configurationProvider
                 let wireguardConfig = configurationProvider.configuration().wireguardConfig
                 let peers = try intent.server.peerInfo(using: wireguardConfig, protocolConfiguration: intent.protocolConfiguration)
-                let locationChange = try ConnectionChange.location(intent.spec, peers)
-                return Set(arrayLiteral: locationChange)
+                return ConnectionUpdate(location: .init(spec: intent.spec, peers: peers))
             },
             configure: { manager, operation in
                 manager.onDemandRules = [NEOnDemandRuleConnect()]

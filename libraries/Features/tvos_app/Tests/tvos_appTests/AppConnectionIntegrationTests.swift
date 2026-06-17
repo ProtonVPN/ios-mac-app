@@ -57,8 +57,6 @@
             } withDependencies: {
                 $0.continuousClock = clock
                 $0.serverIdentifier.fullServerInfo = { _ in .mock }
-                $0.localAgent.postRequestToExtension = { _ in }
-                $0.connectionFeatureProvider.setConnectionFeatures = { _ in }
                 $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
                 $0.networking = VPNNetworkingMock()
                 $0.nwPathStream = { nwPathStream }

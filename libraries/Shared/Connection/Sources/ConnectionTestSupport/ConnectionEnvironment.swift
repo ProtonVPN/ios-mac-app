@@ -85,7 +85,6 @@
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
                 $0.connectionFeatureProvider = .init(
                     connectionFeatures: { .mock },
-                    setConnectionFeatures: { _ in },
                     tunnelFeatures: { .mock },
                     connectionProtocol: { .vpnProtocol(.wireGuard(.tcp)) }
                 )

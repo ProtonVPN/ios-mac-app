@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Domain
+import Foundation
 
 public extension LocalAgent {
     enum Error: Swift.Error {
@@ -26,3 +27,32 @@ public extension LocalAgent {
 }
 
 extension LocalAgent.Error: Codable {}
+
+extension LocalAgent.Error: ProtonVPNError {
+    public static let errorDomain = "LocalAgentErrorDomain"
+
+    public var charCode: FourCharCode {
+        switch self {
+        case .certificateRefreshFatalError: "LACF"
+        case .localAgentSettingPolicyRefused(.netshieldLevel): "PRNS"
+        case .localAgentSettingPolicyRefused(.bouncing): "PRBO"
+        case .localAgentSettingPolicyRefused(.portForwarding): "PRPF"
+        case .localAgentSettingPolicyRefused(.splitTcp): "PRST"
+        case .localAgentSettingPolicyRefused(.safeMode): "PRSM"
+        case .localAgentSettingPolicyRefused(.randomNat): "PRNT"
+        }
+    }
+
+    init?(charCode: FourCharCode) {
+        switch charCode {
+        case "LACF": self = .certificateRefreshFatalError
+        case "PRNS": self = .localAgentSettingPolicyRefused(.netshieldLevel)
+        case "PRBO": self = .localAgentSettingPolicyRefused(.bouncing)
+        case "PRPF": self = .localAgentSettingPolicyRefused(.portForwarding)
+        case "PRST": self = .localAgentSettingPolicyRefused(.splitTcp)
+        case "PRSM": self = .localAgentSettingPolicyRefused(.safeMode)
+        case "PRNT": self = .localAgentSettingPolicyRefused(.randomNat)
+        default: return nil
+        }
+    }
+}

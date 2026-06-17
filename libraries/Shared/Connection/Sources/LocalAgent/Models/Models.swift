@@ -19,13 +19,7 @@
 import Domain
 
 public enum LocalAgent {
-    /// Identifies a single Local Agent setting reported back by the Rust LA layer — typically
-    /// inside a `policyRefused` error so the UI knows which setting the server rejected.
-    ///
-    /// Mirrors the Rust FFI `LocalAgentSettingType` 1:1 (see `helpers.swift::toAgentSetting`).
-    /// This is intentionally *not* the same shape as ``IPCLASettingsPayload`` (which represents
-    /// the effective settings snapshot) nor ``ConnectionFeatureChange/AgentFeature`` (the
-    /// user-writable subset). Each enum serves a different role.
+    /// Used for guessing which user-changed setting resulted in a policy violation error server-side.
     public enum SettingType: Codable {
         case netshieldLevel
         case bouncing
@@ -34,23 +28,7 @@ public enum LocalAgent {
         case safeMode
         case randomNat
     }
-
-    @DebugDescription
-    public enum Event: Codable {
-        case stats(Stats)
-        case connectionStats(ConnectionStats)
-        case features(VPNConnectionFeatures)
-        case error(Error)
-    }
-
-    @DebugDescription
-    public enum Request: Codable {
-        case getFeatures
-        case setFeatures(Set<ConnectionFeatureChange.AgentFeature>)
-    }
 }
-
-extension LocalAgent.Event: Sendable {}
 
 package extension NetShieldType {
     var shouldObserveNetShieldStats: Bool {
@@ -59,32 +37,6 @@ package extension NetShieldType {
             false
         case .level2, .level3:
             true
-        }
-    }
-}
-
-extension LocalAgent.Event: CustomDebugStringConvertible {
-    public var debugDescription: String {
-        switch self {
-        case let .stats(localAgentStats):
-            "stats(\(localAgentStats))"
-        case let .connectionStats(connectionStats):
-            "connectionStats(\(connectionStats))"
-        case let .features(features):
-            "features(\(features))"
-        case let .error(localAgentError):
-            "error(\(localAgentError))"
-        }
-    }
-}
-
-extension LocalAgent.Request: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .getFeatures:
-            "getFeatures"
-        case .setFeatures:
-            "setFeatures"
         }
     }
 }

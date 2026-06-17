@@ -26,7 +26,6 @@ import VPNAppCore
 @DependencyClient
 public struct ConnectionFeatureProvider: Sendable {
     public internal(set) var connectionFeatures: @Sendable () -> VPNConnectionFeatures = { .unimplementedFeatures }
-    public internal(set) var setConnectionFeatures: @Sendable (_: VPNConnectionFeatures) -> Void
     public internal(set) var tunnelFeatures: @Sendable () -> TunnelFeatures = { .unimplementedFeatures }
     public internal(set) var connectionProtocol: @Sendable () -> ConnectionProtocol = { .smartProtocol }
 }
@@ -46,15 +45,6 @@ extension ConnectionFeatureProvider: DependencyKey {
                     portForwarding: portForwardingPropertyProvider.getPortForwarding()
                 )
             },
-            setConnectionFeatures: { newFeatures in
-                @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
-                @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
-                @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
-
-                natTypePropertyProvider.setNATType(newFeatures.natType)
-                netShieldPropertyProvider.setNetShieldType(newFeatures.netshield)
-                portForwardingPropertyProvider.setPortForwarding(newFeatures.portForwarding)
-            },
             tunnelFeatures: {
                 @Shared(.killSwitch) var killSwitch
                 return TunnelFeatures(
@@ -70,7 +60,6 @@ extension ConnectionFeatureProvider: DependencyKey {
     #else
         public static let liveValue: ConnectionFeatureProvider = .init(
             connectionFeatures: { .defaultFeatures },
-            setConnectionFeatures: { _ in log.warning("Nothing to do on tvOS yet") },
             tunnelFeatures: { .tvFeatures },
             connectionProtocol: { .vpnProtocol(.wireGuard(.udp)) }
         )

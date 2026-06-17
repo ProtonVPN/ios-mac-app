@@ -19,11 +19,13 @@
 import IPCErgonomics
 
 public extension IPCNotifications.Notification {
-    static let localAgentToExtensionRequests: Self = .init(name: "ch.protonmail.vpn.protun.localAgentToExtensionRequests")
-    static let localAgentFromExtensionEvents: Self = .init(name: "ch.protonmail.vpn.protun.localAgentFromExtensionEvents")
+    static let extensionForkSelectorRequest: Self = .init(name: "ch.protonmail.vpn.protun.extensionForkSelectorRequest")
 }
 
 public extension IPCNotifications.Notification {
-    static let extensionForkSelectorRequest: Self = .init(name: "ch.protonmail.vpn.protun.extensionForkSelectorRequest")
-    static let localAgentSettings: Self = .init(name: "ch.protonmail.vpn.protun.localAgentSettings")
+    // Each of these corresponds to a `RawChannel` conveying information to the main app / other extensions.
+    static let connectionData: Self = .init(name: "ch.protonmail.vpn.protun.connectionData")
+    static let localAgentStats: Self = .init(name: "ch.protonmail.vpn.protun.localAgentStats")
+    static let localAgentConnectionStats: Self = .init(name: "ch.protonmail.vpn.protun.localAgentConnectionStats")
+    static let localAgentError: Self = .init(name: "ch.protonmail.vpn.protun.localAgentError")
 }
