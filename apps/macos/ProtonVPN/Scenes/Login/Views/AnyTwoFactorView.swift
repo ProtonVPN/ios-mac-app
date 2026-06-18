@@ -120,7 +120,7 @@ struct HardwareKeyTwoFactorView: View {
     var body: some View {
         VStack {
             VStack(alignment: .leading, spacing: .themeSpacing8) {
-                Image("login-hardware-key")
+                Image(.loginHardwareKey)
                     .resizable()
                     .frame(width: 292, height: 150)
 

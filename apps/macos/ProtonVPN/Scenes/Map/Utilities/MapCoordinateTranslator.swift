@@ -25,7 +25,7 @@ import CoreLocation
 
 enum MapCoordinateTranslator {
     // Unfortunately there seems to be a rendering bug with pdf here (around the edges of vectors, and is inconsistent)
-    static let mapImage = Asset.worldMap.image
+    static let mapImage = NSImage(resource: .worldMap)
 
     static func mapImageCoordinate(from coordinate: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
         // MARK: Convert to Miller Cylindrical map projection
