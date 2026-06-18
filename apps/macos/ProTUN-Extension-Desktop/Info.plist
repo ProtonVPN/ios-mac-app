@@ -7,12 +7,14 @@
 	<key>NetworkExtension</key>
 	<dict>
 		<key>NEMachServiceName</key>
-		<string>$(TeamIdentifierPrefix)group.ch.protonvpn.mac.ProTUN-Extension-Desktop</string>
+		<string>$(TeamIdentifierPrefix)group.ch.protonvpn.mac.WireGuard-Extension</string>
 		<key>NEProviderClasses</key>
 		<dict>
 			<key>com.apple.networkextension.packet-tunnel</key>
 			<string>$(PRODUCT_MODULE_NAME).PacketTunnelProvider</string>
 		</dict>
 	</dict>
+    <key>TeamIdentifierPrefix</key>
+    <string>$(TeamIdentifierPrefix)</string>
 </dict>
 </plist>
