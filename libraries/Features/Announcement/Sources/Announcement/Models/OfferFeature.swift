@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct OfferFeature: Codable {
+public struct OfferFeature: Codable, Sendable {
     public let iconURL: String
     public let text: String
 }

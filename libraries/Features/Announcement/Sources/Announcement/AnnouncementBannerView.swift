@@ -16,25 +16,36 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Announcement
 import ComposableArchitecture
-import HomeShared
 import SDWebImageSwiftUI
 import Strings
 import SwiftUI
 import Theme
 
-struct AnnouncementBannerView: View {
+public struct AnnouncementBannerView: View {
     let store: StoreOf<AnnouncementBannerFeature>
 
-    init(store: StoreOf<AnnouncementBannerFeature>) {
+    public init(store: StoreOf<AnnouncementBannerFeature>) {
         self.store = store
     }
+
+    #if DEBUG
+        init(store: StoreOf<AnnouncementBannerFeature>, revealed: Bool) {
+            self.store = store
+            self._showBanner = State(initialValue: revealed)
+        }
+    #endif
 
     private let colors = [
         Theme.Asset.offerBannerGradientRight.swiftUIColor,
         Theme.Asset.offerBannerGradientLeft.swiftUIColor,
     ]
+
+    #if os(iOS)
+        private static let cornerRadius: CGFloat = .themeRadius8
+    #else
+        private static let cornerRadius: CGFloat = .themeRadius12
+    #endif
 
     private static let relativeDateTimeFormatter: RelativeDateTimeFormatter = {
         let formatter = RelativeDateTimeFormatter()
@@ -52,7 +63,7 @@ struct AnnouncementBannerView: View {
 
     @State private var showBanner = false
 
-    var body: some View {
+    public var body: some View {
         if case let .banner(model) = store.state {
             content(model: model)
         }
@@ -65,18 +76,25 @@ struct AnnouncementBannerView: View {
             } label: {
                 VStack(alignment: .leading, spacing: 0) {
                     WebImage(url: model.imageURL)
-                        .resizable().scaledToFit()
+                        .resizable()
+                        .scaledToFit()
                     if model.showCountdown, let timeLeft = timeLeftString(endTime: model.endTime) {
-                        Text(timeLeft)
-                            .themeFont(.caption(emphasised: false))
-                            .foregroundStyle(Color(.text, .weak))
+                        // `caption` typography only exists on UIKit; macOS keeps the legacy default font.
+                        #if os(iOS)
+                            Text(timeLeft)
+                                .themeFont(.caption(emphasised: false))
+                                .foregroundStyle(Color(.text, .weak))
+                        #else
+                            Text(timeLeft)
+                                .foregroundStyle(Color(.text, .weak))
+                        #endif
                     }
                 }
                 .padding(.horizontal, .themeSpacing16)
                 .padding(.vertical, .themeSpacing12)
                 .background(Color(.background, .weak))
                 .overlay(
-                    RoundedRectangle(cornerRadius: .themeRadius8)
+                    RoundedRectangle(cornerRadius: Self.cornerRadius)
                         .stroke(
                             LinearGradient(
                                 colors: colors,
@@ -86,19 +104,15 @@ struct AnnouncementBannerView: View {
                             lineWidth: 1
                         )
                 )
-                .cornerRadius(.themeRadius8)
+                .clipShape(.rect(cornerRadius: Self.cornerRadius))
             }
-            Button {
-                store.send(.didTapDismiss, animation: .default)
-            } label: {
-                Theme.Asset.dismissButton.swiftUIImage
-            }
-            .buttonStyle(StaticButtonStyle())
-            .offset(x: 12, y: -12)
+            .buttonStyle(.plain)
+            dismissButton
         }
         .frame(maxHeight: showBanner ? .infinity : 0)
         .opacity(showBanner ? 1 : 0)
         .task {
+            if showBanner { return }
             @Dependency(\.imagePrefetcher) var imagePrefetcher
             if await imagePrefetcher.containsImageForKey(model.imageURL.absoluteString) {
                 showBanner = true
@@ -107,6 +121,26 @@ struct AnnouncementBannerView: View {
             await imagePrefetcher.prefetchURLs([model.imageURL])
             showBanner = await imagePrefetcher.containsImageForKey(model.imageURL.absoluteString)
         }
+    }
+
+    private var dismissButton: some View {
+        Button {
+            store.send(.didTapDismiss, animation: .default)
+        } label: {
+            #if os(iOS)
+                Theme.Asset.dismissButton.swiftUIImage
+            #else
+                Theme.Asset.dismissButton.swiftUIImage
+                    .resizable()
+                    .frame(.square(.themeSpacing32))
+            #endif
+        }
+        .buttonStyle(StaticButtonStyle())
+        #if os(iOS)
+            .offset(x: .themeSpacing12, y: -.themeSpacing12)
+        #else
+            .offset(x: .themeSpacing16)
+        #endif
     }
 }
 

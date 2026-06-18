@@ -74,7 +74,6 @@ public protocol AnnouncementManager {
     var hasUnreadAnnouncements: Bool { get }
     func fetchCurrentAnnouncementsFromStorage() -> [Announcement]
     func fetchCurrentOfferBannerFromStorage() -> Announcement?
-    func offerBannerViewModel(dismiss: @escaping (Announcement) -> Void) -> OfferBannerViewModel?
     func markAsRead(announcement: Announcement)
     func markAsRead(notificationID: String)
     func shouldShowAnnouncementsIcon() -> Bool
@@ -94,24 +93,6 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
 
     public func shouldShowAnnouncementsIcon() -> Bool {
         fetchCurrentAnnouncementsFromStorage().contains(where: { $0.knownType == .default })
-    }
-
-    public func offerBannerViewModel(dismiss: @escaping (Announcement) -> Void) -> OfferBannerViewModel? {
-        guard let offerBanner = fetchCurrentOfferBannerFromStorage(),
-              let url = offerBanner.offer?.panel?.fullScreenImage?.source.first?.url,
-              let imageURL = URL(string: url),
-              let buttonURLString = offerBanner.offer?.panel?.button.url,
-              let buttonURL = URL(string: buttonURLString) else {
-            return nil
-        }
-        return OfferBannerViewModel(
-            imageURL: imageURL,
-            endTime: offerBanner.endTime,
-            showCountdown: offerBanner.offer?.panel?.showCountdown ?? false,
-            buttonURL: buttonURL,
-            offerReference: offerBanner.reference,
-            dismiss: { dismiss(offerBanner) }
-        )
     }
 
     public func fetchCurrentOfferBannerFromStorage() -> Announcement? {

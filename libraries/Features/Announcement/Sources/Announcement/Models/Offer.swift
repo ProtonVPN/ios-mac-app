@@ -22,7 +22,7 @@
 
 import Foundation
 
-public struct Offer: Codable {
+public struct Offer: Codable, Sendable {
     public let label: String?
     public let icon: String?
     public let panel: OfferPanel?
@@ -34,11 +34,11 @@ public struct Offer: Codable {
         case panel
     }
 
-    public enum Action: String, Codable {
+    public enum Action: String, Codable, Sendable {
         case openURL = "OpenURL"
     }
 
-    public enum Behavior: String, Codable {
+    public enum Behavior: String, Codable, Sendable {
         case autoLogin = "AutoLogin"
     }
 }

@@ -41,7 +41,6 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
         .package(url: "https://github.com/Alamofire/AlamofireImage", exact: "4.2.0"),
-        .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.15.8"),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.9.0")),
     ],
@@ -76,7 +75,6 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "AlamofireImage", package: "AlamofireImage"),
-                .product(name: "SDWebImage", package: "SDWebImage"),
             ],
             resources: [
                 .process("Resources"),
