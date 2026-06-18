@@ -6,5 +6,9 @@
 	<array>
 		<string>packet-tunnel-provider$(NE_ENTITLEMENT_SUFFIX)</string>
 	</array>
+    <key>com.apple.security.application-groups</key>
+    <array>
+        <string>$(TeamIdentifierPrefix)group.ch.protonvpn.mac</string>
+    </array>
 </dict>
 </plist>
