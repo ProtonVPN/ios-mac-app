@@ -84,12 +84,6 @@ extension MacAlertService: CoreAlertService {
         case let appUpdateRequiredAlert as AppUpdateRequiredAlert:
             show(appUpdateRequiredAlert)
 
-        case let cannotAccessVpnCredentialsAlert as CannotAccessVpnCredentialsAlert:
-            show(cannotAccessVpnCredentialsAlert)
-
-        case let refreshTokenExpiredAlert as RefreshTokenExpiredAlert:
-            show(refreshTokenExpiredAlert)
-
         case let alert as WelcomeScreenAlert:
             showWelcomeScreen(alert: alert, welcomeScreenAlert: alert)
 
@@ -249,20 +243,11 @@ extension MacAlertService: CoreAlertService {
         uiAlertService.displayAlert(alert)
     }
 
-    private func show(_: CannotAccessVpnCredentialsAlert) {
-        guard appSessionManager.sessionStatus == .established else { return } // already logged out
-        appSessionManager.logOut(force: true, reason: Localizable.errorSignInAgain)
-    }
-
     private func show(_ alert: SystemExtensionTourAlert) {
         windowService.openSystemExtensionGuideWindow(
             origin: alert.origin,
             cancelledHandler: alert.cancelHandler
         )
-    }
-
-    private func show(_: RefreshTokenExpiredAlert) {
-        appSessionManager.logOut(force: true, reason: Localizable.invalidRefreshTokenPleaseLogin)
     }
 
     private func show(_: VpnServerOnMaintenanceAlert) {

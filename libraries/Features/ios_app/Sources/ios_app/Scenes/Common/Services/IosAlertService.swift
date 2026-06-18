@@ -92,12 +92,6 @@ extension IosAlertService: CoreAlertService {
         case let appUpdateRequiredAlert as AppUpdateRequiredAlert:
             show(appUpdateRequiredAlert)
 
-        case let cannotAccessVpnCredentialsAlert as CannotAccessVpnCredentialsAlert:
-            show(cannotAccessVpnCredentialsAlert)
-
-        case let refreshTokenExpiredAlert as RefreshTokenExpiredAlert:
-            show(refreshTokenExpiredAlert)
-
         case is UpgradeUnavailableAlert:
             showDefaultSystemAlert(alert)
 
@@ -259,15 +253,6 @@ extension IosAlertService: CoreAlertService {
         }))
 
         uiAlertService.displayAlert(alert)
-    }
-
-    private func show(_: CannotAccessVpnCredentialsAlert) {
-        guard appSessionManager.sessionStatus == .established else { return } // already logged out
-        appSessionManager.logOut(force: true, reason: Localizable.errorSignInAgain)
-    }
-
-    private func show(_: RefreshTokenExpiredAlert) {
-        appSessionManager.logOut(force: true, reason: Localizable.invalidRefreshTokenPleaseLogin)
     }
 
     private func show(_ alert: MaintenanceAlert) {

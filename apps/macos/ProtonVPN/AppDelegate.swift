@@ -53,6 +53,7 @@ import LegacyCommon
 import Logging
 import PMLogger
 import Settings
+import Strings
 import Telemetry
 import Timer
 import VPNAppCore
@@ -357,8 +358,7 @@ extension AppDelegate: NSApplicationDelegate {
     }
 
     private func handleLogout() {
-        let alertService = container.makeCoreAlertService()
-        alertService.push(alert: RefreshTokenExpiredAlert())
+        container.makeAppSessionManager().logOut(force: true, reason: Localizable.invalidRefreshTokenPleaseLogin)
     }
 
     private func handleForceUpgrade(message _: String) {

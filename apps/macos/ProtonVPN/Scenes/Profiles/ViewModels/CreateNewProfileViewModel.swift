@@ -43,7 +43,7 @@ extension DependencyContainer: CreateNewProfileViewModelFactory {
 }
 
 class CreateNewProfileViewModel {
-    typealias Factory = CoreAlertServiceFactory & ProfileManagerFactory
+    typealias Factory = AppSessionManagerFactory & CoreAlertServiceFactory & ProfileManagerFactory
     private let factory: Factory
 
     typealias MenuContentUpdate = Set<KeyPath<CreateNewProfileViewModel, [PopUpButtonItemViewModel]>>
@@ -61,6 +61,7 @@ class CreateNewProfileViewModel {
     let sessionFinished = NSNotification.Name("CreateNewProfileViewModelSessionFinished") // two observers
 
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     @Dependency(\.vpnKeychain) private var vpnKeychain
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
@@ -299,7 +300,7 @@ class CreateNewProfileViewModel {
         do {
             userTier = try vpnKeychain.fetchCached().maxTier
         } catch {
-            alertService.push(alert: CannotAccessVpnCredentialsAlert())
+            appSessionManager.logOut(force: true, reason: Localizable.errorSignInAgain)
         }
     }
 

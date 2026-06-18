@@ -34,6 +34,7 @@ import Localization
 import MapKit
 import Persistence
 import Sharing
+import Strings
 import VPNAppCore
 
 // Refactor annotation O(n^2) grouping logic when number of secure core servers ever exceed this value
@@ -52,7 +53,7 @@ extension DependencyContainer: MapSectionViewModelFactory {
     func makeMapSectionViewModel() -> MapSectionViewModel {
         MapSectionViewModel(
             navService: makeNavigationService(),
-            alertService: makeCoreAlertService()
+            appSessionManager: makeAppSessionManager()
         )
     }
 }
@@ -66,7 +67,7 @@ class MapSectionViewModel {
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
     @Shared(.connectionState) private var connectionState: ConnectionState
     @Shared(.connectionProtocol) private var connectionProtocol: ConnectionProtocol
-    private let alertService: CoreAlertService
+    private let appSessionManager: AppSessionManager
     private var cancellables = Set<AnyCancellable>()
 
     var contentChanged: ((AnnotationChange) -> Void)?
@@ -77,9 +78,9 @@ class MapSectionViewModel {
     var annotations: [CountryAnnotationViewModel] = []
     var connections: [ConnectionViewModel] = []
 
-    init(navService: NavigationService, alertService: CoreAlertService) {
+    init(navService: NavigationService, appSessionManager: AppSessionManager) {
         self.navService = navService
-        self.alertService = alertService
+        self.appSessionManager = appSessionManager
 
         $connectionState
             .publisher
@@ -200,7 +201,7 @@ class MapSectionViewModel {
             }
             return annotations
         } catch {
-            alertService.push(alert: CannotAccessVpnCredentialsAlert())
+            appSessionManager.logOut(force: true, reason: Localizable.errorSignInAgain)
             return []
         }
     }
