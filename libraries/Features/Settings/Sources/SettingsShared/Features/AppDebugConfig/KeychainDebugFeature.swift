@@ -79,9 +79,10 @@
                     return .none
 
                 case .clearKeychains:
+                    clearProTUNKeychainService()
                     unauthKeychain.clear()
                     authKeychain.clear(.clearApplicationData)
-                    exit(0)
+                    exit(EXIT_SUCCESS)
                     return .none
 
                 case .alert(.presented(.confirmClear)):
@@ -129,6 +130,23 @@
                 authKeychainData: authKeychainData,
                 unauthKeychainData: unauthKeychainData
             )
+        }
+
+        private func clearProTUNKeychainService() {
+            let query: [CFString: Any] = [
+                kSecClass: kSecClassGenericPassword,
+                kSecReturnAttributes: true,
+                kSecMatchLimit: kSecMatchLimitAll,
+            ]
+            var result: AnyObject?
+            guard SecItemCopyMatching(query as CFDictionary, &result) == errSecSuccess,
+                  let items = result as? [[CFString: Any]] else { return }
+
+            let protunServices = Set(items.compactMap { $0[kSecAttrService] as? String }.filter { $0.hasPrefix("ProTUN_") })
+
+            for service in protunServices {
+                SecItemDelete([kSecClass: kSecClassGenericPassword, kSecAttrService: service] as CFDictionary)
+            }
         }
 
         private var confirmClearKeychains: AlertState<Action.Alert> {
