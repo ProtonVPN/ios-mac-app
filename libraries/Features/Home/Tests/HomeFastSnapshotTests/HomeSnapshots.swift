@@ -49,17 +49,11 @@ struct HomeScreenTests {
         ),
         (
             ProtectionState.protecting(country: "Poland", ip: "1.2.3.4"),
-            ConnectionState.connecting(
-                .resolved(.init(spec: .specificCountryServer, tunnelProtocol: .ike, resolvedServer: polandServer)),
-                tunnelActive: false
-            )
+            ConnectionState.previewConnecting(for: .specificCountryServer)
         ),
         (
             ProtectionState.protected,
-            ConnectionState.connected(
-                .init(connectionSpec: .specificCountryServer, tunnelProtocol: .ike, peerIDs: [], killSwitch: false),
-                .init(currentPeer: polandServer, connectionDate: Date(), protocolConnectionData: .ike)
-            )
+            ConnectionState.previewConnected(for: .specificCountryServer, server: polandServer)
         ),
         (
             ProtectionState.killSwitchActive,
@@ -69,6 +63,11 @@ struct HomeScreenTests {
             )
         ),
     ]
+
+    /// Tolerances for the GPU-rendered globe embedded in the home screen — perceptual precision absorbs
+    /// sub-pixel MSAA-edge differences that can vary across GPU hardware between recording and CI.
+    let snapshotPrecision: Float = 0.99
+    let snapshotPerceptualPrecision: Float = 0.98
 
     @Shared(.protectionState) var protectionState
     @Shared(.connectionState) var connectionState
@@ -96,10 +95,14 @@ struct HomeScreenTests {
             $0.continuousClock = TestClock()
             $0.announcementManager.announcementsPublisher = { Empty(completeImmediately: false).eraseToAnyPublisher() }
         }
-        let appView = try HomeView(store: store)
-            .frame(#require(ViewImageConfig.iPhone13.size))
+        let size = try #require(ViewImageConfig.iPhone13.size)
+        let appView = HomeView(store: store)
+            .frame(size)
             .environment(\._accessibilityReduceMotion, true)
             .environment(\.colorScheme, .dark)
+            // Render the globe via off-screen Metal read-back: a live MTKView can't be captured by the
+            // snapshot strategy's `layer.render(in:)` (and a `.sizeThatFits` layout traps it).
+            .environment(\.globeRenderMode, .staticImage)
 
         withDependencies {
             $0.locale = Locale(identifier: "en")
@@ -121,7 +124,18 @@ struct HomeScreenTests {
 
             store.send(.map(.connectionStateUpdated(state.connection)))
 
-            assertSnapshot(of: appView, as: .image(layout: .sizeThatFits), named: "Home", testName: testName)
+            // `.fixed` (not `.sizeThatFits`) so HomeView's GeometryReader sees the real device height —
+            // otherwise the globe's render height balloons to the measuring proposal.
+            assertSnapshot(
+                of: appView,
+                as: .image(
+                    precision: snapshotPrecision,
+                    perceptualPrecision: snapshotPerceptualPrecision,
+                    layout: .fixed(width: size.width, height: size.height)
+                ),
+                named: "Home",
+                testName: testName
+            )
 
             // reset SVG map highlight
             $userCountry.withLock { $0 = nil }

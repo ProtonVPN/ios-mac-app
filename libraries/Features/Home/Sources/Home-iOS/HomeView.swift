@@ -110,13 +110,23 @@ public struct HomeView: View {
 
     private var content: some View {
         GeometryReader { proxy in
+            // Distance from the screen top to this view (notch / status bar). The map bleeds up by this
+            // much (`.ignoresSafeArea(.top)`) and the globe's focus region is offset down by the same, so
+            // the map fills behind the status bar while the country stays put in the visible area.
+            let topInset = proxy.frame(in: .global).minY
             ZStack(alignment: .top) {
                 HomeMapView(
                     store: store.scope(state: \.map, action: \.map),
                     availableHeight: mapHeight,
-                    availableWidth: proxy.size.width
+                    availableWidth: proxy.size.width,
+                    renderHeight: proxy.size.height + topInset,
+                    topInset: topInset
                 )
-                .frame(width: proxy.size.width, height: mapHeight)
+                // Render at full height incl. behind the notch (top safe-area inset), anchored to the top,
+                // so the map fills the status-bar area and spills below the fold un-clipped, the way the
+                // old SVG view did; the globe is still framed/centred within `mapHeight` below the notch.
+                .frame(width: proxy.size.width, height: proxy.size.height + topInset, alignment: .top)
+                .ignoresSafeArea(.container, edges: .top)
                 .zIndex(ZIndex.map.rawValue)
                 .allowsHitTesting(false) // without this line we experience bad scrolling stutter when using a magic trackpad
 

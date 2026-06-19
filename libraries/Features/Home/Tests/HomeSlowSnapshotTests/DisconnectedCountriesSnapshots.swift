@@ -31,6 +31,9 @@ struct DisconnectedCountriesSnapshotsTests {
     @Shared(.userCountry) var userCountry
 
     let mapRenderingPrecision: Float = 0.99
+    /// Perceptual tolerance for the GPU-rendered globe — absorbs sub-pixel MSAA-edge differences that can
+    /// vary across GPU hardware between the recording machine and CI.
+    let mapPerceptualPrecision: Float = 0.98
 
     @Test("Map Screen Countries", arguments: Countries.all)
     @MainActor
@@ -43,6 +46,9 @@ struct DisconnectedCountriesSnapshotsTests {
                 .frame(size)
                 .background(Color(.background))
                 .environment(\.colorScheme, .dark)
+                // Render the globe via off-screen Metal read-back — a live MTKView can't be captured by
+                // the snapshot strategy's `layer.render(in:)`. See GlobeRenderMode.
+                .environment(\.globeRenderMode, .staticImage)
             VStack {
                 Text(countryCode)
                     .foregroundStyle(.white)
@@ -61,7 +67,7 @@ struct DisconnectedCountriesSnapshotsTests {
             store.send(.connectionStateUpdated(.disconnected))
             assertSnapshot(
                 of: mapView,
-                as: .image(precision: mapRenderingPrecision, layout: .sizeThatFits),
+                as: .image(precision: mapRenderingPrecision, perceptualPrecision: mapPerceptualPrecision, layout: .sizeThatFits),
                 named: "Disconnected",
                 testName: countryCode
             )

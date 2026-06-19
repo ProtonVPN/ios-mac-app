@@ -51,6 +51,9 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.3")),
         .package(url: "https://github.com/SDWebImage/SDWebImageSwiftUI.git", from: "3.0.0"),
         .package(url: "https://github.com/airbnb/lottie-spm", .upToNextMajor(from: "4.6.0")),
+        // GEOS C library (PostGIS engine), used only by the offline MapBaker tool to triangulate the
+        // globe geometry. Not reachable from the "Home" product, so it never links into the app.
+        .package(url: "https://github.com/GEOSwift/geos", .upToNextMajor(from: "9.0.0")),
     ],
     targets: [
         .target(
@@ -79,6 +82,7 @@ let package = Package(
                 "PMLogger",
                 "Strings",
                 "PCAP",
+                "MapModel",
                 .product(name: "Modals", package: "Modals"),
                 .product(name: "ModalsServices", package: "Modals"),
                 .product(name: "Payments", package: "Payments", condition: .when(platforms: [.iOS])),
@@ -94,16 +98,18 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "Clocks", package: "swift-clocks"),
-                .product(name: "SVGView", package: "SVGView"),
                 .product(name: "Collections", package: "swift-collections"),
                 .product(name: "Algorithms", package: "swift-algorithms"),
                 .product(name: "CombineSchedulers", package: "combine-schedulers"),
                 .product(name: "SDWebImageSwiftUI", package: "SDWebImageSwiftUI"),
                 .product(name: "OrderedCollections", package: "swift-collections"),
             ],
-            exclude: ["swiftgen.yml"],
+            exclude: [
+                "swiftgen.yml",
+                "Resources/BlankMap-World.svg", // source for MapBaker; not bundled (the app loads world-globe.bin)
+            ],
             resources: [
-                .process("Resources/BlankMap-World.svg"),
+                .copy("Resources/world-globe.bin"), // 3-D globe geometry, loaded straight into Metal buffers
                 .process("Resources/widget-ios-v4.json"),
                 .process("Resources/Assets.xcassets"),
             ]
@@ -121,6 +127,23 @@ let package = Package(
                 "HomeShared",
             ],
             resources: []
+        ),
+        // Leaf module with no UIKit/iOS deps so it can be shared by both HomeShared (the app) and the
+        // MapBaker command-line tool: the binary map format + its encode/decode live here, keeping the
+        // tool's encoder and the app's decoder from drifting apart.
+        .target(
+            name: "MapModel"
+        ),
+        // Offline tool that converts the source SVG into Resources/world-globe.bin. Run it whenever the
+        // SVG changes: `swift run MapBaker` (from this package directory), then commit the new binary.
+        // Not reachable from the "Home" product, so it never builds as part of the app.
+        .executableTarget(
+            name: "MapBaker",
+            dependencies: [
+                "MapModel",
+                .product(name: "SVGView", package: "SVGView"),
+                .product(name: "geos", package: "geos"),
+            ]
         ),
         .testTarget(
             name: "HomeTests",

@@ -369,9 +369,6 @@ private extension HomeFeature {
             case let .recents(.delegate(.upsellTapped(type))):
                 state.destination = .payments(.init(upsellModalType: upsellModalType(from: type)))
                 return .none
-            case .sharedProperties(.userLocation(.userLocationFetchFinished(.success(_)))):
-                // a bit unfortunate but map.pinOffset can only be updated via this action atm
-                return .send(.map(.connectionStateUpdated(state.connectionState)))
             default:
                 return .none
             }

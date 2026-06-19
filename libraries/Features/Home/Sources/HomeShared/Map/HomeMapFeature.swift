@@ -20,10 +20,8 @@ import ComposableArchitecture
 import Connection
 import CoreLocation
 import Domain
-import Ergonomics
 import Foundation
 import SharedViews
-import SVGView
 import SwiftUI
 import VPNAppCore
 
@@ -43,7 +41,10 @@ public struct HomeMapFeature {
             return userCountry != nil // or we know the user country
         }
 
-        var pinOffset: CGSize = .zero
+        /// The first map-state update is emitted immediately (so the initial render isn't delayed); later
+        /// ones are debounced to coalesce rapid connection transitions. (Previously inferred from the
+        /// now-removed `pinOffset == .zero`.)
+        var hasEmittedInitialMapState = false
 
         @SharedReader(.connectionState) var connectionState: ConnectionState
         @SharedReader(.userCountry) public var userCountry: String?
@@ -108,19 +109,6 @@ public struct HomeMapFeature {
             }
         }
 
-        func pinOffset(userCountry: String?) -> CGSize {
-            guard let code = (code ?? userCountry)?.lowercased(),
-                  let coordinates = coordinates ?? CountriesCoordinates.countryCenterCoordinates(code.uppercased()) else {
-                return .zero
-            }
-            let projection = NaturalEarthProjection.projection(
-                from: coordinates.withMapShift,
-                in: SVGView.mapBounds.size
-            )
-
-            return .init(width: projection.x, height: -projection.y)
-        }
-
         var code: String? {
             switch self {
             case let .connecting(code):
@@ -150,7 +138,6 @@ public struct HomeMapFeature {
         case observeConnectionState
         case connectionStateUpdated(ConnectionState)
         case newMapState(MapState)
-        case newPinOffset(CGSize)
     }
 
     private enum CancelId {
@@ -178,55 +165,26 @@ public struct HomeMapFeature {
 
             case let .connectionStateUpdated(connectionState):
                 let mapState = MapState(connectionState)
-                let pinOffset = mapState.pinOffset(userCountry: state.userCountry)
                 let animation: Animation? = UIAccessibility.isReduceMotionEnabled ? nil : .default
-                let effect: Effect<Action> = .merge(
-                    .send(.newMapState(mapState), animation: animation),
-                    .send(.newPinOffset(pinOffset), animation: nil)
-                )
-                // If we're setting initial pinOffset
-                if state.pinOffset == .zero {
+                let effect: Effect<Action> = .send(.newMapState(mapState), animation: animation)
+                // Emit the first update immediately so the initial render isn't delayed; debounce
+                // subsequent ones to coalesce rapid connecting→connected transitions.
+                guard state.hasEmittedInitialMapState else {
+                    state.hasEmittedInitialMapState = true
                     return effect
-                } else {
-                    return effect
-                        .debounce(
-                            id: IDs.mapState,
-                            for: .milliseconds(Self.mapStateDebounceIntervalInMilliseconds),
-                            scheduler: scheduler
-                        )
                 }
+                return effect.debounce(
+                    id: IDs.mapState,
+                    for: .milliseconds(Self.mapStateDebounceIntervalInMilliseconds),
+                    scheduler: scheduler
+                )
 
             case let .newMapState(mapState):
                 state.pinMode = mapState.pinMode
                 state.mapState = mapState
-                let highlightedCountryCode = mapState.code ?? state.userCountry
-                SVGView.updateWith(code: highlightedCountryCode)
-
-                return .none
-
-            case let .newPinOffset(offset):
-                state.pinOffset = offset
+                // Highlight is derived from state by HomeMapView; no imperative map mutation needed.
                 return .none
             }
-        }
-    }
-}
-
-private extension CLLocationCoordinate2D {
-    var withMapShift: Self {
-        .init(
-            latitude: latitude,
-            longitude: withLongitudeShift
-        )
-    }
-
-    private var withLongitudeShift: CLLocationDegrees {
-        let withShift = longitude - 10 // -10 to account for the shifted map
-        if withShift < -180 {
-            let delta = abs(withShift) - 180
-            return 180 - delta
-        } else {
-            return withShift
         }
     }
 }
