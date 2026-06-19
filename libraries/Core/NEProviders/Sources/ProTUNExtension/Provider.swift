@@ -136,13 +136,24 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
         }
     }
 
-    private func decodeConfiguration() throws(ProTUNConfigurationCoder.CodingError) -> ProTUNConfiguration {
+    private func decodeConfiguration() throws -> ProTUNAdapter.Configuration {
+        let config: ProTUNConfiguration
         do {
-            return try ProTUNConfigurationCoder.decode(from: protocolConfiguration)
+            config = try ProTUNConfigurationCoder.decode(from: protocolConfiguration)
         } catch .providerConfigurationMissing, .proTUNConfigurationMissing {
             Logger.provider.info("ProTUN configuration not found in providerConfiguration; falling back to legacy WireGuard keychain entry")
-            return try ProTUNConfigurationCoder.legacyDecode(from: protocolConfiguration)
+            let config = try ProTUNConfigurationCoder.legacyDecode(from: protocolConfiguration)
+
+            // We have no way of retrieving the user's ID.
+            // Let's use a random id for the connection until the user configures a new connection from within the app.
+            let guestID = UUID().uuidString
+            return .init(userID: guestID, proTUN: config)
         }
+
+        guard let userID = (protocolConfiguration as? NETunnelProviderProtocol)?.userID else {
+            throw ProTUNAdapter.Error.missingUserID
+        }
+        return .init(userID: userID, proTUN: config)
     }
 }
 

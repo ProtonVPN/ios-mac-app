@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CasePaths
+import ConnectionShared
 import CoreConnection
 import Dependencies
 import Domain
@@ -303,7 +304,7 @@ final class PacketTunnelManager: TunnelManager {
             peerIDs = []
         }
         let connectionSpec: ConnectionSpec
-        if let spec = try configuration.connectionSpec {
+        if let spec = try (configuration as? NETunnelProviderProtocol)?.connectionSpec {
             connectionSpec = spec
         } else if tunnelProtocol == .ike {
             // IKEv2 can't provide `configuration.connectionSpec`, we need to pass a `fallbackSpec`
@@ -527,16 +528,6 @@ private extension NEVPNStatus {
 }
 
 extension NEVPNProtocol {
-    /// The user's connection intent, decoded from the provider configuration written by `WireguardConfigurator.encodeProTUNConfiguration`.
-    /// Not available for IKE configurations, which use `NEVPNProtocolIKEv2` and carry no provider dictionary.
-    var connectionSpec: ConnectionSpec? {
-        get throws {
-            guard let providerProtocol = self as? NETunnelProviderProtocol else { return nil }
-            guard let data = providerProtocol.providerConfiguration?["connectionSpec"] as? Data else { return nil }
-            return try JSONDecoder().decode(ConnectionSpec.self, from: data)
-        }
-    }
-
     var peerIDs: [String] {
         get throws {
             guard self is NETunnelProviderProtocol else {
