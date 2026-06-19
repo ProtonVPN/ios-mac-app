@@ -181,7 +181,7 @@ private extension HermesSettingsView {
 
     func hermesPresentationView(alignment: HorizontalAlignment) -> some View {
         VStack(alignment: alignment, spacing: .themeSpacing24) {
-            Asset.hermes.swiftUIImage
+            Image(.hermes)
 
             VStack(alignment: alignment, spacing: .themeSpacing8) {
                 Text(Localizable.hermesFeatureTitle)

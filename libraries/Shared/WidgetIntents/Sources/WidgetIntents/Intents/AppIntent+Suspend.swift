@@ -20,16 +20,45 @@ import AppIntents
 import UIKit
 
 package extension AppIntent {
+    /// Returns the host app to the background after a widget-initiated action completes.
+    ///
+    /// The suspend action should happen when the app is actually active
+    /// Suspending before triggers a crash `__uikit_did_not_receive_a_remote_cacontext_from_coreanimation_`
+    /// If the app never becomes active within the timeout we skip the suspension
     func suspendAppIfSupported() async {
-        try? await Task.sleep(for: .seconds(1))
+        guard await waitUntilActive(timeout: .seconds(5)) else {
+            log.info("App did not become active in time; skipping suspension to avoid launch watchdog crash", category: .app)
+            return
+        }
+
+        try? await Task.sleep(for: .milliseconds(500))
+
         await MainActor.run {
-            let suspendSelector = #selector(URLSessionTask.suspend)
             let app = UIApplication.shared
+            guard app.applicationState == .active else {
+                log.info("App is no longer active; skipping app suspension", category: .app)
+                return
+            }
+            let suspendSelector = #selector(URLSessionTask.suspend)
             guard app.responds(to: suspendSelector) else {
                 log.error("UIApplication does not respond to suspend selector; skipping app suspension", category: .app)
                 return
             }
             _ = app.perform(suspendSelector)
         }
+    }
+
+    private func waitUntilActive(timeout: Duration) async -> Bool {
+        let pollInterval: Duration = .milliseconds(100)
+        var waited: Duration = .zero
+        while waited < timeout {
+            let isActive = await MainActor.run { UIApplication.shared.applicationState == .active }
+            if isActive {
+                return true
+            }
+            try? await Task.sleep(for: pollInterval)
+            waited += pollInterval
+        }
+        return await MainActor.run { UIApplication.shared.applicationState == .active }
     }
 }

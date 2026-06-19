@@ -82,7 +82,7 @@ final class NetShieldSelectionViewModel {
         let upsellCell = TableViewCellModel.imageSubtitle(
             title: Localizable.netshieldUpsellTitle,
             subtitle: Localizable.netshieldUpsellSubtitle,
-            image: Asset.netshieldSmall.image,
+            image: UIImage(resource: .netshieldSmall),
             handler: { [weak self] in
                 self?.alertService.push(alert: NetShieldUpsellAlert())
             }
