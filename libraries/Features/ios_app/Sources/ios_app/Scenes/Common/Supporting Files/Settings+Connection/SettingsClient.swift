@@ -84,9 +84,9 @@ extension SettingsClient: @retroactive DependencyKey {
             connectionCommandClient.send(.reconnect(nil)) // Caused by feature change
             log.assertionFailure("With ProTUN, there is no need to explicitly reconnect")
         },
-        update: { agentFeatures in
+        update: { featureChanges in
             @Dependency(\.connectionCommandClient) var connectionCommandClient
-            connectionCommandClient.send(.applySettings(agentFeatures))
+            connectionCommandClient.send(.applySettings(featureChanges))
         }
     )
 }

@@ -70,7 +70,7 @@ public struct ConnectionFeature: Sendable {
             case onLaunch
             case onLogout
             case connect(ConnectionPreparationIntent)
-            case applySettings(Set<ConnectionFeatureChange.AgentFeature>)
+            case applySettings(Set<ConnectionFeatureChange>)
             case onSessionChange
             case disconnect
         }
@@ -120,18 +120,26 @@ public struct ConnectionFeature: Sendable {
                 state.connectionState = ConnectionState.connecting(.unresolved(intent))
                 return .send(.prepare(intent))
 
-            case let .input(.applySettings(agentFeatures)):
-                // Input goes directly to the tunnel IPC which requests the new features.
-                log.info("applySettings", category: .connection, metadata: ["features": "\(agentFeatures)"])
+            case let .input(.applySettings(featureChanges)):
+                // Input goes directly to the tunnel IPC which requests the new features. Both agent
+                // features (applied by the Local Agent) and tunnel features (e.g. protocol, applied
+                // by the extension in place) are carried in a single configuration update.
+                log.info("applySettings", category: .connection, metadata: ["features": "\(featureChanges)"])
                 var update = ConnectionUpdate()
-                for feature in agentFeatures {
-                    switch feature {
-                    case let .netShield(type): update.netShield = type
-                    case let .vpnAccelerator(enabled): update.vpnAccelerator = enabled
-                    case let .moderateNAT(type): update.moderateNAT = type
-                    case let .portForwarding(enabled): update.portForwarding = enabled
+                for change in featureChanges {
+                    switch change {
+                    case let .agent(.netShield(type)): update.netShield = type
+                    case let .agent(.vpnAccelerator(enabled)): update.vpnAccelerator = enabled
+                    case let .agent(.moderateNAT(type)): update.moderateNAT = type
+                    case let .agent(.portForwarding(enabled)): update.portForwarding = enabled
+                    case let .tunnel(.connectionProtocol(connectionProtocol)): update.connectionProtocol = connectionProtocol
+                    case let .tunnel(.killSwitch(enabled)): update.killSwitch = enabled
+                    case let .tunnel(.allowLAN(enabled)): update.allowLAN = enabled
+                    case let .tunnel(.customDNS(enabled)): update.customDNS = enabled
+                    case let .tunnel(.onDemand(enabled)): update.onDemand = enabled
                     }
                 }
+                log.debug("Connection update", category: .connection, metadata: ["update": "\(update)"])
                 return .send(.tunnel(.requestConfigChange(update)))
 
             case .input(.disconnect):

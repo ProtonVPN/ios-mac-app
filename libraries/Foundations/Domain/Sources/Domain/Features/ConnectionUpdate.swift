@@ -76,7 +76,12 @@ public struct ConnectionUpdate: Identifiable, Sendable, Equatable, Codable {
 public extension ConnectionUpdate {
     /// Whether this update requests any feature changes that require touching the ``ProTUNConfiguration``.
     var hasConfigurationChanges: Bool {
-        location != nil || hasAgentChanges
+        location != nil || connectionProtocol != nil || hasAgentChanges
+    }
+
+    // Whether this update requires the ProTUN connection to be updated with a new set of peers
+    var hasPeerChanges: Bool {
+        location != nil || connectionProtocol != nil
     }
 
     /// Whether this update requests any Local Agent feature change (a feature that is provided by the server).

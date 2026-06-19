@@ -457,7 +457,7 @@ final class ConnectionSettingsViewModel {
         case .withConnectionUpdate:
             // in-place change when connected and using local agent
             setFeatureValue(newValue)
-            connectionCommandClient.send(.applySettings([.vpnAccelerator(enabled)]))
+            connectionCommandClient.send(.applySettings([.agent(.vpnAccelerator(enabled))]))
             completion(true)
         case .withReconnect:
             alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.vpnProtocol, confirmHandler: { [weak self] in

@@ -26,7 +26,7 @@ public enum ConnectionCommand: @unchecked Sendable {
     case disconnect(UserInitiatedVPNChange.VPNTrigger, completion: (@MainActor @Sendable () -> Void)? = nil)
     case retry
     case reconnect(ConnectionProtocol?)
-    case applySettings(Set<ConnectionFeatureChange.AgentFeature>)
+    case applySettings(Set<ConnectionFeatureChange>)
     case clearConnectionData(completion: (@MainActor @Sendable () -> Void)? = nil)
 }
 

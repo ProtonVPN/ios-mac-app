@@ -366,9 +366,12 @@ extension ProTUNAdapter {
         networkAvailable: Bool,
         localAgentSettings: LocalAgentSettings
     ) throws(ProTUNAdapter.Error) -> InitialConnectionConfig {
-        let peers = try proTUNConfig.peers.map { peer throws(ProTUNAdapter.Error) in
-            try PeerInfo(from: peer)
-        }
+        // Restrict transports ProTUN will attempt to connect with by constraining the peers
+        let peers = try proTUNConfig.peers
+            .compactMap { $0.constrained(to: proTUNConfig.preferredTransport) }
+            .map { peer throws(ProTUNAdapter.Error) in
+                try PeerInfo(from: peer)
+            }
         @Dependency(\.appInfo) var appInfo
 
         return .init(

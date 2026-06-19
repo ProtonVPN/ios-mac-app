@@ -866,7 +866,11 @@ final class SettingsViewModel {
 
             switch getProtocolChangeAvailability(for: newProtocol) {
             case .immediate:
-                break // we're not connected, so nothing needs to be done
+                // When connected, the extension applies the protocol change in place. When not
+                // connected, the persisted protocol is picked up on the next connection.
+                if settingsClient.isActive() {
+                    apply(tunnelFeatureChange: .connectionProtocol(newProtocol))
+                }
 
             case .protocolUnavailable:
                 requestDisconnect()
@@ -1050,7 +1054,13 @@ final class SettingsViewModel {
 
     private func apply(agentFeatureChange: ConnectionFeatureChange.AgentFeature) {
         DispatchQueue.main.async {
-            self.settingsClient.update(Set([agentFeatureChange]))
+            self.settingsClient.update(Set([.agent(agentFeatureChange)]))
+        }
+    }
+
+    private func apply(tunnelFeatureChange: ConnectionFeatureChange.TunnelFeature) {
+        DispatchQueue.main.async {
+            self.settingsClient.update(Set([.tunnel(tunnelFeatureChange)]))
         }
     }
 
