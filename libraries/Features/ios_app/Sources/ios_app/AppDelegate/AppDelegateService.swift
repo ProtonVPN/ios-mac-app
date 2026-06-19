@@ -42,6 +42,7 @@ import ProtonCoreUIFoundations
 import Settings
 import SharedErgonomics
 import Sharing
+import Strings
 import Telemetry
 import UIKit
 import VPNAppCore
@@ -500,8 +501,7 @@ public final class AppDelegateService: AppDelegateProtocol {
     }
 
     private func handleLogout() {
-        let alertService = container.makeCoreAlertService()
-        alertService.push(alert: RefreshTokenExpiredAlert())
+        appSessionManager.logOut(force: true, reason: Localizable.invalidRefreshTokenPleaseLogin)
     }
 
     private func handleForceUpgrade(message: String) {

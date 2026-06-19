@@ -160,26 +160,6 @@ public final class AppUpdateRequiredAlert: SystemAlert {
     }
 }
 
-public final class CannotAccessVpnCredentialsAlert: SystemAlert {
-    public var title: String?
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-
-    public init() {}
-}
-
-public final class RefreshTokenExpiredAlert: SystemAlert {
-    public var title: String?
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-
-    public init() {}
-}
-
 public final class UpgradeUnavailableAlert: SystemAlert {
     public var title: String? = Localizable.upgradeUnavailableTitle
     public var message: String?

@@ -622,7 +622,12 @@ private extension SidebarFeature {
                 return .merge(
                     .send(.connectionStateChanged(connectionState)),
                     .send(.syncNATPortMappingState),
-                    .send(.syncPlutoniumState)
+                    .send(.syncPlutoniumState),
+                    .run { _ in
+                        if connectionState.is(\.disconnected) {
+                            await pendingDisconnectCompletions.drainAndInvoke()
+                        }
+                    }
                 )
             // TODO: ProTUN: is it still needed?
 //            case .connection(.delegate(.disconnected)):

@@ -582,7 +582,7 @@ final class StatusMenuViewModel {
 
             updateCountryList()
         } catch {
-            alertService.push(alert: CannotAccessVpnCredentialsAlert())
+            appSessionManager.logOut(force: true, reason: Localizable.errorSignInAgain)
         }
     }
 

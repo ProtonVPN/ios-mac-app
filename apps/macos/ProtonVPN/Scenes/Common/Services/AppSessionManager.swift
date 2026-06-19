@@ -33,6 +33,7 @@ import os
 import ProtonCoreFeatureFlags
 import ProtonCoreUtilities
 import Sharing
+import Strings
 import Telemetry
 import VPNAppCore // UnauthKeychain
 import VPNShared
@@ -80,6 +81,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.activeTunnelInspector) private var activeTunnelInspector
     @Shared(.connectionState) private var connectionState: ConnectionState
 
+    /// While clearing, the keychains are wiped and the server database is closed and deleted.
+    /// However, we must not call logOut multiple times in parallel because we might get race in it, and assertionFailure in the GRDB
+    private var isClearingApplicationData = false
+
     var sessionStatus: SessionStatus = .notEstablished {
         didSet {
             loggedIn = sessionStatus == .established
@@ -91,6 +96,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         self.factory = factory
         super.init(factory: factory)
         propertiesManager.restoreStartOnBootStatus()
+        AppEvent.clearingApplicationData.subscribe(self, selector: #selector(tearDown(_:)))
+    }
+
+    @objc
+    private func tearDown(_: Notification) {
+        isClearingApplicationData = true
     }
 
     // MARK: public log in interface (completion handlers)
@@ -235,7 +246,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
 
         guard let vpnCredentials = try? vpnKeychain.fetch() else {
-            alertService.push(alert: CannotAccessVpnCredentialsAlert())
+            logOut(force: true, reason: Localizable.errorSignInAgain)
             throw CommonVpnError.fetchSession
         }
 
@@ -301,10 +312,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     func logOut(force: Bool, reason: String?) {
+        guard !isClearingApplicationData else { return }
+        guard sessionStatus != .notEstablished else { return } // already logged out
         switch connectionState {
         case .connected:
             confirmLogout(showAlert: !force) { [weak self] in
-                self?.connectionCommandClient.send(.disconnect(.signout, completion: {
+                self?.connectionCommandClient.send(.disconnect(.signout, completion: { [weak self] in
                     self?.logoutRoutine(reason: reason)
                 }))
             }
@@ -329,7 +342,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     private func logoutRoutine(reason: String?) {
         guard sessionStatus != .notEstablished else {
-            return
+            return // already logged out
         }
         sessionStatus = .notEstablished
         post(notification: SessionChanged(data: .lost(reason: reason)))
