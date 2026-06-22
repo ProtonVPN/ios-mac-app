@@ -107,7 +107,6 @@ final class NavigationService {
 
     // MARK: Storyboards
 
-    private lazy var launchStoryboard = UIStoryboard(name: "LaunchScreen", bundle: Bundle.module)
     private lazy var profilesStoryboard = UIStoryboard(name: "Profiles", bundle: Bundle.module)
 
     // MARK: Properties
@@ -148,12 +147,13 @@ final class NavigationService {
     }
 
     @MainActor
+    func showLaunchScreen() {
+        windowService.show(viewController: makeLaunchViewController())
+    }
+
+    @MainActor
     func launched() async {
         AppEvent.sessionManagerSessionChanged.subscribe(self, selector: #selector(sessionChanged))
-
-        if let launchViewController = makeLaunchViewController() {
-            windowService.show(viewController: launchViewController)
-        }
 
         registerForPushNotificationsIfNeeded()
 
@@ -272,11 +272,8 @@ final class NavigationService {
         windowService.show(viewController: tabBarVC)
     }
 
-    func makeLaunchViewController() -> LaunchViewController? {
-        if let launchViewController = launchStoryboard.instantiateViewController(withIdentifier: "LaunchViewController") as? LaunchViewController {
-            return launchViewController
-        }
-        return nil
+    func makeLaunchViewController() -> LaunchViewController {
+        LaunchViewController()
     }
 
     private func makeTabBarController() -> TabBarController {

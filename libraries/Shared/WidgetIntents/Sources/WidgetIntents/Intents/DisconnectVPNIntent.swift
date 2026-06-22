@@ -33,13 +33,30 @@ public struct DisconnectVPNIntent: AppIntent {
 
     private static let timeOut: Duration = .seconds(30)
 
+    @SharedReader(.connectionState) var connectionState
+
     public init() {}
 
+    func finishResolving() async throws {
+        // Wait until the connection state is not .resolving
+        try await $connectionState.when(
+            willMatch: { !$0.is(\.resolving) },
+            every: .milliseconds(200),
+            deadline: Self.timeOut,
+            operation: { _ in }
+        )
+    }
+
     public func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
+        do {
+            try await finishResolving()
+        } catch {
+            log.error("The connectionState hasn’t changed from `resolving` in \(Self.timeOut) seconds. Skipping the widget disconnect intent.", category: .connectionDisconnect)
+            return .result(value: false)
+        }
+
         @Dependencies.Dependency(\.connectionCommandClient) var connectionCommandClient
         connectionCommandClient.send(.disconnect(.widget))
-
-        @SharedReader(.connectionState) var connectionState
 
         log.debug("Waiting for connection state to update to <disconnected>", category: .connectionDisconnect)
 

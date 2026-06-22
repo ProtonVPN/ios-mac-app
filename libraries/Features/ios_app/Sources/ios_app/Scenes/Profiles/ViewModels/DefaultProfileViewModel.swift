@@ -26,8 +26,6 @@ import Connection
 import Dependencies
 import Domain
 import LegacyCommon
-import ProtonCoreFeatureFlags
-import ProtonCoreUIFoundations
 import Strings
 import Theme
 import UIKit
@@ -120,7 +118,7 @@ class DefaultProfileViewModel {
 
     var connectionChanged: (() -> Void)?
 
-    var connectIcon: UIImage? = IconProvider.powerOff
+    var connectIcon: UIImage = Theme.Asset.Icons.powerOff.image
 
     var title: String {
         switch serverOffering {
@@ -136,9 +134,9 @@ class DefaultProfileViewModel {
     var image: UIImage {
         switch serverOffering {
         case .fastest:
-            Asset.fastest.image
+            UIImage(resource: .fastest)
         case .random:
-            IconProvider.arrowsSwapRight
+            Theme.Asset.Icons.arrowsSwapRight.image
         default:
             UIImage()
         }

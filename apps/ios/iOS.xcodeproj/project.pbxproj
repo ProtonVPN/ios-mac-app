@@ -115,7 +115,6 @@
 		E55CCA9B2D30121E00FD0AAD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		E55CCA9D2D30121E00FD0AAD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		E5CE8CDF2F73F37800AE36BD /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Localizable.xcstrings; path = ../../libraries/Shared/WidgetIntents/Sources/WidgetIntents/Resources/Localizable.xcstrings; sourceTree = SOURCE_ROOT; };
-		EB7804852D6CF6DF00E75937 /* ConnectWidgetExtensionProfile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ConnectWidgetExtensionProfile.entitlements; sourceTree = "<group>"; };
 		F38BB450265C0CF600329619 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../ios/Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -158,6 +157,7 @@
 		A4681A982FD95ECB00901B14 /* Exceptions for "ProtonVPN" folder in "ProtonVPN" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				"Info-Debug.plist",
 				Info.plist,
 				ObfuscatedConstants.example.swift,
 			);
@@ -299,7 +299,6 @@
 		791DE5D0208DDA3000A29EA5 = {
 			isa = PBXGroup;
 			children = (
-				EB7804852D6CF6DF00E75937 /* ConnectWidgetExtensionProfile.entitlements */,
 				F38BB450265C0CF600329619 /* Config.xcconfig */,
 				ADA595EC2F34C0670087E150 /* Version.xcconfig */,
 				A4681A6F2FD95E5700901B14 /* External */,
@@ -828,7 +827,8 @@
 					"$(PROJECT_DIR)/OpenPGP/headers/",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = ProtonVPN/Info.plist;
+				INFOPLIST_FILE = "ProtonVPN/Info-Debug.plist";
+				INFOPLIST_KEY_UILaunchStoryboardName = VPNLaunchScreen.storyboard;
 				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1188,7 +1188,8 @@
 					"$(PROJECT_DIR)/OpenPGP/headers/",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = ProtonVPN/Info.plist;
+				INFOPLIST_FILE = "ProtonVPN/Info-Debug.plist";
+				INFOPLIST_KEY_UILaunchStoryboardName = VPNLaunchScreen.storyboard;
 				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1223,6 +1224,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = ProtonVPN/Info.plist;
+				INFOPLIST_KEY_UILaunchStoryboardName = VPNLaunchScreen.storyboard;
 				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1424,7 +1426,8 @@
 					"$(PROJECT_DIR)/OpenPGP/headers/",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = ProtonVPN/Info.plist;
+				INFOPLIST_FILE = "ProtonVPN/Info-Debug.plist";
+				INFOPLIST_KEY_UILaunchStoryboardName = VPNLaunchScreen.storyboard;
 				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1612,7 +1615,7 @@
 		EBE8244F2D5BAE0D00E8D787 /* Profile */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = ConnectWidgetExtensionProfile.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ConnectWidget/ConnectWidgetExtensionProfile.entitlements;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ConnectWidget/Info.plist;

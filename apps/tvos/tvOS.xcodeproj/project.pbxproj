@@ -49,12 +49,17 @@
 		4C54B0312BC027FF00315A3B /* tvOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tvOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C54B0442BC0288F00315A3B /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		4C54B04B2BC02AB200315A3B /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
-		66E03DB42C088C010063E453 /* ProtonVPN-TV.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ProtonVPN-TV.entitlements"; sourceTree = "<group>"; };
 		A46814F32FD8415900901B14 /* ProTUN-Extension-TV.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "ProTUN-Extension-TV.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		AD8181682C10C6D200E59BD4 /* ProtonVPN-TV-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "ProtonVPN-TV-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		A4137CC72FE59392003917FE /* Exceptions for "ProtonVPN" folder in "ProtonVPN-tvOS" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"ProtonVPN-TV-Info.plist",
+			);
+			target = 4C54B0162BC027FD00315A3B /* ProtonVPN-tvOS */;
+		};
 		A454BAD02FDC159C00218EF0 /* Exceptions for "ProtonVPN" folder in "ProTUN-Extension-TV" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -88,6 +93,7 @@
 		A468188C2FD9450200901B14 /* ProtonVPN */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				A4137CC72FE59392003917FE /* Exceptions for "ProtonVPN" folder in "ProtonVPN-tvOS" target */,
 				A454BAD02FDC159C00218EF0 /* Exceptions for "ProtonVPN" folder in "ProTUN-Extension-TV" target */,
 			);
 			path = ProtonVPN;
@@ -131,8 +137,6 @@
 		4C54B00E2BC027FD00315A3B = {
 			isa = PBXGroup;
 			children = (
-				AD8181682C10C6D200E59BD4 /* ProtonVPN-TV-Info.plist */,
-				66E03DB42C088C010063E453 /* ProtonVPN-TV.entitlements */,
 				4C54B0442BC0288F00315A3B /* Config.xcconfig */,
 				A468188C2FD9450200901B14 /* ProtonVPN */,
 				A46818932FD9451700901B14 /* TestPlans */,
@@ -510,13 +514,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "ProtonVPN-TV.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "ProtonVPN/ProtonVPN-TV.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2407112124;
 				DONT_GENERATE_INFOPLIST_FILE = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "ProtonVPN-TV-Info.plist";
+				INFOPLIST_FILE = "ProtonVPN/ProtonVPN-TV-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Proton VPN";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -542,13 +546,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "ProtonVPN-TV.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "ProtonVPN/ProtonVPN-TV.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DONT_GENERATE_INFOPLIST_FILE = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "ProtonVPN-TV-Info.plist";
+				INFOPLIST_FILE = "ProtonVPN/ProtonVPN-TV-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Proton VPN";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -30,8 +30,6 @@ import Foundation
 import LegacyCommon
 import Localization
 import Persistence
-import ProtonCoreFeatureFlags
-import ProtonCoreUIFoundations
 import Strings
 import Theme
 import UIKit
@@ -79,17 +77,17 @@ final class ProfileItemViewModel {
 
     var connectionChanged: (() -> Void)?
 
-    let connectedConnectIcon: ImageAsset.Image = IconProvider.powerOff
+    let connectedConnectIcon: Theme.ImageAsset.Image = Theme.Asset.Icons.powerOff.image
 
-    var connectIcon: UIImage? {
+    var connectIcon: UIImage {
         if isUsersTierTooLow {
-            IconProvider.lock
+            Theme.Asset.Icons.lock.image
         } else if underMaintenance {
-            IconProvider.wrench
+            Theme.Asset.Icons.wrench.image
         } else if connectedUiState {
             connectedConnectIcon
         } else {
-            IconProvider.powerOff
+            Theme.Asset.Icons.powerOff.image
         }
     }
 
@@ -281,7 +279,10 @@ final class ProfileItemViewModel {
         let profileDescription = description.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         let countryName = LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
         let attributedCountryName = countryName.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
-        let doubleArrow = NSAttributedString.imageAttachment(image: IconProvider.chevronsRight, baselineOffset: -4)
+        let doubleArrow = NSAttributedString.imageAttachment(
+            image: Theme.Asset.Icons.chevronsRight.image,
+            baselineOffset: -4
+        )
 
         if serverType == .secureCore {
             return NSAttributedString.concatenate(profileDescription, buffer, doubleArrow, buffer, attributedCountryName)
@@ -291,7 +292,10 @@ final class ProfileItemViewModel {
     }
 
     private func customServerDescriptor(forModel serverModel: ServerModel) -> NSAttributedString {
-        let doubleArrow = NSAttributedString.imageAttachment(image: IconProvider.chevronsRight, baselineOffset: -4)
+        let doubleArrow = NSAttributedString.imageAttachment(
+            image: Theme.Asset.Icons.chevronsRight.image,
+            baselineOffset: -4
+        )
 
         if serverModel.isSecureCore {
             let entryCountry = (serverModel.entryCountry + "  ").attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)

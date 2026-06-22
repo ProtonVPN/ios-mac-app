@@ -105,6 +105,12 @@ public final class AppDelegateService: AppDelegateProtocol {
         }
         log.info("applicationDidFinishLaunchingWithOptions", category: .os)
 
+        // Show the launch screen first before anything else
+        // should fix black screen issue + widget suspendAction
+        MainActor.assumeIsolated {
+            navigationService.showLaunchScreen()
+        }
+
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
 
         Task { @MainActor in

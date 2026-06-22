@@ -64,16 +64,10 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocalNetworkUsageDescription</key>
-	<string>Atlantis would use Bonjour Service to discover Proxyman app from your local network. Atlantis uses it to transfer the data from your iOS app to Proxyman macOS for debugging purposes.</string>
-	<key>NSBonjourServices</key>
-    <array>
-    	<string>_Proxyman._tcp</string>
-    </array>
 	<key>UIBackgroundModes</key>
 	<array>
-    	<string>remote-notification</string>
-    </array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>VPNLaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -113,14 +107,12 @@
 	<string>Dark</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<!-- Send copies of winning postbacks to ourselves -->
 	<key>NSAdvertisingAttributionReportEndpoint</key>
 	<string>https://protonvpn.com/</string>
 	<key>AttributionCopyEndpoint</key>
 	<string>https://protonvpn.com/</string>
 	<key>SKAdNetworkItems</key>
 	<array>
-		<!-- google -->
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
 			<string>eqhxz8m8av.skadnetwork</string>
@@ -133,7 +125,6 @@
 			<key>SKAdNetworkIdentifier</key>
 			<string>klf5c3l5u5.skadnetwork</string>
 		</dict>
-		<!-- meta -->
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
 			<string>v9wttpbfk9.skadnetwork</string>
@@ -142,7 +133,6 @@
 			<key>SKAdNetworkIdentifier</key>
 			<string>n38lu8286q.skadnetwork</string>
 		</dict>
-		<!-- tiktok -->
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
 			<string>mj797d8u6f.skadnetwork</string>
@@ -159,12 +149,10 @@
 			<key>SKAdNetworkIdentifier</key>
 			<string>22mmun2rn5.skadnetwork</string>
 		</dict>
-		<!-- reddit -->
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
 			<string>2tdux39lx8.skadnetwork</string>
 		</dict>
-		<!-- twitter -->
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
 			<string>n66cz3y3bx.skadnetwork</string>
