@@ -24,6 +24,7 @@
     import DomainTestSupport
     @testable import ExtensionManager
     import Foundation
+    import IPCErgonomics
     @testable import LocalAgent
     import LocalAgentIPC
     import class NetworkExtension.NETunnelProviderProtocol
@@ -68,14 +69,20 @@
             try ProTUNConfigurationCoder.encode(configuration: .init(preferredTransport: .udp, peers: [], dnsServers: []), to: config)
             connectedManager.protocolConfiguration = config
 
+            let connectionDataChannel = try IPCNotifications.RawChannel<IPCConnectionDataPayload>(
+                notification: .init(name: "test.connectionData.\(UUID().uuidString)"),
+                fileURL: FileManager.default.temporaryDirectory.appending(component: "test_cd_\(UUID().uuidString)")
+            )
+            connectionDataChannel.mutate {
+                $0 = IPCConnectionDataPayload(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, userISP: nil, userIP: nil))
+            }
+
             try await withDependencies {
                 $0.date = .constant(now)
                 $0.vpnManagerRepository.managers = {
                     [.ike: disconnectingManager, .wireGuard(.proTUN): connectedManager]
                 }
-                $0.localAgent.connectionData = {
-                    .init(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, userISP: nil, userIP: nil))
-                }
+                $0.rawChannels.connectionData = { connectionDataChannel }
             } operation: {
                 let status = try await PacketTunnelManager().status
                 XCTAssertEqual(

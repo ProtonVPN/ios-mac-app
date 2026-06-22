@@ -165,4 +165,36 @@ struct RawChannelTests {
         #expect(channel.payloadOffset == 8)
         #expect(MemoryLayout<IPCTestPayload>.alignment <= 8)
     }
+
+    @Test
+    func coalescedViewsStayIsolatedAndDemuxByGeneration() async throws {
+        // Two channels viewing one shared buffer at different sub-region offsets.
+        // Each has its own seqlock, both share a single notification and demux by generation count.
+        let regionStride = MemoryLayout<IPCTestRegion>.stride
+        let region = try IPCNotifications.SharedRegion(fileURL: tmpURL(), size: regionStride * 2)
+        let notification = uniqueNotification()
+        let viewA = IPCNotifications.RawChannel<IPCTestPayload>(notification: notification, region: region, regionOffset: 0)
+        let viewB = IPCNotifications.RawChannel<IPCTestPayload>(notification: notification, region: region, regionOffset: regionStride)
+
+        // Isolation: a write through one view never bleeds into the other's sub-region.
+        viewA.mutate { $0.timestamp = 111 }
+        #expect(try viewA.read().timestamp == 111)
+        #expect(try viewB.read().timestamp == 0)
+
+        viewB.mutate { $0.timestamp = 222 }
+        #expect(try viewA.read().timestamp == 111)
+        #expect(try viewB.read().timestamp == 222)
+
+        // Generation demux: a sibling's write neither advances this view's generation...
+        let genABeforeSiblingWrite = viewA.generation
+        viewB.mutate { $0.timestamp = 333 }
+        #expect(viewA.generation == genABeforeSiblingWrite)
+
+        // ...nor reaches its stream. (only A's own write does, and the latest value is delivered.)
+        let aStream = viewA.stream()
+        viewB.mutate { $0.timestamp = 444 }
+        viewA.mutate { $0.timestamp = 555 }
+        let delivered = await aStream.first
+        #expect(delivered?.timestamp == 555)
+    }
 }

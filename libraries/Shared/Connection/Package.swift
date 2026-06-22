@@ -71,6 +71,7 @@ let package = Package(
                 .product(name: "IPCErgonomics", package: "Ergonomics"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         ),

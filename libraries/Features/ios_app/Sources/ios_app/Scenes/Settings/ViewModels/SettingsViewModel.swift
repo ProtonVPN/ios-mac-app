@@ -78,6 +78,13 @@ final class SettingsViewModel {
     private let protocolService: ProtocolService
     private var cancellables = Set<AnyCancellable>()
 
+    /// The different in-flight settings waiting to be confirmed by the LocalAgent.
+    private enum AgentToggle { case nat, vpnAccelerator }
+    private var applyingToggles: Set<AgentToggle> = []
+    private var applyingTimeouts: [AgentToggle: Task<Void, Never>] = [:]
+
+    private static let applyingTimeout: Duration = .seconds(3)
+
     var reloadNeeded: (() -> Void)?
 
     @Dependency(\.settingsClient) var settingsClient
@@ -114,6 +121,7 @@ final class SettingsViewModel {
         }
 
         startObserving()
+        observeAppliedFeatures()
     }
 
     var tableViewData: [TableViewSection] {
@@ -407,10 +415,50 @@ final class SettingsViewModel {
         return applied
     }
 
+    /// Reloads the toggle rows whenever the applied features change to show/hide any progress spinners.
+    private func observeAppliedFeatures() {
+        $appliedFeatures.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.clearConfirmedApplyingToggles() }
+            .store(in: &cancellables)
+    }
+
+    private func markApplying(_ toggle: AgentToggle) {
+        applyingToggles.insert(toggle)
+        applyingTimeouts[toggle]?.cancel()
+        applyingTimeouts[toggle] = Task { @MainActor [weak self] in
+            try? await Task.sleep(for: Self.applyingTimeout)
+            guard !Task.isCancelled else { return }
+            self?.clearApplying(toggle)
+        }
+        reloadNeeded?()
+    }
+
+    private func clearApplying(_ toggle: AgentToggle) {
+        applyingTimeouts[toggle]?.cancel()
+        applyingTimeouts[toggle] = nil
+        guard applyingToggles.remove(toggle) != nil else { return }
+        reloadNeeded?()
+    }
+
+    /// Clears any applying toggle whose applied value now matches what the user requested (confirmed by LocalAgent).
+    private func clearConfirmedApplyingToggles() {
+        guard let applied = appliedFeatures else { return }
+        let confirmed = applyingToggles.filter { toggle in
+            switch toggle {
+            case .nat: applied.natType == natTypePropertyProvider.getNATType()
+            case .vpnAccelerator: applied.vpnAccelerator == (AuthorizedFeatureValue<VPNAccelerator>().value() == .on)
+            }
+        }
+        confirmed.forEach { clearApplying($0) }
+    }
+
     private var vpnAcceleratorSection: [TableViewCellModel] {
         [
             .upsellableToggle(
                 title: Localizable.vpnAcceleratorTitle,
+                isOverridden: appliedVPNAcceleratorOverride,
+                isApplying: applyingToggles.contains(.vpnAccelerator),
                 state: { [unowned self] in displayState(for: VPNAccelerator.self) },
                 upsell: { [weak self] in self?.alertService.push(alert: VPNAcceleratorUpsellAlert()) },
                 handler: { toggleOn, callback in
@@ -425,13 +473,13 @@ final class SettingsViewModel {
                             setFeatureValue(acceleratorValue)
                             self.apply(agentFeatureChange: .vpnAccelerator(toggleOn))
                             callback(toggleOn)
+                            self.markApplying(.vpnAccelerator)
                         case .immediate:
                             setFeatureValue(toggleOn ? VPNAccelerator.on : VPNAccelerator.off)
                             callback(toggleOn)
                         }
                     }
-                },
-                isOverridden: appliedVPNAcceleratorOverride
+                }
             ),
             .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.vpnAcceleratorDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.vpnAcceleratorDescriptionAltLink, withUrl: VPNLink.vpnAccelerator.urlString)),
         ]
@@ -504,6 +552,8 @@ final class SettingsViewModel {
         [
             .upsellableToggle(
                 title: Localizable.moderateNatTitle,
+                isOverridden: appliedNATOverride,
+                isApplying: applyingToggles.contains(.nat),
                 state: { [unowned self] in moderateNATState },
                 upsell: { [weak self] in self?.alertService.push(alert: ModerateNATUpsellAlert()) },
                 handler: { [weak self] toggleOn, callback in
@@ -519,13 +569,13 @@ final class SettingsViewModel {
                             self?.natTypePropertyProvider.setNATType(natType)
                             self?.apply(agentFeatureChange: .moderateNAT(natType))
                             callback(toggleOn)
+                            self?.markApplying(.nat)
                         case .immediate:
                             self?.natTypePropertyProvider.setNATType(natType)
                             callback(toggleOn)
                         }
                     }
-                },
-                isOverridden: appliedNATOverride
+                }
             ),
             .attributedTooltip(
                 text: NSMutableAttributedString(

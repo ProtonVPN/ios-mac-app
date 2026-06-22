@@ -19,14 +19,9 @@
 import IPCErgonomics
 
 public extension IPCNotifications.Notification {
-    static let extensionForkSelectorRequest: Self = .init(name: "ch.protonmail.vpn.protun.extensionForkSelectorRequest")
-}
+    /// A raw channel has been updated, the payload will indicate which field.
+    static let tunnelData: Self = .init(name: "ch.protonmail.vpn.protun.tunnelData")
 
-public extension IPCNotifications.Notification {
-    // Each of these corresponds to a `RawChannel` conveying information to the main app / other extensions.
-    static let connectionData: Self = .init(name: "ch.protonmail.vpn.protun.connectionData")
-    static let localAgentStats: Self = .init(name: "ch.protonmail.vpn.protun.localAgentStats")
-    static let localAgentConnectionStats: Self = .init(name: "ch.protonmail.vpn.protun.localAgentConnectionStats")
-    static let localAgentError: Self = .init(name: "ch.protonmail.vpn.protun.localAgentError")
-    static let localAgentFeatures: Self = .init(name: "ch.protonmail.vpn.protun.localAgentFeatures")
+    /// The extension needs a fresh session; the app should fork its own and send it as a provider message.
+    static let extensionForkSelectorRequest: Self = .init(name: "ch.protonmail.vpn.protun.extensionForkSelectorRequest")
 }

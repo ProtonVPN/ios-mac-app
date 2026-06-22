@@ -30,7 +30,7 @@ final class LocalAgentCoordinator: @unchecked Sendable {
         case forkSelectorRequest
     }
 
-    @Dependency(\.localAgent) var localAgentClient
+    @Dependency(\.rawChannels) var rawChannels
 
     let streamSource: StreamSource<Event>
 
@@ -119,12 +119,12 @@ private extension LocalAgentCoordinator {
                     userISP: agent?.userIspName,
                     userIP: agent?.userIspIp
                 )
-                localAgentClient.writeConnectionData { $0 = IPCConnectionDataPayload(currentPeer) }
+                rawChannels.connectionData()?.mutate { $0 = IPCConnectionDataPayload(currentPeer) }
                 Logger.localAgent.info("Published peer to connectionData channel (connected): id=\(peer.peerId, privacy: .public) transport=\(String(describing: currentPeer.transport), privacy: .public) exitV4=\(currentPeer.serverExitV4 ?? "nil", privacy: .public)")
 
                 if let agent {
                     // Publish changes to the app, and persist actual settings to disk in case we crash
-                    localAgentClient.writeAppliedFeatures { $0 = IPCAgentFeaturesPayload(agent.settings.agentTunnelFeatures) }
+                    rawChannels.localAgentFeatures()?.mutate { $0 = IPCAgentFeaturesPayload(agent.settings.agentTunnelFeatures) }
                     await adapter?.enqueueEffectiveLocalAgentSettings(agent.settings)
                 }
             case let .connectingToLocalAgent(peer, _):
@@ -135,7 +135,7 @@ private extension LocalAgentCoordinator {
                     userISP: nil,
                     userIP: nil
                 )
-                localAgentClient.writeConnectionData { $0 = IPCConnectionDataPayload(currentPeer) }
+                rawChannels.connectionData()?.mutate { $0 = IPCConnectionDataPayload(currentPeer) }
                 Logger.localAgent.info("Published peer to connectionData channel (connectingToLocalAgent): id=\(peer.peerId, privacy: .public) transport=\(String(describing: currentPeer.transport), privacy: .public)")
             default:
                 break
@@ -154,14 +154,14 @@ private extension LocalAgentCoordinator {
 
 private extension LocalAgentCoordinator {
     func sendLocalAgentStats(stats: LocalAgent.Stats) {
-        localAgentClient.writeTrafficStats { $0 = IPCStatsPayload(stats) }
+        rawChannels.localAgentStats()?.mutate { $0 = IPCStatsPayload(stats) }
     }
 
     func sendConnectionStats(stats: LocalAgent.ConnectionStats) {
-        localAgentClient.writeConnectionStats { $0 = IPCConnectionStatsPayload(stats) }
+        rawChannels.localAgentConnectionStats()?.mutate { $0 = IPCConnectionStatsPayload(stats) }
     }
 
     func sendError(error: LocalAgent.Error) {
-        localAgentClient.reportError(error)
+        rawChannels.localAgentError()?.mutate { $0 = IPCErrorPayload(error) }
     }
 }

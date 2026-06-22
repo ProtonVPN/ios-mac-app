@@ -31,6 +31,14 @@ import VPNAppCore
 import VPNCoreCommon
 import VPNCoreTypes
 
+#if os(macOS)
+    /// Used for attaching to the ``RawChannel`` streams on macOS.
+    private let tunnelDataXPCClient = TunnelDataXPCClient(
+        machServiceName: "\(DomainConstants.appIdentifierPrefix)group.ch.protonvpn.mac.WireGuard-Extension",
+        log: { log.info("\($0)", category: .connection) }
+    )
+#endif
+
 enum TunnelMessageTarget {
     /// Send to whichever extension is currently active.
     case active
@@ -233,12 +241,23 @@ final class PacketTunnelManager: TunnelManager {
                     .notifications(named: .NEVPNStatusDidChange)
                     .compactMap { StatusChangePayload.from(statusDidChangeNotification: $0) }
                 for await payload in notifications {
-                    await continuation.yield(self.currentTunnelState(after: payload))
+                    let state = await self.currentTunnelState(after: payload)
+                    continuation.yield(state)
+
+                    #if os(macOS)
+                        // macOS: ask for the `RawChannel` region from the extension as soon as we begin connecting.
+                        switch state {
+                        case .connecting:
+                            tunnelDataXPCClient.attachRegion()
+                        default:
+                            break
+                        }
+                    #endif
                 }
             }
             let connectionDataTask = Task {
-                @Dependency(\.localAgent) var localAgent
-                for await _ in localAgent.connectionDataStream() {
+                @Dependency(\.rawChannels) var rawChannels
+                for await _ in rawChannels.connectionData()?.currentPeerStream() ?? .finished {
                     // Updates to the connection data over the `RawChannel`.
                     guard let state = try? await self.status else { continue }
                     continuation.yield(state)
@@ -410,9 +429,9 @@ final class PacketTunnelManager: TunnelManager {
             throw TunnelDataError.unsupportedBackend
 
         case .wireGuard(.proTUN):
-            @Dependency(\.localAgent) var localAgent
+            @Dependency(\.rawChannels) var rawChannels
             // `currentPeer` is nil until the extension publishes the peer to the raw channel.
-            let peer = try localAgent.connectionData().currentPeer
+            let peer = rawChannels.connectionData()?.currentPeer()
             return DynamicConnectionData(
                 currentPeerId: peer?.peerID,
                 connectionDate: connectionDate,

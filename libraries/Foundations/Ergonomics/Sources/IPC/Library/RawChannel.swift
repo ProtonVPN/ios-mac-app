@@ -39,20 +39,38 @@ public extension IPCNotifications {
     final class RawChannel<Payload: BitwiseCopyable>: Sendable {
         public let notification: Notification
         let payloadOffset: Int
-        private let buffer: MmapBuffer
+        private let region: SharedRegion
+        /// Byte offset of this channel's sub-region (its seqlock header) within the shared buffer.
+        private let regionOffset: Int
 
         /// Seqlock only protects cross-process readers from one writer. `writeLock` exists to make sure only one
         /// *in-process* writer is mutating the channel at any given time.
         private let writeLock = OSAllocatedUnfairLock()
 
-        public init(notification: Notification, fileURL: URL) throws {
+        /// Absolute byte offset of this channel's payload within the shared buffer (sub-region header + alignment pad).
+        var payloadBaseOffset: Int {
+            regionOffset + payloadOffset
+        }
+
+        private static func computePayloadOffset() -> Int {
             let headerSize = MemoryLayout<IPCSharedHeader>.size
             let alignment = MemoryLayout<Payload>.alignment
             // Bit trick to round headerSize up to the next multiple of the `Payload` alignment.
-            let payloadOffset = (headerSize + alignment - 1) & ~(alignment - 1)
-            self.buffer = try .init(path: fileURL.path(), size: payloadOffset + MemoryLayout<Payload>.size)
-            self.payloadOffset = payloadOffset
+            return (headerSize + alignment - 1) & ~(alignment - 1)
+        }
+
+        /// A view onto a sub-region of a shared buffer. Assumes a seqlock at `regionOffset`, followed by the payload.
+        public init(notification: Notification, region: SharedRegion, regionOffset: Int) {
+            self.payloadOffset = Self.computePayloadOffset()
+            self.region = region
+            self.regionOffset = regionOffset
             self.notification = notification
+        }
+
+        public convenience init(notification: Notification, fileURL: URL) throws {
+            let payloadOffset = Self.computePayloadOffset()
+            let region = try SharedRegion(fileURL: fileURL, size: payloadOffset + MemoryLayout<Payload>.size)
+            self.init(notification: notification, region: region, regionOffset: 0)
         }
     }
 }
@@ -63,11 +81,11 @@ public extension IPCNotifications.RawChannel {
     /// Mutates the payload in-place under seqlock protection, then notify observers.
     /// - Parameter body: a closure with an instance you can modify.
     func mutate(_ body: (inout Payload) -> Void) {
-        let offset = payloadOffset
         writeLock.lock()
-        buffer.withUnsafeMutableBytes { base in
+        region.withUnsafeMutableBytes { full in
+            let base = full.advanced(by: regionOffset)
             ipc_seqlock_begin_write(base)
-            body(&base.advanced(by: offset).assumingMemoryBound(to: Payload.self).pointee)
+            body(&full.advanced(by: payloadBaseOffset).assumingMemoryBound(to: Payload.self).pointee)
             ipc_seqlock_end_write(base)
         }
         writeLock.unlock()
@@ -84,11 +102,12 @@ public extension IPCNotifications.RawChannel {
         guard let fieldOffset = MemoryLayout<Payload>.offset(of: keyPath) else {
             throw FieldNotFound()
         }
-        let offset = payloadOffset + fieldOffset
+        let offset = payloadBaseOffset + fieldOffset
         writeLock.lock()
-        buffer.withUnsafeMutableBytes { base in
+        region.withUnsafeMutableBytes { full in
+            let base = full.advanced(by: regionOffset)
             ipc_seqlock_begin_write(base)
-            base.advanced(by: offset).assumingMemoryBound(to: T.self).pointee = value
+            full.advanced(by: offset).assumingMemoryBound(to: T.self).pointee = value
             ipc_seqlock_end_write(base)
         }
         writeLock.unlock()
@@ -105,17 +124,17 @@ public extension IPCNotifications.RawChannel {
 public extension IPCNotifications.RawChannel {
     /// Uses the atomic seqlock as a generation counter, to detect any missed reads.
     var generation: UInt64 {
-        buffer.withUnsafeMutableBytes { ipc_seqlock_read_begin($0) } / 2
+        region.withUnsafeMutableBytes { ipc_seqlock_read_begin($0.advanced(by: regionOffset)) } / 2
     }
 
     /// Takes the seqlock and zero-fills the payload. Does *not* send a notification.
     func zero() {
-        let offset = payloadOffset
         let size = MemoryLayout<Payload>.size
         writeLock.lock()
-        buffer.withUnsafeMutableBytes { base in
+        region.withUnsafeMutableBytes { full in
+            let base = full.advanced(by: regionOffset)
             ipc_seqlock_begin_write(base)
-            memset(base.advanced(by: offset), 0, size)
+            memset(full.advanced(by: payloadBaseOffset), 0, size)
             ipc_seqlock_end_write(base)
         }
         writeLock.unlock()
@@ -131,24 +150,16 @@ public extension IPCNotifications.RawChannel {
     /// - Parameter retries: the amount of retries if seqlock doesn't match.
     /// - Returns: A `Payload` value, or throws if it wasn't able to extract a value from the buffer.
     func read(retries: Int = 20) throws -> Payload {
-        let offset = payloadOffset
-        return try buffer.withUnsafeMutableBytes { base in
-            for _ in 0 ..< retries {
-                let seq = ipc_seqlock_read_begin(base)
-                let snapshot = base.advanced(by: offset).assumingMemoryBound(to: Payload.self).pointee
-                if ipc_seqlock_read_end(base, seq) {
-                    return snapshot
-                }
-            }
-            throw SeqlockContention()
-        }
+        try readField(at: payloadBaseOffset, of: Payload.self, retries: retries)
     }
 
+    /// Reads a value at an absolute offset within the shared buffer, under that channel's seqlock.
     private func readField<T>(at offset: Int, of _: T.Type, retries: Int = 20) throws -> T {
-        try buffer.withUnsafeMutableBytes { base in
+        try region.withUnsafeMutableBytes { full in
+            let base = full.advanced(by: regionOffset)
             for _ in 0 ..< retries {
                 let seq = ipc_seqlock_read_begin(base)
-                let value = base.advanced(by: offset).assumingMemoryBound(to: T.self).pointee
+                let value = full.advanced(by: offset).assumingMemoryBound(to: T.self).pointee
                 if ipc_seqlock_read_end(base, seq) {
                     return value
                 }
@@ -177,7 +188,16 @@ public extension IPCNotifications.RawChannel {
         on queue: DispatchQueue,
         handler: @escaping (Result<Payload, any Swift.Error>) -> Void
     ) -> IPCNotifications.Token {
-        IPCNotifications.observeRawState(notification, queue: queue) { _ in
+        // Several channels can share one notification on a coalesced buffer, re-read only when our sub-region changed.
+        let lastSeen = OSAllocatedUnfairLock<UInt64>(initialState: generation)
+        return IPCNotifications.observeRawState(notification, queue: queue) { _ in
+            let current = self.generation
+            let advanced = lastSeen.withLock { seen -> Bool in
+                guard current != seen else { return false }
+                seen = current
+                return true
+            }
+            guard advanced else { return }
             do {
                 let value = try self.read()
                 handler(.success(value))
@@ -212,13 +232,16 @@ public extension IPCNotifications.RawChannel {
         onUnrelatedFieldChange: (() -> Void)? = nil
     ) -> IPCNotifications.Token {
         IPCNotifications.observeRawState(notification, queue: queue) { payload in
-            // We're extracting the field offset via the 4 upper bytes of the notify token
+            // The notify token packs the field offset in the upper 4 bytes and the field size in the lower 4.
+            // Make sure that it matches the field that we're currently subscribed to.
             let fieldOffset = Int(Int32(bitPattern: UInt32(payload >> 32)))
-            guard MemoryLayout<Payload>.offset(of: keyPath) == fieldOffset else {
+            let fieldSize = Int(Int32(bitPattern: UInt32(payload & 0xFFFF_FFFF)))
+            guard MemoryLayout<Payload>.offset(of: keyPath) == fieldOffset,
+                  MemoryLayout<T>.size == fieldSize else {
                 onUnrelatedFieldChange?()
                 return
             }
-            let offset = self.payloadOffset + fieldOffset
+            let offset = self.payloadBaseOffset + fieldOffset
             do {
                 let value = try self.readField(at: offset, of: T.self)
                 handler(.success(value))
@@ -237,6 +260,20 @@ public extension IPCNotifications.RawChannel {
             let token = observe { result in
                 if let value = try? result.get() {
                     continuation.yield(value)
+                }
+            }
+            let observation = token.observation()
+            continuation.onTermination = { _ in observation.cancel() }
+        }
+    }
+
+    /// A stream of success payloads transformed into a domain value `T`.
+    /// - Returns: An `AsyncStream` of transformed values.
+    func stream<T: Sendable>(_ transform: @escaping @Sendable (Payload) -> T) -> AsyncStream<T> {
+        AsyncStream { continuation in
+            let token = observe { result in
+                if let value = try? result.get() {
+                    continuation.yield(transform(value))
                 }
             }
             let observation = token.observation()

@@ -69,6 +69,8 @@ public struct CoreConnectionFeature: Sendable {
         case stopObserving
         /// Starts the disconnection process and clears relevant keychains and configurations
         case handleLogout
+        /// An error payload was received over the error ``RawChannel``; the reducer decides how to react.
+        case errorReceived(IPCErrorPayload)
         /// Tunnel/NetworkExtension child reducer action
         case tunnel(ExtensionFeature.Action)
         /// Delegate action expected to be handled by the parent
@@ -109,32 +111,11 @@ public struct CoreConnectionFeature: Sendable {
         Reduce { state, action in
             switch action {
             case .startObserving:
+                @Dependency(\.rawChannels) var rawChannels
                 return .merge(
                     .send(.tunnel(.startObserving)),
-                    .run { send in
-                        // The error stream from the network extension, communicated via RawChannel.
-                        @Dependency(\.localAgent) var localAgent
-                        for await payload in localAgent.errorStream() {
-                            guard payload.hasError else { continue }
-                            let localAgentError = payload.localAgentError
-                            if case .certificateRefreshFatalError? = localAgentError {
-                                log.error("Local Agent fatal certificate refresh error (error channel)", category: .connection)
-                                await send(.disconnect(.connectionFailure(.tunnel(.tunnelAborted))))
-                                continue
-                            }
-                            let reason = if case let .localAgentSettingPolicyRefused(setting)? = localAgentError {
-                                "Local Agent refused setting: \(setting)"
-                            } else {
-                                "\(payload.errorDomain) (code \(payload.code))"
-                            }
-                            log.warning(
-                                "Connection error received",
-                                category: .connection,
-                                metadata: ["reason": "\(reason)"]
-                            )
-                            await send(.delegate(.featureChangeFailed(reason: reason)))
-                        }
-                    }.cancellable(id: CancelID.connectionErrors)
+                    .observe(rawChannels.localAgentError()) { .errorReceived($0) }
+                        .cancellable(id: CancelID.connectionErrors)
                 )
 
             case .stopObserving:
@@ -143,6 +124,25 @@ public struct CoreConnectionFeature: Sendable {
                     .cancel(id: CancelID.connectionTimeout),
                     .cancel(id: CancelID.connectionErrors)
                 )
+
+            case let .errorReceived(payload):
+                guard payload.hasError else { return .none }
+                let localAgentError = payload.localAgentError
+                if case .certificateRefreshFatalError? = localAgentError {
+                    log.error("Local Agent fatal certificate refresh error (error channel)", category: .connection)
+                    return .send(.disconnect(.connectionFailure(.tunnel(.tunnelAborted))))
+                }
+                let reason = if case let .localAgentSettingPolicyRefused(setting)? = localAgentError {
+                    "Local Agent refused setting: \(setting)"
+                } else {
+                    "\(payload.errorDomain) (code \(payload.code))"
+                }
+                log.warning(
+                    "Connection error received",
+                    category: .connection,
+                    metadata: ["reason": "\(reason)"]
+                )
+                return .send(.delegate(.featureChangeFailed(reason: reason)))
 
             case let .connect(intent):
                 if state.tunnel.canUpdateConfiguration {
@@ -332,6 +332,8 @@ extension CoreConnectionFeature.Action: CustomDebugStringConvertible {
             ".stopObserving"
         case .handleLogout:
             ".handleLogout"
+        case let .errorReceived(payload):
+            ".errorReceived(domain: \(payload.errorDomain), code: \(payload.code))"
         case let .tunnel(action):
             ".tunnel(\(action.debugDescription))"
         case let .delegate(delegate):

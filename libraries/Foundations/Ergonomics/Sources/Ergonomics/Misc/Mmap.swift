@@ -99,9 +99,14 @@ public extension MmapBuffer {
         }
     }
 
-    /// Grants scoped access to the raw mmap'd bytes. Do not let the pointer escape the closure.
+    /// Grants scoped access to the raw mmap'd bytes.
     package borrowing func withUnsafeMutableBytes<R>(_ body: (UnsafeMutableRawPointer) throws -> R) rethrows -> R {
         try body(pointer)
+    }
+
+    /// The stable base address of the mapped region, valid for this buffer's lifetime. Don't use this unless you have to.
+    package var baseAddress: UnsafeMutableRawPointer {
+        pointer
     }
 }
 

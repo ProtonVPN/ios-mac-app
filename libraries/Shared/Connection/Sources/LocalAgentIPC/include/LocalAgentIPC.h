@@ -108,3 +108,20 @@ typedef struct {
 } IPCAgentFeaturesPayload;
 
 IPC_DECLARE_SHARED_REGION(IPCAgentFeaturesRegion, IPCAgentFeaturesPayload);
+
+// ---------------------------------------------------------------------------
+// Coalesced tunnel-data region — all of the above as a SINGLE shared buffer.
+//
+// On iOS/tvOS this is one mmap'd file; on macOS it's one IOSurface handed to the app over XPC (a system extension
+// can't share an app-group container). Each field is a full *region* — its own `IPCSharedHeader` seqlock + payload —
+// so the consistency domains stay independent: a high-frequency stats write never makes a latency-sensitive peer or
+// error READER spin-retry. A writer touches one sub-region under that sub-region's own seqlock and posts a single
+// notification carrying the (offset, size) of the payload it wrote; observers demux by it.
+// ---------------------------------------------------------------------------
+typedef struct {
+    IPCConnectionDataRegion   connection_data;
+    IPCStatsRegion            stats;
+    IPCConnectionStatsRegion  connection_stats;
+    IPCErrorRegion            error;
+    IPCAgentFeaturesRegion    agent_features;
+} IPCTunnelData;

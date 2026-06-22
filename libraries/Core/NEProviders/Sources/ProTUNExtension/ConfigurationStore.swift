@@ -52,8 +52,8 @@ actor ConfigurationStore {
                 Logger.adapter.info("Configuration update applied!")
             } catch {
                 Logger.adapter.error("Configuration update failed: \(error, privacy: .public)")
-                @Dependency(\.localAgent) var localAgentClient
-                localAgentClient.reportError(error)
+                @Dependency(\.rawChannels) var rawChannels
+                rawChannels.localAgentError()?.mutate { $0 = IPCErrorPayload(error) }
             }
         }
     }

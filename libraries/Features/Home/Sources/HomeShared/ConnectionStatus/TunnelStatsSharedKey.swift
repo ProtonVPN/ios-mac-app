@@ -22,32 +22,19 @@ import LocalAgentIPC
 import NetShield
 import Sharing
 
-/// The live NetShield stats reported over the tunnel-data RawChannel, exposed as read-only observed state.
-/// Uses ``LocalAgentClient`` as a dependency.
-struct TunnelStatsKey: SharedReaderKey {
-    let id = "tunnelData.stats"
-
-    func load(context _: LoadContext<NetShieldModel?>, continuation: LoadContinuation<NetShieldModel?>) {
-        @Dependency(\.localAgent) var localAgent
-        continuation.resume(returning: (try? localAgent.trafficStats())?.localAgentStats.toNetShieldModel)
-    }
-
-    func subscribe(
-        context _: LoadContext<NetShieldModel?>,
-        subscriber: SharedSubscriber<NetShieldModel?>
-    ) -> SharedSubscription {
-        @Dependency(\.localAgent) var localAgent
-        let task = Task {
-            for await stats in localAgent.trafficStatsStream() {
-                subscriber.yield(stats.localAgentStats.toNetShieldModel)
-            }
-        }
-        return SharedSubscription { task.cancel() }
-    }
-}
-
-extension SharedReaderKey where Self == TunnelStatsKey {
+extension SharedReaderKey where Self == RawChannelKey<NetShieldModel?> {
     static var tunnelStats: Self {
-        TunnelStatsKey()
+        RawChannelKey(
+            id: "tunnelData.stats",
+            read: {
+                @Dependency(\.rawChannels) var rawChannels
+                return rawChannels.localAgentStats()?.stats()?.toNetShieldModel
+            },
+            updates: {
+                @Dependency(\.rawChannels) var rawChannels
+                guard let channel = rawChannels.localAgentStats() else { return .finished }
+                return channel.stream { $0.localAgentStats.toNetShieldModel as NetShieldModel? }
+            }
+        )
     }
 }

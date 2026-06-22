@@ -19,39 +19,22 @@
 import Dependencies
 import Domain
 import LocalAgent
-import LocalAgentIPC
 import Sharing
 
-/// The server-applied tunnel features (the Local Agent settings ProTUN actually put into effect), exposed as
-/// read-only observed state. Sourced from the `localAgentFeatures` `RawChannel`, and cleared on disconnect and tunnel
-/// start. Uses ``LocalAgentClient`` as a dependency.
-public struct AppliedFeaturesKey: SharedReaderKey {
-    public let id = "appliedFeatures"
-
-    public func load(
-        context _: LoadContext<AgentTunnelFeatures?>,
-        continuation: LoadContinuation<AgentTunnelFeatures?>
-    ) {
-        @Dependency(\.localAgent) var localAgent
-        continuation.resume(returning: (try? localAgent.appliedFeatures()).flatMap(\.agentFeatures))
-    }
-
-    public func subscribe(
-        context _: LoadContext<AgentTunnelFeatures?>,
-        subscriber: SharedSubscriber<AgentTunnelFeatures?>
-    ) -> SharedSubscription {
-        @Dependency(\.localAgent) var localAgent
-        let task = Task {
-            for await payload in localAgent.appliedFeaturesStream() {
-                subscriber.yield(payload.agentFeatures)
-            }
-        }
-        return SharedSubscription { task.cancel() }
-    }
-}
-
-public extension SharedReaderKey where Self == AppliedFeaturesKey {
+public extension SharedReaderKey where Self == RawChannelKey<AgentTunnelFeatures?> {
+    /// The server-applied tunnel features from the live `localAgentFeatures` channel (`nil` until the extension
+    /// publishes them and while disconnected).
     static var appliedFeatures: Self {
-        AppliedFeaturesKey()
+        RawChannelKey(
+            id: "appliedFeatures",
+            read: {
+                @Dependency(\.rawChannels) var rawChannels
+                return rawChannels.localAgentFeatures()?.agentFeatures()
+            },
+            updates: {
+                @Dependency(\.rawChannels) var rawChannels
+                return rawChannels.localAgentFeatures()?.agentFeaturesStream() ?? .finished
+            }
+        )
     }
 }

@@ -16,9 +16,29 @@
 
 import Foundation
 import NetworkExtension
+import os
+import ProTUNExtension
+
+private let tunnelDataXPCLog = Logger(subsystem: "ch.protonvpn.mac.protun", category: "TunnelDataXPC")
+
+/// The extension's own Mach service, declared as `NEMachServiceName` in Info.plist. Used for establishing the
+/// ``RawChannel``s between the extension and the application.
+private func machServiceName() -> String {
+    guard let networkExtension = Bundle.main.object(forInfoDictionaryKey: "NetworkExtension") as? [String: Any],
+          let name = networkExtension["NEMachServiceName"] as? String else {
+        fatalError("NEMachServiceName is missing from the Info.plist")
+    }
+    return name
+}
+
+let tunnelDataXPCService = TunnelDataXPCService(
+    machServiceName: machServiceName(),
+    log: { tunnelDataXPCLog.log("\($0, privacy: .public)") }
+)
 
 autoreleasepool {
     NEProvider.startSystemExtensionMode()
+    tunnelDataXPCService.startListener()
 }
 
 dispatchMain()

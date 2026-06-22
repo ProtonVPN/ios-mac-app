@@ -126,8 +126,8 @@ final class ProTUNAdapter: @unchecked Sendable {
         defer { signposter.endInterval("Start Tunnel", startState) }
 
         Logger.adapter.info("Starting Adapter")
-        @Dependency(\.localAgent) var localAgentClient
-        localAgentClient.zeroTunnelData()
+        @Dependency(\.rawChannels) var rawChannels
+        rawChannels.zeroAll()
 
         let tunFd = try await prepare(with: config.proTUN)
         signposter.emitEvent("Tunnel prepared", id: signpostID)
@@ -214,8 +214,8 @@ final class ProTUNAdapter: @unchecked Sendable {
         localAgentTask = nil
 
         // Clear the shared memory regions just before stopping.
-        @Dependency(\.localAgent) var localAgentClient
-        localAgentClient.zeroTunnelData()
+        @Dependency(\.rawChannels) var rawChannels
+        rawChannels.zeroAll()
     }
 }
 
