@@ -141,5 +141,5 @@ private func proTUNProtocolConfiguration(
     @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
     @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
 
-    return .wireGuard(TunnelSettings(backend: .proTUN, transport: transport, features: connectionFeatureProvider.tunnelFeatures()))
+    return .wireGuard(TunnelSettings(backend: .proTUN, transport: transport, features: connectionFeatureProvider.requestedFeatures()))
 }

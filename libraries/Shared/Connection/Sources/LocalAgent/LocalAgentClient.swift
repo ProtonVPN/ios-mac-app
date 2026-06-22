@@ -45,8 +45,12 @@ public struct LocalAgentClient {
     public internal(set) var errorStream: () -> AsyncStream<IPCErrorPayload> = { .finished }
     public internal(set) var reportError: (_ error: any Error) -> Void
 
+    public internal(set) var appliedFeatures: () throws -> IPCAgentFeaturesPayload
+    public internal(set) var appliedFeaturesStream: () -> AsyncStream<IPCAgentFeaturesPayload> = { .finished }
+    public internal(set) var writeAppliedFeatures: (_ body: (inout IPCAgentFeaturesPayload) -> Void) -> Void
+
     /// Clears all shared memory regions.
-    public internal(set) var zeroConnectionTelemetry: () -> Void
+    public internal(set) var zeroTunnelData: () -> Void
 }
 
 extension LocalAgentClient: DependencyKey {
@@ -68,6 +72,10 @@ extension LocalAgentClient: DependencyKey {
         let errorChannel = try! IPCNotifications.RawChannel<IPCErrorPayload>(
             notification: .localAgentError,
             fileURL: containerURL.appending(component: "la_error")
+        )
+        let appliedFeaturesChannel = try! IPCNotifications.RawChannel<IPCAgentFeaturesPayload>(
+            notification: .localAgentFeatures,
+            fileURL: containerURL.appending(component: "la_features")
         )
 
         return LocalAgentClient { callback in
@@ -96,11 +104,18 @@ extension LocalAgentClient: DependencyKey {
             errorChannel.stream()
         } reportError: { error in
             errorChannel.mutate { $0 = IPCErrorPayload(error) }
-        } zeroConnectionTelemetry: {
+        } appliedFeatures: {
+            try appliedFeaturesChannel.read()
+        } appliedFeaturesStream: {
+            appliedFeaturesChannel.stream()
+        } writeAppliedFeatures: { body in
+            appliedFeaturesChannel.mutate(body)
+        } zeroTunnelData: {
             connectionDataChannel.zero()
             trafficStatsChannel.zero()
             connectionStatsChannel.zero()
             errorChannel.zero()
+            appliedFeaturesChannel.zero()
         }
     }()
 }

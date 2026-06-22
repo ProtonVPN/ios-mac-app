@@ -49,7 +49,7 @@ public enum WireguardProviderRequest: ProviderRequest {
     case setApiSelector(String, withSessionCookie: HTTPCookie?)
     /// Refresh the certificate used by the LocalAgent in the main app, and
     /// save it to the keychain before calling the completion.
-    case refreshCertificate(features: VPNConnectionFeatures?)
+    case refreshCertificate(features: AgentTunnelFeatures?)
     /// Cancel refresh operations and stop all timers. (Used on client's end to
     /// be able to manipulate objects in storage with guarantee that keychain won't
     /// be interfered with)
@@ -103,9 +103,9 @@ public enum WireguardProviderRequest: ProviderRequest {
         case .setApiSelector:
             return try decodeApiSelector(data)
         case .refreshCertificate:
-            var features: VPNConnectionFeatures?
+            var features: AgentTunnelFeatures?
             if let messageData = Self.messageData(rawData: data),
-               let decodedFeatures = try? JSONDecoder().decode(VPNConnectionFeatures.self, from: messageData) {
+               let decodedFeatures = try? JSONDecoder().decode(AgentTunnelFeatures.self, from: messageData) {
                 features = decodedFeatures
             }
 

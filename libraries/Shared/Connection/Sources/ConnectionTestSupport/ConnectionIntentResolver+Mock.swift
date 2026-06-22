@@ -25,7 +25,7 @@ package extension ConnectionIntentResolver {
     static func mock(
         server: Server,
         tunnelSettings: TunnelSettings = TunnelSettings(backend: .go, transport: .udp, features: .mock),
-        features: VPNConnectionFeatures = .mock
+        features: AgentTunnelFeatures = .mock
     ) -> ConnectionIntentResolver {
         ConnectionIntentResolver(
             resolve: { intent throws(IntentResolutionError) in

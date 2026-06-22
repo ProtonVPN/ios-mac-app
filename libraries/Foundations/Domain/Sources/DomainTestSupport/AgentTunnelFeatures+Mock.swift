@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import struct Domain.VPNConnectionFeatures
+import struct Domain.AgentTunnelFeatures
 import Foundation
 
-public extension VPNConnectionFeatures {
-    static let mock = VPNConnectionFeatures(
+public extension AgentTunnelFeatures {
+    static let mock = AgentTunnelFeatures(
         netshield: .level1,
         vpnAccelerator: true,
         natType: .moderateNAT,

@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct VPNConnectionFeatures: Equatable, Sendable {
+public struct AgentTunnelFeatures: Equatable, Sendable {
     public private(set) var netshield: NetShieldType
     public private(set) var vpnAccelerator: Bool
     public private(set) var natType: NATType
@@ -43,14 +43,14 @@ public struct VPNConnectionFeatures: Equatable, Sendable {
         return result
     }
 
-    public func copy<V>(with changes: (field: WritableKeyPath<VPNConnectionFeatures, V>, newValue: V)...) -> Self {
+    public func copy<V>(with changes: (field: WritableKeyPath<AgentTunnelFeatures, V>, newValue: V)...) -> Self {
         var copy = self
         changes.forEach { copy[keyPath: $0.field] = $0.newValue }
         return copy
     }
 }
 
-extension VPNConnectionFeatures: Codable {
+extension AgentTunnelFeatures: Codable {
     enum CodingKeys: String, CodingKey {
         case netshield = "NetShieldLevel"
         case vpnAccelerator = "SplitTCP"
@@ -71,8 +71,8 @@ extension VPNConnectionFeatures: Codable {
     }
 }
 
-public extension VPNConnectionFeatures {
-    func equals(other: VPNConnectionFeatures?) -> Bool {
+public extension AgentTunnelFeatures {
+    func equals(other: AgentTunnelFeatures?) -> Bool {
         netshield == other?.netshield && vpnAccelerator == other?.vpnAccelerator && natType == other?.natType && portForwarding == other?.portForwarding
     }
 }

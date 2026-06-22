@@ -26,6 +26,7 @@ import Connection
 import Dependencies
 import Domain
 import Ergonomics
+import ExtensionManager
 import LegacyCommon
 import LocalAuthentication
 import Modals
@@ -67,6 +68,8 @@ final class SettingsViewModel {
     private lazy var connectionStatusService: ConnectionStatusService = factory.makeConnectionStatusService()
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
+
+    @SharedReader(.appliedFeatures) private var appliedFeatures: AgentTunnelFeatures?
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
     @Dependency(\.appInfo) private var appInfo
     @Dependency(\.authKeychain) private var authKeychain
@@ -391,6 +394,19 @@ final class SettingsViewModel {
         }
     }
 
+    /// Only non-nil when the server reports a different value.
+    private var appliedNATOverride: Bool? {
+        guard case .connected = connectionState, let applied = appliedFeatures?.natType else { return nil }
+        guard applied != natTypePropertyProvider.getNATType() else { return nil }
+        return applied == .moderateNAT
+    }
+
+    private var appliedVPNAcceleratorOverride: Bool? {
+        guard case .connected = connectionState, let applied = appliedFeatures?.vpnAccelerator else { return nil }
+        guard applied != (AuthorizedFeatureValue<VPNAccelerator>().value() == .on) else { return nil }
+        return applied
+    }
+
     private var vpnAcceleratorSection: [TableViewCellModel] {
         [
             .upsellableToggle(
@@ -414,7 +430,8 @@ final class SettingsViewModel {
                             callback(toggleOn)
                         }
                     }
-                }
+                },
+                isOverridden: appliedVPNAcceleratorOverride
             ),
             .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.vpnAcceleratorDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.vpnAcceleratorDescriptionAltLink, withUrl: VPNLink.vpnAccelerator.urlString)),
         ]
@@ -507,7 +524,8 @@ final class SettingsViewModel {
                             callback(toggleOn)
                         }
                     }
-                }
+                },
+                isOverridden: appliedNATOverride
             ),
             .attributedTooltip(
                 text: NSMutableAttributedString(

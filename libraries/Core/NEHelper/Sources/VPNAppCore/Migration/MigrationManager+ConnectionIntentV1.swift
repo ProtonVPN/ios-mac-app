@@ -132,7 +132,7 @@ private extension WireGuardSettings {
     struct V1: Codable {
         let transport: WireGuardTransport
         let ports: [Int]
-        let features: TunnelFeatures
+        let features: LocalTunnelFeatures
     }
 
     init(migrating v1: V1) {
@@ -146,7 +146,7 @@ private extension ServerConnectionIntent {
         let spec: ConnectionSpec.V1
         let server: Server
         let tunnelSettings: TunnelSettings.V1
-        let features: VPNConnectionFeatures
+        let features: AgentTunnelFeatures
     }
 
     init(migrating v1: V1) {
@@ -163,7 +163,7 @@ private extension ServerConnectionIntent {
         let spec: ConnectionSpec
         let server: Server
         let tunnelSettings: WireGuardSettings.V1
-        let features: VPNConnectionFeatures
+        let features: AgentTunnelFeatures
     }
 
     init(migrating v2: V2) {

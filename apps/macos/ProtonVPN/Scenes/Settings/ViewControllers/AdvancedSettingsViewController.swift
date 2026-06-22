@@ -84,7 +84,8 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
         let model = SettingsTickboxView.ViewModel(
             labelText: Localizable.moderateNatTitle,
             state: featureState,
-            toolTip: String(tooltip)
+            toolTip: String(tooltip),
+            isOverridden: viewModel.appliedNATOverride
         )
 
         natTypeView.setupItem(model: model, delegate: self)

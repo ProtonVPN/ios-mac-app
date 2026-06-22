@@ -512,8 +512,6 @@ private extension HomeFeature {
                         openCredentiallessSignUp()
                     }
             #endif
-            case let .connection(.core(.statsReceived(stats))):
-                return .send(.connectionStatus(.newNetShieldStats(stats.toNetShieldModel)))
             case let .connection(.delegate(.connectionFailed(error))):
                 SentryHelper.shared?.log(error: error)
                 state.alert = domainAlertState(from: error.alert)

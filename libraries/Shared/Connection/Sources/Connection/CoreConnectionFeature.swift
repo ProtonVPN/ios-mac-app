@@ -71,8 +71,6 @@ public struct CoreConnectionFeature: Sendable {
         case handleLogout
         /// Tunnel/NetworkExtension child reducer action
         case tunnel(ExtensionFeature.Action)
-        /// Traffic / NetShield stats posted from the extension.
-        case statsReceived(LocalAgent.Stats)
         /// Delegate action expected to be handled by the parent
         case delegate(Delegate)
 
@@ -83,8 +81,6 @@ public struct CoreConnectionFeature: Sendable {
         public enum Delegate: Sendable {
             case error(ConnectionError)
             case stateChanged(TunnelState)
-            /// A feature change was confirmed by the extension. The new effective features are attached.
-            case featuresChanged(VPNConnectionFeatures)
             /// A feature change failed with an error.
             case featureChangeFailed(reason: String)
         }
@@ -98,7 +94,6 @@ public struct CoreConnectionFeature: Sendable {
 
     private enum CancelID {
         case connectionTimeout
-        case localAgentStats
         case connectionErrors
     }
 
@@ -116,12 +111,6 @@ public struct CoreConnectionFeature: Sendable {
             case .startObserving:
                 return .merge(
                     .send(.tunnel(.startObserving)),
-                    .run { send in
-                        @Dependency(\.localAgent) var localAgent
-                        for await payload in localAgent.trafficStatsStream() {
-                            await send(.statsReceived(payload.localAgentStats))
-                        }
-                    }.cancellable(id: CancelID.localAgentStats),
                     .run { send in
                         // The error stream from the network extension, communicated via RawChannel.
                         @Dependency(\.localAgent) var localAgent
@@ -152,7 +141,6 @@ public struct CoreConnectionFeature: Sendable {
                 return .merge(
                     .send(.tunnel(.stopObserving)),
                     .cancel(id: CancelID.connectionTimeout),
-                    .cancel(id: CancelID.localAgentStats),
                     .cancel(id: CancelID.connectionErrors)
                 )
 
@@ -231,13 +219,7 @@ public struct CoreConnectionFeature: Sendable {
             case let .tunnel(.delegate(.reconfigurationFailed(error))):
                 return .send(.delegate(.error(.tunnel(.reconfigurationFailure(error)))))
 
-            case let .tunnel(.delegate(.featuresChanged(features))):
-                return .send(.delegate(.featuresChanged(features)))
-
             case .tunnel:
-                return .none
-
-            case .statsReceived:
                 return .none
 
             case .handleLogout:
@@ -352,8 +334,6 @@ extension CoreConnectionFeature.Action: CustomDebugStringConvertible {
             ".handleLogout"
         case let .tunnel(action):
             ".tunnel(\(action.debugDescription))"
-        case let .statsReceived(stats):
-            ".statsReceived(\(stats))"
         case let .delegate(delegate):
             ".delegate(\(delegate.debugDescription))"
         }
@@ -367,8 +347,6 @@ extension CoreConnectionFeature.Action.Delegate: CustomDebugStringConvertible {
             ".error(\(connectionError))"
         case let .stateChanged(newState):
             ".stateChanged(\(newState))"
-        case let .featuresChanged(features):
-            ".featuresChanged(\(features))"
         case let .featureChangeFailed(reason):
             ".featureChangeFailed(\(reason))"
         }

@@ -43,6 +43,7 @@ enum TableViewCellModel {
     /// `upsell` is executed when the cell accessory is tapped while in the `PaidFeatureDisplayState.upsell` state
     case upsellableToggle(
         title: String,
+        isOverridden: Bool? = nil,
         state: () -> PaidFeatureDisplayState,
         upsell: () -> Void,
         handler: ((Bool, @escaping (Bool) -> Void) -> Void)?
@@ -64,7 +65,7 @@ enum TableViewCellModel {
     )
     case tooltip(text: String)
     case instructionStep(number: Int, text: String)
-    case checkmarkStandard(title: String, checked: Bool, enabled: Bool = true, handler: () -> Bool)
+    case checkmarkStandard(title: String, checked: Bool, enabled: Bool = true, isOverridden: Bool = false, handler: () -> Bool)
     case colorPicker(viewModel: ColorPickerViewModel)
     case invertedKeyValue(key: String, value: String, handler: () -> Void)
     case attributedKeyValue(key: NSAttributedString, value: NSAttributedString, handler: () -> Void)
@@ -256,12 +257,12 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.showDisclosure(true)
 
             return cell
-        case let .upsellableToggle(title, state, upsell, handler):
+        case let .upsellableToggle(title, isOverridden, state, upsell, handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchTableViewCell.identifier) as? SwitchTableViewCell else {
                 return UITableViewCell()
             }
             cell.label.text = title
-            cell.setup(with: state())
+            cell.setup(with: state(), isOverridden: isOverridden)
             cell.upsellTapped = upsell
             cell.toggled = handler
             cell.switchControl.accessibilityLabel = title
@@ -306,14 +307,18 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.label.text = text
 
             return cell
-        case let .checkmarkStandard(title: title, checked: checked, enabled, handler: handler):
+        case let .checkmarkStandard(title: title, checked: checked, enabled, isOverridden: isOverridden, handler: handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CheckmarkTableViewCell.identifier) as? CheckmarkTableViewCell else {
                 return UITableViewCell()
             }
             cell.isEnabled = enabled
             cell.accessibilityIdentifier = title
             cell.label.text = title
-            cell.accessoryType = checked ? .checkmark : .none
+
+            // Purple checkmark marks the user's requested value. A grey checkmark means that the server has applied a
+            // different one. This only appears if the two differ.
+            cell.tintColor = checked ? .iconAccent() : .iconHint()
+            cell.accessoryType = (checked || isOverridden) ? .checkmark : .none
             cell.completionHandler = handler
 
             return cell

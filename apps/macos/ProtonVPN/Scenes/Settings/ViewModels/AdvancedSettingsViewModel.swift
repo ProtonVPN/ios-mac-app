@@ -22,6 +22,7 @@ import ComposableArchitecture
 import Connection
 import Dependencies
 import Domain
+import ExtensionManager
 import Foundation
 import LegacyCommon
 import Settings
@@ -44,6 +45,7 @@ final class AdvancedSettingsViewModel {
     @Shared(.telemetryUsageData) var telemetryUsageData
     @Shared(.telemetryCrashReports) var telemetryCrashReports
     @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.appliedFeatures) private var appliedFeatures: AgentTunnelFeatures?
 
     @Shared(.featureFlags) private var featureFlags: FeatureFlags
 
@@ -110,6 +112,13 @@ final class AdvancedSettingsViewModel {
 
     var natDisplayState: PaidFeatureDisplayState {
         paidFeatureDisplayState(for: NATFeature.self, isEnabled: natTypePropertyProvider.getNATType() == .moderateNAT)
+    }
+
+    /// Only non-nil when the server reports a different value.
+    var appliedNATOverride: Bool? {
+        guard case .connected = connectionState, let applied = appliedFeatures?.natType else { return nil }
+        guard applied != natTypePropertyProvider.getNATType() else { return nil }
+        return applied == .moderateNAT
     }
 
     func displayState(for feature: (some ProvidableFeature & ToggleableFeature & Sendable).Type) -> PaidFeatureDisplayState {

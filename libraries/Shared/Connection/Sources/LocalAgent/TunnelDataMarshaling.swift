@@ -21,14 +21,15 @@ import Foundation
 import IPCErgonomics
 import LocalAgentIPC
 
-// Marshaling between the live-telemetry C payloads (LocalAgentIPC) and their Swift domain types.
+// Marshaling between the live tunnel-data C payloads (LocalAgentIPC) and their Swift domain types.
 
 /// Versions of the different RawChannel structs. Bump when changing formats to avoid ABI mismatch issues.
-public enum IPCConnectionTelemetryVersion {
+public enum IPCTunnelDataVersion {
     public static let connectionData: Int32 = 1
     public static let stats: Int32 = 1
     public static let connectionStats: Int32 = 1
     public static let error: Int32 = 1
+    public static let agentFeatures: Int32 = 1
 }
 
 public extension IPCWireGuardTransport {
@@ -98,7 +99,7 @@ public extension IPCConnectionDataPayload {
 
     init(_ peer: CurrentPeer) {
         self.init()
-        version = IPCConnectionTelemetryVersion.connectionData
+        version = IPCTunnelDataVersion.connectionData
         transport = IPCWireGuardTransport(peer.transport)
         self.peerID = peer.peerID
         self.serverExitV4 = peer.serverExitV4 ?? ""
@@ -122,7 +123,7 @@ public extension IPCConnectionDataPayload {
 public extension IPCStatsPayload {
     init(_ stats: LocalAgent.Stats) {
         self.init()
-        version = IPCConnectionTelemetryVersion.stats
+        version = IPCTunnelDataVersion.stats
         bytes_received = stats.bytesReceived ?? 0
         bytes_sent = stats.bytesSent ?? 0
         malicious_blocked = stats.maliciousBlocked ?? 0
@@ -148,7 +149,7 @@ public extension IPCStatsPayload {
 public extension IPCConnectionStatsPayload {
     init(_ stats: LocalAgent.ConnectionStats) {
         self.init()
-        version = IPCConnectionTelemetryVersion.connectionStats
+        version = IPCTunnelDataVersion.connectionStats
         timestamp_ms = stats.timestampMs
         received_bytes = stats.receivedBytes
         sent_bytes = stats.sentBytes
@@ -184,7 +185,7 @@ public extension IPCErrorPayload {
     /// Encodes any error as a `(domain, code)` pair. Also works for ``ProtonVPNError``.
     init(_ error: any Error) {
         self.init()
-        version = IPCConnectionTelemetryVersion.error
+        version = IPCTunnelDataVersion.error
 
         let nsError = error as NSError
         self.errorDomain = nsError.domain.isEmpty ? "UnexpectedExtensionErrorDomain" : nsError.domain
@@ -195,6 +196,28 @@ public extension IPCErrorPayload {
     var localAgentError: LocalAgent.Error? {
         guard hasError, errorDomain == LocalAgent.Error.errorDomain else { return nil }
         return LocalAgent.Error(charCode: code)
+    }
+}
+
+public extension IPCAgentFeaturesPayload {
+    init(_ features: AgentTunnelFeatures) {
+        self.init()
+        version = IPCTunnelDataVersion.agentFeatures
+        netshield_level = UInt8(truncatingIfNeeded: features.netshield.rawValue)
+        vpn_accelerator = features.vpnAccelerator ? 1 : 0
+        moderate_nat = features.natType.flag ? 1 : 0
+        port_forwarding = (features.portForwarding ?? false) ? 1 : 0
+    }
+
+    /// The server-applied features, or `nil` if nothing has been written yet.
+    var agentFeatures: AgentTunnelFeatures? {
+        guard version != 0 else { return nil }
+        return AgentTunnelFeatures(
+            netshield: NetShieldType(rawValue: Int(netshield_level)) ?? .off,
+            vpnAccelerator: vpn_accelerator != 0,
+            natType: NATType(flag: moderate_nat != 0),
+            portForwarding: port_forwarding != 0
+        )
     }
 }
 

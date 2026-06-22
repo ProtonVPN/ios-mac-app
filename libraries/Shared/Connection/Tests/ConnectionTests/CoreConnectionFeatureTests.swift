@@ -48,7 +48,7 @@
 //            let mockClock = TestClock()
 //            let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
 //            let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
-//            let features = VPNConnectionFeatures.mock
+//            let features = AgentTunnelFeatures.mock
 //            let mockStorage = VpnAuthenticationStorage.testStorage(
 //                keys: mockKeys,
 //                certificate: mockCertificate,
@@ -240,7 +240,7 @@
 //            let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
 //            let oldCertificate = VpnCertificate(certificate: "1234", validUntil: yesterday, refreshTime: yesterday)
 //            let newCertificate = VpnCertificate(certificate: "5678", validUntil: tomorrow, refreshTime: tomorrow)
-//            let features = VPNConnectionFeatures(
+//            let features = AgentTunnelFeatures(
 //                netshield: .off,
 //                vpnAccelerator: false,
 //                bouncing: nil,
@@ -341,7 +341,7 @@
 //
 //            let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
 //            let certificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
-//            let features: VPNConnectionFeatures = .mock
+//            let features: AgentTunnelFeatures = .mock
 //            let mockStorage = VpnAuthenticationStorage.testStorage(
 //                keys: mockKeys,
 //                certificate: certificate,
@@ -430,7 +430,7 @@
 //            )
 //
 //            let server = Server.mock
-//            let features = VPNConnectionFeatures.mock
+//            let features = AgentTunnelFeatures.mock
 //            let tunnelSettings = TunnelSettings.mock
 //            let connectedServerID = server.endpoint.id
 //
@@ -510,7 +510,7 @@
 //            )
 //
 //            let server = Server.mock
-//            let features = VPNConnectionFeatures.mock
+//            let features = AgentTunnelFeatures.mock
 //            let tunnelSettings = TunnelSettings.mock
 //            let connectedServerID = server.endpoint.id
 //
@@ -585,7 +585,7 @@
 //
 //            let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
 //            let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
-//            let features = VPNConnectionFeatures.mock
+//            let features = AgentTunnelFeatures.mock
 //            let mockStorage = VpnAuthenticationStorage.testStorage(
 //                keys: mockKeys,
 //                certificate: mockCertificate,
@@ -677,7 +677,7 @@
 //            let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
 //            let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
 //            let refreshedCertificate = VpnCertificate(certificate: "5678", validUntil: dayAfterTomorrow, refreshTime: dayAfterTomorrow)
-//            let features = VPNConnectionFeatures.mock
+//            let features = AgentTunnelFeatures.mock
 //            let mockStorage = VpnAuthenticationStorage.testStorage(
 //                keys: mockKeys,
 //                certificate: mockCertificate,
@@ -765,7 +765,7 @@
 //
 //            let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
 //            let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
-//            let features = VPNConnectionFeatures.mock
+//            let features = AgentTunnelFeatures.mock
 //            let mockStorage = VpnAuthenticationStorage.testStorage(
 //                keys: mockKeys,
 //                certificate: mockCertificate,
@@ -823,7 +823,7 @@
 //
 //            let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
 //            let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
-//            let features = VPNConnectionFeatures.mock
+//            let features = AgentTunnelFeatures.mock
 //            let mockStorage = VpnAuthenticationStorage.testStorage(
 //                keys: mockKeys,
 //                certificate: mockCertificate,
@@ -906,7 +906,7 @@
 //
 //            let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
 //            let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
-//            let features = VPNConnectionFeatures.mock
+//            let features = AgentTunnelFeatures.mock
 //            let mockStorage = VpnAuthenticationStorage.testStorage(
 //                keys: mockKeys,
 //                certificate: mockCertificate,
@@ -1010,7 +1010,7 @@
 //
 //            let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
 //            let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
-//            let features = VPNConnectionFeatures.mock
+//            let features = AgentTunnelFeatures.mock
 //            let mockStorage = VpnAuthenticationStorage.testStorage(
 //                keys: mockKeys,
 //                certificate: mockCertificate,
@@ -1093,7 +1093,7 @@
 //            let mockClock = TestClock()
 //
 //            let server = Server.mock
-//            let features = VPNConnectionFeatures.mock
+//            let features = AgentTunnelFeatures.mock
 //            let tunnelSettings = TunnelSettings.mock
 //
 //            let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected)
@@ -1155,7 +1155,7 @@
 //            let mockClock = TestClock()
 //
 //            let server = Server.mock
-//            let features = VPNConnectionFeatures.mock
+//            let features = AgentTunnelFeatures.mock
 //            let tunnelSettings = TunnelSettings.mock
 //
 //            let disconnected = CoreConnectionFeature.State(tunnelState: .invalid)

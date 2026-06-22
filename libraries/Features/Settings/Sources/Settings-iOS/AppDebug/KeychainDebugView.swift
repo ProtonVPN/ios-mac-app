@@ -120,7 +120,7 @@
         }
 
         @ViewBuilder
-        private func featuresCell(features: VPNConnectionFeatures?) -> some View {
+        private func featuresCell(features: AgentTunnelFeatures?) -> some View {
             if let features {
                 VStack(alignment: .leading) {
                     Text("Certificate Features")
@@ -151,9 +151,9 @@
     }
 
     struct FeaturesView: View {
-        private let features: VPNConnectionFeatures
+        private let features: AgentTunnelFeatures
 
-        init(features: VPNConnectionFeatures) {
+        init(features: AgentTunnelFeatures) {
             self.features = features
         }
 

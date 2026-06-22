@@ -19,8 +19,8 @@
 import ComposableArchitecture
 import Connection
 import Domain
+import struct Domain.AgentTunnelFeatures
 import struct Domain.Server
-import struct Domain.VPNConnectionFeatures
 import Foundation
 import Persistence
 

@@ -50,10 +50,6 @@
             .finished
         }
 
-        var connectionFeaturesStream: AsyncStream<VPNConnectionFeatures> {
-            .finished
-        }
-
         init(connection: VPNSessionMock = .init(status: .disconnected)) {
             self.connection = connection
         }

@@ -36,7 +36,7 @@
             let session = VPNSessionMock(status: .disconnected, connectedDate: nil)
             var manager: TunnelProviderManager = MockTunnelProviderManager(session: session, isOnDemandEnabled: false, isEnabled: false)
 
-            let features = VPNConnectionFeatures(
+            let features = AgentTunnelFeatures(
                 netshield: .level2,
                 vpnAccelerator: false,
                 natType: .moderateNAT,

@@ -70,7 +70,7 @@ final class SwitchTableViewCell: UITableViewCell {
         upsellTapped()
     }
 
-    func setup(with model: PaidFeatureDisplayState) {
+    func setup(with model: PaidFeatureDisplayState, isOverridden: Bool? = nil) {
         switch model {
         case .disabled:
             log.assertionFailure("We shouldn't display cells for disabled features")
@@ -86,7 +86,13 @@ final class SwitchTableViewCell: UITableViewCell {
             upsellImageView.isHidden = true
 
             switchControl.isEnabled = isInterative
-            switchControl.isOn = isOn
+            if let isOverridden {
+                switchControl.isOn = isOverridden
+                switchControl.onTintColor = .iconWeak()
+            } else {
+                switchControl.isOn = isOn
+                switchControl.onTintColor = .brandColor()
+            }
         }
     }
 }

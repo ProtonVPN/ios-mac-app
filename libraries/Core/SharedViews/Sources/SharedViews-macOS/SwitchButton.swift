@@ -81,6 +81,13 @@ open class SwitchButton: NSView, CAAnimationDelegate {
         }
     }
 
+    /// The shown position has been applied by the extension rather than chosen by the user.
+    public var isOverridden: Bool = false {
+        didSet {
+            setInnerColor()
+        }
+    }
+
     public var maskColor: CGColor {
         get {
             mask.maskColor
@@ -276,7 +283,7 @@ extension SwitchButton: CustomStyleContext {
                 return [.interactive, .weak, .disabled]
             }
             if isOn {
-                return .interactive
+                return isOverridden ? [.interactive, .weak] : .interactive
             }
             return .normal
         case .icon:

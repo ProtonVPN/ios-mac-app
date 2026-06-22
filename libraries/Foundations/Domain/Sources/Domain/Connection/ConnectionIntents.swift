@@ -50,9 +50,9 @@ public struct ServerConnectionIntent: Equatable, Sendable, Codable {
     public let spec: ConnectionSpec
     public let server: Server
     public let protocolConfiguration: ProtocolConfiguration
-    public let features: VPNConnectionFeatures
+    public let features: AgentTunnelFeatures
 
-    public init(spec: ConnectionSpec, server: Server, protocolConfiguration: ProtocolConfiguration, features: VPNConnectionFeatures) {
+    public init(spec: ConnectionSpec, server: Server, protocolConfiguration: ProtocolConfiguration, features: AgentTunnelFeatures) {
         self.spec = spec
         self.server = server
         self.protocolConfiguration = protocolConfiguration

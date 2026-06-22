@@ -16,10 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Connection
 import Dependencies
 import Domain
+import ExtensionManager
 import Foundation
 import LegacyCommon
+import Sharing
 import Strings
 import Theme
 import UIKit
@@ -32,6 +35,9 @@ final class NetShieldSelectionViewModel {
 
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
+
+    @SharedReader(.appliedFeatures) private var appliedFeatures: AgentTunnelFeatures?
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
 
     private var selectedFeature: NetShieldType
 
@@ -106,11 +112,21 @@ final class NetShieldSelectionViewModel {
         return .attributedTooltip(text: cellText)
     }
 
+    /// Only non-nil when the server reports a different value.
+    private var appliedNetShieldOverride: NetShieldType? {
+        guard case .connected = connectionState,
+              let applied = appliedFeatures?.netshield,
+              applied != selectedFeature
+        else { return nil }
+        return applied
+    }
+
     private func cellModel(for netShieldType: NetShieldType) -> TableViewCellModel {
         .checkmarkStandard(
             title: netShieldType.name,
             checked: netShieldType == selectedFeature,
             enabled: netShieldTypeAuthorizer(netShieldType).isAllowed,
+            isOverridden: netShieldType == appliedNetShieldOverride,
             handler: { [weak self] in
                 self?.userSelected(feature: netShieldType)
                 return true

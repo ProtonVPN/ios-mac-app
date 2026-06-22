@@ -233,7 +233,7 @@ extension ManagerConfigurator {
         return config
     }
 
-    private static func ikeUsername(baseUsername: String, features: VPNConnectionFeatures, endpointID: String) -> String {
+    private static func ikeUsername(baseUsername: String, features: AgentTunnelFeatures, endpointID: String) -> String {
         let components = ikeUsernameComponents(features: features, endpointID: endpointID)
         let suffix = components.reduce("") {
             $0 + "\(IkeUsernameComponent.concatChar)" + $1.usernameSuffix
@@ -241,7 +241,7 @@ extension ManagerConfigurator {
         return baseUsername + suffix
     }
 
-    private static func ikeUsernameComponents(features: VPNConnectionFeatures, endpointID: String) -> [IkeUsernameComponent] {
+    private static func ikeUsernameComponents(features: AgentTunnelFeatures, endpointID: String) -> [IkeUsernameComponent] {
         #if os(iOS)
             var components: [IkeUsernameComponent] = [.iosClient]
         #else

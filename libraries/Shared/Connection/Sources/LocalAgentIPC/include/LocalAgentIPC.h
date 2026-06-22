@@ -20,7 +20,7 @@
 #endif
 
 // ---------------------------------------------------------------------------
-// Live connection telemetry — extension-written, app reads/observes
+// Live tunnel data — extension-written, app reads/observes
 //
 // The network extension is the SOLE writer of all four regions below; the app
 // only reads/observes. They carry everything that is *not* a tunnel setting
@@ -94,3 +94,17 @@ typedef struct {
 } IPCErrorPayload;
 
 IPC_DECLARE_SHARED_REGION(IPCErrorRegion, IPCErrorPayload);
+
+// Server-applied Local Agent feature settings (mirrors the app's AgentTunnelFeatures). These ALSO live durably on
+// ProTUNConfiguration; this region carries them live so the app observes a change immediately, since
+// NEVPNConfigurationChange is not delivered to the app's process for extension-initiated saves. `version == 0`
+// (a zeroed region) means nothing has been applied yet.
+typedef struct {
+    int32_t                 version;
+    uint8_t                 netshield_level;   // NetShieldType.rawValue: 0=off, 1=malware, 2=+ads/trackers, 3=+adult
+    uint8_t                 vpn_accelerator;   // bool
+    uint8_t                 moderate_nat;      // bool — true => moderate NAT, false => strict
+    uint8_t                 port_forwarding;   // bool
+} IPCAgentFeaturesPayload;
+
+IPC_DECLARE_SHARED_REGION(IPCAgentFeaturesRegion, IPCAgentFeaturesPayload);

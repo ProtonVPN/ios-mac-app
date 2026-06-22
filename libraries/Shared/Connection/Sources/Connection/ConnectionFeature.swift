@@ -37,8 +37,8 @@ public struct ConnectionFeature: Sendable {
 
     public struct State: Equatable, Sendable {
         @SharedReader(.userTier) public var userTier: Int?
-        /// The server-applied Local Agent settings for the current session.
-        @Shared(.effectiveConnectionFeatures) public var effectiveConnectionFeatures: VPNConnectionFeatures?
+        @SharedReader(.appliedFeatures) public var appliedFeatures: AgentTunnelFeatures?
+
         var connectionState: ConnectionState
         var shouldRegisterServerChangeOnConnection: Bool // TODO: ProTUN: post connection events that some other component can hook into to do this, similarly to Telemetry
         var core: CoreConnectionFeature.State
@@ -177,15 +177,7 @@ public struct ConnectionFeature: Sendable {
             case let .core(.delegate(.error(connectionError))):
                 return .send(.delegate(.connectionFailed(connectionError)))
 
-            case let .core(.delegate(.featuresChanged(features))):
-                // Record the applied server settings for the UI to surface, should they differ from those requested
-                // by the user.
-                state.$effectiveConnectionFeatures.withLock { $0 = features }
-                return .none
-
             case let .core(.delegate(.featureChangeFailed(reason))):
-                // Nothing to revert: no optimistic value was ever applied. The effective settings remain whatever
-                // ProTUN last reported, so we just surface the failure to the user.
                 log.warning("Settings change failed/refused", category: .connection, metadata: ["reason": "\(reason)"])
                 return .send(.delegate(.settingChangeFailed(reason: reason)))
 
@@ -198,12 +190,8 @@ public struct ConnectionFeature: Sendable {
             }
         }
         .onChange(of: \.connectionState) { _, newValue in
-            Reduce { state, _ in
-                // Clear applied server settings once disconnected.
-                if case .disconnected = newValue {
-                    state.$effectiveConnectionFeatures.withLock { $0 = nil }
-                }
-                return .send(.delegate(.stateChanged(newValue)))
+            Reduce { _, _ in
+                .send(.delegate(.stateChanged(newValue)))
             }
         }
     }

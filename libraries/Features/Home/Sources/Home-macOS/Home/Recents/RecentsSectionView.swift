@@ -77,7 +77,7 @@ struct HomeRecentsSectionView_Previews: PreviewProvider {
                     .connectionSecureCore, // maintenance
                     .connectionSecureCoreFastest,
                 ],
-                connectionStatus: .init(protectionState: .protected(netShield: .random))
+                connectionStatus: .init(protectionState: .protected)
             ),
             reducer: { HomeFeature() }
         )

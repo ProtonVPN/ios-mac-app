@@ -64,7 +64,7 @@ private let _testIntent = ServerConnectionIntent(
     spec: .defaultFastest,
     server: _testServer,
     protocolConfiguration: .ike,
-    features: VPNConnectionFeatures(
+    features: AgentTunnelFeatures(
         netshield: .off,
         vpnAccelerator: true,
         natType: .moderateNAT,

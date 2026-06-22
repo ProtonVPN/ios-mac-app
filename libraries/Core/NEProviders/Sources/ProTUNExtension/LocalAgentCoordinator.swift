@@ -121,7 +121,10 @@ private extension LocalAgentCoordinator {
                 )
                 localAgentClient.writeConnectionData { $0 = IPCConnectionDataPayload(currentPeer) }
                 Logger.localAgent.info("Published peer to connectionData channel (connected): id=\(peer.peerId, privacy: .public) transport=\(String(describing: currentPeer.transport), privacy: .public) exitV4=\(currentPeer.serverExitV4 ?? "nil", privacy: .public)")
+
                 if let agent {
+                    // Publish changes to the app, and persist actual settings to disk in case we crash
+                    localAgentClient.writeAppliedFeatures { $0 = IPCAgentFeaturesPayload(agent.settings.agentTunnelFeatures) }
                     await adapter?.enqueueEffectiveLocalAgentSettings(agent.settings)
                 }
             case let .connectingToLocalAgent(peer, _):

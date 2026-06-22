@@ -49,23 +49,7 @@ protocol TunnelManager {
     var status: TunnelState { get async throws }
     var statusStream: AsyncStream<TunnelState> { get }
 
-    var connectionFeaturesStream: AsyncStream<VPNConnectionFeatures> { get }
-
     var forkRequestsStream: AsyncStream<Void> { get }
-}
-
-private extension ProTUNConfiguration {
-    /// The effective connection features encoded in this configuration, or `nil` until the extension has
-    /// populated the Local Agent settings (which it does once ProTUN reports the server-applied values).
-    var effectiveConnectionFeatures: VPNConnectionFeatures? {
-        guard let netShieldLevel, let vpnAccelerator, let randomNat else { return nil }
-        return VPNConnectionFeatures(
-            netshield: NetShieldType(rawValue: netShieldLevel) ?? .off,
-            vpnAccelerator: vpnAccelerator,
-            natType: NATType(flag: randomNat),
-            portForwarding: portForwarding
-        )
-    }
 }
 
 @CasePathable
@@ -264,22 +248,6 @@ final class PacketTunnelManager: TunnelManager {
                 statusTask.cancel()
                 connectionDataTask.cancel()
             }
-        }
-    }
-
-    var connectionFeaturesStream: AsyncStream<VPNConnectionFeatures> {
-        AsyncStream { continuation in
-            let task = Task {
-                for await notification in NotificationCenter.default.notifications(named: .NEVPNConfigurationChange) {
-                    guard let manager = notification.object as? NEVPNManager,
-                          let configuration = manager.protocolConfiguration,
-                          let features = try? ProTUNConfigurationCoder.decode(from: configuration).effectiveConnectionFeatures
-                    else { continue }
-                    log.debug("connectionFeaturesStream emit", category: .connection, metadata: ["features": "\(features)"])
-                    continuation.yield(features)
-                }
-            }
-            continuation.onTermination = { _ in task.cancel() }
         }
     }
 

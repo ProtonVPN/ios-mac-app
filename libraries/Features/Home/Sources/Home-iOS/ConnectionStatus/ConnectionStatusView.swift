@@ -172,7 +172,7 @@ public struct ConnectionStatusView: View {
 }
 
 #Preview("protected", traits: .sizeThatFitsLayout) {
-    @Shared(.protectionState) var protectionState: ProtectionState = .protected(netShield: .random)
+    @Shared(.protectionState) var protectionState: ProtectionState = .protected
     return ConnectionStatusView(store: Store(initialState: .init()) {
         ConnectionStatusFeature()
     })

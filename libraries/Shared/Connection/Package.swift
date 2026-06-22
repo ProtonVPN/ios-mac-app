@@ -14,6 +14,7 @@ let package = Package(
         .library(name: "LocalAgent", targets: ["LocalAgent"]),
         .library(name: "LocalAgentIPC", targets: ["LocalAgentIPC"]),
         .library(name: "Connection", targets: ["Connection"]),
+        .library(name: "ExtensionManager", targets: ["ExtensionManager"]),
         .library(name: "CoreConnection", targets: ["CoreConnection"]),
         .library(name: "ConnectionShared", targets: ["ConnectionShared"]), // Models shared between network extension and app targets
         .library(name: "Hermes", targets: ["Hermes"]),
@@ -97,6 +98,7 @@ let package = Package(
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Sharing", package: "swift-sharing"),
             ]
         ),
         .target(

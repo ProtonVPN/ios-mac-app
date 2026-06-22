@@ -127,7 +127,7 @@ final class ProTUNAdapter: @unchecked Sendable {
 
         Logger.adapter.info("Starting Adapter")
         @Dependency(\.localAgent) var localAgentClient
-        localAgentClient.zeroConnectionTelemetry()
+        localAgentClient.zeroTunnelData()
 
         let tunFd = try await prepare(with: config.proTUN)
         signposter.emitEvent("Tunnel prepared", id: signpostID)
@@ -215,7 +215,7 @@ final class ProTUNAdapter: @unchecked Sendable {
 
         // Clear the shared memory regions just before stopping.
         @Dependency(\.localAgent) var localAgentClient
-        localAgentClient.zeroConnectionTelemetry()
+        localAgentClient.zeroTunnelData()
     }
 }
 
@@ -443,6 +443,17 @@ extension ProTUNConfiguration {
             || differs(vpnAccelerator, effective.splitTcp)
             || differs(portForwarding, effective.portForwarding)
             || differs(randomNat, effective.randomNat)
+    }
+}
+
+extension LocalAgentSettings {
+    var agentTunnelFeatures: AgentTunnelFeatures {
+        AgentTunnelFeatures(
+            netshield: netshieldLevel?.netShieldType ?? .off,
+            vpnAccelerator: splitTcp ?? false,
+            natType: NATType(flag: randomNat ?? false),
+            portForwarding: portForwarding
+        )
     }
 }
 

@@ -31,11 +31,11 @@ struct ConnectionStatusBanner: View {
 
     var body: some View {
         switch store.protectionState {
-        case let .protected(netShield), let .protectedSecureCore(netShield):
+        case .protected, .protectedSecureCore:
             if (store.userTier ?? .freeTier).isFreeTier {
                 ConnectionStatusUpsell(mode: store.upsellMode, sendAction: { _ = store.send($0) })
             } else if store.netShieldLevel?.shouldMonitorStats() == true {
-                NetShieldStatsView(viewModel: netShield)
+                NetShieldStatsView(viewModel: store.netShield)
             }
         case .unprotected, .protecting, .resolving:
             locationText()

@@ -55,9 +55,9 @@
                 protocolConfiguration: .wireGuard(WireGuardSettings(
                     backend: .go,
                     transport: .udp,
-                    features: TunnelFeatures(killSwitch: false, excludeLocalNetworks: false)
+                    features: LocalTunnelFeatures(killSwitch: false, excludeLocalNetworks: false)
                 )),
-                features: VPNConnectionFeatures(
+                features: AgentTunnelFeatures(
                     netshield: .off,
                     vpnAccelerator: true,
                     natType: .default,

@@ -50,7 +50,6 @@ public struct ConnectionStatusFeature {
         case watchConnectionStatus
         case newConnectionState(ConnectionState)
         case newProtectionState(ProtectionState)
-        case newNetShieldStats(NetShieldModel)
 
         case tearDown
 
@@ -100,33 +99,23 @@ public struct ConnectionStatusFeature {
                 return .none
 
             case .watchConnectionStatus:
-                return .merge(
-                    .concatenate(
-                        .cancel(id: IDs.watchConnectionStatus),
-                        .publisher {
-                            state
-                                .$connectionState
-                                .publisher
-                                .removeDuplicates()
-                                .receive(on: UIScheduler.shared)
-                                .map(Action.newConnectionState)
-                        }.cancellable(id: IDs.watchConnectionStatus)
-                    ),
-                    .run { send in
-                        @Dependency(\.localAgent) var localAgent
-                        if let stats = (try? localAgent.trafficStats())?.localAgentStats.toNetShieldModel {
-                            await send(.newNetShieldStats(stats))
-                        }
-                    }
+                return .concatenate(
+                    .cancel(id: IDs.watchConnectionStatus),
+                    .publisher {
+                        state
+                            .$connectionState
+                            .publisher
+                            .removeDuplicates()
+                            .receive(on: UIScheduler.shared)
+                            .map(Action.newConnectionState)
+                    }.cancellable(id: IDs.watchConnectionStatus)
                 )
 
             case let .newConnectionState(connectionState):
                 let code = state.userCountry
                 let country = LocalizationUtility.default.countryName(forCode: code ?? "") ?? ""
                 let userIP = state.userIP ?? ""
-                let netShieldModel = state.protectionState.netShieldModel
-                // Determine protection state, defaulting to empty stats if necessary
-                let protectionState = connectionState.protectionState(country: country, ip: userIP, netShieldModel: netShieldModel)
+                let protectionState = connectionState.protectionState(country: country, ip: userIP)
                 return .send(.newProtectionState(protectionState))
 
             case let .newProtectionState(protectionState):
@@ -150,12 +139,6 @@ public struct ConnectionStatusFeature {
                     state.startingProtectionState = .unprotected // reset startingProtectionState
                     return .cancel(id: IDs.maskLocationTimer)
                 }
-
-            case let .newNetShieldStats(netShieldModel):
-                withOptionalAnimation {
-                    state.$protectionState.withLock { $0 = state.protectionState.copy(withNetShield: netShieldModel) }
-                }
-                return .none
 
             case .connectionStatusBanner:
                 return .none

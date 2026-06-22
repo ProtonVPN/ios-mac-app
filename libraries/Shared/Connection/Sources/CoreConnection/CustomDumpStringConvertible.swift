@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CustomDump
+import struct Domain.AgentTunnelFeatures
 import struct Domain.Server
-import struct Domain.VPNConnectionFeatures
 import Ergonomics
 import Foundation
 
@@ -29,8 +29,8 @@ extension Domain.Server: @retroactive CustomDumpStringConvertible {
     }
 }
 
-extension Domain.VPNConnectionFeatures: @retroactive CustomDumpStringConvertible {
+extension Domain.AgentTunnelFeatures: @retroactive CustomDumpStringConvertible {
     public var customDumpDescription: String {
-        "VPNConnectionFeatures(netShield: \(netshield), vpnAccelerator: \(vpnAccelerator), natType: \(natType))"
+        "AgentTunnelFeatures(netShield: \(netshield), vpnAccelerator: \(vpnAccelerator), natType: \(natType))"
     }
 }

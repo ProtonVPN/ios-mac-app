@@ -391,7 +391,7 @@ struct ConnectingOverlayFeatureTests {
             spec: spec,
             server: server(),
             protocolConfiguration: .ike,
-            features: VPNConnectionFeatures(
+            features: AgentTunnelFeatures(
                 netshield: .off,
                 vpnAccelerator: true,
                 natType: .moderateNAT,

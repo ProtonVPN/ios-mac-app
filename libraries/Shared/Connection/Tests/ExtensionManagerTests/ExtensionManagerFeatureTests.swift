@@ -32,7 +32,7 @@
             let mockClock = TestClock()
 
             let server = Server.ca // Canadian server mock
-            let features = VPNConnectionFeatures.mock
+            let features = AgentTunnelFeatures.mock
             let tunnelSettings = TunnelSettings.mock
             let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, protocolConfiguration: .wireGuard(tunnelSettings), features: features)
             let now = Date.now
@@ -111,7 +111,7 @@
             }
 
             let server = Server.mock
-            let features = VPNConnectionFeatures.mock
+            let features = AgentTunnelFeatures.mock
             let tunnelSettings = TunnelSettings.mock
             let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, protocolConfiguration: .wireGuard(tunnelSettings), features: features)
 

@@ -20,10 +20,10 @@ import Domain
 
 public enum ConnectionFeatureComparator {
     struct AnyEquatableKeyPath {
-        let keyPath: PartialKeyPath<VPNConnectionFeatures>
-        let isSatisfied: (_ base: VPNConnectionFeatures, _ requirement: VPNConnectionFeatures) -> Bool
+        let keyPath: PartialKeyPath<AgentTunnelFeatures>
+        let isSatisfied: (_ base: AgentTunnelFeatures, _ requirement: AgentTunnelFeatures) -> Bool
 
-        init(_ keyPath: KeyPath<VPNConnectionFeatures, some Equatable>) {
+        init(_ keyPath: KeyPath<AgentTunnelFeatures, some Equatable>) {
             self.keyPath = keyPath
             self.isSatisfied = { base, required in
                 base[keyPath: keyPath] == required[keyPath: keyPath]
@@ -31,7 +31,7 @@ public enum ConnectionFeatureComparator {
         }
 
         /// Comparison for optional features
-        init(_ keyPath: KeyPath<VPNConnectionFeatures, (some Equatable)?>) {
+        init(_ keyPath: KeyPath<AgentTunnelFeatures, (some Equatable)?>) {
             self.keyPath = keyPath
             self.isSatisfied = { base, required in
                 guard let requiredFeature = required[keyPath: keyPath] else {
@@ -90,8 +90,8 @@ public enum ConnectionFeatureComparator {
     }
 
     public static func storedFeatures(
-        _ features: VPNConnectionFeatures,
-        satisfy requiredFeatures: VPNConnectionFeatures
+        _ features: AgentTunnelFeatures,
+        satisfy requiredFeatures: AgentTunnelFeatures
     ) -> Result<Void, Failure> {
         let unsatisfiedFeatures = Feature.allCases
             .filter { !$0.erasedKeyPath.isSatisfied(features, requiredFeatures) }

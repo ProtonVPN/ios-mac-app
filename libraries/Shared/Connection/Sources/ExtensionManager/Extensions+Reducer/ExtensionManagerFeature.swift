@@ -64,7 +64,6 @@ public struct ExtensionFeature: Sendable {
         @DebugDescription
         public enum Delegate: Sendable {
             case reconfigurationFailed(Error)
-            case featuresChanged(VPNConnectionFeatures)
         }
     }
 
@@ -87,11 +86,6 @@ public struct ExtensionFeature: Sendable {
                         await send(.tunnelReasserting(.forkSelectorRequest))
                     }
                 }
-                let featuresObservation: Effect<ExtensionFeature.Action> = .run { send in
-                    for await features in tunnelManager.connectionFeaturesStream {
-                        await send(.delegate(.featuresChanged(features)))
-                    }
-                }
 
                 // These effects must not be executed concurrently until we make `PacketTunnelManager` concurrency safe.
                 // Doing so has the potential to create a duplicate set of `NETunnelProviderManager` and `NEVPNSession`
@@ -99,7 +93,7 @@ public struct ExtensionFeature: Sendable {
                 // and `stopTunnel` commands to the other, resulting in failure to connect.
                 return .concatenate(
                     initial,
-                    .merge(observation, forkObservation, featuresObservation)
+                    .merge(observation, forkObservation)
                         .cancellable(id: CancelID.observation, cancelInFlight: true)
                 )
 

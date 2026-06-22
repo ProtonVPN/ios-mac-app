@@ -28,4 +28,5 @@ public extension IPCNotifications.Notification {
     static let localAgentStats: Self = .init(name: "ch.protonmail.vpn.protun.localAgentStats")
     static let localAgentConnectionStats: Self = .init(name: "ch.protonmail.vpn.protun.localAgentConnectionStats")
     static let localAgentError: Self = .init(name: "ch.protonmail.vpn.protun.localAgentError")
+    static let localAgentFeatures: Self = .init(name: "ch.protonmail.vpn.protun.localAgentFeatures")
 }

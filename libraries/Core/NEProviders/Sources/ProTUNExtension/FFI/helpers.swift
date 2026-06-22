@@ -81,7 +81,7 @@ public extension LocalAgentSettingType {
 }
 
 public extension LocalAgentSettings {
-    var toVPNConnectionFeatures: VPNConnectionFeatures {
+    var toAgentTunnelFeatures: AgentTunnelFeatures {
         .init(
             netshield: netshieldLevel?.toNetShieldType ?? .off,
             vpnAccelerator: splitTcp ?? false,

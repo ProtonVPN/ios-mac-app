@@ -112,8 +112,8 @@ struct ConnectionStatusView: View {
                         locationText
                             .padding(.horizontal, 8)
                             .padding(.vertical, 4)
-                    } else if case let .protected(netShield) = store.protectionState {
-                        NetShieldStatsView() // TODO: update netshield stats
+                    } else if case .protected = store.protectionState {
+                        NetShieldStatsView() // TODO: update netshield stats from @SharedReader(.tunnelStats)
                     }
                 }
                 .background(
@@ -134,12 +134,12 @@ struct ConnectionStatusView: View {
 struct ConnectionStatusView_Previews: PreviewProvider {
     static var previews: some View {
         ConnectionStatusView(store: .init(
-            initialState: .init(protectionState: .protected(netShield: .random)),
+            initialState: .init(protectionState: .protected),
             reducer: { ConnectionStatusFeature() }
         ))
         .previewDisplayName("Protected")
         ConnectionStatusView(store: .init(
-            initialState: .init(protectionState: .protectedSecureCore(netShield: .random)),
+            initialState: .init(protectionState: .protectedSecureCore),
             reducer: { ConnectionStatusFeature() }
         ))
         .previewDisplayName("ProtectedSecureCore")
