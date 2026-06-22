@@ -36,7 +36,7 @@ package extension AppIntent {
         await MainActor.run {
             let app = UIApplication.shared
             guard app.applicationState == .active else {
-                log.info("App is no longer active; skipping app suspension", category: .app)
+                log.warning("App is no longer active; skipping app suspension", category: .app)
                 return
             }
             let suspendSelector = #selector(URLSessionTask.suspend)

@@ -47,7 +47,7 @@
 		<true/>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2026 Proton Technologies AG. All rights reserved.</string>
+	<string>Copyright © 2021 Proton Technologies AG. All rights reserved.</string>
 	<key>OSLogPreferences</key>
 	<dict>
 		<key>PROTON-APP</key>
@@ -107,14 +107,12 @@
 	<string>Dark</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<!-- Send copies of winning postbacks to ourselves -->
 	<key>NSAdvertisingAttributionReportEndpoint</key>
 	<string>https://protonvpn.com/</string>
 	<key>AttributionCopyEndpoint</key>
 	<string>https://protonvpn.com/</string>
 	<key>SKAdNetworkItems</key>
 	<array>
-		<!-- google -->
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
 			<string>eqhxz8m8av.skadnetwork</string>
@@ -127,7 +125,6 @@
 			<key>SKAdNetworkIdentifier</key>
 			<string>klf5c3l5u5.skadnetwork</string>
 		</dict>
-		<!-- meta -->
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
 			<string>v9wttpbfk9.skadnetwork</string>
@@ -136,7 +133,6 @@
 			<key>SKAdNetworkIdentifier</key>
 			<string>n38lu8286q.skadnetwork</string>
 		</dict>
-		<!-- tiktok -->
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
 			<string>mj797d8u6f.skadnetwork</string>
@@ -153,12 +149,10 @@
 			<key>SKAdNetworkIdentifier</key>
 			<string>22mmun2rn5.skadnetwork</string>
 		</dict>
-		<!-- reddit -->
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
 			<string>2tdux39lx8.skadnetwork</string>
 		</dict>
-		<!-- twitter -->
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
 			<string>n66cz3y3bx.skadnetwork</string>
