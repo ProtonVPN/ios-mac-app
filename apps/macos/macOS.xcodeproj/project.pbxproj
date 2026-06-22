@@ -144,7 +144,6 @@
 		E15B754D20FA83CB0022C406 /* ProtonVPNmacOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonVPNmacOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E52B8BAD29FBB7E700517FFC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		E57B263129C3188D00533B7C /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
-		E5BDD80A2A67FD3700F3BB7C /* ProtonVPN-mac-redesign-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "ProtonVPN-mac-redesign-Info.plist"; sourceTree = "<group>"; };
 		E5C00F082A15FC6E0030076F /* ProtonVPNmac-redesign-UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ProtonVPNmac-redesign-UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBB751C42DA7D4C800F79994 /* ch.protonvpn.mac.Transparent-Proxy.systemextension */ = {isa = PBXFileReference; explicitFileType = "wrapper.system-extension"; includeInIndex = 0; path = "ch.protonvpn.mac.Transparent-Proxy.systemextension"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE182C551F617C0000F3BA4C /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
@@ -445,7 +444,6 @@
 		EED534781EEC112000013607 = {
 			isa = PBXGroup;
 			children = (
-				E5BDD80A2A67FD3700F3BB7C /* ProtonVPN-mac-redesign-Info.plist */,
 				F38BB451265C0D8F00329619 /* Config.xcconfig */,
 				ADA595EB2F34C02E0087E150 /* Version.xcconfig */,
 				A46820AF2FD96A4500901B14 /* External */,

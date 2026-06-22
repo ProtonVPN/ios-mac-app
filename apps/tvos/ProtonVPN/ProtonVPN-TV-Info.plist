@@ -49,8 +49,6 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>2407112124</string>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
@@ -74,7 +72,7 @@
 		</dict>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2024 Proton Technologies AG. All rights reserved.</string>
+	<string>Copyright © 2026 Proton Technologies AG. All rights reserved.</string>
 	<key>OSLogPreferences</key>
 	<dict>
 		<key>PROTON-APP</key>
@@ -91,14 +89,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>arm64</string>
-	</array>
-	<key>CFBundleSupportedPlatforms</key>
-	<array>
-		<string>AppleTVOS</string>
-	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Automatic</string>
 	<key>UILaunchScreen</key>

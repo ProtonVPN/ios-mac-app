@@ -47,7 +47,7 @@
 		<true/>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2021 Proton Technologies AG. All rights reserved.</string>
+	<string>Copyright © 2026 Proton Technologies AG. All rights reserved.</string>
 	<key>OSLogPreferences</key>
 	<dict>
 		<key>PROTON-APP</key>
@@ -64,16 +64,10 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocalNetworkUsageDescription</key>
-	<string>Atlantis would use Bonjour Service to discover Proxyman app from your local network. Atlantis uses it to transfer the data from your iOS app to Proxyman macOS for debugging purposes.</string>
-	<key>NSBonjourServices</key>
-    <array>
-    	<string>_Proxyman._tcp</string>
-    </array>
 	<key>UIBackgroundModes</key>
 	<array>
-    	<string>remote-notification</string>
-    </array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>VPNLaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

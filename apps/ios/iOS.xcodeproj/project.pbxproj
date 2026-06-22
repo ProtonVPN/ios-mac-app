@@ -157,6 +157,7 @@
 		A4681A982FD95ECB00901B14 /* Exceptions for "ProtonVPN" folder in "ProtonVPN" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				"Info-Debug.plist",
 				Info.plist,
 				ObfuscatedConstants.example.swift,
 			);
@@ -826,7 +827,7 @@
 					"$(PROJECT_DIR)/OpenPGP/headers/",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = ProtonVPN/Info.plist;
+				INFOPLIST_FILE = "ProtonVPN/Info-Debug.plist";
 				INFOPLIST_KEY_UILaunchStoryboardName = VPNLaunchScreen.storyboard;
 				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1187,7 +1188,7 @@
 					"$(PROJECT_DIR)/OpenPGP/headers/",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = ProtonVPN/Info.plist;
+				INFOPLIST_FILE = "ProtonVPN/Info-Debug.plist";
 				INFOPLIST_KEY_UILaunchStoryboardName = VPNLaunchScreen.storyboard;
 				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1425,7 +1426,7 @@
 					"$(PROJECT_DIR)/OpenPGP/headers/",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = ProtonVPN/Info.plist;
+				INFOPLIST_FILE = "ProtonVPN/Info-Debug.plist";
 				INFOPLIST_KEY_UILaunchStoryboardName = VPNLaunchScreen.storyboard;
 				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
