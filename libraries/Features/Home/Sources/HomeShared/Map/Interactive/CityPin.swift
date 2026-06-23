@@ -71,24 +71,23 @@ struct PinCluster: Identifiable, Equatable {
         simd_normalize(members.reduce(SIMD3<Float>(repeating: 0)) { $0 + $1.direction })
     }
 
-    /// Where to fly the camera when this coalesced point is tapped: look at the members' centre, and dolly
-    /// in far enough to start pulling them apart. We fit the cluster's angular spread into the view (so a
-    /// broad cluster frames its region) but also guarantee a minimum zoom-in step (so a tight pair still
-    /// makes visible progress), clamped so we never zoom out or punch through the sphere. Re-clustering
-    /// after the move reflects the new separation, so a second tap drills in further if needed.
-    func zoomTarget(currentDistance: Float, minDistance: Float) -> (latitudeDegrees: Float, longitudeDegrees: Float, distance: Float) {
+    /// Where to fly the camera when this coalesced point is tapped: look at the members' centre and dolly to
+    /// the distance that frames the WHOLE cluster on screen. The fit is the sphere-aware
+    /// `GlobeFocus.distance(fittingAngularRadius:)` for the spherical cap that encloses every member (the
+    /// max angular distance from the centroid), so all of them land inside the view — accounting for the
+    /// curvature, not a flat disc. Clamped so we never zoom out or dolly past the fit (an earlier
+    /// "minimum zoom-in step" over-shot the fit on a second tap and pushed the outer members off-screen).
+    /// Re-clustering after the move reflects the new separation, so a second tap drills in further.
+    func zoomTarget(currentDistance: Float, minDistance: Float, aspectRatio: Float) -> (latitudeDegrees: Float, longitudeDegrees: Float, distance: Float) {
         let direction = centerDirection
         let coordinate = GlobeGeometry.coordinate(of: direction)
         let angularRadius = members
             .map { acos(max(-1, min(1, simd_dot(simd_normalize($0.direction), direction)))) }
             .max() ?? 0
-        let fit = GlobeFocus.distance(fittingAngularRadius: angularRadius, minDistance: minDistance)
-        let target = max(minDistance, min(fit, currentDistance * Self.zoomInStep))
+        let fit = GlobeFocus.distance(fittingAngularRadius: angularRadius, aspectRatio: aspectRatio, minDistance: minDistance)
+        let target = max(minDistance, min(fit, currentDistance))
         return (coordinate.latitudeDegrees, coordinate.longitudeDegrees, target)
     }
-
-    /// Fraction of the current distance to dolly in per tap when the angular fit alone wouldn't move much.
-    private static let zoomInStep: Float = 0.6
 }
 
 /// Greedily groups projected pins whose screen positions fall within `threshold` points of a running

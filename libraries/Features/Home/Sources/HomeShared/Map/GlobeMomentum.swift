@@ -44,9 +44,9 @@ final class GlobeMomentum: ObservableObject {
         self.minSpeed = minSpeed
     }
 
-    var isCoasting: Bool {
-        displayLink != nil
-    }
+    /// Whether a coast is currently running. `@Published` so the view re-renders when it ends — the settling
+    /// tick doesn't fire `onStep`, so without this the "map is moving" signal would never flip back to false.
+    @Published private(set) var isCoasting = false
 
     /// Begins (or refreshes) a coast at the given angular velocity. No-op below `minSpeed`, so a tap or a
     /// slow release won't fling the globe.
@@ -58,6 +58,7 @@ final class GlobeMomentum: ObservableObject {
         let link = CADisplayLink(target: self, selector: #selector(step(_:)))
         link.add(to: .main, forMode: .common)
         displayLink = link
+        isCoasting = true
     }
 
     /// Stops the coast immediately, leaving the orientation wherever this frame left it.
@@ -65,6 +66,7 @@ final class GlobeMomentum: ObservableObject {
         displayLink?.invalidate()
         displayLink = nil
         velocity = .zero
+        isCoasting = false
     }
 
     @objc

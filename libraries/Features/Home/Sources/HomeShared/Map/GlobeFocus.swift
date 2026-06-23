@@ -53,10 +53,17 @@ enum GlobeFocus {
     /// Camera distance that fits a cap of angular radius `rho` (radians) into `fitMargin` of the half-FOV.
     /// Clamped to `[minDistance, wholeGlobeDistance]`. The geometry: with the camera at distance `d` from a
     /// unit sphere, a surface cap of angular radius `rho` subtends a half-angle whose tangent is
-    /// `sin(rho) / (d - cos(rho))`; solving for the `d` that makes that equal `tan(fov/2 · fitMargin)`
+    /// `sin(rho) / (d - cos(rho))`; solving for the `d` that makes that equal `tan(halfFov · fitMargin)`
     /// gives the closed form below.
-    static func distance(fittingAngularRadius rho: Float, minDistance: Float = GlobeFocus.minDistance) -> Float {
-        let distance = cos(rho) + sin(rho) / tan(GlobeCamera.defaultFieldOfView * 0.5 * fitMargin)
+    ///
+    /// `aspectRatio` (width / height) picks the BINDING half-FOV: `defaultFieldOfView` is vertical, so on a
+    /// portrait screen the horizontal FOV is narrower and a cap spread sideways would otherwise frame to the
+    /// vertical FOV and fall off the sides. Using the smaller of the two guarantees the whole cap is on screen
+    /// in either direction (square/landscape ⇒ the vertical FOV, the default).
+    static func distance(fittingAngularRadius rho: Float, aspectRatio: Float = 1, minDistance: Float = GlobeFocus.minDistance) -> Float {
+        let halfFovY = GlobeCamera.defaultFieldOfView * 0.5
+        let halfFov = min(halfFovY, atan(max(aspectRatio, 0.01) * tan(halfFovY)))
+        let distance = cos(rho) + sin(rho) / tan(halfFov * fitMargin)
         return min(max(distance, minDistance), wholeGlobeDistance)
     }
 }

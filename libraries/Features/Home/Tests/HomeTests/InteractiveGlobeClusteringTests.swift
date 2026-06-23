@@ -26,6 +26,9 @@ import Testing
 struct InteractiveGlobeClusteringTests {
     /// A low manual-zoom floor like the interactive globe uses (well below the home map's auto-fit clamp).
     private let zoomFloor: Float = 1.02
+    /// A representative portrait render-canvas aspect (width / height) — the narrower horizontal FOV is what
+    /// the cluster fit must respect so sideways-spread members don't fall off the sides.
+    private let aspectRatio: Float = 0.46
 
     private func pin(_ id: String, latitude: Double = 0, longitude: Double = 0) -> CityPin {
         CityPin(
@@ -74,7 +77,7 @@ struct InteractiveGlobeClusteringTests {
             members: [pin("a", latitude: 50, longitude: 10), pin("b", latitude: 50, longitude: 12)]
         )
 
-        let target = cluster.zoomTarget(currentDistance: GlobeFocus.wholeGlobeDistance, minDistance: zoomFloor)
+        let target = cluster.zoomTarget(currentDistance: GlobeFocus.wholeGlobeDistance, minDistance: zoomFloor, aspectRatio: aspectRatio)
 
         #expect(target.distance < GlobeFocus.wholeGlobeDistance) // zoomed in
         #expect(target.distance >= zoomFloor) // not past the supplied floor
@@ -90,8 +93,27 @@ struct InteractiveGlobeClusteringTests {
             members: [pin("a", latitude: 50, longitude: 10), pin("b", latitude: 50.01, longitude: 10)]
         )
 
-        let target = cluster.zoomTarget(currentDistance: GlobeFocus.wholeGlobeDistance, minDistance: zoomFloor)
+        let target = cluster.zoomTarget(currentDistance: GlobeFocus.wholeGlobeDistance, minDistance: zoomFloor, aspectRatio: aspectRatio)
 
         #expect(target.distance == zoomFloor)
+    }
+
+    @Test("Tapping a cluster while already zoomed in frames all members, not over-shooting past the fit")
+    func zoomTargetFitsAllWhenAlreadyZoomedIn() {
+        // Two pins 5° apart — their fit distance sits well above the floor.
+        let cluster = PinCluster(
+            id: "x",
+            center: .zero,
+            members: [pin("a", latitude: 0, longitude: 0), pin("b", latitude: 0, longitude: 5)]
+        )
+
+        // Already dollied in close: a "fraction of the current distance" step would shoot *past* the fit and
+        // clip the outer members. The target should instead land on the fit that frames the whole cap.
+        let target = cluster.zoomTarget(currentDistance: 1.5, minDistance: zoomFloor, aspectRatio: aspectRatio)
+        let fit = GlobeFocus.distance(fittingAngularRadius: Float(2.5 * Double.pi / 180), aspectRatio: aspectRatio, minDistance: zoomFloor)
+
+        #expect(target.distance > zoomFloor + 0.05) // not over-zoomed down to the floor
+        #expect(target.distance < 1.5) // did zoom in
+        #expect(abs(target.distance - fit) < 0.01) // frames all members at the (aspect-aware) fit
     }
 }

@@ -41,6 +41,12 @@ public struct HomeView: View {
     }
 
     private static let bottomGradientHeight: CGFloat = 100
+    /// Extra map canvas drawn past the bottom safe area so the globe bleeds *under* the (translucent, on
+    /// iOS 26 Liquid Glass) tab bar instead of stopping at its top edge — the tab bar then floats over the
+    /// map. Generously overshoots any tab bar + home-indicator inset (the excess clips off-screen); harmless
+    /// where the bar is opaque (it just hides the bleed). The scroll keeps respecting the inset, so the last
+    /// Recents row still clears the bar.
+    private static let mapBottomBleed: CGFloat = 120
     /// Pulling the connection card + recents down past this many points while already scrolled to the top
     /// collapses them, revealing the full interactive map. Normal scrolling is unaffected.
     private static let pullToCollapseThreshold: CGFloat = 90
@@ -134,27 +140,10 @@ public struct HomeView: View {
             // much (`.ignoresSafeArea(.top)`) and the globe's focus region is offset down by the same, so
             // the map fills behind the status bar while the country stays put in the visible area.
             let topInset = proxy.frame(in: .global).minY
+            // The full-screen map lives in the stack's `.background` (applied below), NOT as a child: its
+            // canvas draws taller than the safe area (spilling under the tab bar) and must stay layout-neutral.
+            // As a child it sized the ZStack, which dragged the ScrollView's last Recents row under the bar.
             ZStack(alignment: .top) {
-                // Full-screen map. Decorative (faces the connected country) with the sheet up; user
-                // interactive (pan/pinch + location pins) when the sheet is collapsed. Only hit-testable
-                // when full so it never competes with the scroll view otherwise; the globe is framed in
-                // the peek band when up and the whole screen when full (animated for a smooth expand).
-                HomeMapView(
-                    store: store.scope(state: \.map, action: \.map),
-                    availableHeight: isMapFull ? proxy.size.height + topInset : mapHeight,
-                    availableWidth: proxy.size.width,
-                    renderHeight: proxy.size.height + topInset,
-                    topInset: topInset,
-                    interactive: isMapFull,
-                    onBackgroundTap: { setMapFull(false) }
-                )
-                .frame(width: proxy.size.width, height: proxy.size.height + topInset, alignment: .top)
-                .ignoresSafeArea(.container, edges: .top)
-                .zIndex(ZIndex.map.rawValue)
-                // Always hit-testable: when the sheet is up the scroll view fully covers the map, so this
-                // never competes with it; when full it must receive pan/pinch/tap. (The MTKView itself is
-                // non-interactive — gestures live on a SwiftUI layer in the globe overlay.)
-
                 // `ConnectionStatusView` owns the top-of-map slot for every protection state, including
                 // the grey Advanced-kill-switch blocking overlay (see its `.killSwitchActive` branch).
                 ConnectionStatusView(
@@ -243,7 +232,27 @@ public struct HomeView: View {
                     .zIndex(ZIndex.enabledConnectionStatus.rawValue)
                 }
             }
-            .background(Color(.background))
+            // Full-screen map behind the stack. Decorative (faces the connected country) with the sheet up;
+            // interactive (pan/pinch + location pins) when collapsed. As a `.background` it draws taller than
+            // the stack — its canvas spills under the tab bar (`mapBottomBleed` + `ignoresSafeArea(.bottom)`) —
+            // WITHOUT sizing the stack, so the ScrollView keeps its safe-area inset and the last Recents row
+            // clears the bar. Still hit-testable: when the sheet is up the scroll covers it; when full the
+            // scroll stops hit-testing, so pan/pinch/tap fall through to the map. (`focusHeight`/availableHeight
+            // is unchanged, so the globe stays framed where it was — only the un-clipped spill below it grows.)
+            .background(alignment: .top) {
+                HomeMapView(
+                    store: store.scope(state: \.map, action: \.map),
+                    availableHeight: isMapFull ? proxy.size.height + topInset : mapHeight,
+                    availableWidth: proxy.size.width,
+                    renderHeight: proxy.size.height + topInset + Self.mapBottomBleed,
+                    topInset: topInset,
+                    interactive: isMapFull,
+                    onBackgroundTap: { setMapFull(false) }
+                )
+                .frame(width: proxy.size.width, height: proxy.size.height + topInset + Self.mapBottomBleed, alignment: .top)
+                .ignoresSafeArea(.container, edges: [.top, .bottom])
+            }
+            .background(Color(.background).ignoresSafeArea())
             .onAppear {
                 viewHeight = proxy.size.height
             }

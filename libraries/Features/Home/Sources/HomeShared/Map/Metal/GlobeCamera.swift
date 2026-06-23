@@ -32,8 +32,10 @@ struct GlobeCamera: Equatable {
     /// Half-depth of the clip slab centred on the globe: the unit-sphere radius (1) plus slack, so the
     /// near and far planes always bracket the visible hemisphere at any dolly distance.
     private static let clipMargin: Float = 1.5
-    /// Floor for the near plane, keeping it positive even when dollied in to the closest distance.
-    private static let minNearPlane: Float = 0.01
+    /// Floor for the near plane, keeping it positive even when dollied in to the closest distance. Small so a
+    /// deep zoom (right up against the surface, to pull apart close-together city pins) doesn't clip the near
+    /// cap of the globe. There's no depth buffer (back-face culling only), so a tiny near plane is harmless.
+    private static let minNearPlane: Float = 0.002
 
     /// Rotation bringing the faced model direction onto +z (north roughly up).
     var orientation: simd_quatf

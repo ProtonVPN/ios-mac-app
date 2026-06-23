@@ -51,9 +51,16 @@ public struct HomeMapView: View {
     /// Tapping the globe away from any pin — used to toggle the full-map / sheet view.
     private let onBackgroundTap: () -> Void
 
-    /// Closest the interactive camera dollies in. Above 1 so it never enters the sphere; high enough that
-    /// max zoom-in isn't disorienting, while still separating cities more than ~0.4° apart.
-    private static let minZoomDistance: Float = 1.15
+    /// Normal closest dolly-in for browsing. The actual floor (`minZoomDistance`) only ever goes *deeper*
+    /// than this — when two cities are close enough on screen that pulling them apart needs more zoom.
+    private static let defaultZoomFloor: Float = 1.15
+    /// Absolute closest the camera may dolly (just outside the sphere) — a safety clamp for the data-derived
+    /// floor so it can never reach the surface. Deep enough to separate cities ~2 km apart (essentially any
+    /// distinct cities); the renderer's near plane is small enough to draw the surface cleanly at this dolly.
+    private static let hardMinZoomDistance: Float = 1.004
+    /// At the floor, the closest pair of cities sit this many × the collision threshold apart on screen — so
+    /// they're not merely un-clustered but comfortably tappable.
+    private static let clusterSeparationMargin: Float = 1.5
     /// Farthest the interactive camera dollies out — more than the decorative whole-globe framing, so you
     /// can pull back for an overview. Separate from `GlobeFocus.wholeGlobeDistance` (decorative auto-fit).
     private static let maxZoomDistance: Float = 3.6
@@ -67,6 +74,9 @@ public struct HomeMapView: View {
     /// shorter glide), and the speed below which a release doesn't coast (so taps and slow lifts just stop).
     private static let coastRetentionPerSecond: Float = 0.3
     private static let coastMinSpeed: Float = 0.5
+    /// Cap on the release spin (rad/s ≈ 2.5 turns/s) so a hard fling can't whip the globe absurdly fast — but
+    /// high enough to still feel playful. Only the post-release coast is capped; the live drag stays 1:1.
+    private static let coastMaxSpeed: Float = 16
     /// EMA weight for the per-frame angular-speed estimate that seeds the coast (higher = tracks the final
     /// motion more, lower = smoother / less spiky).
     private static let velocitySmoothing: Float = 0.35
@@ -80,6 +90,10 @@ public struct HomeMapView: View {
     /// ⇒ an earlier, slower, less dramatic ramp.
     private static let poleZoomStart: Float = 0.5
     private static let poleZoomDistance: Float = 2.2
+    /// Cap on how near the poles the user can steer the look point (|sin lat|; 0.985 ≈ 80°). At the pole the
+    /// north-up roll is singular — north projects onto the screen centre, so the in-plane direction used to
+    /// level it is undefined and the globe spins wildly. Stopping a few degrees short keeps it stable.
+    private static let maxFacingY: Float = 0.985
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     /// The orientation we last presented in *decorative* mode — kept to hemisphere-align the next derived
@@ -98,6 +112,25 @@ public struct HomeMapView: View {
     /// coast continues the *actual* spin — robust where the raw finger velocity spikes on taps.
     @State private var dragAngularVelocity: SIMD3<Float> = .zero
     @State private var lastDragTime: CFTimeInterval?
+    /// The logically-selected city (drives tap handling): tapping a city pin selects it (pin → label); tapping
+    /// the label connects. Cleared the instant the map moves or another pin/cluster is tapped.
+    @State private var selectedCity: CityPin?
+    /// The city the pill is *displayed* for — set on select and KEPT through the collapse, so the pill stays
+    /// in the hierarchy (re-projected each frame → tracks the globe) while it shrinks back into its point.
+    @State private var pillCity: CityPin?
+    /// 0 = collapsed into the point, 1 = full pill. Animated; the pill renders only while it's > 0.
+    @State private var pillReveal: CGFloat = 0
+    /// A previously-displayed pill handed off to collapse while a newly-selected one grows, so tapping a pin
+    /// while another pill is up cross-fades (old shrinks into its point as the new expands) instead of swapping
+    /// hard. Its own city + reveal so both can animate at once. Overwritten by each successive switch.
+    @State private var outgoingCity: CityPin?
+    @State private var outgoingReveal: CGFloat = 0
+    /// Reverse-geocoded `placemark.locality` (in the current locale) keyed by pin id — the label prefers this
+    /// over the server's city name. Filled lazily on selection (geocoding every pin would hit rate limits).
+    @State private var localizedNames: [String: String] = [:]
+    /// Smallest angular separation (radians) between any two city pins — the tightest pair anywhere. Recomputed
+    /// when the pins change; drives how deep `minZoomDistance` allows zooming so even those two can be split.
+    @State private var closestCityAngle: Float = .pi
     /// Decaying-spin coaster (frame-driven, interruptible) for the post-flick glide.
     @StateObject private var momentum = GlobeMomentum(
         retentionPerSecond: HomeMapView.coastRetentionPerSecond,
@@ -163,12 +196,50 @@ public struct HomeMapView: View {
         .animation(reduceMotion ? nil : .default, value: highlightedCode)
         .onChange(of: highlightedCode) { presentedOrientation = displayedCamera.orientation }
         .onChange(of: interactive) { syncOnModeChange() }
+        // Selecting grows the pill in; deselecting collapses it back into the point. `pillCity` is kept on
+        // deselect so the collapsing pill stays positioned (tracks the globe) until `pillReveal` reaches 0,
+        // at which point it stops rendering and the underlying Canvas dot takes over seamlessly.
+        .onChange(of: selectedCity) {
+            // Critically damped (dampingFraction 1) so the collapse doesn't overshoot back past 0 and briefly
+            // re-draw the pill a hair larger than the dot. The grow's overshoot was invisible (clip clamps at
+            // the pill size past reveal 1), so nothing is lost.
+            let reveal = reduceMotion ? nil : Animation.spring(response: 0.32, dampingFraction: 1)
+            if let selectedCity {
+                // Switching directly from another visible pill: hand it to the outgoing slot so it collapses
+                // into its point at the same time the new one grows (symmetrical cross-fade, not a hard swap).
+                if let current = pillCity, current.id != selectedCity.id, pillReveal > 0.001 {
+                    outgoingCity = current
+                    outgoingReveal = pillReveal
+                    withAnimation(reveal) { outgoingReveal = 0 }
+                }
+                pillCity = selectedCity
+                // Render the new pill collapsed for one frame, THEN grow it. SwiftUI animates from the
+                // last-rendered reveal, which is 1 when switching from another pill — so a same-tick grow would
+                // be skipped; deferring one runloop gives it a real 0→1 to interpolate.
+                pillReveal = 0
+                DispatchQueue.main.async { withAnimation(reveal) { pillReveal = 1 } }
+            } else {
+                withAnimation(reveal) { pillReveal = 0 }
+            }
+        }
+        // Recompute the tightest-pair angle (→ the zoom floor) whenever the server-driven pin set changes.
+        .onChange(of: store.cityPins) { closestCityAngle = Self.closestAngle(among: store.cityPins) }
+        // Reverse-geocode the selected city's coordinates to its locale-correct locality, replacing the
+        // server's city name in the label. Lazy (one request per fresh selection) + cached, so it stays well
+        // within CLGeocoder's rate limits; `.task(id:)` cancels an in-flight lookup if you pick another pin.
+        .task(id: selectedCity?.id) {
+            guard let city = selectedCity, localizedNames[city.id] == nil else { return }
+            let location = CLLocation(latitude: city.latitude, longitude: city.longitude)
+            guard let placemarks = try? await CLGeocoder().reverseGeocodeLocation(location, preferredLocale: .current),
+                  let locality = placemarks.first?.locality else { return }
+            localizedNames[city.id] = locality
+        }
         .onAppear {
+            closestCityAngle = Self.closestAngle(among: store.cityPins)
             // The coaster spins the live orientation each frame (keeping north up), so the glide is the
             // real value — grabbing mid-coast just stops it where it is.
             momentum.onStep = { angle, axis in
-                let spin = simd_quatf(angle: angle, axis: axis)
-                $interactiveOrientation.wrappedValue = Self.uprighted(simd_normalize(spin * $interactiveOrientation.wrappedValue))
+                $interactiveOrientation.wrappedValue = Self.coastStep($interactiveOrientation.wrappedValue, angle: angle, axis: axis)
             }
         }
         // The display link retains the coaster while running; stop it on disappear so it can't outlive the view.
@@ -214,9 +285,26 @@ public struct HomeMapView: View {
 
     // MARK: - Pins
 
+    /// True while the user is actively moving the map (dragging, pinching, or the post-flick coast). Pins
+    /// render as stable points then, resolving into counted clusters once it settles.
+    private var isMoving: Bool {
+        lastDragLocation != nil || pinchStartDistance != nil || momentum.isCoasting
+    }
+
     @ViewBuilder
     private func pinsOverlay(projection: GlobeProjection) -> some View {
-        let clusters = interactive ? visibleClusters(projection: projection) : []
+        // Pins render whenever the globe is at all lit — interactive steady-state AND the open/close
+        // transition (`lightFade` interpolates 0↔1 on the same animation that zooms the globe). Driving them
+        // off `lightFade` (not the instant `interactive` flip) means they re-project every frame, so they track
+        // the zoom and fade out *with* it instead of freezing as a static snapshot. Skipped when decorative.
+        let fade = Double(projection.lightFade)
+        let active = fade > 0.001
+        let visible = active ? visiblePins(projection: projection) : []
+        let clusters = active ? clusterPins(visible, within: Self.collisionThreshold) : []
+        // Counted cluster discs only once settled AND fully open; otherwise the stable per-pin points — while
+        // dragging/coasting (membership can't flicker), and right through the open/close transition so they
+        // shrink with the globe cleanly rather than the discs re-clustering/recounting as it scales.
+        let showClusters = !isMoving && projection.lightFade > 0.999
         ZStack {
             // Gesture surface above the (non-interactive) `MTKView`. The tap is location-aware so it can
             // hit-test the Canvas-drawn pins (which carry no gestures of their own); a tap that misses every
@@ -226,15 +314,57 @@ public struct HomeMapView: View {
                 .gesture(panGesture.simultaneously(with: zoomGesture))
                 .simultaneousGesture(SpatialTapGesture().onEnded { handleTap(at: $0.location, clusters: clusters) })
 
-            // All location pins drawn in a single GPU-backed Canvas — one imperative draw per frame instead
-            // of dozens of SwiftUI views to diff and lay out, so a drag re-renders cheaply and tracks the
-            // finger.
-            if interactive {
+            // Pins draw in single GPU-backed Canvases (one imperative draw per frame, not dozens of SwiftUI
+            // views to diff). The two layers crossfade on `showClusters`; both are further scaled by `fade` so
+            // they dissolve in/out with the open/close animation while still tracking the globe.
+            if active {
+                Canvas { context, _ in
+                    for pin in visible {
+                        Self.drawPoint(at: pin.point, in: context)
+                    }
+                }
+                .opacity(showClusters ? 0 : fade)
+                .allowsHitTesting(false)
+
                 Canvas { context, _ in
                     for cluster in clusters {
                         Self.draw(cluster, in: context)
                     }
                 }
+                .opacity(showClusters ? fade : 0)
+                .allowsHitTesting(false)
+            }
+
+            // The selected city's name pill, drawn in a Canvas exactly like the pins (same projected point,
+            // same per-frame redraw) so it tracks the globe in lockstep — a `.position`-ed SwiftUI view
+            // lagged. It's an `Animatable` view with `reveal` as `animatableData`, so `withAnimation(pillReveal)`
+            // interpolates it frame-by-frame (the Canvas redraws each step → a real centre-out grow/collapse),
+            // while `center` is a plain prop refreshed every frame so the collapse tracks the point too. The
+            // name prefers the locale-correct geocoded locality, falling back to the server's city name.
+            if interactive, let pillCity {
+                let projected = projection.project(pillCity.direction)
+                let name = localizedNames[pillCity.id] ?? pillCity.displayName
+                PillCanvas(
+                    reveal: pillReveal,
+                    name: name,
+                    size: Self.labelSize(for: name),
+                    center: projected.isFront ? projected.point : nil
+                )
+                .allowsHitTesting(false)
+            }
+
+            // The handed-off pill collapsing while the new one grows (see the `selectedCity` onChange). Its own
+            // structural slot + its own `reveal`, so the two pills animate independently; same Canvas treatment
+            // so it tracks the globe and shrinks back into its point.
+            if interactive, let outgoingCity {
+                let projected = projection.project(outgoingCity.direction)
+                let name = localizedNames[outgoingCity.id] ?? outgoingCity.displayName
+                PillCanvas(
+                    reveal: outgoingReveal,
+                    name: name,
+                    size: Self.labelSize(for: name),
+                    center: projected.isFront ? projected.point : nil
+                )
                 .allowsHitTesting(false)
             }
 
@@ -252,13 +382,17 @@ public struct HomeMapView: View {
                 }
             }
         }
+        // Crossfade the points↔discs swap (incorporates `isMoving` and the fully-open threshold). The `fade`
+        // dissolve rides the globe's own open/close animation, so it needs no animation of its own here.
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.25), value: showClusters)
     }
 
-    /// Projects the visible location pins (in front of the horizon, on-screen) and coalesces overlapping
-    /// ones. Culling off-screen pins is the main per-frame win — only what's drawn is processed.
-    private func visibleClusters(projection: GlobeProjection) -> [PinCluster] {
+    /// Projects the location pins that are currently visible (in front of the horizon and on-screen). Culling
+    /// off-screen pins is the main per-frame win — only what's drawn is processed. Clustering is applied on
+    /// top of this (`clusterPins`) only for the settled display and for tap hit-testing.
+    private func visiblePins(projection: GlobeProjection) -> [ProjectedPin] {
         let bounds = projection.viewSize
-        let projected = store.cityPins.compactMap { pin -> ProjectedPin? in
+        return store.cityPins.compactMap { pin -> ProjectedPin? in
             let result = projection.project(pin.direction)
             guard result.isFront else { return nil }
             let point = result.point
@@ -267,25 +401,87 @@ public struct HomeMapView: View {
             else { return nil }
             return ProjectedPin(pin: pin, point: point)
         }
-        return clusterPins(projected, within: Self.collisionThreshold)
     }
 
     /// Tap hit-testing for the Canvas pins: the nearest pin within a finger's radius wins; a miss toggles
     /// the background (collapse/expand). Runs only on tap, so it adds no per-frame cost.
     private func handleTap(at location: CGPoint, clusters: [PinCluster]) {
         momentum.stop()
+        // A selected city is shown as its (wider) name label; tapping anywhere on the label connects.
+        if let selectedCity,
+           let cluster = clusters.first(where: { $0.isSingle && $0.members.first?.id == selectedCity.id }),
+           Self.labelRect(at: cluster.center, name: localizedNames[selectedCity.id] ?? selectedCity.displayName).contains(location) {
+            store.send(.cityPinTapped(selectedCity))
+            self.selectedCity = nil // dismiss the label once it's done its job
+            return
+        }
         func distance(_ cluster: PinCluster) -> CGFloat {
             hypot(cluster.center.x - location.x, cluster.center.y - location.y)
         }
         let hit = clusters
             .filter { distance($0) <= Self.collisionThreshold / 2 }
             .min { distance($0) < distance($1) }
-        guard let hit else { onBackgroundTap(); return }
-        if hit.isSingle, let pin = hit.members.first {
-            store.send(.cityPinTapped(pin))
-        } else {
-            zoomIn(on: hit)
+        guard let hit else {
+            // A miss dismisses the label if one is up; otherwise toggles the sheet.
+            if selectedCity != nil { selectedCity = nil } else { onBackgroundTap() }
+            return
         }
+        if hit.isSingle, let pin = hit.members.first {
+            selectedCity = pin // first tap reveals the city name; a second tap on the label connects
+        } else {
+            selectedCity = nil
+            zoomIn(on: hit) // dolly in to pull the members apart (the floor is deep enough to always separate)
+        }
+    }
+
+    /// The interactive zoom-in floor. Normally `defaultZoomFloor`, but pushed *deeper* whenever two cities are
+    /// close enough on screen that separating (and individually tapping) them needs more zoom than that — so
+    /// every city is always reachable. Clamped to `hardMinZoomDistance` for the near-coincident edge case.
+    private var minZoomDistance: Float {
+        let viewHeight = Float(max(renderHeight ?? availableHeight, 1))
+        let focal = 1 / (2 * tan(GlobeCamera.defaultFieldOfView / 2))
+        // Invert the on-screen-gap projection (gap = angle · focal · viewHeight / (d − 1)) for the distance at
+        // which the tightest pair sits a comfortable `targetGap` apart.
+        let targetGap = Float(Self.collisionThreshold) * Self.clusterSeparationMargin
+        let dataFloor = 1 + closestCityAngle * focal * viewHeight / targetGap
+        return max(Self.hardMinZoomDistance, min(Self.defaultZoomFloor, dataFloor))
+    }
+
+    /// Smallest angular separation between any two of the given pins (the globally tightest pair); `.pi` when
+    /// there's nothing to separate. O(n²), recomputed only when the pin set changes.
+    private static func closestAngle(among pins: [CityPin]) -> Float {
+        guard pins.count > 1 else { return .pi }
+        let directions = pins.map { simd_normalize($0.direction) }
+        var maxDot: Float = -1
+        for i in 0 ..< directions.count {
+            for j in (i + 1) ..< directions.count {
+                maxDot = max(maxDot, simd_dot(directions[i], directions[j]))
+            }
+        }
+        return acos(max(-1, min(1, maxDot)))
+    }
+
+    /// Draws a small, uniform point for one pin — the in-motion representation, before pins resolve into
+    /// clusters. Smaller than the settled pin so the "points → pins" transition reads as a grow-in.
+    private static func drawPoint(at center: CGPoint, in context: GraphicsContext) {
+        let diameter: CGFloat = 7
+        let rect = CGRect(x: center.x - diameter / 2, y: center.y - diameter / 2, width: diameter, height: diameter)
+        let circle = Path(ellipseIn: rect)
+        context.fill(circle, with: .color(Color(.icon, .weak)))
+        context.stroke(circle, with: .color(.white.opacity(0.7)), lineWidth: 1)
+    }
+
+    /// Estimated pill size for a city-name label. Used for both drawing and hit-testing so the visible label
+    /// and its tap target match. Width is a generous per-character estimate (proportional font) plus padding.
+    private static func labelSize(for name: String) -> CGSize {
+        CGSize(width: max(48, CGFloat(name.count) * 8.5 + 24), height: 30)
+    }
+
+    /// Screen rect of a city's name label, centred on its pin — the tap target that connects. Matches the
+    /// drawn pill's `labelSize` so the visible pill and the hit area line up.
+    private static func labelRect(at center: CGPoint, name: String) -> CGRect {
+        let size = labelSize(for: name)
+        return CGRect(x: center.x - size.width / 2, y: center.y - size.height / 2, width: size.width, height: size.height)
     }
 
     /// Draws one location pin (grey dot, or a counted disc for a cluster) into the Canvas.
@@ -373,18 +569,29 @@ public struct HomeMapView: View {
     /// decorative view; leaving it, let the derived camera animate shortest-arc from where the user left off.
     private func syncOnModeChange() {
         momentum.stop()
-        if interactive {
-            interactiveOrientation = GlobeCamera.orientation(facing: targetDirection)
-            distance = cameraDistance
-        } else {
+        selectedCity = nil
+        // Leaving interactive: remember where the user left off so the derived camera animates back shortest-arc.
+        if !interactive {
             presentedOrientation = interactiveOrientation
         }
+        // Pin the trackball to the orientation currently ON SCREEN — the derived/decorative camera's, already
+        // hemisphere-aligned to `presentedOrientation`. Entering interactive, this makes the hand-off seamless:
+        // a fresh `orientation(facing:)` can come out antipodal to it (q and −q are the same orientation) and
+        // the AnimatableGlobe then slerps the LONG way round — a wild spin off to a random place before it
+        // settles. Same orientation ⇒ no spin, just the focus/dolly easing in (the intended "slight zoom in").
+        // Leaving interactive, this also primes the next entry so it can't momentarily render the stale
+        // last-pan orientation before `onChange` re-syncs.
+        interactiveOrientation = derivedCamera.orientation
+        distance = cameraDistance
     }
 
     /// Flies the camera to frame a tapped cluster, dollying in until its members start to separate.
     private func zoomIn(on cluster: PinCluster) {
         momentum.stop()
-        let target = cluster.zoomTarget(currentDistance: distance, minDistance: Self.minZoomDistance)
+        // The render canvas aspect (width / height) so the fit uses the narrower (portrait: horizontal) FOV
+        // and a sideways-spread cluster doesn't dolly past where its members fall off the sides.
+        let aspectRatio = Float(availableWidth / max(renderHeight ?? availableHeight, 1))
+        let target = cluster.zoomTarget(currentDistance: distance, minDistance: minZoomDistance, aspectRatio: aspectRatio)
         let orientation = GlobeCamera.orientation(facing: cluster.centerDirection)
         withAnimation(transitionAnimation) {
             interactiveOrientation = Self.aligned(orientation, to: interactiveOrientation)
@@ -395,6 +602,7 @@ public struct HomeMapView: View {
     /// Tapping the user pin returns to the default (connection-derived) view.
     private func recenter() {
         momentum.stop()
+        selectedCity = nil
         let orientation = GlobeCamera.orientation(facing: targetDirection)
         withAnimation(transitionAnimation) {
             interactiveOrientation = Self.aligned(orientation, to: interactiveOrientation)
@@ -420,6 +628,7 @@ public struct HomeMapView: View {
                     // Drag begins: stop any coast — the live orientation stays put (no snap) — and reset the
                     // velocity estimate.
                     momentum.stop()
+                    selectedCity = nil // panning away dismisses a city label
                     dragAngularVelocity = .zero
                     lastDragLocation = value.location
                     lastDragTime = now
@@ -435,7 +644,7 @@ public struct HomeMapView: View {
                     let axis = cross / crossLength
                     let angle = atan2(crossLength, simd_dot(previous, current))
                     // Apply the finger-tracking rotation, then re-level north so roll never accumulates.
-                    interactiveOrientation = Self.uprighted(simd_normalize(simd_quatf(angle: angle, axis: axis) * interactiveOrientation))
+                    interactiveOrientation = Self.uprightedClamped(simd_normalize(simd_quatf(angle: angle, axis: axis) * interactiveOrientation))
                     // Smooth the real angular velocity for the release coast (robust where finger velocity spikes).
                     if let lastTime = lastDragTime {
                         let dt = Float(max(now - lastTime, 1e-4))
@@ -451,8 +660,9 @@ public struct HomeMapView: View {
                 lastDragLocation = nil
                 lastDragTime = nil
                 // Hand the live spin to the coaster: it glides and decelerates naturally, or no-ops if the
-                // release was too slow (a tap or a careful drag simply stops where it is).
-                momentum.start(velocity: dragAngularVelocity)
+                // release was too slow (a tap or a careful drag simply stops where it is). Capped so a hard
+                // fling can't spin the globe absurdly fast.
+                momentum.start(velocity: Self.cappedSpin(dragAngularVelocity))
             }
     }
 
@@ -471,8 +681,11 @@ public struct HomeMapView: View {
             .onChanged { value in
                 guard interactive else { return }
                 let start = pinchStartDistance ?? distance
-                if pinchStartDistance == nil { pinchStartDistance = start }
-                distance = Self.clampZoom(start / Float(max(value.magnification, 0.01)))
+                if pinchStartDistance == nil {
+                    pinchStartDistance = start
+                    selectedCity = nil // zooming dismisses a city label
+                }
+                distance = clampZoom(start / Float(max(value.magnification, 0.01)))
             }
             .onEnded { value in
                 guard interactive else { pinchStartDistance = nil; return }
@@ -481,7 +694,7 @@ public struct HomeMapView: View {
                 // Pinch inertia: glide the zoom a little further along the release velocity, then settle.
                 guard abs(value.velocity) > Self.zoomVelocityThreshold else { return }
                 let projectedMagnification = max(0.1, value.magnification + value.velocity * Self.zoomMomentumProjection)
-                let target = Self.clampZoom(start / Float(projectedMagnification))
+                let target = clampZoom(start / Float(projectedMagnification))
                 withAnimation(reduceMotion ? nil : .easeOut(duration: Self.zoomMomentumDuration)) {
                     distance = target
                 }
@@ -490,8 +703,33 @@ public struct HomeMapView: View {
 
     // MARK: - Helpers
 
-    private static func clampZoom(_ distance: Float) -> Float {
-        min(maxZoomDistance, max(minZoomDistance, distance))
+    private func clampZoom(_ distance: Float) -> Float {
+        min(Self.maxZoomDistance, max(minZoomDistance, distance))
+    }
+
+    /// Clamps a release spin (axis · rad/s) to `coastMaxSpeed`, preserving direction, so a hard fling can't
+    /// whip the globe absurdly fast. This bounds the *view-space* rate; `coastStep` then bounds the on-screen
+    /// rate, which near a pole would otherwise be much larger.
+    private static func cappedSpin(_ velocity: SIMD3<Float>) -> SIMD3<Float> {
+        let speed = simd_length(velocity)
+        return speed > coastMaxSpeed ? velocity * (coastMaxSpeed / speed) : velocity
+    }
+
+    /// One coast step: spin the orientation by `angle` (rad) about view-space `axis`, then re-level north.
+    /// Near a pole the north-up re-level produces a far faster on-screen ROLL than the view-space `angle`
+    /// (meridians converge, so roll ≈ angle / cos(lat) — ~6× at the 80° clamp), which felt uncontrolled. We do
+    /// NOT cap the roll — the roll IS the re-level, so capping it leaves the globe tilted (north stops pointing
+    /// up). Instead, when the step's roll would exceed `angle`, re-spin by a SMALLER angle so the still-fully-
+    /// up-righted step induces only ~`angle` of roll. North stays up; the felt pole spin is bounded to the
+    /// equator's rate. A latitude sweep induces ~no roll (`roll ≤ angle`) so it's left exactly as before — no
+    /// throttle, no stutter. (`cappedSpin` already bounds `angle` itself via the seed speed.)
+    private static func coastStep(_ orientation: simd_quatf, angle: Float, axis: SIMD3<Float>) -> simd_quatf {
+        let target = uprightedClamped(simd_normalize(simd_quatf(angle: angle, axis: axis) * orientation))
+        let rel = simd_normalize(target * orientation.inverse) // step's rotation, in view space (+z = forward)
+        let roll = abs(2 * atan2(rel.imag.z, rel.real)) // on-screen roll the re-level applied this step
+        guard roll > angle, angle > 1e-6 else { return target } // within budget (latitude sweep, equator) → as-is
+        let reduced = angle * angle / roll // smaller spin whose re-level roll lands at ~`angle`
+        return uprightedClamped(simd_normalize(simd_quatf(angle: reduced, axis: axis) * orientation))
     }
 
     /// Hemisphere-aligns `q` to `reference` (negates if opposite) so an animated quaternion interpolation
@@ -507,6 +745,68 @@ public struct HomeMapView: View {
         let northView = orientation.act(SIMD3<Float>(0, 1, 0)) // model north in view space
         let roll = atan2(northView.x, northView.y) // angle of projected north from straight up
         return simd_quatf(angle: roll, axis: SIMD3<Float>(0, 0, 1)) * orientation
+    }
+
+    /// Up-rights, then caps the look latitude short of the poles (`maxFacingY`) so a drag/flick toward a pole
+    /// stops at the limit instead of tumbling through the north-up singularity. Re-derives the north-up
+    /// orientation from the clamped facing direction, preserving the longitude (the east–west heading).
+    private static func uprightedClamped(_ orientation: simd_quatf) -> simd_quatf {
+        let upright = uprighted(orientation)
+        let facing = upright.inverse.act(SIMD3<Float>(0, 0, 1)) // look point on the globe; y = sin(latitude)
+        guard abs(facing.y) > maxFacingY else { return upright }
+        let clampedY = facing.y < 0 ? -maxFacingY : maxFacingY
+        let radius = (1 - clampedY * clampedY).squareRoot() // horizontal extent on the clamped-latitude ring
+        let horizontal = SIMD2<Float>(facing.x, facing.z)
+        let length = simd_length(horizontal)
+        let scaled = length > 1e-5 ? horizontal * (radius / length) : SIMD2<Float>(radius, 0)
+        let clampedFacing = SIMD3<Float>(scaled.x, clampedY, scaled.y)
+        return uprighted(GlobeCamera.orientation(facing: clampedFacing))
+    }
+}
+
+/// The selected city's name pill, drawn in a `Canvas` (like the pins) so it tracks the globe in lockstep:
+/// `center` (the projected pin point) is a plain prop refreshed every frame. It's `Animatable` on `reveal`,
+/// so `withAnimation` interpolates it frame-by-frame and the Canvas redraws each step — the full pill (capsule
+/// + text) clipped to a `Capsule` growing centre-out from a ~12pt dot (`reveal` 0) to full size (`reveal` 1).
+/// Same animated value reversed gives the collapse back into the point, which therefore tracks too.
+private struct PillCanvas: View, Animatable {
+    var reveal: CGFloat
+    let name: String
+    let size: CGSize
+    /// Projected pin location, or `nil` when the pin is behind the globe.
+    let center: CGPoint?
+
+    private static let seed: CGFloat = 12 // the reveal starts/ends at roughly the pin-dot diameter
+
+    var animatableData: CGFloat {
+        get { reveal }
+        set { reveal = newValue }
+    }
+
+    var body: some View {
+        Canvas { context, _ in
+            guard reveal > 0.001, let center else { return }
+            let revealWidth = max(Self.seed, Self.seed + (size.width - Self.seed) * reveal)
+            let revealHeight = max(Self.seed, Self.seed + (size.height - Self.seed) * reveal)
+            var context = context
+            context.clip(to: Path(roundedRect: CGRect(
+                x: center.x - revealWidth / 2,
+                y: center.y - revealHeight / 2,
+                width: revealWidth,
+                height: revealHeight
+            ), cornerRadius: revealHeight / 2))
+            let pillRect = CGRect(x: center.x - size.width / 2, y: center.y - size.height / 2, width: size.width, height: size.height)
+            let pill = Path(roundedRect: pillRect, cornerRadius: size.height / 2)
+            context.fill(pill, with: .color(Color(.icon, .weak)))
+            context.stroke(pill, with: .color(.white.opacity(0.85)), lineWidth: 1.5)
+            // Fade the label out quickly as the pill collapses (clear by ~0.7 reveal), so letters never peek
+            // out of the small central reveal as it shrinks into the point.
+            context.opacity = Double(max(0, min(1, (reveal - 0.7) / 0.25)))
+            context.draw(
+                Text(name).font(.caption.weight(.semibold)).foregroundColor(Color(.text, .inverted)),
+                at: center
+            )
+        }
     }
 }
 
