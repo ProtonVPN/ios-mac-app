@@ -65,7 +65,7 @@ public struct HomeMapView: View {
     private static let dragMinimum: CGFloat = 4
     /// Pan momentum (see `GlobeMomentum`): fraction of spin speed kept per second (smaller = more friction /
     /// shorter glide), and the speed below which a release doesn't coast (so taps and slow lifts just stop).
-    private static let coastRetentionPerSecond: Float = 0.2
+    private static let coastRetentionPerSecond: Float = 0.3
     private static let coastMinSpeed: Float = 0.5
     /// EMA weight for the per-frame angular-speed estimate that seeds the coast (higher = tracks the final
     /// motion more, lower = smoother / less spiky).
@@ -103,6 +103,11 @@ public struct HomeMapView: View {
         retentionPerSecond: HomeMapView.coastRetentionPerSecond,
         minSpeed: HomeMapView.coastMinSpeed
     )
+    /// Where the sun is over the Earth right now (model-space subsolar direction), for day/night lighting.
+    /// Computed once on appear (it drifts ~15°/h — fine for a session).
+    @State private var sunDirection: SIMD3<Float> = SunPosition.subsolarDirection(at: Date())
+    /// Drives the colour of the sunlight cast on the globe — the same green/red as the connection tint.
+    @SharedReader(.protectionState) private var protectionState: ProtectionState
 
     public init(
         store: StoreOf<HomeMapFeature>,
@@ -136,7 +141,18 @@ public struct HomeMapView: View {
             viewSize: CGSize(width: availableWidth, height: renderHeight ?? availableHeight),
             focusHeight: availableHeight,
             focusTop: topInset,
-            highlight: WorldGlobe.highlight(for: highlightedCode)
+            highlight: WorldGlobe.highlight(for: highlightedCode),
+            sunDirection: sunDirection,
+            lightFade: interactive ? 1 : 0,
+            sunTint: sunTintRGB,
+            // Celestial layer behind the globe: stars + the sun, projected through the same camera so they
+            // wheel with the orbit and are occluded by the opaque sphere (the sun shows only past the limb).
+            // Always present; it draws nothing until `lightFade > 0`, so it fades in/out with the open/close
+            // animation rather than popping when `interactive` flips.
+            background: { projection in
+                CelestialLayer(projection: projection, sunDirection: sunDirection, sunColor: sunColor, starFade: starOpacity)
+                    .allowsHitTesting(false)
+            }
         ) { projection in
             pinsOverlay(projection: projection)
         }
@@ -157,6 +173,43 @@ public struct HomeMapView: View {
         }
         // The display link retains the coaster while running; stop it on disappear so it can't outlive the view.
         .onDisappear { momentum.stop() }
+    }
+
+    // MARK: - Sun & stars
+
+    /// The connection colour, used for both the sunlight tint and the sun disc: green when protected, red
+    /// when unprotected, white (neutral) while resolving/connecting.
+    private var sunColor: Color {
+        switch protectionState {
+        case .protected, .protectedSecureCore: Color(.background, .success)
+        case .unprotected: Color(.background, .danger)
+        case .protecting, .resolving: .white
+        }
+    }
+
+    /// The sunlight colour as RGB for the shader.
+    private var sunTintRGB: SIMD3<Float> {
+        Self.rgb(of: sunColor)
+    }
+
+    private static func rgb(of color: Color) -> SIMD3<Float> {
+        #if canImport(UIKit)
+            var r: CGFloat = 1, g: CGFloat = 1, b: CGFloat = 1, a: CGFloat = 1
+            UIColor(color).getRed(&r, green: &g, blue: &b, alpha: &a)
+            return SIMD3<Float>(Float(r), Float(g), Float(b))
+        #else
+            return SIMD3<Float>(1, 1, 1)
+        #endif
+    }
+
+    /// Stars fade in once the user dollies out past the whole-globe distance, reaching full at the zoom-out
+    /// ceiling. Purely zoom-driven — the celestial layer's own `lightFade` gate keeps it off in decorative
+    /// mode and fades it out on close, so this needn't (and mustn't, or it would pop) hard-gate on `interactive`.
+    private var starOpacity: Double {
+        let start = GlobeFocus.wholeGlobeDistance
+        let end = Self.maxZoomDistance
+        guard end > start else { return 0 }
+        return Double(max(0, min(1, (distance - start) / (end - start))))
     }
 
     // MARK: - Pins
@@ -454,5 +507,87 @@ public struct HomeMapView: View {
         let northView = orientation.act(SIMD3<Float>(0, 1, 0)) // model north in view space
         let roll = atan2(northView.x, northView.y) // angle of projected north from straight up
         return simd_quatf(angle: roll, axis: SIMD3<Float>(0, 0, 1)) * orientation
+    }
+}
+
+/// The celestial layer drawn behind the globe: stars plus the sun, all placed far out and projected through
+/// the same camera as the globe, so they wheel with the orbit and are occluded by the opaque sphere. The sun
+/// is therefore visible only once it has rotated past the limb to the night side; the stars fill the space
+/// around the globe and fade in as it is dollied out. One `Canvas`, no per-star views.
+private struct CelestialLayer: View {
+    let projection: GlobeProjection
+    let sunDirection: SIMD3<Float>
+    let sunColor: Color
+    /// Zoom-based star visibility (0 zoomed in, 1 dollied out).
+    let starFade: Double
+
+    private struct Star { let direction: SIMD3<Float>; let radius: CGFloat; let brightness: Double }
+
+    /// Stars spread uniformly over the celestial sphere (fixed seed → stable). Only those in the forward view
+    /// cone and not behind the globe end up visible.
+    private static let stars: [Star] = {
+        var rng = SeededGenerator(seed: 0x5EED_1234_ABCD)
+        return (0 ..< 400).map { _ in
+            // Uniform point on the unit sphere (z uniform, azimuth uniform).
+            let z = Double.random(in: -1 ... 1, using: &rng)
+            let azimuth = Double.random(in: 0 ... (2 * Double.pi), using: &rng)
+            let ring = (1 - z * z).squareRoot()
+            let direction = SIMD3<Float>(Float(ring * cos(azimuth)), Float(z), Float(-ring * sin(azimuth)))
+            return Star(
+                direction: direction,
+                radius: CGFloat.random(in: 0.4 ... 1.5, using: &rng),
+                brightness: Double.random(in: 0.25 ... 0.9, using: &rng)
+            )
+        }
+    }()
+
+    var body: some View {
+        Canvas { context, _ in
+            let lightFade = Double(projection.lightFade)
+            guard lightFade > 0.01 else { return }
+
+            // Stars — faded by both the open transition and the zoom-out.
+            let starAlpha = lightFade * starFade
+            if starAlpha > 0.01 {
+                for star in Self.stars {
+                    guard let point = projection.projectFar(star.direction) else { continue }
+                    let rect = CGRect(x: point.x - star.radius, y: point.y - star.radius, width: star.radius * 2, height: star.radius * 2)
+                    context.fill(Path(ellipseIn: rect), with: .color(.white.opacity(star.brightness * starAlpha)))
+                }
+            }
+
+            // The sun — a bright, connection-tinted disc. Drawn in front of the stars; occluded by the globe
+            // in front, so it only shows once it has swung past the limb to the night side.
+            if let point = projection.projectFar(sunDirection) {
+                let radius: CGFloat = 46
+                let rect = CGRect(x: point.x - radius, y: point.y - radius, width: radius * 2, height: radius * 2)
+                context.fill(
+                    Path(ellipseIn: rect),
+                    with: .radialGradient(
+                        Gradient(colors: [
+                            .white.opacity(0.95 * lightFade),
+                            sunColor.opacity(0.7 * lightFade),
+                            sunColor.opacity(0),
+                        ]),
+                        center: point,
+                        startRadius: 0,
+                        endRadius: radius
+                    )
+                )
+            }
+        }
+    }
+}
+
+/// Tiny seeded LCG so the star field is stable across renders without depending on a global RNG.
+private struct SeededGenerator: RandomNumberGenerator {
+    private var state: UInt64
+    init(seed: UInt64) {
+        self.state = seed
+    }
+
+    mutating func next() -> UInt64 {
+        state = state &* 6_364_136_223_846_793_005 &+ 1_442_695_040_888_963_407
+        return state
     }
 }

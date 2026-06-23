@@ -20,10 +20,20 @@ import simd
 
 /// CPU-side mirror of `GlobeUniforms` in `MapGlobeShaders.metal`.
 ///
-/// Layout must match the shader exactly: `simd_float4x4` is 64 bytes / 16-aligned, then a `Float`,
-/// giving a 16-aligned stride on both sides. Passed via `setVertexBytes`.
+/// Layout must match the shader exactly: `simd_float4x4` (64 B, 16-aligned), then `SIMD3<Float>` (16 B,
+/// 16-aligned), then two `Float`s — a 16-aligned stride of 96 on both sides. Passed via `setVertexBytes`
+/// and (for lighting) `setFragmentBytes`.
 struct MapUniforms {
     var mvp: simd_float4x4
+    /// Model-space unit direction toward the sun (subsolar point), for day/night shading. Default faces the
+    /// camera so the non-lit paths (snapshots, `lightFade == 0`) are unaffected.
+    var sunDirection: SIMD3<Float> = .init(0, 0, 1)
+    /// Colour of the sunlight (the connection green/red); white = neutral. Default white.
+    var sunTint: SIMD3<Float> = .init(1, 1, 1)
     /// Sphere-space half-width of the path currently being drawn (set per border draw).
     var borderHalfWidth: Float
+    /// 0 = flat (decorative map / snapshots), 1 = full day/night terminator lighting; faded in for full view.
+    var lightFade: Float = 0
+    /// How strongly the sunlight colour washes this draw (set per draw — sea more than land).
+    var tintStrength: Float = 0.12
 }

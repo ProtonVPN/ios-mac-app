@@ -45,6 +45,11 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     private static let baseSphereSlices = 96
     /// Transparent clear — the globe composites over whatever is behind it (the app background).
     private static let clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
+    /// How strongly the sunlight colour tints the land vs the sea. The continents carry the connection
+    /// colour while the ocean stays close to neutral-dark — concentrating the tint on the landmasses keeps
+    /// the large sea areas from washing the whole view in colour.
+    private static let landTintStrength: Float = 0.16
+    private static let seaTintStrength: Float = 0.04
     #if DEBUG
         /// Metal's guaranteed max 2-D texture dimension; the offscreen render is clamped to it so an
         /// over-large layout proposal degrades to a low-res image rather than trapping in texture validation.
@@ -209,7 +214,9 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
 
         var uniforms = uniforms
 
-        // Base ocean sphere (so the globe reads as solid; the back hemisphere is culled away).
+        // Base ocean sphere (so the globe reads as solid; the back hemisphere is culled away). The sea barely
+        // takes the sunlight tint, staying near neutral-dark.
+        uniforms.tintStrength = Self.seaTintStrength
         drawFill(
             vertices: baseVertexBuffer,
             indices: baseIndexBuffer,
@@ -220,7 +227,9 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         )
 
         // Countries in document/painter order: fill then border. Whole back-hemisphere paths are
-        // skipped up front (the GPU would back-face-cull their triangles anyway).
+        // skipped up front (the GPU would back-face-cull their triangles anyway). The land carries the
+        // connection colour.
+        uniforms.tintStrength = Self.landTintStrength
         for unit in model.drawOrder {
             if simd_dot(unit.centroid, cameraTarget) < Self.backHemisphereCullDot { continue } // clearly back-facing path
 
@@ -306,6 +315,7 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         encoder.setVertexBuffer(vertices, offset: 0, index: 0)
         encoder.setVertexBytes(&uniforms, length: MemoryLayout<MapUniforms>.stride, index: 1)
         encoder.setFragmentBytes(&color, length: MemoryLayout<SIMD4<Float>>.stride, index: 0)
+        encoder.setFragmentBytes(&uniforms, length: MemoryLayout<MapUniforms>.stride, index: 1) // sun/lighting
         encoder.drawIndexedPrimitives(
             type: .triangle,
             indexCount: range.count,
@@ -329,6 +339,7 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         encoder.setVertexBuffer(segmentBuffer, offset: range.lowerBound * MemoryLayout<MapGlobeSegment>.stride, index: 0)
         encoder.setVertexBytes(&uniforms, length: MemoryLayout<MapUniforms>.stride, index: 1)
         encoder.setFragmentBytes(&color, length: MemoryLayout<SIMD4<Float>>.stride, index: 0)
+        encoder.setFragmentBytes(&uniforms, length: MemoryLayout<MapUniforms>.stride, index: 1) // sun/lighting
         encoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4, instanceCount: range.count)
     }
 

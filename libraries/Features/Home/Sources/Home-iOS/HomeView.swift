@@ -57,8 +57,10 @@ public struct HomeView: View {
     /// full-screen and interactive, with only the minimal connection chrome (tint + lock + title) over it.
     @State private var isMapFull = false
     /// Gates the pull-to-collapse so one over-pull collapses once; re-arms when the pull relaxes back to
-    /// the top, preventing repeat triggers from a single sustained pull.
-    @State private var collapseArmed = true
+    /// the top, preventing repeat triggers from a single sustained pull. Starts **disarmed** so a transient
+    /// large pull during the first layout pass (a named-coordinate-space fallback) can't collapse to the full
+    /// map on launch — it only arms once a genuine at-rest reading (`pull < 10`) is seen.
+    @State private var collapseArmed = false
 
     @SharedReader(.userTier) private var userTier: VpnTier?
 
@@ -157,10 +159,14 @@ public struct HomeView: View {
                 // the grey Advanced-kill-switch blocking overlay (see its `.killSwitchActive` branch).
                 ConnectionStatusView(
                     store: store.scope(state: \.connectionStatus, action: \.connectionStatus),
-                    compact: isMapFull
+                    compact: isMapFull,
+                    // In the full map, tapping the lock/title exits back to the normal view.
+                    onTap: isMapFull ? { setMapFull(false) } : nil
                 )
                 .zIndex(connectionStatusZIndex.rawValue)
-                .allowsHitTesting(!isMapFull)
+                // Hit-testable in both modes now: the decorative gradient never hit-tests and the banner is
+                // hidden when full, so the only thing that catches a tap is the lock/title (→ exit).
+                .allowsHitTesting(true)
 
                 ScrollViewReader { scrollViewProxy in
                     ScrollView(showsIndicators: false) {

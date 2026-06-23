@@ -39,6 +39,10 @@ public struct ConnectionStatusView: View {
     /// banner (which belongs with the connection card) is hidden.
     var compact: Bool = false
 
+    /// Tapping the lock + title invokes this (used in the full map to exit back to the normal view). `nil`
+    /// leaves the header inert.
+    var onTap: (() -> Void)?
+
     private static let headerHeight: CGFloat = 58
     private static let viewHeight: CGFloat = 200
     private static let headerPaddingHeight: CGFloat = 13
@@ -144,17 +148,29 @@ public struct ConnectionStatusView: View {
                 colors: [gradientColor(protectionState: protectionState).opacity(0.5), .clear],
                 startPoint: .top,
                 endPoint: .bottom
-            ).ignoresSafeArea()
+            )
+            .ignoresSafeArea()
+            // In the full map the tint hands off to the sun over the globe: the top band fades out as the
+            // sun fades in (both driven by the same expand animation). Purely decorative — never hit-tests,
+            // so taps on the map (or the lock/title below) aren't swallowed by it.
+            .opacity(compact ? 0 : 1)
+            .allowsHitTesting(false)
 
             VStack(spacing: 0) {
-                titleView(protectionState: protectionState)
-                    .frame(height: Self.headerHeight)
-                if let title = title(protectionState: protectionState) {
-                    Text(title)
-                        .font(.themeFont(.body1(.bold)))
-                    Spacer()
-                        .frame(height: .themeSpacing8)
+                // The lock + title; tapping it runs `onTap` (exits the full map). Scoped to just this header
+                // (not the banner below) so it never intercepts the banner's own controls.
+                VStack(spacing: 0) {
+                    titleView(protectionState: protectionState)
+                        .frame(height: Self.headerHeight)
+                    if let title = title(protectionState: protectionState) {
+                        Text(title)
+                            .font(.themeFont(.body1(.bold)))
+                        Spacer()
+                            .frame(height: .themeSpacing8)
+                    }
                 }
+                .contentShape(Rectangle())
+                .onTapGesture { onTap?() }
                 if !compact {
                     ConnectionStatusBanner(store: store.scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner))
                         .background(
