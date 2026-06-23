@@ -527,6 +527,12 @@
             "value" : "Un journal est un type de fichier qui nous montre les actions que vous avez effectuées et qui ont conduit à une erreur. Nous les utilisons uniquement pour aider nos ingénieurs à corriger les bugs."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un log è un tipo di file che ci mostra le azioni intraprese che hanno portato a un errore. Li useremo solamente per aiutare i nostri ingegneri a correggere i bug."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3754,6 +3760,12 @@
             "value" : "Adresse e-mail"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4122,6 +4134,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Impossible d'envoyer le rapport"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invio del report non riuscito"
           }
         },
         "ja" : {
@@ -4706,6 +4724,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Obtenir les journaux de l'application"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recupera i log dell'applicazione"
           }
         },
         "ja" : {
@@ -5606,7 +5630,7 @@
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vključuje vrhunsko VPN zaščito za vaše mobilne naprave in namizne računalnike (povežite se do 10 naprav hkrati)"
+            "value" : "Vključuje premijsko VPN zaščito za vaše mobilne naprave in namizne računalnike (povežite do 10 naprav hkrati)"
           }
         },
         "sv" : {
@@ -6164,6 +6188,12 @@
             "value" : "Chargements des journaux en cours..."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caricamento dei log in corso..."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6209,7 +6239,7 @@
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nalaganje dnevnikov..."
+            "value" : "Nalaganje dnevnikov ..."
           }
         },
         "sv" : {
@@ -6318,6 +6348,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Journaux"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log"
           }
         },
         "ja" : {
@@ -6692,6 +6728,12 @@
             "value" : "Aucun journal disponible."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun log disponibile."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6737,7 +6779,7 @@
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Na voljo ni dnevnikov."
+            "value" : "Dnevnikov ni na voljo."
           }
         },
         "sv" : {
@@ -6841,6 +6883,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
@@ -6992,6 +7040,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Veuillez réessayer."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si prega di riprovare."
           }
         },
         "ja" : {
@@ -8894,6 +8948,12 @@
             "value" : "Signaler un problème"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Segnala un problema"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9040,6 +9100,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Le rapport a été envoyé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Segnalazione inviata"
           }
         },
         "ja" : {
@@ -9406,6 +9472,12 @@
             "value" : "Envoyer les journaux d'erreurs"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invia i log degli errori"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9554,6 +9626,12 @@
             "value" : "Envoyer le rapport"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invia segnalazione"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9700,6 +9778,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Envoi du rapport en cours"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invio della segnalazione..."
           }
         },
         "ja" : {
@@ -12566,7 +12650,7 @@
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Za odklepanje bliskovito hitrega pretakanja s strežniki v več kot 100+ državah se naročite na VPN Plus."
+            "value" : "Za odklepanje bliskovito hitrega pretakanja s strežniki v več kot 100 državah se naročite na VPN Plus."
           }
         },
         "sv" : {
@@ -12686,6 +12770,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Réessayer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riprova"
           }
         },
         "ja" : {
@@ -13490,6 +13580,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nom d'utilisateur"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome utente"
           }
         },
         "ja" : {
@@ -14715,6 +14811,12 @@
             "value" : "Que s'est-il passé ? Si vous avez reçu un message d'erreur, veuillez le partager avec nous."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Che cosa è andato storto? Se hai ricevuto un messaggio di errore, facci sapere cosa diceva."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15293,6 +15395,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Quel service de streaming essayez-vous d'utiliser ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quale servizio di streaming stai cercando di utilizzare?"
           }
         },
         "ja" : {
