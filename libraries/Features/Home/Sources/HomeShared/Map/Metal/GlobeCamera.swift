@@ -92,7 +92,11 @@ struct GlobeCamera: Equatable {
     /// (for hiding the pin when its location rotates to the back of the globe). Takes the already-built
     /// `mvp` (from `matrix(viewSize:focusHeight:focusTop:)`) so the caller doesn't rebuild it per frame.
     func project(_ direction: SIMD3<Float>, mvp: simd_float4x4, viewSize: CGSize) -> (point: CGPoint, isFront: Bool) {
-        let isFront = simd_dot(simd_normalize(direction), facing) > 0
+        // Visible only within the horizon cap: a camera at `distance` sees the sphere out to where the line
+        // of sight is tangent — angular radius acos(1/distance), i.e. dot(direction, facing) > 1/distance.
+        // A plain `> 0` (the full geometric hemisphere) lets near-limb points show "through" the globe under
+        // perspective (e.g. a pin behind the limb appearing over the front face).
+        let isFront = simd_dot(simd_normalize(direction), facing) > 1 / distance
         let clip = mvp * SIMD4<Float>(direction, 1)
         guard clip.w > 0 else { return (.zero, false) }
         let ndcX = clip.x / clip.w
@@ -102,6 +106,32 @@ struct GlobeCamera: Equatable {
             y: (1 - (CGFloat(ndcY) * 0.5 + 0.5)) * viewSize.height
         )
         return (point, isFront)
+    }
+
+    /// Inverse of `project` for direct-manipulation dragging: the unit-sphere point (in **view space**,
+    /// independent of the globe's orientation) under a screen point — i.e. the surface the finger is
+    /// touching. Off-globe points clamp to the nearest point on the limb so a drag that slips off the edge
+    /// still rotates. `focusHeight`/`focusTop` must match what was passed to `matrix`.
+    func unprojectToSphere(_ point: CGPoint, viewSize: CGSize, focusHeight: CGFloat, focusTop: CGFloat) -> SIMD3<Float> {
+        let width = Float(max(viewSize.width, 1))
+        let renderHeight = Float(max(viewSize.height, 1))
+        let fh = Float(min(max(focusHeight, 1), CGFloat(renderHeight)))
+        let ft = Float(min(max(focusTop, 0), CGFloat(renderHeight)))
+        let ysBase = 1 / tan(fieldOfView * 0.5)
+        let xs = ysBase * fh / width
+        let ys = ysBase * fh / renderHeight
+        let yOffset = (fh + 2 * ft) / renderHeight - 1
+        let ndcX = Float(point.x / viewSize.width) * 2 - 1
+        let ndcY = 1 - Float(point.y / viewSize.height) * 2
+        // View-space ray from the camera (at the origin, looking down −z); inverts `perspective`.
+        let direction = simd_normalize(SIMD3<Float>(ndcX / xs, (ndcY + yOffset) / ys, -1))
+        // Intersect the unit sphere centred at (0, 0, −distance).
+        let toCentre = SIMD3<Float>(0, 0, distance) // origin − centre
+        let dDotL = simd_dot(direction, toCentre)
+        let discriminant = dDotL * dDotL - (distance * distance - 1)
+        let t = discriminant >= 0 ? -dDotL - sqrt(discriminant) : -dDotL // near hit, else perpendicular foot
+        let hit = direction * t
+        return simd_normalize(hit - SIMD3<Float>(0, 0, -distance))
     }
 
     // MARK: - Matrix helpers

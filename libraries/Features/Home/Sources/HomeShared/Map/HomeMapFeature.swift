@@ -21,6 +21,7 @@ import Connection
 import CoreLocation
 import Domain
 import Foundation
+import Persistence
 import SharedViews
 import SwiftUI
 import VPNAppCore
@@ -33,6 +34,10 @@ public struct HomeMapFeature {
     public struct State: Equatable {
         public internal(set) var mapState: MapState = .disconnected
         public internal(set) var pinMode: MapPin.Mode = .disconnected
+
+        /// Connectable locations shown as grey pins when the map is in interactive (full) view. Loaded once
+        /// when observation starts.
+        public internal(set) var cityPins: [CityPin] = []
 
         var shouldShowPin: Bool {
             if case .connected = connectionState { // we're connected to a known country
@@ -48,6 +53,7 @@ public struct HomeMapFeature {
 
         @SharedReader(.connectionState) var connectionState: ConnectionState
         @SharedReader(.userCountry) public var userCountry: String?
+        @SharedReader(.userTier) public var userTier: Int?
 
         public init() {}
     }
@@ -96,7 +102,7 @@ public struct HomeMapFeature {
             }
         }
 
-        fileprivate var pinMode: MapPin.Mode {
+        var pinMode: MapPin.Mode {
             switch self {
             case .connecting:
                 .invisible // Don't show the pin until we resolve the server
@@ -138,6 +144,17 @@ public struct HomeMapFeature {
         case observeConnectionState
         case connectionStateUpdated(ConnectionState)
         case newMapState(MapState)
+        case cityPinsLoaded([CityPin])
+        /// A grey location pin was tapped in interactive view.
+        case cityPinTapped(CityPin)
+        case delegate(Delegate)
+
+        public enum Delegate: Equatable {
+            /// Paid user tapped a location — connect to it (parent issues the command).
+            case connect(ConnectionSpec)
+            /// Free user tapped a location — choosing a location is paid, so route to the upsell.
+            case showUpsell
+        }
     }
 
     private enum CancelId {
@@ -149,19 +166,25 @@ public struct HomeMapFeature {
     }
 
     @Dependency(\.debounceScheduler) private var scheduler
+    @Dependency(\.serverRepository) private var serverRepository
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .observeConnectionState:
-                return .publisher {
-                    state
-                        .$connectionState
-                        .publisher
-                        .receive(on: UIScheduler.shared)
-                        .map(Action.connectionStateUpdated)
-                }
-                .cancellable(id: CancelId.connectionState)
+                // Kick off connection-state observation and load the connectable locations (grey pins) once.
+                let repository = serverRepository
+                return .merge(
+                    .publisher {
+                        state
+                            .$connectionState
+                            .publisher
+                            .receive(on: UIScheduler.shared)
+                            .map(Action.connectionStateUpdated)
+                    }
+                    .cancellable(id: CancelId.connectionState),
+                    .run { send in await send(.cityPinsLoaded(Self.loadCityPins(from: repository))) }
+                )
 
             case let .connectionStateUpdated(connectionState):
                 let mapState = MapState(connectionState)
@@ -184,7 +207,52 @@ public struct HomeMapFeature {
                 state.mapState = mapState
                 // Highlight is derived from state by HomeMapView; no imperative map mutation needed.
                 return .none
+
+            case let .cityPinsLoaded(pins):
+                state.cityPins = pins
+                return .none
+
+            case let .cityPinTapped(pin):
+                if (state.userTier ?? .freeTier).isFreeTier {
+                    return .send(.delegate(.showUpsell))
+                }
+                return .send(.delegate(.connect(pin.connectionSpec)))
+
+            case .delegate:
+                return .none
             }
         }
+    }
+
+    /// Reads the connectable standard locations (one entry per city/state group), skipping gateways,
+    /// secure-core and under-maintenance groups, and maps them to grey pins at their aggregated centre.
+    static func loadCityPins(from repository: ServerRepository) -> [CityPin] {
+        repository
+            .getGroups(filteredBy: [.features(.standard), .isNotUnderMaintenance], groupedBy: .cityName)
+            .compactMap { group in
+                let displayName: String
+                let code: String
+                let location: ConnectionSpec.Location
+                switch group.kind {
+                case let .city(name, countryCode):
+                    displayName = name
+                    code = countryCode
+                    location = .city(name: name, code: countryCode, order: .fastest)
+                case let .state(name, countryCode):
+                    displayName = name
+                    code = countryCode
+                    location = .state(name: name, code: countryCode, order: .fastest)
+                case .country, .gateway:
+                    return nil
+                }
+                return CityPin(
+                    id: "\(code)#\(displayName)",
+                    displayName: displayName,
+                    latitude: group.latitude,
+                    longitude: group.longitude,
+                    minTier: group.minTier,
+                    location: location
+                )
+            }
     }
 }

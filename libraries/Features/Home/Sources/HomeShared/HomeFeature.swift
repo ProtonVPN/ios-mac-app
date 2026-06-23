@@ -369,6 +369,14 @@ private extension HomeFeature {
             case let .recents(.delegate(.upsellTapped(type))):
                 state.destination = .payments(.init(upsellModalType: upsellModalType(from: type)))
                 return .none
+            case let .map(.delegate(.connect(spec))):
+                // Tapping a location pin connects, routed through the same command pipeline as recents/card.
+                connectionCommandClient.send(.connect(spec, nil, .map))
+                return .none
+            case .map(.delegate(.showUpsell)):
+                // Free users can't pick a location — surface the upsell.
+                state.destination = .payments(.init(upsellModalType: allCountriesUpsellModalType()))
+                return .none
             default:
                 return .none
             }

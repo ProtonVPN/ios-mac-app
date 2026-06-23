@@ -35,6 +35,10 @@ public struct ConnectionStatusView: View {
 
     @Bindable var store: StoreOf<ConnectionStatusFeature>
 
+    /// When the map is in full view the only chrome over it is the tint + lock + title; the NetShield
+    /// banner (which belongs with the connection card) is hidden.
+    var compact: Bool = false
+
     private static let headerHeight: CGFloat = 58
     private static let viewHeight: CGFloat = 200
     private static let headerPaddingHeight: CGFloat = 13
@@ -151,18 +155,22 @@ public struct ConnectionStatusView: View {
                     Spacer()
                         .frame(height: .themeSpacing8)
                 }
-                ConnectionStatusBanner(store: store.scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner))
-                    .background(
-                        .translucentLight,
-                        in: RoundedRectangle(
-                            cornerRadius: .themeRadius8,
-                            style: .continuous
+                if !compact {
+                    ConnectionStatusBanner(store: store.scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner))
+                        .background(
+                            .translucentLight,
+                            in: RoundedRectangle(
+                                cornerRadius: .themeRadius8,
+                                style: .continuous
+                            )
                         )
-                    )
-                    .frame(maxWidth: Self.maxContentWidth)
-                    .padding(.horizontal, .themeSpacing16)
+                        .frame(maxWidth: Self.maxContentWidth)
+                        .padding(.horizontal, .themeSpacing16)
+                }
             }
         }
+        // Fixed height in both modes so the tint gradient stays localized to the top band and fades out,
+        // instead of the greedy gradient filling the whole map (a nil height let it expand).
         .frame(height: Self.viewHeight)
         .toolbar {
             ToolbarItem(placement: .principal) {

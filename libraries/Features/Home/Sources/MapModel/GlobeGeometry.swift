@@ -35,4 +35,16 @@ public enum GlobeGeometry {
         let lon = longitude * .pi / 180
         return SIMD3<Float>(cos(lat) * cos(lon), sin(lat), -cos(lat) * sin(lon))
     }
+
+    /// Inverse of `unitSphere`: recovers the geographic coordinate of a point on (or direction toward) the
+    /// unit sphere. Used to re-centre an interactive look-at camera on an arbitrary direction — e.g. the
+    /// averaged centre of a cluster of pins — by turning it back into the latitude/longitude the turntable
+    /// is parameterised on. Round-trips with `unitSphere` (modulo longitude wrap at the poles).
+    public static func coordinate(of direction: SIMD3<Float>) -> (latitudeDegrees: Float, longitudeDegrees: Float) {
+        let n = simd_normalize(direction)
+        let latitude = asin(max(-1, min(1, n.y))) * 180 / .pi
+        // x = cos(lat)·cos(lon), -z = cos(lat)·sin(lon) ⇒ lon = atan2(-z, x).
+        let longitude = atan2(-n.z, n.x) * 180 / .pi
+        return (latitude, longitude)
+    }
 }
