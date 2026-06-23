@@ -55,7 +55,7 @@ final class SettingsViewModel {
     @SharedReader(.connectionState) private var connectionState: ConnectionState
     @SharedReader(.featureFlags) private var featureFlags: Domain.FeatureFlags
     @Shared(.connectionProtocol) private var sharedConnectionProtocol: Domain.ConnectionProtocol
-    @Shared(.killSwitch) private var killSwitch: Bool
+    @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
     @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     @Dependency(\.coreAlertService) private var alertService
@@ -360,13 +360,10 @@ final class SettingsViewModel {
         ))
         cells.append(.tooltip(text: Localizable.alwaysOnVpnTooltipIos))
 
-        cells.append(.upsellableToggle(
-            title: Localizable.killSwitch,
-            state: { [unowned self] in .available(enabled: killSwitch, interactive: true) },
-            upsell: {
-                // No Upsell: Kill Switch is a free feature
-            },
-            handler: ksSwitchCallback()
+        cells.append(.pushKeyValue(
+            key: Localizable.killSwitch,
+            value: killSwitchMode.displayName,
+            handler: { [weak self] in self?.pushKillSwitchSelectionViewController() }
         ))
         cells.append(.tooltip(text: Localizable.killSwitchTooltip))
 
@@ -636,6 +633,25 @@ final class SettingsViewModel {
 
     private func switchLANCallback() -> ((Bool, @escaping (Bool) -> Void) -> Void) {
         { toggleOn, callback in
+            // Turning LAN access on conflicts with an armed kill switch: ask the user to confirm
+            // dropping kill switch protection before applying the change.
+            if toggleOn, self.killSwitchMode.isProtected {
+                let alert = LANConnectionsKillSwitchConflictAlert(connected: self.isActive()) {
+                    setFeatureValue(ExcludeLocalNetworks.on)
+                    self.$killSwitchMode.withLock { $0 = .off }
+                    if self.isActive() {
+                        log.info("Applying LAN access feature change in place", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks", "feature_additional": "killSwitch"])
+                        self.apply(tunnelFeatureChange: .allowLAN(true))
+                    }
+                    self.reloadNeeded?()
+                    callback(true)
+                } cancelHandler: {
+                    callback(false)
+                }
+                self.alertService.push(alert: alert)
+                return
+            }
+
             setFeatureValue(toggleOn ? ExcludeLocalNetworks.on : .off)
             if self.isActive() {
                 log.info("Applying LAN access feature change in place", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])
@@ -645,18 +661,78 @@ final class SettingsViewModel {
         }
     }
 
-    private func ksSwitchCallback() -> ((Bool, @escaping (Bool) -> Void) -> Void) {
-        { toggleOn, callback in
-            let isActive = self.isActive()
+    private func pushKillSwitchSelectionViewController() {
+        let view = KillSwitchSettingsView(
+            onSelect: { [weak self] mode in self?.changeKillSwitchMode(to: mode, completion: { _ in }) }
+        )
+        let hostingController = ShowingNavigationBarUIHostingController(rootView: AnyView(view))
+        hostingController.title = Localizable.settingsTitleKillSwitch
+        push(viewController: hostingController)
+    }
 
-            // Persist immediately and update an active tunnel in place; no reconnect alert is needed.
-            self.$killSwitch.withLock { $0 = toggleOn }
-            log.info("Applying killSwitch feature change in place", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
-            if isActive {
-                self.apply(tunnelFeatureChange: .killSwitch(toggleOn))
-            }
-            callback(toggleOn)
+    private func changeKillSwitchMode(to mode: KillSwitchMode, completion: @escaping (Bool) -> Void) {
+        let current = killSwitchMode
+        guard mode != current else {
+            completion(false)
+            return
         }
+
+        let apply: () -> Void = { [weak self] in
+            guard let self else { return }
+            // Kill switch and "Allow LAN" are mutually exclusive: enabling protection turns Allow LAN off.
+            if mode.isProtected, featureValue(for: ExcludeLocalNetworks.self) == .on {
+                setFeatureValue(ExcludeLocalNetworks.off)
+            }
+            $killSwitchMode.withLock { $0 = mode }
+            // HomeFeature observes `killSwitchMode` and pushes the change to the ProTUN extension over IPC.
+            reloadNeeded?()
+        }
+
+        // Confirm only on up changes; downgrades and Off apply immediately.
+        guard mode.rawValue > current.rawValue,
+              let alert = killSwitchUpgradeAlert(
+                  from: current,
+                  to: mode,
+                  confirm: { apply(); completion(true) },
+                  cancel: { completion(false) }
+              ) else {
+            apply()
+            completion(true)
+            return
+        }
+        showModalController?(alert)
+    }
+
+    private func killSwitchUpgradeAlert(
+        from current: KillSwitchMode,
+        to mode: KillSwitchMode,
+        confirm: @escaping () -> Void,
+        cancel: @escaping () -> Void
+    ) -> UIAlertController? {
+        let title: String
+        let bullets: [String]
+        let confirmTitle: String
+        switch mode {
+        case .standard:
+            title = Localizable.killSwitchEnableStandardTitle
+            bullets = [Localizable.killSwitchBulletNoLan]
+            confirmTitle = Localizable.killSwitchConfirmEnable
+        case .advanced where current == .standard:
+            title = Localizable.killSwitchSwitchAdvancedTitle
+            bullets = [Localizable.killSwitchBulletAdvancedPersists, Localizable.killSwitchBulletAdvancedRecover]
+            confirmTitle = Localizable.killSwitchConfirmSwitch
+        case .advanced:
+            title = Localizable.killSwitchEnableAdvancedTitle
+            bullets = [Localizable.killSwitchBulletNoLan, Localizable.killSwitchBulletAdvancedPersists]
+            confirmTitle = Localizable.killSwitchConfirmEnable
+        case .off:
+            return nil
+        }
+        let message = bullets.map { "•  \($0)" }.joined(separator: "\n")
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Localizable.cancel, style: .cancel) { _ in cancel() })
+        alert.addAction(UIAlertAction(title: confirmTitle, style: .default) { _ in confirm() })
+        return alert
     }
 
     private var extensionsSection: TableViewSection {
@@ -945,7 +1021,13 @@ final class SettingsViewModel {
             let confirmationClosure: () -> Void = { [weak self] in
                 self?.appSessionManager.logOut(force: true, reason: nil)
             }
-            alertService.push(alert: LogoutWarningAlert(confirmHandler: confirmationClosure))
+            // With Advanced KS the session isn't simply "ended" — it keeps blocking after sign-out, so show
+            // the kill-switch-aware confirmation instead of the generic "VPN connection active" one.
+            if killSwitchMode.isAdvanced {
+                alertService.push(alert: LogoutWithAdvancedKillSwitchAlert(username: authKeychain.username, confirmHandler: confirmationClosure))
+            } else {
+                alertService.push(alert: LogoutWarningAlert(confirmHandler: confirmationClosure))
+            }
         } else {
             appSessionManager.logOut(force: false, reason: nil)
         }

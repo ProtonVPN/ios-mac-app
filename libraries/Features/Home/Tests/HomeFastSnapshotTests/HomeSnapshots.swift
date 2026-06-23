@@ -32,17 +32,11 @@ import Testing
 import TestingErgonomics
 import VPNAppCore
 
-@Suite("Home")
+@Suite("Home", .snapshots(record: .missing))
 struct HomeScreenTests {
     private static let polandServer: Server = .mock(
         country: "PL",
         coordinates: .init(latitude: 52.229686, longitude: 21.012247)
-    )
-    private static let polandIntent = ServerConnectionIntent(
-        spec: .specificCountryServer,
-        server: polandServer,
-        protocolConfiguration: .ike,
-        features: .mock
     )
 
     static let homeTestData = [
@@ -52,11 +46,22 @@ struct HomeScreenTests {
         ),
         (
             ProtectionState.protecting(country: "Poland", ip: "1.2.3.4"),
-            ConnectionState.connecting(.resolved(polandIntent, polandServer))
+            ConnectionState.connecting(.resolved(.init(spec: .specificCountryServer, tunnelProtocol: .ike, resolvedServer: polandServer)))
         ),
         (
             ProtectionState.protected,
-            ConnectionState.connected(polandIntent, polandServer, Date(), nil)
+            ConnectionState.connected(
+                .init(connectionSpec: .specificCountryServer, tunnelProtocol: .ike, peerIDs: []),
+                .init(currentPeer: polandServer, connectionDate: Date(), protocolConnectionData: .ike)
+            )
+        ),
+        (
+            // Advanced kill switch blocking (zero-peer tunnel): Home shows the grey KillSwitchBlockingBanner.
+            ProtectionState.killSwitchBlocking(.specificCountryServer),
+            ConnectionState.killSwitchActive(
+                .specificCountryServer,
+                .init(connectionSpec: .specificCountryServer, tunnelProtocol: .ike, peerIDs: [])
+            )
         ),
     ]
 
@@ -131,6 +136,7 @@ extension ProtectionState {
         case .protected: "Protected"
         case .protectedSecureCore: "ProtectedSecureCore"
         case .resolving: "Loading"
+        case .killSwitchBlocking: "KillSwitchBlocking"
         }
     }
 }
@@ -143,6 +149,7 @@ extension ConnectionState {
         case .resolving: "Loading"
         case .disconnecting: "Disconnecting"
         case .connected: "Connected"
+        case .killSwitchActive: "KillSwitchActive"
         }
     }
 }

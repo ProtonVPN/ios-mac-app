@@ -32,6 +32,7 @@ public struct SettingsDimensions: Encodable {
     let isHermesEnabled: HermesEnabled
     @NAEncodable var isSystemCustomDNSEnabled: Bool?
     let isPortForwardingEnabled: IsPortForwardingEnabled
+    let killSwitchLevel: KillSwitchLevel
 
     enum CodingKeys: String, CodingKey {
         case defaultConnectionType = "default_connection_type"
@@ -45,6 +46,7 @@ public struct SettingsDimensions: Encodable {
         case isHermesEnabled = "is_custom_dns_enabled"
         case isSystemCustomDNSEnabled = "is_system_custom_dns_enabled"
         case isPortForwardingEnabled = "is_port_forwarding_enabled"
+        case killSwitchLevel = "kill_switch_level"
         #if os(macOS)
             case isSplitTunnelingEnabled = "is_split_tunneling_enabled"
             case splitTunnelingMode = "split_tunneling_mode"
@@ -119,6 +121,12 @@ public struct SettingsDimensions: Encodable {
     public enum IsPortForwardingEnabled: String, Encodable {
         case `true`
         case `false`
+    }
+
+    public enum KillSwitchLevel: String, Encodable {
+        case off
+        case standard
+        case advanced
     }
 
     #if os(macOS)

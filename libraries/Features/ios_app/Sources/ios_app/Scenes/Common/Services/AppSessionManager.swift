@@ -387,6 +387,18 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
 
         let confirmationClosure: () -> Void = {
+            @Shared(.killSwitchMode) var killSwitchMode
+            if killSwitchMode.isAdvanced {
+                // Advanced KS persists across sign-out: keep blocking instead of tearing the tunnel
+                // down. The mode-aware connection logout switches the tunnel to zero-peer (it does NOT clean
+                // up for Advanced), keeping `killSwitchMode` and the actual blocking state consistent. The
+                // login screen then surfaces a banner to turn the kill switch off.
+                @Dependency(\.connectionCommandClient) var connectionCommandClient
+                connectionCommandClient.send(.clearConnectionData())
+                logOutRoutine()
+                return
+            }
+
             if settingsClient.isActive() {
                 Task {
                     do {
@@ -405,13 +417,26 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         if force {
             confirmationClosure()
         } else {
-            alertService.push(alert: LogoutWarningAlert(confirmHandler: confirmationClosure))
+            @Shared(.killSwitchMode) var killSwitchMode
+            if killSwitchMode.isAdvanced {
+                // signing out with Advanced KS keeps the device offline
+                alertService.push(alert: LogoutWithAdvancedKillSwitchAlert(username: authKeychain.username, confirmHandler: confirmationClosure))
+            } else {
+                alertService.push(alert: LogoutWarningAlert(confirmHandler: confirmationClosure))
+            }
         }
     }
 
     private func logOutCleanup() {
         refreshTimer.stopTimers()
         loggedIn = false
+
+        // Standard kill switch auto-disables on logout so the user isn't locked out of the
+        // internet. Advanced persists until explicitly disabled.
+        @Shared(.killSwitchMode) var killSwitchMode
+        if killSwitchMode == .standard {
+            $killSwitchMode.withLock { $0 = .off }
+        }
 
         if let userId = authKeychain.userId {
             FeatureFlagsRepository.shared.resetFlags(for: userId)

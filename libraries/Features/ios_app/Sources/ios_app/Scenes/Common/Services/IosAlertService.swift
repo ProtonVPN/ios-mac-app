@@ -90,6 +90,9 @@ extension IosAlertService {
         case is ReconnectOnActionAlert:
             showDefaultSystemAlert(alert)
 
+        case is LANConnectionsKillSwitchConflictAlert:
+            showDefaultSystemAlert(alert)
+
         case is ProtocolNotAvailableForServerAlert:
             showDefaultSystemAlert(alert)
 

@@ -18,21 +18,61 @@
 
 import Foundation
 
-public struct LocalTunnelFeatures: Equatable, Sendable, Codable {
-    public let killSwitch: Bool
+public struct LocalTunnelFeatures: Hashable, Sendable, Codable {
+    public let killSwitchMode: KillSwitchMode
     public let excludeLocalNetworks: Bool
 
+    /// Whether any kill switch protection is enabled (Standard or Advanced).
+    /// The IPC/tunnel layers only need this Bool "is KS on" signal; the Standard-vs-Advanced
+    /// distinction is handled by the connection layer via ``killSwitchMode``.
+    public var killSwitch: Bool {
+        killSwitchMode.isProtected
+    }
+
     #if !os(tvOS)
-        public init(killSwitch: Bool, excludeLocalNetworks: Bool) {
-            self.killSwitch = killSwitch
+        public init(killSwitchMode: KillSwitchMode, excludeLocalNetworks: Bool) {
+            self.killSwitchMode = killSwitchMode
             self.excludeLocalNetworks = excludeLocalNetworks
+        }
+
+        /// Convenience for callers that only distinguish on/off (previews, tests, legacy bridges).
+        public init(killSwitch: Bool, excludeLocalNetworks: Bool) {
+            self.init(killSwitchMode: killSwitch ? .standard : .off, excludeLocalNetworks: excludeLocalNetworks)
         }
     #else
         public static let tvFeatures: Self = .init()
 
         init() {
-            self.killSwitch = false
+            self.killSwitchMode = .off
             self.excludeLocalNetworks = false
         }
     #endif
+
+    // MARK: - Codable
+
+    // Custom coding to stay backward-compatible with configurations persisted before the 3-state
+    // migration, which encoded a `killSwitch` boolean instead of `killSwitchMode`.
+    private enum CodingKeys: String, CodingKey {
+        case killSwitchMode
+        case killSwitch
+        case excludeLocalNetworks
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.excludeLocalNetworks = try container.decodeIfPresent(Bool.self, forKey: .excludeLocalNetworks) ?? false
+        if let mode = try container.decodeIfPresent(KillSwitchMode.self, forKey: .killSwitchMode) {
+            self.killSwitchMode = mode
+        } else if let legacyKillSwitch = try container.decodeIfPresent(Bool.self, forKey: .killSwitch) {
+            self.killSwitchMode = legacyKillSwitch ? .standard : .off
+        } else {
+            self.killSwitchMode = .off
+        }
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(killSwitchMode, forKey: .killSwitchMode)
+        try container.encode(excludeLocalNetworks, forKey: .excludeLocalNetworks)
+    }
 }
