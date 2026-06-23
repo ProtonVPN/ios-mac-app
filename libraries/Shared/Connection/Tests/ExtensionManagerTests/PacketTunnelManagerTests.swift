@@ -69,20 +69,14 @@
             try ProTUNConfigurationCoder.encode(configuration: .init(preferredTransport: .udp, peers: [], dnsServers: []), to: config)
             connectedManager.protocolConfiguration = config
 
-            let connectionDataChannel = try IPCNotifications.RawChannel<IPCConnectionDataPayload>(
-                notification: .init(name: "test.connectionData.\(UUID().uuidString)"),
-                fileURL: FileManager.default.temporaryDirectory.appending(component: "test_cd_\(UUID().uuidString)")
-            )
-            connectionDataChannel.mutate {
-                $0 = IPCConnectionDataPayload(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, userISP: nil, userIP: nil))
-            }
-
             try await withDependencies {
                 $0.date = .constant(now)
                 $0.vpnManagerRepository.managers = {
                     [.ike: disconnectingManager, .wireGuard(.proTUN): connectedManager]
                 }
-                $0.rawChannels.connectionData = { connectionDataChannel }
+                $0.extensionIPC.currentPeer = {
+                    CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, userISP: nil, userIP: nil)
+                }
             } operation: {
                 let status = try await PacketTunnelManager().status
                 XCTAssertEqual(

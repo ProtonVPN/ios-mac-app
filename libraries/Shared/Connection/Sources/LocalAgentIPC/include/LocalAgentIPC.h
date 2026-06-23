@@ -2,15 +2,7 @@
 #include <stdint.h>
 #include <IPCSeqlockHelpers.h>
 
-// ---------------------------------------------------------------------------
-// IPC_ENUM
-//
-// Mirrors CF_ENUM / NS_ENUM: the forward-declaration trick + enum_extensibility
-// tells Swift's Clang importer to:
-//   • import the type as a proper Swift enum (not a raw struct wrapper)
-//   • strip the common prefix from case names so dot syntax works
-//     e.g. LocalAgentNetshieldMalware → LocalAgentNetshieldLevel.malware
-// ---------------------------------------------------------------------------
+// Mirrors CF_ENUM / NS_ENUM, tells Swift's clang importer to create a proper enum and strip the common prefix.
 #if __has_attribute(enum_extensibility)
 #  define IPC_ENUM(_type, _name)                                                  \
        typedef enum __attribute__((enum_extensibility(open))) _name : _type _name; \
@@ -19,26 +11,10 @@
 #  define IPC_ENUM(_type, _name) typedef enum _name : _type _name; enum _name : _type
 #endif
 
-// ---------------------------------------------------------------------------
-// Live tunnel data — extension-written, app reads/observes
+// Tunnel data payloads coming from the extension
 //
-// The network extension is the SOLE writer of all four regions below; the app
-// only reads/observes. They carry everything that is *not* a tunnel setting
-// (tunnel settings live on ProTUNConfiguration in the providerConfiguration
-// dictionary, not here).
-//
-// They are deliberately split into four independent regions — connection
-// identity, traffic stats, handshake stats, and the last error — each with its
-// own backing file, notification, and `version`. The split keeps every ABI small
-// and independently versionable, and stops the high-frequency stats writes from
-// contending on the same seqlock as the latency-sensitive peer/error fields.
-//
-// `version` lets a reader detect a payload written by an incompatible build.
-// String fields are fixed-size char[] (so each struct stays BitwiseCopyable);
-// they are NUL-terminated UTF-8, truncated on codepoint boundaries by the Swift
-// marshaling helpers. The connection timestamp is NOT carried — the app uses
-// NEVPNConnection.connectedDate.
-// ---------------------------------------------------------------------------
+// Try to avoid using these for things that can go in the provider configuration and get read from there, it's meant for
+// values that are communicated from the ProTUN framework and the LocalAgent server.
 
 IPC_ENUM(int8_t, IPCWireGuardTransport) {
     IPCWireGuardTransportUnset = 0,
@@ -50,11 +26,11 @@ IPC_ENUM(int8_t, IPCWireGuardTransport) {
 // Connection identity: who/where we are connected to, and what the server observes.
 typedef struct {
     int32_t                 version;
-    IPCWireGuardTransport   transport;
-    uint8_t                 peer_id[64];         // Raw bytes of the server id (PVPNServerIpID). It is an 88-char base64url string elsewhere; we carry it DECODED (exactly 64 bytes) so it fits without bloating the ABI. The marshaling layer base64url-encodes it back to the string the app keys its server lookup on. All-zero == no peer published yet.
-    char                    server_exit_v4[46];  // IPv4 (max 15) with headroom for IPv6 textual forms
-    char                    user_isp[128];       // take care to properly handle UTF-8 boundary truncation
-    char                    user_ip[46];
+    IPCWireGuardTransport   transport;           // The transport currently being used - can change with Smart protocol
+    uint8_t                 peer_id[64];         // Raw bytes of the server id. All-zero implies no peer published yet.
+    char                    server_exit_v4[46];  // IPv4 with headroom for IPv6
+    char                    user_ip[46];         // The user's IP address, according to LocalAgent
+    char                    user_isp[128];       // take care to properly handle UTF-8 boundary truncation (accents etc)
 } IPCConnectionDataPayload;
 
 IPC_DECLARE_SHARED_REGION(IPCConnectionDataRegion, IPCConnectionDataPayload);
@@ -80,13 +56,14 @@ typedef struct {
     uint64_t                received_bytes;
     uint64_t                sent_bytes;
     double                  time_since_last_handshake;
-    double                  estimated_loss;              // Float on the Swift side
+    double                  estimated_loss;
     double                  estimated_rtt;
 } IPCConnectionStatsPayload;
 
 IPC_DECLARE_SHARED_REGION(IPCConnectionStatsRegion, IPCConnectionStatsPayload);
 
-// Most recent extension error (mirrors LocalAgent.Error); single slot, latest wins.
+// Most recent extension error - can be LocalAgent.Error or others.
+// Just provides a domain and a code.
 typedef struct {
     int32_t                 version;
     char                    domain[64];
@@ -95,10 +72,7 @@ typedef struct {
 
 IPC_DECLARE_SHARED_REGION(IPCErrorRegion, IPCErrorPayload);
 
-// Server-applied Local Agent feature settings (mirrors the app's AgentTunnelFeatures). These ALSO live durably on
-// ProTUNConfiguration; this region carries them live so the app observes a change immediately, since
-// NEVPNConfigurationChange is not delivered to the app's process for extension-initiated saves. `version == 0`
-// (a zeroed region) means nothing has been applied yet.
+// Server-applied Local Agent feature settings, mirroring what gets persisted to the provider configuration dictionary.
 typedef struct {
     int32_t                 version;
     uint8_t                 netshield_level;   // NetShieldType.rawValue: 0=off, 1=malware, 2=+ads/trackers, 3=+adult
@@ -109,15 +83,9 @@ typedef struct {
 
 IPC_DECLARE_SHARED_REGION(IPCAgentFeaturesRegion, IPCAgentFeaturesPayload);
 
-// ---------------------------------------------------------------------------
-// Coalesced tunnel-data region — all of the above as a SINGLE shared buffer.
-//
-// On iOS/tvOS this is one mmap'd file; on macOS it's one IOSurface handed to the app over XPC (a system extension
-// can't share an app-group container). Each field is a full *region* — its own `IPCSharedHeader` seqlock + payload —
-// so the consistency domains stay independent: a high-frequency stats write never makes a latency-sensitive peer or
-// error READER spin-retry. A writer touches one sub-region under that sub-region's own seqlock and posts a single
-// notification carrying the (offset, size) of the payload it wrote; observers demux by it.
-// ---------------------------------------------------------------------------
+// This is a single backing memory region for all of the connection data regions. Each subregion is padded to 1024 bytes
+// and has its own seqlock + versioning. iOS and tvOS share this using a file-backed mmap while macOS must accomplish
+// the same using an IOSurface sent over an XPC session.
 typedef struct {
     IPCConnectionDataRegion   connection_data;
     IPCStatsRegion            stats;

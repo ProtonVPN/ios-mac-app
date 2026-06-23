@@ -25,6 +25,7 @@ import LocalAgentIPC
 import NetworkExtension
 import OSLog
 import protun
+import SharedErgonomics
 import VPNCoreCommon
 import VPNCoreTypes
 
@@ -43,17 +44,21 @@ actor ConfigurationStore {
     /// or writing to a stale VPN configuration.
     private var tail: Task<Void, Never> = Task {}
 
+    /// How long a single transaction may run before it's abandoned (to avoid holding up others).
+    private static let transactionTimeout: Duration = .seconds(30)
+
     /// Applies an app-initiated configuration update request that was sent over XPC.
     func apply(_ update: ConnectionUpdate, adapter: ProTUNAdapter) {
         enqueue { [weak adapter] in
             guard let adapter else { return }
             do {
-                try await Self.performUpdate(update, adapter: adapter)
-                Logger.adapter.info("Configuration update applied!")
+                try await withTimeout(of: Self.transactionTimeout) {
+                    try await Self.performUpdate(update, adapter: adapter)
+                }
             } catch {
                 Logger.adapter.error("Configuration update failed: \(error, privacy: .public)")
-                @Dependency(\.rawChannels) var rawChannels
-                rawChannels.localAgentError()?.mutate { $0 = IPCErrorPayload(error) }
+                @Dependency(\.extensionIPCServer) var extensionIPCServer
+                extensionIPCServer.publishError(error)
             }
         }
     }
@@ -64,7 +69,9 @@ actor ConfigurationStore {
         enqueue { [weak adapter] in
             guard let adapter else { return }
             do {
-                try await Self.performPersistEffective(settings, adapter: adapter)
+                try await withTimeout(of: Self.transactionTimeout) {
+                    try await Self.performPersistEffective(settings, adapter: adapter)
+                }
             } catch {
                 Logger.adapter.error("Failed to persist effective Local Agent settings: \(error, privacy: .public)")
             }
@@ -108,28 +115,28 @@ actor ConfigurationStore {
                 nil
             }
 
-            // Location: live-apply the spec + peers to the running tunnel, then persist the new peers. This is the
-            // only field of the ProTUN configuration that the request writes directly for now.
+            // Get ready to tell ProTUN about the peer change, but only do so once we've saved the provider config
+            var peersToApply: [PeerInfo]?
             if let location = update.location, let configuration {
-                guard let connection = adapter.connection else {
+                guard adapter.connection != nil else {
                     throw Failure.location(.noConnection)
                 }
                 do {
-                    let peers: [PeerInfo] = try location.peers.map { try .init(from: $0) }
+                    peersToApply = try location.peers.map { try .init(from: $0) }
                     try config.setConnectionSpec(location.spec)
-                    connection.updatePeers(peers: peers)
+                    try ProTUNConfigurationCoder.encode(configuration: configuration.with(peers: location.peers), to: config)
                 } catch {
-                    Logger.adapter.error("Failed to apply connection spec/peers: \(error, privacy: .public)")
+                    Logger.adapter.error("Failed to prepare connection spec/peers: \(error, privacy: .public)")
                     throw Failure.location(.badPeers)
                 }
-                try ProTUNConfigurationCoder.encode(configuration: configuration.with(peers: location.peers), to: config)
             }
 
-            // Forward any requested Local Agent setting changes to ProTUN.
+            // Check if we have agent changes to apply, and stage them if so
+            var agentSettingsToApply: LocalAgentSettings?
             if update.hasAgentChanges, let configuration {
                 var agentSettings = LocalAgentSettings(configuration)
                 agentSettings.apply(update)
-                adapter.applyLocalAgentSettings(agentSettings)
+                agentSettingsToApply = agentSettings
             }
 
             #if !os(tvOS)
@@ -145,10 +152,18 @@ actor ConfigurationStore {
                 manager.isOnDemandEnabled = onDemand
             }
 
-            // Only save the protocol config when a non-LocalAgent feature has been applied, since those get persisted
-            // when the server confirms the new settings.
+            // Persist the protocol config first, if any changes are needed, to avoid the two getting out of sync if
+            // the save should happen to throw.
             if update.hasAppChanges {
                 try await manager.saveToPreferences()
+            }
+
+            if let peersToApply, let connection = adapter.connection {
+                connection.updatePeers(peers: peersToApply)
+            }
+
+            if let agentSettingsToApply {
+                adapter.applyLocalAgentSettings(agentSettingsToApply)
             }
         }
     }

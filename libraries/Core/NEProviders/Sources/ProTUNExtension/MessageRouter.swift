@@ -130,7 +130,6 @@ private extension MessageRouter {
 
         // Always ack immediately, confirmation of request will come asynchronously through either the provider
         // configuration dictionary or a `RawChannel`.
-        Logger.adapter.info("Routing configuration update; acking and enqueueing")
         await adapter.enqueueConfigurationUpdate(update)
         return .init(payload: .ack)
     }

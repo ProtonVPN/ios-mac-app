@@ -30,7 +30,7 @@
     /// Used on macOS to establish a shared memory region between the System Extension and the the app/other extensions
     ///
     /// A system extension can't share an app-group container with the app, so instead of a file `mmap`, the extension
-    /// allocates an `IOSurface`, backs the ``RawChannels`` with it, and hands that to client apps + extensions instead
+    /// allocates an `IOSurface`, backs the ``ExtensionIPCClient`` with it, and hands that to client apps + extensions instead
     public final class TunnelDataXPCService: Sendable {
         /// All mutable, non-``Sendable`` state, accessed only behind the lock.
         private struct State {
@@ -55,8 +55,8 @@
 
             // Immediately attach the raw channel region on startup.
             if let surface {
-                @Dependency(\.rawChannels) var rawChannels
-                rawChannels.attachRegion(IPCNotifications.SharedRegion(ioSurface: surface))
+                @Dependency(\.extensionIPCServer) var extensionIPCServer
+                extensionIPCServer.attachRegion(IPCNotifications.SharedRegion(ioSurface: surface))
             } else {
                 log("Failed to allocate tunnel-data IOSurface; the macOS app will not receive live tunnel data")
             }

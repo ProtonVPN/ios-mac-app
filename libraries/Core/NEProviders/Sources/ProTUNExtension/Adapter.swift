@@ -126,8 +126,8 @@ final class ProTUNAdapter: @unchecked Sendable {
         defer { signposter.endInterval("Start Tunnel", startState) }
 
         Logger.adapter.info("Starting Adapter")
-        @Dependency(\.rawChannels) var rawChannels
-        rawChannels.zeroAll()
+        @Dependency(\.extensionIPCServer) var extensionIPCServer
+        extensionIPCServer.zeroAll()
 
         let tunFd = try await prepare(with: config.proTUN)
         signposter.emitEvent("Tunnel prepared", id: signpostID)
@@ -198,8 +198,9 @@ final class ProTUNAdapter: @unchecked Sendable {
         switch event {
         case .forkSelectorRequest:
             // packetTunnelProvider?.reasserting = true
-            Logger.localAgent.info("Sending extensionForkSelectorRequest notification")
-            IPCNotifications.post(.extensionForkSelectorRequest)
+            Logger.localAgent.info("Sending forkSelectorRequest tunnel command")
+            @Dependency(\.extensionIPCServer) var extensionIPCServer
+            extensionIPCServer.sendCommand(.forkSelectorRequest)
         }
     }
 
@@ -214,8 +215,8 @@ final class ProTUNAdapter: @unchecked Sendable {
         localAgentTask = nil
 
         // Clear the shared memory regions just before stopping.
-        @Dependency(\.rawChannels) var rawChannels
-        rawChannels.zeroAll()
+        @Dependency(\.extensionIPCServer) var extensionIPCServer
+        extensionIPCServer.zeroAll()
     }
 }
 

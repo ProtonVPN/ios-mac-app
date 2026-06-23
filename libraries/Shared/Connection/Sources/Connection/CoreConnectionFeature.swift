@@ -24,7 +24,6 @@ import Domain
 import ExtensionManager
 import Foundation
 import LocalAgent
-import LocalAgentIPC
 import Network
 import enum NetworkExtension.NEVPNStatus
 import VPNAppCore
@@ -34,11 +33,10 @@ import VPNAppCore
 @Reducer
 public struct CoreConnectionFeature: Sendable {
     @Dependency(\.continuousClock) private var clock
-    @Dependency(\.serverIdentifier) private var serverIdentifier
-    @Dependency(\.nwStatusStream) private var nwStatusStream
+    @Dependency(\.extensionIPC) private var extensionIPC
+    @Dependency(\.forkSelectorClient) private var forkSelectorClient
 
     private static let defaultConnectionTimeout = Duration.seconds(30)
-    private static let disconnectWaitTimeout = Duration.milliseconds(150)
 
     public init() {}
 
@@ -69,8 +67,8 @@ public struct CoreConnectionFeature: Sendable {
         case stopObserving
         /// Starts the disconnection process and clears relevant keychains and configurations
         case handleLogout
-        /// An error payload was received over the error ``RawChannel``; the reducer decides how to react.
-        case errorReceived(IPCErrorPayload)
+        /// A decoded error (or `nil` if cleared) was received over the error ``RawChannel``.
+        case errorReceived(ExtensionError?)
         /// Tunnel/NetworkExtension child reducer action
         case tunnel(ExtensionFeature.Action)
         /// Delegate action expected to be handled by the parent
@@ -84,7 +82,7 @@ public struct CoreConnectionFeature: Sendable {
             case error(ConnectionError)
             case stateChanged(TunnelState)
             /// The extension reported an error over the tunnel-data error channel.
-            case errorReported(LocalAgent.ReportedError)
+            case errorReported(ExtensionError)
         }
     }
 
@@ -99,24 +97,17 @@ public struct CoreConnectionFeature: Sendable {
         case connectionErrors
     }
 
-    /// The order of reducers here is important.
-    ///  - Firstly, we save a copy of the internal state.
-    ///  - Then, we run the child reducers individually, which can result in changes to said child state.
-    ///  - After reducing child states, we run the `reduceCore` function which can further alter the state, and lastly
-    ///    we check if the state has changed and append a `stateChanged` delegate action if it has.
-    ///
-    /// This state change calculation logic could likely be cleaned up with a higher order reducer instead.
+    /// The order of reducers matters: the `tunnel` child reducer runs first so its state changes are visible to the
+    /// core `Reduce` below, which maps tunnel and telemetry events into the `delegate` actions the parent consumes.
     public var body: some Reducer<State, Action> {
         Scope(state: \.tunnel, action: \.tunnel) { ExtensionFeature() } // Firstly, process tunnel child events
         Reduce { state, action in
             switch action {
             case .startObserving:
-                @Dependency(\.rawChannels) var rawChannels
                 return .merge(
                     .send(.tunnel(.startObserving)),
                     // The extension's error channel, surfaced as `.errorReceived` actions for the reducer to handle.
-                    // `observeError` re-subscribes if the region re-attaches, and therefore also works on macOS.
-                    .observe(rawChannels.observeError()) { .errorReceived($0) }
+                    .observe(extensionIPC.observeError()) { .errorReceived($0) }
                         .cancellable(id: CancelID.connectionErrors)
                 )
 
@@ -127,11 +118,11 @@ public struct CoreConnectionFeature: Sendable {
                     .cancel(id: CancelID.connectionErrors)
                 )
 
-            case let .errorReceived(payload):
-                guard let error = payload.reportedError else { return .none }
+            case let .errorReceived(error):
+                guard let error else { return .none }
                 // A fatal certificate-refresh error tears the tunnel down; every other reported error is surfaced
                 // generically to the parent, which decides whether and how to present it.
-                if case .localAgent(.certificateRefreshFatalError) = error {
+                if error.decoded(as: LocalAgent.Error.self) == .certificateRefreshFatalError {
                     log.error("Local Agent fatal certificate refresh error (error channel)", category: .connection)
                     return .send(.disconnect(.connectionFailure(.tunnel(.tunnelAborted))))
                 }
@@ -192,8 +183,7 @@ public struct CoreConnectionFeature: Sendable {
                 return .send(.delegate(.stateChanged(status)))
 
             case .tunnel(.tunnelReasserting(.forkSelectorRequest)):
-                return .run { _ in
-                    @Dependency(\.forkSelectorClient) var forkSelectorClient
+                return .run { [forkSelectorClient] _ in
                     try await forkSelectorClient.pushSelector()
                 } catch: { error, send in
                     await send(.tunnel(.tunnelStartRequestFinished(.failure(error))))
@@ -326,8 +316,8 @@ extension CoreConnectionFeature.Action: CustomDebugStringConvertible {
             ".stopObserving"
         case .handleLogout:
             ".handleLogout"
-        case let .errorReceived(payload):
-            ".errorReceived(domain: \(payload.errorDomain), code: \(payload.code))"
+        case let .errorReceived(error):
+            ".errorReceived(\(error?.description ?? "nil"))"
         case let .tunnel(action):
             ".tunnel(\(action.debugDescription))"
         case let .delegate(delegate):

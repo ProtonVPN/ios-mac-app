@@ -19,9 +19,9 @@
 import IPCErgonomics
 
 public extension IPCNotifications.Notification {
-    /// A raw channel has been updated, the payload will indicate which field.
+    /// A tunnel-data sub-region has been updated, observers demux by looking at the notify token.
     static let tunnelData: Self = .init(name: "ch.protonmail.vpn.protun.tunnelData")
 
-    /// The extension needs a fresh session; the app should fork its own and send it as a provider message.
-    static let extensionForkSelectorRequest: Self = .init(name: "ch.protonmail.vpn.protun.extensionForkSelectorRequest")
+    /// A simple ping from the extension, the token is used to differentiate between the different commands.
+    static let tunnelCmd: Self = .init(name: "ch.protonmail.vpn.protun.tunnelCmd")
 }

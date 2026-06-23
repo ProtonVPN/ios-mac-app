@@ -71,18 +71,6 @@ public struct ConnectionUpdate: Sendable, Equatable, Codable {
 }
 
 public extension ConnectionUpdate {
-    init(agentFeatures: Set<ConnectionFeatureChange.AgentFeature>) {
-        self.init()
-        for feature in agentFeatures {
-            switch feature {
-            case let .netShield(type): self.netShield = type
-            case let .vpnAccelerator(enabled): self.vpnAccelerator = enabled
-            case let .moderateNAT(type): self.moderateNAT = type
-            case let .portForwarding(enabled): self.portForwarding = enabled
-            }
-        }
-    }
-
     /// Whether this update requests any Local Agent feature change (a feature that is provided by the server).
     var hasAgentChanges: Bool {
         netShield != nil || vpnAccelerator != nil || moderateNAT != nil || portForwarding != nil

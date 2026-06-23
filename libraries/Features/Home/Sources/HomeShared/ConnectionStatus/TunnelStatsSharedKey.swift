@@ -22,26 +22,19 @@ import LocalAgentIPC
 import NetShield
 import Sharing
 
-extension SharedReaderKey where Self == RawChannelKey<NetShieldModel?> {
+extension SharedReaderKey where Self == StreamReaderKey<NetShieldModel?> {
     static var tunnelStats: Self {
-        RawChannelKey(
+        StreamReaderKey(
             id: "tunnelData.stats",
             read: {
-                @Dependency(\.rawChannels) var rawChannels
-                return rawChannels.localAgentStats()?.stats()?.toNetShieldModel
+                @Dependency(\.extensionIPC) var extensionIPC
+                return extensionIPC.currentStats()
             },
             updates: {
-                @Dependency(\.rawChannels) var rawChannels
-                let stats = rawChannels.observeStats()
-                return AsyncStream { continuation in
-                    let task = Task {
-                        for await value in stats {
-                            continuation.yield(value?.toNetShieldModel)
-                        }
-                    }
-                    continuation.onTermination = { _ in task.cancel() }
-                }
-            }
+                @Dependency(\.extensionIPC) var extensionIPC
+                return extensionIPC.observeStats()
+            },
+            transform: { $0?.toNetShieldModel }
         )
     }
 }

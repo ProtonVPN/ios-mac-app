@@ -21,19 +21,19 @@ import Domain
 import LocalAgent
 import Sharing
 
-public extension SharedReaderKey where Self == RawChannelKey<AgentTunnelFeatures?> {
+public extension SharedReaderKey where Self == StreamReaderKey<AgentTunnelFeatures?> {
     /// The server-applied tunnel features from the live `localAgentFeatures` channel (`nil` until the extension
     /// publishes them and while disconnected).
     static var appliedFeatures: Self {
-        RawChannelKey(
+        StreamReaderKey(
             id: "appliedFeatures",
             read: {
-                @Dependency(\.rawChannels) var rawChannels
-                return rawChannels.localAgentFeatures()?.agentFeatures()
+                @Dependency(\.extensionIPC) var extensionIPC
+                return extensionIPC.currentFeatures()
             },
             updates: {
-                @Dependency(\.rawChannels) var rawChannels
-                return rawChannels.observeFeatures()
+                @Dependency(\.extensionIPC) var extensionIPC
+                return extensionIPC.observeFeatures()
             }
         )
     }

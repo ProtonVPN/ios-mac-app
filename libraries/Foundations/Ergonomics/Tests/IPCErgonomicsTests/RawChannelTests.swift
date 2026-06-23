@@ -95,15 +95,23 @@ struct RawChannelTests {
         #expect(snapshot?.timestamp == 7)
     }
 
-    @Test(.ipcContext(mmapFileURL: tmpURL(), notification: uniqueNotification()))
-    func onUnrelatedFieldChangeCalledWhenOtherFieldMutated() async throws {
-        let channel = try IPCHelperContext.rawChannel(ofType: IPCTestPayload.self)
+    @Test
+    func onUnrelatedFieldChangeCalledWhenSiblingSubRegionMutated() async throws {
+        // Field observation demuxes by the sub-region's generation, so `onUnrelatedFieldChange` fires when the shared
+        // notification arrives but OUR sub-region didn't advance — i.e. a *sibling* sub-region was written. (Mutating a
+        // different field of the *same* sub-region advances our generation and therefore delivers, by design: the
+        // generation is per-region and is the only signal that can't miss a coalesced update.)
+        let regionStride = MemoryLayout<IPCTestRegion>.stride
+        let region = try IPCNotifications.SharedRegion(fileURL: tmpURL(), size: regionStride * 2)
+        let notification = uniqueNotification()
+        let viewA = IPCNotifications.RawChannel<IPCTestPayload>(notification: notification, region: region, regionOffset: 0)
+        let viewB = IPCNotifications.RawChannel<IPCTestPayload>(notification: notification, region: region, regionOffset: regionStride)
 
         let unrelatedChanges = AsyncStream<Void> { continuation in
-            let token = channel.observeField(
+            let token = viewA.observeField(
                 \.peer_migrations,
                 handler: { _ in
-                    Issue.record("handler must not fire for an unrelated field mutation")
+                    Issue.record("handler must not fire when only a sibling sub-region is mutated")
                 },
                 onUnrelatedFieldChange: {
                     continuation.yield(())
@@ -113,7 +121,7 @@ struct RawChannelTests {
             continuation.onTermination = { _ in observation.cancel() }
         }
 
-        try channel.mutate(\.bytes_transferred, to: 99.0)
+        viewB.mutate { $0.peer_migrations = 7 }
 
         let received: Void? = await unrelatedChanges.first
         #expect(received != nil)

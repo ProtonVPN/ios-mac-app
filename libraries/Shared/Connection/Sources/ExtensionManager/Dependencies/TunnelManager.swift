@@ -31,13 +31,35 @@ import VPNAppCore
 import VPNCoreCommon
 import VPNCoreTypes
 
-#if os(macOS)
-    /// Used for attaching to the ``RawChannel`` streams on macOS.
-    private let tunnelDataXPCClient = TunnelDataXPCClient(
-        machServiceName: "\(DomainConstants.appIdentifierPrefix)group.ch.protonvpn.mac.WireGuard-Extension",
-        log: { log.info("\($0)", category: .connection) }
-    )
-#endif
+/// macOS-only XPC bridge that (re)attaches the extension's `IOSurface` to the raw channels.
+struct TunnelDataXPC: Sendable {
+    var attach: @Sendable () -> Void = {}
+    var reattach: @Sendable () -> Void = {}
+}
+
+extension TunnelDataXPC: DependencyKey {
+    static let liveValue: TunnelDataXPC = {
+        #if os(macOS)
+            // The Mach service name mirrors `SystemExtensionType.proTUN.machServiceName` in the macOS app.
+            let client = TunnelDataXPCClient(
+                machServiceName: "\(DomainConstants.appIdentifierPrefix)group.ch.protonvpn.mac.WireGuard-Extension",
+                log: { log.info("\($0)", category: .connection) }
+            )
+            return TunnelDataXPC(attach: { client.attachRegion() }, reattach: { client.reattachRegion() })
+        #else
+            return TunnelDataXPC()
+        #endif
+    }()
+
+    static let testValue = TunnelDataXPC()
+}
+
+extension DependencyValues {
+    var tunnelDataXPC: TunnelDataXPC {
+        get { self[TunnelDataXPC.self] }
+        set { self[TunnelDataXPC.self] = newValue }
+    }
+}
 
 enum TunnelMessageTarget {
     /// Send to whichever extension is currently active.
@@ -150,6 +172,10 @@ enum TunnelManagerKey: DependencyKey {
 final class PacketTunnelManager: TunnelManager {
     let forkRequestsStream: AsyncStream<Void>
 
+    #if os(macOS)
+        @Dependency(\.tunnelDataXPC) var tunnelDataXPC
+    #endif
+
     private let forkRequestsContinuation: AsyncStream<Void>.Continuation
 
     init() {
@@ -157,8 +183,15 @@ final class PacketTunnelManager: TunnelManager {
         self.forkRequestsStream = stream
         self.forkRequestsContinuation = continuation
 
-        IPCNotifications.observe(.extensionForkSelectorRequest) { [weak self] in
-            self?.forkRequestsContinuation.yield()
+        @Dependency(\.extensionIPC) var extensionIPC
+        let commands = extensionIPC.observeCommands()
+        Task { [continuation] in
+            for await command in commands {
+                switch command {
+                case .forkSelectorRequest:
+                    continuation.yield()
+                }
+            }
         }
     }
 
@@ -170,10 +203,12 @@ final class PacketTunnelManager: TunnelManager {
 
         log.debug("Starting tunnel with bundle identifier: \(optional: manager.providerBundleIdentifier)", category: .connection)
         try Task.checkCancellation()
+
         #if os(macOS)
             // Eagerly (re)attach the tunnel-data IOSurface for this connection, replacing any previous mapping.
-            tunnelDataXPCClient.reattachRegion()
+            tunnelDataXPC.reattach()
         #endif
+
         try manager.session.startTunnel()
     }
 
@@ -237,7 +272,7 @@ final class PacketTunnelManager: TunnelManager {
 
     var statusStream: AsyncStream<TunnelState> {
         log.debug("Creating TunnelState stream for tunnel observation", category: .connection)
-        // Tunnel state is driven by both `NEVPNStatusDidChange` and updates to the `RawChannel` containing the peer ID.
+        // Tunnel state is driven by both `NEVPNStatusDidChange` and updates to the tunnel-data peer channel.
         return AsyncStream { continuation in
             let statusTask = Task {
                 let notifications = NotificationCenter.default
@@ -248,10 +283,10 @@ final class PacketTunnelManager: TunnelManager {
                     continuation.yield(state)
 
                     #if os(macOS)
-                        // macOS: ask for the `RawChannel` region from the extension as soon as we begin connecting.
+                        // macOS: ask the extension for the IOSurface region as soon as we begin connecting.
                         switch state {
                         case .connecting:
-                            tunnelDataXPCClient.attachRegion()
+                            tunnelDataXPC.attach()
                         default:
                             break
                         }
@@ -259,8 +294,8 @@ final class PacketTunnelManager: TunnelManager {
                 }
             }
             let connectionDataTask = Task {
-                @Dependency(\.rawChannels) var rawChannels
-                for await _ in rawChannels.observePeer() {
+                @Dependency(\.extensionIPC) var extensionIPC
+                for await _ in extensionIPC.observePeer() {
                     guard let state = try? await self.status else { continue }
                     continuation.yield(state)
                 }
@@ -431,9 +466,9 @@ final class PacketTunnelManager: TunnelManager {
             throw TunnelDataError.unsupportedBackend
 
         case .wireGuard(.proTUN):
-            @Dependency(\.rawChannels) var rawChannels
+            @Dependency(\.extensionIPC) var extensionIPC
             // `currentPeer` is nil until the extension publishes the peer to the raw channel.
-            let peer = rawChannels.connectionData()?.currentPeer()
+            let peer = extensionIPC.currentPeer()
             return DynamicConnectionData(
                 currentPeerId: peer?.peerID,
                 connectionDate: connectionDate,

@@ -30,7 +30,7 @@ final class LocalAgentCoordinator: @unchecked Sendable {
         case forkSelectorRequest
     }
 
-    @Dependency(\.rawChannels) var rawChannels
+    @Dependency(\.extensionIPCServer) var extensionIPCServer
 
     let streamSource: StreamSource<Event>
 
@@ -119,12 +119,11 @@ private extension LocalAgentCoordinator {
                     userISP: agent?.userIspName,
                     userIP: agent?.userIspIp
                 )
-                rawChannels.connectionData()?.mutate { $0 = IPCConnectionDataPayload(currentPeer) }
-                Logger.localAgent.debug("Published connected peer to connectionData channel (transport \(String(describing: currentPeer.transport), privacy: .public))")
+                extensionIPCServer.publishPeer(currentPeer)
 
                 if let agent {
                     // Publish changes to the app, and persist actual settings to disk in case we crash
-                    rawChannels.localAgentFeatures()?.mutate { $0 = IPCAgentFeaturesPayload(agent.settings.agentTunnelFeatures) }
+                    extensionIPCServer.publishFeatures(agent.settings.agentTunnelFeatures)
                     await adapter?.enqueueEffectiveLocalAgentSettings(agent.settings)
                 }
             case let .connectingToLocalAgent(peer, _):
@@ -135,8 +134,7 @@ private extension LocalAgentCoordinator {
                     userISP: nil,
                     userIP: nil
                 )
-                rawChannels.connectionData()?.mutate { $0 = IPCConnectionDataPayload(currentPeer) }
-                Logger.localAgent.debug("Published connecting peer to connectionData channel (transport \(String(describing: currentPeer.transport), privacy: .public))")
+                extensionIPCServer.publishPeer(currentPeer)
             default:
                 break
             }
@@ -154,14 +152,14 @@ private extension LocalAgentCoordinator {
 
 private extension LocalAgentCoordinator {
     func sendLocalAgentStats(stats: LocalAgent.Stats) {
-        rawChannels.localAgentStats()?.mutate { $0 = IPCStatsPayload(stats) }
+        extensionIPCServer.publishStats(stats)
     }
 
     func sendConnectionStats(stats: LocalAgent.ConnectionStats) {
-        rawChannels.localAgentConnectionStats()?.mutate { $0 = IPCConnectionStatsPayload(stats) }
+        extensionIPCServer.publishConnectionStats(stats)
     }
 
     func sendError(error: LocalAgent.Error) {
-        rawChannels.localAgentError()?.mutate { $0 = IPCErrorPayload(error) }
+        extensionIPCServer.publishError(error)
     }
 }

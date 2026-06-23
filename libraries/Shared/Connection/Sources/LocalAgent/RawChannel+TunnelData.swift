@@ -31,8 +31,8 @@ public extension IPCNotifications.RawChannel where Payload == IPCConnectionDataP
         (try? read())?.currentPeer
     }
 
-    func currentPeerStream() -> AsyncStream<CurrentPeer?> {
-        stream { $0.currentPeer }
+    func currentPeerStream(reconcileOn resumeSignal: AsyncStream<Void> = .finished) -> AsyncStream<CurrentPeer?> {
+        stream(reconcileOn: resumeSignal) { $0.currentPeer }
     }
 }
 
@@ -41,8 +41,8 @@ public extension IPCNotifications.RawChannel where Payload == IPCStatsPayload {
         (try? read()).flatMap(\.localAgentStats)
     }
 
-    func statsStream() -> AsyncStream<LocalAgent.Stats?> {
-        stream { $0.localAgentStats }
+    func statsStream(reconcileOn resumeSignal: AsyncStream<Void> = .finished) -> AsyncStream<LocalAgent.Stats?> {
+        stream(reconcileOn: resumeSignal) { $0.localAgentStats }
     }
 }
 
@@ -51,8 +51,8 @@ public extension IPCNotifications.RawChannel where Payload == IPCConnectionStats
         (try? read()).flatMap(\.localAgentConnectionStats)
     }
 
-    func connectionStatsStream() -> AsyncStream<LocalAgent.ConnectionStats?> {
-        stream { $0.localAgentConnectionStats }
+    func connectionStatsStream(reconcileOn resumeSignal: AsyncStream<Void> = .finished) -> AsyncStream<LocalAgent.ConnectionStats?> {
+        stream(reconcileOn: resumeSignal) { $0.localAgentConnectionStats }
     }
 }
 
@@ -62,7 +62,14 @@ public extension IPCNotifications.RawChannel where Payload == IPCAgentFeaturesPa
         (try? read())?.agentFeatures
     }
 
-    func agentFeaturesStream() -> AsyncStream<AgentTunnelFeatures?> {
-        stream { $0.agentFeatures }
+    func agentFeaturesStream(reconcileOn resumeSignal: AsyncStream<Void> = .finished) -> AsyncStream<AgentTunnelFeatures?> {
+        stream(reconcileOn: resumeSignal) { $0.agentFeatures }
+    }
+}
+
+public extension IPCNotifications.RawChannel where Payload == IPCErrorPayload {
+    /// The extension's most-recent reported error, or `nil` if the value is empty.
+    func errorStream(reconcileOn resumeSignal: AsyncStream<Void> = .finished) -> AsyncStream<ExtensionError?> {
+        stream(reconcileOn: resumeSignal) { $0.extensionError }
     }
 }

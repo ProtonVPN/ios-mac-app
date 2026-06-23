@@ -194,17 +194,9 @@ public extension IPCErrorPayload {
         self.code = UInt32(truncatingIfNeeded: nsError.code)
     }
 
-    /// The Local Agent error this payload represents, if the domain matches. Otherwise use `errorDomain` and `code`.
-    var localAgentError: LocalAgent.Error? {
-        guard hasError, errorDomain == LocalAgent.Error.errorDomain else { return nil }
-        return LocalAgent.Error(charCode: code)
-    }
-
-    /// A Swift-native view of the reported error.
-    var reportedError: LocalAgent.ReportedError? {
+    var extensionError: ExtensionError? {
         guard hasError else { return nil }
-        if let localAgentError { return .localAgent(localAgentError) }
-        return .other(domain: errorDomain, code: code)
+        return ExtensionError(domain: errorDomain, code: code)
     }
 }
 

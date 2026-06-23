@@ -32,12 +32,12 @@ import VPNAppCore
 public struct ConnectionFeature: Sendable {
     @Dependency(\.sessionChangeNotifier) private var sessionChangeNotifier
     @Dependency(\.connectionIntentResolver) private var intentResolver
+    @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
 
     public init() {}
 
     public struct State: Equatable, Sendable {
         @SharedReader(.userTier) public var userTier: Int?
-        @SharedReader(.appliedFeatures) public var appliedFeatures: AgentTunnelFeatures?
 
         var connectionState: ConnectionState
         var shouldRegisterServerChangeOnConnection: Bool // TODO: ProTUN: post connection events that some other component can hook into to do this, similarly to Telemetry
@@ -85,7 +85,7 @@ public struct ConnectionFeature: Sendable {
             case intentResolutionFailed(ConnectionPreparationIntent, with: ConnectionIntentResolutionError)
             case localAgentNotice(LocalAgentTwoFactorAuthenticationError)
             /// The extension reported an error (e.g. a requested setting was policy-refused, or a config update failed).
-            case errorReported(LocalAgent.ReportedError)
+            case errorReported(ExtensionError)
         }
     }
 
@@ -124,7 +124,16 @@ public struct ConnectionFeature: Sendable {
             case let .input(.applySettings(agentFeatures)):
                 // Input goes directly to the tunnel IPC which requests the new features.
                 log.info("applySettings", category: .connection, metadata: ["features": "\(agentFeatures)"])
-                return .send(.core(.tunnel(.requestConfigChange(ConnectionUpdate(agentFeatures: agentFeatures)))))
+                var update = ConnectionUpdate()
+                for feature in agentFeatures {
+                    switch feature {
+                    case let .netShield(type): update.netShield = type
+                    case let .vpnAccelerator(enabled): update.vpnAccelerator = enabled
+                    case let .moderateNAT(type): update.moderateNAT = type
+                    case let .portForwarding(enabled): update.portForwarding = enabled
+                    }
+                }
+                return .send(.core(.tunnel(.requestConfigChange(update))))
 
             case .input(.disconnect):
                 return .merge(
@@ -165,8 +174,7 @@ public struct ConnectionFeature: Sendable {
 
             case let .core(.delegate(.stateChanged(.connected(_, connectionData)))):
                 if state.shouldRegisterServerChangeOnConnection {
-                    @Dependency(\.serverChangeAuthorizer) var authorizer
-                    authorizer.registerServerChange(connectedAt: connectionData.connectionDate)
+                    serverChangeAuthorizer.registerServerChange(connectedAt: connectionData.connectionDate)
                 }
                 state.connectionState = ConnectionState(tunnel: state.core.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
                 return .none
@@ -180,6 +188,7 @@ public struct ConnectionFeature: Sendable {
 
             case let .core(.delegate(.errorReported(error))):
                 log.warning("Extension reported error", category: .connection, metadata: ["error": "\(error)"])
+                SentryHelper.shared?.log(error: error)
                 return .send(.delegate(.errorReported(error)))
 
             case .core:

@@ -144,9 +144,9 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
             Logger.provider.info("ProTUN configuration not found in providerConfiguration; falling back to legacy WireGuard keychain entry")
             let legacyConfig = try ProTUNConfigurationCoder.legacyDecode(from: protocolConfiguration)
 
-            // We have no way of retrieving the user's ID. Use a random id for the connection until the user configures
-            // a new connection from within the app.
-            return .init(userID: UUID().uuidString, proTUN: legacyConfig)
+            // Use a stable (but fake) user ID when recovering legacy configurations to avoid making excessive orphaned
+            // keychain entries.
+            return .init(userID: "legacyWireGuardFallback", proTUN: legacyConfig)
         }
 
         guard let userID = (protocolConfiguration as? NETunnelProviderProtocol)?.userID else {

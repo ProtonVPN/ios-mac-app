@@ -24,16 +24,24 @@ public extension LocalAgent {
         case localAgentSettingPolicyRefused(SettingType)
         case certificateRefreshFatalError
     }
-
-    /// A connection error reported by the extension over the tunnel-data error channel. Typed when the payload is from
-    /// the Local Agent domain we recognize, otherwise carried generically as `(domain, code)`.
-    enum ReportedError: Swift.Error, Equatable, Sendable {
-        case localAgent(LocalAgent.Error)
-        case other(domain: String, code: UInt32)
-    }
 }
 
 extension LocalAgent.Error: Codable, Equatable, Sendable {}
+
+extension LocalAgent.Error: ReconstructableError {
+    public init?(charCode: FourCharCode) {
+        switch charCode {
+        case "LACF": self = .certificateRefreshFatalError
+        case "PRNS": self = .localAgentSettingPolicyRefused(.netshieldLevel)
+        case "PRBO": self = .localAgentSettingPolicyRefused(.bouncing)
+        case "PRPF": self = .localAgentSettingPolicyRefused(.portForwarding)
+        case "PRST": self = .localAgentSettingPolicyRefused(.splitTcp)
+        case "PRSM": self = .localAgentSettingPolicyRefused(.safeMode)
+        case "PRNT": self = .localAgentSettingPolicyRefused(.randomNat)
+        default: return nil
+        }
+    }
+}
 
 extension LocalAgent.Error: ProtonVPNError {
     public static let errorDomain = "LocalAgentErrorDomain"
@@ -47,19 +55,6 @@ extension LocalAgent.Error: ProtonVPNError {
         case .localAgentSettingPolicyRefused(.splitTcp): "PRST"
         case .localAgentSettingPolicyRefused(.safeMode): "PRSM"
         case .localAgentSettingPolicyRefused(.randomNat): "PRNT"
-        }
-    }
-
-    init?(charCode: FourCharCode) {
-        switch charCode {
-        case "LACF": self = .certificateRefreshFatalError
-        case "PRNS": self = .localAgentSettingPolicyRefused(.netshieldLevel)
-        case "PRBO": self = .localAgentSettingPolicyRefused(.bouncing)
-        case "PRPF": self = .localAgentSettingPolicyRefused(.portForwarding)
-        case "PRST": self = .localAgentSettingPolicyRefused(.splitTcp)
-        case "PRSM": self = .localAgentSettingPolicyRefused(.safeMode)
-        case "PRNT": self = .localAgentSettingPolicyRefused(.randomNat)
-        default: return nil
         }
     }
 }

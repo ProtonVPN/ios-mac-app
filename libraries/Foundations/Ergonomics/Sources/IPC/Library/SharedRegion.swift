@@ -78,7 +78,7 @@ private final class FileRegionBacking: SharedRegionBacking, @unchecked Sendable 
 }
 
 #if os(macOS)
-    /// `IOSurface` backing. Retains the surface (keeping its memory wired) and caches its stable base address.
+    /// `IOSurface` backing for the shared region on macOS.
     private final class IOSurfaceRegionBacking: SharedRegionBacking, @unchecked Sendable {
         private let surface: IOSurfaceRef
         let baseAddress: UnsafeMutableRawPointer

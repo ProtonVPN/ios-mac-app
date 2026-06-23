@@ -57,10 +57,12 @@ package extension AppIntent {
         let pollInterval: Duration = .milliseconds(100)
         var waited: Duration = .zero
         while waited < timeout {
+            if Task.isCancelled { return false }
             let isActive = await MainActor.run { UIApplication.shared.applicationState == .active }
             if isActive {
                 return true
             }
+
             try? await Task.sleep(for: pollInterval)
             waited += pollInterval
         }
