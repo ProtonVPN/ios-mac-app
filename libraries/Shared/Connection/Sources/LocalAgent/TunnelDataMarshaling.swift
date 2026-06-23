@@ -63,7 +63,6 @@ public extension IPCConnectionDataPayload {
         }
         set {
             withUnsafeMutableBytes(of: &peer_id) { raw in
-                // Peer IDs
                 guard let bytes = Data(base64URLEncoded: newValue) else {
                     assertionFailure("peerID is not valid base64url, peer not published: \(newValue)")
                     return
@@ -133,8 +132,9 @@ public extension IPCStatsPayload {
         data_saved = stats.dataSaved ?? 0
     }
 
-    var localAgentStats: LocalAgent.Stats {
-        .init(
+    var localAgentStats: LocalAgent.Stats? {
+        guard version != 0 else { return nil }
+        return .init(
             bytesReceived: bytes_received,
             bytesSent: bytes_sent,
             maliciousBlocked: malicious_blocked,
@@ -158,8 +158,10 @@ public extension IPCConnectionStatsPayload {
         estimated_rtt = stats.estimatedRoundTripTime
     }
 
-    var localAgentConnectionStats: LocalAgent.ConnectionStats {
-        .init(
+    /// The per-handshake metrics, or `nil` until the extension has published them (a zeroed region has `version == 0`).
+    var localAgentConnectionStats: LocalAgent.ConnectionStats? {
+        guard version != 0 else { return nil }
+        return .init(
             timestampMs: timestamp_ms,
             receivedBytes: received_bytes,
             sentBytes: sent_bytes,
@@ -197,6 +199,13 @@ public extension IPCErrorPayload {
         guard hasError, errorDomain == LocalAgent.Error.errorDomain else { return nil }
         return LocalAgent.Error(charCode: code)
     }
+
+    /// A Swift-native view of the reported error.
+    var reportedError: LocalAgent.ReportedError? {
+        guard hasError else { return nil }
+        if let localAgentError { return .localAgent(localAgentError) }
+        return .other(domain: errorDomain, code: code)
+    }
 }
 
 public extension IPCAgentFeaturesPayload {
@@ -221,9 +230,8 @@ public extension IPCAgentFeaturesPayload {
     }
 }
 
-/// Proton server/logical ids are base64url (RFC 4648 `-`/`_` instead of `+`/`/`) with `=` padding.
-/// Foundation only speaks standard base64, because of course it does.
-/// Fix this optimistically with a simple find-replace.
+/// Proton server/logical ids are base64url (RFC 4648 `-`/`_` instead of `+`/`/`) and unlike RFC 4648 retain the
+/// `=` padding. Fix this optimistically with a simple find-replace, keeping the padding the encoder emits.
 private extension Data {
     var base64URLEncodedString: String {
         base64EncodedString()

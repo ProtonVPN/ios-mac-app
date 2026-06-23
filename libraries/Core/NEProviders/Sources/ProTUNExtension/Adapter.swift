@@ -410,6 +410,8 @@ extension ProTUNConfiguration {
         randomNat: Bool? = nil
     ) -> ProTUNConfiguration {
         ProTUNConfiguration(
+            // `ProTUNConfiguration.init` takes a non-optional transport, so a configuration decoded without one (the
+            // only way `preferredTransport` is nil) is normalised to `.udp`. In practice it is always written.
             preferredTransport: preferredTransport ?? .udp,
             peers: peers ?? self.peers,
             dnsServers: dnsServers,

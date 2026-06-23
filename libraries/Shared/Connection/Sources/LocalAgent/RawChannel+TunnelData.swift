@@ -38,7 +38,7 @@ public extension IPCNotifications.RawChannel where Payload == IPCConnectionDataP
 
 public extension IPCNotifications.RawChannel where Payload == IPCStatsPayload {
     func stats() -> LocalAgent.Stats? {
-        (try? read())?.localAgentStats
+        (try? read()).flatMap(\.localAgentStats)
     }
 
     func statsStream() -> AsyncStream<LocalAgent.Stats?> {
@@ -48,7 +48,7 @@ public extension IPCNotifications.RawChannel where Payload == IPCStatsPayload {
 
 public extension IPCNotifications.RawChannel where Payload == IPCConnectionStatsPayload {
     func connectionStats() -> LocalAgent.ConnectionStats? {
-        (try? read())?.localAgentConnectionStats
+        (try? read()).flatMap(\.localAgentConnectionStats)
     }
 
     func connectionStatsStream() -> AsyncStream<LocalAgent.ConnectionStats?> {

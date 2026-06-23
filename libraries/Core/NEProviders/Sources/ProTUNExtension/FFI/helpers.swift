@@ -31,19 +31,6 @@ private func unknownDefault<T>(
     return value
 }
 
-extension NetshieldLevel {
-    var toNetShieldType: NetShieldType {
-        switch self {
-        case .none: .off
-        case .malwareFilter: .level1
-        case .adsAndMalwareFilter: .level2
-        case .adultAndAdsAndMalwareFilter: .level3
-        @unknown default:
-            unknownDefault(value: .level1)
-        }
-    }
-}
-
 extension LocalAgentSettingType: @retroactive CustomStringConvertible {
     public var description: String {
         switch self {
@@ -77,17 +64,6 @@ public extension LocalAgentSettingType {
         @unknown default:
             unknownDefault(value: .netshieldLevel)
         }
-    }
-}
-
-public extension LocalAgentSettings {
-    var toAgentTunnelFeatures: AgentTunnelFeatures {
-        .init(
-            netshield: netshieldLevel?.toNetShieldType ?? .off,
-            vpnAccelerator: splitTcp ?? false,
-            natType: randomNat.flatMap { NATType(flag: $0) } ?? .default,
-            portForwarding: portForwarding
-        )
     }
 }
 

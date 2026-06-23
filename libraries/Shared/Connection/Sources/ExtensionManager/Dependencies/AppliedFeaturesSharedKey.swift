@@ -33,7 +33,7 @@ public extension SharedReaderKey where Self == RawChannelKey<AgentTunnelFeatures
             },
             updates: {
                 @Dependency(\.rawChannels) var rawChannels
-                return rawChannels.localAgentFeatures()?.agentFeaturesStream() ?? .finished
+                return rawChannels.observeFeatures()
             }
         )
     }

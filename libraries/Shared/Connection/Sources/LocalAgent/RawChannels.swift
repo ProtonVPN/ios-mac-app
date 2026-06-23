@@ -18,8 +18,10 @@
 
 import Dependencies
 import DependenciesMacros
+import Domain
 import Foundation
 import IPCErgonomics
+import IssueReporting
 import LocalAgentIPC
 import os
 
@@ -32,8 +34,16 @@ public struct RawChannels: Sendable {
     public var localAgentError: @Sendable () -> IPCNotifications.RawChannel<IPCErrorPayload>?
     public var localAgentFeatures: @Sendable () -> IPCNotifications.RawChannel<IPCAgentFeaturesPayload>?
 
-    /// Attaches the coalesced shared region and builds the five channel views over it. iOS/tvOS call this once at
-    /// startup with the file region, while macOS calls it with the `IOSurface` region once it's exchanged over XPC.
+    /// The current peer. Emits `nil` after a disconnect zeroes the region.
+    public var observePeer: @Sendable () -> AsyncStream<CurrentPeer?> = { .finished }
+    /// The live NetShield / traffic stats.
+    public var observeStats: @Sendable () -> AsyncStream<LocalAgent.Stats?> = { .finished }
+    /// The server-applied Local Agent features.
+    public var observeFeatures: @Sendable () -> AsyncStream<AgentTunnelFeatures?> = { .finished }
+    /// The extension's most-recent error payload.
+    public var observeError: @Sendable () -> AsyncStream<IPCErrorPayload> = { .finished }
+
+    /// Attaches the coalesced shared region and builds the channel views over it.
     public var attachRegion: @Sendable (IPCNotifications.SharedRegion) -> Void
 
     /// Clears every sub-region. Called on disconnect / tunnel start to clear out stale values.
@@ -49,10 +59,16 @@ private final class TunnelDataStore: Sendable {
         let localAgentFeatures: IPCNotifications.RawChannel<IPCAgentFeaturesPayload>
     }
 
-    private let storage = OSAllocatedUnfairLock<Channels?>(initialState: nil)
+    private struct State {
+        var channels: Channels?
+        var nextSubscriberID = 0
+        var subscribers: [Int: @Sendable (Channels) -> Void] = [:]
+    }
+
+    private let state = OSAllocatedUnfairLock(initialState: State())
 
     var channels: Channels? {
-        storage.withLock { $0 }
+        state.withLock { $0.channels }
     }
 
     func attach(_ region: IPCNotifications.SharedRegion) {
@@ -78,7 +94,49 @@ private final class TunnelDataStore: Sendable {
                 regionOffset: MemoryLayout<IPCTunnelData>.offset(of: \.agent_features)!
             )
         )
-        storage.withLock { $0 = channels }
+        // Swap in the new channels, then notify current subscribers outside the lock so they re-subscribe to them.
+        let subscribers = state.withLock { state -> [@Sendable (Channels) -> Void] in
+            state.channels = channels
+            return Array(state.subscribers.values)
+        }
+        subscribers.forEach { $0(channels) }
+    }
+
+    /// Emits the current `Channels` (if a region is attached) and every subsequent (re)attach.
+    private func channelsStream() -> AsyncStream<Channels> {
+        AsyncStream { continuation in
+            let (id, current) = state.withLock { state -> (Int, Channels?) in
+                let id = state.nextSubscriberID
+                state.nextSubscriberID += 1
+                state.subscribers[id] = { continuation.yield($0) }
+                return (id, state.channels)
+            }
+            continuation.onTermination = { [weak self] _ in
+                self?.state.withLock { _ = $0.subscribers.removeValue(forKey: id) }
+            }
+            if let current { continuation.yield(current) }
+        }
+    }
+
+    /// Used to handle the extension lifecycle on macOS by re-attaching to the shared memory stream.
+    func resubscribingStream<Value: Sendable>(
+        _ makeStream: @escaping @Sendable (Channels) -> AsyncStream<Value>
+    ) -> AsyncStream<Value> {
+        AsyncStream { continuation in
+            let pump = Task {
+                var inner: Task<Void, Never>?
+                for await channels in channelsStream() {
+                    inner?.cancel()
+                    inner = Task {
+                        for await value in makeStream(channels) {
+                            continuation.yield(value)
+                        }
+                    }
+                }
+                inner?.cancel()
+            }
+            continuation.onTermination = { _ in pump.cancel() }
+        }
     }
 }
 
@@ -88,11 +146,17 @@ extension RawChannels: DependencyKey {
 
         #if !os(macOS)
             // macOS attaches its storage at connection time
-            let containerURL = try! FileManager.default.mainContainerURL
-            store.attach(try! IPCNotifications.SharedRegion(
-                fileURL: containerURL.appending(component: "tunnel_data"),
-                size: MemoryLayout<IPCTunnelData>.size
-            ))
+            do {
+                let containerURL = try FileManager.default.mainContainerURL
+                try store.attach(IPCNotifications.SharedRegion(
+                    fileURL: containerURL.appending(component: "tunnel_data"),
+                    size: MemoryLayout<IPCTunnelData>.size
+                ))
+            } catch {
+                // The app-group container should always be reachable via our entitlements; if it somehow isn't, fail
+                // to initialize and report an issue. (This will result in all channel reads returning `0` values.)
+                reportIssue("Failed to map the tunnel-data shared region: \(error)")
+            }
         #endif
 
         return RawChannels(
@@ -101,6 +165,10 @@ extension RawChannels: DependencyKey {
             localAgentConnectionStats: { store.channels?.localAgentConnectionStats },
             localAgentError: { store.channels?.localAgentError },
             localAgentFeatures: { store.channels?.localAgentFeatures },
+            observePeer: { store.resubscribingStream { $0.connectionData.currentPeerStream() } },
+            observeStats: { store.resubscribingStream { $0.localAgentStats.statsStream() } },
+            observeFeatures: { store.resubscribingStream { $0.localAgentFeatures.agentFeaturesStream() } },
+            observeError: { store.resubscribingStream { $0.localAgentError.stream() } },
             attachRegion: { store.attach($0) },
             zeroAll: {
                 guard let channels = store.channels else { return }

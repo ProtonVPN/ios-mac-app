@@ -20,7 +20,7 @@ import Domain
 
 public enum LocalAgent {
     /// Used for guessing which user-changed setting resulted in a policy violation error server-side.
-    public enum SettingType: Codable {
+    public enum SettingType: Codable, Equatable, Sendable {
         case netshieldLevel
         case bouncing
         case portForwarding

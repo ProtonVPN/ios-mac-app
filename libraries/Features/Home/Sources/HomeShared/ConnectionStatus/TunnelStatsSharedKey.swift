@@ -32,8 +32,15 @@ extension SharedReaderKey where Self == RawChannelKey<NetShieldModel?> {
             },
             updates: {
                 @Dependency(\.rawChannels) var rawChannels
-                guard let channel = rawChannels.localAgentStats() else { return .finished }
-                return channel.stream { $0.localAgentStats.toNetShieldModel as NetShieldModel? }
+                let stats = rawChannels.observeStats()
+                return AsyncStream { continuation in
+                    let task = Task {
+                        for await value in stats {
+                            continuation.yield(value?.toNetShieldModel)
+                        }
+                    }
+                    continuation.onTermination = { _ in task.cancel() }
+                }
             }
         )
     }

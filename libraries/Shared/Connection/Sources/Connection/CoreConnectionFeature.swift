@@ -83,8 +83,8 @@ public struct CoreConnectionFeature: Sendable {
         public enum Delegate: Sendable {
             case error(ConnectionError)
             case stateChanged(TunnelState)
-            /// A feature change failed with an error.
-            case featureChangeFailed(reason: String)
+            /// The extension reported an error over the tunnel-data error channel.
+            case errorReported(LocalAgent.ReportedError)
         }
     }
 
@@ -114,7 +114,9 @@ public struct CoreConnectionFeature: Sendable {
                 @Dependency(\.rawChannels) var rawChannels
                 return .merge(
                     .send(.tunnel(.startObserving)),
-                    .observe(rawChannels.localAgentError()) { .errorReceived($0) }
+                    // The extension's error channel, surfaced as `.errorReceived` actions for the reducer to handle.
+                    // `observeError` re-subscribes if the region re-attaches, and therefore also works on macOS.
+                    .observe(rawChannels.observeError()) { .errorReceived($0) }
                         .cancellable(id: CancelID.connectionErrors)
                 )
 
@@ -126,23 +128,15 @@ public struct CoreConnectionFeature: Sendable {
                 )
 
             case let .errorReceived(payload):
-                guard payload.hasError else { return .none }
-                let localAgentError = payload.localAgentError
-                if case .certificateRefreshFatalError? = localAgentError {
+                guard let error = payload.reportedError else { return .none }
+                // A fatal certificate-refresh error tears the tunnel down; every other reported error is surfaced
+                // generically to the parent, which decides whether and how to present it.
+                if case .localAgent(.certificateRefreshFatalError) = error {
                     log.error("Local Agent fatal certificate refresh error (error channel)", category: .connection)
                     return .send(.disconnect(.connectionFailure(.tunnel(.tunnelAborted))))
                 }
-                let reason = if case let .localAgentSettingPolicyRefused(setting)? = localAgentError {
-                    "Local Agent refused setting: \(setting)"
-                } else {
-                    "\(payload.errorDomain) (code \(payload.code))"
-                }
-                log.warning(
-                    "Connection error received",
-                    category: .connection,
-                    metadata: ["reason": "\(reason)"]
-                )
-                return .send(.delegate(.featureChangeFailed(reason: reason)))
+                log.warning("Extension reported error", category: .connection, metadata: ["error": "\(error)"])
+                return .send(.delegate(.errorReported(error)))
 
             case let .connect(intent):
                 if state.tunnel.canUpdateConfiguration {
@@ -349,8 +343,8 @@ extension CoreConnectionFeature.Action.Delegate: CustomDebugStringConvertible {
             ".error(\(connectionError))"
         case let .stateChanged(newState):
             ".stateChanged(\(newState))"
-        case let .featureChangeFailed(reason):
-            ".featureChangeFailed(\(reason))"
+        case let .errorReported(error):
+            ".errorReported(\(error))"
         }
     }
 }

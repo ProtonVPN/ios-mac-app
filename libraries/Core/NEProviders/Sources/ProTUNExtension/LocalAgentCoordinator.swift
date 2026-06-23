@@ -120,7 +120,7 @@ private extension LocalAgentCoordinator {
                     userIP: agent?.userIspIp
                 )
                 rawChannels.connectionData()?.mutate { $0 = IPCConnectionDataPayload(currentPeer) }
-                Logger.localAgent.info("Published peer to connectionData channel (connected): id=\(peer.peerId, privacy: .public) transport=\(String(describing: currentPeer.transport), privacy: .public) exitV4=\(currentPeer.serverExitV4 ?? "nil", privacy: .public)")
+                Logger.localAgent.debug("Published connected peer to connectionData channel (transport \(String(describing: currentPeer.transport), privacy: .public))")
 
                 if let agent {
                     // Publish changes to the app, and persist actual settings to disk in case we crash
@@ -136,7 +136,7 @@ private extension LocalAgentCoordinator {
                     userIP: nil
                 )
                 rawChannels.connectionData()?.mutate { $0 = IPCConnectionDataPayload(currentPeer) }
-                Logger.localAgent.info("Published peer to connectionData channel (connectingToLocalAgent): id=\(peer.peerId, privacy: .public) transport=\(String(describing: currentPeer.transport), privacy: .public)")
+                Logger.localAgent.debug("Published connecting peer to connectionData channel (transport \(String(describing: currentPeer.transport), privacy: .public))")
             default:
                 break
             }

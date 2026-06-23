@@ -113,7 +113,7 @@ struct ConnectionStatusView: View {
                             .padding(.horizontal, 8)
                             .padding(.vertical, 4)
                     } else if case .protected = store.protectionState {
-                        NetShieldStatsView() // TODO: update netshield stats from @SharedReader(.tunnelStats)
+                        NetShieldStatsView(viewModel: store.netShield)
                     }
                 }
                 .background(

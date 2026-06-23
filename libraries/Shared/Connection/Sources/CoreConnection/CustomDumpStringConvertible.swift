@@ -31,6 +31,6 @@ extension Domain.Server: @retroactive CustomDumpStringConvertible {
 
 extension Domain.AgentTunnelFeatures: @retroactive CustomDumpStringConvertible {
     public var customDumpDescription: String {
-        "AgentTunnelFeatures(netShield: \(netshield), vpnAccelerator: \(vpnAccelerator), natType: \(natType))"
+        "AgentTunnelFeatures(netShield: \(netshield), vpnAccelerator: \(vpnAccelerator), natType: \(natType), portForwarding: \(String(describing: portForwarding)))"
     }
 }

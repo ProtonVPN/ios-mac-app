@@ -55,14 +55,12 @@ public struct RawChannelKey<Value: Sendable>: SharedReaderKey {
 }
 
 public extension Effect {
-    /// Streams a raw channel's payloads into the reducer as actions.
-    static func observe<Payload: BitwiseCopyable & Sendable>(
-        _ channel: IPCNotifications.RawChannel<Payload>?,
+    static func observe<Payload>(
+        _ stream: AsyncStream<Payload>,
         action: @escaping @Sendable (Payload) -> Action
     ) -> Self {
-        guard let channel else { return .none }
-        return .run { send in
-            for await payload in channel.stream() {
+        .run { send in
+            for await payload in stream {
                 await send(action(payload))
             }
         }

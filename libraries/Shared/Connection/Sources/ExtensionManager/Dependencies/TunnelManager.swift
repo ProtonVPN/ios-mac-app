@@ -170,6 +170,10 @@ final class PacketTunnelManager: TunnelManager {
 
         log.debug("Starting tunnel with bundle identifier: \(optional: manager.providerBundleIdentifier)", category: .connection)
         try Task.checkCancellation()
+        #if os(macOS)
+            // Eagerly (re)attach the tunnel-data IOSurface for this connection, replacing any previous mapping.
+            tunnelDataXPCClient.reattachRegion()
+        #endif
         try manager.session.startTunnel()
     }
 
@@ -225,9 +229,8 @@ final class PacketTunnelManager: TunnelManager {
                     configuration: configuration
                 )
             } catch {
-                print(error)
-                // TODO: John: this should use ProtonVPNError + FourCharCode
-                throw NSError(domain: "failed to fetch status", code: 2334)
+                log.error("Failed to resolve tunnel status", category: .connection, metadata: ["error": "\(error)"])
+                throw TunnelManagerError.statusResolutionFailed(error)
             }
         }
     }
@@ -257,8 +260,7 @@ final class PacketTunnelManager: TunnelManager {
             }
             let connectionDataTask = Task {
                 @Dependency(\.rawChannels) var rawChannels
-                for await _ in rawChannels.connectionData()?.currentPeerStream() ?? .finished {
-                    // Updates to the connection data over the `RawChannel`.
+                for await _ in rawChannels.observePeer() {
                     guard let state = try? await self.status else { continue }
                     continuation.yield(state)
                 }
@@ -468,6 +470,30 @@ enum TunnelManagerError: Error {
     case malformedConfiguration
     case noManagerFound
     case missingConfiguration
+    case statusResolutionFailed(Error)
+}
+
+extension TunnelManagerError: ProtonVPNError {
+    static let errorDomain = "TunnelManagerErrorDomain"
+
+    var charCode: FourCharCode {
+        switch self {
+        case .ipc: "TMIP"
+        case .protunIPC: "TMPI"
+        case .malformedConfiguration: "TMMC"
+        case .noManagerFound: "TMNM"
+        case .missingConfiguration: "TMMG"
+        case .statusResolutionFailed: "TMSR"
+        }
+    }
+
+    var underlyingError: Error? {
+        switch self {
+        case let .ipc(_, error): error
+        case let .statusResolutionFailed(error): error
+        case .protunIPC, .malformedConfiguration, .noManagerFound, .missingConfiguration: nil
+        }
+    }
 }
 
 extension DependencyValues {

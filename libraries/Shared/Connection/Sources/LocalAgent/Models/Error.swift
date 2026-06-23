@@ -24,9 +24,16 @@ public extension LocalAgent {
         case localAgentSettingPolicyRefused(SettingType)
         case certificateRefreshFatalError
     }
+
+    /// A connection error reported by the extension over the tunnel-data error channel. Typed when the payload is from
+    /// the Local Agent domain we recognize, otherwise carried generically as `(domain, code)`.
+    enum ReportedError: Swift.Error, Equatable, Sendable {
+        case localAgent(LocalAgent.Error)
+        case other(domain: String, code: UInt32)
+    }
 }
 
-extension LocalAgent.Error: Codable {}
+extension LocalAgent.Error: Codable, Equatable, Sendable {}
 
 extension LocalAgent.Error: ProtonVPNError {
     public static let errorDomain = "LocalAgentErrorDomain"

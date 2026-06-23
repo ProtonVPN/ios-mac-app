@@ -51,7 +51,13 @@
                     return
                 }
                 rawChannels.attachRegion(IPCNotifications.SharedRegion(ioSurface: surface as IOSurfaceRef))
+                log("Attached tunnel-data IOSurface region from extension")
             }
+        }
+
+        public func reattachRegion() {
+            invalidate()
+            attachRegion()
         }
 
         // MARK: - Private

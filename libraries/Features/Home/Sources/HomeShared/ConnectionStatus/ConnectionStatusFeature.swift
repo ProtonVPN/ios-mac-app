@@ -35,6 +35,8 @@ public struct ConnectionStatusFeature {
         @SharedReader(.userCountry) package var userCountry: String?
         @SharedReader(.userIP) package var userIP: String?
         @SharedReader(.connectionState) package var connectionState: ConnectionState
+        /// Live NetShield stats from the tunnel-data channel; `nil` until the extension publishes them.
+        @SharedReader(.tunnelStats) package var netShield: NetShieldModel?
 
         package var connectionStatusBanner: ConnectionStatusBannerFeature.State = .init()
 

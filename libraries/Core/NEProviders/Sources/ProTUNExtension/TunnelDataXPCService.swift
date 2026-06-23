@@ -24,27 +24,34 @@
     import IPCErgonomics
     import LocalAgent
     import LocalAgentIPC
+    import os
     import XPCAuditToken
 
     /// Used on macOS to establish a shared memory region between the System Extension and the the app/other extensions
     ///
-    /// The sysex runs as root, so it can't share the app group container. Consumers of ``RawChannel``s need to check
-    /// in with the mach service on macOS to gain access to channel memory.
-    public final class TunnelDataXPCService: NSObject, @unchecked Sendable {
+    /// A system extension can't share an app-group container with the app, so instead of a file `mmap`, the extension
+    /// allocates an `IOSurface`, backs the ``RawChannels`` with it, and hands that to client apps + extensions instead
+    public final class TunnelDataXPCService: Sendable {
+        /// All mutable, non-``Sendable`` state, accessed only behind the lock.
+        private struct State {
+            var surface: IOSurfaceRef?
+            var listener: NSXPCListener?
+            /// A newly-accepted connection invalidates the previous one. (TODO: widget/shortcut support on macOS)
+            var currentConnection: NSXPCConnection?
+            /// Keep a reference to the listener delegate here, since `NSXPCListener.delegate` is `weak`.
+            var listenerDelegate: Listener?
+        }
+
         private let machServiceName: String
-        private let log: (String) -> Void
+        fileprivate let log: @Sendable (String) -> Void
+        private let state = OSAllocatedUnfairLock<State>(uncheckedState: State())
 
-        /// The backing memory for all ``RawChannel``s published by this extension.
-        private let surface: IOSurfaceRef?
-
-        private var listener: NSXPCListener?
-        private var currentConnection: NSXPCConnection?
-
-        public init(machServiceName: String, log: @escaping (String) -> Void = { _ in }) {
+        public init(machServiceName: String, log: @escaping @Sendable (String) -> Void = { _ in }) {
             self.machServiceName = machServiceName
             self.log = log
-            self.surface = IPCNotifications.SharedRegion.makeIOSurface(size: MemoryLayout<IPCTunnelData>.size)
-            super.init()
+
+            let surface = IPCNotifications.SharedRegion.makeIOSurface(size: MemoryLayout<IPCTunnelData>.size)
+            state.withLockUnchecked { $0.surface = surface }
 
             // Immediately attach the raw channel region on startup.
             if let surface {
@@ -57,62 +64,99 @@
 
         public func startListener() {
             log("Starting tunnel-data XPC listener for mach service \(machServiceName)")
+            let delegate = Listener(service: self)
             let listener = NSXPCListener(machServiceName: machServiceName)
-            listener.delegate = self
+            listener.delegate = delegate
             listener.resume()
-            self.listener = listener
+            state.withLockUnchecked {
+                $0.listener = listener
+                $0.listenerDelegate = delegate
+            }
+        }
+
+        fileprivate var currentSurface: IOSurfaceRef? {
+            state.withLockUnchecked { $0.surface }
+        }
+
+        /// Adopts `connection` as the current client, invalidating any previous ones.
+        fileprivate func adopt(_ connection: NSXPCConnection) {
+            let previous = state.withLockUnchecked { state -> NSXPCConnection? in
+                let previous = state.currentConnection
+                state.currentConnection = connection
+                return previous
+            }
+            previous?.invalidate()
+        }
+
+        /// Called from the invalidation/interruption handler, so a late teardown of an old connection can't
+        /// clobber a newer one.
+        fileprivate func release(_ connection: NSXPCConnection) {
+            state.withLockUnchecked { state in
+                if state.currentConnection === connection {
+                    state.currentConnection = nil
+                }
+            }
         }
     }
 
-    extension TunnelDataXPCService: TunnelDataXPCProtocol {
-        public func fetchTunnelDataSurface(_ reply: @escaping (IOSurface?) -> Void) {
-            reply(surface as IOSurface?)
-        }
-    }
+    private extension TunnelDataXPCService {
+        /// The bridge to ObjC that lets us use delegates + the `exportedObject` property while still conforming to ``Sendable``.
+        final class Listener: NSObject, NSXPCListenerDelegate, TunnelDataXPCProtocol {
+            private unowned let service: TunnelDataXPCService
 
-    extension TunnelDataXPCService: NSXPCListenerDelegate {
-        public func listener(_: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
-            // Check the audit trailer so that we only accept connections from binaries with the same cert chain as us.
-            let pid = newConnection.processIdentifier
-            do {
-                let matches = try CodeSignatureComparator.codeSignatureMatches(auditToken: newConnection.auditToken)
-                #if DEBUG
-                    // Poke a hole for local development.
-                    if !matches {
-                        log("Code signature of pid \(pid) does not match. Proceeding anyway for debug.")
-                    }
-                #else
-                    guard matches else {
-                        log("Refusing XPC connection with pid \(pid): code signature does not match")
-                        return false
-                    }
-                #endif
-            } catch {
-                log("Code signing error while verifying pid \(pid): \(String(describing: error))")
-                #if !DEBUG
-                    return false
-                #endif
+            init(service: TunnelDataXPCService) {
+                self.service = service
             }
 
-            let interface = NSXPCInterface(with: TunnelDataXPCProtocol.self)
+            func fetchTunnelDataSurface(_ reply: @escaping (IOSurface?) -> Void) {
+                reply(service.currentSurface as IOSurface?)
+            }
 
-            // Whitelist `IOSurface` as a reply argument for NSXPC.
-            interface.setClasses(
-                Set<AnyHashable>([IOSurface.self as AnyHashable]),
-                for: #selector(TunnelDataXPCProtocol.fetchTunnelDataSurface(_:)),
-                argumentIndex: 0,
-                ofReply: true
-            )
+            func listener(_: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
+                // Audit-trailer check: only accept clients that are signed with the same identity as us.
+                let pid = newConnection.processIdentifier
+                do {
+                    let matches = try CodeSignatureComparator.codeSignatureMatches(auditToken: newConnection.auditToken)
+                    #if DEBUG
+                        if !matches {
+                            service.log("Code signature of pid \(pid) does not match. Proceeding anyway (debug build).")
+                        }
+                    #else
+                        guard matches else {
+                            service.log("Refusing XPC connection with pid \(pid): code signature does not match")
+                            return false
+                        }
+                    #endif
+                } catch {
+                    service.log("Code signing error while verifying pid \(pid): \(String(describing: error))")
+                    #if !DEBUG
+                        return false
+                    #endif
+                }
 
-            newConnection.exportedInterface = interface
-            newConnection.exportedObject = self
-            newConnection.invalidationHandler = { [weak self] in self?.currentConnection = nil }
-            newConnection.interruptionHandler = { [weak self] in self?.currentConnection = nil }
+                let interface = NSXPCInterface(with: TunnelDataXPCProtocol.self)
+                // `IOSurface` is `NSSecureCoding`, but NSXPC still needs it explicitly whitelisted for the reply argument.
+                interface.setClasses(
+                    NSSet(array: [IOSurface.self]) as! Set<AnyHashable>,
+                    for: #selector(TunnelDataXPCProtocol.fetchTunnelDataSurface(_:)),
+                    argumentIndex: 0,
+                    ofReply: true
+                )
+                newConnection.exportedInterface = interface
+                newConnection.exportedObject = self
+                newConnection.invalidationHandler = { [weak self, weak newConnection] in
+                    guard let newConnection else { return }
+                    self?.service.release(newConnection)
+                }
+                newConnection.interruptionHandler = { [weak self, weak newConnection] in
+                    guard let newConnection else { return }
+                    self?.service.release(newConnection)
+                }
 
-            currentConnection?.invalidate()
-            currentConnection = newConnection
-            newConnection.resume()
-            return true
+                service.adopt(newConnection)
+                newConnection.resume()
+                return true
+            }
         }
     }
 #endif

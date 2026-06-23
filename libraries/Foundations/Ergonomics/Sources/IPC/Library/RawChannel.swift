@@ -146,15 +146,20 @@ public extension IPCNotifications.RawChannel {
 public extension IPCNotifications.RawChannel {
     struct SeqlockContention: Swift.Error {}
 
+    /// Default number of seqlock read attempts before giving up.
+    static var defaultReadRetries: Int {
+        20
+    }
+
     /// Reads a consistent snapshot.
     /// - Parameter retries: the amount of retries if seqlock doesn't match.
     /// - Returns: A `Payload` value, or throws if it wasn't able to extract a value from the buffer.
-    func read(retries: Int = 20) throws -> Payload {
+    func read(retries: Int = defaultReadRetries) throws -> Payload {
         try readField(at: payloadBaseOffset, of: Payload.self, retries: retries)
     }
 
     /// Reads a value at an absolute offset within the shared buffer, under that channel's seqlock.
-    private func readField<T>(at offset: Int, of _: T.Type, retries: Int = 20) throws -> T {
+    private func readField<T>(at offset: Int, of _: T.Type, retries: Int = defaultReadRetries) throws -> T {
         try region.withUnsafeMutableBytes { full in
             let base = full.advanced(by: regionOffset)
             for _ in 0 ..< retries {

@@ -50,7 +50,8 @@ public struct ExtensionFeature: Sendable {
         case startObserving
         case stopObserving
         case updateConfiguration(ServerConnectionIntent)
-        case applyConnectionUpdate(ConnectionUpdate)
+        /// Requests that the extension apply a partial configuration/feature change to the running tunnel.
+        case requestConfigChange(ConnectionUpdate)
         case connect(ServerConnectionIntent)
         case tunnelStartRequestFinished(Result<Bool, Error>)
         /// The internal state of the network extension has changed
@@ -112,7 +113,7 @@ public struct ExtensionFeature: Sendable {
                     await send(.delegate(.reconfigurationFailed(error)))
                 }
 
-            case let .applyConnectionUpdate(update):
+            case let .requestConfigChange(update):
                 return .run { _ in
                     _ = try await tunnelManager.sendProTUN(request: .init(payload: .updateConfiguration(update)))
                 } catch: { error, send in
@@ -265,8 +266,8 @@ extension ExtensionFeature.Action: CustomDebugStringConvertible {
             ".cleanup"
         case let .updateConfiguration(serverConnectionIntent):
             ".updateConfiguration(\(serverConnectionIntent))"
-        case let .applyConnectionUpdate(update):
-            ".applyConnectionUpdate(\(update))"
+        case let .requestConfigChange(update):
+            ".requestConfigChange(\(update))"
         case let .delegate(action):
             ".delegate(\(action)"
         }

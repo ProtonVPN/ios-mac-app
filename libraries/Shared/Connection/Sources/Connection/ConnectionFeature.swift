@@ -84,7 +84,8 @@ public struct ConnectionFeature: Sendable {
             case connectionFailed(ConnectionError)
             case intentResolutionFailed(ConnectionPreparationIntent, with: ConnectionIntentResolutionError)
             case localAgentNotice(LocalAgentTwoFactorAuthenticationError)
-            case settingChangeFailed(reason: String)
+            /// The extension reported an error (e.g. a requested setting was policy-refused, or a config update failed).
+            case errorReported(LocalAgent.ReportedError)
         }
     }
 
@@ -123,7 +124,7 @@ public struct ConnectionFeature: Sendable {
             case let .input(.applySettings(agentFeatures)):
                 // Input goes directly to the tunnel IPC which requests the new features.
                 log.info("applySettings", category: .connection, metadata: ["features": "\(agentFeatures)"])
-                return .send(.core(.tunnel(.applyConnectionUpdate(ConnectionUpdate(agentFeatures: agentFeatures)))))
+                return .send(.core(.tunnel(.requestConfigChange(ConnectionUpdate(agentFeatures: agentFeatures)))))
 
             case .input(.disconnect):
                 return .merge(
@@ -177,9 +178,9 @@ public struct ConnectionFeature: Sendable {
             case let .core(.delegate(.error(connectionError))):
                 return .send(.delegate(.connectionFailed(connectionError)))
 
-            case let .core(.delegate(.featureChangeFailed(reason))):
-                log.warning("Settings change failed/refused", category: .connection, metadata: ["reason": "\(reason)"])
-                return .send(.delegate(.settingChangeFailed(reason: reason)))
+            case let .core(.delegate(.errorReported(error))):
+                log.warning("Extension reported error", category: .connection, metadata: ["error": "\(error)"])
+                return .send(.delegate(.errorReported(error)))
 
             case .core:
                 return .none
@@ -297,8 +298,8 @@ extension ConnectionFeature.Action.Delegate: CustomDebugStringConvertible {
             ".intentResolutionFailed(\(intent), \(resolutionError))"
         case let .localAgentNotice(error):
             ".localAgentNotice(\(error.errorCodeString))"
-        case let .settingChangeFailed(reason):
-            ".settingChangeFailed(\(reason))"
+        case let .errorReported(error):
+            ".errorReported(\(error))"
         }
     }
 }
