@@ -555,10 +555,10 @@
 "_view_toggle_will_cause_disconnect" = "Hvis du skifter til Secure Core, afsluttes din nuværende forbindelse.";
 
 /* Body of the Secure Core toggle warning/discourage notice when turning SC on and a Secure Core server exists in the currently-connected country */
-"_view_toggle_on_reconnect_same_country" = "Turning on Secure Core will end your current connection and try to reconnect to the same country.";
+"_view_toggle_on_reconnect_same_country" = "Ved at aktivere Secure Core afsluttes din nuværende forbindelse og derefter forsøges der at genoprette forbindelsen til det samme land.";
 
 /* Body of the Secure Core toggle warning/discourage notice when turning SC on and no Secure Core server exists in the currently-connected country (fallback). %@ is the localized country name. */
-"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core isn't available in %@. Your VPN will reconnect through the fastest available Secure Core server.";
+"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core er ikke tilgængeligt i %@. Din VPN forbindes igennem den hurtigste tilgængelige Secure Core server.";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Serverbelastning:";
@@ -1932,18 +1932,6 @@
 /* Section title in Settings */
 "_advanced" = "Avanceret";
 
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "Ikke-standard porte";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "Brug Proton VPN til ethvert særligt behov ved at tillade trafik til ikke-standardporte gennem VPN-netværket. \nFå mere at vide";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "Få mere at vide";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "Aktivér ikke-standard porte";
-
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Proton VPN-webstedet kan være midlertidigt utilgængeligt på grund af netværksrestriktioner. Brug mobilappen til at oprette en ny Proton-konto.";
 
@@ -2015,7 +2003,7 @@
 "_connection_card_default_connection" = "Standardforbindelse";
 
 /* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
-"_connection_card_safely_browsing_from" = "Browser sikkert fra";
+"_connection_card_safely_browsing_from" = "Surfer sikkert fra";
 
 /* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
 "_connection_card_last_connected_to" = "Sidst forbundet til";
@@ -2501,12 +2489,6 @@
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Når du opgraderer til Plus";
-
-/* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Har du avancerede eller professionelle computerbehov, der kræver ikke-standard porte?\n\nOpgradér til VPN Plus for at få adgang til dette og andre premium-funktioner.";
-
-/* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "Tillad trafik til ikke-standardporte";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "Gør din spiloplevelse bedre";

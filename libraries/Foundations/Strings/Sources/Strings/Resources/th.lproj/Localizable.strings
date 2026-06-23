@@ -1932,18 +1932,6 @@
 /* Section title in Settings */
 "_advanced" = "ขั้นสูง";
 
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "พอร์ตที่ไม่ใช่มาตรฐาน";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "ใช้ Proton VPN สำหรับความต้องการพิเศษใดๆ โดยอนุญาตให้มีการรับส่งข้อมูลไปยังพอร์ตที่ไม่ได้มาตรฐานผ่านเครือข่าย VPN \nเรียนรู้เพิ่มเติม";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "เรียนรู้เพิ่มเติม";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "เปิดใช้งานพอร์ตที่ไม่ใช่มาตรฐาน";
-
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "เว็บไซต์ Proton VPN อาจไม่สามารถเข้าถึงได้ชั่วคราวเนื่องจากข้อจำกัดของเครือข่าย โปรดใช้แอปมือถือเพื่อสร้างบัญชี Proton ใหม่";
 
@@ -2501,12 +2489,6 @@
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "เมื่อคุณอัปเกรดเป็น Plus";
-
-/* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "มีความต้องการด้านคอมพิวเตอร์ขั้นสูงหรือระดับมืออาชีพที่ต้องใช้พอร์ตที่ไม่ได้มาตรฐานหรือไม่\n\nอัปเกรดเป็น VPN Plus เพื่อเข้าถึงคุณสมบัตินี้และคุณสมบัติพรีเมียมอื่นๆ";
-
-/* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "อนุญาตทราฟฟิกไปยังพอร์ตที่ไม่ได้มาตรฐาน";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "ยกระดับประสบการณ์การเล่นเกมของคุณ";

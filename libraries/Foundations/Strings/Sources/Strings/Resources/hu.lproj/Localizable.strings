@@ -1932,18 +1932,6 @@
 /* Section title in Settings */
 "_advanced" = "Speciális";
 
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "Nem szabványos portok";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "Használja a Proton VPN-t bármilyen különleges igényhez oly módon, hogy engedélyezi a forgalmat nem szabványos portokba a VPN-en keresztül.\nTudjon meg többet";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "További információk";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "Nem szabványos portok engedélyezése";
-
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "A Proton VPN weboldal ideiglenesen elérhetetlen lehet hálózati korlátozások miatt. Kérjük, használja a mobil alkalmazást új Proton fiók létrehozására.";
 
@@ -2501,12 +2489,6 @@
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Amikor előfizet a Plus-ra";
-
-/* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Haladó vagy profi számítástechnikai szükségletei vannak, melyekhez nem szokványos portok szükségesek?\n\nFejlesszen a VPN Plus-ra, hogy hozzá tudjon férni ehhez és más prémium szolgáltatásokhoz.";
-
-/* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "Forgalom engedélyezése nem szabványos portokba";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "Növelje játékélményét";

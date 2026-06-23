@@ -1932,18 +1932,6 @@
 /* Section title in Settings */
 "_advanced" = "高度";
 
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "標準的ではないポート";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "標準以外のポートへの VPN ネットワーク経由のトラフィックを許可して、特殊な用途に Proton VPN を使用します。\n詳細";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "詳細";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "標準的ではないポートを有効にする";
-
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "ネットワークの制限により、一時的に Proton VPN のウェブサイトに到達できない場合があります。モバイルアプリを使用して、新しい Proton アカウントを作成してください。";
 
@@ -2501,12 +2489,6 @@
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Plusへのアップグレード";
-
-/* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "非標準なポートを使用する高度および専門的なコンピューティングを必要としていますか?\n\nVPN Plus にアップグレードしてこれを含めたプレミアムな機能を利用することができます。";
-
-/* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "標準的でないポートのトラフィックを許可";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "ゲーム体験のレベルアップ";

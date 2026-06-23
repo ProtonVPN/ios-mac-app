@@ -1140,6 +1140,12 @@
             "value" : "Se connecter à une région"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connetti alla regione"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1702,6 +1708,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Connecter le VPN"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connetti alla VPN"
           }
         },
         "ja" : {
@@ -2926,6 +2938,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Déconnecter le VPN"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disconnetti la VPN"
           }
         },
         "ja" : {
@@ -6509,7 +6527,7 @@
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ta namen omogoča povezavo z izbrano državo, mestom ali statistiko"
+            "value" : "Ta namen omogoča povezavo z izbrano državo, mestom ali državo"
           }
         },
         "sv" : {
@@ -6628,6 +6646,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "État du VPN"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stato della VPN"
           }
         },
         "ja" : {

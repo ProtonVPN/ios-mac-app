@@ -1932,18 +1932,6 @@
 /* Section title in Settings */
 "_advanced" = "高级";
 
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "非标准端口";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "允许非标准端口流量通过VPN网络可使Proton VPN满足各种特殊联网需求。\n了解详情";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "了解详情";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "启用非标准端口";
-
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "由于网络限制，Proton VPN 网站可能暂时无法访问。请使用移动应用程序创建新的 Proton 账户。";
 
@@ -2501,12 +2489,6 @@
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "只需开通 Plus";
-
-/* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "您需要非标准端口来进行高级或专业计算吗？\n\n升级至 Plus 版即可享受此功能和其他高级功能。";
-
-/* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "开放非标准端口";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "提升您的游戏体验";

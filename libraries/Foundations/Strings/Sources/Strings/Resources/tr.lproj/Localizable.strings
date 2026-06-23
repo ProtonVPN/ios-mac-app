@@ -1437,10 +1437,10 @@
 "_netshield_level1" = "Kötü amaçlı yazılımları engelleyin";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Kötü amaçlı yazılımları, reklamları ve etkinlik izleyicileri engelleyin";
+"_netshield_level2" = "Kötü amaçlı yazılımlar, reklamlar ve etkinlik izleyiciler engellensin";
 
 /* Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_netshield_level3" = "Reklamları, etkinlik izleyicileri, kötü amaçlı yazılımları ve yetişkin içeriklerini engelleyin";
+"_netshield_level3" = "Reklamlar, etkinlik izleyiciler, kötü amaçlı yazılımlar ve yetişkin içerikleri engellensin";
 
 "_netshield_alert_reconnect_description_on" = "NetShield kullanmak için bağlantınız yeniden başlatılacak.\nNot: Bazı siteler yüklenmezse, NetShield özelliğini kapatmayı deneyin.";
 
@@ -1518,10 +1518,10 @@
 "_quick_settings_netshield_option_level1" = "Yalnızca kötü amaçlı yazılımlar engellensin";
 
 /* Quick Settings -> Netshield: Block malware, ads, & trackers */
-"_quick_settings_netshield_option_level2" = "Kötü amaçlı yazılımları, reklamları ve etkinlik izleyicileri engelleyin";
+"_quick_settings_netshield_option_level2" = "Kötü amaçlı yazılımlar, reklamlar ve etkinlik izleyiciler engellensin";
 
 /* Quick Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_quick_settings_netshield_option_level3" = "Reklamları, etkinlik izleyicileri, kötü amaçlı yazılımları ve yetişkin içeriklerini engelleyin";
+"_quick_settings_netshield_option_level3" = "Reklamlar, etkinlik izleyiciler, kötü amaçlı yazılımlar ve yetişkin içerikleri engellensin";
 
 "_upgrade_required_securecore_description" = "Secure Core özelliği Plus tarifesi ile kullanılabilir. Trafiği gizliliğe saygı gösteren ülkelerdeki en güvenli sunucularımız üzerinden aktarmak için tarifenizi yükseltin.";
 
@@ -1931,18 +1931,6 @@
 
 /* Section title in Settings */
 "_advanced" = "Gelişmiş";
-
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "Standart olmayan bağlantı noktaları";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "VPN ağı üzerinden standart olmayan bağlantı noktalarından trafik akışına izin vererek herhangi bir özel gereksinim için Proton VPN kullanabilirsiniz. \nAyrıntılı bilgi alın";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "Ayrıntılı bilgi alın";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "Standart olmayan bağlantı noktaları kullanılsın";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Ağ kısıtlamaları nedeniyle Proton VPN sitesine geçici olarak erişlemeyebilir. Lütfen yeni bir Proton hesabı açmak için mobil uygulamayı kullanın.";
@@ -2501,12 +2489,6 @@
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Plus tarifesine yükselttiğinizde";
-
-/* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Standart olmayan bağlantı noktaları kullanmanızı gerektiren gelişmiş veya profesyonel bilgi işlem gereksinimleriniz mi var? \n\nBu ve diğer ücretli özelliklere erişmek için VPN Plus tarifesine yükseltin.";
-
-/* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "Standart olmayan bağlantı noktalarından trafik geçebilsin";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "Oyun deneyiminizi üst düzeye çıkarın";

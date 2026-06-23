@@ -923,10 +923,10 @@
 "_delete_application_data_popup_body" = "Vsi podatki Proton VPN bodo izbrisani in aplikacija se bo zaprla. Želite nadaljevati?";
 
 /* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Onemogoči stikalo za izklop";
+"_kill_switch_disable" = "Onemogoči odklopno stikalo";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
-"_kill_switch_enable" = "Omogoči stikalo za izklop";
+"_kill_switch_enable" = "Omogoči odklopno stikalo";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Nastavitve";
@@ -955,7 +955,7 @@
 "_manage_subscription_on_web" = "Upravljajte svojo naročnino na spletni nadzorni plošči";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Stikalo za izklop";
+"_kill_switch" = "Odklopno stikalo";
 
 /* Used in MacOS app for Kill switch button in quick settings to turn on */
 "_kill_switch_status_on" = "Kill switch On";
@@ -1079,12 +1079,12 @@
 
 "_allow_lan_info" = "Omogoči izogibanje VPN in se poveže z napravami v vašem lokalnem omrežju, kot je vaš tiskalnik.";
 
-"_allow_lan_description" = "Če želite omogočiti dostop do omrežja LAN, mora biti stikalo za izklop izklopljeno.\n\nNadaljujem?";
+"_allow_lan_description" = "Če želite omogočiti dostop do omrežja LAN, mora biti odklopno stikalo izklopljeno.\n\nNadaljujem?";
 
 "_allow_lan_note" = "Upoštevajte, da morate za uveljavitev te spremembe znova zagnati povezavo";
 
 /* Title of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
-"_turn_ks_on_title" = "Omogočiti stikalo za izklop?";
+"_turn_ks_on_title" = "Omogoči odklopno stikalo?";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
 "_turn_ks_on_description_macos_st_conflict" = "• To bo onemogočilo deljeno tuneliranje";
@@ -1099,7 +1099,7 @@
 "turn_split_tunneling_on_title" = "Omogočiti razdeljeno tuneliranje?";
 
 /* Description text of alert shown if user tries to enable split tunneling when KillSwitch is on */
-"turn_split_tunneling_on_description" = "To bo onemogočilo stikalo za izklop.";
+"turn_split_tunneling_on_description" = "To bo onemogočilo odklopno stikalo.";
 
 /* Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
 "split_tunneling_alert_title" = "Deljenega tuneliranja ni mogoče omogočiti";
@@ -1493,7 +1493,7 @@
 
 "_quick_settings_netShield_note" = "Če se spletna mesta ne naložijo, poskusite onemogočiti NetShield.";
 
-"_quick_settings_killSwitch_note" = "Če se ne morete povezati z napravami v lokalnem omrežju, poskusite onemogočiti stikalo za izklop.";
+"_quick_settings_killSwitch_note" = "Če se ne morete povezati z napravami v lokalnem omrežju, poskusite onemogočiti odklopno stikalo.";
 
 "_quick_settings_portForwarding_note" = "Vnesite številko aktivnih vrat v svojo aplikacijo BitTorrent, da izboljšate hitrosti P2P";
 
@@ -1526,16 +1526,16 @@
 "_upgrade_required_securecore_description" = "Secure Core je na voljo s paketom Plus. Nadgradite zdaj za usmerjanje prometa prek naših najvarnejših strežnikov v zasebno prijaznih državah.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection_header" = "Stikalo za izklop ščiti vaš IP";
+"_kill_switch_reconnection_header" = "Odklopno stikalo ščiti vaš IP";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Vaša internetna povezava se bo nadaljevala takoj, ko bo Proton VPN znova vzpostavil povezavo s strežnikom.\nČe želite uporabljati internet brez VPN in zaščite stikala za izklop prekličite ponovno povezavo s strežnikom.";
+"_kill_switch_reconnection" = "Vaša internetna povezava se bo nadaljevala takoj, ko bo Proton VPN znova vzpostavil povezavo s strežnikom.\nČe želite uporabljati internet brez VPN in zaščite odklopnega stikala, prekličite ponovno povezavo s strežnikom.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "brez";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold2" = "Zaščita stikala za izklop";
+"_kill_switch_reconnection_bold2" = "Zaščita odklopnega stikala";
 
 /* MacOS: connection screen - cancel button */
 "_kill_switch_reconnection_cancel" = "Prekliči ponovno povezavo";
@@ -1858,18 +1858,18 @@
 
 "login_fetch_vpn_data" = "Nastavite vaš dostop VPN";
 
-"login_summary_button" = "Začnite uporabljati ProtonVPN";
+"login_summary_button" = "Začnite uporabljati Proton VPN";
 
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
-"_wgks_ks_off" = "Onemogoči stikalo za izklop";
+"_wgks_ks_off" = "Onemogoči odklopno stikalo";
 
 /* NetworkExtension + KillSwitch on T2 Macs */
-"_neks_t2_title" = "Stikalo za izklop Opozorilo o stabilnosti";
+"_neks_t2_title" = "Opozorilo o stabilnosti odklopnega stikala";
 
 /* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "Varnostni čip T2";
 
-"_neks_t2_description" = "Uporaba stikala za izklop je v tej napravi nestabilna.\n\nVaša naprava ima varnostni čip T2, kar lahko povzroči težave s stabilnostjo sistema, če Proton VPN uporablja funkcijo stikala za izklop macOS.";
+"_neks_t2_description" = "Uporaba odklopnega stikala je v tej napravi nestabilna.\n\nVaša naprava ima varnostni čip T2, kar lahko povzroči težave s stabilnostjo sistema, če Proton VPN uporablja funkcijo odklopnega stikala macOS.";
 
 "_neks_t2_connect" = "Vseeno omogoči";
 
@@ -1931,18 +1931,6 @@
 
 /* Section title in Settings */
 "_advanced" = "Napredno";
-
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "Nestandardna vrata";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "Uporabite Proton VPN za kakršne koli posebne potrebe, tako da omogočite promet do nestandardnih vrat prek omrežja VPN. \nVeč o tem";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "Izvedi več";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "Omogoči nestandardna vrata";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Spletno mesto Proton VPN je morda začasno nedosegljivo zaradi omrežnih omejitev. Za ustvarjanje novega računa Proton uporabite mobilno aplikacijo.";
@@ -2266,7 +2254,7 @@
 "_settings_title_netshield" = "NetShield";
 
 /* Title of the KillSwitch cell in the Settings tab [Redesign_2023] */
-"_settings_title_kill_switch" = "Stikalo za izklop";
+"_settings_title_kill_switch" = "Odklopno stikalo";
 
 /* Title of the Protocol cell in the Settings tab [Redesign_2023] */
 "_settings_title_protocol" = "Protokol";
@@ -2284,7 +2272,7 @@
 "_settings_title_beta_access" = "Beta dostop";
 
 /* Title of the Widget cell in the Settings tab [Redesign_2023] */
-"_settings_title_widget" = "Pripomoček";
+"_settings_title_widget" = "Gradnik";
 
 /* Title of the Support Center cell in the Settings tab [Redesign_2023] */
 "_settings_title_support_center" = "Center za podporo";
@@ -2323,7 +2311,7 @@
 "_settings_killswitch_on" = "Vključeno";
 
 /* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
-"_settings_killswitch_off" = "Izklopljeno";
+"_settings_killswitch_off" = "Izključeno";
 
 /* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
 "_settings_theme_value_auto" = "Samodejno";
@@ -2395,7 +2383,7 @@
 "_bad_interface_ip_range_alert_title" = "Slab omrežni vmesnik";
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
-"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Vaše lokalno omrežje morda ni varno (vmesnik '%@' ima IP in predpono '%@'). Vaši podatki so lahko poslani nešifrirani prek lokalnega omrežja. Če omogočite stikalo za izklop, boste blokirali ta promet. Povezave z lokalnimi zunanjimi napravami bodo prekinjene.";
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Vaše lokalno omrežje morda ni varno (vmesnik '%@' ima IP in predpono '%@'). Vaši podatki so lahko poslani nešifrirani prek lokalnega omrežja. Če omogočite odklopno stikalo, boste blokirali ta promet. Povezave z lokalnimi zunanjimi napravami bodo prekinjene.";
 
 /* Section header with count */
 "cities_section_title" = "Mesta (%@)";
@@ -2501,12 +2489,6 @@
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Ko nadgradite na Plus";
-
-/* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Imate napredne ali profesionalne računalniške potrebe, ki zahtevajo nestandardna vrata?\n\n Nadgradite na VPN Plus za dostop do te in drugih premijskih funkcij.";
-
-/* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "Dovoli promet do nestandardnih vrat";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "Izboljšajte svojo igralno izkušnjo";
@@ -3007,7 +2989,7 @@
 "upsell_carousel_worldwide_title" = "Pokritost po vsem svetu";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_worldwide_subtitle" = "1700+ lokacij strežnikov v 63 državah";
+"upsell_carousel_worldwide_subtitle" = "Več kot 1.700 lokacij strežnikov v 63 državah";
 
 /* Home upsell carousel card title */
 "upsell_carousel_faster_browsing_title" = "Hitrejše brskanje";

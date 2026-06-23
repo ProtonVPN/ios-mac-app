@@ -1932,18 +1932,6 @@
 /* Section title in Settings */
 "_advanced" = "Geavanceerd";
 
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "Niet-standaard poorten";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "Gebruik Proton VPN voor elke speciale nood door verkeer naar niet-standaard poorten toe te laten via het VPN-netwerk. \nMeer leren";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "Meer informatie";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "Niet-standaard poorten inschakelen";
-
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "De Proton VPN website zou tijdelijk onbereikbaar kunnen zijn wegens netwerkbeperkingen. Gebruik de mobiele app om een nieuw Proton-account aan te maken.";
 
@@ -2501,12 +2489,6 @@
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Wanneer u upgrade naar Plus";
-
-/* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Heeft u geavanceerde professionele IT-noden die niet-standaard poorten vereisen?\n\nUpgrade naar VPN Plus om toegang te krijgen tot deze en meer premium functies.";
-
-/* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "Laat verkeer toe naar niet-standaard poorten";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "Verbeter uw game-ervaring";
