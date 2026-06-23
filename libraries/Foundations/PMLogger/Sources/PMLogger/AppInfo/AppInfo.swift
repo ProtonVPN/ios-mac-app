@@ -171,7 +171,10 @@ public extension AppInfo {
             context: { context },
             bundleInfoDictionary: { infoDict },
             clientInfoDictionary: { clientDict },
-            processName: { processInfo.processName },
+            processName: {
+                let processName = processInfo.processName
+                return processName.split(separator: ".").last.map { String($0) } ?? processName
+            },
             modelName: { modelName },
             osVersion: { processInfo.operatingSystemVersion },
             beta: beta
