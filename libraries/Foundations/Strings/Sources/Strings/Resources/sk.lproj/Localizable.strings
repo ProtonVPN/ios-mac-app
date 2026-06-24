@@ -555,10 +555,10 @@
 "_view_toggle_will_cause_disconnect" = "Zapnutím funkcie Secure Core ukončíte aktuálne pripojenie.";
 
 /* Body of the Secure Core toggle warning/discourage notice when turning SC on and a Secure Core server exists in the currently-connected country */
-"_view_toggle_on_reconnect_same_country" = "Turning on Secure Core will end your current connection and try to reconnect to the same country.";
+"_view_toggle_on_reconnect_same_country" = "Zapnutím funkcie Secure Core sa ukončí vaše aktuálne pripojenie a systém sa pokúsi znovu pripojiť v tej istej krajine.";
 
 /* Body of the Secure Core toggle warning/discourage notice when turning SC on and no Secure Core server exists in the currently-connected country (fallback). %@ is the localized country name. */
-"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core isn't available in %@. Your VPN will reconnect through the fastest available Secure Core server.";
+"_view_toggle_on_reconnect_fastest_fallback" = "Funkcia Secure Core nie je v %@ k dispozícii. Vaša VPN sa opäť pripojí cez najrýchlejší dostupný Secure Core server.";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Vyťaženie servera:";
@@ -1932,18 +1932,6 @@
 /* Section title in Settings */
 "_advanced" = "Pokročilé";
 
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "Neštandardné porty";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "Použite Proton VPN pre akúkoľvek špeciálnu potrebu povolením prevádzky na neštandardné porty cez sieť VPN.\nViac informácií";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "Zistiť viac";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "Povoliť neštandardné porty";
-
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Webová stránka Proton VPN môže byť dočasne nedostupná z dôvodu sieťových obmedzení. Na vytvorenie nového konta Proton použite mobilnú aplikáciu.";
 
@@ -2501,12 +2489,6 @@
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Po navýšení na tarif Plus";
-
-/* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Máte pokročilé alebo profesionálne počítačové potreby, ktoré si vyžadujú neštandardné porty?\n\nUpgradom na VPN Plus získate prístup k týmto a ďalším prémiovým funkciám.";
-
-/* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "Povolenie prenosu cez neštandardné porty";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "Zvýšte úroveň svojich herných zážitkov";

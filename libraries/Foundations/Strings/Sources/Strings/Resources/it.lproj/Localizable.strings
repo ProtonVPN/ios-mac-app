@@ -251,7 +251,7 @@
 "_not_connected" = "Non connesso";
 
 /* macOS overlay when reconnecting & text in main window */
-"_you_are_not_protected" = "You are not protected";
+"_you_are_not_protected" = "Non sei protetto";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Riprova";
@@ -555,10 +555,10 @@
 "_view_toggle_will_cause_disconnect" = "Alternare Secure Core terminerà la connessione attuale.";
 
 /* Body of the Secure Core toggle warning/discourage notice when turning SC on and a Secure Core server exists in the currently-connected country */
-"_view_toggle_on_reconnect_same_country" = "Turning on Secure Core will end your current connection and try to reconnect to the same country.";
+"_view_toggle_on_reconnect_same_country" = "Attivando Secure Core, la connessione corrente verrà interrotta e verrà tentata una nuova connessione allo stesso Paese.";
 
 /* Body of the Secure Core toggle warning/discourage notice when turning SC on and no Secure Core server exists in the currently-connected country (fallback). %@ is the localized country name. */
-"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core isn't available in %@. Your VPN will reconnect through the fastest available Secure Core server.";
+"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core non è disponibile in %@. La tua VPN si riconnetterà tramite il server Secure Core più veloce disponibile.";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Carico del server:";
@@ -1168,16 +1168,16 @@
 "_plans_footer" = "Dopo aver confermato l'acquisto di un piano a pagamento, al tuo account iTunes verrà addebitato l'importo visualizzato, che include le tasse e le tasse aggiuntive della piattaforma (che non vengono addebitate direttamente da Proton). Dopo aver effettuato l'acquisto, si sarà aggiornati automaticamente al piano selezionato per un periodo di 1 anno dopo di che puoi rinnovare o annullare, online o tramite la nostra app iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year" = " / year";
+"_per_year" = " / anno";
 
 /* Per month. Appended to plan price. */
-"_per_month" = " / month";
+"_per_month" = " / mese";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Solo Web";
 
 /* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
-"_introductory_price_footer" = "Welcome offer. Auto-renews on %1$@ at %2$@%3$@.";
+"_introductory_price_footer" = "Offerta di benvenuto. Rinnovo automatico il %1$@ a %2$@%3$@.";
 
 /* iOS plan feature */
 "_feature_server_count" = "Collegati ai server in";
@@ -1440,7 +1440,7 @@
 "_netshield_level2" = "Blocca malware, annunci e tracker";
 
 /* Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_netshield_level3" = "Block ads, trackers, malware, & adult content";
+"_netshield_level3" = "Blocca annunci pubblicitari, tracker, malware e contenuti per adulti";
 
 "_netshield_alert_reconnect_description_on" = "La tua connessione verrà riavviata per cambiare la modalità NetShield.\nNota: se alcuni siti non vengono caricati, prova a disabilitare NetShield.";
 
@@ -1484,7 +1484,7 @@
 
 "_quick_settings_netShield_description" = "Naviga in internet senza pubblicità e malware.";
 
-"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
+"_quick_settings_killSwitch_description" = "Disabilita la connessione internet in caso di interruzione della connessione VPN per prevenire la fuga accidentale dell'indirizzo IP. Il tuo indirizzo IP potrebbe essere brevemente visibile durante il cambio di server.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Migliora la velocità di torrenting e di gioco consentendo connessioni P2P dirette tramite una porta dedicata.";
@@ -1521,7 +1521,7 @@
 "_quick_settings_netshield_option_level2" = "Blocca malware, annunci e tracker";
 
 /* Quick Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_quick_settings_netshield_option_level3" = "Block ads, trackers, malware, & adult content";
+"_quick_settings_netshield_option_level3" = "Blocca annunci pubblicitari, tracker, malware e contenuti per adulti";
 
 "_upgrade_required_securecore_description" = "Secure Core è disponibile con un piano Plus. Effettua l'upgrade ora per instradare il traffico attraverso i nostri server più sicuri in paesi rispettosi della privacy.";
 
@@ -1725,7 +1725,7 @@
 
 "_performance_load_high" = "Alto";
 
-"_locations_all" = "All locations (%@)";
+"_locations_all" = "Tutte le località (%@)";
 
 "_locations_free" = "Località gratuite";
 
@@ -1931,18 +1931,6 @@
 
 /* Section title in Settings */
 "_advanced" = "Avanzate";
-
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "Porte non standard";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "Usa Proton VPN per qualsiasi esigenza speciale consentendo il traffico verso porte non standard attraverso la rete VPN. \nScopri di più";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "Scopri di più";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "Abilita porte non standard";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Il sito web di Proton VPN potrebbe essere temporaneamente irraggiungibile a causa di restrizioni di rete. Usa l'app mobile per creare un nuovo account Proton.";
@@ -2479,19 +2467,19 @@
 "_plus_servers" = "Server Plus";
 
 /* Section header in search (RTL/LTR) */
-"search_results_countries_count" = "Countries (%d)";
+"search_results_countries_count" = "Paesi (%d)";
 
 /* Section header in search (RTL/LTR) */
-"search_cities_count" = "Cities (%d)";
+"search_cities_count" = "Città (%d)";
 
 /* Section header in search (RTL/LTR) */
-"search_secure_core_countries_count" = "Secure Core countries (%d)";
+"search_secure_core_countries_count" = "Paesi Secure Core (%d)";
 
 /* Section header in search (RTL/LTR) */
-"_free_servers_count" = "Free Servers (%d)";
+"_free_servers_count" = "Server gratuiti (%d)";
 
 /* Section header in search (RTL/LTR) */
-"_plus_servers_count" = "Plus Servers (%d)";
+"_plus_servers_count" = "Server Plus (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Effettua l'upgrade";
@@ -2501,12 +2489,6 @@
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Quando effettui l'upgrade a Plus";
-
-/* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Hai esigenze di elaborazione avanzate o professionali che richiedono porte non standard?\n\nEffettua l'upgrade a VPN Plus per accedere a questa e ad altre funzionalità premium.";
-
-/* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "Consenti il ​​traffico verso porte non standard";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "Migliora la tua esperienza di gioco";
@@ -3289,7 +3271,7 @@
 "_payment_pending_error" = "L'acquisto è in sospeso e sarà disponibile una volta approvato.";
 
 /* There is no transaction log present */
-"_transaction_log_not_available_" = "Transaction log is not available";
+"_transaction_log_not_available_" = "Il registro delle transazioni non è disponibile";
 
 /* Transaction log entry in logs */
-"_transaction_log_" = "Transaction Log";
+"_transaction_log_" = "Registro delle transazioni";

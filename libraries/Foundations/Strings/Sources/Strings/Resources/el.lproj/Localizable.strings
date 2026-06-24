@@ -1932,18 +1932,6 @@
 /* Section title in Settings */
 "_advanced" = "Προχωρημένα";
 
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "Μη τυποποιημένες θύρες";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "Χρησιμοποιήστε το Proton VPN για κάθε ειδική περίπτωση επιτρέποντας τη ροή των δεδομένων από μη τυποποιημένες θύρες μέσω του δικτύου VPN.\nΜάθετε περισσότερα";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "Μάθετε περισσότερα";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "Ενεργοποίηση μη τυποποιημένων θυρών";
-
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Η ιστοσελίδα του Proton VPN ίσως είναι προσωρινά απρόσιτη, λόγω περιορισμών δικτύου. Για δημιουργία νέου λογαριασμού Proton, παρακαλούμε χρησιμοποιείστε την εφαρμογή κινητού.";
 
@@ -2501,12 +2489,6 @@
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Όταν γίνει αναβάθμισή στο πλάνο Plus";
-
-/* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Έχετε προχωρημένες ή επαγγελματικές υπολογιστικές ανάγκες που απαιτούν μη τυποποιημένες θύρες;\n\nΑναβαθμίστε σε VPN Plus για πρόσβαση σε αυτό και άλλα προνομιακά χαρακτηριστικά.";
-
-/* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "Άδεια διακίνησης σε μη τυποποιημένες θύρες";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "Αναβαθμίστε την εμπειρία παιχνιδιού σας";

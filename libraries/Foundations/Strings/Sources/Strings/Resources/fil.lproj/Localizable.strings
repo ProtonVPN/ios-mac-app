@@ -1932,18 +1932,6 @@
 /* Section title in Settings */
 "_advanced" = "Advanced";
 
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "Mga non-standard na port";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "Gamitin ang Proton VPN para sa anumang espesyal na pangangailangan sa pamamagitan ng pagpapahintulot sa traffic sa mga non-standard na port sa network ng VPN. \nMatuto pa.";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "Matuto pa";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "I-enable ang mga non-standard na port";
-
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Maaaring pansamantalang hindi maabot ang website ng Proton VPN dahil sa mga paghihigpit sa network. Pakigamit ang mobile app upang gumawa ng bagong Proton account.";
 
@@ -2501,12 +2489,6 @@
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Kapag nag-upgrade ka sa Plus";
-
-/* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "May advanced o propesyonal na pangangailangan sa computing na nangangailangan ng mga non-standard port?\n\nMag-upgrade sa VPN Plus para ma-access ito at ang iba pang mga premium na feature.";
-
-/* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "Payagan ang traffic sa mga non-standard port";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "I-level up ang iyong gaming experience";

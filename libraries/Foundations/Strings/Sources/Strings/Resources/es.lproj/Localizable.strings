@@ -555,10 +555,10 @@
 "_view_toggle_will_cause_disconnect" = "Si se activa Secure Core, se pondrá fin a su conexión actual.";
 
 /* Body of the Secure Core toggle warning/discourage notice when turning SC on and a Secure Core server exists in the currently-connected country */
-"_view_toggle_on_reconnect_same_country" = "Turning on Secure Core will end your current connection and try to reconnect to the same country.";
+"_view_toggle_on_reconnect_same_country" = "Al activar Secure Core, se cierra tu conexión actual y se intenta reconectar al mismo país.";
 
 /* Body of the Secure Core toggle warning/discourage notice when turning SC on and no Secure Core server exists in the currently-connected country (fallback). %@ is the localized country name. */
-"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core isn't available in %@. Your VPN will reconnect through the fastest available Secure Core server.";
+"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core no está disponible en %@. Tu VPN se reconecta a través del servidor de Secure Core más rápido disponible.";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Carga del servidor:";
@@ -1168,16 +1168,16 @@
 "_plans_footer" = "Al confirmar su compra de un plan pago, se le cobrará a su cuenta de iTunes la cantidad que se muestra, incluye impuestos y tarifas de plataforma adicionales (que Proton no cobra directamente). Después de realizar la compra, se lo actualizará automáticamente al plan seleccionado por un período de 1 año, después de este tiempo puede renovar o cancelar, ya sea en línea o a través de nuestra aplicación iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year" = " / year";
+"_per_year" = " / año";
 
 /* Per month. Appended to plan price. */
-"_per_month" = " / month";
+"_per_month" = " / mes";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Solo a través de la web";
 
 /* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
-"_introductory_price_footer" = "Welcome offer. Auto-renews on %1$@ at %2$@%3$@.";
+"_introductory_price_footer" = "Oferta de bienvenida. Se renueva automáticamente el %1$@ por %2$@%3$@.";
 
 /* iOS plan feature */
 "_feature_server_count" = "Conéctese a los servidores en";
@@ -1932,18 +1932,6 @@
 /* Section title in Settings */
 "_advanced" = "Avanzado";
 
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "Puertos no estándares";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "Utilice Proton VPN para cualquier necesidad especial permitiendo el tráfico a puertos no estándar a través de la red VPN. \nMás información";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "Más información";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "Activar puertos no estándar";
-
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "El sitio web de Proton VPN podría estar temporalmente inaccesible debido a restricciones de la red. Utilice la aplicación móvil para crear una nueva cuenta de Proton.";
 
@@ -2501,12 +2489,6 @@
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Cuando mejoras a Plus";
-
-/* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "¿Tiene necesidades informáticas avanzadas o profesionales que requieren puertos no estándar?\n\nActualiza a VPN Plus para acceder a esta y otras funciones premium.";
-
-/* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "Permitir el tráfico a puertos no estándar";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "Mejora tu experiencia de juego";

@@ -1932,18 +1932,6 @@
 /* Section title in Settings */
 "_advanced" = "Nâng cao";
 
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "Cổng không tiêu chuẩn";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "Sử dụng Proton VPN cho bất kỳ nhu cầu đặc biệt nào bằng cách cho phép lưu lượng truy cập đến các cổng không tiêu chuẩn thông qua mạng VPN. \nTìm hiểu thêm";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "Tìm hiểu thêm";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "Kích hoạt cổng không tiêu chuẩn";
-
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Trang web Proton VPN có thể tạm thời không thể truy cập do hạn chế mạng. Vui lòng sử dụng ứng dụng di động để tạo tài khoản Proton mới.";
 
@@ -2501,12 +2489,6 @@
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Khi nâng cấp lên Plus";
-
-/* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Có nhu cầu sử dụng máy tính ở mức nâng cao hoặc chuyên nghiệp cần có cổng không tiêu chuẩn?\n\nNâng cấp lên VPN Plus để truy cập tính năng này và các tính năng cao cấp khác.";
-
-/* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "Cho phép lưu lượng đi qua các cổng không tiêu chuẩn";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "Nâng tầm trải nghiệm chơi game";

@@ -555,10 +555,10 @@
 "_view_toggle_will_cause_disconnect" = "Secure Core-ის გადართვა გაწყვეტს მიმდინარე შეერთებას.";
 
 /* Body of the Secure Core toggle warning/discourage notice when turning SC on and a Secure Core server exists in the currently-connected country */
-"_view_toggle_on_reconnect_same_country" = "Turning on Secure Core will end your current connection and try to reconnect to the same country.";
+"_view_toggle_on_reconnect_same_country" = "Secure Core-ის ჩართვა დაასრულებს თქვენს მიმდინარე კავშირს და სცდის იგივე ქვეყანასთან თავიდან დაკავშირებას.";
 
 /* Body of the Secure Core toggle warning/discourage notice when turning SC on and no Secure Core server exists in the currently-connected country (fallback). %@ is the localized country name. */
-"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core isn't available in %@. Your VPN will reconnect through the fastest available Secure Core server.";
+"_view_toggle_on_reconnect_fastest_fallback" = "%@-ში Secure Core ხელმისაწვდომი არაა. თქვენი VPN-ის დაკავშირება უსწრაფეს ხელმისაწვდომ Secure Core-ის სერვერთან მოხდება.";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "სერვერის დატვირთვა:";
@@ -1932,18 +1932,6 @@
 /* Section title in Settings */
 "_advanced" = "დამატებით";
 
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "არასტანდარტული პორტები";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "გამოიყენეთ Proton VPN ნებისმიერი განსაკუთრებული მოთხოვნის მქონე ამოცანისთვის VPN ქსელში არასტანდარტული პორტების ჩართვის საშუალებით.\nგაიგეთ მეტი";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "გაიგეთ მეტი";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "არასტანდარტული პორტების ჩართვა";
-
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Proton VPN-ის ვებსატი დროებით მიუწვდომელია ქსელური შეზღუდვების გამო. Proton-ის ახალი ანგარიშის შესაქმნელა მობილური აპლიკაციიდან სცადეთ.";
 
@@ -2501,12 +2489,6 @@
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "როცა Plus-ზე განახლდებით";
-
-/* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "გაქვთ დამატებითი ან პროფესიული გამოთვლითი საჭიროებები, რომლებსაც არასტანდარტულ პორტები სჭირდება? \n\nამ და სხვა ფასიანი ფუნქციების მისაღებად განახლდით VPN Plus-ზე.";
-
-/* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "არასტანდარტულ პორტებზე ტრაფიკის ნების დართვა";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "ასწიეთ თქვენი თამაშის გამოცდილება";

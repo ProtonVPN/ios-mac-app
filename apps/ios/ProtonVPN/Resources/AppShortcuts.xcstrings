@@ -297,7 +297,7 @@
               "Ali me ščiti ${applicationName}?",
               "Ali je ${applicationName} povezana",
               "Stanje ${applicationName}",
-              "Pokaži status ${applicationName}"
+              "Pokaži stanje ${applicationName}"
             ]
           }
         },
@@ -1233,6 +1233,22 @@
               "Zaščiti me ${applicationName}",
               "Povežite se z ${applicationName}",
               "Poveži ${applicationName}"
+            ]
+          }
+        },
+        "sv" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Anslut till ${country} med ${applicationName}",
+              "Anslut till ${city} med ${applicationName}",
+              "Anslut till ${state} med ${applicationName}",
+              "Anslut ${applicationName} till ${country}",
+              "Anslut ${applicationName} till ${city}",
+              "Anslut ${applicationName} till ${state}",
+              "Skydda mig ${applicationName}",
+              "Anslut till ${applicationName}",
+              "${applicationName} anslut"
             ]
           }
         },

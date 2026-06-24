@@ -558,7 +558,7 @@
 "_view_toggle_on_reconnect_same_country" = "Zapnutím Secure Core dojde k ukončení aktuálního připojení a bude proveden pokus o opětovné připojení ve stejné zemi.";
 
 /* Body of the Secure Core toggle warning/discourage notice when turning SC on and no Secure Core server exists in the currently-connected country (fallback). %@ is the localized country name. */
-"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core není k dispozici v %@. Vaše VPN se znovu připojí přes nejrychlejší dostupný server Secure Core.";
+"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core není v %@ k dispozici. Vaše VPN se znovu připojí přes nejrychlejší dostupný server Secure Core.";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Vytížení serveru:";
@@ -1932,18 +1932,6 @@
 /* Section title in Settings */
 "_advanced" = "Pokročilé";
 
-/* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "Nestandardní porty";
-
-/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "Použijte Proton VPN pro jakékoliv speciální potřeby povolením provozu na nestandardních portech prostřednictvím sítě VPN. \nDalší informace";
-
-/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
-"_non_standard_ports_explanation_link" = "Více informací";
-
-/* Title for alert shown when enabling Non-standard ports requires reconnection */
-"_non_standard_ports_change_title" = "Povolit nestandardní porty";
-
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Webové stránky Proton VPN mohou být dočasně nedostupné z důvodu síťových omezení. Pro vytvoření nového účtu Proton použijte mobilní aplikaci.";
 
@@ -2501,12 +2489,6 @@
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Po navýšení na tarif Plus";
-
-/* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Máte pokročilé nebo profesionální počítačové potřeby, které vyžadují nestandardní porty?\n\nNavyšte na tarif VPN Plus pro přístup k těmto a dalším prémiovým funkcím.";
-
-/* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "Povolte provoz na nestandardních portech";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "Zvýšení úrovně vašich herních zážitků";

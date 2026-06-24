@@ -17,9 +17,9 @@
         <key>two</key>
         <string>%d napravi</string>
         <key>few</key>
-        <string>%d naprav</string>
+        <string>%d naprave</string>
         <key>other</key>
-        <string>%d napravi</string>
+        <string>%d naprav</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
@@ -632,7 +632,7 @@ ustavljenih</string>
         <key>two</key>
         <string>%d državi</string>
         <key>few</key>
-        <string>%d držav</string>
+        <string>%d države</string>
       </dict>
     </dict>
     <key>plan_duration_year</key>
