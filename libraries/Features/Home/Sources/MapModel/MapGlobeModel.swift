@@ -16,17 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CoreGraphics
+import MapShaderTypes
 import simd
+import Triangulation
 
-/// Render-ready representation of the world map on a **unit sphere** (the globe).
+/// Render-ready representation of the world map on a unit sphere: the globe.
 ///
 /// Produced offline by `MapBaker` and serialised to `world-globe.bin`. Every position is a point on the
-/// unit sphere centred at the origin, so the position also *is* the surface normal — which is what keeps
-/// a future day/night terminator a pure shader addition (no geometry change). Country fills are real
-/// triangle meshes (back-face culling alone hides the far hemisphere — there is no depth buffer);
-/// borders are short great-circle-ish segments expanded into ribbons in the vertex shader, as on the
-/// flat map.
+/// unit sphere centred at the origin, so the position also serves as the surface normal. Country fills
+/// are real triangle meshes, and back-face culling alone hides the far hemisphere, so there is no depth
+/// buffer. Borders are short segments expanded into ribbons in the vertex shader.
 public struct MapGlobeModel: Sendable {
     /// Unit-sphere fill vertices (each also serves as its surface normal).
     public let fillVertices: [SIMD3<Float>]
@@ -37,10 +36,10 @@ public struct MapGlobeModel: Sendable {
     public let borderSegments: [MapGlobeSegment]
     public let borderColor: SIMD4<Float>
 
-    /// Per-path draw list in document order (painter order for the front hemisphere — see `GlobeRenderer`).
+    /// Per-path draw list in document order, which is the order the renderer draws in.
     public let drawOrder: [MapGlobeDrawUnit]
-    /// Per-country geometry keyed by SVG node id (country code + `…x` mainland variants), for highlight
-    /// and for rotating the globe to face a country.
+    /// Per-country geometry keyed by SVG node id (a country code, or an "x"-suffixed mainland variant),
+    /// for highlighting and for rotating the globe to face a country.
     public let countries: [String: MapGlobeCountry]
 
     public init(
@@ -61,16 +60,10 @@ public struct MapGlobeModel: Sendable {
 }
 
 /// One border segment: two unit-sphere endpoints. The shader expands it into a ribbon in the local
-/// tangent plane (offset perpendicular via `cross(normal, dir)` where the normal is the endpoint itself).
-public struct MapGlobeSegment: Sendable {
-    public var a: SIMD3<Float>
-    public var b: SIMD3<Float>
-
-    public init(a: SIMD3<Float>, b: SIMD3<Float>) {
-        self.a = a
-        self.b = b
-    }
-}
+/// tangent plane. The layout lives once in `MapShaderTypes.h`, shared verbatim with the GPU side, so the
+/// buffer the codec bulk-loads is the buffer the border pass consumes. Re-exported here so MapModel's
+/// Metal-free consumers, the baker and the codec, never touch the shader-types module directly.
+public typealias MapGlobeSegment = MapShaderTypes.MapGlobeSegment
 
 /// One path's geometry, drawn fill-then-border in document order.
 public struct MapGlobeDrawUnit: Sendable {
@@ -78,7 +71,7 @@ public struct MapGlobeDrawUnit: Sendable {
     public let fillRange: Range<Int> // into MapGlobeModel.fillIndices
     public let borderRange: Range<Int> // into MapGlobeModel.borderSegments
     public let borderHalfWidth: Float // sphere-space half-width for this path's border
-    /// Unit-direction to the path's centroid — for whole-unit back-face culling.
+    /// Unit direction to the path's centroid, for whole-path back-face culling.
     public let centroid: SIMD3<Float>
 
     public init(
@@ -96,24 +89,26 @@ public struct MapGlobeDrawUnit: Sendable {
     }
 }
 
-/// Per-country lookup for highlight + "rotate to face this country".
+/// Per-country lookup for highlighting and for rotating the globe to face the country.
 public struct MapGlobeCountry: Sendable {
-    /// Unit-direction to rotate toward so the country faces the camera.
-    public let centroid: SIMD3<Float>
-    /// Bounding-cap half-angle (radians) around `centroid`, for zoom-to-fit.
-    public let angularRadius: Float
+    /// Bounding cap on the sphere: its centre is the direction to rotate toward so the country faces the
+    /// camera, and its radius is the half-angle the camera zooms to fit. Baked alongside the geometry.
+    public let cap: SphericalCap
     public let fillRanges: [Range<Int>]
     public let borderRanges: [Range<Int>]
 
     public init(
-        centroid: SIMD3<Float>,
-        angularRadius: Float,
+        cap: SphericalCap,
         fillRanges: [Range<Int>],
         borderRanges: [Range<Int>]
     ) {
-        self.centroid = centroid
-        self.angularRadius = angularRadius
+        self.cap = cap
         self.fillRanges = fillRanges
         self.borderRanges = borderRanges
+    }
+
+    /// Unit direction to rotate toward so the country faces the camera (the cap's centre).
+    public var centroid: SIMD3<Float> {
+        cap.center
     }
 }

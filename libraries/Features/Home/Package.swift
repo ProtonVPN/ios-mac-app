@@ -43,7 +43,6 @@ let package = Package(
 
         .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),
         .package(url: "https://github.com/apple/swift-collections", .upToNextMajor(from: "1.1.4")),
-        .package(url: "https://github.com/exyte/SVGView", .upToNextMajor(from: "1.0.6")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
@@ -51,9 +50,9 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.3")),
         .package(url: "https://github.com/SDWebImage/SDWebImageSwiftUI.git", from: "3.0.0"),
         .package(url: "https://github.com/airbnb/lottie-spm", .upToNextMajor(from: "4.6.0")),
-        // GEOS C library (PostGIS engine), used only by the offline MapBaker tool to triangulate the
-        // globe geometry. Not reachable from the "Home" product, so it never links into the app.
+        // GEOS and SVGView not used at runtime, only used by the MapBaker command line tool to generate the 3D model.
         .package(url: "https://github.com/GEOSwift/geos", .upToNextMajor(from: "9.0.0")),
+        .package(url: "https://github.com/exyte/SVGView", .upToNextMajor(from: "1.0.6")),
     ],
     targets: [
         .target(
@@ -83,12 +82,14 @@ let package = Package(
                 "Strings",
                 "PCAP",
                 "MapModel",
+                "MapShaderTypes",
                 .product(name: "Modals", package: "Modals"),
                 .product(name: "ModalsServices", package: "Modals"),
                 .product(name: "Payments", package: "Payments", condition: .when(platforms: [.iOS])),
                 .product(name: "PaymentsShared", package: "Payments", condition: .when(platforms: [.iOS])),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "Triangulation", package: "Ergonomics"), // for the map view
                 .product(name: "CoreConnection", package: "Connection"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
@@ -106,7 +107,7 @@ let package = Package(
             ],
             exclude: [
                 "swiftgen.yml",
-                "Resources/BlankMap-World.svg", // source for MapBaker; not bundled (the app loads world-globe.bin)
+                "Resources/BlankMap-World.svg", // MapBaker's input; not bundled, the app loads world-globe.bin
             ],
             resources: [
                 .copy("Resources/world-globe.bin"), // 3-D globe geometry, loaded straight into Metal buffers
@@ -128,21 +129,27 @@ let package = Package(
             ],
             resources: []
         ),
-        // Leaf module with no UIKit/iOS deps so it can be shared by both HomeShared (the app) and the
-        // MapBaker command-line tool: the binary map format + its encode/decode live here, keeping the
-        // tool's encoder and the app's decoder from drifting apart.
+        // Struct layouts shared between the CPU and the GPU using a simple header file so Metal can consume it.
         .target(
-            name: "MapModel"
+            name: "MapShaderTypes",
+            publicHeadersPath: "include"
         ),
-        // Offline tool that converts the source SVG into Resources/world-globe.bin. Run it whenever the
-        // SVG changes: `swift run MapBaker` (from this package directory), then commit the new binary.
-        // Not reachable from the "Home" product, so it never builds as part of the app.
+        // Model objects shared between the actual view model and the MapBaker command-line tool.
+        .target(
+            name: "MapModel",
+            dependencies: [
+                "Ergonomics",
+                "MapShaderTypes", // the border-segment layout is defined in the shared C header
+                .product(name: "Triangulation", package: "Ergonomics"),
+            ]
+        ),
         .executableTarget(
             name: "MapBaker",
             dependencies: [
                 "MapModel",
                 .product(name: "SVGView", package: "SVGView"),
                 .product(name: "geos", package: "geos"),
+                .product(name: "Triangulation", package: "Ergonomics"),
             ]
         ),
         .testTarget(
@@ -166,6 +173,12 @@ let package = Package(
                 "Home",
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
                 .product(name: "DomainTestSupport", package: "Domain"),
+            ]
+        ),
+        .testTarget(
+            name: "MapModelTests",
+            dependencies: [
+                "MapModel",
             ]
         ),
     ]

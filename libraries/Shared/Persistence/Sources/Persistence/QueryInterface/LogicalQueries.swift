@@ -140,8 +140,11 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
             .annotated(with: logicalAlias[Logical.Columns.longitude])
 
         if grouping == .cityName {
-            // Only include the city name in the result if we are grouping by cities
-            return result.annotated(with: logicalAlias[Logical.Columns.city])
+            // Only include the city name (and its localized form) in the result when grouping by cities. Every
+            // logical in a city group shares the same translatedCity, so selecting the bare column is well-defined.
+            return result
+                .annotated(with: logicalAlias[Logical.Columns.city])
+                .annotated(with: logicalAlias[Logical.Columns.translatedCity])
         }
 
         if grouping == .stateName {

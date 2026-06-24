@@ -19,41 +19,79 @@
 import CoreGraphics
 import Domain
 import Foundation
-import MapModel
 import simd
+import SwiftUI
+import Theme
+import Triangulation
 
-/// A connectable location (city, or state for countries modelled that way) shown as a grey pin on the
-/// interactive globe. Coordinates come from the aggregated server group; tapping it connects via
-/// `connectionSpec` (or, for free users, routes to the upsell — decided in `InteractiveGlobeFeature`).
+/// A connectable location (a city, or a state for countries modelled that way) shown as a grey pin on the
+/// interactive globe. Tapping it connects to the fastest server there, or routes free users to the upsell.
 public struct CityPin: Equatable, Identifiable, Sendable {
     public let id: String
+
     let displayName: String
+    /// The backend's localized city name when present, preferred over `displayName` for the pin label. When
+    /// nil the label falls back to `displayName`, the server's city name.
+    let translatedCity: String?
     let latitude: Double
     let longitude: Double
-    /// Lowest tier among the location's servers — a paid-only location has `minTier > 0`.
+
+    /// The minimum user tier to connect. 0 for cities/countries with free servers.
     let minTier: Int
     /// Where a tap connects to (`.city`/`.state`, fastest server in the location).
     let location: ConnectionSpec.Location
+
+    /// Unit-sphere position for projecting to screen, clustering, and re-centering the camera. Snapped onto
+    /// the country's coast at load, so a coastal city whose true coordinate falls just offshore of the
+    /// simplified coastline still sits on land. `latitude` and `longitude` keep the true coordinate; only
+    /// the rendered position is corrected.
+    let direction: SIMD3<Float>
+
+    init(
+        id: String,
+        displayName: String,
+        translatedCity: String? = nil,
+        latitude: Double,
+        longitude: Double,
+        minTier: Int,
+        location: ConnectionSpec.Location,
+        direction: SIMD3<Float>? = nil
+    ) {
+        self.id = id
+        self.displayName = displayName
+        self.translatedCity = translatedCity
+        self.latitude = latitude
+        self.longitude = longitude
+        self.minTier = minTier
+        self.location = location
+        self.direction = direction ?? GlobeGeometry.unitSphere(latitudeDegrees: Float(latitude), longitudeDegrees: Float(longitude))
+    }
 
     var connectionSpec: ConnectionSpec {
         ConnectionSpec(location: location, features: [])
     }
 
-    /// Unit-sphere direction of this location, for projecting to screen and re-centring the camera.
-    var direction: SIMD3<Float> {
-        GlobeGeometry.unitSphere(latitudeDegrees: Float(latitude), longitudeDegrees: Float(longitude))
+    /// Country code of this location (e.g. "DE"), for the flag on the connect pill. Non-nil for city/state
+    /// locations (which is what these pins are).
+    var countryCode: String? {
+        connectionSpec.countryCode
+    }
+
+    /// The label name: the backend's localized city name if present, else the server's city name.
+    var localizedName: String {
+        translatedCity ?? displayName
     }
 }
 
-/// A pin with its current projected screen position — the input to clustering.
+/// A pin with its current projected screen position, the input to clustering.
 struct ProjectedPin: Equatable {
     let pin: CityPin
     let point: CGPoint
 }
 
-/// One or more pins that project close enough together to be visually/touch-indistinguishable. A
-/// single-member cluster renders as a normal grey pin; a multi-member cluster coalesces into one point at
-/// the members' centroid, and tapping it zooms in (see `zoomTarget(currentDistance:)`).
+/// One or more pins that project too close together to see or tap apart. A single-member cluster renders
+/// as a normal grey pin. A multi-member cluster coalesces into one point at the members' centroid, and
+/// tapping it zooms in.
 struct PinCluster: Identifiable, Equatable {
     /// Stable for a given membership, so SwiftUI keeps a coalesced point identified across frames while the
     /// same locations stay merged, and re-identifies it once the membership changes (a zoom split it).
@@ -66,33 +104,38 @@ struct PinCluster: Identifiable, Equatable {
         members.count == 1
     }
 
-    /// The averaged unit-sphere direction the camera should look at to centre this cluster.
-    var centerDirection: SIMD3<Float> {
-        simd_normalize(members.reduce(SIMD3<Float>(repeating: 0)) { $0 + $1.direction })
-    }
-
-    /// Where to fly the camera when this coalesced point is tapped: look at the members' centre and dolly to
-    /// the distance that frames the WHOLE cluster on screen. The fit is the sphere-aware
-    /// `GlobeFocus.distance(fittingAngularRadius:)` for the spherical cap that encloses every member (the
-    /// max angular distance from the centroid), so all of them land inside the view — accounting for the
-    /// curvature, not a flat disc. Clamped so we never zoom out or dolly past the fit (an earlier
-    /// "minimum zoom-in step" over-shot the fit on a second tap and pushed the outer members off-screen).
-    /// Re-clustering after the move reflects the new separation, so a second tap drills in further.
-    func zoomTarget(currentDistance: Float, minDistance: Float, aspectRatio: Float) -> (latitudeDegrees: Float, longitudeDegrees: Float, distance: Float) {
-        let direction = centerDirection
-        let coordinate = GlobeGeometry.coordinate(of: direction)
-        let angularRadius = members
-            .map { acos(max(-1, min(1, simd_dot(simd_normalize($0.direction), direction)))) }
-            .max() ?? 0
-        let fit = GlobeFocus.distance(fittingAngularRadius: angularRadius, aspectRatio: aspectRatio, minDistance: minDistance)
+    /// Where to fly the camera when this coalesced point is tapped: face the centre of the spherical cap
+    /// enclosing every member, and zoom to the distance that fits that cap on screen. The returned
+    /// `direction` is the same centre the fit was computed around. Facing anything else, like the members'
+    /// screen centroid, would skew a lopsided cluster and could push its outer members off-screen. The
+    /// distance is clamped so a tap never zooms out and never passes the fit. Re-clustering after the move
+    /// reflects the new separation, so a second tap drills in further.
+    func zoomTarget(currentDistance: Float, minDistance: Float, aspectRatio: Float) -> (direction: SIMD3<Float>, distance: Float) {
+        let cap = SphericalCap.enclosing(members.map(\.direction))
+        let fit = GlobeFocus.distance(fitting: cap, aspectRatio: aspectRatio, minDistance: minDistance)
         let target = max(minDistance, min(fit, currentDistance))
-        return (coordinate.latitudeDegrees, coordinate.longitudeDegrees, target)
+        return (cap.center, target)
+    }
+}
+
+/// Projects `pins` and keeps those currently visible: in front of the horizon and within `offscreenMargin`
+/// of the view bounds. Culling off-screen pins up front means only what's drawn is processed.
+func visiblePins(_ pins: [CityPin], projection: GlobeProjection, offscreenMargin: CGFloat) -> [ProjectedPin] {
+    let bounds = projection.viewSize
+    return pins.compactMap { pin -> ProjectedPin? in
+        let result = projection.project(pin.direction)
+        guard result.isFront else { return nil }
+        let point = result.point
+        guard point.x > -offscreenMargin, point.x < bounds.width + offscreenMargin,
+              point.y > -offscreenMargin, point.y < bounds.height + offscreenMargin
+        else { return nil }
+        return ProjectedPin(pin: pin, point: point)
     }
 }
 
 /// Greedily groups projected pins whose screen positions fall within `threshold` points of a running
-/// cluster centre, so overlapping pins coalesce into a single tappable point. O(n·k) in the number of
-/// pins and clusters — fine for the few hundred locations, recomputed each frame as the camera moves.
+/// cluster centre, so overlapping pins coalesce into a single tappable point. Cost grows with pins times
+/// clusters, fine for the few hundred locations even recomputed each frame as the camera moves.
 ///
 /// `threshold` should be roughly the pin's touch diameter: below it two pins can't both be tapped, which
 /// is exactly when they should merge.
@@ -140,4 +183,25 @@ private struct ClusterAccumulator {
             members: members
         )
     }
+}
+
+/// The rule for when the cluster discs replace the per-pin points, defined once because both the Metal
+/// point fade and the SwiftUI disc crossfade apply it and the two must agree: the counted discs take over
+/// only once the map has settled and is fully open. Until then the per-pin points show.
+enum PinDisplay {
+    static func showsClusters(isMoving: Bool, lightFade: Float) -> Bool {
+        !isMoving && lightFade > 0.999
+    }
+
+    /// Settled-disc diameters in points: a lone pin, and a counted multi-member disc. Defined once because
+    /// several pieces hand off to each other at these sizes: the settled discs, the connect pill's collapse
+    /// size, and the crossfade from the smaller in-motion dots.
+    static let singleDiscDiameter: CGFloat = 12
+    static let clusterDiscDiameter: CGFloat = 26
+
+    /// Fill and stroke shared by the settled discs and the connect pill, so the pill grows out of a disc
+    /// that looks exactly like the one it replaces. The in-motion Metal dots resolve the same fill color.
+    static let fillColor = Color(.icon, .weak)
+    static let strokeColor = Color.white.opacity(0.85)
+    static let strokeWidth: CGFloat = 1.5
 }

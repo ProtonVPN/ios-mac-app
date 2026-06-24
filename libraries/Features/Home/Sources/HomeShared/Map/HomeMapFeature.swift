@@ -22,18 +22,20 @@ import CoreLocation
 import Domain
 import Foundation
 import Persistence
-import SharedViews
 import SwiftUI
 import VPNAppCore
 
 @Reducer
 public struct HomeMapFeature {
-    private static let mapStateDebounceIntervalInMilliseconds: Int = 50
+    private enum Constants {
+        /// Debounce window collapsing rapid map-state churn into a single store update.
+        static let mapStateDebounceIntervalInMilliseconds: Int = 50
+    }
 
     @ObservableState
     public struct State: Equatable {
         public internal(set) var mapState: MapState = .disconnected
-        public internal(set) var pinMode: MapPin.Mode = .disconnected
+        public internal(set) var pinMode: UserMapPin.Mode = .disconnected
 
         /// Connectable locations shown as grey pins when the map is in interactive (full) view. Loaded once
         /// when observation starts.
@@ -46,9 +48,8 @@ public struct HomeMapFeature {
             return userCountry != nil // or we know the user country
         }
 
-        /// The first map-state update is emitted immediately (so the initial render isn't delayed); later
-        /// ones are debounced to coalesce rapid connection transitions. (Previously inferred from the
-        /// now-removed `pinOffset == .zero`.)
+        /// The first map-state update is emitted immediately so the initial render isn't delayed. Later ones
+        /// are debounced to coalesce rapid connection transitions.
         var hasEmittedInitialMapState = false
 
         @SharedReader(.connectionState) var connectionState: ConnectionState
@@ -80,13 +81,16 @@ public struct HomeMapFeature {
                 self = .connectedCoordinates(connectionData.currentPeer.logical.coordinates, connectionData.currentPeer.logical.exitCountryCode)
 
             case let .connecting(.resolved(intent), _):
-                self = .connectingCoordinates(intent.resolvedServer.logical.coordinates, intent.resolvedServer.logical.exitCountryCode)
+                self = .connectingCoordinates(
+                    intent.resolvedServer.logical.coordinates,
+                    intent.resolvedServer.logical.exitCountryCode
+                )
 
             case let .connecting(.unresolved(intent), _):
-                // We've started connecting via a `ConnectionSpec` but haven't picked a specific server yet. If the
-                // spec is a city pin we've already loaded, send the pin straight to its coordinates — the resolved
-                // server lives in that city, so there's no second hop. Otherwise keep just the country code, and the
-                // pin parks on the country centre (the view's fallback) until the server resolves.
+                // We've started connecting via a `ConnectionSpec` but haven't picked a specific server yet.
+                // If the spec matches a city pin we've already loaded, send the pin straight to its
+                // coordinates, since the resolved server will live in that city anyway. Otherwise keep just
+                // the country code, and the pin parks on the country centre until the server resolves.
                 if let pin = cityPins.first(where: { $0.location == intent.spec.location }) {
                     self = .connectingCoordinates(
                         CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude),
@@ -110,7 +114,7 @@ public struct HomeMapFeature {
             }
         }
 
-        var pinMode: MapPin.Mode {
+        var pinMode: UserMapPin.Mode {
             switch self {
             case .connecting:
                 .invisible // Don't show the pin until we resolve the server
@@ -158,9 +162,9 @@ public struct HomeMapFeature {
         case delegate(Delegate)
 
         public enum Delegate: Equatable {
-            /// Paid user tapped a location — connect to it (parent issues the command).
+            /// Paid user tapped a location. The parent issues the connect command.
             case connect(ConnectionSpec)
-            /// Free user tapped a location — choosing a location is paid, so route to the upsell.
+            /// Free user tapped a location. Choosing a location is paid, so route to the upsell.
             case showUpsell
         }
     }
@@ -198,22 +202,22 @@ public struct HomeMapFeature {
                 let mapState = MapState(connectionState, cityPins: state.cityPins)
                 let animation: Animation? = UIAccessibility.isReduceMotionEnabled ? nil : .default
                 let effect: Effect<Action> = .send(.newMapState(mapState), animation: animation)
-                // Emit the first update immediately so the initial render isn't delayed; debounce
-                // subsequent ones to coalesce rapid connecting→connected transitions.
+                // Emit the first update immediately so the initial render isn't delayed. Debounce subsequent
+                // ones to coalesce rapid connection transitions.
                 guard state.hasEmittedInitialMapState else {
                     state.hasEmittedInitialMapState = true
                     return effect
                 }
                 return effect.debounce(
                     id: IDs.mapState,
-                    for: .milliseconds(Self.mapStateDebounceIntervalInMilliseconds),
+                    for: .milliseconds(Constants.mapStateDebounceIntervalInMilliseconds),
                     scheduler: scheduler
                 )
 
             case let .newMapState(mapState):
                 state.pinMode = mapState.pinMode
                 state.mapState = mapState
-                // Highlight is derived from state by HomeMapView; no imperative map mutation needed.
+                // The view derives the highlight from this state. No imperative map mutation is needed.
                 return .none
 
             case let .cityPinsLoaded(pins):
@@ -232,8 +236,8 @@ public struct HomeMapFeature {
         }
     }
 
-    /// Reads the connectable standard locations (one entry per city/state group), skipping gateways,
-    /// secure-core and under-maintenance groups, and maps them to grey pins at their aggregated centre.
+    /// Reads the connectable standard locations, one entry per city or state group, skipping gateways,
+    /// secure core, and under-maintenance groups, and maps them to grey pins at their aggregated centre.
     static func loadCityPins(from repository: ServerRepository) -> [CityPin] {
         repository
             .getGroups(filteredBy: [.features(.standard), .isNotUnderMaintenance], groupedBy: .cityName)
@@ -256,10 +260,18 @@ public struct HomeMapFeature {
                 return CityPin(
                     id: "\(code)#\(displayName)",
                     displayName: displayName,
+                    translatedCity: group.translatedCity,
                     latitude: group.latitude,
                     longitude: group.longitude,
                     minTier: group.minTier,
-                    location: location
+                    location: location,
+                    // Render on the country's coast if the true coordinate falls just offshore of the
+                    // simplified coastline (Nuuk, Reykjavik). Snaps only within the pin's own country.
+                    direction: CoastSnap.snappedDirection(
+                        latitudeDegrees: group.latitude,
+                        longitudeDegrees: group.longitude,
+                        countryCode: code
+                    )
                 )
             }
     }

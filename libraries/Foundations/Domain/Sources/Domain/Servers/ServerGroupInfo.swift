@@ -30,6 +30,9 @@ public struct ServerGroupInfo: Sendable {
     public let serverCount: Int
     public let latitude: Double
     public let longitude: Double
+    /// The backend's localized city name for a `.city` group (the logicals' `translatedCity`); nil for other
+    /// kinds, or when the backend supplied no translation. Prefer this over `kind.name` for display.
+    public let translatedCity: String?
 
     public let supportsSmartRouting: Bool
     public let isUnderMaintenance: Bool
@@ -53,6 +56,7 @@ public struct ServerGroupInfo: Sendable {
         cityCount: Int,
         latitude: Double,
         longitude: Double,
+        translatedCity: String? = nil,
         supportsSmartRouting: Bool,
         isUnderMaintenance: Bool,
         protocolSupport: ProtocolSupport
@@ -66,6 +70,7 @@ public struct ServerGroupInfo: Sendable {
         self.cityCount = cityCount
         self.latitude = latitude
         self.longitude = longitude
+        self.translatedCity = translatedCity
         self.isUnderMaintenance = isUnderMaintenance
         self.supportsSmartRouting = supportsSmartRouting
         self.protocolSupport = protocolSupport

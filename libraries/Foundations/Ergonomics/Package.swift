@@ -32,6 +32,10 @@ let package = Package(
             targets: ["TestingErgonomics"]
         ),
         .library(
+            name: "Triangulation",
+            targets: ["Triangulation"]
+        ),
+        .library(
             name: "IPCSeqlockHelpers",
             targets: ["IPCSeqlockHelpers"]
         ),
@@ -115,6 +119,10 @@ let package = Package(
             publicHeadersPath: "include"
         ),
         .target(
+            name: "Triangulation",
+            path: "Sources/Triangulation"
+        ),
+        .target(
             name: "TestingErgonomics",
             dependencies: [
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
@@ -126,6 +134,7 @@ let package = Package(
             name: "ErgonomicsTests",
             dependencies: [
                 "Ergonomics",
+                "Triangulation", // NaturalEarthTests exercises the shared projection directly
                 "Version",
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "Dependencies", package: "swift-dependencies"),

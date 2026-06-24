@@ -16,29 +16,61 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import MapShaderTypes
 import simd
 
-/// CPU-side mirror of `GlobeUniforms` in `MapGlobeShaders.metal`.
-///
-/// Layout must match the shader exactly, field-for-field: `simd_float4x4` (64 B), two `SIMD3<Float>`
-/// (16 B each, 16-aligned), four packed `Float`s, then one more `SIMD3<Float>` — a 16-aligned stride of
-/// 128. Passed via `setVertexBytes` and (for lighting/eclipses) `setFragmentBytes`.
-struct MapUniforms {
-    var mvp: simd_float4x4
-    /// Model-space unit direction toward the sun (subsolar point), for day/night shading. Default faces the
-    /// camera so the non-lit paths (snapshots, `lightFade == 0`) are unaffected.
-    var sunDirection: SIMD3<Float> = .init(0, 0, 1)
-    /// Colour of the sunlight (the connection green/red); white = neutral. Default white.
-    var sunTint: SIMD3<Float> = .init(1, 1, 1)
-    /// Sphere-space half-width of the path currently being drawn (set per border draw).
-    var borderHalfWidth: Float
-    /// 0 = flat (decorative map / snapshots), 1 = full day/night terminator lighting; faded in for full view.
-    var lightFade: Float = 0
-    /// How strongly the sunlight colour washes this draw (set per draw — sea more than land).
-    var tintStrength: Float = 0.12
-    /// Moon radius in Earth radii (≈ 0.2725). 0 disables the eclipse shadow tests (snapshots / no moon).
-    var moonRadius: Float = 0
-    /// Model-space position of the Moon's centre (sub-lunar direction × distance, in Earth radii). Used to
-    /// cast the Moon's shadow on the Earth (solar eclipse) and to place the Moon in the Earth's shadow (lunar).
-    var moonCenter: SIMD3<Float> = .init(0, 0, 0)
+// The GPU uniform and instance struct layouts are defined once in `MapShaderTypes.h`, which the shaders
+// also include, so the CPU and GPU sides can't drift. This file adds only the Swift-side ergonomics those
+// C structs don't get for free.
+
+extension MapUniforms {
+    /// Convenience initializer: the MVP and per-path border width are required, and the lighting and
+    /// eclipse fields default to a neutral, unlit configuration. The renderer overwrites most of them per
+    /// draw, and the snapshot paths leave them at these defaults. The argument order differs from the
+    /// C struct's synthesized memberwise initializer on purpose. That is what lets this defaulted overload
+    /// coexist with it.
+    init(
+        mvp: simd_float4x4,
+        borderHalfWidth: Float,
+        sunDirection: SIMD3<Float> = SIMD3<Float>(0, 0, 1),
+        sunTint: SIMD3<Float> = SIMD3<Float>(1, 1, 1),
+        lightFade: Float = 0,
+        // Neutral, no tint. The renderer owns the real per-draw values and overwrites this before anything
+        // reads it. A non-zero default here would just invite tuning a knob that affects no pixel.
+        tintStrength: Float = 0,
+        moonRadius: Float = 0,
+        moonCenter: SIMD3<Float> = SIMD3<Float>(0, 0, 0)
+    ) {
+        self.init(
+            mvp: mvp,
+            sunDirection: sunDirection,
+            sunTint: sunTint,
+            borderHalfWidth: borderHalfWidth,
+            lightFade: lightFade,
+            tintStrength: tintStrength,
+            moonRadius: moonRadius,
+            moonCenter: moonCenter
+        )
+    }
+}
+
+// `Equatable` so the renderer rebuilds the (static) starfield instance buffer only when it actually changes.
+extension StarInstance: Equatable {
+    public static func == (lhs: StarInstance, rhs: StarInstance) -> Bool {
+        lhs.direction == rhs.direction && lhs.radius == rhs.radius && lhs.brightness == rhs.brightness
+    }
+}
+
+// `Equatable` so `MapGlobeView.apply(to:)` can skip the redraw when a body re-evaluation changed nothing.
+extension MapUniforms: Equatable {
+    public static func == (lhs: MapUniforms, rhs: MapUniforms) -> Bool {
+        lhs.mvp == rhs.mvp
+            && lhs.sunDirection == rhs.sunDirection
+            && lhs.sunTint == rhs.sunTint
+            && lhs.borderHalfWidth == rhs.borderHalfWidth
+            && lhs.lightFade == rhs.lightFade
+            && lhs.tintStrength == rhs.tintStrength
+            && lhs.moonRadius == rhs.moonRadius
+            && lhs.moonCenter == rhs.moonCenter
+    }
 }

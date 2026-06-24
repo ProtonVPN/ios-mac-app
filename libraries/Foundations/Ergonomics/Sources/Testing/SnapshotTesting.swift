@@ -24,6 +24,27 @@ public extension AssertSnapshot {
             .appending("Snapshots")
     }
 
+    /// Precision pair for GPU-rendered snapshots: a near-exact pixel match, with a perceptual tolerance
+    /// absorbing the sub-pixel MSAA-edge differences that vary across GPU hardware between the recording
+    /// machine and CI. Shared so every GPU suite fails at the same threshold.
+    static var gpuSnapshotPrecision: Float {
+        0.99
+    }
+
+    static var gpuPerceptualPrecision: Float {
+        0.98
+    }
+
+    /// The standard CI snapshot directory for a suite: `<CI_PROJECT_DIR>/<testsDirectory>/__Snapshots__/
+    /// <suite-file-stem>`, or `nil` locally, which falls back to SnapshotTesting's default layout next to
+    /// the test file. `testsDirectory` stays explicit because the repo-relative path can't be derived from
+    /// `#filePath` reliably across build and run machines, but the shape lives here once.
+    static func ciSnapshotDirectory(testsDirectory: String, file: String = #filePath) -> String? {
+        guard let projectDir else { return nil }
+        let suite = FilePath(file).lastComponent?.stem ?? ""
+        return "\(projectDir)/\(testsDirectory)/__Snapshots__/\(suite)"
+    }
+
     func assertSnapshot<Value>(
         of value: @autoclosure () throws -> Value,
         as snapshotting: Snapshotting<Value, some Any>,

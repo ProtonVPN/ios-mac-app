@@ -18,10 +18,10 @@
 
 import simd
 
-/// Colours that are an app concept rather than something stored in the SVG.
+/// Colors that are an app concept rather than something stored in the SVG.
 public enum MapStyle {
-    /// Fill applied to the connected country. Mirrors `0x4A4658` from the previous implementation.
+    /// Fill applied to the connected country (`#4A4658`).
     public static let highlightColor = SIMD4<Float>(Float(0x4A) / 255, Float(0x46) / 255, Float(0x58) / 255, 1)
-    /// Base ocean sphere colour behind the land (`~#181B26`).
+    /// Base ocean sphere color behind the land (`#181B26`).
     public static let oceanColor = SIMD4<Float>(Float(0x18) / 255, Float(0x1B) / 255, Float(0x26) / 255, 1)
 }

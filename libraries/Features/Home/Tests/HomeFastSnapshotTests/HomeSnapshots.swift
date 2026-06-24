@@ -30,7 +30,6 @@ import OrderedCollections
 import Sharing
 import SnapshotTesting
 import SwiftUI
-import System
 import Testing
 import TestingErgonomics
 import VPNAppCore
@@ -64,10 +63,9 @@ struct HomeScreenTests {
         ),
     ]
 
-    /// Tolerances for the GPU-rendered globe embedded in the home screen — perceptual precision absorbs
-    /// sub-pixel MSAA-edge differences that can vary across GPU hardware between recording and CI.
-    let snapshotPrecision: Float = 0.99
-    let snapshotPerceptualPrecision: Float = 0.98
+    // GPU-render tolerances, shared across the GPU suites, since the globe is embedded in the screen.
+    let snapshotPrecision = Self.gpuSnapshotPrecision
+    let snapshotPerceptualPrecision = Self.gpuPerceptualPrecision
 
     @Shared(.protectionState) var protectionState
     @Shared(.connectionState) var connectionState
@@ -100,8 +98,8 @@ struct HomeScreenTests {
             .frame(size)
             .environment(\._accessibilityReduceMotion, true)
             .environment(\.colorScheme, .dark)
-            // Render the globe via off-screen Metal read-back: a live MTKView can't be captured by the
-            // snapshot strategy's `layer.render(in:)` (and a `.sizeThatFits` layout traps it).
+            // Render the globe via off-screen Metal read-back, since a live MTKView can't be captured
+            // by the snapshot strategy's `layer.render(in:)`.
             .environment(\.globeRenderMode, .staticImage)
 
         withDependencies {
@@ -124,8 +122,8 @@ struct HomeScreenTests {
 
             store.send(.map(.connectionStateUpdated(state.connection)))
 
-            // `.fixed` (not `.sizeThatFits`) so HomeView's GeometryReader sees the real device height —
-            // otherwise the globe's render height balloons to the measuring proposal.
+            // `.fixed` rather than `.sizeThatFits`, so HomeView's GeometryReader sees the real device
+            // height. Otherwise the globe's render height balloons to the measuring proposal.
             assertSnapshot(
                 of: appView,
                 as: .image(
@@ -137,7 +135,7 @@ struct HomeScreenTests {
                 testName: testName
             )
 
-            // reset SVG map highlight
+            // Reset the shared map state so the next test parameter starts from a clean slate.
             $userCountry.withLock { $0 = nil }
             $connectionState.withLock { $0 = .disconnected }
             store.send(.map(.connectionStateUpdated(state.connection)))
@@ -147,13 +145,7 @@ struct HomeScreenTests {
 
 extension HomeScreenTests: AssertSnapshot {
     func snapshotDirectory() -> String? {
-        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
-            let path = FilePath(String(describing: #filePath))
-            let suite = path.lastComponent?.stem ?? ""
-            return "\(projectDir)/libraries/Features/Home/Tests/HomeFastSnapshotTests/__Snapshots__/\(suite)"
-        } else {
-            return nil
-        }
+        Self.ciSnapshotDirectory(testsDirectory: "libraries/Features/Home/Tests/HomeFastSnapshotTests")
     }
 }
 

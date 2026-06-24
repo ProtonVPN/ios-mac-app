@@ -24,7 +24,6 @@ import Home
 @testable import HomeShared
 import SnapshotTesting
 import SwiftUI
-import System
 import Testing
 import TestingErgonomics
 import Theme
@@ -33,10 +32,9 @@ import VPNAppCore
 struct MapCitiesScreenTests {
     @Shared(.userCountry) var userCountry
 
-    let mapRenderingPrecision: Float = 0.99
-    /// Perceptual tolerance for the GPU-rendered globe — absorbs sub-pixel MSAA-edge differences that can
-    /// vary across GPU hardware between the recording machine and CI.
-    let mapPerceptualPrecision: Float = 0.98
+    // GPU-render tolerances, shared across the GPU suites.
+    let mapRenderingPrecision = Self.gpuSnapshotPrecision
+    let mapPerceptualPrecision = Self.gpuPerceptualPrecision
 
     @Test("Map Screen Cities", arguments: Cities.all)
     @MainActor
@@ -44,22 +42,7 @@ struct MapCitiesScreenTests {
         let countryCode = city.0
         let store = Store(initialState: HomeMapFeature.State(), reducer: HomeMapFeature.init)
         let size = try #require(ViewImageConfig.iPhoneSe.size)
-        let mapView = ZStack {
-            HomeMapView(store: store, availableHeight: size.height, availableWidth: size.width)
-                .frame(size)
-                .background(Color(.background))
-                .environment(\.colorScheme, .dark)
-                // Render the globe via off-screen Metal read-back — a live MTKView can't be captured by
-                // the snapshot strategy's `layer.render(in:)`. See GlobeRenderMode.
-                .environment(\.globeRenderMode, .staticImage)
-            VStack {
-                Text("\(countryCode), \(city.cityName)")
-                    .foregroundStyle(.white)
-                    .font(.hero)
-                    .padding(.top, .themeSpacing64)
-                Spacer()
-            }
-        }
+        let mapView = MapSnapshotScreen(store: store, title: "\(countryCode), \(city.cityName)", size: size)
 
         withDependencies {
             $0.locale = Locale(identifier: "en")
@@ -84,12 +67,6 @@ struct MapCitiesScreenTests {
 
 extension MapCitiesScreenTests: AssertSnapshot {
     func snapshotDirectory() -> String? {
-        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
-            let path = FilePath(String(describing: #filePath))
-            let suite = path.lastComponent?.stem ?? ""
-            return "\(projectDir)/libraries/Features/Home/Tests/HomeSlowSnapshotTests/__Snapshots__/\(suite)"
-        } else {
-            return nil
-        }
+        Self.ciSnapshotDirectory(testsDirectory: "libraries/Features/Home/Tests/HomeSlowSnapshotTests")
     }
 }

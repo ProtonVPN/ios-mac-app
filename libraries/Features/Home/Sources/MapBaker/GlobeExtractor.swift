@@ -21,318 +21,354 @@ import Foundation
 import MapModel
 import simd
 import SVGView
+import Triangulation
 
 /// Converts the parsed SVG into a 3-D `MapGlobeModel` on the unit sphere.
 ///
-/// Pipeline per path: densify long segments (so they hug the sphere), triangulate each polygon (GEOS
-/// constrained Delaunay under the even-odd fill rule — see `GeosTriangulator`), un-project every vertex
-/// from Natural-Earth map space to a unit-sphere position, and emit border segments. Country
-/// centroids/caps are accumulated for the rotate-to-country animation. Triangle count is bounded because
-/// the source polylines are already dense — densification only splits the rare long straight border.
+/// The pipeline per path: densify long segments so they hug the sphere, triangulate each polygon,
+/// un-project every vertex from map space to a unit-sphere position, and emit border segments. Country
+/// centroids and caps are accumulated for the rotate-to-country animation. Triangle count stays bounded
+/// because the source polylines are already dense, so densification only splits the rare long straight
+/// border.
 enum GlobeExtractor {
-    /// Sphere-arc tolerance (radians) for densifying long segments. ~1°. Most source segments are far
-    /// shorter and pass through untouched.
-    private static let densifyTolerance: Float = 1.0 * .pi / 180
-    /// Triangulated-vs-polygon area ratio above which a ring is counted as imperfect (logged as a
-    /// negligible sliver), and the higher ratio above which it's flagged as a gross failure.
-    private static let imperfectAreaRatio: Float = 0.02
-    private static let grossAreaRatio: Float = 0.15
-
     static func extract(from root: SVGNode) -> MapGlobeModel {
-        let bounds = root.bounds()
-        let proj = Unprojector(bounds: bounds)
-        let paths = MapExtractor.collectPaths(from: root)
-        // map-space stroke half-width → sphere units (equatorial circumference 2π over the map width)
-        let halfWidthScale = Float(2 * Double.pi / Double(bounds.width))
-
-        var fillVertices: [SIMD3<Float>] = []
-        var fillIndices: [UInt32] = []
-        var borderSegments: [MapGlobeSegment] = []
-        var borderColor = SIMD4<Float>(0, 0, 0, 0)
-        var drawOrder: [MapGlobeDrawUnit] = []
-        var badRings = 0 // rings whose triangulated area ≠ polygon area (a triangulation failure)
-        var totalPolyArea: Float = 0
-        var failInfo: [(area: Float, ratio: Float, n: Int, ids: [String])] = []
-
-        struct PathOut {
-            let ids: [String]
-            let fill: Range<Int>
-            let border: Range<Int>
-            let centroid: SIMD3<Float>
-            let radius: Float
-            let bounds: CGRect
+        var builder = GlobeBuilder(bounds: root.bounds())
+        for path in MapExtractor.collectPaths(from: root) {
+            builder.append(path)
         }
-        var pathOuts: [PathOut] = []
+        return builder.finish()
+    }
+}
 
-        for path in paths {
-            let denseRings = path.rings.map { densify($0, proj: proj) }
+/// One extracted path's baked geometry: where its fill and border landed in the shared buffers, plus the
+/// cap and 2-D bounds the per-country aggregation works from.
+private struct BakedPath {
+    let ancestorIDs: [String]
+    let fillRange: Range<Int>
+    let borderRange: Range<Int>
+    let centroid: SIMD3<Float>
+    let radius: Float
+    let bounds: CGRect
+}
 
-            // Fills: triangulate the whole path at once under the even-odd rule (the source's
-            // `fill-rule: evenodd`), so interior lakes (Lake Winnipeg, the Great Bear/Slave lakes) carve
-            // as holes and islands stay filled. GEOS repairs the source's near-duplicate
-            // self-intersections and triangulates the interior exactly — concave coastline inlets (the
-            // Great Lakes) carve cleanly too, with no bridge artifacts.
-            let fillStart = fillIndices.count
-            let vertStart = fillVertices.count
-            if path.fillColor != nil {
-                let (verts2D, tris, polyArea) = GeosTriangulator.triangulate(rings: denseRings.map(\.points))
-                if !tris.isEmpty {
-                    let stats = Self.areaStats(polyArea: Float(polyArea), verts: verts2D, tris: tris)
-                    totalPolyArea += stats.poly
-                    if stats.poly > 0, stats.ratio > Self.imperfectAreaRatio {
-                        badRings += 1
-                        failInfo.append((stats.poly, stats.ratio, verts2D.count, path.ancestorIDs))
-                    }
-                    let base = UInt32(fillVertices.count)
-                    for v in verts2D {
-                        fillVertices.append(proj.sphere(v))
-                    }
-                    // Emit each triangle with outward (CCW-from-outside) winding so back-face culling hides
-                    // the far hemisphere — independent of the sphere's coordinate handedness.
-                    for t in tris {
-                        let i0 = base + UInt32(t.0), i1 = base + UInt32(t.1), i2 = base + UInt32(t.2)
-                        let v0 = fillVertices[Int(i0)], v1 = fillVertices[Int(i1)], v2 = fillVertices[Int(i2)]
-                        if simd_dot(simd_cross(v1 - v0, v2 - v0), v0) >= 0 {
-                            fillIndices.append(contentsOf: [i0, i1, i2])
-                        } else {
-                            fillIndices.append(contentsOf: [i0, i2, i1])
-                        }
-                    }
-                }
-            }
-            let fillRange = fillStart ..< fillIndices.count
+/// Accumulates the shared vertex, index, and segment buffers as paths are appended, then assembles the
+/// final model. A type of its own so each baking stage (fills, borders, caps, countries) reads on its own
+/// rather than sharing one loop body.
+private struct GlobeBuilder {
+    private enum Constants {
+        /// Sphere-arc tolerance in radians (about a degree) for densifying long segments. Most source
+        /// segments are far shorter and pass through untouched.
+        static let densifyTolerance: Float = 1.0 * .pi / 180
+    }
 
-            // Borders ---------------------------------------------------------------------------------
-            let borderStart = borderSegments.count
-            if let stroke = path.strokeColor, path.strokeHalfWidth > 0 {
-                borderColor = stroke
-                for ring in denseRings {
-                    let pts = ring.points
-                    guard pts.count >= 2 else { continue }
-                    let count = ring.closed ? pts.count : pts.count - 1
-                    for i in 0 ..< count {
-                        let a = proj.sphere(pts[i])
-                        let b = proj.sphere(pts[(i + 1) % pts.count])
-                        if simd_distance_squared(a, b) < 1e-12 { continue }
-                        borderSegments.append(MapGlobeSegment(a: a, b: b))
-                    }
-                }
-            }
-            let borderRange = borderStart ..< borderSegments.count
+    private enum Dimensions {
+        /// Squared-distance cull for zero-length border segments, in sphere units: about 1e-6 radians, or
+        /// 6 metres of Earth. Only true duplicates, densification landing on an existing vertex, fall
+        /// under it.
+        static let degenerateSegmentLengthSquared: Float = 1e-12
+    }
 
-            guard !fillRange.isEmpty || !borderRange.isEmpty else { continue }
+    private let unprojector: Unprojector
+    /// Map-space stroke half-width to sphere units: the equatorial circumference over the map width.
+    private let halfWidthScale: Float
 
-            // Centre = the country's 2-D bounding-box centre un-projected — matching the flat map's
-            // centring exactly, and avoiding the poleward bias of averaging unit vectors over a country
-            // that spans a wide longitude. Radius is the max sphere-angle to the path's vertices.
-            let sphereVerts: [SIMD3<Float>] = vertStart < fillVertices.count
-                ? Array(fillVertices[vertStart ..< fillVertices.count])
-                : borderSegments[borderStart ..< borderSegments.count].map(\.a)
-            let centroid = proj.sphere(SIMD2<Float>(Float(path.pointBounds.midX), Float(path.pointBounds.midY)))
-            let radius = maxAngle(centroid, sphereVerts)
+    private var fillVertices: [SIMD3<Float>] = []
+    private var fillIndices: [UInt32] = []
+    private var borderSegments: [MapGlobeSegment] = []
+    private var borderColor = SIMD4<Float>(0, 0, 0, 0)
+    private var drawOrder: [MapGlobeDrawUnit] = []
+    private var bakedPaths: [BakedPath] = []
+    private var report = TriangulationReport()
 
-            drawOrder.append(MapGlobeDrawUnit(
-                color: path.fillColor ?? SIMD4<Float>(0, 0, 0, 0),
-                fillRange: fillRange,
-                borderRange: borderRange,
-                borderHalfWidth: path.strokeHalfWidth * halfWidthScale,
-                centroid: centroid
-            ))
-            pathOuts.append(PathOut(
-                ids: path.ancestorIDs,
-                fill: fillRange,
-                border: borderRange,
-                centroid: centroid,
-                radius: radius,
-                bounds: path.pointBounds
-            ))
-        }
+    init(bounds: CGRect) {
+        self.unprojector = Unprojector(bounds: bounds)
+        self.halfWidthScale = Float(2 * Double.pi / Double(bounds.width))
+    }
 
-        if badRings > 0 {
-            let failArea = failInfo.reduce(Float(0)) { $0 + $1.area }
-            let pct = totalPolyArea > 0 ? failArea / totalPolyArea * 100 : 0
-            let gross = failInfo.filter { $0.ratio > Self.grossAreaRatio }
-            print(String(format: "MapBaker: %d rings triangulate imperfectly (%.3f%% of land — negligible slivers on tiny islands)", badRings, pct))
-            if !gross.isEmpty {
-                print("MapBaker: WARNING — \(gross.count) rings have a gross (>15%) area mismatch:")
-                for f in gross.sorted(by: { $0.area > $1.area }).prefix(10) {
-                    print(String(format: "    area=%.0f ratio=%.2f n=%d ids=%@", f.area, f.ratio, f.n, f.ids.joined(separator: ",")))
-                }
-            }
-        }
+    /// Bakes one path: fill triangles, border segments, and the bounding cap the camera frames it with.
+    /// Paths that produce no geometry are dropped.
+    mutating func append(_ path: MapExtractor.ExtractedPath) {
+        let denseRings = path.rings.map(densified)
+        let vertexStart = fillVertices.count
+        let fillRange = appendFill(of: path, rings: denseRings)
+        let borderRange = appendBorders(of: path, rings: denseRings)
+        guard !fillRange.isEmpty || !borderRange.isEmpty else { return }
+
+        // The centre is the path's 2-D bounding-box center un-projected, which avoids the poleward bias
+        // of averaging unit vectors over a country that spans a wide longitude. The radius is the largest
+        // sphere angle to the path's vertices.
+        let sphereVertices: [SIMD3<Float>] = vertexStart < fillVertices.count
+            ? Array(fillVertices[vertexStart...])
+            : borderSegments[borderRange].map(\.a)
+        let centroid = unprojector.sphere(SIMD2<Float>(Float(path.pointBounds.midX), Float(path.pointBounds.midY)))
+        let radius = maxSphereAngle(from: centroid, to: sphereVertices)
+
+        drawOrder.append(MapGlobeDrawUnit(
+            color: path.fillColor ?? SIMD4<Float>(0, 0, 0, 0),
+            fillRange: fillRange,
+            borderRange: borderRange,
+            borderHalfWidth: path.strokeHalfWidth * halfWidthScale,
+            centroid: centroid
+        ))
+        bakedPaths.append(BakedPath(
+            ancestorIDs: path.ancestorIDs,
+            fillRange: fillRange,
+            borderRange: borderRange,
+            centroid: centroid,
+            radius: radius,
+            bounds: path.pointBounds
+        ))
+    }
+
+    mutating func finish() -> MapGlobeModel {
+        report.printSummary()
         return MapGlobeModel(
             fillVertices: fillVertices,
             fillIndices: fillIndices,
             borderSegments: borderSegments,
             borderColor: borderColor,
             drawOrder: drawOrder,
-            countries: countries(proj: proj, from: pathOuts.map { ($0.ids, $0.fill, $0.border, $0.centroid, $0.radius, $0.bounds) })
+            countries: countries()
         )
     }
 
-    // MARK: - Countries
+    // MARK: - Fills
 
-    private static func countries(
-        proj: Unprojector,
-        from outs: [(ids: [String], fill: Range<Int>, border: Range<Int>, centroid: SIMD3<Float>, radius: Float, bounds: CGRect)]
-    ) -> [String: MapGlobeCountry] {
-        var byID: [String: [Int]] = [:]
-        for (i, out) in outs.enumerated() {
-            for id in out.ids {
-                byID[id, default: []].append(i)
-            }
-        }
-        var result: [String: MapGlobeCountry] = [:]
-        for (id, members) in byID {
-            // Country centre = union 2-D bounding-box centre un-projected (matches the flat map's
-            // centring). Radius encloses every member cap. NB: for a country with members that wrap the
-            // antimeridian (e.g. the Aleutians) the union box spans most of the map and this centre is
-            // wrong — but the camera rotates to the `…x` *mainland* variant, which doesn't wrap, so the
-            // affected aggregate centre is never used for framing.
-            var bbox = outs[members[0]].bounds
-            for m in members.dropFirst() {
-                bbox = bbox.union(outs[m].bounds)
-            }
-            let centroid = proj.sphere(SIMD2<Float>(Float(bbox.midX), Float(bbox.midY)))
-            var radius: Float = 0
-            for m in members {
-                let angle = acos(max(-1, min(1, simd_dot(centroid, outs[m].centroid))))
-                radius = max(radius, angle + outs[m].radius)
-            }
-            result[id] = MapGlobeCountry(
-                centroid: centroid,
-                angularRadius: radius,
-                fillRanges: mergeRanges(members.map { outs[$0].fill }.filter { !$0.isEmpty }),
-                borderRanges: mergeRanges(members.map { outs[$0].border }.filter { !$0.isEmpty })
-            )
-        }
-        return result
-    }
+    /// Triangulates the path's fill under the even-odd rule the source SVG uses, so interior lakes carve
+    /// as holes and islands stay filled, then appends the sphere vertices and triangles to the shared
+    /// buffers. GEOS repairs the source's near-duplicate self-intersections and triangulates the interior
+    /// exactly, so concave coastline inlets carve cleanly with no bridging triangles across them. Returns
+    /// the path's slice of `fillIndices`.
+    private mutating func appendFill(of path: MapExtractor.ExtractedPath, rings: [MapExtractor.Ring]) -> Range<Int> {
+        let start = fillIndices.count
+        guard path.fillColor != nil else { return start ..< start }
 
-    /// Largest sphere-angle (radians) from `center` to any vertex — the bounding-cap half-angle.
-    private static func maxAngle(_ center: SIMD3<Float>, _ verts: [SIMD3<Float>]) -> Float {
-        var radius: Float = 0
-        for v in verts {
-            radius = max(radius, acos(max(-1, min(1, simd_dot(center, v)))))
-        }
-        return radius
-    }
+        let (vertices2D, triangles, polygonArea) = GeosTriangulator.triangulate(rings: rings.map(\.points))
+        report.record(polygonArea: polygonArea, vertices: vertices2D, triangles: triangles, ids: path.ancestorIDs)
+        guard !triangles.isEmpty else { return start ..< start }
 
-    private static func mergeRanges(_ ranges: [Range<Int>]) -> [Range<Int>] {
-        let sorted = ranges.sorted { $0.lowerBound < $1.lowerBound }
-        var merged: [Range<Int>] = []
-        for range in sorted {
-            if let last = merged.last, range.lowerBound <= last.upperBound {
-                merged[merged.count - 1] = last.lowerBound ..< max(last.upperBound, range.upperBound)
+        let base = UInt32(fillVertices.count)
+        let sphereVertices = vertices2D.map(unprojector.sphere)
+        fillVertices.append(contentsOf: sphereVertices)
+        // Emit each triangle wound counter-clockwise seen from outside, so back-face culling hides the far
+        // hemisphere regardless of the sphere's coordinate handedness.
+        for triangle in triangles {
+            let (i0, i1, i2) = (base + UInt32(triangle.0), base + UInt32(triangle.1), base + UInt32(triangle.2))
+            if isOutwardFacing(sphereVertices[triangle.0], sphereVertices[triangle.1], sphereVertices[triangle.2]) {
+                fillIndices.append(contentsOf: [i0, i1, i2])
             } else {
-                merged.append(range)
+                fillIndices.append(contentsOf: [i0, i2, i1])
             }
         }
-        return merged
+        return start ..< fillIndices.count
+    }
+
+    // MARK: - Borders
+
+    /// Appends one segment per densified ring edge, skipping zero-length duplicates. Returns the path's
+    /// slice of `borderSegments`.
+    private mutating func appendBorders(of path: MapExtractor.ExtractedPath, rings: [MapExtractor.Ring]) -> Range<Int> {
+        let start = borderSegments.count
+        guard let stroke = path.strokeColor, path.strokeHalfWidth > 0 else { return start ..< start }
+        borderColor = stroke
+        for ring in rings {
+            let points = ring.points
+            guard points.count >= 2 else { continue }
+            let edgeCount = ring.closed ? points.count : points.count - 1
+            for i in 0 ..< edgeCount {
+                let a = unprojector.sphere(points[i])
+                let b = unprojector.sphere(points[(i + 1) % points.count])
+                if simd_distance_squared(a, b) < Dimensions.degenerateSegmentLengthSquared { continue }
+                borderSegments.append(MapGlobeSegment(a: a, b: b))
+            }
+        }
+        return start ..< borderSegments.count
     }
 
     // MARK: - Densification
 
-    private static func densify(_ ring: MapExtractor.Ring, proj: Unprojector) -> MapExtractor.Ring {
-        let pts = ring.points
-        guard pts.count >= 2 else { return ring }
+    /// Splits segments longer than `densifyTolerance` of sphere arc, so a long straight border follows the
+    /// sphere's curvature once un-projected.
+    private func densified(_ ring: MapExtractor.Ring) -> MapExtractor.Ring {
+        let points = ring.points
+        guard points.count >= 2 else { return ring }
         var out: [SIMD2<Float>] = []
-        let count = ring.closed ? pts.count : pts.count - 1
-        for i in 0 ..< count {
-            let a = pts[i]
-            let b = pts[(i + 1) % pts.count]
+        let edgeCount = ring.closed ? points.count : points.count - 1
+        for i in 0 ..< edgeCount {
+            let a = points[i]
+            let b = points[(i + 1) % points.count]
             out.append(a)
-            let arc = proj.arc(a, b)
-            if arc > densifyTolerance {
-                let pieces = Int((arc / densifyTolerance).rounded(.up))
+            let arc = unprojector.arc(a, b)
+            if arc > Constants.densifyTolerance {
+                let pieces = Int((arc / Constants.densifyTolerance).rounded(.up))
                 for k in 1 ..< pieces {
                     out.append(a + (b - a) * (Float(k) / Float(pieces)))
                 }
             }
         }
-        if !ring.closed { out.append(pts[pts.count - 1]) }
+        if !ring.closed { out.append(points[points.count - 1]) }
         return MapExtractor.Ring(points: out, closed: ring.closed)
     }
 
-    // MARK: - Validation
+    // MARK: - Countries
 
-    /// GEOS-computed filled area (outer minus holes) vs triangulated area; a large ratio means the
-    /// triangulation dropped or overlapped triangles. 2-D check, before un-projection.
-    private static func areaStats(polyArea: Float, verts: [SIMD2<Float>], tris: [(Int, Int, Int)]) -> (poly: Float, ratio: Float) {
-        var triArea: Float = 0
-        for t in tris {
-            let a = verts[t.0], b = verts[t.1], c = verts[t.2]
-            triArea += abs((b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y)) / 2
+    /// Groups the baked paths by their SVG ancestor ids and aggregates each group into one
+    /// `MapGlobeCountry`: merged draw ranges plus a cap enclosing every member.
+    private func countries() -> [String: MapGlobeCountry] {
+        var memberIndicesByID: [String: [Int]] = [:]
+        for (index, path) in bakedPaths.enumerated() {
+            for id in path.ancestorIDs {
+                memberIndicesByID[id, default: []].append(index)
+            }
         }
-        guard polyArea > 0 else { return (0, 0) }
-        return (polyArea, abs(triArea - polyArea) / polyArea)
+        var result: [String: MapGlobeCountry] = [:]
+        for (id, members) in memberIndicesByID {
+            // The country centre is the union of the member bounding boxes, un-projected, and the radius
+            // encloses every member cap. For a country with members that wrap the antimeridian, like the
+            // Aleutians, the union box spans most of the map and this centre is wrong. The camera rotates
+            // to the mainland variant though, which doesn't wrap, so the affected aggregate centre is
+            // never used for framing.
+            var unionBounds = bakedPaths[members[0]].bounds
+            for member in members.dropFirst() {
+                unionBounds = unionBounds.union(bakedPaths[member].bounds)
+            }
+            let centroid = unprojector.sphere(SIMD2<Float>(Float(unionBounds.midX), Float(unionBounds.midY)))
+            // Enclosing-cap radius around the fixed bounding-box center. Each member's cap radius is already baked, so
+            // this just adds the centre-to-member angle to it.
+            var radius: Float = 0
+            for member in members {
+                radius = max(radius, acos(cosAngle(between: centroid, bakedPaths[member].centroid)) + bakedPaths[member].radius)
+            }
+            result[id] = MapGlobeCountry(
+                cap: SphericalCap(center: centroid, radius: .radians(Double(radius))),
+                fillRanges: mergeRanges(members.map { bakedPaths[$0].fillRange }.filter { !$0.isEmpty }),
+                borderRanges: mergeRanges(members.map { bakedPaths[$0].borderRange }.filter { !$0.isEmpty })
+            )
+        }
+        return result
     }
+}
+
+/// Tracks how faithfully each path triangulated and prints one summary at the end of the bake. Keeping the
+/// numbers here keeps the geometry code free of bookkeeping.
+private struct TriangulationReport {
+    private enum Constants {
+        /// Triangulated-versus-polygon area ratio above which a ring is counted as imperfect (logged as a
+        /// negligible sliver), and the higher ratio above which it's flagged as a gross failure.
+        static let imperfectAreaRatio: Float = 0.02
+        static let grossAreaRatio: Float = 0.15
+    }
+
+    private struct Failure {
+        let area: Float
+        let ratio: Float
+        let vertexCount: Int
+        let ids: [String]
+    }
+
+    private var failures: [Failure] = []
+    private var totalArea: Float = 0
+
+    /// Compares the area GEOS reported for the polygon (outer ring minus holes) against the summed area of
+    /// the triangles it produced, and logs the path when they disagree by more than a small fraction. A
+    /// large mismatch means the triangulation dropped or overlapped triangles. The check runs in 2-D map
+    /// space, before un-projection. A path with real area but no triangles at all is logged as a
+    /// 100 percent mismatch, so a whole country disappearing can never look smaller than a sliver.
+    mutating func record(polygonArea: Double, vertices: [SIMD2<Float>], triangles: [(Int, Int, Int)], ids: [String]) {
+        let area = Float(polygonArea)
+        guard area > 0 else { return }
+        totalArea += area
+        let ratio = triangles.isEmpty ? 1 : abs(Self.triangulatedArea(vertices, triangles) - area) / area
+        guard ratio > Constants.imperfectAreaRatio else { return }
+        failures.append(Failure(area: area, ratio: ratio, vertexCount: vertices.count, ids: ids))
+    }
+
+    func printSummary() {
+        guard !failures.isEmpty else { return }
+        let failedArea = failures.reduce(Float(0)) { $0 + $1.area }
+        let pct = totalArea > 0 ? failedArea / totalArea * 100 : 0
+        print(String(format: "MapBaker: %d rings triangulate imperfectly (%.3f%% of land, negligible slivers on tiny islands)", failures.count, pct))
+        let gross = failures.filter { $0.ratio > Constants.grossAreaRatio }
+        guard !gross.isEmpty else { return }
+        print("MapBaker: WARNING: \(gross.count) rings have a gross (>\(Int(Constants.grossAreaRatio * 100))%) area mismatch:")
+        for failure in gross.sorted(by: { $0.area > $1.area }).prefix(10) {
+            print(String(format: "    area=%.0f ratio=%.2f vertices=%d ids=%@", failure.area, failure.ratio, failure.vertexCount, failure.ids.joined(separator: ",")))
+        }
+    }
+
+    private static func triangulatedArea(_ vertices: [SIMD2<Float>], _ triangles: [(Int, Int, Int)]) -> Float {
+        var area: Float = 0
+        for triangle in triangles {
+            let a = vertices[triangle.0], b = vertices[triangle.1], c = vertices[triangle.2]
+            area += abs((b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y)) / 2
+        }
+        return area
+    }
+}
+
+/// Largest angle in radians between `center` and any vertex, measured across the sphere's surface: how far
+/// the path spreads out from its center. Stays on plain `Float` maths, with no `Angle` wrapping, because it
+/// scans every vertex of every path.
+private func maxSphereAngle(from center: SIMD3<Float>, to vertices: [SIMD3<Float>]) -> Float {
+    var radius: Float = 0
+    for vertex in vertices {
+        radius = max(radius, acos(cosAngle(between: center, vertex)))
+    }
+    return radius
+}
+
+/// Merges overlapping or touching ranges, so a country's draw ranges stay compact.
+private func mergeRanges(_ ranges: [Range<Int>]) -> [Range<Int>] {
+    let sorted = ranges.sorted { $0.lowerBound < $1.lowerBound }
+    var merged: [Range<Int>] = []
+    for range in sorted {
+        if let last = merged.last, range.lowerBound <= last.upperBound {
+            merged[merged.count - 1] = last.lowerBound ..< max(last.upperBound, range.upperBound)
+        } else {
+            merged.append(range)
+        }
+    }
+    return merged
 }
 
 // MARK: - Natural Earth inversion + sphere mapping
 
-/// Inverts the Natural Earth projection (recovering lat/long from baked map coords) and maps to the unit
-/// sphere. Constants mirror `Ergonomics/NaturalEarthProjection`; verified to round-trip to ~1e-13°.
+/// Inverts the Natural Earth projection, recovering latitude and longitude from map coordinates, and maps
+/// to the unit sphere. The projection's polynomials live once in `Triangulation.NaturalEarth`, shared with
+/// the app's forward pin placement so the two can't drift. This only layers on the map's pixel scale and
+/// undoes its 10-degree prime-meridian shift.
 struct Unprojector {
-    /// Half-extents of the Natural Earth projection at the map's reference scale: x spans
-    /// ±`projectionHalfWidth`, y spans ±`projectionHalfHeight`. Mirror `Ergonomics/NaturalEarthProjection`.
-    private static let projectionHalfWidth = 2.73539
-    private static let projectionHalfHeight = 1.42239
-    /// Bisection steps inverting the (monotonic) latitude polynomial. Each step halves the ±90° interval,
-    /// so ~50 exhausts `Double`'s ~52-bit mantissa — past that the result no longer changes.
-    private static let latitudeBisectionSteps = 50
-
     private let ratioX: Double
     private let ratioY: Double
     private let midX: Double
     private let midY: Double
 
     init(bounds: CGRect) {
-        self.ratioX = Double(bounds.width) / (2 * Self.projectionHalfWidth)
-        self.ratioY = Double(bounds.height) / (2 * Self.projectionHalfHeight)
+        self.ratioX = Double(bounds.width) / (2 * NaturalEarth.halfWidth)
+        self.ratioY = Double(bounds.height) / (2 * NaturalEarth.halfHeight)
         self.midX = Double(bounds.width) / 2
         self.midY = Double(bounds.height) / 2
     }
 
     func sphere(_ p: SIMD2<Float>) -> SIMD3<Float> {
         let (lat, lon) = latLon(p)
-        // Shared with the app's pin placement so the two never drift; winding is re-enforced outward on
-        // the triangles afterwards.
+        // Placed via the app's own GlobeGeometry.unitSphere so baked vertices and runtime pins share one
+        // mapping. Winding is re-enforced outward on the triangles afterwards.
         return GlobeGeometry.unitSphere(latitudeDegrees: Float(lat), longitudeDegrees: Float(lon))
     }
 
-    /// Sphere arc length (radians) between two map points — used to decide segment densification.
+    /// Sphere arc length in radians between two map points. Used to decide segment densification.
     func arc(_ p0: SIMD2<Float>, _ p1: SIMD2<Float>) -> Float {
-        let a = sphere(p0)
-        let b = sphere(p1)
-        return acos(max(-1, min(1, simd_dot(a, b))))
+        acos(cosAngle(between: sphere(p0), sphere(p1)))
     }
 
     private func latLon(_ p: SIMD2<Float>) -> (lat: Double, lon: Double) {
         let projX = (Double(p.x) - midX) / ratioX
         let projY = (midY - Double(p.y)) / ratioY
-        // latitude: dPolynomial is monotonic → bisection
-        var lo = -Double.pi / 2
-        var hi = Double.pi / 2
-        for _ in 0 ..< Self.latitudeBisectionSteps {
-            let mid = (lo + hi) / 2
-            if dPolynomial(mid) < projY { lo = mid } else { hi = mid }
-        }
-        let latR = (lo + hi) / 2
-        let l = lPolynomial(latR)
-        let lonR = abs(l) > 1e-12 ? projX / l : 0
-        var lon = lonR * 180 / .pi + 10 // reverse the map's −10° shift
+        let geo = NaturalEarth.unproject(SIMD2<Double>(projX, projY))
+        var lon = geo.longitude.degrees + 10 // reverse the map's 10-degree prime-meridian shift
         if lon > 180 { lon -= 360 }
         if lon < -180 { lon += 360 }
-        return (latR * 180 / .pi, lon)
-    }
-
-    private func lPolynomial(_ lat: Double) -> Double {
-        0.870700 - 0.131979 * pow(lat, 2) - 0.013791 * pow(lat, 4) + 0.003971 * pow(lat, 10) - 0.001529 * pow(lat, 12)
-    }
-
-    private func dPolynomial(_ lat: Double) -> Double {
-        let s = 1.007226 + 0.015085 * pow(lat, 2) - 0.044475 * pow(lat, 6) + 0.028874 * pow(lat, 8) - 0.005916 * pow(lat, 10)
-        return s * lat
+        return (geo.latitude.degrees, lon)
     }
 }

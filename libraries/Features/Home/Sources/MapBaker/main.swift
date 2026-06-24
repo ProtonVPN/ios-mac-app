@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-// MapBaker — converts the source world-map SVG into the compact `world-globe.bin` consumed at runtime.
+// MapBaker converts the source world-map SVG into the compact `world-globe.bin` consumed at runtime.
 //
 // Usage (run from the Home package directory):
 //
@@ -41,11 +41,12 @@ func fail(_ message: String) -> Never {
     exit(1)
 }
 
-/// Swap the SVG's embedded `<style>` for `MapCSS` so country fills/strokes resolve to the app's colours.
+/// Swap the SVG's embedded `<style>` for `MapCSS` so country fills and strokes resolve to the app's
+/// colors.
 ///
-/// Done as a string substitution (rather than mutating the parsed XML) because Foundation also exports
-/// an `XMLElement` type that collides with SVGView's, and the `SVGView` module name collides with its
-/// own `SVGView` type — making the parsed-node types awkward to reference by name here.
+/// Done as a string substitution rather than by mutating the parsed XML, because Foundation also exports
+/// an `XMLElement` type that collides with SVGView's, and the `SVGView` module name collides with its own
+/// `SVGView` type, which makes the parsed-node types awkward to reference by name here.
 func applyMapCSS(to svg: String) -> String {
     let pattern = "<style[^>]*>.*?</style>"
     guard let regex = try? NSRegularExpression(pattern: pattern, options: [.dotMatchesLineSeparators, .caseInsensitive]) else {
@@ -53,7 +54,7 @@ func applyMapCSS(to svg: String) -> String {
     }
     let range = NSRange(svg.startIndex..., in: svg)
     guard regex.firstMatch(in: svg, options: [], range: range) != nil else {
-        print("MapBaker: warning — no <style> element found; using the SVG's own colours")
+        print("MapBaker: warning: no <style> element found, using the SVG's own colors")
         return svg
     }
     let replacement = "<style type=\"text/css\">\n\(MapCSS.css)\n</style>"
@@ -74,21 +75,32 @@ guard let root = SVGParser.parse(string: applyMapCSS(to: original)) else {
     fail("failed to parse SVG geometry")
 }
 
-print("MapBaker: extracting globe geometry…")
+print("MapBaker: extracting globe geometry...")
 let globe = GlobeExtractor.extract(from: root)
-let globeData = MapGlobeCodec.encode(globe)
+let globeData: Data
+do {
+    globeData = try MapGlobeCodec.encode(globe)
+} catch {
+    fail("failed to encode globe binary: \(error)")
+}
+
+// Decode the encoded bytes and re-encode them: the result must be byte-identical. Decoding alone would
+// miss a swapped pair of same-width fields or an under-reading decoder. The byte compare enforces the
+// real invariant, that the codec is byte-stable against this bin. Checked before the write, so a broken
+// format never lands on disk.
+do {
+    let reencoded = try MapGlobeCodec.encode(MapGlobeCodec.decode(globeData))
+    guard reencoded == globeData else {
+        fail("globe binary is not byte-stable: decoding and re-encoding produced \(reencoded.count) bytes from \(globeData.count)")
+    }
+} catch {
+    fail("globe binary failed to decode: \(error)")
+}
 
 do {
     try globeData.write(to: outputURL)
 } catch {
     fail("failed to write \(outputURL.path): \(error)")
-}
-
-// Round-trip the encoded bytes so a broken format fails the bake, not the app at launch.
-do {
-    _ = try MapGlobeCodec.decode(globeData)
-} catch {
-    fail("globe binary failed to decode: \(error)")
 }
 
 let globeSizeKB = Double(globeData.count) / 1024

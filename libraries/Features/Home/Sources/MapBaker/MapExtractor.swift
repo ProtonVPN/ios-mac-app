@@ -21,24 +21,31 @@ import Foundation
 import simd
 import SVGView
 
-/// Walks the source SVG tree and flattens it into render-ready paths — the expensive XML walk + Bézier
-/// flattening that used to happen on every app launch. Runs once, offline, feeding `GlobeExtractor`.
+/// Walks the source SVG tree and flattens it into render-ready paths, so the expensive XML walk and
+/// Bezier flattening happen once, offline, rather than in the app. Feeds `GlobeExtractor`.
 enum MapExtractor {
-    /// Map-space tolerance for subdividing Bézier curves. The source is already dense polylines, so
-    /// this is rarely hit; kept small so extreme zoom never reveals facets.
-    private static let flatness: CGFloat = 0.15
-    /// Opacity at or below this is treated as hidden (ocean, small-territory circles, and the
-    /// limited-recognition overlays are authored `opacity: 0`).
-    ///
-    /// Note: SVGView resolves CSS `opacity: 0` onto the *fill/stroke colour's alpha* rather than
-    /// `node.opacity`, so the node-level check rarely fires — `hiddenAlphaThreshold` below is what
-    /// actually culls the ocean and the duplicate-overlay layers (and their otherwise-uniform borders).
-    private static let hiddenOpacityThreshold: Double = 0.01
-    /// A resolved fill/stroke colour at or below this alpha contributes nothing and is dropped.
-    private static let hiddenAlphaThreshold: Float = 0.01
+    private enum Constants {
+        /// Opacity at or below this is treated as hidden. The ocean, small-territory circles, and the
+        /// limited-recognition overlays are authored with zero opacity.
+        ///
+        /// Note that SVGView resolves a CSS `opacity: 0` onto the fill and stroke colors' alpha rather
+        /// than `node.opacity`, so this node-level check rarely fires. `hiddenAlphaThreshold` below is
+        /// what actually culls the ocean and the duplicate overlay layers.
+        static let hiddenOpacityThreshold: Double = 0.01
+        /// A resolved fill or stroke color at or below this alpha contributes nothing and is dropped.
+        static let hiddenAlphaThreshold: Float = 0.01
+        /// Recursion cap on curve subdivision, bounding a pathological curve at 2^18 segments. Real map
+        /// curves flatten within a handful of levels.
+        static let maxSubdivisionDepth = 18
+    }
 
-    /// Walks the SVG once and returns the flattened paths for `GlobeExtractor` — so the expensive XML
-    /// walk + Bézier flattening happens once.
+    private enum Dimensions {
+        /// Map-space tolerance for subdividing Bezier curves. The source is already dense polylines, so
+        /// this is rarely hit. Kept small so extreme zoom never reveals facets.
+        static let flatness: CGFloat = 0.15
+    }
+
+    /// Walks the SVG once and returns the flattened paths for `GlobeExtractor`.
     static func collectPaths(from root: SVGNode) -> [ExtractedPath] {
         var paths: [ExtractedPath] = []
         walk(root, transform: .identity, opacity: 1, ancestorIDs: [], into: &paths)
@@ -85,7 +92,7 @@ enum MapExtractor {
         into paths: inout [ExtractedPath]
     ) {
         let opacity = opacity * node.opacity
-        if opacity <= hiddenOpacityThreshold { return } // skip ocean / hidden overlays wholesale
+        if opacity <= Constants.hiddenOpacityThreshold { return } // skip the ocean and hidden overlays wholesale
 
         let worldTransform = node.transform.concatenating(transform)
         var ids = ancestorIDs
@@ -160,9 +167,9 @@ enum MapExtractor {
         SIMD4<Float>(Float(svg.r) / 255, Float(svg.g) / 255, Float(svg.b) / 255, Float(svg.opacity))
     }
 
-    /// Returns the colour only if it is actually visible; near-zero alpha is treated as absent.
+    /// Returns the color only if it is actually visible; near-zero alpha is treated as absent.
     private static func visible(_ color: SIMD4<Float>) -> SIMD4<Float>? {
-        color.w > hiddenAlphaThreshold ? color : nil
+        color.w > Constants.hiddenAlphaThreshold ? color : nil
     }
 
     // MARK: CGPath flattening
@@ -225,7 +232,7 @@ enum MapExtractor {
         depth: Int = 0,
         push: (CGPoint) -> Void
     ) {
-        if depth >= 18 || cubicIsFlat(p0, p1, p2, p3) {
+        if depth >= Constants.maxSubdivisionDepth || cubicIsFlat(p0, p1, p2, p3) {
             push(p3)
             return
         }
@@ -243,7 +250,7 @@ enum MapExtractor {
         depth: Int = 0,
         push: (CGPoint) -> Void
     ) {
-        if depth >= 18 || quadIsFlat(p0, p1, p2) {
+        if depth >= Constants.maxSubdivisionDepth || quadIsFlat(p0, p1, p2) {
             push(p2)
             return
         }
@@ -254,11 +261,11 @@ enum MapExtractor {
     }
 
     private static func cubicIsFlat(_ p0: CGPoint, _ p1: CGPoint, _ p2: CGPoint, _ p3: CGPoint) -> Bool {
-        max(distanceToLine(p1, a: p0, b: p3), distanceToLine(p2, a: p0, b: p3)) <= flatness
+        max(distanceToLine(p1, a: p0, b: p3), distanceToLine(p2, a: p0, b: p3)) <= Dimensions.flatness
     }
 
     private static func quadIsFlat(_ p0: CGPoint, _ p1: CGPoint, _ p2: CGPoint) -> Bool {
-        distanceToLine(p1, a: p0, b: p2) <= flatness
+        distanceToLine(p1, a: p0, b: p2) <= Dimensions.flatness
     }
 
     private static func distanceToLine(_ p: CGPoint, a: CGPoint, b: CGPoint) -> CGFloat {

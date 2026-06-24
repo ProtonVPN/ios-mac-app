@@ -21,13 +21,14 @@ import Domain
 import Foundation
 @testable import HomeShared
 import Testing
+import Triangulation
 
 @Suite("Interactive globe pin clustering")
 struct InteractiveGlobeClusteringTests {
-    /// A low manual-zoom floor like the interactive globe uses (well below the home map's auto-fit clamp).
+    /// A low manual-zoom floor like the interactive globe uses, well below the decorative auto-fit clamp.
     private let zoomFloor: Float = 1.02
-    /// A representative portrait render-canvas aspect (width / height) — the narrower horizontal FOV is what
-    /// the cluster fit must respect so sideways-spread members don't fall off the sides.
+    /// A representative portrait canvas aspect ratio. Its narrower horizontal field of view is what the
+    /// cluster fit must respect so sideways-spread members don't fall off the sides.
     private let aspectRatio: Float = 0.46
 
     private func pin(_ id: String, latitude: Double = 0, longitude: Double = 0) -> CityPin {
@@ -45,8 +46,8 @@ struct InteractiveGlobeClusteringTests {
     func coalescesOverlappingPins() {
         let projected = [
             ProjectedPin(pin: pin("a"), point: CGPoint(x: 100, y: 100)),
-            ProjectedPin(pin: pin("b"), point: CGPoint(x: 110, y: 100)), // 10pt from a → merges
-            ProjectedPin(pin: pin("c"), point: CGPoint(x: 300, y: 300)), // far → stays separate
+            ProjectedPin(pin: pin("b"), point: CGPoint(x: 110, y: 100)), // 10pt from a, so it merges
+            ProjectedPin(pin: pin("c"), point: CGPoint(x: 300, y: 300)), // far away, stays separate
         ]
 
         let clusters = clusterPins(projected, within: 44)
@@ -81,8 +82,9 @@ struct InteractiveGlobeClusteringTests {
 
         #expect(target.distance < GlobeFocus.wholeGlobeDistance) // zoomed in
         #expect(target.distance >= zoomFloor) // not past the supplied floor
-        #expect(abs(target.latitudeDegrees - 50) < 1) // centred on the members
-        #expect(abs(target.longitudeDegrees - 11) < 1)
+        let coordinate = GlobeGeometry.coordinate(of: target.direction)
+        #expect(abs(coordinate.latitude.degrees - 50) < 1) // centred on the members
+        #expect(abs(coordinate.longitude.degrees - 11) < 1)
     }
 
     @Test("A near-coincident pair zooms all the way to the supplied floor")
@@ -100,15 +102,15 @@ struct InteractiveGlobeClusteringTests {
 
     @Test("Tapping a cluster while already zoomed in frames all members, not over-shooting past the fit")
     func zoomTargetFitsAllWhenAlreadyZoomedIn() {
-        // Two pins 5° apart — their fit distance sits well above the floor.
+        // Two pins 5 degrees apart, so their fit distance sits well above the floor.
         let cluster = PinCluster(
             id: "x",
             center: .zero,
             members: [pin("a", latitude: 0, longitude: 0), pin("b", latitude: 0, longitude: 5)]
         )
 
-        // Already dollied in close: a "fraction of the current distance" step would shoot *past* the fit and
-        // clip the outer members. The target should instead land on the fit that frames the whole cap.
+        // Already zoomed in close: stepping by a fraction of the current distance would shoot past the fit
+        // and clip the outer members. The target should instead land on the fit that frames the whole cap.
         let target = cluster.zoomTarget(currentDistance: 1.5, minDistance: zoomFloor, aspectRatio: aspectRatio)
         let fit = GlobeFocus.distance(fittingAngularRadius: Float(2.5 * Double.pi / 180), aspectRatio: aspectRatio, minDistance: zoomFloor)
 

@@ -40,17 +40,32 @@ public struct HomeView: View {
         self.store = store
     }
 
-    private static let bottomGradientHeight: CGFloat = 100
-    /// Extra map canvas drawn past the bottom safe area so the globe bleeds *under* the (translucent, on
-    /// iOS 26 Liquid Glass) tab bar instead of stopping at its top edge — the tab bar then floats over the
-    /// map. Generously overshoots any tab bar + home-indicator inset (the excess clips off-screen); harmless
-    /// where the bar is opaque (it just hides the bleed). The scroll keeps respecting the inset, so the last
-    /// Recents row still clears the bar.
-    private static let mapBottomBleed: CGFloat = 120
-    /// Pulling the connection card + recents down past this many points while already scrolled to the top
-    /// collapses them, revealing the full interactive map. Normal scrolling is unaffected.
-    private static let pullToCollapseThreshold: CGFloat = 90
-    private static let scrollSpace = "homeScroll"
+    private enum Constants {
+        /// The animation between sheet and full map, slightly under-damped so the hand-off has some life.
+        static let mapFullSpring = Animation.spring(response: 0.42, dampingFraction: 0.9)
+        static let scrollSpace = "homeScroll"
+    }
+
+    private enum Dimensions {
+        static let bottomGradientHeight: CGFloat = 100
+        /// Extra map canvas drawn past the bottom safe area so the globe bleeds under the tab bar
+        /// (translucent on iOS 26) instead of stopping at its top edge, letting the bar float over the
+        /// map. Generously overshoots any tab bar and home-indicator inset, since the excess clips
+        /// off-screen, and is harmless where the bar is opaque. The scroll keeps respecting the inset, so
+        /// the last Recents row still clears the bar.
+        static let mapBottomBleed: CGFloat = 120
+        /// Pulling the connection card and recents down past this many points while already scrolled to
+        /// the top collapses them, revealing the full interactive map. Normal scrolling is unaffected.
+        static let pullToCollapseThreshold: CGFloat = 90
+        /// The pull must relax back under this before another over-pull may collapse again. The re-arm
+        /// side of `pullToCollapseThreshold`.
+        static let pullRearmThreshold: CGFloat = 10
+        /// The swipe-up-to-return strip along the full map's bottom edge: its hit-band height, the drag
+        /// travel that starts the gesture, and the upward translation that triggers the return.
+        static let returnStripHeight: CGFloat = 56
+        static let returnSwipeMinimumDistance: CGFloat = 12
+        static let returnSwipeTrigger: CGFloat = -24
+    }
 
     @State private var lastScrollOffset: CGFloat = .zero
 
@@ -59,16 +74,22 @@ public struct HomeView: View {
     @State private var swapThreshold: CGFloat = .zero
     @State private var mapHeight: CGFloat = .zero
 
-    /// false: card + recents up (the normal home, map peeking above). true: they're hidden and the map is
-    /// full-screen and interactive, with only the minimal connection chrome (tint + lock + title) over it.
+    /// False shows the normal home, card and recents up with the map peeking above them. True hides them,
+    /// leaving the map full-screen and interactive with only the tint, lock, and title over it.
     @State private var isMapFull = false
-    /// Gates the pull-to-collapse so one over-pull collapses once; re-arms when the pull relaxes back to
-    /// the top, preventing repeat triggers from a single sustained pull. Starts **disarmed** so a transient
-    /// large pull during the first layout pass (a named-coordinate-space fallback) can't collapse to the full
-    /// map on launch — it only arms once a genuine at-rest reading (`pull < 10`) is seen.
+    /// Gates the pull-to-collapse so one over-pull collapses once, re-arming when the pull relaxes back to
+    /// the top. This prevents repeat triggers from a single sustained pull. Starts disarmed so a transient
+    /// large pull during the first layout pass can't collapse to the full map on launch. It only arms once
+    /// a genuine at-rest reading is seen.
     @State private var collapseArmed = false
 
     @SharedReader(.userTier) private var userTier: VpnTier?
+
+    #if DEBUG
+        /// `.staticImage` only while snapshot testing, the app never sets it. Lets `resolvedMapHeight` frame
+        /// the map synchronously during off-screen capture.
+        @Environment(\.globeRenderMode) private var globeRenderMode
+    #endif
 
     @Namespace private var topID
 
@@ -85,16 +106,47 @@ public struct HomeView: View {
     }
 
     private func calculateMapHeight() {
+        mapHeight = framedMapHeight(viewHeight: viewHeight)
+        swapThreshold = mapHeight - connectionViewHeight - Dimensions.bottomGradientHeight
+    }
+
+    /// The map peek height for a given container height. Factored out of `calculateMapHeight` so the DEBUG
+    /// snapshot path can compute it synchronously from live geometry.
+    private func framedMapHeight(viewHeight: CGFloat) -> CGFloat {
         let hasRecents = !store.recents.recentConnectionList.isEmpty
         let isFree = userTier.isFree
         let recentPeek: CGFloat = (hasRecents || isFree) ? .themeSpacing64 : 0
-        mapHeight = max(0, viewHeight - (connectionViewHeight + recentPeek))
-        swapThreshold = mapHeight - connectionViewHeight - Self.bottomGradientHeight
+        return max(0, viewHeight - (connectionViewHeight + recentPeek))
+    }
+
+    /// The height handed to the map's framing. Normally the measured `mapHeight`, but during off-screen
+    /// snapshot capture `onAppear` hasn't run to seed `viewHeight`, so `mapHeight` is still 0 and the globe
+    /// would be unframed, leaving a black map. In that DEBUG-only path, derive the height synchronously from
+    /// the live geometry instead so the globe is framed exactly as in the live app.
+    private func resolvedMapHeight(_ proxy: GeometryProxy) -> CGFloat {
+        #if DEBUG
+            if globeRenderMode == .staticImage {
+                return framedMapHeight(viewHeight: proxy.size.height)
+            }
+        #endif
+        return mapHeight
+    }
+
+    /// Distance from the screen top to this view, the status-bar inset the map bleeds up under. During
+    /// off-screen snapshot capture the host window sits at a large global offset, so the `.global` minY
+    /// balloons into the tens of thousands and the map's render canvas blows past Metal's texture limit,
+    /// leaving the visible area black. The snapshot config has a zero safe area, so the inset is simply 0
+    /// in that DEBUG path.
+    private func resolvedTopInset(_ proxy: GeometryProxy) -> CGFloat {
+        #if DEBUG
+            if globeRenderMode == .staticImage { return 0 }
+        #endif
+        return proxy.frame(in: .global).minY
     }
 
     private func setMapFull(_ full: Bool) {
         guard isMapFull != full else { return }
-        withAnimation(.spring(response: 0.42, dampingFraction: 0.9)) {
+        withAnimation(Constants.mapFullSpring) {
             isMapFull = full
         }
     }
@@ -139,10 +191,11 @@ public struct HomeView: View {
             // Distance from the screen top to this view (notch / status bar). The map bleeds up by this
             // much (`.ignoresSafeArea(.top)`) and the globe's focus region is offset down by the same, so
             // the map fills behind the status bar while the country stays put in the visible area.
-            let topInset = proxy.frame(in: .global).minY
-            // The full-screen map lives in the stack's `.background` (applied below), NOT as a child: its
-            // canvas draws taller than the safe area (spilling under the tab bar) and must stay layout-neutral.
-            // As a child it sized the ZStack, which dragged the ScrollView's last Recents row under the bar.
+            let topInset = resolvedTopInset(proxy)
+            // The full-screen map lives in the stack's `.background` (applied below) rather than as a child.
+            // Its canvas draws taller than the safe area, spilling under the tab bar, and must stay
+            // layout-neutral. As a child it would size the ZStack and drag the ScrollView's last Recents row
+            // under the bar.
             ZStack(alignment: .top) {
                 // `ConnectionStatusView` owns the top-of-map slot for every protection state, including
                 // the grey Advanced-kill-switch blocking overlay (see its `.killSwitchActive` branch).
@@ -153,8 +206,9 @@ public struct HomeView: View {
                     onTap: isMapFull ? { setMapFull(false) } : nil
                 )
                 .zIndex(connectionStatusZIndex.rawValue)
-                // Hit-testable in both modes now: the decorative gradient never hit-tests and the banner is
-                // hidden when full, so the only thing that catches a tap is the lock/title (→ exit).
+                // Hit-testable in both modes: the decorative gradient never hit-tests and the banner is
+                // hidden when the map is full, so the only thing that catches a tap is the lock and title,
+                // which exits.
                 .allowsHitTesting(true)
 
                 ScrollViewReader { scrollViewProxy in
@@ -172,7 +226,7 @@ public struct HomeView: View {
                                 startPoint: .top,
                                 endPoint: .bottom
                             )
-                            .frame(width: proxy.size.width, height: Self.bottomGradientHeight)
+                            .frame(width: proxy.size.width, height: Dimensions.bottomGradientHeight)
                             .allowsHitTesting(false)
                         }
                         VStack(spacing: 0) {
@@ -180,13 +234,13 @@ public struct HomeView: View {
                                 HomeConnectionCardView(store: store.scope(state: \.connectionCard, action: \.connectionCard))
                                     .padding(.horizontal, .themeSpacing16)
                                     .padding(.bottom, .themeSpacing12)
-                                    .frame(width: min(proxy.size.width, Constants.maxHomeContentWidth))
+                                    .frame(width: min(proxy.size.width, Theme.Constants.maxHomeContentWidth))
                                     .background(trackConnectionViewHeight())
                                 AnnouncementBannerView(store: store.scope(state: \.announcementBanner, action: \.announcementBanner))
                                     .padding(.horizontal, .themeSpacing16)
                                     .padding(.bottom, .themeSpacing8)
                                     .padding(.top, .themeSpacing16)
-                                    .frame(width: min(proxy.size.width, Constants.maxAnnouncementBannerWidth))
+                                    .frame(width: min(proxy.size.width, Theme.Constants.maxAnnouncementBannerWidth))
                             }
 
                             RecentsSectionView(store: store.scope(state: \.recents, action: \.recents))
@@ -196,7 +250,7 @@ public struct HomeView: View {
                         }
                         .background(Color(.background).padding(.bottom, -(proxy.size.height * 2))) // Extends the background color well below the scroll view content.
                     }
-                    .coordinateSpace(name: Self.scrollSpace)
+                    .coordinateSpace(name: Constants.scrollSpace)
                     .frame(width: proxy.size.width)
                     .onChange(of: store.connectionState, to: \.connecting) { _, _ in
                         scrollViewProxy.scrollTo(topID)
@@ -218,12 +272,12 @@ public struct HomeView: View {
                     VStack(spacing: 0) {
                         Spacer(minLength: 0)
                         Color.clear
-                            .frame(height: 56)
+                            .frame(height: Dimensions.returnStripHeight)
                             .contentShape(Rectangle())
                             .gesture(
-                                DragGesture(minimumDistance: 12)
+                                DragGesture(minimumDistance: Dimensions.returnSwipeMinimumDistance)
                                     .onEnded { value in
-                                        if value.translation.height < -24 { setMapFull(false) }
+                                        if value.translation.height < Dimensions.returnSwipeTrigger { setMapFull(false) }
                                     }
                             )
                     }
@@ -232,24 +286,23 @@ public struct HomeView: View {
                     .zIndex(ZIndex.enabledConnectionStatus.rawValue)
                 }
             }
-            // Full-screen map behind the stack. Decorative (faces the connected country) with the sheet up;
-            // interactive (pan/pinch + location pins) when collapsed. As a `.background` it draws taller than
-            // the stack — its canvas spills under the tab bar (`mapBottomBleed` + `ignoresSafeArea(.bottom)`) —
-            // WITHOUT sizing the stack, so the ScrollView keeps its safe-area inset and the last Recents row
-            // clears the bar. Still hit-testable: when the sheet is up the scroll covers it; when full the
-            // scroll stops hit-testing, so pan/pinch/tap fall through to the map. (`focusHeight`/availableHeight
-            // is unchanged, so the globe stays framed where it was — only the un-clipped spill below it grows.)
+            // Full-screen map behind the stack: decorative and facing the connected country with the sheet
+            // up, interactive when collapsed. As a `.background` it draws taller than the stack, spilling
+            // under the tab bar, without sizing it, so the ScrollView keeps its safe-area inset and the last
+            // Recents row clears the bar. It stays hit-testable: with the sheet up the scroll covers it, and
+            // when full the scroll stops hit-testing so gestures fall through to the map. The framed height
+            // is the same either way, so the globe stays put and only the unclipped spill below it grows.
             .background(alignment: .top) {
                 HomeMapView(
                     store: store.scope(state: \.map, action: \.map),
-                    availableHeight: isMapFull ? proxy.size.height + topInset : mapHeight,
+                    availableHeight: isMapFull ? proxy.size.height + topInset : resolvedMapHeight(proxy),
                     availableWidth: proxy.size.width,
-                    renderHeight: proxy.size.height + topInset + Self.mapBottomBleed,
+                    renderHeight: proxy.size.height + topInset + Dimensions.mapBottomBleed,
                     topInset: topInset,
                     interactive: isMapFull,
                     onBackgroundTap: { setMapFull(false) }
                 )
-                .frame(width: proxy.size.width, height: proxy.size.height + topInset + Self.mapBottomBleed, alignment: .top)
+                .frame(width: proxy.size.width, height: proxy.size.height + topInset + Dimensions.mapBottomBleed, alignment: .top)
                 .ignoresSafeArea(.container, edges: [.top, .bottom])
             }
             .background(Color(.background).ignoresSafeArea())
@@ -282,26 +335,26 @@ public struct HomeView: View {
                 )
         }
         .onPreferenceChange(ScrollOffsetPreferenceKey.self) { scrollOffset in
-            if abs(lastScrollOffset - scrollOffset) > Self.bottomGradientHeight {
+            if abs(lastScrollOffset - scrollOffset) > Dimensions.bottomGradientHeight {
                 updateConnectionStatusZIndex(scrollOffset)
             }
         }
     }
 
-    /// Reads how far the content is pulled down past the top of the scroll view; once it exceeds the
-    /// threshold (only possible by over-pulling at the very top), it collapses to the full map. Normal
-    /// scrolling keeps this at/below zero, so the two gestures don't fight.
+    /// Reads how far the content is pulled down past the top of the scroll view, and collapses to the full
+    /// map once it exceeds the threshold, which is only possible by over-pulling at the very top. Normal
+    /// scrolling keeps the value at or below zero, so the two gestures don't fight.
     private func pullToCollapseReader() -> some View {
         GeometryReader { inner in
             Color.clear
                 .preference(
                     key: PullDownPreferenceKey.self,
-                    value: inner.frame(in: .named(Self.scrollSpace)).minY
+                    value: inner.frame(in: .named(Constants.scrollSpace)).minY
                 )
         }
         .onPreferenceChange(PullDownPreferenceKey.self) { pull in
-            if pull < 10 { collapseArmed = true }
-            if !isMapFull, collapseArmed, pull > Self.pullToCollapseThreshold {
+            if pull < Dimensions.pullRearmThreshold { collapseArmed = true }
+            if !isMapFull, collapseArmed, pull > Dimensions.pullToCollapseThreshold {
                 collapseArmed = false
                 setMapFull(true)
             }

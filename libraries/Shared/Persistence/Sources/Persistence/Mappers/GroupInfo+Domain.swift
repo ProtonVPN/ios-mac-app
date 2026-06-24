@@ -31,6 +31,7 @@ extension GroupInfoResult {
             cityCount: cityCount,
             latitude: latitude,
             longitude: longitude,
+            translatedCity: translatedCity,
             supportsSmartRouting: isVirtual == 1,
             isUnderMaintenance: statusUnion == 0,
             protocolSupport: protocolSupport

@@ -35,12 +35,12 @@ public struct ConnectionStatusView: View {
 
     @Bindable var store: StoreOf<ConnectionStatusFeature>
 
-    /// When the map is in full view the only chrome over it is the tint + lock + title; the NetShield
-    /// banner (which belongs with the connection card) is hidden.
+    /// When the map is in full view, only the tint, lock, and title show over it. The NetShield banner,
+    /// which belongs with the connection card, is hidden.
     var compact: Bool = false
 
-    /// Tapping the lock + title invokes this (used in the full map to exit back to the normal view). `nil`
-    /// leaves the header inert.
+    /// Invoked when the lock and title are tapped. The full map uses this to exit back to the normal view.
+    /// `nil` leaves the header inert.
     var onTap: (() -> Void)?
 
     private static let headerHeight: CGFloat = 58
@@ -150,15 +150,14 @@ public struct ConnectionStatusView: View {
                 endPoint: .bottom
             )
             .ignoresSafeArea()
-            // In the full map the tint hands off to the sun over the globe: the top band fades out as the
-            // sun fades in (both driven by the same expand animation). Purely decorative — never hit-tests,
-            // so taps on the map (or the lock/title below) aren't swallowed by it.
-            .opacity(compact ? 0 : 1)
+            // Kept visible in the full map too. The colored top band gives the lock and title a backdrop so
+            // the status reads clearly instead of clashing with the pins and stars on the map below. Purely
+            // decorative: it never hit-tests, so it can't swallow taps meant for the map or the title.
             .allowsHitTesting(false)
 
             VStack(spacing: 0) {
-                // The lock + title; tapping it runs `onTap` (exits the full map). Scoped to just this header
-                // (not the banner below) so it never intercepts the banner's own controls.
+                // The lock and title. Tapping it runs `onTap`, which exits the full map. Scoped to just this
+                // header, not the banner below, so it never intercepts the banner's own controls.
                 VStack(spacing: 0) {
                     titleView(protectionState: protectionState)
                         .frame(height: Self.headerHeight)
@@ -171,6 +170,9 @@ public struct ConnectionStatusView: View {
                 }
                 .contentShape(Rectangle())
                 .onTapGesture { onTap?() }
+                // An inert header (no `onTap`) must not eat taps. With the sheet up, the map peek behind it
+                // owns the tap-to-expand, and a no-op gesture here would dead-zone the title area.
+                .allowsHitTesting(onTap != nil)
                 if !compact {
                     ConnectionStatusBanner(store: store.scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner))
                         .background(
@@ -185,8 +187,8 @@ public struct ConnectionStatusView: View {
                 }
             }
         }
-        // Fixed height in both modes so the tint gradient stays localized to the top band and fades out,
-        // instead of the greedy gradient filling the whole map (a nil height let it expand).
+        // Fixed height in both modes so the tint gradient stays localized to the top band and fades out.
+        // With no height the greedy gradient would fill the whole map.
         .frame(height: Self.viewHeight)
         .toolbar {
             ToolbarItem(placement: .principal) {

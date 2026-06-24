@@ -22,13 +22,16 @@ import Foundation
 import MapModel
 import simd
 
-/// Loads the baked `world-globe.bin` once and resolves country codes to baked sphere geometry. Keeps the
-/// old flat-map lookup semantics (the same `…x` mainland variants and `gb`→`uk` alias), but for the 3-D
-/// model.
+/// Loads the baked `world-globe.bin` once and resolves country codes to baked sphere geometry. Codes are
+/// lowercased, an "x" suffix names a country's mainland, and "gb" aliases to the map's "uk".
 enum WorldGlobe {
+    /// Bundle URL of the baked binary. Also read directly by the codec byte-stability test, which asserts
+    /// that decoding and re-encoding this exact resource reproduces it bit for bit.
+    static let resourceURL = Bundle.module.url(forResource: "world-globe", withExtension: "bin")
+
     static let model: MapGlobeModel = {
-        guard let url = Bundle.module.url(forResource: "world-globe", withExtension: "bin") else {
-            fatalError("world-globe.bin missing from HomeShared resources — run `swift run MapBaker`")
+        guard let url = resourceURL else {
+            fatalError("world-globe.bin missing from HomeShared resources, run `swift run MapBaker`")
         }
         do {
             let data = try Data(contentsOf: url, options: .mappedIfSafe)
@@ -38,18 +41,21 @@ enum WorldGlobe {
         }
     }()
 
-    private static let alternativeCountryCodes = ["gb": "uk"]
-
-    /// Country-first resolution (whole country incl. territories) — used for highlighting.
-    static func country(code: String) -> MapGlobeCountry? {
-        let code = code.lowercased()
-        return firstCountry([code, code + "x", alternativeCountryCodes[code]])
+    private enum Constants {
+        /// Country codes whose ISO form differs from the map's naming: ISO "gb" is the map's "uk".
+        static let alternativeCountryCodes = ["gb": "uk"]
     }
 
-    /// Mainland-first resolution (the `…x` variant) — used as the camera's rotate-to target.
+    /// Country-first resolution, the whole country including territories. Used for highlighting.
+    static func country(code: String) -> MapGlobeCountry? {
+        let code = code.lowercased()
+        return firstCountry([code, code + "x", Constants.alternativeCountryCodes[code]])
+    }
+
+    /// Mainland-first resolution, preferring the "x"-suffixed variant. Used as the camera's rotate target.
     static func mainland(code: String) -> MapGlobeCountry? {
         let code = code.lowercased()
-        return firstCountry([code + "x", code, alternativeCountryCodes[code]])
+        return firstCountry([code + "x", code, Constants.alternativeCountryCodes[code]])
     }
 
     private static func firstCountry(_ candidates: [String?]) -> MapGlobeCountry? {
@@ -59,8 +65,8 @@ enum WorldGlobe {
         return nil
     }
 
-    /// Highlight for the connected country — same semantics as the flat map (recolour the fill, or, for
-    /// disputed-territory countries, hide their borders).
+    /// Highlight for the connected country: recolor its fill, or, for countries with disputed territories,
+    /// hide the contested borders instead.
     static func highlight(for code: String?) -> MapHighlight {
         guard let code = code?.lowercased(), let country = country(code: code) else { return .none }
         guard let disputed = CountriesCoordinates.disputedCountries[code] else {
@@ -76,7 +82,7 @@ enum WorldGlobe {
 
 /// What to draw differently for the currently-connected country.
 struct MapHighlight: Equatable, Sendable {
-    /// Fill index ranges to redraw in the highlight colour (on top of the base land fill).
+    /// Fill index ranges to redraw in the highlight color (on top of the base land fill).
     var fillRanges: [Range<Int>]
     /// Border index ranges to skip when drawing, hiding disputed-territory borders.
     var hiddenBorderRanges: [Range<Int>]
