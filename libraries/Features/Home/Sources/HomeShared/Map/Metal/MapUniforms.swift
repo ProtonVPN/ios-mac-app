@@ -20,9 +20,9 @@ import simd
 
 /// CPU-side mirror of `GlobeUniforms` in `MapGlobeShaders.metal`.
 ///
-/// Layout must match the shader exactly: `simd_float4x4` (64 B, 16-aligned), then `SIMD3<Float>` (16 B,
-/// 16-aligned), then two `Float`s — a 16-aligned stride of 96 on both sides. Passed via `setVertexBytes`
-/// and (for lighting) `setFragmentBytes`.
+/// Layout must match the shader exactly, field-for-field: `simd_float4x4` (64 B), two `SIMD3<Float>`
+/// (16 B each, 16-aligned), four packed `Float`s, then one more `SIMD3<Float>` — a 16-aligned stride of
+/// 128. Passed via `setVertexBytes` and (for lighting/eclipses) `setFragmentBytes`.
 struct MapUniforms {
     var mvp: simd_float4x4
     /// Model-space unit direction toward the sun (subsolar point), for day/night shading. Default faces the
@@ -36,4 +36,9 @@ struct MapUniforms {
     var lightFade: Float = 0
     /// How strongly the sunlight colour washes this draw (set per draw — sea more than land).
     var tintStrength: Float = 0.12
+    /// Moon radius in Earth radii (≈ 0.2725). 0 disables the eclipse shadow tests (snapshots / no moon).
+    var moonRadius: Float = 0
+    /// Model-space position of the Moon's centre (sub-lunar direction × distance, in Earth radii). Used to
+    /// cast the Moon's shadow on the Earth (solar eclipse) and to place the Moon in the Earth's shadow (lunar).
+    var moonCenter: SIMD3<Float> = .init(0, 0, 0)
 }

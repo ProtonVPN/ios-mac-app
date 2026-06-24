@@ -30,8 +30,12 @@ struct GlobeCamera: Equatable {
     /// Default vertical field of view (radians); shared with the zoom-to-fit maths in `HomeMapView`.
     static let defaultFieldOfView: Float = .pi / 4
     /// Half-depth of the clip slab centred on the globe: the unit-sphere radius (1) plus slack, so the
-    /// near and far planes always bracket the visible hemisphere at any dolly distance.
+    /// near plane always sits just in front of the visible hemisphere at any dolly distance.
     private static let clipMargin: Float = 1.5
+    /// How far past the globe centre the FAR plane reaches. Must clear the Moon, which orbits at ~57–64 Earth
+    /// radii — without this it would be clipped away. Harmless to the globe: there's no depth buffer, so a
+    /// distant far plane costs no precision (occlusion is painter order + back-face culling).
+    private static let farClipMargin: Float = 70
     /// Floor for the near plane, keeping it positive even when dollied in to the closest distance. Small so a
     /// deep zoom (right up against the surface, to pull apart close-together city pins) doesn't clip the near
     /// cap of the globe. There's no depth buffer (back-face culling only), so a tiny near plane is harmless.
@@ -72,7 +76,7 @@ struct GlobeCamera: Equatable {
             focusHeight: Float(min(max(focusHeight, 1), CGFloat(height))),
             focusTop: Float(min(max(focusTop, 0), CGFloat(height))),
             near: max(Self.minNearPlane, distance - Self.clipMargin),
-            far: distance + Self.clipMargin
+            far: distance + Self.farClipMargin
         )
         return projection * Self.translation(z: -distance) * simd_float4x4(orientation)
     }

@@ -136,11 +136,30 @@ public struct HomeMapView: View {
         retentionPerSecond: HomeMapView.coastRetentionPerSecond,
         minSpeed: HomeMapView.coastMinSpeed
     )
-    /// Where the sun is over the Earth right now (model-space subsolar direction), for day/night lighting.
-    /// Computed once on appear (it drifts ~15°/h — fine for a session).
-    @State private var sunDirection: SIMD3<Float> = SunPosition.subsolarDirection(at: Date())
+    /// Geocentric Sun + Moon positions (sub-solar/sub-lunar directions + Moon distance) for the date, driving
+    /// the day/night terminator, the Moon's phase + place in the sky, and the eclipse geometry. Computed once
+    /// (both drift slowly — fine for a session).
+    @State private var celestial: CelestialEphemeris.Positions = CelestialEphemeris.positions(at: Date())
+    /// Mean lunar radius in Earth radii (1737.4 / 6378.14) — the Moon is rendered true-to-scale.
+    private static let moonRadiusEarthRadii: Float = 0.2724
+    /// Model-space direction toward the sun (sub-solar point) for day/night lighting and the sunlight tint.
+    private var sunDirection: SIMD3<Float> {
+        celestial.sunDirection
+    }
+
+    /// Model-space position of the Moon's centre (sub-lunar direction × its true distance, in Earth radii).
+    private var moonCenter: SIMD3<Float> {
+        celestial.moonDirection * celestial.moonDistance
+    }
+
     /// Drives the colour of the sunlight cast on the globe — the same green/red as the connection tint.
     @SharedReader(.protectionState) private var protectionState: ProtectionState
+    /// The currently-displayed sunlight colour (RGB). Eased toward `sunTintRGB` whenever the protection state
+    /// changes, so the green/white/red tint cross-fades instead of snapping (set once, un-animated, on appear).
+    @State private var displayedSunTint: SIMD3<Float> = .init(1, 1, 1)
+    /// How long the sunlight colour takes to ease to a new connection tint. Short enough to keep up with a
+    /// reconnect, long enough that the change reads as a fade rather than a flash.
+    private static let sunTintFadeDuration: Double = 0.5
 
     public init(
         store: StoreOf<HomeMapFeature>,
@@ -169,25 +188,33 @@ public struct HomeMapView: View {
     }
 
     public var body: some View {
-        AnimatableGlobe(
-            camera: displayedCamera,
-            viewSize: CGSize(width: availableWidth, height: renderHeight ?? availableHeight),
-            focusHeight: availableHeight,
-            focusTop: topInset,
-            highlight: WorldGlobe.highlight(for: highlightedCode),
-            sunDirection: sunDirection,
-            lightFade: interactive ? 1 : 0,
-            sunTint: sunTintRGB,
-            // Celestial layer behind the globe: stars + the sun, projected through the same camera so they
-            // wheel with the orbit and are occluded by the opaque sphere (the sun shows only past the limb).
-            // Always present; it draws nothing until `lightFade > 0`, so it fades in/out with the open/close
-            // animation rather than popping when `interactive` flips.
-            background: { projection in
-                CelestialLayer(projection: projection, sunDirection: sunDirection, sunColor: sunColor, starFade: starOpacity)
-                    .allowsHitTesting(false)
+        // The sun's connection colour cross-fades between green/white/red: `AnimatableTint` interpolates
+        // `displayedSunTint` frame-by-frame (driven by the `sunTintRGB` onChange below), so a fast (sub-second)
+        // reconnect eases through the colours rather than snapping. The interpolated `tint` feeds both the
+        // shader (the sunlight wash) and the sun disc, keeping them in lockstep.
+        AnimatableTint(tint: displayedSunTint) { tint in
+            AnimatableGlobe(
+                camera: displayedCamera,
+                viewSize: CGSize(width: availableWidth, height: renderHeight ?? availableHeight),
+                focusHeight: availableHeight,
+                focusTop: topInset,
+                highlight: WorldGlobe.highlight(for: highlightedCode),
+                sunDirection: sunDirection,
+                lightFade: interactive ? 1 : 0,
+                sunTint: tint,
+                moonCenter: moonCenter,
+                moonRadius: Self.moonRadiusEarthRadii,
+                // Celestial layer behind the globe: stars + the sun, projected through the same camera so they
+                // wheel with the orbit and are occluded by the opaque sphere (the sun shows only past the limb).
+                // Always present; it draws nothing until `lightFade > 0`, so it fades in/out with the open/close
+                // animation rather than popping when `interactive` flips.
+                background: { projection in
+                    CelestialLayer(projection: projection, sunDirection: sunDirection, sunColor: Self.color(tint), starFade: starOpacity)
+                        .allowsHitTesting(false)
+                }
+            ) { projection in
+                pinsOverlay(projection: projection)
             }
-        ) { projection in
-            pinsOverlay(projection: projection)
         }
         .environment(\.layoutDirection, .leftToRight)
         // Animate the rotation/dolly when the faced country changes (connect/disconnect, user country
@@ -196,6 +223,11 @@ public struct HomeMapView: View {
         .animation(reduceMotion ? nil : .default, value: highlightedCode)
         .onChange(of: highlightedCode) { presentedOrientation = displayedCamera.orientation }
         .onChange(of: interactive) { syncOnModeChange() }
+        // Ease the sunlight colour to its new connection tint instead of snapping — a fast reconnect
+        // (green→white→red→… in well under a second) reads as a smooth cross-fade rather than a hard flash.
+        .onChange(of: sunTintRGB) {
+            withAnimation(reduceMotion ? nil : .easeInOut(duration: Self.sunTintFadeDuration)) { displayedSunTint = sunTintRGB }
+        }
         // Selecting grows the pill in; deselecting collapses it back into the point. `pillCity` is kept on
         // deselect so the collapsing pill stays positioned (tracks the globe) until `pillReveal` reaches 0,
         // at which point it stops rendering and the underlying Canvas dot takes over seamlessly.
@@ -236,6 +268,8 @@ public struct HomeMapView: View {
         }
         .onAppear {
             closestCityAngle = Self.closestAngle(among: store.cityPins)
+            displayedSunTint = sunTintRGB // start on the current colour (no fade); the map's lighting is off until it opens
+
             // The coaster spins the live orientation each frame (keeping north up), so the glide is the
             // real value — grabbing mid-coast just stops it where it is.
             momentum.onStep = { angle, axis in
@@ -271,6 +305,11 @@ public struct HomeMapView: View {
         #else
             return SIMD3<Float>(1, 1, 1)
         #endif
+    }
+
+    /// The (interpolated) sunlight RGB back as a `Color` for the sun disc, so it cross-fades with the shader.
+    private static func color(_ rgb: SIMD3<Float>) -> Color {
+        Color(red: Double(rgb.x), green: Double(rgb.y), blue: Double(rgb.z))
     }
 
     /// Stars fade in once the user dollies out past the whole-globe distance, reaching full at the zoom-out
@@ -764,6 +803,24 @@ public struct HomeMapView: View {
     }
 }
 
+/// Interpolates a SIMD3 colour tint frame-by-frame (its `animatableData`) and hands the in-between value to
+/// its content — the mechanism that cross-fades the sun's connection colour. A withAnimation on the parent's
+/// `displayedSunTint` drives it; the content rebuilds each step with the eased `tint`. (Separate from
+/// `AnimatableGlobe`'s own camera animation, which it wraps, so the two animate independently.)
+private struct AnimatableTint<Content: View>: View, Animatable {
+    var tint: SIMD3<Float>
+    @ViewBuilder let content: (SIMD3<Float>) -> Content
+
+    var animatableData: AnimatablePair<Float, AnimatablePair<Float, Float>> {
+        get { AnimatablePair(tint.x, AnimatablePair(tint.y, tint.z)) }
+        set { tint = SIMD3<Float>(newValue.first, newValue.second.first, newValue.second.second) }
+    }
+
+    var body: some View {
+        content(tint)
+    }
+}
+
 /// The selected city's name pill, drawn in a `Canvas` (like the pins) so it tracks the globe in lockstep:
 /// `center` (the projected pin point) is a plain prop refreshed every frame. It's `Animatable` on `reveal`,
 /// so `withAnimation` interpolates it frame-by-frame and the Canvas redraws each step — the full pill (capsule
@@ -827,7 +884,7 @@ private struct CelestialLayer: View {
     /// cone and not behind the globe end up visible.
     private static let stars: [Star] = {
         var rng = SeededGenerator(seed: 0x5EED_1234_ABCD)
-        return (0 ..< 400).map { _ in
+        return (0 ..< 200).map { _ in
             // Uniform point on the unit sphere (z uniform, azimuth uniform).
             let z = Double.random(in: -1 ... 1, using: &rng)
             let azimuth = Double.random(in: 0 ... (2 * Double.pi), using: &rng)

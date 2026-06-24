@@ -64,7 +64,7 @@ public struct HomeMapFeature {
         case connectingCoordinates(CLLocationCoordinate2D, String?)
         case disconnected
 
-        init(_ connectionState: ConnectionState) {
+        init(_ connectionState: ConnectionState, cityPins: [CityPin] = []) {
             switch connectionState {
             case .disconnected:
                 self = .disconnected
@@ -83,10 +83,18 @@ public struct HomeMapFeature {
                 self = .connectingCoordinates(intent.resolvedServer.logical.coordinates, intent.resolvedServer.logical.exitCountryCode)
 
             case let .connecting(.unresolved(intent), _):
-                // We've started connecting according to a `ConnectionSpec`, but we've not yet chosen a specific server
-                // We *could* retrieve the coordinates for the country, but we want to avoid the pin moving once to the
-                // country, and then again to the specific location of the server
-                self = .connecting(intent.spec.countryCode)
+                // We've started connecting via a `ConnectionSpec` but haven't picked a specific server yet. If the
+                // spec is a city pin we've already loaded, send the pin straight to its coordinates — the resolved
+                // server lives in that city, so there's no second hop. Otherwise keep just the country code, and the
+                // pin parks on the country centre (the view's fallback) until the server resolves.
+                if let pin = cityPins.first(where: { $0.location == intent.spec.location }) {
+                    self = .connectingCoordinates(
+                        CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude),
+                        intent.spec.countryCode
+                    )
+                } else {
+                    self = .connecting(intent.spec.countryCode)
+                }
 
             case .resolving:
                 // During the resolve window, if we have a prior server, keep the pin on it
@@ -187,7 +195,7 @@ public struct HomeMapFeature {
                 )
 
             case let .connectionStateUpdated(connectionState):
-                let mapState = MapState(connectionState)
+                let mapState = MapState(connectionState, cityPins: state.cityPins)
                 let animation: Animation? = UIAccessibility.isReduceMotionEnabled ? nil : .default
                 let effect: Effect<Action> = .send(.newMapState(mapState), animation: animation)
                 // Emit the first update immediately so the initial render isn't delayed; debounce

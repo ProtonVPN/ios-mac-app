@@ -44,6 +44,10 @@ struct MapGlobeView: GlobeViewRepresentable {
     var lightFade: Float = 0
     /// Colour of the sunlight falling on the globe (connection green/red); white = neutral.
     var sunTint: SIMD3<Float> = .init(1, 1, 1)
+    /// Model-space Moon-centre position (sub-lunar direction × distance, Earth radii) and the Moon's radius —
+    /// the renderer draws the Moon here and the shaders use it for the eclipse shadows. Radius 0 ⇒ no Moon.
+    var moonCenter: SIMD3<Float> = .init(0, 0, 0)
+    var moonRadius: Float = 0
 
     /// MSAA sample count — edges are antialiased purely by multisample coverage (there is no depth pass).
     private static let sampleCount = 4
@@ -108,7 +112,7 @@ struct MapGlobeView: GlobeViewRepresentable {
 
     private func update(_ view: MTKView, _ context: Context) {
         guard let renderer = context.coordinator.renderer else { return }
-        renderer.uniforms = MapUniforms(mvp: mvp, sunDirection: sunDirection, sunTint: sunTint, borderHalfWidth: 0, lightFade: lightFade)
+        renderer.uniforms = MapUniforms(mvp: mvp, sunDirection: sunDirection, sunTint: sunTint, borderHalfWidth: 0, lightFade: lightFade, moonRadius: moonRadius, moonCenter: moonCenter)
         renderer.cameraTarget = cameraTarget
         renderer.highlight = highlight
         #if canImport(UIKit)
@@ -178,6 +182,10 @@ struct AnimatableGlobe<Background: View, Overlay: View>: View, Animatable {
     var lightFade: Float = 0
     /// Colour of the sunlight falling on the globe (connection green/red); white = neutral.
     var sunTint: SIMD3<Float> = .init(1, 1, 1)
+    /// Model-space Moon-centre (sub-lunar direction × distance, Earth radii) and radius. Not animated — it's a
+    /// slowly-drifting astronomical position; the (animated) camera MVP carries it. Radius 0 ⇒ no Moon.
+    var moonCenter: SIMD3<Float> = .init(0, 0, 0)
+    var moonRadius: Float = 0
     /// Background (stars + sun) built from the interpolated projection, drawn behind the globe so the opaque
     /// sphere occludes celestial objects on its far side.
     @ViewBuilder var background: (GlobeProjection) -> Background
@@ -233,7 +241,7 @@ struct AnimatableGlobe<Background: View, Overlay: View>: View, Animatable {
         #if DEBUG
             switch renderMode {
             case .live:
-                MapGlobeView(mvp: mvp, cameraTarget: camera.facing, highlight: highlight, oceanColor: oceanColor, sunDirection: sunDirection, lightFade: lightFade, sunTint: sunTint)
+                MapGlobeView(mvp: mvp, cameraTarget: camera.facing, highlight: highlight, oceanColor: oceanColor, sunDirection: sunDirection, lightFade: lightFade, sunTint: sunTint, moonCenter: moonCenter, moonRadius: moonRadius)
             case .staticImage:
                 StaticGlobeImage(mvp: mvp, cameraTarget: camera.facing, highlight: highlight, size: viewSize, scale: displayScale)
             }

@@ -50,6 +50,8 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     /// the large sea areas from washing the whole view in colour.
     private static let landTintStrength: Float = 0.16
     private static let seaTintStrength: Float = 0.04
+    /// The Moon's albedo (a light cool grey); the fragment shader Lambert-lights it into phases.
+    private static let moonColor = SIMD4<Float>(0.80, 0.80, 0.84, 1)
     #if DEBUG
         /// Metal's guaranteed max 2-D texture dimension; the offscreen render is clamped to it so an
         /// over-large layout proposal degrades to a low-res image rather than trapping in texture validation.
@@ -61,6 +63,7 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     private let commandQueue: MTLCommandQueue
     private let fillPipeline: MTLRenderPipelineState
     private let borderPipeline: MTLRenderPipelineState
+    private let moonPipeline: MTLRenderPipelineState
 
     private let fillVertexBuffer: MTLBuffer
     private let fillIndexBuffer: MTLBuffer
@@ -103,7 +106,8 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         }
         guard
             let fillPipeline = pipeline(vertex: "vertex_globe_fill", fragment: "fragment_solid"),
-            let borderPipeline = pipeline(vertex: "vertex_globe_border", fragment: "fragment_solid")
+            let borderPipeline = pipeline(vertex: "vertex_globe_border", fragment: "fragment_globe_border"),
+            let moonPipeline = pipeline(vertex: "vertex_globe_fill", fragment: "fragment_moon")
         else {
             return nil
         }
@@ -121,6 +125,7 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         self.commandQueue = commandQueue
         self.fillPipeline = fillPipeline
         self.borderPipeline = borderPipeline
+        self.moonPipeline = moonPipeline
         self.fillVertexBuffer = fillVertexBuffer
         self.fillIndexBuffer = fillIndexBuffer
         self.borderSegmentBuffer = Self.buffer(device, model.borderSegments)
@@ -214,6 +219,10 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
 
         var uniforms = uniforms
 
+        // The Moon first, so the opaque Earth (drawn next) occludes it wherever they overlap — it's always
+        // farther than the Earth's near surface, so painter order alone gives correct occlusion (no depth).
+        drawMoon(uniforms: uniforms, into: encoder)
+
         // Base ocean sphere (so the globe reads as solid; the back hemisphere is culled away). The sea barely
         // takes the sunlight tint, staying near neutral-dark.
         uniforms.tintStrength = Self.seaTintStrength
@@ -299,6 +308,37 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     #endif
 
     // MARK: - Passes
+
+    /// Draws the Moon: the base sphere translated to `moonCenter` and scaled to `moonRadius` (Earth radii),
+    /// lit by the Sun (phases) and faded by `lightFade`. The model offset is folded into the MVP; the
+    /// fragment keeps `moonCenter`/`moonRadius` to reconstruct each pixel's world position for the lunar
+    /// eclipse. Skipped when there's no Moon (radius 0) or the map is closed (`lightFade ≈ 0`).
+    private func drawMoon(uniforms: MapUniforms, into encoder: MTLRenderCommandEncoder) {
+        guard uniforms.moonRadius > 0, uniforms.lightFade > 0.001 else { return }
+        var moonUniforms = uniforms
+        let r = uniforms.moonRadius
+        let c = uniforms.moonCenter
+        let model = simd_float4x4(columns: (
+            SIMD4<Float>(r, 0, 0, 0),
+            SIMD4<Float>(0, r, 0, 0),
+            SIMD4<Float>(0, 0, r, 0),
+            SIMD4<Float>(c.x, c.y, c.z, 1)
+        ))
+        moonUniforms.mvp = uniforms.mvp * model
+        var color = Self.moonColor
+        encoder.setRenderPipelineState(moonPipeline)
+        encoder.setVertexBuffer(baseVertexBuffer, offset: 0, index: 0)
+        encoder.setVertexBytes(&moonUniforms, length: MemoryLayout<MapUniforms>.stride, index: 1)
+        encoder.setFragmentBytes(&color, length: MemoryLayout<SIMD4<Float>>.stride, index: 0)
+        encoder.setFragmentBytes(&moonUniforms, length: MemoryLayout<MapUniforms>.stride, index: 1)
+        encoder.drawIndexedPrimitives(
+            type: .triangle,
+            indexCount: baseIndexCount,
+            indexType: .uint32,
+            indexBuffer: baseIndexBuffer,
+            indexBufferOffset: 0
+        )
+    }
 
     /// Draws a sub-range of an indexed triangle mesh in a solid colour. The base ocean sphere passes its
     /// whole index range; each country passes its slice of the shared fill index buffer.
