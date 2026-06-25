@@ -78,11 +78,6 @@ public extension IPCNotifications {
             regionOffset + payloadOffset
         }
 
-        /// The notify token we should expect to receive when getting updates to this region of the payload.
-        var channelToken: UInt64 {
-            (UInt64(UInt32(payloadBaseOffset)) << 32) | UInt64(UInt32(MemoryLayout<Payload>.size))
-        }
-
         private static func computePayloadOffset() -> Int {
             let headerSize = MemoryLayout<IPCSharedHeader>.size
             let alignment = MemoryLayout<Payload>.alignment
@@ -107,7 +102,6 @@ public extension IPCNotifications {
 }
 
 public extension IPCNotifications.RawChannel {
-    struct FieldNotFound: Swift.Error {}
     struct SeqlockContention: Swift.Error {}
 
     /// Thrown when reading a region whose backing hasn't been attached yet (macOS).
@@ -129,32 +123,16 @@ public extension IPCNotifications.RawChannel where Role == IPCNotifications.Writ
         store.withLock { region in
             region.withMutableSpan { span in
                 Seqlock.performingWrite(to: &span, at: regionOffset) { span in
-                    var payload = span.unsafeLoad(fromByteOffset: payloadBaseOffset, as: Payload.self)
-                    body(&payload)
-                    span.storeBytes(of: payload, toByteOffset: payloadBaseOffset, as: Payload.self)
+                    span.withUnsafeMutableBytes { raw in
+                        let payload = raw.baseAddress!
+                            .advanced(by: payloadBaseOffset)
+                            .bindMemory(to: Payload.self, capacity: 1)
+                        body(&payload.pointee)
+                    }
                 }
             }
         }
-        IPCNotifications.postRawState(notification, state: channelToken)
-    }
-
-    /// Mutates a specific field of the payload under seqlock protection, then notify observers of the field that was modified.
-    /// - Parameters:
-    ///   - keyPath: a `KeyPath` of the field you want to modify.
-    ///   - value: the new value you want to apply for the field.
-    func mutate<T: BitwiseCopyable>(_ keyPath: KeyPath<Payload, T>, to value: T) throws {
-        guard let fieldOffset = MemoryLayout<Payload>.offset(of: keyPath) else {
-            throw FieldNotFound()
-        }
-        let offset = payloadBaseOffset + fieldOffset
-        store.withLock { region in
-            region.withMutableSpan { span in
-                Seqlock.performingWrite(to: &span, at: regionOffset) { span in
-                    span.storeBytes(of: value, toByteOffset: offset, as: T.self)
-                }
-            }
-        }
-        IPCNotifications.postRawState(notification, state: channelToken)
+        IPCNotifications.signal(notification)
     }
 
     /// Takes the seqlock and clears the payload by storing its all-zeros value. Does *not* send a notification.
@@ -176,103 +154,34 @@ public extension IPCNotifications.RawChannel where Role == IPCNotifications.Writ
 // MARK: - Readers
 
 public extension IPCNotifications.RawChannel where Role == IPCNotifications.Reader {
-    /// Uses the atomic seqlock as a generation counter, to detect any missed reads.
-    var generation: UInt64 {
-        store.withSpan { span in
-            Seqlock.generation(of: span, at: regionOffset)
-        } ?? 0
-    }
-
     /// Reads a consistent snapshot.
     /// - Parameter retries: the amount of retries if seqlock doesn't match.
     /// - Returns: A `Payload` value, or throws if it wasn't able to extract a value from the buffer.
     func read(retries: Int = defaultReadRetries) throws -> Payload {
-        try readField(at: payloadBaseOffset, of: Payload.self, retries: retries)
-    }
-
-    /// Reads a value at an absolute offset within the shared buffer, under that channel's seqlock.
-    private func readField<T: BitwiseCopyable>(at offset: Int, of _: T.Type, retries: Int = defaultReadRetries) throws -> T {
-        let value = try store.withSpan { span -> T in
-            guard let value = Seqlock.tryingRead(from: span, at: regionOffset, retries: retries, { span in
-                span.unsafeLoad(fromByteOffset: offset, as: T.self)
-            }) else {
-                throw SeqlockContention()
-            }
-            return value
-        }
-        guard let value else { throw NotAttached() }
+        let (value, _) = try readField(at: payloadBaseOffset, of: Payload.self, retries: retries)
+        guard let value else { throw SeqlockContention() }
         return value
     }
-}
 
-public extension IPCNotifications.RawChannel where Role == IPCNotifications.Reader {
-    /// Observes any payload posted to the channel on the main actor.
-    @discardableResult
-    func observe(
-        handler: @MainActor @escaping (Result<Payload, any Swift.Error>) -> Void
-    ) -> IPCNotifications.Token {
-        observe(on: .main) { result in
-            MainActor.assumeIsolated { handler(result) }
-        }
-    }
-
-    /// Observes any payload posted to the channel on a specific `DispatchQueue`.
-    @discardableResult
-    func observe(
-        on queue: DispatchQueue,
-        handler: @escaping (Result<Payload, any Swift.Error>) -> Void
-    ) -> IPCNotifications.Token {
-        // Demux notifications according to the posted token, which uses the payload's offset and size in the region.
-        let myToken = channelToken
-        return IPCNotifications.observeRawState(notification, queue: queue) { token in
-            guard token == myToken else { return }
-            do {
-                let value = try self.read()
-                handler(.success(value))
-            } catch {
-                handler(.failure(error))
+    /// Reads a value at an absolute offset within the shared buffer, using that channel's seqlock for consistency.
+    ///
+    /// If the value has not changed since `lastSequence`, the returned value will be `nil`. Otherwise, returns the
+    /// updated value and the current sequence counter.
+    private func readField<T: BitwiseCopyable>(
+        at offset: Int,
+        of _: T.Type,
+        since lastSequence: UInt64 = ~0, // lets callers do a one-shot read without caring about the sequence number
+        retries: Int = defaultReadRetries
+    ) throws -> (value: T?, sequence: UInt64) {
+        guard let attempt = store.withSpan({ span in
+            Seqlock.tryingRead(from: span, at: regionOffset, since: lastSequence, retries: retries) { span in
+                span.unsafeLoad(fromByteOffset: offset, as: T.self)
             }
+        }) else {
+            throw NotAttached()
         }
-    }
-
-    /// Observes a specific field updated via the channel, with handling happening on the main actor.
-    @discardableResult
-    func observeField<T: BitwiseCopyable>(
-        _ keyPath: KeyPath<Payload, T>,
-        handler: @MainActor @escaping (Result<T, any Swift.Error>) -> Void,
-        onUnrelatedFieldChange: (() -> Void)? = nil
-    ) -> IPCNotifications.Token {
-        observeField(keyPath, on: .main) { result in
-            MainActor.assumeIsolated { handler(result) }
-        } onUnrelatedFieldChange: {
-            onUnrelatedFieldChange?()
-        }
-    }
-
-    /// Observes a specific field updated via the channel, with handling happening on a specific `DispatchQueue`.
-    @discardableResult
-    func observeField<T: BitwiseCopyable>(
-        _ keyPath: KeyPath<Payload, T>,
-        on queue: DispatchQueue,
-        handler: @escaping (Result<T, any Swift.Error>) -> Void,
-        onUnrelatedFieldChange: (() -> Void)? = nil
-    ) -> IPCNotifications.Token {
-        // React only to our own region's token.
-        let myToken = channelToken
-        let fieldOffset = MemoryLayout<Payload>.offset(of: keyPath)
-        return IPCNotifications.observeRawState(notification, queue: queue) { token in
-            guard token == myToken else {
-                onUnrelatedFieldChange?()
-                return
-            }
-            guard let fieldOffset else { return }
-            do {
-                let value = try self.readField(at: self.payloadBaseOffset + fieldOffset, of: T.self)
-                handler(.success(value))
-            } catch {
-                handler(.failure(error))
-            }
-        }
+        guard let result = attempt else { throw SeqlockContention() }
+        return result
     }
 }
 
@@ -284,23 +193,33 @@ public extension IPCNotifications.RawChannel where Role == IPCNotifications.Read
 
     /// A stream of payloads transformed into a domain value `T`.
     /// - Parameters:
-    ///   - reconcileOn: ticks (e.g. app resume) that force a refresh of the channel's generation counter.
+    ///   - reconcileOn: ticks (e.g. app resume) that re-check the channel for an update missed while suspended.
     ///   - transform: maps each payload to the value callers actually want.
     func stream<T: Sendable>(
         reconcileOn resumeSignal: AsyncStream<Void> = .finished,
         _ transform: @escaping @Sendable (Payload) -> T
     ) -> AsyncStream<T> {
-        let myToken = channelToken
-        // Read from the channel whenever we get a notification with our token or a tick.
-        // If the generation counter hasn't changed since the previous value, don't broadcast the change.
-        return merge(
-            IPCNotifications.streamRawState(notification).filter { $0 == myToken }.map { _ in () },
-            resumeSignal
-        )
-        .compactMap { [self] _ in (try? read()).map { (generation, transform($0)) } }
-        .removeDuplicates { $0.0 == $1.0 }
-        .map(\.1)
-        .eraseToStream()
+        // Get updates to the Darwin notification here, and every time we get pinged check the seqlock to see if our
+        // field has changed. `readField` can fail if the read is interrupted too many times, but this is unlikely
+        // unless something in the extension is very wrong.
+        let posts = IPCNotifications.streamRawState(notification)
+        return AsyncStream { continuation in
+            let task = Task { [self] in
+                // `~0` is 0xFFFF... and matches no valid sequence, so the first `readField` should always work
+                var lastSequence: UInt64 = ~0
+                for await _ in merge(posts.map { _ in () }, resumeSignal) {
+                    guard let (payload, sequence) = try? readField(
+                        at: payloadBaseOffset,
+                        of: Payload.self,
+                        since: lastSequence
+                    ) else { continue }
+                    lastSequence = sequence
+                    guard let payload else { continue }
+                    continuation.yield(transform(payload))
+                }
+            }
+            continuation.onTermination = { _ in task.cancel() }
+        }
     }
 
     /// A stream of a single field's values. Gets broadcasted with every update of the payload.

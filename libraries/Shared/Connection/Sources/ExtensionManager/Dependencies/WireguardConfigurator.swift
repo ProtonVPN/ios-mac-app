@@ -116,8 +116,8 @@ extension ManagerConfigurator {
             randomNat: features.natType.flag
         )
         try ProTUNConfigurationCoder.encode(configuration: config, to: protocolConfiguration)
-
         try protocolConfiguration.setConnectionSpec(connectionIntent.spec)
+        protocolConfiguration.setProviderConfiguration(value: UUID().uuidString, forKey: "UUID")
 
         // The userID is used by ProTUN to store credentials (certs, tokens) in a distinct bucket per user
         @Dependency(\.authKeychain) var authKeychain

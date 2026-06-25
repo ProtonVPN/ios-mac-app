@@ -74,8 +74,8 @@
                 $0.vpnManagerRepository.managers = {
                     [.ike: disconnectingManager, .wireGuard(.proTUN): connectedManager]
                 }
-                $0.extensionIPC.currentPeer = {
-                    CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, userISP: nil, userIP: nil)
+                $0.extensionIPC.currentExtensionState = {
+                    .connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil))
                 }
             } operation: {
                 let status = try await PacketTunnelManager().status

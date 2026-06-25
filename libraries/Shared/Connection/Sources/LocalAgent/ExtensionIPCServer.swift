@@ -19,17 +19,18 @@
 import Dependencies
 import DependenciesMacros
 import Domain
+import Foundation
 import IPCErgonomics
 import LocalAgentIPC
 
 /// The server-side of the memory-backed IPC channel. The extension should be the only process to write these values.
 @DependencyClient
 public struct ExtensionIPCServer: Sendable {
-    public var publishPeer: @Sendable (CurrentPeer) -> Void
+    public var publishExtensionState: @Sendable (ExtensionState) -> Void
     public var publishStats: @Sendable (LocalAgent.Stats) -> Void
     public var publishConnectionStats: @Sendable (LocalAgent.ConnectionStats) -> Void
     public var publishFeatures: @Sendable (AgentTunnelFeatures) -> Void
-    public var publishError: @Sendable (any Error) -> Void
+    public var publishError: @Sendable (any Error, UUID?) -> Void
 
     /// Posts a ``TunnelCommand`` using ``notify_post``.
     public var sendCommand: @Sendable (TunnelCommand) -> Void
@@ -43,13 +44,13 @@ extension ExtensionIPCServer: DependencyKey {
     public static let liveValue: ExtensionIPCServer = {
         let store = TunnelDataStore<IPCNotifications.Writer>.live()
         return ExtensionIPCServer(
-            publishPeer: { peer in store.channels.connectionData.mutate { $0 = IPCConnectionDataPayload(peer) } },
+            publishExtensionState: { connectionState in store.channels.connectionData.mutate { $0 = IPCConnectionDataPayload(connectionState) } },
             publishStats: { stats in store.channels.localAgentStats.mutate { $0 = IPCStatsPayload(stats) } },
             publishConnectionStats: { stats in
                 store.channels.localAgentConnectionStats.mutate { $0 = IPCConnectionStatsPayload(stats) }
             },
             publishFeatures: { features in store.channels.localAgentFeatures.mutate { $0 = IPCAgentFeaturesPayload(features) } },
-            publishError: { error in store.channels.localAgentError.mutate { $0 = IPCErrorPayload(error) } },
+            publishError: { error, requestId in store.channels.localAgentError.mutate { $0 = IPCErrorPayload(error, requestId: requestId) } },
             sendCommand: { command in
                 IPCNotifications.postRawState(.tunnelCmd, state: UInt64(command.rawValue))
             },

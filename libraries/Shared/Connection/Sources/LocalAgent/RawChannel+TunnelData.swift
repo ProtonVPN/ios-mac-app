@@ -27,13 +27,18 @@ import LocalAgentIPC
 // a getter + an `AsyncStream`.
 
 public extension IPCNotifications.RawChannel where Payload == IPCConnectionDataPayload, Role == IPCNotifications.Reader {
-    /// The current peer, or `nil` if none has been published yet.
-    func currentPeer() -> CurrentPeer? {
-        (try? read())?.currentPeer
+    func currentExtensionState() -> ExtensionState {
+        if let payload = try? read() {
+            payload.extensionState
+        } else {
+            .disconnected(reason: .unset)
+        }
     }
 
-    func currentPeerStream(reconcileOn resumeSignal: AsyncStream<Void> = .finished) -> AsyncStream<CurrentPeer?> {
-        stream(reconcileOn: resumeSignal) { $0.currentPeer }
+    func extensionStateStream(reconcileOn resumeSignal: AsyncStream<Void> = .finished) -> AsyncStream<ExtensionState> {
+        stream(reconcileOn: resumeSignal) { payload in
+            payload.extensionState
+        }
     }
 }
 
@@ -70,7 +75,7 @@ public extension IPCNotifications.RawChannel where Payload == IPCAgentFeaturesPa
 
 public extension IPCNotifications.RawChannel where Payload == IPCErrorPayload, Role == IPCNotifications.Reader {
     /// The extension's most-recent reported error, or `nil` if the value is empty.
-    func errorStream(reconcileOn resumeSignal: AsyncStream<Void> = .finished) -> AsyncStream<ExtensionError?> {
-        stream(reconcileOn: resumeSignal) { $0.extensionError }
+    func errorStream(reconcileOn resumeSignal: AsyncStream<Void> = .finished) -> AsyncStream<(ExtensionError?, UUID?)> {
+        stream(reconcileOn: resumeSignal) { ($0.extensionError, UUID(uuid: $0.config_id)) }
     }
 }

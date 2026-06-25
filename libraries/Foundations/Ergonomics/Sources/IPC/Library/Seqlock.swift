@@ -24,12 +24,6 @@ import IPCSeqlockHelpers
 /// `offset` is the byte position of the sub-region's seqlock header (its `IPCSharedHeader`) within `span`; the pointer
 /// the C primitives need is taken from the span and never escapes the wrapper.
 enum Seqlock {
-    /// The number of completed writes to the region at `offset` — the seqlock counter halved, since it bumps once when a
-    /// write starts and once when it ends. Spins briefly if a write is in progress, so the count is never mid-write.
-    static func generation(of span: borrowing RawSpan, at offset: Int) -> UInt64 {
-        readBegin(span, at: offset) / 2
-    }
-
     /// Runs `body` as a write to the region at `offset` under seqlock protection: marks the counter odd, lets `body`
     /// mutate the payload through the span, then marks it even again.
     static func performingWrite<Value>(
@@ -44,30 +38,50 @@ enum Seqlock {
         return body(&span)
     }
 
-    /// Attempts a consistent snapshot of the region at `offset`, re-running `body` up to `retries` times if a write
-    /// races the read. Returns `body`'s value once it reads cleanly, or `nil` if every attempt was torn.
+    /// Attempts to read from the given span, invoking `body` on the memory region up to `retries` times.
+    ///
+    /// If the value has not changed since `lastSequence`, the function will return `nil` for the value, with the
+    /// current sequence number. If the value has changed, returns the new value and sequence number. If the region
+    /// could not be read successfully due to contention, the function returns `nil`. For best results, make sure that
+    /// `body` is only reading memory and performing simple operations as quickly as possible.
     static func tryingRead<Value>(
         from span: borrowing RawSpan,
         at offset: Int,
+        since lastSequence: UInt64 = ~0,
         retries: Int,
         _ body: (borrowing RawSpan) -> Value
-    ) -> Value? {
+    ) -> (value: Value?, sequence: UInt64)? {
         for _ in 0 ..< retries {
-            let sequence = readBegin(span, at: offset)
+            guard let sequence = readBegin(span, at: offset, since: lastSequence) else {
+                return (nil, lastSequence)
+            }
+
             let value = body(span)
             let consistent = span.withUnsafeBytes {
                 ipc_seqlock_read_end($0.baseAddress!.advanced(by: offset), sequence)
             }
+
             if consistent {
-                return value
+                return (value, sequence)
             }
         }
         return nil
     }
 
-    /// Spins until no write is in progress and returns the (even) counter. Shared by ``generation(of:at:)`` and the
-    /// ``tryingRead(_:at:retries:_:)`` retry loop.
-    private static func readBegin(_ span: borrowing RawSpan, at offset: Int) -> UInt64 {
-        span.withUnsafeBytes { ipc_seqlock_read_begin($0.baseAddress!.advanced(by: offset)) }
+    /// If the contents protected by the seqlock have changed since `lastSequence`, returns the new sequence number.
+    /// Otherwise returns `nil`.
+    private static func readBegin(
+        _ span: borrowing RawSpan,
+        at offset: Int,
+        since lastSequence: UInt64
+    ) -> UInt64? {
+        assert(span.byteCount + MemoryLayout<UInt64>.size >= offset)
+
+        var changed = false
+        let sequence = span.withUnsafeBytes {
+            ipc_seqlock_read_begin($0.baseAddress!.advanced(by: offset), lastSequence, &changed)
+        }
+
+        return changed ? sequence : nil
     }
 }

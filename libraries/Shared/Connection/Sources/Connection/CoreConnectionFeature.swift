@@ -68,7 +68,7 @@ public struct CoreConnectionFeature: Sendable {
         /// Starts the disconnection process and clears relevant keychains and configurations
         case handleLogout
         /// A decoded error (or `nil` if cleared) was received over the error ``RawChannel``.
-        case errorReceived(ExtensionError?)
+        case errorReceived(ExtensionError?, UUID?)
         /// Tunnel/NetworkExtension child reducer action
         case tunnel(ExtensionFeature.Action)
         /// Delegate action expected to be handled by the parent
@@ -107,7 +107,7 @@ public struct CoreConnectionFeature: Sendable {
                 return .merge(
                     .send(.tunnel(.startObserving)),
                     // The extension's error channel, surfaced as `.errorReceived` actions for the reducer to handle.
-                    .observe(extensionIPC.observeError()) { .errorReceived($0) }
+                    .observe(extensionIPC.observeError()) { .errorReceived($0.0, $0.1) }
                         .cancellable(id: CancelID.connectionErrors)
                 )
 
@@ -118,7 +118,7 @@ public struct CoreConnectionFeature: Sendable {
                     .cancel(id: CancelID.connectionErrors)
                 )
 
-            case let .errorReceived(error):
+            case let .errorReceived(error, requestId):
                 guard let error else { return .none }
                 // A fatal certificate-refresh error tears the tunnel down; every other reported error is surfaced
                 // generically to the parent, which decides whether and how to present it.
@@ -316,8 +316,8 @@ extension CoreConnectionFeature.Action: CustomDebugStringConvertible {
             ".stopObserving"
         case .handleLogout:
             ".handleLogout"
-        case let .errorReceived(error):
-            ".errorReceived(\(error?.description ?? "nil"))"
+        case let .errorReceived(error, uuid):
+            ".errorReceived(\(optional: error?.description), \(optional: uuid))"
         case let .tunnel(action):
             ".tunnel(\(action.debugDescription))"
         case let .delegate(delegate):

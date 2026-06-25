@@ -210,6 +210,8 @@ extension TunnelConnectionError: ProtonVPNError {
 
     public var charCode: FourCharCode {
         switch self {
+        case let .tunnelStartFailed(vpnError as ProtonVPNError):
+            vpnError.charCode
         case .tunnelStartFailed:
             "TNST"
         case .unknownServer:

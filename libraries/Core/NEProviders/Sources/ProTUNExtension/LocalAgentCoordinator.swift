@@ -110,9 +110,7 @@ private extension LocalAgentCoordinator {
     /// Listen for connection-state updates from ProTUN and dispatch updates to the raw channels and protocol config.
     func listenToConnectionState() async {
         for await state in adapter.stateDelegate.stateSource.newStream {
-            if let peer = state.connectionState.peer {
-                extensionIPCServer.publishPeer(peer)
-            }
+            extensionIPCServer.publishExtensionState(state.connectionState.extensionState)
 
             if let settings = state.connectionState.agentSettings {
                 // Publish changes to the app, and persist actual settings to disk in case we crash
@@ -141,15 +139,11 @@ private extension LocalAgentCoordinator {
     }
 
     func sendError(error: LocalAgent.Error) {
-        extensionIPCServer.publishError(error)
+        extensionIPCServer.publishError(error, nil)
     }
 }
 
 extension ConnectionState {
-    var peer: CurrentPeer? {
-        CurrentPeer(from: self)
-    }
-
     var agentSettings: LocalAgentSettings? {
         switch self {
         case let .connected(_, agentInfo):

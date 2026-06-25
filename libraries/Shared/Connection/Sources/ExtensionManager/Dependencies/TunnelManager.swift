@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CasePaths
+import Combine
 import ConnectionShared
 import CoreConnection
 import Dependencies
@@ -27,6 +28,8 @@ import IPCErgonomics
 import LocalAgent
 import LocalAgentIPC
 import NetworkExtension
+import os
+import Sharing
 import VPNAppCore
 import VPNCoreCommon
 import VPNCoreTypes
@@ -174,10 +177,16 @@ enum TunnelManagerKey: DependencyKey {
 
 final class PacketTunnelManager: TunnelManager {
     let forkRequestsStream: AsyncStream<Void>
+    let lastConnectionSpec: OSAllocatedUnfairLock<ConnectionSpec?> = .init(initialState: nil)
 
     #if os(macOS)
         @Dependency(\.tunnelDataXPC) var tunnelDataXPC
     #endif
+
+    /// The NEPacketTunnelProvider connection state, as reported by the ProTUN framework. Sent over a shared memory
+    /// channel directly from the extension.
+    /// - Note: If the selected protocol is IKEv2, this will read as `.disconnected`.
+    @SharedReader(.extensionState) private var extensionState: ExtensionState = .disconnected(reason: .unset)
 
     private let forkRequestsContinuation: AsyncStream<Void>.Continuation
 
@@ -200,6 +209,11 @@ final class PacketTunnelManager: TunnelManager {
 
     func startTunnel(with intent: ServerConnectionIntent) async throws {
         log.debug("Starting tunnel with configuration: \(intent.protocolConfiguration)", category: .connection)
+
+        // Stash the connection spec on the tunnel manager. During connection, the extension can check in with us faster
+        // than the Network Extension framework is able to persist the protocol configuration by the time that it pings.
+        lastConnectionSpec.withLock { $0 = intent.spec }
+
         @Dependency(\.vpnManagerRepository) var managerRepository
         // Prepare the configuration - this may prompt the user for VPN permissions
         let manager = try await managerRepository.prepareManager(intent.tunnelProtocol, .connection(intent))
@@ -254,22 +268,29 @@ final class PacketTunnelManager: TunnelManager {
 
     var status: TunnelState {
         get async throws {
-            do {
-                guard let (tunnelProtocol, activeManager) = try await activeManager() else {
-                    return .disconnected(nil)
-                }
-                guard let configuration = activeManager.protocolConfiguration else {
-                    throw TunnelManagerError.missingConfiguration
-                }
-                return try await tunnelState(
-                    session: activeManager.session,
-                    tunnelProtocol: tunnelProtocol,
-                    configuration: configuration
-                )
-            } catch {
-                log.error("Failed to resolve tunnel status", category: .connection, metadata: ["error": "\(error)"])
-                throw TunnelManagerError.statusResolutionFailed(error)
+            // Resolve against the latest connection data we've cached from the channel.
+            try await resolveState(extensionState: extensionState)
+        }
+    }
+
+    /// Resolves the TunnelState according to the state reported by the extension (if any) and NetworkExtension itself.
+    private func resolveState(extensionState: ExtensionState) async throws -> TunnelState {
+        do {
+            guard let (tunnelProtocol, activeManager) = try await activeManager() else {
+                return .disconnected(nil)
             }
+            guard let configuration = activeManager.protocolConfiguration else {
+                throw TunnelManagerError.missingConfiguration
+            }
+            return try await tunnelState(
+                session: activeManager.session,
+                tunnelProtocol: tunnelProtocol,
+                configuration: configuration,
+                extensionState: extensionState
+            )
+        } catch {
+            log.error("Failed to resolve tunnel status", category: .connection, metadata: ["error": "\(error)"])
+            throw TunnelManagerError.statusResolutionFailed(error)
         }
     }
 
@@ -282,7 +303,7 @@ final class PacketTunnelManager: TunnelManager {
                     .notifications(named: .NEVPNStatusDidChange)
                     .compactMap { StatusChangePayload.from(statusDidChangeNotification: $0) }
                 for await payload in notifications {
-                    let state = await self.currentTunnelState(after: payload)
+                    let state = await self.currentState(afterStatusChange: payload)
                     continuation.yield(state)
 
                     #if os(macOS)
@@ -297,9 +318,8 @@ final class PacketTunnelManager: TunnelManager {
                 }
             }
             let connectionDataTask = Task {
-                @Dependency(\.extensionIPC) var extensionIPC
-                for await _ in extensionIPC.observePeer() {
-                    guard let state = try? await self.status else { continue }
+                for await extensionState in $extensionState.publisher.values {
+                    guard let state = try? await self.resolveState(extensionState: extensionState) else { continue }
                     continuation.yield(state)
                 }
             }
@@ -310,7 +330,9 @@ final class PacketTunnelManager: TunnelManager {
         }
     }
 
-    private func currentTunnelState(after payload: StatusChangePayload) async -> TunnelState {
+    /// The global tunnel state after an `NEVPNStatusDidChange`. Tries to resolve using `status` at first, and otherwise
+    /// tries to reconstruct the tunnel state from the payload sent with the notification. This is to handle IKEv2.
+    private func currentState(afterStatusChange payload: StatusChangePayload) async -> TunnelState {
         do {
             return try await status
         } catch {
@@ -319,7 +341,17 @@ final class PacketTunnelManager: TunnelManager {
                 category: .connection,
                 metadata: ["error": "\(error)"]
             )
-            return await tunnelState(from: payload)
+            do {
+                return try await tunnelState(
+                    session: payload.session,
+                    tunnelProtocol: payload.tunnelProtocol,
+                    configuration: payload.configuration,
+                    extensionState: extensionState
+                )
+            } catch {
+                log.error("Failed to determine connected state: \(error)", category: .connection)
+                return .unknown
+            }
         }
     }
 
@@ -337,49 +369,38 @@ final class PacketTunnelManager: TunnelManager {
         }
     }
 
-    private func tunnelState(from payload: StatusChangePayload) async -> TunnelState {
-        do {
-            return try await tunnelState(
-                session: payload.session,
-                tunnelProtocol: payload.tunnelProtocol,
-                configuration: payload.configuration
-            )
-        } catch {
-            log.error("Failed to determine connected state: \(error)", category: .connection)
-            return .unknown
-        }
-    }
-
-    private func tunnelState(after payload: StatusChangePayload) async -> TunnelState {
-        do {
-            return try await status
-        } catch {
-            log.error("Failed to resolve global tunnel status: \(error)", category: .connection)
-            return await tunnelState(from: payload)
-        }
-    }
-
-    private func staticTunnelData(
+    private func tunnelConfiguration(
         tunnelProtocol: TunnelProtocol,
-        configuration: NEVPNProtocol
+        configuration: NEVPNProtocol,
+        extensionState: ExtensionState
     ) throws -> TunnelConfiguration {
         let peerIDs: [String]
-        do {
-            peerIDs = try configuration.peerIDs
-        } catch {
-            // For IKEv2 we can still advance here
-            guard tunnelProtocol == .ike else { throw error }
-            log.warning("Could not recover IKE peer IDs from configuration", category: .connection)
-            peerIDs = []
-        }
         let connectionSpec: ConnectionSpec
-        if let spec = try (configuration as? NETunnelProviderProtocol)?.connectionSpec {
-            connectionSpec = spec
-        } else if tunnelProtocol == .ike {
-            // IKEv2 can't provide `configuration.connectionSpec`, we need to pass a `fallbackSpec`
+
+        switch tunnelProtocol {
+        case .ike:
+            do {
+                peerIDs = try configuration.peerIDs
+            } catch {
+                log.warning("Could not recover IKE peer IDs: \(error)", category: .connection)
+                peerIDs = []
+            }
+
+            connectionSpec = lastConnectionSpec.withLock { $0 } ?? ConnectionSpec()
+        case .wireGuard(.proTUN):
+            peerIDs = extensionState.currentPeer.map { [$0.peerID] } ?? []
+
+            if let spec = try (configuration as? NETunnelProviderProtocol)?.connectionSpec {
+                connectionSpec = spec
+            } else if let spec = lastConnectionSpec.withLock({ $0 }) {
+                connectionSpec = spec
+            } else {
+                throw TunnelDataError.missingConnectionSpec
+            }
+        case .wireGuard(.go):
+            assertionFailure("Unsupported backend")
+            peerIDs = []
             connectionSpec = ConnectionSpec()
-        } else {
-            throw TunnelDataError.missingConnectionSpec
         }
 
         return TunnelConfiguration(
@@ -392,38 +413,53 @@ final class PacketTunnelManager: TunnelManager {
     private func tunnelState(
         session: VPNSession,
         tunnelProtocol: TunnelProtocol,
-        configuration: NEVPNProtocol
+        configuration: NEVPNProtocol,
+        extensionState: ExtensionState
     ) async throws -> TunnelState {
+        if case .invalid = session.status { return .invalid }
+
+        // Future: After IKEv2, we can probably get rid of `TunnelState` entirely and just use `ExtensionState`.
+        let tunnelConfig = try tunnelConfiguration(
+            tunnelProtocol: tunnelProtocol,
+            configuration: configuration,
+            extensionState: extensionState
+        )
+
         switch session.status {
         case .invalid:
             return .invalid
 
         case .disconnected:
+            if case .disconnected(.tunEstablishError) = extensionState {
+                return .disconnected(.tunnelStartFailed(ProTUNConnectionError.tunEstablishFailed))
+            }
             return .disconnected(nil)
 
         case .reasserting:
-            return try .reasserting(staticTunnelData(tunnelProtocol: tunnelProtocol, configuration: configuration))
+            return .reasserting(tunnelConfig)
 
         case .connecting:
-            return try .connecting(staticTunnelData(tunnelProtocol: tunnelProtocol, configuration: configuration))
+            return .connecting(tunnelConfig)
 
         case .disconnecting:
-            return try .disconnecting(staticTunnelData(tunnelProtocol: tunnelProtocol, configuration: configuration))
+            return .disconnecting(tunnelConfig)
 
         case .connected:
-            let tunnelConfig = try staticTunnelData(tunnelProtocol: tunnelProtocol, configuration: configuration)
-            let dynamicData = try await dynamicConnectionData(
-                session: session,
-                tunnelProtocol: tunnelProtocol,
-                configuration: configuration
-            )
+            switch tunnelProtocol {
+            case .ike:
+                // IKEv2 has no Local Agent or extension, so NE reporting `.connected` is authoritative.
+                return .connected(tunnelConfig, ikeConnectionData(session: session, configuration: configuration))
 
-            // ProTUN only reports connected when the user IP field is populated.
-            if tunnelProtocol != .ike, dynamicData.protocolConnectionData.proTUNData?.userIP == nil {
-                return .connecting(tunnelConfig)
+            case .wireGuard(.proTUN):
+                // The network extension tells the NEPacketTunnelProvider that we're connected before we actually are,
+                // so make sure that ProTUN actually says we're connected before advancing the connection state.
+                guard case let .connected(peer) = extensionState else { return .connecting(tunnelConfig) }
+
+                return .connected(tunnelConfig, proTUNConnectionData(session: session, peer: peer))
+
+            case .wireGuard(.go):
+                throw TunnelDataError.unsupportedBackend
             }
-
-            return .connected(tunnelConfig, dynamicData)
 
         @unknown default:
             log.error("Unknown NEVPNStatus: \(session.status)", category: .connection)
@@ -431,58 +467,39 @@ final class PacketTunnelManager: TunnelManager {
         }
     }
 
-    /// Resolve the runtime connection data for a tunnel that is connected.
-    ///
-    /// For ProTUN, `currentPeerId` is `nil` until the extension publishes the peer. This shows up as the tunnel still
-    /// connecting.
-    private func dynamicConnectionData(
-        session: any VPNSession,
-        tunnelProtocol: TunnelProtocol,
-        configuration: NEVPNProtocol?
-    ) async throws -> DynamicConnectionData {
+    /// Since IKE has no LocalAgent channel, we recover the server ID from the configuration. On macOS, the
+    /// `.certificate`  auth option can cause the username to be dropped, so we recover it from the connection intent.
+    private func ikeConnectionData(session: any VPNSession, configuration: NEVPNProtocol) -> DynamicConnectionData {
         @Dependency(\.date) var date
-        let connectionDate = session.connectedDate ?? date.now
-
-        switch tunnelProtocol {
-        case .ike:
-            // IKE bypasses Local Agent, so tunnel-up is sufficient for the user-facing
-            // `.connected` state to advance. We try to recover the server ID from the
-            // configuration (via `ikePeerID`) but tolerate failure: macOS occasionally drops the
-            // username across save/load for `.certificate` auth. Falling back to an empty serverID
-            // lets the connection advance; the Connection layer resolves the server and spec from
-            // the in-app intent (`ConnectionState.init(tunnel:fallbackSpec:)`) when this is empty.
-            let serverID = (try? configuration?.ikePeerID) ?? ""
-            if serverID.isEmpty {
-                log.warning(
-                    "Could not recover IKE peer ID from configuration; advancing connected state with empty serverID",
-                    category: .connection
-                )
-                SentryHelper.shared?.log(message: "Could not recover IKE peer ID from configuration; advancing connected state with empty serverID")
-            }
-            return DynamicConnectionData(
-                currentPeerId: serverID,
-                connectionDate: connectionDate,
-                protocolConnectionData: .ike
+        let serverID = (try? configuration.ikePeerID) ?? ""
+        if serverID.isEmpty {
+            log.warning(
+                "Could not recover IKE peer ID from configuration; advancing connected state with empty serverID",
+                category: .connection
             )
-
-        case .wireGuard(.go):
-            throw TunnelDataError.unsupportedBackend
-
-        case .wireGuard(.proTUN):
-            @Dependency(\.extensionIPC) var extensionIPC
-            // `currentPeer` is nil until the extension publishes the peer to the raw channel.
-            let peer = extensionIPC.currentPeer()
-            return DynamicConnectionData(
-                currentPeerId: peer?.peerID,
-                connectionDate: connectionDate,
-                protocolConnectionData: .proTUN(.init(
-                    transport: peer?.transport ?? .udp,
-                    serverExitV4: peer?.serverExitV4,
-                    userISP: peer?.userISP,
-                    userIP: peer?.userIP
-                ))
-            )
+            SentryHelper.shared?.log(message: "Could not recover IKE peer ID from configuration; advancing connected state with empty serverID")
         }
+
+        return DynamicConnectionData(
+            currentPeerId: serverID,
+            connectionDate: session.connectedDate ?? date.now,
+            protocolConnectionData: .ike
+        )
+    }
+
+    /// Future: when IKEv2 goes away, we can replace `DynamicConnectionData` with the `ExtensionState` enum altogether.
+    private func proTUNConnectionData(session: any VPNSession, peer: CurrentPeer?) -> DynamicConnectionData {
+        @Dependency(\.date) var date
+        return DynamicConnectionData(
+            currentPeerId: peer?.peerID,
+            connectionDate: session.connectedDate ?? date.now,
+            protocolConnectionData: .proTUN(.init(
+                transport: peer?.transport ?? .udp,
+                serverExitV4: peer?.serverExitV4,
+                userISP: peer?.userISP,
+                userIP: peer?.userIP
+            ))
+        )
     }
 
     func cleanup() async throws {
@@ -638,4 +655,8 @@ extension NEVPNProtocol {
 enum TunnelDataError: Error {
     case unsupportedBackend
     case missingConnectionSpec
+}
+
+enum ProTUNConnectionError: FourCharCode, ProtonVPNError {
+    case tunEstablishFailed = "PTEF"
 }

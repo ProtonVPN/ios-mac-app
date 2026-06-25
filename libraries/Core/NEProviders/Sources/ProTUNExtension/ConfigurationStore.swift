@@ -45,7 +45,7 @@ actor ConfigurationStore {
     private var tail: Task<Void, Never> = Task {}
 
     /// How long a single transaction may run before it's abandoned (to avoid holding up others).
-    private static let transactionTimeout: Duration = .seconds(30)
+    private static let transactionTimeout: Duration = .seconds(5)
 
     /// Applies an app-initiated configuration update request that was sent over XPC.
     func apply(_ update: ConnectionUpdate, adapter: ProTUNAdapter) {
@@ -58,7 +58,7 @@ actor ConfigurationStore {
             } catch {
                 Logger.adapter.error("Configuration update failed: \(error, privacy: .public)")
                 @Dependency(\.extensionIPCServer) var extensionIPCServer
-                extensionIPCServer.publishError(error)
+                extensionIPCServer.publishError(error, update.id)
             }
         }
     }
@@ -125,6 +125,7 @@ actor ConfigurationStore {
                     peersToApply = try location.peers.map { try .init(from: $0) }
                     try config.setConnectionSpec(location.spec)
                     try ProTUNConfigurationCoder.encode(configuration: configuration.with(peers: location.peers), to: config)
+                    config.setProviderConfiguration(value: update.id.uuidString, forKey: "UUID")
                 } catch {
                     Logger.adapter.error("Failed to prepare connection spec/peers: \(error, privacy: .public)")
                     throw Failure.location(.badPeers)

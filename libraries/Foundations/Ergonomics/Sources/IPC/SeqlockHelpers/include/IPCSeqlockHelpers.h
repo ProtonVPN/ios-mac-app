@@ -59,7 +59,7 @@ typedef struct {
 // (i.e. the address of the IPCSharedHeader / the seqlock itself).
 //
 // Write protocol: ipc_seqlock_begin_write, mutate payload, ipc_seqlock_end_write.
-// Read protocol: seq = ipc_seqlock_read_begin, copy payload, ipc_seqlock_read_end(seq) + check return value.
+// Read protocol: sample = ipc_seqlock_read_begin(last_sequence); if sample.changed { copy payload; ipc_seqlock_read_end(sample.sequence) + check }.
 //
 // An even seqlock implies no write in progress.
 // An odd seqlock implies that a write is in progress and readers should spin/retry.
@@ -71,9 +71,17 @@ void ipc_seqlock_begin_write(void * _Nonnull base);
 /// Increment seqlock back to even (write end). Call after all payload fields are written.
 void ipc_seqlock_end_write(void * _Nonnull base);
 
-/// Spin until no write is in progress; returns the current (even) seqlock value.
-/// Pass the return value to ipc_seqlock_read_end to validate the read.
-uint64_t ipc_seqlock_read_begin(const void * _Nonnull base);
+/// Atomically samples the seqlock to begin a read, relative to the caller's last validated `last_sequence`, reporting
+/// through `changed` whether it moved.
+///
+/// A single acquire-load is taken and compared against `last_sequence` here, on the actual seqlock value — so the
+/// change decision is never recomputed non-atomically by the caller. When unchanged, `*changed` is set false and
+/// `last_sequence` is returned immediately (a sibling region's wake costs one atomic load, no spin). Otherwise it
+/// spins until no write is in progress, sets `*changed` true, and returns the current (even) sequence to hand to
+/// ipc_seqlock_read_end.
+///
+/// Pass `~0` for `last_sequence` to force a read — no valid even sequence equals it.
+uint64_t ipc_seqlock_read_begin(const void * _Nonnull base, uint64_t last_sequence, bool * _Nonnull changed);
 
 /// Returns true if no write raced the read. If false, discard the snapshot and retry.
 bool ipc_seqlock_read_end(const void * _Nonnull base, uint64_t expected_seq);

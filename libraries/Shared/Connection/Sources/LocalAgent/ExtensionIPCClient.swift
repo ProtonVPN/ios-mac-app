@@ -45,21 +45,24 @@ private func appBecameActiveTicks() -> AsyncStream<Void> {
 /// Read-only channels for consuming updates to tunnel data from the extension.
 @DependencyClient
 public struct ExtensionIPCClient: Sendable {
-    /// The current peer, or `nil` before the extension publishes one (or after a disconnect zeroes the region).
-    public var currentPeer: @Sendable () -> CurrentPeer?
+    /// The current connection state according to ProTUN in the network extension.
+    public var currentExtensionState: @Sendable () -> ExtensionState = {
+        .disconnected(reason: .unset)
+    }
+
     /// The current NetShield / traffic stats, or `nil` before the extension has published any.
     public var currentStats: @Sendable () -> LocalAgent.Stats?
     /// The current server-applied Local Agent features, or `nil` before the extension has published any.
     public var currentFeatures: @Sendable () -> AgentTunnelFeatures?
 
-    /// The current peer information.
-    public var observePeer: @Sendable () -> AsyncStream<CurrentPeer?> = { .finished }
+    /// The live connection state according to ProTUN in the network extension.
+    public var observeExtensionState: @Sendable () -> AsyncStream<ExtensionState> = { .finished }
     /// The live NetShield / traffic stats.
     public var observeStats: @Sendable () -> AsyncStream<LocalAgent.Stats?> = { .finished }
     /// The server-applied Local Agent features.
     public var observeFeatures: @Sendable () -> AsyncStream<AgentTunnelFeatures?> = { .finished }
     /// The extension's most-recent reported error (`nil` when the slot is empty), decoded from the raw payload.
-    public var observeError: @Sendable () -> AsyncStream<ExtensionError?> = { .finished }
+    public var observeError: @Sendable () -> AsyncStream<(ExtensionError?, UUID?)> = { .finished }
     /// Commands the extension posts over the `.tunnelCmd` notification.
     public var observeCommands: @Sendable () -> AsyncStream<TunnelCommand> = { .finished }
 
@@ -71,10 +74,10 @@ extension ExtensionIPCClient: DependencyKey {
     public static let liveValue: ExtensionIPCClient = {
         let store = TunnelDataStore<IPCNotifications.Reader>.live()
         return ExtensionIPCClient(
-            currentPeer: { store.channels.connectionData.currentPeer() },
+            currentExtensionState: { store.channels.connectionData.currentExtensionState() },
             currentStats: { store.channels.localAgentStats.stats() },
             currentFeatures: { store.channels.localAgentFeatures.agentFeatures() },
-            observePeer: { store.channels.connectionData.currentPeerStream(reconcileOn: appBecameActiveTicks()) },
+            observeExtensionState: { store.channels.connectionData.extensionStateStream(reconcileOn: appBecameActiveTicks()) },
             observeStats: { store.channels.localAgentStats.statsStream(reconcileOn: appBecameActiveTicks()) },
             observeFeatures: { store.channels.localAgentFeatures.agentFeaturesStream(reconcileOn: appBecameActiveTicks()) },
             observeError: { store.channels.localAgentError.errorStream(reconcileOn: appBecameActiveTicks()) },
@@ -92,6 +95,18 @@ extension ExtensionIPCClient: DependencyKey {
             attachRegion: { store.attach($0) }
         )
     }()
+
+    public static let testValue = ExtensionIPCClient(
+        currentExtensionState: { .disconnected(reason: .unset) },
+        currentStats: { nil },
+        currentFeatures: { nil },
+        observeExtensionState: { .finished },
+        observeStats: { .finished },
+        observeFeatures: { .finished },
+        observeError: { .finished },
+        observeCommands: { .finished },
+        attachRegion: { _ in }
+    )
 }
 
 public extension DependencyValues {

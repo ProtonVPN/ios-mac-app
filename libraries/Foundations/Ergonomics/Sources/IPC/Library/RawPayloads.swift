@@ -118,6 +118,11 @@ public extension IPCNotifications {
         token.setState(state)
         notify_post(notification.name)
     }
+
+    /// Just posts a bare notification, without an associated token.
+    static func signal(_ notification: Notification) {
+        notify_post(notification.name)
+    }
 }
 
 public extension IPCNotifications {

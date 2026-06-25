@@ -32,31 +32,6 @@ private func unknownDefault<T>(
     return value
 }
 
-extension CurrentPeer {
-    init?(from state: ConnectionState) {
-        switch state {
-        case let .connected(peer, agent):
-            self = .init(
-                peerID: peer.peerId,
-                transport: .from(protocol: peer.protocol),
-                serverExitV4: agent?.serverExitV4,
-                userISP: agent?.userIspName,
-                userIP: agent?.userIspIp
-            )
-        case let .connectingToLocalAgent(peer, _):
-            self = .init(
-                peerID: peer.peerId,
-                transport: .from(protocol: peer.protocol),
-                serverExitV4: nil,
-                userISP: nil,
-                userIP: nil
-            )
-        default:
-            return nil
-        }
-    }
-}
-
 extension LocalAgentSettings {
     init(_ config: ProTUNConfiguration) {
         self.init(
@@ -147,6 +122,86 @@ public extension LocalAgentSettingType {
         case .randomNat: .randomNat
         @unknown default:
             unknownDefault(value: .netshieldLevel)
+        }
+    }
+}
+
+public extension ConnectionState {
+    /// Bridges the ProTUN connection state into the ``ExtensionState`` recognized by the app
+    var extensionState: ExtensionState {
+        switch self {
+        case let .disconnected(error):
+            .disconnected(reason: error?.ipcDisconnectReason ?? .unset)
+        case let .connecting(_, waitReasons):
+            .connecting(waitReason: waitReasons.first?.ipcPeerWaitReason ?? .unset)
+        case let .connectingToLocalAgent(_, waitReason):
+            .connectingToLocalAgent(
+                waitReason: waitReason?.ipcAgentWaitReason ?? .unset,
+                jail: waitReason?.ipcAgentJailReason ?? .unset
+            )
+        case let .connected(peer, agent):
+            .connected(.init(
+                peerID: peer.peerId,
+                transport: .from(protocol: peer.protocol),
+                serverExitV4: agent?.serverExitV4,
+                serverExitV6: agent?.serverExitV6,
+                userISP: agent?.userIspName,
+                userIP: agent?.userIspIp
+            ))
+        @unknown default:
+            unknownDefault(value: .disconnected(reason: .unset))
+        }
+    }
+}
+
+private extension DisconnectReason {
+    var ipcDisconnectReason: IPCConnectionDisconnectReason {
+        switch self {
+        case .tunEstablishError: .tunEstablishError
+        @unknown default: unknownDefault(value: .unset)
+        }
+    }
+}
+
+private extension PeerConnectionWaitReason {
+    var ipcPeerWaitReason: IPCConnectionPeerWaitReason {
+        switch self {
+        case .waitingForNetwork: .waitingForNetwork
+        @unknown default: unknownDefault(value: .unset)
+        }
+    }
+}
+
+private extension AgentConnectionWaitReason {
+    var ipcAgentWaitReason: IPCConnectionAgentWaitReason {
+        switch self {
+        case .softJailed: .softJailed
+        case .hardJailed: .hardJailed
+        @unknown default: unknownDefault(value: .unset)
+        }
+    }
+
+    var ipcAgentJailReason: IPCConnectionAgentJailReason {
+        switch self {
+        case let .hardJailed(jails): jails.first?.ipcJailReason ?? .unset
+        default: .unset
+        }
+    }
+}
+
+private extension WaitJailReason {
+    var ipcJailReason: IPCConnectionAgentJailReason {
+        switch self {
+        case .badUserBehavior: .badUserBehavior
+        case .disabledUser: .disabledUser
+        case .lowPlan: .lowPlan
+        case .need2Fa: .need2Fa
+        case .pendingInvoice: .pendingInvoice
+        case .sessionOverLimit: .sessionOverLimit
+        case .waitingClientChallengeReply: .waitingClientChallengeReply
+        case .`internal`: .`internal`
+        case .other: .other
+        @unknown default: unknownDefault(value: .unset)
         }
     }
 }

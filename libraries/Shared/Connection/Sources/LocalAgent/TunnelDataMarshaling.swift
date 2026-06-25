@@ -17,36 +17,38 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Domain
+import Ergonomics
 import Foundation
 import IPCErgonomics
 import LocalAgentIPC
+import Network
 
 // Marshaling between the live tunnel-data C payloads (LocalAgentIPC) and their Swift domain types.
 
 /// Versions of the different RawChannel structs. Bump when changing formats to avoid ABI mismatch issues.
 public enum IPCTunnelDataVersion {
-    public static let connectionData: Int32 = 1
-    public static let stats: Int32 = 1
-    public static let connectionStats: Int32 = 1
-    public static let error: Int32 = 1
-    public static let agentFeatures: Int32 = 1
+    public static let connectionData: UInt16 = 1
+    public static let stats: UInt16 = 1
+    public static let connectionStats: UInt16 = 1
+    public static let error: UInt16 = 1
+    public static let agentFeatures: UInt16 = 1
 }
 
-public extension IPCConnectionWireGuardTransport {
+public extension IPCConnectionTransport {
     init(_ transport: WireGuardTransport) {
         switch transport {
-        case .udp: self = .udp
-        case .tcp: self = .tcp
-        case .tls: self = .tls
+        case .udp: self = .wireGuardUdp
+        case .tcp: self = .wireGuardTcp
+        case .tls: self = .wireGuardTls
         }
     }
 
     /// The Swift transport, or `nil` if one hasn't yet been written.
     var wireGuardTransport: WireGuardTransport? {
         switch self {
-        case .udp: .udp
-        case .tcp: .tcp
-        case .tls: .tls
+        case .wireGuardUdp: .udp
+        case .wireGuardTcp: .tcp
+        case .wireGuardTls: .tls
         case .unset: nil
         @unknown default: nil
         }
@@ -63,10 +65,18 @@ public extension IPCConnectionDataPayload {
         }
         set {
             withUnsafeMutableBytes(of: &peer_id) { raw in
+                guard !newValue.isEmpty else {
+                    for index in raw.indices {
+                        raw[index] = 0 // Clear out the peer on state transitions if not connected
+                    }
+                    return
+                }
+
                 guard let bytes = Data(base64URLEncoded: newValue) else {
                     assertionFailure("peerID is not valid base64url, peer not published: \(newValue)")
                     return
                 }
+
                 guard bytes.count == raw.count else {
                     assertionFailure("peerID decoded to \(bytes.count) bytes, expected \(raw.count), peer not published: \(newValue)")
                     return
@@ -76,9 +86,16 @@ public extension IPCConnectionDataPayload {
         }
     }
 
+    /// The server's exit IPv4 address, if any. Otherwise returns an empty string.
     var serverExitV4: String {
-        get { withUnsafeBytes(of: server_exit_ip) { IPCFixedString.read($0) } }
-        set { withUnsafeMutableBytes(of: &server_exit_ip) { IPCFixedString.write(newValue, into: $0) } }
+        get { withUnsafeBytes(of: server_exit_v4) { IPAddressPacking.string($0) ?? "" } }
+        set { withUnsafeMutableBytes(of: &server_exit_v4) { IPAddressPacking.write(IPv4Address(newValue), into: $0) } }
+    }
+
+    /// The server's exit IPv6 address, if any. Otherwise returns an empty string.
+    var serverExitV6: String {
+        get { withUnsafeBytes(of: server_exit_v6) { IPAddressPacking.string($0) ?? "" } }
+        set { withUnsafeMutableBytes(of: &server_exit_v6) { IPAddressPacking.write(IPv6Address(newValue), into: $0) } }
     }
 
     var userISP: String {
@@ -86,9 +103,20 @@ public extension IPCConnectionDataPayload {
         set { withUnsafeMutableBytes(of: &user_isp) { IPCFixedString.write(newValue, into: $0) } }
     }
 
+    /// The user's observed IP, packed by address family.
     var userIP: String {
-        get { withUnsafeBytes(of: user_ip) { IPCFixedString.read($0) } }
-        set { withUnsafeMutableBytes(of: &user_ip) { IPCFixedString.write(newValue, into: $0) } }
+        get {
+            withUnsafeBytes(of: user_ipv4) { v4 in
+                withUnsafeBytes(of: user_ipv6) { v6 in
+                    IPAddressPacking.string(v4) ?? IPAddressPacking.string(v6) ?? ""
+                }
+            }
+        }
+        set {
+            // At the moment this is either a v4 or a v6, so store whichever one returns a value and zero-out the other.
+            withUnsafeMutableBytes(of: &user_ipv4) { IPAddressPacking.write(IPv4Address(newValue), into: $0) }
+            withUnsafeMutableBytes(of: &user_ipv6) { IPAddressPacking.write(IPv6Address(newValue), into: $0) }
+        }
     }
 
     /// Checks if the peer has a non-zero byte, in which case it's been written to.
@@ -96,23 +124,60 @@ public extension IPCConnectionDataPayload {
         withUnsafeBytes(of: peer_id) { raw in raw.contains { $0 != 0 } }
     }
 
-    init(_ peer: CurrentPeer) {
-        self.init()
+    init(_ state: ExtensionState) {
+        self.init() // zeroes every field, so the cases below only set what applies
         version = IPCTunnelDataVersion.connectionData
-        transport = IPCConnectionWireGuardTransport(peer.transport)
-        self.peerID = peer.peerID
-        self.serverExitV4 = peer.serverExitV4 ?? ""
-        self.userISP = peer.userISP ?? ""
-        self.userIP = peer.userIP ?? ""
+        self.connectionState = state.connectionState
+
+        switch state {
+        case let .disconnected(reason):
+            self.reason = reason.rawValue
+        case let .connecting(waitReason):
+            self.reason = waitReason.rawValue
+        case let .connectingToLocalAgent(waitReason, jail):
+            self.reason = waitReason.rawValue
+            context = jail.rawValue
+        case let .connected(peer):
+            self.reason = IPCConnectionTransport(peer.transport).rawValue
+            self.peerID = peer.peerID
+            self.serverExitV4 = peer.serverExitV4 ?? ""
+            self.serverExitV6 = peer.serverExitV6 ?? ""
+            self.userISP = peer.userISP ?? ""
+            self.userIP = peer.userIP ?? ""
+        }
     }
 
-    /// The peer as a domain value, or `nil` if no peer has been published yet.
+    /// The basic connection state, stored in the lower nibble of the `state` byte.
+    var connectionState: IPCConnectionState {
+        get { IPCConnectionState(rawValue: Int8(state & 0x0F)) ?? .disconnected }
+        set { state = (state & 0xF0) | (UInt8(truncatingIfNeeded: newValue.rawValue) & 0x0F) }
+    }
+
+    /// Field accessor for the upper nibble of the `state` byte.
+    ///
+    /// If connected, contains the transport type.
+    /// Otherwise, contains the reason why the tunnel is in that state, if any has been set.
+    var reason: Int8 {
+        get { Int8((state >> 4) & 0x0F) }
+        set { state = (state & 0x0F) | ((UInt8(truncatingIfNeeded: newValue) & 0x0F) << 4) }
+    }
+
+    /// The connection state that gets reported to the main application.
+    var extensionState: ExtensionState {
+        ExtensionState(self)
+    }
+
+    /// Unpacks the peer information from the binary format.
     var currentPeer: CurrentPeer? {
-        guard hasPeer, let transport = transport.wireGuardTransport else { return nil }
+        guard hasPeer, let transport = IPCConnectionTransport(rawValue: reason)?.wireGuardTransport else {
+            return nil
+        }
+
         return CurrentPeer(
             peerID: peerID,
             transport: transport,
             serverExitV4: serverExitV4.isEmpty ? nil : serverExitV4,
+            serverExitV6: serverExitV6.isEmpty ? nil : serverExitV6,
             userISP: userISP.isEmpty ? nil : userISP,
             userIP: userIP.isEmpty ? nil : userIP
         )
@@ -185,13 +250,14 @@ public extension IPCErrorPayload {
     }
 
     /// Encodes any error as a `(domain, code)` pair. Also works for ``ProtonVPNError``.
-    init(_ error: any Error) {
+    init(_ error: any Error, requestId: UUID?) {
         self.init()
         version = IPCTunnelDataVersion.error
 
         let nsError = error as NSError
         self.errorDomain = nsError.domain.isEmpty ? "UnexpectedExtensionErrorDomain" : nsError.domain
         self.code = UInt32(truncatingIfNeeded: nsError.code)
+        self.config_id = requestId?.uuid ?? zero(value: uuid_t.self)
     }
 
     var extensionError: ExtensionError? {

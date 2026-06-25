@@ -42,7 +42,7 @@ public enum ProTUNMessage {
 }
 
 public extension ProTUNMessage.Request {
-    enum Payload: Codable {
+    enum Payload: Sendable, Codable, Equatable {
         case flushLogsToFile
         case retrieveLogsArchive
         case pcapRequest(PcapRequest)
@@ -55,7 +55,7 @@ public extension ProTUNMessage.Request {
 }
 
 public extension ProTUNMessage.Response {
-    enum Payload: Codable {
+    enum Payload: Sendable, Codable, Equatable {
         case ack
         case logs(CodableResult<URL, Error>)
         case pcapUpdate(PcapUpdate)
@@ -70,6 +70,7 @@ public struct CurrentPeer: Codable, Sendable, Equatable {
     public let peerID: String
     public let transport: WireGuardTransport
     public let serverExitV4: String?
+    public let serverExitV6: String?
     public let userISP: String?
     public let userIP: String?
 
@@ -77,21 +78,18 @@ public struct CurrentPeer: Codable, Sendable, Equatable {
         peerID: String,
         transport: WireGuardTransport,
         serverExitV4: String?,
+        serverExitV6: String?,
         userISP: String?,
         userIP: String?
     ) {
         self.peerID = peerID
         self.transport = transport
         self.serverExitV4 = serverExitV4
+        self.serverExitV6 = serverExitV6
         self.userISP = userISP
         self.userIP = userIP
     }
 }
-
-extension ProTUNMessage.Request.Payload: Sendable {}
-extension ProTUNMessage.Request.Payload: Equatable {}
-extension ProTUNMessage.Response.Payload: Sendable {}
-extension ProTUNMessage.Response.Payload: Equatable {}
 
 public extension ProTUNMessage {
     enum Version: UInt8, Codable {

@@ -20,7 +20,7 @@ import Foundation
 import VPNCoreTypes
 
 /// Mirrors every updateable field in ``ProTUNConfiguration``, except everything is optional.
-public struct ConnectionUpdate: Sendable, Equatable, Codable {
+public struct ConnectionUpdate: Identifiable, Sendable, Equatable, Codable {
     public struct Location: Sendable, Equatable, Codable {
         public let spec: ConnectionSpec
         public let peers: [ProTUNConfiguration.Peer]
@@ -30,6 +30,8 @@ public struct ConnectionUpdate: Sendable, Equatable, Codable {
             self.peers = peers
         }
     }
+
+    public let id: UUID
 
     // Tunnel settings
     public var location: Location?
@@ -57,6 +59,7 @@ public struct ConnectionUpdate: Sendable, Equatable, Codable {
         moderateNAT: NATType? = nil,
         portForwarding: Bool? = nil
     ) {
+        self.id = UUID()
         self.location = location
         self.connectionProtocol = connectionProtocol
         self.killSwitch = killSwitch
