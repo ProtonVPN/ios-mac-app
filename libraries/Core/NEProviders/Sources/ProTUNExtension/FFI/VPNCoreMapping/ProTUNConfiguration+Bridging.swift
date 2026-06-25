@@ -37,3 +37,28 @@ extension PeerInfo {
         )
     }
 }
+
+extension ProTUNConfiguration {
+    /// Merges the ``LocalAgentSettings`` reported by ProTUN with the existing provider configuration.
+    func merging(effectiveSettings settings: LocalAgentSettings) -> ProTUNConfiguration {
+        with(
+            netShieldLevel: settings.netshieldLevel.map(\.netShieldType.rawValue),
+            vpnAccelerator: settings.splitTcp,
+            portForwarding: settings.portForwarding,
+            randomNat: settings.randomNat
+        )
+    }
+
+    /// Whether the applied server settings differ from what this configuration requested for any
+    /// user-facing Local Agent setting, and therefore need persisting so the app can observe the change.
+    func localAgentSettingsDiffer(from effective: LocalAgentSettings) -> Bool {
+        func differs<Value: Equatable>(_ requested: Value?, _ applied: Value?) -> Bool {
+            guard let requested, let applied else { return false }
+            return requested != applied
+        }
+        return differs(netShieldLevel, effective.netshieldLevel.map(\.netShieldType.rawValue))
+            || differs(vpnAccelerator, effective.splitTcp)
+            || differs(portForwarding, effective.portForwarding)
+            || differs(randomNat, effective.randomNat)
+    }
+}

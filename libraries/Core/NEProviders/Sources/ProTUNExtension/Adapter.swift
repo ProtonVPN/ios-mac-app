@@ -72,6 +72,7 @@ final class ProTUNAdapter: @unchecked Sendable {
     /// Serializes every write to the provider configuration.
     private let configurationStore = ConfigurationStore()
 
+    @Dependency(\.extensionIPCServer) var extensionIPCServer
     private let signposter = OSSignposter(logger: .adapter)
 
     init(packetTunnelProvider: NEPacketTunnelProvider) {
@@ -126,7 +127,6 @@ final class ProTUNAdapter: @unchecked Sendable {
         defer { signposter.endInterval("Start Tunnel", startState) }
 
         Logger.adapter.info("Starting Adapter")
-        @Dependency(\.extensionIPCServer) var extensionIPCServer
         extensionIPCServer.zeroAll()
 
         let tunFd = try await prepare(with: config.proTUN)
@@ -199,7 +199,6 @@ final class ProTUNAdapter: @unchecked Sendable {
         case .forkSelectorRequest:
             // packetTunnelProvider?.reasserting = true
             Logger.localAgent.info("Sending forkSelectorRequest tunnel command")
-            @Dependency(\.extensionIPCServer) var extensionIPCServer
             extensionIPCServer.sendCommand(.forkSelectorRequest)
         }
     }
@@ -215,10 +214,11 @@ final class ProTUNAdapter: @unchecked Sendable {
         localAgentTask = nil
 
         // Clear the shared memory regions just before stopping.
-        @Dependency(\.extensionIPCServer) var extensionIPCServer
         extensionIPCServer.zeroAll()
     }
 }
+
+// MARK: - Tunnel bringup + configuration
 
 extension ProTUNAdapter {
     func handleForkSelector(_ selector: String, cookieName: String, cookieValue: String) {
@@ -376,113 +376,6 @@ extension VpnState {
             true
         default:
             false
-        }
-    }
-}
-
-extension LocalAgentSettings {
-    init(_ config: ProTUNConfiguration) {
-        self.init(
-            splitTcp: config.vpnAccelerator,
-            netshieldLevel: config.netShieldLevel.flatMap { NetShieldType(rawValue: $0)?.toRustNetShieldLevel },
-            softJail: config.softJail,
-            portForwarding: config.portForwarding,
-            randomNat: config.randomNat,
-            circumventionRouting: config.circumventionRouting
-        )
-    }
-
-    /// Overrides LocalAgent settings according to an update, leaving the rest unchanged. Used to build the
-    /// settings forwarded to ProTUN from a partial update without persisting them to the configuration.
-    mutating func apply(_ update: ConnectionUpdate) {
-        if let netShield = update.netShield { netshieldLevel = netShield.toRustNetShieldLevel }
-        if let vpnAccelerator = update.vpnAccelerator { splitTcp = vpnAccelerator }
-        if let moderateNAT = update.moderateNAT { randomNat = moderateNAT.flag }
-        if let portForwarding = update.portForwarding { self.portForwarding = portForwarding }
-    }
-}
-
-extension ProTUNConfiguration {
-    func with(
-        peers: [Peer]? = nil,
-        netShieldLevel: Int? = nil,
-        vpnAccelerator: Bool? = nil,
-        portForwarding: Bool? = nil,
-        randomNat: Bool? = nil
-    ) -> ProTUNConfiguration {
-        ProTUNConfiguration(
-            // `ProTUNConfiguration.init` takes a non-optional transport, so a configuration decoded without one (the
-            // only way `preferredTransport` is nil) is normalised to `.udp`. In practice it is always written.
-            preferredTransport: preferredTransport ?? .udp,
-            peers: peers ?? self.peers,
-            dnsServers: dnsServers,
-            netShieldLevel: netShieldLevel ?? self.netShieldLevel,
-            vpnAccelerator: vpnAccelerator ?? self.vpnAccelerator,
-            portForwarding: portForwarding ?? self.portForwarding,
-            randomNat: randomNat ?? self.randomNat,
-            softJail: softJail,
-            circumventionRouting: circumventionRouting
-        )
-    }
-
-    /// Merges the ``LocalAgentSettings`` reported by ProTUN with the existing provider configuration.
-    func merging(effectiveSettings settings: LocalAgentSettings) -> ProTUNConfiguration {
-        with(
-            netShieldLevel: settings.netshieldLevel.map(\.netShieldType.rawValue),
-            vpnAccelerator: settings.splitTcp,
-            portForwarding: settings.portForwarding,
-            randomNat: settings.randomNat
-        )
-    }
-
-    /// Whether the applied server settings differ from what this configuration requested for any
-    /// user-facing Local Agent setting, and therefore need persisting so the app can observe the change.
-    func localAgentSettingsDiffer(from effective: LocalAgentSettings) -> Bool {
-        func differs<Value: Equatable>(_ requested: Value?, _ applied: Value?) -> Bool {
-            guard let requested, let applied else { return false }
-            return requested != applied
-        }
-        return differs(netShieldLevel, effective.netshieldLevel.map(\.netShieldType.rawValue))
-            || differs(vpnAccelerator, effective.splitTcp)
-            || differs(portForwarding, effective.portForwarding)
-            || differs(randomNat, effective.randomNat)
-    }
-}
-
-extension LocalAgentSettings {
-    var agentTunnelFeatures: AgentTunnelFeatures {
-        AgentTunnelFeatures(
-            netshield: netshieldLevel?.netShieldType ?? .off,
-            vpnAccelerator: splitTcp ?? false,
-            natType: NATType(flag: randomNat ?? false),
-            portForwarding: portForwarding
-        )
-    }
-}
-
-private extension NetshieldLevel {
-    var netShieldType: NetShieldType {
-        switch self {
-        case .none: .off
-        case .malwareFilter: .level1
-        case .adsAndMalwareFilter: .level2
-        case .adultAndAdsAndMalwareFilter: .level3
-        @unknown default: .off
-        }
-    }
-}
-
-private extension NetShieldType {
-    var toRustNetShieldLevel: NetshieldLevel {
-        switch self {
-        case .off:
-            .none
-        case .level1:
-            .malwareFilter
-        case .level2:
-            .adsAndMalwareFilter
-        case .level3:
-            .adultAndAdsAndMalwareFilter
         }
     }
 }

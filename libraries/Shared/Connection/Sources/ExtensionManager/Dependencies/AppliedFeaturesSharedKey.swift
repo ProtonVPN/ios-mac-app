@@ -26,7 +26,6 @@ public extension SharedReaderKey where Self == StreamReaderKey<AgentTunnelFeatur
     /// publishes them and while disconnected).
     static var appliedFeatures: Self {
         StreamReaderKey(
-            id: "appliedFeatures",
             read: {
                 @Dependency(\.extensionIPC) var extensionIPC
                 return extensionIPC.currentFeatures()

@@ -34,14 +34,12 @@ private let appDidBecomeActiveNotification: Notification.Name = {
 
 /// Notifies channels to check if the generation counter for their values have changed, and broadcast updates if so.
 private func appBecameActiveTicks() -> AsyncStream<Void> {
-    AsyncStream { continuation in
-        let task = Task {
-            for await _ in NotificationCenter.default.notifications(named: appDidBecomeActiveNotification) {
-                continuation.yield(())
-            }
-        }
-        continuation.onTermination = { _ in task.cancel() }
-    }
+    UncheckedSendable(
+        NotificationCenter.default
+            .notifications(named: appDidBecomeActiveNotification)
+            .map { _ in () }
+    )
+    .eraseToStream()
 }
 
 /// Read-only channels for consuming updates to tunnel data from the extension.

@@ -17,20 +17,19 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Foundation
 import Sharing
 
 /// A simple wrapper type for creating a ``SharedReaderKey`` from a value getter and an ``AsyncStream`` of updates.
 public struct StreamReaderKey<Value: Sendable>: SharedReaderKey {
-    public let id: String
+    public let id = UUID()
     private let _load: @Sendable () -> Value
     private let _subscribe: @Sendable (SharedSubscriber<Value>) -> SharedSubscription
 
     public init(
-        id: String,
         read: @escaping @Sendable () -> Value,
         updates: @escaping @Sendable () -> AsyncStream<Value>
     ) {
-        self.id = id
         self._load = read
         self._subscribe = { subscriber in
             let task = Task {
@@ -44,12 +43,10 @@ public struct StreamReaderKey<Value: Sendable>: SharedReaderKey {
 
     /// Kind of jank but lets us skip an extra `transform` step
     public init<Source: Sendable>(
-        id: String,
         read: @escaping @Sendable () -> Source,
         updates: @escaping @Sendable () -> AsyncStream<Source>,
         transform: @escaping @Sendable (Source) -> Value
     ) {
-        self.id = id
         self._load = { transform(read()) }
         self._subscribe = { subscriber in
             let task = Task {
@@ -78,7 +75,7 @@ public extension Effect {
     /// values, or other situations where modeling messages as actions that produce effects makes more sense.
     static func observe<Payload>(
         _ stream: AsyncStream<Payload>,
-        action: @escaping @Sendable (Payload) -> Action
+        action: @escaping @MainActor (Payload) -> Action
     ) -> Self {
         .run { send in
             for await payload in stream {

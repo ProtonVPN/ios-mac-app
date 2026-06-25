@@ -25,7 +25,6 @@ import Sharing
 extension SharedReaderKey where Self == StreamReaderKey<NetShieldModel?> {
     static var tunnelStats: Self {
         StreamReaderKey(
-            id: "tunnelData.stats",
             read: {
                 @Dependency(\.extensionIPC) var extensionIPC
                 return extensionIPC.currentStats()

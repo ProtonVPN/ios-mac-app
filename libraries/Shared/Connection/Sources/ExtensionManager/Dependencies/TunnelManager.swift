@@ -40,11 +40,9 @@ struct TunnelDataXPC: Sendable {
 extension TunnelDataXPC: DependencyKey {
     static let liveValue: TunnelDataXPC = {
         #if os(macOS)
-            // The Mach service name mirrors `SystemExtensionType.proTUN.machServiceName` in the macOS app.
-            let client = TunnelDataXPCClient(
-                machServiceName: "\(DomainConstants.appIdentifierPrefix)group.ch.protonvpn.mac.WireGuard-Extension",
-                log: { log.info("\($0)", category: .connection) }
-            )
+            // Mirrors the `NEMachServiceName` entry in the System Extension's Info.plist.
+            let serviceName = "\(DomainConstants.appIdentifierPrefix)group.ch.protonvpn.mac.WireGuard-Extension"
+            let client = TunnelDataXPCClient(machServiceName: serviceName)
             return TunnelDataXPC(attach: { client.attachRegion() }, reattach: { client.reattachRegion() })
         #else
             return TunnelDataXPC()
@@ -135,6 +133,11 @@ public struct DynamicConnectionData: Equatable, Sendable {
 public enum ProtocolConnectionData: Equatable, Sendable {
     case ike
     case proTUN(ProTUNConnectionData)
+
+    var proTUNData: ProTUNConnectionData? {
+        guard case let .proTUN(data) = self else { return nil }
+        return data
+    }
 
     public struct ProTUNConnectionData: Equatable, Sendable {
         public let transport: Domain.WireGuardTransport
@@ -415,8 +418,8 @@ final class PacketTunnelManager: TunnelManager {
                 configuration: configuration
             )
 
-            // ProTUN has brought the tunnel up, but we aren't technically connected until it reports a peer ID.
-            guard dynamicData.currentPeerId != nil else {
+            // ProTUN only reports connected when the user IP field is populated.
+            if tunnelProtocol != .ike, dynamicData.protocolConnectionData.proTUNData?.userIP == nil {
                 return .connecting(tunnelConfig)
             }
 

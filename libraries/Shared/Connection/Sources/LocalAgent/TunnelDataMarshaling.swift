@@ -32,7 +32,7 @@ public enum IPCTunnelDataVersion {
     public static let agentFeatures: Int32 = 1
 }
 
-public extension IPCWireGuardTransport {
+public extension IPCConnectionWireGuardTransport {
     init(_ transport: WireGuardTransport) {
         switch transport {
         case .udp: self = .udp
@@ -77,8 +77,8 @@ public extension IPCConnectionDataPayload {
     }
 
     var serverExitV4: String {
-        get { withUnsafeBytes(of: server_exit_v4) { IPCFixedString.read($0) } }
-        set { withUnsafeMutableBytes(of: &server_exit_v4) { IPCFixedString.write(newValue, into: $0) } }
+        get { withUnsafeBytes(of: server_exit_ip) { IPCFixedString.read($0) } }
+        set { withUnsafeMutableBytes(of: &server_exit_ip) { IPCFixedString.write(newValue, into: $0) } }
     }
 
     var userISP: String {
@@ -99,7 +99,7 @@ public extension IPCConnectionDataPayload {
     init(_ peer: CurrentPeer) {
         self.init()
         version = IPCTunnelDataVersion.connectionData
-        transport = IPCWireGuardTransport(peer.transport)
+        transport = IPCConnectionWireGuardTransport(peer.transport)
         self.peerID = peer.peerID
         self.serverExitV4 = peer.serverExitV4 ?? ""
         self.userISP = peer.userISP ?? ""

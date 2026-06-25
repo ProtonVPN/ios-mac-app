@@ -16,21 +16,27 @@
 // Try to avoid using these for things that can go in the provider configuration and get read from there, it's meant for
 // values that are communicated from the ProTUN framework and the LocalAgent server.
 
-IPC_ENUM(int8_t, IPCWireGuardTransport) {
-    IPCWireGuardTransportUnset = 0,
-    IPCWireGuardTransportUdp   = 1,
-    IPCWireGuardTransportTcp   = 2,
-    IPCWireGuardTransportTls   = 3,
+IPC_ENUM(int8_t, IPCConnectionWireGuardTransport) {
+    IPCConnectionWireGuardTransportUnset = 0,
+    IPCConnectionWireGuardTransportUdp   = 1,
+    IPCConnectionWireGuardTransportTcp   = 2,
+    IPCConnectionWireGuardTransportTls   = 3,
 };
+
+// Field sizes
+#define IP_DATA_LENGTH 46 // leaves headroom for IPv6 addresses
+#define PEER_ID_LENGTH 64
+#define ERROR_DOMAIN_LENGTH 64
+#define USER_ISP_STRING_LENGTH 128
 
 // Connection identity: who/where we are connected to, and what the server observes.
 typedef struct {
-    int32_t                 version;
-    IPCWireGuardTransport   transport;           // The transport currently being used - can change with Smart protocol
-    uint8_t                 peer_id[64];         // Raw bytes of the server id. All-zero implies no peer published yet.
-    char                    server_exit_v4[46];  // IPv4 with headroom for IPv6
-    char                    user_ip[46];         // The user's IP address, according to LocalAgent
-    char                    user_isp[128];       // take care to properly handle UTF-8 boundary truncation (accents etc)
+    int32_t                         version;
+    IPCConnectionWireGuardTransport transport;
+    uint8_t                         peer_id[PEER_ID_LENGTH]; // Raw bytes of the server id. Zeroes implies no peer yet.
+    char                            server_exit_ip[IP_DATA_LENGTH];
+    char                            user_ip[IP_DATA_LENGTH];
+    char                            user_isp[USER_ISP_STRING_LENGTH]; // Watch for UTF-8 grapheme clusters (accents).
 } IPCConnectionDataPayload;
 
 IPC_DECLARE_SHARED_REGION(IPCConnectionDataRegion, IPCConnectionDataPayload);
@@ -66,7 +72,7 @@ IPC_DECLARE_SHARED_REGION(IPCConnectionStatsRegion, IPCConnectionStatsPayload);
 // Just provides a domain and a code.
 typedef struct {
     int32_t                 version;
-    char                    domain[64];
+    char                    domain[ERROR_DOMAIN_LENGTH];
     uint32_t                code;
 } IPCErrorPayload;
 

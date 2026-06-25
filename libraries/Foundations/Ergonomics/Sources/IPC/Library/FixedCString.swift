@@ -24,28 +24,24 @@ import Foundation
 /// contain accents or other non-standard characters.
 public enum IPCFixedString {
     public static func read(_ raw: UnsafeRawBufferPointer) -> String {
-        let bytes = raw.prefix { $0 != 0 }
-        return String(decoding: bytes, as: UTF8.self)
+        String(decoding: raw.prefix { $0 != 0 }, as: UTF8.self)
     }
 
-    /// Go one character of the string at a time when writing to the pointer, taking care not to stop in the middle
-    /// of any UTF-8 grapheme clusters.
+    /// Checks the UTF8 grapheme cluster boundaries of the string before writing it.
     public static func write(_ string: String, into raw: UnsafeMutableRawBufferPointer) {
         guard let base = raw.baseAddress, !raw.isEmpty else { return }
         memset(base, 0, raw.count)
 
-        // Reserve one byte for \0.
+        // Reserve one byte for the NUL terminator.
         let maxBytes = raw.count - 1
         guard maxBytes > 0 else { return }
 
-        var offset = 0
-        for character in string {
-            let utf8 = character.utf8
-            guard offset + utf8.count <= maxBytes else { break }
-            for byte in utf8 {
-                raw[offset] = byte
-                offset += 1
-            }
+        // Keep whole grapheme clusters while their UTF-8 still fits, so we never stop mid-cluster.
+        var byteCount = 0
+        let fitting = string.prefix { character in
+            byteCount += character.utf8.count
+            return byteCount <= maxBytes
         }
+        raw.copyBytes(from: fitting.utf8)
     }
 }

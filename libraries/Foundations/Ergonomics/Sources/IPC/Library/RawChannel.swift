@@ -293,22 +293,14 @@ public extension IPCNotifications.RawChannel where Role == IPCNotifications.Read
         let myToken = channelToken
         // Read from the channel whenever we get a notification with our token or a tick.
         // If the generation counter hasn't changed since the previous value, don't broadcast the change.
-        let values = merge(
+        return merge(
             IPCNotifications.streamRawState(notification).filter { $0 == myToken }.map { _ in () },
             resumeSignal
         )
         .compactMap { [self] _ in (try? read()).map { (generation, transform($0)) } }
         .removeDuplicates { $0.0 == $1.0 }
         .map(\.1)
-
-        return AsyncStream { continuation in
-            let task = Task {
-                for await value in values {
-                    continuation.yield(value)
-                }
-            }
-            continuation.onTermination = { _ in task.cancel() }
-        }
+        .eraseToStream()
     }
 
     /// A stream of a single field's values. Gets broadcasted with every update of the payload.

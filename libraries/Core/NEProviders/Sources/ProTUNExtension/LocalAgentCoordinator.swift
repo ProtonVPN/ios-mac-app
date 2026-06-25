@@ -110,33 +110,14 @@ private extension LocalAgentCoordinator {
     /// Listen for connection-state updates from ProTUN and dispatch updates to the raw channels and protocol config.
     func listenToConnectionState() async {
         for await state in adapter.stateDelegate.stateSource.newStream {
-            switch state.connectionState {
-            case let .connected(peer, agent):
-                let currentPeer = CurrentPeer(
-                    peerID: peer.peerId,
-                    transport: .from(protocol: peer.protocol),
-                    serverExitV4: agent?.serverExitV4,
-                    userISP: agent?.userIspName,
-                    userIP: agent?.userIspIp
-                )
-                extensionIPCServer.publishPeer(currentPeer)
+            if let peer = state.connectionState.peer {
+                extensionIPCServer.publishPeer(peer)
+            }
 
-                if let agent {
-                    // Publish changes to the app, and persist actual settings to disk in case we crash
-                    extensionIPCServer.publishFeatures(agent.settings.agentTunnelFeatures)
-                    await adapter?.enqueueEffectiveLocalAgentSettings(agent.settings)
-                }
-            case let .connectingToLocalAgent(peer, _):
-                let currentPeer = CurrentPeer(
-                    peerID: peer.peerId,
-                    transport: .from(protocol: peer.protocol),
-                    serverExitV4: peer.entryIp,
-                    userISP: nil,
-                    userIP: nil
-                )
-                extensionIPCServer.publishPeer(currentPeer)
-            default:
-                break
+            if let settings = state.connectionState.agentSettings {
+                // Publish changes to the app, and persist actual settings to disk in case we crash
+                extensionIPCServer.publishFeatures(settings.agentTunnelFeatures)
+                await adapter?.enqueueEffectiveLocalAgentSettings(settings)
             }
         }
     }
@@ -161,5 +142,20 @@ private extension LocalAgentCoordinator {
 
     func sendError(error: LocalAgent.Error) {
         extensionIPCServer.publishError(error)
+    }
+}
+
+extension ConnectionState {
+    var peer: CurrentPeer? {
+        CurrentPeer(from: self)
+    }
+
+    var agentSettings: LocalAgentSettings? {
+        switch self {
+        case let .connected(_, agentInfo):
+            agentInfo?.settings
+        default:
+            nil
+        }
     }
 }

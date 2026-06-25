@@ -22,7 +22,10 @@
     import Foundation
     import IOSurface
     import IPCErgonomics
+    import Logging
     import os
+
+    fileprivate let log: Logging.Logger = .init(label: "ProtonVPN.XPCClient.logger")
 
     /// macOS XPC client for the extension's `TunnelDataXPCService`, which fetches the shared `IOSurface` and sets it
     /// as the backing memory for the ``TunnelDataStore``.
@@ -30,29 +33,28 @@
         @Dependency(\.extensionIPC) private var extensionIPC
 
         private let machServiceName: String
-        private let log: (String) -> Void
 
         /// The current XPC connection, guarded so only one is created or torn down at a time.
         private let connectionLock = OSAllocatedUnfairLock<NSXPCConnection?>(uncheckedState: nil)
 
-        public init(machServiceName: String, log: @escaping (String) -> Void = { _ in }) {
+        public init(machServiceName: String) {
             self.machServiceName = machServiceName
-            self.log = log
         }
 
         public func attachRegion() {
             guard let proxy = remoteProxy() else {
-                log("Could not obtain ProTUN XPC proxy for \(machServiceName)")
+                log.error("Could not obtain ProTUN XPC proxy for \(machServiceName)")
                 return
             }
             proxy.fetchTunnelDataSurface { [weak self] surface in
                 guard let self else { return }
                 guard let surface else {
-                    log("Extension returned no tunnel-data surface")
+                    log.error("Extension returned no tunnel-data surface")
                     return
                 }
+
                 extensionIPC.attachRegion(IPCNotifications.SharedRegion(ioSurface: surface as IOSurfaceRef))
-                log("Attached tunnel-data IOSurface region from extension")
+                log.info("Attached tunnel-data IOSurface region from extension")
             }
         }
 
@@ -72,7 +74,7 @@
             }
 
             return connection.remoteObjectProxyWithErrorHandler { [weak self] error in
-                self?.log("ProTUN XPC proxy error for \(self?.machServiceName ?? "?"): \(String(describing: error))")
+                log.error("ProTUN XPC proxy error for \(self?.machServiceName ?? "?"): \(String(describing: error))")
                 self?.invalidate()
             } as? TunnelDataXPCProtocol
         }
@@ -80,6 +82,7 @@
         private func makeConnection() -> NSXPCConnection {
             let connection = NSXPCConnection(machServiceName: machServiceName, options: [])
             let interface = NSXPCInterface(with: TunnelDataXPCProtocol.self)
+
             // `IOSurface` is `NSSecureCoding`, but NSXPC still needs it whitelisted on the reply argument to decode it.
             interface.setClasses(
                 NSSet(array: [IOSurface.self]) as! Set<AnyHashable>,

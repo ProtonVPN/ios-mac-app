@@ -20,6 +20,7 @@ import Domain
 import LocalAgent
 import LocalAgentIPC
 import protun
+import VPNCoreTypes
 
 private func unknownDefault<T>(
     function: StaticString = #function,
@@ -29,6 +30,89 @@ private func unknownDefault<T>(
 ) -> T {
     assertionFailure("Unknown value in \(function) (\(file):\(line))")
     return value
+}
+
+extension CurrentPeer {
+    init?(from state: ConnectionState) {
+        switch state {
+        case let .connected(peer, agent):
+            self = .init(
+                peerID: peer.peerId,
+                transport: .from(protocol: peer.protocol),
+                serverExitV4: agent?.serverExitV4,
+                userISP: agent?.userIspName,
+                userIP: agent?.userIspIp
+            )
+        case let .connectingToLocalAgent(peer, _):
+            self = .init(
+                peerID: peer.peerId,
+                transport: .from(protocol: peer.protocol),
+                serverExitV4: nil,
+                userISP: nil,
+                userIP: nil
+            )
+        default:
+            return nil
+        }
+    }
+}
+
+extension LocalAgentSettings {
+    init(_ config: ProTUNConfiguration) {
+        self.init(
+            splitTcp: config.vpnAccelerator,
+            netshieldLevel: config.netShieldLevel.flatMap { NetShieldType(rawValue: $0)?.toRustNetShieldLevel },
+            softJail: config.softJail,
+            portForwarding: config.portForwarding,
+            randomNat: config.randomNat,
+            circumventionRouting: config.circumventionRouting
+        )
+    }
+
+    /// Overrides LocalAgent settings according to an update, leaving the rest unchanged. Used to build the
+    /// settings forwarded to ProTUN from a partial update without persisting them to the configuration.
+    mutating func apply(_ update: ConnectionUpdate) {
+        if let netShield = update.netShield { netshieldLevel = netShield.toRustNetShieldLevel }
+        if let vpnAccelerator = update.vpnAccelerator { splitTcp = vpnAccelerator }
+        if let moderateNAT = update.moderateNAT { randomNat = moderateNAT.flag }
+        if let portForwarding = update.portForwarding { self.portForwarding = portForwarding }
+    }
+
+    public var agentTunnelFeatures: AgentTunnelFeatures {
+        AgentTunnelFeatures(
+            netshield: netshieldLevel?.netShieldType ?? .off,
+            vpnAccelerator: splitTcp ?? false,
+            natType: NATType(flag: randomNat ?? false),
+            portForwarding: portForwarding
+        )
+    }
+}
+
+public extension NetshieldLevel {
+    var netShieldType: NetShieldType {
+        switch self {
+        case .none: .off
+        case .malwareFilter: .level1
+        case .adsAndMalwareFilter: .level2
+        case .adultAndAdsAndMalwareFilter: .level3
+        @unknown default: .off
+        }
+    }
+}
+
+public extension NetShieldType {
+    var toRustNetShieldLevel: NetshieldLevel {
+        switch self {
+        case .off:
+            .none
+        case .level1:
+            .malwareFilter
+        case .level2:
+            .adsAndMalwareFilter
+        case .level3:
+            .adultAndAdsAndMalwareFilter
+        }
+    }
 }
 
 extension LocalAgentSettingType: @retroactive CustomStringConvertible {
@@ -145,7 +229,7 @@ extension ConnectionState: @retroactive CustomStringConvertible {
     }
 }
 
-public extension WireGuardTransport {
+public extension Domain.WireGuardTransport {
     static func from(protocol: protun.`Protocol`) -> Self {
         switch `protocol` {
         case .wireguardUdp:
