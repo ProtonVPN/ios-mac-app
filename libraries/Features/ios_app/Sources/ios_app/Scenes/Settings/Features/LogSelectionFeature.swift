@@ -36,20 +36,33 @@ struct LogSelectionFeature {
     struct State: Equatable {
         enum Row: Equatable {
             case logSource(LogSource)
+            case pcap
 
             var title: String {
                 switch self {
                 case let .logSource(source):
                     source.title
+                case .pcap:
+                    Localizable.createTroubleshootingFile
                 }
             }
         }
 
         @Presents var destination: Destination.State?
-        var rows: [Row] = LogSource.visibleAppSources.map(Row.logSource)
+        var rows: [Row]
         var alertMessage: String?
         var shareLogsURL: URL?
         var title: String = "Logs"
+        init(rows: [Row]) {
+            self.rows = rows
+        }
+
+        init() {
+            self.rows = LogSource
+                .visibleAppSources
+                .map(Row.logSource)
+                .appending(.pcap)
+        }
     }
 
     enum Action: BindableAction {
@@ -75,10 +88,11 @@ struct LogSelectionFeature {
                 return .none
             case let .rowTapped(row):
                 switch row {
+                case .pcap:
+                    state.destination = .captureVPNSession(.init())
+                    return .none
                 case let .logSource(source):
                     switch source {
-                    case .pcap:
-                        state.destination = .captureVPNSession(.init())
                     case .transactionLog:
                         if let transactionLogURL = paymentsPlanServiceV2.generateTransactionLog() {
                             state.shareLogsURL = transactionLogURL

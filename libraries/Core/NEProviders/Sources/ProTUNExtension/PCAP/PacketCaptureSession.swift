@@ -93,13 +93,16 @@ struct PacketCaptureSession {
         }
         let interval = Date.now.timeIntervalSince(fileHandle.startDate)
         @Dependency(\.fileManagerClient) var fileManagerClient
-        guard let fileSize = try? fileManagerClient.fileSize(at: fileHandle.url) else {
-            // We were in the recording state, but nothing was recorded, most likely because the connection never started
+        do {
+            let fileSize = try fileManagerClient.fileSize(at: fileHandle.url)
+            state = .finished(duration: interval, fileSize: fileSize)
+            return (fileHandle.url, interval, fileSize)
+        } catch {
+            // We were in the recording state, but nothing was recorded,
+            // most likely because the connection never started
             state = .idle
             return nil
         }
-        state = .finished(duration: interval, fileSize: fileSize)
-        return (fileHandle.url, interval, fileSize)
     }
 }
 

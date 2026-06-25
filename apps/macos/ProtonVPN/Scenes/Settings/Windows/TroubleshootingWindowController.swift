@@ -19,7 +19,7 @@
 import AppKit
 import Settings
 
-class TroubleshootingWindowController: WindowController {
+final class TroubleshootingWindowController: WindowController {
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")

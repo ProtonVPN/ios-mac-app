@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CasePaths
 import Foundation
 import IPCErgonomics
 import Sharing
@@ -31,6 +32,7 @@ public enum PacketCaptureInterruptionReason: UInt64 {
 extension PacketCaptureInterruptionReason: Codable {}
 extension PacketCaptureInterruptionReason: Sendable {}
 
+@CasePathable
 public enum CaptureSession: Equatable, Codable, Sendable {
     public static let storageKey: String = "PcapSession"
 

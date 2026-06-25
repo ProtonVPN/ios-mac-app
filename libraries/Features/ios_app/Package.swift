@@ -26,6 +26,7 @@ let package = Package(
         .package(path: "../Home"),
         .package(path: "../Countries"),
         .package(path: "../Payments"),
+        .package(path: "../Settings"),
 
         .package(path: "../../Core/NEHelper"),
         .package(path: "../../Core/LegacyCommon"),
@@ -70,6 +71,7 @@ let package = Package(
                 "Domain",
                 "PCAP",
                 "Strings",
+                "Settings",
                 "Modals",
                 "Persistence",
                 "Announcement",

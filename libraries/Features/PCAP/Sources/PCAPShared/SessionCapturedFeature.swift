@@ -38,6 +38,7 @@ public struct SessionCapturedFeature: Equatable {
         @CasePathable
         public enum Alert {
             case discardFile
+            case cancel
         }
     }
 
@@ -53,6 +54,11 @@ public struct SessionCapturedFeature: Equatable {
                 return .run { _ in
                     @Dependency(\.packetCaptureClient) var packetCaptureClient
                     _ = try await packetCaptureClient.cleanup()
+                } catch: { error, _ in
+                    // We can fail to cleanup, but we shouldn't show any errors to the user here
+                    // Otherwise we might lock the user out of using the app because the pcap modal
+                    // isn't dismissible unless user clears the pcap file.
+                    log.error("PCAP cleanup failed", category: .app, metadata: ["error": "\(error)"])
                 }
             case .alert:
                 return .none
@@ -72,6 +78,7 @@ public struct SessionCapturedFeature: Equatable {
                 )
                 ButtonState(
                     role: .cancel,
+                    action: .send(.cancel),
                     label: { TextState(Localizable.cancel) }
                 )
             },

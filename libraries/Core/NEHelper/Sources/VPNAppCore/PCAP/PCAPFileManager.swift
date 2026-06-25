@@ -27,7 +27,7 @@ public struct PCAPFileManager: Sendable {
 
     public var newFileURL: (_ startDate: Date) throws -> URL
     public var cleanUpAllPcapFiles: () throws -> Void
-    public var retrieveLastPcapFileURL: () -> URL?
+    public var retrieveLastPcapFileURL: @Sendable () -> URL?
 }
 
 extension PCAPFileManager: DependencyKey {

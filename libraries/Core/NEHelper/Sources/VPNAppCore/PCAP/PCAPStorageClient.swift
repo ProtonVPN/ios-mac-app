@@ -39,18 +39,19 @@ extension PCAPStorageClient: DependencyKey {
             finishPCAPSession: { reason in
                 @Dependency(\.pcapFileManager) var pcapFileManager
                 @Dependency(\.fileManagerClient) var fileManagerClient
-                guard let fileURL = pcapFileManager.retrieveLastPcapFileURL(),
-                      let fileSize = try? fileManagerClient.fileSize(fileURL) else { return }
-
-                let endedSession = CaptureSession.sessionEnded(
-                    urlWithSize: .init(url: fileURL, size: fileSize),
-                    reason: reason
-                )
                 do {
+                    guard let fileURL = pcapFileManager.retrieveLastPcapFileURL() else {
+                        return
+                    }
+                    let fileSize = try fileManagerClient.fileSize(fileURL)
+                    let endedSession = CaptureSession.sessionEnded(
+                        urlWithSize: .init(url: fileURL, size: fileSize),
+                        reason: reason
+                    )
                     let encoded = try JSONEncoder().encode(endedSession)
                     UserDefaults.domainUserDefaults.setValue(encoded, forKey: CaptureSession.storageKey)
                 } catch {
-                    log.error("Failed to encode PCAP session", category: .app, metadata: ["error": "\(error)"])
+                    log.error("Failed to finish PCAP session", category: .app, metadata: ["error": "\(error)"])
                 }
             }
         )

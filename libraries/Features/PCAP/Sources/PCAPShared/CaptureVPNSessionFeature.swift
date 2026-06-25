@@ -62,6 +62,7 @@ public struct CaptureVPNSessionFeature {
         }
     }
 
+    @CasePathable
     public enum Action {
         case onAppear
         case onDisappear
@@ -134,11 +135,7 @@ public struct CaptureVPNSessionFeature {
                 } catch: { error, send in
                     await send(.showErrorMessage(error.localizedDescription))
                 }
-            case .destination(.presented(.sessionCaptured(.doneTapped))):
-                return .none
-            case .destination:
-                return .none
-            case .alert(.dismiss):
+            case .destination, .alert:
                 return .none
             case .refreshStorageCapacity:
                 do {

@@ -60,6 +60,7 @@ extension PacketCaptureClient: DependencyKey {
             return pcapUpdate
         }
 
+        // Not sure if this below is needed :thinking-face:
         IPCNotifications.observe(.pcapSessionChanged) {
             @Shared(.captureSession) var captureSession
             let data = UserDefaults.domainUserDefaults.data(forKey: "PcapSession")
@@ -112,6 +113,18 @@ extension PacketCaptureClient: DependencyKey {
             default:
                 throw PacketCaptureClientError.ipcInvalidResponse
             }
+        }
+    }
+
+    public static func stub(onCleanup: (() -> Bool)? = nil, onTogglePacketCapture: (() -> Void)? = nil) -> PacketCaptureClient {
+        .init {
+            nil
+        } isCaptureRunning: {
+            true
+        } cleanup: {
+            onCleanup?() ?? true
+        } togglePacketCapture: {
+            onTogglePacketCapture?()
         }
     }
 }

@@ -23,9 +23,12 @@ import Theme
 public struct RecordingPin: View {
     public init() {}
 
+    private static let innerCircleDiameter: CGFloat = 9
+    private static let outerCircleDiameter: CGFloat = 24
+
     public var body: some View {
         ZStack {
-            externalCircle
+            outerCircle
             innerCircle
         }
     }
@@ -33,12 +36,12 @@ public struct RecordingPin: View {
     var innerCircle: some View {
         Circle()
             .fill(Color(.background, .danger))
-            .frame(.square(9))
+            .frame(.square(Self.innerCircleDiameter))
     }
 
-    var externalCircle: some View {
+    var outerCircle: some View {
         Circle()
             .fill(Color(.background, .danger)).opacity(0.2)
-            .frame(.square(24))
+            .frame(.square(Self.outerCircleDiameter))
     }
 }

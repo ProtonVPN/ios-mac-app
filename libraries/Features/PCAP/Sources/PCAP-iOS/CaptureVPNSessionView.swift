@@ -21,8 +21,6 @@ import Connection
 import Domain
 import PCAPShared
 import ProtonCoreUIFoundations
-
-// import SharedViews
 import Sharing
 import Strings
 import SwiftUI

@@ -20,56 +20,65 @@ import Dependencies
 import DependenciesMacros
 import Foundation
 
-/// Dependency that reports the amount of disk space currently available.
-/// Possible todo: create a publisher that would periodically check for the available
-/// capacity and report every few seconds or few MB of change.
-@DependencyClient
-public struct VolumeAvailableCapacity: Sendable {
-    /// Returns the volume's available capacity for important usage, in bytes.
-    ///
-    /// - Throws: `VolumeAvailableCapacityError`
-    public var capacity: @Sendable () throws -> Int64
-}
+#if os(iOS) || os(macOS)
 
-public enum VolumeAvailableCapacityError: Swift.Error {
-    case failedRetrievingAvailableCapacity
-}
+    /// Dependency that reports the amount of disk space currently available.
+    /// Possible todo: create a publisher that would periodically check for the available
+    /// capacity and report every few seconds or few MB of change.
+    @DependencyClient
+    public struct VolumeAvailableCapacity: Sendable {
+        /// Returns the volume's available capacity for important usage, in bytes.
+        ///
+        /// - Throws: `VolumeAvailableCapacityError`
+        public var capacity: @Sendable () throws -> Int64
+    }
 
-extension VolumeAvailableCapacity: DependencyKey {
-    public static let liveValue = VolumeAvailableCapacity(
-        capacity: { () throws(VolumeAvailableCapacityError) in
-            do {
-                let resourceValues = try Bundle.main.bundleURL.resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey])
-                if let capacity = resourceValues.volumeAvailableCapacityForImportantUsage {
-                    return capacity
-                } else {
+    public enum VolumeAvailableCapacityError: Swift.Error {
+        case failedRetrievingAvailableCapacity
+    }
+
+    extension VolumeAvailableCapacity: DependencyKey {
+        public static let liveValue = VolumeAvailableCapacity(
+            capacity: { () throws(VolumeAvailableCapacityError) in
+                do {
+                    let resourceValues = try Bundle.main.bundleURL.resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey])
+                    if let capacity = resourceValues.volumeAvailableCapacityForImportantUsage {
+                        return capacity
+                    } else {
+                        throw VolumeAvailableCapacityError.failedRetrievingAvailableCapacity
+                    }
+                } catch {
                     throw VolumeAvailableCapacityError.failedRetrievingAvailableCapacity
                 }
-            } catch {
-                throw VolumeAvailableCapacityError.failedRetrievingAvailableCapacity
+            }
+        )
+
+        public static let testValue: VolumeAvailableCapacity = value(with: 100)
+
+        /// Builds a stub `VolumeAvailableCapacity` that always reports a fixed amount of free space.
+        ///
+        /// Use this in tests to drive code paths that branch on available storage (e.g. low-storage warnings)
+        /// without touching the real filesystem.
+        ///
+        /// - Parameter capacity: The amount of available capacity to report, expressed in **Bytes**.
+        /// - Returns: A `VolumeAvailableCapacity` whose `capacity()` closure returns the given value in bytes.
+        public static func value(with capacity: Int64) -> VolumeAvailableCapacity {
+            .init {
+                capacity
             }
         }
-    )
 
-    public static var testValue: VolumeAvailableCapacity = value(with: 100)
-
-    /// Builds a stub `VolumeAvailableCapacity` that always reports a fixed amount of free space.
-    ///
-    /// Use this in tests to drive code paths that branch on available storage (e.g. low-storage warnings)
-    /// without touching the real filesystem.
-    ///
-    /// - Parameter capacity: The amount of available capacity to report, expressed in **MB**.
-    /// - Returns: A `VolumeAvailableCapacity` whose `capacity()` closure returns the given value in bytes.
-    public static func value(with capacity: Int) -> VolumeAvailableCapacity {
-        .init {
-            Int64(capacity) * 1 << 20
+        public static func throwing(error: VolumeAvailableCapacityError) -> VolumeAvailableCapacity {
+            .init {
+                throw error
+            }
         }
     }
-}
 
-public extension DependencyValues {
-    var volumeAvailableCapacity: VolumeAvailableCapacity {
-        get { self[VolumeAvailableCapacity.self] }
-        set { self[VolumeAvailableCapacity.self] = newValue }
+    public extension DependencyValues {
+        var volumeAvailableCapacity: VolumeAvailableCapacity {
+            get { self[VolumeAvailableCapacity.self] }
+            set { self[VolumeAvailableCapacity.self] = newValue }
+        }
     }
-}
+#endif

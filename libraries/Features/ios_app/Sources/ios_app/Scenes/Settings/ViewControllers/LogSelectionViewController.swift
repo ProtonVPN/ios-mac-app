@@ -120,7 +120,7 @@ final class LogSelectionViewController: UIViewController {
         let rows = store.rows
         let cells: [TableViewCellModel] = rows.map { row in
             switch row {
-            case .logSource:
+            case .logSource, .pcap:
                 TableViewCellModel.pushStandard(title: row.title) { [weak self] in
                     self?.store.send(.rowTapped(row))
                 }
