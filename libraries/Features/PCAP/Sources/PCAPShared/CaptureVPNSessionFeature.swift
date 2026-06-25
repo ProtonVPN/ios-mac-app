@@ -67,7 +67,7 @@ public struct CaptureVPNSessionFeature {
         case onDisappear
         case captureButtonPressed
         case alert(PresentationAction<Alert>)
-        case newCaptureSession(CaptureSession)
+        case captureSessionUpdate(CaptureSession)
         case showErrorMessage(String)
         case destination(PresentationAction<Destination.Action>)
         case togglePacketCapture
@@ -91,7 +91,7 @@ public struct CaptureVPNSessionFeature {
             case let .showErrorMessage(message):
                 state.alert = Self.sessionCaptureFailedAlert(message: message)
                 return .none
-            case let .newCaptureSession(captureSession):
+            case let .captureSessionUpdate(captureSession):
                 switch captureSession {
                 case .noSession, .sessionStarted:
                     state.destination = nil
@@ -109,7 +109,7 @@ public struct CaptureVPNSessionFeature {
                             .publisher
                             .receive(on: UIScheduler.shared)
                             .removeDuplicates()
-                            .map(Action.newCaptureSession)
+                            .map(Action.captureSessionUpdate)
                     }
                     .cancellable(id: CancelID.captureSession)
                 )

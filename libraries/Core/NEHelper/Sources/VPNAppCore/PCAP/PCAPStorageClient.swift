@@ -46,11 +46,12 @@ extension PCAPStorageClient: DependencyKey {
                     urlWithSize: .init(url: fileURL, size: fileSize),
                     reason: reason
                 )
-                guard let encoded = try? JSONEncoder().encode(endedSession) else {
-                    return
+                do {
+                    let encoded = try JSONEncoder().encode(endedSession)
+                    UserDefaults.domainUserDefaults.setValue(encoded, forKey: CaptureSession.storageKey)
+                } catch {
+                    log.error("Failed to encode PCAP session", category: .app, metadata: ["error": "\(error)"])
                 }
-
-                UserDefaults.domainUserDefaults.setValue(encoded, forKey: CaptureSession.storageKey)
             }
         )
     }

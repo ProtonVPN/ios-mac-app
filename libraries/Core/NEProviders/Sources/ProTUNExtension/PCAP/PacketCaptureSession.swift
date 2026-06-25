@@ -66,6 +66,7 @@ struct PacketCaptureSession {
         stateStream: (AsyncStream<State>) -> Void
     ) throws -> URL {
         guard state.canStart else {
+            assertionFailure("Attempted to start PCAP session with invalid state")
             throw InvalidState()
         }
         @Dependency(\.pcapFileManager) var pcapFileManager

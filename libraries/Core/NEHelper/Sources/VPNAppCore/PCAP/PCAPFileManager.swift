@@ -70,6 +70,7 @@ extension PCAPFileManager: DependencyKey {
                         .sortedByCreationDate
                         .first
                 } catch {
+                    log.error("Failed to retrieve last PCAP file URL", category: .app, metadata: ["error": "\(error)"])
                     return nil
                 }
             }
