@@ -20,117 +20,75 @@ import Foundation
 import IPCErgonomics
 import IssueReporting
 import LocalAgentIPC
-import os
 
-/// Sent/received using the `tunnelCmd` notification, with the command value set as the notify token.
+/// Commands sent by the tunnel to the extension, representing a single ping that indicate an action should be taken.
 public enum TunnelCommand: Int, Sendable, CaseIterable {
-    /// App should fork its API session and send a session selector as a provider message.
+    /// The extension needs a fresh API session; the app should fork its own and send it back as a provider message.
     case forkSelectorRequest = 1
 }
 
-/// DataStore object that represents the memory region backing all of the different ``RawChannel``s in the app.
-final class TunnelDataStore: Sendable {
+/// ``IPCNotifications/RawChannel``s live here for now. This object is the backing store for several unidirectional
+/// channels coming from the extension.
+final class TunnelDataStore<Role: RawChannelRole>: Sendable {
     struct Channels: Sendable {
-        let connectionData: IPCNotifications.RawChannel<IPCConnectionDataPayload>
-        let localAgentStats: IPCNotifications.RawChannel<IPCStatsPayload>
-        let localAgentConnectionStats: IPCNotifications.RawChannel<IPCConnectionStatsPayload>
-        let localAgentError: IPCNotifications.RawChannel<IPCErrorPayload>
-        let localAgentFeatures: IPCNotifications.RawChannel<IPCAgentFeaturesPayload>
+        let connectionData: IPCNotifications.RawChannel<IPCConnectionDataPayload, Role>
+        let localAgentStats: IPCNotifications.RawChannel<IPCStatsPayload, Role>
+        let localAgentConnectionStats: IPCNotifications.RawChannel<IPCConnectionStatsPayload, Role>
+        let localAgentError: IPCNotifications.RawChannel<IPCErrorPayload, Role>
+        let localAgentFeatures: IPCNotifications.RawChannel<IPCAgentFeaturesPayload, Role>
     }
 
-    private struct State {
-        var channels: Channels?
-        var nextSubscriberID = 0
-        var subscribers: [Int: @Sendable (Channels) -> Void] = [:]
-    }
+    private let region: IPCNotifications.SharedRegion
 
-    private let state = OSAllocatedUnfairLock(initialState: State())
+    let channels: Channels
 
-    var channels: Channels? {
-        state.withLock { $0.channels }
-    }
-
-    func attach(_ region: IPCNotifications.SharedRegion) {
-        // If for whatever reason theshe return `nil`, we probably have bigger problems to worry about
-        guard
-            let connectionDataOffset = MemoryLayout<IPCTunnelData>.offset(of: \.connection_data),
-            let statsOffset = MemoryLayout<IPCTunnelData>.offset(of: \.stats),
-            let connectionStatsOffset = MemoryLayout<IPCTunnelData>.offset(of: \.connection_stats),
-            let errorOffset = MemoryLayout<IPCTunnelData>.offset(of: \.error),
-            let agentFeaturesOffset = MemoryLayout<IPCTunnelData>.offset(of: \.agent_features)
-        else {
-            reportIssue("IPCTunnelData sub-region offsets are not computable; live tunnel data will be unavailable")
-            return
-        }
-        let channels = Channels(
-            connectionData: .init(notification: .tunnelData, region: region, regionOffset: connectionDataOffset),
-            localAgentStats: .init(notification: .tunnelData, region: region, regionOffset: statsOffset),
-            localAgentConnectionStats: .init(notification: .tunnelData, region: region, regionOffset: connectionStatsOffset),
-            localAgentError: .init(notification: .tunnelData, region: region, regionOffset: errorOffset),
-            localAgentFeatures: .init(notification: .tunnelData, region: region, regionOffset: agentFeaturesOffset)
+    private init(region: IPCNotifications.SharedRegion) {
+        self.region = region
+        self.channels = Channels(
+            connectionData: .init(
+                notification: .tunnelData, region: region,
+                regionOffset: MemoryLayout<IPCTunnelData>.offset(of: \.connection_data)!
+            ),
+            localAgentStats: .init(
+                notification: .tunnelData, region: region,
+                regionOffset: MemoryLayout<IPCTunnelData>.offset(of: \.stats)!
+            ),
+            localAgentConnectionStats: .init(
+                notification: .tunnelData, region: region,
+                regionOffset: MemoryLayout<IPCTunnelData>.offset(of: \.connection_stats)!
+            ),
+            localAgentError: .init(
+                notification: .tunnelData, region: region,
+                regionOffset: MemoryLayout<IPCTunnelData>.offset(of: \.error)!
+            ),
+            localAgentFeatures: .init(
+                notification: .tunnelData, region: region,
+                regionOffset: MemoryLayout<IPCTunnelData>.offset(of: \.agent_features)!
+            )
         )
-        // Swap in the new channels, then notify current subscribers outside the lock so they re-subscribe to them.
-        let subscribers = state.withLock { state -> [@Sendable (Channels) -> Void] in
-            state.channels = channels
-            return Array(state.subscribers.values)
-        }
-        subscribers.forEach { $0(channels) }
     }
 
-    /// Emits the current `Channels` (if a region is attached) and every subsequent (re)attach.
-    private func channelsStream() -> AsyncStream<Channels> {
-        AsyncStream { continuation in
-            let (id, current) = state.withLock { state -> (Int, Channels?) in
-                let id = state.nextSubscriberID
-                state.nextSubscriberID += 1
-                state.subscribers[id] = { continuation.yield($0) }
-                return (id, state.channels)
-            }
-            continuation.onTermination = { [weak self] _ in
-                self?.state.withLock { _ = $0.subscribers.removeValue(forKey: id) }
-            }
-            if let current { continuation.yield(current) }
-        }
+    /// Swap in the backing memory carried by `region`. macOS calls this when the extension's IOSurface arrives, which
+    /// happens on every VPN (re)connection.
+    func attach(_ region: IPCNotifications.SharedRegion) {
+        self.region.adopt(region)
     }
 
-    /// Listens to a ``RawChannel`` stream in a way that survives the region re-attaching if the app reconnects.
-    func resubscribingStream<Value: Sendable>(
-        _ makeStream: @escaping @Sendable (Channels) -> AsyncStream<Value>
-    ) -> AsyncStream<Value> {
-        AsyncStream { continuation in
-            let pump = Task {
-                var inner: Task<Void, Never>?
-                for await channels in channelsStream() {
-                    inner?.cancel()
-                    inner = Task {
-                        for await value in makeStream(channels) {
-                            continuation.yield(value)
-                        }
-                    }
-                }
-                inner?.cancel()
-            }
-            continuation.onTermination = { _ in pump.cancel() }
-        }
-    }
-
-    /// Create a data store object, attaching immediately to the file-backed mmap region if on iOS/tvOS. macOS will
-    /// attach later on when it checks in with the extension.
+    /// The initial value for the data store. Initially empty on macOS, iOS and tvOS use the group container.
     static func live() -> TunnelDataStore {
-        let store = TunnelDataStore()
-        #if !os(macOS)
+        #if os(macOS)
+            return TunnelDataStore(region: IPCNotifications.SharedRegion())
+        #else
             do {
                 let containerURL = try FileManager.default.mainContainerURL
-                try store.attach(IPCNotifications.SharedRegion(
+                let region = try IPCNotifications.SharedRegion(
                     fileURL: containerURL.appending(component: "tunnel_data"),
                     size: MemoryLayout<IPCTunnelData>.size
-                ))
+                )
+                return TunnelDataStore(region: region)
             } catch {
-                // The app-group container should always be reachable via our entitlements. Otherwise, report an issue.
-                // Release apps should simply fail to connect here.
-                reportIssue("Failed to map the tunnel-data shared region: \(error)")
+                preconditionFailure("Failed to map the tunnel-data shared region: \(error)")
             }
         #endif
-        return store
     }
 }

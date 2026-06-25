@@ -41,26 +41,25 @@ public struct ExtensionIPCServer: Sendable {
 
 extension ExtensionIPCServer: DependencyKey {
     public static let liveValue: ExtensionIPCServer = {
-        let store = TunnelDataStore.live()
+        let store = TunnelDataStore<IPCNotifications.Writer>.live()
         return ExtensionIPCServer(
-            publishPeer: { peer in store.channels?.connectionData.mutate { $0 = IPCConnectionDataPayload(peer) } },
-            publishStats: { stats in store.channels?.localAgentStats.mutate { $0 = IPCStatsPayload(stats) } },
+            publishPeer: { peer in store.channels.connectionData.mutate { $0 = IPCConnectionDataPayload(peer) } },
+            publishStats: { stats in store.channels.localAgentStats.mutate { $0 = IPCStatsPayload(stats) } },
             publishConnectionStats: { stats in
-                store.channels?.localAgentConnectionStats.mutate { $0 = IPCConnectionStatsPayload(stats) }
+                store.channels.localAgentConnectionStats.mutate { $0 = IPCConnectionStatsPayload(stats) }
             },
-            publishFeatures: { features in store.channels?.localAgentFeatures.mutate { $0 = IPCAgentFeaturesPayload(features) } },
-            publishError: { error in store.channels?.localAgentError.mutate { $0 = IPCErrorPayload(error) } },
+            publishFeatures: { features in store.channels.localAgentFeatures.mutate { $0 = IPCAgentFeaturesPayload(features) } },
+            publishError: { error in store.channels.localAgentError.mutate { $0 = IPCErrorPayload(error) } },
             sendCommand: { command in
                 IPCNotifications.postRawState(.tunnelCmd, state: UInt64(command.rawValue))
             },
             attachRegion: { store.attach($0) },
             zeroAll: {
-                guard let channels = store.channels else { return }
-                channels.connectionData.zero()
-                channels.localAgentStats.zero()
-                channels.localAgentConnectionStats.zero()
-                channels.localAgentError.zero()
-                channels.localAgentFeatures.zero()
+                store.channels.connectionData.zero()
+                store.channels.localAgentStats.zero()
+                store.channels.localAgentConnectionStats.zero()
+                store.channels.localAgentError.zero()
+                store.channels.localAgentFeatures.zero()
             }
         )
     }()

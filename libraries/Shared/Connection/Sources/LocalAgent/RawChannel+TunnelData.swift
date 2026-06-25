@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ConcurrencyExtras
 import CoreConnection
 import Domain
 import Foundation
@@ -25,7 +26,7 @@ import LocalAgentIPC
 // Typed accessors over the live tunnel-data channels. Each exposes the Swift struct that wraps the raw C payload as
 // a getter + an `AsyncStream`.
 
-public extension IPCNotifications.RawChannel where Payload == IPCConnectionDataPayload {
+public extension IPCNotifications.RawChannel where Payload == IPCConnectionDataPayload, Role == IPCNotifications.Reader {
     /// The current peer, or `nil` if none has been published yet.
     func currentPeer() -> CurrentPeer? {
         (try? read())?.currentPeer
@@ -36,7 +37,7 @@ public extension IPCNotifications.RawChannel where Payload == IPCConnectionDataP
     }
 }
 
-public extension IPCNotifications.RawChannel where Payload == IPCStatsPayload {
+public extension IPCNotifications.RawChannel where Payload == IPCStatsPayload, Role == IPCNotifications.Reader {
     func stats() -> LocalAgent.Stats? {
         (try? read()).flatMap(\.localAgentStats)
     }
@@ -46,7 +47,7 @@ public extension IPCNotifications.RawChannel where Payload == IPCStatsPayload {
     }
 }
 
-public extension IPCNotifications.RawChannel where Payload == IPCConnectionStatsPayload {
+public extension IPCNotifications.RawChannel where Payload == IPCConnectionStatsPayload, Role == IPCNotifications.Reader {
     func connectionStats() -> LocalAgent.ConnectionStats? {
         (try? read()).flatMap(\.localAgentConnectionStats)
     }
@@ -56,7 +57,7 @@ public extension IPCNotifications.RawChannel where Payload == IPCConnectionStats
     }
 }
 
-public extension IPCNotifications.RawChannel where Payload == IPCAgentFeaturesPayload {
+public extension IPCNotifications.RawChannel where Payload == IPCAgentFeaturesPayload, Role == IPCNotifications.Reader {
     /// The server-applied features, or `nil` until the extension has published them (or after a disconnect zeroes the region).
     func agentFeatures() -> AgentTunnelFeatures? {
         (try? read())?.agentFeatures
@@ -67,7 +68,7 @@ public extension IPCNotifications.RawChannel where Payload == IPCAgentFeaturesPa
     }
 }
 
-public extension IPCNotifications.RawChannel where Payload == IPCErrorPayload {
+public extension IPCNotifications.RawChannel where Payload == IPCErrorPayload, Role == IPCNotifications.Reader {
     /// The extension's most-recent reported error, or `nil` if the value is empty.
     func errorStream(reconcileOn resumeSignal: AsyncStream<Void> = .finished) -> AsyncStream<ExtensionError?> {
         stream(reconcileOn: resumeSignal) { $0.extensionError }

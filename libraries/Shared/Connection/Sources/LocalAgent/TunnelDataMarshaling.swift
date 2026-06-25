@@ -206,7 +206,7 @@ public extension IPCAgentFeaturesPayload {
         version = IPCTunnelDataVersion.agentFeatures
         netshield_level = UInt8(truncatingIfNeeded: features.netshield.rawValue)
         vpn_accelerator = features.vpnAccelerator ? 1 : 0
-        moderate_nat = features.natType.flag ? 1 : 0
+        moderate_nat = features.natType == .moderateNAT ? 1 : 0
         port_forwarding = (features.portForwarding ?? false) ? 1 : 0
     }
 
@@ -216,7 +216,7 @@ public extension IPCAgentFeaturesPayload {
         return AgentTunnelFeatures(
             netshield: NetShieldType(rawValue: Int(netshield_level)) ?? .off,
             vpnAccelerator: vpn_accelerator != 0,
-            natType: NATType(flag: moderate_nat != 0),
+            natType: moderate_nat != 0 ? .moderateNAT : .strictNAT,
             portForwarding: port_forwarding != 0
         )
     }

@@ -71,15 +71,15 @@ public struct ExtensionIPCClient: Sendable {
 
 extension ExtensionIPCClient: DependencyKey {
     public static let liveValue: ExtensionIPCClient = {
-        let store = TunnelDataStore.live()
+        let store = TunnelDataStore<IPCNotifications.Reader>.live()
         return ExtensionIPCClient(
-            currentPeer: { store.channels?.connectionData.currentPeer() },
-            currentStats: { store.channels?.localAgentStats.stats() },
-            currentFeatures: { store.channels?.localAgentFeatures.agentFeatures() },
-            observePeer: { store.resubscribingStream { $0.connectionData.currentPeerStream(reconcileOn: appBecameActiveTicks()) } },
-            observeStats: { store.resubscribingStream { $0.localAgentStats.statsStream(reconcileOn: appBecameActiveTicks()) } },
-            observeFeatures: { store.resubscribingStream { $0.localAgentFeatures.agentFeaturesStream(reconcileOn: appBecameActiveTicks()) } },
-            observeError: { store.resubscribingStream { $0.localAgentError.errorStream(reconcileOn: appBecameActiveTicks()) } },
+            currentPeer: { store.channels.connectionData.currentPeer() },
+            currentStats: { store.channels.localAgentStats.stats() },
+            currentFeatures: { store.channels.localAgentFeatures.agentFeatures() },
+            observePeer: { store.channels.connectionData.currentPeerStream(reconcileOn: appBecameActiveTicks()) },
+            observeStats: { store.channels.localAgentStats.statsStream(reconcileOn: appBecameActiveTicks()) },
+            observeFeatures: { store.channels.localAgentFeatures.agentFeaturesStream(reconcileOn: appBecameActiveTicks()) },
+            observeError: { store.channels.localAgentError.errorStream(reconcileOn: appBecameActiveTicks()) },
             observeCommands: {
                 AsyncStream { continuation in
                     let token = IPCNotifications.observeRawState(.tunnelCmd) { state in
