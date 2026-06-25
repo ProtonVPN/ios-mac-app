@@ -81,8 +81,6 @@ public enum AppEvent: String {
     // MARK: Platform-Specific
 
     #if os(macOS)
-        /// The `earlyAccess` value changed. This happens when a user wants to use the beta version of the app.
-        case earlyAccess
         /// The user bailed out of the system extension tour early.
         case systemExtensionTourCancelled
         /// The user successfully installed all of the system extensions.

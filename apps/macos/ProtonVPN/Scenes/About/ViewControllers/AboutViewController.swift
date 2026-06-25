@@ -21,14 +21,18 @@
 //
 
 import Cocoa
+import Combine
+import Dependencies
 import Ergonomics
 import LegacyCommon
+import PMLogger
 import Strings
 import Theme
+import VPNAppCore
 import WebKit
 
 class AboutViewController: NSViewController {
-    typealias Factory = NavigationServiceFactory & UpdateManagerFactory
+    typealias Factory = NavigationServiceFactory
     var factory: Factory!
 
     @IBOutlet var imageHeader: NSImageView!
@@ -41,9 +45,11 @@ class AboutViewController: NSViewController {
     @IBOutlet var changelogLabel: PVPNTextField!
     @IBOutlet var webView: WKWebView!
 
-    private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
+    @Dependency(\.updateManager) private var updateManager
+    @Dependency(\.appInfo) private var appInfo
     private lazy var bundle: Bundle = .main
     private lazy var navigationService = factory.makeNavigationService()
+    private var stateUpdatesCancellable: AnyCancellable?
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -62,14 +68,16 @@ class AboutViewController: NSViewController {
     override func viewWillAppear() {
         super.viewWillAppear()
         setupComponents()
-        updateManager.stateUpdated = { [weak self] in
-            self?.setupComponents()
-        }
+        stateUpdatesCancellable = updateManager.stateUpdates()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.setupComponents()
+            }
     }
 
     override func viewWillDisappear() {
         super.viewWillDisappear()
-        updateManager.stateUpdated = nil
+        stateUpdatesCancellable = nil
     }
 
     @IBAction
@@ -109,15 +117,15 @@ class AboutViewController: NSViewController {
     // MARK: - Texts
 
     private var currentVersion: String {
-        updateManager.currentVersion ?? Localizable.unavailable.lowercased()
+        appInfo.bundleShortVersion
     }
 
     private var currentBuild: String {
-        updateManager.currentBuild ?? Localizable.unavailable.lowercased()
+        appInfo.bundleVersion
     }
 
     private var currentVersionReleaseDate: String {
-        guard let currentDate = updateManager.currentVersionReleaseDate else {
+        guard let currentDate = updateManager.currentVersionReleaseDate() else {
             return Localizable.unavailable.lowercased()
         }
         let dateFormatter = DateFormatter()
@@ -130,7 +138,7 @@ class AboutViewController: NSViewController {
         guard let path = Bundle.main.path(forResource: "text-template", ofType: "html"), let htmlTemplate = try? String(contentsOfFile: path) else {
             return ""
         }
-        guard let originalReleaseNotes = updateManager.releaseNotes else { return htmlTemplate }
+        guard let originalReleaseNotes = updateManager.releaseNotes() else { return htmlTemplate }
         let htmlBody = originalReleaseNotes.map { extractHtmlBody($0) }.joined()
         return htmlTemplate.replacingOccurrences(of: "</body>", with: "\(htmlBody)</body>")
     }

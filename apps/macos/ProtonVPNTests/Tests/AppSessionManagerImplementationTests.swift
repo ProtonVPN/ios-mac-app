@@ -65,7 +65,6 @@ struct AppSessionManagerImplementationTests {
         let manager: AppSessionManagerImplementation
         let vpnKeychain: VpnKeychainMock
         let repository: ServerRepository
-        let updateChecker: UpdateCheckerMock
 
         fileprivate init(
             alertService: AppSessionManagerAlertServiceMock,
@@ -75,8 +74,7 @@ struct AppSessionManagerImplementationTests {
             networkingDelegate: FullNetworkingMockDelegate,
             manager: AppSessionManagerImplementation,
             vpnKeychain: VpnKeychainMock,
-            repository: ServerRepository,
-            updateChecker: UpdateCheckerMock
+            repository: ServerRepository
         ) {
             self.alertService = alertService
             self.authKeychain = authKeychain
@@ -86,7 +84,6 @@ struct AppSessionManagerImplementationTests {
             self.manager = manager
             self.vpnKeychain = vpnKeychain
             self.repository = repository
-            self.updateChecker = updateChecker
         }
     }
 
@@ -354,7 +351,6 @@ struct AppSessionManagerImplementationTests {
         let unauthKeychain = UnauthKeychainMock()
         let vpnKeychain = VpnKeychainMock()
         let alertService = AppSessionManagerAlertServiceMock()
-        let updateChecker = UpdateCheckerMock()
 
         let networkingDelegate = FullNetworkingMockDelegate()
         networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(planName: "free", maxTier: .freeTier)
@@ -362,8 +358,7 @@ struct AppSessionManagerImplementationTests {
         let networkingWrapper = CoreNetworkingWrapper(wrapped: networking)
 
         let factory = ManagerFactoryMock(
-            alertService: alertService,
-            updateChecker: updateChecker
+            alertService: alertService
         )
 
         try await withDependencies {
@@ -423,8 +418,7 @@ struct AppSessionManagerImplementationTests {
                 networkingDelegate: networkingDelegate,
                 manager: manager,
                 vpnKeychain: vpnKeychain,
-                repository: repository,
-                updateChecker: updateChecker
+                repository: repository
             )
 
             setConnectionStatus(
@@ -543,7 +537,6 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     @Dependency(\.unauthKeychain) private var unauthKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
     private let alertService: CoreAlertService
-    private let updateChecker: UpdateChecker
 
     let announcementRefresherMock = AnnouncementRefresherMock()
     let appSessionRefreshTimerMock = AppSessionRefreshTimerMock()
@@ -572,16 +565,10 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
         NetworkingMock()
     }
 
-    func makeUpdateChecker() -> any UpdateChecker {
-        updateChecker
-    }
-
     init(
-        alertService: CoreAlertService,
-        updateChecker: UpdateChecker
+        alertService: CoreAlertService
     ) {
         self.alertService = alertService
-        self.updateChecker = updateChecker
     }
 }
 

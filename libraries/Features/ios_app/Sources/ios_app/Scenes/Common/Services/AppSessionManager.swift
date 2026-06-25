@@ -70,8 +70,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         AppSessionRefreshTimerFactory &
         CoreAlertServiceFactory &
         NavigationServiceFactory &
-        ProfileManagerFactory &
-        UpdateCheckerFactory
+        ProfileManagerFactory
 
     private let factory: Factory
 

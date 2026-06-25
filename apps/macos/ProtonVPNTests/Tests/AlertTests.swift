@@ -169,10 +169,6 @@ private class MacAlertServiceFactoryMock: MacAlertService.Factory {
     func makeNotificationManager() -> NotificationManagerProtocol {
         NotificationManagerMock()
     }
-
-    func makeUpdateManager() -> UpdateManager {
-        UpdateManager()
-    }
 }
 
 private class AppSessionManagerMock: AppSessionManager {

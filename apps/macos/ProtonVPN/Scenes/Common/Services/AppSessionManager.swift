@@ -63,8 +63,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     typealias Factory =
         AppSessionRefreshTimerFactory &
         CoreAlertServiceFactory &
-        ProfileManagerFactory &
-        UpdateCheckerFactory
+        ProfileManagerFactory
     private let factory: Factory
 
     private lazy var appSessionRefreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
@@ -79,6 +78,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.activeTunnelInspector) private var activeTunnelInspector
+    @Dependency(\.updateManager) private var updateManager
     @Shared(.connectionState) private var connectionState: ConnectionState
 
     /// While clearing, the keychains are wiped and the server database is closed and deleted.
@@ -387,7 +387,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 await systemExtensionsCoordinator.uninstallAll(origin: .termination, userInitiated: false)
             }
 
-            guard sessionStatus == .established, !isSafeToEnd, !propertiesManager.rememberLoginAfterUpdate else {
+            // Skip the quit confirmation prompt when Sparkle is relaunching the app to apply an update.
+            guard sessionStatus == .established, !isSafeToEnd, !updateManager.isRelaunchingForUpdate() else {
                 NSApp.reply(toApplicationShouldTerminate: true)
                 return
             }

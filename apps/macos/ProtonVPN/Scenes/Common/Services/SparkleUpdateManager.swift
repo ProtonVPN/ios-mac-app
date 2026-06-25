@@ -1,5 +1,5 @@
 //
-//  UpdateManager.swift
+//  SparkleUpdateManager.swift
 //  ProtonVPN - Created on 27.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -21,31 +21,38 @@
 //
 
 import Cocoa
+import Combine
 import Dependencies
-import Domain
+import Ergonomics
 import Foundation
-import LegacyCommon
+import PMLogger
+import Sharing
 import Sparkle
-import Version
+import VPNAppCore
 
-protocol UpdateManagerFactory {
-    func makeUpdateManager() -> UpdateManager
-}
-
-final class UpdateManager: NSObject {
+final class SparkleUpdateManager: NSObject {
     private static let updateChillInterval: TimeInterval = .hours(1)
 
-    // Callback for UI
-    var stateUpdated: (() -> Void)?
+    /// Fires when update state changes (e.g. the appcast finishes loading), exposed via ``stateUpdates()``.
+    private let stateUpdateSubject = PassthroughSubject<Void, Never>()
 
-    private var appSessionManager: AppSessionManager?
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.appInfo) private var appInfo
+
+    /// Beta-channel opt-in. Toggled from Settings
+    @Shared(.earlyAccess) private var earlyAccess
+    /// When set, suppresses update prompts (used in UI tests)
+    @SharedReader(.blockUpdatePrompt) private var blockUpdatePrompt
 
     private var updater: SPUStandardUpdaterController?
     private var appcast: SUAppcast?
+    private var earlyAccessObservation: AnyCancellable?
 
     private var lastUpdateDismissal: Date?
+
+    /// Set to `true` immediately before Sparkle relaunches the app to apply an update, so termination
+    /// proceeds without the quit confirmation prompt
+    private(set) var isRelaunchingForUpdate = false
+
     private var chillOut: Bool {
         if let lastUpdateDismissal, Date().timeIntervalSince(lastUpdateDismissal) < Self.updateChillInterval {
             return true
@@ -58,16 +65,16 @@ final class UpdateManager: NSObject {
         appInfo.bundleInfoDictionary()["SUFeedURL"] as? String
     }
 
-    var currentVersion: String? {
+    private var currentVersion: String? {
         appInfo.bundleShortVersion
     }
 
-    var currentBuild: String? {
+    private var currentBuild: String? {
         appInfo.bundleVersion
     }
 
     var channel: String? {
-        if propertiesManager.earlyAccess {
+        if earlyAccess {
             return "beta"
         }
 
@@ -97,31 +104,26 @@ final class UpdateManager: NSObject {
     override init() {
         super.init()
 
-        AppEvent.earlyAccess.subscribe(self, selector: #selector(earlyAccessChanged))
+        self.earlyAccessObservation = $earlyAccess.publisher
+            .dropFirst()
+            .sink { [weak self] earlyAccess in
+                self?.turnOnEarlyAccess(earlyAccess)
+            }
 
         suDateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss ZZ"
 
         self.updater = SPUStandardUpdaterController(updaterDelegate: self, userDriverDelegate: nil)
     }
 
-    @objc
-    private func earlyAccessChanged(_ notification: NSNotification) {
-        turnOnEarlyAccess((notification.object as? Bool) ?? false)
-    }
-
     private func turnOnEarlyAccess(_ earlyAccess: Bool) {
         lastUpdateDismissal = nil
 
         if earlyAccess {
-            checkForUpdates(nil, userInitiated: true)
+            checkForUpdates(userInitiated: true)
         }
     }
 
-    func checkForUpdates(_ appSessionManager: AppSessionManager?, userInitiated: Bool) {
-        self.appSessionManager = appSessionManager
-
-        propertiesManager.rememberLoginAfterUpdate = false
-
+    func checkForUpdates(userInitiated: Bool) {
         for window in NSApp.windows {
             if window.title == "Software Update" {
                 window.makeKeyAndOrderFront(self)
@@ -140,6 +142,11 @@ final class UpdateManager: NSObject {
 
     func startUpdate() {
         updater?.checkForUpdates(self)
+    }
+
+    /// A publisher that emits each time update state changes (e.g. the appcast finishes loading).
+    func stateUpdates() -> AnyPublisher<Void, Never> {
+        stateUpdateSubject.eraseToAnyPublisher()
     }
 
     // MARK: - Private data
@@ -171,16 +178,14 @@ final class UpdateManager: NSObject {
     private let suDateFormatter: DateFormatter = .init()
 }
 
-extension UpdateManager: SPUUpdaterDelegate {
+extension SparkleUpdateManager: SPUUpdaterDelegate {
     func updaterWillRelaunchApplication(_: SPUUpdater) {
-        if let sessionManager = appSessionManager, sessionManager.loggedIn {
-            propertiesManager.rememberLoginAfterUpdate = true
-        }
+        isRelaunchingForUpdate = true
     }
 
     func updater(_: SPUUpdater, didFinishLoading appcast: SUAppcast) {
         self.appcast = appcast
-        stateUpdated?()
+        stateUpdateSubject.send()
     }
 
     func updater(_: SPUUpdater, userDidMake choice: SPUUserUpdateChoice, forUpdate _: SUAppcastItem, state _: SPUUserUpdateState) {
@@ -212,7 +217,7 @@ extension UpdateManager: SPUUpdaterDelegate {
     }
 
     func updaterMayCheck(forUpdates _: SPUUpdater) -> Bool {
-        guard !propertiesManager.blockUpdatePrompt else {
+        guard !blockUpdatePrompt else {
             return false
         }
         return true
@@ -224,7 +229,7 @@ extension UpdateManager: SPUUpdaterDelegate {
     }
 }
 
-extension UpdateManager: UpdateChecker {
+extension SparkleUpdateManager {
     enum UpdateCheckError: String, Error, CustomStringConvertible {
         case notReady = "No appcast item has appeared yet."
         case invalidMinimumSystemVersion = "Invalid or unrecognized minimum system version."
@@ -265,4 +270,20 @@ extension UpdateManager: UpdateChecker {
             return ProcessInfo.processInfo.operatingSystemVersion
         }
     }
+}
+
+extension UpdateManager: @retroactive DependencyKey {
+    public static let liveValue: UpdateManager = {
+        let manager = SparkleUpdateManager()
+        return UpdateManager(
+            isRelaunchingForUpdate: { manager.isRelaunchingForUpdate },
+            isUpdateAvailable: { await manager.isUpdateAvailable() },
+            minimumVersionRequiredByNextUpdate: { await manager.minimumVersionRequiredByNextUpdate() },
+            startUpdate: { manager.startUpdate() },
+            checkForUpdates: { manager.checkForUpdates(userInitiated: $0) },
+            currentVersionReleaseDate: { manager.currentVersionReleaseDate },
+            releaseNotes: { manager.releaseNotes },
+            stateUpdates: { manager.stateUpdates() }
+        )
+    }()
 }

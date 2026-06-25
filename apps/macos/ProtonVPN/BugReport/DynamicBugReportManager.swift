@@ -58,24 +58,14 @@ public class DynamicBugReportManager {
     @Dependency(\.dynamicBugReportStorage) private var storage
     @Dependency(\.propertiesManager) private var propertiesManager
     private var timer: Timer?
-    private let updateChecker: UpdateChecker
+    @Dependency(\.updateManager) private var updateManager
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.logContentProvider) private var logContentProvider
     private let logSources: [LogSource]
 
-    public typealias Factory = UpdateCheckerFactory
-
-    public convenience init(_ factory: Factory) {
-        self.init(
-            updateChecker: factory.makeUpdateChecker()
-        )
-    }
-
     public init(
-        updateChecker: UpdateChecker,
         logSources: [LogSource] = LogSource.allCases
     ) {
-        self.updateChecker = updateChecker
         self.logSources = logSources
 
         @Dependency(\.dynamicBugReportStorage) var storage
@@ -182,12 +172,12 @@ extension DynamicBugReportManager: BugReportDelegate {
     }
 
     public func updateApp() {
-        updateChecker.startUpdate()
+        updateManager.startUpdate()
     }
 
     public func checkUpdateAvailability() {
         Task.detached {
-            let available = await self.updateChecker.isUpdateAvailable()
+            let available = await self.updateManager.isUpdateAvailable()
             self.updateAvailabilityChanged?(available)
         }
     }

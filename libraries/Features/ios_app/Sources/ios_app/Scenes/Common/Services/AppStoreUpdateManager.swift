@@ -16,16 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 import Dependencies
 import Domain
 import Ergonomics
 import Foundation
-import LegacyCommon
 import PMLogger
 import Version
 import VPNAppCore
 
-final class iOSUpdateManager: UpdateChecker {
+final class AppStoreUpdateManager {
     @Dependency(\.appInfo) private var appInfo
 
     private lazy var updateURL: URL? = {
@@ -196,4 +196,20 @@ final class iOSUpdateManager: UpdateChecker {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open("itms-apps://itunes.apple.com/app/id\(identifier)?mt=8")
     }
+}
+
+extension UpdateManager: @retroactive DependencyKey {
+    public static let liveValue: UpdateManager = {
+        let manager = AppStoreUpdateManager()
+        return UpdateManager(
+            isRelaunchingForUpdate: { false }, // No in-app relaunch on iOS (App Store updates).
+            isUpdateAvailable: { await manager.isUpdateAvailable() },
+            minimumVersionRequiredByNextUpdate: { await manager.minimumVersionRequiredByNextUpdate() },
+            startUpdate: { manager.startUpdate() },
+            checkForUpdates: { _ in }, // macOS/Sparkle only.
+            currentVersionReleaseDate: { nil },
+            releaseNotes: { nil },
+            stateUpdates: { Empty().eraseToAnyPublisher() } // No appcast on iOS.
+        )
+    }()
 }

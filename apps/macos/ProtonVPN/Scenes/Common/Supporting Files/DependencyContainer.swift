@@ -41,7 +41,7 @@ final class DependencyContainer: Container {
     private lazy var macAlertService: MacAlertService = .init(factory: self)
 
     // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
-    private lazy var dynamicBugReportManager = DynamicBugReportManager(self)
+    private lazy var dynamicBugReportManager = DynamicBugReportManager()
 
     // Refreshes app data at predefined time intervals
     private lazy var refreshTimer: AppSessionRefreshTimer = AppSessionRefreshTimerImplementation(
@@ -56,9 +56,6 @@ final class DependencyContainer: Container {
         delegate: self
     )
 
-    // Manages app updates
-    private lazy var updateManager = UpdateManager()
-
     override init() {
         super.init()
         // Some classes depend on shared container from vpncore directly
@@ -71,12 +68,6 @@ final class DependencyContainer: Container {
 
     override func makeCoreAlertService() -> CoreAlertService {
         macAlertService
-    }
-
-    // MARK: UpdateManagerFactory
-
-    override func makeUpdateChecker() -> UpdateChecker {
-        updateManager
     }
 }
 
@@ -196,13 +187,5 @@ extension DependencyContainer: ProtonReachabilityCheckerFactory {
 extension DependencyContainer: StatusMenuViewModelFactory {
     func makeStatusMenuViewModel() -> StatusMenuViewModel {
         StatusMenuViewModel(factory: self)
-    }
-}
-
-// MARK: UpdateManagerFactory
-
-extension DependencyContainer: UpdateManagerFactory {
-    func makeUpdateManager() -> UpdateManager {
-        updateManager
     }
 }
