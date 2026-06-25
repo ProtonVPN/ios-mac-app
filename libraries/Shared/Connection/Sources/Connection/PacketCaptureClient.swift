@@ -68,8 +68,6 @@ extension PacketCaptureClient: DependencyKey {
             }
         }
 
-        let pcapInterruptionObservation = LockIsolated<IPCNotifications.Observation?>(nil)
-
         return PacketCaptureClient {
             guard case let .fileURL(url) = try await sendProTUNPcapRequest(.fileURL) else {
                 throw PacketCaptureClientError.ipcInvalidResponse
@@ -103,35 +101,14 @@ extension PacketCaptureClient: DependencyKey {
 
             switch response {
             case let .captureStartResult(.success(url)):
-                let token = IPCNotifications.observeState(
-                    .pcapInterrupted
-                ) { [weak pcapInterruptionObservation] (reason: PacketCaptureInterruptionReason?) in
-                    $captureSession.withLock { state in
-                        guard case let .sessionStarted(urlWithDate) = state else { return }
-                        let fileSize = (try? fileManagerClient.fileSize(urlWithDate.url)) ?? .zero
-                        state = .sessionEnded(urlWithSize: .init(url: url, size: fileSize), reason: reason ?? .unknown)
-                    }
-                    pcapInterruptionObservation?.setValue(nil)
-                }
-
-                let tokenObservation = token.observation()
-                pcapInterruptionObservation.setValue(tokenObservation)
-
                 $captureSession.withLock { $0 = .sessionStarted(urlWithDate: .init(url: url, date: .now)) }
             case let .captureStartResult(.failure(error)):
-                pcapInterruptionObservation.setValue(nil)
                 throw PacketCaptureClientError.failedToStart(error)
             case let .captureFinished(.success(urlWithSize)):
-                pcapInterruptionObservation.setValue(nil)
-                $captureSession.withLock {
-                    $0 = .sessionEnded(urlWithSize: urlWithSize, reason: .explicitStop)
-                }
+                $captureSession.withLock { $0 = .sessionEnded(urlWithSize: urlWithSize, reason: .explicitStop) }
             case .captureFinished(.failure(_)):
-                pcapInterruptionObservation.setValue(nil)
                 // We failed to stop the capture. This will only occur when there was no file.
-                $captureSession.withLock {
-                    $0 = .noSession
-                }
+                $captureSession.withLock { $0 = .noSession }
             default:
                 throw PacketCaptureClientError.ipcInvalidResponse
             }
