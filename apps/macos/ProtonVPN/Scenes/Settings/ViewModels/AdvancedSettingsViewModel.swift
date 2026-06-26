@@ -36,6 +36,7 @@ final class AdvancedSettingsViewModel {
     private let factory: Factory
 
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    @Dependency(\.upsellManager) private var upsellManager
 
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
     @Dependency(\.hermesClient) private var hermesClient
@@ -130,7 +131,7 @@ final class AdvancedSettingsViewModel {
     // MARK: - Upsell Modals
 
     func showNATUpsell() {
-        alertService.push(alert: ModerateNATUpsellAlert())
+        upsellManager.present(.moderateNat)
     }
 
     // MARK: - Setters
@@ -140,7 +141,7 @@ final class AdvancedSettingsViewModel {
         let result = canUseNat()
         guard case .success = result else {
             if result.requiresUpgrade {
-                alertService.push(alert: ModerateNATUpsellAlert())
+                upsellManager.present(.moderateNat)
             }
             completion(false)
             return

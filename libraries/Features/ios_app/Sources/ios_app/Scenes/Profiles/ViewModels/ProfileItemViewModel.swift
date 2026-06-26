@@ -41,6 +41,7 @@ final class ProfileItemViewModel {
 
     private let profile: Profile
     private let alertService: AlertService
+    @Dependency(\.upsellManager) private var upsellManager
     private let connectionStatusService: ConnectionStatusService
 
     private let userTier: Int
@@ -171,7 +172,7 @@ final class ProfileItemViewModel {
 
         if !authorizer.canUseProfiles {
             log.debug("Connect to profile rejected because user is on free plan", category: .connectionConnect, event: .trigger)
-            alertService.push(alert: ProfilesUpsellAlert())
+            upsellManager.present(.profiles)
         } else if !authorizer.canUseProfile(ofTier: lowestServerTier) {
             // The user is on a paid plan, but this profile requires a higher user tier
             // This shouldn't really happen unless the user is on the basic plan, or the profile requires visionary tier
@@ -181,7 +182,7 @@ final class ProfileItemViewModel {
                 event: .trigger,
                 metadata: ["userTier": "\(userTier)", "lowestServerTier": "\(lowestServerTier)"]
             )
-            alertService.push(alert: AllCountriesUpsellAlert())
+            upsellManager.present(.countries)
         } else if underMaintenance {
             log.debug("Connect rejected because server is in maintenance", category: .connectionConnect, event: .trigger)
             alertService.push(alert: MaintenanceAlert())

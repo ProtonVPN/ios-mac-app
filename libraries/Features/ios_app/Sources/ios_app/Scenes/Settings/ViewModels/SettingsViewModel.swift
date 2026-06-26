@@ -64,6 +64,7 @@ final class SettingsViewModel {
     @Shared(.sessionStatus) private var sessionStatus: SessionStatus
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
+    @Dependency(\.upsellManager) private var upsellManager
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
     @Dependency(\.vpnKeychain) private var vpnKeychain
     private lazy var connectionStatusService: ConnectionStatusService = factory.makeConnectionStatusService()
@@ -399,7 +400,7 @@ final class SettingsViewModel {
                 .upsellableToggle(
                     title: Localizable.netshieldTitle,
                     state: { .upsell },
-                    upsell: { [weak self] in self?.alertService.push(alert: NetShieldUpsellAlert()) },
+                    upsell: { [weak self] in self?.upsellManager.present(.netShield) },
                     handler: { _, _ in }
                 ),
                 .tooltip(text: Localizable.netshieldTitleTooltip),
@@ -469,7 +470,7 @@ final class SettingsViewModel {
                 overriddenValue: appliedVPNAcceleratorOverride,
                 isPending: applyingToggles.contains(.vpnAccelerator),
                 state: { [unowned self] in displayState(for: VPNAccelerator.self) },
-                upsell: { [weak self] in self?.alertService.push(alert: VPNAcceleratorUpsellAlert()) },
+                upsell: { [weak self] in self?.upsellManager.present(.vpnAccelerator) },
                 handler: { toggleOn, callback in
                     self.getFeatureChangeAvailability(for: .agent(.vpnAccelerator(toggleOn))) { featureChangeAvailability in
                         let acceleratorValue = toggleOn ? VPNAccelerator.on : VPNAccelerator.off
@@ -503,7 +504,7 @@ final class SettingsViewModel {
             .upsellableToggle(
                 title: Localizable.allowLanTitle,
                 state: { [unowned self] in displayState(for: ExcludeLocalNetworks.self) },
-                upsell: { [weak self] in self?.alertService.push(alert: CustomizationUpsellAlert()) },
+                upsell: { [weak self] in self?.upsellManager.present(.allowLan) },
                 handler: switchLANCallback()
             ),
             .tooltip(text: Localizable.allowLanInfo),
@@ -521,7 +522,7 @@ final class SettingsViewModel {
                 value: hermesStatusLabel,
                 icon: nil,
                 upsell: { [weak self] in
-                    self?.alertService.push(alert: HermesUpsellAlert())
+                    self?.upsellManager.present(.hermes)
                 },
                 handler: { [weak self] in
                     self?.pushHermesViewController()
@@ -564,7 +565,7 @@ final class SettingsViewModel {
                 overriddenValue: appliedNATOverride,
                 isPending: applyingToggles.contains(.nat),
                 state: { [unowned self] in moderateNATState },
-                upsell: { [weak self] in self?.alertService.push(alert: ModerateNATUpsellAlert()) },
+                upsell: { [weak self] in self?.upsellManager.present(.moderateNat) },
                 handler: { [weak self] toggleOn, callback in
                     let natType = toggleOn ? NATType.moderateNAT : NATType.strictNAT
 
@@ -909,7 +910,7 @@ final class SettingsViewModel {
         let result = netShieldTypeAuthorizer(type)
         guard result.isAllowed else {
             if result.requiresUpgrade {
-                alertService.push(alert: NetShieldUpsellAlert())
+                upsellManager.present(.netShield)
             }
             completion(false)
             return

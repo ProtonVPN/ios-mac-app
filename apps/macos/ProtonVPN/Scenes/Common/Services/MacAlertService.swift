@@ -37,8 +37,6 @@ import VPNAppCore
 import VPNShared
 
 final class MacAlertService {
-    @Dependency(\.serverRepository) var serverRepository
-
     typealias Factory =
         NavigationServiceFactory &
         UIAlertServiceFactory &
@@ -48,14 +46,10 @@ final class MacAlertService {
 
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
     private lazy var windowService: WindowService = factory.makeWindowService()
-    @Dependency(\.notificationManager) private var notificationManager
     @Dependency(\.updateManager) private var updateManager
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    @Dependency(\.sessionService) var sessionService
     @Dependency(\.linkOpener) var linkOpener
-
-    private var lastTimeCheckMaintenance = Date(timeIntervalSince1970: 0)
 
     init(factory: Factory) {
         self.factory = factory
@@ -80,42 +74,25 @@ extension MacAlertService: CoreAlertService {
         case let appUpdateRequiredAlert as AppUpdateRequiredAlert:
             show(appUpdateRequiredAlert)
 
-        case let alert as WelcomeScreenAlert:
-            showWelcomeScreen(alert: alert, welcomeScreenAlert: alert)
+        case let alert as IkeDeprecatedAlert:
+            show(alert)
 
-        case let alert as AllCountriesUpsellAlert:
-            let allCountriesUpsell = UpsellModalType.allCountries(
-                numberOfServers: serverRepository.roundedServerCount,
-                numberOfCountries: serverRepository.countryCount()
-            )
-            show(alert: alert, upsellModalType: allCountriesUpsell)
+        case let connectionTroubleshootingAlert as ConnectionTroubleshootingAlert:
+            show(connectionTroubleshootingAlert)
 
-        case let alert as ModerateNATUpsellAlert:
-            show(alert: alert, upsellModalType: .moderateNAT)
+        case let sysexAlert as SysexEnabledAlert:
+            show(sysexAlert)
 
-        case let alert as SecureCoreUpsellAlert:
-            show(alert: alert, upsellModalType: .secureCore)
+        case let systemExtensionTourAlert as SystemExtensionTourAlert:
+            show(systemExtensionTourAlert)
 
-        case let alert as NetShieldUpsellAlert:
-            show(alert: alert, upsellModalType: .netShield)
+        case let announcementOfferAlert as AnnouncementOfferAlert:
+            show(announcementOfferAlert)
 
-        case let alert as PortForwardingUpsellAlert:
-            show(alert: alert, upsellModalType: .portForwarding)
+        case let subuserAlert as SubuserWithoutConnectionsAlert:
+            show(subuserAlert)
 
-        case let alert as ProfilesUpsellAlert:
-            show(alert: alert, upsellModalType: .profiles)
-
-        case let alert as VPNAcceleratorUpsellAlert:
-            show(alert: alert, upsellModalType: .vpnAccelerator)
-
-        case let alert as CustomizationUpsellAlert:
-            show(alert: alert, upsellModalType: .customization)
-
-        case let alert as HermesUpsellAlert:
-            show(alert: alert, upsellModalType: .hermes)
-
-        case let alert as PlutoniumUpsellAlert:
-            show(alert: alert, upsellModalType: .plutonium)
+        // Actual Alerts
 
         case is MaintenanceAlert:
             showDefaultSystemAlert(alert)
@@ -132,26 +109,11 @@ extension MacAlertService: CoreAlertService {
         case is QuitWarningAlert:
             showDefaultSystemAlert(alert)
 
-        case let alert as IkeDeprecatedAlert:
-            show(alert)
-
-        case let vpnServerOnMaintenanceAlert as VpnServerOnMaintenanceAlert:
-            show(vpnServerOnMaintenanceAlert)
-
-        case let connectionTroubleshootingAlert as ConnectionTroubleshootingAlert:
-            show(connectionTroubleshootingAlert)
-
         case is UnreachableNetworkAlert:
             showDefaultSystemAlert(alert)
 
-        case let sysexAlert as SysexEnabledAlert:
-            show(sysexAlert)
-
         case is SysexInstallingErrorAlert:
             showDefaultSystemAlert(alert)
-
-        case let systemExtensionTourAlert as SystemExtensionTourAlert:
-            show(systemExtensionTourAlert)
 
         case is ReconnectOnSettingsChangeAlert:
             showDefaultSystemAlert(alert)
@@ -167,12 +129,6 @@ extension MacAlertService: CoreAlertService {
 
         case is LANConnectionsKillSwitchConflictAlert:
             showDefaultSystemAlert(alert)
-
-        case let announcementOfferAlert as AnnouncementOfferAlert:
-            show(announcementOfferAlert)
-
-        case let subuserAlert as SubuserWithoutConnectionsAlert:
-            show(subuserAlert)
 
         case is ProtonUnreachableAlert:
             showDefaultSystemAlert(alert)
@@ -198,8 +154,6 @@ extension MacAlertService: CoreAlertService {
         }
     }
 
-    // swiftlint:enable cyclomatic_complexity function_body_length
-
     // MARK: Alerts UI
 
     private func showDefaultSystemAlert(_ alert: SystemAlert) {
@@ -207,22 +161,6 @@ extension MacAlertService: CoreAlertService {
             alert.actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: nil))
         }
         uiAlertService.displayAlert(alert)
-    }
-
-    // MARK: Custom Alerts
-
-    private func show(_: SysexEnabledAlert) {
-        @Dependency(\.defaultsProvider) var provider
-        guard !provider.getDefaults().bool(forKey: AppConstants.UserDefaults.welcomed),
-              let credentials = try? vpnKeychain.fetchCached()
-        else {
-            return
-        }
-
-        let welcomeViewController = WelcomeViewController(windowService: windowService)
-        windowService.presentKeyModal(viewController: welcomeViewController, activatingApp: false)
-
-        provider.getDefaults().set(true, forKey: AppConstants.UserDefaults.welcomed)
     }
 
     private func show(_ alert: AppUpdateRequiredAlert) {
@@ -239,6 +177,22 @@ extension MacAlertService: CoreAlertService {
         uiAlertService.displayAlert(alert)
     }
 
+    // MARK: Custom controllers that treated as Alerts
+
+    private func show(_: SysexEnabledAlert) {
+        @Dependency(\.defaultsProvider) var provider
+        guard !provider.getDefaults().bool(forKey: AppConstants.UserDefaults.welcomed),
+              let credentials = try? vpnKeychain.fetchCached()
+        else {
+            return
+        }
+
+        let welcomeViewController = WelcomeViewController(windowService: windowService)
+        windowService.presentKeyModal(viewController: welcomeViewController, activatingApp: false)
+
+        provider.getDefaults().set(true, forKey: AppConstants.UserDefaults.welcomed)
+    }
+
     private func show(_ alert: SystemExtensionTourAlert) {
         windowService.openSystemExtensionGuideWindow(
             origin: alert.origin,
@@ -246,80 +200,9 @@ extension MacAlertService: CoreAlertService {
         )
     }
 
-    private func show(_: VpnServerOnMaintenanceAlert) {
-        guard lastTimeCheckMaintenance.timeIntervalSinceNow < -AppConstants.Time.maintenanceMessageTimeThreshold else {
-            return
-        }
-        notificationManager.displayServerGoingOnMaintenance()
-        lastTimeCheckMaintenance = Date()
-    }
-
     private func show(_: ConnectionTroubleshootingAlert) {
         let connectionTroubleshootingAlert = TroubleshootHostingViewController()
         windowService.presentKeyModal(viewController: connectionTroubleshootingAlert, activatingApp: false)
-    }
-
-    private func showWelcomeScreen(alert: UpsellAlert, welcomeScreenAlert: WelcomeScreenAlert) {
-        let modalType: ModalType = switch welcomeScreenAlert.plan {
-        case .fallback:
-            .welcomeFallback
-        case .unlimited:
-            .welcomeUnlimited
-        case let .plus(numberOfServers, numberOfDevices, numberOfCountries):
-            .welcomePlus(
-                numberOfServers: numberOfServers,
-                numberOfDevices: numberOfDevices,
-                numberOfCountries: numberOfCountries
-            )
-        }
-
-        let modalSource = alert.modalSource
-
-        let upgradeAction: (() -> Void) = { [weak self] in
-            Task { [weak self] in
-                guard let url = await self?.sessionService.getPlanSession(mode: .upgrade) else {
-                    return
-                }
-                AppEvent.userEngagedWithUpsellAlert.post(modalSource)
-                self?.linkOpener.open(url)
-            }
-        }
-
-        AppEvent.upsellAlertWasDisplayed.post(modalSource)
-
-        let viewController = ModalsFactory.modalViewController(
-            modalType: modalType,
-            upgradeAction: upgradeAction,
-            continueAction: alert.continueAction
-        )
-
-        windowService.presentKeyModal(viewController: viewController, activatingApp: alert.activatingApp)
-    }
-
-    @MainActor
-    private func show(alert: UpsellAlert, upsellModalType: UpsellModalType) {
-        let modalSource = alert.modalSource
-
-        let upgradeAction: (() -> Void) = { [weak self] in
-            Task { [weak self] in
-                guard let url = await self?.sessionService.getPlanSession(mode: .upgrade) else {
-                    return
-                }
-                AppEvent.userEngagedWithUpsellAlert.post(modalSource)
-                self?.linkOpener.open(url)
-            }
-        }
-
-        AppEvent.upsellAlertWasDisplayed.post(modalSource)
-
-        let upsellViewController = LegacyUpsellFactory.upsellViewController(
-            upsellModalType: upsellModalType,
-            upgradeAction: upgradeAction,
-            skipAction: alert.continueAction,
-            showsCloseButton: false
-        )
-
-        windowService.presentKeyModal(viewController: upsellViewController, activatingApp: alert.activatingApp)
     }
 
     private func show(_ alert: AnnouncementOfferAlert) {

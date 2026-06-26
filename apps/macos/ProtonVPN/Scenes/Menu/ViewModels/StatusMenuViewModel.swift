@@ -65,6 +65,7 @@ final class StatusMenuViewModel {
     private lazy var navService: NavigationService = factory.makeNavigationService()
     @Dependency(\.vpnKeychain) private var vpnKeychain
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    @Dependency(\.upsellManager) private var upsellManager
     private lazy var wifiSecurityMonitor: WiFiSecurityMonitor = factory.makeWiFiSecurityMonitor()
     private lazy var windowService: WindowService = factory.makeWindowService()
 
@@ -285,7 +286,7 @@ final class StatusMenuViewModel {
         // Upsell for free tier
         if turningOn, !isSufficientTierLevel() {
             viewController?.secureCoreSwitch.setState(.off)
-            alertService.push(alert: SecureCoreUpsellAlert())
+            upsellManager.present(.secureCore)
             return
         }
 

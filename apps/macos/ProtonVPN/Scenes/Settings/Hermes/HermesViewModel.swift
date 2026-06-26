@@ -60,6 +60,7 @@ final class HermesViewModel {
     @Shared(.connectionState) private var connectionState: ConnectionState
 
     private let alertService: any CoreAlertService
+    @Dependency(\.upsellManager) private var upsellManager
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
 
     private var initialState: State
@@ -155,6 +156,6 @@ final class HermesViewModel {
     }
 
     func upsellButtonTapped() {
-        alertService.push(alert: HermesUpsellAlert())
+        upsellManager.present(.hermes)
     }
 }

@@ -46,6 +46,7 @@ class ProfilesMenuViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
     private let navService: NavigationService
     private let alertService: CoreAlertService
+    @Dependency(\.upsellManager) private var upsellManager
 
     var contentChanged: (() -> Void)?
 
@@ -87,7 +88,7 @@ class ProfilesMenuViewModel {
     }
 
     func showProfilesUpsellAlert() {
-        alertService.push(alert: ProfilesUpsellAlert())
+        upsellManager.present(.profiles)
     }
 
     func overviewAction() {

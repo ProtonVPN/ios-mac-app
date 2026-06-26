@@ -34,6 +34,7 @@ class ProfilesViewModel {
     @Dependency(\.profileAuthorizer) var profileAuthorizer
     private let factory: Factory
     private lazy var alertService = factory.makeCoreAlertService()
+    @Dependency(\.upsellManager) private var upsellManager
 
     private let profileService: ProfileService
     private var profileManager: ProfileManager?
@@ -96,7 +97,7 @@ class ProfilesViewModel {
             log.error("Tried to show profiles upsell modal, but profiles are usable", category: .userPlan)
             return
         }
-        alertService.push(alert: ProfilesUpsellAlert())
+        upsellManager.present(.profiles)
     }
 
     func cellCount(for section: Int) -> Int {

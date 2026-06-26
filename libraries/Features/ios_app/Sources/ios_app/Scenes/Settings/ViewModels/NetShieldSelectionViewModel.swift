@@ -34,6 +34,7 @@ final class NetShieldSelectionViewModel {
     private var factory: Factory
 
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    @Dependency(\.upsellManager) private var upsellManager
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
 
     @SharedReader(.appliedFeatures) private var appliedFeatures: AgentTunnelFeatures?
@@ -90,7 +91,7 @@ final class NetShieldSelectionViewModel {
             subtitle: Localizable.netshieldUpsellSubtitle,
             image: UIImage(resource: .netshieldSmall),
             handler: { [weak self] in
-                self?.alertService.push(alert: NetShieldUpsellAlert())
+                self?.upsellManager.present(.netShield)
             }
         )
 

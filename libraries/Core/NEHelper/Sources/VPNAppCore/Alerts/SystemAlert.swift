@@ -427,16 +427,6 @@ public final class ConnectionTroubleshootingAlert: SystemAlert {
     public init() {}
 }
 
-public final class VpnServerOnMaintenanceAlert: SystemAlert {
-    public var title: String? = Localizable.maintenanceOnServerDetectedTitle
-    public var message: String? = Localizable.maintenanceOnServerDetectedDescription
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-
-    public init() {}
-}
-
 public final class SubuserWithoutConnectionsAlert: SystemAlert {
     public var title: String?
     public var message: String?

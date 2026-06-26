@@ -74,6 +74,24 @@ extension WindowService {
     }
 }
 
+// MARK: - DependencyKey
+
+enum WindowServiceKey: DependencyKey {
+    static var liveValue: WindowService {
+        guard let factory = Container.sharedContainer as? WindowServiceFactory else {
+            fatalError("windowService accessed before the app DependencyContainer was configured")
+        }
+        return factory.makeWindowService()
+    }
+}
+
+extension DependencyValues {
+    var windowService: WindowService {
+        get { self[WindowServiceKey.self] }
+        set { self[WindowServiceKey.self] = newValue }
+    }
+}
+
 // this need to abstract class for common functions. for sharing code. ios/mac should have different implementation
 final class WindowServiceImplementation: WindowService {
     typealias Factory = AnnouncementsViewModelFactory

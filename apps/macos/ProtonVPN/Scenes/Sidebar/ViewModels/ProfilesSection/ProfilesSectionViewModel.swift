@@ -39,6 +39,7 @@ class ProfilesSectionViewModel {
     private let profileManager: ProfileManager
     private let navService: NavigationService
     private let alertService: CoreAlertService
+    @Dependency(\.upsellManager) private var upsellManager
 
     @Shared(.featureFlags) private var featureFlags: FeatureFlags
     private var featureFlagsObservation: AnyCancellable?
@@ -106,7 +107,7 @@ class ProfilesSectionViewModel {
     }
 
     private func showProfilesUpsellAlert() {
-        alertService.push(alert: ProfilesUpsellAlert())
+        upsellManager.present(.profiles)
     }
 
     func createNewProfileAction() {

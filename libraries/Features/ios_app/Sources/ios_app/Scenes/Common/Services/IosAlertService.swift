@@ -44,13 +44,9 @@ final class IosAlertService {
     private let factory: Factory
 
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
-    private lazy var navigationService: NavigationService = factory.makeNavigationService()
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
 
     private let paymentsFlowCoordinator = PaymentsFlowCoordinator()
-    private var oneClickIapVC: UIViewController?
-
-    @ConcurrentlyReadable private var upsellAlerts: [UUID: UpsellAlert] = [:]
 
     @Dependency(\.windowService) private var windowService
 
@@ -101,9 +97,6 @@ extension IosAlertService: CoreAlertService {
         case let connectionTroubleshootingAlert as ConnectionTroubleshootingAlert:
             show(connectionTroubleshootingAlert)
 
-        case let vpnServerOnMaintenanceAlert as VpnServerOnMaintenanceAlert:
-            show(vpnServerOnMaintenanceAlert)
-
         case is ReconnectOnSmartProtocolChangeAlert:
             showDefaultSystemAlert(alert)
 
@@ -125,9 +118,6 @@ extension IosAlertService: CoreAlertService {
         case let subuserAlert as SubuserWithoutConnectionsAlert:
             show(subuserAlert)
 
-        case let alert as WelcomeScreenAlert:
-            showWelcomeScreen(welcomeScreenAlert: alert)
-
         case is ProtocolNotAvailableForServerAlert:
             showDefaultSystemAlert(alert)
 
@@ -140,40 +130,6 @@ extension IosAlertService: CoreAlertService {
         case let alert as PaymentRestorationAlert:
             showDefaultSystemAlert(alert)
 
-        // Upsell related
-
-        case let netShieldUpsell as NetShieldUpsellAlert:
-            showUpsell(alert: netShieldUpsell, upsellModalType: .netShield)
-
-        case let secureCoreUpsell as SecureCoreUpsellAlert:
-            showUpsell(alert: secureCoreUpsell, upsellModalType: .secureCore)
-
-        case let moderateNatUpsell as ModerateNATUpsellAlert:
-            showUpsell(alert: moderateNatUpsell, upsellModalType: .moderateNAT)
-
-        case let allCountriesUpsell as AllCountriesUpsellAlert:
-            @Dependency(\.serverRepository) var repository
-            let allCountriesModalType = UpsellModalType.allCountries(
-                numberOfServers: repository.roundedServerCount,
-                numberOfCountries: repository.countryCount()
-            )
-            showUpsell(alert: allCountriesUpsell, upsellModalType: allCountriesModalType)
-
-        case let profilesUpsell as ProfilesUpsellAlert:
-            showUpsell(alert: profilesUpsell, upsellModalType: .profiles)
-
-        case let vpnAcceleratorUpsell as VPNAcceleratorUpsellAlert:
-            showUpsell(alert: vpnAcceleratorUpsell, upsellModalType: .vpnAccelerator)
-
-        case let customizationUpsell as CustomizationUpsellAlert:
-            showUpsell(alert: customizationUpsell, upsellModalType: .customization)
-
-        case let torUpsell as TorUpsellAlert:
-            showUpsell(alert: torUpsell, upsellModalType: .torOverVPN)
-
-        case let alert as HermesUpsellAlert:
-            showUpsell(alert: alert, upsellModalType: .hermes)
-
         default:
             if case .debug = BuildConfiguration.current {
                 fatalError("Alert type handling not implemented: \(String(describing: alert))")
@@ -181,60 +137,6 @@ extension IosAlertService: CoreAlertService {
                 showDefaultSystemAlert(alert)
             }
         }
-    }
-
-    private func showWelcomeScreen(welcomeScreenAlert: WelcomeScreenAlert) {
-        let modalType: ModalType = switch welcomeScreenAlert.plan {
-        case .fallback:
-            .welcomeFallback
-        case .unlimited:
-            .welcomeUnlimited
-        case let .plus(numberOfServers, numberOfDevices, numberOfCountries):
-            .welcomePlus(
-                numberOfServers: numberOfServers,
-                numberOfDevices: numberOfDevices,
-                numberOfCountries: numberOfCountries
-            )
-        }
-        let viewController = ModalsFactory().modalViewController(modalType: modalType, primaryAction: { [weak self] in
-            self?.windowService.dismissModal(nil)
-        })
-        viewController.modalPresentationStyle = .overFullScreen
-        windowService.present(modal: viewController)
-    }
-
-    @MainActor
-    private func showUpsell(alert: UpsellAlert, upsellModalType: Payments.UpsellModalType) {
-        let viewController = paymentsFlowCoordinator.makeViewController(
-            request: .upsell(upsellModalType)
-        ) { [weak self] event in
-            guard let self else { return }
-            switch event {
-            case .completed, .dismissed:
-                windowService.dismissModal(nil)
-            case let .engaged(_, purchaseType):
-                let upsellData: UpsellData = if purchaseType == .web {
-                    .webIntro(modalSource: alert.modalSource, newPlanName: nil)
-                } else {
-                    .init(
-                        modalSource: alert.modalSource,
-                        newPlanName: nil,
-                        reference: nil,
-                        cycle: nil,
-                        flowType: .oneClick
-                    )
-                }
-                AppEvent.userEngagedWithUpsellAlert.post(upsellData)
-            case .createAccountFirstRequested:
-                guard let oneClickIapVC else { return }
-                navigationService.presentSignUp(over: oneClickIapVC, flow: .credentiallessUpsell)
-            }
-        }
-
-        viewController.modalPresentationStyle = .overFullScreen
-        oneClickIapVC = viewController
-        windowService.present(modal: viewController)
-        AppEvent.upsellAlertWasDisplayed.post(alert.modalSource)
     }
 
     private func show(_ alert: AppUpdateRequiredAlert) {
@@ -268,10 +170,6 @@ extension IosAlertService: CoreAlertService {
     private func show(_: ConnectionTroubleshootingAlert) {
         let controller = TroubleshootHostingViewController()
         windowService.present(modal: controller)
-    }
-
-    private func show(_ alert: VpnServerOnMaintenanceAlert) {
-        showNotificationStyleAlert(message: alert.title ?? "", type: .success)
     }
 
     private func show(_ alert: AnnouncementOfferAlert) {

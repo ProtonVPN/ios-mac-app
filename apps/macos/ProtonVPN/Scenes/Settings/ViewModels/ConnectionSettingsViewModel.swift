@@ -57,6 +57,7 @@ final class ConnectionSettingsViewModel {
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    @Dependency(\.upsellManager) private var upsellManager
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
@@ -516,19 +517,19 @@ final class ConnectionSettingsViewModel {
     // MARK: - Upsell Modals
 
     func showLANConnectionUpsell() {
-        alertService.push(alert: CustomizationUpsellAlert())
+        upsellManager.present(.allowLan)
     }
 
     func showVPNAcceleratorUpsell() {
-        alertService.push(alert: VPNAcceleratorUpsellAlert())
+        upsellManager.present(.vpnAccelerator)
     }
 
     func showPlutoniumUpsell() {
-        alertService.push(alert: PlutoniumUpsellAlert())
+        upsellManager.present(.splitTunneling)
     }
 
     func showPortForwardingUpsell() {
-        alertService.push(alert: PortForwardingUpsellAlert())
+        upsellManager.present(.portForwarding)
     }
 
     // MARK: - Item
