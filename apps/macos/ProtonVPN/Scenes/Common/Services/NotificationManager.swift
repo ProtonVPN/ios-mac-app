@@ -36,7 +36,7 @@ import VPNShared
 
 final class NotificationManager: NSObject, NotificationManagerProtocol {
     private let delayBeforeDismissing: Duration = .seconds(5)
-    private let appSessionManager: AppSessionManager
+    @Shared(.sessionStatus) private var sessionStatus: SessionStatus
     @Shared(.connectionState) private var connectionState: ConnectionState
 
     private var cancellables = Set<AnyCancellable>()
@@ -44,12 +44,11 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
     private var shouldShowNotification: Bool {
         @Dependency(\.defaultsProvider) var provider
 
-        return appSessionManager.sessionStatus == .established
+        return sessionStatus == .established
             && provider.getDefaults().bool(forKey: AppConstants.UserDefaults.systemNotifications)
     }
 
-    init(appSessionManager: AppSessionManager) {
-        self.appSessionManager = appSessionManager
+    override init() {
         super.init()
 
         UNUserNotificationCenter.current().delegate = self

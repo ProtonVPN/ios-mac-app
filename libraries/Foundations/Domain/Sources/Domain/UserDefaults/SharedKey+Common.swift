@@ -45,6 +45,21 @@ public extension SharedKey where Self == InMemoryKey<String?>.Default {
     static var userPlan: Self {
         Self[.inMemory("userPlan"), default: nil]
     }
+
+    /// The reason the session was last lost (e.g. a forced logout message), or `nil`.
+    ///
+    /// Written by `AppSessionManager` immediately before it sets `sessionStatus` to
+    /// `.notEstablished`; read by login/welcome screens to surface why the user was signed out
+    static var sessionLogoutReason: Self {
+        Self[.inMemory("sessionLogoutReason"), default: nil]
+    }
+}
+
+public extension SharedKey where Self == InMemoryKey<SessionStatus>.Default {
+    /// The app's authenticated-session state
+    static var sessionStatus: Self {
+        Self[.inMemory("sessionStatus"), default: .undetermined]
+    }
 }
 
 public extension SharedKey where Self == InMemoryKey<Bool>.Default {

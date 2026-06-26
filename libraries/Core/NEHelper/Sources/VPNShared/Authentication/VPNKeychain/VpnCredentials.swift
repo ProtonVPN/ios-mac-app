@@ -192,12 +192,6 @@ public struct VpnCredentials: Codable, Equatable, CustomStringConvertible {
     }
 }
 
-public extension VpnCredentials {
-    var isDelinquent: Bool {
-        delinquent > 2
-    }
-}
-
 /// Contains everything that VpnCredentials has, minus the username, password, group ID,
 /// and expiration date/time.
 /// This lets us avoid querying the keychain unnecessarily, since every query results in a synchronous
@@ -217,10 +211,6 @@ public struct CachedVpnCredentials {
     public let businessEvents: Bool
     public let isBusiness: Bool
     public let netshield: NetShieldFeatureSettings
-
-    public var canUsePromoCode: Bool {
-        !isDelinquent && !hasPaymentMethod && credit == 0 && subscribed == 0
-    }
 }
 
 extension CachedVpnCredentials {
@@ -241,13 +231,5 @@ extension CachedVpnCredentials {
             isBusiness: credentials.isBusiness,
             netshield: credentials.netshield
         )
-    }
-}
-
-// MARK: - Checks performed on CachedVpnCredentials
-
-public extension CachedVpnCredentials {
-    var isDelinquent: Bool {
-        delinquent > 2
     }
 }

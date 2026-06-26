@@ -36,7 +36,6 @@ public class VpnKeychainMock: VpnKeychainProtocol {
 
     public static var vpnCredentialsChanged = Notification.Name("vpnCredentialsChanged")
     public static var vpnPlanChanged = Notification.Name("vpnPlanChanged")
-    public static var vpnUserDelinquent = Notification.Name("vpnUserDelinquent")
 
     public var credentials: VpnCredentials?
 
@@ -73,10 +72,6 @@ public class VpnKeychainMock: VpnKeychainProtocol {
         let oldCredentials = credentials
 
         if let oldCredentials {
-            if !oldCredentials.isDelinquent, newCredentials.isDelinquent {
-                let downgradeInfo: VpnDowngradeInfo = (oldCredentials, newCredentials)
-                NotificationCenter.default.post(name: Self.vpnUserDelinquent, object: downgradeInfo)
-            }
             if oldCredentials.planName != newCredentials.planName {
                 let downgradeInfo: VpnDowngradeInfo = (oldCredentials, newCredentials)
                 NotificationCenter.default.post(name: Self.vpnPlanChanged, object: downgradeInfo)

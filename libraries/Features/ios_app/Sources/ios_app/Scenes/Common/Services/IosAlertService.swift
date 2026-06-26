@@ -29,13 +29,9 @@ import Foundation
 import LegacyCommon
 import Modals
 import Payments
-import Persistence
-import ProtonCoreFeatureFlags
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Telemetry
-import Theme
 import UIKit
 import VPNAppCore
 
@@ -43,17 +39,13 @@ final class IosAlertService {
     typealias Factory =
         AppSessionManagerFactory &
         NavigationServiceFactory &
-        SettingsServiceFactory &
         UIAlertServiceFactory
 
     private let factory: Factory
 
-    private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
-    private lazy var settingsService: SettingsService = factory.makeSettingsService()
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
-
-    private lazy var modalsFactory = ModalsFactory()
+    private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
 
     private let paymentsFlowCoordinator = PaymentsFlowCoordinator()
     private var oneClickIapVC: UIViewController?
@@ -61,7 +53,6 @@ final class IosAlertService {
     @ConcurrentlyReadable private var upsellAlerts: [UUID: UpsellAlert] = [:]
 
     @Dependency(\.windowService) private var windowService
-    @Dependency(\.paymentsPlanServiceV2) private var planServiceV2
 
     init(_ factory: Factory) {
         self.factory = factory
@@ -205,9 +196,8 @@ extension IosAlertService: CoreAlertService {
                 numberOfCountries: numberOfCountries
             )
         }
-        let viewController = modalsFactory.modalViewController(modalType: modalType, primaryAction: { [weak self] in
+        let viewController = ModalsFactory().modalViewController(modalType: modalType, primaryAction: { [weak self] in
             self?.windowService.dismissModal(nil)
-            AppEvent.userDismissedWelcomeScreen.post()
         })
         viewController.modalPresentationStyle = .overFullScreen
         windowService.present(modal: viewController)

@@ -40,16 +40,15 @@ extension DependencyContainer: StatusMenuWindowModelFactory {
 }
 
 class StatusMenuWindowModel {
-    typealias Factory = AppSessionManagerFactory & StatusMenuViewModelFactory
+    typealias Factory = StatusMenuViewModelFactory
     private let factory: Factory
 
-    private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
+    @Shared(.sessionStatus) private var sessionStatus: SessionStatus
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
     @Shared(.connectionState) private var connectionState: ConnectionState
 
     var contentChanged: (() -> Void)?
 
-    private var notificationTokens: [NotificationToken] = []
     private var cancellables = Set<AnyCancellable>()
 
     init(factory: Factory) {
@@ -58,7 +57,7 @@ class StatusMenuWindowModel {
     }
 
     var isSessionEstablished: Bool {
-        appSessionManager.sessionStatus == .established
+        sessionStatus == .established
     }
 
     var isConnected: Bool {
@@ -93,7 +92,12 @@ class StatusMenuWindowModel {
     // MARK: - Private functions
 
     private func startObserving() {
-        notificationTokens.append(NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged))
+        $sessionStatus.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.contentChanged?()
+            }
+            .store(in: &cancellables)
 
         $secureCoreToggle.publisher
             .sink { [weak self] _ in
@@ -109,15 +113,6 @@ class StatusMenuWindowModel {
                 self?.contentChanged?()
             }
             .store(in: &cancellables)
-    }
-
-    private func sessionChanged(data: SessionChanged.T) {
-        if case .established = data {
-            if !isSessionEstablished {
-                log.error("Expected session to be established when receiving gateway")
-            }
-        }
-        contentChanged?()
     }
 }
 

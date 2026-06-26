@@ -77,7 +77,6 @@ public extension AuthKeychainHandle {
     func store(_ credentials: AuthCredentials, source: AuthCredentialsSource) throws {
         saveToCache(credentials)
         try store(credentials, forContext: nil, source: source)
-        AppEvent.authCredentialsChanged.post()
     }
 }
 

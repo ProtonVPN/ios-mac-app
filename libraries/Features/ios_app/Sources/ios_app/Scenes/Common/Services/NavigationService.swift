@@ -21,6 +21,7 @@
 //
 
 import BugReport
+import Combine
 import CommonNetworking
 import ComposableArchitecture
 import Countries
@@ -115,6 +116,9 @@ final class NavigationService {
     @Dependency(\.windowService) private var windowService
     @Dependency(\.vpnApiClient) private var vpnApiClient
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
+    @Shared(.sessionStatus) private var sessionStatus: SessionStatus
+    @Shared(.sessionLogoutReason) private var sessionLogoutReason: String?
+    private var cancellables = Set<AnyCancellable>()
     @Dependency(\.authKeychain) private var authKeychain
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
@@ -153,7 +157,11 @@ final class NavigationService {
 
     @MainActor
     func launched() async {
-        AppEvent.sessionManagerSessionChanged.subscribe(self, selector: #selector(sessionChanged))
+        $sessionStatus.publisher
+            .dropFirst()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] status in self?.sessionChanged(status) }
+            .store(in: &cancellables)
 
         registerForPushNotificationsIfNeeded()
 
@@ -241,13 +249,11 @@ final class NavigationService {
         tabBarController?.present(ModalsFactory().whatsNewViewController(variant: variant), animated: true)
     }
 
-    @objc
-    private func sessionChanged(_ notification: Notification) {
-        guard appSessionManager.sessionStatus == .notEstablished else {
+    private func sessionChanged(_ status: SessionStatus) {
+        guard status == .notEstablished else {
             return
         }
-        let reasonForSessionChange = notification.object as? String
-        presentWelcome(initialError: reasonForSessionChange)
+        presentWelcome(initialError: sessionLogoutReason)
     }
 
     private func setupTabs() {

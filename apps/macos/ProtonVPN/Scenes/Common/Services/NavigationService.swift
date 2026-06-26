@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Combine
 import CommonNetworking
 import ComposableArchitecture
 import Connection
@@ -55,6 +56,8 @@ class NavigationService {
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.credentialsProvider) private var credentials
     @SharedReader(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
+    @SharedReader(.sessionLogoutReason) private var sessionLogoutReason: String?
     lazy var windowService: WindowService = factory.makeWindowService()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
@@ -63,7 +66,7 @@ class NavigationService {
     var appHasPresented = false
     var isSystemTeardown = false
 
-    private var notificationTokens: [NotificationToken] = []
+    private var cancellables = Set<AnyCancellable>()
 
     // Add a flag and interval to suppress duplicate reconnection after wake
     private var didHandleWake = false
@@ -76,13 +79,11 @@ class NavigationService {
 
     @MainActor
     func launched() async {
-        notificationTokens.append(
-            NotificationCenter.default.addObserver(
-                for: SessionChanged.self,
-                object: appSessionManager,
-                handler: sessionChanged
-            )
-        )
+        $sessionStatus.publisher
+            .dropFirst()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] status in self?.sessionChanged(status) }
+            .store(in: &cancellables)
         AppEvent.clearingApplicationData.subscribe(self, selector: #selector(tearDown(_:)))
 
         NSWorkspace.shared.notificationCenter.addObserver(
@@ -220,22 +221,20 @@ class NavigationService {
         var sendAction: AppReducer.ActionSender?
     #endif
 
-    private func sessionChanged(data: SessionChanged.T) {
+    private func sessionChanged(_ status: SessionStatus) {
         windowService.closeActiveWindows(except: [SysexGuideWindowController.self])
 
-        switch data {
+        switch status {
         case .established:
-            if appSessionManager.sessionStatus != .established {
-                log.error("Expected session to be established when receiving gateway")
-            }
-
             autoConnectIfEnabled()
 
             if appHasPresented {
                 showSidebar()
             }
-        case let .lost(loginError):
-            showLogIn(initialError: loginError)
+        case .notEstablished:
+            showLogIn(initialError: sessionLogoutReason)
+        case .undetermined:
+            break
         }
     }
 
@@ -390,7 +389,7 @@ extension NavigationService {
 
     private func openRequiredWindow() {
         if !windowService.bringWindowsToForeground() {
-            if appSessionManager.sessionStatus == .established {
+            if sessionStatus == .established {
                 showSidebar()
             } else {
                 showLogIn()

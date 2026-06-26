@@ -160,8 +160,6 @@ public class VpnKeychain: VpnKeychainProtocol {
                 "Comparing vpn credentials to detect possible plan change",
                 category: .keychain,
                 metadata: [
-                    "wasDelinquent": "\(currentCredentials.isDelinquent)",
-                    "isDelinquent": "\(vpnCredentials.isDelinquent)",
                     "oldTier": "\(currentCredentials.maxTier)",
                     "newTier": "\(vpnCredentials.maxTier)",
                 ]
@@ -169,12 +167,8 @@ public class VpnKeychain: VpnKeychainProtocol {
             // Posted from inside the lock, must remain `async`. The block executes only after the lock has
             // been released. Changing it to `sync` would deadlock
             DispatchQueue.main.async {
-                let downgradeInfo = VpnDowngradeInfo(currentCredentials, vpnCredentials)
-                if !currentCredentials.isDelinquent, vpnCredentials.isDelinquent {
-                    AppEvent.userDelinquent.post(downgradeInfo)
-                }
-
                 if currentCredentials.maxTier != vpnCredentials.maxTier {
+                    let downgradeInfo = VpnDowngradeInfo(currentCredentials, vpnCredentials)
                     AppEvent.planChanged.post(downgradeInfo)
                 }
             }

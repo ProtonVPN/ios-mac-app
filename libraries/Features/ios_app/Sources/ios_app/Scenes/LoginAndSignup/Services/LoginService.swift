@@ -23,6 +23,7 @@ import ProtonCoreServices
 import ProtonCoreUIFoundations
 import Settings
 import SharedErgonomics
+import Sharing
 import Strings
 import SwiftUI
 import UIKit
@@ -318,7 +319,8 @@ extension CoreLoginService: LoginService {
                 await appSessionRefresher.refreshData()
             }
 
-            return appSessionManager.sessionStatus == .established ? .loggedIn : .notLoggedIn(.sessionNotEstablished)
+            @Shared(.sessionStatus) var sessionStatus
+            return sessionStatus == .established ? .loggedIn : .notLoggedIn(.sessionNotEstablished)
         }
 
         do {

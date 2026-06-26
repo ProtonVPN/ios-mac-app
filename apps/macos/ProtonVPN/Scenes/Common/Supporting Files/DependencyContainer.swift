@@ -136,9 +136,7 @@ extension DependencyContainer: AppSessionManagerFactory {
 
 extension DependencyContainer: NotificationManagerFactory {
     func makeNotificationManager() -> NotificationManagerProtocol {
-        NotificationManager(
-            appSessionManager: makeAppSessionManager()
-        )
+        NotificationManager()
     }
 }
 
