@@ -22,11 +22,22 @@
     import Domain
     import ExtensionIPC
     import Foundation
+    import LocalAgent
     import enum NetworkExtension.NEVPNStatus
+    import Sharing
     import VPNShared
 
     final class MockTunnelManager: TunnelManager {
         @Dependency(\.date) var date
+
+        /// The connection state the simulator's `VPNSessionMock` publishes, used to fake the connected peer in the UI.
+        @SharedReader(.mockExtensionState) private var publishedExtensionState
+
+        /// The published peer, once the mock has reported a connection.
+        private var publishedPeer: CurrentPeer? {
+            guard case let .connected(peer) = publishedExtensionState else { return nil }
+            return peer
+        }
 
         func sendProTUN(request: Domain.ProTUNMessage.Request) async throws(ExtensionIPC.ProviderMessageError) -> Domain.ProTUNMessage.Response {
             do {
@@ -81,15 +92,16 @@
             let tunnelConfig = TunnelConfiguration(connectionSpec: ConnectionSpec(), tunnelProtocol: .wireGuard(.proTUN), peerIDs: ["peer-id"])
             switch connection.status {
             case .connected:
-                @Dependency(\.date) var date
+                // Fake the connected peer from the value `VPNSessionMock` published, falling back to the "peer-id"
+                // default when nothing has been published (e.g. a test that sets `.connected` without starting).
                 let connectionData = DynamicConnectionData(
-                    currentPeerId: "peer-id",
+                    currentPeerId: publishedPeer?.peerID ?? "peer-id",
                     connectionDate: date.now,
                     protocolConnectionData: .proTUN(.init(
-                        transport: .udp,
-                        serverExitV4: nil,
-                        userISP: nil,
-                        userIP: nil
+                        transport: publishedPeer?.transport ?? .udp,
+                        serverExitV4: publishedPeer?.serverExitV4,
+                        userISP: publishedPeer?.userISP,
+                        userIP: publishedPeer?.userIP
                     ))
                 )
                 return .connected(tunnelConfig, connectionData)

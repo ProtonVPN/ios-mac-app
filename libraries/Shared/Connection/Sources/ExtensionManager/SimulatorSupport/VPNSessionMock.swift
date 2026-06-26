@@ -23,7 +23,10 @@
     import ExtensionIPC
     import Foundation
     import IssueReporting
+    import LocalAgent
+    import LocalAgentIPC
     import enum NetworkExtension.NEVPNStatus
+    import Sharing
     import VPNShared
 
     final class VPNSessionMock: VPNSession {
@@ -52,6 +55,20 @@
         var messageHandler: ((VPNSessionMock, ProTUNMessage.Request) async throws(ProviderMessageError) -> ProTUNMessage.Response)?
         var internalMessageSender: (Data) async throws -> Data?
 
+        /// Published to the in-process `.mockExtensionState` cell so `@SharedReader(.extensionState)` reflects the
+        /// mock, the way the network extension publishes via `extensionIPCServer`. Backs `ExtensionIPCClient.inMemoryBacked`.
+        @Shared(.mockExtensionState) private var publishedExtensionState
+
+        /// The fixed peer reported once the mock reaches `.connected`.
+        static let testPeer = CurrentPeer(
+            peerID: "peer-id",
+            transport: .udp,
+            serverExitV4: "203.0.113.7",
+            serverExitV6: "2001:db8::7",
+            userISP: "Proton ISP",
+            userIP: "198.51.100.42"
+        )
+
         init(
             status: NEVPNStatus,
             connectedDate: Date? = nil,
@@ -69,6 +86,11 @@
 
         func fetchLastDisconnectError() async throws -> Error? {
             lastDisconnectError
+        }
+
+        /// Fakes a `RawChannel` publisher from the extension.
+        private func publish(_ state: ExtensionState) {
+            $publishedExtensionState.withLock { $0 = state }
         }
 
         func startTunnel() throws {
@@ -94,6 +116,8 @@
 
                 @Dependency(\.date) var date
                 connectedDate = date.now
+                // Before transitioning `status`, make sure that the extension state reports the test peer.
+                self.publish(.connected(Self.testPeer))
                 self.status = .connected
             }
         }
@@ -108,6 +132,7 @@
             disconnectionTask = Task {
                 @Dependency(\.continuousClock) var clock
                 try await clock.sleep(for: disconnectionDuration)
+                self.publish(.disconnected(reason: .unset))
                 status = .disconnected
             }
         }

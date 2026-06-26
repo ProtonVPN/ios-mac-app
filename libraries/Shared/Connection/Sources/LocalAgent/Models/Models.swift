@@ -18,15 +18,30 @@
 
 import Domain
 
-public enum LocalAgent {
-    /// Used for guessing which user-changed setting resulted in a policy violation error server-side.
-    public enum SettingType: Codable, Equatable, Sendable {
-        case netshieldLevel
-        case bouncing
-        case portForwarding
-        case splitTcp
-        case safeMode
-        case randomNat
+public enum LocalAgent {}
+
+public struct CurrentPeer: Codable, Sendable, Equatable {
+    public let peerID: String
+    public let transport: WireGuardTransport
+    public let serverExitV4: String?
+    public let serverExitV6: String?
+    public let userISP: String?
+    public let userIP: String?
+
+    public init(
+        peerID: String,
+        transport: WireGuardTransport,
+        serverExitV4: String?,
+        serverExitV6: String?,
+        userISP: String?,
+        userIP: String?
+    ) {
+        self.peerID = peerID
+        self.transport = transport
+        self.serverExitV4 = serverExitV4
+        self.serverExitV6 = serverExitV6
+        self.userISP = userISP
+        self.userIP = userIP
     }
 }
 

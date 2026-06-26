@@ -20,41 +20,20 @@ import Domain
 import Foundation
 
 public extension LocalAgent {
-    enum Error: Swift.Error {
-        case localAgentSettingPolicyRefused(SettingType)
-        case certificateRefreshFatalError
-    }
-}
+    enum Error: FourCharCode, ProtonVPNError {
+        public static let errorDomain = "LocalAgentExtensionErrorDomain"
 
-extension LocalAgent.Error: Codable, Equatable, Sendable {}
+        case unknownProTUNError = "PTUK"
+        case certificateRefreshFatalError = "LACF"
+        case apiSessionExpired = "LASE"
 
-extension LocalAgent.Error: ReconstructableError {
-    public init?(charCode: FourCharCode) {
-        switch charCode {
-        case "LACF": self = .certificateRefreshFatalError
-        case "PRNS": self = .localAgentSettingPolicyRefused(.netshieldLevel)
-        case "PRBO": self = .localAgentSettingPolicyRefused(.bouncing)
-        case "PRPF": self = .localAgentSettingPolicyRefused(.portForwarding)
-        case "PRST": self = .localAgentSettingPolicyRefused(.splitTcp)
-        case "PRSM": self = .localAgentSettingPolicyRefused(.safeMode)
-        case "PRNT": self = .localAgentSettingPolicyRefused(.randomNat)
-        default: return nil
-        }
-    }
-}
-
-extension LocalAgent.Error: ProtonVPNError {
-    public static let errorDomain = "LocalAgentErrorDomain"
-
-    public var charCode: FourCharCode {
-        switch self {
-        case .certificateRefreshFatalError: "LACF"
-        case .localAgentSettingPolicyRefused(.netshieldLevel): "PRNS"
-        case .localAgentSettingPolicyRefused(.bouncing): "PRBO"
-        case .localAgentSettingPolicyRefused(.portForwarding): "PRPF"
-        case .localAgentSettingPolicyRefused(.splitTcp): "PRST"
-        case .localAgentSettingPolicyRefused(.safeMode): "PRSM"
-        case .localAgentSettingPolicyRefused(.randomNat): "PRNT"
-        }
+        // Policy violation (refused settings)
+        case localAgentUnknownSettingRefused = "LAUS"
+        case localAgentNetShieldSettingRefused = "LANS"
+        case localAgentBouncingSettingRefused = "LABO"
+        case localAgentPortForwardingSettingRefused = "LAPF"
+        case localAgentSplitTcpSettingRefused = "LAST"
+        case localAgentSafeModeSettingRefused = "LASM"
+        case localAgentRandomNatSettingRefused = "LARN"
     }
 }

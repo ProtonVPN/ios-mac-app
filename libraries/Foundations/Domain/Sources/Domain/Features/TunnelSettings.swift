@@ -47,6 +47,15 @@ public enum TunnelProtocol: Equatable, Hashable, Sendable {
             [.wireGuard(.proTUN)]
         #endif
     }
+
+    public init(_ protocol: ConnectionProtocol) {
+        switch `protocol` {
+        case .vpnProtocol(.ike):
+            self = .ike
+        default:
+            self = .wireGuard(.proTUN)
+        }
+    }
 }
 
 public enum WGBackend: Equatable, Sendable, Codable {

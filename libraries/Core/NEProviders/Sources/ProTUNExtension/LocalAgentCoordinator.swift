@@ -92,13 +92,12 @@ private extension LocalAgentCoordinator {
                 )
             case .error(.apiSessionExpired):
                 continuation.yield(.forkSelectorRequest)
-            case .error(.certificateRefreshFatalError):
-                sendError(error: .certificateRefreshFatalError)
-            // TODO: ProTUN: enable ZeroPeer KS here once it is available
-            // + adapter?.connection?.disconnectAndWait()
-            case let .error(.localAgentSettingPolicyRefused(setting)):
-                Logger.localAgent.info("Policy refused to set \(setting)")
-                sendError(error: .localAgentSettingPolicyRefused(setting.toAgentSetting))
+            case let .error(protunError):
+                // TODO: ProTUN: enable ZeroPeer KS here once it is available
+                // if protunError == .certificateRefreshFatalError {
+                // + adapter?.connection?.disconnectAndWait()
+                // }
+                sendError(error: .init(protunError))
             case .packetCaptureStarted, .packetCaptureStopped:
                 break
             @unknown default:
@@ -110,7 +109,11 @@ private extension LocalAgentCoordinator {
     /// Listen for connection-state updates from ProTUN and dispatch updates to the raw channels and protocol config.
     func listenToConnectionState() async {
         for await state in adapter.stateDelegate.stateSource.newStream {
-            extensionIPCServer.publishExtensionState(state.connectionState.extensionState)
+            // Every state transition includes the UUID of the current (or last) request handled by the
+            // ConfigurationStore, so the app can know if its requested settings have been applied.
+            let id = await adapter.currentRequestId
+
+            extensionIPCServer.publishExtensionState(state.connectionState.extensionState, id)
 
             if let settings = state.connectionState.agentSettings {
                 // Publish changes to the app, and persist actual settings to disk in case we crash
@@ -150,6 +153,36 @@ extension ConnectionState {
             agentInfo?.settings
         default:
             nil
+        }
+    }
+}
+
+extension LocalAgent.Error {
+    init(_ protunError: ErrorEvent) {
+        switch protunError {
+        case .apiSessionExpired:
+            self = .apiSessionExpired
+        case .certificateRefreshFatalError:
+            self = .certificateRefreshFatalError
+        case let .localAgentSettingPolicyRefused(setting):
+            switch setting {
+            case .bouncing:
+                self = .localAgentBouncingSettingRefused
+            case .netshieldLevel:
+                self = .localAgentNetShieldSettingRefused
+            case .portForwarding:
+                self = .localAgentPortForwardingSettingRefused
+            case .randomNat:
+                self = .localAgentRandomNatSettingRefused
+            case .safeMode:
+                self = .localAgentSafeModeSettingRefused
+            case .splitTcp:
+                self = .localAgentSplitTcpSettingRefused
+            @unknown default:
+                self = .localAgentUnknownSettingRefused
+            }
+        @unknown default:
+            self = .unknownProTUNError
         }
     }
 }

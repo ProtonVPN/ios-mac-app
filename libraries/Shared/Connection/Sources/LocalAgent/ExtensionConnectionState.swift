@@ -22,17 +22,19 @@ import LocalAgentIPC
 /// Loosely mirrors the `ConnectionState` enum in `protun`.
 public enum ExtensionState: Sendable, Equatable {
     case disconnected(reason: IPCConnectionDisconnectReason)
-    case connecting(waitReason: IPCConnectionPeerWaitReason)
-    case connectingToLocalAgent(waitReason: IPCConnectionAgentWaitReason, jail: IPCConnectionAgentJailReason)
+    case connecting(peerID: String?, waitReason: IPCConnectionPeerWaitReason)
+    case connectingToLocalAgent(peerID: String?, waitReason: IPCConnectionAgentWaitReason, jail: IPCConnectionAgentJailReason)
     case connected(CurrentPeer)
 }
 
 extension ExtensionState {
-    public var currentPeer: CurrentPeer? {
-        guard case let .connected(peer) = self else {
-            return nil
+    public var peerID: String? {
+        switch self {
+        case .disconnected: nil
+        case let .connected(peer): peer.peerID
+        case let .connecting(peerID, _): peerID
+        case let .connectingToLocalAgent(peerID, _, _): peerID
         }
-        return peer
     }
 
     /// Translates the current connection state to a raw int value.
@@ -45,15 +47,20 @@ extension ExtensionState {
         }
     }
 
-    /// Reassemble the state from the payload's bytes. Peer information is only reported if the state is `.connected`.
+    /// Reassemble the state from the payload's bytes.
     init(_ payload: IPCConnectionDataPayload) {
+        let peerID = payload.peerID.isEmpty ? nil : payload.peerID
         switch payload.connectionState {
         case .disconnected:
             self = .disconnected(reason: IPCConnectionDisconnectReason(rawValue: payload.reason) ?? .unset)
         case .connecting:
-            self = .connecting(waitReason: IPCConnectionPeerWaitReason(rawValue: payload.reason) ?? .unset)
+            self = .connecting(
+                peerID: peerID,
+                waitReason: IPCConnectionPeerWaitReason(rawValue: payload.reason) ?? .unset
+            )
         case .connectingToLocalAgent:
             self = .connectingToLocalAgent(
+                peerID: peerID,
                 waitReason: IPCConnectionAgentWaitReason(rawValue: payload.reason) ?? .unset,
                 jail: IPCConnectionAgentJailReason(rawValue: payload.context) ?? .unset
             )
@@ -62,7 +69,7 @@ extension ExtensionState {
                 self = .connected(peer)
             } else {
                 assertionFailure("Peer should be present for connected state")
-                self = .connecting(waitReason: .unset)
+                self = .connecting(peerID: peerID, waitReason: .unset)
             }
         @unknown default:
             self = .disconnected(reason: .unset)

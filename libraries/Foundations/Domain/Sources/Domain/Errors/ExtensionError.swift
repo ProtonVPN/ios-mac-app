@@ -18,11 +18,6 @@
 
 import Foundation
 
-/// A ``ProtonVPNError`` that can be reconstructed from its ``FourCharCode`` and ErrorDomain alone.
-public protocol ReconstructableError: ProtonVPNError {
-    init?(charCode: FourCharCode)
-}
-
 /// The marshalled type for errors reported by the network extension over the ``IPCErrorPayload`` ``RawChannel``.
 /// Provides a helper method for ``ProtonVPNError``s that can be initialized from just a char code, so that the
 /// connection layer can consume error values idiomatically.
@@ -35,11 +30,10 @@ public struct ExtensionError: Error, Equatable, Sendable {
         self.code = code
     }
 
-    /// Recover this as a concrete ``ReconstructableError`` error of type `E` when the domain matches and the code is one
-    /// `E` recognises; otherwise `nil` (handle it generically via `domain`/`code`).
-    public func decoded<E: ReconstructableError>(as _: E.Type) -> E? {
+    /// Recover ``ProtonVPNError``'s that are happy to be represented as a raw `FourCharCode`.
+    public func decoded<E: RawRepresentable<FourCharCode> & ProtonVPNError>(as _: E.Type) -> E? {
         guard domain == E.errorDomain else { return nil }
-        return E(charCode: code)
+        return E(rawValue: code)
     }
 }
 

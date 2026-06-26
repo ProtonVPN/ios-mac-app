@@ -124,19 +124,22 @@ public extension IPCConnectionDataPayload {
         withUnsafeBytes(of: peer_id) { raw in raw.contains { $0 != 0 } }
     }
 
-    init(_ state: ExtensionState) {
+    init(_ state: ExtensionState, id: UUID?) {
         self.init() // zeroes every field, so the cases below only set what applies
         version = IPCTunnelDataVersion.connectionData
         self.connectionState = state.connectionState
+        self.requestId = id
 
         switch state {
         case let .disconnected(reason):
             self.reason = reason.rawValue
-        case let .connecting(waitReason):
+        case let .connecting(peerID, waitReason):
             self.reason = waitReason.rawValue
-        case let .connectingToLocalAgent(waitReason, jail):
+            if let peerID { self.peerID = peerID }
+        case let .connectingToLocalAgent(peerID, waitReason, jail):
             self.reason = waitReason.rawValue
             context = jail.rawValue
+            if let peerID { self.peerID = peerID }
         case let .connected(peer):
             self.reason = IPCConnectionTransport(peer.transport).rawValue
             self.peerID = peer.peerID
@@ -165,6 +168,16 @@ public extension IPCConnectionDataPayload {
     /// The connection state that gets reported to the main application.
     var extensionState: ExtensionState {
         ExtensionState(self)
+    }
+
+    var requestId: UUID? {
+        get {
+            guard withUnsafeBytes(of: config_id, { $0.contains(where: { $0 != 0 }) }) else { return nil }
+            return UUID(uuid: config_id)
+        }
+        set {
+            config_id = newValue?.uuid ?? zero(value: uuid_t.self)
+        }
     }
 
     /// Unpacks the peer information from the binary format.

@@ -66,31 +66,6 @@ public extension ProTUNMessage.Response {
     }
 }
 
-public struct CurrentPeer: Codable, Sendable, Equatable {
-    public let peerID: String
-    public let transport: WireGuardTransport
-    public let serverExitV4: String?
-    public let serverExitV6: String?
-    public let userISP: String?
-    public let userIP: String?
-
-    public init(
-        peerID: String,
-        transport: WireGuardTransport,
-        serverExitV4: String?,
-        serverExitV6: String?,
-        userISP: String?,
-        userIP: String?
-    ) {
-        self.peerID = peerID
-        self.transport = transport
-        self.serverExitV4 = serverExitV4
-        self.serverExitV6 = serverExitV6
-        self.userISP = userISP
-        self.userIP = userIP
-    }
-}
-
 public extension ProTUNMessage {
     enum Version: UInt8, Codable {
         public static let current: Self = .v1

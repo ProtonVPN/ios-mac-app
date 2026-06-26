@@ -40,6 +40,7 @@ final class ProTUNAdapter: @unchecked Sendable {
         case noPeers
         case invalidKeys
         case missingUserID
+        case missingConfiguration
     }
 
     private(set) weak var packetTunnelProvider: NEPacketTunnelProvider?
@@ -70,7 +71,11 @@ final class ProTUNAdapter: @unchecked Sendable {
     private var pathUpdatesTask: Task<Void, Never>?
 
     /// Serializes every write to the provider configuration.
-    private let configurationStore = ConfigurationStore()
+    private let configurationStore: ConfigurationStore
+
+    var currentRequestId: UUID? {
+        get async { await configurationStore.requestId }
+    }
 
     @Dependency(\.extensionIPCServer) var extensionIPCServer
     private let signposter = OSSignposter(logger: .adapter)
@@ -79,6 +84,9 @@ final class ProTUNAdapter: @unchecked Sendable {
         self.packetTunnelProvider = packetTunnelProvider
         self.stateDelegate = .init()
         self.eventDelegate = .init()
+
+        let providerConfig = packetTunnelProvider.protocolConfiguration as? NETunnelProviderProtocol
+        self.configurationStore = ConfigurationStore(initial: providerConfig?.requestId)
     }
 
     func prepare(with config: ProTUNConfiguration) async throws -> FileDescriptor {

@@ -26,7 +26,7 @@ import LocalAgentIPC
 /// The server-side of the memory-backed IPC channel. The extension should be the only process to write these values.
 @DependencyClient
 public struct ExtensionIPCServer: Sendable {
-    public var publishExtensionState: @Sendable (ExtensionState) -> Void
+    public var publishExtensionState: @Sendable (ExtensionState, UUID?) -> Void
     public var publishStats: @Sendable (LocalAgent.Stats) -> Void
     public var publishConnectionStats: @Sendable (LocalAgent.ConnectionStats) -> Void
     public var publishFeatures: @Sendable (AgentTunnelFeatures) -> Void
@@ -44,7 +44,7 @@ extension ExtensionIPCServer: DependencyKey {
     public static let liveValue: ExtensionIPCServer = {
         let store = TunnelDataStore<IPCNotifications.Writer>.live()
         return ExtensionIPCServer(
-            publishExtensionState: { connectionState in store.channels.connectionData.mutate { $0 = IPCConnectionDataPayload(connectionState) } },
+            publishExtensionState: { connectionState, uuid in store.channels.connectionData.mutate { $0 = IPCConnectionDataPayload(connectionState, id: uuid) } },
             publishStats: { stats in store.channels.localAgentStats.mutate { $0 = IPCStatsPayload(stats) } },
             publishConnectionStats: { stats in
                 store.channels.localAgentConnectionStats.mutate { $0 = IPCConnectionStatsPayload(stats) }

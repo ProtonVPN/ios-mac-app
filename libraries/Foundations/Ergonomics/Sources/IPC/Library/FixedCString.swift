@@ -29,12 +29,16 @@ public enum IPCFixedString {
 
     /// Checks the UTF8 grapheme cluster boundaries of the string before writing it.
     public static func write(_ string: String, into raw: UnsafeMutableRawBufferPointer) {
-        guard let base = raw.baseAddress, !raw.isEmpty else { return }
+        // Pointer + bounds checks (also accounting for the NUL terminator)
+        guard let base = raw.baseAddress, raw.count > 1 else {
+            assertionFailure("Invalid buffer size for IPCFixedString")
+            return
+        }
+
         memset(base, 0, raw.count)
 
         // Reserve one byte for the NUL terminator.
         let maxBytes = raw.count - 1
-        guard maxBytes > 0 else { return }
 
         // Keep whole grapheme clusters while their UTF-8 still fits, so we never stop mid-cluster.
         var byteCount = 0

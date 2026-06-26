@@ -19,7 +19,7 @@
 import Foundation
 import VPNCoreTypes
 
-/// Mirrors every updateable field in ``ProTUNConfiguration``, except everything is optional.
+/// Mirrors every field we might want to update in the `NETunnelProviderProtocol`, except everything is optional.
 public struct ConnectionUpdate: Identifiable, Sendable, Equatable, Codable {
     public struct Location: Sendable, Equatable, Codable {
         public let spec: ConnectionSpec
@@ -74,13 +74,13 @@ public struct ConnectionUpdate: Identifiable, Sendable, Equatable, Codable {
 }
 
 public extension ConnectionUpdate {
+    /// Whether this update requests any feature changes that require touching the ``ProTUNConfiguration``.
+    var hasConfigurationChanges: Bool {
+        location != nil || hasAgentChanges
+    }
+
     /// Whether this update requests any Local Agent feature change (a feature that is provided by the server).
     var hasAgentChanges: Bool {
         netShield != nil || vpnAccelerator != nil || moderateNAT != nil || portForwarding != nil
-    }
-
-    /// Whether this update requests any app feature changes (a feature performed/decided by the app, not the server).
-    var hasAppChanges: Bool {
-        location != nil || allowLAN != nil || killSwitch != nil || onDemand != nil
     }
 }

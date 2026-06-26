@@ -35,7 +35,7 @@ struct ConnectionStatusBanner: View {
             if (store.userTier ?? .freeTier).isFreeTier {
                 ConnectionStatusUpsell(mode: store.upsellMode, sendAction: { _ = store.send($0) })
             } else if store.netShieldLevel?.shouldMonitorStats() == true {
-                NetShieldStatsView(viewModel: store.netShield)
+                NetShieldStatsView(viewModel: store.netShieldStats)
             }
         case .unprotected, .protecting, .resolving:
             locationText()

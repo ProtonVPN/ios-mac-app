@@ -40,6 +40,8 @@ import VPNCoreTypes
 /// Since there are many opportunities for these two sources to race while updating the configuration, this actor is
 /// responsible for guaranteeing serial updates.
 actor ConfigurationStore {
+    var requestId: UUID?
+
     /// Tail of the serial transaction chain. Each enqueued transaction awaits the previous one to avoid reading from
     /// or writing to a stale VPN configuration.
     private var tail: Task<Void, Never> = Task {}
@@ -47,9 +49,13 @@ actor ConfigurationStore {
     /// How long a single transaction may run before it's abandoned (to avoid holding up others).
     private static let transactionTimeout: Duration = .seconds(5)
 
+    init(initial: UUID? = nil) {
+        self.requestId = initial
+    }
+
     /// Applies an app-initiated configuration update request that was sent over XPC.
     func apply(_ update: ConnectionUpdate, adapter: ProTUNAdapter) {
-        enqueue { [weak adapter] in
+        enqueue(id: update.id) { [weak adapter] in
             guard let adapter else { return }
             do {
                 try await withTimeout(of: Self.transactionTimeout) {
@@ -78,12 +84,17 @@ actor ConfigurationStore {
         }
     }
 
-    /// Appends `work` to the serial chain. Mutating `tail` is actor-isolated, so awaiting the previous task is what
-    /// serializes the `load -> modify -> save` loop in an async way.
-    private func enqueue(_ work: @escaping @Sendable () async -> Void) {
+    /// Appends `work` to the queue. Since mutating `tail` is actor-isolated, awaiting the previous task is what
+    /// serializes the `load -> modify -> save` loop in an async way. Takes an optional ID so we can figure out if a
+    /// setting has been applied in the RawChannel without having to compare a bunch of fields in the provider config.
+    private func enqueue(id: UUID? = nil, _ work: @escaping @Sendable () async -> Void) {
         let previous = tail
         tail = Task {
             await previous.value
+
+            if let id {
+                self.requestId = id
+            }
             await work()
         }
     }
@@ -100,64 +111,15 @@ actor ConfigurationStore {
 
         // `reasserting` covers the reconfiguration of ProTUN, as well as the save to network preferences.
         try await adapter.whileReasserting {
-            // Reject changes we can't apply before mutating anything.
-            if update.connectionProtocol != nil {
-                throw Failure.unhandledChange("connectionProtocol")
-            }
-            if update.customDNS != nil {
-                throw Failure.unhandledChange("customDNS")
-            }
-
-            // Only decode the ProTUN configuration if we know a field that lives inside it is changing.
-            let configuration: ProTUNConfiguration? = if update.location != nil || update.hasAgentChanges {
-                try ProTUNConfigurationCoder.decode(from: config)
-            } else {
-                nil
-            }
-
-            // Get ready to tell ProTUN about the peer change, but only do so once we've saved the provider config
-            var peersToApply: [PeerInfo]?
-            if let location = update.location, let configuration {
-                guard adapter.connection != nil else {
-                    throw Failure.location(.noConnection)
-                }
-                do {
-                    peersToApply = try location.peers.map { try .init(from: $0) }
-                    try config.setConnectionSpec(location.spec)
-                    try ProTUNConfigurationCoder.encode(configuration: configuration.with(peers: location.peers), to: config)
-                    config.setProviderConfiguration(value: update.id.uuidString, forKey: "UUID")
-                } catch {
-                    Logger.adapter.error("Failed to prepare connection spec/peers: \(error, privacy: .public)")
-                    throw Failure.location(.badPeers)
-                }
-            }
-
-            // Check if we have agent changes to apply, and stage them if so
-            var agentSettingsToApply: LocalAgentSettings?
-            if update.hasAgentChanges, let configuration {
-                var agentSettings = LocalAgentSettings(configuration)
-                agentSettings.apply(update)
-                agentSettingsToApply = agentSettings
-            }
-
-            #if !os(tvOS)
-                if let allowLAN = update.allowLAN {
-                    config.excludeLocalNetworks = !allowLAN
-                }
-                if let killSwitch = update.killSwitch {
-                    config.includeAllNetworks = killSwitch
-                }
-            #endif
-
             if let onDemand = update.onDemand {
                 manager.isOnDemandEnabled = onDemand
             }
 
+            let (peersToApply, agentSettingsToApply) = try config.apply(update: update)
+
             // Persist the protocol config first, if any changes are needed, to avoid the two getting out of sync if
             // the save should happen to throw.
-            if update.hasAppChanges {
-                try await manager.saveToPreferences()
-            }
+            try await manager.saveToPreferences()
 
             if let peersToApply, let connection = adapter.connection {
                 connection.updatePeers(peers: peersToApply)
@@ -178,12 +140,7 @@ actor ConfigurationStore {
             throw Failure.badConfiguration
         }
 
-        let decoded = try ProTUNConfigurationCoder.decode(from: config)
-        guard decoded.localAgentSettingsDiffer(from: settings) else {
-            return
-        }
-        let merged = decoded.merging(effectiveSettings: settings)
-        try ProTUNConfigurationCoder.encode(configuration: merged, to: config)
+        try config.apply(serverSettings: settings)
 
         try await adapter.whileReasserting {
             try await manager.saveToPreferences()
@@ -232,6 +189,52 @@ extension ConfigurationStore {
         enum Location: Error {
             case badPeers
             case noConnection
+        }
+    }
+}
+
+extension NETunnelProviderProtocol {
+    func apply(update: ConnectionUpdate) throws -> (newPeers: [PeerInfo]?, newSettings: LocalAgentSettings?) {
+        requestId = update.id
+
+        // Native NETunnelProviderProtocol configuration options go up here
+        #if !os(tvOS)
+            if let killSwitch = update.killSwitch {
+                includeAllNetworks = killSwitch
+            }
+
+            if let allowLAN = update.allowLAN {
+                excludeLocalNetworks = !allowLAN
+            }
+        #endif
+
+        // If we don't have changes to make to the `ProTUNConfiguration`, don't bother unpacking it.
+        // Return `nil` for both here to indicate that we don't need to change the peer or settings.
+        guard update.hasConfigurationChanges else { return (nil, nil) }
+
+        return try withProTUNConfiguration { protunConfig in
+            var newPeers: [PeerInfo]?
+            if let location = update.location {
+                try setConnectionSpec(location.spec)
+                protunConfig = protunConfig.with(peers: location.peers)
+                newPeers = try location.peers.map(PeerInfo.init)
+            }
+
+            guard update.hasAgentChanges else { return (newPeers, nil) }
+
+            var agentSettings = LocalAgentSettings(protunConfig)
+            agentSettings.apply(update)
+            return (newPeers, agentSettings)
+        }
+    }
+
+    func apply(serverSettings: LocalAgentSettings) throws {
+        try withProTUNConfiguration {
+            guard $0.localAgentSettingsDiffer(from: serverSettings) else {
+                return
+            }
+
+            $0 = $0.merging(effectiveSettings: serverSettings)
         }
     }
 }

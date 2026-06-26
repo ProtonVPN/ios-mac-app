@@ -111,31 +111,20 @@ extension LocalAgentSettingType: @retroactive CustomStringConvertible {
     }
 }
 
-public extension LocalAgentSettingType {
-    var toAgentSetting: LocalAgent.SettingType {
-        switch self {
-        case .netshieldLevel: .netshieldLevel
-        case .bouncing: .bouncing
-        case .portForwarding: .portForwarding
-        case .splitTcp: .splitTcp
-        case .safeMode: .safeMode
-        case .randomNat: .randomNat
-        @unknown default:
-            unknownDefault(value: .netshieldLevel)
-        }
-    }
-}
-
 public extension ConnectionState {
     /// Bridges the ProTUN connection state into the ``ExtensionState`` recognized by the app
     var extensionState: ExtensionState {
         switch self {
         case let .disconnected(error):
             .disconnected(reason: error?.ipcDisconnectReason ?? .unset)
-        case let .connecting(_, waitReasons):
-            .connecting(waitReason: waitReasons.first?.ipcPeerWaitReason ?? .unset)
-        case let .connectingToLocalAgent(_, waitReason):
+        case let .connecting(peers, waitReasons):
+            .connecting(
+                peerID: peers.first?.peerId,
+                waitReason: waitReasons.first?.ipcPeerWaitReason ?? .unset
+            )
+        case let .connectingToLocalAgent(peer, waitReason):
             .connectingToLocalAgent(
+                peerID: peer.peerId,
                 waitReason: waitReason?.ipcAgentWaitReason ?? .unset,
                 jail: waitReason?.ipcAgentJailReason ?? .unset
             )

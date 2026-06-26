@@ -25,15 +25,15 @@ public struct NetShieldStatsView: View {
         static let netShieldStatsViewId: String = "net_shield_stats"
     }
 
-    public var viewModel: NetShieldModel?
+    @ObservedObject public var viewModel: NetShieldModel
 
     static let maxWidth: CGFloat = 440
 
     public var body: some View {
         HStack(spacing: 0) {
-            StatsView(model: viewModel?.ads ?? .emptyAds)
-            StatsView(model: viewModel?.trackers ?? .emptyTrackers)
-            StatsView(model: viewModel?.data ?? .emptyData)
+            StatsView(model: viewModel.ads)
+            StatsView(model: viewModel.trackers)
+            StatsView(model: viewModel.data)
         }
         .padding(.vertical, .themeSpacing12)
         .padding(.horizontal, .themeSpacing8)
@@ -41,7 +41,7 @@ public struct NetShieldStatsView: View {
         .accessibilityIdentifier(AccessibilityIdentifiers.netShieldStatsViewId)
     }
 
-    public init(viewModel: NetShieldModel?) {
+    public init(viewModel: NetShieldModel) {
         self.viewModel = viewModel
     }
 }

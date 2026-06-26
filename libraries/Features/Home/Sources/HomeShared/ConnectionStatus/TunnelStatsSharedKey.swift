@@ -22,7 +22,7 @@ import LocalAgentIPC
 import NetShield
 import Sharing
 
-extension SharedReaderKey where Self == StreamReaderKey<NetShieldModel?> {
+extension SharedReaderKey where Self == StreamReaderKey<NetShieldModel> {
     static var tunnelStats: Self {
         StreamReaderKey(
             read: {
@@ -33,7 +33,7 @@ extension SharedReaderKey where Self == StreamReaderKey<NetShieldModel?> {
                 @Dependency(\.extensionIPC) var extensionIPC
                 return extensionIPC.observeStats()
             },
-            transform: { $0?.toNetShieldModel }
+            transform: { $0?.toNetShieldModel ?? .zero(enabled: true) }
         )
     }
 }

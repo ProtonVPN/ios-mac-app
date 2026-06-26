@@ -48,7 +48,7 @@ struct FixedCStringTests {
         // Each "é" is 2 bytes. Capacity 4 → 3 usable → only one "é" fits; the rest is dropped whole.
         let (decoded, bytes) = roundTrip("ééé", capacity: 4)
         #expect(decoded == "é")
-        #expect(bytes[3] == 0) // reserved NUL untouched
+        #expect(bytes[2] == 0) // reserved NUL untouched
         // The decoded value must be valid UTF-8 with no partial scalar.
         #expect(Array(decoded.utf8) == [0xC3, 0xA9])
     }

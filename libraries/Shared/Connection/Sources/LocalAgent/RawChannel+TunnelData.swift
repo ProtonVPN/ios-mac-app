@@ -27,17 +27,17 @@ import LocalAgentIPC
 // a getter + an `AsyncStream`.
 
 public extension IPCNotifications.RawChannel where Payload == IPCConnectionDataPayload, Role == IPCNotifications.Reader {
-    func currentExtensionState() -> ExtensionState {
+    func currentExtensionState() -> (ExtensionState, UUID?) {
         if let payload = try? read() {
-            payload.extensionState
+            (payload.extensionState, payload.requestId)
         } else {
-            .disconnected(reason: .unset)
+            (.disconnected(reason: .unset), nil)
         }
     }
 
-    func extensionStateStream(reconcileOn resumeSignal: AsyncStream<Void> = .finished) -> AsyncStream<ExtensionState> {
+    func extensionStateStream(reconcileOn resumeSignal: AsyncStream<Void> = .finished) -> AsyncStream<(state: ExtensionState, requestId: UUID?)> {
         stream(reconcileOn: resumeSignal) { payload in
-            payload.extensionState
+            (payload.extensionState, payload.requestId)
         }
     }
 }

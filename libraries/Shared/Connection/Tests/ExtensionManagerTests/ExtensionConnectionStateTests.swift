@@ -27,18 +27,18 @@
     /// all-zero case registers as disconnected.
     final class ExtensionStateTests: XCTestCase {
         private func roundTrip(_ state: ExtensionState) -> ExtensionState {
-            IPCConnectionDataPayload(state).extensionState
+            IPCConnectionDataPayload(state, id: nil).extensionState
         }
 
         func testRoundTripsEachPhaseThroughThePayload() {
             let states: [ExtensionState] = [
                 .disconnected(reason: .unset),
                 .disconnected(reason: .tunEstablishError),
-                .connecting(waitReason: .unset),
-                .connecting(waitReason: .waitingForNetwork),
-                .connectingToLocalAgent(waitReason: .softJailed, jail: .unset),
-                .connectingToLocalAgent(waitReason: .hardJailed, jail: .badUserBehavior),
-                .connectingToLocalAgent(waitReason: .hardJailed, jail: .other),
+                .connecting(peerID: nil, waitReason: .unset),
+                .connecting(peerID: "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0-Pw==", waitReason: .waitingForNetwork),
+                .connectingToLocalAgent(peerID: nil, waitReason: .softJailed, jail: .unset),
+                .connectingToLocalAgent(peerID: "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0-Pw==", waitReason: .hardJailed, jail: .badUserBehavior),
+                .connectingToLocalAgent(peerID: nil, waitReason: .hardJailed, jail: .other),
                 .connected(.init(peerID: "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0-Pw==", transport: .tls, serverExitV4: "192.168.0.1", serverExitV6: "2001:db8::1", userISP: "Proton ISP", userIP: "127.0.0.1")),
             ]
             for state in states {

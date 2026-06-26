@@ -151,11 +151,18 @@ public struct ExtensionFeature: Sendable {
                 state = status
                 return .none
 
-            case let .disconnect(error):
+            case .disconnect:
                 return .merge(
                     .cancel(id: CancelID.tunnelStart),
-                    .run { _ in
-                        try await tunnelManager.stopTunnel()
+                    .run { send in
+                        do {
+                            try await tunnelManager.stopTunnel()
+                        } catch {
+                            // Sometimes the tunnel can go away without us knowing, make sure we have the latest state.
+                            if let status = try? await tunnelManager.status {
+                                await send(.tunnelStatusChanged(status))
+                            }
+                        }
                     } catch: { error, _ in
                         log.assertionFailure("Failed to stop tunnel: \(error)")
                     }

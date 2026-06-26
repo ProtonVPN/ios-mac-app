@@ -21,7 +21,7 @@ import ConcurrencyExtras
 import Ergonomics
 import Foundation
 import IPCSeqlockHelpers
-import os
+import struct os.OSAllocatedUnfairLock
 
 // MARK: - Channel roles
 
