@@ -166,10 +166,6 @@ private class MacAlertServiceFactoryMock: MacAlertService.Factory {
     func makeWindowService() -> WindowService {
         windowService
     }
-
-    func makeNotificationManager() -> NotificationManagerProtocol {
-        NotificationManagerMock()
-    }
 }
 
 private class AppSessionManagerMock: AppSessionManager {
@@ -182,10 +178,4 @@ private class AppSessionManagerMock: AppSessionManager {
     func logOut(force _: Bool, reason _: String?) {}
     func logOut() {}
     func replyToApplicationShouldTerminate() {}
-}
-
-private class NotificationManagerMock: NotificationManagerProtocol {
-    func displayServerGoingOnMaintenance() {}
-    func displayPFChange(portNumber _: UInt16) {}
-    func displayPFError() {}
 }

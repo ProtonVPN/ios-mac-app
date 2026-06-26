@@ -41,7 +41,6 @@ final class MacAlertService {
 
     typealias Factory =
         NavigationServiceFactory &
-        NotificationManagerFactory &
         UIAlertServiceFactory &
         WindowServiceFactory
 
@@ -49,7 +48,7 @@ final class MacAlertService {
 
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
     private lazy var windowService: WindowService = factory.makeWindowService()
-    private lazy var notificationManager: NotificationManagerProtocol = factory.makeNotificationManager()
+    @Dependency(\.notificationManager) private var notificationManager
     @Dependency(\.updateManager) private var updateManager
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
     @Dependency(\.vpnKeychain) private var vpnKeychain
