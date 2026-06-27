@@ -48,28 +48,30 @@ private func appBecameActiveTicks() -> AsyncStream<Void> {
 @DependencyClient
 public struct ExtensionIPCClient: Sendable {
     /// The current connection state according to ProTUN in the network extension.
-    public var currentExtensionState: @Sendable () -> (ExtensionState, UUID?) = {
+    public package(set) var currentExtensionState: @Sendable () -> (ExtensionState, UUID?) = {
         (.disconnected(reason: .unset), nil)
     }
 
     /// The current NetShield / traffic stats, or `nil` before the extension has published any.
-    public var currentStats: @Sendable () -> LocalAgent.Stats?
+    public package(set) var currentStats: @Sendable () -> LocalAgent.Stats?
     /// The current server-applied Local Agent features, or `nil` before the extension has published any.
-    public var currentFeatures: @Sendable () -> AgentTunnelFeatures?
+    public package(set) var currentFeatures: @Sendable () -> AgentTunnelFeatures?
+    /// The extension's most-recent reported error, or `nil` if it's empty.
+    public package(set) var currentExtensionError: @Sendable () -> ExtensionError? = { nil }
 
     /// The live connection state according to ProTUN in the network extension.
-    public var observeExtensionState: @Sendable () -> AsyncStream<(state: ExtensionState, requestId: UUID?)> = { .finished }
+    public package(set) var observeExtensionState: @Sendable () -> AsyncStream<(state: ExtensionState, requestId: UUID?)> = { .finished }
     /// The live NetShield / traffic stats.
-    public var observeStats: @Sendable () -> AsyncStream<LocalAgent.Stats?> = { .finished }
+    public package(set) var observeStats: @Sendable () -> AsyncStream<LocalAgent.Stats?> = { .finished }
     /// The server-applied Local Agent features.
-    public var observeFeatures: @Sendable () -> AsyncStream<AgentTunnelFeatures?> = { .finished }
+    public package(set) var observeFeatures: @Sendable () -> AsyncStream<AgentTunnelFeatures?> = { .finished }
     /// The extension's most-recent reported error (`nil` when the slot is empty), decoded from the raw payload.
-    public var observeError: @Sendable () -> AsyncStream<(ExtensionError?, UUID?)> = { .finished }
+    public package(set) var observeError: @Sendable () -> AsyncStream<ExtensionError?> = { .finished }
     /// Commands the extension posts over the `.tunnelCmd` notification.
-    public var observeCommands: @Sendable () -> AsyncStream<TunnelCommand> = { .finished }
+    public package(set) var observeCommands: @Sendable () -> AsyncStream<TunnelCommand> = { .finished }
 
     /// macOS: attach the `IOSurface` region received from the extension over XPC so reads/streams resolve against it.
-    public var attachRegion: @Sendable (IPCNotifications.SharedRegion) -> Void
+    public package(set) var attachRegion: @Sendable (IPCNotifications.SharedRegion) -> Void
 }
 
 extension ExtensionIPCClient: DependencyKey {
@@ -83,6 +85,7 @@ extension ExtensionIPCClient: DependencyKey {
                 currentExtensionState: { store.channels.connectionData.currentExtensionState() },
                 currentStats: { store.channels.localAgentStats.stats() },
                 currentFeatures: { store.channels.localAgentFeatures.agentFeatures() },
+                currentExtensionError: { store.channels.localAgentError.currentExtensionError() },
                 observeExtensionState: { store.channels.connectionData.extensionStateStream(reconcileOn: appBecameActiveTicks()) },
                 observeStats: { store.channels.localAgentStats.statsStream(reconcileOn: appBecameActiveTicks()) },
                 observeFeatures: { store.channels.localAgentFeatures.agentFeaturesStream(reconcileOn: appBecameActiveTicks()) },
@@ -111,6 +114,7 @@ extension ExtensionIPCClient: DependencyKey {
             },
             currentStats: { nil },
             currentFeatures: { nil },
+            currentExtensionError: { nil },
             observeExtensionState: {
                 // The reader is resolved per call so each test / `withDependencies` scope binds to its own value.
                 @SharedReader(.mockExtensionState) var state

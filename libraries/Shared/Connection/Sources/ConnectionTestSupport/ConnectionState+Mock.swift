@@ -36,11 +36,9 @@ public extension ConnectionFeature.State {
 
             ),
             shouldRegisterServerChangeOnConnection: false,
-            core: .init(
-                tunnelState: .connected(
-                    TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
-                    DynamicConnectionData(currentPeerId: "peer-id", connectionDate: now, protocolConnectionData: .ike)
-                )
+            tunnel: .connected(
+                TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+                DynamicConnectionData(currentPeerId: "peer-id", connectionDate: now, protocolConnectionData: .ike)
             )
         )
     }()

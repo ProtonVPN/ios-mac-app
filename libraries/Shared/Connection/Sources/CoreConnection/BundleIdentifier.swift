@@ -64,27 +64,23 @@ extension BundleIDClient: DependencyKey {
 
     package static let liveValue = BundleIDClient(
         bundleIdentifier: { proto in
-            #if os(iOS)
-                switch (proto, BuildType.buildType) {
-                case (.wireGuard(.proTUN), .local), (.wireGuard(.proTUN), .production):
+            switch (proto, BuildType.buildType) {
+            case (.wireGuard, .staging):
+                return BundleID.proTUNiOSStaging
+
+            case (.wireGuard, _):
+                #if os(iOS)
                     return BundleID.proTUNiOS
+                #elseif os(macOS)
+                    return BundleID.wireGuardMac
+                #elseif os(tvOS)
+                    return BundleID.wireGuardtvOS
+                #endif
 
-                case (.wireGuard(.proTUN), .staging):
-                    return BundleID.proTUNiOSStaging
-
-                case (.ike, _):
-                    log.assertionFailure("IKE is not referenced through a bundle identifier.")
-                    return ""
-
-                case (.wireGuard(.go), _):
-                    log.assertionFailure("WireGuard Go has been deprecated")
-                    return ""
-                }
-            #elseif os(macOS)
-                return BundleID.wireGuardMac
-            #elseif os(tvOS)
-                return BundleID.wireGuardtvOS
-            #endif
+            case (.ike, _):
+                log.assertionFailure("IKE is not referenced through a bundle identifier.")
+                return ""
+            }
         },
         allBundleIdentifiers: {
             #if os(iOS)
@@ -106,17 +102,15 @@ extension BundleIDClient: DependencyKey {
         },
         tunnelProtocol: { configuration in
             guard let bundleIdentifier = (configuration as? NETunnelProviderProtocol)?.providerBundleIdentifier else {
-                return .ike
+                #if os(macOS)
+                    return .ike
+                #else
+                    return nil
+                #endif
             }
             switch bundleIdentifier {
-            case BundleID.proTUNiOS, BundleID.proTUNiOSStaging:
-                return .wireGuard(.proTUN)
-
-            case BundleID.wireGuardMac:
-                return .wireGuard(.proTUN)
-
-            case BundleID.wireGuardtvOS:
-                return .wireGuard(.proTUN)
+            case BundleID.proTUNiOS, BundleID.proTUNiOSStaging, BundleID.wireGuardMac, BundleID.wireGuardtvOS:
+                return .wireGuard
 
             case BundleID.plutoniumMac:
                 // Transparent Proxy notifications can be observed via shared NEVPN notifications.
@@ -134,7 +128,7 @@ extension BundleIDClient: DependencyKey {
         BundleIDClient(
             bundleIdentifier: { _ in bundleID },
             allBundleIdentifiers: { allBundleIDs ?? [bundleID] },
-            tunnelProtocol: { _ in .wireGuard(.go) }
+            tunnelProtocol: { _ in .wireGuard }
         )
     }
 

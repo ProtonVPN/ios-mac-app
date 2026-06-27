@@ -25,21 +25,29 @@
         /// from `spec.location` so the rendered UI reflects the intent.
         static func previewConnected(for spec: ConnectionSpec) -> ConnectionState {
             .connected(
-                .init(connectionSpec: spec, tunnelProtocol: .ike, peerIDs: []),
-                .init(currentPeer: .preview(for: spec.location), connectionDate: Date(), protocolConnectionData: .ike)
+                .init(connectionSpec: spec, tunnelProtocol: .wireGuard, peerIDs: []),
+                .init(
+                    currentPeer: .preview(for: spec.location),
+                    connectionDate: Date(),
+                    protocolConnectionData: .proTUN(.init(transport: .udp))
+                )
             )
         }
 
         static func previewConnected(for spec: ConnectionSpec, server: Server) -> ConnectionState {
             .connected(
-                .init(connectionSpec: spec, tunnelProtocol: .ike, peerIDs: []),
-                .init(currentPeer: server, connectionDate: Date(), protocolConnectionData: .ike)
+                .init(connectionSpec: spec, tunnelProtocol: .wireGuard, peerIDs: []),
+                .init(
+                    currentPeer: server,
+                    connectionDate: Date(),
+                    protocolConnectionData: .proTUN(.init(transport: .udp))
+                )
             )
         }
 
         /// A `.connecting(.resolved(...))` state matching `spec`.
         static func previewConnecting(for spec: ConnectionSpec) -> ConnectionState {
-            .connecting(.resolved(.init(spec: spec, tunnelProtocol: .ike, resolvedServer: .preview(for: spec.location))))
+            .connecting(.resolved(.init(spec: spec, tunnelProtocol: .wireGuard, resolvedServer: .preview(for: spec.location))))
         }
     }
 

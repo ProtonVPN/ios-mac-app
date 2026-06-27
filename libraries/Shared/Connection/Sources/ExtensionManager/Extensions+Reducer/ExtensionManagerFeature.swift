@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Clocks
 import ComposableArchitecture
 import ConnectionShared
 import CoreConnection
@@ -24,6 +25,7 @@ import Domain
 import Ergonomics
 import ExtensionIPC
 import Foundation
+import LocalAgent
 import ProtonCoreFeatureFlags
 import Strings
 import VPNAppCore
@@ -31,12 +33,17 @@ import VPNAppCore
 @Reducer
 public struct ExtensionFeature: Sendable {
     @Dependency(\.tunnelManager) var tunnelManager
+    @Dependency(\.continuousClock) var clock
+    @Dependency(\.forkSelectorClient) var forkSelectorClient
+
+    private static let defaultConnectionTimeout = Duration.seconds(30)
 
     public init() {}
 
     private enum CancelID {
         case tunnelStart
         case observation
+        case connectionTimeout
     }
 
     public typealias State = TunnelState
@@ -49,13 +56,15 @@ public struct ExtensionFeature: Sendable {
     public enum Action: Sendable {
         case startObserving
         case stopObserving
-        case updateConfiguration(ServerConnectionIntent)
         /// Requests that the extension apply a partial configuration/feature change to the running tunnel.
         case requestConfigChange(ConnectionUpdate)
         case connect(ServerConnectionIntent)
         case tunnelStartRequestFinished(Result<Bool, Error>)
         /// The internal state of the network extension has changed
         case tunnelStatusChanged(TunnelState)
+        /// The extension reported an error over the error channel (surfaced through `statusStream`).
+        case tunnelErrored(ExtensionError)
+        case timeout
         case tunnelReasserting(ReassertionReason?)
         case disconnect(TunnelConnectionError?)
         case cleanup
@@ -65,6 +74,9 @@ public struct ExtensionFeature: Sendable {
         @DebugDescription
         public enum Delegate: Sendable {
             case reconfigurationFailed(Error)
+            /// A non-fatal error the extension reported (e.g. a server policy refusal or a config-update failure).
+            case errorReported(ExtensionError)
+            case timedOut(ConnectionStage)
         }
     }
 
@@ -78,8 +90,13 @@ public struct ExtensionFeature: Sendable {
                     return await send(.tunnelStatusChanged(status))
                 }
                 let observation: Effect<ExtensionFeature.Action> = .run { send in
-                    for await status in tunnelManager.statusStream {
-                        await send(.tunnelStatusChanged(status))
+                    for await result in tunnelManager.statusStream {
+                        switch result {
+                        case let .success(status):
+                            await send(.tunnelStatusChanged(status))
+                        case let .failure(error):
+                            await send(.tunnelErrored(error))
+                        }
                     }
                 }
                 let forkObservation: Effect<ExtensionFeature.Action> = .run { send in
@@ -99,19 +116,10 @@ public struct ExtensionFeature: Sendable {
                 )
 
             case .stopObserving:
-                return .cancel(id: CancelID.observation)
-
-            case let .updateConfiguration(intent):
-                return .run { _ in
-                    @Dependency(\.tunnelProviderConfigurator) var configurator
-                    let changes = try configurator.changes(intent)
-                    _ = try await tunnelManager.sendProTUN(request: .init(payload: .updateConfiguration(changes)))
-                } catch: { error, send in
-                    log.error("Failed to apply connection configuration changes", category: .connection, metadata: ["error": "\(error)"])
-                    SentryHelper.shared?.log(error: error)
-                    // TODO: ProTUN: Raise the derived set of (failed) configuration changes using the error
-                    await send(.delegate(.reconfigurationFailed(error)))
-                }
+                return .merge(
+                    .cancel(id: CancelID.observation),
+                    .cancel(id: CancelID.connectionTimeout)
+                )
 
             case let .requestConfigChange(update):
                 return .run { _ in
@@ -122,22 +130,61 @@ public struct ExtensionFeature: Sendable {
                     await send(.delegate(.reconfigurationFailed(error)))
                 }
 
-            case let .connect(intent):
+            case let .connect(intent) where state.canUpdateConfiguration:
+                // The tunnel is already up, so reconfigure it in-place instead of reconnecting. Route any failure
+                // through `reconfigurationFailed` (never a disconnect) so the existing tunnel doesn't get torn down.
                 return .run { send in
-                    await send(.tunnelStartRequestFinished(Result {
-                        try await tunnelManager.startTunnel(with: intent)
+                    @Dependency(\.tunnelProviderConfigurator) var configurator
+                    try await send(.requestConfigChange(configurator.changes(intent)))
+                } catch: { error, send in
+                    log.error("Failed to derive configuration changes", category: .connection, metadata: ["error": "\(error)"])
+                    SentryHelper.shared?.log(error: error)
+                    await send(.delegate(.reconfigurationFailed(error)))
+                }
+
+            case let .connect(intent):
+                // Start the tunnel and, concurrently, arm the connection timeout. The timeout is cancelled once we
+                // reach a terminal state for the attempt (connected / disconnected / start-request failure).
+                return .merge(
+                    .run { send in
+                        await send(.tunnelStartRequestFinished(Result {
+                            try await tunnelManager.startTunnel(with: intent)
+                            try Task.checkCancellation()
+                            // returning a Bool is to circumvent a compiler build issue with Result<Void, _> & CaseKeyPaths
+                            return true
+                        }))
+                    }.cancellable(id: CancelID.tunnelStart),
+                    .run { send in
+                        try await clock.sleep(for: Self.defaultConnectionTimeout)
                         try Task.checkCancellation()
-                        // returning a Bool is to circumvent a compiler build issue with Result<Void, _> & CaseKeyPaths
-                        return true
-                    }))
-                }.cancellable(id: CancelID.tunnelStart)
+                        await send(.timeout)
+                    } catch: { error, _ in
+                        log.error("Timeout task cancellation error: \(error)", category: .connection)
+                    }.cancellable(id: CancelID.connectionTimeout, cancelInFlight: true)
+                )
+
+            case .timeout:
+                // Should we bump the timeout back to 30s every time the connection state advances?
+                let stage = connectionStage(state) ?? .tunnel(.connection)
+                return .merge(
+                    .send(.delegate(.timedOut(stage))),
+                    .send(.disconnect(nil))
+                )
 
             case .tunnelStartRequestFinished(.success):
                 // Tunnel has started, but we may still need to wait for connection to be established
                 return .none
 
+            case .tunnelReasserting(.forkSelectorRequest):
+                // ProTUN asked us to (re-)fork the app's session selector so it can refresh its certificate. Forking
+                // can fail (e.g. session expiry), so make sure the failure is handled by the reducer as well.
+                return .run { [forkSelectorClient] _ in
+                    try await forkSelectorClient.pushSelector()
+                } catch: { error, send in
+                    await send(.tunnelStartRequestFinished(.failure(error)))
+                }
+
             case .tunnelReasserting:
-                // handled by parents
                 return .none
 
             case .tunnelStatusChanged(.invalid):
@@ -149,11 +196,40 @@ public struct ExtensionFeature: Sendable {
 
             case let .tunnelStatusChanged(status):
                 state = status
-                return .none
+                switch status {
+                case .connected, .disconnected:
+                    return .cancel(id: CancelID.connectionTimeout)
+                default:
+                    return .none
+                }
+
+            case let .tunnelErrored(error):
+                // A fatal certificate-refresh error tears the tunnel down, surfacing the reason through the
+                // disconnected state. Every other reported error is forwarded to the parent and then acknowledged to
+                // the extension via provider message, so that the app display state can quiesce.
+                if error.decoded(as: LocalAgent.Error.self) == .certificateRefreshFatalError {
+                    log.error("Local Agent fatal certificate refresh error (error channel)", category: .connection)
+                    return .merge(
+                        .send(.tunnelStatusChanged(.disconnected(.tunnelAborted))),
+                        .send(.disconnect(.tunnelAborted))
+                    )
+                }
+
+                log.warning("Extension reported error", category: .connection, metadata: ["error": "\(error)"])
+                return .merge(
+                    .send(.delegate(.errorReported(error))),
+                    .run { [requestId = error.id] _ in
+                        guard let requestId else { return }
+                        _ = try await tunnelManager.sendProTUN(request: .init(payload: .ack(errorId: requestId)))
+                    } catch: { error, _ in
+                        log.error("Failed to acknowledge extension error", category: .connection, metadata: ["error": "\(error)"])
+                    }
+                )
 
             case .disconnect:
                 return .merge(
                     .cancel(id: CancelID.tunnelStart),
+                    .cancel(id: CancelID.connectionTimeout),
                     .run { send in
                         do {
                             try await tunnelManager.stopTunnel()
@@ -169,9 +245,15 @@ public struct ExtensionFeature: Sendable {
                 )
 
             case let .tunnelStartRequestFinished(.failure(error)):
-                // Start request failed, so there's no need to disconnect
-                state = .disconnected(.tunnelStartFailed(error))
-                return .none
+                // Two distinct failures land here: `startTunnel` failing before any provider is active, and a
+                // fork-selector request failing while the tunnel is already alive (connecting). Surface the failure as
+                // a disconnected state and attempt to stop the tunnel if it hasn't been stopped already (it's a no-op
+                // otherwise).
+                return .merge(
+                    .cancel(id: CancelID.connectionTimeout),
+                    .send(.tunnelStatusChanged(.disconnected(.tunnelStartFailed(error)))),
+                    .run { _ in try? await tunnelManager.stopTunnel() }
+                )
 
             case .cleanup:
                 return .run { _ in
@@ -183,6 +265,73 @@ public struct ExtensionFeature: Sendable {
             case .delegate:
                 return .none
             }
+        }
+    }
+
+    /// Returns the connection stage the tunnel is currently in, or `nil` if fully connected.
+    private func connectionStage(_ state: TunnelState) -> ConnectionStage? {
+        switch state {
+        case .connecting:
+            .tunnel(.connection)
+        case .connectingToLocalAgent:
+            .connectingToLocalAgentServer
+        case .disconnected:
+            .tunnel(.start)
+        case .invalid, .reasserting, .disconnecting, .unknown:
+            // TODO: ProTUN: Error reporting - more connection stages
+            nil
+        case .connected:
+            nil
+        }
+    }
+}
+
+/// Used to provide more information about what stage of the connection process we reached before timing out.
+@CasePathable
+public enum ConnectionStage: Equatable, Sendable {
+    /// We have failed to start the network extension process, or the extension failed to transition to the
+    /// `connected` state.
+    case tunnel(TunnelConnectionStage)
+    /// We've established the tunnel to the server, and we have a valid certificate, but we've not been able to
+    /// establish a connection to the Local Agent remote server.
+    case connectingToLocalAgentServer
+
+    @CasePathable
+    public enum TunnelConnectionStage: Equatable, Sendable {
+        /// Before a tunnel can be started, a valid VPN configuration must be saved in the system settings.
+        /// Saving a configuration requires explicit user permission, which the system prompts for the first time
+        /// the app attempts to save one.
+        ///
+        /// A connection attempt may time out at this stage if:
+        ///  - the user does not enter their passcode within the timeout window
+        ///  - the system fails to present the VPN configuration screen or passcode prompt
+        case configuration
+        /// A connection attempt may time out at this stage if we successfully configure the tunnel, but never
+        /// observe it transitioning to the `.connecting` state. This can happen due to incorrectly set up
+        /// `NEVPNStatusDidChange` notifications observers.
+        case start
+        /// We time out with this error if we successfully configure the tunnel, but never observe it transitioning
+        /// to the `.connected` state.
+        case connection
+    }
+}
+
+extension TunnelState {
+    /// Whether the tunnel is in a state where its configuration can be updated in place, rather than requiring a fresh
+    /// connection.
+    var canUpdateConfiguration: Bool {
+        switch self {
+        case .unknown:
+            // Can be returned when the app is just starting to resolve the tunnel state
+            false
+        case .invalid:
+            // We don't even have permissions to write VPN configs
+            false
+        case .disconnected, .disconnecting:
+            // We can't simply update the config, since the tunnel will have to be started
+            false
+        case .reasserting, .connecting, .connectingToLocalAgent, .connected:
+            true
         }
     }
 }
@@ -267,14 +416,16 @@ extension ExtensionFeature.Action: CustomDebugStringConvertible {
             ".tunnelStartRequestFinished(\(result))"
         case let .tunnelStatusChanged(tunnelState):
             ".tunnelStatusChanged(\(tunnelState))"
+        case let .tunnelErrored(error):
+            ".tunnelErrored(\(error))"
+        case .timeout:
+            ".timeout"
         case let .tunnelReasserting(reason):
             ".tunnelReasserting(\(String(describing: reason)))"
         case let .disconnect(tunnelConnectionError):
             ".disconnect(\(String(describing: tunnelConnectionError))"
         case .cleanup:
             ".cleanup"
-        case let .updateConfiguration(serverConnectionIntent):
-            ".updateConfiguration(\(serverConnectionIntent))"
         case let .requestConfigChange(update):
             ".requestConfigChange(\(update))"
         case let .delegate(action):

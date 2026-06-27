@@ -21,11 +21,14 @@ import Foundation
 /// The marshalled type for errors reported by the network extension over the ``IPCErrorPayload`` ``RawChannel``.
 /// Provides a helper method for ``ProtonVPNError``s that can be initialized from just a char code, so that the
 /// connection layer can consume error values idiomatically.
-public struct ExtensionError: Error, Equatable, Sendable {
+public struct ExtensionError: Error, Identifiable, Equatable, Sendable {
+    /// The id of the request this error relates to, if any.
+    public let id: UUID?
     public let domain: String
     public let code: UInt32
 
-    public init(domain: String, code: UInt32) {
+    public init(domain: String, code: UInt32, requestId: UUID? = nil) {
+        self.id = requestId
         self.domain = domain
         self.code = code
     }
@@ -39,6 +42,6 @@ public struct ExtensionError: Error, Equatable, Sendable {
 
 extension ExtensionError: CustomStringConvertible {
     public var description: String {
-        "\(domain) (code \(code))"
+        "\(domain) (code \(code) id \(id?.uuidString ?? "nil"))"
     }
 }

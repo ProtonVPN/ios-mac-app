@@ -135,7 +135,7 @@ public extension IPCNotifications.RawChannel where Role == IPCNotifications.Writ
         IPCNotifications.signal(notification)
     }
 
-    /// Takes the seqlock and clears the payload by storing its all-zeros value. Does *not* send a notification.
+    /// Takes the seqlock and clears the payload by storing its all-zeros value, then notifies the readers.
     func zero() {
         store.withLock { region in
             region.withMutableSpan { span in
@@ -148,6 +148,7 @@ public extension IPCNotifications.RawChannel where Role == IPCNotifications.Writ
                 }
             }
         }
+        IPCNotifications.signal(notification)
     }
 }
 

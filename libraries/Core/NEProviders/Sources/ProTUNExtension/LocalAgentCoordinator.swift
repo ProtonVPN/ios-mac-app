@@ -97,7 +97,7 @@ private extension LocalAgentCoordinator {
                 // if protunError == .certificateRefreshFatalError {
                 // + adapter?.connection?.disconnectAndWait()
                 // }
-                sendError(error: .init(protunError))
+                await sendError(error: .init(protunError))
             case .packetCaptureStarted, .packetCaptureStopped:
                 break
             @unknown default:
@@ -141,8 +141,10 @@ private extension LocalAgentCoordinator {
         extensionIPCServer.publishConnectionStats(stats)
     }
 
-    func sendError(error: LocalAgent.Error) {
-        extensionIPCServer.publishError(error, nil)
+    func sendError(error: LocalAgent.Error) async {
+        let id = await adapter.currentRequestId
+
+        extensionIPCServer.publishError(error, id)
     }
 }
 

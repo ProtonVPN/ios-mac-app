@@ -89,7 +89,7 @@
         }
 
         private func state(from _: NEVPNStatus) -> TunnelState {
-            let tunnelConfig = TunnelConfiguration(connectionSpec: ConnectionSpec(), tunnelProtocol: .wireGuard(.proTUN), peerIDs: ["peer-id"])
+            let tunnelConfig = TunnelConfiguration(connectionSpec: ConnectionSpec(), tunnelProtocol: .wireGuard, peerIDs: ["peer-id"])
             switch connection.status {
             case .connected:
                 // Fake the connected peer from the value `VPNSessionMock` published, falling back to the "peer-id"
@@ -120,12 +120,12 @@
             }
         }
 
-        var statusStream: AsyncStream<TunnelState> {
-            AsyncStream<TunnelState> { [weak self] continuation in
+        var statusStream: AsyncStream<Result<TunnelState, ExtensionError>> {
+            AsyncStream<Result<TunnelState, ExtensionError>> { [weak self] continuation in
                 self?.connection.onStatusChange = { [weak self] newStatus in
                     guard let self else { return }
                     let state = state(from: newStatus)
-                    continuation.yield(state)
+                    continuation.yield(.success(state))
                 }
                 continuation.onTermination = { [weak self] _ in
                     self?.connection.onStatusChange = nil

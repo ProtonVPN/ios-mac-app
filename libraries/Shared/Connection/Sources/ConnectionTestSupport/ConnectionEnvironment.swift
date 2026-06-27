@@ -68,7 +68,7 @@
                 initialState: .init(
                     connectionState: .resolving,
                     shouldRegisterServerChangeOnConnection: false,
-                    core: .initialCoreConnectionState
+                    tunnel: .unknown
                 ),
                 vpnSession: vpnSession,
                 tunnelManager: MockTunnelManager(connection: vpnSession)

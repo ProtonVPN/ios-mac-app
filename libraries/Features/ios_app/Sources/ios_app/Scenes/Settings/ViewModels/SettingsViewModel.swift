@@ -457,8 +457,8 @@ final class SettingsViewModel {
         [
             .upsellableToggle(
                 title: Localizable.vpnAcceleratorTitle,
-                isOverridden: appliedVPNAcceleratorOverride,
-                isApplying: applyingToggles.contains(.vpnAccelerator),
+                overriddenValue: appliedVPNAcceleratorOverride,
+                isPending: applyingToggles.contains(.vpnAccelerator),
                 state: { [unowned self] in displayState(for: VPNAccelerator.self) },
                 upsell: { [weak self] in self?.alertService.push(alert: VPNAcceleratorUpsellAlert()) },
                 handler: { toggleOn, callback in
@@ -552,8 +552,8 @@ final class SettingsViewModel {
         [
             .upsellableToggle(
                 title: Localizable.moderateNatTitle,
-                isOverridden: appliedNATOverride,
-                isApplying: applyingToggles.contains(.nat),
+                overriddenValue: appliedNATOverride,
+                isPending: applyingToggles.contains(.nat),
                 state: { [unowned self] in moderateNATState },
                 upsell: { [weak self] in self?.alertService.push(alert: ModerateNATUpsellAlert()) },
                 handler: { [weak self] toggleOn, callback in

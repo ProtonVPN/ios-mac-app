@@ -83,7 +83,7 @@ final class SwitchTableViewCell: UITableViewCell {
         upsellTapped()
     }
 
-    func setup(with model: PaidFeatureDisplayState, isOverridden: Bool? = nil, isApplying: Bool = false) {
+    func setup(with model: PaidFeatureDisplayState, overriddenValue: Bool? = nil, isPending: Bool = false) {
         switch model {
         case .disabled:
             log.assertionFailure("We shouldn't display cells for disabled features")
@@ -99,7 +99,7 @@ final class SwitchTableViewCell: UITableViewCell {
             upsellImageView.isHidden = true
             switchControl.isHidden = false
 
-            if isApplying {
+            if isPending {
                 // Keep the switch at the value the user chose, dimmed + non-interactive, until the server acks with the
                 // applied value.
                 switchControl.isOn = isOn
@@ -113,8 +113,8 @@ final class SwitchTableViewCell: UITableViewCell {
                 switchControl.isUserInteractionEnabled = true
                 switchControl.alpha = 1
                 switchControl.isEnabled = isInterative
-                if let isOverridden {
-                    switchControl.isOn = isOverridden
+                if let overriddenValue {
+                    switchControl.isOn = overriddenValue
                     switchControl.onTintColor = .iconWeak()
                 } else {
                     switchControl.isOn = isOn

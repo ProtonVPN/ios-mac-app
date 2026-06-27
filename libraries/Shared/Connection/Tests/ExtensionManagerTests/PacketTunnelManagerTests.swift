@@ -47,11 +47,11 @@
             activeManager.protocolConfiguration = config
 
             try await withDependencies {
-                $0.vpnManagerRepository.managers = { [.ike: inactiveManager, .wireGuard(.proTUN): activeManager] }
+                $0.vpnManagerRepository.managers = { [.ike: inactiveManager, .wireGuard: activeManager] }
                 $0.extensionIPC.currentExtensionState = { (.connecting(peerID: nil, waitReason: .unset), nil) }
             } operation: {
                 let status = try await PacketTunnelManager().status
-                XCTAssertEqual(status, .connecting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard(.proTUN), peerIDs: [])))
+                XCTAssertEqual(status, .connecting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: [])))
             }
         }
 
@@ -76,7 +76,7 @@
             try await withDependencies {
                 $0.date = .constant(now)
                 $0.vpnManagerRepository.managers = {
-                    [.ike: disconnectingManager, .wireGuard(.proTUN): connectedManager]
+                    [.ike: disconnectingManager, .wireGuard: connectedManager]
                 }
                 $0.extensionIPC.currentExtensionState = {
                     (.connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)), requestId)
@@ -86,7 +86,7 @@
                 XCTAssertEqual(
                     status,
                     .connected(
-                        TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard(.proTUN), peerIDs: ["peer-id"]),
+                        TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"]),
                         DynamicConnectionData(currentPeerId: "peer-id", connectionDate: now, protocolConnectionData: .proTUN(.init(transport: .udp)))
                     )
                 )
@@ -129,7 +129,7 @@
 
             try await withDependencies {
                 $0.continuousClock = clock
-                $0.vpnManagerRepository.managers = { [.wireGuard(.go): providerManager] }
+                $0.vpnManagerRepository.managers = { [.wireGuard: providerManager] }
                 $0.vpnManagerRepository.prepareManager = { _, _ in
                     managerConfigured.fulfill()
                     return providerManager
@@ -153,17 +153,14 @@
 
             try await withDependencies {
                 $0.continuousClock = clock
-                $0.vpnManagerRepository.managers = { [.ike: ikeManager, .wireGuard(.go): wgManager] }
+                $0.vpnManagerRepository.managers = { [.ike: ikeManager, .wireGuard: wgManager] }
                 $0.vpnManagerRepository.prepareManager = { proto, _ in
                     switch proto {
                     case .ike:
                         ikePrepared.fulfill()
                         return ikeManager
-                    case .wireGuard(.go):
+                    case .wireGuard:
                         wgPrepared.fulfill()
-                        return wgManager
-                    case .wireGuard(.proTUN):
-                        XCTFail("Unexpected protocol")
                         return wgManager
                     }
                 }

@@ -14,8 +14,9 @@
 
 // Tunnel data payloads coming from the extension
 //
-// Try to avoid using these for things that can go in the provider configuration and get read from there, it's meant for
-// values that are communicated from the ProTUN framework and the LocalAgent server.
+// Try to avoid using this IPC channel for things that can go in the provider configuration and get read from there,
+// it's meant for values that are communicated from the ProTUN framework and the LocalAgent server. If your value is a
+// configuration setting rather than a property of the active tunnel, it should go in the provider configuration.
 
 IPC_ENUM(int8_t, IPCConnectionTransport) {
     IPCConnectionTransportUnset = 0,

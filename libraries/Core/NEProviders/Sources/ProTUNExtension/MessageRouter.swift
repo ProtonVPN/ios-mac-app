@@ -46,6 +46,8 @@ enum MessageRouter {
             return handlePushSelector(selector, cookieName: cookieName, cookieValue: cookieValue, with: adapter)
         case let .updateConfiguration(update):
             return await handleConfigurationUpdate(update: update, with: adapter)
+        case let .ack(errorId):
+            return await handleAcknowledgeError(errorId, with: adapter)
         }
     }
 }
@@ -120,6 +122,11 @@ private extension MessageRouter {
 
     static func handlePushSelector(_ selector: String, cookieName: String, cookieValue: String, with adapter: ProTUNAdapter) -> Response {
         adapter.handleForkSelector(selector, cookieName: cookieName, cookieValue: cookieValue)
+        return .init(payload: .ack)
+    }
+
+    static func handleAcknowledgeError(_ errorId: UUID, with adapter: ProTUNAdapter) async -> Response {
+        await adapter.acknowledgeError(errorId)
         return .init(payload: .ack)
     }
 

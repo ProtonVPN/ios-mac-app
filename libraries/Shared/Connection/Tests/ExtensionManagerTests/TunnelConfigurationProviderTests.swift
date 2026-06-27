@@ -43,7 +43,7 @@
                 )
             } operation: {
                 let repository = VPNManagerRepositoryImplementation()
-                _ = try await repository.prepareManager(of: .wireGuard(.go), for: .reconfiguration([.feature(.tunnel(.onDemand(false)))]))
+                _ = try await repository.prepareManager(of: .wireGuard, for: .reconfiguration([.feature(.tunnel(.onDemand(false)))]))
             }
 
             await fulfillment(of: [existingManagersLoaded, newManagerLoaded], timeout: 1)

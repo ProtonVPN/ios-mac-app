@@ -43,8 +43,8 @@ enum TableViewCellModel {
     /// `upsell` is executed when the cell accessory is tapped while in the `PaidFeatureDisplayState.upsell` state
     case upsellableToggle(
         title: String,
-        isOverridden: Bool? = nil,
-        isApplying: Bool = false,
+        overriddenValue: Bool? = nil,
+        isPending: Bool = false,
         state: () -> PaidFeatureDisplayState,
         upsell: () -> Void,
         handler: ((Bool, @escaping (Bool) -> Void) -> Void)?
@@ -258,12 +258,12 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.showDisclosure(true)
 
             return cell
-        case let .upsellableToggle(title, isOverridden, isApplying, state, upsell, handler):
+        case let .upsellableToggle(title, overriddenValue, isPending, state, upsell, handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchTableViewCell.identifier) as? SwitchTableViewCell else {
                 return UITableViewCell()
             }
             cell.label.text = title
-            cell.setup(with: state(), isOverridden: isOverridden, isApplying: isApplying)
+            cell.setup(with: state(), overriddenValue: overriddenValue, isPending: isPending)
             cell.upsellTapped = upsell
             cell.toggled = handler
             cell.switchControl.accessibilityLabel = title

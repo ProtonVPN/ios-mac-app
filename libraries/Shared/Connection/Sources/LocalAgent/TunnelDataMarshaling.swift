@@ -275,7 +275,8 @@ public extension IPCErrorPayload {
 
     var extensionError: ExtensionError? {
         guard hasError else { return nil }
-        return ExtensionError(domain: errorDomain, code: code)
+        let requestId = withUnsafeBytes(of: config_id) { $0.contains { $0 != 0 } } ? UUID(uuid: config_id) : nil
+        return ExtensionError(domain: errorDomain, code: code, requestId: requestId)
     }
 }
 

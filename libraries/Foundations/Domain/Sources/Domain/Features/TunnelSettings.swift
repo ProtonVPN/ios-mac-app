@@ -38,22 +38,28 @@ public struct WireGuardSettings: Equatable, Sendable, Codable {
 
 public enum TunnelProtocol: Equatable, Hashable, Sendable {
     case ike
-    case wireGuard(WGBackend)
+
+    case wireGuard
 
     package static var availableProtocols: [Self] {
         #if os(macOS)
-            [.ike, .wireGuard(.proTUN)]
+            [.ike, .wireGuard]
         #else
-            [.wireGuard(.proTUN)]
+            [.wireGuard]
         #endif
     }
 
     public init(_ protocol: ConnectionProtocol) {
         switch `protocol` {
         case .vpnProtocol(.ike):
-            self = .ike
+            #if os(macOS)
+                self = .ike
+            #else
+                assertionFailure("IKEv2 not supported on non-macOS platforms")
+                self = .wireGuard
+            #endif
         default:
-            self = .wireGuard(.proTUN)
+            self = .wireGuard
         }
     }
 }

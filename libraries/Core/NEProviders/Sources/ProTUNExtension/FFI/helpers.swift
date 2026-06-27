@@ -256,6 +256,42 @@ extension ErrorEvent: @retroactive CustomDebugStringConvertible {
     }
 }
 
+extension LocalAgentSettings: @retroactive CustomStringConvertible {
+    public var description: String {
+        var elements = ["fingerprint: \(fingerprint)"]
+        if let softJail {
+            elements.append("softJail: \(softJail)")
+        }
+        if let circumventionRouting {
+            elements.append("circumventionRouting: \(circumventionRouting)")
+        }
+        if let splitTcp {
+            elements.append("splitTcp: \(splitTcp)")
+        }
+        if let netshieldLevel {
+            elements.append("netshield: \(netshieldLevel)")
+        }
+        if let randomNat {
+            elements.append("randomNat: \(randomNat)")
+        }
+        if let portForwarding {
+            elements.append("portForwarding: \(portForwarding)")
+        }
+        return "(\(elements.joined(separator: ", ")))"
+    }
+}
+
+extension PeerInfo: @retroactive CustomStringConvertible {
+    public var description: String {
+        "(peer: \(peerId), " +
+            "ip: \(serverIp), " +
+            "priority: \(priority), " +
+            "udp: \(udpPorts), " +
+            "tcp: \(tcpPorts), " +
+            "tls: \(tlsPorts))"
+    }
+}
+
 extension ConnectionState: @retroactive CustomStringConvertible {
     public var description: String {
         switch self {

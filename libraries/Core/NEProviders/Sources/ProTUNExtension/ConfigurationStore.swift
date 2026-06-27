@@ -109,23 +109,25 @@ actor ConfigurationStore {
             throw Failure.badConfiguration
         }
 
+        let (peersToApply, agentSettingsToApply) = try config.apply(update: update)
+
         // `reasserting` covers the reconfiguration of ProTUN, as well as the save to network preferences.
         try await adapter.whileReasserting {
             if let onDemand = update.onDemand {
                 manager.isOnDemandEnabled = onDemand
             }
 
-            let (peersToApply, agentSettingsToApply) = try config.apply(update: update)
-
             // Persist the protocol config first, if any changes are needed, to avoid the two getting out of sync if
             // the save should happen to throw.
             try await manager.saveToPreferences()
 
             if let peersToApply, let connection = adapter.connection {
+                Logger.adapter.info("Updating peers: \(peersToApply.map(\.description))")
                 connection.updatePeers(peers: peersToApply)
             }
 
             if let agentSettingsToApply {
+                Logger.adapter.info("Applying settings: \(agentSettingsToApply)")
                 adapter.applyLocalAgentSettings(agentSettingsToApply)
             }
         }
@@ -140,11 +142,11 @@ actor ConfigurationStore {
             throw Failure.badConfiguration
         }
 
+        Logger.adapter.info("Received settings: \(settings)")
         try config.apply(serverSettings: settings)
 
         try await adapter.whileReasserting {
             try await manager.saveToPreferences()
-            Logger.adapter.info("Persisted server-applied Local Agent settings (differed from requested)")
         }
     }
 

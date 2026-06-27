@@ -56,7 +56,7 @@
 
             await store.send(.connect(intent))
             await store.receive(\.tunnelStatusChanged.connecting) {
-                $0 = .connecting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard(.proTUN), peerIDs: ["peer-id"]))
+                $0 = .connecting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"]))
             }
 
             await store.receive(\.tunnelStartRequestFinished.success)
@@ -85,7 +85,7 @@
             await store.send(.startObserving)
             await store.receive(\.tunnelStatusChanged.connected) {
                 $0 = .connected(
-                    TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard(.proTUN), peerIDs: ["peer-id"]),
+                    TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"]),
                     DynamicConnectionData(currentPeerId: "peer-id", connectionDate: now, protocolConnectionData: .proTUN(.init(transport: .udp)))
                 )
             }

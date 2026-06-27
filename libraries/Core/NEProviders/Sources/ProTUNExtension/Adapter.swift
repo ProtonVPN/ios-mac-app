@@ -89,6 +89,18 @@ final class ProTUNAdapter: @unchecked Sendable {
         self.configurationStore = ConfigurationStore(initial: providerConfig?.requestId)
     }
 
+    /// Acknowledges the app's receipt of the last reported error. If the error still pertains to the current request,
+    /// clear the error region and update the IPCConnectionData to include the error ID so that the connection layer
+    /// can properly quiesce. If the ack's id doesn't match the request ID that's currently in flighht, ignore it.
+    func acknowledgeError(_ errorId: UUID) async {
+        guard await currentRequestId == errorId else {
+            Logger.adapter.info("Ignoring stale error ack \(errorId.uuidString, privacy: .public)")
+            return
+        }
+        extensionIPCServer.restampConnectionData(errorId)
+        extensionIPCServer.clearError()
+    }
+
     func prepare(with config: ProTUNConfiguration) async throws -> FileDescriptor {
         Logger.adapter.info("Preparing...")
 

@@ -26,18 +26,25 @@ import LocalAgentIPC
 /// The server-side of the memory-backed IPC channel. The extension should be the only process to write these values.
 @DependencyClient
 public struct ExtensionIPCServer: Sendable {
-    public var publishExtensionState: @Sendable (ExtensionState, UUID?) -> Void
-    public var publishStats: @Sendable (LocalAgent.Stats) -> Void
-    public var publishConnectionStats: @Sendable (LocalAgent.ConnectionStats) -> Void
-    public var publishFeatures: @Sendable (AgentTunnelFeatures) -> Void
-    public var publishError: @Sendable (any Error, UUID?) -> Void
+    public private(set) var publishExtensionState: @Sendable (ExtensionState, UUID?) -> Void
+    public private(set) var publishStats: @Sendable (LocalAgent.Stats) -> Void
+    public private(set) var publishConnectionStats: @Sendable (LocalAgent.ConnectionStats) -> Void
+    public private(set) var publishFeatures: @Sendable (AgentTunnelFeatures) -> Void
+    public private(set) var publishError: @Sendable (any Error, UUID?) -> Void
+
+    /// Touches the `IPCConnectionData` similar to `publishExtensionState`, but only touches the UUID. This is how error
+    /// "acking" works from the main app: the acknowledged error UUID is cleared from the error channel, and placed as
+    /// the UUID of the IPCConnectionData to indicate that the error has been handled.
+    public private(set) var restampConnectionData: @Sendable (UUID) -> Void
+    /// Clears the error region (and notifies), used once the app has acknowledged the last reported error.
+    public private(set) var clearError: @Sendable () -> Void
 
     /// Posts a ``TunnelCommand`` using ``notify_post``.
-    public var sendCommand: @Sendable (TunnelCommand) -> Void
+    public private(set) var sendCommand: @Sendable (TunnelCommand) -> Void
     /// Attach to the region this process writes into - file-backed `mmap` on iOS/tvOS, or ``IOSurface`` on macOS.
-    public var attachRegion: @Sendable (IPCNotifications.SharedRegion) -> Void
+    public private(set) var attachRegion: @Sendable (IPCNotifications.SharedRegion) -> Void
     /// Zero every sub-region on disconnect and tunnel start to clear out stale values.
-    public var zeroAll: @Sendable () -> Void
+    public private(set) var zeroAll: @Sendable () -> Void
 }
 
 extension ExtensionIPCServer: DependencyKey {
@@ -51,6 +58,8 @@ extension ExtensionIPCServer: DependencyKey {
             },
             publishFeatures: { features in store.channels.localAgentFeatures.mutate { $0 = IPCAgentFeaturesPayload(features) } },
             publishError: { error, requestId in store.channels.localAgentError.mutate { $0 = IPCErrorPayload(error, requestId: requestId) } },
+            restampConnectionData: { requestId in store.channels.connectionData.mutate { $0.requestId = requestId } },
+            clearError: { store.channels.localAgentError.zero() },
             sendCommand: { command in
                 IPCNotifications.postRawState(.tunnelCmd, state: UInt64(command.rawValue))
             },

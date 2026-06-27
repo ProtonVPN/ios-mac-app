@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import struct Foundation.URL
+import struct Foundation.UUID
 import IPCErgonomics
 
 public enum ProTUNMessage {
@@ -48,6 +49,7 @@ public extension ProTUNMessage.Request {
         case pcapRequest(PcapRequest)
         case pushForkInfo(selector: String, cookieName: String, cookieValue: String)
         case updateConfiguration(ConnectionUpdate)
+        case ack(errorId: UUID)
         #if DEBUG
             case ping
         #endif
@@ -114,6 +116,7 @@ extension ProTUNMessage.Request.Payload: CustomStringConvertible {
         case let .pcapRequest(request): "pcapRequest(\(request))"
         case .pushForkInfo: "pushForkInfo"
         case .updateConfiguration: "updateConfiguration"
+        case let .ack(errorId): "ack(\(errorId))"
         }
     }
 }

@@ -40,14 +40,14 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
         let toolTip: String?
         let liveSource: AnyPublisher<Bool, Never>?
         /// When non-nil, setting has been overridden by the server.
-        let isOverridden: Bool?
+        let overriddenValue: Bool?
 
-        init(labelText: String, state: PaidFeatureDisplayState, toolTip: String? = nil, liveSource: AnyPublisher<Bool, Never>? = nil, isOverridden: Bool? = nil) {
+        init(labelText: String, state: PaidFeatureDisplayState, toolTip: String? = nil, liveSource: AnyPublisher<Bool, Never>? = nil, overriddenValue: Bool? = nil) {
             self.labelText = labelText
             self.state = state
             self.toolTip = toolTip
             self.liveSource = liveSource
-            self.isOverridden = isOverridden
+            self.overriddenValue = overriddenValue
         }
 
         init(labelText: String, buttonState: Bool, buttonEnabled: Bool = true, toolTip: String? = nil) {
@@ -166,8 +166,8 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
             upsellImageView?.isHidden = true
             switchButton?.isHidden = false
             switchButton?.enabled = isInteractive
-            let displayOn = model.isOverridden ?? isOn
-            switchButton?.isOverridden = model.isOverridden != nil
+            let displayOn = model.overriddenValue ?? isOn
+            switchButton?.isOverridden = model.overriddenValue != nil
             switchButton?.setState(displayOn ? .on : .off)
             updateOnOffLabel(isOn: displayOn)
         }
