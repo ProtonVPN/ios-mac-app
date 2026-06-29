@@ -55,31 +55,61 @@ actor ConfigurationStore {
 
     /// Applies an app-initiated configuration update request that was sent over XPC.
     func apply(_ update: ConnectionUpdate, adapter: ProTUNAdapter) {
-        enqueue(id: update.id) { [weak adapter] in
-            guard let adapter else { return }
+        enqueue(id: update.id) { [weak self, weak adapter] _ in
+            guard let self, let adapter else { return }
+
             do {
                 try await withTimeout(of: Self.transactionTimeout) {
                     try await Self.performUpdate(update, adapter: adapter)
                 }
-            } catch {
+            } catch let error as ConfigurationUpdateError {
                 Logger.adapter.error("Configuration update failed: \(error, privacy: .public)")
-                @Dependency(\.extensionIPCServer) var extensionIPCServer
-                extensionIPCServer.publishError(error, update.id)
+                await self.reportConfigChangeFailure(error)
+            } catch is AsyncTimeoutError {
+                Logger.adapter.error("Configuration update timed out")
+                await reportConfigChangeFailure(.timeout)
+            } catch {
+                // `performUpdate` has a typed throw, so this really shouldn't happen
+                assertionFailure("Unhandled error in configuration update handler: \(error)")
+                Logger.adapter.error("Unhandled error in configuration update handler: \(error, privacy: .public)")
             }
         }
+    }
+
+    /// Config change failures are a special case because this means that the new config profile wasn't persisted.
+    /// In this case we want to report the config change error with the *existing* id in the configuration to make sure
+    /// that the state can align properly.
+    private func reportConfigChangeFailure(_ error: ConfigurationUpdateError) async {
+        @Dependency(\.extensionIPCServer) var extensionIPCServer
+        /// First, see if we can get the existing configuration profile for the "real" current config ID.
+        let manager = await (try? Self.loadManager())
+        let config = manager?.protocolConfiguration as? NETunnelProviderProtocol
+
+        // If we can't get at that, then settle for the request ID that was last stored on the `ConfigurationStore`.
+        let reportedId = config?.requestId ?? requestId
+        requestId = reportedId
+        extensionIPCServer.publishError(error, reportedId)
     }
 
     /// Persists the server-applied (effective) Local Agent settings ProTUN reported, when they differ from what the
     /// configuration already holds.
     func persistEffective(_ settings: LocalAgentSettings, adapter: ProTUNAdapter) {
-        enqueue { [weak adapter] in
+        enqueue { [weak adapter] _ in
             guard let adapter else { return }
             do {
                 try await withTimeout(of: Self.transactionTimeout) {
                     try await Self.performPersistEffective(settings, adapter: adapter)
                 }
+            } catch let error as ConfigurationUpdateError {
+                Logger.adapter.error("Persisting effective settings failed: \(error, privacy: .public)")
+                await self.reportConfigChangeFailure(error)
+            } catch is AsyncTimeoutError {
+                Logger.adapter.error("Persisting effective settings timed out")
+                await self.reportConfigChangeFailure(.timeout)
             } catch {
-                Logger.adapter.error("Failed to persist effective Local Agent settings: \(error, privacy: .public)")
+                // `performUpdate` has a typed throw, so this really shouldn't happen
+                assertionFailure("Unhandled error in effective settings update handler: \(error)")
+                Logger.adapter.error("Unhandled error in effective settings update handler: \(error, privacy: .public)")
             }
         }
     }
@@ -87,7 +117,7 @@ actor ConfigurationStore {
     /// Appends `work` to the queue. Since mutating `tail` is actor-isolated, awaiting the previous task is what
     /// serializes the `load -> modify -> save` loop in an async way. Takes an optional ID so we can figure out if a
     /// setting has been applied in the RawChannel without having to compare a bunch of fields in the provider config.
-    private func enqueue(id: UUID? = nil, _ work: @escaping @Sendable () async -> Void) {
+    private func enqueue(id: UUID? = nil, _ work: @escaping @Sendable (UUID?) async -> Void) {
         let previous = tail
         tail = Task {
             await previous.value
@@ -95,31 +125,44 @@ actor ConfigurationStore {
             if let id {
                 self.requestId = id
             }
-            await work()
+            await work(id ?? self.requestId)
         }
     }
 
     /// Update the tunnel by checking which knobs are managed locally (like kill switch, transport, etc) and which are
     /// managed by the server (like netshield, nattype, etc), and dispatch the configuration changes to the necessary
     /// places before saving the updated configuration to the network preferences, if necessary.
-    private static func performUpdate(_ update: ConnectionUpdate, adapter: ProTUNAdapter) async throws {
+    private static func performUpdate(_ update: ConnectionUpdate, adapter: ProTUNAdapter) async throws(ConfigurationUpdateError) {
         Logger.adapter.info("Applying configuration update...")
         let manager = try await loadManager()
         guard let config = manager.protocolConfiguration as? NETunnelProviderProtocol else {
-            throw Failure.badConfiguration
+            throw ConfigurationUpdateError.badConfiguration
         }
 
-        let (peersToApply, agentSettingsToApply) = try config.apply(update: update)
+        let peersToApply: [PeerInfo]?
+        let agentSettingsToApply: LocalAgentSettings?
+
+        do {
+            (peersToApply, agentSettingsToApply) = try config.apply(update: update)
+        } catch {
+            Logger.adapter.error("Encountered encoding error when applying config update: \(error, privacy: .public)")
+            throw ConfigurationUpdateError.badEncoding
+        }
 
         // `reasserting` covers the reconfiguration of ProTUN, as well as the save to network preferences.
-        try await adapter.whileReasserting {
+        try await adapter.whileReasserting { () async throws(ConfigurationUpdateError) in
             if let onDemand = update.onDemand {
                 manager.isOnDemandEnabled = onDemand
             }
 
-            // Persist the protocol config first, if any changes are needed, to avoid the two getting out of sync if
-            // the save should happen to throw.
-            try await manager.saveToPreferences()
+            // Persist the protocol config first, if any changes are needed, to avoid the two getting out of sync if the
+            // save should happen to throw.
+            do {
+                try await manager.saveToPreferences()
+            } catch {
+                Logger.adapter.error("Unable to save tunnel configuration: \(error, privacy: .public)")
+                throw ConfigurationUpdateError.couldntSave
+            }
 
             if let peersToApply, let connection = adapter.connection {
                 Logger.adapter.info("Updating peers: \(peersToApply.map(\.description))")
@@ -136,67 +179,57 @@ actor ConfigurationStore {
     /// Some settings are decided for us by the server after we request a settings change. It can decide to either
     /// report the same value back, or a different one. Persisting settings in this way simplifies the UI presentation
     /// since we don't have to closely track which LocalAgent requests were allowed or rejected.
-    private static func performPersistEffective(_ settings: LocalAgentSettings, adapter: ProTUNAdapter) async throws {
+    private static func performPersistEffective(
+        _ settings: LocalAgentSettings,
+        adapter: ProTUNAdapter
+    ) async throws(ConfigurationUpdateError) {
         let manager = try await loadManager()
         guard let config = manager.protocolConfiguration as? NETunnelProviderProtocol else {
-            throw Failure.badConfiguration
+            throw ConfigurationUpdateError.badConfiguration
         }
 
         Logger.adapter.info("Received settings: \(settings)")
-        try config.apply(serverSettings: settings)
+        do {
+            try config.apply(serverSettings: settings)
+        } catch {
+            Logger.adapter.error("Unable to save new LocalAgent settings: \(error, privacy: .public)")
+            throw ConfigurationUpdateError.couldntSave
+        }
 
-        try await adapter.whileReasserting {
-            try await manager.saveToPreferences()
+        try await adapter.whileReasserting { () async throws(ConfigurationUpdateError) in
+            do {
+                try await manager.saveToPreferences()
+            } catch {
+                Logger.adapter.error("Unable to save new LocalAgent settings: \(error, privacy: .public)")
+                throw ConfigurationUpdateError.couldntSave
+            }
         }
     }
 
     /// Loads the ProTUN provider manager fresh from preferences.
     /// - Note: when saving, if you need to read a value back afterwards, make sure to load again first.
-    private static func loadManager() async throws -> NETunnelProviderManager {
+    private static func loadManager() async throws(ConfigurationUpdateError) -> NETunnelProviderManager {
         let managers: [NETunnelProviderManager]
         do {
             managers = try await NETunnelProviderManager.loadAllFromPreferences()
         } catch {
             Logger.adapter.error("Failed to load ProTUN manager: \(error, privacy: .public)")
-            throw Failure.missingManager
+            throw ConfigurationUpdateError.missingManager
         }
         guard let manager = managers.first(where: {
             ($0.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == Bundle.main.bundleIdentifier
         }) else {
-            throw Failure.missingManager
+            throw ConfigurationUpdateError.missingManager
         }
         return manager
     }
 }
 
-extension ConfigurationStore {
-    enum Failure: ProtonVPNError {
-        static let errorDomain = "ConfigurationUpdateErrorDomain"
-
-        var charCode: FourCharCode {
-            switch self {
-            case .badConfiguration: "CUBC"
-            case .location(.badPeers): "CULP"
-            case .location(.noConnection): "CUNC"
-            case .missingManager: "CUMM"
-            case .unhandledChange: "CUUC"
-            }
-        }
-
-        case badConfiguration
-        case location(Location)
-        case missingManager
-        case unhandledChange(String)
-
-        enum Location: Error {
-            case badPeers
-            case noConnection
-        }
-    }
-}
-
 extension NETunnelProviderProtocol {
-    func apply(update: ConnectionUpdate) throws -> (newPeers: [PeerInfo]?, newSettings: LocalAgentSettings?) {
+    func apply(update: ConnectionUpdate) throws -> (
+        newPeers: [PeerInfo]?,
+        newSettings: LocalAgentSettings?
+    ) {
         requestId = update.id
 
         // Native NETunnelProviderProtocol configuration options go up here

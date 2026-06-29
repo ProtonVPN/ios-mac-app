@@ -85,7 +85,7 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
             labelText: Localizable.moderateNatTitle,
             state: featureState,
             toolTip: String(tooltip),
-            isOverridden: viewModel.appliedNATOverride
+            overriddenValue: viewModel.appliedNATOverride
         )
 
         natTypeView.setupItem(model: model, delegate: self)

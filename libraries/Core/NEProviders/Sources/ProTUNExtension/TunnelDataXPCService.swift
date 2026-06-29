@@ -36,7 +36,8 @@
         private struct State {
             var surface: IOSurfaceRef?
             var listener: NSXPCListener?
-            /// A newly-accepted connection invalidates the previous one. (TODO: widget/shortcut support on macOS)
+            /// A newly-accepted connection invalidates the previous one.
+            /// (TODO: widget/shortcut support on macOS - VPNAPPL-3567)
             var currentConnection: NSXPCConnection?
             /// Keep a reference to the listener delegate here, since `NSXPCListener.delegate` is `weak`.
             var listenerDelegate: Listener?

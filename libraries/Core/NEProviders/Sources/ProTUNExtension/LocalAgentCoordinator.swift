@@ -116,7 +116,8 @@ private extension LocalAgentCoordinator {
             extensionIPCServer.publishExtensionState(state.connectionState.extensionState, id)
 
             if let settings = state.connectionState.agentSettings {
-                // Publish changes to the app, and persist actual settings to disk in case we crash
+                // Publish changes to the app, and persist actual settings to disk in case we crash (or if user
+                // manually starts/stops the protocol from settings).
                 extensionIPCServer.publishFeatures(settings.agentTunnelFeatures)
                 await adapter?.enqueueEffectiveLocalAgentSettings(settings)
             }

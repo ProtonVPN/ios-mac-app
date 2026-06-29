@@ -124,7 +124,8 @@
             mockManager.tunnelStartErrorToThrow = permissionDenied
 
             await store.send(.connect(intent))
-            await store.receive(\.tunnelStartRequestFinished.failure) {
+            await store.receive(\.tunnelStartRequestFinished.failure)
+            await store.receive(\.tunnelStatusChanged.disconnected) {
                 $0 = .disconnected(.tunnelStartFailed(permissionDenied))
             }
 

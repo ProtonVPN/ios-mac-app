@@ -265,7 +265,7 @@ extension ProTUNAdapter {
         await configurationStore.persistEffective(settings, adapter: self)
     }
 
-    func whileReasserting<T>(_ closure: () async throws -> T) async rethrows -> T {
+    func whileReasserting<T, E: Swift.Error>(_ closure: () async throws(E) -> T) async throws(E) -> T {
         packetTunnelProvider?.reasserting = true
         defer { packetTunnelProvider?.reasserting = false }
         return try await closure()

@@ -406,6 +406,8 @@ final class SettingsViewModel {
     private var appliedNATOverride: Bool? {
         guard case .connected = connectionState, let applied = appliedFeatures?.natType else { return nil }
         guard applied != natTypePropertyProvider.getNATType() else { return nil }
+
+        // The toggle is set to "on" when moderate NAT is enabled. Otherwise, a "false" value indicates strict NAT.
         return applied == .moderateNAT
     }
 
