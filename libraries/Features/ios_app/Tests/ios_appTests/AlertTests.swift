@@ -38,7 +38,7 @@ import XCTest
 private let uiAlertService = IosUiAlertService()
 
 class AlertTests: XCTestCase {
-    let alertService = IosAlertService(IosAlertServiceFactoryMock())
+    let alertService = IosAlertService()
     var displayCount = 0
 
     override func invokeTest() {
@@ -105,62 +105,6 @@ class AlertTests: XCTestCase {
         alert1.actions[1].handler?()
 
         XCTAssert(confirmRan && cancelRan)
-    }
-}
-
-private class IosAlertServiceFactoryMock: IosAlertService.Factory {
-    func makeNavigationService() -> NavigationService {
-        NavigationService(DependencyContainer())
-    }
-
-    func makeUIAlertService() -> UIAlertService {
-        uiAlertService
-    }
-
-    func makeAppSessionManager() -> AppSessionManager {
-        AppSessionManagerMock(
-            sessionStatus: .established,
-            loggedIn: true,
-            sessionChanged: Notification.Name(rawValue: "")
-        )
-    }
-
-    func makeSettingsService() -> SettingsService {
-        SettingsServiceMock()
-    }
-}
-
-private class SettingsServiceMock: SettingsService {
-    func makeLogSelectionViewController() -> LogSelectionViewController {
-        LogSelectionViewController(store: StoreOf<LogSelectionFeature>(initialState: LogSelectionFeature.State()) { LogSelectionFeature() })
-    }
-
-    func makeSettingsViewController() -> SettingsViewController {
-        fatalError("Not implemented")
-    }
-
-    func makeSettingsAccountViewController() -> SettingsAccountViewController? {
-        nil
-    }
-
-    func makeHermesSettingsViewController(viewModel _: HermesSettingsViewModel) -> HermesSettingsViewController {
-        fatalError("Not implemented")
-    }
-
-    func makeExtensionsSettingsViewController() -> UIViewController {
-        UIHostingController(rootView: WidgetSettingsView())
-    }
-
-    func presentLogs() {}
-    func presentReportBug() {}
-
-    func makeAccountRecoveryViewController() -> AccountRecoveryViewController {
-        let viewModel = AccountRecoveryView.ViewModel()
-        return UIHostingController(rootView: AccountRecoveryView(viewModel: viewModel))
-    }
-
-    func makePasswordChangeViewController(mode _: PasswordChangeModule.PasswordChangeMode) -> PasswordChangeViewController? {
-        nil
     }
 }
 

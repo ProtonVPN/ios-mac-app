@@ -38,7 +38,6 @@ final class DependencyContainer: Container {
     private lazy var windowService: WindowService = WindowServiceImplementation(factory: self)
 
     private lazy var appSessionManager: AppSessionManagerImplementation = .init(factory: self)
-    private lazy var macAlertService: MacAlertService = .init(factory: self)
 
     // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
     private lazy var dynamicBugReportManager = DynamicBugReportManager()
@@ -60,14 +59,6 @@ final class DependencyContainer: Container {
         super.init()
         // Some classes depend on shared container from vpncore directly
         Container.sharedContainer = self
-    }
-
-    // MARK: - Overridden factory methods
-
-    // MARK: CoreAlertServiceFactory
-
-    override func makeCoreAlertService() -> CoreAlertService {
-        macAlertService
     }
 }
 
@@ -113,14 +104,6 @@ extension DependencyContainer: NavigationServiceFactory {
 extension DependencyContainer: WindowServiceFactory {
     func makeWindowService() -> WindowService {
         windowService
-    }
-}
-
-// MARK: OsxUiAlertServiceFactory
-
-extension DependencyContainer: UIAlertServiceFactory {
-    func makeUIAlertService() -> UIAlertService {
-        OsxUiAlertService(factory: self)
     }
 }
 

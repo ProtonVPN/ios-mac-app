@@ -40,16 +40,14 @@ extension DependencyContainer: HelpMenuViewModelFactory {
 }
 
 class HelpMenuViewModel {
-    typealias Factory = CoreAlertServiceFactory
-        & NavigationServiceFactory
-        & WindowServiceFactory
+    typealias Factory = NavigationServiceFactory
     private var factory: Factory
+    private lazy var navService: NavigationService = factory.makeNavigationService()
 
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
-    private lazy var windowService: WindowService = factory.makeWindowService()
-    private lazy var navService: NavigationService = factory.makeNavigationService()
+    @Dependency(\.windowService) private var windowService
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Dependency(\.logFileManager) private var logFileManager
     @Dependency(\.logContentProvider) private var logContentProvider

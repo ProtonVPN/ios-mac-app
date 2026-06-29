@@ -360,8 +360,8 @@ extension AppDelegate: NSApplicationDelegate {
     }
 
     private func handleForceUpgrade(message _: String) {
-        let alertService = container.makeCoreAlertService()
-        alertService.push(alert: ForceUpgradeAlert())
+        @Dependency(\.coreAlertService) var coreAlertService
+        coreAlertService.push(alert: ForceUpgradeAlert())
     }
 }
 

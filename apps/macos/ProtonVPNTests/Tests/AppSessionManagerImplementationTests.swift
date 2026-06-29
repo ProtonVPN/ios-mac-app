@@ -339,13 +339,12 @@ struct AppSessionManagerImplementationTests {
         networking.delegate = networkingDelegate
         let networkingWrapper = CoreNetworkingWrapper(wrapped: networking)
 
-        let factory = ManagerFactoryMock(
-            alertService: alertService
-        )
+        let factory = ManagerFactoryMock()
 
         try await withDependencies {
             $0.serverRepository = repository
             $0.date = .constant(Date())
+            $0.coreAlertService = .init(push: { alertService.push(alert: $0) })
             $0.networking = networkingWrapper
             $0.authKeychain = authKeychain
             $0.unauthKeychain = unauthKeychain
@@ -513,7 +512,6 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.unauthKeychain) private var unauthKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    private let alertService: CoreAlertService
 
     let announcementRefresherMock = AnnouncementRefresherMock()
     let appSessionRefreshTimerMock = AppSessionRefreshTimerMock()
@@ -530,22 +528,12 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
         appSessionRefreshTimerMock
     }
 
-    func makeCoreAlertService() -> CoreAlertService {
-        alertService
-    }
-
     func makeProfileManager() -> ProfileManager {
         profileManager
     }
 
     func makeNetworking() -> Networking {
         NetworkingMock()
-    }
-
-    init(
-        alertService: CoreAlertService
-    ) {
-        self.alertService = alertService
     }
 }
 
@@ -582,7 +570,7 @@ class AuthKeychainHandleMock: AuthKeychainHandle {
     func clear(_: VPNShared.ClearKeychainReason) {}
 }
 
-private class AppSessionManagerAlertServiceMock: CoreAlertService {
+private class AppSessionManagerAlertServiceMock {
     private var alertHandlers: [(alertType: SystemAlert.Type, handler: (SystemAlert) -> Void)] = []
 
     init() {}

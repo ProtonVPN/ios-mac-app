@@ -54,7 +54,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private var headerViewModel: HeaderViewModel?
 
     typealias Factory = AnnouncementsViewModelFactory
-        & CoreAlertServiceFactory
         & HeaderViewModelFactory
         & MapSectionViewModelFactory
         & ProfileManagerFactory
@@ -77,7 +76,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private lazy var profileSectionViewController: ProfileSectionViewController = { [unowned self] in
         let viewModel = ProfilesSectionViewModel(
             navService: navService,
-            alertService: factory.makeCoreAlertService(),
             profileManager: factory.makeProfileManager()
         )
         return ProfileSectionViewController(viewModel: viewModel)

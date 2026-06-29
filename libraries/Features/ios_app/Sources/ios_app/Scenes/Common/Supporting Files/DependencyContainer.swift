@@ -39,7 +39,6 @@ final class DependencyContainer: Container {
     private lazy var navigationService = NavigationService(self)
     private lazy var appSessionManager = AppSessionManagerImplementation(factory: self)
     private lazy var uiAlertService = IosUiAlertService()
-    private lazy var iosAlertService = IosAlertService(self)
 
     // Refreshes app data at predefined time intervals
     private lazy var refreshTimer: AppSessionRefreshTimer = AppSessionRefreshTimerImplementation(
@@ -63,14 +62,6 @@ final class DependencyContainer: Container {
         super.init()
         // Some classes depend on shared container from vpncore directly
         Container.sharedContainer = self
-    }
-
-    // MARK: - Overridden factory methods
-
-    // MARK: CoreAlertServiceFactory
-
-    override func makeCoreAlertService() -> CoreAlertService {
-        iosAlertService
     }
 }
 
@@ -110,14 +101,6 @@ extension DependencyContainer: DynamicBugReportManagerFactory {
 extension DependencyContainer: AppSessionManagerFactory {
     func makeAppSessionManager() -> AppSessionManager {
         appSessionManager
-    }
-}
-
-// MARK: UIAlertServiceFactory
-
-extension DependencyContainer: UIAlertServiceFactory {
-    func makeUIAlertService() -> UIAlertService {
-        uiAlertService
     }
 }
 

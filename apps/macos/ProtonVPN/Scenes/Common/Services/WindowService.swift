@@ -25,6 +25,7 @@ import AppKit
 import BugReport
 import Cocoa
 import Dependencies
+import Domain
 import Ergonomics
 import LegacyCommon
 import Modals
@@ -56,7 +57,7 @@ protocol WindowService: WindowControllerDelegate {
     func openReportBugWindow()
     func openPlutoniumWindow()
     func openSystemExtensionGuideWindow(origin: SystemExtensionTourAlert.Origin, cancelledHandler: @escaping () -> Void)
-    func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert)
+    func openSubuserAlertWindow(mode: NoConnectionsAvailableMode)
 
     func bringWindowsToForeground() -> Bool
     func closeActiveWindows(except: [NSWindowController.Type])
@@ -95,7 +96,6 @@ extension DependencyValues {
 // this need to abstract class for common functions. for sharing code. ios/mac should have different implementation
 final class WindowServiceImplementation: WindowService {
     typealias Factory = AnnouncementsViewModelFactory
-        & CoreAlertServiceFactory
         & CreateNewProfileViewModelFactory
         & DynamicBugReportManagerFactory
         & HeaderViewModelFactory
@@ -247,7 +247,7 @@ final class WindowServiceImplementation: WindowService {
 
     func openPlutoniumWindow() {
         NSApp.setActivationPolicy(.regular)
-        let windowController = PlutoniumWindowController(factory: factory)
+        let windowController = PlutoniumWindowController()
         activeWindowControllers.insert(windowController)
         windowController.showWindow(self)
         windowController.window?.positionWindow(size: Theme.Constants.settingsViewSize)
@@ -266,8 +266,8 @@ final class WindowServiceImplementation: WindowService {
         windowController.window?.centerWindowOnScreen()
     }
 
-    func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert) {
-        let controller = NSHostingController(rootView: Modals.NoConnectionsAvailableView(mode: alert.mode))
+    func openSubuserAlertWindow(mode: NoConnectionsAvailableMode) {
+        let controller = NSHostingController(rootView: Modals.NoConnectionsAvailableView(mode: mode))
         controller.title = ""
         let windowController = SubuserAlertWindowController(viewController: controller)
         windowController.delegate = self

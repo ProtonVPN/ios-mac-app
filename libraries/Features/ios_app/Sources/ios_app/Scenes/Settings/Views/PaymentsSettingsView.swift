@@ -29,11 +29,7 @@ import VPNAppCore
 
 struct PaymentsSettingsView: View {
     @Dependency(\.paymentsPlanServiceV2) private var planServiceV2
-    private let alertService: CoreAlertService
-
-    init(alertService: CoreAlertService) {
-        self.alertService = alertService
-    }
+    @Dependency(\.coreAlertService) private var alertService
 
     func recoverPurchase() async {
         var purchase: CurrentSubscriptionResponse?
@@ -92,5 +88,5 @@ struct PaymentsSettingsView: View {
 }
 
 #Preview {
-    PaymentsSettingsView(alertService: CoreAlertServiceDummy())
+    PaymentsSettingsView()
 }

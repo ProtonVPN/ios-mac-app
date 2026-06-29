@@ -30,10 +30,7 @@ import VPNAppCore
 import VPNShared
 
 final class NetShieldSelectionViewModel {
-    typealias Factory = AppSessionManagerFactory & CoreAlertServiceFactory
-    private var factory: Factory
-
-    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.upsellManager) private var upsellManager
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
 
@@ -66,14 +63,12 @@ final class NetShieldSelectionViewModel {
         title: String,
         allFeatures: [NetShieldType],
         selectedFeature: NetShieldType,
-        factory: Factory,
         onSelect: @escaping (NetShieldType, @escaping (Bool) -> Void) -> Void
     ) {
-        self.factory = factory
-        self.onSelect = onSelect
-        self.allFeatures = allFeatures
         self.title = title
+        self.allFeatures = allFeatures
         self.selectedFeature = selectedFeature
+        self.onSelect = onSelect
 
         AppEvent.sessionManagerDataReloaded.subscribe(self, selector: #selector(reload))
     }

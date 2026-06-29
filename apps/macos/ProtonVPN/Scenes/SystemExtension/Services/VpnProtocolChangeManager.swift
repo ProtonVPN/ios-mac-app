@@ -35,7 +35,7 @@ protocol VpnProtocolChangeManagerFactory {
 
 extension DependencyContainer: VpnProtocolChangeManagerFactory {
     func makeVpnProtocolChangeManager() -> VpnProtocolChangeManager {
-        VpnProtocolChangeManagerImplementation(factory: self)
+        VpnProtocolChangeManagerImplementation()
     }
 }
 
@@ -46,11 +46,8 @@ protocol VpnProtocolChangeManager {
 }
 
 final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
-    typealias Factory = CoreAlertServiceFactory
-    private let factory: Factory
-
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
-    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Shared(.connectionState) private var connectionState: ConnectionState
 
@@ -62,10 +59,6 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         case disconnect
         /// Just switch the protocol, don't do anything else.
         case doNothing
-    }
-
-    init(factory: Factory) {
-        self.factory = factory
     }
 
     func change(

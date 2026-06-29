@@ -37,7 +37,6 @@ enum AppConstants {
         static let warnedTrialExpiring = "WarnedTrialExpiring"
         static let warnedTrialExpired = "WarnedTrialExpired"
         static let uninstallSysexesOnTerminate = "UninstallSysexesOnTerminate"
-        static let displayAlertsOnActiveScreen = "DisplayAlertsOnActiveScreen"
     }
 
     enum Filenames {

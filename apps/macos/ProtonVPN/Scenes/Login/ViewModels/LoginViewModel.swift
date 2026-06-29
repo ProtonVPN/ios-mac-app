@@ -21,6 +21,7 @@
 //
 
 import AppKit
+import BugReport
 import CommonNetworking
 import Dependencies
 import Domain
@@ -60,7 +61,7 @@ final class LoginViewModel: ObservableObject {
 
     typealias Factory =
         AppSessionManagerFactory &
-        CoreAlertServiceFactory & NavigationServiceFactory &
+        NavigationServiceFactory &
         ProtonReachabilityCheckerFactory
 
     private let factory: Factory
@@ -70,7 +71,8 @@ final class LoginViewModel: ObservableObject {
     @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
-    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    @Dependency(\.coreAlertService) private var alertService
+    @Dependency(\.windowService) private var windowService
     @Dependency(\.updateManager) private var updateManager
     private lazy var protonReachabilityChecker: ProtonReachabilityChecker = factory.makeProtonReachabilityChecker()
     private lazy var loginService: Login = LoginService(
@@ -344,20 +346,20 @@ final class LoginViewModel: ObservableObject {
             let nsError = error as NSError
             if nsError.isTlsError || nsError.isNetworkError {
                 let alert = UnreachableNetworkAlert(error: error, troubleshoot: { [weak self] in
-                    self?.alertService.push(alert: ConnectionTroubleshootingAlert())
+                    self?.windowService.presentKeyModal(viewController: TroubleshootHostingViewController(), activatingApp: false)
                 })
                 self.alertService.push(alert: alert)
                 self.logInFailure?(nil, nil)
             } else if case CommonVpnError.subuserWithoutSessions = error {
-                self.alertService.push(alert: SubuserWithoutConnectionsAlert(mode: .connectionsDisabled))
+                self.windowService.openSubuserAlertWindow(mode: .connectionsDisabled)
                 self.twoFactorViewKind = .none
                 self.logInFailure?(nil, nil)
             } else if case CommonVpnError.noConnectionsAvailable = error {
-                self.alertService.push(alert: SubuserWithoutConnectionsAlert(mode: .noServers))
+                self.windowService.openSubuserAlertWindow(mode: .noServers)
                 self.twoFactorViewKind = .none
                 self.logInFailure?(nil, nil)
             } else if case CommonVpnError.logicalsEndpointFailed = error {
-                self.alertService.push(alert: SubuserWithoutConnectionsAlert(mode: .loadingError))
+                self.windowService.openSubuserAlertWindow(mode: .loadingError)
                 self.twoFactorViewKind = .none
                 self.logInFailure?(nil, nil)
             } else {

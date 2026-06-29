@@ -94,8 +94,9 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             $0.vpnApiClient.refreshServerInfo = { _, _ in
                 nil
             }
+            $0.coreAlertService = .init(push: { [alertService] in alertService?.push(alert: $0) })
         } operation: {
-            AppSessionRefresherMock(factory: self)
+            AppSessionRefresherMock()
         }
         clock = TestClock()
         appSessionRefreshTimer = AppSessionRefreshTimerImplementation(
@@ -223,6 +224,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             $0.vpnApiClient.refreshServerInfo = { _, _ in
                 nil
             }
+            $0.coreAlertService = .init(push: { [alertService] in alertService?.push(alert: $0) })
         } operation: {
             // Insert initial server data
             let initialServers = [ServerModel.testServer1, ServerModel.testServer2, ServerModel.testServer3].map {
@@ -232,7 +234,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             serverRepository.upsert(servers: initialServers)
 
             // Create both refresher and timer within the same dependency context
-            appSessionRefresher = AppSessionRefresherMock(factory: self)
+            appSessionRefresher = AppSessionRefresherMock()
             appSessionRefreshTimer = AppSessionRefreshTimerImplementation(
                 factory: self,
                 refreshIntervals: (full: 30, loads: 20, account: 10, streaming: 60, partners: 60),
@@ -327,14 +329,20 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     }
 }
 
-extension AppSessionRefreshTimerTests: CoreAlertServiceFactory, AppSessionRefresherFactory {
-    func makeCoreAlertService() -> CoreAlertService {
-        alertService
-    }
-
+extension AppSessionRefreshTimerTests: AppSessionRefresherFactory {
     func makeAppSessionRefresher() -> AppSessionRefresher {
         appSessionRefresher
     }
 }
 
 extension AppSessionRefreshTimerTests: AppSessionRefreshTimerDelegate {}
+
+final class CoreAlertServiceDummy {
+    private(set) var alerts: [SystemAlert] = []
+    var alertAdded: ((SystemAlert) -> Void)?
+
+    func push(alert: SystemAlert) {
+        alerts.append(alert)
+        alertAdded?(alert)
+    }
+}

@@ -36,9 +36,7 @@ import VPNAppCore
 import VPNShared
 
 class CreateOrEditProfileViewModel: NSObject {
-    typealias Factory = CoreAlertServiceFactory
-    private let factory: Factory
-    private lazy var alertService = factory.makeCoreAlertService()
+    @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.upsellManager) private var upsellManager
     @Shared(.connectionState) private var connectionState: ConnectionState
     @Shared(.smartProtocolConfig) private var smartProtocolConfig: SmartProtocolConfig
@@ -91,7 +89,6 @@ class CreateOrEditProfileViewModel: NSObject {
     }
 
     init(
-        factory: Factory,
         username: String?,
         for profile: Profile?,
         profileService: ProfileService,
@@ -99,7 +96,6 @@ class CreateOrEditProfileViewModel: NSObject {
         profileManager: ProfileManager
     ) {
         @Dependency(\.propertiesManager) var propertiesManager
-        self.factory = factory
         self.username = username
         self.editedProfile = profile
         self.profileService = profileService

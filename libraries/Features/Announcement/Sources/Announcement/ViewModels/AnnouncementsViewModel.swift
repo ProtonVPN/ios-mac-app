@@ -36,7 +36,7 @@ public protocol AnnouncementsViewModelFactory {
 
 extension Container: AnnouncementsViewModelFactory {
     public func makeAnnouncementsViewModel() -> AnnouncementsViewModel {
-        AnnouncementsViewModel(factory: self)
+        AnnouncementsViewModel()
     }
 }
 
@@ -61,12 +61,8 @@ public final class AnnouncementOfferAlert: SystemAlert {
 
 /// Control view showing the list of announcements
 public class AnnouncementsViewModel {
-    public typealias Factory = CoreAlertServiceFactory
-    private let factory: Factory
-
     @Dependency(\.announcementManager) var announcementManager
-    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    @Dependency(\.appInfo) private var appInfo
+    @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.propertiesManager) private var propertiesManager
 
     // Data
@@ -83,8 +79,7 @@ public class AnnouncementsViewModel {
     // Callbacks
     public var refreshView: (() -> Void)?
 
-    public init(factory: Factory) {
-        self.factory = factory
+    public init() {
         fillItems()
         // This type of announcement should ONLY be opened right after opening the app
         openOneTimeAnnouncement()

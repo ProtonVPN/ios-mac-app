@@ -53,7 +53,6 @@ class DefaultProfileViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
-    private let alertService: AlertService
     @Dependency(\.upsellManager) private var upsellManager
 
     private let serverOffering: ServerOffering
@@ -157,12 +156,10 @@ class DefaultProfileViewModel {
 
     init(
         serverOffering: ServerOffering,
-        alertService: AlertService,
         connectionStatusService: ConnectionStatusService,
         extraMargin: Bool = false
     ) {
         self.serverOffering = serverOffering
-        self.alertService = alertService
         self.connectionStatusService = connectionStatusService
         self.defaultAccessTier = .paidTier
         self.extraMargin = extraMargin
@@ -226,25 +223,21 @@ class DefaultProfileViewModel {
     extension DefaultProfileViewModel {
         static var mock = DefaultProfileViewModel(
             serverOffering: .fastest("Server"),
-            alertService: CoreAlertServiceDummy(),
             connectionStatusService: ConnectionStatusServiceMock()
         )
 
         static var fastestMock = DefaultProfileViewModel(
             serverOffering: .fastest("Server"),
-            alertService: CoreAlertServiceDummy(),
             connectionStatusService: ConnectionStatusServiceMock()
         )
 
         static var randomMock = DefaultProfileViewModel(
             serverOffering: .random("Server"),
-            alertService: CoreAlertServiceDummy(),
             connectionStatusService: ConnectionStatusServiceMock()
         )
 
         static var withExtraMarginMock = DefaultProfileViewModel(
             serverOffering: .fastest("Server"),
-            alertService: CoreAlertServiceDummy(),
             connectionStatusService: ConnectionStatusServiceMock(),
             extraMargin: true
         )
@@ -254,7 +247,6 @@ class DefaultProfileViewModel {
             $connectionState.withLock { $0 = .previewConnected(for: .defaultFastest) }
             return DefaultProfileViewModel(
                 serverOffering: .fastest("Server"),
-                alertService: CoreAlertServiceDummy(),
                 connectionStatusService: ConnectionStatusServiceMock()
             )
         }
@@ -264,7 +256,6 @@ class DefaultProfileViewModel {
             $connectionState.withLock { $0 = .previewConnecting(for: .defaultFastest) }
             return DefaultProfileViewModel(
                 serverOffering: .fastest("Server"),
-                alertService: CoreAlertServiceDummy(),
                 connectionStatusService: ConnectionStatusServiceMock()
             )
         }

@@ -20,6 +20,7 @@ import ComposableArchitecture
 import Dependencies
 import DependenciesMacros
 import Domain
+import Ergonomics
 import Foundation
 import LegacyCommon
 import SystemExtensions
@@ -85,7 +86,6 @@ struct SystemExtensionsFeature {
     @Dependency(\.systemExtensionsProfilesClient) private var profilesClient
     @Dependency(\.systemExtensionsRequestSubmissionClient) private var requestSubmissionClient
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    @Dependency(\.pushAlert) private var pushAlert
 
     var body: some ReducerOf<Self> {
         Scope(state: \.service, action: \.service) {
@@ -226,11 +226,16 @@ struct SystemExtensionsFeature {
                 }
 
                 let requestID = context.requestID
-                return .run { [pushAlert] send in
-                    let alert = SystemExtensionTourAlert(origin: origin, cancelHandler: {
-                        Task { await send(.installTourCancelled(requestID)) }
-                    })
-                    pushAlert(alert)
+                return .run { send in
+                    await MainActor.run {
+                        @Dependency(\.windowService) var windowService
+                        windowService.openSystemExtensionGuideWindow(
+                            origin: origin,
+                            cancelledHandler: {
+                                Task { await send(.installTourCancelled(requestID)) }
+                            }
+                        )
+                    }
                 }
 
             case let .installTourCancelled(requestID):
@@ -276,10 +281,22 @@ struct SystemExtensionsFeature {
 
                 let interpretedResult = interpretRawInstallResult(rawResult, includedTypes: context.includedTypes)
                 if case .success(.installed) = interpretedResult.accumulated {
-                    return .run { [pushAlert] send in
+                    return .run { send in
                         await MainActor.run {
                             AppEvent.systemExtensionsAllInstalled.post(rawResult.didRequireUserApproval)
-                            pushAlert(SysexEnabledAlert())
+                            // Show the welcome screen on first successful sysex enable (logged-in users only).
+                            @Dependency(\.windowService) var windowService
+                            @Dependency(\.vpnKeychain) var vpnKeychain
+                            @Dependency(\.defaultsProvider) var defaultsProvider
+                            let defaults = defaultsProvider.getDefaults()
+                            if !defaults.bool(forKey: AppConstants.UserDefaults.welcomed),
+                               (try? vpnKeychain.fetchCached()) != nil {
+                                windowService.presentKeyModal(
+                                    viewController: WelcomeViewController(windowService: windowService),
+                                    activatingApp: false
+                                )
+                                defaults.set(true, forKey: AppConstants.UserDefaults.welcomed)
+                            }
                         }
                         await send(.completed(context.requestID, .installation(interpretedResult)))
                     }

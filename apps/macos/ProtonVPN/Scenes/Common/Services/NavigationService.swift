@@ -43,14 +43,13 @@ protocol NavigationServiceFactory {
 
 class NavigationService {
     typealias Factory = AppSessionManagerFactory
-        & CoreAlertServiceFactory
         & HelpMenuViewModelFactory
         & NavigationServiceFactory
         & ProfileManagerFactory
         & ProtonReachabilityCheckerFactory
         & VpnProtocolChangeManagerFactory
-        & WindowServiceFactory
     private let factory: Factory
+    lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
 
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
@@ -58,9 +57,7 @@ class NavigationService {
     @SharedReader(.connectionState) private var connectionState: ConnectionState
     @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
     @SharedReader(.sessionLogoutReason) private var sessionLogoutReason: String?
-    lazy var windowService: WindowService = factory.makeWindowService()
-    lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
-    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    @Dependency(\.windowService) private var windowService
     @Dependency(\.authKeychain) private var authKeychain
 
     var appHasPresented = false
@@ -378,7 +375,7 @@ extension NavigationService {
     func openProfiles(_ initialTab: ProfilesTab) {
         guard !windowService.showIfPresent(windowController: ProfilesWindowController.self) else { return }
 
-        windowService.openProfilesWindow(viewModel: ProfilesContainerViewModel(initialTab: initialTab, alertService: alertService))
+        windowService.openProfilesWindow(viewModel: ProfilesContainerViewModel(initialTab: initialTab))
     }
 
     @objc

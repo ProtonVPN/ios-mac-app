@@ -24,11 +24,9 @@ import Foundation
 import LegacyCommon
 
 class ProfilesContainerViewModel {
-    let alertService: CoreAlertService
     let initialTab: ProfilesTab
 
-    init(initialTab: ProfilesTab, alertService: CoreAlertService) {
+    init(initialTab: ProfilesTab) {
         self.initialTab = initialTab
-        self.alertService = alertService
     }
 }

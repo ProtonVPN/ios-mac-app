@@ -26,37 +26,27 @@ import Connection
 import Domain
 import Foundation
 import LegacyCommon
+import Observation
 import Sharing
+import Strings
+import SwiftUI
 import VPNAppCore
 
-protocol UIAlertServiceFactory {
-    func makeUIAlertService() -> UIAlertService
-}
-
-final class OsxUiAlertService: UIAlertService {
-    typealias Factory = NavigationServiceFactory & WindowServiceFactory
-
-    private let factory: Factory
-    private let windowService: WindowService
-
-    private lazy var navigationService: NavigationService = factory.makeNavigationService()
+final class OsxUiAlertService {
     @Shared(.connectionState) private var connectionState: ConnectionState
 
-    private var currentAlerts = [SystemAlert]()
+    private var currentAlerts: [SystemAlert] = []
+    /// Alerts pushed while no window was available to host them; flushed once one appears.
+    private var pendingAlerts: [SystemAlert] = []
+    private var isObservingWindowAvailability = false
     private var cancellables = Set<AnyCancellable>()
 
-    init(factory: Factory) {
-        self.factory = factory
-        self.windowService = factory.makeWindowService()
+    init() {
         startObservingConnectionState()
     }
 
     func displayAlert(_ alert: SystemAlert) {
         present(alert)
-    }
-
-    func displayNotificationStyleAlert(message _: String, type _: NotificationStyleAlertType, accessibilityIdentifier _: String?) {
-        fatalError("Notification syle alerts unsupported on macOS")
     }
 
     private func present(_ alert: SystemAlert) {
@@ -65,20 +55,75 @@ final class OsxUiAlertService: UIAlertService {
             return
         }
 
+        guard let window = hostWindow() else {
+            // No window yet — e.g. a critical alert (force-upgrade, update-required) pushed at
+            // launch or while the app runs menu-bar-only. Queue and retry when a window appears
+            // rather than silently dropping it.
+            enqueuePending(alert)
+            return
+        }
+
+        show(alert, in: window)
+    }
+
+    /// Hosts a native SwiftUI `.alert` translated from the legacy `SystemAlert`.
+    /// The host view is a zero-size ``NSHostingView`` mounted on the given window.
+    private func show(_ alert: SystemAlert, in window: NSWindow) {
         currentAlerts.append(alert)
 
-        let popUp = PopUpViewModel(
-            alert: alert,
-            inAppLinkManager: InAppLinkManager(navigationService: navigationService)
+        let presentation = LegacyAlertPresentation()
+        weak var weakHostingView: NSView?
+        let hostingView = NSHostingView(
+            rootView: LegacyAlertView(alert: alert, presentation: presentation) { [weak self] in
+                weakHostingView?.removeFromSuperview()
+                self?.dismissCompletion(alert)
+            }
         )
-        popUp.dismissCompletion = { [weak self] in self?.dismissCompletion(alert) }
-        alert.dismiss = { [weak popUp] in popUp?.close() }
-        let modalVC: NSViewController = PopUpViewController(viewModel: popUp)
+        weakHostingView = hostingView
+        hostingView.frame = .zero
+        window.contentView?.addSubview(hostingView)
 
-        if alert.displayOnActiveScreen, UserDefaults.standard.bool(forKey: AppConstants.UserDefaults.displayAlertsOnActiveScreen) {
-            windowService.presentKeyModalOnActiveScreen(viewController: modalVC, activatingApp: alert.activatingApp)
-        } else {
-            windowService.presentKeyModal(viewController: modalVC, activatingApp: alert.activatingApp)
+        // Allows the alert to be dismissed programmatically (e.g. auto-dismiss on connection).
+        alert.dismiss = { presentation.isPresented = false }
+
+        if alert.activatingApp {
+            NSRunningApplication.current.activate(options: [.activateAllWindows])
+        }
+    }
+
+    private func hostWindow() -> NSWindow? {
+        NSApp.keyWindow ?? NSApp.mainWindow ?? NSApp.windows.first(where: \.isVisible)
+    }
+
+    // MARK: - Deferred presentation
+
+    /// Defers an alert that arrived with no window to host it, and starts listening for a window to
+    /// become available so it can be shown instead of lost.
+    private func enqueuePending(_ alert: SystemAlert) {
+        log.warning("No window available to present \(alert.className); deferring until one appears", category: .ui)
+        pendingAlerts.append(alert)
+        startObservingWindowAvailability()
+    }
+
+    private func startObservingWindowAvailability() {
+        guard !isObservingWindowAvailability else { return }
+        isObservingWindowAvailability = true
+
+        Publishers.Merge(
+            NotificationCenter.default.publisher(for: NSWindow.didBecomeKeyNotification),
+            NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] _ in self?.flushPendingAlerts() }
+        .store(in: &cancellables)
+    }
+
+    private func flushPendingAlerts() {
+        guard !pendingAlerts.isEmpty, let window = hostWindow() else { return }
+        let deferredAlerts = pendingAlerts
+        pendingAlerts.removeAll()
+        for alert in deferredAlerts where alertIsNew(alert) {
+            show(alert, in: window)
         }
     }
 
@@ -104,15 +149,12 @@ final class OsxUiAlertService: UIAlertService {
     }
 
     private func alertIsNew(_ alert: SystemAlert) -> Bool {
-        !currentAlerts.contains(where: { currentAlert -> Bool in
-            return currentAlert.className == alert.className
-        })
+        !(currentAlerts + pendingAlerts).contains { $0.className == alert.className }
     }
 
     private func updateOldAlert(with newAlert: SystemAlert) {
-        let oldAlert = currentAlerts.first { alert -> Bool in
-            return alert.className == newAlert.className
-        }
+        // Match against shown and deferred alerts so a re-push updates whichever is tracked.
+        let oldAlert = (currentAlerts + pendingAlerts).first { $0.className == newAlert.className }
 
         // In particular this means the alert's completion handlers will be updated
         oldAlert?.actions = newAlert.actions
@@ -121,6 +163,59 @@ final class OsxUiAlertService: UIAlertService {
     private func dismissCompletion(_ alert: SystemAlert) {
         currentAlerts.removeAll { currentAlert in
             currentAlert.className == alert.className
+        }
+    }
+}
+
+// MARK: - SwiftUI alert host
+
+@Observable
+private final class LegacyAlertPresentation {
+    var isPresented = true
+}
+
+/// Converts a legacy `SystemAlert` into a native SwiftUI `.alert`
+///
+/// zero-size host view on the key window so SwiftUI can present the alert
+/// window-modally; the underlying view is never visible
+private struct LegacyAlertView: View {
+    let alert: SystemAlert
+    @Bindable var presentation: LegacyAlertPresentation
+    let onDismiss: () -> Void
+
+    var body: some View {
+        Color.clear
+            .frame(width: 0, height: 0)
+            .alert(alert.title ?? "", isPresented: $presentation.isPresented) {
+                if alert.actions.isEmpty {
+                    Button(Localizable.ok) {}
+                } else {
+                    ForEach(Array(alert.actions.enumerated()), id: \.offset) { _, action in
+                        Button(action.title, role: action.style.buttonRole) {
+                            action.handler?()
+                        }
+                    }
+                }
+            } message: {
+                if let message = alert.message, !message.isEmpty {
+                    Text(message)
+                }
+            }
+            .onChange(of: presentation.isPresented) { _, isPresented in
+                if !isPresented {
+                    onDismiss()
+                }
+            }
+    }
+}
+
+private extension PrimaryActionType {
+    /// Maps the legacy action style to a SwiftUI alert button role.
+    var buttonRole: ButtonRole? {
+        switch self {
+        case .destructive: .destructive
+        case .cancel: .cancel
+        case .confirmative, .secondary: nil
         }
     }
 }

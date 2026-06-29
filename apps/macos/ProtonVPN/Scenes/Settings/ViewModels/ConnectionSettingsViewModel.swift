@@ -45,8 +45,7 @@ final class ConnectionSettingsViewModel {
     @Dependency(\.profileAuthorizer) var profileAuthorizer
     @Dependency(\.featureAuthorizerProvider) var authorizerProvider
 
-    typealias Factory = CoreAlertServiceFactory
-        & NavigationServiceFactory
+    typealias Factory = NavigationServiceFactory
         & ProfileManagerFactory
         & VpnProtocolChangeManagerFactory
 
@@ -56,7 +55,7 @@ final class ConnectionSettingsViewModel {
     @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
-    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.upsellManager) private var upsellManager
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
     @Dependency(\.authKeychain) private var authKeychain
@@ -320,6 +319,10 @@ final class ConnectionSettingsViewModel {
                 )
                 @Shared(.plutoniumFeature) var plutonium
                 $plutonium.withLock { $0.disable() }
+            }, learnMoreHandler: {
+                SentryHelper.shared?.log(message: "IKEv2 Deprecation: User opened Learn more; keeping the current (Smart) protocol selection.")
+                // Don't select IKEv2: revert the picker to its previous selection
+                changeCompletionHandler(.failure(CancellationError()))
             }))
         }
     }

@@ -24,11 +24,7 @@ import Foundation
 import LegacyCommon
 
 final class SettingsContainerViewModel {
-    typealias Factory = CoreAlertServiceFactory
-        & NavigationServiceFactory
-        & ProfileManagerFactory
-        & VpnProtocolChangeManagerFactory
-
+    typealias Factory = NavigationServiceFactory & ProfileManagerFactory & VpnProtocolChangeManagerFactory
     private let factory: Factory
 
     init(factory: Factory) {
@@ -44,6 +40,6 @@ final class SettingsContainerViewModel {
     }
 
     var advancedSettingsViewModel: AdvancedSettingsViewModel {
-        AdvancedSettingsViewModel(factory: factory)
+        AdvancedSettingsViewModel()
     }
 }

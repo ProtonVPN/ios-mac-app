@@ -52,12 +52,7 @@ protocol AppSessionManager {
 }
 
 final class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
-    typealias Factory =
-        AppSessionRefreshTimerFactory &
-        CoreAlertServiceFactory &
-        NavigationServiceFactory &
-        ProfileManagerFactory
-
+    typealias Factory = AppSessionRefreshTimerFactory & NavigationServiceFactory & ProfileManagerFactory
     private let factory: Factory
 
     private var navService: NavigationService? {
@@ -97,9 +92,18 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     init(factory: Factory) {
         self.factory = factory
-        super.init(factory: factory)
+        super.init()
 
         AppEvent.userEngagedWithUpsellAlert.subscribe(self, selector: #selector(userEngagedWithUpsell))
+    }
+
+    /// On iOS an unsupported app version can't self-update, so the alert forces a logout
+    override func presentAppUpdateRequired(_ error: Error) {
+        let alert = AppUpdateRequiredAlert(error)
+        alert.actions.append(AlertAction(title: Localizable.ok, style: .confirmative) { [weak self] in
+            self?.logOut(force: true, reason: nil)
+        })
+        alertService.push(alert: alert)
     }
 
     // MARK: - Beginning of the login logic.

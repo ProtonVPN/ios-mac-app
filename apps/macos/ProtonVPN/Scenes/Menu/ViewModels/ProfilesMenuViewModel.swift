@@ -36,8 +36,7 @@ protocol ProfilesMenuViewModelFactory {
 extension DependencyContainer: ProfilesMenuViewModelFactory {
     func makeProfilesMenuViewModel() -> ProfilesMenuViewModel {
         ProfilesMenuViewModel(
-            navService: makeNavigationService(),
-            alertService: makeCoreAlertService()
+            navService: makeNavigationService()
         )
     }
 }
@@ -45,7 +44,6 @@ extension DependencyContainer: ProfilesMenuViewModelFactory {
 class ProfilesMenuViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
     private let navService: NavigationService
-    private let alertService: CoreAlertService
     @Dependency(\.upsellManager) private var upsellManager
 
     var contentChanged: (() -> Void)?
@@ -57,11 +55,9 @@ class ProfilesMenuViewModel {
     private var cancellables = Set<AnyCancellable>()
 
     init(
-        navService: NavigationService,
-        alertService: CoreAlertService
+        navService: NavigationService
     ) {
         self.navService = navService
-        self.alertService = alertService
 
         self.notificationTokens = [
             NotificationCenter.default.addObserver(for: AppEvent.planChanged.name, object: nil, handler: planChanged),
