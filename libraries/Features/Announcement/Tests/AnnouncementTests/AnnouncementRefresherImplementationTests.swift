@@ -138,7 +138,7 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
         )
 
         AnnouncementClient.testValue = AnnouncementClient {
-            throw ResponseError.unknownError
+            throw CancellationError()
         }
 
         let refresher = AnnouncementRefresherImplementation(refreshInterval: 0)

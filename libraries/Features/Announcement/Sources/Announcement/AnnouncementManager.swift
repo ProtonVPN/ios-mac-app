@@ -22,6 +22,8 @@
 
 import Dependencies
 import Foundation
+import Sharing
+import VPNAppCore
 import VPNShared
 
 public enum AnnouncementManagerKey: DependencyKey {
@@ -82,6 +84,26 @@ public protocol AnnouncementManager {
 public extension AnnouncementManager {
     static var notification: Notification.Name {
         .init("Announcements")
+    }
+
+    /// The current offer announcement surfaced by the announcement bell (first `.default`).
+    var currentOfferAnnouncement: Announcement? {
+        fetchCurrentAnnouncementsFromStorage().first { $0.knownType == .default }
+    }
+
+    /// The one-time announcement to auto-present right after launch, or `nil` if none is pending or
+    /// one-time announcements are blocked.
+    func oneTimeAnnouncementToPresent() -> Announcement? {
+        #if DEBUG
+            @SharedReader(.blockOneTimeAnnouncement) var blockOneTimeAnnouncement
+            guard !blockOneTimeAnnouncement else { return nil }
+        #endif
+        return fetchCurrentAnnouncementsFromStorage().first { $0.knownType == .oneTime && $0.isRead == false }
+    }
+
+    /// Offer image URLs worth prefetching for the announcement bell.
+    func offerImagePrefetchURLs() -> [URL] {
+        fetchCurrentAnnouncementsFromStorage().compactMap(\.prefetchableImage)
     }
 }
 

@@ -22,7 +22,6 @@
 
 @testable import Announcement
 import Dependencies
-@testable import LegacyCommon
 import XCTest
 
 extension Offer {

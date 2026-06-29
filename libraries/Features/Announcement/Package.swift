@@ -26,7 +26,6 @@ let package = Package(
         .package(path: "../../Foundations/Theme"),
 
         .package(path: "../../Core/NEHelper"),
-        .package(path: "../../Core/LegacyCommon"),
 
         .package(path: "../../Shared/CommonNetworking"),
         .package(path: "../../Shared/Connection"),
@@ -49,7 +48,6 @@ let package = Package(
                 "Timer",
                 "Theme",
                 "CommonNetworking",
-                "LegacyCommon",
                 "Connection",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),

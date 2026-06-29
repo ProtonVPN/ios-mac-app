@@ -111,7 +111,7 @@ public final class AppDelegateService: AppDelegateProtocol {
             navigationService.showLaunchScreen()
         }
 
-        AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
+        AnnouncementButtonViewModel.shared = AnnouncementButtonViewModel()
 
         Task { @MainActor in
             setupDebugHelpers()

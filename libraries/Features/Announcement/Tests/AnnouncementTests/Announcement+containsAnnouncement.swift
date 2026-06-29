@@ -1,5 +1,5 @@
 //
-//  AnnouncementStorageMock.swift
+//  Announcement+containsAnnouncement.swift
 //  vpncore - Created on 2020-10-19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -23,18 +23,6 @@
 @testable import Announcement
 import Domain
 import Foundation
-
-public class AnnouncementStorageFactoryMock: AnnouncementStorageFactory {
-    public var announcementStorage: AnnouncementStorage
-
-    public init(_ announcementStorage: AnnouncementStorage) {
-        self.announcementStorage = announcementStorage
-    }
-
-    public func makeAnnouncementStorage() -> AnnouncementStorage {
-        announcementStorage
-    }
-}
 
 public extension [Announcement] {
     /// Helper for testing if array contains concrete Announcement

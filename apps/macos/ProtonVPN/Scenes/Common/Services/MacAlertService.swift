@@ -32,7 +32,6 @@ import VPNShared
 
 final class MacAlertService {
     private lazy var uiAlertService = OsxUiAlertService()
-    @Dependency(\.windowService) private var windowService
     @Dependency(\.updateManager) private var updateManager
     @Dependency(\.linkOpener) var linkOpener
 }
@@ -65,9 +64,6 @@ extension MacAlertService {
         switch alert {
         case let appUpdateRequiredAlert as AppUpdateRequiredAlert:
             show(appUpdateRequiredAlert)
-
-        case let announcementOfferAlert as AnnouncementOfferAlert:
-            show(announcementOfferAlert)
 
         // Actual Alerts
 
@@ -155,25 +151,5 @@ extension MacAlertService {
         alert.actions.append(updateAction)
 
         uiAlertService.displayAlert(alert)
-    }
-
-    // MARK: Custom controllers that treated as Alerts
-
-    private func show(_ alert: AnnouncementOfferAlert) {
-        guard let panelMode = alert.data.panelMode() else {
-            log.warning("Couldn't determine panelMode from: \(alert.data)")
-            return
-        }
-        let vc: NSViewController = switch panelMode {
-        case let .legacy(legacyPanel):
-            AnnouncementDetailViewController(legacyPanel)
-        case let .image(imagePanel):
-            AnnouncementImageViewController(
-                data: imagePanel,
-                offerReference: alert.offerReference
-            )
-        }
-
-        windowService.presentKeyModal(viewController: vc, activatingApp: alert.activatingApp)
     }
 }

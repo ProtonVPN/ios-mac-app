@@ -24,7 +24,6 @@ import Dependencies
 import Domain
 import Ergonomics
 import Foundation
-import LegacyCommon
 import VPNShared
 
 public protocol AnnouncementStorage {
@@ -35,19 +34,6 @@ public protocol AnnouncementStorage {
 
 public protocol KeyNameProvider {
     var storageKey: String { get }
-}
-
-public protocol AnnouncementStorageFactory {
-    func makeAnnouncementStorage() -> AnnouncementStorage
-}
-
-// MARK: AnnouncementStorageFactory
-
-extension Container: AnnouncementStorageFactory {
-    public func makeAnnouncementStorage() -> AnnouncementStorage {
-        @Dependency(\.defaultsProvider) var provider
-        return AnnouncementStorageUserDefaults(userDefaults: provider.getDefaults(), keyNameProvider: nil)
-    }
 }
 
 public class AnnouncementStorageUserDefaults: AnnouncementStorage {

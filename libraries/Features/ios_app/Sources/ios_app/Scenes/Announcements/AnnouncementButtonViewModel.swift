@@ -27,36 +27,22 @@ import Foundation
 import LegacyCommon
 import Sharing
 
-protocol AnnouncementButtonViewModelFactory {
-    func makeAnnouncementButtonViewModel() -> AnnouncementButtonViewModel
-}
-
-extension DependencyContainer: AnnouncementButtonViewModelFactory {
-    func makeAnnouncementButtonViewModel() -> AnnouncementButtonViewModel {
-        AnnouncementButtonViewModel(factory: self)
-    }
-}
-
 final class AnnouncementButtonViewModel {
     // Must be pre-set in AppDelegate!
     static var shared: AnnouncementButtonViewModel!
 
-    typealias Factory = AnnouncementsViewModelFactory
-    private let factory: Factory
-
     @Dependency(\.announcementManager) var announcementManager
-    // The announcementsViewModel property can't be lazy because we depend on the behaviour in its init method.
-    private let announcementsViewModel: AnnouncementsViewModel
 
-    init(factory: Factory) {
-        self.factory = factory
-        self.announcementsViewModel = factory.makeAnnouncementsViewModel()
+    init() {
+        Task { @MainActor in
+            AnnouncementOfferCoordinator().presentOneTimeAnnouncementIfNeeded()
+        }
     }
 
     // MARK: Main part
 
     var iconUrl: URL? {
-        if let icon = announcementsViewModel.currentItem?.offer?.icon, let url = URL(string: icon) {
+        if let icon = announcementManager.currentOfferAnnouncement?.offer?.icon, let url = URL(string: icon) {
             return url
         }
         return nil
@@ -74,12 +60,13 @@ final class AnnouncementButtonViewModel {
         announcementManager.hasUnreadAnnouncements
     }
 
+    /// Bell tap: present the current announcement offer.
     func showAnnouncement() {
-        announcementsViewModel.open()
+        AnnouncementOfferCoordinator().presentCurrentAnnouncement()
     }
 
     func prefetchImages() async {
-        let urls = announcementsViewModel.backgroundURLs()
+        let urls = announcementManager.offerImagePrefetchURLs()
         guard !urls.isEmpty else {
             log.debug("No URLs to prefetch")
             return

@@ -34,11 +34,11 @@ public struct Offer: Codable, Sendable {
         case panel
     }
 
-    public enum Action: String, Codable, Sendable {
+    public enum Action: String, Codable, Sendable, Equatable {
         case openURL = "OpenURL"
     }
 
-    public enum Behavior: String, Codable, Sendable {
+    public enum Behavior: String, Codable, Sendable, Equatable {
         case autoLogin = "AutoLogin"
     }
 }

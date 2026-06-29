@@ -50,7 +50,6 @@
 
         public var hasConnected: Bool = false
 
-        public var blockOneTimeAnnouncement: Bool = false
         public var lastPreparedServer: ServerModel?
 
         var lastUserAccountPlan: String?

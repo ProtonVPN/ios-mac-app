@@ -53,8 +53,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     // Retain header view model to set `changeServerStateUpdated` when needed
     private var headerViewModel: HeaderViewModel?
 
-    typealias Factory = AnnouncementsViewModelFactory
-        & HeaderViewModelFactory
+    typealias Factory = HeaderViewModelFactory
         & MapSectionViewModelFactory
         & ProfileManagerFactory
 
@@ -87,7 +86,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
 
     private lazy var mapSectionViewModel: MapSectionViewModel = factory.makeMapSectionViewModel()
 
-    private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
     private lazy var mapSectionViewController: MapSectionViewController = { [unowned self] in
         MapSectionViewController(
             mapSectionViewModel: mapSectionViewModel,
@@ -297,8 +295,8 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private func setupHeader() {
         headerViewModel = factory.makeHeaderViewModel()
         headerViewController = HeaderViewController(viewModel: headerViewModel!)
-        headerViewController.announcementsButtonPressed = { [weak self] in
-            self?.announcementsViewModel.open()
+        headerViewController.announcementsButtonPressed = {
+            AnnouncementOfferCoordinator().presentCurrentAnnouncement()
         }
         headerControllerViewContainer.pin(viewController: headerViewController)
 
@@ -306,6 +304,11 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         expandButton.action = #selector(expandButtonAction(_:))
         expandButton.expandState = .compact
         applyExpandButtonLayoutDirection()
+
+        // Auto-present a pending one-time announcement once the window is ready.
+        DispatchQueue.main.async {
+            AnnouncementOfferCoordinator().presentOneTimeAnnouncementIfNeeded()
+        }
     }
 
     private func setupTabBar() {
