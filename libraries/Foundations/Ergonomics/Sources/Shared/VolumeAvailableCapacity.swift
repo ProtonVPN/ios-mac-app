@@ -30,7 +30,7 @@ import Foundation
         /// Returns the volume's available capacity for important usage, in bytes.
         ///
         /// - Throws: `VolumeAvailableCapacityError`
-        public var capacity: @Sendable () throws -> Int64
+        public var capacity: @Sendable () throws -> Int
     }
 
     public enum VolumeAvailableCapacityError: Swift.Error {
@@ -43,7 +43,7 @@ import Foundation
                 do {
                     let resourceValues = try Bundle.main.bundleURL.resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey])
                     if let capacity = resourceValues.volumeAvailableCapacityForImportantUsage {
-                        return capacity
+                        return Int(capacity)
                     } else {
                         throw VolumeAvailableCapacityError.failedRetrievingAvailableCapacity
                     }
@@ -62,7 +62,7 @@ import Foundation
         ///
         /// - Parameter capacity: The amount of available capacity to report, expressed in **Bytes**.
         /// - Returns: A `VolumeAvailableCapacity` whose `capacity()` closure returns the given value in bytes.
-        public static func value(with capacity: Int64) -> VolumeAvailableCapacity {
+        public static func value(with capacity: Int) -> VolumeAvailableCapacity {
             .init {
                 capacity
             }

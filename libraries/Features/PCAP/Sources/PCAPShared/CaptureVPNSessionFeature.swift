@@ -31,23 +31,20 @@ public struct CaptureVPNSessionFeature {
         case sessionCaptured(SessionCapturedFeature)
     }
 
-    static let minimumStorageCapacity: Int64 = 1024 * 1024 * 200 // 200 MB
+    static let minimumStorageCapacity: Int = 1024 * 1024 * 200 // 200 MB
 
     @ObservableState
     public struct State: Equatable {
         @Shared(.captureSession) public var captureSession
         @Presents public var alert: AlertState<Action.Alert>?
-        var storageCapacity: Int64?
+        var storageCapacity: Int?
         @Presents public var destination: Destination.State?
 
         public var buttonText: String {
-            switch captureSession {
-            case .noSession:
-                Localizable.pcapCaptureSessionStart
-            case .sessionStarted:
+            if case .sessionStarted = captureSession {
                 Localizable.pcapCaptureSessionStop
-            case .sessionEnded:
-                Localizable.pcapCaptureSessionCaptureAgain
+            } else {
+                Localizable.pcapCaptureSessionStart
             }
         }
 

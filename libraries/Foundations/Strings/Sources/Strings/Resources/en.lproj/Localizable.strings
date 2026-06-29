@@ -3164,8 +3164,6 @@
 
 "_pcap_capture_session_stop" = "Stop";
 
-"_pcap_capture_session_capture_again" = "Capture again";
-
 "_pcap_capture_session_should_start_session" = "Start capturing VPN session?";
 
 "_pcap_capture_session_issue_reproduction" = "If possible, apply the same settings and type of connection you used when you first faced the issue.\n\nAim to reproduce the issue in the same way it first happened (browsing the web, using an app, etc.)\n\nWhen you’ve reproduced the issue, you can stop the capture and share the file with the customer support team.";

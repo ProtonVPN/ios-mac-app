@@ -26,7 +26,7 @@ public struct FileManagerClient: Sendable {
     public var moveItem: @Sendable (_ from: URL, _ to: URL) throws -> Void
     public var fileExists: @Sendable (_ at: String) -> Bool = { _ in false }
     public var createDirectory: @Sendable (_ at: URL, _ withIntermediateDirectories: Bool) throws -> Void
-    public var fileSize: @Sendable (_ at: URL) throws -> Int64
+    public var fileSize: @Sendable (_ at: URL) throws -> Int
 }
 
 extension FileManagerClient: DependencyKey {
@@ -45,7 +45,7 @@ extension FileManagerClient: DependencyKey {
         },
         fileSize: { url in
             let fileAttributes = try FileManager.default.attributesOfItem(atPath: url.path())
-            return (fileAttributes[.size] as? Int64) ?? .zero
+            return (fileAttributes[.size] as? Int) ?? .zero
         }
     )
 }

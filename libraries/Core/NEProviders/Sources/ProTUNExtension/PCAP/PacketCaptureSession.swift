@@ -37,7 +37,7 @@ struct PacketCaptureSession {
     enum State: Equatable {
         case idle
         case recording(PcapFileHandle)
-        case finished(duration: TimeInterval, fileSize: Int64)
+        case finished(duration: TimeInterval, fileSize: Int)
         case timerHit
         case maxFileSizeHit
     }
@@ -62,7 +62,7 @@ struct PacketCaptureSession {
     // TODO: ProTUN(pcap):  Add file storage capacity checks?
     mutating func start(
         with eventStream: AsyncStream<Event>,
-        performing action: (URL, UInt64) -> Void,
+        performing action: (URL, Int) -> Void,
         stateStream: (AsyncStream<State>) -> Void
     ) throws -> URL {
         guard state.canStart else {
@@ -87,7 +87,7 @@ struct PacketCaptureSession {
         return fileURL
     }
 
-    mutating func stop() -> (URL, TimeInterval, Int64)? {
+    mutating func stop() -> (URL, TimeInterval, Int)? {
         guard case let .recording(fileHandle) = state else {
             return nil
         }

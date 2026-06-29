@@ -116,7 +116,7 @@ extension PacketCaptureClient: DependencyKey {
         }
     }
 
-    public static func stub(onCleanup: (() -> Bool)? = nil, onTogglePacketCapture: (() -> Void)? = nil) -> PacketCaptureClient {
+    public static func stub(onCleanup: (() -> Bool)? = nil, onTogglePacketCapture: (() throws -> Void)? = nil) -> PacketCaptureClient {
         .init {
             nil
         } isCaptureRunning: {
@@ -124,7 +124,7 @@ extension PacketCaptureClient: DependencyKey {
         } cleanup: {
             onCleanup?() ?? true
         } togglePacketCapture: {
-            onTogglePacketCapture?()
+            try onTogglePacketCapture?()
         }
     }
 }
@@ -137,8 +137,8 @@ public extension DependencyValues {
 }
 
 private extension FileManager {
-    func fileSize(for url: URL) throws -> Int64 {
+    func fileSize(for url: URL) throws -> Int {
         let fileAttributes = try attributesOfItem(atPath: url.path())
-        return (fileAttributes[.size] as? Int64) ?? .zero
+        return (fileAttributes[.size] as? Int) ?? .zero
     }
 }

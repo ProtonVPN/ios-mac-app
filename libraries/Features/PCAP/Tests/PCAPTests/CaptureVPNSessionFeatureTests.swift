@@ -31,11 +31,11 @@ struct CaptureVPNSessionFeatureTests {
         let store = TestStore(initialState: CaptureVPNSessionFeature.State()) {
             CaptureVPNSessionFeature()
         } withDependencies: {
-            $0.volumeAvailableCapacity = .value(with: CaptureVPNSessionFeature.minimumStorageCapacity - Int64(1))
+            $0.volumeAvailableCapacity = .value(with: CaptureVPNSessionFeature.minimumStorageCapacity - 1)
         }
         await store.send(.onAppear)
         await store.receive(\.refreshStorageCapacity) {
-            $0.storageCapacity = CaptureVPNSessionFeature.minimumStorageCapacity - Int64(1)
+            $0.storageCapacity = CaptureVPNSessionFeature.minimumStorageCapacity - 1
         }
         await store.receive(\.captureSessionUpdate.noSession)
         await store.send(.captureButtonPressed) {
@@ -71,6 +71,38 @@ struct CaptureVPNSessionFeatureTests {
             $0.alert = nil
         }
         await store.receive(\.togglePacketCapture)
+        #expect(onTogglePacketCaptureCalled)
+        await store.send(.onDisappear)
+    }
+
+    @Test
+    func `start capturing error`() async {
+        var onTogglePacketCaptureCalled = false
+        let store = TestStore(initialState: CaptureVPNSessionFeature.State()) {
+            CaptureVPNSessionFeature()
+        } withDependencies: {
+            $0.volumeAvailableCapacity = .value(with: CaptureVPNSessionFeature.minimumStorageCapacity)
+            $0.packetCaptureClient = .stub(onTogglePacketCapture: {
+                onTogglePacketCaptureCalled = true
+                throw PacketCaptureClientError.failedToStart(PCAPTestError.testError)
+            })
+        }
+        await store.send(.onAppear)
+        await store.receive(\.refreshStorageCapacity) {
+            $0.storageCapacity = CaptureVPNSessionFeature.minimumStorageCapacity
+        }
+        await store.receive(\.captureSessionUpdate.noSession)
+
+        await store.send(.captureButtonPressed) {
+            $0.alert = CaptureVPNSessionFeature.startCapturingAlert
+        }
+        await store.send(.alert(.presented(.startCapturing))) {
+            $0.alert = nil
+        }
+        await store.receive(\.togglePacketCapture)
+        await store.receive(\.showErrorMessage) {
+            $0.alert = CaptureVPNSessionFeature.sessionCaptureFailedAlert(message: "The operation couldn’t be completed. (Connection.PacketCaptureClientError error 0.)")
+        }
         #expect(onTogglePacketCaptureCalled)
         await store.send(.onDisappear)
     }
@@ -149,4 +181,12 @@ struct CaptureVPNSessionFeatureTests {
         #expect(onTogglePacketCaptureCalled)
         await store.send(.onDisappear)
     }
+}
+
+enum PCAPTestError: Error, CustomStringConvertible {
+    var description: String {
+        "just a test error"
+    }
+
+    case testError
 }

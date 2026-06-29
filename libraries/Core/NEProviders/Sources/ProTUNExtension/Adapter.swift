@@ -325,7 +325,7 @@ extension ProTUNAdapter {
         let eventStream = eventDelegate.eventSource.newStream
         return try packetCaptureSession.start(with: eventStream) { fileURL, maxBytes in
             let file: PcapFile = .path(path: fileURL.absolutePath, mode: .overwrite)
-            self.connection?.startPacketCapture(pcapFile: .init(file: file, maxBytes: maxBytes))
+            self.connection?.startPacketCapture(pcapFile: .init(file: file, maxBytes: UInt64(maxBytes)))
         } stateStream: { stream in
             listenToPacketCaptureUpdates(with: stream)
         }

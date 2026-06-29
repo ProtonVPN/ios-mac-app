@@ -63,7 +63,7 @@ public enum DomainConstants {
         // Name of the log file from WireGuard NE.
         public static let wireGuard = "WireGuard.log"
         public static let pcapMaxDurationInMinutes: Int = 20
-        public static let pcapMaxFileSize: UInt64 = 100 * (1 << 20) // 100 MB
+        public static let pcapMaxFileSize: Int = 100 * (1 << 20) // 100 MB
     }
 }
 

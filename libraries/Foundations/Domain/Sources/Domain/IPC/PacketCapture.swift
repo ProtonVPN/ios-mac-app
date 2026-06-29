@@ -75,8 +75,8 @@ public extension ProTUNMessage.Response {
 
 public struct URLWithSize: Codable, Equatable, Sendable {
     public let url: URL
-    public let size: Int64
-    public init(url: URL, size: Int64) {
+    public let size: Int
+    public init(url: URL, size: Int) {
         self.url = url
         self.size = size
     }
