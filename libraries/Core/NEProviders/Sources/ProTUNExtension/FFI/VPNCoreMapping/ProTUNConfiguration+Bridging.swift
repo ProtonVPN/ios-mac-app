@@ -53,12 +53,11 @@ extension ProTUNConfiguration {
     /// user-facing Local Agent setting, and therefore need persisting so the app can observe the change.
     func localAgentSettingsDiffer(from effective: LocalAgentSettings) -> Bool {
         func differs<Value: Equatable>(_ requested: Value?, _ applied: Value?) -> Bool {
-            guard let requested, let applied else { return false }
-            return requested != applied
+            requested != applied
         }
-        return differs(netShieldLevel, effective.netshieldLevel.map(\.netShieldType.rawValue))
-            || differs(vpnAccelerator, effective.splitTcp)
-            || differs(portForwarding, effective.portForwarding)
-            || differs(randomNat, effective.randomNat)
+        return netShieldLevel != effective.netshieldLevel.map(\.netShieldType.rawValue)
+            || vpnAccelerator != effective.splitTcp
+            || portForwarding != effective.portForwarding
+            || randomNat != effective.randomNat
     }
 }

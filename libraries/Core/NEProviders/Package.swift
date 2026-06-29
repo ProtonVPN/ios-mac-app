@@ -68,6 +68,7 @@ let package = Package(
                 "Domain",
                 "PMLogger",
                 .product(name: "ConnectionShared", package: "Connection"),
+                .product(name: "VPNCoreCommon", package: "vpn-core-apple"),
                 .product(name: "VPNCoreTypes", package: "vpn-core-apple"),
                 .product(name: "VPNCoreExtension", package: "vpn-core-apple"),
                 .product(name: "LocalAgent", package: "Connection"),
