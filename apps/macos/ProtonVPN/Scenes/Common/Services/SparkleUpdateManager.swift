@@ -40,8 +40,10 @@ final class SparkleUpdateManager: NSObject {
 
     /// Beta-channel opt-in. Toggled from Settings
     @Shared(.earlyAccess) private var earlyAccess
-    /// When set, suppresses update prompts (used in UI tests)
-    @SharedReader(.blockUpdatePrompt) private var blockUpdatePrompt
+    #if DEBUG
+        /// When set, suppresses update prompts (used in UI tests)
+        @SharedReader(.blockUpdatePrompt) private var blockUpdatePrompt
+    #endif
 
     private var updater: SPUStandardUpdaterController?
     private var appcast: SUAppcast?
@@ -217,9 +219,11 @@ extension SparkleUpdateManager: SPUUpdaterDelegate {
     }
 
     func updaterMayCheck(forUpdates _: SPUUpdater) -> Bool {
-        guard !blockUpdatePrompt else {
-            return false
-        }
+        #if DEBUG
+            guard !blockUpdatePrompt else {
+                return false
+            }
+        #endif
         return true
     }
 

@@ -116,7 +116,7 @@ extension VPNNetworkingKey: @retroactive DependencyKey {
 
 extension AppInfoKey: @retroactive DependencyKey {
     public static var liveValue: AppInfo = {
-        @Shared(.earlyAccess) var earlyAccess
+        @SharedReader(.earlyAccess) var earlyAccess
 
         return .live(context: .mainApp, beta: earlyAccess)
     }()
