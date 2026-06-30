@@ -132,14 +132,6 @@ extension DependencyContainer: AppSessionManagerFactory {
     }
 }
 
-// MARK: NotificationManagerFactory
-
-extension DependencyContainer: NotificationManagerFactory {
-    func makeNotificationManager() -> NotificationManagerProtocol {
-        NotificationManager()
-    }
-}
-
 // MARK: DynamicBugReportManagerFactory
 
 extension DependencyContainer: DynamicBugReportManagerFactory {

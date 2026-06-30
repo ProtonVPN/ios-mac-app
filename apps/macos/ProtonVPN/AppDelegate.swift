@@ -74,7 +74,6 @@ import VPNShared
         @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
         private var appInactivityTask: Task<Void, Error>?
         private lazy var pushNotificationService = PushNotificationService.shared
-        private var notificationManager: NotificationManagerProtocol!
         private lazy var menuManager = MenuManager(container: container)
 
         @SharedReader(.telemetryCrashReports) var telemetryCrashReports
@@ -97,7 +96,6 @@ import VPNShared
         @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
         private var appInactivityTask: Task<Void, Error>?
         private lazy var pushNotificationService = PushNotificationService.shared
-        private var notificationManager: NotificationManagerProtocol!
     }
 #endif
 
@@ -154,7 +152,7 @@ extension AppDelegate: NSApplicationDelegate {
                 #if !REDESIGN
                     self.menuManager.updateMenuControllers()
                 #endif
-                notificationManager = container.makeNotificationManager()
+                _ = Dependency(\.notificationManager).wrappedValue // Start the notification manager so it observes connection state and registers notification actions
                 container.makeMaintenanceManagerHelper().startMaintenanceManager()
                 _ = Dependency(\.updateManager).wrappedValue // Load update manager so it has a chance to update the appcast feed URL
                 _ = container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.

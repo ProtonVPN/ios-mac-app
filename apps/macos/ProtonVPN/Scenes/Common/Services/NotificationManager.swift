@@ -26,6 +26,7 @@ import CommonNetworking
 import ComposableArchitecture
 import Connection
 import Dependencies
+import DependenciesMacros
 import Domain
 import Foundation
 import LegacyCommon
@@ -34,7 +35,39 @@ import UserNotifications
 import VPNAppCore
 import VPNShared
 
-final class NotificationManager: NSObject, NotificationManagerProtocol {
+@DependencyClient
+struct NotificationManager {
+    /// Notifies the user that the server they are connected to is going on maintenance
+    var displayServerGoingOnMaintenance: () -> Void
+    /// Notifies the user that the forwarded port changed
+    var displayPFChange: (_ portNumber: UInt16) -> Void
+    /// Notifies the user that port forwarding failed
+    var displayPFError: () -> Void
+}
+
+extension NotificationManager: DependencyKey {
+    static let liveValue: NotificationManager = {
+        let implementation = NotificationManagerImplementation()
+        return NotificationManager(
+            displayServerGoingOnMaintenance: { implementation.displayServerGoingOnMaintenance() },
+            displayPFChange: { implementation.displayPFChange(portNumber: $0) },
+            displayPFError: { implementation.displayPFError() }
+        )
+    }()
+
+    #if DEBUG
+        static let testValue = NotificationManager()
+    #endif
+}
+
+extension DependencyValues {
+    var notificationManager: NotificationManager {
+        get { self[NotificationManager.self] }
+        set { self[NotificationManager.self] = newValue }
+    }
+}
+
+private final class NotificationManagerImplementation: NSObject {
     private let delayBeforeDismissing: Duration = .seconds(5)
     @Shared(.sessionStatus) private var sessionStatus: SessionStatus
     @Shared(.connectionState) private var connectionState: ConnectionState
@@ -132,7 +165,7 @@ final class NotificationManager: NSObject, NotificationManagerProtocol {
 
 // MARK: - Public
 
-extension NotificationManager {
+extension NotificationManagerImplementation {
     func displayServerGoingOnMaintenance() {
         @Dependency(\.uuid) var uuidgen
 
@@ -166,7 +199,7 @@ extension NotificationManager {
     }
 }
 
-extension NotificationManager: UNUserNotificationCenterDelegate {
+extension NotificationManagerImplementation: UNUserNotificationCenterDelegate {
     func userNotificationCenter(
         _: UNUserNotificationCenter,
         willPresent _: UNNotification,
