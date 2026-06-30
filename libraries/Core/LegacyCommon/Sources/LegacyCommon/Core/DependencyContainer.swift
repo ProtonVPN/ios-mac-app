@@ -23,7 +23,7 @@ import ProtonCorePushNotifications
 import Telemetry
 import VPNShared
 
-typealias PropertiesToOverride = CoreAlertServiceFactory & UpdateCheckerFactory
+typealias PropertiesToOverride = CoreAlertServiceFactory
 
 open class Container: PropertiesToOverride {
     @Dependency(\.date) var date
@@ -76,12 +76,6 @@ open class Container: PropertiesToOverride {
     // MARK: CoreAlertService
 
     open func makeCoreAlertService() -> CoreAlertService {
-        shouldHaveOverridden()
-    }
-
-    // MARK: UpdateChecker
-
-    open func makeUpdateChecker() -> UpdateChecker {
         shouldHaveOverridden()
     }
 }

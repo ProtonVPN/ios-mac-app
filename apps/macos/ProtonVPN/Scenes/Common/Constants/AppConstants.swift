@@ -27,12 +27,9 @@ import VPNShared
 enum AppConstants {
     enum UserDefaults {
         static let launchedBefore = "LaunchedBefore"
-        static let rememberLogin = "RememberLogin"
-        static let rememberLoginAfterUpdate = "RememberLoginAfterUpdate"
         static let startOnBoot = "StartOnBoot"
         static let startMinimized = "StartMinimized"
         static let systemNotifications = "SystemNotifications"
-        static let earlyAccess = "EarlyAccess"
         static let unprotectedNetworkNotifications = "UnprotectedNetwork"
         static let mapWidth = "MapWidth"
         static let welcomed = "Welcomed"

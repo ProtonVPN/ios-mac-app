@@ -51,7 +51,6 @@
         public var hasConnected: Bool = false
 
         public var blockOneTimeAnnouncement: Bool = false
-        public var blockUpdatePrompt: Bool = false
         public var lastPreparedServer: ServerModel?
 
         var lastUserAccountPlan: String?
@@ -124,14 +123,6 @@
         public var streamingResourcesUrl: String? {
             get { queue.sync { _streamingResourcesUrl } }
             set { queue.sync { _streamingResourcesUrl = newValue } }
-        }
-
-        var earlyAccess: Bool = false {
-            didSet {
-                #if os(macOS)
-                    AppEvent.earlyAccess.post(earlyAccess)
-                #endif
-            }
         }
 
         public var didShowDeprecationWarningForOSVersion: String?

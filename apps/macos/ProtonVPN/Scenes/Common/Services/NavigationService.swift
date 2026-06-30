@@ -47,7 +47,6 @@ class NavigationService {
         & NavigationServiceFactory
         & ProfileManagerFactory
         & ProtonReachabilityCheckerFactory
-        & UpdateManagerFactory
         & VpnProtocolChangeManagerFactory
         & WindowServiceFactory
     private let factory: Factory
@@ -59,7 +58,6 @@ class NavigationService {
     lazy var windowService: WindowService = factory.makeWindowService()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     @Dependency(\.authKeychain) private var authKeychain
 
     var appHasPresented = false
@@ -314,10 +312,6 @@ extension NavigationService {
     func openAcknowledgements() {
         guard !windowService.showIfPresent(windowController: AcknowledgementsWindowController.self) else { return }
         windowService.openAcknowledgements()
-    }
-
-    func checkForUpdates() {
-        updateManager.checkForUpdates(appSessionManager, userInitiated: true)
     }
 
     // If the user is manually showing the logs in Finder to share with someone, make sure that the log file

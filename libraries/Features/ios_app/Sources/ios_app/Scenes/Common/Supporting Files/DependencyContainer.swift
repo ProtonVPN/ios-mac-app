@@ -55,7 +55,7 @@ final class DependencyContainer: Container {
     )
 
     // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
-    private lazy var dynamicBugReportManager = DynamicBugReportManager(self)
+    private lazy var dynamicBugReportManager = DynamicBugReportManager()
 
     // MARK: - Init
 
@@ -71,12 +71,6 @@ final class DependencyContainer: Container {
 
     override func makeCoreAlertService() -> CoreAlertService {
         iosAlertService
-    }
-
-    // MARK: UpdateChecker
-
-    override func makeUpdateChecker() -> UpdateChecker {
-        iOSUpdateManager()
     }
 }
 

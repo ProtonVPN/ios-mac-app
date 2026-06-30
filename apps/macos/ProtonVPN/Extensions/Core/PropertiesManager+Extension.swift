@@ -26,33 +26,12 @@ import LegacyCommon
 import ServiceManagement
 
 extension PropertiesManagerProtocol {
-    var earlyAccess: Bool {
-        get {
-            getValue(forKey: AppConstants.UserDefaults.earlyAccess)
-        }
-        set {
-            setValue(newValue, forKey: AppConstants.UserDefaults.earlyAccess)
-            DispatchQueue.main.async {
-                AppEvent.earlyAccess.post(newValue)
-            }
-        }
-    }
-
     var unprotectedNetworkNotifications: Bool {
         get {
             getValue(forKey: AppConstants.UserDefaults.unprotectedNetworkNotifications)
         }
         set {
             setValue(newValue, forKey: AppConstants.UserDefaults.unprotectedNetworkNotifications)
-        }
-    }
-
-    var rememberLoginAfterUpdate: Bool {
-        get {
-            getValue(forKey: AppConstants.UserDefaults.rememberLoginAfterUpdate)
-        }
-        set {
-            setValue(newValue, forKey: AppConstants.UserDefaults.rememberLoginAfterUpdate)
         }
     }
 

@@ -46,7 +46,6 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     var clock: TestClock<Duration>!
     var appSessionRefreshTimer: AppSessionRefreshTimer!
     var mockAuthKeychain = MockAuthKeychain()
-    var updateChecker: UpdateCheckerMock!
 
     let location: VPNLocationResponse = .mock
 
@@ -62,7 +61,6 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
         repositoryWrapper = ServerRepositoryWrapper(repository: repository)
 
         networking.delegate = networkingDelegate
-        updateChecker = UpdateCheckerMock()
         appSessionRefresher = withDependencies {
             $0.serverRepository = .wrapped(wrappedWith: repositoryWrapper)
             $0.vpnApiClient.clientCredentials = { [weak self] in
@@ -329,17 +327,13 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     }
 }
 
-extension AppSessionRefreshTimerTests: CoreAlertServiceFactory, AppSessionRefresherFactory, UpdateCheckerFactory {
+extension AppSessionRefreshTimerTests: CoreAlertServiceFactory, AppSessionRefresherFactory {
     func makeCoreAlertService() -> CoreAlertService {
         alertService
     }
 
     func makeAppSessionRefresher() -> AppSessionRefresher {
         appSessionRefresher
-    }
-
-    func makeUpdateChecker() -> any UpdateChecker {
-        updateChecker
     }
 }
 

@@ -156,7 +156,7 @@ extension AppDelegate: NSApplicationDelegate {
                 #endif
                 notificationManager = container.makeNotificationManager()
                 container.makeMaintenanceManagerHelper().startMaintenanceManager()
-                _ = container.makeUpdateManager() // Load update manager so it has a chance to update xml url
+                _ = Dependency(\.updateManager).wrappedValue // Load update manager so it has a chance to update the appcast feed URL
                 _ = container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.
 
                 // Check sysex approval and protocol deprecation and revert to Smart or IKE if necessary, but only if we're logged in

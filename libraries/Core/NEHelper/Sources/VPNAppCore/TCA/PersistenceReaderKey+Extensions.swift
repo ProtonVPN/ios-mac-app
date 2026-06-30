@@ -78,6 +78,24 @@ public extension SharedKey where Self == AppStorageKey<Bool>.Default {
     }
 }
 
+#if os(macOS)
+    public extension SharedKey where Self == AppStorageKey<Bool>.Default {
+        /// Beta / early-access channel (macOS only)
+        static var earlyAccess: Self {
+            Self[.appStorage("EarlyAccess"), default: false]
+        }
+    }
+#endif
+
+#if DEBUG
+    public extension SharedKey where Self == AppStorageKey<Bool>.Default {
+        /// When set, suppresses update prompts (UI tests)
+        static var blockUpdatePrompt: Self {
+            Self[.appStorage("BlockUpdatePrompt"), default: false]
+        }
+    }
+#endif
+
 public extension ServerType {
     static var current: ServerType {
         @Shared(.secureCoreToggle) var secureCoreToggle

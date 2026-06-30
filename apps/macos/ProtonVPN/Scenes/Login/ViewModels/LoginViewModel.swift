@@ -61,8 +61,7 @@ final class LoginViewModel: ObservableObject {
     typealias Factory =
         AppSessionManagerFactory &
         CoreAlertServiceFactory & NavigationServiceFactory &
-        ProtonReachabilityCheckerFactory &
-        UpdateManagerFactory
+        ProtonReachabilityCheckerFactory
 
     private let factory: Factory
 
@@ -72,7 +71,7 @@ final class LoginViewModel: ObservableObject {
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
+    @Dependency(\.updateManager) private var updateManager
     private lazy var protonReachabilityChecker: ProtonReachabilityChecker = factory.makeProtonReachabilityChecker()
     private lazy var loginService: Login = LoginService(
         api: apiService,
@@ -376,7 +375,7 @@ final class LoginViewModel: ObservableObject {
     }
 
     private func checkForUpdatesInBackground() {
-        updateManager.checkForUpdates(appSessionManager, userInitiated: false)
+        updateManager.checkForUpdates(userInitiated: false)
     }
 
     func keychainHelpAction() {

@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Dependencies
 import Ergonomics
 import LegacyCommon
 
@@ -35,7 +36,7 @@ extension DependencyContainer: ProtonVpnMenuViewModelFactory {
 }
 
 class ProtonVpnMenuViewModel {
-    typealias Factory = AppSessionManagerFactory & NavigationServiceFactory & UpdateManagerFactory
+    typealias Factory = AppSessionManagerFactory & NavigationServiceFactory
     let factory: Factory
 
     private let appSessionManager: AppSessionManager
@@ -65,7 +66,8 @@ class ProtonVpnMenuViewModel {
     }
 
     func checkForUpdatesAction() {
-        navService.checkForUpdates()
+        @Dependency(\.updateManager) var updateManager
+        updateManager.checkForUpdates(userInitiated: true)
     }
 
     func openPreferencesAction() {

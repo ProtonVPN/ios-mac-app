@@ -50,18 +50,17 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.updateManager) private var updateManager
     public var alertService: CoreAlertService
-    private let updateChecker: UpdateChecker
 
     private var notificationCenter: NotificationCenter = .default
 
     private var observation: NotificationToken?
 
-    public typealias Factory = CoreAlertServiceFactory & UpdateCheckerFactory
+    public typealias Factory = CoreAlertServiceFactory
 
     public init(factory: Factory) {
         self.alertService = factory.makeCoreAlertService()
-        self.updateChecker = factory.makeUpdateChecker()
 
         self.observation = notificationCenter.addObserver(
             for: AppEvent.planChanged.name,
@@ -134,7 +133,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             let processInfo = ProcessInfo.processInfo
             let osVersionString = processInfo.operatingSystemVersionString
 
-            let minimumOSVersion = await self.updateChecker.minimumVersionRequiredByNextUpdate()
+            let minimumOSVersion = await self.updateManager.minimumVersionRequiredByNextUpdate()
 
             if processInfo.isOperatingSystemAtLeast(minimumOSVersion) {
                 return

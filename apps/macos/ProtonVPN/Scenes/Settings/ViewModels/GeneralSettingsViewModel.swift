@@ -23,9 +23,12 @@
 import Dependencies
 import Foundation
 import LegacyCommon
+import Sharing
+import VPNAppCore
 
 final class GeneralSettingsViewModel {
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Shared(.earlyAccess) private var earlyAccessSetting: Bool
 
     init() {}
 
@@ -42,7 +45,7 @@ final class GeneralSettingsViewModel {
     }
 
     var earlyAccess: Bool {
-        propertiesManager.earlyAccess
+        earlyAccessSetting
     }
 
     var unprotectedNetworkNotifications: Bool {
@@ -64,7 +67,7 @@ final class GeneralSettingsViewModel {
     }
 
     func setEarlyAccess(_ enabled: Bool) {
-        propertiesManager.earlyAccess = enabled
+        $earlyAccessSetting.withLock { $0 = enabled }
     }
 
     func setUnprotectedNetworkNotifications(_ enabled: Bool) {

@@ -27,6 +27,7 @@ import Persistence
 import PMLogger
 import ProtonCoreFoundations
 import Sharing
+import VPNAppCore
 
 // MARK: Live implementations of app dependencies
 
@@ -115,8 +116,8 @@ extension VPNNetworkingKey: @retroactive DependencyKey {
 
 extension AppInfoKey: @retroactive DependencyKey {
     public static var liveValue: AppInfo = {
-        @Dependency(\.propertiesManager) var propertiesManager
+        @SharedReader(.earlyAccess) var earlyAccess
 
-        return .live(context: .mainApp, beta: propertiesManager.earlyAccess)
+        return .live(context: .mainApp, beta: earlyAccess)
     }()
 }
