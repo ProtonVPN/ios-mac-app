@@ -34,7 +34,11 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
     override init() {
         let pid = ProcessInfo.processInfo.processIdentifier
         Logger.provider.info("Starting ProTUNPacketTunnelProvider with pid \(pid)")
-        initLogger(level: .info, logger: protunLogger)
+        #if DEBUG
+            initLogger(level: .debug, logger: protunLogger)
+        #else
+            initLogger(level: .info, logger: protunLogger)
+        #endif
     }
 
     #if swift(>=6.2)
@@ -98,6 +102,10 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
         if case .perSession = loggingMode {
             _ = try? Logger.flushSession()
         }
+
+        #if os(macOS)
+            exit(EXIT_SUCCESS)
+        #endif
     }
 
     override open func sleep() async {
