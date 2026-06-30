@@ -39,6 +39,7 @@ class CreateOrEditProfileViewModel: NSObject {
     typealias Factory = CoreAlertServiceFactory
     private let factory: Factory
     private lazy var alertService = factory.makeCoreAlertService()
+    @Dependency(\.upsellManager) private var upsellManager
     @Shared(.connectionState) private var connectionState: ConnectionState
     @Shared(.smartProtocolConfig) private var smartProtocolConfig: SmartProtocolConfig
 
@@ -241,7 +242,7 @@ class CreateOrEditProfileViewModel: NSObject {
         TableViewCellModel.upsellableToggle(
             title: Localizable.featureSecureCore,
             state: { [unowned self] in .available(enabled: state == .secureCore, interactive: true) },
-            upsell: { [weak self] in self?.alertService.push(alert: SecureCoreUpsellAlert()) },
+            upsell: { [weak self] in self?.upsellManager.present(.secureCore) },
             handler: { [weak self] _, callback in
                 self?.toggleState(completion: { [weak self] on in
                     callback(on)
@@ -329,7 +330,7 @@ class CreateOrEditProfileViewModel: NSObject {
     private func toggleState(completion: @escaping (Bool) -> Void) {
         if case .standard = state {
             guard userTier.isPaidTier else {
-                alertService.push(alert: SecureCoreUpsellAlert())
+                upsellManager.present(.secureCore)
                 return
             }
 

@@ -31,6 +31,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
     private static let maxCharCount = 30
 
     private let alertService: CoreAlertService
+    @Dependency(\.upsellManager) private var upsellManager
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
@@ -72,7 +73,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
 
         guard canUseProfile else {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
-            alertService.push(alert: AllCountriesUpsellAlert())
+            upsellManager.present(.countries)
             return
         }
 

@@ -35,18 +35,8 @@ import UserNotifications
 import VPNAppCore
 import VPNShared
 
-@DependencyClient
-struct NotificationManager {
-    /// Notifies the user that the server they are connected to is going on maintenance
-    var displayServerGoingOnMaintenance: () -> Void
-    /// Notifies the user that the forwarded port changed
-    var displayPFChange: (_ portNumber: UInt16) -> Void
-    /// Notifies the user that port forwarding failed
-    var displayPFError: () -> Void
-}
-
-extension NotificationManager: DependencyKey {
-    static let liveValue: NotificationManager = {
+extension NotificationManager: @retroactive DependencyKey {
+    public static let liveValue: NotificationManager = {
         let implementation = NotificationManagerImplementation()
         return NotificationManager(
             displayServerGoingOnMaintenance: { implementation.displayServerGoingOnMaintenance() },
@@ -54,17 +44,6 @@ extension NotificationManager: DependencyKey {
             displayPFError: { implementation.displayPFError() }
         )
     }()
-
-    #if DEBUG
-        static let testValue = NotificationManager()
-    #endif
-}
-
-extension DependencyValues {
-    var notificationManager: NotificationManager {
-        get { self[NotificationManager.self] }
-        set { self[NotificationManager.self] = newValue }
-    }
 }
 
 private final class NotificationManagerImplementation: NSObject {

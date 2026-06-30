@@ -38,15 +38,20 @@ public class MaintenanceManagerHelper {
         .random(in: -jitterPercentage ... jitterPercentage)
     }
 
-    public typealias Factory = CoreAlertServiceFactory & ProfileManagerFactory
+    public typealias Factory = ProfileManagerFactory
     private let factory: Factory
 
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
-    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
 
     private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager()
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.propertiesManager) private var propertiesManager
+    @Dependency(\.notificationManager) private var notificationManager
+
+    /// Throttles the "server going on maintenance" notification so repeated maintenance checks
+    /// don't spam the user. The reconnect below still happens on every detection.
+    private static let maintenanceNotificationThreshold: TimeInterval = 60 * 60 * 12
+    private var lastMaintenanceNotification = Date(timeIntervalSince1970: 0)
 
     @Shared(.featureFlags) private var featureFlags: FeatureFlags
     private var featureFlagsObservation: AnyCancellable?
@@ -79,7 +84,10 @@ public class MaintenanceManagerHelper {
 
             log.info("The currently connected server will be going to maintenance soon, reconnecting", category: .connectionConnect)
             guard let self else { return }
-            alertService.push(alert: VpnServerOnMaintenanceAlert())
+            if lastMaintenanceNotification.timeIntervalSinceNow < -Self.maintenanceNotificationThreshold {
+                notificationManager.displayServerGoingOnMaintenance()
+                lastMaintenanceNotification = Date()
+            }
             // Mirror legacy `vpnGateway.quickConnect(trigger: .auto)`: prefer the user's saved
             // Quick Connect profile, otherwise fall back to fastest. (Not `.lastConnectionIntent`,
             // which would reconnect to the maintenance server.)

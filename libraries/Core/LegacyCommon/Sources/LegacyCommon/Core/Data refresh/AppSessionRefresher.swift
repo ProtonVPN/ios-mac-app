@@ -51,6 +51,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.updateManager) private var updateManager
+    @Dependency(\.upsellManager) private var upsellManager
     public var alertService: CoreAlertService
 
     private var notificationCenter: NotificationCenter = .default
@@ -159,8 +160,8 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
 
     private func presentWelcomeScreen(_ notification: Notification) {
         guard let info = notification.object as? VpnDowngradeInfo else { return }
-        if let plan = WelcomeScreenAlert.Plan(info: info) {
-            alertService.push(alert: WelcomeScreenAlert(plan: plan))
+        if let plan = WelcomeScreenPlan(info: info) {
+            upsellManager.presentWelcome(plan)
         }
     }
 
@@ -172,7 +173,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     }
 }
 
-private extension WelcomeScreenAlert.Plan {
+private extension WelcomeScreenPlan {
     init?(info: VpnDowngradeInfo) {
         // Replace hardcoded string with a proper solution VPNAPPL-2142
         if info.to.planName == "bundle2022" {

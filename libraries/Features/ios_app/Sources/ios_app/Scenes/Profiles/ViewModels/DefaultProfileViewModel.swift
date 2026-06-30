@@ -54,6 +54,7 @@ class DefaultProfileViewModel {
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
     private let alertService: AlertService
+    @Dependency(\.upsellManager) private var upsellManager
 
     private let serverOffering: ServerOffering
     @Dependency(\.propertiesManager) private var propertiesManager
@@ -173,7 +174,7 @@ class DefaultProfileViewModel {
 
         guard authorizer.canUseProfiles else {
             log.debug("Connect to profile rejected because user is on free plan", category: .connectionConnect, event: .trigger)
-            alertService.push(alert: ProfilesUpsellAlert())
+            upsellManager.present(.profiles)
             return
         }
         authorizedConnectAction()
