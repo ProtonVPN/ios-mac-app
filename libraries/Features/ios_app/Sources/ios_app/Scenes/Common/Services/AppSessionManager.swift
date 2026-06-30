@@ -23,17 +23,12 @@
 import Announcement
 import CommonNetworking
 import Connection
-import Countries
 import Dependencies
 import Domain
-import Ergonomics
-import ExtensionIPC
 import Foundation
 import LegacyCommon
-import Modals
 import Payments
 import ProtonCoreFeatureFlags
-import ProtonCoreServices
 import Sharing
 import Strings
 import Telemetry
@@ -41,20 +36,11 @@ import UIKit
 import VPNAppCore
 import VPNShared
 
-enum SessionStatus {
-    case notEstablished
-    case established
-    case undetermined
-}
-
 protocol AppSessionManagerFactory {
     func makeAppSessionManager() -> AppSessionManager
 }
 
 protocol AppSessionManager {
-    var sessionStatus: SessionStatus { get set }
-    var loggedIn: Bool { get }
-
     func attemptSilentLogIn() async throws
     func finishLogin(authCredentials: AuthCredentials) async throws
     func logOut(force: Bool, reason: String?)
@@ -91,11 +77,16 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.paymentsPlanServiceV2) private var planServiceV2
     @Dependency(\.propertiesManager) private var propertiesManager
     @Shared(.connectionState) private var connectionState: ConnectionState
+    /// session status, single source of truth
+    @Shared(.sessionStatus) private var sharedSessionStatus: SessionStatus
+    /// Reason for a forced logout to login/welcome screens
+    @Shared(.sessionLogoutReason) private var sessionLogoutReason: String?
 
-    var sessionStatus: SessionStatus = .undetermined {
-        didSet {
-            log.info(.init(stringLiteral: "Session status is now \(sessionStatus)"), category: .app)
-            log.info("Session status is now \(sessionStatus)", category: .app)
+    var sessionStatus: SessionStatus {
+        get { sharedSessionStatus }
+        set {
+            $sharedSessionStatus.withLock { $0 = newValue }
+            log.info("Session status is now \(newValue)", category: .app)
         }
     }
 
@@ -333,8 +324,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     // swiftlint:enable function_body_length
 
     private func resolveActiveSession() async throws {
-        await MainActor.run { AppEvent.sessionManagerSessionRefreshed.post() }
-
         guard connectionState.isConnectedForSessionValidation else {
             return // Success
         }
@@ -445,15 +434,20 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func setAndNotify(for state: SessionStatus, reason: String?) {
         guard !loggedIn else { return }
 
+        // clear/set the logout reason before updating sessionStatus
+        if state == .established {
+            $sessionLogoutReason.withLock { $0 = nil }
+        } else if state == .notEstablished {
+            $sessionLogoutReason.withLock { $0 = reason }
+        }
+
         sessionStatus = state
         if state == .established {
             loggedIn = true
             propertiesManager.hasConnected = true
-            DispatchQueue.main.async { AppEvent.sessionManagerSessionChanged.post() }
         } else if state == .notEstablished {
             // Clear auth token and vpn creds to ensure they won't be used
             logOutCleanup()
-            DispatchQueue.main.async { AppEvent.sessionManagerSessionChanged.post(reason) }
         }
 
         refreshTimer.startTimers()

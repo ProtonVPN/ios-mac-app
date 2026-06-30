@@ -58,6 +58,7 @@ final class StatusMenuViewModel {
     @Dependency(\.linkOpener) var linkOpener
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
     @Shared(.connectionState) private var connectionState: ConnectionState
+    @Shared(.sessionStatus) private var sessionStatus: SessionStatus
 
     @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -102,7 +103,6 @@ final class StatusMenuViewModel {
 
     private var profileManager: ProfileManager?
 
-    private var notificationTokens: [NotificationToken] = []
     private var cancellables = Set<AnyCancellable>()
 
     init(factory: Factory) {
@@ -113,7 +113,7 @@ final class StatusMenuViewModel {
     }
 
     var isSessionEstablished: Bool {
-        appSessionManager.sessionStatus == .established
+        sessionStatus == .established
     }
 
     var isConnected: Bool {
@@ -387,13 +387,11 @@ final class StatusMenuViewModel {
     // MARK: - Private functions
 
     private func startObserving() {
-        notificationTokens.append(
-            NotificationCenter.default.addObserver(
-                for: SessionChanged.self,
-                object: appSessionManager,
-                handler: sessionChanged
-            )
-        )
+        $sessionStatus.publisher
+            .dropFirst()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] status in self?.sessionChanged(status) }
+            .store(in: &cancellables)
 
         let events: [AppEvent] = [
             .userIp,
@@ -431,11 +429,8 @@ final class StatusMenuViewModel {
         changeServerStateChanged?(viewState)
     }
 
-    private func sessionChanged(data: SessionChanged.T) {
-        if case .established = data {
-            if !isSessionEstablished {
-                log.error("Expected session to be established when receiving gateway")
-            }
+    private func sessionChanged(_ status: SessionStatus) {
+        if status == .established {
             sessionEstablished()
         } else {
             sessionEnded()

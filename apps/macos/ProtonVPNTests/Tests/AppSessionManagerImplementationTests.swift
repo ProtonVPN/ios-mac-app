@@ -54,8 +54,6 @@ private let subuserWithoutSessionsResponseError = ResponseError(
 @Suite(.serialized)
 @MainActor
 struct AppSessionManagerImplementationTests {
-    private let asyncTimeout: Duration = .seconds(5)
-
     final class TestContext {
         fileprivate let alertService: AppSessionManagerAlertServiceMock
         let authKeychain: AuthKeychainHandleMock
@@ -168,28 +166,25 @@ struct AppSessionManagerImplementationTests {
     }
 
     @Test
-    func loginPostsSessionChangedNotification() async throws {
+    func loginEstablishesSession() async throws {
         try await withTestContext { context in
-            let notificationTask = makeNotificationTask(name: SessionChanged.name, object: context.manager)
             try await login(with: testAuthCredentials(), context: context)
-            let posted = await waitForTask(notificationTask, timeout: asyncTimeout) ?? false
-            #expect(posted)
+            #expect(context.manager.sessionStatus == .established)
         }
     }
 
     @Test
-    func loginDoesNotPostSessionChangedNotificationWhenAlreadyLoggedIn() async throws {
+    func silentLoginWhenAlreadyEstablishedStaysEstablished() async throws {
         try await withTestContext { context in
             context.networkingDelegate.apiVpnLocation = .mock
             context.networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
             context.authKeychain.credentials = testAuthCredentials()
             context.manager.sessionStatus = .established
 
-            let notificationTask = makeNotificationTask(name: SessionChanged.name, object: context.manager)
             try await context.manager.attemptSilentLogIn()
-            let posted = await waitForTask(notificationTask, timeout: .milliseconds(300)) ?? false
 
-            #expect(posted == false)
+            #expect(context.manager.sessionStatus == .established)
+            #expect(context.manager.loggedIn)
         }
     }
 
@@ -245,11 +240,9 @@ struct AppSessionManagerImplementationTests {
     @Test
     func noAlertShownOnLogoutWhenNotLoggedIn() async {
         await withTestContext { context in
-            let notificationTask = makeNotificationTask(name: SessionChanged.name, object: context.manager)
             context.manager.logOut() // no-op in this state
-            let posted = await waitForTask(notificationTask, timeout: .milliseconds(300)) ?? false
-            #expect(posted == false)
             #expect(context.manager.loggedIn == false)
+            #expect(context.manager.sessionStatus != .established)
         }
     }
 
@@ -259,10 +252,8 @@ struct AppSessionManagerImplementationTests {
             try await login(with: testAuthCredentials(), context: context)
             setConnectionStatus(vpnStatus: .disconnected, connectionState: .disconnected)
 
-            let notificationTask = makeNotificationTask(name: SessionChanged.name, object: context.manager)
             context.manager.logOut()
-            let posted = await waitForTask(notificationTask, timeout: asyncTimeout) ?? false
-            #expect(posted)
+            #expect(await waitForSessionStatus(.notEstablished, on: context.manager))
             #expect(context.manager.loggedIn == false)
         }
     }
@@ -273,11 +264,8 @@ struct AppSessionManagerImplementationTests {
             try await login(with: testAuthCredentials(), context: context)
             setConnectionStatus(vpnStatus: .connecting(.defaultFastest, nil), connectionState: .resolving)
 
-            let notificationTask = makeNotificationTask(name: SessionChanged.name, object: context.manager)
             context.manager.logOut()
-            let posted = await waitForTask(notificationTask, timeout: asyncTimeout) ?? false
-
-            #expect(posted)
+            #expect(await waitForSessionStatus(.notEstablished, on: context.manager))
             #expect(context.manager.loggedIn == false)
             assertDisconnectedStatus()
         }
@@ -289,11 +277,8 @@ struct AppSessionManagerImplementationTests {
             try await login(with: testAuthCredentials(), context: context)
             setConnectedStatus()
 
-            let notificationTask = makeNotificationTask(name: SessionChanged.name, object: context.manager)
             context.manager.logOut(force: true, reason: "")
-            let posted = await waitForTask(notificationTask, timeout: asyncTimeout) ?? false
-
-            #expect(posted)
+            #expect(await waitForSessionStatus(.notEstablished, on: context.manager))
             #expect(context.manager.loggedIn == false)
             assertDisconnectedStatus()
         }
@@ -309,11 +294,8 @@ struct AppSessionManagerImplementationTests {
                 alert.triggerHandler(forFirstActionOfType: .confirmative)
             })
 
-            let notificationTask = makeNotificationTask(name: SessionChanged.name, object: context.manager)
             context.manager.logOut()
-            let posted = await waitForTask(notificationTask, timeout: asyncTimeout) ?? false
-
-            #expect(posted)
+            #expect(await waitForSessionStatus(.notEstablished, on: context.manager))
             #expect(context.manager.loggedIn == false)
             assertDisconnectedStatus()
         }
@@ -425,21 +407,24 @@ struct AppSessionManagerImplementationTests {
                 vpnStatus: .disconnected,
                 connectionState: .disconnected
             )
+
+            @Shared(.sessionStatus) var sessionStatus
+            // `.undetermined` mirrors the real fresh-launch default (not `.notEstablished`).
+            $sessionStatus.withLock { $0 = .undetermined }
+            @Shared(.sessionLogoutReason) var sessionLogoutReason
+            $sessionLogoutReason.withLock { $0 = nil }
             try await body(context)
         }
     }
 
     private func login(with authCredentials: AuthCredentials, context: TestContext) async throws {
-        let notificationTask = makeNotificationTask(name: SessionChanged.name, object: context.manager)
-
         context.networkingDelegate.apiVpnLocation = .mock
         context.networkingDelegate.apiClientConfig = ClientConfig.defaultClientConfigForTests
         context.authKeychain.credentials = authCredentials
 
         try await context.manager.attemptSilentLogIn()
 
-        let posted = await waitForTask(notificationTask, timeout: asyncTimeout) ?? false
-        #expect(posted)
+        #expect(context.manager.sessionStatus == .established)
         #expect(context.manager.loggedIn)
     }
 
@@ -460,27 +445,19 @@ struct AppSessionManagerImplementationTests {
         }
     }
 
-    private func makeNotificationTask(name: Notification.Name, object: AnyObject?) -> Task<Bool, Never> {
-        Task {
-            for await _ in NotificationCenter.default.notifications(named: name, object: object) {
-                return true
-            }
-            return false
+    /// Polls `manager.sessionStatus` until it reaches `target` or the attempts are exhausted.
+    /// Handles both synchronous (disconnected) and asynchronous (post-disconnect) logout paths.
+    private func waitForSessionStatus(
+        _ target: SessionStatus,
+        on manager: AppSessionManagerImplementation,
+        pollInterval: Duration = .milliseconds(10),
+        attempts: Int = 500
+    ) async -> Bool {
+        for _ in 0 ..< attempts {
+            if manager.sessionStatus == target { return true }
+            try? await Task.sleep(for: pollInterval)
         }
-    }
-
-    private func waitForTask<T: Sendable>(_ task: Task<T, Never>, timeout: Duration) async -> T? {
-        await withTaskGroup(of: T?.self) { group in
-            group.addTask { await task.value }
-            group.addTask {
-                try? await Task.sleep(for: timeout)
-                task.cancel()
-                return nil
-            }
-            let first = await group.next() ?? nil
-            group.cancelAll()
-            return first
-        }
+        return manager.sessionStatus == target
     }
 
     private func setConnectionStatus(vpnStatus: VPNConnectionStatusDoNotUse, connectionState: ConnectionState) {

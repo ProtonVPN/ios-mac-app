@@ -38,19 +38,11 @@ import Telemetry
 import VPNAppCore // UnauthKeychain
 import VPNShared
 
-enum SessionStatus {
-    case notEstablished
-    case established
-}
-
 protocol AppSessionManagerFactory {
     func makeAppSessionManager() -> AppSessionManager
 }
 
 protocol AppSessionManager {
-    var sessionStatus: SessionStatus { get set }
-    var loggedIn: Bool { get }
-
     func attemptSilentLogIn() async throws
     func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func logOut(force: Bool, reason: String?)
@@ -80,15 +72,21 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.activeTunnelInspector) private var activeTunnelInspector
     @Dependency(\.updateManager) private var updateManager
     @Shared(.connectionState) private var connectionState: ConnectionState
+    /// session status, single source of truth
+    @Shared(.sessionStatus) private var sharedSessionStatus: SessionStatus
+    /// Reason for a forced logout to login/welcome screens
+    @Shared(.sessionLogoutReason) private var sessionLogoutReason: String?
 
     /// While clearing, the keychains are wiped and the server database is closed and deleted.
     /// However, we must not call logOut multiple times in parallel because we might get race in it, and assertionFailure in the GRDB
     private var isClearingApplicationData = false
 
-    var sessionStatus: SessionStatus = .notEstablished {
-        didSet {
-            loggedIn = sessionStatus == .established
-            log.info("Session status is now \(sessionStatus)", category: .app)
+    var sessionStatus: SessionStatus {
+        get { sharedSessionStatus }
+        set {
+            $sharedSessionStatus.withLock { $0 = newValue }
+            loggedIn = newValue == .established
+            log.info("Session status is now \(newValue)", category: .app)
         }
     }
 
@@ -138,10 +136,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         try await retrieveProperties()
         checkIfOSIsSupportedInNextUpdateAndAlertIfNeeded()
 
-        if sessionStatus == .notEstablished {
+        if sessionStatus != .established {
+            // Clear any stale logout reason before establishing the session
+            $sessionLogoutReason.withLock { $0 = nil }
             sessionStatus = .established
             propertiesManager.hasConnected = true
-            post(notification: SessionChanged(data: .established))
         }
 
         appSessionRefreshTimer.startTimers()
@@ -313,7 +312,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     func logOut(force: Bool, reason: String?) {
         guard !isClearingApplicationData else { return }
-        guard sessionStatus != .notEstablished else { return } // already logged out
+        guard sessionStatus == .established else { return } // not logged in, nothing to do
         switch connectionState {
         case .connected:
             confirmLogout(showAlert: !force) { [weak self] in
@@ -341,11 +340,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     private func logoutRoutine(reason: String?) {
-        guard sessionStatus != .notEstablished else {
-            return // already logged out
+        guard sessionStatus == .established else {
+            return // not logged in, nothing to do
         }
+        // set the logout reason before updating sessionStatus
+        $sessionLogoutReason.withLock { $0 = reason }
         sessionStatus = .notEstablished
-        post(notification: SessionChanged(data: .lost(reason: reason)))
         logOutCleanup()
     }
 
@@ -370,12 +370,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     // End of the logout logic
-
-    private func post(notification: any TypedNotification) {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(notification, object: self)
-        }
-    }
 
     // MARK: - AppDelegate quit behaviour
 
@@ -446,15 +440,5 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     private var isSafeToEnd: Bool {
         connectionState.isSafeToEnd
-    }
-}
-
-struct SessionChanged: TypedNotification {
-    static let name = Notification.Name("AppSessionManagerSessionChanged")
-    let data: SessionChangeData
-
-    enum SessionChangeData {
-        case established
-        case lost(reason: String?)
     }
 }

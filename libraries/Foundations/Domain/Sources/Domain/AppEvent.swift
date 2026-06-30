@@ -35,8 +35,6 @@ public enum AppEvent: String {
     case profileContentChanged
     /// The content on disk of profiles settings has changed.
     case profileStorageChanged
-    /// The user's Auth credentials changed.
-    case authCredentialsChanged
 
     // MARK: API-Driven
 
@@ -44,16 +42,10 @@ public enum AppEvent: String {
     case announcementStorageContent
     /// The user's VPN credentials changed on the backend.
     case credentialsChanged
-    /// The user's payment for their VPN plan is delinquent.
-    case userDelinquent
     /// The user's VPN plan changed on the backend.
     case planChanged
     /// Session manager data was reloaded.
     case sessionManagerDataReloaded
-    /// Session manager data has changed.
-    case sessionManagerSessionChanged
-    /// Session manager data has been refreshed.
-    case sessionManagerSessionRefreshed
 
     // MARK: User events (mostly for Telemetry)
 
@@ -87,9 +79,6 @@ public enum AppEvent: String {
         case systemExtensionsAllInstalled
         /// A user has elected to clear all application data. (This happens by default on iOS when removing the app.)
         case clearingApplicationData
-    #elseif os(iOS)
-        /// The user dismissed the welcome screen.
-        case userDismissedWelcomeScreen
     #endif
 
     #if DEBUG

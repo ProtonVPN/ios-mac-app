@@ -24,6 +24,7 @@ import Domain
 import Foundation
 import LegacyCommon
 import ProtonCoreFeatureFlags
+import Sharing
 
 protocol TabBarViewModelModelDelegate: AnyObject {
     func removeLoginBox()
@@ -34,6 +35,8 @@ class TabBarViewModel {
 
     let navigationService: NavigationService
     let sessionManager: AppSessionManager
+
+    @Shared(.sessionStatus) private var sessionStatus: SessionStatus
 
     var showLoginAnimated: Bool {
         true
@@ -49,7 +52,7 @@ class TabBarViewModel {
     // MARK: Functions
 
     func settingShouldBeSelected() -> Bool {
-        guard sessionManager.loggedIn else {
+        guard sessionStatus == .established else {
             navigationService.presentWelcome(initialError: nil)
             return false
         }

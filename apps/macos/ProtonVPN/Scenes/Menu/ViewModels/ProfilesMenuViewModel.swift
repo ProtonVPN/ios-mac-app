@@ -36,7 +36,6 @@ protocol ProfilesMenuViewModelFactory {
 extension DependencyContainer: ProfilesMenuViewModelFactory {
     func makeProfilesMenuViewModel() -> ProfilesMenuViewModel {
         ProfilesMenuViewModel(
-            appSessionManager: makeAppSessionManager(),
             navService: makeNavigationService(),
             alertService: makeCoreAlertService()
         )
@@ -45,7 +44,6 @@ extension DependencyContainer: ProfilesMenuViewModelFactory {
 
 class ProfilesMenuViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
-    private let appSessionManager: AppSessionManager
     private let navService: NavigationService
     private let alertService: CoreAlertService
 
@@ -53,31 +51,35 @@ class ProfilesMenuViewModel {
 
     private var notificationTokens: [NotificationToken] = []
 
+    @Shared(.sessionStatus) private var sessionStatus: SessionStatus
     @Shared(.featureFlags) private var featureFlags: FeatureFlags
-    private var featureFlagsObservation: AnyCancellable?
+    private var cancellables = Set<AnyCancellable>()
 
     init(
-        appSessionManager: AppSessionManager,
         navService: NavigationService,
         alertService: CoreAlertService
     ) {
-        self.appSessionManager = appSessionManager
         self.navService = navService
         self.alertService = alertService
 
         self.notificationTokens = [
-            NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged),
             NotificationCenter.default.addObserver(for: AppEvent.planChanged.name, object: nil, handler: planChanged),
         ]
 
-        self.featureFlagsObservation = $featureFlags.publisher
+        $featureFlags.publisher
             .dropFirst()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.contentChanged?() }
+            .store(in: &cancellables)
+
+        $sessionStatus.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.contentChanged?() }
+            .store(in: &cancellables)
     }
 
     var areProfilesEnabled: Bool {
-        canUserUseProfiles && appSessionManager.sessionStatus == .established
+        canUserUseProfiles && sessionStatus == .established
     }
 
     private var canUserUseProfiles: Bool {
@@ -107,10 +109,6 @@ class ProfilesMenuViewModel {
     }
 
     // MARK: - Private functions
-
-    private func sessionChanged(data _: SessionChanged.T) {
-        contentChanged?()
-    }
 
     private func planChanged(notification _: Notification) {
         contentChanged?()

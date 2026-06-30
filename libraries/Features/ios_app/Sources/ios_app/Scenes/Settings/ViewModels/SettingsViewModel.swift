@@ -61,6 +61,7 @@ final class SettingsViewModel {
     @Shared(.featureFlags) private var featureFlags: Domain.FeatureFlags
     @Shared(.connectionProtocol) private var sharedConnectionProtocol: Domain.ConnectionProtocol
     @Shared(.killSwitch) private var killSwitch: Bool
+    @Shared(.sessionStatus) private var sessionStatus: SessionStatus
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
@@ -112,7 +113,7 @@ final class SettingsViewModel {
 
         self.isAccountRecoveryEnabled = AccountRecoveryModule.feature.enabled
 
-        if appSessionManager.sessionStatus == .established {
+        if sessionStatus == .established {
             sessionEstablished()
         }
 
@@ -176,7 +177,14 @@ final class SettingsViewModel {
     // MARK: - Private functions
 
     private func startObserving() {
-        AppEvent.sessionManagerSessionChanged.subscribe(self, selector: #selector(sessionChanged))
+        $sessionStatus
+            .publisher
+            .dropFirst()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] status in
+                self?.sessionChanged(status)
+            }
+            .store(in: &cancellables)
 
         let reloadEvents: [AppEvent] = [
             .sessionManagerDataReloaded,
@@ -210,9 +218,8 @@ final class SettingsViewModel {
             .store(in: &cancellables)
     }
 
-    @objc
-    private func sessionChanged(_: Notification) {
-        if appSessionManager.sessionStatus == .established {
+    private func sessionChanged(_ status: SessionStatus) {
+        if status == .established {
             sessionEstablished()
         } else {
             sessionEnded()

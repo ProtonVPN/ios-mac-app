@@ -21,9 +21,12 @@
 //
 
 import Cocoa
+import Combine
 import Dependencies
+import Domain
 import Ergonomics
 import LegacyCommon
+import Sharing
 
 protocol ProtonVpnMenuViewModelFactory {
     func makeProtonVpnMenuViewModel() -> ProtonVpnMenuViewModel
@@ -36,29 +39,32 @@ extension DependencyContainer: ProtonVpnMenuViewModelFactory {
 }
 
 class ProtonVpnMenuViewModel {
-    typealias Factory = AppSessionManagerFactory & NavigationServiceFactory
+    typealias Factory = NavigationServiceFactory
     let factory: Factory
 
-    private let appSessionManager: AppSessionManager
     private let navService: NavigationService
+
+    @Shared(.sessionStatus) private var sessionStatus: SessionStatus
 
     var contentChanged: (() -> Void)?
 
-    private var notificationTokens: [NotificationToken] = []
+    private var cancellables = Set<AnyCancellable>()
 
     init(factory: Factory) {
         self.factory = factory
-        self.appSessionManager = factory.makeAppSessionManager()
         self.navService = factory.makeNavigationService()
-        notificationTokens.append(NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged))
+        $sessionStatus.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.contentChanged?() }
+            .store(in: &cancellables)
     }
 
     var isPreferencesEnabled: Bool {
-        appSessionManager.sessionStatus == .established
+        sessionStatus == .established
     }
 
     var isLogOutEnabled: Bool {
-        appSessionManager.sessionStatus == .established
+        sessionStatus == .established
     }
 
     func openAboutAction() {
@@ -84,11 +90,5 @@ class ProtonVpnMenuViewModel {
 
     func quitAction() {
         NSApp.terminate(self)
-    }
-
-    // MARK: - Private functions
-
-    private func sessionChanged(data _: SessionChanged.T) {
-        contentChanged?()
     }
 }

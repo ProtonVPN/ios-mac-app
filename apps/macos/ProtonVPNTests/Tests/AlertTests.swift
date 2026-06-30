@@ -21,6 +21,7 @@
 //
 
 import BugReport
+import Domain
 import LegacyCommon
 import ProtonCoreNetworking
 @testable import ProtonVPN
