@@ -46,8 +46,10 @@ class LoginTests: ProtonVPNUITests {
             .verify.specialCharErrorDialog()
     }
 
+    /// Disabled for now while we find a replacement for the vpn automation subuser, since another team has commandeered
+    /// it from us :/
     @MainActor
-    func testLoginAsSubuserWithNoConnectionsAssigned() {
+    func disabledTestLoginAsSubuserWithNoConnectionsAssigned() {
         let subusercredentials = getCredentials(from: "subusercredentials")
 
         loginRobot
