@@ -40,6 +40,7 @@ final class ProTUNAdapter: @unchecked Sendable {
         case noPeers
         case invalidKeys
         case missingUserID
+        case missingConfiguration
     }
 
     private(set) weak var packetTunnelProvider: NEPacketTunnelProvider?
@@ -69,12 +70,35 @@ final class ProTUNAdapter: @unchecked Sendable {
     private var localAgentTask: Task<Void, Never>?
     private var pathUpdatesTask: Task<Void, Never>?
 
+    /// Serializes every write to the provider configuration.
+    private let configurationStore: ConfigurationStore
+
+    var currentRequestId: UUID? {
+        get async { await configurationStore.requestId }
+    }
+
+    @Dependency(\.extensionIPCServer) var extensionIPCServer
     private let signposter = OSSignposter(logger: .adapter)
 
     init(packetTunnelProvider: NEPacketTunnelProvider) {
         self.packetTunnelProvider = packetTunnelProvider
         self.stateDelegate = .init()
         self.eventDelegate = .init()
+
+        let providerConfig = packetTunnelProvider.protocolConfiguration as? NETunnelProviderProtocol
+        self.configurationStore = ConfigurationStore(initial: providerConfig?.requestId)
+    }
+
+    /// Acknowledges the app's receipt of the last reported error. If the error still pertains to the current request,
+    /// clear the error region and update the IPCConnectionData to include the error ID so that the connection layer
+    /// can properly quiesce. If the ack's id doesn't match the request ID that's currently in flighht, ignore it.
+    func acknowledgeError(_ errorId: UUID) async {
+        guard await currentRequestId == errorId else {
+            Logger.adapter.info("Ignoring stale error ack \(errorId.uuidString, privacy: .public)")
+            return
+        }
+        extensionIPCServer.restampConnectionData(errorId)
+        extensionIPCServer.clearError()
     }
 
     func prepare(with config: ProTUNConfiguration) async throws -> FileDescriptor {
@@ -123,14 +147,18 @@ final class ProTUNAdapter: @unchecked Sendable {
         defer { signposter.endInterval("Start Tunnel", startState) }
 
         Logger.adapter.info("Starting Adapter")
+        extensionIPCServer.zeroAll()
 
         let tunFd = try await prepare(with: config.proTUN)
         signposter.emitEvent("Tunnel prepared", id: signpostID)
 
         let rawTunFd = try tunFd.dup().take()
-        let localAgentSettings = LocalAgentSettings.current
 
-        startLocalAgentRunLoop(with: localAgentSettings)
+        // Initial Local Agent settings come from the app, while the extension manages all protocol settings
+        // once it's running.
+        let localAgentSettings = LocalAgentSettings(config.proTUN)
+
+        startLocalAgentRunLoop()
         signposter.emitEvent("Local agent run loop started", id: signpostID)
 
         // TODO: ProTUN: rework this so we're TOCTOU resilient
@@ -166,8 +194,8 @@ final class ProTUNAdapter: @unchecked Sendable {
             }
     }
 
-    private func startLocalAgentRunLoop(with settings: LocalAgentSettings) {
-        let coordinator = LocalAgentCoordinator(adapter: self, initialSettings: settings)
+    private func startLocalAgentRunLoop() {
+        let coordinator = LocalAgentCoordinator(adapter: self)
 
         localAgentTask = Task {
             await withTaskGroup(of: Void.self) { group in
@@ -190,8 +218,8 @@ final class ProTUNAdapter: @unchecked Sendable {
         switch event {
         case .forkSelectorRequest:
             // packetTunnelProvider?.reasserting = true
-            Logger.localAgent.info("Sending extensionForkSelectorRequest notification")
-            IPCNotifications.post(.extensionForkSelectorRequest)
+            Logger.localAgent.info("Sending forkSelectorRequest tunnel command")
+            extensionIPCServer.sendCommand(.forkSelectorRequest)
         }
     }
 
@@ -204,8 +232,13 @@ final class ProTUNAdapter: @unchecked Sendable {
         pathUpdatesTask = nil
         localAgentTask?.cancel()
         localAgentTask = nil
+
+        // Clear the shared memory regions just before stopping.
+        extensionIPCServer.zeroAll()
     }
 }
+
+// MARK: - Tunnel bringup + configuration
 
 extension ProTUNAdapter {
     func handleForkSelector(_ selector: String, cookieName: String, cookieValue: String) {
@@ -215,6 +248,27 @@ extension ProTUNAdapter {
             cookies: .init(cookies: [.init(name: cookieName, value: cookieValue)])
         )
         connection?.provideApiForkSelector(forkSelectorInfo: forkSelectorInfo)
+    }
+
+    /// Single entry point for updating LocalAgentSettings.
+    func applyLocalAgentSettings(_ settings: LocalAgentSettings) {
+        connection?.updateLocalAgentSettings(settings: settings)
+    }
+
+    func enqueueConfigurationUpdate(_ update: ConnectionUpdate) async {
+        await configurationStore.apply(update, adapter: self)
+    }
+
+    /// Enqueue a write of the server-applied Local Agent settings ProTUN reported. Serialized with user-initiated
+    /// configuration updates so the two can't race on the provider configuration.
+    func enqueueEffectiveLocalAgentSettings(_ settings: LocalAgentSettings) async {
+        await configurationStore.persistEffective(settings, adapter: self)
+    }
+
+    func whileReasserting<T, E: Swift.Error>(_ closure: () async throws(E) -> T) async throws(E) -> T {
+        packetTunnelProvider?.reasserting = true
+        defer { packetTunnelProvider?.reasserting = false }
+        return try await closure()
     }
 }
 
@@ -342,54 +396,6 @@ extension VpnState {
             true
         default:
             false
-        }
-    }
-}
-
-extension LocalAgentSettings {
-    static var current: Self {
-        @Dependency(\.localAgent) var localAgentClient
-        return (try? localAgentClient.settings())
-            .flatMap { $0.hasValues ? LocalAgentSettings($0) : nil } ?? .default
-    }
-
-    private static let `default`: Self = .init(
-        splitTcp: nil,
-        netshieldLevel: nil,
-        softJail: nil,
-        portForwarding: nil,
-        randomNat: nil,
-        circumventionRouting: nil
-    )
-
-    mutating func update(with featureChanges: Set<ConnectionFeatureChange.AgentFeature>) {
-        for feature in featureChanges {
-            switch feature {
-            case let .netShield(netShieldType):
-                netshieldLevel = netShieldType.toRustNetShieldLevel
-            case let .vpnAccelerator(enabled):
-                splitTcp = enabled
-            case let .moderateNAT(NATType):
-                randomNat = NATType.flag
-            case let .portForwarding(enabled):
-                portForwarding = enabled
-            }
-        }
-    }
-}
-
-private extension NetShieldType {
-    var toRustNetShieldLevel: NetshieldLevel {
-        switch self {
-        case .off:
-            return .none
-        case .level1:
-            return .malwareFilter
-        case .level2:
-            return .adsAndMalwareFilter
-        case .level3:
-            assertionFailure("Not handled yet")
-            return .adsAndMalwareFilter
         }
     }
 }

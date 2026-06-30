@@ -341,6 +341,6 @@ private extension ConnectionStatusFeature.State {
     }
 
     static func protected() -> Self {
-        .init(protectionState: .protected(netShield: .random))
+        .init(protectionState: .protected)
     }
 }

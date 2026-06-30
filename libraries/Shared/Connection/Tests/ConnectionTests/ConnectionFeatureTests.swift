@@ -59,7 +59,7 @@
 //            let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
 //            let mockStorage = VpnAuthenticationStorage.testStorage(keys: keys, certificate: certificate)
 //
-//            let connectionFeatures: VPNConnectionFeatures = .mock
+//            let connectionFeatures: AgentTunnelFeatures = .mock
 //            let server = Server.ca
 //            let reconnectingServerID = server.endpoint.id
 //            let initialIntent = ServerConnectionIntent.mock()
@@ -169,7 +169,7 @@
 //            let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
 //            let mockStorage = VpnAuthenticationStorage.testStorage(keys: keys, certificate: certificate)
 //
-//            let connectionFeatures: VPNConnectionFeatures = .mock
+//            let connectionFeatures: AgentTunnelFeatures = .mock
 //            let initialServerID = Server.mock.endpoint.id
 //            let initialIntent = ServerConnectionIntent.mock()
 //
@@ -450,7 +450,7 @@
 //            } withDependencies: {
 //                $0.serverIdentifier = .init(fullServerInfo: { _ in actualServer })
 //                $0.connectionFeatureProvider.connectionFeatures = { .unimplementedFeatures }
-//                $0.connectionFeatureProvider.tunnelFeatures = { .unimplementedFeatures }
+//                $0.connectionFeatureProvider.requestedFeatures = { .unimplementedFeatures }
 //            }
 //            store.exhaustivity = .off
 //

@@ -34,6 +34,19 @@ final class SwitchTableViewCell: UITableViewCell {
     var upsellTapped: (() -> Void)?
     var toggled: ((Bool, @escaping (Bool) -> Void) -> Void)?
 
+    /// Spinner shown to the left of the switch while a feature change is being applied by the extension
+    private lazy var applyingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.hidesWhenStopped = true
+        contentView.addSubview(indicator)
+        NSLayoutConstraint.activate([
+            indicator.trailingAnchor.constraint(equalTo: switchControl.leadingAnchor, constant: -12),
+            indicator.centerYAnchor.constraint(equalTo: switchControl.centerYAnchor),
+        ])
+        return indicator
+    }()
+
     override func awakeFromNib() {
         super.awakeFromNib()
 
@@ -70,7 +83,7 @@ final class SwitchTableViewCell: UITableViewCell {
         upsellTapped()
     }
 
-    func setup(with model: PaidFeatureDisplayState) {
+    func setup(with model: PaidFeatureDisplayState, overriddenValue: Bool? = nil, isPending: Bool = false) {
         switch model {
         case .disabled:
             log.assertionFailure("We shouldn't display cells for disabled features")
@@ -78,15 +91,36 @@ final class SwitchTableViewCell: UITableViewCell {
             fallthrough
 
         case .upsell:
+            applyingIndicator.stopAnimating()
             switchControl.isHidden = true
             upsellImageView.isHidden = false
 
         case let .available(isOn, isInterative):
-            switchControl.isHidden = false
             upsellImageView.isHidden = true
+            switchControl.isHidden = false
 
-            switchControl.isEnabled = isInterative
-            switchControl.isOn = isOn
+            if isPending {
+                // Keep the switch at the value the user chose, dimmed + non-interactive, until the server acks with the
+                // applied value.
+                switchControl.isOn = isOn
+                switchControl.onTintColor = .brandColor()
+                switchControl.isEnabled = true
+                switchControl.isUserInteractionEnabled = false
+                switchControl.alpha = 0.5
+                applyingIndicator.startAnimating()
+            } else {
+                applyingIndicator.stopAnimating()
+                switchControl.isUserInteractionEnabled = true
+                switchControl.alpha = 1
+                switchControl.isEnabled = isInterative
+                if let overriddenValue {
+                    switchControl.isOn = overriddenValue
+                    switchControl.onTintColor = .iconWeak()
+                } else {
+                    switchControl.isOn = isOn
+                    switchControl.onTintColor = .brandColor()
+                }
+            }
         }
     }
 }

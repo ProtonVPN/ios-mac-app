@@ -24,7 +24,7 @@ public extension ServerConnectionIntent {
         withSpecLocation location: ConnectionSpec.Location = .any(.fastest),
         server: Server = .mock,
         protocolConfiguration: ProtocolConfiguration = .ike,
-        features: VPNConnectionFeatures = .mock
+        features: AgentTunnelFeatures = .mock
     ) -> ServerConnectionIntent {
         ServerConnectionIntent(
             spec: .init(location: location, features: []),

@@ -20,6 +20,7 @@ import Domain
 import LocalAgent
 import LocalAgentIPC
 import protun
+import VPNCoreTypes
 
 private func unknownDefault<T>(
     function: StaticString = #function,
@@ -31,26 +32,60 @@ private func unknownDefault<T>(
     return value
 }
 
-extension NetshieldLevel {
-    var toNetShieldType: NetShieldType {
+extension LocalAgentSettings {
+    init(_ config: ProTUNConfiguration) {
+        self.init(
+            splitTcp: config.vpnAccelerator,
+            netshieldLevel: config.netShieldLevel.flatMap { NetShieldType(rawValue: $0)?.toRustNetShieldLevel },
+            softJail: config.softJail,
+            portForwarding: config.portForwarding,
+            randomNat: config.randomNat,
+            circumventionRouting: config.circumventionRouting
+        )
+    }
+
+    /// Overrides LocalAgent settings according to an update, leaving the rest unchanged. Used to build the
+    /// settings forwarded to ProTUN from a partial update without persisting them to the configuration.
+    mutating func apply(_ update: ConnectionUpdate) {
+        if let netShield = update.netShield { netshieldLevel = netShield.toRustNetShieldLevel }
+        if let vpnAccelerator = update.vpnAccelerator { splitTcp = vpnAccelerator }
+        if let moderateNAT = update.moderateNAT { randomNat = moderateNAT.flag }
+        if let portForwarding = update.portForwarding { self.portForwarding = portForwarding }
+    }
+
+    public var agentTunnelFeatures: AgentTunnelFeatures {
+        AgentTunnelFeatures(
+            netshield: netshieldLevel?.netShieldType ?? .off,
+            vpnAccelerator: splitTcp ?? false,
+            natType: NATType(flag: randomNat ?? false),
+            portForwarding: portForwarding
+        )
+    }
+}
+
+public extension NetshieldLevel {
+    var netShieldType: NetShieldType {
         switch self {
         case .none: .off
         case .malwareFilter: .level1
         case .adsAndMalwareFilter: .level2
         case .adultAndAdsAndMalwareFilter: .level3
-        @unknown default:
-            unknownDefault(value: .level1)
+        @unknown default: .off
         }
     }
+}
 
-    var toPayload: IPCLANetshieldLevel {
+public extension NetShieldType {
+    var toRustNetShieldLevel: NetshieldLevel {
         switch self {
-        case .none: .off
-        case .malwareFilter: .malware
-        case .adsAndMalwareFilter: .adsAndMalware
-        case .adultAndAdsAndMalwareFilter: .adultContentAndAdsAndMalware
-        @unknown default:
-            unknownDefault(value: .malware)
+        case .off:
+            .none
+        case .level1:
+            .malwareFilter
+        case .level2:
+            .adsAndMalwareFilter
+        case .level3:
+            .adultAndAdsAndMalwareFilter
         }
     }
 }
@@ -76,29 +111,87 @@ extension LocalAgentSettingType: @retroactive CustomStringConvertible {
     }
 }
 
-public extension LocalAgentSettingType {
-    var toAgentSetting: LocalAgent.SettingType {
+public extension ConnectionState {
+    /// Bridges the ProTUN connection state into the ``ExtensionState`` recognized by the app
+    var extensionState: ExtensionState {
         switch self {
-        case .netshieldLevel: .netshieldLevel
-        case .bouncing: .bouncing
-        case .portForwarding: .portForwarding
-        case .splitTcp: .splitTcp
-        case .safeMode: .safeMode
-        case .randomNat: .randomNat
+        case let .disconnected(error):
+            .disconnected(reason: error?.ipcDisconnectReason ?? .unset)
+        case let .connecting(peers, waitReasons):
+            .connecting(
+                peerID: peers.first?.peerId,
+                waitReason: waitReasons.first?.ipcPeerWaitReason ?? .unset
+            )
+        case let .connectingToLocalAgent(peer, waitReason):
+            .connectingToLocalAgent(
+                peerID: peer.peerId,
+                waitReason: waitReason?.ipcAgentWaitReason ?? .unset,
+                jail: waitReason?.ipcAgentJailReason ?? .unset
+            )
+        case let .connected(peer, agent):
+            .connected(.init(
+                peerID: peer.peerId,
+                transport: .from(protocol: peer.protocol),
+                serverExitV4: agent?.serverExitV4,
+                serverExitV6: agent?.serverExitV6,
+                userISP: agent?.userIspName,
+                userIP: agent?.userIspIp
+            ))
         @unknown default:
-            unknownDefault(value: .netshieldLevel)
+            unknownDefault(value: .disconnected(reason: .unset))
         }
     }
 }
 
-public extension LocalAgentSettings {
-    var toVPNConnectionFeatures: VPNConnectionFeatures {
-        .init(
-            netshield: netshieldLevel?.toNetShieldType ?? .off,
-            vpnAccelerator: splitTcp ?? false,
-            natType: randomNat.flatMap { NATType(flag: $0) } ?? .default,
-            portForwarding: portForwarding
-        )
+private extension DisconnectReason {
+    var ipcDisconnectReason: IPCConnectionDisconnectReason {
+        switch self {
+        case .tunEstablishError: .tunEstablishError
+        @unknown default: unknownDefault(value: .unset)
+        }
+    }
+}
+
+private extension PeerConnectionWaitReason {
+    var ipcPeerWaitReason: IPCConnectionPeerWaitReason {
+        switch self {
+        case .waitingForNetwork: .waitingForNetwork
+        @unknown default: unknownDefault(value: .unset)
+        }
+    }
+}
+
+private extension AgentConnectionWaitReason {
+    var ipcAgentWaitReason: IPCConnectionAgentWaitReason {
+        switch self {
+        case .softJailed: .softJailed
+        case .hardJailed: .hardJailed
+        @unknown default: unknownDefault(value: .unset)
+        }
+    }
+
+    var ipcAgentJailReason: IPCConnectionAgentJailReason {
+        switch self {
+        case let .hardJailed(jails): jails.first?.ipcJailReason ?? .unset
+        default: .unset
+        }
+    }
+}
+
+private extension WaitJailReason {
+    var ipcJailReason: IPCConnectionAgentJailReason {
+        switch self {
+        case .badUserBehavior: .badUserBehavior
+        case .disabledUser: .disabledUser
+        case .lowPlan: .lowPlan
+        case .need2Fa: .need2Fa
+        case .pendingInvoice: .pendingInvoice
+        case .sessionOverLimit: .sessionOverLimit
+        case .waitingClientChallengeReply: .waitingClientChallengeReply
+        case .`internal`: .`internal`
+        case .other: .other
+        @unknown default: unknownDefault(value: .unset)
+        }
     }
 }
 
@@ -163,6 +256,42 @@ extension ErrorEvent: @retroactive CustomDebugStringConvertible {
     }
 }
 
+extension LocalAgentSettings: @retroactive CustomStringConvertible {
+    public var description: String {
+        var elements = ["fingerprint: \(fingerprint)"]
+        if let softJail {
+            elements.append("softJail: \(softJail)")
+        }
+        if let circumventionRouting {
+            elements.append("circumventionRouting: \(circumventionRouting)")
+        }
+        if let splitTcp {
+            elements.append("splitTcp: \(splitTcp)")
+        }
+        if let netshieldLevel {
+            elements.append("netshield: \(netshieldLevel)")
+        }
+        if let randomNat {
+            elements.append("randomNat: \(randomNat)")
+        }
+        if let portForwarding {
+            elements.append("portForwarding: \(portForwarding)")
+        }
+        return "(\(elements.joined(separator: ", ")))"
+    }
+}
+
+extension PeerInfo: @retroactive CustomStringConvertible {
+    public var description: String {
+        "(peer: \(peerId), " +
+            "ip: \(serverIp), " +
+            "priority: \(priority), " +
+            "udp: \(udpPorts), " +
+            "tcp: \(tcpPorts), " +
+            "tls: \(tlsPorts))"
+    }
+}
+
 extension ConnectionState: @retroactive CustomStringConvertible {
     public var description: String {
         switch self {
@@ -180,7 +309,7 @@ extension ConnectionState: @retroactive CustomStringConvertible {
     }
 }
 
-public extension WireGuardTransport {
+public extension Domain.WireGuardTransport {
     static func from(protocol: protun.`Protocol`) -> Self {
         switch `protocol` {
         case .wireguardUdp:

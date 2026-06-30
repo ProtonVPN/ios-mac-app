@@ -54,6 +54,7 @@ let package = Package(
         .package(path: "../../Foundations/PMLogger"),
 
         .package(path: "../../Shared/Connection"),
+        .package(path: "../../Shared/ExtensionIPC"),
 
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
         .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
@@ -67,12 +68,15 @@ let package = Package(
                 "Domain",
                 "PMLogger",
                 .product(name: "ConnectionShared", package: "Connection"),
+                .product(name: "VPNCoreCommon", package: "vpn-core-apple"),
                 .product(name: "VPNCoreTypes", package: "vpn-core-apple"),
                 .product(name: "VPNCoreExtension", package: "vpn-core-apple"),
                 .product(name: "LocalAgent", package: "Connection"),
                 .product(name: "LocalAgentIPC", package: "Connection"),
                 .product(name: "NetworkingErgonomics", package: "Ergonomics"),
+                .product(name: "ExtensionIPC", package: "ExtensionIPC"),
                 .target(name: "protun"),
+                .target(name: "XPCAuditToken", condition: .when(platforms: [.macOS])),
 
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
@@ -80,6 +84,7 @@ let package = Package(
             ],
             plugins: protunExtensionPlugins
         ),
+        .target(name: "XPCAuditToken"),
         ProTUNFFITargetKind.current.target,
     ]
 )

@@ -28,11 +28,11 @@ public enum TunnelConfigurationOperation {
     case reconfiguration(Set<ConnectionChange>)
 }
 
-struct ManagerConfigurator {
-    typealias ConfigurationHandler = @Sendable (inout TunnelProviderManager, TunnelConfigurationOperation) async throws -> Void
+package struct ManagerConfigurator {
+    public typealias ConfigurationHandler = @Sendable (inout TunnelProviderManager, TunnelConfigurationOperation) async throws -> Void
 
-    private(set) var changes: @Sendable (ServerConnectionIntent) throws -> Set<ConnectionChange>
-    private(set) var configure: ConfigurationHandler
+    public private(set) var changes: @Sendable (ServerConnectionIntent) throws -> ConnectionUpdate
+    public private(set) var configure: ConfigurationHandler
 }
 
 /// Convenience API with labels
@@ -48,10 +48,10 @@ extension ManagerConfigurator {
 }
 
 extension ManagerConfigurator: DependencyKey {
-    static let liveValue: Self = .wireGuardConfigurator
+    package static let liveValue: Self = .wireGuardConfigurator
 }
 
-extension DependencyValues {
+package extension DependencyValues {
     var tunnelProviderConfigurator: ManagerConfigurator {
         get { self[ManagerConfigurator.self] }
         set { self[ManagerConfigurator.self] = newValue }

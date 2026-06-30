@@ -32,24 +32,25 @@ import VPNAppCore
 public struct ConnectionFeature: Sendable {
     @Dependency(\.sessionChangeNotifier) private var sessionChangeNotifier
     @Dependency(\.connectionIntentResolver) private var intentResolver
-    @Dependency(\.connectionFeatureProvider) private var connectionFeatureProvider
+    @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
 
     public init() {}
 
     public struct State: Equatable, Sendable {
         @SharedReader(.userTier) public var userTier: Int?
+
         var connectionState: ConnectionState
         var shouldRegisterServerChangeOnConnection: Bool // TODO: ProTUN: post connection events that some other component can hook into to do this, similarly to Telemetry
-        var core: CoreConnectionFeature.State
+        var tunnel: ExtensionFeature.State
 
         package init(
             connectionState: ConnectionState,
             shouldRegisterServerChangeOnConnection: Bool,
-            core: CoreConnectionFeature.State
+            tunnel: ExtensionFeature.State
         ) {
             self.connectionState = connectionState
             self.shouldRegisterServerChangeOnConnection = shouldRegisterServerChangeOnConnection
-            self.core = core
+            self.tunnel = tunnel
         }
     }
 
@@ -57,7 +58,7 @@ public struct ConnectionFeature: Sendable {
     public enum Action: Sendable {
         case prepare(ConnectionPreparationIntent)
         case finishedPreparing(Result<ServerConnectionIntent, IntentResolutionError>)
-        case core(CoreConnectionFeature.Action)
+        case tunnel(ExtensionFeature.Action)
         case input(Input)
         case delegate(Delegate)
         case stopObserving
@@ -83,35 +84,29 @@ public struct ConnectionFeature: Sendable {
             case connectionFailed(ConnectionError)
             case intentResolutionFailed(ConnectionPreparationIntent, with: ConnectionIntentResolutionError)
             case localAgentNotice(LocalAgentTwoFactorAuthenticationError)
+            /// The extension reported an error (e.g. a requested setting was policy-refused, or a config update failed).
+            case errorReported(ExtensionError)
         }
     }
 
     private enum CancelID {
         case preparation
-        case connectionTimeout
         case observation
     }
 
     public var body: some Reducer<State, Action> {
-        Scope(state: \.core, action: \.core) { CoreConnectionFeature() } // Firstly, process internal connection events
+        Scope(state: \.tunnel, action: \.tunnel) { ExtensionFeature() }
         Reduce { state, action in
             switch action {
             case .input(.onLaunch):
                 return .merge(
-                    .merge(
-                        .send(.core(.startObserving)),
-                        // logout or guest→authenticated transition
-                        .listen(to: sessionChangeNotifier.stream()) { _ in .input(.onSessionChange) }
-                    ).cancellable(id: CancelID.observation, cancelInFlight: true),
-                    .run { _ in
-                        @Dependency(\.localAgent) var localAgentClient
-                        let features = connectionFeatureProvider.connectionFeatures()
-                        localAgentClient.writeSettings { $0 = IPCLASettingsPayload(features) }
-                    }
-                )
+                    .send(.tunnel(.startObserving)),
+                    // Listen for session changes (logout or guest --> authenticated transitions)
+                    .listen(to: sessionChangeNotifier.stream()) { _ in .input(.onSessionChange) }
+                ).cancellable(id: CancelID.observation, cancelInFlight: true)
 
             case .stopObserving:
-                return .merge(.send(.core(.stopObserving)), .cancel(id: CancelID.observation))
+                return .merge(.send(.tunnel(.stopObserving)), .cancel(id: CancelID.observation))
 
             case let .input(.connect(intent)):
                 do throws(ConnectionIntentResolutionError) {
@@ -126,22 +121,30 @@ public struct ConnectionFeature: Sendable {
                 return .send(.prepare(intent))
 
             case let .input(.applySettings(agentFeatures)):
-                return .run { _ in
-                    @Dependency(\.localAgent) var localAgentClient
-                    try localAgentClient.postRequestToExtension(.setFeatures(agentFeatures))
+                // Input goes directly to the tunnel IPC which requests the new features.
+                log.info("applySettings", category: .connection, metadata: ["features": "\(agentFeatures)"])
+                var update = ConnectionUpdate()
+                for feature in agentFeatures {
+                    switch feature {
+                    case let .netShield(type): update.netShield = type
+                    case let .vpnAccelerator(enabled): update.vpnAccelerator = enabled
+                    case let .moderateNAT(type): update.moderateNAT = type
+                    case let .portForwarding(enabled): update.portForwarding = enabled
+                    }
                 }
+                return .send(.tunnel(.requestConfigChange(update)))
 
             case .input(.disconnect):
                 return .merge(
                     .cancel(id: CancelID.preparation),
-                    .send(.core(.disconnect(.userIntent)))
+                    .send(.tunnel(.disconnect(nil)))
                 )
 
             case .input(.onLogout):
-                return .merge(.send(.stopObserving), .send(.core(.handleLogout)))
+                return .merge(.send(.stopObserving), .send(.tunnel(.cleanup)))
 
             case .input(.onSessionChange):
-                return .send(.core(.handleLogout))
+                return .send(.tunnel(.cleanup))
 
             case let .prepare(intent):
                 state.shouldRegisterServerChangeOnConnection = intent.spec.location == .any(.random)
@@ -156,39 +159,49 @@ public struct ConnectionFeature: Sendable {
                 }.cancellable(id: CancelID.preparation, cancelInFlight: true)
 
             case let .finishedPreparing(.success(resolvedIntent)):
-                return .send(.core(.connect(resolvedIntent)))
+                return .send(.tunnel(.connect(resolvedIntent)))
 
             case let .finishedPreparing(.failure(error)):
                 log.error("Failed to preparing connection with error: \(error)")
                 // Revert state to actual tunnel state
-                state.connectionState = ConnectionState(tunnel: state.core.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
+                state.connectionState = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
                 return .send(.delegate(.connectionFailed(.preparation(.intentResolution(error)))))
 
-            case let .core(.delegate(.stateChanged(.disconnected(.some(error))))):
+            case let .tunnel(.tunnelStatusChanged(.disconnected(.some(error)))):
                 state.connectionState = .disconnected
                 return .send(.delegate(.connectionFailed(.tunnel(error))))
 
-            case let .core(.delegate(.stateChanged(.connected(_, connectionData)))):
+            case let .tunnel(.tunnelStatusChanged(.connected(_, connectionData))):
+                log.info(
+                    "Tunnel connection finished",
+                    category: .connection,
+                    metadata: ["date": "\(connectionData.connectionDate)", "serverID": "\(connectionData.currentPeerId ?? "")"]
+                )
                 if state.shouldRegisterServerChangeOnConnection {
-                    @Dependency(\.serverChangeAuthorizer) var authorizer
-                    authorizer.registerServerChange(connectedAt: connectionData.connectionDate)
+                    serverChangeAuthorizer.registerServerChange(connectedAt: connectionData.connectionDate)
                 }
-                state.connectionState = ConnectionState(tunnel: state.core.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
+                state.connectionState = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
                 return .none
 
-            case let .core(.delegate(.stateChanged(newState))):
-                state.connectionState = ConnectionState(tunnel: newState, fallbackSpec: state.connectionState.resolvedSpec)
+            case .tunnel(.tunnelStatusChanged):
+                state.connectionState = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
                 return .none
 
-            case let .core(.delegate(.error(connectionError))):
-                return .send(.delegate(.connectionFailed(connectionError)))
+            case let .tunnel(.delegate(.timedOut(stage))):
+                return .send(.delegate(.connectionFailed(.timeout(stage))))
 
-            case let .core(.delegate(.featuresChanged(features))):
-                return .run { _ in
-                    connectionFeatureProvider.setConnectionFeatures(features)
-                }
+            case let .tunnel(.delegate(.reconfigurationFailed(error))):
+                // Reconfiguring an already-running tunnel failed. Make sure we have an accurate view of the current
+                // tunnel state in case the extension couldn't notify us, and then surface the error.
+                state.connectionState = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
+                return .send(.delegate(.connectionFailed(.tunnel(.reconfigurationFailure(error)))))
 
-            case .core:
+            case let .tunnel(.delegate(.errorReported(error))):
+                log.warning("Extension reported error", category: .connection, metadata: ["error": "\(error)"])
+                SentryHelper.shared?.log(error: error)
+                return .send(.delegate(.errorReported(error)))
+
+            case .tunnel:
                 return .none
 
             case .delegate:
@@ -251,7 +264,7 @@ public extension ConnectionFeature.State {
     static let initialState = ConnectionFeature.State(
         connectionState: .resolving,
         shouldRegisterServerChangeOnConnection: false,
-        core: .initialCoreConnectionState
+        tunnel: .unknown
     )
 }
 
@@ -262,8 +275,8 @@ extension ConnectionFeature.Action: CustomDebugStringConvertible {
             ".prepare(\(intent))"
         case let .finishedPreparing(result):
             ".finishedPreparing(\(result))"
-        case let .core(action):
-            ".core(\(action.debugDescription))"
+        case let .tunnel(action):
+            ".tunnel(\(action.debugDescription))"
         case let .input(input):
             ".input(\(input.debugDescription))"
         case let .delegate(delegate):
@@ -304,6 +317,8 @@ extension ConnectionFeature.Action.Delegate: CustomDebugStringConvertible {
             ".intentResolutionFailed(\(intent), \(resolutionError))"
         case let .localAgentNotice(error):
             ".localAgentNotice(\(error.errorCodeString))"
+        case let .errorReported(error):
+            ".errorReported(\(error))"
         }
     }
 }
@@ -355,15 +370,25 @@ extension ConnectionState {
     /// IKE configurations have no `connectionSpec`, that's why we need a `fallbackSpec` for IKE.
     init(tunnel: ExtensionFeature.State, fallbackSpec: ConnectionSpec? = nil) {
         func resolvedSpec(for tunnelConfig: TunnelConfiguration) -> ConnectionSpec {
-            guard tunnelConfig.tunnelProtocol == .ike, let fallbackSpec else {
+            #if os(macOS)
+                guard tunnelConfig.tunnelProtocol == .ike, let fallbackSpec else {
+                    return tunnelConfig.connectionSpec
+                }
+                return fallbackSpec
+            #else
                 return tunnelConfig.connectionSpec
-            }
-            return fallbackSpec
+            #endif
         }
 
         switch tunnel {
         case .unknown:
             self = .resolving
+
+        case let .connectingToLocalAgent(tunnelConfig):
+            #if os(macOS)
+                assert(tunnelConfig.tunnelProtocol != .ike, "IKE should have no local agent")
+            #endif
+            fallthrough
 
         case let .connecting(tunnelConfig):
             @Dependency(\.serverIdentifier) var identifier
@@ -384,8 +409,9 @@ extension ConnectionState {
 
         case let .connected(tunnelConfig, connectionData):
             @Dependency(\.serverIdentifier) var identifier
-            guard let server = identifier.fullServerInfo(connectionData.currentPeerId) else {
-                log.error("Server with id \(connectionData.currentPeerId) not found")
+            guard let peerID = connectionData.currentPeerId,
+                  let server = identifier.fullServerInfo(peerID) else {
+                log.error("Server with id \(optional: connectionData.currentPeerId) not found")
                 self = .resolving
                 return
             }

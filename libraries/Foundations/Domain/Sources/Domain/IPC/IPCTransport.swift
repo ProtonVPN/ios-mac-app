@@ -56,7 +56,7 @@ struct IPCNEChannel {
     ) async throws -> R {
         var retryIntervalDuration: Duration = baseInterval
 
-        for _ in 1 ... Self.maxRetries {
+        for _ in 0 ..< retriesCount {
             try Task.checkCancellation()
 
             if let response = try await work() {

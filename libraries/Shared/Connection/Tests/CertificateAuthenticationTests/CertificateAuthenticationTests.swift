@@ -19,7 +19,7 @@
 import ComposableArchitecture
 @testable import CoreConnection
 import CoreConnectionTestSupport
-import struct Domain.VPNConnectionFeatures
+import struct Domain.AgentTunnelFeatures
 import Foundation
 import VPNShared
 import VPNSharedTesting
@@ -107,7 +107,7 @@ final class CertificateAuthenticationTests: XCTestCase {
 //        let tomorrow = now.addingTimeInterval(.days(1))
 //        let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
 //        let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
-//        let storedFeatures = VPNConnectionFeatures(
+//        let storedFeatures = AgentTunnelFeatures(
 //            netshield: .off,
 //            vpnAccelerator: false,
 //            bouncing: "0",
@@ -115,7 +115,7 @@ final class CertificateAuthenticationTests: XCTestCase {
 //            safeMode: false,
 //            portForwarding: false
 //        )
-//        let newFeatures = VPNConnectionFeatures(
+//        let newFeatures = AgentTunnelFeatures(
 //            netshield: .level2,
 //            vpnAccelerator: true,
 //            bouncing: "1",
@@ -179,7 +179,7 @@ final class CertificateAuthenticationTests: XCTestCase {
 //
 //        let mockStorage = VpnAuthenticationStorage.testStorage(keys: mockKeys)
 //
-//        let expectedFeatures = VPNConnectionFeatures(
+//        let expectedFeatures = AgentTunnelFeatures(
 //            netshield: .level1,
 //            vpnAccelerator: false,
 //            bouncing: nil,
@@ -241,7 +241,7 @@ final class CertificateAuthenticationTests: XCTestCase {
 //            certificate: mockCertificate
 //        )
 //
-//        let newFeatures = VPNConnectionFeatures(
+//        let newFeatures = AgentTunnelFeatures(
 //            netshield: .level2,
 //            vpnAccelerator: true,
 //            bouncing: "1",

@@ -49,7 +49,7 @@ public enum ConnectionError: Error, Equatable, Sendable {
     /// Connection was attempted to a server that is no longer in the server list.
     case serverMissing
     /// The connection timed out.
-    case timeout(CoreConnectionFeature.ConnectionStage)
+    case timeout(ConnectionStage)
 }
 
 extension ConnectionError: ProtonVPNError {
@@ -88,8 +88,6 @@ extension ConnectionError: ProtonVPNError {
                 "TOTS"
             case .tunnel(.connection):
                 "TOTC"
-            case .refreshingCertificate:
-                "TORC"
             case .connectingToLocalAgentServer:
                 "TOLA"
             }

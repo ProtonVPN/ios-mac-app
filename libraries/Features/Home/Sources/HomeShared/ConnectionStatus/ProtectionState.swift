@@ -21,52 +21,27 @@ import Connection
 import Dependencies
 import Domain
 import Foundation
-import NetShield
 import Strings
 import VPNAppCore
 
 public enum ProtectionState: Equatable {
     case resolving // Transitionary state. Shown at app start while we figure out what state the tunnel is in.
-    case protected(netShield: NetShieldModel?)
-    case protectedSecureCore(netShield: NetShieldModel?)
+    case protected
+    case protectedSecureCore
     case unprotected
     case protecting(country: String, ip: String)
-
-    func copy(withNetShield netShield: NetShieldModel) -> ProtectionState {
-        switch self {
-        case .resolving:
-            self
-        case .protected:
-            .protected(netShield: netShield.copy(enabled: true))
-        case .protectedSecureCore:
-            .protectedSecureCore(netShield: netShield.copy(enabled: true))
-        case .unprotected:
-            self
-        case .protecting:
-            self
-        }
-    }
-
-    public var netShieldModel: NetShieldModel? {
-        switch self {
-        case let .protected(netShield), let .protectedSecureCore(netShield):
-            netShield
-        case .unprotected, .protecting, .resolving:
-            nil
-        }
-    }
 }
 
 extension ConnectionState {
-    func protectionState(country: String, ip: String, netShieldModel: NetShieldModel? = nil) -> ProtectionState {
+    func protectionState(country: String, ip: String) -> ProtectionState {
         switch self {
         case .disconnected:
             return .unprotected
         case let .connected(tunnelConfig, _):
             if case .secureCore = tunnelConfig.connectionSpec.location {
-                return .protectedSecureCore(netShield: netShieldModel?.copy(enabled: true))
+                return .protectedSecureCore
             }
-            return .protected(netShield: netShieldModel?.copy(enabled: true))
+            return .protected
         case .connecting:
             return .protecting(country: country, ip: ip)
         case .resolving:

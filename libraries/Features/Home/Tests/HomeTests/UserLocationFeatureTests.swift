@@ -103,6 +103,9 @@ struct UserLocationFeatureTests {
         await store.receive(\.delegate.userLocationChanged)
 
         store.dependencies.date = .constant(nextRefreshDate)
+        // Ensure the interval timer has registered its sleep with the clock before advancing (see
+        // `awaitTimerSubscription`); otherwise the advance can race ahead of the timer's subscription.
+        await clock.awaitTimerSubscription()
         await clock.advance(by: .hours(1))
 
         await store.receive(\.fetchUserLocation) {
@@ -153,6 +156,9 @@ struct UserLocationFeatureTests {
 
         $connectionState.withLock { $0 = .connecting(.unresolved(.init(spec: .defaultFastest, acceptableProtocols: .all))) }
         store.dependencies.date = .constant(nextRefreshDate)
+        // Ensure the interval timer has registered its sleep with the clock before advancing (see
+        // `awaitTimerSubscription`); otherwise the advance can race ahead of the timer's subscription.
+        await clock.awaitTimerSubscription()
         await clock.advance(by: .hours(1))
 
         await store.receive(\.fetchUserLocation)
@@ -239,6 +245,9 @@ struct UserLocationFeatureTests {
 
         // Trigger a second fetch after one cooldown interval; location remains unchanged.
         store.dependencies.date = .constant(firstRefreshDate)
+        // Ensure the interval timer has registered its sleep with the clock before advancing (see
+        // `awaitTimerSubscription`); otherwise the advance can race ahead of the timer's subscription.
+        await clock.awaitTimerSubscription()
         await clock.advance(by: .hours(1))
         await store.receive(\.fetchUserLocation) {
             $0.$lastLocationRetrieval.withLock { $0 = firstRefreshDate }
@@ -252,5 +261,31 @@ struct UserLocationFeatureTests {
         await store.receive(\.fetchUserLocation)
         await store.receive(\.userLocationFetchFinished.failure.cooldown)
         await store.send(.tearDown)
+    }
+}
+
+private extension TestClock {
+    /// Blocks until the clock has at least one registered suspension — i.e. the long-living
+    /// `Effect.timer` started by `.listen` has reached its first `clock.sleep` and computed its tick
+    /// deadline against the current `now`.
+    ///
+    /// `clock.advance(by:)` only `megaYield`s (a best-effort, fixed-count yield) before resolving
+    /// suspensions, so on a contended cooperative pool — e.g. when another suite runs in parallel and
+    /// toggles the global main-serial-executor that `TestStore` installs — the advance can run *before*
+    /// the merged timer effect subscribes. Its first tick is then scheduled off the advanced `now`,
+    /// never fires, and the test times out waiting for `.fetchUserLocation`. Draining the `.listen`
+    /// effect chain via `receive` first makes that subscription likely but not guaranteed.
+    ///
+    /// `TestClock` exposes no blocking "await subscription" primitive, so we poll `checkSuspension()`,
+    /// which throws `SuspensionError` once a sleeper is registered. The bound is only a safety net: in
+    /// practice the timer is already subscribed and this returns on the first iteration.
+    func awaitTimerSubscription() async {
+        for _ in 0 ..< 100 {
+            do {
+                try await checkSuspension()
+            } catch {
+                return // a suspension is registered → timer subscribed → safe to advance
+            }
+        }
     }
 }

@@ -512,8 +512,6 @@ private extension HomeFeature {
                         openCredentiallessSignUp()
                     }
             #endif
-            case let .connection(.core(.localAgentEvent(.stats(stats)))):
-                return .send(.connectionStatus(.newNetShieldStats(stats.toNetShieldModel)))
             case let .connection(.delegate(.connectionFailed(error))):
                 SentryHelper.shared?.log(error: error)
                 state.alert = domainAlertState(from: error.alert)
@@ -626,7 +624,7 @@ private extension HomeFeature {
     }
 }
 
-private extension LocalAgent.Stats {
+extension LocalAgent.Stats {
     var toNetShieldModel: NetShield.NetShieldModel {
         NetShieldModel(
             trackersCount: Int(trackersBlocked ?? 0),

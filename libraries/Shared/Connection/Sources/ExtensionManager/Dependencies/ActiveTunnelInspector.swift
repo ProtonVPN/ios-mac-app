@@ -20,6 +20,7 @@ import Dependencies
 import DependenciesMacros
 import NetworkExtension
 
+#if os(macOS)
 /// Read-only view onto the currently-loaded VPN tunnel configurations, intended for cross-user-tunnel
 /// detection on app launch / login.
 ///
@@ -71,3 +72,4 @@ public extension DependencyValues {
         set { self[ActiveTunnelInspector.self] = newValue }
     }
 }
+#endif

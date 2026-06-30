@@ -34,21 +34,20 @@ struct IPCHelperContext {
         return context.mmapFileURL
     }
 
-    static func sharedBuffer() throws -> IPCNotifications.SharedBuffer {
-        guard let context = current else { throw Error.noContextProvided }
-        return try IPCNotifications.SharedBuffer(url: context.mmapFileURL)
-    }
-
-    static func channel<T>(ofType _: T.Type) throws -> IPCNotifications.Channel<T> {
+    static func writer<T: BitwiseCopyable>(
+        ofType _: T.Type
+    ) throws -> IPCNotifications.RawChannel<T, IPCNotifications.Writer> {
         guard let context = current else { throw Error.noContextProvided }
         guard let notification = context.notification else { throw Error.noNotificationProvided }
-        return try IPCNotifications.Channel<T>(notification: notification, fileURL: context.mmapFileURL)
+        return try .init(notification: notification, fileURL: context.mmapFileURL)
     }
 
-    static func rawChannel<T>(ofType _: T.Type) throws -> IPCNotifications.RawChannel<T> {
+    static func reader<T: BitwiseCopyable>(
+        ofType _: T.Type
+    ) throws -> IPCNotifications.RawChannel<T, IPCNotifications.Reader> {
         guard let context = current else { throw Error.noContextProvided }
         guard let notification = context.notification else { throw Error.noNotificationProvided }
-        return try IPCNotifications.RawChannel<T>(notification: notification, fileURL: context.mmapFileURL)
+        return try .init(notification: notification, fileURL: context.mmapFileURL)
     }
 
     @TaskLocal fileprivate static var current: IPCHelperContext?

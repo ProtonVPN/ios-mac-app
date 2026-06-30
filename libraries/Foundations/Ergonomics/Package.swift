@@ -101,7 +101,11 @@ let package = Package(
         ),
         .target(
             name: "IPCErgonomics",
-            dependencies: ["Ergonomics", "IPCSeqlockHelpers"],
+            dependencies: [
+                "Ergonomics",
+                "IPCSeqlockHelpers",
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
+            ],
             path: "Sources/IPC/Library"
         ),
         .target(

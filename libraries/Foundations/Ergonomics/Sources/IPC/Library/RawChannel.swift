@@ -16,9 +16,38 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import AsyncAlgorithms
+import ConcurrencyExtras
 import Ergonomics
 import Foundation
 import IPCSeqlockHelpers
+import struct os.OSAllocatedUnfairLock
+
+// MARK: - Channel roles
+
+/// Type-safe role for a ``IPCNotifications/RawChannel``. The conforming struct decides how the channel accesses its
+/// shared region, which in turn decides what it can do.
+public protocol RawChannelRole {
+    /// How a channel of this role holds its ``IPCNotifications/SharedRegion``.
+    associatedtype RegionStore: Sendable
+
+    /// For readers, just returns a buffer. Writers return a lock around the same type.
+    static func makeStore(_ region: IPCNotifications.SharedRegion) -> RegionStore
+}
+
+public extension IPCNotifications {
+    enum Reader: RawChannelRole {
+        public static func makeStore(_ region: SharedRegion) -> SharedRegion {
+            region
+        }
+    }
+
+    enum Writer: RawChannelRole {
+        public static func makeStore(_ region: SharedRegion) -> OSAllocatedUnfairLock<SharedRegion> {
+            .init(initialState: region)
+        }
+    }
+}
 
 // MARK: - RawChannel
 
@@ -26,205 +55,176 @@ public extension IPCNotifications {
     /// A channel that maps a fixed-layout payload struct directly into shared memory,
     /// bypassing `Codable` serialisation entirely.
     ///
-    /// The mmap region is laid out as `[IPCSharedHeader][Payload]`, where
-    /// `IPCSharedHeader` holds the `_Atomic uint64_t` seqlock at offset 0.
-    /// `RawChannel` computes the exact payload offset using `MemoryLayout`, matching
-    /// the C compiler's `offsetof(Region, payload)`.
+    /// The shared region is laid out as `[IPCSharedHeader][Payload]`, where `IPCSharedHeader` holds the atomic seqlock.
+    /// `RawChannel` computes the exact payload offset using `MemoryLayout`, to detect updates through `notify_post`.
     ///
-    /// - ``mutate(_:)`` acquires the seqlock, hands a pointer to the payload to the
-    ///   caller, then releases the seqlock and posts a Darwin notification.
-    /// - ``read()`` takes a consistent snapshot of the payload via the seqlock read
-    ///   protocol, retrying on write contention.
-    final class RawChannel<Payload: BitwiseCopyable>: Sendable {
+    /// The `Role` associated type ensures that an instance can be used for either reading or writing, but not both.
+    ///
+    /// - Warning: only one process may use a writeable channel for a region. This is a unidirectional primitive.
+    final class RawChannel<Payload: BitwiseCopyable, Role: RawChannelRole>: Sendable {
         public let notification: Notification
         let payloadOffset: Int
-        private let buffer: MmapBuffer
 
-        public init(notification: Notification, fileURL: URL) throws {
+        /// The shared region, stored as the `Role` dictates: a bare region for a ``Reader``, or a region behind an
+        /// `OSAllocatedUnfairLock` for a ``Writer`` (where the lock both serialises in-process writers and *is* the
+        /// thing held for each mutation's critical section).
+        private let store: Role.RegionStore
+
+        /// Byte offset of this channel's sub-region (its seqlock header) within the shared buffer.
+        private let regionOffset: Int
+
+        /// Absolute byte offset of this channel's payload within the shared buffer (sub-region header + alignment pad).
+        var payloadBaseOffset: Int {
+            regionOffset + payloadOffset
+        }
+
+        private static func computePayloadOffset() -> Int {
             let headerSize = MemoryLayout<IPCSharedHeader>.size
             let alignment = MemoryLayout<Payload>.alignment
             // Bit trick to round headerSize up to the next multiple of the `Payload` alignment.
-            let payloadOffset = (headerSize + alignment - 1) & ~(alignment - 1)
-            self.buffer = try .init(path: fileURL.path(), size: payloadOffset + MemoryLayout<Payload>.size)
-            self.payloadOffset = payloadOffset
+            return (headerSize + alignment - 1) & ~(alignment - 1)
+        }
+
+        /// A view onto a sub-region of a shared buffer. Assumes a seqlock at `regionOffset`, followed by the payload.
+        public init(notification: Notification, region: SharedRegion, regionOffset: Int) {
+            self.payloadOffset = Self.computePayloadOffset()
+            self.store = Role.makeStore(region)
+            self.regionOffset = regionOffset
             self.notification = notification
         }
+
+        public convenience init(notification: Notification, fileURL: URL) throws {
+            let payloadOffset = Self.computePayloadOffset()
+            let region = try SharedRegion(fileURL: fileURL, size: payloadOffset + MemoryLayout<Payload>.size)
+            self.init(notification: notification, region: region, regionOffset: 0)
+        }
     }
 }
-
-// MARK: - Write
-
-public extension IPCNotifications.RawChannel {
-    /// Mutates the payload in-place under seqlock protection, then notify observers.
-    /// - Parameter body: a closure with an instance you can modify.
-    func mutate(_ body: (inout Payload) -> Void) {
-        let offset = payloadOffset
-        buffer.withUnsafeMutableBytes { base in
-            ipc_seqlock_begin_write(base)
-            body(&base.advanced(by: offset).assumingMemoryBound(to: Payload.self).pointee)
-            ipc_seqlock_end_write(base)
-        }
-        IPCNotifications.post(notification)
-    }
-
-    struct FieldNotFound: Swift.Error {}
-
-    /// Mutates a specific field of the payload under seqlock protection, then notify observers of the field that was modified.
-    /// - Parameters:
-    ///   - keyPath: a `KeyPath` of the field you want to modify.
-    ///   - value: the new value you want to apply for the field.
-    func mutate<T>(_ keyPath: KeyPath<Payload, T>, to value: T) throws {
-        guard let fieldOffset = MemoryLayout<Payload>.offset(of: keyPath) else {
-            throw FieldNotFound()
-        }
-        let offset = payloadOffset + fieldOffset
-        buffer.withUnsafeMutableBytes { base in
-            ipc_seqlock_begin_write(base)
-            base.advanced(by: offset).assumingMemoryBound(to: T.self).pointee = value
-            ipc_seqlock_end_write(base)
-        }
-        // We leverage the UInt64 token to use the upper 4 bytes for the field offset,
-        // and the remaining 4 bytes for the size of the field
-        let sizeOfField = MemoryLayout<T>.size
-        let payload = (UInt64(UInt32(bitPattern: Int32(fieldOffset))) << 32) | UInt64(UInt32(bitPattern: Int32(sizeOfField)))
-        IPCNotifications.postRawState(notification, state: payload)
-    }
-}
-
-// MARK: - Read
 
 public extension IPCNotifications.RawChannel {
     struct SeqlockContention: Swift.Error {}
 
+    /// Thrown when reading a region whose backing hasn't been attached yet (macOS).
+    struct NotAttached: Swift.Error {}
+
+    /// Default number of seqlock read attempts before giving up.
+    static var defaultReadRetries: Int {
+        20
+    }
+}
+
+// MARK: - Writers
+
+public extension IPCNotifications.RawChannel where Role == IPCNotifications.Writer {
+    /// Mutates the payload in-place under seqlock protection, then notifies observers.
+    /// - Parameter body: invoked while holding a lock, do not yield to any continuations within this closure.
+    func mutate(_ body: (inout Payload) -> Void) {
+        // Locking serialises in-process writers for this channel.
+        store.withLock { region in
+            region.withMutableSpan { span in
+                Seqlock.performingWrite(to: &span, at: regionOffset) { span in
+                    span.withUnsafeMutableBytes { raw in
+                        let payload = raw.baseAddress!
+                            .advanced(by: payloadBaseOffset)
+                            .bindMemory(to: Payload.self, capacity: 1)
+                        body(&payload.pointee)
+                    }
+                }
+            }
+        }
+        IPCNotifications.signal(notification)
+    }
+
+    /// Takes the seqlock and clears the payload by storing its all-zeros value, then notifies the readers.
+    func zero() {
+        store.withLock { region in
+            region.withMutableSpan { span in
+                Seqlock.performingWrite(to: &span, at: regionOffset) { span in
+                    span.storeBytes(
+                        of: Ergonomics.zero(value: Payload.self),
+                        toByteOffset: payloadBaseOffset,
+                        as: Payload.self
+                    )
+                }
+            }
+        }
+        IPCNotifications.signal(notification)
+    }
+}
+
+// MARK: - Readers
+
+public extension IPCNotifications.RawChannel where Role == IPCNotifications.Reader {
     /// Reads a consistent snapshot.
     /// - Parameter retries: the amount of retries if seqlock doesn't match.
     /// - Returns: A `Payload` value, or throws if it wasn't able to extract a value from the buffer.
-    func read(retries: Int = 20) throws -> Payload {
-        let offset = payloadOffset
-        return try buffer.withUnsafeMutableBytes { base in
-            for _ in 0 ..< retries {
-                let seq = ipc_seqlock_read_begin(base)
-                let snapshot = base.advanced(by: offset).assumingMemoryBound(to: Payload.self).pointee
-                if ipc_seqlock_read_end(base, seq) {
-                    return snapshot
-                }
-            }
-            throw SeqlockContention()
-        }
+    func read(retries: Int = defaultReadRetries) throws -> Payload {
+        let (value, _) = try readField(at: payloadBaseOffset, of: Payload.self, retries: retries)
+        guard let value else { throw SeqlockContention() }
+        return value
     }
 
-    private func readField<T>(at offset: Int, of _: T.Type, retries: Int = 20) throws -> T {
-        try buffer.withUnsafeMutableBytes { base in
-            for _ in 0 ..< retries {
-                let seq = ipc_seqlock_read_begin(base)
-                let value = base.advanced(by: offset).assumingMemoryBound(to: T.self).pointee
-                if ipc_seqlock_read_end(base, seq) {
-                    return value
-                }
+    /// Reads a value at an absolute offset within the shared buffer, using that channel's seqlock for consistency.
+    ///
+    /// If the value has not changed since `lastSequence`, the returned value will be `nil`. Otherwise, returns the
+    /// updated value and the current sequence counter.
+    private func readField<T: BitwiseCopyable>(
+        at offset: Int,
+        of _: T.Type,
+        since lastSequence: UInt64 = ~0, // lets callers do a one-shot read without caring about the sequence number
+        retries: Int = defaultReadRetries
+    ) throws -> (value: T?, sequence: UInt64) {
+        guard let attempt = store.withSpan({ span in
+            Seqlock.tryingRead(from: span, at: regionOffset, since: lastSequence, retries: retries) { span in
+                span.unsafeLoad(fromByteOffset: offset, as: T.self)
             }
-            throw SeqlockContention()
+        }) else {
+            throw NotAttached()
         }
-    }
-}
-
-// MARK: - Observe
-
-public extension IPCNotifications.RawChannel {
-    /// Observes any payload posted to the channel on the main actor.
-    @discardableResult
-    func observe(
-        handler: @MainActor @escaping (Result<Payload, any Swift.Error>) -> Void
-    ) -> IPCNotifications.Token {
-        observe(on: .main) { result in
-            MainActor.assumeIsolated { handler(result) }
-        }
-    }
-
-    /// Observes any payload posted to the channel on a specific `DispatchQueue`.
-    @discardableResult
-    func observe(
-        on queue: DispatchQueue,
-        handler: @escaping (Result<Payload, any Swift.Error>) -> Void
-    ) -> IPCNotifications.Token {
-        IPCNotifications.observeRawState(notification, queue: queue) { _ in
-            do {
-                let value = try self.read()
-                handler(.success(value))
-            } catch {
-                handler(.failure(error))
-            }
-        }
+        guard let result = attempt else { throw SeqlockContention() }
+        return result
     }
 }
 
-public extension IPCNotifications.RawChannel {
-    /// Observes a specific field updated via the channel, with handling happening on the main actor.
-    @discardableResult
-    func observeField<T>(
-        _ keyPath: KeyPath<Payload, T>,
-        handler: @MainActor @escaping (Result<T, any Swift.Error>) -> Void,
-        onUnrelatedFieldChange: (() -> Void)? = nil
-    ) -> IPCNotifications.Token {
-        observeField(keyPath, on: .main) { result in
-            MainActor.assumeIsolated { handler(result) }
-        } onUnrelatedFieldChange: {
-            onUnrelatedFieldChange?()
-        }
+public extension IPCNotifications.RawChannel where Role == IPCNotifications.Reader {
+    /// A stream of payloads emitted from the channel. See ``stream(reconcileOn:_:)`` for `reconcileOn`.
+    func stream(reconcileOn resumeSignal: AsyncStream<Void> = .finished) -> AsyncStream<Payload> {
+        stream(reconcileOn: resumeSignal) { $0 }
     }
 
-    /// Observes a specific field updated via the channel, with handling happening on a specific `DispatchQueue`.
-    @discardableResult
-    func observeField<T>(
-        _ keyPath: KeyPath<Payload, T>,
-        on queue: DispatchQueue,
-        handler: @escaping (Result<T, any Swift.Error>) -> Void,
-        onUnrelatedFieldChange: (() -> Void)? = nil
-    ) -> IPCNotifications.Token {
-        IPCNotifications.observeRawState(notification, queue: queue) { payload in
-            // We're extracting the field offset via the 4 upper bytes of the notify token
-            let fieldOffset = Int(Int32(bitPattern: UInt32(payload >> 32)))
-            guard MemoryLayout<Payload>.offset(of: keyPath) == fieldOffset else {
-                onUnrelatedFieldChange?()
-                return
-            }
-            let offset = self.payloadOffset + fieldOffset
-            do {
-                let value = try self.readField(at: offset, of: T.self)
-                handler(.success(value))
-            } catch {
-                handler(.failure(error))
-            }
-        }
-    }
-}
-
-public extension IPCNotifications.RawChannel {
-    /// A stream of only success payloads emitted from the channel.
-    /// - Returns: An `AsyncStream` of `Payload` values.
-    func stream() -> AsyncStream<Payload> {
-        AsyncStream { continuation in
-            let token = observe { result in
-                if let value = try? result.get() {
-                    continuation.yield(value)
+    /// A stream of payloads transformed into a domain value `T`.
+    /// - Parameters:
+    ///   - reconcileOn: ticks (e.g. app resume) that re-check the channel for an update missed while suspended.
+    ///   - transform: maps each payload to the value callers actually want.
+    func stream<T: Sendable>(
+        reconcileOn resumeSignal: AsyncStream<Void> = .finished,
+        _ transform: @escaping @Sendable (Payload) -> T
+    ) -> AsyncStream<T> {
+        // Get updates to the Darwin notification here, and every time we get pinged check the seqlock to see if our
+        // field has changed. `readField` can fail if the read is interrupted too many times, but this is unlikely
+        // unless something in the extension is very wrong.
+        let posts = IPCNotifications.streamRawState(notification)
+        return AsyncStream { continuation in
+            let task = Task { [self] in
+                // `~0` is 0xFFFF... and matches no valid sequence, so the first `readField` should always work
+                var lastSequence: UInt64 = ~0
+                for await _ in merge(posts.map { _ in () }, resumeSignal) {
+                    guard let (payload, sequence) = try? readField(
+                        at: payloadBaseOffset,
+                        of: Payload.self,
+                        since: lastSequence
+                    ) else { continue }
+                    lastSequence = sequence
+                    guard let payload else { continue }
+                    continuation.yield(transform(payload))
                 }
             }
-            let observation = token.observation()
-            continuation.onTermination = { _ in observation.cancel() }
+            continuation.onTermination = { _ in task.cancel() }
         }
     }
 
-    /// A stream of fields updates of type `T` emitted from the channel.
-    /// - Parameter keyPath: a `KeyPath` of the field of type `T` that was modified.
-    /// - Returns: An `AsyncStream` of fields of type `T` values.
-    func stream<T>(forField keyPath: KeyPath<Payload, T>) -> AsyncStream<T> {
-        AsyncStream { continuation in
-            let token = observeField(keyPath) { result in
-                if let value = try? result.get() {
-                    continuation.yield(value)
-                }
-            }
-            let observation = token.observation()
-            continuation.onTermination = { _ in observation.cancel() }
-        }
+    /// A stream of a single field's values. Gets broadcasted with every update of the payload.
+    func stream<T: Sendable>(forField keyPath: KeyPath<Payload, T>) -> AsyncStream<T> {
+        stream { $0[keyPath: keyPath] }
     }
 }

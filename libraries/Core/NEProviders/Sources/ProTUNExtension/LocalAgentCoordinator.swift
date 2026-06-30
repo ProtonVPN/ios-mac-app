@@ -22,7 +22,6 @@ import Foundation
 import IPCErgonomics
 import LocalAgent
 import LocalAgentIPC
-import os
 import OSLog
 import protun
 
@@ -31,11 +30,9 @@ final class LocalAgentCoordinator: @unchecked Sendable {
         case forkSelectorRequest
     }
 
-    @Dependency(\.localAgent) var localAgentClient
+    @Dependency(\.extensionIPCServer) var extensionIPCServer
 
     let streamSource: StreamSource<Event>
-
-    let settings: OSAllocatedUnfairLock<LocalAgentSettings>
 
     private static let statsFetchingInterval: Duration = .seconds(30)
     private static let statsFetchingTolerance: Duration = .seconds(1)
@@ -44,21 +41,20 @@ final class LocalAgentCoordinator: @unchecked Sendable {
     private weak var adapter: ProTUNAdapter!
     private let continuation: AsyncStream<Event>.Continuation
 
-    init(adapter: ProTUNAdapter, initialSettings: LocalAgentSettings) {
+    init(adapter: ProTUNAdapter) {
         self.adapter = adapter
         let (stream, continuation) = AsyncStream<Event>.makeStream()
         self.streamSource = StreamSource.source(for: stream)
         self.continuation = continuation
-        self.settings = .init(initialState: initialSettings)
     }
 
     func start() async {
         await withTaskGroup(of: Void.self) { group in
             group.addTask {
-                await self.listenForRequests()
+                await self.listenToEvents()
             }
             group.addTask {
-                await self.listenToEvents()
+                await self.listenToConnectionState()
             }
             group.addTask {
                 await self.startStatsRunLoop()
@@ -68,26 +64,6 @@ final class LocalAgentCoordinator: @unchecked Sendable {
 }
 
 private extension LocalAgentCoordinator {
-    func listenForRequests() async {
-        let stream = localAgentClient.requestsStream()
-        for await request in stream {
-            Logger.localAgent.info("Received request \(request, privacy: .public)")
-
-            switch request {
-            case .getFeatures:
-                sendFeatures()
-            case let .setFeatures(features):
-                let settings = settings.withLock { settings in
-                    settings.update(with: features)
-                    return settings
-                }
-                adapter?.connection?.updateLocalAgentSettings(settings: settings)
-                // Maybe we should write instead when we receive an ack from ProTUN Rust lib?
-                localAgentClient.writeSettings { $0 = IPCLASettingsPayload(settings) }
-            }
-        }
-    }
-
     func listenToEvents() async {
         for await event in adapter.eventDelegate.eventSource.newStream {
             switch event {
@@ -116,17 +92,34 @@ private extension LocalAgentCoordinator {
                 )
             case .error(.apiSessionExpired):
                 continuation.yield(.forkSelectorRequest)
-            case .error(.certificateRefreshFatalError):
-                sendError(error: .certificateRefreshFatalError)
-            // TODO: ProTUN: enable ZeroPeer KS here once it is available
-            // + adapter?.connection?.disconnectAndWait()
-            case let .error(.localAgentSettingPolicyRefused(setting)):
-                Logger.localAgent.info("Policy refused to set \(setting)")
-                sendError(error: .localAgentSettingPolicyRefused(setting.toAgentSetting))
+            case let .error(protunError):
+                // TODO: ProTUN: enable ZeroPeer KS here once it is available
+                // if protunError == .certificateRefreshFatalError {
+                // + adapter?.connection?.disconnectAndWait()
+                // }
+                await sendError(error: .init(protunError))
             case .packetCaptureStarted, .packetCaptureStopped:
                 break
             @unknown default:
                 assertionFailure("Unknown value encountered in \(#function)")
+            }
+        }
+    }
+
+    /// Listen for connection-state updates from ProTUN and dispatch updates to the raw channels and protocol config.
+    func listenToConnectionState() async {
+        for await state in adapter.stateDelegate.stateSource.newStream {
+            // Every state transition includes the UUID of the current (or last) request handled by the
+            // ConfigurationStore, so the app can know if its requested settings have been applied.
+            let id = await adapter.currentRequestId
+
+            extensionIPCServer.publishExtensionState(state.connectionState.extensionState, id)
+
+            if let settings = state.connectionState.agentSettings {
+                // Publish changes to the app, and persist actual settings to disk in case we crash (or if user
+                // manually starts/stops the protocol from settings).
+                extensionIPCServer.publishFeatures(settings.agentTunnelFeatures)
+                await adapter?.enqueueEffectiveLocalAgentSettings(settings)
             }
         }
     }
@@ -141,81 +134,58 @@ private extension LocalAgentCoordinator {
 }
 
 private extension LocalAgentCoordinator {
-    func sendFeatures() {
-        do {
-            let currentSettings = settings.withLock { $0 }
-            localAgentClient.writeSettings { $0 = IPCLASettingsPayload(currentSettings) }
-            try localAgentClient.postEventFromExtension(event: .features(currentSettings.toVPNConnectionFeatures))
-        } catch {
-            Logger.localAgent.error("Failed to broadcast features (\(error))")
-        }
-    }
-
     func sendLocalAgentStats(stats: LocalAgent.Stats) {
-        do {
-            try localAgentClient.postEventFromExtension(event: .stats(stats))
-        } catch {
-            Logger.localAgent.error("Failed to broadcast local agent stats (\(error))")
-        }
+        extensionIPCServer.publishStats(stats)
     }
 
     func sendConnectionStats(stats: LocalAgent.ConnectionStats) {
-        do {
-            try localAgentClient.postEventFromExtension(event: .connectionStats(stats))
-        } catch {
-            Logger.localAgent.error("Failed to broadcast connection stats (\(error))")
-        }
+        extensionIPCServer.publishConnectionStats(stats)
     }
 
-    func sendError(error: LocalAgent.Error) {
-        do {
-            try localAgentClient.postEventFromExtension(event: .error(error))
-        } catch {
-            Logger.localAgent.error("Failed to broadcast error \(error)")
-        }
+    func sendError(error: LocalAgent.Error) async {
+        let id = await adapter.currentRequestId
+
+        extensionIPCServer.publishError(error, id)
     }
 }
 
-private extension IPCLASettingsPayload {
-    init(_ settings: LocalAgentSettings) {
-        self = .init(
-            netshield_level: settings.netshieldLevel?.toPayload ?? .unset,
-            vpn_accelerator: settings.splitTcp.map { $0 ? .enabled : .disabled } ?? .unset,
-            port_forwarding: settings.portForwarding.map { $0 ? .enabled : .disabled } ?? .unset,
-            random_nat: settings.randomNat.map { $0 ? .strict : .moderate } ?? .unset,
-            soft_jail: settings.softJail.map { $0 ? .enabled : .disabled } ?? .unset,
-            circumvention_routing: settings.circumventionRouting.map { $0 ? .enabled : .disabled } ?? .unset
-        )
-    }
-}
-
-extension LocalAgentSettings {
-    init(_ payload: IPCLASettingsPayload) {
-        self.init(
-            splitTcp: payload.vpn_accelerator == .unset ? nil : payload.vpn_accelerator == .enabled,
-            netshieldLevel: payload.netshield_level == .unset ? nil : payload.netshield_level.toLocalAgentNetshieldLevel,
-            softJail: payload.soft_jail == .unset ? nil : payload.soft_jail == .enabled,
-            portForwarding: payload.port_forwarding == .unset ? nil : payload.port_forwarding == .enabled,
-            randomNat: payload.random_nat == .unset ? nil : payload.random_nat == .strict,
-            circumventionRouting: payload.circumvention_routing == .unset ? nil : payload.circumvention_routing == .enabled
-        )
-    }
-}
-
-private extension IPCLANetshieldLevel {
-    var toLocalAgentNetshieldLevel: NetshieldLevel {
+extension ConnectionState {
+    var agentSettings: LocalAgentSettings? {
         switch self {
-        case .unset, .off:
-            return .none
-        case .malware:
-            return .malwareFilter
-        case .adsAndMalware:
-            return .adsAndMalwareFilter
-        case .adultContentAndAdsAndMalware:
-            return .adultAndAdsAndMalwareFilter
+        case let .connected(_, agentInfo):
+            agentInfo?.settings
+        default:
+            nil
+        }
+    }
+}
+
+extension LocalAgent.Error {
+    init(_ protunError: ErrorEvent) {
+        switch protunError {
+        case .apiSessionExpired:
+            self = .apiSessionExpired
+        case .certificateRefreshFatalError:
+            self = .certificateRefreshFatalError
+        case let .localAgentSettingPolicyRefused(setting):
+            switch setting {
+            case .bouncing:
+                self = .localAgentBouncingSettingRefused
+            case .netshieldLevel:
+                self = .localAgentNetShieldSettingRefused
+            case .portForwarding:
+                self = .localAgentPortForwardingSettingRefused
+            case .randomNat:
+                self = .localAgentRandomNatSettingRefused
+            case .safeMode:
+                self = .localAgentSafeModeSettingRefused
+            case .splitTcp:
+                self = .localAgentSplitTcpSettingRefused
+            @unknown default:
+                self = .localAgentUnknownSettingRefused
+            }
         @unknown default:
-            assertionFailure("NetShield level mapping not handled")
-            return .none
+            self = .unknownProTUNError
         }
     }
 }

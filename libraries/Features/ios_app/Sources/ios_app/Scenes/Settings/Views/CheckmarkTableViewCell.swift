@@ -45,6 +45,7 @@ class CheckmarkTableViewCell: UITableViewCell {
 
     func select() {
         if completionHandler?() ?? true {
+            tintColor = .iconAccent()
             accessoryType = .checkmark
         }
     }

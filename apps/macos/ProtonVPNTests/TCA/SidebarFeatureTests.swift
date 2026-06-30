@@ -341,9 +341,8 @@ struct SidebarFeatureTests {
         await store.send(.connectionCommandReceived(.clearConnectionData()))
         await store.receive(\.connection.input.onLogout)
         await store.receive(\.connection.stopObserving)
-        await store.receive(\.connection.core.handleLogout)
-        await store.receive(\.connection.core.stopObserving)
-        await store.receive(\.connection.core.tunnel.cleanup)
+        await store.receive(\.connection.tunnel.cleanup)
+        await store.receive(\.connection.tunnel.stopObserving)
     }
 
     @Test("command client broadcasts sent commands")

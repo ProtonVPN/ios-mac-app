@@ -17,12 +17,23 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Domain
+import Foundation
 
 public extension LocalAgent {
-    enum Error: Swift.Error {
-        case localAgentSettingPolicyRefused(SettingType)
-        case certificateRefreshFatalError
+    enum Error: FourCharCode, ProtonVPNError {
+        public static let errorDomain = "LocalAgentExtensionErrorDomain"
+
+        case unknownProTUNError = "PTUK"
+        case certificateRefreshFatalError = "LACF"
+        case apiSessionExpired = "LASE"
+
+        // Policy violation (refused settings)
+        case localAgentUnknownSettingRefused = "LAUS"
+        case localAgentNetShieldSettingRefused = "LANS"
+        case localAgentBouncingSettingRefused = "LABO"
+        case localAgentPortForwardingSettingRefused = "LAPF"
+        case localAgentSplitTcpSettingRefused = "LAST"
+        case localAgentSafeModeSettingRefused = "LASM"
+        case localAgentRandomNatSettingRefused = "LARN"
     }
 }
-
-extension LocalAgent.Error: Codable {}

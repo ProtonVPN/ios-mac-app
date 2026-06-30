@@ -16,23 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import struct Domain.LocalTunnelFeatures
 import Foundation
 
-public struct TunnelFeatures: Equatable, Sendable, Codable {
-    public let killSwitch: Bool
-    public let excludeLocalNetworks: Bool
-
+public extension LocalTunnelFeatures {
     #if !os(tvOS)
-        public init(killSwitch: Bool, excludeLocalNetworks: Bool) {
-            self.killSwitch = killSwitch
-            self.excludeLocalNetworks = excludeLocalNetworks
-        }
+        static let mock = LocalTunnelFeatures(
+            killSwitch: false,
+            excludeLocalNetworks: false
+        )
     #else
-        public static let tvFeatures: Self = .init()
-
-        init() {
-            self.killSwitch = false
-            self.excludeLocalNetworks = false
-        }
+        static let mock = LocalTunnelFeatures.tvFeatures
     #endif
 }

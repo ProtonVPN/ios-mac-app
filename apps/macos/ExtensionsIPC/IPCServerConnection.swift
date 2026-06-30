@@ -72,7 +72,7 @@ extension XPCBaseService: NSXPCListenerDelegate {
         let auditToken = newConnection.auditToken
 
         do {
-            let matches = try CodeSignatureComparitor.codeSignatureMatches(auditToken: auditToken)
+            let matches = try CodeSignatureComparator.codeSignatureMatches(auditToken: auditToken)
             #if DEBUG
                 if !matches {
                     log("Code signature of pid \(pid) does not match. Proceeding anyway (debug build).")

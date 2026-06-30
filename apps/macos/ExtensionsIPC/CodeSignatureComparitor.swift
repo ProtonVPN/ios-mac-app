@@ -26,7 +26,7 @@ struct CodeSignatureError: Error, CustomStringConvertible {
     let description: String
 }
 
-enum CodeSignatureComparitor {
+enum CodeSignatureComparator {
     static func codeSignatureMatches(auditToken: audit_token_t) throws -> Bool {
         try codeSigningCertificatesForSelf() == codeSigningCertificates(for: auditToken)
     }

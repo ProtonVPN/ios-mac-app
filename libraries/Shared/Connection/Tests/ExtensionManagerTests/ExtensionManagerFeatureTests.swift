@@ -32,7 +32,7 @@
             let mockClock = TestClock()
 
             let server = Server.ca // Canadian server mock
-            let features = VPNConnectionFeatures.mock
+            let features = AgentTunnelFeatures.mock
             let tunnelSettings = TunnelSettings.mock
             let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, protocolConfiguration: .wireGuard(tunnelSettings), features: features)
             let now = Date.now
@@ -56,7 +56,7 @@
 
             await store.send(.connect(intent))
             await store.receive(\.tunnelStatusChanged.connecting) {
-                $0 = .connecting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard(.proTUN), peerIDs: ["peer-id"]))
+                $0 = .connecting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"]))
             }
 
             await store.receive(\.tunnelStartRequestFinished.success)
@@ -85,7 +85,7 @@
             await store.send(.startObserving)
             await store.receive(\.tunnelStatusChanged.connected) {
                 $0 = .connected(
-                    TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard(.proTUN), peerIDs: ["peer-id"]),
+                    TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"]),
                     DynamicConnectionData(currentPeerId: "peer-id", connectionDate: now, protocolConnectionData: .proTUN(.init(transport: .udp)))
                 )
             }
@@ -111,7 +111,7 @@
             }
 
             let server = Server.mock
-            let features = VPNConnectionFeatures.mock
+            let features = AgentTunnelFeatures.mock
             let tunnelSettings = TunnelSettings.mock
             let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, protocolConfiguration: .wireGuard(tunnelSettings), features: features)
 
@@ -124,7 +124,8 @@
             mockManager.tunnelStartErrorToThrow = permissionDenied
 
             await store.send(.connect(intent))
-            await store.receive(\.tunnelStartRequestFinished.failure) {
+            await store.receive(\.tunnelStartRequestFinished.failure)
+            await store.receive(\.tunnelStatusChanged.disconnected) {
                 $0 = .disconnected(.tunnelStartFailed(permissionDenied))
             }
 

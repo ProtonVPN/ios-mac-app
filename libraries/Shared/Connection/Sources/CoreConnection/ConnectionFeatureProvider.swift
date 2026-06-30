@@ -25,9 +25,8 @@ import VPNAppCore
 
 @DependencyClient
 public struct ConnectionFeatureProvider: Sendable {
-    public internal(set) var connectionFeatures: @Sendable () -> VPNConnectionFeatures = { .unimplementedFeatures }
-    public internal(set) var setConnectionFeatures: @Sendable (_: VPNConnectionFeatures) -> Void
-    public internal(set) var tunnelFeatures: @Sendable () -> TunnelFeatures = { .unimplementedFeatures }
+    public internal(set) var connectionFeatures: @Sendable () -> AgentTunnelFeatures = { .unimplementedFeatures }
+    public internal(set) var requestedFeatures: @Sendable () -> LocalTunnelFeatures = { .unimplementedFeatures }
     public internal(set) var connectionProtocol: @Sendable () -> ConnectionProtocol = { .smartProtocol }
 }
 
@@ -46,18 +45,9 @@ extension ConnectionFeatureProvider: DependencyKey {
                     portForwarding: portForwardingPropertyProvider.getPortForwarding()
                 )
             },
-            setConnectionFeatures: { newFeatures in
-                @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider
-                @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
-                @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
-
-                natTypePropertyProvider.setNATType(newFeatures.natType)
-                netShieldPropertyProvider.setNetShieldType(newFeatures.netshield)
-                portForwardingPropertyProvider.setPortForwarding(newFeatures.portForwarding)
-            },
-            tunnelFeatures: {
+            requestedFeatures: {
                 @Shared(.killSwitch) var killSwitch
-                return TunnelFeatures(
+                return LocalTunnelFeatures(
                     killSwitch: killSwitch,
                     excludeLocalNetworks: AuthorizedFeatureValue<ExcludeLocalNetworks>().value() == .on
                 )
@@ -70,8 +60,7 @@ extension ConnectionFeatureProvider: DependencyKey {
     #else
         public static let liveValue: ConnectionFeatureProvider = .init(
             connectionFeatures: { .defaultFeatures },
-            setConnectionFeatures: { _ in log.warning("Nothing to do on tvOS yet") },
-            tunnelFeatures: { .tvFeatures },
+            requestedFeatures: { .tvFeatures },
             connectionProtocol: { .vpnProtocol(.wireGuard(.udp)) }
         )
     #endif
@@ -86,8 +75,8 @@ public extension DependencyValues {
     }
 }
 
-extension VPNConnectionFeatures {
-    @usableFromInline static let unimplementedFeatures: VPNConnectionFeatures = .init(
+extension AgentTunnelFeatures {
+    @usableFromInline static let unimplementedFeatures: AgentTunnelFeatures = .init(
         netshield: .off,
         vpnAccelerator: false,
         natType: .moderateNAT,
@@ -95,7 +84,7 @@ extension VPNConnectionFeatures {
     )
 
     #if os(tvOS)
-        @usableFromInline static let defaultFeatures: VPNConnectionFeatures = .init(
+        @usableFromInline static let defaultFeatures: AgentTunnelFeatures = .init(
             netshield: .level1,
             vpnAccelerator: true,
             natType: .moderateNAT,
@@ -104,8 +93,8 @@ extension VPNConnectionFeatures {
     #endif
 }
 
-extension TunnelFeatures {
-    @usableFromInline static let unimplementedFeatures: TunnelFeatures = {
+extension LocalTunnelFeatures {
+    @usableFromInline static let unimplementedFeatures: LocalTunnelFeatures = {
         #if !os(tvOS)
             .init(killSwitch: false, excludeLocalNetworks: false)
         #else

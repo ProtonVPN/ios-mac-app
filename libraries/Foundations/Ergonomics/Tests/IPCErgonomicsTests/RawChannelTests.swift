@@ -32,29 +32,16 @@ private func uniqueNotification() -> IPCNotifications.Notification {
 struct RawChannelTests {
     @Test(.ipcContext(mmapFileURL: tmpURL(), notification: uniqueNotification()))
     func mutateAndReadRoundTrip() throws {
-        let channel = try IPCHelperContext.rawChannel(ofType: IPCTestPayload.self)
+        let writer = try IPCHelperContext.writer(ofType: IPCTestPayload.self)
+        let reader = try IPCHelperContext.reader(ofType: IPCTestPayload.self)
 
-        channel.mutate { ptr in
+        writer.mutate { ptr in
             ptr.bytes_transferred = 1024.5
             ptr.timestamp = 42
             ptr.peer_migrations = 2
         }
 
-        let snapshot = try channel.read()
-        #expect(snapshot.bytes_transferred == 1024.5)
-        #expect(snapshot.timestamp == 42)
-        #expect(snapshot.peer_migrations == 2)
-    }
-
-    @Test(.ipcContext(mmapFileURL: tmpURL(), notification: uniqueNotification()))
-    func mutateFieldsAndReadRoundTrip() throws {
-        let channel = try IPCHelperContext.rawChannel(ofType: IPCTestPayload.self)
-
-        try channel.mutate(\.bytes_transferred, to: 1024.5)
-        try channel.mutate(\.timestamp, to: 42)
-        try channel.mutate(\.peer_migrations, to: 2)
-
-        let snapshot = try channel.read()
+        let snapshot = try reader.read()
         #expect(snapshot.bytes_transferred == 1024.5)
         #expect(snapshot.timestamp == 42)
         #expect(snapshot.peer_migrations == 2)
@@ -62,19 +49,20 @@ struct RawChannelTests {
 
     @Test(.ipcContext(mmapFileURL: tmpURL(), notification: uniqueNotification()))
     func readBeforeAnyWriteReturnsZeroedMemory() throws {
-        let channel = try IPCHelperContext.rawChannel(ofType: IPCTestPayload.self)
+        let reader = try IPCHelperContext.reader(ofType: IPCTestPayload.self)
         // mmap is zero-initialised; seqlock = 0 (even), so read should succeed.
-        let snapshot = try channel.read()
+        let snapshot = try reader.read()
         #expect(snapshot.bytes_transferred == 0)
         #expect(snapshot.peer_migrations == 0)
     }
 
     @Test(.ipcContext(mmapFileURL: tmpURL(), notification: uniqueNotification()))
     func observeFields() async throws {
-        let channel = try IPCHelperContext.rawChannel(ofType: IPCTestPayload.self)
+        let writer = try IPCHelperContext.writer(ofType: IPCTestPayload.self)
+        let reader = try IPCHelperContext.reader(ofType: IPCTestPayload.self)
 
-        let stream = channel.stream(forField: \.peer_migrations)
-        try channel.mutate(\.peer_migrations, to: 1337)
+        let stream = reader.stream(forField: \.peer_migrations)
+        writer.mutate { $0.peer_migrations = 1337 }
 
         let value = await stream.first
         #expect(value == 1337)
@@ -82,10 +70,11 @@ struct RawChannelTests {
 
     @Test(.ipcContext(mmapFileURL: tmpURL(), notification: uniqueNotification()))
     func streamFullPayloadObservesClosureMutation() async throws {
-        let channel = try IPCHelperContext.rawChannel(ofType: IPCTestPayload.self)
+        let writer = try IPCHelperContext.writer(ofType: IPCTestPayload.self)
+        let reader = try IPCHelperContext.reader(ofType: IPCTestPayload.self)
 
-        let stream = channel.stream()
-        channel.mutate { ptr in
+        let stream = reader.stream()
+        writer.mutate { ptr in
             ptr.bytes_transferred = 512.0
             ptr.timestamp = 7
         }
@@ -96,27 +85,23 @@ struct RawChannelTests {
     }
 
     @Test(.ipcContext(mmapFileURL: tmpURL(), notification: uniqueNotification()))
-    func onUnrelatedFieldChangeCalledWhenOtherFieldMutated() async throws {
-        let channel = try IPCHelperContext.rawChannel(ofType: IPCTestPayload.self)
+    func zeroClearsPayload() throws {
+        let writer = try IPCHelperContext.writer(ofType: IPCTestPayload.self)
+        let reader = try IPCHelperContext.reader(ofType: IPCTestPayload.self)
 
-        let unrelatedChanges = AsyncStream<Void> { continuation in
-            let token = channel.observeField(
-                \.peer_migrations,
-                handler: { _ in
-                    Issue.record("handler must not fire for an unrelated field mutation")
-                },
-                onUnrelatedFieldChange: {
-                    continuation.yield(())
-                }
-            )
-            let observation = token.observation()
-            continuation.onTermination = { _ in observation.cancel() }
+        writer.mutate { ptr in
+            ptr.bytes_transferred = 1024.5
+            ptr.timestamp = 42
+            ptr.peer_migrations = 7
         }
+        #expect(try reader.read().peer_migrations == 7)
 
-        try channel.mutate(\.bytes_transferred, to: 99.0)
+        writer.zero()
 
-        let received: Void? = await unrelatedChanges.first
-        #expect(received != nil)
+        let snapshot = try reader.read()
+        #expect(snapshot.bytes_transferred == 0)
+        #expect(snapshot.timestamp == 0)
+        #expect(snapshot.peer_migrations == 0)
     }
 
     @Test(.ipcContext(mmapFileURL: tmpURL(), notification: uniqueNotification()))
@@ -127,8 +112,39 @@ struct RawChannelTests {
         // IPCSharedHeader = { _Atomic uint64_t seqlock } = 8 bytes.
         // IPCTestPayload starts with `double` (8-byte aligned), so no padding needed.
         // Expected offset: 8.
-        let channel = try IPCHelperContext.rawChannel(ofType: IPCTestPayload.self)
+        let channel = try IPCHelperContext.reader(ofType: IPCTestPayload.self)
         #expect(channel.payloadOffset == 8)
         #expect(MemoryLayout<IPCTestPayload>.alignment <= 8)
+    }
+
+    @Test
+    func coalescedViewsStayIsolatedAndDemuxByGeneration() async throws {
+        // Two channels viewing one shared buffer at different sub-region offsets.
+        // Each has its own seqlock, both share a single notification and demux by generation count.
+        let regionStride = MemoryLayout<IPCTestRegion>.stride
+        let region = try IPCNotifications.SharedRegion(fileURL: tmpURL(), size: regionStride * 2)
+        let notification = uniqueNotification()
+        // A writer/reader endpoint per sub-region, all over the one shared region.
+        let writerA = IPCNotifications.RawChannel<IPCTestPayload, IPCNotifications.Writer>(notification: notification, region: region, regionOffset: 0)
+        let readerA = IPCNotifications.RawChannel<IPCTestPayload, IPCNotifications.Reader>(notification: notification, region: region, regionOffset: 0)
+        let writerB = IPCNotifications.RawChannel<IPCTestPayload, IPCNotifications.Writer>(notification: notification, region: region, regionOffset: regionStride)
+        let readerB = IPCNotifications.RawChannel<IPCTestPayload, IPCNotifications.Reader>(notification: notification, region: region, regionOffset: regionStride)
+
+        // Isolation: a write through one view never bleeds into the other's sub-region.
+        writerA.mutate { $0.timestamp = 111 }
+        #expect(try readerA.read().timestamp == 111)
+        #expect(try readerB.read().timestamp == 0)
+
+        writerB.mutate { $0.timestamp = 222 }
+        #expect(try readerA.read().timestamp == 111)
+        #expect(try readerB.read().timestamp == 222)
+
+        // Generation demux: a sibling's write doesn't reach this view's stream — only A's own write does, and the
+        // latest value is delivered.
+        let aStream = readerA.stream()
+        writerB.mutate { $0.timestamp = 444 }
+        writerA.mutate { $0.timestamp = 555 }
+        let delivered = await aStream.first
+        #expect(delivered?.timestamp == 555)
     }
 }

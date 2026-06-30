@@ -18,39 +18,32 @@
 
 import Domain
 
-public enum LocalAgent {
-    /// Identifies a single Local Agent setting reported back by the Rust LA layer — typically
-    /// inside a `policyRefused` error so the UI knows which setting the server rejected.
-    ///
-    /// Mirrors the Rust FFI `LocalAgentSettingType` 1:1 (see `helpers.swift::toAgentSetting`).
-    /// This is intentionally *not* the same shape as ``IPCLASettingsPayload`` (which represents
-    /// the effective settings snapshot) nor ``ConnectionFeatureChange/AgentFeature`` (the
-    /// user-writable subset). Each enum serves a different role.
-    public enum SettingType: Codable {
-        case netshieldLevel
-        case bouncing
-        case portForwarding
-        case splitTcp
-        case safeMode
-        case randomNat
-    }
+public enum LocalAgent {}
 
-    @DebugDescription
-    public enum Event: Codable {
-        case stats(Stats)
-        case connectionStats(ConnectionStats)
-        case features(VPNConnectionFeatures)
-        case error(Error)
-    }
+public struct CurrentPeer: Codable, Sendable, Equatable {
+    public let peerID: String
+    public let transport: WireGuardTransport
+    public let serverExitV4: String?
+    public let serverExitV6: String?
+    public let userISP: String?
+    public let userIP: String?
 
-    @DebugDescription
-    public enum Request: Codable {
-        case getFeatures
-        case setFeatures(Set<ConnectionFeatureChange.AgentFeature>)
+    public init(
+        peerID: String,
+        transport: WireGuardTransport,
+        serverExitV4: String?,
+        serverExitV6: String?,
+        userISP: String?,
+        userIP: String?
+    ) {
+        self.peerID = peerID
+        self.transport = transport
+        self.serverExitV4 = serverExitV4
+        self.serverExitV6 = serverExitV6
+        self.userISP = userISP
+        self.userIP = userIP
     }
 }
-
-extension LocalAgent.Event: Sendable {}
 
 package extension NetShieldType {
     var shouldObserveNetShieldStats: Bool {
@@ -59,32 +52,6 @@ package extension NetShieldType {
             false
         case .level2, .level3:
             true
-        }
-    }
-}
-
-extension LocalAgent.Event: CustomDebugStringConvertible {
-    public var debugDescription: String {
-        switch self {
-        case let .stats(localAgentStats):
-            "stats(\(localAgentStats))"
-        case let .connectionStats(connectionStats):
-            "connectionStats(\(connectionStats))"
-        case let .features(features):
-            "features(\(features))"
-        case let .error(localAgentError):
-            "error(\(localAgentError))"
-        }
-    }
-}
-
-extension LocalAgent.Request: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .getFeatures:
-            "getFeatures"
-        case .setFeatures:
-            "setFeatures"
         }
     }
 }

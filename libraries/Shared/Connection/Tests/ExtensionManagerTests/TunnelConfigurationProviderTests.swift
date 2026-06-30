@@ -32,7 +32,7 @@
             newManager.loadFromPreferencesBlock = { newManagerLoaded.fulfill() }
             try await withDependencies {
                 $0.bundleIDClient = .mock(bundleID: "123")
-                $0.tunnelProviderConfigurator = .init(changes: { _ in Set() }, configure: { _, _ in })
+                $0.tunnelProviderConfigurator = .init(changes: { _ in .init() }, configure: { _, _ in })
                 $0.tunnelProviderManagerFactory = .init(
                     create: { _ in newManager },
                     removeAll: unimplemented(),
@@ -43,7 +43,7 @@
                 )
             } operation: {
                 let repository = VPNManagerRepositoryImplementation()
-                _ = try await repository.prepareManager(of: .wireGuard(.go), for: .reconfiguration([.feature(.tunnel(.onDemand(false)))]))
+                _ = try await repository.prepareManager(of: .wireGuard, for: .reconfiguration([.feature(.tunnel(.onDemand(false)))]))
             }
 
             await fulfillment(of: [existingManagersLoaded, newManagerLoaded], timeout: 1)

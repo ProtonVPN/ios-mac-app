@@ -118,7 +118,7 @@
 //
 //        @MainActor
 //        func testFetchesNetShieldStatsWhenConnectedOnDidBecomeActive() async throws {
-//            let featuresWithNetShieldStatsEnabled = VPNConnectionFeatures(
+//            let featuresWithNetShieldStatsEnabled = AgentTunnelFeatures(
 //                netshield: .level2,
 //                vpnAccelerator: true,
 //                bouncing: nil,

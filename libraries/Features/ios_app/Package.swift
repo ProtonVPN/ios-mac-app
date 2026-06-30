@@ -85,6 +85,7 @@ let package = Package(
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "Timer", package: "Timer"),
                 .product(name: "Hermes", package: "Connection"),
+                .product(name: "ExtensionManager", package: "Connection"),
 
                 .product(name: "ProtonCoreAPIClient", package: "protoncore"),
                 .product(name: "ProtonCoreAccountDeletion", package: "protoncore"),

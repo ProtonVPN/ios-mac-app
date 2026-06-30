@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import struct Domain.TunnelFeatures
+import struct Domain.LocalTunnelFeatures
 import struct Domain.TunnelSettings
 import Foundation
 
@@ -24,6 +24,6 @@ public extension TunnelSettings {
     static let mock = TunnelSettings(
         backend: .go,
         transport: .udp,
-        features: TunnelFeatures.mock
+        features: LocalTunnelFeatures.mock
     )
 }

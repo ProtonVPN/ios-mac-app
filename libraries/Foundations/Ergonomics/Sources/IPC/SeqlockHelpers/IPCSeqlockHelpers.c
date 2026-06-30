@@ -13,12 +13,20 @@ void ipc_seqlock_end_write(void * _Nonnull base) {
     atomic_fetch_add_explicit(seqlock, 1, memory_order_relaxed);
 }
 
-uint64_t ipc_seqlock_read_begin(const void * _Nonnull base) {
+uint64_t ipc_seqlock_read_begin(const void * _Nonnull base, uint64_t last_sequence, bool * _Nonnull changed) {
     const _Atomic uint64_t *seqlock = (const _Atomic uint64_t *)base;
-    uint64_t seq;
-    do {
+    uint64_t seq = atomic_load_explicit(seqlock, memory_order_acquire);
+    // The seqlock only ever increments, so an identical value means no write has started or completed since the
+    // caller's last validated snapshot. Decide that here, atomically, on the value we just loaded.
+    if (seq == last_sequence) {
+        *changed = false;
+        return seq;
+    }
+    // Changed (or a write is mid-flight): wait out any in-progress write so the caller copies a stable payload.
+    while (seq & 1) {
         seq = atomic_load_explicit(seqlock, memory_order_acquire);
-    } while (seq & 1);
+    }
+    *changed = true;
     return seq;
 }
 

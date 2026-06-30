@@ -19,11 +19,9 @@
 import IPCErgonomics
 
 public extension IPCNotifications.Notification {
-    static let localAgentToExtensionRequests: Self = .init(name: "ch.protonmail.vpn.protun.localAgentToExtensionRequests")
-    static let localAgentFromExtensionEvents: Self = .init(name: "ch.protonmail.vpn.protun.localAgentFromExtensionEvents")
-}
+    /// A tunnel-data sub-region has been updated, observers demux by looking at the notify token.
+    static let tunnelData: Self = .init(name: "ch.protonmail.vpn.protun.tunnelData")
 
-public extension IPCNotifications.Notification {
-    static let extensionForkSelectorRequest: Self = .init(name: "ch.protonmail.vpn.protun.extensionForkSelectorRequest")
-    static let localAgentSettings: Self = .init(name: "ch.protonmail.vpn.protun.localAgentSettings")
+    /// A simple ping from the extension, the token is used to differentiate between the different commands.
+    static let tunnelCmd: Self = .init(name: "ch.protonmail.vpn.protun.tunnelCmd")
 }

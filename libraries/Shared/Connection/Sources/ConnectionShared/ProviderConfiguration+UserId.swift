@@ -24,6 +24,7 @@ import VPNCoreCommon
 public extension NETunnelProviderProtocol {
     private enum ProviderConfigurationKey {
         static let userID = "userID"
+        static let requestID = "requestID"
         static let connectionSpec = "connectionSpec"
     }
 
@@ -52,5 +53,15 @@ public extension NETunnelProviderProtocol {
     func setConnectionSpec(_ spec: ConnectionSpec) throws {
         let data = try JSONEncoder().encode(spec)
         setProviderConfiguration(value: data, forKey: ProviderConfigurationKey.connectionSpec)
+    }
+
+    var requestId: UUID? {
+        get {
+            guard let string = providerConfiguration?[ProviderConfigurationKey.requestID] as? String else { return nil }
+            return UUID(uuidString: string)
+        }
+        set {
+            providerConfiguration?[ProviderConfigurationKey.requestID] = newValue?.uuidString
+        }
     }
 }

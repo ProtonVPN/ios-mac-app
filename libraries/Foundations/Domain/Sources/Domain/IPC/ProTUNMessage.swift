@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import struct Foundation.URL
+import struct Foundation.UUID
 import IPCErgonomics
 
 public enum ProTUNMessage {
@@ -42,13 +43,13 @@ public enum ProTUNMessage {
 }
 
 public extension ProTUNMessage.Request {
-    enum Payload: Codable {
+    enum Payload: Sendable, Codable, Equatable {
         case flushLogsToFile
         case retrieveLogsArchive
-        case getCurrentPeer
         case pcapRequest(PcapRequest)
         case pushForkInfo(selector: String, cookieName: String, cookieValue: String)
-        case updateConfiguration(Set<ConnectionChange>)
+        case updateConfiguration(ConnectionUpdate)
+        case ack(errorId: UUID)
         #if DEBUG
             case ping
         #endif
@@ -56,9 +57,8 @@ public extension ProTUNMessage.Request {
 }
 
 public extension ProTUNMessage.Response {
-    enum Payload: Codable {
+    enum Payload: Sendable, Codable, Equatable {
         case ack
-        case currentPeer(CodableResult<CurrentPeer, Error>)
         case logs(CodableResult<URL, Error>)
         case pcapUpdate(PcapUpdate)
         case error(GenericError)
@@ -67,33 +67,6 @@ public extension ProTUNMessage.Response {
         #endif
     }
 }
-
-public struct CurrentPeer: Codable, Sendable, Equatable {
-    public let peerID: String
-    public let transport: WireGuardTransport
-    public let serverExitV4: String?
-    public let userISP: String?
-    public let userIP: String?
-
-    public init(
-        peerID: String,
-        transport: WireGuardTransport,
-        serverExitV4: String?,
-        userISP: String?,
-        userIP: String?
-    ) {
-        self.peerID = peerID
-        self.transport = transport
-        self.serverExitV4 = serverExitV4
-        self.userISP = userISP
-        self.userIP = userIP
-    }
-}
-
-extension ProTUNMessage.Request.Payload: Sendable {}
-extension ProTUNMessage.Request.Payload: Equatable {}
-extension ProTUNMessage.Response.Payload: Sendable {}
-extension ProTUNMessage.Response.Payload: Equatable {}
 
 public extension ProTUNMessage {
     enum Version: UInt8, Codable {
@@ -140,10 +113,10 @@ extension ProTUNMessage.Request.Payload: CustomStringConvertible {
         #endif
         case .flushLogsToFile: "flushLogsToFile"
         case .retrieveLogsArchive: "retrieveLogsArchive"
-        case .getCurrentPeer: "getCurrentPeer"
         case let .pcapRequest(request): "pcapRequest(\(request))"
         case .pushForkInfo: "pushForkInfo"
         case .updateConfiguration: "updateConfiguration"
+        case let .ack(errorId): "ack(\(errorId))"
         }
     }
 }

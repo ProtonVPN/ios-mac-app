@@ -21,13 +21,13 @@ import SwiftUI
 import Theme
 
 public struct NetShieldStatsView: View {
-    @ObservedObject public var viewModel = NetShieldModel.zero(enabled: false)
+    public var viewModel: NetShieldModel?
 
     public var body: some View {
         HStack(spacing: 0) {
-            StatsView(model: viewModel.ads)
-            StatsView(model: viewModel.trackers)
-            StatsView(model: viewModel.data)
+            StatsView(model: viewModel?.ads ?? .emptyAds)
+            StatsView(model: viewModel?.trackers ?? .emptyTrackers)
+            StatsView(model: viewModel?.data ?? .emptyData)
         }
         .frame(maxWidth: .infinity)
         .padding(8)
@@ -37,7 +37,9 @@ public struct NetShieldStatsView: View {
         )
     }
 
-    public init() {}
+    public init(viewModel: NetShieldModel? = nil) {
+        self.viewModel = viewModel
+    }
 }
 
 struct StatsView: View {

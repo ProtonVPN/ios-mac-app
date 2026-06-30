@@ -24,7 +24,9 @@
     import DomainTestSupport
     @testable import ExtensionManager
     import Foundation
+    import IPCErgonomics
     @testable import LocalAgent
+    import LocalAgentIPC
     import class NetworkExtension.NETunnelProviderProtocol
     import VPNCoreCommon
     import XCTest
@@ -45,10 +47,11 @@
             activeManager.protocolConfiguration = config
 
             try await withDependencies {
-                $0.vpnManagerRepository.managers = { [.ike: inactiveManager, .wireGuard(.go): activeManager] }
+                $0.vpnManagerRepository.managers = { [.ike: inactiveManager, .wireGuard: activeManager] }
+                $0.extensionIPC.currentExtensionState = { (.connecting(peerID: nil, waitReason: .unset), nil) }
             } operation: {
                 let status = try await PacketTunnelManager().status
-                XCTAssertEqual(status, .connecting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard(.go), peerIDs: [])))
+                XCTAssertEqual(status, .connecting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: [])))
             }
         }
 
@@ -61,24 +64,29 @@
             disconnectingManager.session = VPNSessionMock(status: .disconnecting)
             (connectedManager.session as? VPNSessionMock)?.connectedServerID = "server-id"
             (connectedManager.session as? VPNSessionMock)?.messageHandler = MessageHandler.full
+            let requestId = UUID()
             let config = NETunnelProviderProtocol()
             let specData = try JSONEncoder().encode(ConnectionSpec.defaultFastest)
             config.setProviderConfiguration(value: specData, forKey: "connectionSpec")
+            // `.connected` is gated on the applied request ID matching the config's, so they must agree.
+            config.setProviderConfiguration(value: requestId.uuidString, forKey: "requestID")
             try ProTUNConfigurationCoder.encode(configuration: .init(preferredTransport: .udp, peers: [], dnsServers: []), to: config)
             connectedManager.protocolConfiguration = config
 
             try await withDependencies {
                 $0.date = .constant(now)
                 $0.vpnManagerRepository.managers = {
-                    [.ike: disconnectingManager, .wireGuard(.proTUN): connectedManager]
+                    [.ike: disconnectingManager, .wireGuard: connectedManager]
                 }
-                $0.localAgent.postRequestToExtension = { _ in }
+                $0.extensionIPC.currentExtensionState = {
+                    (.connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)), requestId)
+                }
             } operation: {
                 let status = try await PacketTunnelManager().status
                 XCTAssertEqual(
                     status,
                     .connected(
-                        TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard(.proTUN), peerIDs: []),
+                        TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"]),
                         DynamicConnectionData(currentPeerId: "peer-id", connectionDate: now, protocolConnectionData: .proTUN(.init(transport: .udp)))
                     )
                 )
@@ -121,7 +129,7 @@
 
             try await withDependencies {
                 $0.continuousClock = clock
-                $0.vpnManagerRepository.managers = { [.wireGuard(.go): providerManager] }
+                $0.vpnManagerRepository.managers = { [.wireGuard: providerManager] }
                 $0.vpnManagerRepository.prepareManager = { _, _ in
                     managerConfigured.fulfill()
                     return providerManager
@@ -145,17 +153,14 @@
 
             try await withDependencies {
                 $0.continuousClock = clock
-                $0.vpnManagerRepository.managers = { [.ike: ikeManager, .wireGuard(.go): wgManager] }
+                $0.vpnManagerRepository.managers = { [.ike: ikeManager, .wireGuard: wgManager] }
                 $0.vpnManagerRepository.prepareManager = { proto, _ in
                     switch proto {
                     case .ike:
                         ikePrepared.fulfill()
                         return ikeManager
-                    case .wireGuard(.go):
+                    case .wireGuard:
                         wgPrepared.fulfill()
-                        return wgManager
-                    case .wireGuard(.proTUN):
-                        XCTFail("Unexpected protocol")
                         return wgManager
                     }
                 }

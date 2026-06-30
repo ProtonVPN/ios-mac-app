@@ -1,5 +1,5 @@
 //
-//  Created on 27/04/2026 by Chris Janusiewicz.
+//  Created on 23/06/2026.
 //
 //  Copyright (c) 2026 Proton AG
 //
@@ -16,24 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import protun
-import struct VPNCoreTypes.ProTUNConfiguration
+#if os(macOS)
+    import Foundation
+    import IOSurface
 
-extension PeerInfo {
-    init(from peer: ProTUNConfiguration.Peer) throws(ProTUNAdapter.Error) {
-        guard let serverPublicKeyData = Data(base64Encoded: peer.serverPublicKey) else {
-            throw .invalidKeys
-        }
-        self.init(
-            peerId: peer.id,
-            serverIp: peer.serverIP,
-            serverPublicKey: serverPublicKeyData,
-            udpPorts: peer.udpPorts,
-            tcpPorts: peer.tcpPorts,
-            tlsPorts: peer.tlsPorts,
-            priority: Int32(peer.priority),
-            exitLabel: peer.exitLabel
-        )
+    @objc
+    public protocol TunnelDataXPCProtocol {
+        /// Returns the shared `IOSurface` backing the tunnel-data region on macOS, or `nil` if it isn't available yet.
+        func fetchTunnelDataSurface(_ reply: @escaping (IOSurface?) -> Void)
     }
-}
+#endif

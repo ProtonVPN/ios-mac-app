@@ -55,7 +55,7 @@ struct HomeScreenTests {
             ConnectionState.connecting(.resolved(polandIntent, polandServer))
         ),
         (
-            ProtectionState.protected(netShield: .init(trackersCount: 432, adsCount: 12345, dataSaved: 123_456_789, enabled: true)),
+            ProtectionState.protected,
             ConnectionState.connected(polandIntent, polandServer, Date(), nil)
         ),
     ]

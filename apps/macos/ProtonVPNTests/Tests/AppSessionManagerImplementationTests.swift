@@ -501,9 +501,9 @@ struct AppSessionManagerImplementationTests {
         let wireGuardSettings = WireGuardSettings(
             backend: .proTUN,
             transport: .udp,
-            features: TunnelFeatures(killSwitch: false, excludeLocalNetworks: false)
+            features: LocalTunnelFeatures(killSwitch: false, excludeLocalNetworks: false)
         )
-        let connectionFeatures = VPNConnectionFeatures(
+        let connectionFeatures = AgentTunnelFeatures(
             netshield: .off,
             vpnAccelerator: false,
             natType: .moderateNAT,

@@ -26,12 +26,17 @@ package extension AppIntent {
     /// Suspending before triggers a crash `__uikit_did_not_receive_a_remote_cacontext_from_coreanimation_`
     /// If the app never becomes active within the timeout we skip the suspension
     func suspendAppIfSupported() async {
-        guard await waitUntilActive(timeout: .seconds(5)) else {
+        // How long to wait for the host app to reach the foreground before giving up on suspending it.
+        let activationTimeout: Duration = .seconds(5)
+        // Brief settle delay once active, so the suspend lands after the first frame rather than during launch.
+        let settleDelay: Duration = .milliseconds(500)
+
+        guard await waitUntilActive(timeout: activationTimeout) else {
             log.info("App did not become active in time; skipping suspension to avoid launch watchdog crash", category: .app)
             return
         }
 
-        try? await Task.sleep(for: .milliseconds(500))
+        try? await Task.sleep(for: settleDelay)
 
         await MainActor.run {
             let app = UIApplication.shared
@@ -52,10 +57,12 @@ package extension AppIntent {
         let pollInterval: Duration = .milliseconds(100)
         var waited: Duration = .zero
         while waited < timeout {
+            if Task.isCancelled { return false }
             let isActive = await MainActor.run { UIApplication.shared.applicationState == .active }
             if isActive {
                 return true
             }
+
             try? await Task.sleep(for: pollInterval)
             waited += pollInterval
         }

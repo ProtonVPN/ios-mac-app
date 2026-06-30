@@ -22,35 +22,35 @@ import Testing
 @testable import VPNShared
 import XCTest
 
-private let concreteFeaturesOff = VPNConnectionFeatures(
+private let concreteFeaturesOff = AgentTunnelFeatures(
     netshield: .off,
     vpnAccelerator: false,
     natType: .strictNAT,
     portForwarding: nil
 )
 
-private let allOff = VPNConnectionFeatures(
+private let allOff = AgentTunnelFeatures(
     netshield: .off,
     vpnAccelerator: false,
     natType: .strictNAT,
     portForwarding: false
 )
 
-private let withPortForwardingDisabled = VPNConnectionFeatures(
+private let withPortForwardingDisabled = AgentTunnelFeatures(
     netshield: .off,
     vpnAccelerator: false,
     natType: .strictNAT,
     portForwarding: false // Our stored certificate has the feature turned off explicitly
 )
 
-private let concreteFeaturesOn = VPNConnectionFeatures(
+private let concreteFeaturesOn = AgentTunnelFeatures(
     netshield: .level2,
     vpnAccelerator: true,
     natType: .moderateNAT,
     portForwarding: nil
 )
 
-private let optionalFeaturesOn = VPNConnectionFeatures(
+private let optionalFeaturesOn = AgentTunnelFeatures(
     netshield: .off,
     vpnAccelerator: false,
     natType: .strictNAT,
