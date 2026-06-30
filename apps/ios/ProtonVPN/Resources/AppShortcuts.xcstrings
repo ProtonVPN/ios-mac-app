@@ -722,6 +722,19 @@
             ]
           }
         },
+        "sv" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Anslut ${applicationName}",
+              "Anslut med ${applicationName}",
+              "Skydda mig ${applicationName}",
+              "Anslut till ${applicationName}",
+              "Starta ${applicationName}",
+              "${applicationName} anslut"
+            ]
+          }
+        },
         "th" : {
           "stringSet" : {
             "state" : "translated",
