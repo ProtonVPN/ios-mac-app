@@ -32,6 +32,7 @@ import ModalsServices
 import NetShield
 import Payments
 import PCAP
+import PCAPShared
 import ProtonCoreFeatureFlags
 import Sharing
 import Strings

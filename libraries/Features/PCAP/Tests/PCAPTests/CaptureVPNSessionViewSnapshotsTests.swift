@@ -26,8 +26,8 @@ import Testing
 import TestingErgonomics
 
 @MainActor
-@Suite("Session Captured Snapshot Tests", .serialized, .snapshots(record: .missing))
-struct SessionCapturedSnapshotsTests {
+@Suite("CaptureVPNSessionView Snapshot Tests", .serialized, .snapshots(record: .missing))
+struct CaptureVPNSessionViewSnapshotsTests {
     @Test
     func `no session`() {
         let view = CaptureVPNSessionView(store: .init(
@@ -61,12 +61,12 @@ struct SessionCapturedSnapshotsTests {
     }
 }
 
-extension SessionCapturedSnapshotsTests: @preconcurrency AssertSnapshot {
+extension CaptureVPNSessionViewSnapshotsTests: @preconcurrency AssertSnapshot {
     func snapshotDirectory() -> String? {
         if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
             let path = FilePath(String(describing: #filePath))
             let suite = path.lastComponent?.stem ?? ""
-            return "\(projectDir)/libraries/Features/Settings/Tests/PCAPTests/__Snapshots__/\(suite)"
+            return "\(projectDir)/libraries/Features/PCAP/Tests/PCAPTests/__Snapshots__/\(suite)"
         } else {
             return nil
         }

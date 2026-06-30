@@ -72,7 +72,7 @@ struct PacketCaptureSession {
         @Dependency(\.pcapFileManager) var pcapFileManager
         try pcapFileManager.cleanUpAllPcapFiles()
 
-        let startDate: Date = .now
+        let startDate = date.now
 
         let fileURL = try pcapFileManager.newFileURL(startDate: startDate)
         let (combinedStream, continuation) = makeStream(from: eventStream)
@@ -91,7 +91,7 @@ struct PacketCaptureSession {
         guard case let .recording(fileHandle) = state else {
             return nil
         }
-        let interval = Date.now.timeIntervalSince(fileHandle.startDate)
+        let interval = date.now.timeIntervalSince(fileHandle.startDate)
         @Dependency(\.fileManagerClient) var fileManagerClient
         do {
             let fileSize = try fileManagerClient.fileSize(at: fileHandle.url)

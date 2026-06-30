@@ -87,7 +87,7 @@ public struct CaptureVPNSessionView: View {
         }
     }
 
-    private var maxDuration: String = Duration.minutes(DomainConstants.LogFiles.pcapMaxDurationInMinutes)
+    private let maxDuration: String = Duration.minutes(DomainConstants.LogFiles.pcapMaxDurationInMinutes)
         .formatted(.time(pattern: .minuteSecond(padMinuteToLength: 2)))
 
     private func capturingView(startTime: Date) -> some View {

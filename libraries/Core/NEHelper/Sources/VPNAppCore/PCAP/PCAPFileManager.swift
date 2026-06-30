@@ -25,17 +25,16 @@ public struct PCAPFileManager: Sendable {
     static let pcapPathExtension: String = "pcap"
     static let pcapDirectoryPath: String = "/PcapFiles"
 
-    public var newFileURL: (_ startDate: Date) throws -> URL
-    public var cleanUpAllPcapFiles: () throws -> Void
+    public var newFileURL: @Sendable (_ startDate: Date) throws -> URL
+    public var cleanUpAllPcapFiles: @Sendable () throws -> Void
     public var retrieveLastPcapFileURL: @Sendable () -> URL?
 }
 
 extension PCAPFileManager: DependencyKey {
     public static var liveValue: PCAPFileManager {
-        let fileManager = FileManager.default
-
+        @Sendable
         func pcapDirectory() throws -> URL {
-            try fileManager
+            try FileManager.default
                 .mainContainerURL
                 .appendingPathComponent(pcapDirectoryPath)
         }
@@ -53,14 +52,14 @@ extension PCAPFileManager: DependencyKey {
                     .appendingPathExtension(Self.pcapPathExtension)
             },
             cleanUpAllPcapFiles: {
-                try fileManager.subpaths(atPath: pcapDirectory().absoluteString)?.forEach { path in
-                    try fileManager.removeItem(atPath: path)
+                try FileManager.default.subpaths(atPath: pcapDirectory().absoluteString)?.forEach { path in
+                    try FileManager.default.removeItem(atPath: path)
                 }
             },
             retrieveLastPcapFileURL: {
                 do {
                     let directory = try pcapDirectory()
-                    let files = try fileManager.contentsOfDirectory(
+                    let files = try FileManager.default.contentsOfDirectory(
                         at: directory,
                         includingPropertiesForKeys: [.creationDateKey],
                         options: [.skipsHiddenFiles]

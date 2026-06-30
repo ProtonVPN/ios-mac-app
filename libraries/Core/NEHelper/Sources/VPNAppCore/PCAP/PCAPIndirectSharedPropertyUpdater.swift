@@ -22,9 +22,8 @@ import Domain
 import Foundation
 
 @DependencyClient
-public struct PCAPStorageClient: Sendable {
+public struct PCAPIndirectSharedPropertyUpdater: Sendable {
     /// Update the capture session shared property directly in the user defaults.
-    /// Ok, this is not the place, where it should be updated, nor is it the way it should be updated.
     /// We're guarding here against the app being killed while the pcap capture is terminated due to
     /// the connection being terminated.
     /// The way we update the shared property isn't great because we're not using the @Shared
@@ -33,9 +32,9 @@ public struct PCAPStorageClient: Sendable {
     public var finishPCAPSession: @Sendable (_ reason: PacketCaptureInterruptionReason) -> Void
 }
 
-extension PCAPStorageClient: DependencyKey {
-    public static var liveValue: PCAPStorageClient {
-        PCAPStorageClient(
+extension PCAPIndirectSharedPropertyUpdater: DependencyKey {
+    public static var liveValue: PCAPIndirectSharedPropertyUpdater {
+        PCAPIndirectSharedPropertyUpdater(
             finishPCAPSession: { reason in
                 @Dependency(\.pcapFileManager) var pcapFileManager
                 @Dependency(\.fileManagerClient) var fileManagerClient
@@ -59,8 +58,8 @@ extension PCAPStorageClient: DependencyKey {
 }
 
 public extension DependencyValues {
-    var pcapStorageClient: PCAPStorageClient {
-        get { self[PCAPStorageClient.self] }
-        set { self[PCAPStorageClient.self] = newValue }
+    var pcapSharedPropertyUpdater: PCAPIndirectSharedPropertyUpdater {
+        get { self[PCAPIndirectSharedPropertyUpdater.self] }
+        set { self[PCAPIndirectSharedPropertyUpdater.self] = newValue }
     }
 }

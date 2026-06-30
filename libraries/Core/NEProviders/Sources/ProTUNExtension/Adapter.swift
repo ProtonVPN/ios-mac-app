@@ -352,9 +352,8 @@ extension ProTUNAdapter {
     private func handlePacketCaptureInterruption(reason: PacketCaptureInterruptionReason) {
         stopPacketCapture(reason: reason)
 
-        // IPCNotification does not work outside of the protun extension when the app is killed
-        @Dependency(\.pcapStorageClient) var pcapStorageClient
-        pcapStorageClient.finishPCAPSession(reason: reason)
+        @Dependency(\.pcapSharedPropertyUpdater) var pcapSharedPropertyUpdater
+        pcapSharedPropertyUpdater.finishPCAPSession(reason: reason)
 
         IPCNotifications.postState(.pcapInterrupted, state: reason)
     }
