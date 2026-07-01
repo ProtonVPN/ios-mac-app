@@ -24,6 +24,7 @@ import CommonNetworkingTestSupport
 import Dependencies
 import Domain
 import Ergonomics
+import Hermes
 import LegacyCommon
 import Localization
 import Persistence
@@ -411,6 +412,130 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         return withExtendedLifetime(subscribeAndReturnToken()) { _ in
             operation()
         }
+    }
+}
+
+final class AppSessionManagerHermesDNSTests: XCTestCase {
+    private var alertService: AppSessionManagerAlertServiceMock!
+    private var appStateManager: AppStateManagerMock!
+    private var updateChecker: UpdateCheckerMock!
+    private var repository: ServerRepository!
+
+    override func invokeTest() {
+        repository = withDependencies {
+            $0.databaseConfiguration = .withTestExecutor(databaseType: .ephemeral)
+        } operation: {
+            ServerRepositoryKey.liveValue
+        }
+
+        withDependencies {
+            $0.serverRepository = repository
+        } operation: {
+            super.invokeTest()
+        }
+    }
+
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+
+        alertService = AppSessionManagerAlertServiceMock()
+        appStateManager = AppStateManagerMock()
+        updateChecker = UpdateCheckerMock()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+
+        alertService = nil
+        appStateManager = nil
+        updateChecker = nil
+        repository = nil
+    }
+
+    func testSilentLoginAppliesHermesDNSWhenStoringWireGuardClientConfig() async throws {
+        let propertiesManager = try await performSilentLoginWithHermesConfig(
+            isHermesEnabled: true,
+            hermesAuthorization: .success
+        )
+
+        XCTAssertEqual(propertiesManager.wireguardConfig.dnsServers, ["127.0.0.1", "10.2.0.1"])
+    }
+
+    func testSilentLoginDoesNotApplyHermesDNSWhenHermesIsDisabled() async throws {
+        let propertiesManager = try await performSilentLoginWithHermesConfig(
+            isHermesEnabled: false,
+            hermesAuthorization: .success
+        )
+
+        XCTAssertEqual(propertiesManager.wireguardConfig.dnsServers, ["10.2.0.1"])
+    }
+
+    func testSilentLoginDoesNotApplyHermesDNSWhenHermesIsNotAllowed() async throws {
+        let propertiesManager = try await performSilentLoginWithHermesConfig(
+            isHermesEnabled: true,
+            hermesAuthorization: .failure(.requiresUpgrade)
+        )
+
+        XCTAssertEqual(propertiesManager.wireguardConfig.dnsServers, ["10.2.0.1"])
+    }
+
+    private func performSilentLoginWithHermesConfig(
+        isHermesEnabled: Bool,
+        hermesAuthorization: FeatureAuthorizationResult
+    ) async throws -> PropertiesManagerMock {
+        let propertiesManager = PropertiesManagerMock()
+        let authKeychain = AuthKeychainHandleMock()
+        authKeychain.credentials = testAuthCredentials
+        let vpnKeychain = VpnKeychainMock()
+        let vpnCredentials = VpnKeychainMock.vpnCredentials(planName: "plus", maxTier: .paidTier)
+        let customResolver = try HermesResolver(ipAddress: "127.0.0.1")
+        @Dependency(\.hermesClient) var hermesClient
+        defer {
+            let activeResolvers = hermesClient.activeHermesResolvers().wrappedValue
+            for index in activeResolvers.indices.reversed() {
+                _ = hermesClient.removeHermesResolver(index)
+            }
+            hermesClient.setIsEnabled(false)
+        }
+
+        try await withDependencies {
+            $0.authKeychain = authKeychain
+            $0.vpnKeychain = vpnKeychain
+            $0.propertiesManager = propertiesManager
+            $0.serverRepository = repository
+            $0.featureAuthorizerProvider = FeatureAuthorizerKey.constant(hermesAuthorization)
+            $0.announcementRefresher = AnnouncementRefresherMock()
+
+            let existingResolvers = $0.hermesClient.activeHermesResolvers().wrappedValue
+            for index in existingResolvers.indices.reversed() {
+                _ = $0.hermesClient.removeHermesResolver(index)
+            }
+            $0.hermesClient.setIsEnabled(isHermesEnabled)
+            _ = $0.hermesClient.addHermesResolver(customResolver)
+
+            $0.vpnApiClient.vpnProperties = { _, _, _ in
+                VpnProperties(
+                    serverInfo: .notModified(since: nil),
+                    streamingServices: nil,
+                    vpnCredentials: vpnCredentials,
+                    location: nil,
+                    clientConfig: ClientConfig.defaultClientConfigForTests,
+                    user: nil,
+                    addresses: nil
+                )
+            }
+        } operation: {
+            let factory = ManagerFactoryMock(
+                alertService: alertService,
+                appStateManager: appStateManager,
+                updateChecker: updateChecker
+            )
+            let manager = AppSessionManagerImplementation(factory: factory)
+
+            try await manager.attemptSilentLogIn()
+        }
+
+        return propertiesManager
     }
 }
 

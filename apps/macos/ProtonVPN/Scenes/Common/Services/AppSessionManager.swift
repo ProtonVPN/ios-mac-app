@@ -196,7 +196,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         $userTier.withLock { $0 = credentials.maxTier }
 
         if let clientConfig = properties.clientConfig {
-            propertiesManager.wireguardConfig = clientConfig.wireGuardConfig
+            propertiesManager.wireguardConfig = clientConfig.wireGuardConfig.refreshConfig()
             propertiesManager.smartProtocolConfig = clientConfig.smartProtocolConfig
             propertiesManager.featureFlags = clientConfig.featureFlags
             propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
