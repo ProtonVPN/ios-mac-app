@@ -35,18 +35,15 @@ import VPNAppCore
 /// reproduces the user's last *destination*, not their Quick Connect preference.
 public enum QuickConnectIntent {
     /// Resolves the `(spec, protocol)` that the new layer should connect with.
-    ///
-    /// - Parameter profileManager: provides the user's saved Quick Connect profile, when set.
-    public static func resolve(
-        profileManager: ProfileManager
-    ) -> (spec: ConnectionSpec, connectionProtocol: ConnectionProtocol?) {
+    public static func resolve() -> (spec: ConnectionSpec, connectionProtocol: ConnectionProtocol?) {
         @Dependency(\.profileAuthorizer) var profileAuthorizer
         @Shared(.connectionProtocol) var connectionProtocol
         @SharedReader(.userTier) var userTier
         @SharedReader(.secureCoreToggle) var secureCoreToggle
+        @Dependency(\.profileManager) var profileManager
 
         // 1) User has a Quick Connect profile saved and is authorized to use profiles → use it.
-        if let qcProfile = profileManager.quickConnectProfile, profileAuthorizer.canUseProfiles {
+        if let qcProfile = profileManager.quickConnectProfile(), profileAuthorizer.canUseProfiles {
             return (qcProfile.connectionSpec(trigger: nil), qcProfile.connectionProtocol)
         }
 
@@ -64,11 +61,8 @@ public enum QuickConnectIntent {
 public extension ConnectionCommandClient {
     /// Sends a `.connect` command resolved through `QuickConnectIntent`. Use this in place of
     /// the legacy `vpnGateway.quickConnect(trigger:)` call.
-    func quickConnect(
-        profileManager: ProfileManager,
-        trigger: UserInitiatedVPNChange.VPNTrigger
-    ) {
-        let (spec, connectionProtocol) = QuickConnectIntent.resolve(profileManager: profileManager)
+    func quickConnect(trigger: UserInitiatedVPNChange.VPNTrigger) {
+        let (spec, connectionProtocol) = QuickConnectIntent.resolve()
         send(.connect(spec, connectionProtocol, trigger))
     }
 }

@@ -45,7 +45,6 @@ class NavigationService {
     typealias Factory = AppSessionManagerFactory
         & HelpMenuViewModelFactory
         & NavigationServiceFactory
-        & ProfileManagerFactory
         & ProtonReachabilityCheckerFactory
         & VpnProtocolChangeManagerFactory
     private let factory: Factory
@@ -257,8 +256,8 @@ class NavigationService {
     }
 
     private func triggerAutoConnect() {
-        let profileManager = factory.makeProfileManager()
-        if let profile = profileManager.autoConnectProfile {
+        @Dependency(\.profileManager) var profileManager
+        if let profile = profileManager.autoConnectProfile() {
             let spec = profile.connectionSpec(trigger: .auto)
             connectionCommandClient.send(.connect(spec, profile.connectionProtocol, .auto))
             return

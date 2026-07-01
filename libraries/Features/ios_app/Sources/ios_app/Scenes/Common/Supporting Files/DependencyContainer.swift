@@ -38,7 +38,6 @@ final class DependencyContainer: Container {
     // Singletons
     private lazy var navigationService = NavigationService(self)
     private lazy var appSessionManager = AppSessionManagerImplementation(factory: self)
-    private lazy var uiAlertService = IosUiAlertService()
 
     // Refreshes app data at predefined time intervals
     private lazy var refreshTimer: AppSessionRefreshTimer = AppSessionRefreshTimerImplementation(

@@ -45,7 +45,6 @@ protocol StatusMenuViewModelFactory {
 final class StatusMenuViewModel {
     typealias Factory = AppSessionManagerFactory
         & NavigationServiceFactory
-        & ProfileManagerFactory
         & WiFiSecurityMonitorFactory
 
     private let factory: Factory
@@ -99,8 +98,6 @@ final class StatusMenuViewModel {
 
     weak var viewController: StatusMenuViewControllerProtocol?
 
-    private var profileManager: ProfileManager?
-
     private var cancellables = Set<AnyCancellable>()
 
     init(factory: Factory) {
@@ -136,7 +133,7 @@ final class StatusMenuViewModel {
     }
 
     var profileListViewModel: StatusMenuProfilesListViewModel {
-        StatusMenuProfilesListViewModel(profileManager: factory.makeProfileManager())
+        StatusMenuProfilesListViewModel()
     }
 
     // MARK: - Connecting screen
@@ -222,10 +219,7 @@ final class StatusMenuViewModel {
             connectionCommandClient.send(.disconnect(.tray))
         } else {
             log.debug("Connect requested by pressing Quick connect", category: .connectionConnect, event: .trigger)
-            connectionCommandClient.quickConnect(
-                profileManager: profileManager ?? factory.makeProfileManager(),
-                trigger: .tray
-            )
+            connectionCommandClient.quickConnect(trigger: .tray)
         }
     }
 
@@ -534,8 +528,6 @@ final class StatusMenuViewModel {
     private func sessionEstablished() {
         serverType = ServerType.current
 
-        profileManager = factory.makeProfileManager()
-
         updateCountryList()
 
         AppEvent.profileContentChanged.subscribe(self, selector: #selector(handleDataChange))
@@ -552,8 +544,6 @@ final class StatusMenuViewModel {
         AppEvent.profileContentChanged.unsubscribe(self)
 
         NotificationCenter.default.removeObserver(self, name: ServerListUpdateNotification.name, object: nil)
-
-        profileManager = nil
     }
 
     private func handleVpnStatusChanged() {

@@ -143,7 +143,7 @@ extension DependencyContainer: AppSessionRefresherFactory {
 
 extension DependencyContainer: HeaderViewModelFactory {
     func makeHeaderViewModel() -> HeaderViewModel {
-        HeaderViewModel(factory: self)
+        HeaderViewModel()
     }
 }
 

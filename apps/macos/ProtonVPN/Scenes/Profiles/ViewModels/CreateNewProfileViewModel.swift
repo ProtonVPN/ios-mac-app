@@ -43,7 +43,7 @@ extension DependencyContainer: CreateNewProfileViewModelFactory {
 }
 
 class CreateNewProfileViewModel {
-    typealias Factory = AppSessionManagerFactory & ProfileManagerFactory
+    typealias Factory = AppSessionManagerFactory
     private let factory: Factory
 
     typealias MenuContentUpdate = Set<KeyPath<CreateNewProfileViewModel, [PopUpButtonItemViewModel]>>
@@ -63,7 +63,7 @@ class CreateNewProfileViewModel {
     @Dependency(\.coreAlertService) private var alertService
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    private lazy var profileManager: ProfileManager = factory.makeProfileManager()
+    @Dependency(\.profileManager) private var profileManager
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Shared(.smartProtocolConfig) private var smartProtocolConfig: SmartProtocolConfig
     @Dependency(\.serverRepository) private var serverRepository

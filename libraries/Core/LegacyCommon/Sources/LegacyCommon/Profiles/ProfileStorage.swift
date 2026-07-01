@@ -20,25 +20,28 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import DependenciesMacros
 import Domain
 import Foundation
 import VPNShared
 
-public protocol ProfileStorageFactory {
-    func makeProfileStorage() -> ProfileStorage
+public enum StorageVersion: Int, CaseIterable {
+    case v1 = 1
+    case v2 = 2
+
+    static let current: StorageVersion = .v2
+}
+
+@DependencyClient
+public struct ProfileStorage {
+    public var fetch: () -> [Profile] = { [] }
+    public var store: (_ profiles: [Profile], _ storageVersion: StorageVersion) -> Void = { _, _ in }
 }
 
 // TODO: This would be a good use case for non-user defaults storage
 //  - Profiles can get pretty big because they encode servers (big especially when they are SC servers)
 //  - Once we move to something like Core Data for servers, we could model a relationship between profiles and servers?
-public final class ProfileStorage {
-    enum StorageVersion: Int, CaseIterable {
-        case v1 = 1
-        case v2 = 2
-
-        static let current: StorageVersion = .v2
-    }
-
+public final class ProfileStorageImplementation {
     private static let storageVersion = StorageVersion.v2
     private static let versionKey = "profileCacheVersion"
 
@@ -79,9 +82,6 @@ public final class ProfileStorage {
             return
         }
         storeInMemory(profiles, storageKey: storageKey)
-        DispatchQueue.main.async {
-            AppEvent.profileStorageChanged.post(profiles)
-        }
     }
 
     // MARK: - Private functions
@@ -122,5 +122,26 @@ public final class ProfileStorage {
 
     private func systemProfilesPresent(in profiles: [Profile]) -> Bool {
         !profiles.filter { $0.profileType == .system }.isEmpty
+    }
+}
+
+public enum ProfileStorageKey: DependencyKey {
+    public static var liveValue: ProfileStorage = {
+        let profileStorageImpl = ProfileStorageImplementation()
+        return ProfileStorage(
+            fetch: {
+                profileStorageImpl.fetch()
+            },
+            store: { profiles, version in
+                profileStorageImpl.store(profiles, storageVersion: version)
+            }
+        )
+    }()
+}
+
+public extension DependencyValues {
+    var profileStorage: ProfileStorage {
+        get { self[ProfileStorageKey.self] }
+        set { self[ProfileStorageKey.self] = newValue }
     }
 }

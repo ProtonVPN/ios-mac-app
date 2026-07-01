@@ -53,9 +53,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     // Retain header view model to set `changeServerStateUpdated` when needed
     private var headerViewModel: HeaderViewModel?
 
-    typealias Factory = HeaderViewModelFactory
-        & MapSectionViewModelFactory
-        & ProfileManagerFactory
+    typealias Factory = HeaderViewModelFactory & MapSectionViewModelFactory
 
     private let navService: NavigationService
     private let factory: Factory
@@ -76,10 +74,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     }()
 
     private lazy var profileSectionViewController: ProfileSectionViewController = { [unowned self] in
-        let viewModel = ProfilesSectionViewModel(
-            navService: navService,
-            profileManager: factory.makeProfileManager()
-        )
+        let viewModel = ProfilesSectionViewModel(navService: navService)
         return ProfileSectionViewController(viewModel: viewModel)
     }()
 
@@ -102,7 +97,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         navService: NavigationService,
         factory: Factory
     ) {
-        let profileManager = factory.makeProfileManager()
         let store = Store(initialState: .init()) {
             SidebarFeature(
                 environment: .init(
@@ -110,12 +104,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                     expandButtonWidth: Dimensions.expandButtonWidth,
                     defaultMapWidth: Dimensions.defaultMapContainerWidth
                 )
-            )
-        } withDependencies: {
-            $0.sidebarProfileNameResolver = SidebarProfileNameResolver(
-                profileName: { profileID in
-                    profileManager.profile(withId: profileID)?.name
-                }
             )
         }
 

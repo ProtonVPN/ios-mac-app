@@ -24,7 +24,7 @@ import Foundation
 import LegacyCommon
 
 final class SettingsContainerViewModel {
-    typealias Factory = NavigationServiceFactory & ProfileManagerFactory & VpnProtocolChangeManagerFactory
+    typealias Factory = NavigationServiceFactory & VpnProtocolChangeManagerFactory
     private let factory: Factory
 
     init(factory: Factory) {

@@ -33,7 +33,7 @@ class ProfilesViewModel {
     @Dependency(\.upsellManager) private var upsellManager
 
     private let profileService: ProfileService
-    private var profileManager: ProfileManager?
+    @Dependency(\.profileManager) private var profileManager
     private let connectionStatusService: ConnectionStatusService
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.vpnKeychain) private var vpnKeychain
@@ -50,12 +50,10 @@ class ProfilesViewModel {
 
     init(
         profileService: ProfileService,
-        connectionStatusService: ConnectionStatusService,
-        profileManager: ProfileManager
+        connectionStatusService: ConnectionStatusService
     ) {
         self.profileService = profileService
         self.connectionStatusService = connectionStatusService
-        self.profileManager = profileManager
     }
 
     func makeCreateProfileViewController() -> UITableViewController? {
@@ -63,7 +61,11 @@ class ProfilesViewModel {
     }
 
     func makeEditProfileViewController(for index: Int) -> UITableViewController? {
-        profileService.makeCreateProfileViewController(for: profileManager?.customProfiles[index])
+        if profileManager.customProfiles().indices.contains(index) {
+            let profile = profileManager.customProfiles()[index]
+            return profileService.makeCreateProfileViewController(for: profile)
+        }
+        return nil
     }
 
     var headerHeight: CGFloat {
@@ -99,7 +101,7 @@ class ProfilesViewModel {
         case 0:
             2
         default:
-            profileManager?.customProfiles.count ?? 0
+            profileManager.customProfiles().count
         }
     }
 
@@ -112,7 +114,8 @@ class ProfilesViewModel {
     }
 
     func cellModel(for index: Int) -> ProfileItemViewModel? {
-        if let profile = profileManager?.customProfiles[index] {
+        if profileManager.customProfiles().indices.contains(index) {
+            let profile = profileManager.customProfiles()[index]
             return ProfileItemViewModel(
                 profile: profile,
                 userTier: userTier,
@@ -123,13 +126,13 @@ class ProfilesViewModel {
     }
 
     func deleteProfile(for index: Int) {
-        if let profile = profileManager?.customProfiles[index],
-           let profileManager {
+        if profileManager.customProfiles().indices.contains(index) {
+            let profile = profileManager.customProfiles()[index]
             profileManager.deleteProfile(profile)
         }
     }
 
     func reloadData() {
-        profileManager?.refreshProfiles()
+        profileManager.refreshProfiles()
     }
 }

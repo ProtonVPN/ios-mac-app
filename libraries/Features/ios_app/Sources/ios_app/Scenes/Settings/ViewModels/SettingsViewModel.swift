@@ -50,7 +50,6 @@ final class SettingsViewModel {
         AppSessionManagerFactory &
         ConnectionStatusServiceFactory &
         NavigationServiceFactory &
-        ProfileManagerFactory &
         SettingsServiceFactory
 
     private let factory: Factory
@@ -94,7 +93,6 @@ final class SettingsViewModel {
 
     @Dependency(\.hermesClient) private var hermesClient
 
-    private var profileManager: ProfileManager?
     private var accountRecoveryRepository: AccountRecoveryRepositoryProtocol?
     private let isAccountRecoveryEnabled: Bool
 
@@ -229,8 +227,6 @@ final class SettingsViewModel {
     }
 
     private func sessionEstablished() {
-        profileManager = factory.makeProfileManager()
-
         let reloadEvents: [AppEvent] = [
             .profileContentChanged,
         ]
@@ -239,11 +235,7 @@ final class SettingsViewModel {
     }
 
     private func sessionEnded() {
-        if profileManager != nil {
-            AppEvent.profileContentChanged.unsubscribe(self)
-        }
-
-        profileManager = nil
+        AppEvent.profileContentChanged.unsubscribe(self)
     }
 
     @objc

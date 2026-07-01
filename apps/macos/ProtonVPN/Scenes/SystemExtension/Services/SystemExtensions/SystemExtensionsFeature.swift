@@ -83,7 +83,7 @@ struct SystemExtensionsFeature {
     }
 
     @Dependency(\.propertiesManager) private var propertiesManager
-    @Dependency(\.systemExtensionsProfilesClient) private var profilesClient
+    @Dependency(\.profileManager) private var profileManager
     @Dependency(\.systemExtensionsRequestSubmissionClient) private var requestSubmissionClient
     @Dependency(\.vpnKeychain) private var vpnKeychain
 
@@ -326,7 +326,7 @@ struct SystemExtensionsFeature {
         return vpnKeychain.userIsLoggedIn &&
             (
                 connectionProtocol.requiresSystemExtension ||
-                    profilesClient.hasCustomProfilesRequiringSystemExtension()
+                    profileManager.customProfiles().contains(where: \.connectionProtocol.requiresSystemExtension) == true
             )
     }
 

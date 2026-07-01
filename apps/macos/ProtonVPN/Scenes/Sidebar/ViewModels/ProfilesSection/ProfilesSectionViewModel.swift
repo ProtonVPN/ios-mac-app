@@ -36,7 +36,7 @@ enum ProfilesSectionListCell {
 class ProfilesSectionViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    private let profileManager: ProfileManager
+    @Dependency(\.profileManager) private var profileManager
     private let navService: NavigationService
     @Dependency(\.upsellManager) private var upsellManager
 
@@ -49,7 +49,7 @@ class ProfilesSectionViewModel {
     var contentChanged: (() -> Void)?
 
     var cellCount: Int {
-        profileManager.allProfiles.count + 1
+        profileManager.allProfiles().count + 1
     }
 
     private var userTier: Int {
@@ -60,12 +60,8 @@ class ProfilesSectionViewModel {
         }
     }
 
-    init(
-        navService: NavigationService,
-        profileManager: ProfileManager
-    ) {
+    init(navService: NavigationService) {
         self.navService = navService
-        self.profileManager = profileManager
 
         let events: [AppEvent] = [
             .profileContentChanged,
@@ -93,7 +89,7 @@ class ProfilesSectionViewModel {
 
     func cellModel(forRow index: Int) -> ProfilesSectionListCell {
         if index < cellCount - 1 {
-            .profile(ProfileItemViewModel(profile: profileManager.allProfiles[index], userTier: userTier))
+            .profile(ProfileItemViewModel(profile: profileManager.allProfiles()[index], userTier: userTier))
         } else {
             .footer(self)
         }

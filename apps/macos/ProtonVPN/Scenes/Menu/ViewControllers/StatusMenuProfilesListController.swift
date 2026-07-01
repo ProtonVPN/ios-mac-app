@@ -97,9 +97,8 @@ extension StatusMenuProfilesListController: NSTableViewDataSource {
     }
 
     func tableView(_ tableView: NSTableView, viewFor _: NSTableColumn?, row: Int) -> NSView? {
-        let rowItem = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: statusMenuProfileItemIdentifier), owner: nil) as! StatusMenuProfileViewItem
-
-        let cellViewModel = viewModel.cellModel(forIndex: row)
+        guard let rowItem = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: statusMenuProfileItemIdentifier), owner: nil) as? StatusMenuProfileViewItem,
+              let cellViewModel = viewModel.cellModel(forIndex: row) else { return nil }
         rowItem.updateView(withModel: cellViewModel)
         return rowItem
     }

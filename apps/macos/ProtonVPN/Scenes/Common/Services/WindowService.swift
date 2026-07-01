@@ -100,7 +100,6 @@ final class WindowServiceImplementation: WindowService {
         & HeaderViewModelFactory
         & MapSectionViewModelFactory
         & NavigationServiceFactory
-        & ProfileManagerFactory
 
     private let factory: Factory
 
