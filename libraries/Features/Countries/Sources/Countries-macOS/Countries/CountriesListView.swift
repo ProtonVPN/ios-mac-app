@@ -77,13 +77,13 @@ public struct CountriesListView: View {
 
     private var countriesSection: some View {
         Section {
+            // we show either an announcement banner, or an upsell banner (only to free users)
             if case .banner = store.announcementBanner {
                 AnnouncementBannerView(store: store.scope(state: \.announcementBanner, action: \.announcementBanner))
                     .padding(.horizontal, .themeSpacing12)
                     .padding(.top, .themeSpacing16)
                     .padding(.bottom, .themeSpacing8)
-            }
-            if store.isFreeTier {
+            } else if store.isFreeTier {
                 upsellBanner
                     .padding(.horizontal, .themeSpacing8)
             }

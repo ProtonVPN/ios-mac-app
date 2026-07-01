@@ -139,7 +139,7 @@ public struct AnnouncementBannerView: View {
         #if os(iOS)
             .offset(x: .themeSpacing12, y: -.themeSpacing12)
         #else
-            .offset(x: .themeSpacing16)
+            .offset(x: .themeSpacing16, y: -.themeSpacing16)
         #endif
     }
 }

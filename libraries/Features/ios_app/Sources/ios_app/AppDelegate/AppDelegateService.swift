@@ -55,7 +55,6 @@ public final class AppDelegateService: AppDelegateProtocol {
     private static let sessionAcquisitionTimeout: Duration = .seconds(30)
 
     @Dependency(\.networking) private var networking
-    @Dependency(\.defaultsProvider) private var defaultsProvider
     @Dependency(\.cryptoService) private var cryptoService
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain

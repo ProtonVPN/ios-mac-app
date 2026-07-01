@@ -24,7 +24,6 @@ import VPNAppCore
 @Reducer
 public struct AnnouncementBannerFeature {
     @SharedReader(.announcementBanner) var announcementBanner: Announcement?
-    @SharedReader(.userTier) private var userTier: Int?
 
     @ObservableState
     public enum State: Equatable {
@@ -80,8 +79,7 @@ public struct AnnouncementBannerFeature {
                 }
                 .cancellable(id: CancelID.announcementBanner)
             case let .fetchCurrentOfferBannerFromStorage(announcement):
-                if userTier?.isFreeTier ?? true,
-                   let announcement,
+                if let announcement,
                    let model = AnnouncementBannerFeature.State.Model(announcement: announcement) {
                     state = .banner(model)
                 }
