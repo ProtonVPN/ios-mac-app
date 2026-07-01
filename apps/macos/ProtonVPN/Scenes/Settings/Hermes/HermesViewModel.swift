@@ -30,8 +30,6 @@ import Sharing
 import VPNAppCore
 
 final class HermesViewModel {
-    typealias Factory = CoreAlertServiceFactory
-
     enum LocationValidation {
         case empty
         case duplicate
@@ -59,7 +57,7 @@ final class HermesViewModel {
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Shared(.connectionState) private var connectionState: ConnectionState
 
-    private let alertService: any CoreAlertService
+    @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.upsellManager) private var upsellManager
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
 
@@ -69,13 +67,12 @@ final class HermesViewModel {
         netShieldPropertyProvider.getNetShieldType() != .off
     }
 
-    init(factory: Factory) {
+    init() {
         @Dependency(\.hermesClient) var hermesClient
         let hermesIsEnabled = hermesClient.isEnabled()
         let resolvers = hermesClient.activeHermesResolvers()
         _isEnabled = hermesIsEnabled
         _activeHermesResolvers = hermesClient.activeHermesResolvers()
-        self.alertService = factory.makeCoreAlertService()
         self.initialState = .init(enabled: hermesIsEnabled.wrappedValue, resolvers: resolvers.wrappedValue)
     }
 

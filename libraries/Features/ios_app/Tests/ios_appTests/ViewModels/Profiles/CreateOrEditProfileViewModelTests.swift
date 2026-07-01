@@ -148,7 +148,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
             $0.vpnKeychain = vpnKeychainMock
         } operation: {
             CreateOrEditProfileViewModel(
-                factory: self,
                 username: "user1",
                 for: secureCore ? secureCoreProfile : standardProfile,
                 profileService: profileService,
@@ -176,11 +175,5 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                 }
             }
         }
-    }
-}
-
-extension CreateOrEditProfileViewModelTests: CreateOrEditProfileViewModel.Factory {
-    func makeCoreAlertService() -> any LegacyCommon.CoreAlertService {
-        AlertServiceEmptyStub()
     }
 }

@@ -96,8 +96,6 @@ protocol ConnectionStatusService {
     func presentStatusViewController()
 }
 
-typealias AlertService = CoreAlertService
-
 protocol NavigationServiceFactory {
     func makeNavigationService() -> NavigationService
 }
@@ -120,8 +118,7 @@ final class NavigationService {
     @Shared(.sessionLogoutReason) private var sessionLogoutReason: String?
     private var cancellables = Set<AnyCancellable>()
     @Dependency(\.authKeychain) private var authKeychain
-    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
+    @Dependency(\.coreAlertService) private var alertService
     private lazy var loginService: LoginService = {
         let loginService = factory.makeLoginService()
         loginService.delegate = self
@@ -319,7 +316,6 @@ extension NavigationService: ProfileService {
         let profilesViewController = profilesStoryboard.instantiateViewController(withIdentifier: String(describing: ProfilesViewController.self)) as! ProfilesViewController
 
         profilesViewController.viewModel = ProfilesViewModel(
-            factory: factory,
             profileService: self,
             connectionStatusService: self,
             profileManager: profileManager
@@ -337,7 +333,6 @@ extension NavigationService: ProfileService {
         }
 
         createProfileViewController.viewModel = CreateOrEditProfileViewModel(
-            factory: factory,
             username: username,
             for: profile,
             profileService: self,

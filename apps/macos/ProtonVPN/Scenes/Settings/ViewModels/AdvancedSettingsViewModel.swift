@@ -32,10 +32,7 @@ import VPNAppCore
 import VPNShared
 
 final class AdvancedSettingsViewModel {
-    typealias Factory = CoreAlertServiceFactory
-    private let factory: Factory
-
-    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.upsellManager) private var upsellManager
 
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
@@ -52,14 +49,12 @@ final class AdvancedSettingsViewModel {
 
     var reloadNeeded: (() -> Void)?
 
-    lazy var hermesViewModel = HermesViewModel(factory: factory)
+    lazy var hermesViewModel = HermesViewModel()
 
     private var natTypeObserverTask: Task<Void, Never>?
     private var featureFlagsObservation: AnyCancellable?
 
-    init(factory: Factory) {
-        self.factory = factory
-
+    init() {
         // Observe feature flags changes via the @Shared(.featureFlags) publisher
         self.featureFlagsObservation = $featureFlags.publisher
             .dropFirst()

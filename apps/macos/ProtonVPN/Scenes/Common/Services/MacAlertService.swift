@@ -23,40 +23,32 @@
 import Announcement
 import AppKit
 import BugReport
-import CommonNetworking
 import Dependencies
 import Domain
 import Ergonomics
-import Foundation
-import LegacyCommon
-import Modals
-import Payments
 import Strings
-import Theme
 import VPNAppCore
 import VPNShared
 
 final class MacAlertService {
-    typealias Factory =
-        NavigationServiceFactory &
-        UIAlertServiceFactory &
-        WindowServiceFactory
-
-    private let factory: Factory
-
-    private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
-    private lazy var windowService: WindowService = factory.makeWindowService()
+    private lazy var uiAlertService = OsxUiAlertService()
+    @Dependency(\.windowService) private var windowService
     @Dependency(\.updateManager) private var updateManager
-    private lazy var navigationService: NavigationService = factory.makeNavigationService()
-    @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.linkOpener) var linkOpener
-
-    init(factory: Factory) {
-        self.factory = factory
-    }
 }
 
-extension MacAlertService: CoreAlertService {
+// MARK: - Live dependency
+
+extension CoreAlertService: @retroactive DependencyKey {
+    public static let liveValue = {
+        let macAlertsService = MacAlertService()
+        return CoreAlertService(push: { alert in
+            macAlertsService.push(alert: alert)
+        })
+    }()
+}
+
+extension MacAlertService {
     func push(alert: SystemAlert) {
         executeOnUIThread {
             MainActor.assumeIsolated {
@@ -74,23 +66,8 @@ extension MacAlertService: CoreAlertService {
         case let appUpdateRequiredAlert as AppUpdateRequiredAlert:
             show(appUpdateRequiredAlert)
 
-        case let alert as IkeDeprecatedAlert:
-            show(alert)
-
-        case let connectionTroubleshootingAlert as ConnectionTroubleshootingAlert:
-            show(connectionTroubleshootingAlert)
-
-        case let sysexAlert as SysexEnabledAlert:
-            show(sysexAlert)
-
-        case let systemExtensionTourAlert as SystemExtensionTourAlert:
-            show(systemExtensionTourAlert)
-
         case let announcementOfferAlert as AnnouncementOfferAlert:
             show(announcementOfferAlert)
-
-        case let subuserAlert as SubuserWithoutConnectionsAlert:
-            show(subuserAlert)
 
         // Actual Alerts
 
@@ -122,6 +99,9 @@ extension MacAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
 
         case is ReconnectOnActionAlert:
+            showDefaultSystemAlert(alert)
+
+        case is IkeDeprecatedAlert:
             showDefaultSystemAlert(alert)
 
         case is KillSwitchConflictAlert:
@@ -179,32 +159,6 @@ extension MacAlertService: CoreAlertService {
 
     // MARK: Custom controllers that treated as Alerts
 
-    private func show(_: SysexEnabledAlert) {
-        @Dependency(\.defaultsProvider) var provider
-        guard !provider.getDefaults().bool(forKey: AppConstants.UserDefaults.welcomed),
-              let credentials = try? vpnKeychain.fetchCached()
-        else {
-            return
-        }
-
-        let welcomeViewController = WelcomeViewController(windowService: windowService)
-        windowService.presentKeyModal(viewController: welcomeViewController, activatingApp: false)
-
-        provider.getDefaults().set(true, forKey: AppConstants.UserDefaults.welcomed)
-    }
-
-    private func show(_ alert: SystemExtensionTourAlert) {
-        windowService.openSystemExtensionGuideWindow(
-            origin: alert.origin,
-            cancelledHandler: alert.cancelHandler
-        )
-    }
-
-    private func show(_: ConnectionTroubleshootingAlert) {
-        let connectionTroubleshootingAlert = TroubleshootHostingViewController()
-        windowService.presentKeyModal(viewController: connectionTroubleshootingAlert, activatingApp: false)
-    }
-
     private func show(_ alert: AnnouncementOfferAlert) {
         guard let panelMode = alert.data.panelMode() else {
             log.warning("Couldn't determine panelMode from: \(alert.data)")
@@ -220,15 +174,6 @@ extension MacAlertService: CoreAlertService {
             )
         }
 
-        windowService.presentKeyModal(viewController: vc, activatingApp: alert.activatingApp)
-    }
-
-    private func show(_ alert: SubuserWithoutConnectionsAlert) {
-        windowService.openSubuserAlertWindow(alert: alert)
-    }
-
-    private func show(_ alert: IkeDeprecatedAlert) {
-        let vc = ProtocolDeprecatedViewController(viewModel: WarningPopupViewModel(alert: alert))
         windowService.presentKeyModal(viewController: vc, activatingApp: alert.activatingApp)
     }
 }

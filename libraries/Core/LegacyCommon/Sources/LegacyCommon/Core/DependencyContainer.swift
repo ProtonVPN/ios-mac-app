@@ -23,9 +23,7 @@ import ProtonCorePushNotifications
 import Telemetry
 import VPNShared
 
-typealias PropertiesToOverride = CoreAlertServiceFactory
-
-open class Container: PropertiesToOverride {
+open class Container {
     @Dependency(\.date) var date
 
     // Lazy instances - get allocated once, and stay allocated
@@ -69,14 +67,6 @@ open class Container: PropertiesToOverride {
 
     func shouldHaveOverridden(caller: StaticString = #function) -> Never {
         fatalError("Should have overridden \(caller)")
-    }
-
-    // MARK: - Factories to override
-
-    // MARK: CoreAlertService
-
-    open func makeCoreAlertService() -> CoreAlertService {
-        shouldHaveOverridden()
     }
 }
 

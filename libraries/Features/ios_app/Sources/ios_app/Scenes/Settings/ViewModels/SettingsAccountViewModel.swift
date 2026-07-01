@@ -40,12 +40,11 @@ import VPNShared
 
 final class SettingsAccountViewModel {
     typealias Factory = AppSessionManagerFactory &
-        CoreAlertServiceFactory &
         NavigationServiceFactory
 
     private let factory: Factory
 
-    private lazy var alertService: AlertService = factory.makeCoreAlertService()
+    @Dependency(\.coreAlertService) private var alertService
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.vpnKeychain) private var vpnKeychain
@@ -168,7 +167,7 @@ final class SettingsAccountViewModel {
         TableViewSection(title: "", cells: [
             .pushStandard(title: Localizable.paymentsOptions, handler: { [weak self] in
                 guard let self, let pushHandler else { return }
-                pushHandler(UIHostingController(rootView: PaymentsSettingsView(alertService: alertService)))
+                pushHandler(UIHostingController(rootView: PaymentsSettingsView()))
             }),
         ])
     }

@@ -25,37 +25,28 @@ import BugReport
 import Dependencies
 import Domain
 import Ergonomics
-import Foundation
-import LegacyCommon
 import Modals
-import Payments
 import Strings
 import SwiftUI
-import Telemetry
-import UIKit
 import VPNAppCore
 
 final class IosAlertService {
-    typealias Factory =
-        AppSessionManagerFactory &
-        NavigationServiceFactory &
-        UIAlertServiceFactory
-
-    private let factory: Factory
-
-    private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
-    private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
-
-    private let paymentsFlowCoordinator = PaymentsFlowCoordinator()
-
+    private lazy var uiAlertService = IosUiAlertService()
     @Dependency(\.windowService) private var windowService
-
-    init(_ factory: Factory) {
-        self.factory = factory
-    }
 }
 
-extension IosAlertService: CoreAlertService {
+// MARK: - Live dependency
+
+extension CoreAlertService: @retroactive DependencyKey {
+    public static let liveValue = {
+        let iosAlertService = IosAlertService()
+        return CoreAlertService(push: { alert in
+            iosAlertService.push(alert: alert)
+        })
+    }()
+}
+
+extension IosAlertService {
     func push(alert: SystemAlert) {
         executeOnUIThread {
             MainActor.assumeIsolated {
@@ -76,8 +67,8 @@ extension IosAlertService: CoreAlertService {
         case is AccountDeletionWarningAlert:
             showDefaultSystemAlert(alert)
 
-        case let appUpdateRequiredAlert as AppUpdateRequiredAlert:
-            show(appUpdateRequiredAlert)
+        case is AppUpdateRequiredAlert:
+            showDefaultSystemAlert(alert)
 
         case is UpgradeUnavailableAlert:
             showDefaultSystemAlert(alert)
@@ -93,9 +84,6 @@ extension IosAlertService: CoreAlertService {
 
         case is UnreachableNetworkAlert:
             showDefaultSystemAlert(alert)
-
-        case let connectionTroubleshootingAlert as ConnectionTroubleshootingAlert:
-            show(connectionTroubleshootingAlert)
 
         case is ReconnectOnSmartProtocolChangeAlert:
             showDefaultSystemAlert(alert)
@@ -114,9 +102,6 @@ extension IosAlertService: CoreAlertService {
 
         case let announcementOfferAlert as AnnouncementOfferAlert:
             show(announcementOfferAlert)
-
-        case let subuserAlert as SubuserWithoutConnectionsAlert:
-            show(subuserAlert)
 
         case is ProtocolNotAvailableForServerAlert:
             showDefaultSystemAlert(alert)
@@ -139,14 +124,6 @@ extension IosAlertService: CoreAlertService {
         }
     }
 
-    private func show(_ alert: AppUpdateRequiredAlert) {
-        alert.actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: { [weak self] in
-            self?.appSessionManager.logOut(force: true, reason: nil)
-        }))
-
-        uiAlertService.displayAlert(alert)
-    }
-
     private func show(_ alert: MaintenanceAlert) {
         switch alert.type {
         case .alert:
@@ -165,11 +142,6 @@ extension IosAlertService: CoreAlertService {
 
     private func showNotificationStyleAlert(message: String, type: NotificationStyleAlertType = .error, accessibilityIdentifier: String? = nil) {
         uiAlertService.displayNotificationStyleAlert(message: message, type: type, accessibilityIdentifier: accessibilityIdentifier)
-    }
-
-    private func show(_: ConnectionTroubleshootingAlert) {
-        let controller = TroubleshootHostingViewController()
-        windowService.present(modal: controller)
     }
 
     private func show(_ alert: AnnouncementOfferAlert) {
@@ -198,27 +170,6 @@ extension IosAlertService: CoreAlertService {
             }
         }
         windowService.present(modal: announcement)
-    }
-
-    private func show(_ alert: SubuserWithoutConnectionsAlert) {
-        let controller = UIHostingController(rootView: NoConnectionsAvailableView(mode: alert.mode))
-        windowService.present(modal: controller)
-    }
-
-    @MainActor
-    private func presentDirectSubscriptionManagement() {
-        let viewController = paymentsFlowCoordinator.makeViewController(
-            request: .directSubscriptionManagement
-        ) { [weak self] event in
-            guard let self else { return }
-            switch event {
-            case .completed, .dismissed:
-                windowService.dismissModal(nil)
-            case .engaged, .createAccountFirstRequested:
-                break
-            }
-        }
-        windowService.present(modal: viewController)
     }
 }
 

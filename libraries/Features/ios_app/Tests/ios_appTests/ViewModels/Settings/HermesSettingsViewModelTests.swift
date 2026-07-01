@@ -112,7 +112,6 @@ final class HermesSettingsViewModelTests: XCTestCase {
 
 // MARK: - Testing Helpers
 
-@available(macOS 14.0, *)
 private extension HermesSettingsViewModelTests {
     static let resolversValidationSamples: [(input: String, validation: HermesSettingsViewModel.LocationValidation, addingResult: Bool)] = [
         ("", .empty, false),

@@ -39,11 +39,11 @@ final class HeaderViewController: NSViewController {
 
     // MARK: - Views
 
-    private let backgroundView = NSView(frame: .zero).with { bckv in
-        bckv.translatesAutoresizingMaskIntoConstraints = false
-        bckv.wantsLayer = true
+    private let backgroundView = NSView(frame: .zero).with { background in
+        background.translatesAutoresizingMaskIntoConstraints = false
+        background.wantsLayer = true
         DarkAppearance {
-            bckv.layer?.backgroundColor = .cgColor(.background)
+            background.layer?.backgroundColor = .cgColor(.background)
         }
     }
 
@@ -86,14 +86,14 @@ final class HeaderViewController: NSViewController {
         $0.action = #selector(announcementsButtonTapped(_:))
     }
 
-    private let badgeView = NSView(frame: .zero).with { bdg in
-        bdg.translatesAutoresizingMaskIntoConstraints = false
-        bdg.wantsLayer = true
-        bdg.layer?.cornerRadius = Dimensions.badgeCornerRadius
+    private let badgeView = NSView(frame: .zero).with { badge in
+        badge.translatesAutoresizingMaskIntoConstraints = false
+        badge.wantsLayer = true
+        badge.layer?.cornerRadius = Dimensions.badgeCornerRadius
         DarkAppearance {
-            bdg.layer?.backgroundColor = .cgColor(.background, .info)
+            badge.layer?.backgroundColor = .cgColor(.background, .info)
         }
-        bdg.isHidden = true
+        badge.isHidden = true
     }
 
     // MARK: - Stacks
@@ -281,7 +281,7 @@ final class HeaderViewController: NSViewController {
             $0.focusRingType = .none
             $0.usesSingleLineMode = true
             $0.lineBreakMode = .byClipping
-            $0.cell?.isScrollable = true
+            $0.cell?.isScrollable = false
             $0.setContentHuggingPriority(.init(horizontalHugging), for: .horizontal)
             $0.setContentHuggingPriority(.init(750), for: .vertical)
             if let horizontalCompressionResistance {

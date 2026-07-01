@@ -37,7 +37,7 @@ class AnnouncementsViewModelTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        viewModel = AnnouncementsViewModel(factory: AnnouncementsViewModelFactoryMock(coreAlertService: CoreAlertServiceDummy()))
+        viewModel = AnnouncementsViewModel()
         storage.store([])
     }
 
@@ -61,24 +61,6 @@ class AnnouncementsViewModelTests: XCTestCase {
         storage.store([.mock])
 
         wait(for: [expectationViewRefreshed], timeout: 0.2)
-    }
-}
-
-private class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Factory {
-    let coreAlertService: CoreAlertService
-
-    @Dependency(\.announcementManager) var announcementManager: AnnouncementManager
-
-    init(coreAlertService: CoreAlertService) {
-        self.coreAlertService = coreAlertService
-    }
-
-    func makeAnnouncementManager() -> AnnouncementManager {
-        announcementManager
-    }
-
-    func makeCoreAlertService() -> CoreAlertService {
-        coreAlertService
     }
 }
 

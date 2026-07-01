@@ -49,7 +49,6 @@ final class SettingsViewModel {
     typealias Factory =
         AppSessionManagerFactory &
         ConnectionStatusServiceFactory &
-        CoreAlertServiceFactory &
         NavigationServiceFactory &
         ProfileManagerFactory &
         SettingsServiceFactory
@@ -63,7 +62,7 @@ final class SettingsViewModel {
     @Shared(.killSwitch) private var killSwitch: Bool
     @Shared(.sessionStatus) private var sessionStatus: SessionStatus
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
-    private lazy var alertService: AlertService = factory.makeCoreAlertService()
+    @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.upsellManager) private var upsellManager
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
     @Dependency(\.vpnKeychain) private var vpnKeychain
@@ -900,7 +899,6 @@ final class SettingsViewModel {
             title: Localizable.netshieldTitle,
             allFeatures: NetShieldType.allCases,
             selectedFeature: netShieldPropertyProvider.getNetShieldType(),
-            factory: factory,
             onSelect: { [weak self] type, completion in self?.changeNetShieldType(to: type, completion: completion) }
         )
         push(viewController: NetShieldSelectionViewController(viewModel: viewModel))

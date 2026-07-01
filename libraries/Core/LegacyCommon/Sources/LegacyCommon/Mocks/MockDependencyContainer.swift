@@ -34,11 +34,10 @@
 
         public static let appGroup = "test"
 
-        public lazy var alertService = CoreAlertServiceDummy()
         lazy var appSessionRefresher = withDependencies {
             $0.serverRepository = self.serverRepository
         } operation: {
-            AppSessionRefresherMock(factory: MockFactory(container: self))
+            AppSessionRefresherMock()
         }
 
         lazy var appSessionRefreshTimer = AppSessionRefreshTimerImplementation(
@@ -65,13 +64,6 @@
 
         init(container: MockDependencyContainer) {
             self.container = container
-        }
-    }
-
-    // public typealias Factory = VpnApiServiceFactory & CoreAlertServiceFactory
-    extension MockFactory: CoreAlertServiceFactory {
-        func makeCoreAlertService() -> CoreAlertService {
-            container.alertService
         }
     }
 

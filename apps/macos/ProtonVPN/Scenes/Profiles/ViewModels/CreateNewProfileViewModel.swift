@@ -43,7 +43,7 @@ extension DependencyContainer: CreateNewProfileViewModelFactory {
 }
 
 class CreateNewProfileViewModel {
-    typealias Factory = AppSessionManagerFactory & CoreAlertServiceFactory & ProfileManagerFactory
+    typealias Factory = AppSessionManagerFactory & ProfileManagerFactory
     private let factory: Factory
 
     typealias MenuContentUpdate = Set<KeyPath<CreateNewProfileViewModel, [PopUpButtonItemViewModel]>>
@@ -60,7 +60,7 @@ class CreateNewProfileViewModel {
 
     let sessionFinished = NSNotification.Name("CreateNewProfileViewModelSessionFinished") // two observers
 
-    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    @Dependency(\.coreAlertService) private var alertService
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     @Dependency(\.vpnKeychain) private var vpnKeychain
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
@@ -369,6 +369,13 @@ class CreateNewProfileViewModel {
                 update(connectionProtocol: .smartProtocol)
             }, continueHandler: {
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User decided to continue with IKEv2 anyway for a new profile.")
+            }, learnMoreHandler: { [weak self] in
+                guard let self else {
+                    return
+                }
+                SentryHelper.shared?.log(message: "IKEv2 Deprecation: User opened Learn more for a new profile; keeping the Smart protocol selection.")
+                // Don't select IKEv2: keep the recommended Smart protocol
+                update(connectionProtocol: .smartProtocol)
             }))
         }
     }

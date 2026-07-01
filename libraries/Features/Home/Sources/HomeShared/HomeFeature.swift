@@ -43,7 +43,6 @@ public struct HomeFeature {
     @Dependency(\.planChangeClient) private var planChangeClient
     @Dependency(\.pendingDisconnectCompletions) private var pendingDisconnectCompletions
     @Dependency(\.serverRepository) private var serverRepository
-    @Dependency(\.alertService) private var alertService
     @Dependency(\.continuousClock) private var clock
     @Dependency(\.networkInterfacePropertiesProvider) private var networkInterfacePropertiesProvider
     #if os(iOS)
@@ -123,7 +122,6 @@ public struct HomeFeature {
         /// translates a `ConnectionCommand` into `ConnectionFeature.input(...)`.
         case connectionCommandReceived(ConnectionCommand)
 
-        case incomingAlert(Alert)
         case killSwitchSettingChanged(Bool)
         case planChanged(PlanChange)
 
@@ -257,11 +255,6 @@ private extension HomeFeature {
                         try await clock.sleep(for: Self.whatsNewPresentationDelay)
                         await send(.whatsNewChecker(.check))
                     },
-                    .run { send in
-                        for await alert in await alertService.alerts() {
-                            await send(.incomingAlert(alert))
-                        }
-                    },
                     .run { [killSwitch = $killSwitch] send in
                         for await value in killSwitch.publisher.removeDuplicates().values.dropFirst() {
                             await send(.killSwitchSettingChanged(value))
@@ -293,9 +286,6 @@ private extension HomeFeature {
                 // update the persisted feature settings so a downgrade clears paid features
                 // and an upgrade re-enables NetShield
                 return .run { _ in applyPlanChangeFeatureResets(planChange) }
-            case let .incomingAlert(alert):
-                state.alert = domainAlertState(from: alert)
-                return .none
             default:
                 return .none
             }

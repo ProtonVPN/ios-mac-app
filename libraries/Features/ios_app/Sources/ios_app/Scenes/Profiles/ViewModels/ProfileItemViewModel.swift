@@ -40,7 +40,7 @@ final class ProfileItemViewModel {
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
     private let profile: Profile
-    private let alertService: AlertService
+    @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.upsellManager) private var upsellManager
     private let connectionStatusService: ConnectionStatusService
 
@@ -118,12 +118,10 @@ final class ProfileItemViewModel {
 
     init(
         profile: Profile,
-        alertService: AlertService,
         userTier: Int,
         connectionStatusService: ConnectionStatusService
     ) {
         self.profile = profile
-        self.alertService = alertService
         self.userTier = userTier
         self.connectionStatusService = connectionStatusService
 

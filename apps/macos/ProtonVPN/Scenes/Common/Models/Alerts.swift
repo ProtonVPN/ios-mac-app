@@ -20,6 +20,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Dependencies
+import Domain
 import Foundation
 import LegacyCommon
 import Sharing
@@ -69,28 +71,39 @@ public class IkeDeprecatedAlert: SystemAlert {
     public var title: String? = Localizable.ikeDeprecationAlertTitle
     public var message: String? = {
         @SharedReader(.plutoniumFeature) var feature: PlutoniumFeatureToggle
+        let base = Localizable.ikeDeprecationAlertMessage
+            .replacingOccurrences(of: Localizable.ikeDeprecationAlertMessageLinkText, with: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
         if case .enabled = feature {
-            return Localizable.ikeDeprecationAlertMessage + "\n\n" + Localizable.disablePlutoniumMessage
+            return base + "\n\n" + Localizable.disablePlutoniumMessage
         } else {
-            return Localizable.ikeDeprecationAlertMessage
+            return base
         }
     }()
 
-    public let linkText: String = Localizable.ikeDeprecationAlertMessageLinkText
     public let confirmTitle: String = Localizable.ikeDeprecationAlertEnableSmartButtonTitle
     public let dismissTitle: String = Localizable.ikeDeprecationAlertContinueButtonTitle
 
     public var actions = [AlertAction]()
     public var isError: Bool = false
-    public let enableSmartProtocol: () -> Void
     public var dismiss: (() -> Void)?
 
-    public init(enableSmartProtocolHandler: @escaping () -> Void, continueHandler: @escaping () -> Void) {
-        self.enableSmartProtocol = enableSmartProtocolHandler
+    public init(
+        enableSmartProtocolHandler: @escaping () -> Void,
+        continueHandler: @escaping () -> Void,
+        learnMoreHandler: @escaping () -> Void
+    ) {
         self.dismiss = continueHandler
 
         actions.append(AlertAction(title: confirmTitle, style: .confirmative, handler: enableSmartProtocolHandler))
         actions.append(AlertAction(title: dismissTitle, style: .secondary, handler: continueHandler))
+        // opens the support page and runs `learnMoreHandler` — which keeps the recommended Smart
+        // protocol selected
+        actions.append(AlertAction(title: Localizable.ikeDeprecationAlertMessageLinkText, style: .secondary) {
+            @Dependency(\.linkOpener) var linkOpener
+            linkOpener.open(.ikev2Deprecation)
+            learnMoreHandler()
+        })
     }
 }
 

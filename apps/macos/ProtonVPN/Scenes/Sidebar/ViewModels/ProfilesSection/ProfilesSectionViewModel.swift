@@ -38,7 +38,6 @@ class ProfilesSectionViewModel {
     @Dependency(\.vpnKeychain) private var vpnKeychain
     private let profileManager: ProfileManager
     private let navService: NavigationService
-    private let alertService: CoreAlertService
     @Dependency(\.upsellManager) private var upsellManager
 
     @Shared(.featureFlags) private var featureFlags: FeatureFlags
@@ -63,11 +62,9 @@ class ProfilesSectionViewModel {
 
     init(
         navService: NavigationService,
-        alertService: CoreAlertService,
         profileManager: ProfileManager
     ) {
         self.navService = navService
-        self.alertService = alertService
         self.profileManager = profileManager
 
         let events: [AppEvent] = [
@@ -96,7 +93,7 @@ class ProfilesSectionViewModel {
 
     func cellModel(forRow index: Int) -> ProfilesSectionListCell {
         if index < cellCount - 1 {
-            .profile(ProfileItemViewModel(profile: profileManager.allProfiles[index], userTier: userTier, alertService: alertService))
+            .profile(ProfileItemViewModel(profile: profileManager.allProfiles[index], userTier: userTier))
         } else {
             .footer(self)
         }

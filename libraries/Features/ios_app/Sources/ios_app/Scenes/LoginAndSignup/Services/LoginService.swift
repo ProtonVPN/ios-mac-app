@@ -6,12 +6,14 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
+import BugReport
 import CommonNetworking
 import Dependencies
 import Domain
 import Ergonomics
 import Foundation
 import LegacyCommon
+import Modals
 import ProtonCoreDataModel
 import ProtonCoreFeatureFlags
 import ProtonCoreLogin
@@ -69,13 +71,12 @@ protocol LoginService: AnyObject {
 final class CoreLoginService {
     typealias Factory = AppSessionManagerFactory
         & AppSessionRefresherFactory
-        & CoreAlertServiceFactory
         & PushNotificationServiceFactory
         & SettingsServiceFactory
 
     private let appSessionManager: AppSessionManager
     private let appSessionRefresher: AppSessionRefresher
-    private let alertService: AlertService
+    @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.networking) private var networking
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.welcomeFlowPresenter) private var welcomeFlowPresenter
@@ -93,7 +94,6 @@ final class CoreLoginService {
         self.doh = Dependency(\.dohConfiguration).wrappedValue
         self.appSessionManager = factory.makeAppSessionManager()
         self.appSessionRefresher = factory.makeAppSessionRefresher()
-        self.alertService = factory.makeCoreAlertService()
         self.settingsService = factory.makeSettingsService()
         self.pushNotificationService = factory.makePushNotificationService()
     }
@@ -248,13 +248,13 @@ extension CoreLoginService: LoginErrorPresenter {
     func willPresentError(error: LoginError, from _: UIViewController) -> Bool {
         switch error {
         case .generic(_, _, CommonVpnError.noConnectionsAvailable):
-            alertService.push(alert: SubuserWithoutConnectionsAlert(mode: .noServers))
+            windowService.present(modal: UIHostingController(rootView: NoConnectionsAvailableView(mode: .noServers)))
             return true
         case .generic(_, _, CommonVpnError.subuserWithoutSessions):
-            alertService.push(alert: SubuserWithoutConnectionsAlert(mode: .connectionsDisabled))
+            windowService.present(modal: UIHostingController(rootView: NoConnectionsAvailableView(mode: .connectionsDisabled)))
             return true
         case .generic(_, _, CommonVpnError.logicalsEndpointFailed):
-            alertService.push(alert: SubuserWithoutConnectionsAlert(mode: .loadingError))
+            windowService.present(modal: UIHostingController(rootView: NoConnectionsAvailableView(mode: .loadingError)))
             return true
         case let .generic(_, code: _, originalError: originalError):
             // show a custom alert with a way to show the troubleshooting screen
@@ -262,7 +262,7 @@ extension CoreLoginService: LoginErrorPresenter {
             let error = convertError(from: originalError)
             if error.isTlsError || error.isNetworkError {
                 alertService.push(alert: UnreachableNetworkAlert(error: error, troubleshoot: { [weak self] in
-                    self?.alertService.push(alert: ConnectionTroubleshootingAlert())
+                    self?.windowService.present(modal: TroubleshootHostingViewController())
                 }))
                 return true
             }

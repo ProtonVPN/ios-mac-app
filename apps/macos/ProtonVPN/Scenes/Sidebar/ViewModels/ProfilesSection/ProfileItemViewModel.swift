@@ -30,7 +30,6 @@ import VPNAppCore
 class ProfileItemViewModel: AbstractProfileViewModel {
     private static let maxCharCount = 30
 
-    private let alertService: CoreAlertService
     @Dependency(\.upsellManager) private var upsellManager
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
@@ -57,15 +56,6 @@ class ProfileItemViewModel: AbstractProfileViewModel {
 
     var secondaryDescription: NSAttributedString {
         formSecondaryDescription()
-    }
-
-    init(
-        profile: Profile,
-        userTier: Int,
-        alertService: CoreAlertService
-    ) {
-        self.alertService = alertService
-        super.init(profile: profile, userTier: userTier)
     }
 
     func connectAction() {

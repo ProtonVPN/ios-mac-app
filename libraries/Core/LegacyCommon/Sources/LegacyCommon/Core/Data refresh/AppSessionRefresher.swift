@@ -52,17 +52,13 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.updateManager) private var updateManager
     @Dependency(\.upsellManager) private var upsellManager
-    public var alertService: CoreAlertService
+    @Dependency(\.coreAlertService) public var alertService
 
     private var notificationCenter: NotificationCenter = .default
 
     private var observation: NotificationToken?
 
-    public typealias Factory = CoreAlertServiceFactory
-
-    public init(factory: Factory) {
-        self.alertService = factory.makeCoreAlertService()
-
+    public init() {
         self.observation = notificationCenter.addObserver(
             for: AppEvent.planChanged.name,
             object: nil,
@@ -86,11 +82,20 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
 
             switch error.responseCode {
             case ApiErrorCode.apiVersionBad, ApiErrorCode.appVersionBad:
-                alertService.push(alert: AppUpdateRequiredAlert(error))
+                presentAppUpdateRequired(error)
             default:
                 break // ignore failures
             }
         }
+    }
+
+    /// Presents the "app update required" alert when the API rejects the app version.
+    ///
+    /// The base implementation only shows the informational alert. Platforms override this to
+    /// attach the appropriate action (e.g. iOS forces a logout) so the alert presenter itself
+    /// stays free of session side effects.
+    open func presentAppUpdateRequired(_ error: Error) {
+        alertService.push(alert: AppUpdateRequiredAlert(error))
     }
 
     public func refreshServerLoads() async {

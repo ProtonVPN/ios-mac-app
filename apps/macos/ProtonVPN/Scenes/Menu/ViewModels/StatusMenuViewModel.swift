@@ -44,11 +44,9 @@ protocol StatusMenuViewModelFactory {
 
 final class StatusMenuViewModel {
     typealias Factory = AppSessionManagerFactory
-        & CoreAlertServiceFactory
         & NavigationServiceFactory
         & ProfileManagerFactory
         & WiFiSecurityMonitorFactory
-        & WindowServiceFactory
 
     private let factory: Factory
     @Dependency(\.profileAuthorizer) private var profileAuthorizer
@@ -64,10 +62,9 @@ final class StatusMenuViewModel {
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     @Dependency(\.upsellManager) private var upsellManager
     private lazy var wifiSecurityMonitor: WiFiSecurityMonitor = factory.makeWiFiSecurityMonitor()
-    private lazy var windowService: WindowService = factory.makeWindowService()
+    @Dependency(\.windowService) private var windowService
 
     @Dependency(\.sessionService) private var sessionService: SessionService
 

@@ -417,30 +417,6 @@ public final class UnreachableNetworkAlert: SystemAlert {
     }
 }
 
-public final class ConnectionTroubleshootingAlert: SystemAlert {
-    public var title: String? = Localizable.errorUnknownTitle
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-
-    public init() {}
-}
-
-public final class SubuserWithoutConnectionsAlert: SystemAlert {
-    public var title: String?
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-
-    public let mode: NoConnectionsAvailableMode
-
-    public init(mode: NoConnectionsAvailableMode) {
-        self.mode = mode
-    }
-}
-
 public final class ProtonUnreachableAlert: SystemAlert {
     public var title: String?
     public var message: String? = Localizable.protonWebsiteUnreachable
@@ -542,16 +518,6 @@ public final class PaymentRestorationAlert: SystemAlert {
 }
 
 #if canImport(SystemExtensions)
-    public final class SysexEnabledAlert: SystemAlert {
-        public var title: String? = Localizable.sysexEnabledTitle
-        public var message: String? = Localizable.sysexEnabledDescription
-        public var actions = [AlertAction]()
-        public let isError: Bool = false
-        public var dismiss: (() -> Void)?
-
-        public init() {}
-    }
-
     @available(macOS 13, iOS 18.4, *)
     public final class SysexInstallingErrorAlert: SystemAlert {
         public var title: String? = Localizable.sysexCannotEnable

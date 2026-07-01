@@ -1,5 +1,5 @@
 //
-//  UIAlertService.swift
+//  IosUiAlertService.swift
 //  ProtonVPN - Created on 01.07.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -26,7 +26,7 @@ import LegacyCommon
 import UIKit
 import VPNAppCore
 
-class IosUiAlertService: UIAlertService {
+final class IosUiAlertService {
     @Dependency(\.windowService) private var windowService
     private var currentAlerts: [SystemAlert] = []
 
@@ -106,4 +106,9 @@ extension NotificationStyleAlertType {
         case .success: PresentedMessageType.success
         }
     }
+}
+
+public enum NotificationStyleAlertType {
+    case error
+    case success
 }

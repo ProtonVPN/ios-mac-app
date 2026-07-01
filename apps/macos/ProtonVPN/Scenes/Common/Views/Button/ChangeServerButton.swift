@@ -101,7 +101,7 @@ class ChangeServerView: NSView {
             $0.focusRingType = .none
             $0.usesSingleLineMode = true
             $0.lineBreakMode = .byClipping
-            $0.cell?.isScrollable = true
+            $0.cell?.isScrollable = false
             $0.isUserInteractive = false
             $0.setContentHuggingPriority(.init(251), for: .horizontal)
             $0.setContentHuggingPriority(.init(750), for: .vertical)

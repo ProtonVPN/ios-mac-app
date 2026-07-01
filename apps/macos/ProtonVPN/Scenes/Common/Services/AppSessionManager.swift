@@ -52,10 +52,7 @@ protocol AppSessionManager {
 }
 
 final class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
-    typealias Factory =
-        AppSessionRefreshTimerFactory &
-        CoreAlertServiceFactory &
-        ProfileManagerFactory
+    typealias Factory = AppSessionRefreshTimerFactory & ProfileManagerFactory
     private let factory: Factory
 
     private lazy var appSessionRefreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
@@ -92,7 +89,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     init(factory: Factory) {
         self.factory = factory
-        super.init(factory: factory)
+        super.init()
         propertiesManager.restoreStartOnBootStatus()
         AppEvent.clearingApplicationData.subscribe(self, selector: #selector(tearDown(_:)))
     }

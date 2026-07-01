@@ -29,11 +29,7 @@ import UIKit
 import VPNAppCore
 
 class ProfilesViewModel {
-    typealias Factory = CoreAlertServiceFactory
-
     @Dependency(\.profileAuthorizer) var profileAuthorizer
-    private let factory: Factory
-    private lazy var alertService = factory.makeCoreAlertService()
     @Dependency(\.upsellManager) private var upsellManager
 
     private let profileService: ProfileService
@@ -53,12 +49,10 @@ class ProfilesViewModel {
     }
 
     init(
-        factory: Factory,
         profileService: ProfileService,
         connectionStatusService: ConnectionStatusService,
         profileManager: ProfileManager
     ) {
-        self.factory = factory
         self.profileService = profileService
         self.connectionStatusService = connectionStatusService
         self.profileManager = profileManager
@@ -113,7 +107,6 @@ class ProfilesViewModel {
         let serverOffering = row == 0 ? ServerOffering.fastest(nil) : ServerOffering.random(nil)
         return DefaultProfileViewModel(
             serverOffering: serverOffering,
-            alertService: alertService,
             connectionStatusService: connectionStatusService
         )
     }
@@ -122,7 +115,6 @@ class ProfilesViewModel {
         if let profile = profileManager?.customProfiles[index] {
             return ProfileItemViewModel(
                 profile: profile,
-                alertService: alertService,
                 userTier: userTier,
                 connectionStatusService: connectionStatusService
             )

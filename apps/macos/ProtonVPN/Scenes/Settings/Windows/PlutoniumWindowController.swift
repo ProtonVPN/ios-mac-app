@@ -27,11 +27,9 @@ import Strings
 import VPNAppCore
 
 class PlutoniumWindowController: WindowController {
-    typealias Factory = CoreAlertServiceFactory
-
     let store: StoreOf<PlutoniumFeature>
 
-    private let alertService: CoreAlertService
+    @Dependency(\.coreAlertService) private var alertService
     @Shared(.connectionState) private var connectionState: ConnectionState
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
@@ -40,8 +38,7 @@ class PlutoniumWindowController: WindowController {
         fatalError("Unsupported initializer")
     }
 
-    required init(factory: Factory) {
-        self.alertService = factory.makeCoreAlertService()
+    required init() {
         let state = PlutoniumFeature.State()
         self.store = StoreOf<PlutoniumFeature>(initialState: state) {
             PlutoniumFeature()

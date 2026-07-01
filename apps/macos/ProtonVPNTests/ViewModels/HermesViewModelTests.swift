@@ -26,15 +26,6 @@ import LegacyCommon
 import VPNAppCore
 import XCTest
 
-private final class HermesTestContainer: MockDependencyContainer {}
-
-extension HermesTestContainer: CoreAlertServiceFactory {
-    func makeCoreAlertService() -> any LegacyCommon.CoreAlertService {
-        alertService
-    }
-}
-
-@available(macOS 14.0, *)
 final class HermesViewModelTests: XCTestCase {
     var cancellables: Set<AnyCancellable> = []
 
@@ -51,9 +42,9 @@ final class HermesViewModelTests: XCTestCase {
     func testEnablingWithNetShieldOff() {
         withDependencies {
             $0.netShieldPropertyProvider.getNetShieldType = { .off }
+            $0.coreAlertService.push = { _ in }
         } operation: {
-            let testContainer = HermesTestContainer()
-            let viewModel = HermesViewModel(factory: testContainer)
+            let viewModel = HermesViewModel()
 
             XCTAssertFalse(viewModel.isEnabled)
             viewModel.setIsEnabled(true)
@@ -64,9 +55,9 @@ final class HermesViewModelTests: XCTestCase {
     func testEnablingWithNetShieldOn() {
         withDependencies {
             $0.netShieldPropertyProvider.getNetShieldType = { .level2 }
+            $0.coreAlertService.push = { _ in }
         } operation: {
-            let testContainer = HermesTestContainer()
-            let viewModel = HermesViewModel(factory: testContainer)
+            let viewModel = HermesViewModel()
 
             XCTAssertFalse(viewModel.isEnabled)
             viewModel.setIsEnabled(true) // this make an alert appear since NetShield is not off
@@ -77,7 +68,7 @@ final class HermesViewModelTests: XCTestCase {
     }
 
     func testResolverValidation() {
-        let viewModel = HermesViewModel(factory: HermesTestContainer())
+        let viewModel = HermesViewModel()
 
         // we'll not test extensively IPv4/IPv6/DOH/DOT validation, this is already done in Connection.Hermes tests
         for (input, expectedResult, _) in Self.resolversValidationSamples {
@@ -91,7 +82,7 @@ final class HermesViewModelTests: XCTestCase {
         let viewModel = withDependencies {
             $0.hermesClient = .liveValue
         } operation: {
-            HermesViewModel(factory: HermesTestContainer())
+            HermesViewModel()
         }
 
         // adding resolver should still go once more to validation
@@ -121,7 +112,7 @@ final class HermesViewModelTests: XCTestCase {
     }
 
     func testAddingRemovingReorderingResolvers() throws {
-        let viewModel = HermesViewModel(factory: HermesTestContainer())
+        let viewModel = HermesViewModel()
 
         // adding resolver should still go once more to validation
         for (input, _, addingResult) in Self.resolversValidationSamples {
@@ -163,7 +154,6 @@ final class HermesViewModelTests: XCTestCase {
 
 // MARK: - Testing Helpers
 
-@available(macOS 14.0, *)
 private extension HermesViewModelTests {
     static let resolversValidationSamples: [(input: String, validation: HermesViewModel.LocationValidation, addingResult: Bool)] = [
         ("", .empty, false),
