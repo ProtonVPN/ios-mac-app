@@ -141,7 +141,7 @@ final class HeaderViewModel {
             return nil
         }
 
-        return vpnProtocol.localizedDescription.styled(font: .themeFont(.small))
+        return vpnProtocol.localizedDescription.styled(font: .themeFont(.small), alignment: .left)
     }
 
     var isVisible: Bool = false {

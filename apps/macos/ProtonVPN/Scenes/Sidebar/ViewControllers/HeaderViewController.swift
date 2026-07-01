@@ -27,6 +27,7 @@ import Ergonomics
 import LegacyCommon
 import NATPMPUI
 import SDWebImage
+import SharedViews
 import Theme
 
 final class HeaderViewController: NSViewController {
@@ -36,24 +37,117 @@ final class HeaderViewController: NSViewController {
         static let headerLabel: String = "headerLabel"
     }
 
-    @IBOutlet private var backgroundView: NSView!
-    @IBOutlet private var flagView: FlagView!
-    @IBOutlet private var headerLabel: NSTextField!
-    @IBOutlet private var ipLabel: NSTextField!
-    @IBOutlet private var loadLabel: NSTextField!
-    @IBOutlet private var loadIcon: LoadCircle!
-    @IBOutlet private var speedLabel: NSTextField!
-    @IBOutlet private var connectButton: LargeConnectButton!
-    @IBOutlet private var changeServerView: ChangeServerView!
-    @IBOutlet private var announcementsContainer: NSView!
-    @IBOutlet private var announcementsButton: NSButton!
-    @IBOutlet private var protocolLabel: NSTextField!
-    @IBOutlet private var badgeView: NSView!
+    // MARK: - Views
 
-    @IBOutlet private var loadLabelLoadCircleHorizontalSpacing: NSLayoutConstraint!
-    @IBOutlet private var ipLabelLoadLabelHorizontalSpacing: NSLayoutConstraint!
-    @IBOutlet private var ipLoadRowContainer: NSView!
-    @IBOutlet private var infoStackView: NSStackView!
+    private let backgroundView = NSView(frame: .zero).with { bckv in
+        bckv.translatesAutoresizingMaskIntoConstraints = false
+        bckv.wantsLayer = true
+        DarkAppearance {
+            bckv.layer?.backgroundColor = .cgColor(.background)
+        }
+    }
+
+    private let flagView = FlagView(frame: .zero).with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    private let headerLabel = HeaderViewController.makeLabel(horizontalHugging: 248)
+
+    private let ipLabel = HeaderViewController.makeLabel(horizontalHugging: 249)
+    private let loadLabel = HeaderViewController.makeLabel(horizontalHugging: 251)
+    private let loadIcon = LoadCircle(frame: .zero).with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    private let protocolLabel = HeaderViewController.makeLabel(horizontalHugging: 249, horizontalCompressionResistance: 751)
+    private let speedLabel = HeaderViewController.makeLabel(horizontalHugging: 251, horizontalCompressionResistance: 751)
+
+    private lazy var connectButton = LargeConnectButton(frame: .zero).with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.target = self
+        $0.action = #selector(quickConnectButtonAction)
+    }
+
+    private lazy var changeServerView = ChangeServerView(frame: .zero).with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.handler = changeServerButtonAction
+    }
+
+    private let announcementsContainer = NSView(frame: .zero).with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    private lazy var announcementsButton = HoverDetectionButton(frame: .zero).with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.imagePosition = .imageOnly
+        $0.imageScaling = .scaleProportionallyDown
+        $0.isHidden = true
+        $0.target = self
+        $0.action = #selector(announcementsButtonTapped(_:))
+    }
+
+    private let badgeView = NSView(frame: .zero).with { bdg in
+        bdg.translatesAutoresizingMaskIntoConstraints = false
+        bdg.wantsLayer = true
+        bdg.layer?.cornerRadius = Dimensions.badgeCornerRadius
+        DarkAppearance {
+            bdg.layer?.backgroundColor = .cgColor(.background, .info)
+        }
+        bdg.isHidden = true
+    }
+
+    // MARK: - Stacks
+
+    /// Header row: title pinned to the leading edge, announcements bell pushed to the trailing edge.
+    private let headerStack = NSStackView().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.orientation = .horizontal
+        $0.alignment = .centerY
+        $0.distribution = .fill
+        $0.spacing = Dimensions.stackSpacing
+    }
+
+    /// IP address on the leading edge, server load + load circle on the trailing edge.
+    private let ipLoadStack = NSStackView().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.orientation = .horizontal
+        $0.alignment = .centerY
+        $0.distribution = .fill
+        $0.spacing = Dimensions.rowSpacing
+    }
+
+    /// Protocol on the leading edge, transfer speed on the trailing edge.
+    private let protocolSpeedStack = NSStackView().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.orientation = .horizontal
+        $0.alignment = .centerY
+        $0.distribution = .fill
+        $0.spacing = Dimensions.rowSpacing
+    }
+
+    private let infoStackView = NSStackView().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.orientation = .vertical
+        $0.alignment = .centerX
+        $0.distribution = .fillEqually
+        $0.spacing = Dimensions.stackSpacing
+    }
+
+    private let buttonStack = NSStackView().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.orientation = .vertical
+        $0.alignment = .centerX
+        $0.distribution = .fill
+        $0.spacing = Dimensions.stackSpacing
+    }
+
+    private let contentStack = NSStackView().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.orientation = .vertical
+        $0.alignment = .centerX
+        $0.distribution = .fill
+        $0.spacing = Dimensions.contentSpacing
+    }
 
     private lazy var statusPortForwardingView = StatusPortAppKitView().with {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -70,20 +164,25 @@ final class HeaderViewController: NSViewController {
     }
 
     required init(viewModel: HeaderViewModel) {
-        super.init(nibName: NSNib.Name("Header"), bundle: nil)
+        super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
+    }
+
+    // MARK: - Lifecycle
+
+    override func loadView() {
+        view = NSView(frame: NSRect(x: 0, y: 0, width: Dimensions.rootWidth, height: Dimensions.rootHeight))
+        setupLayout()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         viewModel.delegate = self
-        setupPersistentView()
         setupEphemeralView()
         viewModel.contentChanged = { [weak self] in self?.setupEphemeralView() }
 
         setupAnnouncements()
-        setupBadgeView()
 
         AppEvent.announcementStorageContent.subscribe(self, selector: #selector(setupAnnouncements))
     }
@@ -99,17 +198,99 @@ final class HeaderViewController: NSViewController {
         viewModel.isVisible = false
     }
 
-    private func setupPersistentView() {
-        backgroundView.wantsLayer = true
-        DarkAppearance {
-            backgroundView.layer?.backgroundColor = .cgColor(.background)
-        }
+    // MARK: - Layout
 
-        connectButton.target = self
-        connectButton.action = #selector(quickConnectButtonAction)
+    private func setupLayout() {
+        [announcementsButton, badgeView].forEach(announcementsContainer.addSubview)
 
-        changeServerView.handler = changeServerButtonAction
+        [headerLabel, announcementsContainer].forEach(headerStack.addArrangedSubview)
+        [ipLabel, loadLabel, loadIcon].forEach(ipLoadStack.addArrangedSubview)
+        [protocolLabel, speedLabel].forEach(protocolSpeedStack.addArrangedSubview)
+        [ipLoadStack, protocolSpeedStack].forEach(infoStackView.addArrangedSubview)
+        [connectButton, changeServerView].forEach(buttonStack.addArrangedSubview)
+        [headerStack, infoStackView, buttonStack].forEach(contentStack.addArrangedSubview)
+
+        view.addSubview(backgroundView)
+        backgroundView.addSubview(flagView)
+        flagView.addSubview(contentStack)
+
+        NSLayoutConstraint.activate([
+            // Background and flag fill the root view.
+            backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+            flagView.topAnchor.constraint(equalTo: backgroundView.topAnchor),
+            flagView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor),
+            flagView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor),
+            flagView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor),
+
+            // Content stack inset within the flag view.
+            contentStack.topAnchor.constraint(equalTo: flagView.topAnchor, constant: Dimensions.contentInsetVertical),
+            contentStack.bottomAnchor.constraint(equalTo: flagView.bottomAnchor, constant: -Dimensions.contentInsetVertical),
+            contentStack.leadingAnchor.constraint(equalTo: flagView.leadingAnchor, constant: Dimensions.contentInsetHorizontal),
+            contentStack.trailingAnchor.constraint(equalTo: flagView.trailingAnchor, constant: -Dimensions.contentInsetHorizontal),
+
+            // Each row spans the full width of its parent stack.
+            headerStack.leadingAnchor.constraint(equalTo: contentStack.leadingAnchor),
+            headerStack.trailingAnchor.constraint(equalTo: contentStack.trailingAnchor),
+            infoStackView.leadingAnchor.constraint(equalTo: contentStack.leadingAnchor),
+            infoStackView.trailingAnchor.constraint(equalTo: contentStack.trailingAnchor),
+            buttonStack.leadingAnchor.constraint(equalTo: contentStack.leadingAnchor),
+            buttonStack.trailingAnchor.constraint(equalTo: contentStack.trailingAnchor),
+
+            ipLoadStack.leadingAnchor.constraint(equalTo: infoStackView.leadingAnchor),
+            ipLoadStack.trailingAnchor.constraint(equalTo: infoStackView.trailingAnchor),
+            protocolSpeedStack.leadingAnchor.constraint(equalTo: infoStackView.leadingAnchor),
+            protocolSpeedStack.trailingAnchor.constraint(equalTo: infoStackView.trailingAnchor),
+
+            connectButton.leadingAnchor.constraint(equalTo: buttonStack.leadingAnchor),
+            connectButton.trailingAnchor.constraint(equalTo: buttonStack.trailingAnchor),
+            changeServerView.leadingAnchor.constraint(equalTo: buttonStack.leadingAnchor),
+            changeServerView.trailingAnchor.constraint(equalTo: buttonStack.trailingAnchor),
+            connectButton.heightAnchor.constraint(equalToConstant: Dimensions.buttonHeight),
+
+            loadIcon.widthAnchor.constraint(equalToConstant: Dimensions.loadIconSize),
+            loadIcon.heightAnchor.constraint(equalToConstant: Dimensions.loadIconSize),
+
+            // Announcements button container: button fills it, badge sits at the top trailing corner.
+            announcementsButton.leadingAnchor.constraint(equalTo: announcementsContainer.leadingAnchor),
+            announcementsButton.trailingAnchor.constraint(equalTo: announcementsContainer.trailingAnchor),
+            announcementsButton.topAnchor.constraint(equalTo: announcementsContainer.topAnchor),
+            announcementsButton.bottomAnchor.constraint(equalTo: announcementsContainer.bottomAnchor),
+            announcementsButton.widthAnchor.constraint(equalToConstant: Dimensions.announcementsSize),
+            announcementsButton.heightAnchor.constraint(equalToConstant: Dimensions.announcementsSize),
+            badgeView.topAnchor.constraint(equalTo: announcementsContainer.topAnchor),
+            badgeView.trailingAnchor.constraint(equalTo: announcementsContainer.trailingAnchor),
+            badgeView.widthAnchor.constraint(equalToConstant: Dimensions.badgeSize),
+            badgeView.heightAnchor.constraint(equalToConstant: Dimensions.badgeSize),
+        ])
     }
+
+    private static func makeLabel(
+        horizontalHugging: Float,
+        horizontalCompressionResistance: Float? = nil
+    ) -> NSTextField {
+        NSTextField().with {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.isEditable = false
+            $0.isSelectable = false
+            $0.isBordered = false
+            $0.drawsBackground = false
+            $0.focusRingType = .none
+            $0.usesSingleLineMode = true
+            $0.lineBreakMode = .byClipping
+            $0.cell?.isScrollable = true
+            $0.setContentHuggingPriority(.init(horizontalHugging), for: .horizontal)
+            $0.setContentHuggingPriority(.init(750), for: .vertical)
+            if let horizontalCompressionResistance {
+                $0.setContentCompressionResistancePriority(.init(horizontalCompressionResistance), for: .horizontal)
+            }
+        }
+    }
+
+    // MARK: - Content
 
     private func setupEphemeralView() {
         setupFlagView()
@@ -135,31 +316,37 @@ final class HeaderViewController: NSViewController {
         }
     }
 
+    /// Available width for the load label inside the IP/load row, accounting for the IP label, the
+    /// load circle, and the inter-element spacing.
     private var horizontalSpaceAvailableForLoadLabel: CGFloat {
-        let widthOfOtherElements = ipLabel.intrinsicContentSize.width + loadIcon.intrinsicContentSize.width
-        let padding = ipLabelLoadLabelHorizontalSpacing.constant + loadLabelLoadCircleHorizontalSpacing.constant
-
-        return ipLoadRowContainer.bounds.width - widthOfOtherElements - padding
+        let widthOfOtherElements = ipLabel.intrinsicContentSize.width + Dimensions.loadIconSize
+        let padding = Dimensions.rowSpacing * 2
+        return ipLoadStack.bounds.width - widthOfOtherElements - padding
     }
 
     private func setupLoad() {
-        if viewModel.isConnected, let loadDescription = viewModel.loadLabel, let loadDescriptionShort = viewModel.loadLabelShort, let loadPercentage = viewModel.loadPercentage {
-            if horizontalSpaceAvailableForLoadLabel < 10 + loadDescription.size().width {
-                loadLabel.attributedStringValue = loadDescriptionShort
-                loadLabel.toolTip = loadDescription.string
-            } else {
-                loadLabel.attributedStringValue = loadDescription
-                loadLabel.toolTip = ""
-            }
-
-            loadLabel.isHidden = false
-            loadIcon.load = loadPercentage
-            loadIcon.toolTip = loadDescription.string
-            loadIcon.isHidden = false
-        } else {
+        guard viewModel.isConnected,
+              let loadDescription = viewModel.loadLabel,
+              let loadDescriptionShort = viewModel.loadLabelShort,
+              let loadPercentage = viewModel.loadPercentage else {
             loadLabel.isHidden = true
             loadIcon.isHidden = true
+            return
         }
+
+        // Fall back to the short "NN%" form when the full description doesn't fit, keeping the full
+        // text available as a tooltip.
+        if horizontalSpaceAvailableForLoadLabel < 10 + loadDescription.size().width {
+            loadLabel.attributedStringValue = loadDescriptionShort
+            loadLabel.toolTip = loadDescription.string
+        } else {
+            loadLabel.attributedStringValue = loadDescription
+            loadLabel.toolTip = ""
+        }
+
+        loadLabel.isHidden = false
+        loadIcon.load = loadPercentage
+        loadIcon.isHidden = false
     }
 
     private func setupProtocol() {
@@ -213,15 +400,6 @@ final class HeaderViewController: NSViewController {
 
     // MARK: Announcements
 
-    fileprivate func setupBadgeView() {
-        badgeView.wantsLayer = true
-        badgeView.layer?.cornerRadius = 3
-        DarkAppearance {
-            badgeView.layer?.backgroundColor = .cgColor(.background, .info)
-        }
-        badgeView.isHidden = true
-    }
-
     @objc
     func setupAnnouncements() {
         guard let viewModel else {
@@ -269,7 +447,7 @@ final class HeaderViewController: NSViewController {
         }
     }
 
-    @IBAction
+    @objc
     private func announcementsButtonTapped(_: Any) {
         announcementsButtonPressed?()
     }
@@ -300,5 +478,22 @@ extension HeaderViewController: HeaderViewModelDelegate {
             self.infoStackView.needsLayout = true
             self.statusPortForwardingView.isHidden = false
         }
+    }
+}
+
+private extension HeaderViewController {
+    enum Dimensions {
+        static let rootWidth: CGFloat = 432
+        static let rootHeight: CGFloat = 224
+        static let contentInsetVertical: CGFloat = 24
+        static let contentInsetHorizontal: CGFloat = 40
+        static let contentSpacing: CGFloat = 16
+        static let stackSpacing: CGFloat = 8
+        static let rowSpacing: CGFloat = 4
+        static let buttonHeight: CGFloat = 40
+        static let loadIconSize: CGFloat = 15
+        static let announcementsSize: CGFloat = 24
+        static let badgeSize: CGFloat = 6
+        static let badgeCornerRadius: CGFloat = 3
     }
 }

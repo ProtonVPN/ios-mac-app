@@ -28,10 +28,21 @@ import Theme
 /// Uses text fields and an image view to display the `unavailable` state, because I went mad trying to implement an
 /// NSButton subclass with multiple strings aligned to different edges, with padding and an image
 class ChangeServerView: NSView {
-    @IBOutlet private var button: ChangeServerButton!
-    @IBOutlet private var changeServerLabel: NSTextField!
-    @IBOutlet private var hourglassImageView: NSImageView!
-    @IBOutlet private var timerLabel: NSTextField!
+    private lazy var button = ChangeServerButton(frame: .zero).with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.target = self
+        $0.action = #selector(onButtonTapped(_:))
+    }
+
+    private let changeServerLabel = ChangeServerView.makeClickthroughLabel()
+    private let hourglassImageView = NSImageView().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.imageScaling = .scaleProportionallyDown
+        $0.setContentHuggingPriority(.init(251), for: .horizontal)
+        $0.setContentHuggingPriority(.init(251), for: .vertical)
+    }
+
+    private let timerLabel = ChangeServerView.makeClickthroughLabel()
 
     var handler: (() -> Void)?
 
@@ -39,6 +50,61 @@ class ChangeServerView: NSView {
         didSet {
             updateView()
             needsDisplay = true
+        }
+    }
+
+    // MARK: - Initialization
+
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        setupLayout()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupLayout()
+    }
+
+    // MARK: - Layout
+
+    private func setupLayout() {
+        [button, changeServerLabel, hourglassImageView, timerLabel].forEach(addSubview)
+
+        NSLayoutConstraint.activate([
+            heightAnchor.constraint(equalToConstant: Dimensions.height),
+
+            button.leadingAnchor.constraint(equalTo: leadingAnchor),
+            button.trailingAnchor.constraint(equalTo: trailingAnchor),
+            button.topAnchor.constraint(equalTo: topAnchor),
+            button.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            changeServerLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            changeServerLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Dimensions.horizontalInset),
+
+            hourglassImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            hourglassImageView.widthAnchor.constraint(equalToConstant: Dimensions.hourglassSize),
+            hourglassImageView.heightAnchor.constraint(equalToConstant: Dimensions.hourglassSize),
+            hourglassImageView.trailingAnchor.constraint(equalTo: timerLabel.leadingAnchor, constant: -Dimensions.hourglassTimerSpacing),
+
+            timerLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            timerLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Dimensions.horizontalInset),
+        ])
+    }
+
+    private static func makeClickthroughLabel() -> ClickthroughTextField {
+        ClickthroughTextField().with {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.isEditable = false
+            $0.isSelectable = false
+            $0.isBordered = false
+            $0.drawsBackground = false
+            $0.focusRingType = .none
+            $0.usesSingleLineMode = true
+            $0.lineBreakMode = .byClipping
+            $0.cell?.isScrollable = true
+            $0.isUserInteractive = false
+            $0.setContentHuggingPriority(.init(251), for: .horizontal)
+            $0.setContentHuggingPriority(.init(750), for: .vertical)
         }
     }
 
@@ -64,8 +130,8 @@ class ChangeServerView: NSView {
         }
     }
 
-    @IBAction
-    func onButtonTapped(_: Any) {
+    @objc
+    private func onButtonTapped(_: Any) {
         handler?()
     }
 }
@@ -120,5 +186,14 @@ extension ChangeServerButton: CustomStyleContext {
 
         log.assertionFailure("Context not handled: \(context)")
         return .normal
+    }
+}
+
+private extension ChangeServerView {
+    enum Dimensions {
+        static let height: CGFloat = 40
+        static let horizontalInset: CGFloat = 24
+        static let hourglassSize: CGFloat = 16
+        static let hourglassTimerSpacing: CGFloat = 8
     }
 }

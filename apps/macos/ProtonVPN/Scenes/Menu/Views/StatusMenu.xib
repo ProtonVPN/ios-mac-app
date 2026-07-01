@@ -190,71 +190,9 @@
                                                 </stackView>
                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="Dw1-gY-PpH" userLabel="Change Server View" customClass="ChangeServerView" customModule="ProtonVPN" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="280" height="40"/>
-                                                    <subviews>
-                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="v5z-Ib-gsz" userLabel="Change Server Button" customClass="ChangeServerButton" customModule="ProtonVPN" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="280" height="40"/>
-                                                            <buttonCell key="cell" type="bevel" title="Change Server" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="wti-XA-mop">
-                                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                <font key="font" metaFont="system"/>
-                                                            </buttonCell>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="280" id="1Ud-Y1-Rsf"/>
-                                                                <constraint firstAttribute="height" constant="40" id="ldV-ND-iLW"/>
-                                                            </constraints>
-                                                            <connections>
-                                                                <action selector="onButtonTapped:" target="Dw1-gY-PpH" id="9sc-4c-doL"/>
-                                                            </connections>
-                                                        </button>
-                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nht-8h-WO0" userLabel="Change Server Label" customClass="ClickthroughTextField" customModule="ProtonVPN" customModuleProvider="target">
-                                                            <rect key="frame" x="22" y="12" width="37" height="16"/>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="iXr-sU-mnK">
-                                                                <font key="font" metaFont="system"/>
-                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="isUserInteractive" value="NO"/>
-                                                            </userDefinedRuntimeAttributes>
-                                                        </textField>
-                                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NXU-Ld-Gsf">
-                                                            <rect key="frame" x="199" y="12" width="16" height="16"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="16" id="5ru-dr-pfm"/>
-                                                                <constraint firstAttribute="width" constant="16" id="gRq-5C-Aq3"/>
-                                                            </constraints>
-                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="9cq-Z3-UCI"/>
-                                                        </imageView>
-                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="czE-UV-J8D" userLabel="Timer Label" customClass="ClickthroughTextField" customModule="ProtonVPN" customModuleProvider="target">
-                                                            <rect key="frame" x="221" y="12" width="37" height="16"/>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="aNZ-xE-GE1">
-                                                                <font key="font" metaFont="system"/>
-                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="isUserInteractive" value="NO"/>
-                                                            </userDefinedRuntimeAttributes>
-                                                        </textField>
-                                                    </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="nht-8h-WO0" firstAttribute="centerY" secondItem="Dw1-gY-PpH" secondAttribute="centerY" id="4FS-uC-q3c"/>
                                                         <constraint firstAttribute="width" constant="280" id="Cx4-Qt-u8k"/>
-                                                        <constraint firstAttribute="height" constant="40" id="Lez-Vm-kec"/>
-                                                        <constraint firstItem="nht-8h-WO0" firstAttribute="leading" secondItem="Dw1-gY-PpH" secondAttribute="leading" constant="24" id="Mm9-D3-2Zf"/>
-                                                        <constraint firstItem="NXU-Ld-Gsf" firstAttribute="trailing" secondItem="czE-UV-J8D" secondAttribute="leading" constant="-8" id="Ruv-zS-bmq"/>
-                                                        <constraint firstItem="czE-UV-J8D" firstAttribute="centerY" secondItem="Dw1-gY-PpH" secondAttribute="centerY" id="bhb-lx-Mcq"/>
-                                                        <constraint firstAttribute="trailing" secondItem="v5z-Ib-gsz" secondAttribute="trailing" id="dok-uZ-xxq"/>
-                                                        <constraint firstAttribute="trailing" secondItem="czE-UV-J8D" secondAttribute="trailing" constant="24" id="dqh-wa-KP9"/>
-                                                        <constraint firstItem="NXU-Ld-Gsf" firstAttribute="centerY" secondItem="Dw1-gY-PpH" secondAttribute="centerY" id="fhq-Xa-4gU"/>
-                                                        <constraint firstAttribute="bottom" secondItem="v5z-Ib-gsz" secondAttribute="bottom" id="tSd-FW-L0e"/>
-                                                        <constraint firstItem="v5z-Ib-gsz" firstAttribute="leading" secondItem="Dw1-gY-PpH" secondAttribute="leading" id="wxN-xS-WzG"/>
                                                     </constraints>
-                                                    <connections>
-                                                        <outlet property="button" destination="v5z-Ib-gsz" id="FHB-dJ-vH5"/>
-                                                        <outlet property="changeServerLabel" destination="nht-8h-WO0" id="PMd-bF-QN4"/>
-                                                        <outlet property="hourglassImageView" destination="NXU-Ld-Gsf" id="A18-rV-UzB"/>
-                                                        <outlet property="timerLabel" destination="czE-UV-J8D" id="rko-7k-6F0"/>
-                                                    </connections>
                                                 </customView>
                                             </subviews>
                                             <constraints>
