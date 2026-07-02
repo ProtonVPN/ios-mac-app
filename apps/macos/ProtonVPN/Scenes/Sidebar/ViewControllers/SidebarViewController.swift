@@ -53,10 +53,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     // Retain header view model to set `changeServerStateUpdated` when needed
     private var headerViewModel: HeaderViewModel?
 
-    typealias Factory = HeaderViewModelFactory & MapSectionViewModelFactory
-
     private let navService: NavigationService
-    private let factory: Factory
     private let store: StoreOf<SidebarFeature>
 
     @Dependency(\.announcementManager) private var announcementManager
@@ -78,25 +75,16 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         return ProfileSectionViewController(viewModel: viewModel)
     }()
 
-    private lazy var mapHeaderViewModel: MapHeaderViewModel = { [unowned self] in
-        return MapHeaderViewModel()
-    }()
-
-    private lazy var mapSectionViewModel: MapSectionViewModel = factory.makeMapSectionViewModel()
-
     private lazy var mapSectionViewController: MapSectionViewController = { [unowned self] in
         MapSectionViewController(
-            mapSectionViewModel: mapSectionViewModel,
-            mapHeaderViewModel: mapHeaderViewModel
+            mapSectionViewModel: MapSectionViewModel(),
+            mapHeaderViewModel: MapHeaderViewModel()
         )
     }()
 
     // MARK: - Init
 
-    init(
-        navService: NavigationService,
-        factory: Factory
-    ) {
+    init(navService: NavigationService) {
         let store = Store(initialState: .init()) {
             SidebarFeature(
                 environment: .init(
@@ -108,7 +96,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         }
 
         self.navService = navService
-        self.factory = factory
         self.store = store
         super.init(nibName: nil, bundle: nil)
     }
@@ -284,8 +271,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     }
 
     private func setupHeader() {
-        headerViewModel = factory.makeHeaderViewModel()
-        headerViewController = HeaderViewController(viewModel: headerViewModel!)
+        headerViewController = HeaderViewController(viewModel: HeaderViewModel())
         headerViewController.announcementsButtonPressed = {
             AnnouncementOfferCoordinator().presentCurrentAnnouncement()
         }

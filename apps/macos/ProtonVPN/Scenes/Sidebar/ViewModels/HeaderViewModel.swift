@@ -44,10 +44,6 @@ protocol HeaderViewModelDelegate: AnyObject {
     func mappedPortChanged(to mappedPort: UInt16?)
 }
 
-protocol HeaderViewModelFactory {
-    func makeHeaderViewModel() -> HeaderViewModel
-}
-
 final class HeaderViewModel {
     @Dependency(\.credentialsProvider) var credentials
     @Dependency(\.connectionCommandClient) private var connectionCommandClient

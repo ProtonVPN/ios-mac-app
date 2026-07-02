@@ -43,11 +43,9 @@ protocol StatusMenuViewModelFactory {
 }
 
 final class StatusMenuViewModel {
-    typealias Factory = AppSessionManagerFactory
-        & NavigationServiceFactory
-        & WiFiSecurityMonitorFactory
-
+    typealias Factory = NavigationServiceFactory & WiFiSecurityMonitorFactory
     private let factory: Factory
+
     @Dependency(\.profileAuthorizer) private var profileAuthorizer
     @Dependency(\.credentialsProvider) private var credentials
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
@@ -58,7 +56,6 @@ final class StatusMenuViewModel {
     @Shared(.sessionStatus) private var sessionStatus: SessionStatus
 
     @Dependency(\.propertiesManager) private var propertiesManager
-    private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.upsellManager) private var upsellManager
@@ -553,20 +550,16 @@ final class StatusMenuViewModel {
 
     @objc
     private func handlePlanChange() {
-        do {
-            let tier = try vpnKeychain.fetchCached().maxTier
+        let tier = (try? vpnKeychain.fetchCached().maxTier) ?? .freeTier
 
-            // if Secure Core was enabled but the tier no longer allows its use
-            if secureCoreToggle, tier.isFreeTier {
-                log.debug("Disabling Secure Core because the changed plan does not allow its use anymore", category: .app)
-                $secureCoreToggle.withLock { $0 = false }
-                serverType = .standard
-            }
-
-            updateCountryList()
-        } catch {
-            appSessionManager.logOut(force: true, reason: Localizable.errorSignInAgain)
+        // if Secure Core was enabled but the tier no longer allows its use
+        if secureCoreToggle, tier.isFreeTier {
+            log.debug("Disabling Secure Core because the changed plan does not allow its use anymore", category: .app)
+            $secureCoreToggle.withLock { $0 = false }
+            serverType = .standard
         }
+
+        updateCountryList()
     }
 
     @objc

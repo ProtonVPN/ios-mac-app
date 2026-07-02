@@ -39,9 +39,7 @@ import VPNAppCore
 import VPNShared
 
 final class SettingsAccountViewModel {
-    typealias Factory = AppSessionManagerFactory &
-        NavigationServiceFactory
-
+    typealias Factory = AppSessionManagerFactory & NavigationServiceFactory
     private let factory: Factory
 
     @Dependency(\.coreAlertService) private var alertService
