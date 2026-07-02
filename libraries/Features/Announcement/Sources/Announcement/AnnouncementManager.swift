@@ -20,75 +20,44 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Combine
 import Dependencies
+import DependenciesMacros
 import Foundation
 import Sharing
 import VPNAppCore
-import VPNShared
 
-public enum AnnouncementManagerKey: DependencyKey {
-    public static let liveValue: any AnnouncementManager = AnnouncementManagerImplementation()
-}
-
-#if DEBUG
-    extension AnnouncementManagerKey: TestDependencyKey {
-        public static let previewValue: any AnnouncementManager = AnnouncementManagerImplementation()
-        public static let testValue: any AnnouncementManager = AnnouncementManagerImplementation()
-    }
-#endif
-
-public enum AnnouncementStorageKey: DependencyKey {
-    public static let liveValue: any AnnouncementStorage = {
-        @Dependency(\.defaultsProvider) var provider
-        return AnnouncementStorageUserDefaults(userDefaults: provider.getDefaults(), keyNameProvider: nil)
-    }()
-}
-
-public enum AnnouncementRefresherKey: DependencyKey {
-    public static let liveValue: any AnnouncementRefresher = AnnouncementRefresherImplementation()
-}
-
-#if DEBUG
-    extension AnnouncementStorageKey: TestDependencyKey {
-        public static let previewValue: any AnnouncementStorage = AnnouncementStorageMock()
-        public static let testValue: any AnnouncementStorage = AnnouncementStorageMock()
-    }
-#endif
-
-public extension DependencyValues {
-    var announcementManager: AnnouncementManager {
-        get { self[AnnouncementManagerKey.self] }
-        set { self[AnnouncementManagerKey.self] = newValue }
-    }
-
-    var announcementStorage: AnnouncementStorage {
-        get { self[AnnouncementStorageKey.self] }
-        set { self[AnnouncementStorageKey.self] = newValue }
-    }
-
-    var announcementRefresher: AnnouncementRefresher {
-        get { self[AnnouncementRefresherKey.self] }
-        set { self[AnnouncementRefresherKey.self] = newValue }
+@DependencyClient
+public struct AnnouncementManager: Sendable {
+    /// Current (started, not-yet-ended, offer-bearing) announcements, oldest first.
+    public var fetchCurrentAnnouncementsFromStorage: @Sendable () -> [Announcement] = { [] }
+    /// The single active offer banner announcement, or `nil` if none / already read.
+    public var fetchCurrentOfferBannerFromStorage: @Sendable () -> Announcement? = { nil }
+    /// Marks the announcement with the given notification id as read.
+    public var markAsRead: @Sendable (_ notificationID: String) -> Void
+    /// Whether the announcement bell icon should be shown (a `.default` offer exists).
+    public var shouldShowAnnouncementsIcon: @Sendable () -> Bool = { false }
+    /// Whether there is an unread `.default` offer announcement.
+    public var hasUnreadAnnouncements: @Sendable () -> Bool = { false }
+    /// Emits whenever the stored announcements change, replaying the current value to new
+    /// subscribers. The reliable source of truth for announcement UI to react to.
+    public var announcementsPublisher: @Sendable () -> AnyPublisher<[Announcement], Never> = {
+        Empty(completeImmediately: false).eraseToAnyPublisher()
     }
 }
 
-public protocol AnnouncementManager {
-    var hasUnreadAnnouncements: Bool { get }
-    func fetchCurrentAnnouncementsFromStorage() -> [Announcement]
-    func fetchCurrentOfferBannerFromStorage() -> Announcement?
-    func markAsRead(announcement: Announcement)
-    func markAsRead(notificationID: String)
-    func shouldShowAnnouncementsIcon() -> Bool
-}
+// MARK: - Convenience
 
 public extension AnnouncementManager {
-    static var notification: Notification.Name {
-        .init("Announcements")
-    }
-
     /// The current offer announcement surfaced by the announcement bell (first `.default`).
     var currentOfferAnnouncement: Announcement? {
         fetchCurrentAnnouncementsFromStorage().first { $0.knownType == .default }
+    }
+
+    /// The bell icon URL for the current offer announcement, if any.
+    var announcementIconURL: URL? {
+        guard let icon = currentOfferAnnouncement?.offer?.icon else { return nil }
+        return URL(string: icon)
     }
 
     /// The one-time announcement to auto-present right after launch, or `nil` if none is pending or
@@ -105,87 +74,69 @@ public extension AnnouncementManager {
     func offerImagePrefetchURLs() -> [URL] {
         fetchCurrentAnnouncementsFromStorage().compactMap(\.prefetchableImage)
     }
-}
 
-/// Fetches announcements from storage.
-/// Informs if there are any unread current announcements.
-/// Marks announcements as read.
-public class AnnouncementManagerImplementation: AnnouncementManager {
-    @Dependency(\.announcementStorage) private var announcementStorage: AnnouncementStorage
-
-    public func shouldShowAnnouncementsIcon() -> Bool {
-        fetchCurrentAnnouncementsFromStorage().contains(where: { $0.knownType == .default })
-    }
-
-    public func fetchCurrentOfferBannerFromStorage() -> Announcement? {
-        let offers = announcementStorage.fetch().filter {
-            $0.knownType == .banner && $0.startTime.isPast && $0.endTime.isFuture && $0.offer != nil
-        }.sorted { // sorting is needed because we only want to consider the first announcement
-            $0.endTime < $1.endTime
-        }
-        if offers.count > 1 {
-            log.error("There should only ever be one or none welcome offer banner, having more is an error.")
-        }
-        // Only return the one with closest endTime. If the offer was read, return nothing, though there might be others in queue.
-        // This should not really happen, it would be a configuration error if it did.
-        return offers.first?.isRead == false ? offers.first : nil
-    }
-
-    public func fetchCurrentAnnouncementsFromStorage() -> [Announcement] {
-        announcementStorage.fetch().filter {
-            $0.startTime.isPast && $0.endTime.isFuture && $0.offer != nil
-        }.sorted { // sorting is needed because we only want to consider the first announcement
-            $0.startTime < $1.startTime
-        }
-    }
-
-    public var hasUnreadAnnouncements: Bool {
-        let announcement = fetchCurrentAnnouncementsFromStorage()
-            .filter { $0.knownType == .default }
-            .first
-        guard let announcement else { return false }
-        return !announcement.wasRead
-    }
-
-    public func markAsRead(announcement: Announcement) {
+    func markAsRead(announcement: Announcement) {
         markAsRead(notificationID: announcement.notificationID)
     }
-
-    public func markAsRead(notificationID: String) {
-        var announcements = announcementStorage.fetch()
-        if let index = announcements.firstIndex(where: { $0.notificationID == notificationID }) {
-            announcements[index].isRead = true
-            announcementStorage.store(announcements)
-        }
-    }
 }
 
-// MARK: - Mocks
+// MARK: - Live
 
-#if DEBUG
-    import Domain
+extension AnnouncementManager: DependencyKey {
+    public static let liveValue: AnnouncementManager = {
+        // Read/write directly against the user-scoped key
+        let key: UserScopedAppStorageKey<[Announcement]?> = .announcements
 
-    public final class AnnouncementStorageMock: AnnouncementStorage {
-        public var announcements: [Announcement]
-
-        public init(_ announcements: [Announcement] = []) {
-            self.announcements = announcements
+        let currentAnnouncements: @Sendable () -> [Announcement] = {
+            (key.currentValue() ?? [])
+                .filter { $0.startTime.isPast && $0.endTime.isFuture && $0.offer != nil }
+                // sorting is needed because we only want to consider the first announcement
+                .sorted { $0.startTime < $1.startTime }
         }
 
-        public func fetch() -> [Announcement] {
-            announcements
-        }
+        return AnnouncementManager(
+            fetchCurrentAnnouncementsFromStorage: { currentAnnouncements() },
+            fetchCurrentOfferBannerFromStorage: {
+                let offers = (key.currentValue() ?? [])
+                    .filter { $0.knownType == .banner && $0.startTime.isPast && $0.endTime.isFuture && $0.offer != nil }
+                    .sorted { $0.endTime < $1.endTime }
+                if offers.count > 1 {
+                    log.error("There should only ever be one or none welcome offer banner, having more is an error.")
+                }
+                // Only return the one with closest endTime, and only if it hasn't been read.
+                return offers.first?.isRead == false ? offers.first : nil
+            },
+            markAsRead: { notificationID in
+                guard var current = key.currentValue(),
+                      let index = current.firstIndex(where: { $0.notificationID == notificationID }) else {
+                    return
+                }
+                current[index].isRead = true
+                key.setCurrentValue(current)
+            },
+            shouldShowAnnouncementsIcon: {
+                currentAnnouncements().contains { $0.knownType == .default }
+            },
+            hasUnreadAnnouncements: {
+                guard let announcement = currentAnnouncements().first(where: { $0.knownType == .default }) else {
+                    return false
+                }
+                return !announcement.wasRead
+            },
+            announcementsPublisher: {
+                @SharedReader(.announcements) var announcements
+                return $announcements.publisher.map { $0 ?? [] }.eraseToAnyPublisher()
+            }
+        )
+    }()
+}
 
-        public func store(_ objects: [Announcement]) {
-            announcements = objects
-            AppEvent.announcementStorageContent.post(objects)
-        }
-
-        public func clear() {
-            announcements = []
-        }
+public extension DependencyValues {
+    var announcementManager: AnnouncementManager {
+        get { self[AnnouncementManager.self] }
+        set { self[AnnouncementManager.self] = newValue }
     }
-#endif
+}
 
 public extension Date {
     /// Check if this date represnt time in future

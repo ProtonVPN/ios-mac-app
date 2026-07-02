@@ -68,9 +68,11 @@ let package = Package(
             dependencies: [
                 "Announcement",
                 .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ]
         ),

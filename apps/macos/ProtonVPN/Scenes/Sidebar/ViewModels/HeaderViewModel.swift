@@ -59,7 +59,7 @@ final class HeaderViewModel {
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
 
     @Dependency(\.propertiesManager) private var propertiesManager
-    @Dependency(\.announcementManager) var announcementManager
+    @Dependency(\.announcementManager) private var announcementManager
     @Dependency(\.notificationManager) private var notificationManager
 
     var contentChanged: (() -> Void)?
@@ -194,7 +194,7 @@ final class HeaderViewModel {
     }
 
     var hasUnreadAnnouncements: Bool {
-        announcementManager.hasUnreadAnnouncements
+        announcementManager.hasUnreadAnnouncements()
     }
 
     var announcementIconUrl: URL? {

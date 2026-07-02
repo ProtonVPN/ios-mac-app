@@ -31,7 +31,6 @@ import ServiceManagement
 #if DEBUG
     import Atlantis
 #endif
-import Announcement
 import Dependencies
 import Domain
 import Ergonomics
@@ -220,18 +219,10 @@ extension AppDelegate: NSApplicationDelegate {
     func applicationDidBecomeActive(_: Notification) {
         log.info("applicationDidBecomeActive", category: .os)
         updateRecentlyActive(true)
-
-        // Refresh API announcements
-        @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
-        @Shared(.featureFlags) var featureFlags
-        if featureFlags.pollNotificationAPI, authKeychain.username != nil {
-            announcementRefresher.tryRefreshing()
-        }
     }
 
     func applicationDidResignActive(_: Notification) {
         log.info("applicationDidResignActive", category: .os)
-
         updateRecentlyActive(false)
     }
 

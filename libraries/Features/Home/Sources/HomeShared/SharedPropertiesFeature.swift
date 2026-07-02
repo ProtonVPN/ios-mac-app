@@ -52,7 +52,7 @@ public struct SharedPropertiesFeature {
 
         case newConnectionState(ConnectionState)
         case connectionFailed(ConnectionError)
-        case newAnnouncementBanner(Notification)
+        case newAnnouncementBanner
 
         case refreshServerLoads(UserLocation)
     }
@@ -61,12 +61,13 @@ public struct SharedPropertiesFeature {
         case watchAnnouncementBanner
     }
 
-    private let longLivingAnnouncementBannerEffect: Effect<Action> = .publisher {
-        AppEvent.announcementStorageContent
-            .publisher
-            .receive(on: UIScheduler.shared)
-            .map(Action.newAnnouncementBanner)
-    }.cancellable(id: CancelId.watchAnnouncementBanner)
+    private var longLivingAnnouncementBannerEffect: Effect<Action> {
+        .publisher {
+            announcementManager.announcementsPublisher()
+                .receive(on: UIScheduler.shared)
+                .map { _ in Action.newAnnouncementBanner }
+        }.cancellable(id: CancelId.watchAnnouncementBanner)
+    }
 
     public var body: some Reducer<State, Action> {
         Scope(state: \.userLocation, action: \.userLocation) {

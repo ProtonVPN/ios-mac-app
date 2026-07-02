@@ -149,19 +149,11 @@ public struct ReviewFeature {
             .map { _ in Action.clear }
     }.cancellable(id: CancelIDs.watchUserPlan)
 
-    #if canImport(UIKit)
-        private let longLivingDidBecomeActiveEffect: Effect<Action> = .publisher {
-            NotificationCenter.default
-                .publisher(for: UIApplication.didBecomeActiveNotification)
-                .map { _ in Action.activate }
-        }.cancellable(id: CancelIDs.watchDidBecomeActive)
-    #elseif canImport(AppKit)
-        private let longLivingDidBecomeActiveEffect: Effect<Action> = .publisher {
-            NotificationCenter.default
-                .publisher(for: NSApplication.didBecomeActiveNotification)
-                .map { _ in Action.activate }
-        }.cancellable(id: CancelIDs.watchDidBecomeActive)
-    #endif
+    private let longLivingDidBecomeActiveEffect: Effect<Action> = .publisher {
+        NotificationCenter.default
+            .publisher(for: didBecomeActiveNotification)
+            .map { _ in Action.activate }
+    }.cancellable(id: CancelIDs.watchDidBecomeActive)
 
     @Dependency(\.date) var date
 

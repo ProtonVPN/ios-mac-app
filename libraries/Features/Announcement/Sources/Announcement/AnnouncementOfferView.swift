@@ -62,23 +62,26 @@ struct AnnouncementOfferImageView: View {
     let onClose: () -> Void
 
     var body: some View {
-        ZStack(alignment: .topTrailing) {
-            VStack(spacing: .themeSpacing16) {
-                if let url = panel.fullScreenImage.firstURL {
-                    WebImage(url: url)
-                        .resizable()
-                        .scaledToFit()
-                        .accessibilityLabel(panel.fullScreenImage.alternativeText)
-                }
-                Button(panel.button.text ?? Localizable.ok, action: onAction)
-                    .buttonStyle(.borderedProminent)
+        VStack(spacing: 0) {
+            if let url = panel.fullScreenImage.firstURL {
+                WebImage(url: url)
+                    .resizable()
+                    .scaledToFit()
+                    .accessibilityLabel(panel.fullScreenImage.alternativeText)
             }
-            .padding(.themeSpacing16)
-
-            AnnouncementCloseButton(action: onClose)
+            Spacer(minLength: 0)
+            Button(panel.button.text ?? Localizable.ok, action: onAction)
+                .buttonStyle(.borderedProminent)
                 .padding(.themeSpacing16)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(.background, .weak))
+        #if os(iOS)
+            .overlay(alignment: .topTrailing) {
+                AnnouncementCloseButton(action: onClose)
+                    .padding(.themeSpacing16)
+            }
+        #endif
     }
 }
 

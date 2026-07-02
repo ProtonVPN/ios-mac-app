@@ -58,9 +58,13 @@ public struct AnnouncementDetailView: View {
             }
             .safeAreaInset(edge: .bottom) { footer }
 
-            AnnouncementCloseButton(action: onClose)
-                .padding(.themeSpacing16)
+            // On macOS the modal is a native window with native close button
+            #if os(iOS)
+                AnnouncementCloseButton(action: onClose)
+                    .padding(.themeSpacing16)
+            #endif
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(.background, .weak))
     }
 

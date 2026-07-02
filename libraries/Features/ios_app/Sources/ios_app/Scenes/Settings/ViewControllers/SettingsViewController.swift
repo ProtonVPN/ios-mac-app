@@ -21,12 +21,14 @@
 //
 
 import Announcement
+import Combine
+import Dependencies
 import Domain
 import Ergonomics
-import LegacyCommon
-import ProtonCoreFeatureFlags
-import ProtonCoreUIFoundations
+import SDWebImage
+import Sharing
 import Strings
+import Theme
 import UIKit
 
 final class SettingsViewController: UIViewController {
@@ -42,6 +44,9 @@ final class SettingsViewController: UIViewController {
     var genericDataSource: GenericTableViewDataSource?
 
     private let viewModel: SettingsViewModel
+
+    @Dependency(\.announcementManager) private var announcementManager
+    private var announcementsCancellable: AnyCancellable?
 
     // MARK: - Init
 
@@ -68,7 +73,7 @@ final class SettingsViewController: UIViewController {
             tableView.reloadData()
         }
         // Set up tab bar item
-        tabBarItem = UITabBarItem(title: Localizable.settings, image: IconProvider.cogWheel, tag: 3)
+        tabBarItem = UITabBarItem(title: Localizable.settings, image: Theme.Asset.Icons.cogWheel.image, tag: 3)
         tabBarItem.accessibilityIdentifier = "Settings back btn"
     }
 
@@ -82,7 +87,10 @@ final class SettingsViewController: UIViewController {
 
         setupView()
 
-        AppEvent.announcementStorageContent.subscribe(self, selector: #selector(setupAnnouncements))
+        setupAnnouncements()
+        announcementsCancellable = announcementManager.announcementsPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.setupAnnouncements() }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -126,6 +134,65 @@ final class SettingsViewController: UIViewController {
         }
 
         navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    // MARK: - Announcements
+
+    private var showAnnouncements: Bool {
+        @Shared(.featureFlags) var featureFlags
+        guard featureFlags.pollNotificationAPI else { return false }
+        return announcementManager.shouldShowAnnouncementsIcon()
+    }
+
+    private func setupAnnouncements() {
+        Task {
+            await prefetchAnnouncementImages()
+            guard showAnnouncements else {
+                if navigationItem.rightBarButtonItem is BadgedBarButtonItem {
+                    navigationItem.rightBarButtonItem = nil
+                }
+                return
+            }
+            setupAnnouncementsButton()
+        }
+    }
+
+    private func prefetchAnnouncementImages() async {
+        let urls = announcementManager.offerImagePrefetchURLs()
+        guard !urls.isEmpty else { return }
+        @Dependency(\.imagePrefetcher) var imagePrefetcher
+        await imagePrefetcher.prefetchURLs(urls)
+    }
+
+    private func setupAnnouncementsButton() {
+        let apply: (UIImage) -> Void = { [weak self] image in
+            guard let self else { return }
+            let button = BadgedBarButtonItem(withImage: image)
+            button.onTouchUpInside = {
+                AnnouncementOfferCoordinator().presentCurrentAnnouncement()
+            }
+            button.showBadge = announcementManager.hasUnreadAnnouncements()
+            navigationItem.rightBarButtonItem = button
+        }
+
+        guard let iconURL = announcementManager.announcementIconURL else {
+            apply(Theme.Asset.Icons.bell.image)
+            return
+        }
+        if let cached = SDImageCache.shared.imageFromCache(forKey: iconURL.absoluteString) {
+            apply(cached)
+            return
+        }
+        SDWebImageDownloader.shared.downloadImage(with: iconURL) { image, _, _, _ in
+            executeOnUIThread {
+                guard let image else {
+                    apply(Theme.Asset.Icons.bell.image)
+                    return
+                }
+                SDImageCache.shared.store(image, forKey: iconURL.absoluteString, completion: nil)
+                apply(image)
+            }
+        }
     }
 }
 
