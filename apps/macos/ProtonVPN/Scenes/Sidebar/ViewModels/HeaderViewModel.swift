@@ -49,7 +49,7 @@ final class HeaderViewModel {
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.serverRepository) private var serverRepository
-    @Dependency(\.propertiesManager) private var propertiesManager
+    @Shared(.userLocation) private var userLocation: UserLocation?
     @Dependency(\.announcementManager) private var announcementManager
     @Dependency(\.notificationManager) private var notificationManager
 
@@ -222,10 +222,14 @@ final class HeaderViewModel {
             .store(in: &cancellables)
 
         let contentChangedEvents: [AppEvent] = [
-            .userIp,
             .profileContentChanged,
         ]
         contentChangedEvents.subscribe(self, selector: #selector(contentChangedNotification))
+
+        $userLocation
+            .publisher
+            .sink { [weak self] _ in self?.contentChangedNotification() }
+            .store(in: &cancellables)
 
         NotificationCenter.default.addObserver(
             self,
@@ -416,7 +420,7 @@ final class HeaderViewModel {
         if isConnected {
             connectedServer?.endpoint.offsetExitIp
         } else {
-            propertiesManager.userLocation?.ip
+            userLocation?.ip
         }
     }
 

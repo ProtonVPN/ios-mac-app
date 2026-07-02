@@ -30,14 +30,10 @@ import VPNAppCore
 
 enum HomeFeatureCreator {
     static func loadInitialState() -> HomeFeature.State {
-        do {
-            // Set initial values of properties that can't be loaded easily from user defaults
-            @Dependency(\.defaultConnectionStorage) var storage
-            @Shared(.defaultConnectionPreference) var defaultConnectionPreference
-            try $defaultConnectionPreference.withLock { $0 = try ((storage.getPreference()) ?? .fastest) }
-        } catch {
-            log.error("Failed to load initial state: \(error)")
-        }
+        // Seed the in-memory default-connection preference from its persisted value.
+        @Shared(.defaultConnectionPreference) var defaultConnectionPreference
+        @Shared(.storedDefaultConnectionPreference) var storedPreference
+        $defaultConnectionPreference.withLock { $0 = storedPreference ?? .fastest }
 
         return .init()
     }

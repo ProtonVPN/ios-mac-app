@@ -19,11 +19,10 @@
 import CommonNetworking
 import ComposableArchitecture
 import Connection
-import struct Domain.Alert
+import Domain
 import Foundation
 import ModalsServices
 import ProtonCoreFeatureFlags
-import enum VPNShared.StorageKeys
 
 /// Some business logic requires communication between reducers. This is facilitated by the parent feature, which
 /// listens to actions coming from one child, and sends the relevant action to the other child. This allows features to
@@ -330,10 +329,10 @@ struct AppFeature {
     /// In DEBUG builds, persists the atlas secret and custom environment to shared defaults.
     /// In RELEASE builds, these are always nil.
     private func prepareEnvironment() {
-        @Dependency(\.storage) var storage
-
-        storage.setValue(Bundle.atlasSecret, forKey: StorageKeys.atlasSecret)
-        storage.setValue(Bundle.dynamicDomain, forKey: StorageKeys.apiEndpoint)
+        @Shared(.atlasSecret) var atlasSecret
+        $atlasSecret.withLock { $0 = Bundle.atlasSecret }
+        @Shared(.apiEndpoint) var apiEndpoint
+        $apiEndpoint.withLock { $0 = Bundle.dynamicDomain }
     }
 
     private func clearUserSessionState(_ state: inout State, includeEmail: Bool = false) {

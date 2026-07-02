@@ -67,8 +67,8 @@ public class MaintenanceManagerHelper {
             return // Feature is disabled
         }
 
-        @Dependency(\.propertiesManager) var propertiesManager
-        let time = TimeInterval(propertiesManager.maintenanceServerRefreshIntereval * 60)
+        @Shared(.maintenanceServerRefreshIntereval) var maintenanceServerRefreshIntereval
+        let time = TimeInterval(maintenanceServerRefreshIntereval * 60)
         let jitter = (TimeInterval(Self.randomJitterPercentage) / 100) * time
         maintenanceManager.observeCurrentServerState(every: time + jitter, repeats: true, completion: { [weak self] isMaintenance in
             guard isMaintenance else {

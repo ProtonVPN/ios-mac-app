@@ -68,7 +68,6 @@ final class LoginViewModel: ObservableObject {
 
     @Dependency(\.networking) private var networking
     private lazy var apiService: APIService = networking.apiService
-    @Dependency(\.propertiesManager) private var propertiesManager
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
     @Dependency(\.coreAlertService) private var alertService
@@ -99,12 +98,10 @@ final class LoginViewModel: ObservableObject {
         self.initialError = initialError
     }
 
-    var startOnBoot: Bool {
-        propertiesManager.startOnBoot
-    }
+    @SharedReader(.startOnBoot) var startOnBoot
 
     func startOnBoot(enabled: Bool) {
-        propertiesManager.startOnBoot = enabled
+        setStartOnBoot(enabled)
     }
 
     @MainActor
@@ -273,7 +270,8 @@ final class LoginViewModel: ObservableObject {
     /// - Parameter shouldDefaultToSmartIfPossible: If system extensions are approved, sets default protocol to smart.
     /// - Parameter shouldStartTour: Controls whether the sysex tour is shown, if approval is required.
     private func checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: Bool, shouldStartTour: Bool) {
-        let includedExtensionTypes: [SystemExtensionType] = propertiesManager.isSubsequentLaunch ? [.proTUN] : [.proTUN, .plutonium]
+        @Shared(.isSubsequentLaunch) var isSubsequentLaunch
+        let includedExtensionTypes: [SystemExtensionType] = isSubsequentLaunch ? [.proTUN] : [.proTUN, .plutonium]
         Task { @MainActor [weak self] in
             guard let self else { return }
             let outcome = await systemExtensionsCoordinator.installOrUpdate(

@@ -89,10 +89,10 @@ class CreateNewProfileViewModel {
         }
     }
 
-    /// Consults the server repository and properties manager to create an empty/starting model state.
-    /// We could make this a static initializer on `ModelState` since we now have `@Dependency(\.propertiesManager)` and
-    /// `@Dependency(\.serverRepository)`, but it's probably not worth getting carried away with non-essential refactors
-    /// on viewmodels that will be removed during redesign.
+    /// Consults the server repository to create an empty/starting model state.
+    /// We could make this a static initializer on `ModelState` since we now have
+    /// `@Dependency(\.serverRepository)`, but it's probably not worth getting carried away with
+    /// non-essential refactors on viewmodels that will be removed during redesign.
     private func createStartingState() -> ModelState {
         let defaultServerType = ModelState.default.serverType
         @Shared(.connectionProtocol) var sharedConnectionProtocol

@@ -104,8 +104,7 @@ public struct CountryFeature {
         }
 
         var underMaintenance: Bool {
-            @Dependency(\.propertiesManager) var propertiesManager
-            return serverGroup.isUnderMaintenance
+            serverGroup.isUnderMaintenance
                 || serverGroup.protocolSupport.isDisjoint(with: currentProtocolSupport())
         }
 
@@ -134,8 +133,8 @@ public struct CountryFeature {
         }
 
         var streamingServices: [VpnStreamingOption] {
-            @Dependency(\.propertiesManager) var propertiesManager
-            return propertiesManager.streamingServices[countryCode]?["2"] ?? []
+            @Shared(.streamingServices) var streamingServices
+            return streamingServices[countryCode]?["2"] ?? []
         }
     }
 
@@ -160,7 +159,6 @@ public struct CountryFeature {
     }
 
     @Dependency(\.serverRepository) private var serverRepository
-    @Dependency(\.propertiesManager) private var propertiesManager
 
     public var body: some ReducerOf<Self> {
         BindingReducer()

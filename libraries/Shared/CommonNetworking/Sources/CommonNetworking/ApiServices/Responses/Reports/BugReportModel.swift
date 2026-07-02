@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct BugReportModel: Codable {
+public struct BugReportModel: Codable, Sendable {
     public let categories: [Category]
 
     public init() {

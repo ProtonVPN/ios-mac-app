@@ -50,7 +50,6 @@ class NavigationService {
     private let factory: Factory
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
 
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.credentialsProvider) private var credentials
     @SharedReader(.connectionState) private var connectionState: ConnectionState
@@ -107,7 +106,8 @@ class NavigationService {
             object: nil
         )
 
-        if propertiesManager.startMinimized {
+        @Shared(.startMinimized) var startMinimized
+        if startMinimized {
             await attemptSilentLogIn()
         } else {
             showLogIn()
@@ -158,7 +158,8 @@ class NavigationService {
             return false
         }
 
-        guard propertiesManager.getAutoConnect(for: username).enabled else {
+        @Shared(.autoConnect) var autoConnect
+        guard autoConnect else {
             log.debug("Skipping auto-connect: auto-connect disabled for user", category: .app)
             return false
         }

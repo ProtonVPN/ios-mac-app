@@ -20,8 +20,55 @@
     import CommonNetworking
     import ComposableArchitecture
     import Dependencies
+    import Domain
+    import Ergonomics
     import Foundation
+    import Sharing
     import Theme
+
+    /// The dev-environment settings, read from / written to their `@Shared` keys. Replaces the
+    /// removed `SettingsStorage` dependency (which was just a wrapper around these keys).
+    private struct EnvironmentSettings {
+        let apiEndpoint: String
+        let atlasSecret: String
+        let atlasSecretFetchURLString: String
+        let featureFlagOverrides: [String: Bool]
+        let localValuesOverrides: [String: String]
+
+        static func current() -> EnvironmentSettings {
+            @Shared(.apiEndpoint) var apiEndpoint
+            @Shared(.atlasSecret) var atlasSecret
+            @Shared(.atlasSecretFetchURLString) var atlasSecretFetchURLString
+            @Shared(.featureFlagOverrides) var featureFlagOverrides
+            @Shared(.localValuesOverrides) var localValuesOverrides
+            return .init(
+                apiEndpoint: apiEndpoint ?? Bundle.dynamicDomain ?? "",
+                atlasSecret: atlasSecret ?? Bundle.atlasSecret ?? "",
+                atlasSecretFetchURLString: atlasSecretFetchURLString ?? "",
+                featureFlagOverrides: featureFlagOverrides ?? [:],
+                localValuesOverrides: localValuesOverrides ?? [:]
+            )
+        }
+
+        func apply() {
+            @Shared(.apiEndpoint) var sharedApiEndpoint
+            @Shared(.atlasSecret) var sharedAtlasSecret
+            @Shared(.atlasSecretFetchURLString) var sharedAtlasSecretFetchURLString
+            @Shared(.featureFlagOverrides) var sharedFeatureFlagOverrides
+            @Shared(.localValuesOverrides) var sharedLocalValuesOverrides
+            $sharedApiEndpoint.withLock { $0 = apiEndpoint.valueIfNotEmpty }
+            $sharedAtlasSecret.withLock { $0 = atlasSecret.valueIfNotEmpty }
+            $sharedAtlasSecretFetchURLString.withLock { $0 = atlasSecretFetchURLString.valueIfNotEmpty }
+            $sharedFeatureFlagOverrides.withLock { $0 = featureFlagOverrides }
+            $sharedLocalValuesOverrides.withLock { $0 = localValuesOverrides }
+        }
+    }
+
+    private extension String {
+        var valueIfNotEmpty: String? {
+            isEmpty ? nil : self
+        }
+    }
 
     @Reducer
     public struct DebugConfigurationFeature: Sendable {
@@ -139,8 +186,7 @@
             }
 
             public init() {
-                @Dependency(\.settingsStorage) var settingsStorage
-                let settings = settingsStorage.getEnvironment()
+                let settings = EnvironmentSettings.current()
                 self.apiEndpoint = settings.apiEndpoint.isEmpty ? State.defaultApiUrlString : settings.apiEndpoint
                 self.newApiEndpointURLString = apiEndpoint
                 self.atlasSecret = settings.atlasSecret
@@ -244,16 +290,13 @@
                     state.newApiEndpointURLString = State.defaultApiUrlString
                     return .concatenate(
                         .run { [state] _ in
-                            @Dependency(\.settingsStorage) var storage
-                            do {
-                                try storage.setEnvironment(.init(
-                                    apiEndpoint: "",
-                                    atlasSecret: "",
-                                    atlasSecretFetchURLString: state.atlasSecretFetchURLString,
-                                    featureFlagOverrides: [:],
-                                    localValuesOverrides: [:]
-                                ))
-                            }
+                            EnvironmentSettings(
+                                apiEndpoint: "",
+                                atlasSecret: "",
+                                atlasSecretFetchURLString: state.atlasSecretFetchURLString,
+                                featureFlagOverrides: [:],
+                                localValuesOverrides: [:]
+                            ).apply()
                         },
                         .send(.displayKillAppConfirmationAlert)
                     )
@@ -264,22 +307,19 @@
                     // Need to send alert telling user to kill the app
                     return .concatenate(
                         .run { [state] _ in
-                            @Dependency(\.settingsStorage) var storage
-                            do {
-                                try storage.setEnvironment(.init(
-                                    apiEndpoint: state.newApiEndpointURLString,
-                                    atlasSecret: state.atlasSecret,
-                                    atlasSecretFetchURLString: state.atlasSecretFetchURLString,
-                                    featureFlagOverrides: state.overrides.reduce(into: [:]) { partialResult, item in
-                                        guard !item.name.isEmpty else { return }
-                                        partialResult[item.name] = item.value
-                                    },
-                                    localValuesOverrides: state.localValuesOverrides.reduce(into: [:]) { partialResult, item in
-                                        guard !item.name.isEmpty else { return }
-                                        partialResult[item.name] = item.value
-                                    }
-                                ))
-                            }
+                            EnvironmentSettings(
+                                apiEndpoint: state.newApiEndpointURLString,
+                                atlasSecret: state.atlasSecret,
+                                atlasSecretFetchURLString: state.atlasSecretFetchURLString,
+                                featureFlagOverrides: state.overrides.reduce(into: [:]) { partialResult, item in
+                                    guard !item.name.isEmpty else { return }
+                                    partialResult[item.name] = item.value
+                                },
+                                localValuesOverrides: state.localValuesOverrides.reduce(into: [:]) { partialResult, item in
+                                    guard !item.name.isEmpty else { return }
+                                    partialResult[item.name] = item.value
+                                }
+                            ).apply()
                         },
                         .send(.displayKillAppConfirmationAlert)
                     )

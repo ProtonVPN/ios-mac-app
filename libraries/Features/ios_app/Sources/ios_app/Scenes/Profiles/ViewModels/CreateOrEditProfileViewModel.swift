@@ -45,7 +45,6 @@ class CreateOrEditProfileViewModel: NSObject {
     private let profileService: ProfileService
     private let protocolService: ProtocolService
     @Dependency(\.profileManager) private var profileManager
-    @Dependency(\.propertiesManager) private var propertiesManager
     private let editedProfile: Profile?
     @Dependency(\.serverRepository) private var serverRepository
 
@@ -94,7 +93,6 @@ class CreateOrEditProfileViewModel: NSObject {
         profileService: ProfileService,
         protocolSelectionService: ProtocolService
     ) {
-        @Dependency(\.propertiesManager) var propertiesManager
         self.username = username
         self.editedProfile = profile
         self.profileService = profileService
@@ -109,9 +107,9 @@ class CreateOrEditProfileViewModel: NSObject {
         }
 
         @Dependency(\.profileManager) var profileManager
+        @Shared(.quickConnect) var quickConnect
         if let profile,
-           let username,
-           let quickConnectProfileId = propertiesManager.getQuickConnect(for: username),
+           let quickConnectProfileId = quickConnect,
            let quickConnectProfile = profileManager.profile(id: quickConnectProfileId) {
             self.isDefaultProfile = profile.id == quickConnectProfile.id
         }
@@ -204,17 +202,18 @@ class CreateOrEditProfileViewModel: NSObject {
             return
         }
 
-        guard let username else {
+        guard username != nil else {
             messageHandler?(Localizable.vpnstatusNotLoggedin, GSMessageType.warning, UIConstants.messageOptions)
             completion(false)
             return
         }
 
         state = .standard
+        @Shared(.quickConnect) var quickConnect
         if isDefaultProfile {
-            propertiesManager.setQuickConnect(for: username, quickConnect: profile.id)
-        } else if let quickConnectId = propertiesManager.getQuickConnect(for: username), quickConnectId == profile.id { // default was on and has now been turned off for this profile
-            propertiesManager.setQuickConnect(for: username, quickConnect: nil)
+            $quickConnect.withLock { $0 = profile.id }
+        } else if let quickConnectId = quickConnect, quickConnectId == profile.id { // default was on and has now been turned off for this profile
+            $quickConnect.withLock { $0 = nil }
         }
 
         completion(true)

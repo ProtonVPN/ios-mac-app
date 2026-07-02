@@ -27,50 +27,33 @@ import Sharing
 import VPNAppCore
 
 final class GeneralSettingsViewModel {
-    @Dependency(\.propertiesManager) private var propertiesManager
-    @Shared(.earlyAccess) private var earlyAccessSetting: Bool
-
     init() {}
 
-    var startOnBoot: Bool {
-        propertiesManager.startOnBoot
-    }
-
-    var startMinimized: Bool {
-        propertiesManager.startMinimized
-    }
-
-    var systemNotifications: Bool {
-        propertiesManager.systemNotifications
-    }
-
-    var earlyAccess: Bool {
-        earlyAccessSetting
-    }
-
-    var unprotectedNetworkNotifications: Bool {
-        propertiesManager.unprotectedNetworkNotifications
-    }
+    @Shared(.startOnBoot) var startOnBoot
+    @Shared(.startMinimized) var startMinimized
+    @Shared(.systemNotifications) var systemNotifications
+    @Shared(.unprotectedNetworkNotifications) var unprotectedNetworkNotifications
+    @Shared(.earlyAccess) var earlyAccess: Bool
 
     // MARK: - Setters
 
     func setStartOnBoot(_ enabled: Bool) {
-        propertiesManager.startOnBoot = enabled
+        ProtonVPN.setStartOnBoot(enabled)
     }
 
     func setStartMinimized(_ enabled: Bool) {
-        propertiesManager.startMinimized = enabled
+        $startMinimized.withLock { $0 = enabled }
     }
 
     func setSystemNotifications(_ enabled: Bool) {
-        propertiesManager.systemNotifications = enabled
+        $systemNotifications.withLock { $0 = enabled }
     }
 
     func setEarlyAccess(_ enabled: Bool) {
-        $earlyAccessSetting.withLock { $0 = enabled }
+        $earlyAccess.withLock { $0 = enabled }
     }
 
     func setUnprotectedNetworkNotifications(_ enabled: Bool) {
-        propertiesManager.unprotectedNetworkNotifications = enabled
+        $unprotectedNetworkNotifications.withLock { $0 = enabled }
     }
 }

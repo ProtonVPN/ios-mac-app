@@ -16,8 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import Dependencies
 import Foundation
+import Sharing
 import VPNAppCore
 
 public struct ServerChangeAuthorizerImplementation {
@@ -28,19 +30,21 @@ public struct ServerChangeAuthorizerImplementation {
             return .available
         }
 
-        @Dependency(\.serverChangeStorage) var storage
         @Dependency(\.date) var date
         let now = date.now
 
-        let skips = storage.connectionStack.filter { $0.intent == .random }
+        @Shared(.serverChangeConnectionStack) var connectionStack
+        @Shared(.serverChangeConfig) var config
+
+        let skips = (connectionStack ?? []).filter { $0.intent == .random }
 
         guard let lastConnection = skips.first else {
             return .available
         }
 
         let reconnectDelay = TimeInterval(
-            lastConnection.upsellNext ? storage.config.changeServerLongDelayInSeconds :
-                storage.config.changeServerShortDelayInSeconds
+            lastConnection.upsellNext ? config.changeServerLongDelayInSeconds :
+                config.changeServerShortDelayInSeconds
         )
 
         let connectionDate = lastConnection.date
@@ -57,16 +61,16 @@ public struct ServerChangeAuthorizerImplementation {
     }
 
     func registerServerChange(connectedAt connectionDate: Date) {
-        @Dependency(\.serverChangeStorage) var storage
+        @Shared(.serverChangeConfig) var config
+        @Shared(.serverChangeConnectionStack) var connectionStack
 
-        let config = storage.config
-        let recentConnections = storage.connectionStack
+        let recentConnections = (connectionStack ?? [])
             .prefix(max(0, config.changeServerAttemptLimit - 1))
             .filter { $0.intent == .random }
 
         let recentlyUpsold = recentConnections.contains(where: \.upsellNext)
 
-        let serverChangeItem = ServerChangeStorage.ConnectionStackItem(
+        let serverChangeItem = ConnectionStackItem(
             intent: .random,
             date: connectionDate,
             upsellNext: recentConnections.count >= (config.changeServerAttemptLimit - 1) &&
@@ -74,6 +78,6 @@ public struct ServerChangeAuthorizerImplementation {
         )
 
         log.debug("Registering server change", metadata: ["item": "\(serverChangeItem)"])
-        storage.push(item: serverChangeItem)
+        pushServerChangeConnection(serverChangeItem)
     }
 }

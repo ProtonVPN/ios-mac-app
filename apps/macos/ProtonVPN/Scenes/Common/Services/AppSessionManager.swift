@@ -64,7 +64,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.vpnApiClient) private var vpnApiClient
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.activeTunnelInspector) private var activeTunnelInspector
     @Dependency(\.updateManager) private var updateManager
@@ -90,7 +89,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     init(factory: Factory) {
         self.factory = factory
         super.init()
-        propertiesManager.restoreStartOnBootStatus()
+        restoreStartOnBootStatus()
         AppEvent.clearingApplicationData.subscribe(self, selector: #selector(tearDown(_:)))
     }
 
@@ -137,7 +136,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             // Clear any stale logout reason before establishing the session
             $sessionLogoutReason.withLock { $0 = nil }
             sessionStatus = .established
-            propertiesManager.hasConnected = true
+            @Shared(.hasConnected) var hasConnected
+            $hasConnected.withLock { $0 = true }
         }
 
         appSessionRefreshTimer.startTimers()
@@ -165,9 +165,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
 
         if isDisconnectedForPropertiesRefresh {
-            propertiesManager.userLocation = properties.location
+            @Shared(.userLocation) var userLocation
+            $userLocation.withLock { $0 = properties.location }
         }
-        propertiesManager.userRole = properties.userRole
 
         @Shared(.userAccountCreationDate) var userAccountCreationDate
         $userAccountCreationDate.withLock { $0 = properties.userCreateTime }
@@ -179,13 +179,16 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             $smartProtocolConfig.withLock { $0 = clientConfig.smartProtocolConfig }
             @Shared(.featureFlags) var featureFlags
             $featureFlags.withLock { $0 = clientConfig.featureFlags }
-            propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
-            @Dependency(\.serverChangeStorage) var storage
-            storage.config = clientConfig.serverChangeConfig
+            @Shared(.maintenanceServerRefreshIntereval) var maintenanceServerRefreshIntereval
+            $maintenanceServerRefreshIntereval.withLock { $0 = clientConfig.serverRefreshInterval }
+            @Shared(.serverChangeConfig) var serverChangeConfig
+            $serverChangeConfig.withLock { $0 = clientConfig.serverChangeConfig }
         }
-        if let streamingServices = properties.streamingResponse {
-            propertiesManager.streamingServices = streamingServices.streamingServices
-            propertiesManager.streamingResourcesUrl = streamingServices.resourceBaseURL
+        if let streamingResponse = properties.streamingResponse {
+            @Shared(.streamingServices) var streamingServices
+            $streamingServices.withLock { $0 = streamingResponse.streamingServices }
+            @Shared(.streamingResourcesUrl) var streamingResourcesUrl
+            $streamingResourcesUrl.withLock { $0 = streamingResponse.resourceBaseURL }
         }
         @Shared(.featureFlags) var pollFeatureFlags
         if pollFeatureFlags.pollNotificationAPI {
@@ -208,7 +211,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     /// - We hit a keychain error
     private func getVPNProperties() async throws -> VpnProperties? {
         let isDisconnected = isDisconnectedForPropertiesRefresh
-        let location = propertiesManager.userLocation
+        @Shared(.userLocation) var userLocation
+        let location = userLocation
 
         let shouldRefreshServersAccordingToUserTier = !serverManager.shouldFetchFullServerList
         do {
@@ -228,7 +232,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         } catch {
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
             @Dependency(\.serverRepository) var serverRepository
-            if serverRepository.isEmpty || propertiesManager.userLocation?.ip == nil {
+            if serverRepository.isEmpty || userLocation?.ip == nil {
                 // only throw if there is a major reason
                 throw error
             }
@@ -361,7 +365,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         @Dependency(\.serverManager) var serverManager
         serverManager.purgeAllServers()
 
-        propertiesManager.logoutCleanup()
+        performLogoutCleanup()
 
         networking.apiService.acquireSessionIfNeeded { _ in }
     }
@@ -374,7 +378,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         Task { @MainActor [weak self] in
             guard let self else { return }
 
-            if propertiesManager.uninstallSysexesOnTerminate {
+            @Shared(.uninstallSysexesOnTerminate) var uninstallSysexesOnTerminate
+            if uninstallSysexesOnTerminate {
                 await systemExtensionsCoordinator.uninstallAll(origin: .termination, userInitiated: false)
             }
 
@@ -393,8 +398,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             }
 
             // ensure application data hasn't been cleared
-            @Dependency(\.defaultsProvider) var provider
-            guard provider.getDefaults().bool(forKey: AppConstants.UserDefaults.launchedBefore) else {
+            @Shared(.launchedBefore) var launchedBefore
+            guard launchedBefore else {
                 confirmationClosure()
                 return
             }

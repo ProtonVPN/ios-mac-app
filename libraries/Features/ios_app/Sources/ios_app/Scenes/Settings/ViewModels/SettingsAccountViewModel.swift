@@ -44,7 +44,6 @@ final class SettingsAccountViewModel {
 
     @Dependency(\.coreAlertService) private var alertService
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.settingsClient) private var settingsClient
@@ -145,7 +144,8 @@ final class SettingsAccountViewModel {
             .pushStandard(title: Localizable.changePassword, handler: { [weak self] in
                 guard let self, let pushHandler else { return }
                 Task { @MainActor [weak self] in
-                    guard let self, let userSettings = propertiesManager.userSettings else {
+                    @Shared(.userSettings) var userSettings
+                    guard let self, let userSettings else {
                         log.debug("No user settings found, not displaying password change menu")
                         return
                     }
@@ -188,7 +188,9 @@ final class SettingsAccountViewModel {
               !mailboxPassword.isEmpty else {
             return false
         }
-        return FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.changePassword, reloadValue: true) && propertiesManager.userInfo != nil && propertiesManager.userSettings != nil
+        @Shared(.userInfo) var userInfo
+        @Shared(.userSettings) var userSettings
+        return FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.changePassword, reloadValue: true) && userInfo != nil && userSettings != nil
     }
 
     private var deleteAccountSection: TableViewSection {

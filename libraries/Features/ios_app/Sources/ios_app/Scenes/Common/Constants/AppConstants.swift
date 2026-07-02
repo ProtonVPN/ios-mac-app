@@ -25,11 +25,11 @@ import UIKit
 import VPNShared
 
 class AppConstants {
-    enum Time {
-        // Connection stuck timming
-        static let waitingTimeForConnectionStuck: TimeInterval = 3 // seconds
-        static let timeForForegroundStuck: TimeInterval = .minutes(30)
+    enum Filenames {
+        static let appLogFilename = "ProtonVPN.log"
+    }
 
+    enum Time {
         // Servers list refresh
         static let fullServerRefresh: TimeInterval = .hours(3)
         static let serverLoadsRefresh: TimeInterval = .minutes(15)
@@ -40,12 +40,5 @@ class AppConstants {
         // Streaming & Partners
         static let streamingInfoRefresh: TimeInterval = .days(2)
         static let partnersInfoRefresh: TimeInterval = .days(2)
-
-        // Payments
-        static let paymentTokenLifetime: TimeInterval = 60 * 59 // 59 minutes
-    }
-
-    enum Filenames {
-        static let appLogFilename = "ProtonVPN.log"
     }
 }

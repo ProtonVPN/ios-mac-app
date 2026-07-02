@@ -261,7 +261,8 @@ private extension SidebarFeature {
             switch action {
             case .viewDidLoad:
                 state.selectedTab = .countries
-                let loadedMapWidth = defaultsProvider.getDefaults().integer(forKey: AppConstants.UserDefaults.mapWidth)
+                @Shared(.mapWidth) var mapWidth
+                let loadedMapWidth = mapWidth
                 state.mapWidth = loadedMapWidth > Int(environment.expandButtonWidth) ? CGFloat(loadedMapWidth) : environment.defaultMapWidth
                 return .merge(
                     .send(.connection(.input(.onLaunch))),
@@ -384,7 +385,8 @@ private extension SidebarFeature {
                 }
                 let mapWidth = Int(width - environment.sidebarWidth)
                 state.mapWidth = CGFloat(mapWidth)
-                defaultsProvider.getDefaults().set(mapWidth, forKey: AppConstants.UserDefaults.mapWidth)
+                @Shared(.mapWidth) var storedMapWidth
+                $storedMapWidth.withLock { $0 = mapWidth }
                 return .none
             case .windowWillEnterFullScreen:
                 state.isFullscreen = true

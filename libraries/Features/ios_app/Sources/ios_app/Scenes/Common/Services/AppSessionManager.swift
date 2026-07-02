@@ -60,7 +60,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
-    @Dependency(\.searchStorageNew) private var searchStorage
     @Dependency(\.networking) private var networking
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.unauthKeychain) private var unauthKeychain
@@ -69,7 +68,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
     @Dependency(\.paymentsPlanServiceV2) private var planServiceV2
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Shared(.connectionState) private var connectionState: ConnectionState
     /// session status, single source of truth
     @Shared(.sessionStatus) private var sharedSessionStatus: SessionStatus
@@ -114,9 +112,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
         do {
             @Dependency(\.userSettingsClient) var userSettingsClient
-            let userSettings = try await userSettingsClient.fetchUserSettings(authCredentials: authKeychain.fetch())
-            propertiesManager.userSettings = userSettings
-            propertiesManager.userInfo?.apply(userSettings)
+            @Shared(.userSettings) var userSettings
+            @Shared(.userInfo) var userInfo
+            let fetchedSettings = try await userSettingsClient.fetchUserSettings(authCredentials: authKeychain.fetch())
+            $userSettings.withLock { $0 = fetchedSettings }
+            $userInfo.withLock { $0?.apply(fetchedSettings) }
         } catch {
             log.error("UserSettings error", category: .app, metadata: ["error": "\(error)"])
         }
@@ -129,7 +129,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             try authKeychain.store(authCredentials, source: .userLogin)
             unauthKeychain.clear()
             vpnKeychain.clear()
-            propertiesManager.logoutCleanup()
+            performLogoutCleanup()
         } catch {
             throw CommonVpnError.keychainWriteFailed
         }
@@ -165,7 +165,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     func canPreviewApp() -> Bool {
-        !isServerRepositoryEmpty && propertiesManager.userLocation?.ip != nil
+        @Shared(.userLocation) var userLocation
+        return !isServerRepositoryEmpty && userLocation?.ip != nil
     }
 
     func loadDataWithoutLogin() async throws {
@@ -174,19 +175,20 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         log.info("Attempting to load data without login")
 
+        @Shared(.userLocation) var userLocation
         let shouldRefreshServers = !serverManager.shouldFetchFullServerList
         let properties: VpnProperties
         do {
             properties = try await vpnApiClient.vpnProperties(
                 isDisconnected: connectionState.isDisconnectedForPropertiesRefresh,
-                lastKnownLocation: propertiesManager.userLocation,
+                lastKnownLocation: userLocation,
                 serversAccordingToTier: shouldRefreshServers
             )
         } catch {
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
 
             // only fail if there is a major reason
-            if isServerRepositoryEmpty || propertiesManager.userLocation?.ip == nil {
+            if isServerRepositoryEmpty || userLocation?.ip == nil {
                 throw error
             }
 
@@ -210,7 +212,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             )
         }
 
-        propertiesManager.userLocation = properties.location
+        $userLocation.withLock { $0 = properties.location }
         do {
             try await resolveActiveSession()
         } catch {
@@ -224,13 +226,15 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         @Dependency(\.serverManager) var serverManager
         let shouldRefreshServersAccordingToTier = !serverManager.shouldFetchFullServerList
 
+        @Shared(.userLocation) var userLocation
+
         async let status = try planServiceV2.fetchIAPStatus()
 
         // Get VPN properties from API and save them
         do {
             let properties = try await vpnApiClient.vpnProperties(
                 isDisconnected: connectionState.isDisconnectedForPropertiesRefresh,
-                lastKnownLocation: propertiesManager.userLocation,
+                lastKnownLocation: userLocation,
                 serversAccordingToTier: shouldRefreshServersAccordingToTier
             )
 
@@ -254,33 +258,37 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 )
             }
 
-            propertiesManager.userRole = properties.userRole
-
             @Shared(.userAccountCreationDate) var userAccountCreationDate
             $userAccountCreationDate.withLock { $0 = properties.userCreateTime }
 
-            propertiesManager.userLocation = properties.location
-            propertiesManager.userAccountRecovery = properties.userAccountRecovery
-            propertiesManager.userInfo = properties.userInfo
-            if let userSettings = propertiesManager.userSettings {
-                propertiesManager.userInfo?.apply(userSettings)
+            $userLocation.withLock { $0 = properties.location }
+            @Shared(.userAccountRecovery) var userAccountRecovery
+            $userAccountRecovery.withLock { $0 = properties.userAccountRecovery }
+            @Shared(.userInfo) var userInfo
+            $userInfo.withLock { $0 = properties.userInfo }
+            @Shared(.userSettings) var userSettings
+            if let userSettings {
+                $userInfo.withLock { $0?.apply(userSettings) }
             }
             if let clientConfig = properties.clientConfig {
                 @Shared(.smartProtocolConfig) var smartProtocolConfig
                 $smartProtocolConfig.withLock { $0 = clientConfig.smartProtocolConfig }
-                propertiesManager.maintenanceServerRefreshIntereval = clientConfig.serverRefreshInterval
+                @Shared(.maintenanceServerRefreshIntereval) var maintenanceServerRefreshIntereval
+                $maintenanceServerRefreshIntereval.withLock { $0 = clientConfig.serverRefreshInterval }
                 @Shared(.featureFlags) var featureFlags
                 $featureFlags.withLock { $0 = clientConfig.featureFlags }
 
                 @Shared(.ratingSettings) var ratingSettings
                 $ratingSettings.withLock { $0 = clientConfig.ratingSettings }
 
-                @Dependency(\.serverChangeStorage) var storage
-                storage.config = clientConfig.serverChangeConfig
+                @Shared(.serverChangeConfig) var serverChangeConfig
+                $serverChangeConfig.withLock { $0 = clientConfig.serverChangeConfig }
             }
-            if let streamingServices = properties.streamingResponse {
-                propertiesManager.streamingServices = streamingServices.streamingServices
-                propertiesManager.streamingResourcesUrl = streamingServices.resourceBaseURL
+            if let streamingResponse = properties.streamingResponse {
+                @Shared(.streamingServices) var streamingServices
+                @Shared(.streamingResourcesUrl) var streamingResourcesUrl
+                $streamingServices.withLock { $0 = streamingResponse.streamingServices }
+                $streamingResourcesUrl.withLock { $0 = streamingResponse.resourceBaseURL }
             }
             @Shared(.featureFlags) var pollFeatureFlags
             if pollFeatureFlags.pollNotificationAPI {
@@ -305,7 +313,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             // Also the error has to be not keychain related, because if there is a problem with
             // the keychain, use most probably will not be able to use API nor VPN connection.
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
-            if isServerRepositoryEmpty || propertiesManager.userLocation?.ip == nil {
+            if isServerRepositoryEmpty || userLocation?.ip == nil {
                 throw error
             }
         }
@@ -344,7 +352,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             guard let self else { return }
             do {
                 let user = try await vpnApiClient.userInfo()
-                propertiesManager.userAccountRecovery = user.accountRecovery
+                @Shared(.userAccountRecovery) var userAccountRecovery
+                $userAccountRecovery.withLock { $0 = user.accountRecovery }
                 await MainActor.run {
                     AppEvent.sessionManagerDataReloaded.post()
                 }
@@ -414,7 +423,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         vpnKeychain.clear()
         announcementRefresher.clear()
 
-        searchStorage.clear()
+        @Shared(.recentSearches) var storedSearches
+        $storedSearches.withLock { $0 = nil }
         planServiceV2.clear()
 
         @Shared(.userPlan) var userPlan
@@ -423,7 +433,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         @Dependency(\.serverManager) var serverManager
         serverManager.purgeAllServers()
 
-        propertiesManager.logoutCleanup()
+        performLogoutCleanup()
 
         networking.apiService.acquireSessionIfNeeded { _ in }
         paymentTransactionEvents?.cancel()
@@ -448,7 +458,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         sessionStatus = state
         if state == .established {
             loggedIn = true
-            propertiesManager.hasConnected = true
+            @Shared(.hasConnected) var hasConnected
+            $hasConnected.withLock { $0 = true }
         } else if state == .notEstablished {
             // Clear auth token and vpn creds to ensure they won't be used
             logOutCleanup()

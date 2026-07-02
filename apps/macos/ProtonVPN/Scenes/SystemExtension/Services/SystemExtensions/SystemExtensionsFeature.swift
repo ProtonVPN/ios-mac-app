@@ -82,7 +82,6 @@ struct SystemExtensionsFeature {
         case completed(UUID, SystemExtensionsRequestResponse)
     }
 
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.profileManager) private var profileManager
     @Dependency(\.systemExtensionsRequestSubmissionClient) private var requestSubmissionClient
     @Dependency(\.vpnKeychain) private var vpnKeychain
@@ -109,7 +108,8 @@ struct SystemExtensionsFeature {
                 state.queuedRequests.removeFirst()
 
                 state.inFlightRequestID = nextRequest.id
-                let forceUpgrade = propertiesManager.forceExtensionUpgrade
+                @Shared(.forceExtensionUpgrade) var forceExtensionUpgrade
+                let forceUpgrade = forceExtensionUpgrade
 
                 switch nextRequest.kind {
                 case let .installOrUpdate(shouldStartTour, includedTypes):
@@ -219,7 +219,8 @@ struct SystemExtensionsFeature {
                     return .none
                 }
 
-                let origin: SystemExtensionTourAlert.Origin = if propertiesManager.isSubsequentLaunch {
+                @Shared(.isSubsequentLaunch) var isSubsequentLaunch
+                let origin: SystemExtensionTourAlert.Origin = if isSubsequentLaunch {
                     .inAppPrompt(requiringApprovalTypes.map(\.tourFeature))
                 } else {
                     .firstAppLaunch
@@ -287,15 +288,14 @@ struct SystemExtensionsFeature {
                             // Show the welcome screen on first successful sysex enable (logged-in users only).
                             @Dependency(\.windowService) var windowService
                             @Dependency(\.vpnKeychain) var vpnKeychain
-                            @Dependency(\.defaultsProvider) var defaultsProvider
-                            let defaults = defaultsProvider.getDefaults()
-                            if !defaults.bool(forKey: AppConstants.UserDefaults.welcomed),
+                            @Shared(.welcomed) var welcomed
+                            if !welcomed,
                                (try? vpnKeychain.fetchCached()) != nil {
                                 windowService.presentKeyModal(
                                     viewController: WelcomeViewController(windowService: windowService),
                                     activatingApp: false
                                 )
-                                defaults.set(true, forKey: AppConstants.UserDefaults.welcomed)
+                                $welcomed.withLock { $0 = true }
                             }
                         }
                         await send(.completed(context.requestID, .installation(interpretedResult)))

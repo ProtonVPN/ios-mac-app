@@ -21,24 +21,28 @@
 //
 
 import Dependencies
+import Domain
 import Foundation
 import LegacyCommon
+import Sharing
 import VPNShared
 
 class AppLaunchRoutine {
     static var launchedBefore = true
 
     static func execute() {
-        @Dependency(\.defaultsProvider) var provider
-        @Dependency(\.propertiesManager) var propertiesManager
-        let defaults = provider.getDefaults()
-        if !defaults.bool(forKey: AppConstants.UserDefaults.launchedBefore) {
-            launchedBefore = false
-            defaults.set(false, forKey: AppConstants.UserDefaults.startOnBoot)
-            defaults.set(false, forKey: AppConstants.UserDefaults.startMinimized)
-            propertiesManager.hasConnected = false
-            defaults.set(true, forKey: AppConstants.UserDefaults.systemNotifications)
-            defaults.set(true, forKey: AppConstants.UserDefaults.launchedBefore)
+        @Shared(.launchedBefore) var launchedBefore
+        if !launchedBefore {
+            Self.launchedBefore = false
+            @Shared(.startOnBoot) var startOnBoot
+            $startOnBoot.withLock { $0 = false }
+            @Shared(.startMinimized) var startMinimized
+            $startMinimized.withLock { $0 = false }
+            @Shared(.hasConnected) var hasConnected
+            $hasConnected.withLock { $0 = false }
+            @Shared(.systemNotifications) var systemNotifications
+            $systemNotifications.withLock { $0 = true }
+            $launchedBefore.withLock { $0 = true }
         }
     }
 }

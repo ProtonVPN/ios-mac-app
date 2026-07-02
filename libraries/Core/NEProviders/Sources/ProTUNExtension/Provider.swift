@@ -31,7 +31,7 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
 
     private let protunLogger: ProTUNLogger = .init()
 
-    override init() {
+    override public init() {
         let pid = ProcessInfo.processInfo.processIdentifier
         Logger.provider.info("Starting ProTUNPacketTunnelProvider with pid \(pid)")
         #if DEBUG

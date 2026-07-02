@@ -46,11 +46,12 @@ extension ChallengeParametersProviderKey: @retroactive DependencyKey {
 
 extension DoHConfigurationKey: @retroactive DependencyKey {
     public static var liveValue: DoHVPN {
-        @Dependency(\.propertiesManager) var propertiesManager
+        @Shared(.apiEndpoint) var apiEndpoint
+        @Shared(.atlasSecret) var atlasSecretSetting
         var cancellables: Set<AnyCancellable> = []
 
-        let customHost = Bundle.dynamicDomain ?? propertiesManager.apiEndpoint
-        let atlasSecret = Bundle.atlasSecret ?? propertiesManager.atlasSecret
+        let customHost = Bundle.dynamicDomain ?? apiEndpoint
+        let atlasSecret = Bundle.atlasSecret ?? atlasSecretSetting
         log.info("Custom host: \(optional: customHost), atlasSecret: \(optional: atlasSecret)")
 
         @Shared(.alternativeRouting) var alternativeRouting

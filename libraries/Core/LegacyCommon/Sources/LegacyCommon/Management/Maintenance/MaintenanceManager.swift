@@ -85,8 +85,8 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
 
     @MainActor
     private func checkServerAsync() async throws -> Bool {
-        @Dependency(\.propertiesManager) var propertiesManager
-        let location = propertiesManager.userLocation
+        @Shared(.userLocation) var userLocation
+        let location = userLocation
         guard let activeServer = connectionState.resolvedServer else {
             log.info("No active connection", category: .app)
             return false

@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 @testable import CountriesShared
+import Foundation
 import Strings
 import Testing
 
@@ -25,207 +26,242 @@ import Testing
 @MainActor
 struct SearchFeatureReducerTests {
     @Test("searchQueryChangeDebounced sends performSearch with current query")
-    func searchQueryDebounceFlow() async {
-        let store = TestStore(initialState: SearchFeature.State(searchResults: .placeholder)) {
-            SearchFeature()
-        } withDependencies: {
-            $0.searchStorageNew.save = { _ in }
-        }
+    func searchQueryDebounceFlow() async throws {
+        let suiteName = "SearchFeatureReducerTests-\(#function)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defaults.removePersistentDomain(forName: suiteName)
+        await withDependencies {
+            $0.defaultAppStorage = defaults
+        } operation: {
+            let store = TestStore(initialState: SearchFeature.State(searchResults: .placeholder)) {
+                SearchFeature()
+            }
 
-        await store.send(.searchQueryChanged("Test")) {
-            $0.searchQuery = "Test"
-        }
-        await store.send(.searchQueryChangeDebounced)
-        await store.receive(\.performSearch) {
-            $0.searchResults = .noResults
+            await store.send(.searchQueryChanged("Test")) {
+                $0.searchQuery = "Test"
+            }
+            await store.send(.searchQueryChangeDebounced)
+            await store.receive(\.performSearch) {
+                $0.searchResults = .noResults
+            }
         }
     }
 
     @Test("empty search loads recents from storage")
-    func emptySearchLoadsRecents() async {
-        let store = TestStore(initialState: SearchFeature.State(searchResults: .placeholder)) {
-            SearchFeature()
-        } withDependencies: {
-            $0.searchStorageNew.get = { ["Dd", "Uk"] }
-        }
+    func emptySearchLoadsRecents() async throws {
+        let suiteName = "SearchFeatureReducerTests-\(#function)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defaults.removePersistentDomain(forName: suiteName)
+        await withDependencies {
+            $0.defaultAppStorage = defaults
+        } operation: {
+            @Shared(.recentSearches) var recentSearches
+            $recentSearches.withLock { $0 = ["Dd", "Uk"] }
 
-        await store.send(.performSearch("   ")) {
-            $0.searchResults = .recentSearches(.init(recentSearches: ["Dd", "Uk"]))
+            let store = TestStore(initialState: SearchFeature.State(searchResults: .placeholder)) {
+                SearchFeature()
+            }
+
+            await store.send(.performSearch("   ")) {
+                $0.searchResults = .recentSearches(.init(recentSearches: ["Dd", "Uk"]))
+            }
         }
     }
 
     @Test("standard search returns results with upsell for free user")
-    func standardSearchBuildsResultsWithUpsell() async {
-        @Shared(.secureCoreToggle) var secureCoreToggle = false
-        @Shared(.userTier) var userTier: Int? = 0
+    func standardSearchBuildsResultsWithUpsell() async throws {
+        let suiteName = "SearchFeatureReducerTests-\(#function)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defaults.removePersistentDomain(forName: suiteName)
+        await withDependencies {
+            $0.defaultAppStorage = defaults
+        } operation: {
+            @Shared(.secureCoreToggle) var secureCoreToggle = false
+            @Shared(.userTier) var userTier: Int? = 0
+            @Shared(.recentSearches) var recentSearches
 
-        let savedQueries = LockIsolated<[[String]]>([])
-        let initialState = SearchFeature.State(
-            allCountries: [
-                SearchCountryIndex(id: "GB", countryCode: "GB", name: "United Kingdom"),
-            ],
-            allCities: [],
-            freeServers: [
-                SearchServerIndex(
-                    id: "gb-1",
-                    serverName: "UK#1",
-                    cityName: "London",
-                    translatedCityName: nil,
-                    countryName: "United Kingdom",
-                    exitCountryCode: "GB",
-                    entryCountryCode: nil,
-                    tier: .free,
-                    load: 42,
-                    isP2PAvailable: false,
-                    isTorAvailable: false,
-                    isSmartAvailable: false,
-                    isStreamingAvailable: false,
-                    isUsersTierTooLow: false,
-                    underMaintenance: false
-                ),
-            ],
-            plusServers: [],
-            searchResults: .placeholder
-        )
-
-        let store = TestStore(initialState: initialState) {
-            SearchFeature()
-        } withDependencies: {
-            $0.searchStorageNew.save = { newQ in savedQueries.withValue { $0.append(newQ) } }
-        }
-
-        await store.send(.performSearch("uk")) {
-            let server = $0.freeServers[0]
-            $0.searchResults = .resultsDisplay(
-                .init(
-                    rows: [
-                        .upsell,
-                        .sectionHeader("\(ServerTier.free.title) (1)"),
-                        .server(server),
-                    ],
-                    searchText: "uk",
-                    isFreeTier: true
-                )
+            let initialState = SearchFeature.State(
+                allCountries: [
+                    SearchCountryIndex(id: "GB", countryCode: "GB", name: "United Kingdom"),
+                ],
+                allCities: [],
+                freeServers: [
+                    SearchServerIndex(
+                        id: "gb-1",
+                        serverName: "UK#1",
+                        cityName: "London",
+                        translatedCityName: nil,
+                        countryName: "United Kingdom",
+                        exitCountryCode: "GB",
+                        entryCountryCode: nil,
+                        tier: .free,
+                        load: 42,
+                        isP2PAvailable: false,
+                        isTorAvailable: false,
+                        isSmartAvailable: false,
+                        isStreamingAvailable: false,
+                        isUsersTierTooLow: false,
+                        underMaintenance: false
+                    ),
+                ],
+                plusServers: [],
+                searchResults: .placeholder
             )
+
+            let store = TestStore(initialState: initialState) {
+                SearchFeature()
+            }
+
+            await store.send(.performSearch("uk")) {
+                let server = $0.freeServers[0]
+                $0.searchResults = .resultsDisplay(
+                    .init(
+                        rows: [
+                            .upsell,
+                            .sectionHeader("\(ServerTier.free.title) (1)"),
+                            .server(server),
+                        ],
+                        searchText: "uk",
+                        isFreeTier: true
+                    )
+                )
+            }
+
+            #expect(recentSearches == ["uk"])
         }
     }
 
     @Test("secure core mode returns secure core rows")
-    func secureCoreSearchBuildsSecureCoreRows() async {
-        @Shared(.secureCoreToggle) var secureCoreToggle = true
-        @Shared(.userTier) var userTier: Int? = 2
+    func secureCoreSearchBuildsSecureCoreRows() async throws {
+        let suiteName = "SearchFeatureReducerTests-\(#function)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defaults.removePersistentDomain(forName: suiteName)
+        await withDependencies {
+            $0.defaultAppStorage = defaults
+        } operation: {
+            @Shared(.secureCoreToggle) var secureCoreToggle = true
+            @Shared(.userTier) var userTier: Int? = 2
 
-        let initialState = SearchFeature.State(
-            allCountries: [
-                SearchCountryIndex(id: "CH", countryCode: "CH", name: "Switzerland"),
-            ],
-            allCities: [],
-            freeServers: [
-                SearchServerIndex(
-                    id: "ch-1",
-                    serverName: "CH#1",
-                    cityName: "Zurich",
-                    translatedCityName: nil,
-                    countryName: "Switzerland",
-                    exitCountryCode: "CH",
-                    entryCountryCode: "SE",
-                    tier: .free,
-                    load: 12,
-                    isP2PAvailable: false,
-                    isTorAvailable: false,
-                    isSmartAvailable: false,
-                    isStreamingAvailable: false,
-                    isUsersTierTooLow: false,
-                    underMaintenance: false
-                ),
-            ],
-            plusServers: [],
-            searchResults: .placeholder
-        )
-
-        let store = TestStore(initialState: initialState) {
-            SearchFeature()
-        } withDependencies: {
-            $0.searchStorageNew.save = { _ in }
-        }
-
-        await store.send(.performSearch("sw")) {
-            let server = $0.freeServers[0]
-            $0.searchResults = .resultsDisplay(
-                .init(
-                    rows: [
-                        .sectionHeader("\(Localizable.searchSecureCoreCountries) (1)"),
-                        .secureCoreCountry(server),
-                    ],
-                    searchText: "sw"
-                )
+            let initialState = SearchFeature.State(
+                allCountries: [
+                    SearchCountryIndex(id: "CH", countryCode: "CH", name: "Switzerland"),
+                ],
+                allCities: [],
+                freeServers: [
+                    SearchServerIndex(
+                        id: "ch-1",
+                        serverName: "CH#1",
+                        cityName: "Zurich",
+                        translatedCityName: nil,
+                        countryName: "Switzerland",
+                        exitCountryCode: "CH",
+                        entryCountryCode: "SE",
+                        tier: .free,
+                        load: 12,
+                        isP2PAvailable: false,
+                        isTorAvailable: false,
+                        isSmartAvailable: false,
+                        isStreamingAvailable: false,
+                        isUsersTierTooLow: false,
+                        underMaintenance: false
+                    ),
+                ],
+                plusServers: [],
+                searchResults: .placeholder
             )
+
+            let store = TestStore(initialState: initialState) {
+                SearchFeature()
+            }
+
+            await store.send(.performSearch("sw")) {
+                let server = $0.freeServers[0]
+                $0.searchResults = .resultsDisplay(
+                    .init(
+                        rows: [
+                            .sectionHeader("\(Localizable.searchSecureCoreCountries) (1)"),
+                            .secureCoreCountry(server),
+                        ],
+                        searchText: "sw"
+                    )
+                )
+            }
         }
     }
 
     @Test("standard search includes matching states section")
-    func standardSearchBuildsStateResults() async {
-        @Shared(.secureCoreToggle) var secureCoreToggle = false
-        @Shared(.userTier) var userTier: Int? = 2
+    func standardSearchBuildsStateResults() async throws {
+        let suiteName = "SearchFeatureReducerTests-\(#function)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defaults.removePersistentDomain(forName: suiteName)
+        await withDependencies {
+            $0.defaultAppStorage = defaults
+        } operation: {
+            @Shared(.secureCoreToggle) var secureCoreToggle = false
+            @Shared(.userTier) var userTier: Int? = 2
 
-        let initialState = SearchFeature.State(
-            allCountries: [],
-            allCities: [],
-            allStates: [
-                SearchCityIndex(
-                    id: "california-us",
-                    cityName: "California",
-                    translatedCityName: nil,
-                    countryName: "United States",
-                    countryCode: "US"
-                ),
-            ],
-            freeServers: [],
-            plusServers: [],
-            searchResults: .placeholder
-        )
-
-        let store = TestStore(initialState: initialState) {
-            SearchFeature()
-        } withDependencies: {
-            $0.searchStorageNew.save = { _ in }
-        }
-
-        await store.send(.performSearch("cal")) {
-            let stateItem = $0.allStates[0]
-            $0.searchResults = .resultsDisplay(
-                .init(
-                    rows: [
-                        .sectionHeader("\(Localizable.searchStates) (1)"),
-                        .state(stateItem),
-                    ],
-                    searchText: "cal",
-                    isFreeTier: false
-                )
+            let initialState = SearchFeature.State(
+                allCountries: [],
+                allCities: [],
+                allStates: [
+                    SearchCityIndex(
+                        id: "california-us",
+                        cityName: "California",
+                        translatedCityName: nil,
+                        countryName: "United States",
+                        countryCode: "US"
+                    ),
+                ],
+                freeServers: [],
+                plusServers: [],
+                searchResults: .placeholder
             )
+
+            let store = TestStore(initialState: initialState) {
+                SearchFeature()
+            }
+
+            await store.send(.performSearch("cal")) {
+                let stateItem = $0.allStates[0]
+                $0.searchResults = .resultsDisplay(
+                    .init(
+                        rows: [
+                            .sectionHeader("\(Localizable.searchStates) (1)"),
+                            .state(stateItem),
+                        ],
+                        searchText: "cal",
+                        isFreeTier: false
+                    )
+                )
+            }
         }
     }
 
     @Test("tapping recent search updates query and performs search")
-    func recentTappedTriggersSearch() async {
-        let state = SearchFeature.State(
-            allCountries: [],
-            allCities: [],
-            freeServers: [],
-            plusServers: [],
-            searchResults: .recentSearches(.init(recentSearches: ["Te"]))
-        )
-        let store = TestStore(initialState: state) {
-            SearchFeature()
-        } withDependencies: {
-            $0.searchStorageNew.save = { _ in }
-        }
+    func recentTappedTriggersSearch() async throws {
+        let suiteName = "SearchFeatureReducerTests-\(#function)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defaults.removePersistentDomain(forName: suiteName)
+        await withDependencies {
+            $0.defaultAppStorage = defaults
+        } operation: {
+            let state = SearchFeature.State(
+                allCountries: [],
+                allCities: [],
+                freeServers: [],
+                plusServers: [],
+                searchResults: .recentSearches(.init(recentSearches: ["Te"]))
+            )
+            let store = TestStore(initialState: state) {
+                SearchFeature()
+            }
 
-        await store.send(.searchResults(.recentSearches(.recentTapped("Te")))) {
-            $0.searchQuery = "Te"
-        }
-        await store.receive(\.performSearch) {
-            $0.searchResults = .noResults
+            await store.send(.searchResults(.recentSearches(.recentTapped("Te")))) {
+                $0.searchQuery = "Te"
+            }
+            await store.receive(\.performSearch) {
+                $0.searchResults = .noResults
+            }
         }
     }
 

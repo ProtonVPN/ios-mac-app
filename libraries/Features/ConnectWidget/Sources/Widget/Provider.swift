@@ -28,17 +28,17 @@ import WidgetKit
 
 struct Provider: TimelineProvider {
     @Dependency(\.authKeychain) var authKeychain
-    @Dependency(\.recentsStorage) var recentsStorage
-    @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
+    @Shared(.recentConnections) var recentConnections
+    @Shared(.storedDefaultConnectionPreference) var storedDefaultConnectionPreference
     @Dependency(\.connectionInventory) var connectionInventory
     @SharedReader(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse: VPNConnectionStatusDoNotUse
 
     func recentConnectionList() -> [RecentConnection] {
-        let preference = try? defaultConnectionStorage.getPreference()
+        let preference = storedDefaultConnectionPreference
 
         return connectionInventory.recentConnectionList(
             preference ?? .fastest,
-            recentsStorage.readFromStorage(),
+            recentConnections ?? [],
             ConnectionSpec.defaultFastest
         ).elements
     }
@@ -62,12 +62,12 @@ struct Provider: TimelineProvider {
     }
 
     private func connectionSpec() -> ConnectionSpec {
-        let preference = try? defaultConnectionStorage.getPreference()
+        let preference = storedDefaultConnectionPreference
         switch preference ?? .fastest {
         case .fastest:
             return .defaultFastest
         case .mostRecent:
-            let recents = recentsStorage.readFromStorage()
+            let recents = recentConnections ?? []
             return recents.elements.first?.connection ?? .defaultFastest
         case let .recent(spec):
             return spec

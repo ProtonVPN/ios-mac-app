@@ -60,7 +60,6 @@ public struct DesktopCityStateListFeature: Sendable {
     }
 
     @Dependency(\.connectionCommandClient) var connectionCommandClient
-    @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
 
     public init() {}
 
@@ -86,7 +85,8 @@ public struct DesktopCityStateListFeature: Sendable {
                 return .send(.connect(location: groupInfo.kind.locationWithOrder(), trigger: nil))
             case let .connect(location, trigger):
                 let spec = CityStateConnectionSpecFactory.makeSpec(location: location)
-                let connectionProtocol = (try? defaultConnectionStorage.getDefaultProtocol()) ?? .smartProtocol
+                @Shared(.connectionProtocol) var sharedConnectionProtocol
+                let connectionProtocol = sharedConnectionProtocol
                 let listTrigger = state.listType.telemetryTrigger
                 connectionCommandClient.send(.connect(spec, connectionProtocol, trigger ?? listTrigger))
                 return .none

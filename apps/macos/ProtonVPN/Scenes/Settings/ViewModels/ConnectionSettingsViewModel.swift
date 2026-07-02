@@ -50,7 +50,6 @@ final class ConnectionSettingsViewModel {
     private let factory: Factory
     private typealias ProtocolSwitchAction = VpnProtocolChangeManagerImplementation.ProtocolSwitchAction
 
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.profileManager) private var profileManager
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Dependency(\.coreAlertService) private var alertService
@@ -156,24 +155,33 @@ final class ConnectionSettingsViewModel {
 
     var autoConnect: (enabled: Bool, profileId: String?)? {
         get {
-            guard let username = authKeychain.username else { return nil }
-            return propertiesManager.getAutoConnect(for: username)
+            guard authKeychain.username != nil else { return nil }
+            @Shared(.autoConnect) var autoConnect
+            @Shared(.autoConnectProfileId) var autoConnectProfileId
+            return (autoConnect, autoConnectProfileId)
         }
         set {
             guard let newValue else { return }
-            guard let username = authKeychain.username else { return }
-            propertiesManager.setAutoConnect(for: username, enabled: newValue.enabled, profileId: newValue.profileId)
+            guard authKeychain.username != nil else { return }
+            @Shared(.autoConnect) var autoConnect
+            @Shared(.autoConnectProfileId) var autoConnectProfileId
+            $autoConnect.withLock { $0 = newValue.enabled }
+            if let profileId = newValue.profileId {
+                $autoConnectProfileId.withLock { $0 = profileId }
+            }
         }
     }
 
     var quickConnect: String? {
         get {
-            guard let username = authKeychain.username else { return nil }
-            return propertiesManager.getQuickConnect(for: username)
+            guard authKeychain.username != nil else { return nil }
+            @Shared(.quickConnect) var quickConnect
+            return quickConnect
         }
         set {
-            guard let username = authKeychain.username else { return }
-            propertiesManager.setQuickConnect(for: username, quickConnect: newValue)
+            guard authKeychain.username != nil else { return }
+            @Shared(.quickConnect) var quickConnect
+            $quickConnect.withLock { $0 = newValue }
         }
     }
 

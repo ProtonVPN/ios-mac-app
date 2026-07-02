@@ -54,7 +54,6 @@ final class SettingsViewModel {
 
     private let factory: Factory
 
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Shared(.connectionState) private var connectionState: ConnectionState
     @Shared(.featureFlags) private var featureFlags: Domain.FeatureFlags
     @Shared(.connectionProtocol) private var sharedConnectionProtocol: Domain.ConnectionProtocol
@@ -304,7 +303,8 @@ final class SettingsViewModel {
             cells = [cell]
         }
 
-        let qrLoginOptedOut = propertiesManager.userInfo?.edmOptOut == 1
+        @Shared(.userInfo) var userInfo
+        let qrLoginOptedOut = userInfo?.edmOptOut == 1
         let qrLoginFeatureDisabled = CoreFeatureFlagType.easyDeviceMigrationDisabled.enabled
         let isDeviceSecured: Bool = {
             #if targetEnvironment(simulator)
@@ -333,7 +333,8 @@ final class SettingsViewModel {
     }
 
     private var accountRecoveryStatus: AccountRecovery? {
-        propertiesManager.userAccountRecovery
+        @Shared(.userAccountRecovery) var userAccountRecovery
+        return userAccountRecovery
     }
 
     private var securitySection: TableViewSection {

@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 @testable import CountriesShared
+import Foundation
 import Strings
 import Testing
 
@@ -25,16 +26,24 @@ import Testing
 @MainActor
 struct SearchRecentsFeatureReducerTests {
     @Test("onAppear loads recents from storage")
-    func onAppearLoadsRecents() async {
-        let store = TestStore(initialState: SearchRecentsFeature.State()) {
-            SearchRecentsFeature()
-        } withDependencies: {
-            $0.searchStorageNew.get = { ["A", "B"] }
-        }
+    func onAppearLoadsRecents() async throws {
+        let suiteName = "SearchRecentsFeatureTests-\(#function)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defaults.removePersistentDomain(forName: suiteName)
+        await withDependencies {
+            $0.defaultAppStorage = defaults
+        } operation: {
+            @Shared(.recentSearches) var recentSearches
+            $recentSearches.withLock { $0 = ["A", "B"] }
 
-        await store.send(.onAppear)
-        await store.receive(\.load) {
-            $0.recentSearches = ["A", "B"]
+            let store = TestStore(initialState: SearchRecentsFeature.State()) {
+                SearchRecentsFeature()
+            }
+
+            await store.send(.onAppear)
+            await store.receive(\.load) {
+                $0.recentSearches = ["A", "B"]
+            }
         }
     }
 
@@ -52,23 +61,30 @@ struct SearchRecentsFeatureReducerTests {
     }
 
     @Test("confirm clear clears storage and emits recentsCleared")
-    func confirmClearClearsStateAndStorage() async {
-        let didClear = LockIsolated(false)
-        let store = TestStore(
-            initialState: SearchRecentsFeature.State(recentSearches: ["A"], alert: SearchRecentsFeature.clearAlert)
-        ) {
-            SearchRecentsFeature()
-        } withDependencies: {
-            $0.searchStorageNew.clear = { didClear.withValue { $0 = true } }
-        }
+    func confirmClearClearsStateAndStorage() async throws {
+        let suiteName = "SearchRecentsFeatureTests-\(#function)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defaults.removePersistentDomain(forName: suiteName)
+        await withDependencies {
+            $0.defaultAppStorage = defaults
+        } operation: {
+            @Shared(.recentSearches) var recentSearches
+            $recentSearches.withLock { $0 = ["A"] }
 
-        await store.send(.clear)
-        await store.send(.alert(.presented(.confirmClear))) {
-            $0.alert = nil
-            $0.recentSearches = []
-        }
-        await store.receive(\.recentsCleared)
+            let store = TestStore(
+                initialState: SearchRecentsFeature.State(recentSearches: ["A"], alert: SearchRecentsFeature.clearAlert)
+            ) {
+                SearchRecentsFeature()
+            }
 
-        #expect(didClear.value)
+            await store.send(.clear)
+            await store.send(.alert(.presented(.confirmClear))) {
+                $0.alert = nil
+                $0.recentSearches = []
+            }
+            await store.receive(\.recentsCleared)
+
+            #expect(recentSearches == nil)
+        }
     }
 }

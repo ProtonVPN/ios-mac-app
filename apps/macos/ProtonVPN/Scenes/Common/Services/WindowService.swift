@@ -30,6 +30,7 @@ import Ergonomics
 import LegacyCommon
 import Modals
 import PMLogger
+import Sharing
 import Strings
 import SwiftUI
 import Theme
@@ -104,7 +105,6 @@ final class WindowServiceImplementation: WindowService {
 
     private lazy var navService: NavigationService = factory.makeNavigationService()
     @Dependency(\.bugReport) private var bugReportCreator
-    @Dependency(\.propertiesManager) private var propertiesManager
 
     fileprivate var mainWindowController: WindowController?
     fileprivate var statusMenuWindowController: StatusMenuWindowController?
@@ -175,12 +175,13 @@ final class WindowServiceImplementation: WindowService {
 
         func showInitialModals() {
             // TODO: VPNAPPL-2831 actually make sure we don't show what's new after a specified deadline
-            propertiesManager.showWhatsNewModal = false
+            @Shared(.showWhatsNewModal) var showWhatsNewModal
+            $showWhatsNewModal.withLock { $0 = false }
 
-            guard propertiesManager.showWhatsNewModal else {
+            guard showWhatsNewModal else {
                 return
             }
-            propertiesManager.showWhatsNewModal = false
+            $showWhatsNewModal.withLock { $0 = false }
 
             presentKeyModal(viewController: ModalsFactory.whatsNewViewController(), activatingApp: false)
         }

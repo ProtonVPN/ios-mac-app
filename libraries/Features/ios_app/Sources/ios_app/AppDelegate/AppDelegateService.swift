@@ -57,7 +57,6 @@ public final class AppDelegateService: AppDelegateProtocol {
     @Dependency(\.cryptoService) private var cryptoService
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
     private let container: DependencyContainer
@@ -85,7 +84,8 @@ public final class AppDelegateService: AppDelegateProtocol {
         FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan, true)
 
         // Next, properly set the feature flag overrides in the repository.
-        for (name, value) in propertiesManager.featureFlagOverrides ?? [:] {
+        @Shared(.featureFlagOverrides) var featureFlagOverrides
+        for (name, value) in featureFlagOverrides ?? [:] {
             guard let feature = ManuallySpecifiedFeatureFlag(rawValue: name) else { continue }
             FeatureFlagsRepository.shared.setFlagOverride(feature, value)
         }
@@ -168,8 +168,8 @@ public final class AppDelegateService: AppDelegateProtocol {
         } else {
             [WidgetIntents.ShortcutItem.connect.shortcutItem]
         }
-        @Dependency(\.recentsStorage) var recentsStorage
-        let pinned = recentsStorage.readFromStorage().first { $0.pinned }
+        @Shared(.recentConnections) var recentConnections
+        let pinned = (recentConnections ?? []).first { $0.pinned }
         if let pinned {
             UIApplication.shared.shortcutItems?.append(WidgetIntents.ShortcutItem.connectToFirstPinnedRecent(pinned).shortcutItem)
         }

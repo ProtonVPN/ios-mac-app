@@ -22,7 +22,7 @@ import Domain
 import Foundation
 
 class UserLocationService {
-    @Shared(.userLocation) var userLocation: UserLocation?
+    @Shared(.userLocationInMemory) var userLocation: UserLocation?
 
     /// Update user location (ip)
     ///

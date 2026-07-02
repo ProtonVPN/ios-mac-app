@@ -40,7 +40,7 @@ struct MainFeature {
         var settings = SettingsFeature.State()
 
         @Shared(.connectionState) var connectionState: ConnectionState = .resolving
-        @Shared(.userLocation) var userLocation: UserLocation?
+        @Shared(.userLocationInMemory) var userLocation: UserLocation?
         @Shared(.mainBackground) var mainBackground: MainBackground = .clear
     }
 

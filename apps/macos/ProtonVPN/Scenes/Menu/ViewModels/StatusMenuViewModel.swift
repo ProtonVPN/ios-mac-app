@@ -55,7 +55,7 @@ final class StatusMenuViewModel {
     @Shared(.connectionState) private var connectionState: ConnectionState
     @Shared(.sessionStatus) private var sessionStatus: SessionStatus
 
-    @Dependency(\.propertiesManager) private var propertiesManager
+    @Shared(.userLocation) private var userLocation: UserLocation?
     private lazy var navService: NavigationService = factory.makeNavigationService()
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.upsellManager) private var upsellManager
@@ -228,9 +228,7 @@ final class StatusMenuViewModel {
 
     // MARK: - General section
 
-    var unprotectedNetworkNotifications: Bool {
-        propertiesManager.unprotectedNetworkNotifications
-    }
+    @SharedReader(.unprotectedNetworkNotifications) var unprotectedNetworkNotifications
 
     // MARK: - Connect section - Outputs
 
@@ -382,8 +380,13 @@ final class StatusMenuViewModel {
             .sink { [weak self] status in self?.sessionChanged(status) }
             .store(in: &cancellables)
 
-        AppEvent.userIp.subscribe(self, selector: #selector(handleDataChange))
         AppEvent.planChanged.subscribe(self, selector: #selector(handlePlanChange))
+
+        $userLocation
+            .publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.updateCountryList() }
+            .store(in: &cancellables)
 
         $secureCoreToggle
             .publisher
@@ -578,7 +581,7 @@ final class StatusMenuViewModel {
         if isConnected {
             connectionState.resolvedServer?.endpoint.offsetExitIp
         } else {
-            propertiesManager.userLocation?.ip
+            userLocation?.ip
         }
     }
 
@@ -631,7 +634,8 @@ final class StatusMenuViewModel {
             return nil
         }
 
-        let description = propertiesManager.hasConnected ? Localizable.enabled.lowercased() : Localizable.disabled.lowercased()
+        @Shared(.hasConnected) var hasConnected
+        let description = hasConnected ? Localizable.enabled.lowercased() : Localizable.disabled.lowercased()
         return Localizable.killSwitch + " " + description
     }
 

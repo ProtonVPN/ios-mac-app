@@ -29,13 +29,18 @@ import VPNAppCore
 import VPNShared
 import WidgetKit
 
+extension SharedKey where Self == UserScopedAppStorageKey<Date?> {
+    /// The timestamp of the last settings heartbeat, per user. Legacy key:
+    /// `telemetry_lastSettingsHeartbeatTimestamp<username>` (native `Date`).
+    static var telemetryLastSettingsHeartbeat: Self {
+        .date("telemetry_lastSettingsHeartbeatTimestamp")
+    }
+}
+
 public final class TelemetrySettingsReporter {
     private var telemetryEventScheduler: TelemetryEventScheduler
 
     private let heartbeatInterval: TimeInterval = 24 * 60 * 60 // 24 hours
-
-    // Key used to persist the last settings heartbeat timestamp.
-    private let lastHeartbeatKey = "telemetry_lastSettingsHeartbeatTimestamp"
 
     private var heartbeatTask: Task<Void, Error>?
     #if DEBUG
@@ -76,14 +81,14 @@ public final class TelemetrySettingsReporter {
     }
 
     private func checkAndSendHeartbeat() async {
-        @Dependency(\.defaultsProvider) var provider
         let now = Date()
-        let lastHeartbeat = provider.getDefaults().userObject(forKey: lastHeartbeatKey) as? Date ?? Date.distantPast
+        @Shared(.telemetryLastSettingsHeartbeat) var lastSettingsHeartbeat
+        let lastHeartbeat = lastSettingsHeartbeat ?? Date.distantPast
 
         if now.timeIntervalSince(lastHeartbeat) >= heartbeatInterval {
             do {
                 try await sendHeartbeat()
-                provider.getDefaults().setUserValue(now, forKey: lastHeartbeatKey)
+                $lastSettingsHeartbeat.withLock { $0 = now }
                 log.debug("Settings Heartbeat sent.")
             } catch {
                 log.error("Failed to send settings heartbeat: \(error)")
@@ -133,20 +138,14 @@ public final class TelemetrySettingsReporter {
     // Dimensions helpers
 
     private func defaultConnectionType() -> SettingsDimensions.DefaultConnectionType {
-        @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
-        do {
-            let preference = try defaultConnectionStorage.getPreference()
-            switch preference ?? .fastest {
-            case .fastest:
-                return .fastest
-            case .mostRecent:
-                return .lastConnection
-            case .recent:
-                return .recent
-            }
-        } catch {
-            log.error("Error retrieving default connection preference: \(error)")
+        @Shared(.storedDefaultConnectionPreference) var storedDefaultConnectionPreference
+        switch storedDefaultConnectionPreference ?? .fastest {
+        case .fastest:
             return .fastest
+        case .mostRecent:
+            return .lastConnection
+        case .recent:
+            return .recent
         }
     }
 

@@ -54,10 +54,9 @@ private final class NotificationManagerImplementation: NSObject {
     private var cancellables = Set<AnyCancellable>()
 
     private var shouldShowNotification: Bool {
-        @Dependency(\.defaultsProvider) var provider
+        @Shared(.systemNotifications) var systemNotifications
 
-        return sessionStatus == .established
-            && provider.getDefaults().bool(forKey: AppConstants.UserDefaults.systemNotifications)
+        return sessionStatus == .established && systemNotifications
     }
 
     override init() {

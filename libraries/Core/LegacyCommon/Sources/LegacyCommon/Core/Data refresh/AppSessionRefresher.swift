@@ -27,6 +27,7 @@ import Ergonomics
 import Foundation
 import Persistence
 import ProtonCoreServices
+import Sharing
 import VPNAppCore
 import VPNShared
 
@@ -49,7 +50,6 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     @Dependency(\.vpnApiClient) private var vpnApiClient
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.authKeychain) private var authKeychain
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.updateManager) private var updateManager
     @Dependency(\.upsellManager) private var upsellManager
     @Dependency(\.coreAlertService) public var alertService
@@ -75,8 +75,10 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             async let _ = CheckedFeatureFlagsRepository.shared.fetchFlags()
 
             let userSettings = try await userSettingsClient.fetchUserSettings(authCredentials: authKeychain.fetch())
-            propertiesManager.userSettings = userSettings
-            propertiesManager.userInfo?.apply(userSettings)
+            @Shared(.userSettings) var sharedUserSettings
+            $sharedUserSettings.withLock { $0 = userSettings }
+            @Shared(.userInfo) var userInfo
+            $userInfo.withLock { $0?.apply(userSettings) }
         } catch {
             log.error("Failed to refresh vpn credentials", category: .app, metadata: ["error": "\(error)"])
 
@@ -101,7 +103,8 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     public func refreshServerLoads() async {
         guard loggedIn else { return }
 
-        let lastKnownIp = (propertiesManager.userLocation?.ip).flatMap { TruncatedIp(ip: $0) }
+        @Shared(.userLocation) var userLocation
+        let lastKnownIp = (userLocation?.ip).flatMap { TruncatedIp(ip: $0) }
         do {
             let properties = try await vpnApiClient.loads(lastKnownIp: lastKnownIp)
             let loads = properties.map(\.value)
@@ -127,8 +130,10 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
 
         do {
             let streamingResponse = try await vpnApiClient.virtualServices()
-            propertiesManager.streamingServices = streamingResponse.streamingServices
-            propertiesManager.streamingResourcesUrl = streamingResponse.resourceBaseURL
+            @Shared(.streamingServices) var streamingServices
+            $streamingServices.withLock { $0 = streamingResponse.streamingServices }
+            @Shared(.streamingResourcesUrl) var streamingResourcesUrl
+            $streamingResourcesUrl.withLock { $0 = streamingResponse.resourceBaseURL }
         } catch {
             log.error("RefreshStreamingInfo error", category: .app, metadata: ["error": "\(error)"])
         }
@@ -146,11 +151,12 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             }
 
             // We only want to alert once per OS update.
-            guard self.propertiesManager.didShowDeprecationWarningForOSVersion != osVersionString else {
+            @Shared(.didShowDeprecationWarningForOSVersion) var didShowDeprecationWarningForOSVersion
+            guard didShowDeprecationWarningForOSVersion != osVersionString else {
                 return
             }
 
-            self.propertiesManager.didShowDeprecationWarningForOSVersion = osVersionString
+            $didShowDeprecationWarningForOSVersion.withLock { $0 = osVersionString }
             self.alertService.push(alert: UpgradeOperatingSystemAlert(minimumOSVersionRequired: minimumOSVersion))
         }
     }

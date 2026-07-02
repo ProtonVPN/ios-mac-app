@@ -24,6 +24,7 @@ import OrderedCollections
 import SwiftUI
 import VPNAppCore
 import VPNShared
+import WidgetKit
 
 @Reducer
 public struct RecentsFeature {
@@ -49,8 +50,8 @@ public struct RecentsFeature {
         @SharedReader(.userTier) public var userTier: Int?
 
         public init() {
-            @Dependency(\.recentsStorage) var recentsStorage
-            $recents.withLock { $0 = recentsStorage.readFromStorage() }
+            @Shared(.recentConnections) var recentConnections
+            $recents.withLock { $0 = recentConnections ?? [] }
         }
     }
 
@@ -76,7 +77,7 @@ public struct RecentsFeature {
         case watchConnectionStatus
     }
 
-    @Dependency(\.recentsStorage) var recentsStorage
+    @Shared(.recentConnections) var recentConnections
     @Dependency(\.date) var date
 
     public init() {}
@@ -106,7 +107,8 @@ public struct RecentsFeature {
                 withAnimation {
                     state.$recents.withLock { $0.updateList(with: spec) }
                 }
-                recentsStorage.saveToStorage(state.recents)
+                $recentConnections.withLock { $0 = state.recents }
+                WidgetCenter.shared.reloadAllTimelines()
 
                 return .none
 
@@ -114,21 +116,24 @@ public struct RecentsFeature {
                 withAnimation {
                     state.$recents.withLock { $0.pin(recent: recent, pinnedDate: date.now) }
                 }
-                recentsStorage.saveToStorage(state.recents)
+                $recentConnections.withLock { $0 = state.recents }
+                WidgetCenter.shared.reloadAllTimelines()
                 return .none
 
             case let .unpin(recent):
                 withAnimation {
                     state.$recents.withLock { $0.unpin(recent: recent) }
                 }
-                recentsStorage.saveToStorage(state.recents)
+                $recentConnections.withLock { $0 = state.recents }
+                WidgetCenter.shared.reloadAllTimelines()
                 return .none
 
             case let .remove(recent):
                 _ = withAnimation {
                     state.$recents.withLock { $0.remove(recent) }
                 }
-                recentsStorage.saveToStorage(state.recents)
+                $recentConnections.withLock { $0 = state.recents }
+                WidgetCenter.shared.reloadAllTimelines()
                 return .none
 
             case .delegate:

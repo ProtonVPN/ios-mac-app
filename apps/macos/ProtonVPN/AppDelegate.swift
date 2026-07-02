@@ -65,7 +65,6 @@ import VPNShared
     class AppDelegate: NSObject {
         let container = DependencyContainer()
         lazy var navigationService = container.makeNavigationService()
-        @Dependency(\.propertiesManager) private var propertiesManager
         @Dependency(\.authKeychain) private var authKeychain
         @Dependency(\.vpnKeychain) private var vpnKeychain
         @Dependency(\.networking) private var networking
@@ -90,7 +89,6 @@ import VPNShared
         private(set) static var wasRecentlyActive = false
         let container = DependencyContainer()
         lazy var navigationService = container.makeNavigationService()
-        @Dependency(\.propertiesManager) private var propertiesManager
         @Dependency(\.appInfo) private var appInfo
         @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
         private var appInactivityTask: Task<Void, Error>?
@@ -110,7 +108,8 @@ extension AppDelegate: NSApplicationDelegate {
             Atlantis.start()
         #endif
 
-        for (featureFlagOverride, value) in propertiesManager.featureFlagOverrides ?? [:] {
+        @Shared(.featureFlagOverrides) var featureFlagOverrides
+        for (featureFlagOverride, value) in featureFlagOverrides ?? [:] {
             guard let feature = ManuallySpecifiedFeatureFlag(rawValue: featureFlagOverride) else { continue }
             FeatureFlagsRepository.shared.setFlagOverride(feature, value)
         }
@@ -259,7 +258,8 @@ extension AppDelegate: NSApplicationDelegate {
         }
 
         // For new installations, we also ask for plutonium extension installation.
-        let includedExtensionTypes: [SystemExtensionType] = propertiesManager.isSubsequentLaunch ? [.proTUN] : [.proTUN, .plutonium]
+        @Shared(.isSubsequentLaunch) var isSubsequentLaunch
+        let includedExtensionTypes: [SystemExtensionType] = isSubsequentLaunch ? [.proTUN] : [.proTUN, .plutonium]
 
         Task { [weak self] in
             guard let self else { return }

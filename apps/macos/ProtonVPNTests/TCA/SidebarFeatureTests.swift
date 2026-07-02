@@ -379,7 +379,7 @@ struct SidebarFeatureTests {
             $0.expandState = .expanded
             $0.mapWidth = 575
         }
-        #expect(defaults.integer(forKey: AppConstants.UserDefaults.mapWidth) == 575)
+        #expect(defaults.integer(forKey: "MapWidth") == 575)
     }
 
     @Test("vpn status updates overlay flag")
@@ -638,7 +638,7 @@ struct SidebarFeatureTests {
     @Test("loads map with initial width")
     func viewDidLoadLoadsInitialMapWidth() async throws {
         let defaults = try #require(UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)"))
-        defaults.set(720, forKey: AppConstants.UserDefaults.mapWidth)
+        defaults.set(720, forKey: "MapWidth")
         let store = makeStore(defaults: defaults)
         store.exhaustivity = .off
 
@@ -702,6 +702,7 @@ struct SidebarFeatureTests {
             }
             $0.tunnelManager = MockTunnelManager(connection: .init(status: .disconnected))
             $0.defaultsProvider = .init(getDefaults: { defaults })
+            $0.defaultAppStorage = defaults
             $0.connectionCommandClient = connectionCommandClient
             $0.pendingDisconnectCompletions = pendingDisconnectCompletions
             $0.portForwardingPropertyProvider.setPortForwarding(portForwardingEnabled)
