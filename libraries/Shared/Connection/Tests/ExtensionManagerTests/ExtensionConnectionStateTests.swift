@@ -19,8 +19,8 @@
 #if DEBUG
 
     import Domain
-    import LocalAgent
-    import LocalAgentIPC
+    import ExtensionSync
+    import IPCDefinitions
     import XCTest
 
     /// Round-trips ``ExtensionState`` through the `IPCConnectionDataPayload` it packs into, makes sure that the

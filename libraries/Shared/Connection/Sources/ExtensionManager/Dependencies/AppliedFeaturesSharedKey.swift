@@ -18,7 +18,7 @@
 
 import Dependencies
 import Domain
-import LocalAgent
+import ExtensionSync
 import Sharing
 
 public extension SharedReaderKey where Self == StreamReaderKey<AgentTunnelFeatures?> {

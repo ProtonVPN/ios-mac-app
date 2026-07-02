@@ -23,8 +23,8 @@ import Dependencies
 import Domain
 import ExtensionManager
 import Foundation
-import LocalAgent
-import LocalAgentIPC
+import ExtensionSync
+import IPCDefinitions
 import Sharing
 import VPNAppCore
 

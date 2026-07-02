@@ -25,8 +25,8 @@ import Domain
 import ExtensionIPC
 import Foundation
 import IPCErgonomics
-import LocalAgent
-import LocalAgentIPC
+import ExtensionSync
+import IPCDefinitions
 import NetworkExtension
 import os
 import Sharing

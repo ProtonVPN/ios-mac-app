@@ -20,8 +20,8 @@ import ConnectionShared
 import Dependencies
 import Domain
 import IPCErgonomics
-import LocalAgent
-import LocalAgentIPC
+import ExtensionSync
+import IPCDefinitions
 import NetworkExtension
 import OSLog
 import protun

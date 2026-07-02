@@ -21,7 +21,7 @@ import CoreConnection
 import Domain
 import Foundation
 import IPCErgonomics
-import LocalAgentIPC
+import IPCDefinitions
 
 // Typed accessors over the live tunnel-data channels. Each exposes the Swift struct that wraps the raw C payload as
 // a getter + an `AsyncStream`.

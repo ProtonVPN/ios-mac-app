@@ -17,7 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Domain
-import LocalAgentIPC
+import IPCDefinitions
 
 /// Loosely mirrors the `ConnectionState` enum in `protun`.
 public enum ExtensionState: Sendable, Equatable {

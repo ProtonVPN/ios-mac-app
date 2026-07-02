@@ -24,7 +24,7 @@ import Domain
 @testable import ExtensionManager
 import Foundation
 import LegacyCommon
-@testable import LocalAgent
+@testable import ExtensionSync
 import PaymentsShared
 @testable import ProtonVPN
 import Testing

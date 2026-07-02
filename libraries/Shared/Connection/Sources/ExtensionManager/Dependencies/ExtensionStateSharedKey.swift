@@ -19,7 +19,7 @@
 import Dependencies
 import Domain
 import Foundation
-import LocalAgent
+import ExtensionSync
 import Sharing
 
 public extension SharedReaderKey

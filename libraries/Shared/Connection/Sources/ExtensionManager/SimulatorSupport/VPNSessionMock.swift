@@ -23,8 +23,8 @@
     import ExtensionIPC
     import Foundation
     import IssueReporting
-    import LocalAgent
-    import LocalAgentIPC
+    import ExtensionSync
+    import IPCDefinitions
     import enum NetworkExtension.NEVPNStatus
     import Sharing
     import VPNShared

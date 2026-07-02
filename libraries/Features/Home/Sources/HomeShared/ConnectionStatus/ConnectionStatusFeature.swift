@@ -20,8 +20,8 @@ import ComposableArchitecture
 import Connection
 import Domain
 import Ergonomics
-import LocalAgent
-import LocalAgentIPC
+import ExtensionSync
+import IPCDefinitions
 import Localization
 import NetShield
 import SwiftUI

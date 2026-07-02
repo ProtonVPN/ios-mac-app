@@ -65,7 +65,7 @@ let package = Package(
             dependencies: [
                 "CommonNetworking",
                 "Connection",
-                .product(name: "LocalAgent", package: "Connection"),
+                .product(name: "ExtensionSync", package: "Connection"),
                 "Localization",
                 "Persistence",
                 "Theme",

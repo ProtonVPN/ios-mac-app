@@ -24,7 +24,7 @@
     @testable import CoreConnection
     import Domain
     @testable import ExtensionManager
-    @testable import LocalAgent
+    @testable import ExtensionSync
     import Network
     @testable import tvos_app
     import VPNShared

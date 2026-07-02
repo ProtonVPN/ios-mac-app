@@ -20,10 +20,10 @@ import Domain
 import Ergonomics
 import Foundation
 import IPCErgonomics
-import LocalAgentIPC
+import IPCDefinitions
 import Network
 
-// Marshaling between the live tunnel-data C payloads (LocalAgentIPC) and their Swift domain types.
+// Marshaling between the live tunnel-data C payloads (IPCDefinitions) and their Swift domain types.
 
 /// Versions of the different RawChannel structs. Bump when changing formats to avoid ABI mismatch issues.
 public enum IPCTunnelDataVersion {

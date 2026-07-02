@@ -22,8 +22,8 @@
     import Foundation
     import IOSurface
     import IPCErgonomics
-    import LocalAgent
-    import LocalAgentIPC
+    import ExtensionSync
+    import IPCDefinitions
     import os
     import XPCAuditToken
 

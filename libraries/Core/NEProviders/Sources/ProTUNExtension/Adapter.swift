@@ -22,8 +22,8 @@ import Dependencies
 import Domain
 import Ergonomics
 import IPCErgonomics
-import LocalAgent
-import LocalAgentIPC
+import ExtensionSync
+import IPCDefinitions
 import NetworkExtension
 import NetworkingErgonomics
 import OSLog

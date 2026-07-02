@@ -21,8 +21,8 @@ import Domain
 import Ergonomics
 import Foundation
 import IPCErgonomics
-import LocalAgent
-import LocalAgentIPC
+import ExtensionSync
+import IPCDefinitions
 import OSLog
 import protun
 

@@ -19,7 +19,7 @@
 import Foundation
 @_spi(Internals) import IPCErgonomics
 import IssueReporting
-import LocalAgentIPC
+import IPCDefinitions
 import os
 #if os(macOS)
     import IOSurface

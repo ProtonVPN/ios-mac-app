@@ -11,8 +11,8 @@ let package = Package(
         .tvOS(.v17),
     ],
     products: [
-        .library(name: "LocalAgent", targets: ["LocalAgent"]),
-        .library(name: "LocalAgentIPC", targets: ["LocalAgentIPC"]),
+        .library(name: "ExtensionSync", targets: ["ExtensionSync"]),
+        .library(name: "IPCDefinitions", targets: ["IPCDefinitions"]),
         .library(name: "Connection", targets: ["Connection"]),
         .library(name: "ExtensionManager", targets: ["ExtensionManager"]),
         .library(name: "CoreConnection", targets: ["CoreConnection"]),
@@ -66,10 +66,10 @@ let package = Package(
             ]
         ),
         .target(
-            name: "LocalAgent",
+            name: "ExtensionSync",
             dependencies: [
                 "CoreConnection",
-                "LocalAgentIPC",
+                "IPCDefinitions",
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "IPCErgonomics", package: "Ergonomics"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
@@ -79,17 +79,17 @@ let package = Package(
             ]
         ),
         .target(
-            name: "LocalAgentIPC",
+            name: "IPCDefinitions",
             dependencies: [
                 .product(name: "IPCSeqlockHelpers", package: "Ergonomics"),
             ],
-            path: "Sources/LocalAgentIPC",
+            path: "Sources/IPCDefinitions",
             publicHeadersPath: "include"
         ),
         .target(
             name: "ExtensionManager",
             dependencies: [
-                "LocalAgent",
+                "ExtensionSync",
                 "CoreConnection",
                 "Domain",
                 "ExtensionIPC",
@@ -109,7 +109,8 @@ let package = Package(
             name: "Connection",
             dependencies: [
                 "ExtensionManager",
-                "LocalAgent",
+                "ExtensionSync",
+                "IPCDefinitions",
                 "Domain",
                 "Localization",
                 .product(name: "VPNShared", package: "NEHelper"),

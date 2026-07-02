@@ -27,7 +27,7 @@ import CoreConnection // LocalAgent
 import Dependencies
 import Domain
 import Foundation
-import LocalAgent
+import ExtensionSync
 import ModalsServices
 import NetShield
 import Payments

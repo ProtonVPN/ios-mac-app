@@ -26,8 +26,8 @@
     @testable import ExtensionManager
     import Foundation
     import IPCErgonomics
-    @testable import LocalAgent
-    import LocalAgentIPC
+    @testable import ExtensionSync
+    import IPCDefinitions
     import class NetworkExtension.NETunnelProviderProtocol
     import os
     import Testing

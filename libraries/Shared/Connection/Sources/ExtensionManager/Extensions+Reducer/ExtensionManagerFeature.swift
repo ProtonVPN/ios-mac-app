@@ -25,7 +25,7 @@ import Domain
 import Ergonomics
 import ExtensionIPC
 import Foundation
-import LocalAgent
+import ExtensionSync
 import ProtonCoreFeatureFlags
 import Strings
 import VPNAppCore

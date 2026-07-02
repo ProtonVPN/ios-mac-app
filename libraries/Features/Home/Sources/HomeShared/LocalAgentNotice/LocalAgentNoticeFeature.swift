@@ -19,7 +19,7 @@
 import CommonNetworking
 import ComposableArchitecture
 import Connection
-import LocalAgent
+import ExtensionSync
 
 @Reducer
 public struct LocalAgentNoticeFeature {

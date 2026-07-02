@@ -22,7 +22,7 @@
     import Domain
     import ExtensionIPC
     import Foundation
-    import LocalAgent
+    import ExtensionSync
     import enum NetworkExtension.NEVPNStatus
     import Sharing
     import VPNShared

@@ -24,7 +24,7 @@ import Ergonomics
 import Foundation
 import IOSurface
 import IPCErgonomics
-import LocalAgentIPC
+import IPCDefinitions
 import Logging
 import os
 

@@ -17,8 +17,8 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
-import LocalAgent
-import LocalAgentIPC
+import ExtensionSync
+import IPCDefinitions
 import NetShield
 import Sharing
 
