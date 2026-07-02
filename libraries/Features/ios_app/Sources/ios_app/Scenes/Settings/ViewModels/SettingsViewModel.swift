@@ -679,37 +679,34 @@ final class SettingsViewModel {
         { toggleOn, callback in
             let isActive = self.isActive()
 
-            var alert: SystemAlert
-
-            if featureValue(for: ExcludeLocalNetworks.self) == .on, !self.killSwitch {
-                alert = KillSwitchConflictAlert {
+            // Enabling killSwitch conflicts with ExcludeLocalNetworks (LAN) and Plutonium (Split
+            // Tunneling). When enabling while LAN access is on, surface a conflict alert that,
+            // once confirmed, disables LAN and applies the killSwitch change.
+            if toggleOn, featureValue(for: ExcludeLocalNetworks.self) == .on, !self.killSwitch {
+                let alert = KillSwitchConflictAlert {
                     setFeatureValue(ExcludeLocalNetworks.off)
                     self.$killSwitch.withLock { $0 = true }
                     if isActive {
-                        log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch", "feature_additional": "excludeLocalNetworks"])
-                        self.reconnect(with: .killSwitch(toggleOn))
+                        log.info("Applying killSwitch feature change in place", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch", "feature_additional": "excludeLocalNetworks"])
+                        self.apply(tunnelFeatureChanges: [.killSwitch(toggleOn), .allowLAN(false)])
                     }
                     self.reloadNeeded?()
                     callback(true)
                 } cancelHandler: {
                     callback(false)
                 }
-            } else if isActive {
-                alert = ReconnectOnSettingsChangeAlert(confirmHandler: {
-                    self.$killSwitch.withLock { $0.toggle() }
-                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
-                    self.reconnect(with: .killSwitch(toggleOn))
-                    callback(self.killSwitch)
-                }, cancelHandler: {
-                    callback(self.killSwitch)
-                })
-            } else {
-                self.$killSwitch.withLock { $0.toggle() }
-                callback(self.killSwitch)
+                self.alertService.push(alert: alert)
                 return
             }
 
-            self.alertService.push(alert: alert)
+            // KillSwitch can now be updated on the fly via the tunnel config, so we apply it in
+            // place regardless of connection state (no reconnect alert is needed).
+            self.$killSwitch.withLock { $0.toggle() }
+            log.info("Applying killSwitch feature change in place", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
+            if isActive {
+                self.apply(tunnelFeatureChange: .killSwitch(toggleOn))
+            }
+            callback(self.killSwitch)
         }
     }
 
@@ -1054,6 +1051,12 @@ final class SettingsViewModel {
     private func apply(tunnelFeatureChange: ConnectionFeatureChange.TunnelFeature) {
         DispatchQueue.main.async {
             self.settingsClient.update(Set([.tunnel(tunnelFeatureChange)]))
+        }
+    }
+
+    private func apply(tunnelFeatureChanges: [ConnectionFeatureChange.TunnelFeature]) {
+        DispatchQueue.main.async {
+            self.settingsClient.update(Set(tunnelFeatureChanges.map { .tunnel($0) }))
         }
     }
 

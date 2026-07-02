@@ -83,3 +83,23 @@ public extension IPCNotifications.RawChannel where Payload == IPCErrorPayload, R
         stream(reconcileOn: resumeSignals) { $0.extensionError }
     }
 }
+
+public extension IPCNotifications.RawChannel where Payload == IPCTunnelStatusPayload, Role == ReaderRole, Backing: ~Copyable {
+    func tunnelStatus() -> IPCTunnelStatusPayload? {
+        try? read()
+    }
+
+    func tunnelStatusStream(reconcileOn resumeSignals: AsyncStream<Void>...) -> AsyncStream<IPCTunnelStatusPayload> {
+        stream(reconcileOn: resumeSignals) { $0 }
+    }
+
+    func zeroPeerKillSwitchActiveStream(reconcileOn resumeSignals: AsyncStream<Void>...) -> AsyncStream<Bool> {
+        stream(reconcileOn: resumeSignals) { $0.zeroPeerKillSwitchActive == .enabled }
+    }
+}
+
+public extension IPCNotifications.RawChannel where Payload == IPCTunnelStatusPayload, Role == WriterRole, Backing: ~Copyable {
+    func setZeroPeerKillSwitchActive(_ active: Bool) {
+        mutate { $0.zeroPeerKillSwitchActive = active ? .enabled : .disabled }
+    }
+}

@@ -139,7 +139,7 @@ class CountryAnnotationViewModel: CustomStyleContext {
         switch state {
         case .resolving, .connecting, .disconnecting:
             self.state = .idle
-        case .connected, .disconnected:
+        case .connected, .disconnected, .killSwitchActive:
             break
         }
         viewStateChange?()

@@ -70,6 +70,12 @@ IPC_ENUM(int8_t, IPCConnectionAgentJailReason) {
     IPCConnectionAgentJailReasonOther                       = 9,
 };
 
+IPC_ENUM(int8_t, IPCTunnelSettingsToggle) {
+    IPCTunnelSettingsToggleUnset    = 0,
+    IPCTunnelSettingsToggleDisabled = 1,
+    IPCTunnelSettingsToggleEnabled  = 2,
+};
+
 // Field sizes
 #define IPV4_BYTE_LENGTH 4  // packed in_addr
 #define IPV6_BYTE_LENGTH 16 // packed in6_addr
@@ -144,6 +150,15 @@ typedef struct {
 
 IPC_DECLARE_SHARED_REGION(IPCAgentFeaturesRegion, IPCAgentFeaturesPayload);
 
+typedef struct {
+    uint16_t                    version;
+    IPCTunnelSettingsToggle     zeroPeerKillSwitchActive;
+    IPCTunnelSettingsToggle     excludingLocalAreaNetwork;
+    IPCTunnelSettingsToggle     excludingAPNs;
+} IPCTunnelStatusPayload;
+
+IPC_DECLARE_SHARED_REGION(IPCTunnelStatusRegion, IPCTunnelStatusPayload);
+
 // This is a single backing memory region for all of the connection data regions. Each subregion is padded to 1024 bytes
 // and has its own seqlock + versioning. iOS and tvOS share this using a file-backed mmap while macOS must accomplish
 // the same using an IOSurface sent over an XPC session.
@@ -155,4 +170,5 @@ typedef struct {
     IPCConnectionStatsRegion  connection_stats;
     IPCErrorRegion            error;
     IPCAgentFeaturesRegion    agent_features;
+    IPCTunnelStatusRegion     tunnel_status;
 } IPCTunnelData;

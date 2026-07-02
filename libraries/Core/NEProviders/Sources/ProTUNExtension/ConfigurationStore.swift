@@ -117,15 +117,23 @@ actor ConfigurationStore {
         }
 
         // `reasserting` covers the reconfiguration of ProTUN.
-        await adapter.whileReasserting {
-            if let peersToApply, let connection = adapter.connection {
-                Logger.adapter.info("Updating peers: \(peersToApply.map(\.description))")
-                connection.updatePeers(peers: peersToApply)
-            }
+        try await adapter.whileReasserting { () async throws(ConfigurationUpdateError) in
+            do {
+                if let peersToApply {
+                    Logger.adapter.info("Updating peers: \(peersToApply.map(\.description))")
+                    try adapter.handlePeersUpdate(peersToApply)
+                    adapter.publishZeroPeerMode(active: peersToApply.isEmpty)
+                }
 
-            if let agentSettingsToApply {
-                Logger.adapter.info("Applying settings: \(agentSettingsToApply)")
-                adapter.applyLocalAgentSettings(agentSettingsToApply)
+                if let agentSettingsToApply {
+                    Logger.adapter.info("Applying settings: \(agentSettingsToApply)")
+                    try adapter.applyLocalAgentSettings(agentSettingsToApply)
+                }
+            } catch ProTUNAdapter.Error.noConnection {
+                throw .noConnection
+            } catch {
+                Logger.adapter.error("Reconfiguration failed: \(error, privacy: .public)")
+                throw .couldntSave
             }
         }
     }

@@ -60,6 +60,11 @@ struct ProtectionStatusView: View {
                 self.title = "Loading"
                 self.foregroundColor = Color(.text)
                 self.buttonTitle = "Cancel"
+            case .killSwitchActive:
+                self.icon = IconProvider.lockFilled
+                self.title = "Kill Switch Active"
+                self.foregroundColor = Asset.vpnGreen.swiftUIColor
+                self.buttonTitle = "Quick Connect"
             }
         }
     }

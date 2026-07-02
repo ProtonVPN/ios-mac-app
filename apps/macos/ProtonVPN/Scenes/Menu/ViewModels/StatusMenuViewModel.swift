@@ -122,7 +122,7 @@ final class StatusMenuViewModel {
 
     var isStateStable: Bool {
         switch connectionState {
-        case .connected, .disconnected:
+        case .connected, .disconnected, .killSwitchActive:
             true
         case .resolving, .connecting, .disconnecting:
             false
@@ -139,7 +139,7 @@ final class StatusMenuViewModel {
         switch connectionState {
         case .connecting, .resolving:
             true
-        case .connected, .disconnected, .disconnecting:
+        case .connected, .disconnected, .disconnecting, .killSwitchActive:
             false
         }
     }
@@ -647,7 +647,7 @@ final class StatusMenuViewModel {
         let description: String = switch connectionState {
         case .connected:
             Localizable.disconnect
-        case .disconnecting, .disconnected, .connecting, .resolving:
+        case .disconnecting, .disconnected, .connecting, .resolving, .killSwitchActive:
             Localizable.quickConnect
         }
         return description

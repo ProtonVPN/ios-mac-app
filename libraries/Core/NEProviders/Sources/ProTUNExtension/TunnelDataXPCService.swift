@@ -19,11 +19,11 @@
 #if os(macOS)
     import Dependencies
     import ExtensionIPC
+    import ExtensionSync
     import Foundation
     import IOSurface
-    import IPCErgonomics
-    import ExtensionSync
     import IPCDefinitions
+    import IPCErgonomics
     import os
     import XPCAuditToken
 

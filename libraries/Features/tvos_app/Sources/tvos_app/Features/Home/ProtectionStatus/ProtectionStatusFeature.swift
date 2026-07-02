@@ -52,7 +52,7 @@ struct ProtectionStatusFeature {
                     .send(.delegate(.userClickedDisconnect))
                 case .connecting:
                     .send(.delegate(.userClickedCancel))
-                case .disconnected, .disconnecting, .resolving:
+                case .disconnected, .disconnecting, .resolving, .killSwitchActive:
                     .send(.delegate(.userClickedConnect))
                 }
 

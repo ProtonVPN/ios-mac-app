@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-
     import Domain
     import ExtensionSync
     import IPCDefinitions

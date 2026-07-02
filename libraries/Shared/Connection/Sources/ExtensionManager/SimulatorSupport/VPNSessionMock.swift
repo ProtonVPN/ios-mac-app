@@ -21,10 +21,10 @@
     import Dependencies
     import Domain
     import ExtensionIPC
-    import Foundation
-    import IssueReporting
     import ExtensionSync
+    import Foundation
     import IPCDefinitions
+    import IssueReporting
     import enum NetworkExtension.NEVPNStatus
     import Sharing
     import VPNShared

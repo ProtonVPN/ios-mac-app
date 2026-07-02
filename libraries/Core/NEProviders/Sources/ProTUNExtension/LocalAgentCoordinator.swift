@@ -19,9 +19,8 @@
 import Dependencies
 import Domain
 import Ergonomics
-import Foundation
-import IPCErgonomics
 import ExtensionSync
+import Foundation
 import IPCDefinitions
 import OSLog
 import protun

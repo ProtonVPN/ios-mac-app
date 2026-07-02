@@ -332,7 +332,7 @@ public final class AppDelegateService: AppDelegateProtocol {
                     }
                 case .connecting, .resolving:
                     return
-                case .disconnected, .disconnecting:
+                case .disconnected, .disconnecting, .killSwitchActive:
                     deepLinkConnectStatusCancellable?.cancel()
                     deepLinkConnectStatusCancellable = nil
                 }

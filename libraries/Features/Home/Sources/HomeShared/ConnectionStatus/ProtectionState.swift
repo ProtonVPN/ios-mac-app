@@ -30,6 +30,7 @@ public enum ProtectionState: Equatable {
     case protectedSecureCore
     case unprotected
     case protecting(country: String, ip: String)
+    case killSwitchActive
 }
 
 extension ConnectionState {
@@ -48,6 +49,8 @@ extension ConnectionState {
             return .resolving
         case .disconnecting:
             return .unprotected
+        case .killSwitchActive:
+            return .killSwitchActive
         }
     }
 }

@@ -18,12 +18,11 @@
 
 import Dependencies
 import Domain
-import Foundation
 import ExtensionSync
+import Foundation
 import Sharing
 
-public extension SharedReaderKey
-    where Self == StreamReaderKey<(state: ExtensionState, requestId: UUID?)> {
+public extension SharedReaderKey where Self == StreamReaderKey<(state: ExtensionState, requestId: UUID?)> {
     static var extensionState: Self {
         StreamReaderKey(
             read: {

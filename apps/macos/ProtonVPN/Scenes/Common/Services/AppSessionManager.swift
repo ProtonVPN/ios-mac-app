@@ -315,7 +315,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         guard !isClearingApplicationData else { return }
         guard sessionStatus == .established else { return } // not logged in, nothing to do
         switch connectionState {
-        case .connected:
+        case .connected, .killSwitchActive:
             confirmLogout(showAlert: !force) { [weak self] in
                 self?.connectionCommandClient.send(.disconnect(.signout, completion: { [weak self] in
                     self?.logoutRoutine(reason: reason)

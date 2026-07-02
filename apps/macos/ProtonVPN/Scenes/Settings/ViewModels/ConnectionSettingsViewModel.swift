@@ -371,7 +371,7 @@ final class ConnectionSettingsViewModel {
             }
             alertService.push(alert: alert)
 
-        case .resolving, .disconnected, .disconnecting:
+        case .resolving, .disconnected, .disconnecting, .killSwitchActive:
             enableSmartProtocol(and: .doNothing, completion)
         }
     }

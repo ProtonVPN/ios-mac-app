@@ -25,8 +25,8 @@ import Domain
 import Ergonomics
 import Foundation
 import IOSurface
-import IPCErgonomics
 import IPCDefinitions
+import IPCErgonomics
 import os
 import Sharing
 
@@ -63,6 +63,13 @@ public struct ExtensionIPCClient: Sendable {
     public package(set) var currentFeatures: @Sendable () -> AgentTunnelFeatures?
     /// The extension's most-recent reported error, or `nil` if it's empty.
     public package(set) var currentExtensionError: @Sendable () -> ExtensionError? = { nil }
+
+    /// The current tunnel-status flags (zero-peer KS, LAN exclusion, APNs), or `nil` until the extension publishes.
+    public package(set) var currentTunnelStatus: @Sendable () -> IPCTunnelStatusPayload? = { nil }
+    /// Whether the extension is currently in zero-peer kill-switch mode.
+    public package(set) var isZeroPeerKillSwitchActive: @Sendable () -> Bool = { false }
+    /// Stream of zero-peer kill-switch activation state, projected from the tunnel-status channel.
+    public package(set) var observeZeroPeerKillSwitchActive: @Sendable () -> AsyncStream<Bool> = { .finished }
 
     /// The live connection state according to ProTUN in the network extension.
     public package(set) var observeExtensionState: @Sendable () -> AsyncStream<(state: ExtensionState, requestId: UUID?)> = { .finished }
@@ -147,6 +154,16 @@ public struct ExtensionIPCClient: Sendable {
                 current.withLock { $0?.channels.localAgentFeatures.agentFeatures() }
             } currentExtensionError: {
                 current.withLock { $0?.channels.localAgentError.currentExtensionError() }
+            } currentTunnelStatus: {
+                current.withLock { $0?.channels.tunnelStatus.tunnelStatus() }
+            } isZeroPeerKillSwitchActive: {
+                current.withLock { $0?.channels.tunnelStatus.tunnelStatus()?.isZeroPeerKillSwitchActive ?? false }
+            } observeZeroPeerKillSwitchActive: {
+                observe(attachSource: attachSource, reconcileOn: appBecameActiveTicks()) { store, since in
+                    store.channels.tunnelStatus.readIfChanged(since: since)
+                } transform: { payload in
+                    payload.isZeroPeerKillSwitchActive
+                }
             } observeExtensionState: {
                 observe(attachSource: attachSource, reconcileOn: appBecameActiveTicks()) { store, since in
                     store.channels.connectionData.readIfChanged(since: since)
@@ -195,6 +212,12 @@ public struct ExtensionIPCClient: Sendable {
                 store.channels.localAgentFeatures.agentFeatures()
             } currentExtensionError: {
                 store.channels.localAgentError.currentExtensionError()
+            } currentTunnelStatus: {
+                store.channels.tunnelStatus.tunnelStatus()
+            } isZeroPeerKillSwitchActive: {
+                store.channels.tunnelStatus.tunnelStatus()?.isZeroPeerKillSwitchActive ?? false
+            } observeZeroPeerKillSwitchActive: {
+                store.channels.tunnelStatus.zeroPeerKillSwitchActiveStream(reconcileOn: appBecameActiveTicks())
             } observeExtensionState: {
                 store.channels.connectionData.extensionStateStream(reconcileOn: appBecameActiveTicks())
             } observeStats: {
@@ -225,6 +248,9 @@ public struct ExtensionIPCClient: Sendable {
             currentStats: { nil },
             currentFeatures: { nil },
             currentExtensionError: { nil },
+            currentTunnelStatus: { nil },
+            isZeroPeerKillSwitchActive: { false },
+            observeZeroPeerKillSwitchActive: { .finished },
             observeExtensionState: {
                 // The reader is resolved per call so each test / `withDependencies` scope binds to its own value.
                 @SharedReader(.mockExtensionState) var state

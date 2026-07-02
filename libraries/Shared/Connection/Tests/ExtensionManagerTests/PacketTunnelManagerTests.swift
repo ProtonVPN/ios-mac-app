@@ -24,10 +24,10 @@
     import DomainTestSupport
     import ExtensionIPC
     @testable import ExtensionManager
-    import Foundation
-    import IPCErgonomics
     @testable import ExtensionSync
+    import Foundation
     import IPCDefinitions
+    import IPCErgonomics
     import class NetworkExtension.NETunnelProviderProtocol
     import os
     import Testing

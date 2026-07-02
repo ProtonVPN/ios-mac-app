@@ -480,13 +480,15 @@ private extension QuickSettingsFeature {
             // Tunneling). When enabling, force them off; the conflict-confirmation alert already
             // informed the user before we got here.
             $killSwitch.withLock { $0 = enabled }
+            var changes: Set<ConnectionFeatureChange> = [.tunnel(.killSwitch(enabled))]
             if enabled {
                 setFeatureValue(ExcludeLocalNetworks.off)
                 $plutonium.withLock { $0 = .disabled(plutonium.mode) }
+                changes.insert(.tunnel(.allowLAN(false)))
             }
             if connectionState.isConnected {
-                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
-                connectionCommandClient.send(.retry)
+                log.info("Applying killSwitch feature change in place", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
+                connectionCommandClient.send(.applySettings(changes))
             }
 
         case let .netShield(level):
@@ -563,7 +565,7 @@ private extension QuickSettingsFeature {
 
     var isConnectionActive: Bool {
         switch connectionState {
-        case .disconnected, .resolving: false
+        case .disconnected, .resolving, .killSwitchActive: false
         case .connecting, .connected, .disconnecting: true
         }
     }

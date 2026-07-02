@@ -35,6 +35,8 @@ enum MainBackground: Equatable {
             self = .connecting
         case .connected:
             self = .connected
+        case .killSwitchActive:
+            self = .disconnected
         }
     }
 }

@@ -37,6 +37,9 @@ public struct ExtensionIPCServer: Sendable {
     public internal(set) var publishFeatures: @Sendable (AgentTunnelFeatures) -> Void
     public internal(set) var publishError: @Sendable (any Error, UUID?) -> Void
 
+    /// Mirrors whether the running tunnel currently has no peers.
+    public internal(set) var setZeroPeerKillSwitchActive: @Sendable (Bool) -> Void
+
     /// Touches the `IPCConnectionData` similar to `publishExtensionState`, but only touches the UUID. This is how error
     /// "acking" works from the main app: the acknowledged error UUID is cleared from the error channel, and placed as
     /// the UUID of the IPCConnectionData to indicate that the error has been handled.
@@ -88,6 +91,9 @@ extension ExtensionIPCServer: DependencyKey {
             publishError: { error, requestId in
                 withStore { $0.channels.localAgentError.mutate { $0 = IPCErrorPayload(error, requestId: requestId) } }
             },
+            setZeroPeerKillSwitchActive: { active in
+                withStore { $0.channels.tunnelStatus.setZeroPeerKillSwitchActive(active) }
+            },
             restampConnectionData: { requestId in
                 withStore { $0.channels.connectionData.mutate { $0.requestId = requestId } }
             },
@@ -102,6 +108,7 @@ extension ExtensionIPCServer: DependencyKey {
                     store.channels.localAgentConnectionStats.zero()
                     store.channels.localAgentError.zero()
                     store.channels.localAgentFeatures.zero()
+                    store.channels.tunnelStatus.zero()
                 }
             },
             attachIOSurfaceBackedRegion: { surface in

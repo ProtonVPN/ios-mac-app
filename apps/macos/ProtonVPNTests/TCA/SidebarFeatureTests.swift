@@ -22,9 +22,9 @@ import ComposableArchitecture
 @testable import CoreConnection
 import Domain
 @testable import ExtensionManager
+@testable import ExtensionSync
 import Foundation
 import LegacyCommon
-@testable import ExtensionSync
 import PaymentsShared
 @testable import ProtonVPN
 import Testing

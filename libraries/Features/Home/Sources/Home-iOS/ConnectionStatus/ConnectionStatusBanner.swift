@@ -37,7 +37,7 @@ struct ConnectionStatusBanner: View {
             } else if store.netShieldLevel?.shouldMonitorStats() == true {
                 NetShieldStatsView(viewModel: store.netShieldStats)
             }
-        case .unprotected, .protecting, .resolving:
+        case .unprotected, .protecting, .resolving, .killSwitchActive:
             locationText()
                 .padding(.horizontal, .themeSpacing8)
                 .padding(.vertical, .themeSpacing4)
@@ -53,6 +53,11 @@ struct ConnectionStatusBanner: View {
             return nil
         case .protected, .protectedSecureCore:
             return nil
+        case .killSwitchActive:
+            // TODO: ProTUN: show proper KS UI
+            return Text("KillSwitch blocking")
+                .font(.themeFont(.body2()))
+                .foregroundColor(Color(.text))
         case .unprotected:
             let code = store.userCountry
             displayCountry = LocalizationUtility.default.countryName(forCode: code ?? "")

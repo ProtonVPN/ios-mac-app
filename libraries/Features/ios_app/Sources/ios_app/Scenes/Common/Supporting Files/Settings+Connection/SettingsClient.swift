@@ -36,6 +36,9 @@ extension SettingsClient: @retroactive DependencyKey {
             }
 
             switch feature {
+            case .tunnel(.killSwitch), .tunnel(.allowLAN):
+                return .immediate
+
             case .tunnel:
                 return .withReconnect
 
@@ -48,6 +51,9 @@ extension SettingsClient: @retroactive DependencyKey {
             @SharedReader(.connectionState) var connectionState
             switch connectionState {
             case .disconnected, .disconnecting:
+                return .immediate
+
+            case .killSwitchActive:
                 return .immediate
 
             case .resolving:
@@ -80,13 +86,15 @@ extension SettingsClient: @retroactive DependencyKey {
             connectionCommandClient.send(.disconnect(.auto))
         },
         reconnect: { _ in
-            @Dependency(\.connectionCommandClient) var connectionCommandClient
-            connectionCommandClient.send(.reconnect(nil)) // Caused by feature change
-            log.assertionFailure("With ProTUN, there is no need to explicitly reconnect")
+            // TODO: ProTUN: NO-OP now, should we remove the closure from the client?
+            log.info("Reconnection endpoint is a NO-OP")
+            // @Dependency(\.connectionCommandClient) var connectionCommandClient
+            // connectionCommandClient.send(.reconnect(nil)) // Caused by feature change
+            // log.assertionFailure("With ProTUN, there is no need to explicitly reconnect")
         },
-        update: { featureChanges in
+        update: { features in
             @Dependency(\.connectionCommandClient) var connectionCommandClient
-            connectionCommandClient.send(.applySettings(featureChanges))
+            connectionCommandClient.send(.applySettings(features))
         }
     )
 }

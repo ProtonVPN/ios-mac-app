@@ -21,7 +21,7 @@ import Connection
 import Domain
 import Ergonomics
 import ExtensionSync
-import IPCDefinitions
+import IPCErgonomics
 import Localization
 import NetShield
 import SwiftUI

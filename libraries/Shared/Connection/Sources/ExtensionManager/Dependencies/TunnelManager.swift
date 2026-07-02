@@ -23,10 +23,10 @@ import CoreConnection
 import Dependencies
 import Domain
 import ExtensionIPC
-import Foundation
-import IPCErgonomics
 import ExtensionSync
+import Foundation
 import IPCDefinitions
+import IPCErgonomics
 import NetworkExtension
 import os
 import Sharing
@@ -93,6 +93,9 @@ public enum TunnelState: Equatable, Sendable {
     case connected(TunnelConfiguration, DynamicConnectionData)
     case reasserting(TunnelConfiguration) // Briefly re-establishing an existing connection
     case disconnecting(TunnelConfiguration)
+    /// Zero-peer kill-switch: the tunnel interface is alive but every peer has been stripped, so traffic is
+    /// captured and blackholed rather than routed anywhere.
+    case killSwitchActive(TunnelConfiguration)
 }
 
 /// Data relating to the connection that is strongly tied to the tunnel's configuration.
@@ -486,6 +489,14 @@ final class PacketTunnelManager: TunnelManager {
         case (.invalid, _):
             return .success(.connecting(config))
         case (.disconnected, _), (_, .disconnected):
+            // Rust reports `.disconnected` both for a genuine teardown and for the zero-peer kill-switch settling
+            // (no peer to be "connected" to, even though the tunnel interface itself is still alive). Don't trust
+            // either reading until our own request has round-tripped, then disambiguate using the zero-peer flag.
+            guard quiesced else { return .success(.connecting(config)) }
+            @Dependency(\.extensionIPC) var extensionIPC
+            if extensionIPC.isZeroPeerKillSwitchActive() {
+                return .success(.killSwitchActive(config))
+            }
             return .success(.disconnected(nil))
         case (.disconnecting, _):
             return .success(.disconnecting(config))
