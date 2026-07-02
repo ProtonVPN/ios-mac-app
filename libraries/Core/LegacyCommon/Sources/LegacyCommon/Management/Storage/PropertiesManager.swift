@@ -38,38 +38,24 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var hasConnected: Bool { get set }
     var isSubsequentLaunch: Bool { get set }
     var firstLaunchReported: Bool { get set }
-    var lastPreparedServer: ServerModel? { get set }
-
-    func getLastAccountPlan(for username: String) -> String?
-    func setLastAccountPlan(for username: String, plan: String?)
 
     func getQuickConnect(for username: String) -> String? // profile + username (incase multiple users are using the app)
     func setQuickConnect(for username: String, quickConnect: String?)
 
     var reportBugEmail: String? { get set }
-    var discourageSecureCore: Bool { get set }
     var showWhatsNewModal: Bool { get set }
 
     var userLocation: UserLocation? { get set }
-    var userDataDisclaimerAgreed: Bool { get set }
     var userRole: UserRole { get set }
     var userAccountRecovery: AccountRecovery? { get set }
 
     var userInfo: UserInfo? { get set }
     var userSettings: UserSettings? { get set }
 
-    var trialWelcomed: Bool { get set }
-    var warnedTrialExpiring: Bool { get set }
-    var warnedTrialExpired: Bool { get set }
-
     var maintenanceServerRefreshIntereval: Int { get set }
 
     // Development properties
     var apiEndpoint: String? { get set }
-
-    var lastAppVersion: String { get set }
-
-    var humanValidationFailed: Bool { get set }
 
     var streamingServices: StreamingDictServices { get set }
     var streamingResourcesUrl: String? { get set }
@@ -105,13 +91,10 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case autoConnect = "AutoConnect"
         case autoConnectProfile = "AutoConnect_"
         case connectOnDemand = "ConnectOnDemand"
-        case lastPreparingServer = "LastPreparingServer"
-        case lastUserAccountPlan = "LastUserAccountPlan"
         case quickConnectProfile = "QuickConnect_"
 
         case userRole
         case userLocation = "UserLocation"
-        case userDataDisclaimerAgreed = "UserDataDisclaimerAgreed"
 
         case lastBugReportEmail = "LastBugReportEmail"
 
@@ -121,15 +104,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case defaultPlanDetails
         case isIAPUpgradePlanAvailable // Old name is left for backwards compatibility
 
-        // Trial
-        case trialWelcomed = "TrialWelcomed"
-        case warnedTrialExpiring = "WarnedTrialExpiring"
-        case warnedTrialExpired = "WarnedTrialExpired"
-
         case apiEndpoint = "ApiEndpoint"
-
-        // Migration
-        case lastAppVersion = "LastAppVersion"
 
         // Discourage Secure Core
         case discourageSecureCore = "DiscourageSecureCore"
@@ -141,7 +116,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case featureFlags = "FeatureFlags"
         case maintenanceServerRefreshIntereval = "MaintenanceServerRefreshIntereval"
 
-        case humanValidationFailed
         case streamingServices
         case partnerTypes
         case streamingResourcesUrl
@@ -184,16 +158,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     // Use to do first time connecting stuff if needed
     @BoolProperty(.connectOnDemand) public var hasConnected: Bool
 
-    @Property(.lastPreparingServer) public var lastPreparedServer: ServerModel?
-
-    public func getLastAccountPlan(for username: String) -> String? {
-        defaults.string(forKey: Keys.lastUserAccountPlan.rawValue + username)
-    }
-
-    public func setLastAccountPlan(for username: String, plan: String?) {
-        storage.setValue(plan, forKey: Keys.lastUserAccountPlan.rawValue + username)
-    }
-
     public func getQuickConnect(for username: String) -> String? {
         defaults.string(forKey: Keys.quickConnectProfile.rawValue + username)
     }
@@ -207,11 +171,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     @Property(.userLocation, notifyChangesWith: .userIp)
     public var userLocation: UserLocation?
 
-    @BoolProperty(.userDataDisclaimerAgreed) public var userDataDisclaimerAgreed: Bool
-    @BoolProperty(.trialWelcomed) public var trialWelcomed: Bool
-    @BoolProperty(.warnedTrialExpiring) public var warnedTrialExpiring: Bool
-    @BoolProperty(.warnedTrialExpired) public var warnedTrialExpired: Bool
-
     @StringProperty(.apiEndpoint) public var apiEndpoint: String?
 
     @InitializedProperty(.serverChangeConfig) public var serverChangeConfig: ServerChangeConfig
@@ -219,12 +178,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     #if os(macOS)
         @BoolProperty(.forceExtensionUpgrade) public var forceExtensionUpgrade: Bool
     #endif
-
-    @StringProperty(.lastAppVersion) private var _lastAppVersion: String?
-    public var lastAppVersion: String {
-        get { _lastAppVersion ?? "0.0.0" }
-        set { _lastAppVersion = newValue }
-    }
 
     public var maintenanceServerRefreshIntereval: Int {
         get {
@@ -242,8 +195,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     @BoolProperty(.discourageSecureCore) public var discourageSecureCore: Bool
 
     @BoolProperty(.showWhatsNewModal) public var showWhatsNewModal: Bool
-
-    @BoolProperty(.humanValidationFailed) public var humanValidationFailed: Bool
 
     @InitializedProperty(.streamingServices) public var streamingServices: StreamingDictServices
     @InitializedProperty(.userRole) public var userRole: UserRole
@@ -278,9 +229,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         @Shared(.secureCoreToggle) var secureCoreToggle
         $secureCoreToggle.withLock { $0 = false }
         discourageSecureCore = true
-        trialWelcomed = false
-        warnedTrialExpiring = false
-        warnedTrialExpired = false
         reportBugEmail = nil
         @Shared(.alternativeRouting) var alternativeRouting
         $alternativeRouting.withLock { $0 = true }

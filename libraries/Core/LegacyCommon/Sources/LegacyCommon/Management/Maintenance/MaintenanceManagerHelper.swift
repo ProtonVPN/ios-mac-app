@@ -40,7 +40,6 @@ public class MaintenanceManagerHelper {
 
     private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager()
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.notificationManager) private var notificationManager
 
     /// Throttles the "server going on maintenance" notification so repeated maintenance checks
@@ -68,6 +67,7 @@ public class MaintenanceManagerHelper {
             return // Feature is disabled
         }
 
+        @Dependency(\.propertiesManager) var propertiesManager
         let time = TimeInterval(propertiesManager.maintenanceServerRefreshIntereval * 60)
         let jitter = (TimeInterval(Self.randomJitterPercentage) / 100) * time
         maintenanceManager.observeCurrentServerState(every: time + jitter, repeats: true, completion: { [weak self] isMaintenance in

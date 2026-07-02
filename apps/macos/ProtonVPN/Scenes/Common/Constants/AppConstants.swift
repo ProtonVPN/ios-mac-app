@@ -33,9 +33,6 @@ enum AppConstants {
         static let unprotectedNetworkNotifications = "UnprotectedNetwork"
         static let mapWidth = "MapWidth"
         static let welcomed = "Welcomed"
-        static let trialWelcomed = "TrialWelcomed"
-        static let warnedTrialExpiring = "WarnedTrialExpiring"
-        static let warnedTrialExpired = "WarnedTrialExpired"
         static let uninstallSysexesOnTerminate = "UninstallSysexesOnTerminate"
     }
 

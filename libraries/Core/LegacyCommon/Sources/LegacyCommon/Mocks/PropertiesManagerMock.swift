@@ -50,17 +50,6 @@
 
         public var hasConnected: Bool = false
 
-        public var lastPreparedServer: ServerModel?
-
-        var lastUserAccountPlan: String?
-        public func getLastAccountPlan(for _: String) -> String? {
-            lastUserAccountPlan
-        }
-
-        public func setLastAccountPlan(for _: String, plan: String?) {
-            lastUserAccountPlan = plan
-        }
-
         public var quickConnect: String?
         public func getQuickConnect(for _: String) -> String? {
             quickConnect
@@ -76,11 +65,8 @@
             }
         }
 
-        public var userDataDisclaimerAgreed: Bool = false
-
         public var trialWelcomed: Bool = false
         public var warnedTrialExpiring: Bool = false
-        public var warnedTrialExpired: Bool = false
         public var reportBugEmail: String?
         public var discourageSecureCore: Bool = false
         public var ratingSettings: RatingSettings = .init()
@@ -91,14 +77,12 @@
         #endif
 
         public var apiEndpoint: String?
-        public var lastAppVersion = "0.0.0"
 
         public var maintenanceServerRefreshIntereval: Int = 1
         public var vpnAcceleratorEnabled: Bool = false
 
         public var portForwarding: Bool = false
 
-        public var humanValidationFailed: Bool = false
         public var alternativeRouting: Bool = false {
             didSet {
                 onAlternativeRoutingChange?(alternativeRouting)
