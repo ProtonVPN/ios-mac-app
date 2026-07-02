@@ -701,7 +701,6 @@ struct SidebarFeatureTests {
                 $0.continuousClock = clock
             }
             $0.tunnelManager = MockTunnelManager(connection: .init(status: .disconnected))
-            $0.defaultsProvider = .init(getDefaults: { defaults })
             $0.defaultAppStorage = defaults
             $0.connectionCommandClient = connectionCommandClient
             $0.pendingDisconnectCompletions = pendingDisconnectCompletions

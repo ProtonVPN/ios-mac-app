@@ -79,13 +79,13 @@ import VPNShared
         private var tokens: [NotificationToken] = []
         private var cancellables = Set<AnyCancellable>()
 
-        @Dependency(\.defaultsProvider) private var provider
+        @Dependency(\.defaultAppStorage) private var defaults
         private(set) static var wasRecentlyActive = false
         private var appHasCompletedInitialSetup: Bool = false
     }
 #else
     class AppDelegate: NSObject {
-        @Dependency(\.defaultsProvider) var provider
+        @Dependency(\.defaultAppStorage) var defaults
         private(set) static var wasRecentlyActive = false
         let container = DependencyContainer()
         lazy var navigationService = container.makeNavigationService()
@@ -245,7 +245,7 @@ extension AppDelegate: NSApplicationDelegate {
 
     func applicationShouldTerminate(_: NSApplication) -> NSApplication.TerminateReply {
         log.info("applicationShouldTerminate", category: .os)
-        provider.getDefaults().set(500, forKey: "NSInitialToolTipDelay")
+        defaults.set(500, forKey: "NSInitialToolTipDelay")
         return navigationService.handleApplicationShouldTerminate()
     }
 

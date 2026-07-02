@@ -71,7 +71,7 @@ public final class AppDelegateService: AppDelegateProtocol {
 
     public init() {
         prepareDependencies {
-            $0.defaultAppStorage = UserDefaultsClient.getUserDefaults ?? .standard
+            $0.defaultAppStorage = .domainUserDefaults
         }
         self.container = DependencyContainer.shared
     }

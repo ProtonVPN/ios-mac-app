@@ -184,7 +184,6 @@ struct SidebarFeature {
     }
 
     private let environment: Environment
-    @Dependency(\.defaultsProvider) private var defaultsProvider
     @Dependency(\.sidebarEventsClient) private var sidebarEventsClient
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.pendingDisconnectCompletions) private var pendingDisconnectCompletions

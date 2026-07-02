@@ -22,8 +22,8 @@ import Sharing
 final class PacketTunnelProvider: ProTUNPacketTunnelProvider {
     override init() {
         prepareDependencies {
-            // Align swift-sharing's default store with the legacy `defaultsProvider` (app-group
-            // suite) so `@Shared` keys read the same UserDefaults values as the containing app.
+            // Align swift-sharing's default store with the app-group suite so `@Shared`
+            // keys read the same UserDefaults values as the containing app.
             $0.defaultAppStorage = .domainUserDefaults
         }
         super.init()

@@ -26,7 +26,3 @@ import SharedErgonomics
 extension AppInfoKey: @retroactive DependencyKey {
     public static let liveValue: AppInfo = .live(context: .proTUNExtension, beta: Bundle.isTestflight)
 }
-
-extension DefaultsProvider: @retroactive DependencyKey {
-    public static let liveValue: DefaultsProvider = .init(getDefaults: { .domainUserDefaults })
-}

@@ -23,8 +23,8 @@ import ServiceManagement
 import Sharing
 
 // macOS-only settings migrated off the legacy `PropertiesManager+Extension` / `AppConstants.UserDefaults`.
-// The macOS default sharing store is `UserDefaults.standard`, matching the legacy `defaultsProvider`
-// these keys used, so existing values are read transparently.
+// The macOS default sharing store is `UserDefaults.standard`, matching the store
+// these keys previously used, so existing values are read transparently.
 
 extension SharedKey where Self == AppStorageKey<Bool>.Default {
     /// Whether the app registers itself as a login item (starts on boot).

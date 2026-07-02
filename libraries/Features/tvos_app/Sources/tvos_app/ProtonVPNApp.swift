@@ -37,8 +37,8 @@ import VPNShared
 struct ProtonVPNApp: App {
     init() {
         prepareDependencies {
-            // Align swift-sharing's default store with the legacy `defaultsProvider` (app-group
-            // suite) so migrated `@Shared` keys read the same UserDefaults values.
+            // Align swift-sharing's default store with the app-group suite so migrated
+            // `@Shared` keys read the same UserDefaults values.
             $0.defaultAppStorage = .domainUserDefaults
         }
         setupLogsForApp()

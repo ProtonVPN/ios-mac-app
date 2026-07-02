@@ -17,8 +17,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import Domain
 import Foundation
 
+// A UserDefaults browsing/reset client used exclusively by the debug `UserDefaultsDebugFeature`.
+// Kept here (next to its only consumer) rather than in a foundational module so it isn't
+// accidentally reused as a general storage accessor — use `@Dependency(\.defaultAppStorage)` for that.
 public struct UserDefaultsClient: DependencyKey, Sendable {
     public var flipBool: @Sendable (UserDefaultsEntry) -> Void
     public var entries: @Sendable () async throws -> [UserDefaultsEntry]
@@ -78,7 +82,7 @@ public struct UserDefaultsClient: DependencyKey, Sendable {
         return domain
     }
 
-    public static let getUserDefaults: UserDefaults? = {
+    static let getUserDefaults: UserDefaults? = {
         #if os(iOS)
             guard let suiteName = getSuiteName(),
                   let defaults = UserDefaults(suiteName: suiteName) else {
@@ -142,7 +146,7 @@ public struct UserDefaultsEntry: Equatable, Hashable, Sendable {
     public let key: String
     public let value: Value
 
-    public enum Value: Equatable, Hashable {
+    public enum Value: Equatable, Hashable, Sendable {
         case string(String)
         case utf8(String)
         case bool(Bool)
