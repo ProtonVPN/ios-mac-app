@@ -776,6 +776,14 @@ public enum Localizable {
   public static var localAgentServerErrorMessage: String { return Localizable.tr("Localizable", "_local_agent_server_error_message", fallback: "An error occured on the server. Please connect to another server.") }
   /// Server error
   public static var localAgentServerErrorTitle: String { return Localizable.tr("Localizable", "_local_agent_server_error_title", fallback: "Server error") }
+  /// Alert body shown when the server refuses a named setting. %@ is the setting name, e.g. NetShield
+  public static func localAgentSettingRefusedMessage(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_local_agent_setting_refused_message", String(describing: p1), fallback: "%@ is not an available setting for this connection.")
+  }
+  /// Alert body shown when the server refuses a setting the app doesn't surface as a named control
+  public static var localAgentSettingRefusedMessageGeneric: String { return Localizable.tr("Localizable", "_local_agent_setting_refused_message_generic", fallback: "One of your settings is not available for this connection, it has been turned off.") }
+  /// Title of the alert shown when the VPN server refuses one of the user's requested settings
+  public static var localAgentSettingRefusedTitle: String { return Localizable.tr("Localizable", "_local_agent_setting_refused_title", fallback: "Setting not applied") }
   /// iOS status view
   public static var location: String { return Localizable.tr("Localizable", "_location", fallback: "Location") }
   /// User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text)

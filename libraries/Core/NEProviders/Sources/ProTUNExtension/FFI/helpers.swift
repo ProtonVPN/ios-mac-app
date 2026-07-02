@@ -244,12 +244,14 @@ extension Event: @retroactive CustomStringConvertible {
 extension ErrorEvent: @retroactive CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
-        case .apiSessionExpired:
-            "apiSessionExpired"
+        case .forkSelectorNeeded:
+            "forkSelectorNeeded"
         case let .localAgentSettingPolicyRefused(setting):
             "localAgentSettingPolicyRefused\(setting)"
         case .certificateRefreshFatalError:
             "certificateRefreshFatalError"
+        case let .apiError(endpoint, httpCode, protonCode, message, refreshTokenInvalid):
+            "apiError(\(endpoint), \(optional: httpCode), \(optional: protonCode), \(optional: message), \(refreshTokenInvalid))"
         @unknown default:
             unknownDefault(value: "(unknown value)")
         }

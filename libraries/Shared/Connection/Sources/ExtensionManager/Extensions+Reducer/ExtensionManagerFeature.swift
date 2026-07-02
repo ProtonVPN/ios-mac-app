@@ -207,8 +207,8 @@ public struct ExtensionFeature: Sendable {
                 // A fatal certificate-refresh error tears the tunnel down, surfacing the reason through the
                 // disconnected state. Every other reported error is forwarded to the parent and then acknowledged to
                 // the extension via provider message, so that the app display state can quiesce.
-                if error.decoded(as: LocalAgent.Error.self) == .certificateRefreshFatalError {
-                    log.error("Local Agent fatal certificate refresh error (error channel)", category: .connection)
+                if error.decoded(as: ExtensionTunnelError.self) == .certificateRefreshFatalError {
+                    log.error("Local Agent fatal certificate refresh error", category: .connection)
                     return .merge(
                         .send(.tunnelStatusChanged(.disconnected(.tunnelAborted))),
                         .send(.disconnect(.tunnelAborted))

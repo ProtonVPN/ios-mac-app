@@ -33,10 +33,10 @@ public struct ExtensionError: Error, Identifiable, Equatable, Sendable {
         self.code = code
     }
 
-    /// Recover ``ProtonVPNError``'s that are happy to be represented as a raw `FourCharCode`.
-    public func decoded<E: RawRepresentable<FourCharCode> & ProtonVPNError>(as _: E.Type) -> E? {
+    /// Recover ``ProtonVPNError``'s that are happy to be represented as a raw `FourCharCode` (or any other binary type)
+    public func decoded<T: BinaryInteger, E: RawRepresentable<T> & CustomNSError>(as _: E.Type) -> E? {
         guard domain == E.errorDomain else { return nil }
-        return E(rawValue: code)
+        return E(rawValue: T(code))
     }
 }
 

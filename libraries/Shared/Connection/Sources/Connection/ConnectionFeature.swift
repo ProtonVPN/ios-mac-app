@@ -83,9 +83,9 @@ public struct ConnectionFeature: Sendable {
             case stateChanged(ConnectionState)
             case connectionFailed(ConnectionError)
             case intentResolutionFailed(ConnectionPreparationIntent, with: ConnectionIntentResolutionError)
-            case localAgentNotice(LocalAgentTwoFactorAuthenticationError)
-            /// The extension reported an error (e.g. a requested setting was policy-refused, or a config update failed).
-            case errorReported(ExtensionError)
+            /// A user-relevant notice surfaced by the LocalAgent (e.g. a fresh 2FA is required, or the server
+            /// refused a requested setting). The parent decides how to present it.
+            case localAgentNotice(LocalAgent.Error)
         }
     }
 
@@ -205,9 +205,21 @@ public struct ConnectionFeature: Sendable {
                 return .send(.delegate(.connectionFailed(.tunnel(.reconfigurationFailure(error)))))
 
             case let .tunnel(.delegate(.errorReported(error))):
-                log.warning("Extension reported error", category: .connection, metadata: ["error": "\(error)"])
+                // Decode the transport-level error and forward only the user-relevant classes up as notices.
+                if let localAgentError = error.decoded(as: LocalAgent.Error.self) {
+                    log.error("Local agent error", category: .connection, metadata: ["error": "\(error)"])
+                    return .send(.delegate(.localAgentNotice(localAgentError)))
+                } else if let apiError = error.decoded(as: APIError.self) {
+                    // We'll get a connection failure notice soon, but log the error at least.
+                    log.error("Extension encountered an API error: \(optional: apiError.httpErrorCode) (\(apiError.apiErrorCode))", category: .connection)
+                } else {
+                    // All other unhandled errors get logged wholesale.
+                    log.error("Extension encountered an unhandled error", category: .connection, metadata: ["error": "\(error)"])
+                }
+
+                // Log all other unactionable errors as diagnostics.
                 SentryHelper.shared?.log(error: error)
-                return .send(.delegate(.errorReported(error)))
+                return .none
 
             case .tunnel:
                 return .none
@@ -324,9 +336,7 @@ extension ConnectionFeature.Action.Delegate: CustomDebugStringConvertible {
         case let .intentResolutionFailed(intent, resolutionError):
             ".intentResolutionFailed(\(intent), \(resolutionError))"
         case let .localAgentNotice(error):
-            ".localAgentNotice(\(error.errorCodeString))"
-        case let .errorReported(error):
-            ".errorReported(\(error))"
+            ".localAgentNotice(\(error))"
         }
     }
 }
@@ -357,21 +367,6 @@ extension ConnectionState.Intent: CustomDebugStringConvertible {
             ".resolved(\(intent))"
         }
     }
-}
-
-public enum LocalAgentTwoFactorAuthenticationError: FourCharCode, ProtonVPNError {
-    public static let errorDomain = "LocalAgent2FAErrorDomain"
-
-    /// The server requires a more recent 2FA, for an unspecified reason.
-    case authenticationRequired = "LA2R"
-    /// The server requires a more recent 2FA, 2FA validity has expired.
-    /// This is more specific than `authenticationRequired` to give the user an explanation, but the behavior is
-    /// exactly the same.
-    case authenticationExpired = "LA2E"
-    /// The server requires a more recent 2FA, as it’s a new connection or the client address has roamed.
-    /// From the client perspective, this can be handled as `authenticationRequired` (if the client supports it),
-    /// or ad-interim by asking the user to provide a 2FA via the browser.
-    case authenticationLocationChanged = "LA2L"
 }
 
 extension ConnectionState {

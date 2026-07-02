@@ -80,7 +80,7 @@ public struct HomeFeature {
         package var connectionStatus: ConnectionStatusFeature.State
         package var announcementBanner: AnnouncementBannerFeature.State
         package var whatsNewChecker: WhatsNewCheckerFeature.State
-        package var localAgentNotice: LocalAgentNoticeFeature.State
+        package var localAgentNotice: LocalAgentNoticeFeature.State?
 
         fileprivate var shouldPushAlert: Bool = false
 
@@ -105,7 +105,7 @@ public struct HomeFeature {
             self.connection = .initialState
             self.announcementBanner = .noBanner
             self.whatsNewChecker = .init()
-            self.localAgentNotice = .init()
+            self.localAgentNotice = nil
         }
     }
 
@@ -238,9 +238,6 @@ public struct HomeFeature {
         Scope(state: \.whatsNewChecker, action: \.whatsNewChecker) {
             WhatsNewCheckerFeature()
         }
-        Scope(state: \.localAgentNotice, action: \.localAgentNotice) {
-            LocalAgentNoticeFeature()
-        }
         CombineReducers {
             lifecycleAndObservationReducer
             recentsAndSharedPropertiesReducer
@@ -251,6 +248,9 @@ public struct HomeFeature {
         }
         .ifLet(\.$destination, action: \.destination)
         .ifLet(\.$alert, action: \.alert)
+        .ifLet(\.localAgentNotice, action: \.localAgentNotice) {
+            LocalAgentNoticeFeature()
+        }
     }
 }
 
@@ -592,8 +592,14 @@ private extension HomeFeature {
                     )
                     return .none
                 }
-            case let .connection(.delegate(.localAgentNotice(authenticationError))):
-                state.destination = .localAgentNotice(.init(code: authenticationError.charCode))
+            case let .connection(.delegate(.localAgentNotice(error))):
+                if error.twoFactorRequired {
+                    // The FIDO/2FA notice needs its own actions, so present the sheet.
+                    state.destination = .localAgentNotice(.init(twoFactorError: error))
+                } else if error.settingWasRefused {
+                    // The connection layer took care of the error handling for us, we just need to alert here.
+                    state.alert = settingRefusedAlert(for: error)
+                }
                 return .none
             default:
                 return .none
@@ -626,6 +632,46 @@ private extension HomeFeature {
             TextState(String(localized: alert.title))
         } message: {
             TextState(String(localized: alert.message))
+        }
+    }
+
+    /// Informational alert telling the user the server refused one of their requested settings. The extension has
+    /// already reverted the setting (via the error-ack path in `ExtensionFeature`), so there is nothing to act on.
+    func settingRefusedAlert(for error: LocalAgent.Error) -> AlertState<Action.HomeAlert> {
+        let message = if let name = Self.refusedSettingName(for: error) {
+            Localizable.localAgentSettingRefusedMessage(name)
+        } else {
+            Localizable.localAgentSettingRefusedMessageGeneric
+        }
+        return AlertState {
+            TextState(Localizable.localAgentSettingRefusedTitle)
+        } message: {
+            TextState(message)
+        }
+    }
+
+    /// The user-facing name of the app feature backing a refused LocalAgent setting, or `nil` for settings the app
+    /// doesn't surface as a first-class control (in which case the alert uses generic copy).
+    static func refusedSettingName(for error: LocalAgent.Error) -> String? {
+        assert(error.settingWasRefused, "Unexpected error: \(error) was not a refused setting error")
+
+        return switch error {
+        case .netShieldSettingRefused:
+            Localizable.netshieldTitle
+        case .portForwardingSettingRefused:
+            Localizable.portForwarding
+        case .randomNatSettingRefused:
+            Localizable.moderateNatTitle
+        case .splitTcpSettingRefused:
+            Localizable.vpnAcceleratorTitle
+        case .bouncingSettingRefused,
+             .safeModeSettingRefused,
+             .unknownSettingRefused:
+            nil
+        case .authenticationExpired,
+             .authenticationRequired,
+             .authenticationLocationChanged:
+            nil
         }
     }
 
