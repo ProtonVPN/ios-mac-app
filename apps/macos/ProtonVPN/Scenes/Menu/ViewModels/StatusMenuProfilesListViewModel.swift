@@ -57,8 +57,9 @@ class StatusMenuProfilesListViewModel {
     }
 
     func cellModel(forIndex index: Int) -> StatusMenuProfileItemViewModel? {
-        guard profileManager.allProfiles().indices.contains(index) else { return nil }
-        let profile = profileManager.allProfiles()[index]
+        let allProfiles = profileManager.allProfiles()
+        guard allProfiles.indices.contains(index) else { return nil }
+        let profile = allProfiles[index]
         return StatusMenuProfileItemViewModel(profile: profile, userTier: userTier)
     }
 

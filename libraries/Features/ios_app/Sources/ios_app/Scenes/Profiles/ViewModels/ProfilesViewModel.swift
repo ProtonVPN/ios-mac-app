@@ -41,11 +41,7 @@ class ProfilesViewModel {
     private let sectionTitles = [Localizable.recommended, Localizable.myProfiles]
 
     private var userTier: Int {
-        do {
-            return try vpnKeychain.fetchCached().maxTier
-        } catch {
-            return .freeTier
-        }
+        (try? vpnKeychain.fetchCached().maxTier) ?? .freeTier
     }
 
     init(
@@ -61,11 +57,11 @@ class ProfilesViewModel {
     }
 
     func makeEditProfileViewController(for index: Int) -> UITableViewController? {
-        if profileManager.customProfiles().indices.contains(index) {
-            let profile = profileManager.customProfiles()[index]
-            return profileService.makeCreateProfileViewController(for: profile)
+        let customProfiles = profileManager.customProfiles()
+        guard customProfiles.indices.contains(index) else {
+            return nil
         }
-        return nil
+        return profileService.makeCreateProfileViewController(for: customProfiles[index])
     }
 
     var headerHeight: CGFloat {
@@ -114,21 +110,21 @@ class ProfilesViewModel {
     }
 
     func cellModel(for index: Int) -> ProfileItemViewModel? {
-        if profileManager.customProfiles().indices.contains(index) {
-            let profile = profileManager.customProfiles()[index]
-            return ProfileItemViewModel(
-                profile: profile,
-                userTier: userTier,
-                connectionStatusService: connectionStatusService
-            )
+        let customProfiles = profileManager.customProfiles()
+        guard customProfiles.indices.contains(index) else {
+            return nil
         }
-        return nil
+        return ProfileItemViewModel(
+            profile: customProfiles[index],
+            userTier: userTier,
+            connectionStatusService: connectionStatusService
+        )
     }
 
     func deleteProfile(for index: Int) {
-        if profileManager.customProfiles().indices.contains(index) {
-            let profile = profileManager.customProfiles()[index]
-            profileManager.deleteProfile(profile)
+        let customProfiles = profileManager.customProfiles()
+        if customProfiles.indices.contains(index) {
+            profileManager.deleteProfile(customProfiles[index])
         }
     }
 

@@ -38,9 +38,6 @@ public struct ProfileStorage {
     public var store: (_ profiles: [Profile], _ storageVersion: StorageVersion) -> Void = { _, _ in }
 }
 
-// TODO: This would be a good use case for non-user defaults storage
-//  - Profiles can get pretty big because they encode servers (big especially when they are SC servers)
-//  - Once we move to something like Core Data for servers, we could model a relationship between profiles and servers?
 public final class ProfileStorageImplementation {
     private static let storageVersion = StorageVersion.v2
     private static let versionKey = "profileCacheVersion"

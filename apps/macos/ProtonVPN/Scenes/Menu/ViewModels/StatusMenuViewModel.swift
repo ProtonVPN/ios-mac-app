@@ -382,11 +382,8 @@ final class StatusMenuViewModel {
             .sink { [weak self] status in self?.sessionChanged(status) }
             .store(in: &cancellables)
 
-        let events: [AppEvent] = [
-            .userIp,
-            .planChanged,
-        ]
-        events.subscribe(self, selector: #selector(handleDataChange))
+        AppEvent.userIp.subscribe(self, selector: #selector(handleDataChange))
+        AppEvent.planChanged.subscribe(self, selector: #selector(handlePlanChange))
 
         $secureCoreToggle
             .publisher
