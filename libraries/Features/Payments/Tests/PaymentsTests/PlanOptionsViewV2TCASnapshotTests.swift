@@ -40,10 +40,10 @@
                 loadedState.plans = plans
                 loadedState.selectedPlan = plans.first
 
-                let store = Store(initialState: loadedState) {
-                    PaymentsFeature()
-                } withDependencies: {
-                    $0.paymentsClient.availableDiscount = { _ in 15 }
+                // EmptyReducer: the view sends .onAppear on render, which would
+                // set isLoading and capture the skeleton instead of this state.
+                let store = StoreOf<PaymentsFeature>(initialState: loadedState) {
+                    EmptyReducer()
                 }
 
                 let view = PlanOptionsViewV2TCA(store: store)
@@ -64,10 +64,8 @@
                 loadedState.plans = plans
                 loadedState.selectedPlan = plans.last
 
-                let store = Store(initialState: loadedState) {
-                    PaymentsFeature()
-                } withDependencies: {
-                    $0.paymentsClient.availableDiscount = { _ in 15 }
+                let store = StoreOf<PaymentsFeature>(initialState: loadedState) {
+                    EmptyReducer()
                 }
 
                 let view = PlanOptionsViewV2TCA(store: store)
@@ -82,8 +80,8 @@
             var loadingState = PaymentsFeature.State(upsellModalType: .subscription)
             loadingState.isLoading = true
 
-            let store = Store(initialState: loadingState) {
-                PaymentsFeature()
+            let store = StoreOf<PaymentsFeature>(initialState: loadingState) {
+                EmptyReducer()
             }
 
             let view = PlanOptionsViewV2TCA(store: store)
