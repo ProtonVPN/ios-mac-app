@@ -29,18 +29,13 @@ import LegacyCommon
 import Strings
 import VPNAppCore
 
-protocol OverviewItemViewModelDelegate: AnyObject {
-    func showDeleteWarning(_ viewModel: WarningPopupViewModel)
-}
-
 final class OverviewItemViewModel: AbstractProfileViewModel {
     private let editProfile: ((Profile) -> Void)?
     @Dependency(\.profileManager) private var profileManager
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
+    @Dependency(\.coreAlertService) private var coreAlertService
 
     @Dependency(\.sessionService) private var sessionService
-
-    weak var delegate: OverviewItemViewModelDelegate?
 
     var canConnect: Bool {
         !underMaintenance
@@ -97,16 +92,14 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
     }
 
     func deleteAction() {
-        guard let delegate else { return }
-
-        let warningViewModel = WarningPopupViewModel(title: Localizable.deleteProfileHeader, description: Localizable.deleteProfileWarning) { [weak self] in
-            guard let self else {
-                return
+        coreAlertService.push(alert: WarningAlert(
+            title: Localizable.deleteProfileHeader,
+            message: Localizable.deleteProfileWarning,
+            onConfirm: { [weak self] in
+                guard let self else { return }
+                profileManager.deleteProfile(profile)
             }
-
-            profileManager.deleteProfile(profile)
-        }
-        delegate.showDeleteWarning(warningViewModel)
+        ))
     }
 
     private func formConnectButtonTitle() -> String {

@@ -87,6 +87,38 @@ public class DisconnectWithAdvancedKillSwitchAlert: SystemAlert {
     }
 }
 
+/// Generic confirm/cancel warning
+public class WarningAlert: SystemAlert {
+    public var title: String?
+    public var message: String?
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+
+    public init(
+        title: String,
+        message: String,
+        confirmTitle: String = Localizable.continue,
+        onConfirm: @escaping () -> Void,
+        showCancel: Bool = true,
+        onCancel: (() -> Void)? = nil,
+        learnMore: (title: String, urlString: String)? = nil
+    ) {
+        self.title = title
+        self.message = message
+        actions.append(AlertAction(title: confirmTitle, style: .confirmative, handler: onConfirm))
+        if showCancel {
+            actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: onCancel))
+        }
+        if let learnMore {
+            actions.append(AlertAction(title: learnMore.title, style: .secondary, handler: {
+                @Dependency(\.linkOpener) var linkOpener
+                linkOpener.open(learnMore.urlString)
+            }))
+        }
+    }
+}
+
 public class IkeDeprecatedAlert: SystemAlert {
     public var title: String? = Localizable.ikeDeprecationAlertTitle
     public var message: String? = {

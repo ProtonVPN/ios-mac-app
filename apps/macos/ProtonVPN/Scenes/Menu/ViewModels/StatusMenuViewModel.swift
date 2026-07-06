@@ -49,6 +49,7 @@ final class StatusMenuViewModel {
     @Dependency(\.credentialsProvider) private var credentials
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
+    @Dependency(\.coreAlertService) private var coreAlertService
     @Dependency(\.linkOpener) var linkOpener
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
     @SharedReader(.killSwitchMode) private var killSwitchMode: KillSwitchMode
@@ -65,8 +66,6 @@ final class StatusMenuViewModel {
 
     var contentChanged: (() -> Void)?
     var changeServerStateChanged: ((ServerChangeViewState) -> Void)?
-    var disconnectWarning: ((WarningPopupViewModel) -> Void)?
-    var unsecureWiFiWarning: ((WarningPopupViewModel) -> Void)?
 
     var serverType: ServerType = .standard
     var standardCountries: [ServerGroupInfo]?
@@ -174,14 +173,9 @@ final class StatusMenuViewModel {
             connectionCommandClient.send(.disconnect(.tray))
             return
         }
-        let viewModel = WarningPopupViewModel(
-            title: Localizable.killSwitchDisconnectAdvancedTitle,
-            description: Localizable.killSwitchAdvancedDisconnectWarning,
-            onConfirm: { [weak self] in
-                self?.connectionCommandClient.send(.disconnect(.tray))
-            }
-        )
-        disconnectWarning?(viewModel)
+        coreAlertService.push(alert: DisconnectWithAdvancedKillSwitchAlert(confirmHandler: { [weak self] in
+            self?.connectionCommandClient.send(.disconnect(.tray))
+        }))
     }
 
     // MARK: - Login section
@@ -448,14 +442,16 @@ final class StatusMenuViewModel {
             turningOn: turningOn,
             fallbackCountryName: fallbackCountryName(turningOn: turningOn)
         )
-        let viewModel = WarningPopupViewModel(
+        // Revert the optimistic switch flip until the user confirms; applying re-syncs it from
+        // `secureCoreToggle` on confirmation.
+        viewController?.secureCoreSwitch.setState(turningOn ? .off : .on)
+        coreAlertService.push(alert: WarningAlert(
             title: Localizable.vpnConnectionActive,
-            description: description,
+            message: description,
             onConfirm: { [weak self] in
                 self?.applySecureCoreToggle(turningOn: turningOn)
             }
-        )
-        disconnectWarning?(viewModel)
+        ))
     }
 
     /// Toggles the Secure Core setting. If we are connected, also dispatches a reconnect
@@ -505,19 +501,15 @@ final class StatusMenuViewModel {
     // MARK: - Present unsecure connection
 
     private func presentUnsecureWiFiWarning() {
-        let confirmationClosure: () -> Void = {
-            log.info("User accepted unsecure WiFi option", category: .net)
-        }
         guard let wifiName = wifiSecurityMonitor.wifiName else { return }
-        let viewModel = WarningPopupViewModel(
+        coreAlertService.push(alert: WarningAlert(
             title: Localizable.unsecureWifiTitle,
-            description: "\(Localizable.unsecureWifi): \(wifiName). \(Localizable.unsecureWifiLearnMore)",
-            linkDescription: Localizable.unsecureWifiLearnMore,
-            url: VPNLink.unsecureWiFi.urlString,
-            onConfirm: confirmationClosure
-        )
-
-        unsecureWiFiWarning?(viewModel)
+            message: "\(Localizable.unsecureWifi): \(wifiName). \(Localizable.unsecureWifiLearnMore)",
+            confirmTitle: Localizable.ok,
+            onConfirm: { log.info("User accepted unsecure WiFi option", category: .net) },
+            showCancel: false,
+            learnMore: (Localizable.unsecureWifiLearnMore, VPNLink.unsecureWiFi.urlString)
+        ))
     }
 
     private func updateCountryList() {

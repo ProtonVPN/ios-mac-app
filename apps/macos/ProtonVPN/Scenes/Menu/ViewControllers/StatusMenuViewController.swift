@@ -82,14 +82,6 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
             self?.setupHeaderButtons(with: state)
         }
 
-        viewModel.disconnectWarning = { [weak self] viewModel in
-            self?.disconnectWarning(viewModel)
-        }
-
-        viewModel.unsecureWiFiWarning = { [weak self] viewModel in
-            self?.unsecureWarning(viewModel)
-        }
-
         viewModel.viewController = self
         initialViewSetup()
     }
@@ -281,19 +273,6 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
                 countryItem.button.updateTrackingAreas()
             }
         }
-    }
-
-    private func unsecureWarning(_ viewModel: WarningPopupViewModel) {
-        // This warning lies! "Cast from 'NSWindowDelegate?' to unrelated type 'WiFiWarningPopupViewController' always fails"
-        if let window = NSApplication.shared.modalWindow, window.delegate is WiFiWarningPopupViewController {
-            return
-        }
-        presentAsModalWindow(WiFiWarningPopupViewController(viewModel: viewModel))
-    }
-
-    private func disconnectWarning(_ viewModel: WarningPopupViewModel) {
-        secureCoreSwitch.setState(ButtonState(rawValue: 1 - secureCoreSwitch.currentButtonState.rawValue)!)
-        presentAsModalWindow(WarningPopupViewController(viewModel: viewModel))
     }
 
     @IBAction

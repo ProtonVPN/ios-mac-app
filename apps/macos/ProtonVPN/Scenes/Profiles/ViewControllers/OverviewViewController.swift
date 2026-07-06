@@ -129,14 +129,7 @@ extension OverviewViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, viewFor _: NSTableColumn?, row: Int) -> NSView? {
         guard let rowItem = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: overviewItemIdentifier), owner: nil) as? OverviewItemView,
               let cellViewModel = viewModel.cellModel(forIndex: row) else { return nil }
-        cellViewModel.delegate = self
         rowItem.updateView(withModel: cellViewModel)
         return rowItem
-    }
-}
-
-extension OverviewViewController: OverviewItemViewModelDelegate {
-    func showDeleteWarning(_ viewModel: WarningPopupViewModel) {
-        presentAsModalWindow(WarningPopupViewController(viewModel: viewModel))
     }
 }

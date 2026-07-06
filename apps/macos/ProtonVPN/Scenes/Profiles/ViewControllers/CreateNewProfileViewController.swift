@@ -21,12 +21,15 @@
 //
 
 import Cocoa
+import Dependencies
 import Domain
 import Ergonomics
 import LegacyCommon
 import Strings
 
 final class CreateNewProfileViewController: NSViewController {
+    @Dependency(\.coreAlertService) private var coreAlertService
+
     @IBOutlet private var profileSettingsLabel: PVPNTextField!
     @IBOutlet private var nameLabel: PVPNTextField!
     @IBOutlet private var nameTextField: TextFieldWithFocus!
@@ -237,13 +240,13 @@ final class CreateNewProfileViewController: NSViewController {
     @objc
     private func cancelButtonAction() {
         if isSessionUnderway {
-            let viewModel = WarningPopupViewModel(
+            coreAlertService.push(alert: WarningAlert(
                 title: Localizable.createNewProfile,
-                description: Localizable.currentSelectionWillBeLost
-            ) { [weak self] in
-                self?.viewModel.clearContent()
-            }
-            presentAsModalWindow(WarningPopupViewController(viewModel: viewModel))
+                message: Localizable.currentSelectionWillBeLost,
+                onConfirm: { [weak self] in
+                    self?.viewModel.clearContent()
+                }
+            ))
             return
         }
         viewModel.clearContent()
