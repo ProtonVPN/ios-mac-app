@@ -36,7 +36,7 @@ struct IPCHelperContext {
 
     static func writer<T: BitwiseCopyable>(
         ofType _: T.Type
-    ) throws -> IPCNotifications.RawChannel<T, IPCNotifications.Writer> {
+    ) throws -> IPCNotifications.RawChannel<T, WriterRole, FileBackedRegion> {
         guard let context = current else { throw Error.noContextProvided }
         guard let notification = context.notification else { throw Error.noNotificationProvided }
         return try .init(notification: notification, fileURL: context.mmapFileURL)
@@ -44,7 +44,7 @@ struct IPCHelperContext {
 
     static func reader<T: BitwiseCopyable>(
         ofType _: T.Type
-    ) throws -> IPCNotifications.RawChannel<T, IPCNotifications.Reader> {
+    ) throws -> IPCNotifications.RawChannel<T, ReaderRole, FileBackedRegion> {
         guard let context = current else { throw Error.noContextProvided }
         guard let notification = context.notification else { throw Error.noNotificationProvided }
         return try .init(notification: notification, fileURL: context.mmapFileURL)

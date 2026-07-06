@@ -18,145 +18,123 @@
 
 import Ergonomics
 import Foundation
+import IPCSeqlockHelpers
 import os
 #if os(macOS)
     import IOSurface
 #endif
 
+// MARK: - RegionBacking
+
+/// How a ``IPCNotifications/SharedRegion`` reaches its bytes. Used **only as a generic constraint**, never as `any
+/// RegionBacking` — so calls through it are specialized per concrete backing (no witness-table dispatch). New backings
+/// (a different shared-memory transport) just conform here.
+public protocol RegionBacking: ~Copyable, Sendable {
+    borrowing func withRawSpan<R, E: Error>(_ body: (RawSpan) throws(E) -> R) throws(E) -> R
+    borrowing func withMutableRawSpan<R, E: Error>(_ body: (inout MutableRawSpan) throws(E) -> R) throws(E) -> R
+}
+
+/// A single `mmap`'d file. Used on iOS and tvOS via the shared app group container, and by tests. Never moves once
+/// mapped, so reads are lock-free. Noncopyable: it owns the mapping and `munmap`s it on `deinit`.
+public struct FileBackedRegion: ~Copyable, Sendable {
+    @_spi(Internals) public let mmapBuffer: MmapBuffer
+
+    public init(fileURL: URL, size: Int) throws {
+        self.mmapBuffer = try MmapBuffer(path: fileURL.path(), size: size)
+    }
+}
+
+extension FileBackedRegion: RegionBacking {
+    public borrowing func withRawSpan<R, E: Error>(_ body: (RawSpan) throws(E) -> R) throws(E) -> R {
+        try mmapBuffer.withRawSpan(body)
+    }
+
+    public borrowing func withMutableRawSpan<R, E: Error>(_ body: (inout MutableRawSpan) throws(E) -> R) throws(E) -> R {
+        try mmapBuffer.withMutableRawSpan(body)
+    }
+}
+
+#if os(macOS)
+    /// An `IOSurface` the extension allocates and vends over XPC, since System Extensions can't reach the app group
+    /// container. Noncopyable: it owns one retain of the surface.
+    public struct IOSurfaceBackedRegion: ~Copyable, Sendable {
+        @_spi(Internals) public let ioSurface: IOSurface
+
+        public init(_ surface: IOSurfaceRef) {
+            self.ioSurface = surface
+        }
+
+        /// Allocate an `IOSurface` large enough for `size` bytes. Returns `nil` if allocation fails.
+        @inlinable
+        public static func makeIOSurface(size: Int) -> IOSurfaceRef? {
+            IOSurfaceCreate([
+                kIOSurfaceWidth: size,
+                kIOSurfaceHeight: 1,
+                kIOSurfaceBytesPerElement: 1,
+            ] as CFDictionary)
+        }
+    }
+
+    extension IOSurfaceBackedRegion: RegionBacking {
+        public borrowing func withRawSpan<R, E: Error>(_ body: (RawSpan) throws(E) -> R) throws(E) -> R {
+            let bufferPtr = UnsafeRawBufferPointer(
+                start: IOSurfaceGetBaseAddress(ioSurface),
+                count: IOSurfaceGetAllocSize(ioSurface)
+            )
+            return try body(bufferPtr.bytes)
+        }
+
+        public borrowing func withMutableRawSpan<R, E: Error>(_ body: (inout MutableRawSpan) throws(E) -> R) throws(E) -> R {
+            var span = UnsafeMutableRawBufferPointer(
+                start: IOSurfaceGetBaseAddress(ioSurface),
+                count: IOSurfaceGetAllocSize(ioSurface)
+            ).mutableBytes
+            return try body(&span)
+        }
+    }
+#endif
+
+// MARK: - SharedRegion
+
 public extension IPCNotifications {
-    /// A single shared-memory region that backs one or more ``RawChannel`` views. Uses Spans to ensure safe accesses.
-    final class SharedRegion: Sendable {
-        /// How the region holds its backing. At the moment, IOSurface on macOS needs a lock for reads.
-        private enum Backing: Sendable {
-            case fixed(RegionBacking)
-            #if os(macOS)
-                case swappable(OSAllocatedUnfairLock<RegionBacking?>)
-            #endif
+    /// The shared home for one mapping. Owns a noncopyable ``RegionBacking`` (which is where single-ownership of the
+    /// OS resource lives) and lets several ``IPCNotifications/RawChannel`` views — and concurrent reader tasks — share
+    /// that one mapping. A reference type because sibling channels reading one mapping is inherently shared; it holds
+    /// no seqlock of its own and, since the mapping never swaps in place, needs no lock.
+    final class SharedRegion<Backing: RegionBacking & ~Copyable>: Sendable {
+        @_spi(Internals) public let backing: Backing
+
+        public init(_ backing: consuming Backing) {
+            self.backing = backing
         }
 
-        private let backing: Backing
-
-        /// A single `mmap`'d file. Used on iOS and tvOS via the shared app group container. Never changes, so reads
-        /// are lock-free.
-        public init(fileURL: URL, size: Int) throws {
-            self.backing = try .fixed(RegionBacking(fileURL: fileURL, size: size))
+        func withRawSpan<R, E: Error>(_ body: (RawSpan) throws(E) -> R) throws(E) -> R {
+            try backing.withRawSpan(body)
         }
 
-        #if os(macOS)
-            /// An unattached, swappable region: reads return `nil` and writes no-op until an IOSurface is adopted.
-            public init() {
-                self.backing = .swappable(.init(initialState: nil))
-            }
-
-            /// A swappable region seeded with the IOSurface the extension allocates and vends to clients.
-            public init(ioSurface: IOSurfaceRef) {
-                self.backing = .swappable(.init(initialState: RegionBacking(ioSurface: ioSurface)))
-            }
-
-            /// Allocate an `IOSurface` large enough for `size` bytes. Returns `nil` if allocation fails.
-            @inlinable
-            public static func makeIOSurface(size: Int) -> IOSurfaceRef? {
-                IOSurfaceCreate([
-                    kIOSurfaceWidth: size,
-                    kIOSurfaceHeight: 1,
-                    kIOSurfaceBytesPerElement: 1,
-                ] as CFDictionary)
-            }
-        #endif
-
-        /// Hot-swap a shared region while others may still be observing.
-        public func adopt(_ other: SharedRegion) {
-            #if os(macOS)
-                guard case let .swappable(lock) = backing,
-                      case let .swappable(otherLock) = other.backing
-                else { return }
-                lock.withLock { $0 = otherLock.withLock { $0 } }
-            #endif
+        func withMutableRawSpan<R, E: Error>(_ body: (inout MutableRawSpan) throws(E) -> R) throws(E) -> R {
+            try backing.withMutableRawSpan(body)
         }
 
-        @discardableResult
-        borrowing func withSpan<R, E: Error>(_ body: (RawSpan) throws(E) -> R) throws(E) -> R? {
-            switch backing {
-            case let .fixed(backing):
-                return try backing.withSpan(body)
-            #if os(macOS)
-                case let .swappable(lock):
-                    guard let backing = lock.withLock({ $0 }) else { return nil }
-                    return try backing.withSpan(body)
-            #endif
-            }
-        }
-
-        @discardableResult
-        borrowing func withMutableSpan<R, E: Error>(_ body: (inout MutableRawSpan) throws(E) -> R) throws(E) -> R? {
-            switch backing {
-            case let .fixed(backing):
-                return try backing.withMutableSpan(body)
-            #if os(macOS)
-                case let .swappable(lock):
-                    guard let backing = lock.withLock({ $0 }) else { return nil }
-                    return try backing.withMutableSpan(body)
-            #endif
-            }
+        /// Vend a handle to the seqlock window whose header begins at `offset`.
+        public func seqlockRegion(at offset: Int = 0, length: Int = Int(IPC_SHARED_REGION_SIZE)) -> SeqlockRegion<Backing> {
+            SeqlockRegion(region: self, regionOffset: offset, length: length)
         }
     }
 }
 
-/// Owns the shared-memory mapping that backs a region and vends bounded, non-escapable spans over it. Can be backed by
-/// either a memory region created through `mmap` or IOSurface.
-private final class RegionBacking: @unchecked Sendable {
-    private enum Storage: ~Copyable {
-        /// A file `mmap`. Used on iOS/tvOS, macOS may come later with App Extensions.
-        case file(MmapBuffer)
+// MARK: - SeqlockRegion
 
-        #if os(macOS)
-            /// An `IOSurface` the extension allocates and vends over XPC in the case of System Extensions, since
-            /// they can't access the app group container.
-            case ioSurface(IOSurfaceRef)
-        #endif
-    }
+/// A handle to one seqlock-protected window (`[IPCSharedHeader][Payload][padding]`) inside a shared mapping. Carries
+/// *where* the window lives (which region, at what offset) but does not own the bytes
+public struct SeqlockRegion<Backing: RegionBacking & ~Copyable>: ~Copyable, Sendable {
+    let region: IPCNotifications.SharedRegion<Backing>
+    let regionOffset: Int
+    let length: Int
 
-    private let storage: Storage
-
-    init(fileURL: URL, size: Int) throws {
-        self.storage = try .file(MmapBuffer(path: fileURL.path(), size: size))
-    }
-
-    #if os(macOS)
-        init(ioSurface: IOSurfaceRef) {
-            self.storage = .ioSurface(ioSurface)
-        }
-    #endif
-
-    borrowing func withSpan<R, E: Error>(_ body: (RawSpan) throws(E) -> R) throws(E) -> R {
-        switch storage {
-        case let .file(buffer):
-            let span = UnsafeRawBufferPointer(start: buffer.baseAddress, count: buffer.totalSize).bytes
-            return try body(span)
-        #if os(macOS)
-            case let .ioSurface(surface):
-                let span = UnsafeRawBufferPointer(
-                    start: IOSurfaceGetBaseAddress(surface),
-                    count: IOSurfaceGetAllocSize(surface)
-                ).bytes
-                return try body(span)
-        #endif
-        }
-    }
-
-    borrowing func withMutableSpan<R, E: Error>(_ body: (inout MutableRawSpan) throws(E) -> R) throws(E) -> R {
-        switch storage {
-        case let .file(buffer):
-            var span = UnsafeMutableRawBufferPointer(start: buffer.baseAddress, count: buffer.totalSize).mutableBytes
-            return try body(&span)
-        #if os(macOS)
-            case let .ioSurface(surface):
-                var span = UnsafeMutableRawBufferPointer(
-                    start: IOSurfaceGetBaseAddress(surface),
-                    count: IOSurfaceGetAllocSize(surface)
-                ).mutableBytes
-                return try body(&span)
-        #endif
-        }
+    fileprivate init(region: IPCNotifications.SharedRegion<Backing>, regionOffset: Int, length: Int) {
+        self.region = region
+        self.regionOffset = regionOffset
+        self.length = length
     }
 }

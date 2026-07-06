@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AsyncAlgorithms
+import ConcurrencyExtras
 import Foundation
 
 @available(iOS, deprecated: 18, renamed: "AsyncShareSequence")
@@ -119,6 +120,35 @@ public extension AsyncSequence where Self: Sendable, Element: Sendable {
         SharedAsyncThrowingStream(self)
     }
 }
+
+// MARK: - StreamSource
+
+public enum StreamSource<T: Sendable>: Sendable {
+    public typealias StreamFactory = @Sendable () -> AsyncStream<T>
+
+    case sharedStream(SharedAsyncStream<T>)
+    case asyncAlgorithms(StreamFactory)
+
+    public static func source(for stream: AsyncStream<T>) -> Self {
+        if #available(iOS 18.0, macOS 15.0, tvOS 18.0, *) {
+            let shared = stream.share()
+            return .asyncAlgorithms { shared.eraseToStream() }
+        } else {
+            return .sharedStream(stream.sharedStream)
+        }
+    }
+
+    public var newStream: AsyncStream<T> {
+        switch self {
+        case let .sharedStream(sharedStream):
+            sharedStream.subscribe()
+        case let .asyncAlgorithms(factory):
+            factory()
+        }
+    }
+}
+
+// MARK: - Private helpers
 
 private final class ManagedCriticalState<State>: @unchecked Sendable {
     private var _state: State

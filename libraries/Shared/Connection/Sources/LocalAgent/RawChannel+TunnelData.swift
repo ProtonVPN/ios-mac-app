@@ -26,7 +26,7 @@ import LocalAgentIPC
 // Typed accessors over the live tunnel-data channels. Each exposes the Swift struct that wraps the raw C payload as
 // a getter + an `AsyncStream`.
 
-public extension IPCNotifications.RawChannel where Payload == IPCConnectionDataPayload, Role == IPCNotifications.Reader {
+public extension IPCNotifications.RawChannel where Payload == IPCConnectionDataPayload, Role == ReaderRole, Backing: ~Copyable {
     func currentExtensionState() -> (ExtensionState, UUID?) {
         if let payload = try? read() {
             (payload.extensionState, payload.requestId)
@@ -35,51 +35,51 @@ public extension IPCNotifications.RawChannel where Payload == IPCConnectionDataP
         }
     }
 
-    func extensionStateStream(reconcileOn resumeSignal: AsyncStream<Void> = .finished) -> AsyncStream<(state: ExtensionState, requestId: UUID?)> {
-        stream(reconcileOn: resumeSignal) { payload in
+    func extensionStateStream(reconcileOn resumeSignals: AsyncStream<Void>...) -> AsyncStream<(state: ExtensionState, requestId: UUID?)> {
+        stream(reconcileOn: resumeSignals) { payload in
             (payload.extensionState, payload.requestId)
         }
     }
 }
 
-public extension IPCNotifications.RawChannel where Payload == IPCStatsPayload, Role == IPCNotifications.Reader {
+public extension IPCNotifications.RawChannel where Payload == IPCStatsPayload, Role == ReaderRole, Backing: ~Copyable {
     func stats() -> LocalAgent.Stats? {
         (try? read()).flatMap(\.localAgentStats)
     }
 
-    func statsStream(reconcileOn resumeSignal: AsyncStream<Void> = .finished) -> AsyncStream<LocalAgent.Stats?> {
-        stream(reconcileOn: resumeSignal) { $0.localAgentStats }
+    func statsStream(reconcileOn resumeSignals: AsyncStream<Void>...) -> AsyncStream<LocalAgent.Stats?> {
+        stream(reconcileOn: resumeSignals) { $0.localAgentStats }
     }
 }
 
-public extension IPCNotifications.RawChannel where Payload == IPCConnectionStatsPayload, Role == IPCNotifications.Reader {
+public extension IPCNotifications.RawChannel where Payload == IPCConnectionStatsPayload, Role == ReaderRole, Backing: ~Copyable {
     func connectionStats() -> LocalAgent.ConnectionStats? {
         (try? read()).flatMap(\.localAgentConnectionStats)
     }
 
-    func connectionStatsStream(reconcileOn resumeSignal: AsyncStream<Void> = .finished) -> AsyncStream<LocalAgent.ConnectionStats?> {
-        stream(reconcileOn: resumeSignal) { $0.localAgentConnectionStats }
+    func connectionStatsStream(reconcileOn resumeSignals: AsyncStream<Void>...) -> AsyncStream<LocalAgent.ConnectionStats?> {
+        stream(reconcileOn: resumeSignals) { $0.localAgentConnectionStats }
     }
 }
 
-public extension IPCNotifications.RawChannel where Payload == IPCAgentFeaturesPayload, Role == IPCNotifications.Reader {
+public extension IPCNotifications.RawChannel where Payload == IPCAgentFeaturesPayload, Role == ReaderRole, Backing: ~Copyable {
     /// The server-applied features, or `nil` until the extension has published them (or after a disconnect zeroes the region).
     func agentFeatures() -> AgentTunnelFeatures? {
         (try? read())?.agentFeatures
     }
 
-    func agentFeaturesStream(reconcileOn resumeSignal: AsyncStream<Void> = .finished) -> AsyncStream<AgentTunnelFeatures?> {
-        stream(reconcileOn: resumeSignal) { $0.agentFeatures }
+    func agentFeaturesStream(reconcileOn resumeSignals: AsyncStream<Void>...) -> AsyncStream<AgentTunnelFeatures?> {
+        stream(reconcileOn: resumeSignals) { $0.agentFeatures }
     }
 }
 
-public extension IPCNotifications.RawChannel where Payload == IPCErrorPayload, Role == IPCNotifications.Reader {
+public extension IPCNotifications.RawChannel where Payload == IPCErrorPayload, Role == ReaderRole, Backing: ~Copyable {
     func currentExtensionError() -> ExtensionError? {
         (try? read())?.extensionError
     }
 
     /// The extension's most-recent reported error, or `nil` if the value is empty.
-    func errorStream(reconcileOn resumeSignal: AsyncStream<Void> = .finished) -> AsyncStream<ExtensionError?> {
-        stream(reconcileOn: resumeSignal) { $0.extensionError }
+    func errorStream(reconcileOn resumeSignals: AsyncStream<Void>...) -> AsyncStream<ExtensionError?> {
+        stream(reconcileOn: resumeSignals) { $0.extensionError }
     }
 }

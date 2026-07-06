@@ -31,6 +31,7 @@ public enum MmapBufferError: Error {
 
 public struct MmapBuffer: ~Copyable, Sendable {
     public let totalSize: Int
+    private let fd: FileDescriptor
     private nonisolated(unsafe) let pointer: UnsafeMutableRawPointer
 
     public init(path: String, size: Int = 65536) throws(MmapBufferError) {
@@ -58,10 +59,25 @@ public struct MmapBuffer: ~Copyable, Sendable {
 
         self.pointer = mmapRv
         self.totalSize = size
+        self.fd = fd
     }
 
     deinit {
         munmap(pointer, totalSize)
+    }
+}
+
+public extension MmapBuffer {
+    /// Retrieve the file path associated with this mmap'd region using `fcntl(F_GETPATH)`.
+    /// Returns `nil` if the path cannot be determined (e.g., the file was deleted).
+    var filePath: String? {
+        withUnsafeTemporaryAllocation(of: CChar.self, capacity: Int(MAXPATHLEN)) { pathBuffer in
+            let pathBufferPtr = pathBuffer.baseAddress!
+            guard fcntl(fd.fd, F_GETPATH, pathBufferPtr) == 0 else {
+                return nil
+            }
+            return String(cString: pathBufferPtr)
+        }
     }
 }
 
@@ -99,14 +115,24 @@ public extension MmapBuffer {
         }
     }
 
-    /// Grants scoped access to the raw mmap'd bytes.
-    package borrowing func withUnsafeMutableBytes<R>(_ body: (UnsafeMutableRawPointer) throws -> R) rethrows -> R {
-        try body(pointer)
+    borrowing func withRawSpan<R, E: Swift.Error>(_ body: (RawSpan) throws(E) -> R) throws(E) -> R {
+        let span = UnsafeRawBufferPointer(start: pointer, count: totalSize).bytes
+        return try body(span)
     }
 
-    /// The stable base address of the mapped region, valid for this buffer's lifetime. Don't use this unless you have to.
-    package var baseAddress: UnsafeMutableRawPointer {
-        pointer
+    borrowing func withSpan<R, E: Swift.Error>(_ body: (Span<UInt8>) throws(E) -> R) throws(E) -> R {
+        let span = UnsafeBufferPointer<UInt8>(start: pointer.assumingMemoryBound(to: UInt8.self), count: totalSize).span
+        return try body(span)
+    }
+
+    borrowing func withMutableRawSpan<R, E: Error>(_ body: (inout MutableRawSpan) throws(E) -> R) throws(E) -> R {
+        var mutableSpan = UnsafeMutableRawBufferPointer(start: pointer, count: totalSize).mutableBytes
+        return try body(&mutableSpan)
+    }
+
+    borrowing func withMutableSpan<R, E: Swift.Error>(_ body: (inout MutableSpan<UInt8>) throws(E) -> R) throws(E) -> R {
+        var mutableSpan = UnsafeMutableBufferPointer<UInt8>(start: pointer.assumingMemoryBound(to: UInt8.self), count: totalSize).mutableSpan
+        return try body(&mutableSpan)
     }
 }
 
