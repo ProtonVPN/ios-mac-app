@@ -92,6 +92,12 @@ public extension SharedKey where Self == AppStorageKey<Bool>.Default {
         static var earlyAccess: Self {
             Self[.appStorage("EarlyAccess"), default: false]
         }
+
+        /// Set when Advanced kill switch is temporarily disabled to let an app update install
+        /// Restored to ``killSwitchMode`` `.advanced` on the next launch
+        static var restoreAdvancedKillSwitchAfterUpdate: Self {
+            Self[.appStorage("RestoreAdvancedKillSwitchAfterUpdate"), default: false]
+        }
     }
 #endif
 

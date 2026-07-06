@@ -828,6 +828,14 @@ public enum Localizable {
   public static var killSwitchTurnOff: String { return Localizable.tr("Localizable", "_kill_switch_turn_off", fallback: "Turn off kill switch") }
   /// iOS: Body of the alert shown when a user tries to sign in / sign up / continue as guest while Advanced kill switch is blocking
   public static var killSwitchTurnOffToGetOnline: String { return Localizable.tr("Localizable", "_kill_switch_turn_off_to_get_online", fallback: "To get back online you need to turn off kill switch.") }
+  /// macOS: update confirmation body when kill switch is off
+  public static var killSwitchUpdateBody: String { return Localizable.tr("Localizable", "_kill_switch_update_body", fallback: "This will disconnect you from VPN. Any active internet connections will be temporarily unprotected.") }
+  /// macOS: update confirmation body when kill switch is on (also temporarily disables the kill switch)
+  public static var killSwitchUpdateBodyKillSwitchOn: String { return Localizable.tr("Localizable", "_kill_switch_update_body_kill_switch_on", fallback: "This will disconnect you from VPN and temporarily disable kill switch. Any active internet connections will be temporarily unprotected.") }
+  /// macOS: primary button of the update confirmation; proceeds with installing the update
+  public static var killSwitchUpdateConfirm: String { return Localizable.tr("Localizable", "_kill_switch_update_confirm", fallback: "Install") }
+  /// macOS: title of the confirmation shown before installing an app update while VPN / kill switch is active
+  public static var killSwitchUpdateTitle: String { return Localizable.tr("Localizable", "_kill_switch_update_title", fallback: "Install update?") }
   /// MacOS: link in login screen
   public static var learnMore: String { return Localizable.tr("Localizable", "_learn_more", fallback: "Learn more") }
   /// MacOS: SecureCore warning alert when users plan has to be upgraded
