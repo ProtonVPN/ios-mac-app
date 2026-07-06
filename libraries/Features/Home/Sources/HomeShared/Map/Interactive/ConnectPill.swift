@@ -41,7 +41,7 @@ struct ConnectPill: View, Animatable {
 
     private enum Dimensions {
         /// The mask starts and ends at the settled pin-disc diameter, so the pill grows out of and collapses back into
-        // exactly the dot it replaces.
+        /// exactly the dot it replaces.
         static let seed = PinDisplay.singleDiscDiameter
         static let height: CGFloat = 30
         static let horizontalPadding: CGFloat = 12

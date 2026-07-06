@@ -147,6 +147,7 @@ let package = Package(
             name: "MapBaker",
             dependencies: [
                 "MapModel",
+                .product(name: "Ergonomics", package: "Ergonomics"),
                 .product(name: "SVGView", package: "SVGView"),
                 .product(name: "geos", package: "geos"),
                 .product(name: "Triangulation", package: "Ergonomics"),
@@ -156,6 +157,7 @@ let package = Package(
             name: "HomeTests",
             dependencies: [
                 "HomeShared",
+                .product(name: "Ergonomics", package: "Ergonomics"),
                 .product(name: "DomainTestSupport", package: "Domain"),
             ]
         ),
@@ -179,6 +181,7 @@ let package = Package(
             name: "MapModelTests",
             dependencies: [
                 "MapModel",
+                .product(name: "Ergonomics", package: "Ergonomics"),
             ]
         ),
     ]

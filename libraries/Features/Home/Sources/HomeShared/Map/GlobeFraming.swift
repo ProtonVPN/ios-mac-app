@@ -42,7 +42,6 @@ extension GlobeProjection {
     /// Builds the projection for `camera` at this `framing`, the one construction shared by the per-frame
     /// render and the tap hit-test, so the tap-time projection matches what's on screen.
     static func make(camera: GlobeCamera, framing: GlobeFraming, lightFade: Float = 0) -> GlobeProjection {
-        let mvp = camera.matrix(viewSize: framing.viewSize, focusHeight: framing.focusHeight, focusTop: framing.focusTop)
-        return GlobeProjection(camera: camera, mvp: mvp, viewSize: framing.viewSize, lightFade: lightFade)
+        GlobeProjection(camera: camera, mvp: camera.matrix(framing: framing), viewSize: framing.viewSize, lightFade: lightFade)
     }
 }

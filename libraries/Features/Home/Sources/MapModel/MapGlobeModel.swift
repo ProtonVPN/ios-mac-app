@@ -16,24 +16,28 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Ergonomics
 import MapShaderTypes
 import simd
 import Triangulation
 
 /// Render-ready representation of the world map on a unit sphere: the globe.
 ///
-/// Produced offline by `MapBaker` and serialised to `world-globe.bin`. Every position is a point on the
-/// unit sphere centred at the origin, so the position also serves as the surface normal. Country fills
-/// are real triangle meshes, and back-face culling alone hides the far hemisphere, so there is no depth
-/// buffer. Borders are short segments expanded into ribbons in the vertex shader.
-public struct MapGlobeModel: Sendable {
+/// Produced offline by `MapBaker` and serialised to `world-globe.bin`. Every position is a point on the unit sphere
+/// centered at the origin, so the position also serves as the surface normal. Country fills are real triangle meshes,
+/// and back-face culling alone hides the far hemisphere, so there is no depth buffer. Borders are short segments
+/// expanded into ribbons in the vertex shader.
+///
+/// The `Storage` generic type communicates the characteristics of the underlying memory used by the model. `InMemory`
+/// models hold their arrays, while `Mapped` models are zero-copy views into the memory-mapped binary globe data.
+public struct MapGlobeModel<Storage: BinaryBacking>: Sendable {
     /// Unit-sphere fill vertices (each also serves as its surface normal).
-    public let fillVertices: [SIMD3<Float>]
+    public let fillVertices: BinaryArray<SIMD3<Float>, Storage>
     /// Triangle indices into `fillVertices`.
-    public let fillIndices: [UInt32]
+    public let fillIndices: BinaryArray<UInt32, Storage>
 
     /// Border segments on the sphere, expanded to tangent-plane ribbons in the shader.
-    public let borderSegments: [MapGlobeSegment]
+    public let borderSegments: BinaryArray<MapGlobeSegment, Storage>
     public let borderColor: SIMD4<Float>
 
     /// Per-path draw list in document order, which is the order the renderer draws in.
@@ -43,9 +47,9 @@ public struct MapGlobeModel: Sendable {
     public let countries: [String: MapGlobeCountry]
 
     public init(
-        fillVertices: [SIMD3<Float>],
-        fillIndices: [UInt32],
-        borderSegments: [MapGlobeSegment],
+        fillVertices: BinaryArray<SIMD3<Float>, Storage>,
+        fillIndices: BinaryArray<UInt32, Storage>,
+        borderSegments: BinaryArray<MapGlobeSegment, Storage>,
         borderColor: SIMD4<Float>,
         drawOrder: [MapGlobeDrawUnit],
         countries: [String: MapGlobeCountry]
@@ -56,6 +60,27 @@ public struct MapGlobeModel: Sendable {
         self.borderColor = borderColor
         self.drawOrder = drawOrder
         self.countries = countries
+    }
+}
+
+public extension MapGlobeModel where Storage == InMemory {
+    /// InMemory-storage convenience for the baker and synthetic test models.
+    init(
+        fillVertices: [SIMD3<Float>],
+        fillIndices: [UInt32],
+        borderSegments: [MapGlobeSegment],
+        borderColor: SIMD4<Float>,
+        drawOrder: [MapGlobeDrawUnit],
+        countries: [String: MapGlobeCountry]
+    ) {
+        self.init(
+            fillVertices: BinaryArray(fillVertices),
+            fillIndices: BinaryArray(fillIndices),
+            borderSegments: BinaryArray(borderSegments),
+            borderColor: borderColor,
+            drawOrder: drawOrder,
+            countries: countries
+        )
     }
 }
 
@@ -105,10 +130,5 @@ public struct MapGlobeCountry: Sendable {
         self.cap = cap
         self.fillRanges = fillRanges
         self.borderRanges = borderRanges
-    }
-
-    /// Unit direction to rotate toward so the country faces the camera (the cap's centre).
-    public var centroid: SIMD3<Float> {
-        cap.center
     }
 }

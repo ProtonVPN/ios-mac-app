@@ -77,7 +77,7 @@ struct PointSnapshots {
         let size = CGSize(width: 500, height: 500)
         let scale: CGFloat = 2
         let camera = GlobeCamera(orientation: GlobeCamera.orientation(facing: facing), distance: distance)
-        let mvp = camera.matrix(viewSize: size, focusHeight: size.height)
+        let mvp = camera.matrix(framing: GlobeFraming(viewSize: size, focusHeight: size.height, focusTop: 0))
         let device = try #require(MTLCreateSystemDefaultDevice())
         let renderer = try #require(GlobeRenderer(device: device, model: WorldGlobe.model, oceanColor: MapStyle.oceanColor, colorFormat: GlobeSurface.colorFormat, sampleCount: GlobeSurface.sampleCount))
         renderer.uniforms = MapUniforms(mvp: mvp, borderHalfWidth: 0)

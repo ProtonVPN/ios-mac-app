@@ -91,6 +91,12 @@ let package = Package(
                 .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "ProtonCoreServices", package: "protoncore"),
+            ],
+            swiftSettings: [
+                // BinaryDecoder stores its RawSpan cursor and mutates through ~Escapable self, which is SE-0446's
+                // still-experimental lifetime-dependence slice (@_lifetime). Consuming modules conform and call
+                // through stable syntax.
+                .enableExperimentalFeature("Lifetimes"),
             ]
         ),
         .target(

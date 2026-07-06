@@ -277,7 +277,7 @@ final class GlobeTrackballModel {
 
     /// View-space unit-sphere point under a finger location, in the current camera framing.
     private func spherePoint(at location: CGPoint, framing: GlobeFraming) -> SIMD3<Float> {
-        camera.unprojectToSphere(location, viewSize: framing.viewSize, focusHeight: framing.focusHeight, focusTop: framing.focusTop)
+        camera.unprojectToSphere(location, framing: framing)
     }
 
     private func clampZoom(_ distance: Float, minZoomDistance: Float) -> Float {

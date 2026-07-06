@@ -93,7 +93,10 @@ struct DisputedTerritoriesSnapshots {
         let camera = GlobeCamera(orientation: GlobeCamera.orientation(facing: facing), distance: distance)
         let device = try #require(MTLCreateSystemDefaultDevice())
         let renderer = try #require(GlobeRenderer(device: device, model: WorldGlobe.model, oceanColor: MapStyle.oceanColor, colorFormat: GlobeSurface.colorFormat, sampleCount: GlobeSurface.sampleCount))
-        renderer.uniforms = MapUniforms(mvp: camera.matrix(viewSize: size, focusHeight: size.height), borderHalfWidth: 0)
+        renderer.uniforms = MapUniforms(
+            mvp: camera.matrix(framing: GlobeFraming(viewSize: size, focusHeight: size.height, focusTop: 0)),
+            borderHalfWidth: 0
+        )
         renderer.cameraTarget = camera.facing
         renderer.cameraDistance = distance
         renderer.highlight = highlight

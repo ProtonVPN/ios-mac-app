@@ -26,8 +26,9 @@ public extension simd_quatf {
     /// The rotation that brings model-space `target` onto the camera's +z axis (facing the camera), keeping
     /// north (`worldUp`, +y) roughly up. Builds an orthonormal view basis from `target` and `worldUp`,
     /// swapping to a fallback up axis within `poleGuardDot` of the pole, where `target` and `worldUp` are
-    /// near-parallel and the cross product would collapse. The sign is canonical to the rotation, not to
-    /// any previous orientation, so animating between orientations needs `aligned(to:)` first.
+    /// near-parallel and the cross product would collapse. Of a rotation's two quaternion encodings, q and
+    /// -q, this picks from the basis alone, with no memory of any previous orientation; run the result
+    /// through `aligned(to:)` before interpolating toward it, or the animation can rotate the long way round.
     static func lookingAt(
         _ target: SIMD3<Float>,
         worldUp: SIMD3<Float> = SIMD3<Float>(0, 1, 0),

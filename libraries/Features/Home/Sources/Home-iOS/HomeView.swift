@@ -206,10 +206,6 @@ public struct HomeView: View {
                     onTap: isMapFull ? { setMapFull(false) } : nil
                 )
                 .zIndex(connectionStatusZIndex.rawValue)
-                // Hit-testable in both modes: the decorative gradient never hit-tests and the banner is
-                // hidden when the map is full, so the only thing that catches a tap is the lock and title,
-                // which exits.
-                .allowsHitTesting(true)
 
                 ScrollViewReader { scrollViewProxy in
                     ScrollView(showsIndicators: false) {

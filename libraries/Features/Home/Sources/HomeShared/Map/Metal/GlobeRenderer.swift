@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CoreGraphics
+import Ergonomics
 import Foundation
 import MapModel
 import MapShaderTypes
@@ -105,7 +106,8 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         #endif
     }
 
-    private let model: MapGlobeModel
+    private let drawOrder: [MapGlobeDrawUnit]
+    private let borderColor: SIMD4<Float>
     /// Color of the base ocean sphere. A `var` set through `MapGlobeView.apply(to:)`, so a changed value
     /// takes effect on the next frame instead of being silently ignored for the life of the view.
     var oceanColor: SIMD4<Float>
@@ -117,8 +119,8 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     private let starPipeline: MTLRenderPipelineState
     private let sunPipeline: MTLRenderPipelineState
 
-    /// City-point and starfield instance buffers, rebuilt on change, and their counts. `viewportSizePixels`
-    /// and `contentScale` are refreshed each live frame from the drawable, for constant-pixel dot sizing.
+    /// City-point and starfield instance buffers, rebuilt on change, and their counts. `viewportSizePixels` and
+    /// `contentScale` are refreshed each live frame from the drawable, for constant-pixel dot sizing.
     private var pinBuffer: MTLBuffer?
     private var pinCount = 0
     private var starBuffer: MTLBuffer?
@@ -130,6 +132,12 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     private let fillVertexBuffer: MTLBuffer
     private let fillIndexBuffer: MTLBuffer
     private let borderSegmentBuffer: MTLBuffer?
+
+    /// Byte offset of each baked section within its buffer: 0 on the copying path, the section's baked blob offset when
+    /// the three buffers are one adopted mapping.
+    private let fillVertexOffset: Int
+    private let fillIndexOffset: Int
+    private let borderSegmentOffset: Int
     private let baseVertexBuffer: MTLBuffer
     private let baseIndexBuffer: MTLBuffer
     private let baseIndexCount: Int
@@ -140,11 +148,44 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         private let sampleCount: Int
     #endif
 
-    init?(device: MTLDevice, model: MapGlobeModel, oceanColor: SIMD4<Float>, colorFormat: MTLPixelFormat, sampleCount: Int) {
+    /// The app renderer performs a zero-copy mmap of the model, whose sections bind straight out of the resource mapping.
+    convenience init?(device: MTLDevice, model: MapGlobeModel<Mapped>, oceanColor: SIMD4<Float>, colorFormat: MTLPixelFormat, sampleCount: Int) {
+        self.init(
+            device: device,
+            drawOrder: model.drawOrder,
+            borderColor: model.borderColor,
+            geometry: Self.slicedGeometryBuffers(device, model),
+            oceanColor: oceanColor,
+            colorFormat: colorFormat,
+            sampleCount: sampleCount
+        )
+    }
+
+    /// InMemory models (synthetic test fixtures) copy their arrays into standalone buffers.
+    convenience init?(device: MTLDevice, model: MapGlobeModel<InMemory>, oceanColor: SIMD4<Float>, colorFormat: MTLPixelFormat, sampleCount: Int) {
+        self.init(
+            device: device,
+            drawOrder: model.drawOrder,
+            borderColor: model.borderColor,
+            geometry: Self.ownedGeometryBuffers(device, model),
+            oceanColor: oceanColor,
+            colorFormat: colorFormat,
+            sampleCount: sampleCount
+        )
+    }
+
+    private init?(
+        device: MTLDevice,
+        drawOrder: [MapGlobeDrawUnit],
+        borderColor: SIMD4<Float>,
+        geometry: GeometryBuffers?,
+        oceanColor: SIMD4<Float>,
+        colorFormat: MTLPixelFormat,
+        sampleCount: Int
+    ) {
         guard let commandQueue = device.makeCommandQueue(),
               let library = try? device.makeDefaultLibrary(bundle: .module),
-              let fillVertexBuffer = Self.buffer(device, model.fillVertices),
-              let fillIndexBuffer = Self.buffer(device, model.fillIndices)
+              let geometry
         else {
             log.error("Globe renderer setup failed: no command queue, shader library, or fill buffers")
             return nil
@@ -190,7 +231,8 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
             return nil
         }
 
-        self.model = model
+        self.drawOrder = drawOrder
+        self.borderColor = borderColor
         self.oceanColor = oceanColor
         self.commandQueue = commandQueue
         self.fillPipeline = fillPipeline
@@ -199,9 +241,12 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         self.pinPipeline = pinPipeline
         self.starPipeline = starPipeline
         self.sunPipeline = sunPipeline
-        self.fillVertexBuffer = fillVertexBuffer
-        self.fillIndexBuffer = fillIndexBuffer
-        self.borderSegmentBuffer = Self.buffer(device, model.borderSegments)
+        self.fillVertexBuffer = geometry.fillVertexBuffer
+        self.fillIndexBuffer = geometry.fillIndexBuffer
+        self.borderSegmentBuffer = geometry.borderSegmentBuffer
+        self.fillVertexOffset = geometry.fillVertexOffset
+        self.fillIndexOffset = geometry.fillIndexOffset
+        self.borderSegmentOffset = geometry.borderSegmentOffset
         self.baseVertexBuffer = baseVertexBuffer
         self.baseIndexBuffer = baseIndexBuffer
         self.baseIndexCount = base.indices.count
@@ -276,14 +321,16 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         // color.
         uniforms.tintStrength = Constants.landTintStrength
         let cullDot = pathCullDot
-        for unit in model.drawOrder {
+        for unit in drawOrder {
             if simd_dot(unit.centroid, cameraTarget) < cullDot { continue } // provably behind the visible rim
 
             if !unit.fillRange.isEmpty {
                 let color = contained(unit.fillRange, in: highlight.fillRanges) ? MapStyle.highlightColor : unit.color
                 drawFill(
                     vertices: fillVertexBuffer,
+                    vertexOffset: fillVertexOffset,
                     indices: fillIndexBuffer,
+                    indexOffset: fillIndexOffset,
                     range: unit.fillRange,
                     color: color,
                     uniforms: &uniforms,
@@ -296,7 +343,7 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
                 uniforms.borderHalfWidth = unit.borderHalfWidth
                 drawBorder(
                     range: unit.borderRange,
-                    color: model.borderColor,
+                    color: borderColor,
                     uniforms: &uniforms,
                     segments: borderSegmentBuffer,
                     into: encoder
@@ -336,11 +383,14 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         )
     }
 
-    /// Draws a sub-range of an indexed triangle mesh in a solid color. The base ocean sphere passes its
-    /// whole index range; each country passes its slice of the shared fill index buffer.
+    /// Draws a sub-range of an indexed triangle mesh in a solid color. The base ocean sphere passes its whole index
+    /// range; each country passes its slice of the shared fill index buffer. The two offsets locate the vertex and
+    /// index sections within their buffers (when those buffers are from a `MapGlobeModel<Mapped>`, 0 otherwise).
     private func drawFill(
         vertices: MTLBuffer,
+        vertexOffset: Int = 0,
         indices: MTLBuffer,
+        indexOffset: Int = 0,
         range: Range<Int>,
         color: SIMD4<Float>,
         uniforms: inout MapUniforms,
@@ -348,7 +398,7 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     ) {
         var color = color
         encoder.setRenderPipelineState(fillPipeline)
-        encoder.setVertexBuffer(vertices, offset: 0, index: 0)
+        encoder.setVertexBuffer(vertices, offset: vertexOffset, index: 0)
         encoder.setVertexBytes(&uniforms, length: MemoryLayout<MapUniforms>.stride, index: 1)
         encoder.setFragmentBytes(&color, length: MemoryLayout<SIMD4<Float>>.stride, index: 0)
         encoder.setFragmentBytes(&uniforms, length: MemoryLayout<MapUniforms>.stride, index: 1) // sun/lighting
@@ -357,7 +407,7 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
             indexCount: range.count,
             indexType: .uint32,
             indexBuffer: indices,
-            indexBufferOffset: range.lowerBound * MemoryLayout<UInt32>.stride
+            indexBufferOffset: indexOffset + range.lowerBound * MemoryLayout<UInt32>.stride
         )
     }
 
@@ -370,7 +420,7 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     ) {
         var color = color
         encoder.setRenderPipelineState(borderPipeline)
-        encoder.setVertexBuffer(segmentBuffer, offset: range.lowerBound * MemoryLayout<MapGlobeSegment>.stride, index: 0)
+        encoder.setVertexBuffer(segmentBuffer, offset: borderSegmentOffset + range.lowerBound * MemoryLayout<MapGlobeSegment>.stride, index: 0)
         encoder.setVertexBytes(&uniforms, length: MemoryLayout<MapUniforms>.stride, index: 1)
         encoder.setFragmentBytes(&color, length: MemoryLayout<SIMD4<Float>>.stride, index: 0)
         encoder.setFragmentBytes(&uniforms, length: MemoryLayout<MapUniforms>.stride, index: 1) // sun/lighting
@@ -382,7 +432,7 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     /// out, empty, or before the drawable size is known.
     private func drawPoints(into encoder: MTLRenderCommandEncoder) {
         guard pinFade > Constants.minVisibleFade, pinCount > 0, let pinBuffer, viewportSizePixels.x > 0 else { return }
-        var u = PinUniforms(
+        var pinUniforms = PinUniforms(
             mvp: uniforms.mvp,
             cameraTarget: cameraTarget,
             horizonCosThreshold: HorizonCap(facing: cameraTarget, distance: cameraDistance).cosThreshold,
@@ -391,36 +441,38 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
             fade: pinFade,
             fillColor: pinColor
         )
-        encoder.setCullMode(.none) // billboards face the camera; horizon visibility is handled in the shader
+        // billboards face the camera; horizon visibility is handled in the shader
+        encoder.setCullMode(.none)
         encoder.setRenderPipelineState(pinPipeline)
         encoder.setVertexBuffer(pinBuffer, offset: 0, index: 0)
-        encoder.setVertexBytes(&u, length: MemoryLayout<PinUniforms>.stride, index: 1)
-        encoder.setFragmentBytes(&u, length: MemoryLayout<PinUniforms>.stride, index: 1)
+        encoder.setVertexBytes(&pinUniforms, length: MemoryLayout<PinUniforms>.stride, index: 1)
+        encoder.setFragmentBytes(&pinUniforms, length: MemoryLayout<PinUniforms>.stride, index: 1)
         encoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4, instanceCount: pinCount)
-        encoder.setCullMode(Constants.cullMode) // restore, like the other billboard passes, so a pass added after can't inherit .none
+
+        // restore the cull mode to its previous value
+        encoder.setCullMode(Constants.cullMode)
     }
 
-    /// Draws the starfield as instanced screen-facing billboards far out at the celestial radius, projected
-    /// by the same MVP so the field turns with the camera. Called first, so the Moon and globe drawn later
-    /// cover the stars behind them. Skipped when faded out or empty.
+    /// Draws the starfield as instanced screen-facing billboards far out at the celestial radius, projected by the same
+    /// MVP so the field turns with the camera. Called first, so the Moon and globe drawn later cover the stars behind
+    /// them. Skipped when faded out or empty.
     private func drawStars(into encoder: MTLRenderCommandEncoder) {
         guard starFade > Constants.minVisibleFade, starCount > 0, let starBuffer, viewportSizePixels.x > 0 else { return }
-        var u = StarUniforms(mvp: uniforms.mvp, viewportSize: viewportSizePixels, scale: contentScale, fade: starFade)
+        var starUniforms = StarUniforms(mvp: uniforms.mvp, viewportSize: viewportSizePixels, scale: contentScale, fade: starFade)
         encoder.setCullMode(.none) // screen-facing billboards
         encoder.setRenderPipelineState(starPipeline)
         encoder.setVertexBuffer(starBuffer, offset: 0, index: 0)
-        encoder.setVertexBytes(&u, length: MemoryLayout<StarUniforms>.stride, index: 1)
+        encoder.setVertexBytes(&starUniforms, length: MemoryLayout<StarUniforms>.stride, index: 1)
         encoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4, instanceCount: starCount)
         encoder.setCullMode(Constants.cullMode) // restore back-culling for the Moon and globe passes that follow
     }
 
-    /// Draws the sun as a single soft-glow billboard at the sub-solar direction, taking its color from the
-    /// globe uniforms, far out so it turns with the camera. Drawn between the stars and the Moon so the
-    /// opaque sphere occludes it. Fades with `lightFade`, like the rest of the lighting, and is skipped
-    /// while the map is unlit.
+    /// Draws the sun as a single soft-glow billboard at the sub-solar direction, taking its color from the globe
+    /// uniforms, far out so it turns with the camera. Drawn between the stars and the Moon so the opaque sphere
+    /// occludes it. Fades with `lightFade`, like the rest of the lighting, and is skipped while the map is unlit.
     private func drawSun(into encoder: MTLRenderCommandEncoder) {
         guard uniforms.lightFade > Constants.minVisibleFade, viewportSizePixels.x > 0 else { return }
-        var u = SunUniforms(
+        var sunUniforms = SunUniforms(
             mvp: uniforms.mvp,
             sunDirection: uniforms.sunDirection,
             viewportSize: viewportSizePixels,
@@ -430,16 +482,18 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         )
         encoder.setCullMode(.none) // screen-facing billboard
         encoder.setRenderPipelineState(sunPipeline)
-        encoder.setVertexBytes(&u, length: MemoryLayout<SunUniforms>.stride, index: 0)
-        encoder.setFragmentBytes(&u, length: MemoryLayout<SunUniforms>.stride, index: 0)
+        encoder.setVertexBytes(&sunUniforms, length: MemoryLayout<SunUniforms>.stride, index: 0)
+        encoder.setFragmentBytes(&sunUniforms, length: MemoryLayout<SunUniforms>.stride, index: 0)
         encoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
         encoder.setCullMode(Constants.cullMode) // restore back-culling for the Moon and globe passes that follow
     }
 
-    /// Centroid-dot threshold for skipping whole back-hemisphere paths. The visible rim sits
-    /// `acos(1/distance)` from the camera direction and widens as the camera pulls out, so the cutoff
-    /// follows the distance rather than being fixed. A path can reach past the rim by at most its own
-    /// angular radius, so anything beyond the rim plus `maxPathCapAngle` is provably invisible.
+    /// Skip threshold for whole paths, compared against `dot(centroid, cameraTarget)`. A sphere point is visible
+    /// only within `acos(1/distance)` of the camera direction (the visible rim, which widens as the camera pulls
+    /// out), and every baked path fits inside a cap of at most `maxPathCapAngle` around its own centroid. A centroid
+    /// farther than the sum of those two angles therefore cannot have a single visible vertex, so the threshold is
+    /// the cosine of that sum: it follows the camera distance, and saturates at pi (cosine -1), where nothing is
+    /// skipped.
     private var pathCullDot: Float {
         let rim = acos(1 / max(cameraDistance, 1.001))
         return cos(min(rim + Constants.maxPathCapAngle, .pi))
@@ -456,6 +510,77 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
             guard let base = raw.baseAddress, !raw.isEmpty else { return nil }
             return device.makeBuffer(bytes: base, length: raw.count, options: .storageModeShared)
         }
+    }
+
+    private struct GeometryBuffers {
+        let fillVertexBuffer: MTLBuffer
+        let fillIndexBuffer: MTLBuffer
+        let borderSegmentBuffer: MTLBuffer?
+        let fillVertexOffset: Int
+        let fillIndexOffset: Int
+        let borderSegmentOffset: Int
+    }
+
+    /// The zero-copy path: adopt the whole mapping as one shared no-copy buffer and bind each section by its baked
+    /// offset, failing over to a copy if unsuccessful. If successful, however, the mapped file directly becomes the
+    /// GPU's working set in memory without performing any copying. The mapping is a static property of `WorldGlobe`,
+    /// so we pass `deallocator: nil` when making the buffers to avoid freeing it accidentally.
+    private static func slicedGeometryBuffers(_ device: MTLDevice, _ model: MapGlobeModel<Mapped>) -> GeometryBuffers? {
+        // No-copy adoption needs a page-aligned base (the mapping is one) and a page-multiple length. The pages are
+        // PROT_READ and the GPU only reads them, but we have to mutably cast it to make Metal happy.
+        let adopted = WorldGlobe.withBlob { blob -> MTLBuffer? in
+            guard let base = blob.baseAddress else { return nil }
+            return device.makeBuffer(
+                bytesNoCopy: UnsafeMutableRawPointer(mutating: base),
+                length: WorldGlobe.blobPageAlignedSize,
+                options: .storageModeShared,
+                deallocator: nil
+            )
+        }
+
+        guard let adopted else {
+            // Adoption is expected to succeed; degrade to copying out of the mapping rather than losing the map if a
+            // device refuses it.
+            log.error("Globe renderer: no-copy adoption of the map resource failed, copying instead")
+            return WorldGlobe.withBlob { blob -> GeometryBuffers? in
+                guard let vertices = buffer(device, model.fillVertices.elements(in: blob)),
+                      let indices = buffer(device, model.fillIndices.elements(in: blob))
+                else { return nil }
+                return GeometryBuffers(
+                    fillVertexBuffer: vertices,
+                    fillIndexBuffer: indices,
+                    borderSegmentBuffer: model.borderSegments.isEmpty ? nil :
+                        buffer(device, model.borderSegments.elements(in: blob)),
+                    fillVertexOffset: 0,
+                    fillIndexOffset: 0,
+                    borderSegmentOffset: 0
+                )
+            }
+        }
+
+        return GeometryBuffers(
+            fillVertexBuffer: adopted,
+            fillIndexBuffer: adopted,
+            borderSegmentBuffer: model.borderSegments.isEmpty ? nil : adopted,
+            fillVertexOffset: model.fillVertices.blobSliceRegion.byteOffset,
+            fillIndexOffset: model.fillIndices.blobSliceRegion.byteOffset,
+            borderSegmentOffset: model.borderSegments.blobSliceRegion.byteOffset
+        )
+    }
+
+    /// The copying path for in-memory buffers.
+    private static func ownedGeometryBuffers(_ device: MTLDevice, _ model: MapGlobeModel<InMemory>) -> GeometryBuffers? {
+        guard let vertices = buffer(device, model.fillVertices.elements),
+              let indices = buffer(device, model.fillIndices.elements)
+        else { return nil }
+        return GeometryBuffers(
+            fillVertexBuffer: vertices,
+            fillIndexBuffer: indices,
+            borderSegmentBuffer: buffer(device, model.borderSegments.elements),
+            fillVertexOffset: 0,
+            fillIndexOffset: 0,
+            borderSegmentOffset: 0
+        )
     }
 
     // MARK: - Debug + UI test support

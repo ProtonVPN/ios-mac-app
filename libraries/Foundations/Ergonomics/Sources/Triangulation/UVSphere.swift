@@ -50,7 +50,9 @@ public enum UVSphere {
         return (vertices, indices)
     }
 
-    /// Appends a triangle, swapping the last two indices if it faces inward, so winding is consistently outward.
+    /// Appends a triangle, swapping the last two indices if it faces inward, so winding is consistently
+    /// outward. The pole rows collapse one edge of each quad to a point, and those sliver triangles are
+    /// skipped rather than emitted with (near) zero area.
     private static func appendOutward(
         _ indices: inout [UInt32],
         _ a: UInt32,
@@ -58,10 +60,19 @@ public enum UVSphere {
         _ c: UInt32,
         from verts: [SIMD3<Float>]
     ) {
-        if isOutwardFacing(verts[Int(a)], verts[Int(b)], verts[Int(c)]) {
+        let v0 = verts[Int(a)], v1 = verts[Int(b)], v2 = verts[Int(c)]
+        guard simd_length_squared(simd_cross(v1 - v0, v2 - v0)) > Constants.minTriangleCrossSquared else { return }
+        if isOutwardFacing(v0, v1, v2) {
             indices.append(contentsOf: [a, b, c])
         } else {
             indices.append(contentsOf: [a, c, b])
         }
+    }
+
+    private enum Constants {
+        /// Squared cross-product length below which a triangle is a degenerate sliver. Pole slivers come
+        /// out around 1e-17 and the smallest real quad triangle around 1e-5, so this separates them with
+        /// orders of magnitude to spare on either side.
+        static let minTriangleCrossSquared: Float = 1e-12
     }
 }

@@ -20,6 +20,7 @@ import Foundation
 import Observation
 import simd
 import SwiftUI
+import Triangulation
 
 /// Pin selection and connect-pill state for the interactive map: which city is selected, the pill's
 /// grow/collapse/cross-fade progress, and the zoom floor derived from the pin set. A view-owned
@@ -126,9 +127,9 @@ final class PinSelectionModel {
         var maxDot: Float = -1
         for i in 0 ..< directions.count {
             for j in (i + 1) ..< directions.count {
-                maxDot = max(maxDot, simd_dot(directions[i], directions[j]))
+                maxDot = max(maxDot, cosAngle(between: directions[i], directions[j]))
             }
         }
-        return acos(max(-1, min(1, maxDot)))
+        return acos(maxDot) // maxDot is already clamped, so the acos stays in its domain
     }
 }

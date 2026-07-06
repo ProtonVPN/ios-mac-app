@@ -37,13 +37,13 @@ struct ScreenProjection {
     /// Vertical shift placing the framed region within the full canvas.
     private let yOffset: Float
 
-    init(fieldOfView: Angle, viewSize: CGSize, focusHeight: CGFloat, focusTop: CGFloat = 0) {
-        let width = Float(max(viewSize.width, 1))
-        let renderHeight = Float(max(viewSize.height, 1))
-        let fh = Float(min(max(focusHeight, 1), CGFloat(renderHeight)))
-        let ft = Float(min(max(focusTop, 0), CGFloat(renderHeight)))
+    init(fieldOfView: Angle, framing: GlobeFraming) {
+        let width = Float(max(framing.viewSize.width, 1))
+        let renderHeight = Float(max(framing.viewSize.height, 1))
+        let fh = Float(min(max(framing.focusHeight, 1), CGFloat(renderHeight)))
+        let ft = Float(min(max(framing.focusTop, 0), CGFloat(renderHeight)))
         let focal = GlobeCamera.focalLength(fieldOfView: fieldOfView) // 1 / tan(fov / 2)
-        self.viewSize = viewSize
+        self.viewSize = framing.viewSize
         self.xScale = focal * fh / width
         self.yScale = focal * fh / renderHeight
         self.yOffset = (fh + 2 * ft) / renderHeight - 1

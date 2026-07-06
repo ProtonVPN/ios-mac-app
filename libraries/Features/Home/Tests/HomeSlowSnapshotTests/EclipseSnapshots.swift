@@ -56,7 +56,7 @@ struct EclipseSnapshots {
         let facing = Self.solarUmbra(Meeus.positions(at: greatest)) // fixed, so the shadow moves under it
         for offsetMinutes in eclipseOffsetsMinutes {
             let positions = Meeus.positions(at: greatest.addingTimeInterval(Double(offsetMinutes * 60)))
-            let image = try Self.render(positions: positions, facing: facing, distance: 2.8, fieldOfView: .pi / 4)
+            let image = try Self.render(positions: positions, facing: facing, distance: 2.8, fieldOfView: .radians(.pi / 4))
             assertSnapshot(of: image, as: .image(precision: precision, perceptualPrecision: perceptualPrecision), named: Self.name("SolarEclipse", offsetMinutes))
         }
     }
@@ -73,7 +73,7 @@ struct EclipseSnapshots {
         for offsetMinutes in eclipseOffsetsMinutes {
             let positions = Meeus.positions(at: greatest.addingTimeInterval(Double(offsetMinutes * 60)))
             let facing = Self.lunarFraming(positions, distance: distance) // re-aimed each frame to follow the Moon
-            let image = try Self.render(positions: positions, facing: facing, distance: distance, fieldOfView: .pi / 9)
+            let image = try Self.render(positions: positions, facing: facing, distance: distance, fieldOfView: .radians(.pi / 9))
             assertSnapshot(of: image, as: .image(precision: precision, perceptualPrecision: perceptualPrecision), named: Self.name("LunarEclipse", offsetMinutes))
         }
     }
@@ -103,11 +103,11 @@ struct EclipseSnapshots {
     /// Renders the lit globe and Moon for the given positions from a camera looking at `facing` at the
     /// given `distance` and field of view. `lightFade: 1` enables the day/night terminator and the Moon.
     @MainActor
-    private static func render(positions: Meeus.Positions, facing: SIMD3<Float>, distance: Float, fieldOfView: Float) throws -> UIImage {
+    private static func render(positions: Meeus.Positions, facing: SIMD3<Float>, distance: Float, fieldOfView: Angle) throws -> UIImage {
         let size = CGSize(width: 500, height: 500)
         let scale: CGFloat = 2
         let camera = GlobeCamera(orientation: GlobeCamera.orientation(facing: facing), distance: distance, fieldOfView: fieldOfView)
-        let mvp = camera.matrix(viewSize: size, focusHeight: size.height)
+        let mvp = camera.matrix(framing: GlobeFraming(viewSize: size, focusHeight: size.height, focusTop: 0))
         let device = try #require(MTLCreateSystemDefaultDevice())
         let renderer = try #require(GlobeRenderer(device: device, model: WorldGlobe.model, oceanColor: MapStyle.oceanColor, colorFormat: GlobeSurface.colorFormat, sampleCount: GlobeSurface.sampleCount))
         renderer.uniforms = MapUniforms(

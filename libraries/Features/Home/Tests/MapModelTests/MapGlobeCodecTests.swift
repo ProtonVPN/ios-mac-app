@@ -23,11 +23,12 @@ import simd
 import Testing
 import Triangulation
 
+// Sample construction uses the owned-array init, so `.elements` resolves everywhere without a blob.
 @Suite("MapGlobeCodec")
 struct MapGlobeCodecTests {
     /// A model exercising every branch of the codec: bulk data arrays, a draw list with ranges, and a
     /// country dictionary whose keys are deliberately out of order, to prove the sort on encode.
-    static let sample = MapGlobeModel(
+    static let sample = MapGlobeModel<InMemory>(
         fillVertices: [
             SIMD3<Float>(0, 0, 1),
             SIMD3<Float>(1, 0, 0),
@@ -80,11 +81,11 @@ struct MapGlobeCodecTests {
         let decoded = try MapGlobeCodec.decode(MapGlobeCodec.encode(Self.sample))
         let original = Self.sample
 
-        #expect(decoded.fillVertices == original.fillVertices)
-        #expect(decoded.fillIndices == original.fillIndices)
+        #expect(decoded.fillVertices.elements == original.fillVertices.elements)
+        #expect(decoded.fillIndices.elements == original.fillIndices.elements)
         #expect(decoded.borderColor == original.borderColor)
-        #expect(decoded.borderSegments.map(\.a) == original.borderSegments.map(\.a))
-        #expect(decoded.borderSegments.map(\.b) == original.borderSegments.map(\.b))
+        #expect(decoded.borderSegments.elements.map(\.a) == original.borderSegments.elements.map(\.a))
+        #expect(decoded.borderSegments.elements.map(\.b) == original.borderSegments.elements.map(\.b))
 
         #expect(decoded.drawOrder.map(\.color) == original.drawOrder.map(\.color))
         #expect(decoded.drawOrder.map(\.fillRange) == original.drawOrder.map(\.fillRange))
@@ -184,5 +185,30 @@ struct MapGlobeCodecTests {
         #expect(throws: MapGlobeCodec.DecodeError.trailingData) {
             try MapGlobeCodec.decode(data)
         }
+    }
+
+    @Test("Zero-copy decode matches the copying decode and aligns its sections")
+    func mappedDecode() throws {
+        let data = try MapGlobeCodec.encode(Self.sample)
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("globe-\(UUID().uuidString).bin")
+        try data.write(to: url)
+        defer { try? FileManager.default.removeItem(at: url) }
+
+        let mapping = try MmapBuffer(readingPath: url.path)
+        let mapped = try mapping.withRawSpan { try MapGlobeCodec.decode(slicing: $0) }
+        let copied = try MapGlobeCodec.decode(data)
+
+        // The bulk sections come back as blob slices, on the GPU-bindable alignment, resolving to the same elements
+        // the copying decode produced.
+        for region in [mapped.fillVertices.blobSliceRegion, mapped.fillIndices.blobSliceRegion, mapped.borderSegments.blobSliceRegion] {
+            #expect(region.byteOffset % MapGlobeCodec.gpuSectionAlignment == 0)
+        }
+        mapping.withUnsafeBytes { blob in
+            #expect(mapped.fillVertices.elements(in: blob) == copied.fillVertices.elements)
+            #expect(mapped.fillIndices.elements(in: blob) == copied.fillIndices.elements)
+            #expect(mapped.borderSegments.elements(in: blob).map(\.a) == copied.borderSegments.elements.map(\.a))
+        }
+        #expect(mapped.drawOrder.map(\.fillRange) == copied.drawOrder.map(\.fillRange))
+        #expect(mapped.countries.keys.sorted() == copied.countries.keys.sorted())
     }
 }

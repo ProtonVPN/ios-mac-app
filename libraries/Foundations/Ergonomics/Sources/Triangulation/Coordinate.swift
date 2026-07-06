@@ -17,7 +17,6 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import simd
 
 /// Ecliptic spherical coordinate: longitude λ measured along the ecliptic, latitude β above/below it.
 public struct EclipticCoordinate: Sendable, Equatable {

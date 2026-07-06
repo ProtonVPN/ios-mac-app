@@ -22,19 +22,20 @@ import Triangulation
 
 // The binary layout of the globe binary data on disk. This is used for both encoding and decoding steps to keep them
 // from getting out of sync.
-extension MapGlobeModel: BinaryCodable {
-    public init() {
+extension MapGlobeModel {
+    /// `code(with:)` overwrites every field on binary decode later, this function allocates an "empty" model.
+    init() {
         self.init(
-            fillVertices: [],
-            fillIndices: [],
-            borderSegments: [],
+            fillVertices: BinaryArray(),
+            fillIndices: BinaryArray(),
+            borderSegments: BinaryArray(),
             borderColor: .zero,
             drawOrder: [],
             countries: [:]
         )
     }
 
-    public mutating func code(with coder: inout some BinaryCoder) throws {
+    mutating func code<C: BinaryCoder & ~Escapable>(with coder: inout C) throws where C.Storage == Storage {
         var fillVertices = fillVertices
         var fillIndices = fillIndices
         var borderSegments = borderSegments
@@ -43,9 +44,10 @@ extension MapGlobeModel: BinaryCodable {
         var countries = countries
 
         try coder.value(&borderColor)
-        try coder.bulkArray(&fillVertices)
-        try coder.bulkArray(&fillIndices)
-        try coder.bulkArray(&borderSegments)
+        // The array sections are aligned so a zero-copy decode yields slices a GPU can bind by offset.
+        try coder.binaryArray(&fillVertices, alignedTo: MapGlobeCodec.gpuSectionAlignment)
+        try coder.binaryArray(&fillIndices, alignedTo: MapGlobeCodec.gpuSectionAlignment)
+        try coder.binaryArray(&borderSegments, alignedTo: MapGlobeCodec.gpuSectionAlignment)
         try coder.elements(&drawOrder)
         try coder.dictionary(&countries)
 
@@ -65,7 +67,7 @@ extension MapGlobeDrawUnit: BinaryCodable {
         self.init(color: .zero, fillRange: 0 ..< 0, borderRange: 0 ..< 0, borderHalfWidth: 0, centroid: .zero)
     }
 
-    public mutating func code(with coder: inout some BinaryCoder) throws {
+    public mutating func code(with coder: inout some BinaryCoder & ~Escapable) throws {
         var color = color
         var fillRange = fillRange
         var borderRange = borderRange
@@ -93,7 +95,7 @@ extension MapGlobeCountry: BinaryCodable {
         self.init(cap: SphericalCap(center: .zero, radius: .radians(0)), fillRanges: [], borderRanges: [])
     }
 
-    public mutating func code(with coder: inout some BinaryCoder) throws {
+    public mutating func code(with coder: inout some BinaryCoder & ~Escapable) throws {
         var center = cap.center
         // The radius crosses the wire as its bare `Double`, not the raw `Angle` struct.
         var radians = cap.radius.radians

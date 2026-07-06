@@ -57,10 +57,10 @@ struct GlobeCamera: Equatable {
     var orientation: simd_quatf
     /// Camera distance from the globe center (> 1).
     var distance: Float
-    /// Vertical field of view (radians).
-    var fieldOfView: Float
+    /// Vertical field of view.
+    var fieldOfView: Angle
 
-    init(orientation: simd_quatf, distance: Float, fieldOfView: Float = Float(defaultFieldOfView.radians)) {
+    init(orientation: simd_quatf, distance: Float, fieldOfView: Angle = defaultFieldOfView) {
         self.orientation = orientation
         self.distance = distance
         self.fieldOfView = fieldOfView
@@ -74,25 +74,22 @@ struct GlobeCamera: Equatable {
 
     /// Model-to-clip matrix: perspective, view translation, and globe rotation multiplied together.
     ///
-    /// `viewSize` is the full render canvas. The globe is framed within the sub-region
-    /// `[focusTop, focusTop + focusHeight]` of it, but the rest of the canvas still renders, so the globe
-    /// bleeds behind the status bar at the top and spills below the fold at the bottom, unclipped.
-    /// `focusTop == 0 && focusHeight == height` gives a plain full-canvas projection.
-    func matrix(viewSize: CGSize, focusHeight: CGFloat, focusTop: CGFloat = 0) -> simd_float4x4 {
-        let projection = ScreenProjection(
-            fieldOfView: .radians(Double(fieldOfView)),
-            viewSize: viewSize,
-            focusHeight: focusHeight,
-            focusTop: focusTop
-        )
+    /// The globe is fitted into `framing`'s focus region, but the rest of the render canvas still renders, so the
+    /// globe bleeds behind the status bar at the top and spills below the fold at the bottom, unclipped. A focus
+    /// region spanning the whole canvas gives a plain full-canvas projection.
+    func matrix(framing: GlobeFraming) -> simd_float4x4 {
+        let projection = ScreenProjection(fieldOfView: fieldOfView, framing: framing)
         let near = max(Dimensions.minNearPlane, distance - Dimensions.clipMargin)
         let far = distance + Dimensions.farClipMargin
         return projection.matrix(near: near, far: far) * .translation(z: -distance) * simd_float4x4(orientation)
     }
 
-    /// Quaternion bringing `target` onto +z (facing the camera), keeping north roughly up. The sign is
-    /// canonical to the rotation, not to any previous orientation, so callers that animate between
-    /// orientations must align consecutive quaternions themselves.
+    /// Quaternion bringing `target` onto +z (facing the camera), keeping north roughly up.
+    ///
+    /// Every rotation has two quaternion encodings, q and -q, and this picks between them from `target`
+    /// alone, with no memory of whatever orientation is currently on screen. Interpolating from the
+    /// current orientation to a result that landed in the opposite hemisphere rotates the long way round,
+    /// so run the result through `aligned(to:)` before animating to it.
     static func orientation(facing target: SIMD3<Float>) -> simd_quatf {
         .lookingAt(target)
     }
@@ -120,14 +117,8 @@ struct GlobeCamera: Equatable {
     /// Inverse of `project`, for direct-manipulation dragging: the unit-sphere point under a screen point,
     /// the surface the finger is touching. In view space, independent of the globe's orientation. Off-globe
     /// points clamp to the nearest point on the limb so a drag that slips off the edge still rotates.
-    /// `focusHeight` and `focusTop` must match what was passed to `matrix`.
-    func unprojectToSphere(_ point: CGPoint, viewSize: CGSize, focusHeight: CGFloat, focusTop: CGFloat) -> SIMD3<Float> {
-        let projection = ScreenProjection(
-            fieldOfView: .radians(Double(fieldOfView)),
-            viewSize: viewSize,
-            focusHeight: focusHeight,
-            focusTop: focusTop
-        )
+    func unprojectToSphere(_ point: CGPoint, framing: GlobeFraming) -> SIMD3<Float> {
+        let projection = ScreenProjection(fieldOfView: fieldOfView, framing: framing)
         return unitSphereHit(ray: projection.viewRay(at: point), cameraDistance: distance)
     }
 }

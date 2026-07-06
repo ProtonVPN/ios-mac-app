@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Ergonomics
 import Foundation
 @testable import HomeShared
 import MapModel
@@ -41,7 +42,7 @@ struct CoastSnapTests {
         borderRanges: []
     )
 
-    private static let model = MapGlobeModel(
+    private static let model = MapGlobeModel<InMemory>(
         fillVertices: [a, b, c],
         fillIndices: [0, 1, 2],
         borderSegments: [],
@@ -53,7 +54,7 @@ struct CoastSnapTests {
     @Test("A point on the country's land is left exactly where it is")
     func onLandStaysPut() {
         let direction = GlobeGeometry.unitSphere(latitudeDegrees: 0.5, longitudeDegrees: 0.5)
-        #expect(CoastSnap.snap(direction, to: Self.country, in: Self.model) == direction)
+        #expect(Self.model.withMesh { CoastSnap.snap(direction, to: Self.country, in: $0) } == direction)
     }
 
     @Test("A point just offshore snaps past the nearest vertex, landing on the country's fill")
@@ -62,7 +63,7 @@ struct CoastSnapTests {
         // to the others. The snap must not stop at the vertex, since a pin centred on the coastline still
         // reads as offshore. It carries the point inland, verifiably inside the triangle.
         let direction = GlobeGeometry.unitSphere(latitudeDegrees: -1, longitudeDegrees: -1)
-        let snapped = CoastSnap.snap(direction, to: Self.country, in: Self.model)
+        let snapped = Self.model.withMesh { CoastSnap.snap(direction, to: Self.country, in: $0) }
         #expect(snapped != direction)
         #expect(SphericalTriangle(Self.a, Self.b, Self.c).contains(snapped))
         #expect(angle(between: Self.a, snapped).degrees <= CoastSnap.inlandNudge.degrees + 0.01)
@@ -71,7 +72,7 @@ struct CoastSnapTests {
     @Test("A point farther than the snap cap is left put, not flung onto the land")
     func farAwayIsLeftPut() {
         let direction = GlobeGeometry.unitSphere(latitudeDegrees: 10, longitudeDegrees: 10)
-        #expect(CoastSnap.snap(direction, to: Self.country, in: Self.model) == direction)
+        #expect(Self.model.withMesh { CoastSnap.snap(direction, to: Self.country, in: $0) } == direction)
     }
 
     @Test("A degenerate (weld-collapsed) triangle can't make the whole ocean read as land")
@@ -79,7 +80,7 @@ struct CoastSnapTests {
         // A duplicate vertex zeroes an edge normal, and a raw sign test would then hold for every point on
         // the sphere, letting one bad sliver disable coast snapping for its whole country. With the
         // degenerate triangle listed first, the offshore point must still snap onto the real land.
-        let degenerate = MapGlobeModel(
+        let degenerate = MapGlobeModel<InMemory>(
             fillVertices: [Self.a, Self.b, Self.c],
             fillIndices: [0, 0, 2, 0, 1, 2], // the degenerate (a, a, c), then the real triangle
             borderSegments: [],
@@ -88,7 +89,7 @@ struct CoastSnapTests {
             countries: ["xx": Self.degenerateCountry]
         )
         let direction = GlobeGeometry.unitSphere(latitudeDegrees: -1, longitudeDegrees: -1)
-        let snapped = CoastSnap.snap(direction, to: Self.degenerateCountry, in: degenerate)
+        let snapped = degenerate.withMesh { CoastSnap.snap(direction, to: Self.degenerateCountry, in: $0) }
         #expect(snapped != direction)
         #expect(SphericalTriangle(Self.a, Self.b, Self.c).contains(snapped))
     }

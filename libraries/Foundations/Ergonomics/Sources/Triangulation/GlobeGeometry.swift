@@ -45,12 +45,11 @@ public enum GlobeGeometry {
     /// at the poles.
     public static func coordinate(of direction: SIMD3<Float>) -> GeographicCoordinate {
         let n = simd_normalize(direction)
-        let latitude = asin(max(-1, min(1, n.y))) * 180 / .pi
-        // x = cos(lat) * cos(lon) and -z = cos(lat) * sin(lon), so lon = atan2(-z, x).
-        let longitude = atan2(-n.z, n.x) * 180 / .pi
+        // x = cos(lat) * cos(lon) and -z = cos(lat) * sin(lon), so lon = atan2(-z, x). The y clamp keeps
+        // normalisation round-off from pushing the asin out of its domain.
         return GeographicCoordinate(
-            latitude: .degrees(Double(latitude)),
-            longitude: .degrees(Double(longitude))
+            latitude: .asin(max(-1, min(1, Double(n.y)))),
+            longitude: .atan2(Double(-n.z), Double(n.x))
         )
     }
 }

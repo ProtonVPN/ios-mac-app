@@ -18,6 +18,7 @@
 
 import CoreGraphics
 import Domain
+import Ergonomics
 import Foundation
 import MapModel
 import simd
@@ -29,17 +30,44 @@ enum WorldGlobe {
     /// that decoding and re-encoding this exact resource reproduces it bit for bit.
     static let resourceURL = Bundle.module.url(forResource: "world-globe", withExtension: "bin")
 
-    static let model: MapGlobeModel = {
+    /// The resource, mapped read-only for the life of the process. `model`'s array fields are zero-copy views into
+    /// this mapping, and the renderer adopts it wholesale as a GPU buffer. This memory is mapped for the lifetime of
+    /// the app process.
+    private static let mapping: MmapBuffer = {
         guard let url = resourceURL else {
             fatalError("world-globe.bin missing from HomeShared resources, run `swift run MapBaker`")
         }
         do {
-            let data = try Data(contentsOf: url, options: .mappedIfSafe)
-            return try MapGlobeCodec.decode(data)
+            return try MmapBuffer(readingPath: url.path)
+        } catch {
+            fatalError("Failed to map world-globe.bin: \(error)")
+        }
+    }()
+
+    static let model: MapGlobeModel<Mapped> = {
+        do {
+            return try mapping.withRawSpan { try MapGlobeCodec.decode(slicing: $0) }
         } catch {
             fatalError("Failed to load world-globe.bin: \(error)")
         }
     }()
+
+    /// Scoped access to the mapped blob backing `model`'s array slices, for adopting the whole region by the GPU.
+    static func withBlob<R>(_ body: (UnsafeRawBufferPointer) -> R) -> R {
+        mapping.withUnsafeBytes(body)
+    }
+
+    /// Scoped access to the globe's fill mesh
+    static func withMesh<R>(_ body: (MapGlobeMesh) -> R) -> R {
+        withBlob { blob in
+            model.withMesh(in: blob, body)
+        }
+    }
+
+    /// The mapping's page-rounded length, the size a whole-region GPU adoption must be created with.
+    static var blobPageAlignedSize: Int {
+        mapping.pageAlignedSize
+    }
 
     private enum Constants {
         /// Country codes whose ISO form differs from the map's naming: ISO "gb" is the map's "uk".

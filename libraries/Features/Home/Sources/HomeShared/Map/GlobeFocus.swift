@@ -37,7 +37,7 @@ enum GlobeFocus {
         guard let code = code?.lowercased(), let country = WorldGlobe.mainland(code: code) else {
             return defaultDirection
         }
-        return simd_normalize(country.centroid)
+        return simd_normalize(country.cap.center)
     }
 
     /// Camera distance for a country code, closer for smaller countries so they fill the view. Clamped so

@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CoreGraphics
+import Ergonomics
 import Foundation
 import MapModel
 import simd
@@ -25,13 +26,12 @@ import Triangulation
 
 /// Converts the parsed SVG into a 3-D `MapGlobeModel` on the unit sphere.
 ///
-/// The pipeline per path: densify long segments so they hug the sphere, triangulate each polygon,
-/// un-project every vertex from map space to a unit-sphere position, and emit border segments. Country
-/// centroids and caps are accumulated for the rotate-to-country animation. Triangle count stays bounded
-/// because the source polylines are already dense, so densification only splits the rare long straight
-/// border.
+/// The pipeline per path: densify long segments so they hug the sphere, triangulate each polygon, un-project every
+/// vertex from map space to a unit-sphere position, and emit border segments. Country centroids and caps are
+/// accumulated for the rotate-to-country animation. Triangle count stays bounded because the source polylines are
+/// already dense, so densification only splits the rare long straight border.
 enum GlobeExtractor {
-    static func extract(from root: SVGNode) -> MapGlobeModel {
+    static func extract(from root: SVGNode) -> MapGlobeModel<InMemory> {
         var builder = GlobeBuilder(bounds: root.bounds())
         for path in MapExtractor.collectPaths(from: root) {
             builder.append(path)
@@ -40,31 +40,27 @@ enum GlobeExtractor {
     }
 }
 
-/// One extracted path's baked geometry: where its fill and border landed in the shared buffers, plus the
-/// cap and 2-D bounds the per-country aggregation works from.
+/// One extracted path's baked geometry: where its fill and border landed in the shared buffers, plus the bounding cap
+/// and 2-D bounds the per-country aggregation works from.
 private struct BakedPath {
     let ancestorIDs: [String]
     let fillRange: Range<Int>
     let borderRange: Range<Int>
-    let centroid: SIMD3<Float>
-    let radius: Float
+    let cap: SphericalCap
     let bounds: CGRect
 }
 
-/// Accumulates the shared vertex, index, and segment buffers as paths are appended, then assembles the
-/// final model. A type of its own so each baking stage (fills, borders, caps, countries) reads on its own
-/// rather than sharing one loop body.
+/// Accumulates the shared vertex, index, and segment buffers as paths are appended, then assembles the final model.
 private struct GlobeBuilder {
     private enum Constants {
-        /// Sphere-arc tolerance in radians (about a degree) for densifying long segments. Most source
-        /// segments are far shorter and pass through untouched.
+        /// Sphere-arc tolerance in radians (about a degree) for densifying long segments. Most source segments are
+        /// far shorter and pass through untouched.
         static let densifyTolerance: Float = 1.0 * .pi / 180
     }
 
     private enum Dimensions {
-        /// Squared-distance cull for zero-length border segments, in sphere units: about 1e-6 radians, or
-        /// 6 metres of Earth. Only true duplicates, densification landing on an existing vertex, fall
-        /// under it.
+        /// Squared-distance cull for zero-length border segments, in sphere units: about 1e-6 radians, or 6 metres
+        /// of Earth. Only true duplicates, densification landing on an existing vertex, fall under it.
         static let degenerateSegmentLengthSquared: Float = 1e-12
     }
 
@@ -114,13 +110,12 @@ private struct GlobeBuilder {
             ancestorIDs: path.ancestorIDs,
             fillRange: fillRange,
             borderRange: borderRange,
-            centroid: centroid,
-            radius: radius,
+            cap: SphericalCap(center: centroid, radius: .radians(Double(radius))),
             bounds: path.pointBounds
         ))
     }
 
-    mutating func finish() -> MapGlobeModel {
+    mutating func finish() -> MapGlobeModel<InMemory> {
         report.printSummary()
         return MapGlobeModel(
             fillVertices: fillVertices,
@@ -233,14 +228,8 @@ private struct GlobeBuilder {
                 unionBounds = unionBounds.union(bakedPaths[member].bounds)
             }
             let centroid = unprojector.sphere(SIMD2<Float>(Float(unionBounds.midX), Float(unionBounds.midY)))
-            // Enclosing-cap radius around the fixed bounding-box center. Each member's cap radius is already baked, so
-            // this just adds the centre-to-member angle to it.
-            var radius: Float = 0
-            for member in members {
-                radius = max(radius, acos(cosAngle(between: centroid, bakedPaths[member].centroid)) + bakedPaths[member].radius)
-            }
             result[id] = MapGlobeCountry(
-                cap: SphericalCap(center: centroid, radius: .radians(Double(radius))),
+                cap: .enclosing(members.map { bakedPaths[$0].cap }, around: centroid),
                 fillRanges: mergeRanges(members.map { bakedPaths[$0].fillRange }.filter { !$0.isEmpty }),
                 borderRanges: mergeRanges(members.map { bakedPaths[$0].borderRange }.filter { !$0.isEmpty })
             )
