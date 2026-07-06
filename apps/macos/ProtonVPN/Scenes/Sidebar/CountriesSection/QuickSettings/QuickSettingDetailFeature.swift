@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import Domain
 import Foundation
 import LegacyCommon
@@ -34,7 +35,8 @@ struct QuickSettingDetailFeature {
         let type: QuickSettingType
         var secureCoreEnabled: Bool
         var netShieldType: NetShieldType
-        var killSwitchEnabled: Bool
+        var killSwitchMode: KillSwitchMode
+        var isConnected: Bool
         var portForwardingEnabled: Bool
         var netShieldStatsEnabled: Bool
         var netShieldStats: NetShieldModel
@@ -102,14 +104,21 @@ struct QuickSettingDetailFeature {
                         id: .killSwitchOff,
                         title: Localizable.killSwitchStatusOff,
                         icon: Theme.Asset.Icons.switchOff.swiftUIImage,
-                        isActive: !killSwitchEnabled,
+                        isActive: killSwitchMode == .off,
                         requiresUpdate: false
                     ),
                     .init(
-                        id: .killSwitchOn,
-                        title: Localizable.killSwitchStatusOn,
+                        id: .killSwitchStandard,
+                        title: Localizable.killSwitchOptionStandard,
                         icon: Theme.Asset.Icons.switchOn.swiftUIImage,
-                        isActive: killSwitchEnabled,
+                        isActive: killSwitchMode == .standard,
+                        requiresUpdate: false
+                    ),
+                    .init(
+                        id: .killSwitchAdvanced,
+                        title: Localizable.killSwitchOptionAdvanced,
+                        icon: Theme.Asset.Icons.switchOnLock.swiftUIImage,
+                        isActive: killSwitchMode == .advanced,
                         requiresUpdate: false
                     ),
                 ]
@@ -161,6 +170,65 @@ struct QuickSettingDetailFeature {
                 }
         }
 
+        /// Kill Switch status message(s) + LAN hint shown below the picker rows
+        /// (VPN status × KS mode) matrix. Empty for non-KS quick settings.
+        var killSwitchStatusMessages: [KillSwitchStatusMessage] {
+            guard type == .killSwitchDisplay else { return [] }
+            let lanHint = KillSwitchStatusMessage(
+                text: Localizable.quickSettingsKillSwitchNote,
+                icon: Theme.Asset.Icons.infoCircleFilled.swiftUIImage,
+                iconColor: Color(.icon, .weak)
+            )
+            let ipExposed = KillSwitchStatusMessage(
+                text: Localizable.killSwitchStatusExposed,
+                icon: Theme.Asset.Icons.infoCircleFilled.swiftUIImage,
+                iconColor: Color(.icon, .weak)
+            )
+            switch killSwitchMode {
+            case .off:
+                return [ipExposed]
+            case .standard where isConnected:
+                return [
+                    KillSwitchStatusMessage(
+                        text: Localizable.killSwitchStatusStandard,
+                        icon: Theme.Asset.Icons.checkmarkCircleFilled.swiftUIImage,
+                        iconColor: Color(.icon, .success)
+                    ),
+                    lanHint,
+                ]
+            case .standard:
+                return [ipExposed, lanHint]
+            case .advanced where isConnected:
+                return [
+                    KillSwitchStatusMessage(
+                        text: Localizable.killSwitchStatusAdvancedBlocksAll,
+                        icon: Theme.Asset.Icons.checkmarkCircleFilled.swiftUIImage,
+                        iconColor: Color(.icon, .success)
+                    ),
+                    KillSwitchStatusMessage(
+                        text: Localizable.killSwitchStatusAdvancedApplies,
+                        icon: Theme.Asset.Icons.exclamationCircleFilled.swiftUIImage,
+                        iconColor: Color(.icon, .warning)
+                    ),
+                    lanHint,
+                ]
+            case .advanced:
+                return [
+                    KillSwitchStatusMessage(
+                        text: Localizable.killSwitchStatusAdvancedDisablesInternet,
+                        icon: Theme.Asset.Icons.circleSlash.swiftUIImage,
+                        iconColor: Color(.icon, .weak)
+                    ),
+                    KillSwitchStatusMessage(
+                        text: Localizable.killSwitchBulletAdvancedRecover,
+                        icon: Theme.Asset.Icons.exclamationCircleFilled.swiftUIImage,
+                        iconColor: Color(.icon, .warning)
+                    ),
+                    lanHint,
+                ]
+            }
+        }
+
         var portForwardingState: PortForwardingVCState {
             switch connectionInfo {
             case let .portForwardingStatus(enabled, supportsP2P, isConnected):
@@ -187,7 +255,8 @@ struct QuickSettingDetailFeature {
                 type: type,
                 secureCoreEnabled: state.secureCore.isEnabled,
                 netShieldType: state.netShield.type,
-                killSwitchEnabled: state.killSwitch.isEnabled,
+                killSwitchMode: state.killSwitch.killSwitchMode,
+                isConnected: state.killSwitch.connectionState.isConnected,
                 portForwardingEnabled: state.portForwarding.isEnabled,
                 netShieldStatsEnabled: state.netShield.isStatsEnabled,
                 netShieldStats: state.netShield.stats,
@@ -246,4 +315,15 @@ struct QuickSettingOptionRow: Identifiable {
     let icon: Image
     let isActive: Bool
     let requiresUpdate: Bool
+}
+
+/// A single Kill Switch status line (icon + text) shown below the picker rows
+struct KillSwitchStatusMessage: Identifiable {
+    var id: String {
+        text
+    }
+
+    let text: String
+    let icon: Image
+    let iconColor: Color?
 }

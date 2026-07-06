@@ -106,8 +106,10 @@ struct QuickSettingsFeature {
 
         @CasePathable
         enum Alert: Equatable {
-            case confirmKillSwitchOn
-            case cancelKillSwitchOn
+            /// Confirmed a mode-up Kill Switch transition (Off→Standard, Off→Advanced, Standard→Advanced).
+            /// The target mode is captured so the apply path doesn't re-derive it.
+            case confirmKillSwitchMode(KillSwitchMode)
+            case cancelKillSwitchMode
             case confirmDisableHermesAndSetNetShield(NetShieldType)
             /// Confirmed mid-session Secure Core toggle. `turningOn` is captured at the moment
             /// the alert is presented so the apply path doesn't have to re-derive direction
@@ -119,7 +121,7 @@ struct QuickSettingsFeature {
     @SharedReader(.discourageSecureCore) private var discourageSecureCore: Bool
     @SharedReader(.connectionState) private var connectionState: ConnectionState
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
-    @Shared(.killSwitch) private var killSwitch: Bool
+    @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
     @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
 
     @Dependency(\.sessionService) var sessionService
@@ -278,13 +280,18 @@ private extension QuickSettingsFeature {
                 return .none
 
             case let .destination(.presented(.quickSettingDetail(.delegate(.option(type, option))))):
-                // Alerts before applying: Kill Switch/Plutonium conflict alert, NetShield/Hermes
+                // Alerts before applying: Kill Switch mode-up confirmation, NetShield/Hermes
                 // conflict alert, paywall upsell, Secure Core discourage modal. Only after all
                 // of these pass do we hand off to `applyQuickSettingOptionSelection`.
-                if type == .killSwitchDisplay, option == .killSwitchOn,
-                   Self.requiresKillSwitchConflictConfirmation() {
-                    state.alert = Self.killSwitchConflictAlert
-                    return .none
+                if type == .killSwitchDisplay, let targetMode = option.killSwitchMode {
+                    // Confirm only on mode-up transitions (increasing protection); downgrades and Off
+                    // apply immediately
+                    if targetMode.rawValue > killSwitchMode.rawValue {
+                        state.alert = Self.killSwitchModeUpAlert(from: killSwitchMode, to: targetMode)
+                        return .none
+                    }
+                    apply(.killSwitch(mode: targetMode))
+                    return .send(.dismissDetails)
                 }
 
                 if case let .netShield(level) = option, level != .off, hermesClient.isEnabled().wrappedValue {
@@ -376,11 +383,11 @@ private extension QuickSettingsFeature {
     var alertReducer: some ReducerOf<Self> {
         Reduce { _, action in
             switch action {
-            case .alert(.presented(.cancelKillSwitchOn)):
+            case .alert(.presented(.cancelKillSwitchMode)):
                 return .send(.dismissDetails)
 
-            case .alert(.presented(.confirmKillSwitchOn)):
-                applyQuickSettingOptionSelection(type: .killSwitchDisplay, option: .killSwitchOn)
+            case let .alert(.presented(.confirmKillSwitchMode(mode))):
+                apply(.killSwitch(mode: mode))
                 return .send(.dismissDetails)
 
             case let .alert(.presented(.confirmDisableHermesAndSetNetShield(level))):
@@ -437,7 +444,7 @@ private extension QuickSettingsFeature {
     /// rejects new mismatched cases at compile time.
     enum QuickSettingChange: Equatable {
         case secureCore(enabled: Bool)
-        case killSwitch(enabled: Bool)
+        case killSwitch(mode: KillSwitchMode)
         case netShield(NetShieldType)
         case portForwarding(enabled: Bool)
 
@@ -445,8 +452,9 @@ private extension QuickSettingsFeature {
             switch (type, option) {
             case (.secureCoreDisplay, .secureCoreOff): self = .secureCore(enabled: false)
             case (.secureCoreDisplay, .secureCoreOn): self = .secureCore(enabled: true)
-            case (.killSwitchDisplay, .killSwitchOff): self = .killSwitch(enabled: false)
-            case (.killSwitchDisplay, .killSwitchOn): self = .killSwitch(enabled: true)
+            case (.killSwitchDisplay, .killSwitchOff): self = .killSwitch(mode: .off)
+            case (.killSwitchDisplay, .killSwitchStandard): self = .killSwitch(mode: .standard)
+            case (.killSwitchDisplay, .killSwitchAdvanced): self = .killSwitch(mode: .advanced)
             case let (.netShieldDisplay, .netShield(level)): self = .netShield(level)
             case (.portForwardingDisplay, .portForwardingOff): self = .portForwarding(enabled: false)
             case (.portForwardingDisplay, .portForwardingOn): self = .portForwarding(enabled: true)
@@ -475,15 +483,16 @@ private extension QuickSettingsFeature {
             $secureCoreToggle.withLock { $0 = enabled }
             quickSettingsDisplayReconnectionFeedback()
 
-        case let .killSwitch(enabled):
-            $killSwitch.withLock { $0 = enabled }
-            if enabled {
+        case let .killSwitch(mode):
+            // KS is mutually exclusive with both ExcludeLocalNetworks (LAN) and Plutonium (Split
+            // Tunneling). When enabling any protected mode, force them off; the mode-up confirmation
+            // already informed the user before we got here.
+            $killSwitchMode.withLock { $0 = mode }
+            if mode.isProtected {
+                setFeatureValue(ExcludeLocalNetworks.off)
                 $plutonium.withLock { $0 = .disabled(plutonium.mode) }
             }
-            if connectionState.isConnected || connectionState.is(\.killSwitchActive) {
-                log.info("Applying killSwitch feature change in place", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
-                connectionCommandClient.send(.applySettings([.tunnel(.killSwitch(enabled))]))
-            }
+            // The connection effect is handled by SidebarFeature by observing `killSwitchMode`
 
         case let .netShield(level):
             quickSettingsChangeNetShieldLevel(level)
@@ -594,28 +603,52 @@ extension QuickSettingsFeature {
         }
     }
 
-    /// Kill Switch conflicts with Plutonium split tunneling.
-    static func requiresKillSwitchConflictConfirmation() -> Bool {
-        @SharedReader(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
-        if case .enabled = plutonium { return true }
-        return false
-    }
-
-    static var killSwitchConflictAlert: AlertState<Action.Alert> {
-        AlertState(
-            title: { TextState(Localizable.turnKsOnTitle) },
+    /// Mode-up confirmation for enabling/increasing Kill Switch protection
+    static func killSwitchModeUpAlert(from current: KillSwitchMode, to mode: KillSwitchMode) -> AlertState<Action.Alert> {
+        let title: String
+        let bullets: [String]
+        let confirmTitle: String
+        switch mode {
+        case .standard:
+            // Off → Standard
+            title = Localizable.killSwitchEnableStandardTitle
+            bullets = [Localizable.killSwitchBulletSplitTunneling, Localizable.killSwitchBulletNoLan]
+            confirmTitle = Localizable.killSwitchConfirmEnable
+        case .advanced where current == .standard:
+            // Standard → Advanced
+            title = Localizable.killSwitchSwitchAdvancedTitle
+            bullets = [Localizable.killSwitchBulletAdvancedPersists, Localizable.killSwitchBulletAdvancedRecover]
+            confirmTitle = Localizable.killSwitchConfirmSwitch
+        case .advanced:
+            // Off → Advanced
+            title = Localizable.killSwitchEnableAdvancedTitle
+            bullets = [
+                Localizable.killSwitchBulletSplitTunneling,
+                Localizable.killSwitchBulletNoLan,
+                Localizable.killSwitchBulletAdvancedPersists,
+            ]
+            confirmTitle = Localizable.killSwitchConfirmEnable
+        case .off:
+            // Not a mode-up; never reached (downgrade/Off applies without a dialog).
+            title = ""
+            bullets = []
+            confirmTitle = Localizable.killSwitchConfirmEnable
+        }
+        let message = bullets.map { "•  \($0)" }.joined(separator: "\n")
+        return AlertState(
+            title: { TextState(title) },
             actions: {
                 ButtonState(
-                    action: .send(.confirmKillSwitchOn),
-                    label: { TextState(Localizable.continue) }
+                    action: .send(.confirmKillSwitchMode(mode)),
+                    label: { TextState(confirmTitle) }
                 )
                 ButtonState(
                     role: .cancel,
-                    action: .send(.cancelKillSwitchOn),
+                    action: .send(.cancelKillSwitchMode),
                     label: { TextState(Localizable.cancel) }
                 )
             },
-            message: { TextState(Localizable.turnKsOnDescriptionMacosStConflict) }
+            message: { TextState(message) }
         )
     }
 
@@ -678,9 +711,20 @@ enum QuickSettingOptionID: Equatable, Hashable {
     case secureCoreOn
     case netShield(NetShieldType)
     case killSwitchOff
-    case killSwitchOn
+    case killSwitchStandard
+    case killSwitchAdvanced
     case portForwardingOff
     case portForwardingOn
+
+    /// The Kill Switch mode this option represents, or `nil` for non-KS options.
+    var killSwitchMode: KillSwitchMode? {
+        switch self {
+        case .killSwitchOff: .off
+        case .killSwitchStandard: .standard
+        case .killSwitchAdvanced: .advanced
+        default: nil
+        }
+    }
 }
 
 extension QuickSettingsFeature.Destination.State: Equatable {}

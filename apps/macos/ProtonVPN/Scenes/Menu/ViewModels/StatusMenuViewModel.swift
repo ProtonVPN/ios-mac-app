@@ -51,6 +51,7 @@ final class StatusMenuViewModel {
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.linkOpener) var linkOpener
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
+    @SharedReader(.killSwitchMode) private var killSwitchMode: KillSwitchMode
     @SharedReader(.connectionState) private var connectionState: ConnectionState
     @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
 
@@ -163,7 +164,24 @@ final class StatusMenuViewModel {
             connectionCommandClient.send(.disconnect(.tray))
             return
         }
-        connectionCommandClient.send(.disconnect(.tray))
+        disconnectFromTray()
+    }
+
+    /// Advanced kill switch keeps blocking after an intentional disconnect, so confirm first when
+    /// connected. Other states disconnect immediately
+    private func disconnectFromTray() {
+        guard killSwitchMode.isAdvanced, connectionState.isConnected else {
+            connectionCommandClient.send(.disconnect(.tray))
+            return
+        }
+        let viewModel = WarningPopupViewModel(
+            title: Localizable.killSwitchDisconnectAdvancedTitle,
+            description: Localizable.killSwitchAdvancedDisconnectWarning,
+            onConfirm: { [weak self] in
+                self?.connectionCommandClient.send(.disconnect(.tray))
+            }
+        )
+        disconnectWarning?(viewModel)
     }
 
     // MARK: - Login section
@@ -211,7 +229,7 @@ final class StatusMenuViewModel {
     func quickConnectAction() {
         if isQuickConnectInDisconnectMode {
             log.debug("Disconnect requested by pressing Quick connect", category: .connectionDisconnect, event: .trigger)
-            connectionCommandClient.send(.disconnect(.tray))
+            disconnectFromTray()
         } else {
             log.debug("Connect requested by pressing Quick connect", category: .connectionConnect, event: .trigger)
             connectionCommandClient.quickConnect(trigger: .tray)
@@ -631,8 +649,7 @@ final class StatusMenuViewModel {
             return nil
         }
 
-        @SharedReader(.hasConnected) var hasConnected
-        let description = hasConnected ? Localizable.enabled.lowercased() : Localizable.disabled.lowercased()
+        let description = killSwitchMode.isProtected ? Localizable.enabled.lowercased() : Localizable.disabled.lowercased()
         return Localizable.killSwitch + " " + description
     }
 

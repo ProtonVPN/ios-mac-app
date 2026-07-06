@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
 import NetShield
@@ -371,14 +372,9 @@ struct CountriesQuickSettingsFeatureTests {
         }
     }
 
-    @Test("kill switch on presents Plutonium conflict alert")
-    func killSwitchOnPresentsPlutoniumConflictAlert() async {
+    @Test("enabling kill switch (mode-up) presents confirmation")
+    func killSwitchModeUpPresentsConfirmation() async {
         @SharedReader(.userTier) var userTier: VpnTier? = .paid
-        @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
-        $plutonium.withLock { $0 = .disabled(.exclusion) }
-        #expect(!QuickSettingsFeature.requiresKillSwitchConflictConfirmation())
-        $plutonium.withLock { $0 = .enabled(.exclusion) }
-        defer { $plutonium.withLock { $0 = .disabled(.exclusion) } }
 
         let store = makeStore()
 
@@ -389,8 +385,8 @@ struct CountriesQuickSettingsFeatureTests {
             $0.killSwitch.isSelected = true
             $0.portForwarding.isSelected = false
         }
-        await store.send(.destination(.presented(.quickSettingDetail(.delegate(.option(.killSwitchDisplay, .killSwitchOn)))))) {
-            $0.alert = QuickSettingsFeature.killSwitchConflictAlert
+        await store.send(.destination(.presented(.quickSettingDetail(.delegate(.option(.killSwitchDisplay, .killSwitchStandard)))))) {
+            $0.alert = QuickSettingsFeature.killSwitchModeUpAlert(from: .off, to: .standard)
         }
     }
 
@@ -430,7 +426,8 @@ struct CountriesQuickSettingsFeatureTests {
             type: type,
             secureCoreEnabled: state.secureCore.isEnabled,
             netShieldType: state.netShield.type,
-            killSwitchEnabled: state.killSwitch.isEnabled,
+            killSwitchMode: state.killSwitch.killSwitchMode,
+            isConnected: state.killSwitch.connectionState.isConnected,
             portForwardingEnabled: state.portForwarding.isEnabled,
             netShieldStatsEnabled: state.netShield.isStatsEnabled,
             netShieldStats: state.netShield.stats,

@@ -22,6 +22,9 @@
 
 import AuthenticationServices
 import Cocoa
+import Connection
+import Dependencies
+import Domain
 import Ergonomics
 import Foundation
 import LegacyCommon
@@ -31,6 +34,7 @@ import ProtonCoreObservability
 import ProtonCoreServices
 import Settings_macOS
 import SharedViews
+import Sharing
 import Strings
 import SwiftUI
 import Theme
@@ -122,6 +126,45 @@ final class LoginViewController: NSViewController {
         return view
     }()
 
+    // MARK: - Kill Switch login banner
+
+    @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
+    @Dependency(\.vpnTunnelControl) private var vpnTunnelControl
+
+    private lazy var killSwitchBanner: KillSwitchLoginBanner = {
+        let banner = KillSwitchLoginBanner()
+        banner.translatesAutoresizingMaskIntoConstraints = false
+        banner.isHidden = true
+        view.addSubview(banner)
+        NSLayoutConstraint.activate([
+            banner.leadingAnchor.constraint(equalTo: startOnBootLabel.leadingAnchor),
+            banner.trailingAnchor.constraint(equalTo: startOnBootButton.trailingAnchor),
+            banner.topAnchor.constraint(equalTo: view.topAnchor, constant: .themeSpacing16),
+        ])
+        return banner
+    }()
+
+    /// Shows the Advanced kill-switch blocking banner while the user is logged out but KS is still
+    /// blocking. "Disable" tears down the zero-peer tunnel and switches KS off.
+    private func updateKillSwitchBanner() {
+        guard killSwitchMode.isAdvanced else {
+            killSwitchBanner.isHidden = true
+            return
+        }
+        killSwitchBanner.configureBlocking { [weak self] in
+            self?.disableKillSwitchFromBanner()
+        }
+    }
+
+    private func disableKillSwitchFromBanner() {
+        let control = vpnTunnelControl
+        Task { try? await control.stop() }
+        $killSwitchMode.withLock { $0 = .off }
+        killSwitchBanner.configureDisabled { [weak self] in
+            self?.killSwitchBanner.isHidden = true
+        }
+    }
+
     @IBOutlet private var usernameTextField: TextFieldWithFocus!
     @IBOutlet private var usernameHorizontalLine: NSBox!
 
@@ -202,6 +245,7 @@ final class LoginViewController: NSViewController {
         setupOnboardingView()
         setupTwoFactorView()
         setupCallbacks()
+        updateKillSwitchBanner()
 
         viewModel.updateAvailableDomains()
     }

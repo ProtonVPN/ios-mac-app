@@ -55,15 +55,35 @@ public class ActiveSessionWarningAlert: SystemAlert {
 }
 
 public class QuitWarningAlert: SystemAlert {
-    public var title: String? = Localizable.vpnConnectionActive
-    public var message: String? = Localizable.quitWarning
+    public var title: String?
+    public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
 
-    public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: confirmHandler))
+    /// Quit confirmation while a VPN session is active. Standard releases KS on quit;
+    public init(killSwitchMode: KillSwitchMode, confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
+        self.title = Localizable.killSwitchQuitTitle
+        self.message = killSwitchMode.isAdvanced
+            ? Localizable.killSwitchLogoutAdvancedBody
+            : Localizable.killSwitchDisconnectedFromVpn
+        actions.append(AlertAction(title: Localizable.quit, style: .confirmative, handler: confirmHandler))
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
+    }
+}
+
+/// Confirmation shown when the user clicks the in-app Disconnect button while Advanced kill switch is
+/// active. Disconnecting is a clean disconnect, but Advanced keeps blocking traffic afterward.
+public class DisconnectWithAdvancedKillSwitchAlert: SystemAlert {
+    public var title: String? = Localizable.killSwitchDisconnectAdvancedTitle
+    public var message: String? = Localizable.killSwitchAdvancedDisconnectWarning
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+
+    public init(confirmHandler: @escaping () -> Void) {
+        actions.append(AlertAction(title: Localizable.disconnect, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: nil))
     }
 }
 

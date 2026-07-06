@@ -122,6 +122,7 @@ struct SidebarFeature {
         case windowDidEndLiveResize(width: CGFloat, isFullscreen: Bool)
         case windowWillEnterFullScreen
         case windowWillExitFullScreen
+        case killSwitchModeChanged(KillSwitchMode)
         case planChanged(PlanChange)
         /// Refresh API announcements if polling is enabled (on start and each time the app becomes active)
         case refreshAnnouncementsIfNeeded
@@ -191,7 +192,7 @@ struct SidebarFeature {
     @Dependency(\.profileManager) private var profileManager
     @Dependency(\.announcementRefresher) private var announcementRefresher
 
-    @Shared(.killSwitch) private var killSwitch: Bool
+    @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
     @SharedReader(.connectionProtocol) private var sharedConnectionProtocol: ConnectionProtocol
     @Shared(.plutoniumFeature) private var plutoniumFeature: PlutoniumFeatureToggle
 
@@ -234,6 +235,7 @@ struct SidebarFeature {
         case plutoniumSync
         case planChange
         case announcementRefresh
+        case killSwitchSetting
     }
 }
 
@@ -307,6 +309,12 @@ private extension SidebarFeature {
                         }
                     }
                     .cancellable(id: CancelID.plutoniumSetting),
+                    .run { [killSwitchMode = $killSwitchMode] send in
+                        for await value in killSwitchMode.publisher.removeDuplicates().values.dropFirst() {
+                            await send(.killSwitchModeChanged(value))
+                        }
+                    }
+                    .cancellable(id: CancelID.killSwitchSetting),
                     .run { send in
                         for await planChange in planChangeClient.events() {
                             await send(.planChanged(planChange))
@@ -396,6 +404,18 @@ private extension SidebarFeature {
     var overlayReducer: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
+            case let .killSwitchModeChanged(mode):
+                // If we're actively blocking (zero-peer) and the new mode no longer wants persistent
+                // blocking (Off or Standard), tear the tunnel down so the user regains connectivity.
+                // Otherwise the user is stuck behind a blackholed tunnel.
+                if !mode.isAdvanced, state.connectionState.is(\.killSwitchActive) {
+                    return .send(.connection(.input(.disconnect)))
+                }
+                // Otherwise: leave the live tunnel untouched. The mode is already persisted (@Shared, written
+                // by the settings picker) and takes effect on the NEXT connection — `.input(.connect)` arms
+                // `includeAllNetworks` from the mode, and the in-place zero-peer switch on disconnect works
+                // because the tunnel was armed at connect
+                return .none
             case let .connectionStateChanged(connectionState):
                 switch connectionState {
                 case .resolving:
@@ -561,7 +581,9 @@ private extension SidebarFeature {
                     await completion?()
                 }
             case let .alert(.presented(.enableKillSwitchAndConnect(pending))):
-                $killSwitch.withLock { $0 = true }
+                // The bad-LAN intercept offers to enable Kill Switch to block leaks; Standard is the
+                // minimal protection that satisfies this
+                $killSwitchMode.withLock { $0 = .standard }
                 return resolveAndPerformConnect(&state, pending: pending.resolving(.badLAN))
             case let .alert(.presented(.connectAnywayDespiteBadLAN(pending))):
                 return resolveAndPerformConnect(&state, pending: pending.resolving(.badLAN))
@@ -826,7 +848,7 @@ private extension SidebarFeature {
         @SharedReader(.featureFlags) var featureFlags
         if !pending.resolvedIntercepts.contains(.badLAN),
            featureFlags.unsafeLanWarnings,
-           !killSwitch,
+           !killSwitchMode.isProtected,
            let bad = networkInterfacePropertiesProvider.firstBadInterface() {
             return bad.interceptAlert(
                 enableKillSwitch: .enableKillSwitchAndConnect(pending),
@@ -842,7 +864,7 @@ private extension SidebarFeature {
         var overlay = state.connectingOverlay ?? ConnectingOverlayFeature.State()
         overlay.beginConnecting(
             selectedProtocol: sharedConnectionProtocol,
-            killSwitchEnabled: killSwitch,
+            killSwitchEnabled: killSwitchMode.isProtected,
             intentionallyDisconnected: intentionallyDisconnected
         )
         state.overlayState = .connecting(overlay)
@@ -854,7 +876,7 @@ private extension SidebarFeature {
         overlay.sync(
             connectionState: connectionState,
             selectedProtocol: sharedConnectionProtocol,
-            killSwitchEnabled: killSwitch,
+            killSwitchEnabled: killSwitchMode.isProtected,
             intentionallyDisconnected: intentionallyDisconnected
         )
         state.overlayState = .autoDismiss(overlay)
@@ -868,7 +890,7 @@ private extension SidebarFeature {
         overlay.sync(
             connectionState: connectionState,
             selectedProtocol: sharedConnectionProtocol,
-            killSwitchEnabled: killSwitch,
+            killSwitchEnabled: killSwitchMode.isProtected,
             intentionallyDisconnected: intentionallyDisconnected
         )
         state.connectingOverlay = overlay

@@ -542,6 +542,7 @@ public enum Asset {
   public static let zm = ImageAsset(name: "ZM")
   public static let zw = ImageAsset(name: "ZW")
   public static let dismissButton = ImageAsset(name: "Dismiss button")
+  public static let advancedKs = ImageAsset(name: "advanced_ks")
   public static let freeFlags = ImageAsset(name: "free-flags")
   public static let globeError = ImageAsset(name: "globe-error")
   public static let hermesDragIcon = ImageAsset(name: "hermesDragIcon")

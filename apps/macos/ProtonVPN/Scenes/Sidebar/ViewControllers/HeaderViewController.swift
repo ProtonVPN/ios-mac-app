@@ -53,6 +53,13 @@ final class HeaderViewController: NSViewController {
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
 
+    private let killSwitchIcon = NSImageView().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.imageScaling = .scaleProportionallyUpOrDown
+        $0.image = Theme.Asset.advancedKs.image
+        $0.isHidden = true
+    }
+
     private let headerLabel = HeaderViewController.makeLabel(horizontalHugging: 248)
 
     private let ipLabel = HeaderViewController.makeLabel(horizontalHugging: 249)
@@ -215,7 +222,7 @@ final class HeaderViewController: NSViewController {
         [protocolLabel, speedLabel].forEach(protocolSpeedStack.addArrangedSubview)
         [ipLoadStack, protocolSpeedStack].forEach(infoStackView.addArrangedSubview)
         [connectButton, changeServerView].forEach(buttonStack.addArrangedSubview)
-        [headerStack, infoStackView, buttonStack].forEach(contentStack.addArrangedSubview)
+        [killSwitchIcon, headerStack, infoStackView, buttonStack].forEach(contentStack.addArrangedSubview)
 
         view.addSubview(backgroundView)
         backgroundView.addSubview(flagView)
@@ -232,6 +239,9 @@ final class HeaderViewController: NSViewController {
             flagView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor),
             flagView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor),
             flagView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor),
+
+            killSwitchIcon.widthAnchor.constraint(equalToConstant: 24),
+            killSwitchIcon.heightAnchor.constraint(equalToConstant: 24),
 
             // Content stack inset within the flag view.
             contentStack.topAnchor.constraint(equalTo: flagView.topAnchor, constant: Dimensions.contentInsetVertical),
@@ -301,6 +311,8 @@ final class HeaderViewController: NSViewController {
 
     private func setupEphemeralView() {
         setupFlagView()
+
+        killSwitchIcon.isHidden = !viewModel.isKillSwitchBlocking
 
         headerLabel.attributedStringValue = viewModel.headerLabel
         headerLabel.setAccessibilityIdentifier(AccessibilityIdentifiers.headerLabel)

@@ -21,6 +21,7 @@
 //
 
 import ComposableArchitecture
+import Domain
 import SwiftUI
 import Theme
 
@@ -109,7 +110,7 @@ extension QuickSettingButtonView {
             let scoped = store.scope(state: \.killSwitch, action: \.killSwitch)
             self.init(
                 icon: scoped.icon,
-                isEnabled: scoped.isEnabled,
+                isEnabled: scoped.killSwitchMode.isProtected,
                 toolTip: type.title,
                 accessibilityIdentifier: scoped.accessibilityIdentifier,
                 action: { scoped.send(.buttonTapped) }

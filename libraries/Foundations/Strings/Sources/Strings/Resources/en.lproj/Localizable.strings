@@ -991,6 +991,15 @@
 /* iOS: Kill switch confirmation - title when switching from Standard to Advanced */
 "_kill_switch_switch_advanced_title" = "Switch to advanced kill switch?";
 
+/* macOS: Kill switch popover - "Standard" option row label */
+"_kill_switch_option_standard" = "Kill switch Standard";
+
+/* macOS: Kill switch popover - "Advanced" option row label */
+"_kill_switch_option_advanced" = "Kill switch Advanced";
+
+/* macOS: Kill switch confirmation - bullet: enabling KS disables split tunneling (macOS only) */
+"_kill_switch_bullet_split_tunneling" = "This will disable split tunneling";
+
 /* iOS: Kill switch confirmation - bullet: local network access is lost */
 "_kill_switch_bullet_no_lan" = "You won't be able to access devices on your local network";
 
@@ -1041,6 +1050,15 @@
 
 /* iOS: Body of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
 "_kill_switch_logout_blocking_failed_body" = "You've been signed out, but the kill switch couldn't be kept active, so your device may be exposed. Open Proton VPN and connect again to stay protected.";
+
+/* macOS: title of the confirmation shown when disconnecting with Advanced kill switch active */
+"_kill_switch_disconnect_advanced_title" = "Disconnect from VPN?";
+
+/* macOS: title of the quit confirmation shown while a VPN session is active */
+"_kill_switch_quit_title" = "Quit Proton VPN?";
+
+/* macOS: quit confirmation body (Standard / non-advanced kill switch) */
+"_kill_switch_disconnected_from_vpn" = "You'll be disconnected from VPN.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "Port forwarding";

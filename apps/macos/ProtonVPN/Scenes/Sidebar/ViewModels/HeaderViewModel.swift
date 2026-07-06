@@ -46,6 +46,8 @@ protocol HeaderViewModelDelegate: AnyObject {
 final class HeaderViewModel {
     @Dependency(\.credentialsProvider) var credentials
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
+    @Dependency(\.coreAlertService) private var coreAlertService
+    @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.serverRepository) private var serverRepository
     @SharedReader(.userLocation) private var userLocation: UserLocation?
@@ -100,6 +102,12 @@ final class HeaderViewModel {
         connectionState.isConnected
     }
 
+    /// Advanced kill switch is actively blocking (zero-peer)
+    var isKillSwitchBlocking: Bool {
+        if case .killSwitchActive = connectionState { return true }
+        return false
+    }
+
     var connectedCountryCode: String? {
         connectedServer?.logical.exitCountryCode
     }
@@ -147,6 +155,14 @@ final class HeaderViewModel {
 
     func quickConnectAction() {
         if isConnected {
+            // Advanced KS keeps blocking after an intentional disconnect, so confirm first
+            if killSwitchMode.isAdvanced {
+                coreAlertService.push(alert: DisconnectWithAdvancedKillSwitchAlert(confirmHandler: { [connectionCommandClient] in
+                    log.debug("Disconnect confirmed with Advanced kill switch active", category: .connectionDisconnect, event: .trigger)
+                    connectionCommandClient.send(.disconnect(.quick))
+                }))
+                return
+            }
             log.debug("Disconnect requested by selecting Quick connect", category: .connectionDisconnect, event: .trigger)
             connectionCommandClient.send(.disconnect(.quick))
         } else {
@@ -382,6 +398,10 @@ final class HeaderViewModel {
     }
 
     private func formHeaderLabel() -> NSAttributedString {
+        // Advanced kill switch is actively blocking (zero-peer)
+        if case .killSwitchActive = connectionState {
+            return Localizable.killSwitchAdvancedBannerTitle.styled(.warning, font: .themeFont(.heading4, bold: true), alignment: .left)
+        }
         if !isConnected {
             return Localizable.youAreNotProtected.styled(.danger, font: .themeFont(.heading4, bold: true), alignment: .left)
         }
@@ -408,6 +428,9 @@ final class HeaderViewModel {
     }
 
     private func formIpLabel() -> NSAttributedString {
+        if case .killSwitchActive = connectionState {
+            return Localizable.killSwitchAdvancedBannerMessage.styled(alignment: .left)
+        }
         let ip = Localizable.ipValue(getCurrentIp() ?? Localizable.unavailable)
         let attributedString = NSMutableAttributedString(attributedString: ip.styled(alignment: .left))
         let ipRange = (ip as NSString).range(of: getCurrentIp() ?? Localizable.unavailable)

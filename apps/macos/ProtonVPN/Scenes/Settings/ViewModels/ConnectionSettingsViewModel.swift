@@ -79,6 +79,7 @@ final class ConnectionSettingsViewModel {
     @SharedReader(.featureFlags) private var featureFlags: FeatureFlags
     @SharedReader(.connectionProtocol) private var sharedConnectionProtocol: ConnectionProtocol
     @Shared(.smartProtocol) private var sharedSmartProtocol: Bool
+    @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
 
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     private let vpnAcceleratorReader = AuthorizedFeatureValue<VPNAccelerator>().sharedReader()
@@ -483,6 +484,26 @@ final class ConnectionSettingsViewModel {
 
     func setAllowLANAccess(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
         let newValue: ExcludeLocalNetworks = enabled ? .on : .off
+
+        // Turning LAN access on conflicts with an armed kill switch: ask the user to confirm dropping
+        // kill switch protection before applying the change. SidebarFeature observes `killSwitchMode`
+        // and handles the tunnel side of the mode change.
+        if enabled, killSwitchMode.isProtected {
+            let alert = LANConnectionsKillSwitchConflictAlert(connected: connectionState.isConnected, confirmHandler: {
+                setFeatureValue(newValue)
+                self.$killSwitchMode.withLock { $0 = .off }
+                if self.connectionState.isConnected {
+                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks", "feature_additional": "killSwitch"])
+                    self.connectionCommandClient.send(.retry)
+                }
+                completion(true)
+            }, cancelHandler: {
+                completion(false)
+            })
+            alertService.push(alert: alert)
+            return
+        }
+
         let changeState: VpnFeatureChangeState = connectionState.is(\.killSwitchActive)
             ? .withConnectionUpdate
             : .init(connectionState: connectionState)

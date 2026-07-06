@@ -94,7 +94,7 @@ struct ConnectingOverlayFeature {
         }
     }
 
-    @Shared(.killSwitch) private var killSwitch: Bool
+    @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
     var body: some ReducerOf<Self> {
@@ -116,7 +116,7 @@ struct ConnectingOverlayFeature {
 
                 case .retryWithoutKillSwitch:
                     state.timedOut = false
-                    $killSwitch.withLock { $0 = false }
+                    $killSwitchMode.withLock { $0 = .off }
                     connectionCommandClient.send(.retry)
                     return .none
                 }

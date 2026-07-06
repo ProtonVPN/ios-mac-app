@@ -80,6 +80,7 @@ public extension Asset {
         public static let star = ThemeIcon(iconProviderKeyPath: \.star)
         public static let switchOff = ThemeIcon(iconProviderKeyPath: \.switchOff)
         public static let switchOn = ThemeIcon(iconProviderKeyPath: \.switchOn)
+        public static let switchOnLock = ThemeIcon(iconProviderKeyPath: \.switchOnLock)
         public static let threeDotsVertical = ThemeIcon(iconProviderKeyPath: \.threeDotsVertical)
         public static let user = ThemeIcon(iconProviderKeyPath: \.user)
         public static let users = ThemeIcon(iconProviderKeyPath: \.users)

@@ -26,7 +26,6 @@ public enum HomeAsset {
   public static let fastest = ImageAsset(name: "Fastest")
   public static let random = ImageAsset(name: "Random")
   public static let us = ImageAsset(name: "US")
-  public static let advancedKs = ImageAsset(name: "advanced_ks")
   public static let customisationMobileSmall = ImageAsset(name: "customisation-mobile-small")
   public static let multipleDevicesSmall = ImageAsset(name: "multiple-devices-small")
   public static let netshieldMobileSmall = ImageAsset(name: "netshield-mobile-small")

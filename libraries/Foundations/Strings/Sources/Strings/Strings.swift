@@ -750,6 +750,8 @@ public enum Localizable {
   public static var killSwitchBulletAdvancedRecover: String { return Localizable.tr("Localizable", "_kill_switch_bullet_advanced_recover", fallback: "To get back online, connect to VPN or disable advanced kill switch") }
   /// iOS: Kill switch confirmation - bullet: local network access is lost
   public static var killSwitchBulletNoLan: String { return Localizable.tr("Localizable", "_kill_switch_bullet_no_lan", fallback: "You won't be able to access devices on your local network") }
+  /// macOS: Kill switch confirmation - bullet: enabling KS disables split tunneling (macOS only)
+  public static var killSwitchBulletSplitTunneling: String { return Localizable.tr("Localizable", "_kill_switch_bullet_split_tunneling", fallback: "This will disable split tunneling") }
   /// iOS: Kill switch confirmation - primary button to enable
   public static var killSwitchConfirmEnable: String { return Localizable.tr("Localizable", "_kill_switch_confirm_enable", fallback: "Enable") }
   /// iOS: Kill switch confirmation - primary button to switch to advanced
@@ -758,6 +760,10 @@ public enum Localizable {
   public static var killSwitchDisable: String { return Localizable.tr("Localizable", "_kill_switch_disable", fallback: "Disable kill switch") }
   /// iOS: Confirmation banner shown after disabling kill switch from the login screen
   public static var killSwitchDisabledConfirmation: String { return Localizable.tr("Localizable", "_kill_switch_disabled_confirmation", fallback: "Kill switch is disabled.") }
+  /// macOS: title of the confirmation shown when disconnecting with Advanced kill switch active
+  public static var killSwitchDisconnectAdvancedTitle: String { return Localizable.tr("Localizable", "_kill_switch_disconnect_advanced_title", fallback: "Disconnect from VPN?") }
+  /// macOS: quit confirmation body (Standard / non-advanced kill switch)
+  public static var killSwitchDisconnectedFromVpn: String { return Localizable.tr("Localizable", "_kill_switch_disconnected_from_vpn", fallback: "You'll be disconnected from VPN.") }
   /// iOS and macOS: Enable kill switch on badly-routed networks
   public static var killSwitchEnable: String { return Localizable.tr("Localizable", "_kill_switch_enable", fallback: "Enable Kill Switch") }
   /// iOS: Kill switch confirmation - title when enabling Advanced from Off
@@ -784,6 +790,12 @@ public enum Localizable {
   public static var killSwitchModeOff: String { return Localizable.tr("Localizable", "_kill_switch_mode_off", fallback: "Off") }
   /// iOS: Kill switch settings - "Standard" option title
   public static var killSwitchModeStandard: String { return Localizable.tr("Localizable", "_kill_switch_mode_standard", fallback: "Standard") }
+  /// macOS: Kill switch popover - "Advanced" option row label
+  public static var killSwitchOptionAdvanced: String { return Localizable.tr("Localizable", "_kill_switch_option_advanced", fallback: "Kill switch Advanced") }
+  /// macOS: Kill switch popover - "Standard" option row label
+  public static var killSwitchOptionStandard: String { return Localizable.tr("Localizable", "_kill_switch_option_standard", fallback: "Kill switch Standard") }
+  /// macOS: title of the quit confirmation shown while a VPN session is active
+  public static var killSwitchQuitTitle: String { return Localizable.tr("Localizable", "_kill_switch_quit_title", fallback: "Quit Proton VPN?") }
   /// MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect
   public static var killSwitchReconnection: String { return Localizable.tr("Localizable", "_kill_switch_reconnection", fallback: "Your internet connection will resume as soon as Proton VPN reconnects to a server.\nTo use the internet without VPN and kill switch protection, cancel the reconnection to the server.") }
   /// MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded

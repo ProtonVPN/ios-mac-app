@@ -102,8 +102,8 @@ struct ConnectingOverlayFeatureTests {
 
     @Test("retryWithoutKillSwitch clears timedOut, disables KS, sends retry")
     func retryWithoutKillSwitchDisablesKillSwitchAndRetries() async {
-        @Shared(.killSwitch) var killSwitch: Bool
-        $killSwitch.withLock { $0 = true }
+        @Shared(.killSwitchMode) var killSwitchMode: KillSwitchMode
+        $killSwitchMode.withLock { $0 = .standard }
 
         await confirmation("retry command sent") { confirm in
             let client = ConnectionCommandClient(
@@ -123,7 +123,7 @@ struct ConnectingOverlayFeatureTests {
             await store.send(.buttonTapped(.retryWithoutKillSwitch)) {
                 $0.timedOut = false
             }
-            #expect(killSwitch == false)
+            #expect(killSwitchMode == .off)
         }
     }
 
