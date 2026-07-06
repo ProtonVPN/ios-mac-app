@@ -122,13 +122,23 @@ struct RawChannelTests {
         // Two channels viewing one shared buffer at different sub-region offsets.
         // Each has its own seqlock, both share a single notification and demux by generation count.
         let regionStride = MemoryLayout<IPCTestRegion>.stride
-        let region = try IPCNotifications.SharedRegion(fileURL: tmpURL(), size: regionStride * 2)
+        let region = try IPCNotifications.SharedRegion<FileBackedRegion>(
+            .init(fileURL: tmpURL(), size: regionStride * 2)
+        )
         let notification = uniqueNotification()
         // A writer/reader endpoint per sub-region, all over the one shared region.
-        let writerA = IPCNotifications.RawChannel<IPCTestPayload, IPCNotifications.Writer>(notification: notification, region: region, regionOffset: 0)
-        let readerA = IPCNotifications.RawChannel<IPCTestPayload, IPCNotifications.Reader>(notification: notification, region: region, regionOffset: 0)
-        let writerB = IPCNotifications.RawChannel<IPCTestPayload, IPCNotifications.Writer>(notification: notification, region: region, regionOffset: regionStride)
-        let readerB = IPCNotifications.RawChannel<IPCTestPayload, IPCNotifications.Reader>(notification: notification, region: region, regionOffset: regionStride)
+        let writerA = IPCNotifications.RawChannel<IPCTestPayload, WriterRole, FileBackedRegion>(
+            notification: notification, seqlockRegion: region.seqlockRegion(at: 0, length: regionStride)
+        )
+        let readerA = IPCNotifications.RawChannel<IPCTestPayload, ReaderRole, FileBackedRegion>(
+            notification: notification, seqlockRegion: region.seqlockRegion(at: 0, length: regionStride)
+        )
+        let writerB = IPCNotifications.RawChannel<IPCTestPayload, WriterRole, FileBackedRegion>(
+            notification: notification, seqlockRegion: region.seqlockRegion(at: regionStride, length: regionStride)
+        )
+        let readerB = IPCNotifications.RawChannel<IPCTestPayload, ReaderRole, FileBackedRegion>(
+            notification: notification, seqlockRegion: region.seqlockRegion(at: regionStride, length: regionStride)
+        )
 
         // Isolation: a write through one view never bleeds into the other's sub-region.
         writerA.mutate { $0.timestamp = 111 }

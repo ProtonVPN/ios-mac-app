@@ -18,6 +18,7 @@
 
 import Dependencies
 import Dispatch
+import Ergonomics
 import Network
 
 struct NetworkPath: Equatable {

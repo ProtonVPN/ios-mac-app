@@ -43,21 +43,22 @@
             var listenerDelegate: Listener?
         }
 
-        private let machServiceName: String
         fileprivate let log: @Sendable (String) -> Void
+
+        private let machServiceName: String
         private let state = OSAllocatedUnfairLock<State>(uncheckedState: State())
 
         public init(machServiceName: String, log: @escaping @Sendable (String) -> Void = { _ in }) {
             self.machServiceName = machServiceName
             self.log = log
 
-            let surface = IPCNotifications.SharedRegion.makeIOSurface(size: MemoryLayout<IPCTunnelData>.size)
+            let surface = IOSurfaceBackedRegion.makeIOSurface(size: MemoryLayout<IPCTunnelData>.size)
             state.withLockUnchecked { $0.surface = surface }
 
             // Immediately attach the raw channel region on startup.
             if let surface {
                 @Dependency(\.extensionIPCServer) var extensionIPCServer
-                extensionIPCServer.attachRegion(IPCNotifications.SharedRegion(ioSurface: surface))
+                extensionIPCServer.attachIOSurfaceBackedRegion(surface)
             } else {
                 log("Failed to allocate tunnel-data IOSurface; the macOS app will not receive live tunnel data")
             }

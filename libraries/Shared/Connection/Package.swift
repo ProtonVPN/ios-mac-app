@@ -33,6 +33,7 @@ let package = Package(
         .package(path: "../../Shared/Localization"),
         .package(path: "../../Core/NEHelper"),
 
+        .package(url: "https://github.com/apple/swift-async-algorithms", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
         .package(url: "https://github.com/pointfreeco/swift-custom-dump", .upToNextMajor(from: "1.5.0")),
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
@@ -68,6 +69,7 @@ let package = Package(
             dependencies: [
                 "CoreConnection",
                 "LocalAgentIPC",
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "IPCErgonomics", package: "Ergonomics"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),

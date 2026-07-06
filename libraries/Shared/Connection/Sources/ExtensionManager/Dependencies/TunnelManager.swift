@@ -532,7 +532,8 @@ final class PacketTunnelManager: TunnelManager {
                 tracked.withLockUnchecked { state in
                     update(&state)
                     let resolved = resolve(state)
-                    guard resolved != state.lastEmitted else { return nil }
+                    let squelched = resolved == state.lastEmitted
+                    guard !squelched else { return nil }
                     state.lastEmitted = resolved
                     return resolved
                 }

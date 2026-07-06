@@ -18,6 +18,7 @@
 
 import Dependencies
 import Domain
+import Ergonomics
 import Foundation
 import IPCErgonomics
 import LocalAgent

@@ -53,7 +53,7 @@
                     return
                 }
 
-                extensionIPC.attachRegion(IPCNotifications.SharedRegion(ioSurface: surface as IOSurfaceRef))
+                extensionIPC.attachRegion(surface as IOSurfaceRef)
                 log.info("Attached tunnel-data IOSurface region from extension")
             }
         }

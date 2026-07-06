@@ -75,6 +75,16 @@ struct MmapBufferTests {
             return true
         }
     }
+
+    @Test(.ipcContext(mmapFileURL: tmpURL()))
+    func filePathReturnsCorrectPath() throws {
+        let url = try IPCHelperContext.url()
+
+        let buf = try MmapBuffer(path: url.path(), size: 256)
+
+        let resolved = String(cString: realpath(url.path(), nil))
+        #expect(buf.filePath == resolved)
+    }
 }
 
 // MARK: - Observation lifetime
