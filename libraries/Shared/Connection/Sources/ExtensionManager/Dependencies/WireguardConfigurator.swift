@@ -105,9 +105,12 @@ extension ManagerConfigurator {
         // Initial connection features created from user defaults.
         let features = connectionFeatureProvider.connectionFeatures()
 
-        let peers = try connectionIntent.server.peerInfo(using: wgConfig, protocolConfiguration: connectionIntent.protocolConfiguration)
+        // Encode every peer with the full set of transports/ports, so that we can reconfigure the connection with a
+        // specific transport later without supplying a new set of peers.
+        let peers = try connectionIntent.server.peerInfo(using: wgConfig)
+        let preferredTransport = connectionIntent.preferredWireGuardTransport
         let config = ProTUNConfiguration(
-            preferredTransport: .udp,
+            preferredTransport: preferredTransport,
             peers: peers,
             dnsServers: wgConfig.dnsServers ?? [],
             netShieldLevel: features.netshield.rawValue,
@@ -132,7 +135,7 @@ extension ManagerConfigurator {
             changes: { intent in
                 @Dependency(\.connectionConfiguration) var configurationProvider
                 let wireguardConfig = configurationProvider.configuration().wireguardConfig
-                let peers = try intent.server.peerInfo(using: wireguardConfig, protocolConfiguration: intent.protocolConfiguration)
+                let peers = try intent.server.peerInfo(using: wireguardConfig)
                 return ConnectionUpdate(location: .init(spec: intent.spec, peers: peers))
             },
             configure: { manager, operation in
@@ -363,20 +366,15 @@ extension Server {
     /// But, if the IP address of the server has been overridden for any of the transports, the array will include an
     /// additional peer for each. If the IP is overridden for each transport, there will **not** be a fourth peer with
     /// the default IP.
-    func peerInfo(
-        using wgConfig: WireguardConfig,
-        protocolConfiguration: ProtocolConfiguration
-    ) throws -> [ProTUNConfiguration.Peer] {
-        try [peerWithDefaultIP(with: wgConfig, protocolConfiguration: protocolConfiguration)].compactMap { $0 }
-            + peersWithOverriddenIPs(with: wgConfig, protocolConfiguration: protocolConfiguration)
+    func peerInfo(using wgConfig: WireguardConfig) throws -> [ProTUNConfiguration.Peer] {
+        try [peerWithDefaultIP(with: wgConfig)].compactMap { $0 }
+            + peersWithOverriddenIPs(with: wgConfig)
     }
 
     private func peerWithDefaultIP(
-        with config: WireguardConfig,
-        protocolConfiguration: ProtocolConfiguration
+        with config: WireguardConfig
     ) throws(ManagerConfigurationError) -> ProTUNConfiguration.Peer? {
-        let acceptableTransports = protocolConfiguration.acceptableTransports
-        let perTransportPortOverrides: [Domain.WireGuardTransport: [UInt16]] = acceptableTransports
+        let perTransportPortOverrides: [Domain.WireGuardTransport: [UInt16]] = Domain.WireGuardTransport.allCases
             .reduce(into: [:]) { overrides, transport in
                 let usesDefaultIp = endpoint.entryIp(using: .wireGuard(transport)) == endpoint.entryIp
                 guard usesDefaultIp else {
@@ -408,10 +406,9 @@ extension Server {
     }
 
     private func peersWithOverriddenIPs(
-        with config: WireguardConfig,
-        protocolConfiguration: ProtocolConfiguration
+        with config: WireguardConfig
     ) throws -> [ProTUNConfiguration.Peer] {
-        protocolConfiguration.acceptableTransports
+        Domain.WireGuardTransport.allCases
             .compactMap { transport in
                 guard let customIp = endpoint.entryIp(using: .wireGuard(transport)) else {
                     // Skip this transport if no custom IP is defined
@@ -440,16 +437,26 @@ extension Server {
     }
 }
 
-extension ProtocolConfiguration {
-    var acceptableTransports: [Domain.WireGuardTransport] {
-        switch self {
+private extension ServerConnectionIntent {
+    var preferredWireGuardTransport: VPNCoreTypes.WireGuardTransport? {
+        switch protocolConfiguration {
         case .ike:
-            return []
-        case let .wireGuard(config):
-            if let transport = config.transport {
-                return [transport]
-            }
-            return Domain.WireGuardTransport.allCases
+            nil
+        case let .wireGuard(settings):
+            settings.transport.map { VPNCoreTypes.WireGuardTransport.from($0) }
+        }
+    }
+}
+
+extension VPNCoreTypes.WireGuardTransport {
+    static func from(_ transport: Domain.WireGuardTransport) -> VPNCoreTypes.WireGuardTransport {
+        switch transport {
+        case .udp:
+            .udp
+        case .tcp:
+            .tcp
+        case .tls:
+            .tls
         }
     }
 }

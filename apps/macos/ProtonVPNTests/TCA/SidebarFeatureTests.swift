@@ -244,7 +244,7 @@ struct SidebarFeatureTests {
     @Test("apply settings command forwards to connection feature")
     func applySettingsCommandForwardsToConnectionFeature() async {
         let store = makeStore()
-        let settings: Set<ConnectionFeatureChange.AgentFeature> = [.vpnAccelerator(true)]
+        let settings: Set<ConnectionFeatureChange> = [.agent(.vpnAccelerator(true))]
 
         await store.send(.connectionCommandReceived(.applySettings(settings))) {
             $0.overlayState = .suppressed
@@ -259,7 +259,7 @@ struct SidebarFeatureTests {
         await store.send(.connectionCommandReceived(.connect(.defaultFastest, .vpnProtocol(.ike), .quick))) {
             $0.overlayState = .connecting(spec: .defaultFastest)
         }
-        await store.send(.connectionCommandReceived(.applySettings([.vpnAccelerator(true)]))) {
+        await store.send(.connectionCommandReceived(.applySettings([.agent(.vpnAccelerator(true))]))) {
             $0.overlayState = .suppressed
         }
     }
@@ -280,7 +280,7 @@ struct SidebarFeatureTests {
     func inPlaceSettingsSuppressOverlayUntilReconnectCommand() async {
         let store = makeStore()
         store.exhaustivity = .off
-        let settings: Set<ConnectionFeatureChange.AgentFeature> = [.portForwarding(true)]
+        let settings: Set<ConnectionFeatureChange> = [.agent(.portForwarding(true))]
 
         await store.send(.connectionCommandReceived(.applySettings(settings))) {
             $0.overlayState = .suppressed
@@ -298,7 +298,7 @@ struct SidebarFeatureTests {
     func refreshFinishedDoesNotReEnableOverlayForInPlaceUpdates() async {
         let store = makeStore()
         store.exhaustivity = .off
-        let settings: Set<ConnectionFeatureChange.AgentFeature> = [.portForwarding(true)]
+        let settings: Set<ConnectionFeatureChange> = [.agent(.portForwarding(true))]
 
         await store.send(.connectionCommandReceived(.applySettings(settings))) {
             $0.overlayState = .suppressed
@@ -315,7 +315,7 @@ struct SidebarFeatureTests {
         store.exhaustivity = .off
         let connectedState = VPNConnectionActual.mock()
 
-        await store.send(.connectionCommandReceived(.applySettings([.portForwarding(true)]))) {
+        await store.send(.connectionCommandReceived(.applySettings([.agent(.portForwarding(true))]))) {
             $0.overlayState = .suppressed
         }
 

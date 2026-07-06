@@ -18,7 +18,37 @@
 
 import Foundation
 import protun
-import struct VPNCoreTypes.ProTUNConfiguration
+import VPNCoreTypes
+
+extension ProTUNConfiguration.Peer {
+    /// Returns a copy of the peer, exposing only the ports for `transport`, or `nil` if the peer has no ports for it.
+    /// This restricts what transports ProTUN will attempt to connect with.
+    /// For Smart protocol, when ``transport`` is nil, the peer is returned unchanged.
+    /// If we've chosen ``.udp``:
+    ///  - we return nil if the peer doesn't define ports for this transport
+    ///  - we nil out ports for the other transports
+    func constrained(to transport: WireGuardTransport?) -> ProTUNConfiguration.Peer? {
+        guard let transport else {
+            return self
+        }
+        let udpPorts = transport == .udp ? udpPorts : []
+        let tcpPorts = transport == .tcp ? tcpPorts : []
+        let tlsPorts = transport == .tls ? tlsPorts : []
+        if udpPorts.isEmpty, tcpPorts.isEmpty, tlsPorts.isEmpty {
+            return nil
+        }
+        return ProTUNConfiguration.Peer(
+            id: id,
+            serverIP: serverIP,
+            serverPublicKey: serverPublicKey,
+            udpPorts: udpPorts,
+            tcpPorts: tcpPorts,
+            tlsPorts: tlsPorts,
+            priority: priority,
+            exitLabel: exitLabel
+        )
+    }
+}
 
 extension PeerInfo {
     init(from peer: ProTUNConfiguration.Peer) throws(ProTUNAdapter.Error) {

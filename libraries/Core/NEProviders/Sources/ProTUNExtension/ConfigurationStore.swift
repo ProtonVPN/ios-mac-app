@@ -248,11 +248,24 @@ extension NETunnelProviderProtocol {
         guard update.hasConfigurationChanges else { return (nil, nil) }
 
         return try withProTUNConfiguration { protunConfig in
-            var newPeers: [PeerInfo]?
             if let location = update.location {
                 try setConnectionSpec(location.spec)
                 protunConfig = protunConfig.with(peers: location.peers)
-                newPeers = try location.peers.map(PeerInfo.init)
+            }
+
+            if let newProtocol = update.connectionProtocol {
+                // Pass .some(transport) to overwrite any existing preferredTransport in the config,
+                // even when transport happens to be nil (reflecting app-side smart protocol)
+                protunConfig = protunConfig.with(preferredTransport: .some(newProtocol.wireGuardTransport))
+            }
+
+            var newPeers: [PeerInfo]?
+            if update.hasPeerChanges {
+                // Restrict transports ProTUN will attempt to connect with by constraining peers
+                // The configuration's peers and transport have already been updated to reflect relevant updates.
+                newPeers = try (protunConfig.peers)
+                    .compactMap { $0.constrained(to: protunConfig.preferredTransport) }
+                    .map(PeerInfo.init)
             }
 
             guard update.hasAgentChanges else { return (newPeers, nil) }
@@ -271,5 +284,21 @@ extension NETunnelProviderProtocol {
 
             $0 = $0.merging(effectiveSettings: serverSettings)
         }
+    }
+}
+
+extension Domain.ConnectionProtocol {
+    var wireGuardTransport: VPNCoreTypes.WireGuardTransport? {
+        if case let .vpnProtocol(.wireGuard(transport)) = self {
+            switch transport {
+            case .udp:
+                return .udp
+            case .tcp:
+                return .tcp
+            case .tls:
+                return .tls
+            }
+        }
+        return nil
     }
 }

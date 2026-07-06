@@ -146,7 +146,7 @@ final class AdvancedSettingsViewModel {
         case .withConnectionUpdate:
             // in-place change when connected and using local agent
             natTypePropertyProvider.setNATType(natType)
-            connectionCommandClient.send(.applySettings([.moderateNAT(natType)]))
+            connectionCommandClient.send(.applySettings([.agent(.moderateNAT(natType))]))
             completion(true)
         case .withReconnect:
             alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.moderateNatTitle, confirmHandler: { [weak self] in

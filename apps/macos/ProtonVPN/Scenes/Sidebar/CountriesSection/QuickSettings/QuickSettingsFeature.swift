@@ -531,7 +531,7 @@ private extension QuickSettingsFeature {
         netShieldPropertyProvider.setNetShieldType(level)
         switch VpnFeatureChangeState(connectionState: connectionState) {
         case .withConnectionUpdate:
-            connectionCommandClient.send(.applySettings([.netShield(level)]))
+            connectionCommandClient.send(.applySettings([.agent(.netShield(level))]))
         case .withReconnect:
             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
             connectionCommandClient.send(.retry)
@@ -546,7 +546,7 @@ private extension QuickSettingsFeature {
         switch VpnFeatureChangeState(connectionState: connectionState) {
         case .withConnectionUpdate:
             log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-            connectionCommandClient.send(.applySettings([.portForwarding(isEnabled)]))
+            connectionCommandClient.send(.applySettings([.agent(.portForwarding(isEnabled))]))
         case .withReconnect:
             guard isConnectionActive else { return }
             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
