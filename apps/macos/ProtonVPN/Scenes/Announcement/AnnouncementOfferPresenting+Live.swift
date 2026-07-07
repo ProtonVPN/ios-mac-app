@@ -22,6 +22,10 @@ import ComposableArchitecture
 import Dependencies
 import SwiftUI
 
+/// Weakly tracks the presented controller so `\.dismiss` can close it without capturing a
+/// non-Sendable view controller in the `@Sendable` presenter closures. Because the reference is
+/// `weak`, an externally-closed window (Cmd+W / the native close button) auto-nils it and `dismiss`
+/// becomes a safe no-op — no manual cleanup needed, and the controller is never retained here
 private final class AnnouncementOfferControllerBox: @unchecked Sendable {
     weak var controller: NSViewController?
 }
@@ -33,6 +37,9 @@ extension AnnouncementOfferPresenting: @retroactive DependencyKey {
             present: { store in
                 MainActor.assumeIsolated {
                     @Dependency(\.windowService) var windowService
+                    // Offer modals are shown one at a time. Dismiss any still-presented one before
+                    // presenting the next, so it isn't left on screen
+                    box.controller?.dismiss(nil)
                     let controller = NSHostingController(rootView: AnnouncementOfferView(store: store))
                     controller.title = "Proton VPN"
                     // The modal is a native window; size it to the content
@@ -51,33 +58,43 @@ extension AnnouncementOfferPresenting: @retroactive DependencyKey {
     }()
 }
 
-/// Content size for the offer modal window. The image panel matches the offer image's aspect ratio
-/// the legacy panel uses a fixed portrait size (its content scrolls)
+private let offerActionButtonArea: CGFloat = 76
+
+/// Content size for the offer modal window. The image panel matches the offer image's aspect ratio;
+/// the legacy panel uses a fixed portrait size (its content scrolls). Both are capped to the current
+/// screen so the window always fits
 private func preferredOfferSize(for panel: OfferPanel) -> CGSize {
+    let maxSize = availableModalSize()
     switch panel.panelMode() {
     case let .image(imagePanel):
-        let actionButtonArea: CGFloat = 76
-        return imageOfferSize(imagePanel, actionButtonArea: actionButtonArea)
+        return imageOfferSize(imagePanel, maxSize: maxSize)
     case .legacy, .none:
-        return CGSize(width: 420, height: 640)
+        return CGSize(width: min(420, maxSize.width), height: min(640, maxSize.height))
     }
 }
 
-private func imageOfferSize(_ panel: OfferPanel.ImagePanel, actionButtonArea: CGFloat) -> CGSize {
+/// The largest an offer modal should be on the current screen, leaving a margin
+private func availableModalSize() -> CGSize {
+    let visible = NSScreen.main?.visibleFrame.size ?? CGSize(width: 1280, height: 800)
+    return CGSize(width: visible.width * 0.9, height: visible.height * 0.85)
+}
+
+private func imageOfferSize(_ panel: OfferPanel.ImagePanel, maxSize: CGSize) -> CGSize {
     // Source dimensions are pixel values of the (usually @2x) asset; convert to points.
     let pointScale = 1 / (NSScreen.main?.backingScaleFactor ?? 2)
-    let visible = NSScreen.main?.visibleFrame.size ?? CGSize(width: 1440, height: 900)
-    let maxImage = CGSize(width: visible.width * 0.9, height: visible.height * 0.85 - actionButtonArea)
+    let maxImageHeight = max(maxSize.height - offerActionButtonArea, 0)
 
-    let fallback = CGSize(width: 480, height: 480 + actionButtonArea)
-    guard let source = panel.fullScreenImage.source.first,
-          let width = source.width, let height = source.height,
-          width > 0, height > 0 else {
-        return fallback
+    // Desired image size in points; a square fallback when the source has no dimensions
+    let desiredImage = if let source = panel.fullScreenImage.source.first,
+                          let width = source.width, let height = source.height,
+                          width > 0, height > 0 {
+        CGSize(width: width * pointScale, height: height * pointScale)
+    } else {
+        CGSize(width: 480, height: 480)
     }
 
-    var image = CGSize(width: width * pointScale, height: height * pointScale)
-    let ratio = min(maxImage.width / image.width, maxImage.height / image.height, 1)
-    image = CGSize(width: image.width * ratio, height: image.height * ratio)
-    return CGSize(width: image.width, height: image.height + actionButtonArea)
+    // Scale down to fit the scree preserving aspect ratio
+    let ratio = min(maxSize.width / desiredImage.width, maxImageHeight / desiredImage.height, 1)
+    let image = CGSize(width: desiredImage.width * ratio, height: desiredImage.height * ratio)
+    return CGSize(width: image.width, height: image.height + offerActionButtonArea)
 }

@@ -54,9 +54,8 @@ public struct AnnouncementsFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .run { [reference = state.offerReference] _ in
-                    AppEvent.userWasDisplayedAnnouncement.post(reference)
-                }
+                AppEvent.userWasDisplayedAnnouncement.post(state.offerReference)
+                return .none
 
             case .actionButtonTapped:
                 let button = state.panel.button
@@ -67,8 +66,8 @@ public struct AnnouncementsFeature {
                     )
                     return .run { [dismiss] _ in await dismiss() }
                 }
-                return .run { [dismiss, button, reference = state.offerReference] _ in
-                    AppEvent.userEngagedWithAnnouncement.post(reference)
+                AppEvent.userEngagedWithAnnouncement.post(state.offerReference)
+                return .run { [dismiss, button] _ in
                     @Dependency(\.linkOpener) var linkOpener
                     if button.behaviors?.contains(.autoLogin) == true {
                         @Dependency(\.sessionService) var sessionService

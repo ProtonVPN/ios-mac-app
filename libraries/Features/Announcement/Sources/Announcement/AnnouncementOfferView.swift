@@ -64,10 +64,16 @@ struct AnnouncementOfferImageView: View {
     var body: some View {
         VStack(spacing: 0) {
             if let url = panel.fullScreenImage.firstURL {
-                WebImage(url: url)
-                    .resizable()
-                    .scaledToFit()
-                    .accessibilityLabel(panel.fullScreenImage.alternativeText)
+                WebImage(url: url) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .accessibilityLabel(panel.fullScreenImage.alternativeText)
+                } placeholder: {
+                    // Neutral, image-proportioned area while loading / on failure
+                    Color(.background, .weak)
+                        .aspectRatio(4 / 3, contentMode: .fit)
+                }
             }
             Spacer(minLength: 0)
             Button(panel.button.text ?? Localizable.ok, action: onAction)

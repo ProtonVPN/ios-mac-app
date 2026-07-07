@@ -35,8 +35,6 @@ import VPNAppCore
 public struct AnnouncementRefresher: Sendable {
     /// Refreshes if the throttle interval has elapsed since the last refresh
     public var tryRefreshing: @Sendable () -> Void
-    /// Async variant of ``tryRefreshing``
-    public var tryRefreshingAsync: @Sendable () async -> Void
     /// Clears stored announcements and the last-refresh timestamp
     public var clear: @Sendable () -> Void
 }
@@ -46,7 +44,6 @@ extension AnnouncementRefresher: DependencyKey {
         let implementation = AnnouncementRefresherImplementation()
         return AnnouncementRefresher(
             tryRefreshing: { implementation.tryRefreshing() },
-            tryRefreshingAsync: { await implementation.tryRefreshingAsync() },
             clear: { implementation.clear() }
         )
     }()
@@ -91,25 +88,16 @@ final class AnnouncementRefresherImplementation: @unchecked Sendable {
 
     @objc
     func tryRefreshing() {
-        if let lastRefresh = lastRefreshDate,
-           Date().timeIntervalSince(lastRefresh) < refreshInterval {
-            return
+        // a single lock
+        let shouldRefresh = $lastRefreshDate.withLock { lastRefresh -> Bool in
+            if let last = lastRefresh, Date().timeIntervalSince(last) < refreshInterval {
+                return false
+            }
+            lastRefresh = Date()
+            return true
         }
-        $lastRefreshDate.withLock {
-            $0 = Date()
-        }
+        guard shouldRefresh else { return }
         refresh()
-    }
-
-    func tryRefreshingAsync() async {
-        if let lastRefresh = lastRefreshDate,
-           Date().timeIntervalSince(lastRefresh) < refreshInterval {
-            return
-        }
-        $lastRefreshDate.withLock {
-            $0 = Date()
-        }
-        await refreshAsync()
     }
 
     private func refresh() {

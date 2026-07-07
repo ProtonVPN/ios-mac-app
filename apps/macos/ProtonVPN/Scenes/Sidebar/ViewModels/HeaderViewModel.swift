@@ -198,10 +198,7 @@ final class HeaderViewModel {
     }
 
     var announcementIconUrl: URL? {
-        if let icon = announcementManager.currentOfferAnnouncement?.offer?.icon, let url = URL(string: icon) {
-            return url
-        }
-        return nil
+        announcementManager.announcementIconURL
     }
 
     func prefetchImages() async {

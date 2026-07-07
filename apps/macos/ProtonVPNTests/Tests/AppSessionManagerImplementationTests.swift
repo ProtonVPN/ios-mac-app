@@ -349,7 +349,7 @@ struct AppSessionManagerImplementationTests {
             $0.authKeychain = authKeychain
             $0.unauthKeychain = unauthKeychain
             $0.vpnKeychain = vpnKeychain
-            $0.announcementRefresher = .init(tryRefreshing: {}, tryRefreshingAsync: {}, clear: {})
+            $0.announcementRefresher = .init(tryRefreshing: {}, clear: {})
             $0.connectionCommandClient = .init(
                 send: { command in
                     guard case let .disconnect(_, completion) = command else { return }

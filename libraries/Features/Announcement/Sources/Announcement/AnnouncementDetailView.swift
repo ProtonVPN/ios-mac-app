@@ -99,12 +99,21 @@ public struct AnnouncementDetailView: View {
             .clipShape(.capsule)
     }
 
+    private static let pictureMaxHeight: CGFloat = 240
+
     @ViewBuilder
     private var picture: some View {
         if let url = URL(string: panel.pictureURL) {
-            WebImage(url: url)
-                .resizable()
-                .scaledToFit()
+            WebImage(url: url) { image in
+                image
+                    .resizable()
+                    .scaledToFit()
+            } placeholder: {
+                // Reserve a neutral area while loading and if the load fails
+                RoundedRectangle(cornerRadius: .themeRadius8)
+                    .fill(Color(.background, .weak))
+            }
+            .frame(maxHeight: Self.pictureMaxHeight)
         }
     }
 
