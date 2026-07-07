@@ -45,12 +45,10 @@ public struct ConnectionStatusView: View {
             Localizable.connectionStatusLoading
         case .protected, .protectedSecureCore:
             nil
-        case .unprotected:
+        case .unprotected, .killSwitchActive: // .killSwitchActive is rendered by KillSwitchBlockingBanner (see body)
             Localizable.connectionStatusUnprotected
         case .protecting:
             Localizable.connectionStatusProtecting
-        case .killSwitchActive:
-            Localizable.connectionStatusDisconnectedByKillswitch
         }
     }
 
@@ -86,12 +84,8 @@ public struct ConnectionStatusView: View {
             ProgressView()
                 .controlSize(.regular)
                 .tint(.white)
-        case .unprotected:
+        case .unprotected, .killSwitchActive: // .killSwitchActive is rendered by KillSwitchBlockingBanner (see body)
             IconProvider.lockOpenFilled2
-                .styled(.danger)
-                .accessibilityHidden(true)
-        case .killSwitchActive:
-            IconProvider.lockFilled
                 .styled(.danger)
                 .accessibilityHidden(true)
         }
@@ -118,19 +112,26 @@ public struct ConnectionStatusView: View {
                 ProgressView()
                     .controlSize(.regular)
                     .tint(.white)
-            case .unprotected:
+            case .unprotected, .killSwitchActive: // .killSwitchActive is rendered by KillSwitchBlockingBanner (see body)
                 IconProvider.lockOpenFilled2
-                    .styled(.danger)
-            case .killSwitchActive:
-                IconProvider.lockFilled
                     .styled(.danger)
             }
         }
     }
 
     public var body: some View {
-        let protectionState = store.protectionState
+        Group {
+            if store.protectionState == .killSwitchActive {
+                // Advanced kill switch is blocking: show the grey KS overlay in place of the connection status.
+                KillSwitchBlockingBanner()
+            } else {
+                connectionStatus(protectionState: store.protectionState)
+            }
+        }
+        .task { await store.send(.watchConnectionStatus).finish() }
+    }
 
+    private func connectionStatus(protectionState: ProtectionState) -> some View {
         ZStack(alignment: .top) {
             LinearGradient(
                 colors: [gradientColor(protectionState: protectionState).opacity(0.5), .clear],
@@ -176,7 +177,6 @@ public struct ConnectionStatusView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.hidden, for: .navigationBar)
-        .task { await store.send(.watchConnectionStatus).finish() }
     }
 }
 

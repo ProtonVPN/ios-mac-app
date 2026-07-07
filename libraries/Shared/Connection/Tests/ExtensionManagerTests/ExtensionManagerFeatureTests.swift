@@ -56,11 +56,10 @@
             await store.receive(\.tunnelStatusChanged.disconnected)
 
             await store.send(.connect(intent))
+            await store.receive(\.tunnelStartRequestFinished)
             await store.receive(\.tunnelStatusChanged.connecting) {
                 $0 = .connecting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"]))
             }
-
-            await store.receive(\.tunnelStartRequestFinished.success)
 
             await store.send(.stopObserving)
         }

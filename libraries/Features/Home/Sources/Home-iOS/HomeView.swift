@@ -120,15 +120,10 @@ public struct HomeView: View {
                 .zIndex(ZIndex.map.rawValue)
                 .allowsHitTesting(false) // without this line we experience bad scrolling stutter when using a magic trackpad
 
-                if store.connectionState.is(\.killSwitchActive) {
-                    // Advanced kill switch is blocking: replace the (red) connection status with the
-                    // grey kill-switch overlay at the top of the map.
-                    KillSwitchBlockingBanner()
-                        .zIndex(connectionStatusZIndex.rawValue)
-                } else {
-                    ConnectionStatusView(store: store.scope(state: \.connectionStatus, action: \.connectionStatus))
-                        .zIndex(connectionStatusZIndex.rawValue)
-                }
+                // `ConnectionStatusView` owns the top-of-map slot for every protection state, including
+                // the grey Advanced-kill-switch blocking overlay (see its `.killSwitchActive` branch).
+                ConnectionStatusView(store: store.scope(state: \.connectionStatus, action: \.connectionStatus))
+                    .zIndex(connectionStatusZIndex.rawValue)
 
                 ScrollViewReader { scrollViewProxy in
                     ScrollView(showsIndicators: false) {

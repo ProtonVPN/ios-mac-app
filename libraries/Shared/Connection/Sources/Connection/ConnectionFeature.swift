@@ -170,8 +170,9 @@ public struct ConnectionFeature: Sendable {
                 }
                 log.debug("Connection update", category: .connection, metadata: ["update": "\(update)"])
                 if update.killSwitch == false, state.connectionState.is(\.killSwitchActive) {
-                    // Zero-peer mode has no peer to resume, so disabling Kill Switch intentionally stops the tunnel.
-                    // The next connection will rebuild it with the location selected by the user.
+                    // Disabling KS while zero-peer blocking must tear the tunnel down: a bare `killSwitch=false`
+                    // config change can't exit zero-peer mode (that needs a peer/location update). The next
+                    // connection will rebuild the tunnel with the location selected by the user.
                     state.isBlockingIntended = false
                     return .merge(
                         .cancel(id: CancelID.preparation),
