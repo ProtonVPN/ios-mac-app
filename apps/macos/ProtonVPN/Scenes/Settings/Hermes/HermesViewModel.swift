@@ -82,16 +82,20 @@ final class HermesViewModel {
             completion?()
             return
         }
+        initialState = newState
+
         switch VpnFeatureChangeState(connectionState: connectionState) {
         case .immediate:
             completion?()
-        case .withConnectionUpdate, .withReconnect:
+        case .withConnectionUpdate:
+            connectionCommandClient.send(.applySettings([.tunnel(.customDNS(hermesClient.currentResolvers.map(\.location)))]))
+            completion?()
+        case .withReconnect:
             showAlert(.reconnectNecessary) { [weak self] in
                 self?.userConfirmsReconnection()
                 completion?()
             }
         }
-        initialState = newState
     }
 
     func setIsEnabled(_ newValue: Bool) {

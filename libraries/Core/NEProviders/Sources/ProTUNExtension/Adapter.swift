@@ -116,12 +116,12 @@ final class ProTUNAdapter: @unchecked Sendable {
         // VPNAPPL-3344 For multi-peer support, it's likely that we will need to set the
         // server IP address to something other than the address of the first peer in the list
         if let peer = config.peers.first {
-            try await setNetworkSettings(serverIpAddress: peer.serverIP)
+            try await setNetworkSettings(excludingRoute: peer.serverIP, dnsServers: config.dnsServers)
         } else {
             // Preparing the Adapter without any peer is allowed
             // Just generate the network settings intercepting all possible routes
             Logger.adapter.info("Preparing in zero-peer killswitch mode (no peers)")
-            try await setNetworkSettings(serverIpAddress: nil)
+            try await setNetworkSettings(excludingRoute: nil, dnsServers: config.dnsServers)
         }
 
         return try setupTunnelDescriptor()
@@ -322,8 +322,8 @@ extension ProTUNAdapter {
 // MARK: - Network setup
 
 extension ProTUNAdapter {
-    func setNetworkSettings(serverIpAddress: String?) async throws {
-        let networkSettings = SettingsGenerator.settings(excludingRoute: serverIpAddress)
+    func setNetworkSettings(excludingRoute: String?, dnsServers: [String]) async throws {
+        let networkSettings = SettingsGenerator.settings(excludingRoute: excludingRoute, dnsServers: dnsServers)
         try await packetTunnelProvider?.setTunnelNetworkSettings(networkSettings)
     }
 

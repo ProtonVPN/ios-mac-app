@@ -23,34 +23,6 @@ import Foundation
 import Sharing
 import VPNAppCore
 
-private import Network
-private import Synchronization
-
-public struct HermesResolver: Hashable {
-    public enum Error: Swift.Error {
-        case invalidIPAddress
-    }
-
-    public static let storagePathComponent: String = "hermes.json"
-
-    public let location: String
-
-    public init(ipAddress: String) throws(Error) {
-        guard HermesResolverLocationValidator.isValidIPv4(ipAddress) != nil else {
-            throw .invalidIPAddress
-        }
-        self.location = ipAddress
-    }
-}
-
-extension HermesResolver: Identifiable {
-    public var id: String {
-        location
-    }
-}
-
-extension HermesResolver: Codable {}
-
 public struct HermesClient: Sendable {
     public internal(set) var isEnabled: @Sendable () -> SharedReader<Bool>
     public internal(set) var setIsEnabled: @Sendable (Bool) -> Void

@@ -73,6 +73,7 @@ let package = Package(
                 .product(name: "VPNCoreTypes", package: "vpn-core-apple"),
                 .product(name: "VPNCoreExtension", package: "vpn-core-apple"),
                 .product(name: "ExtensionSync", package: "Connection"),
+                .product(name: "Hermes", package: "Connection"),
                 .product(name: "IPCDefinitions", package: "Connection"),
                 .product(name: "NetworkingErgonomics", package: "Ergonomics"),
                 .product(name: "ExtensionIPC", package: "ExtensionIPC"),

@@ -136,8 +136,7 @@ public struct ConnectionFeature: Sendable {
                     case let .tunnel(.connectionProtocol(connectionProtocol)): update.connectionProtocol = connectionProtocol
                     case let .tunnel(.killSwitch(enabled)): update.killSwitch = enabled
                     case let .tunnel(.allowLAN(enabled)): update.allowLAN = enabled
-                    case .tunnel(.customDNS):
-                        log.assertionFailure("Custom DNS changes cannot be applied in place")
+                    case let .tunnel(.customDNS(resolvers)): update.customDNS = resolvers
                     }
                 }
                 log.debug("Connection update", category: .connection, metadata: ["update": "\(update)"])
