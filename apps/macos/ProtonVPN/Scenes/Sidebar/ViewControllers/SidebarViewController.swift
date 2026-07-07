@@ -61,6 +61,9 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private let factory: Factory
     private let store: StoreOf<SidebarFeature>
 
+    @Dependency(\.announcementManager) private var announcementManager
+    private var announcementsCancellable: AnyCancellable?
+
     private lazy var tabBarViewController: SidebarTabBarViewController = .init()
 
     private lazy var countriesSectionViewController: CountriesSectionViewController = { [unowned self] in
@@ -305,10 +308,12 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         expandButton.expandState = .compact
         applyExpandButtonLayoutDirection()
 
-        // Auto-present a pending one-time announcement once the window is ready.
-        DispatchQueue.main.async {
-            AnnouncementOfferCoordinator().presentOneTimeAnnouncementIfNeeded()
-        }
+        // Present a pending one-time announcement whenever the stored announcements change
+        announcementsCancellable = announcementManager.announcementsPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                AnnouncementOfferCoordinator().presentOneTimeAnnouncementIfNeeded()
+            }
     }
 
     private func setupTabBar() {

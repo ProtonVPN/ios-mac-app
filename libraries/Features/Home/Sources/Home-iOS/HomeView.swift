@@ -163,6 +163,15 @@ public struct HomeView: View {
             .onChange(of: proxy.size.height) { _, height in
                 viewHeight = height
             }
+            .task {
+                // Present a pending one-time announcement whenever the stored announcements change
+                @Dependency(\.announcementManager) var announcementManager
+                for await _ in announcementManager.announcementsPublisher().values {
+                    await MainActor.run {
+                        AnnouncementOfferCoordinator().presentOneTimeAnnouncementIfNeeded()
+                    }
+                }
+            }
         }
     }
 

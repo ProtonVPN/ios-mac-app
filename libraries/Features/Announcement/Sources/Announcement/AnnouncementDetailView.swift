@@ -154,10 +154,12 @@ struct AnnouncementFeatureRow: View {
                     .scaledToFit()
                     .frame(.square(.themeSpacing24))
             }
-            Text(feature.text)
-                .font(DetailFonts.feature)
-                .foregroundStyle(Color(.text))
-            Spacer(minLength: 0)
+            HStack(spacing: 0) {
+                Text(feature.text)
+                    .font(DetailFonts.feature)
+                    .foregroundStyle(Color(.text))
+                Spacer(minLength: 0)
+            }
         }
     }
 }

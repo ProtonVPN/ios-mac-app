@@ -93,7 +93,7 @@ private func imageOfferSize(_ panel: OfferPanel.ImagePanel, maxSize: CGSize) -> 
         CGSize(width: 480, height: 480)
     }
 
-    // Scale down to fit the scree preserving aspect ratio
+    // Scale down to fit the screen preserving aspect ratio
     let ratio = min(maxSize.width / desiredImage.width, maxImageHeight / desiredImage.height, 1)
     let image = CGSize(width: desiredImage.width * ratio, height: desiredImage.height * ratio)
     return CGSize(width: image.width, height: image.height + offerActionButtonArea)

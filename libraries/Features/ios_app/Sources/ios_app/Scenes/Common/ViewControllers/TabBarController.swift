@@ -20,9 +20,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Announcement
-import Combine
-import Dependencies
 import LegacyCommon
 import ProtonCoreFeatureFlags
 import Strings
@@ -30,9 +27,6 @@ import UIKit
 
 final class TabBarController: UITabBarController {
     var viewModel: TabBarViewModel
-
-    @Dependency(\.announcementManager) private var announcementManager
-    private var announcementsCancellable: AnyCancellable?
 
     init(viewModel: TabBarViewModel) {
         self.viewModel = viewModel
@@ -50,13 +44,6 @@ final class TabBarController: UITabBarController {
 
         traitOverrides.horizontalSizeClass = .compact
         setupView()
-
-        // Present a pending one-time announcement if any
-        announcementsCancellable = announcementManager.announcementsPublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                AnnouncementOfferCoordinator().presentOneTimeAnnouncementIfNeeded()
-            }
     }
 
     func setupView() {
