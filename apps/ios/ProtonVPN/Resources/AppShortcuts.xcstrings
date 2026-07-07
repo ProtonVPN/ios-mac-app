@@ -63,7 +63,7 @@
           "stringSet" : {
             "state" : "translated",
             "values" : [
-              "Bin ich durch ${applicationName} geschützt?",
+              "Bin ich durch ${applicationName} geschützt",
               "Ist ${applicationName} verbunden?",
               "Status von ${applicationName}",
               "Status von ${applicationName} anzeigen"

@@ -1188,6 +1188,12 @@
             "value" : "Pripojiť k regiónu"
           }
         },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poveži se z regijo"
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1756,6 +1762,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pripojiť k VPN"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Povežite se z VPN"
           }
         },
         "sv" : {
@@ -2986,6 +2998,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Odpojiť od VPN"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prekini povezavo z VPN"
           }
         },
         "sv" : {
@@ -4430,6 +4448,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aktuálny index"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nedavni indeks"
           }
         },
         "sv" : {
@@ -6694,6 +6718,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Stav VPN"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stanje VPN"
           }
         },
         "sv" : {
