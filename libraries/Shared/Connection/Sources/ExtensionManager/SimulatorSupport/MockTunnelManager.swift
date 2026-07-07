@@ -77,6 +77,12 @@
             try connection.startTunnel()
         }
 
+        func startZeroPeerTunnel() async throws {
+            try await Task.sleep(for: tunnelStartDuration)
+            try Task.checkCancellation()
+            try connection.startTunnel()
+        }
+
         func stopTunnel() async throws {
             didStopTunnelCallback?()
             connection.stopTunnel()

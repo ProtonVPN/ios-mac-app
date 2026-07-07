@@ -36,7 +36,7 @@ public struct ConnectionFeature: Sendable {
     @Dependency(\.sessionChangeNotifier) private var sessionChangeNotifier
     @Dependency(\.connectionIntentResolver) private var intentResolver
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
-    @Dependency(\.connectionFeatureProvider) private var features
+    @Dependency(\.connectionFeatureProvider) private var connectionFeatureProvider
 
     public init() {}
 
@@ -46,6 +46,19 @@ public struct ConnectionFeature: Sendable {
         @Shared(.connectionState) var connectionState
         var shouldRegisterServerChangeOnConnection: Bool // TODO: ProTUN: post connection events that some other component can hook into to do this, similarly to Telemetry
         var tunnel: ExtensionFeature.State
+
+        /// Whether the live tunnel was started with `includeAllNetworks = true`
+        /// Advanced KS disconnect can switch to zero-peer in place or must cold-start a fresh blocking tunnel
+        var tunnelArmedForKillSwitch: Bool = false
+        /// Intent flag: we are (or should be) blocking via zero-peer. Survives a tunnel drop so an
+        /// unexpected disconnect while Advanced KS is on can re-block. Distinct from the resolved
+        /// `connectionState.killSwitchActive`
+        var isBlockingIntended: Bool = false
+        /// One-shot guard so a failed Advanced KS re-block can't spin into a retry loop
+        var isAttemptingZeroPeerReblock: Bool = false
+        /// Set while tearing the tunnel down purely to re-arm `includeAllNetworks`; once we observe
+        /// `.disconnected`, cold-start a fresh connect to this spec
+        var pendingReconnectSpec: ConnectionSpec?
 
         package init(
             shouldRegisterServerChangeOnConnection: Bool,
@@ -77,6 +90,11 @@ public struct ConnectionFeature: Sendable {
             case applySettings(Set<ConnectionFeatureChange>)
             case onSessionChange
             case disconnect
+            /// Enter Advanced kill switch blocking from a disconnected state (cold-start).
+            case enterZeroPeerBlocking
+            /// Fully restart the tunnel, reconnecting to `spec`, to re-arm `includeAllNetworks`
+            /// (which can't be applied to a live session).
+            case reconnect(ConnectionSpec)
         }
 
         /// A subset of this reducer's actions that must be handled appropriately by its parent
@@ -119,6 +137,12 @@ public struct ConnectionFeature: Sendable {
                     return .send(.delegate(.intentResolutionFailed(intent, with: error)))
                 }
 
+                // A fresh connect sets `includeAllNetworks` from the current KS mode and clears any pending
+                // zero-peer re-block (the user is explicitly connecting)
+                state.isAttemptingZeroPeerReblock = false
+                state.isBlockingIntended = false
+                state.tunnelArmedForKillSwitch = connectionFeatureProvider.requestedFeatures().killSwitch
+
                 // Transition to connecting to give the user immediate feedback while
                 // we perform the somewhat expensive database operations to resolve the server
                 state.$connectionState.withLock {
@@ -148,40 +172,102 @@ public struct ConnectionFeature: Sendable {
                 if update.killSwitch == false, state.connectionState.is(\.killSwitchActive) {
                     // Zero-peer mode has no peer to resume, so disabling Kill Switch intentionally stops the tunnel.
                     // The next connection will rebuild it with the location selected by the user.
+                    state.isBlockingIntended = false
                     return .merge(
                         .cancel(id: CancelID.preparation),
                         .send(.tunnel(.disconnect(nil))) // this sets `onDemand` to `false`
                     )
                 }
-                return .send(.tunnel(.requestConfigChange(update)))
+                let ipcEffect: Effect<Action> = .send(.tunnel(.requestConfigChange(update)))
+                // Enabling KS needs `includeAllNetworks` set in the tunnel, which can't be applied to a
+                // live session. If we're connected on a tunnel that wasn't started armed, reconnect to the
+                // current server so KS actually blocks on a later disconnect/drop
+                let enablesKillSwitch = featureChanges.contains { change in
+                    if case .tunnel(.killSwitch(true)) = change { return true }
+                    return false
+                }
+                if enablesKillSwitch,
+                   state.connectionState.is(\.connected),
+                   !state.tunnelArmedForKillSwitch,
+                   let spec = state.connectionState.resolvedSpec {
+                    return .merge(ipcEffect, .send(.input(.reconnect(spec))))
+                }
+                return ipcEffect
 
             case .input(.disconnect):
-                // Zero-peer KS: when the user requests a disconnect while KS is enabled and the tunnel is connected,
-                // strip peers in place (preserving the tunnel interface) rather than tearing it down. Otherwise, fall
-                // through to the normal disconnect path.
-                if case let .connected(tunnelConfig, _) = state.connectionState, features.requestedFeatures().killSwitch {
-                    // Optimistic: reconciled by resolveProTUN once the applied requestId quiesces; on failure the
-                    // .reconfigurationFailed handler restores connectionState from the reported tunnel state.
-                    let zeroPeerConfig = TunnelConfiguration(
-                        connectionSpec: tunnelConfig.connectionSpec,
-                        tunnelProtocol: tunnelConfig.tunnelProtocol,
-                        peerIDs: []
-                    )
-                    state.$connectionState.withLock {
-                        $0 = .killSwitchActive(tunnelConfig.connectionSpec, zeroPeerConfig)
+                let mode = connectionFeatureProvider.requestedFeatures().killSwitchMode
+                if mode.isAdvanced {
+                    // Advanced KS keeps blocking on an intentional disconnect
+                    state.isBlockingIntended = true
+                    if state.tunnelArmedForKillSwitch, case let .connected(tunnelConfig, _) = state.connectionState {
+                        // Live armed tunnel: switch to zero-peer in place (gap-free). Optimistic: reconciled by
+                        // resolveProTUN once the applied requestId quiesces; on failure the .reconfigurationFailed
+                        // handler restores connectionState from the reported tunnel state.
+                        let zeroPeerConfig = TunnelConfiguration(
+                            connectionSpec: tunnelConfig.connectionSpec,
+                            tunnelProtocol: tunnelConfig.tunnelProtocol,
+                            peerIDs: []
+                        )
+                        state.$connectionState.withLock {
+                            $0 = .killSwitchActive(tunnelConfig.connectionSpec, zeroPeerConfig)
+                        }
+                        let update = ConnectionUpdate(
+                            location: .init(spec: tunnelConfig.connectionSpec, peers: []),
+                            killSwitch: true
+                        )
+                        return .send(.tunnel(.requestConfigChange(update)))
                     }
-                    let update = ConnectionUpdate(
-                        location: .init(spec: tunnelConfig.connectionSpec, peers: []),
-                        killSwitch: true
-                    )
-                    return .send(.tunnel(.requestConfigChange(update)))
+                    // Not armed, or cancelling a connect that never reached `.connected`: an in-place switch
+                    // wouldn't block, so stop the tunnel; the disconnect-driven re-block (gated on
+                    // `isBlockingIntended`) cold starts a fresh, armed zero-peer tunnel once we reach `.disconnected`
+                    return .merge(.cancel(id: CancelID.preparation), .send(.tunnel(.disconnect(nil))))
                 }
-                return .merge(
-                    .cancel(id: CancelID.preparation),
-                    .send(.tunnel(.disconnect(nil)))
-                )
+                // Standard / Off: release on user intent. Zero-peer mode has no peer to resume, so the tunnel
+                // stops; projection walks the state through `.disconnecting` to `.disconnected`.
+                state.isBlockingIntended = false
+                return .merge(.cancel(id: CancelID.preparation), .send(.tunnel(.disconnect(nil))))
+
+            case .input(.enterZeroPeerBlocking):
+                // Cold start zero-peer blocking from a fully disconnected state (enable Advanced KS when disconnected)
+                guard !state.isBlockingIntended, state.connectionState.is(\.disconnected) else { return .none }
+                state.isBlockingIntended = true
+                state.isAttemptingZeroPeerReblock = true
+                state.tunnelArmedForKillSwitch = true // the cold-start config always sets includeAllNetworks
+                return .send(.tunnel(.startZeroPeerColdStart))
+
+            case let .input(.reconnect(spec)):
+                // Tear-down to set `includeAllNetworks`; the `.disconnected` observation cold-starts
+                // a fresh connect. Must NOT enter zero-peer, so we don't set `isBlockingIntended`
+                state.pendingReconnectSpec = spec
+                state.tunnelArmedForKillSwitch = false
+                return .merge(.cancel(id: CancelID.preparation), .send(.tunnel(.disconnect(nil))))
 
             case .input(.onLogout):
+                // Advanced KS persists across logout: keep blocking on the login screen instead of
+                // tearing the tunnel down. Standard/Off release so the user isn't locked out
+                if connectionFeatureProvider.requestedFeatures().killSwitchMode.isAdvanced {
+                    if case let .connected(tunnelConfig, _) = state.connectionState {
+                        state.isBlockingIntended = true
+                        let zeroPeerConfig = TunnelConfiguration(
+                            connectionSpec: tunnelConfig.connectionSpec,
+                            tunnelProtocol: tunnelConfig.tunnelProtocol,
+                            peerIDs: []
+                        )
+                        state.$connectionState.withLock {
+                            $0 = .killSwitchActive(tunnelConfig.connectionSpec, zeroPeerConfig)
+                        }
+                        let update = ConnectionUpdate(
+                            location: .init(spec: tunnelConfig.connectionSpec, peers: []),
+                            killSwitch: true
+                        )
+                        return .merge(
+                            .send(.stopObserving),
+                            .send(.tunnel(.requestConfigChange(update)))
+                        )
+                    }
+                    // Already blocking or disconnected: leave the firewall untouched, just stop observing
+                    return .send(.stopObserving)
+                }
                 return .merge(.send(.stopObserving), .send(.tunnel(.cleanup)))
 
             case .input(.onSessionChange):
@@ -210,10 +296,28 @@ public struct ConnectionFeature: Sendable {
                 }
                 return .send(.delegate(.connectionFailed(.preparation(.intentResolution(error)))))
 
+            case let .tunnel(.tunnelStatusChanged(tunnelState)) where tunnelState.is(\.disconnected) && state.pendingReconnectSpec != nil:
+                // The tunnel finished tearing down for a re-arm; now that we're disconnected, cold start a
+                // fresh connect so `includeAllNetworks` is there
+                guard let spec = state.pendingReconnectSpec else { return .none }
+                state.pendingReconnectSpec = nil
+                return .send(.input(.connect(ConnectionPreparationIntent(spec: spec, acceptableProtocols: .all))))
+
+            case let .tunnel(.tunnelStatusChanged(tunnelState)) where tunnelState.is(\.disconnected)
+                && state.isBlockingIntended
+                && !state.isAttemptingZeroPeerReblock
+                && connectionFeatureProvider.requestedFeatures().killSwitchMode.isAdvanced:
+                // Advanced KS: an unexpected drop (or VPN toggled off in Settings) while we were blocking →
+                // one-shot cold start re-block. The guard prevents a retry loop.
+                state.isAttemptingZeroPeerReblock = true
+                state.tunnelArmedForKillSwitch = true // the cold-start config always sets includeAllNetworks
+                return .send(.tunnel(.startZeroPeerColdStart))
+
             case let .tunnel(.tunnelStatusChanged(.disconnected(.some(error)))):
                 state.$connectionState.withLock {
                     $0 = .disconnected
                 }
+                state.isBlockingIntended = false
                 return .send(.delegate(.connectionFailed(.tunnel(error))))
 
             case let .tunnel(.tunnelStatusChanged(.connected(_, connectionData))):
@@ -231,8 +335,16 @@ public struct ConnectionFeature: Sendable {
                 return .none
 
             case .tunnel(.tunnelStatusChanged):
+                let incoming = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
+                if incoming.is(\.killSwitchActive) {
+                    // Zero-peer blocking is active (cold start success, or the app relaunched into a blocking
+                    // tunnel). A zero-peer tunnel always has `includeAllNetworks`
+                    state.isBlockingIntended = true
+                    state.isAttemptingZeroPeerReblock = false
+                    state.tunnelArmedForKillSwitch = true
+                }
                 state.$connectionState.withLock {
-                    $0 = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
+                    $0 = incoming
                 }
                 return .none
 
@@ -378,6 +490,10 @@ extension ConnectionFeature.Action.Input: CustomDebugStringConvertible {
             ".disconnect"
         case .onSessionChange:
             ".onSessionChange"
+        case .enterZeroPeerBlocking:
+            ".enterZeroPeerBlocking"
+        case let .reconnect(spec):
+            ".reconnect(\(spec))"
         }
     }
 }

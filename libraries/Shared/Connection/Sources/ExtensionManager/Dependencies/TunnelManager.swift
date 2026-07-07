@@ -71,6 +71,7 @@ enum TunnelMessageTarget {
 
 protocol TunnelManager {
     func startTunnel(with intent: ServerConnectionIntent) async throws
+    func startZeroPeerTunnel() async throws
     func stopTunnel() async throws
 
     func sendProTUN(request: ProTUNMessage.Request) async throws(ProviderMessageError) -> ProTUNMessage.Response
@@ -237,6 +238,16 @@ final class PacketTunnelManager: TunnelManager {
             tunnelDataXPC.reattach()
         #endif
 
+        try manager.session.startTunnel()
+    }
+
+    /// Starts a zero-peer ProTUN tunnel from a disconnected state to enforce Advanced kill switch blocking.
+    /// May prompt for VPN permission the first time. The tunnel comes up intercepting all traffic
+    /// with no peer, so it blocks until a real connection replaces the configuration
+    func startZeroPeerTunnel() async throws {
+        @Dependency(\.vpnManagerRepository) var managerRepository
+        let manager = try await managerRepository.prepareManager(.wireGuard, .zeroPeerColdStart)
+        try Task.checkCancellation()
         try manager.session.startTunnel()
     }
 

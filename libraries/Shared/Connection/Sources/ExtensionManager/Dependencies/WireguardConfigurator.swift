@@ -98,6 +98,40 @@ extension ManagerConfigurator {
         return protocolConfiguration
     }
 
+    /// Builds a ProTUN provider configuration with **no peers** (and no server), used to enforce Advanced
+    /// kill switch blocking from a disconnected state. `includeAllNetworks` routes all traffic into a tunnel
+    /// that never establishes a peer connection, so everything is blocked until the config is replaced.
+    private static func zeroPeerProviderConfiguration() throws -> NETunnelProviderProtocol {
+        @Dependency(\.bundleIDClient) var bundleIDClient
+        let protocolConfiguration = NETunnelProviderProtocol()
+        protocolConfiguration.providerBundleIdentifier = bundleIDClient.bundleIdentifier(.wireGuard)
+        protocolConfiguration.serverAddress = "" // If nil, start fails. Empty string is accepted.
+        protocolConfiguration.username = nil
+
+        #if os(iOS)
+            protocolConfiguration.includeAllNetworks = true
+        #endif
+
+        @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
+        let wgConfig = connectionConfigurationProvider.configuration().wireguardConfig
+        let config = ProTUNConfiguration(preferredTransport: .udp, peers: [], dnsServers: wgConfig.dnsServers ?? [])
+        try ProTUNConfigurationCoder.encode(configuration: config, to: protocolConfiguration)
+
+        try protocolConfiguration.setConnectionSpec(ConnectionSpec())
+
+        // The extension seeds its request id from the starting configuration and republishes it with the
+        // extension state. Stamping one here is what lets `resolveProTUN` treat the saved zero-peer intent
+        // as applied and resolve `.killSwitchActive` once the tunnel is up.
+        protocolConfiguration.requestId = UUID()
+
+        @Dependency(\.authKeychain) var authKeychain
+        guard let userID = authKeychain.userId else {
+            throw ManagerConfigurationError.userIdMissing
+        }
+        protocolConfiguration.userID = userID
+        return protocolConfiguration
+    }
+
     static func encodeProTUNConfiguration(connectionIntent: ServerConnectionIntent, on protocolConfiguration: NETunnelProviderProtocol) throws {
         @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
         @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
@@ -166,6 +200,12 @@ extension ManagerConfigurator {
 
                 case .disconnection:
                     manager.isOnDemandEnabled = false
+                    manager.isEnabled = true
+
+                case .zeroPeerColdStart:
+                    manager.vpnProtocolConfiguration = try zeroPeerProviderConfiguration()
+                    manager.localizedDescription = "Proton VPN"
+                    manager.isOnDemandEnabled = true
                     manager.isEnabled = true
                 }
             }

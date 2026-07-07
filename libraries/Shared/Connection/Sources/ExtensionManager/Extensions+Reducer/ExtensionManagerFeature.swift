@@ -59,6 +59,8 @@ public struct ExtensionFeature: Sendable {
         /// Requests that the extension apply a partial configuration/feature change to the running tunnel.
         case requestConfigChange(ConnectionUpdate)
         case connect(ServerConnectionIntent)
+        /// Start a zero-peer tunnel from a disconnected state (Advanced kill switch cold-start).
+        case startZeroPeerColdStart
         case tunnelStartRequestFinished(Result<Bool, Error>)
         /// The internal state of the network extension has changed
         case tunnelStatusChanged(TunnelState)
@@ -162,6 +164,17 @@ public struct ExtensionFeature: Sendable {
                         log.error("Timeout task cancellation error: \(error)", category: .connection)
                     }.cancellable(id: CancelID.connectionTimeout, cancelInFlight: true)
                 )
+
+            case .startZeroPeerColdStart:
+                // Cold start a peerless, includeAllNetworks tunnel to enforce Advanced kill switch blocking
+                // from a disconnected state
+                return .run { send in
+                    await send(.tunnelStartRequestFinished(Result {
+                        try await tunnelManager.startZeroPeerTunnel()
+                        try Task.checkCancellation()
+                        return true
+                    }))
+                }.cancellable(id: CancelID.tunnelStart)
 
             case .timeout:
                 // Should we bump the timeout back to 30s every time the connection state advances?
@@ -418,6 +431,8 @@ extension ExtensionFeature.Action: CustomDebugStringConvertible {
             ".stopObserving"
         case let .connect(serverConnectionIntent):
             ".connect(\(serverConnectionIntent))"
+        case .startZeroPeerColdStart:
+            ".startZeroPeerColdStart"
         case let .tunnelStartRequestFinished(result):
             ".tunnelStartRequestFinished(\(result))"
         case let .tunnelStatusChanged(tunnelState):

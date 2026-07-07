@@ -35,9 +35,11 @@
 
     #if !os(tvOS)
         struct ConnectionFeatureTransitionTests {
+            /// Disconnecting with Advanced kill switch Active (the live tunnel was armed at connect) switches to
+            /// zero-peer blocking in place, reflected in the state immediately.
             @Test
             @MainActor
-            func disconnectWithKillSwitchUpdatesStateImmediately() async {
+            func disconnectWithActiveAdvancedKillSwitchUpdatesStateImmediately() async {
                 let spec = ConnectionSpec(location: .country(code: "IT", order: .fastest), features: [])
                 let configuration = TunnelConfiguration(
                     connectionSpec: spec,
@@ -51,7 +53,7 @@
                 )
                 let session = VPNSessionMock(status: .connected)
                 session.messageHandler = MessageHandler.full
-                let store = TestStore(initialState: ConnectionFeature.State(
+                var initialState = ConnectionFeature.State(
                     connectionState: .connected(
                         configuration,
                         .init(
@@ -62,14 +64,16 @@
                     ),
                     shouldRegisterServerChangeOnConnection: false,
                     tunnel: .unknown
-                )) {
+                )
+                initialState.tunnelArmedForKillSwitch = true
+                let store = TestStore(initialState: initialState) {
                     ConnectionFeature()
                 } withDependencies: {
                     $0.connectionFeatureProvider = .init(
                         connectionFeatures: { .mock },
                         requestedFeatures: {
                             #if !os(tvOS)
-                                .init(killSwitch: true, excludeLocalNetworks: false)
+                                .init(killSwitchMode: .advanced, excludeLocalNetworks: false)
                             #else
                                 .tvFeatures
                             #endif
@@ -82,8 +86,59 @@
                 store.exhaustivity = .off
 
                 await store.send(.input(.disconnect)) {
+                    $0.isBlockingIntended = true
                     $0.connectionState = .killSwitchActive(spec, zeroPeerConfiguration)
                 }
+            }
+
+            /// Disconnecting with Standard kill switch releases the tunnel instead of blackholing: the state is
+            /// left for projection to walk down, and no zero-peer switch happens.
+            @Test
+            @MainActor
+            func disconnectWithStandardKillSwitchReleasesTunnel() async {
+                let spec = ConnectionSpec(location: .country(code: "IT", order: .fastest), features: [])
+                let configuration = TunnelConfiguration(
+                    connectionSpec: spec,
+                    tunnelProtocol: .wireGuard,
+                    peerIDs: ["old-peer"]
+                )
+                let session = VPNSessionMock(status: .connected)
+                session.messageHandler = MessageHandler.full
+                var initialState = ConnectionFeature.State(
+                    connectionState: .connected(
+                        configuration,
+                        .init(
+                            currentPeer: .mock,
+                            connectionDate: .now,
+                            protocolConnectionData: .proTUN(.init(transport: .udp))
+                        )
+                    ),
+                    shouldRegisterServerChangeOnConnection: false,
+                    tunnel: .unknown
+                )
+                initialState.tunnelArmedForKillSwitch = true
+                let store = TestStore(initialState: initialState) {
+                    ConnectionFeature()
+                } withDependencies: {
+                    $0.connectionFeatureProvider = .init(
+                        connectionFeatures: { .mock },
+                        requestedFeatures: {
+                            #if !os(tvOS)
+                                .init(killSwitchMode: .standard, excludeLocalNetworks: false)
+                            #else
+                                .tvFeatures
+                            #endif
+                        },
+                        connectionProtocol: { .smartProtocol }
+                    )
+                    $0.tunnelManager = MockTunnelManager(connection: session)
+                    $0.continuousClock = TestClock()
+                    $0.defaultAppStorage = .testValue()
+                }
+                store.exhaustivity = .off
+
+                await store.send(.input(.disconnect))
+                #expect(store.state.connectionState.is(\.connected))
             }
         }
     #endif
