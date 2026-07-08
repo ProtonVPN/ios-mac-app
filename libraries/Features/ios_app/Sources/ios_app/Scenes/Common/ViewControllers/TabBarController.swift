@@ -26,19 +26,6 @@ import Strings
 import UIKit
 
 final class TabBarController: UITabBarController {
-    var viewModel: TabBarViewModel
-
-    init(viewModel: TabBarViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-        delegate = self
-    }
-
-    @available(*, unavailable)
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -60,26 +47,5 @@ final class TabBarController: UITabBarController {
         }
 
         selectedIndex = 0
-    }
-}
-
-extension TabBarController: UITabBarControllerDelegate {
-    func tabBarController(_: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        // to help with data updating and easier to understand navigation, pop nvc to root
-        if let navigationViewController = viewController as? UINavigationController, navigationViewController != selectedViewController {
-            navigationViewController.popToRootViewController(animated: false)
-        }
-
-        if viewController == viewControllers?.last { // settings
-            return viewModel.settingShouldBeSelected()
-        }
-        return true
-    }
-
-    func tabBarController(_: UITabBarController, didSelect viewController: UIViewController) {
-        if let navigationController = viewController as? UINavigationController,
-           navigationController.visibleViewController is SettingsViewController {
-            viewModel.settingsTabTapped()
-        }
     }
 }

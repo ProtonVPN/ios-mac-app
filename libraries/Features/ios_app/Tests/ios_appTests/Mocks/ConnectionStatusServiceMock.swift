@@ -24,5 +24,5 @@ import Foundation
 @testable import ios_app
 
 class ConnectionStatusServiceMock: ConnectionStatusService {
-    func presentStatusViewController() {}
+    func presentHome() {}
 }

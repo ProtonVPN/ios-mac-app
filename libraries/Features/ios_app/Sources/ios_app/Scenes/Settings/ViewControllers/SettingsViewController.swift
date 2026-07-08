@@ -25,7 +25,11 @@ import Combine
 import Dependencies
 import Domain
 import Ergonomics
+import LegacyCommon
+import ProtonCoreFeatureFlags
+import ProtonCoreUIFoundations
 import SDWebImage
+import Settings
 import Sharing
 import Strings
 import Theme
@@ -72,10 +76,33 @@ final class SettingsViewController: UIViewController {
             setupTableView()
             tableView.reloadData()
         }
-        // Set up tab bar item
-        tabBarItem = UITabBarItem(title: Localizable.settings, image: Theme.Asset.Icons.cogWheel.image, tag: 3)
+        @SharedReader(.captureSession) var captureSession
+
+        observe { [weak self] in
+            guard let self else { return }
+            switch captureSession {
+            case .sessionStarted:
+                guard recordingTabBarItem != tabBarItem else { return }
+                tabBarItem = recordingTabBarItem
+            default:
+                guard idleTabBarItem != tabBarItem else { return }
+                tabBarItem = idleTabBarItem
+            }
+        }
         tabBarItem.accessibilityIdentifier = "Settings back btn"
     }
+
+    private let recordingTabBarItem = UITabBarItem(
+        title: Localizable.settings,
+        image: UIImage(resource: .settingsTabbarDot).withRenderingMode(.alwaysOriginal),
+        selectedImage: UIImage(resource: .settingsTabbarDotActive).withRenderingMode(.alwaysOriginal)
+    )
+
+    private let idleTabBarItem = UITabBarItem(
+        title: Localizable.settings,
+        image: UIImage(resource: .settingsTabbar).withRenderingMode(.alwaysOriginal),
+        selectedImage: UIImage(resource: .settingsTabbarActive).withRenderingMode(.alwaysOriginal)
+    )
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {

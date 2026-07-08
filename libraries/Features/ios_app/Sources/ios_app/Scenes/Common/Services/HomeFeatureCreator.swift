@@ -49,8 +49,7 @@ enum HomeFeatureCreator {
         } withDependencies: {
             $0.openCredentiallessSignUp = {
                 let navService = DependencyContainer.shared.makeNavigationService()
-                guard let tabBarController = navService.tabBarController else { return }
-                navService.presentSignUp(over: tabBarController, flow: .credentiallessUpsell)
+                navService.presentSignUp(over: navService.tabBarController, flow: .credentiallessUpsell)
             }
         }
 

@@ -1064,7 +1064,7 @@ final class SettingsViewModel {
             $sharedConnectionProtocol.withLock { $0 = connectionProtocol }
         }
         if showStatusViewController {
-            connectionStatusService.presentStatusViewController()
+            connectionStatusService.presentHome()
         }
         Task {
             do {

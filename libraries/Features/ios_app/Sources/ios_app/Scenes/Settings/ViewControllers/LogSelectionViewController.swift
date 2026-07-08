@@ -9,7 +9,9 @@
 
 import ComposableArchitecture
 import LegacyCommon
+import PCAP
 import Strings
+import SwiftUI
 import UIKit
 
 final class LogSelectionViewController: UIViewController {
@@ -79,6 +81,8 @@ final class LogSelectionViewController: UIViewController {
             switch store.case {
             case let .logs(store):
                 LogsViewController(store: store)
+            case let .captureVPNSession(store):
+                UIHostingController(rootView: CaptureVPNSessionView(store: store))
             }
         }
 
@@ -116,7 +120,7 @@ final class LogSelectionViewController: UIViewController {
         let rows = store.rows
         let cells: [TableViewCellModel] = rows.map { row in
             switch row {
-            case .logSource:
+            case .logSource, .pcap:
                 TableViewCellModel.pushStandard(title: row.title) { [weak self] in
                     self?.store.send(.rowTapped(row))
                 }

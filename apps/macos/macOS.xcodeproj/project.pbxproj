@@ -65,6 +65,7 @@
 		E59447542A86217A00E1E241 /* ProtonCoreLoginUI in Frameworks */ = {isa = PBXBuildFile; productRef = E59447532A86217A00E1E241 /* ProtonCoreLoginUI */; };
 		E5A6921B2EB0B4550050AB7F /* VPNShared in Frameworks */ = {isa = PBXBuildFile; productRef = E5A6921A2EB0B4550050AB7F /* VPNShared */; };
 		E5C00F0D2A15FC6E0030076F /* (null) in Sources */ = {isa = PBXBuildFile; };
+		E5A6B1FB2FC45BB200AB7367 /* TroubleshootingWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A6B1FA2FC45BB200AB7367 /* TroubleshootingWindowController.swift */; };
 		E5C384662D96AAA5003494D5 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = E5C384652D96AAA5003494D5 /* Settings */; };
 		E5C3847E2D96B9DE003494D5 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E5C3847D2D96B9DE003494D5 /* Modals */; };
 		E5D1A5A22F43292100A26EA8 /* Countries in Frameworks */ = {isa = PBXBuildFile; productRef = E5D1A5A12F43292100A26EA8 /* Countries */; };
@@ -145,6 +146,7 @@
 		E52B8BAD29FBB7E700517FFC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		E57B263129C3188D00533B7C /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		E5C00F082A15FC6E0030076F /* ProtonVPNmac-redesign-UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ProtonVPNmac-redesign-UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5A6B1FA2FC45BB200AB7367 /* TroubleshootingWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingWindowController.swift; sourceTree = "<group>"; };
 		EBB751C42DA7D4C800F79994 /* ch.protonvpn.mac.Transparent-Proxy.systemextension */ = {isa = PBXFileReference; explicitFileType = "wrapper.system-extension"; includeInIndex = 0; path = "ch.protonvpn.mac.Transparent-Proxy.systemextension"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE182C551F617C0000F3BA4C /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		EE8CA7B01F06F94800BA829F /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };

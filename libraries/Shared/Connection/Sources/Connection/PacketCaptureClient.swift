@@ -42,6 +42,7 @@ public struct PacketCaptureClient {
 extension PacketCaptureClient: DependencyKey {
     public static var liveValue: PacketCaptureClient {
         @Dependency(\.tunnelMessageSender) var messageSender
+        @Dependency(\.fileManagerClient) var fileManagerClient
 
         @Sendable
         func sendProTUNPcapRequest(
@@ -58,17 +59,6 @@ extension PacketCaptureClient: DependencyKey {
             }
             return pcapUpdate
         }
-
-        // TODO: ProTUN(pcap): To test with the `pendingConnection`
-        IPCNotifications.observe(.pcapSessionChanged) {
-            @Shared(.captureSession) var captureSession
-            let data = UserDefaults.domainUserDefaults.data(forKey: "PcapSession")
-            if let data, let next = try? JSONDecoder().decode(CaptureSession.self, from: data) {
-                $captureSession.withLock { $0 = next }
-            }
-        }
-
-        let observation = LockIsolated<IPCNotifications.Observation?>(nil)
 
         return PacketCaptureClient {
             guard case let .fileURL(url) = try await sendProTUNPcapRequest(.fileURL) else {
@@ -103,52 +93,45 @@ extension PacketCaptureClient: DependencyKey {
 
             switch response {
             case let .captureStartResult(.success(url)):
-                let token = IPCNotifications.observeState(
-                    .pcapInterrupted
-                ) { [weak observation] (reason: PacketCaptureInterruptionReason?) in
-                    $captureSession.withLock { state in
-                        guard case .sessionStarted(to: url, _) = state else { return }
-                        let fileSize = (try? FileManager.default.fileSize(for: url)) ?? .zero
-                        state = .sessionEnded(to: url, fileSize: fileSize, reason: reason ?? .unknown)
-                    }
-                    observation?.setValue(nil)
-                }
-
-                let tokenObservation = token.observation()
-                observation.setValue(tokenObservation)
-
-                $captureSession.withLock { $0 = .sessionStarted(to: url, at: .now) }
+                $captureSession.withLock { $0 = .sessionStarted(urlWithDate: .init(url: url, date: .now)) }
             case let .captureStartResult(.failure(error)):
-                observation.setValue(nil)
                 throw PacketCaptureClientError.failedToStart(error)
-            case let .captureFinished(url, fileSize):
-                observation.setValue(nil)
-                $captureSession.withLock {
-                    $0 = .sessionEnded(to: url, fileSize: fileSize, reason: .explicitStop)
-                }
+            case let .captureFinished(.success(urlWithSize)):
+                $captureSession.withLock { $0 = .sessionEnded(urlWithSize: urlWithSize, reason: .explicitStop) }
+            case .captureFinished(.failure(_)):
+                // We failed to stop the capture. This will only occur when there was no file.
+                $captureSession.withLock { $0 = .noSession }
             default:
                 throw PacketCaptureClientError.ipcInvalidResponse
             }
         }
     }
+
+    #if DEBUG
+        public static func stub(onCleanup: (() -> Bool)? = nil, onTogglePacketCapture: (() throws -> Void)? = nil) -> PacketCaptureClient {
+            .init {
+                nil
+            } isCaptureRunning: {
+                true
+            } cleanup: {
+                onCleanup?() ?? true
+            } togglePacketCapture: {
+                try onTogglePacketCapture?()
+            }
+        }
+    #endif
 }
 
-extension DependencyValues {
+public extension DependencyValues {
     var packetCaptureClient: PacketCaptureClient {
         get { self[PacketCaptureClient.self] }
         set { self[PacketCaptureClient.self] = newValue }
     }
 }
 
-public extension SharedKey where Self == AppStorageKey<CaptureSession>.Default {
-    static var captureSession: Self {
-        Self[.appStorage(CaptureSession.storageKey, store: .domainUserDefaults), default: .noSession]
-    }
-}
-
 private extension FileManager {
-    func fileSize(for url: URL) throws -> Int64 {
+    func fileSize(for url: URL) throws -> Int {
         let fileAttributes = try attributesOfItem(atPath: url.path())
-        return (fileAttributes[.size] as? Int64) ?? .zero
+        return (fileAttributes[.size] as? Int) ?? .zero
     }
 }

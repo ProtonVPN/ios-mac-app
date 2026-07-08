@@ -81,6 +81,10 @@ class HelpMenuViewModel {
         }
     }
 
+    func presentTroubleshootingWindow() {
+        windowService.openTroubleshootingWindow()
+    }
+
     func systemExtensionTutorialAction() {
         windowService.openSystemExtensionGuideWindow(origin: .inAppPrompt([]), cancelledHandler: {})
     }

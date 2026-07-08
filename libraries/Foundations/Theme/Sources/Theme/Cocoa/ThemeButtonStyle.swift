@@ -16,118 +16,129 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if canImport(AppKit)
+import SwiftUI
 
-    import SwiftUI
+public struct ThemeButtonStyle: ButtonStyle {
+    let padding: Padding
+    let style: Style
+    let maxWidth: CGFloat?
 
-    public struct ThemeButtonStyle: ButtonStyle {
-        let padding: Padding
-        let style: Style
+    @State private var isHovered = false
+    @Environment(\.isEnabled) var isEnabled
 
-        @State private var isHovered = false
-        @Environment(\.isEnabled) var isEnabled
+    public enum Style {
+        case primary
+        case secondary
+    }
 
-        public enum Style {
-            case primary
-            case secondary
-        }
+    public enum Padding {
+        case small
+        case medium
 
-        public enum Padding {
-            case small
-            case medium
-
-            var vertical: CGFloat {
-                switch self {
-                case .small:
-                    .themeSpacing8
-                case .medium:
+        var vertical: CGFloat {
+            switch self {
+            case .small:
+                .themeSpacing8
+            case .medium:
+                #if canImport(AppKit)
                     .themeSpacing12
-                }
-            }
-
-            var horizontal: CGFloat {
-                switch self {
-                case .small:
+                #else
                     .themeSpacing16
-                case .medium:
-                    .themeSpacing24
-                }
+                #endif
             }
         }
 
-        public init(padding: Padding = .medium, style: Style = .primary) {
-            self.padding = padding
-            self.style = style
-        }
-
-        func backgroundColor(isPressed: Bool) -> Color {
-            var backgroundStyle: AppTheme.Style = [.interactive]
-            if style == .secondary {
-                backgroundStyle.insert(.weak)
+        var horizontal: CGFloat {
+            switch self {
+            case .small:
+                .themeSpacing16
+            case .medium:
+                .themeSpacing24
             }
-            if isPressed {
-                backgroundStyle.insert(.active)
-            }
-            if isHovered {
-                backgroundStyle.insert(.hovered)
-            }
-            return Color(.background, backgroundStyle)
-        }
-
-        public func makeBody(configuration: Self.Configuration) -> some View {
-            configuration
-                .label
-                .foregroundColor(Color(.text, isEnabled ? [] : [.hint]))
-                .font(.body(emphasised: true))
-                .padding(.vertical, padding.vertical)
-                .padding(.horizontal, padding.horizontal)
-                .background(backgroundColor(isPressed: configuration.isPressed))
-                .cornerRadius(.themeRadius8)
-                .onHover { isHovered = $0 }
-                .linkPointer()
         }
     }
 
-    public extension View {
-        func linkPointer() -> some View {
+    public init(padding: Padding = .medium, style: Style = .primary, maxWidth: CGFloat? = nil) {
+        self.padding = padding
+        self.style = style
+        self.maxWidth = maxWidth
+    }
+
+    func backgroundColor(isPressed: Bool) -> Color {
+        var backgroundStyle: AppTheme.Style = [.interactive]
+        if style == .secondary {
+            backgroundStyle.insert(.weak)
+        }
+        if isPressed {
+            backgroundStyle.insert(.active)
+        }
+        if isHovered {
+            backgroundStyle.insert(.hovered)
+        }
+        return Color(.background, backgroundStyle)
+    }
+
+    public func makeBody(configuration: Self.Configuration) -> some View {
+        configuration
+            .label
+        #if canImport(AppKit)
+            .font(.body(emphasised: true))
+            .onHover { isHovered = $0 }
+        #else
+            .font(.body1(.semibold))
+        #endif
+            .frame(maxWidth: maxWidth)
+            .foregroundColor(Color(.text, isEnabled ? [] : [.hint]))
+            .padding(.vertical, padding.vertical)
+            .padding(.horizontal, padding.horizontal)
+            .background(backgroundColor(isPressed: configuration.isPressed))
+            .cornerRadius(.themeRadius8)
+            .linkPointer()
+    }
+}
+
+public extension View {
+    func linkPointer() -> some View {
+        #if canImport(AppKit)
             if #available(macOS 15.0, *) {
                 return pointerStyle(.link)
             } else {
                 return self
             }
-        }
+        #else
+            return self
+        #endif
     }
+}
 
-    #Preview {
-        HStack {
-            ForEach([SwiftUICore.ColorScheme.dark, .light], id: \.hashValue) { scheme in
-                VStack {
-                    Button("Small padding, secondary style") {}
-                        .buttonStyle(ThemeButtonStyle(
-                            padding: .small,
-                            style: .secondary
-                        ))
-                    Button("Medium padding, secondary style") {}
-                        .buttonStyle(ThemeButtonStyle(
-                            padding: .medium,
-                            style: .secondary
-                        ))
-                    Button("Small padding, primary style") {}
-                        .buttonStyle(ThemeButtonStyle(
-                            padding: .small,
-                            style: .primary
-                        ))
-                    Button("Medium padding, primary style") {}
-                        .buttonStyle(ThemeButtonStyle(
-                            padding: .medium,
-                            style: .primary
-                        ))
-                }
-                .padding()
-                .background(Color(.background, .weak))
-                .colorScheme(scheme)
+#Preview {
+    HStack {
+        ForEach([SwiftUICore.ColorScheme.dark, .light], id: \.hashValue) { scheme in
+            VStack {
+                Button("Small padding, secondary style") {}
+                    .buttonStyle(ThemeButtonStyle(
+                        padding: .small,
+                        style: .secondary
+                    ))
+                Button("Medium padding, secondary style") {}
+                    .buttonStyle(ThemeButtonStyle(
+                        padding: .medium,
+                        style: .secondary
+                    ))
+                Button("Small padding, primary style") {}
+                    .buttonStyle(ThemeButtonStyle(
+                        padding: .small,
+                        style: .primary
+                    ))
+                Button("Medium padding, primary style") {}
+                    .buttonStyle(ThemeButtonStyle(
+                        padding: .medium,
+                        style: .primary
+                    ))
             }
+            .padding()
+            .background(Color(.background, .weak))
+            .colorScheme(scheme)
         }
     }
-
-#endif
+}

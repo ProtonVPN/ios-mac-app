@@ -181,6 +181,13 @@
         "identifier": "ios_appTests",
         "name": "ios_appTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:../../libraries/Features/PCAP",
+        "identifier" : "PCAPTests",
+        "name" : "PCAPTests"
+      }
     }
   ],
   "version": 1

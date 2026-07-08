@@ -1,20 +1,25 @@
 {
-  "configurations": [
+  "configurations" : [
     {
-      "id": "68DED108-96F1-4794-969E-CE6E52099D69",
-      "name": "Configuration 1",
-      "options": {}
-    }
-  ],
-  "defaultOptions": {},
-  "testTargets": [
-    {
-      "target": {
-        "containerPath": "container:",
-        "identifier": "SettingsTests",
-        "name": "SettingsTests"
+      "id" : "0C6C4045-21A7-48BC-B7A1-8733C0B21236",
+      "name" : "Test Scheme Action",
+      "options" : {
+
       }
     }
   ],
-  "version": 1
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "performanceAntipatternCheckerEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "SettingsTests",
+        "name" : "SettingsTests"
+      }
+    }
+  ],
+  "version" : 1
 }

@@ -19,21 +19,25 @@
 import AsyncAlgorithms
 import Clocks
 import Dependencies
+import Domain
 import Foundation
 import os
 import protun
 
 struct PacketCaptureSession {
     static let pcapPathExtension: String = "pcap"
-    private static let pcapMaxDurationInMinutes: Int = 20
-    private static let pcapMaxFileSize: UInt64 = 5 * (1 << 20)
     private static let timerInterval: Duration = .minutes(1)
     private static let timerTolerance: Duration = .seconds(1)
 
+    struct PcapFileHandle: Equatable {
+        let startDate: Date
+        let url: URL
+    }
+
     enum State: Equatable {
         case idle
-        case recording(to: URL, since: Date)
-        case finished(duration: TimeInterval, fileSize: Int64)
+        case recording(PcapFileHandle)
+        case finished(duration: TimeInterval, fileSize: Int)
         case timerHit
         case maxFileSizeHit
     }
@@ -48,73 +52,57 @@ struct PacketCaptureSession {
         }
     }
 
+    @Dependency(\.date) var date
+
     private let stateLock = OSAllocatedUnfairLock<State>(initialState: .idle)
     private var continuation: AsyncStream<State>.Continuation?
 
     private struct InvalidState: Swift.Error {}
 
-    static func retrieveLastPcapFileURL() -> URL? {
-        do {
-            let fileManager = FileManager.default
-            let containerURL = try fileManager.mainContainerURL
-            let files = try fileManager.contentsOfDirectory(
-                at: containerURL,
-                includingPropertiesForKeys: [.creationDateKey],
-                options: [.skipsHiddenFiles]
-            )
-            return files
-                .filter { $0.pathExtension == Self.pcapPathExtension }
-                .sortedByCreationDate
-                .first
-        } catch {
-            return nil
-        }
-    }
-
-    @discardableResult
-    static func cleanUpLastPcapFile() throws -> Bool {
-        guard let lastPcapFileURL = retrieveLastPcapFileURL() else { return false }
-        try FileManager.default.removeItem(at: lastPcapFileURL)
-        return true
-    }
-
     // TODO: ProTUN(pcap):  Add file storage capacity checks?
     mutating func start(
         with eventStream: AsyncStream<Event>,
-        performing action: (URL, UInt64) -> Void,
+        performing action: (URL, Int) -> Void,
         stateStream: (AsyncStream<State>) -> Void
     ) throws -> URL {
         guard state.canStart else {
+            assertionFailure("Attempted to start PCAP session with invalid state")
             throw InvalidState()
         }
+        @Dependency(\.pcapFileManager) var pcapFileManager
+        try pcapFileManager.cleanUpAllPcapFiles()
 
-        try Self.cleanUpLastPcapFile()
+        let startDate = date.now
 
-        let startDate: Date = .now
-
-        let fileURL = try fileURL(for: startDate)
+        let fileURL = try pcapFileManager.newFileURL(startDate: startDate)
         let (combinedStream, continuation) = makeStream(from: eventStream)
 
         self.continuation = continuation
 
         stateStream(combinedStream)
-        action(fileURL, Self.pcapMaxFileSize)
+        action(fileURL, DomainConstants.LogFiles.pcapMaxFileSize)
 
-        state = .recording(to: fileURL, since: startDate)
+        state = .recording(.init(startDate: startDate, url: fileURL))
 
         return fileURL
     }
 
-    mutating func stop(performing action: (() -> Void)? = nil) throws -> (URL, TimeInterval, Int64) {
-        guard case let .recording(fileURL, startDate) = state else {
-            throw InvalidState()
+    mutating func stop() -> (URL, TimeInterval, Int)? {
+        guard case let .recording(fileHandle) = state else {
+            return nil
         }
-        let interval = Date.now.timeIntervalSince(startDate)
-        let fileAttributes = try FileManager.default.attributesOfItem(atPath: fileURL.path())
-        let fileSize = (fileAttributes[.size] as? Int64) ?? .zero
-        state = .finished(duration: interval, fileSize: fileSize)
-        action?()
-        return (fileURL, interval, fileSize)
+        let interval = date.now.timeIntervalSince(fileHandle.startDate)
+        @Dependency(\.fileManagerClient) var fileManagerClient
+        do {
+            let fileSize = try fileManagerClient.fileSize(at: fileHandle.url)
+            state = .finished(duration: interval, fileSize: fileSize)
+            return (fileHandle.url, interval, fileSize)
+        } catch {
+            // We were in the recording state, but nothing was recorded,
+            // most likely because the connection never started
+            state = .idle
+            return nil
+        }
     }
 }
 
@@ -153,26 +141,12 @@ private extension PacketCaptureSession {
             if case .packetCaptureStopped(reason: .maxSizeReached) = event {
                 return State.maxFileSizeHit
             }
-            return elapsedMinutes >= Self.pcapMaxDurationInMinutes ? State.timerHit : state
+            return elapsedMinutes >= DomainConstants.LogFiles.pcapMaxDurationInMinutes ? State.timerHit : state
         }
         .removeDuplicates()
         .eraseToStream()
 
         return (mergedStream, stateContinuation)
-    }
-
-    func fileURL(for startDate: Date) throws -> URL {
-        let containerURL = try FileManager.default.mainContainerURL
-
-        let formatter = DateFormatter()
-        formatter.dateFormat = "ddMMyyyyHHmmss"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-
-        let timestamp = formatter.string(from: startDate)
-
-        return containerURL
-            .appendingPathComponent(timestamp)
-            .appendingPathExtension(Self.pcapPathExtension)
     }
 }
 
@@ -200,16 +174,6 @@ extension PacketCaptureSession.State: CustomStringConvertible {
             "timerHit"
         case .maxFileSizeHit:
             "maxFileSizeHit"
-        }
-    }
-}
-
-private extension Collection<URL> {
-    var sortedByCreationDate: [URL] {
-        sorted { a, b in
-            let d1 = (try? a.resourceValues(forKeys: [.creationDateKey]))?.creationDate ?? .distantPast
-            let d2 = (try? b.resourceValues(forKeys: [.creationDateKey]))?.creationDate ?? .distantPast
-            return d1 > d2
         }
     }
 }
