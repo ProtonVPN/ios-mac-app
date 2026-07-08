@@ -28,7 +28,7 @@ import VPNAppCore
 
 class StatusMenuProfilesListViewModel {
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    private let profileManager: ProfileManager
+    @Dependency(\.profileManager) private var profileManager
 
     var contentChanged: (() -> Void)?
 
@@ -37,7 +37,7 @@ class StatusMenuProfilesListViewModel {
     }
 
     var cellCount: Int {
-        profileManager.allProfiles.count
+        profileManager.allProfiles().count
     }
 
     private var userTier: Int {
@@ -48,9 +48,7 @@ class StatusMenuProfilesListViewModel {
         }
     }
 
-    init(profileManager: ProfileManager) {
-        self.profileManager = profileManager
-
+    init() {
         AppEvent.profileContentChanged.subscribe(self, selector: #selector(profilesChanged))
     }
 
@@ -58,8 +56,11 @@ class StatusMenuProfilesListViewModel {
         NotificationCenter.default.removeObserver(self)
     }
 
-    func cellModel(forIndex index: Int) -> StatusMenuProfileItemViewModel {
-        StatusMenuProfileItemViewModel(profile: profileManager.allProfiles[index], userTier: userTier)
+    func cellModel(forIndex index: Int) -> StatusMenuProfileItemViewModel? {
+        let allProfiles = profileManager.allProfiles()
+        guard allProfiles.indices.contains(index) else { return nil }
+        let profile = allProfiles[index]
+        return StatusMenuProfileItemViewModel(profile: profile, userTier: userTier)
     }
 
     @objc

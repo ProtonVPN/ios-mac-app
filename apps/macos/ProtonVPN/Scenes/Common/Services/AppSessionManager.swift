@@ -52,11 +52,11 @@ protocol AppSessionManager {
 }
 
 final class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
-    typealias Factory = AppSessionRefreshTimerFactory & ProfileManagerFactory
+    typealias Factory = AppSessionRefreshTimerFactory
     private let factory: Factory
 
     private lazy var appSessionRefreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
-    private lazy var profileManager: ProfileManager = factory.makeProfileManager()
+    @Dependency(\.profileManager) private var profileManager
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Dependency(\.networking) private var networking
     @Dependency(\.authKeychain) private var authKeychain

@@ -24,7 +24,6 @@ import Foundation
 import ProtonCoreFeatureFlags
 import VPNShared
 
-/// Duplicates logic in `ConnectionAuthorizer` in `LegacyCommon` for now, but can add more resolution errors later.
 @CasePathable
 public enum ConnectionIntentResolutionError: Error, Equatable {
     case serverChangeUnavailable(until: Date, duration: TimeInterval, exhaustedSkips: Bool)

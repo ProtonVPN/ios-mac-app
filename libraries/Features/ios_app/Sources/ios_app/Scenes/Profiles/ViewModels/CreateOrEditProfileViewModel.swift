@@ -44,7 +44,7 @@ class CreateOrEditProfileViewModel: NSObject {
     private let username: String?
     private let profileService: ProfileService
     private let protocolService: ProtocolService
-    private let profileManager: ProfileManager
+    @Dependency(\.profileManager) private var profileManager
     @Dependency(\.propertiesManager) private var propertiesManager
     private let editedProfile: Profile?
     @Dependency(\.serverRepository) private var serverRepository
@@ -92,15 +92,13 @@ class CreateOrEditProfileViewModel: NSObject {
         username: String?,
         for profile: Profile?,
         profileService: ProfileService,
-        protocolSelectionService: ProtocolService,
-        profileManager: ProfileManager
+        protocolSelectionService: ProtocolService
     ) {
         @Dependency(\.propertiesManager) var propertiesManager
         self.username = username
         self.editedProfile = profile
         self.profileService = profileService
         self.protocolService = protocolSelectionService
-        self.profileManager = profileManager
         @Shared(.connectionProtocol) var connectionProtocol
         self.selectedProtocol = connectionProtocol
 
@@ -110,10 +108,11 @@ class CreateOrEditProfileViewModel: NSObject {
             self.colorPickerViewModel = ColorPickerViewModel()
         }
 
+        @Dependency(\.profileManager) var profileManager
         if let profile,
            let username,
            let quickConnectProfileId = propertiesManager.getQuickConnect(for: username),
-           let quickConnectProfile = profileManager.profile(withId: quickConnectProfileId) {
+           let quickConnectProfile = profileManager.profile(id: quickConnectProfileId) {
             self.isDefaultProfile = profile.id == quickConnectProfile.id
         }
 

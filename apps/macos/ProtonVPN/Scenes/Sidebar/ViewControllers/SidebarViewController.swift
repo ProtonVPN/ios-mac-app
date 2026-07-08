@@ -53,12 +53,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     // Retain header view model to set `changeServerStateUpdated` when needed
     private var headerViewModel: HeaderViewModel?
 
-    typealias Factory = HeaderViewModelFactory
-        & MapSectionViewModelFactory
-        & ProfileManagerFactory
-
     private let navService: NavigationService
-    private let factory: Factory
     private let store: StoreOf<SidebarFeature>
 
     @Dependency(\.announcementManager) private var announcementManager
@@ -76,33 +71,20 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     }()
 
     private lazy var profileSectionViewController: ProfileSectionViewController = { [unowned self] in
-        let viewModel = ProfilesSectionViewModel(
-            navService: navService,
-            profileManager: factory.makeProfileManager()
-        )
+        let viewModel = ProfilesSectionViewModel(navService: navService)
         return ProfileSectionViewController(viewModel: viewModel)
     }()
 
-    private lazy var mapHeaderViewModel: MapHeaderViewModel = { [unowned self] in
-        return MapHeaderViewModel()
-    }()
-
-    private lazy var mapSectionViewModel: MapSectionViewModel = factory.makeMapSectionViewModel()
-
     private lazy var mapSectionViewController: MapSectionViewController = { [unowned self] in
         MapSectionViewController(
-            mapSectionViewModel: mapSectionViewModel,
-            mapHeaderViewModel: mapHeaderViewModel
+            mapSectionViewModel: MapSectionViewModel(),
+            mapHeaderViewModel: MapHeaderViewModel()
         )
     }()
 
     // MARK: - Init
 
-    init(
-        navService: NavigationService,
-        factory: Factory
-    ) {
-        let profileManager = factory.makeProfileManager()
+    init(navService: NavigationService) {
         let store = Store(initialState: .init()) {
             SidebarFeature(
                 environment: .init(
@@ -111,16 +93,9 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                     defaultMapWidth: Dimensions.defaultMapContainerWidth
                 )
             )
-        } withDependencies: {
-            $0.sidebarProfileNameResolver = SidebarProfileNameResolver(
-                profileName: { profileID in
-                    profileManager.profile(withId: profileID)?.name
-                }
-            )
         }
 
         self.navService = navService
-        self.factory = factory
         self.store = store
         super.init(nibName: nil, bundle: nil)
     }
@@ -296,8 +271,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     }
 
     private func setupHeader() {
-        headerViewModel = factory.makeHeaderViewModel()
-        headerViewController = HeaderViewController(viewModel: headerViewModel!)
+        headerViewController = HeaderViewController(viewModel: HeaderViewModel())
         headerViewController.announcementsButtonPressed = {
             AnnouncementOfferCoordinator().presentCurrentAnnouncement()
         }

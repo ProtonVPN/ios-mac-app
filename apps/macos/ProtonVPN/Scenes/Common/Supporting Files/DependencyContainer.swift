@@ -139,14 +139,6 @@ extension DependencyContainer: AppSessionRefresherFactory {
     }
 }
 
-// MARK: - HeaderViewModelFactory
-
-extension DependencyContainer: HeaderViewModelFactory {
-    func makeHeaderViewModel() -> HeaderViewModel {
-        HeaderViewModel(factory: self)
-    }
-}
-
 // MARK: ProtonReachabilityCheckerFactory
 
 extension DependencyContainer: ProtonReachabilityCheckerFactory {

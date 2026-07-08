@@ -43,12 +43,9 @@ protocol StatusMenuViewModelFactory {
 }
 
 final class StatusMenuViewModel {
-    typealias Factory = AppSessionManagerFactory
-        & NavigationServiceFactory
-        & ProfileManagerFactory
-        & WiFiSecurityMonitorFactory
-
+    typealias Factory = NavigationServiceFactory & WiFiSecurityMonitorFactory
     private let factory: Factory
+
     @Dependency(\.profileAuthorizer) private var profileAuthorizer
     @Dependency(\.credentialsProvider) private var credentials
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
@@ -59,7 +56,6 @@ final class StatusMenuViewModel {
     @Shared(.sessionStatus) private var sessionStatus: SessionStatus
 
     @Dependency(\.propertiesManager) private var propertiesManager
-    private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.upsellManager) private var upsellManager
@@ -99,8 +95,6 @@ final class StatusMenuViewModel {
 
     weak var viewController: StatusMenuViewControllerProtocol?
 
-    private var profileManager: ProfileManager?
-
     private var cancellables = Set<AnyCancellable>()
 
     init(factory: Factory) {
@@ -136,7 +130,7 @@ final class StatusMenuViewModel {
     }
 
     var profileListViewModel: StatusMenuProfilesListViewModel {
-        StatusMenuProfilesListViewModel(profileManager: factory.makeProfileManager())
+        StatusMenuProfilesListViewModel()
     }
 
     // MARK: - Connecting screen
@@ -222,10 +216,7 @@ final class StatusMenuViewModel {
             connectionCommandClient.send(.disconnect(.tray))
         } else {
             log.debug("Connect requested by pressing Quick connect", category: .connectionConnect, event: .trigger)
-            connectionCommandClient.quickConnect(
-                profileManager: profileManager ?? factory.makeProfileManager(),
-                trigger: .tray
-            )
+            connectionCommandClient.quickConnect(trigger: .tray)
         }
     }
 
@@ -391,11 +382,8 @@ final class StatusMenuViewModel {
             .sink { [weak self] status in self?.sessionChanged(status) }
             .store(in: &cancellables)
 
-        let events: [AppEvent] = [
-            .userIp,
-            .planChanged,
-        ]
-        events.subscribe(self, selector: #selector(handleDataChange))
+        AppEvent.userIp.subscribe(self, selector: #selector(handleDataChange))
+        AppEvent.planChanged.subscribe(self, selector: #selector(handlePlanChange))
 
         $secureCoreToggle
             .publisher
@@ -534,8 +522,6 @@ final class StatusMenuViewModel {
     private func sessionEstablished() {
         serverType = ServerType.current
 
-        profileManager = factory.makeProfileManager()
-
         updateCountryList()
 
         AppEvent.profileContentChanged.subscribe(self, selector: #selector(handleDataChange))
@@ -552,8 +538,6 @@ final class StatusMenuViewModel {
         AppEvent.profileContentChanged.unsubscribe(self)
 
         NotificationCenter.default.removeObserver(self, name: ServerListUpdateNotification.name, object: nil)
-
-        profileManager = nil
     }
 
     private func handleVpnStatusChanged() {
@@ -563,20 +547,16 @@ final class StatusMenuViewModel {
 
     @objc
     private func handlePlanChange() {
-        do {
-            let tier = try vpnKeychain.fetchCached().maxTier
+        let tier = (try? vpnKeychain.fetchCached().maxTier) ?? .freeTier
 
-            // if Secure Core was enabled but the tier no longer allows its use
-            if secureCoreToggle, tier.isFreeTier {
-                log.debug("Disabling Secure Core because the changed plan does not allow its use anymore", category: .app)
-                $secureCoreToggle.withLock { $0 = false }
-                serverType = .standard
-            }
-
-            updateCountryList()
-        } catch {
-            appSessionManager.logOut(force: true, reason: Localizable.errorSignInAgain)
+        // if Secure Core was enabled but the tier no longer allows its use
+        if secureCoreToggle, tier.isFreeTier {
+            log.debug("Disabling Secure Core because the changed plan does not allow its use anymore", category: .app)
+            $secureCoreToggle.withLock { $0 = false }
+            serverType = .standard
         }
+
+        updateCountryList()
     }
 
     @objc

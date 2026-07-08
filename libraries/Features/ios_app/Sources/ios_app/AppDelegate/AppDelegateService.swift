@@ -64,7 +64,6 @@ public final class AppDelegateService: AppDelegateProtocol {
     private lazy var appSessionManager: AppSessionManager = container.makeAppSessionManager()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var pushNotificationService = container.makePushNotificationService()
-    private lazy var profileManager: ProfileManager = container.makeProfileManager()
     @Shared(.connectionState) private var connectionState: ConnectionState
 
     private var tokens: [NotificationToken] = []
@@ -278,7 +277,7 @@ public final class AppDelegateService: AppDelegateProtocol {
             // Action may only come from a trusted source
             guard verified else { return false }
 
-            connectionCommandClient.quickConnect(profileManager: profileManager, trigger: .widget)
+            connectionCommandClient.quickConnect(trigger: .widget)
             startListeningForDeepLinkConnectState()
             navigationService.presentStatusViewController()
 

@@ -35,7 +35,7 @@ protocol OverviewItemViewModelDelegate: AnyObject {
 
 final class OverviewItemViewModel: AbstractProfileViewModel {
     private let editProfile: ((Profile) -> Void)?
-    private let profileManager: ProfileManager
+    @Dependency(\.profileManager) private var profileManager
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
     @Dependency(\.sessionService) private var sessionService
@@ -66,9 +66,8 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
         formConnectButtonTitle()
     }
 
-    init(profile: Profile, editProfile: ((Profile) -> Void)?, profileManager: ProfileManager, userTier: Int) {
+    init(profile: Profile, editProfile: ((Profile) -> Void)?, userTier: Int) {
         self.editProfile = editProfile
-        self.profileManager = profileManager
         super.init(profile: profile, userTier: userTier)
     }
 

@@ -50,8 +50,6 @@
         public lazy var vpnKeychain = VpnKeychainMock()
         public lazy var dohVpn = DoHVPN.mock
 
-        public lazy var profileManager = ProfileManager(profileStorage: ProfileStorage())
-
         public init() {}
     }
 

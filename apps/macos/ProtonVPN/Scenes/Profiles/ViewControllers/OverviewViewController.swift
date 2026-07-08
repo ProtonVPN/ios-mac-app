@@ -127,8 +127,8 @@ extension OverviewViewController: NSTableViewDelegate {
     }
 
     func tableView(_ tableView: NSTableView, viewFor _: NSTableColumn?, row: Int) -> NSView? {
-        let rowItem = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: overviewItemIdentifier), owner: nil) as! OverviewItemView
-        let cellViewModel = viewModel.cellModel(forIndex: row)
+        guard let rowItem = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: overviewItemIdentifier), owner: nil) as? OverviewItemView,
+              let cellViewModel = viewModel.cellModel(forIndex: row) else { return nil }
         cellViewModel.delegate = self
         rowItem.updateView(withModel: cellViewModel)
         return rowItem

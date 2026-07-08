@@ -29,37 +29,7 @@ enum ProfileUtilityOperationOutcome {
     case nameInUse
 }
 
-public enum ProfileUtility {
-    public static func index(for serverType: ServerType) -> Int {
-        switch serverType {
-        case .standard:
-            0
-        case .secureCore:
-            1
-        case .p2p:
-            2
-        case .tor:
-            3
-        case .unspecified:
-            4
-        }
-    }
-
-    public static func serverType(for index: Int) -> ServerType {
-        switch index {
-        case 0:
-            .standard
-        case 1:
-            .secureCore
-        case 2:
-            .p2p
-        case 3:
-            .tor
-        default:
-            .unspecified
-        }
-    }
-
+enum ProfileUtility {
     static func profile(withName name: String, in profiles: [Profile]) -> Profile? {
         profiles.filter { $0.name == name }.first
     }
@@ -70,49 +40,6 @@ public enum ProfileUtility {
 
     static func existsProfile(withName name: String, in profiles: [Profile]) -> Bool {
         profile(withName: name, in: profiles) != nil
-    }
-
-    static func profile(withServer server: ServerModel, in profiles: [Profile]) -> Profile? {
-        for existingProfile in profiles {
-            if case let ServerOffering.custom(sw) = existingProfile.serverOffering, sw.server == server {
-                return existingProfile
-            }
-        }
-        return nil
-    }
-
-    static func existsProfile(withServer server: ServerModel, in profiles: [Profile]) -> Bool {
-        profile(withServer: server, in: profiles) != nil
-    }
-
-    static func profile(withConfiguration profile: Profile, in profiles: [Profile]) -> Profile? {
-        profiles.filter { $0.serverType == profile.serverType && $0.serverOffering == profile.serverOffering }.first
-    }
-
-    static func existsProfile(withConfiguration existingProfile: Profile, in profiles: [Profile]) -> Bool {
-        profile(withConfiguration: existingProfile, in: profiles) != nil
-    }
-
-    static func createProfile(with server: ServerModel, vpnProtocol: VpnProtocol, netShield _: NetShieldType?, in profiles: [Profile]) -> ProfileUtilityOperationOutcome {
-        let accessTier = server.tier
-        let serverType: ServerType = server.isSecureCore ? .secureCore : .standard
-        let serverOffering: ServerOffering = .custom(ServerWrapper(server: server))
-        let name = pickName(for: server, in: profiles)
-
-        let colors = ProfileConstants.profileColors
-        let color = colors[.random(in: 0 ..< colors.count)]
-
-        let profile = Profile(
-            accessTier: accessTier,
-            profileIcon: .circle(color.hexRepresentation),
-            profileType: .user,
-            serverType: serverType,
-            serverOffering: serverOffering,
-            name: name,
-            connectionProtocol: .vpnProtocol(vpnProtocol)
-        )
-
-        return .success(profiles + [profile])
     }
 
     static func createProfile(_ profile: Profile, in profiles: [Profile], at index: Int? = nil) -> ProfileUtilityOperationOutcome {

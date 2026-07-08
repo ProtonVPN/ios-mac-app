@@ -129,7 +129,7 @@ struct SystemExtensionsFeatureTests {
         let store = TestStore(initialState: SystemExtensionsFeature.State()) {
             SystemExtensionsFeature()
         } withDependencies: {
-            $0.systemExtensionsProfilesClient = .init(hasCustomProfilesRequiringSystemExtension: { false })
+            $0.profileManager.customProfiles = { [] }
         }
 
         let request = SystemExtensionsRequest(

@@ -26,7 +26,7 @@ import LegacyCommon
 import Strings
 
 final class ProfilesContainerViewController: NSViewController {
-    typealias Factory = CreateNewProfileViewModelFactory & ProfileManagerFactory
+    typealias Factory = CreateNewProfileViewModelFactory
     private let factory: Factory
 
     @IBOutlet var profilesTabBarControllerViewContainer: NSView!
@@ -40,7 +40,7 @@ final class ProfilesContainerViewController: NSViewController {
     private var activeController: NSViewController?
 
     private lazy var overviewVC: OverviewViewController = { [unowned self] in
-        let viewModel = OverviewViewModel(profileManager: factory.makeProfileManager())
+        let viewModel = OverviewViewModel()
         setUpCallbacks(overview: viewModel)
         return OverviewViewController(viewModel: viewModel)
     }()

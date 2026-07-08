@@ -38,14 +38,11 @@ protocol CreateNewProfileViewModelFactory {
 
 extension DependencyContainer: CreateNewProfileViewModelFactory {
     func makeCreateNewProfileViewModel(editProfile: Notification.Name) -> CreateNewProfileViewModel {
-        CreateNewProfileViewModel(editProfile: editProfile, factory: self)
+        CreateNewProfileViewModel(editProfile: editProfile)
     }
 }
 
 class CreateNewProfileViewModel {
-    typealias Factory = AppSessionManagerFactory & ProfileManagerFactory
-    private let factory: Factory
-
     typealias MenuContentUpdate = Set<KeyPath<CreateNewProfileViewModel, [PopUpButtonItemViewModel]>>
 
     var menuContentChanged: ((MenuContentUpdate) -> Void)?
@@ -61,9 +58,8 @@ class CreateNewProfileViewModel {
     let sessionFinished = NSNotification.Name("CreateNewProfileViewModelSessionFinished") // two observers
 
     @Dependency(\.coreAlertService) private var alertService
-    private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    private lazy var profileManager: ProfileManager = factory.makeProfileManager()
+    @Dependency(\.profileManager) private var profileManager
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Shared(.smartProtocolConfig) private var smartProtocolConfig: SmartProtocolConfig
     @Dependency(\.serverRepository) private var serverRepository
@@ -297,16 +293,10 @@ class CreateNewProfileViewModel {
     }
 
     private func setupUserTier() {
-        do {
-            userTier = try vpnKeychain.fetchCached().maxTier
-        } catch {
-            appSessionManager.logOut(force: true, reason: Localizable.errorSignInAgain)
-        }
+        userTier = (try? vpnKeychain.fetchCached().maxTier) ?? .freeTier
     }
 
-    init(editProfile: Notification.Name, factory: Factory) {
-        self.factory = factory
-
+    init(editProfile: Notification.Name) {
         self.state = ModelState.default // initialize all stored properties so we can use createStartingState
         self.state = createStartingState()
 

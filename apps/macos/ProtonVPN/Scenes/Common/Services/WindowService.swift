@@ -97,10 +97,7 @@ extension DependencyValues {
 final class WindowServiceImplementation: WindowService {
     typealias Factory = CreateNewProfileViewModelFactory
         & DynamicBugReportManagerFactory
-        & HeaderViewModelFactory
-        & MapSectionViewModelFactory
         & NavigationServiceFactory
-        & ProfileManagerFactory
 
     private let factory: Factory
 
@@ -164,7 +161,7 @@ final class WindowServiceImplementation: WindowService {
                 windowController.close()
             }
 
-            let viewController = SidebarViewController(navService: navService, factory: factory)
+            let viewController = SidebarViewController(navService: navService)
 
             let windowController = SidebarWindowController(viewController: viewController)
             windowController.delegate = self

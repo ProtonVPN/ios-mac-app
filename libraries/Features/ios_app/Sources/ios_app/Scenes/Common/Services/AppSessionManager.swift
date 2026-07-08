@@ -52,7 +52,7 @@ protocol AppSessionManager {
 }
 
 final class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
-    typealias Factory = AppSessionRefreshTimerFactory & NavigationServiceFactory & ProfileManagerFactory
+    typealias Factory = AppSessionRefreshTimerFactory & NavigationServiceFactory
     private let factory: Factory
 
     private var navService: NavigationService? {
@@ -60,7 +60,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
-    private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     @Dependency(\.searchStorageNew) private var searchStorage
     @Dependency(\.networking) private var networking
     @Dependency(\.authKeychain) private var authKeychain
@@ -322,6 +321,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         await MainActor.run {
             setAndNotify(for: .established, reason: nil)
         }
+        @Dependency(\.profileManager) var profileManager
         profileManager.refreshProfiles()
     }
 

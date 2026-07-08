@@ -44,20 +44,11 @@ protocol HeaderViewModelDelegate: AnyObject {
     func mappedPortChanged(to mappedPort: UInt16?)
 }
 
-protocol HeaderViewModelFactory {
-    func makeHeaderViewModel() -> HeaderViewModel
-}
-
 final class HeaderViewModel {
     @Dependency(\.credentialsProvider) var credentials
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.serverRepository) private var serverRepository
-
-    typealias Factory = ProfileManagerFactory
-    private let factory: Factory
-    private lazy var profileManager: ProfileManager = factory.makeProfileManager()
-
     @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.announcementManager) private var announcementManager
     @Dependency(\.notificationManager) private var notificationManager
@@ -98,8 +89,7 @@ final class HeaderViewModel {
         }
     }
 
-    init(factory: Factory) {
-        self.factory = factory
+    init() {
         startObserving()
     }
 
@@ -162,7 +152,7 @@ final class HeaderViewModel {
             connectionCommandClient.send(.disconnect(.quick))
         } else {
             log.debug("Connect requested by selecting Quick connect", category: .connectionConnect, event: .trigger)
-            connectionCommandClient.quickConnect(profileManager: profileManager, trigger: .quick)
+            connectionCommandClient.quickConnect(trigger: .quick)
         }
     }
 

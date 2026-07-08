@@ -50,8 +50,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
 
     lazy var vpnKeychainMock: VpnKeychainProtocol = VpnKeychainMock(planName: "visionary", maxTier: 4)
 
-    lazy var profileManager = ProfileManager(profileStorage: ProfileStorage())
-
     var profileService: ProfileServiceMock!
 
     var usIndexStandard = 2
@@ -151,8 +149,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                 username: "user1",
                 for: secureCore ? secureCoreProfile : standardProfile,
                 profileService: profileService,
-                protocolSelectionService: ProtocolServiceMock(),
-                profileManager: profileManager
+                protocolSelectionService: ProtocolServiceMock()
             )
         }
 

@@ -24,17 +24,11 @@ import Telemetry
 import VPNShared
 
 open class Container {
-    @Dependency(\.date) var date
-
     // Lazy instances - get allocated once, and stay allocated
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.networking) var networking
-    private lazy var profileManager = ProfileManager(self)
-
     private lazy var pushNotificationService: PushNotificationServiceProtocol = PushNotificationService(apiService: networking.apiService)
 
-    private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager()
-    private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = .init(factory: self)
+    private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = .init()
 
     // Should be set in apps to the Container object
     public static var sharedContainer: Container!
@@ -49,6 +43,7 @@ open class Container {
             // TelemetryService listens to notifications and sends telemetry events based on that.
             @Dependency(\.telemetryService) var telemetryService
             @Dependency(\.vpnKeychain) var vpnKeychain
+            @Dependency(\.propertiesManager) var propertiesManager
 
             if !propertiesManager.firstLaunchReported {
                 // The app launched for the first time since the last install.
@@ -63,26 +58,6 @@ open class Container {
             // Start settingsHeartbeat scheduled telemetry report
             telemetryService.startSettingsHeartbeat()
         }
-    }
-
-    func shouldHaveOverridden(caller: StaticString = #function) -> Never {
-        fatalError("Should have overridden \(caller)")
-    }
-}
-
-// MARK: ProfileManagerFactory
-
-extension Container: ProfileManagerFactory {
-    public func makeProfileManager() -> ProfileManager {
-        profileManager
-    }
-}
-
-// MARK: ProfileStorageFactory
-
-extension Container: ProfileStorageFactory {
-    public func makeProfileStorage() -> ProfileStorage {
-        ProfileStorage()
     }
 }
 

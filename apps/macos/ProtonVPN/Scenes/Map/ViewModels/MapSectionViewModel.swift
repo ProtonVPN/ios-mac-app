@@ -45,29 +45,14 @@ struct AnnotationChange {
     let newAnnotations: [CountryAnnotationViewModel]
 }
 
-protocol MapSectionViewModelFactory {
-    func makeMapSectionViewModel() -> MapSectionViewModel
-}
-
-extension DependencyContainer: MapSectionViewModelFactory {
-    func makeMapSectionViewModel() -> MapSectionViewModel {
-        MapSectionViewModel(
-            navService: makeNavigationService(),
-            appSessionManager: makeAppSessionManager()
-        )
-    }
-}
-
 class MapSectionViewModel {
     private let countrySelected = Notification.Name("MapSectionViewModelCountrySelected")
     private let scEntryCountrySelected = Notification.Name("MapSectionViewModelScEntryCountrySelected")
     private let scExitCountrySelected = Notification.Name("MapSectionViewModelScExitCountrySelected")
-    private let navService: NavigationService
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
     @Shared(.connectionState) private var connectionState: ConnectionState
     @Shared(.connectionProtocol) private var connectionProtocol: ConnectionProtocol
-    private let appSessionManager: AppSessionManager
     private var cancellables = Set<AnyCancellable>()
 
     var contentChanged: ((AnnotationChange) -> Void)?
@@ -78,10 +63,7 @@ class MapSectionViewModel {
     var annotations: [CountryAnnotationViewModel] = []
     var connections: [ConnectionViewModel] = []
 
-    init(navService: NavigationService, appSessionManager: AppSessionManager) {
-        self.navService = navService
-        self.appSessionManager = appSessionManager
-
+    init() {
         $connectionState
             .publisher
             .sink { [weak self] state in
@@ -190,19 +172,13 @@ class MapSectionViewModel {
     }
 
     private func annotations(forView viewType: ServerType) -> [CountryAnnotationViewModel] {
-        do {
-            let userTier = try vpnKeychain.fetchCached().maxTier
+        guard let userTier = try? vpnKeychain.fetchCached().maxTier else { return [] }
 
-            let annotations: [CountryAnnotationViewModel] = switch viewType {
-            case .standard, .p2p, .tor, .unspecified:
-                standardAnnotations(userTier)
-            case .secureCore:
-                secureCoreAnnotations(userTier)
-            }
-            return annotations
-        } catch {
-            appSessionManager.logOut(force: true, reason: Localizable.errorSignInAgain)
-            return []
+        return switch viewType {
+        case .standard, .p2p, .tor, .unspecified:
+            standardAnnotations(userTier)
+        case .secureCore:
+            secureCoreAnnotations(userTier)
         }
     }
 

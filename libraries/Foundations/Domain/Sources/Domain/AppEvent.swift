@@ -33,8 +33,6 @@ public enum AppEvent: String {
     case userIp
     /// The visible content in the profile settings has changed.
     case profileContentChanged
-    /// The content on disk of profiles settings has changed.
-    case profileStorageChanged
 
     // MARK: API-Driven
 

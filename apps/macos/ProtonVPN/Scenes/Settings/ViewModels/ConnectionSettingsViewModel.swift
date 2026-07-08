@@ -45,15 +45,13 @@ final class ConnectionSettingsViewModel {
     @Dependency(\.profileAuthorizer) var profileAuthorizer
     @Dependency(\.featureAuthorizerProvider) var authorizerProvider
 
-    typealias Factory = NavigationServiceFactory
-        & ProfileManagerFactory
-        & VpnProtocolChangeManagerFactory
+    typealias Factory = NavigationServiceFactory & VpnProtocolChangeManagerFactory
 
     private let factory: Factory
     private typealias ProtocolSwitchAction = VpnProtocolChangeManagerImplementation.ProtocolSwitchAction
 
     @Dependency(\.propertiesManager) private var propertiesManager
-    private lazy var profileManager: ProfileManager = factory.makeProfileManager()
+    @Dependency(\.profileManager) private var profileManager
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.upsellManager) private var upsellManager
@@ -151,7 +149,7 @@ final class ConnectionSettingsViewModel {
                 defaultProfileAccessTier: .freeTier
             )]
         }
-        return profileManager.allProfiles
+        return profileManager.allProfiles()
     }
 
     // MARK: - Quick and auto connect for current user
@@ -197,7 +195,7 @@ final class ConnectionSettingsViewModel {
 
     var quickConnectProfileIndex: Int {
         guard let profileId = quickConnect else { return 0 }
-        let index = profileManager.allProfiles.firstIndex {
+        let index = profileManager.allProfiles().firstIndex {
             $0.id == profileId
         }
 
@@ -245,7 +243,7 @@ final class ConnectionSettingsViewModel {
             throw ConnectionSettingsError.quickConnectRange
         }
 
-        let selectedProfile = profileManager.allProfiles[index]
+        let selectedProfile = profileManager.allProfiles()[index]
         quickConnect = selectedProfile.id
         log.debug("Quick connect profiles changed", category: .settings, event: .change, metadata: ["profile": "\(selectedProfile.logDescription)"])
     }

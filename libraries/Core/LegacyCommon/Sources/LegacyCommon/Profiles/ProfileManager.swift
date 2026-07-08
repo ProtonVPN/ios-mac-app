@@ -21,6 +21,7 @@
 
 import CommonNetworking
 import Dependencies
+import DependenciesMacros
 import Domain
 import Foundation
 import Sharing
@@ -40,39 +41,36 @@ public enum ProfileManagerOperationOutcome {
     }
 }
 
-public protocol ProfileManagerFactory {
-    func makeProfileManager() -> ProfileManager
+@DependencyClient
+public struct ProfileManager {
+    public var customProfiles: () -> [Profile] = { [] }
+    public var defaultProfiles: () -> [Profile] = { [] }
+    public var allProfiles: () -> [Profile] = { [] }
+    public var autoConnectProfile: () -> Profile?
+    public var quickConnectProfile: () -> Profile?
+
+    public var refreshProfiles: () -> Void = {}
+    public var profile: (_ id: String) -> Profile?
+    public var createProfile: (_ profile: Profile) -> ProfileManagerOperationOutcome = { _ in .nameInUse }
+    public var updateProfile: (_ profile: Profile) -> ProfileManagerOperationOutcome = { _ in .nameInUse }
+    public var deleteProfile: (_ profile: Profile) -> Void
 }
 
-public final class ProfileManager {
-    @Dependency(\.authKeychain) var authKeychain
-
+public final class ProfileManagerImplementation {
     public var customProfiles: [Profile] = []
     public var defaultProfiles: [Profile] {
         @Shared(.connectionProtocol) var connectionProtocol
         return ProfileConstants.defaultProfiles(connectionProtocol: connectionProtocol)
     }
 
-    private var servers: [ServerModel] = []
     @Dependency(\.propertiesManager) private var propertiesManager
-    private let profileStorage: ProfileStorage
+    @Dependency(\.profileStorage) private var profileStorage
 
     public var allProfiles: [Profile] {
         defaultProfiles + customProfiles
     }
 
-    public typealias Factory = ProfileStorageFactory
-
-    public convenience init(_ factory: Factory) {
-        self.init(profileStorage: factory.makeProfileStorage())
-    }
-
-    public init(profileStorage: ProfileStorage) {
-        self.profileStorage = profileStorage
-
-        AppEvent.profileStorageChanged.subscribe(self, selector: #selector(profilesChanged))
-        // VPNAPPL-2075 - refresh UI on server list update
-        // NotificationCenter.default.addObserver(self, selector: #selector(serversChanged(_:)), name: serverStorage.contentChanged, object: nil)
+    public init() {
         refreshProfiles()
     }
 
@@ -81,7 +79,8 @@ public final class ProfileManager {
     }
 
     public var username: String? {
-        authKeychain.username
+        @Dependency(\.authKeychain) var authKeychain
+        return authKeychain.username
     }
 
     public var autoConnectProfile: Profile? {
@@ -105,47 +104,28 @@ public final class ProfileManager {
         return profile(withId: profileID)
     }
 
-    public func profile(withServer server: ServerModel) -> Profile? {
-        ProfileUtility.profile(withServer: server, in: customProfiles)
-    }
-
     public func profile(withId id: String) -> Profile? {
-        defaultProfiles.first { id == $0.id }
-            ?? ProfileUtility.profile(withId: id, in: customProfiles)
-    }
-
-    public func existsProfile(withServer server: ServerModel) -> Bool {
-        ProfileUtility.existsProfile(withServer: server, in: customProfiles)
-    }
-
-    public func createProfile(withServer server: ServerModel, vpnProtocol: VpnProtocol, netShield: NetShieldType?) -> ProfileManagerOperationOutcome {
-        let result = ProfileUtility.createProfile(with: server, vpnProtocol: vpnProtocol, netShield: netShield, in: customProfiles)
-        switch result {
-        case let .success(updatedProfiles):
-            profileStorage.store(updatedProfiles)
-        default:
-            break
-        }
-        return ProfileManagerOperationOutcome(outcome: result)
+        defaultProfiles.first { id == $0.id } ?? ProfileUtility.profile(withId: id, in: customProfiles)
     }
 
     public func createProfile(_ profile: Profile) -> ProfileManagerOperationOutcome {
         let result = ProfileUtility.createProfile(profile, in: customProfiles)
         switch result {
         case let .success(updatedProfiles):
-            profileStorage.store(updatedProfiles)
+            profileStorage.store(profiles: updatedProfiles, storageVersion: .current)
+            profilesChanged(updatedProfiles)
         default:
             break
         }
         return ProfileManagerOperationOutcome(outcome: result)
     }
 
-    @discardableResult
     public func updateProfile(_ profile: Profile) -> ProfileManagerOperationOutcome {
         let result = ProfileUtility.updateProfile(profile, in: customProfiles)
         switch result {
         case let .success(updatedProfiles):
-            profileStorage.store(updatedProfiles)
+            profileStorage.store(profiles: updatedProfiles, storageVersion: .current)
+            profilesChanged(updatedProfiles)
         default:
             break
         }
@@ -154,25 +134,39 @@ public final class ProfileManager {
 
     public func deleteProfile(_ profile: Profile) {
         let updatedProfiles = ProfileUtility.delete(profile: profile, in: customProfiles)
-        customProfiles = updatedProfiles
-        profileStorage.store(updatedProfiles)
+        profileStorage.store(profiles: updatedProfiles, storageVersion: .current)
+        profilesChanged(updatedProfiles)
     }
 
     // MARK: - Private functions
 
-    @objc
-    private func profilesChanged(_ notification: Notification) {
-        if let newProfiles = notification.object as? [Profile] {
-            customProfiles = newProfiles
-            AppEvent.profileContentChanged.post(customProfiles)
-        }
+    private func profilesChanged(_ profiles: [Profile]) {
+        customProfiles = profiles
+        AppEvent.profileContentChanged.post(customProfiles)
     }
+}
 
-    @objc
-    private func serversChanged(_ notification: Notification) {
-        if let newServers = notification.object as? [ServerModel] {
-            servers = newServers
-            AppEvent.profileContentChanged.post(customProfiles)
-        }
+public enum ProfileManagerKey: DependencyKey {
+    public static var liveValue: ProfileManager = {
+        let profileManagerImpl = ProfileManagerImplementation()
+        return ProfileManager(
+            customProfiles: { profileManagerImpl.customProfiles },
+            defaultProfiles: { profileManagerImpl.defaultProfiles },
+            allProfiles: { profileManagerImpl.allProfiles },
+            autoConnectProfile: { profileManagerImpl.autoConnectProfile },
+            quickConnectProfile: { profileManagerImpl.quickConnectProfile },
+            refreshProfiles: { profileManagerImpl.refreshProfiles() },
+            profile: { id in profileManagerImpl.profile(withId: id) },
+            createProfile: { newProfile in profileManagerImpl.createProfile(newProfile) },
+            updateProfile: { profile in profileManagerImpl.updateProfile(profile) },
+            deleteProfile: { profileToDelete in profileManagerImpl.deleteProfile(profileToDelete) }
+        )
+    }()
+}
+
+public extension DependencyValues {
+    var profileManager: ProfileManager {
+        get { self[ProfileManagerKey.self] }
+        set { self[ProfileManagerKey.self] = newValue }
     }
 }

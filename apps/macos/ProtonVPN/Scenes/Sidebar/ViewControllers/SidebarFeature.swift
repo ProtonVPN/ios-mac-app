@@ -196,7 +196,7 @@ struct SidebarFeature {
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
     @Dependency(\.networkInterfacePropertiesProvider) private var networkInterfacePropertiesProvider
-    @Dependency(\.sidebarProfileNameResolver) private var sidebarProfileNameResolver
+    @Dependency(\.profileManager) private var profileManager
     @Dependency(\.announcementRefresher) private var announcementRefresher
 
     @Shared(.killSwitch) private var killSwitch: Bool
@@ -829,7 +829,7 @@ private extension SidebarFeature {
            effectiveProtocol == .vpnProtocol(.ike) {
             // Title includes the profile name when the connect originates from a saved profile.
             let title: String = if let profileID = pending.spec.profileId,
-                                   let profileName = sidebarProfileNameResolver.profileName(profileID) {
+                                   let profileName = profileManager.profile(id: profileID)?.name {
                 Localizable.splitTunnelingConnectToProfileNameAlertTitle(profileName)
             } else {
                 Localizable.splitTunnelingConnectToProfileAlertTitle
@@ -988,22 +988,5 @@ private extension SidebarFeature {
 
         let hermesResolvers: [HermesResolver] = hermesClient.activeHermesResolvers().wrappedValue + [.proton]
         return hermesResolvers.map(\.location).first
-    }
-}
-
-// TODO: refactor with Profiles 2.0 in VPNAPPL-3472; most likely we'll have a proper profile dependency
-@DependencyClient
-struct SidebarProfileNameResolver {
-    var profileName: (String) -> String?
-}
-
-extension SidebarProfileNameResolver: DependencyKey {
-    static let liveValue = SidebarProfileNameResolver(profileName: { _ in nil })
-}
-
-extension DependencyValues {
-    var sidebarProfileNameResolver: SidebarProfileNameResolver {
-        get { self[SidebarProfileNameResolver.self] }
-        set { self[SidebarProfileNameResolver.self] = newValue }
     }
 }

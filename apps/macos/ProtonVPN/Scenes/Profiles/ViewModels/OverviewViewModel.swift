@@ -27,7 +27,7 @@ import Domain
 import LegacyCommon
 
 final class OverviewViewModel {
-    private let profileManager: ProfileManager
+    @Dependency(\.profileManager) private var profileManager
     @Dependency(\.vpnKeychain) private var vpnKeychain
 
     @Dependency(\.sessionService) private var sessionService: SessionService
@@ -36,9 +36,7 @@ final class OverviewViewModel {
     var createNewProfile: (() -> Void)?
     var editProfile: ((Profile) -> Void)?
 
-    init(profileManager: ProfileManager) {
-        self.profileManager = profileManager
-
+    init() {
         AppEvent.profileContentChanged.subscribe(self, selector: #selector(profilesChanged))
     }
 
@@ -60,14 +58,15 @@ final class OverviewViewModel {
     }
 
     var cellCount: Int {
-        profileManager.allProfiles.count
+        profileManager.allProfiles().count
     }
 
-    func cellModel(forIndex index: Int) -> OverviewItemViewModel {
-        OverviewItemViewModel(
-            profile: profileManager.allProfiles[index],
+    func cellModel(forIndex index: Int) -> OverviewItemViewModel? {
+        guard profileManager.allProfiles().indices.contains(index) else { return nil }
+        let profile = profileManager.allProfiles()[index]
+        return OverviewItemViewModel(
+            profile: profile,
             editProfile: editProfile,
-            profileManager: profileManager,
             userTier: userTier
         )
     }

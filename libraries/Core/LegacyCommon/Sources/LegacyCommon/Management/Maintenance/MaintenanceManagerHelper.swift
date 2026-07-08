@@ -38,11 +38,6 @@ public class MaintenanceManagerHelper {
         .random(in: -jitterPercentage ... jitterPercentage)
     }
 
-    public typealias Factory = ProfileManagerFactory
-    private let factory: Factory
-
-    private lazy var profileManager: ProfileManager = factory.makeProfileManager()
-
     private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager()
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.propertiesManager) private var propertiesManager
@@ -56,9 +51,7 @@ public class MaintenanceManagerHelper {
     @Shared(.featureFlags) private var featureFlags: FeatureFlags
     private var featureFlagsObservation: AnyCancellable?
 
-    public init(factory: Factory) {
-        self.factory = factory
-
+    public init() {
         self.featureFlagsObservation = $featureFlags.publisher
             .dropFirst()
             .receive(on: DispatchQueue.main)
@@ -91,7 +84,7 @@ public class MaintenanceManagerHelper {
             // Mirror legacy `vpnGateway.quickConnect(trigger: .auto)`: prefer the user's saved
             // Quick Connect profile, otherwise fall back to fastest. (Not `.lastConnectionIntent`,
             // which would reconnect to the maintenance server.)
-            connectionCommandClient.quickConnect(profileManager: profileManager, trigger: .auto)
+            connectionCommandClient.quickConnect(trigger: .auto)
         }, failure: { error in
             log.error("Checking for server maintenance failed", category: .app, metadata: ["error": "\(error)"])
         })

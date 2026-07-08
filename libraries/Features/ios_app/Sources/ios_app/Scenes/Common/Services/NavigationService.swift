@@ -127,7 +127,6 @@ final class NavigationService {
 
     private lazy var pushNotificationService = factory.makePushNotificationService()
 
-    private lazy var profileManager = factory.makeProfileManager()
     @Dependency(\.announcementManager) var announcementManager
     @Dependency(\.networking) private var networking
 
@@ -315,11 +314,7 @@ extension NavigationService: ProfileService {
     func makeProfilesViewController() -> ProfilesViewController {
         let profilesViewController = profilesStoryboard.instantiateViewController(withIdentifier: String(describing: ProfilesViewController.self)) as! ProfilesViewController
 
-        profilesViewController.viewModel = ProfilesViewModel(
-            profileService: self,
-            connectionStatusService: self,
-            profileManager: profileManager
-        )
+        profilesViewController.viewModel = ProfilesViewModel(profileService: self, connectionStatusService: self)
         return profilesViewController
     }
 
@@ -336,8 +331,7 @@ extension NavigationService: ProfileService {
             username: username,
             for: profile,
             profileService: self,
-            protocolSelectionService: self,
-            profileManager: profileManager
+            protocolSelectionService: self
         )
         return createProfileViewController
     }
