@@ -153,6 +153,10 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
         } catch .providerConfigurationMissing, .proTUNConfigurationMissing {
             proTUN = try ProTUNConfigurationCoder.legacyDecode(from: protocolConfiguration)
             legacy = true
+        } catch {
+            // Without this catchall, the compiler's implicit rethrow of unmatched typed error cases emits invalid SIL
+            // and crashes release builds (swiftlang/swift#89787).
+            throw error
         }
 
         let userID: String
