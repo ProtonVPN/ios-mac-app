@@ -41,7 +41,7 @@
 "_not_found" = "찾을 수 없음";
 
 /* Proton VPN Connected - used in Notifications */
-"_proton_vpn_connected" = "Proton VPN Connected";
+"_proton_vpn_connected" = "Proton VPN 연결됨";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "서버 목록 펼치기";
@@ -192,10 +192,10 @@
 "_secure_core" = "Secure Core";
 
 /* Used in MacOS app for Secure core button in quick settings to turn on */
-"_secure_core_status_on" = "Secure Core On";
+"_secure_core_status_on" = "Secure Core 켬";
 
 /* Used in MacOS app for Secure core button in quick settings to turn off */
-"_secure_core_status_off" = "Secure Core Off";
+"_secure_core_status_off" = "Secure Core 끔";
 
 /* %@ is a country e.g. Secure Core Switzerland */
 "_secure_core_country" = "Secure Core %@";
@@ -251,7 +251,7 @@
 "_not_connected" = "연결되지 않음";
 
 /* macOS overlay when reconnecting & text in main window */
-"_you_are_not_protected" = "You are not protected";
+"_you_are_not_protected" = "보호되어 있지 않음";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "다시 시도";
@@ -469,7 +469,7 @@
 "_terms_and_conditions" = "이용 약관";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "By using Proton VPN, you agree to our\n%1$@ and %2$@";
+"_terms_and_conditions_disclaimer" = "Proton VPN을 사용함으로서, \n%1$@ 와 %2$@ 에 동의하는 것으로 간주합니다.";
 
 /* iOS: link inside text under sign-up form */
 "_privacy_policy" = "개인정보취급방침";
@@ -523,7 +523,7 @@
 "_via_secure_core" = "Secure Core를 통해";
 
 /* Used for SecureCore connection labels when connecting to a random country. */
-"_random_via_secure_core" = "Random via Secure Core";
+"_random_via_secure_core" = "Secure Core를 통한 무작위 국가";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "경유";
@@ -555,10 +555,10 @@
 "_view_toggle_will_cause_disconnect" = "보안 코어를 전환하면 현재 연결이 종료됩니다.";
 
 /* Body of the Secure Core toggle warning/discourage notice when turning SC on and a Secure Core server exists in the currently-connected country */
-"_view_toggle_on_reconnect_same_country" = "Turning on Secure Core will end your current connection and try to reconnect to the same country.";
+"_view_toggle_on_reconnect_same_country" = "Secure Core를 활성화하면 현재 연결이 종료되고 동일한 국가로 재연결을 시도합니다.";
 
 /* Body of the Secure Core toggle warning/discourage notice when turning SC on and no Secure Core server exists in the currently-connected country (fallback). %@ is the localized country name. */
-"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core isn't available in %@. Your VPN will reconnect through the fastest available Secure Core server.";
+"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core가 %@(에)서 지원되지 않습니다. VPN이 사용 가능한 가장 빠른 Secure Core 서버를 통해 다시 연결합니다.";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "서버 부하율:";
@@ -820,11 +820,11 @@
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "이 국가의 모든 서버가 점검 중입니다. 다른 국가로 연결해 주십시오.";
 
-"_all_servers_in_city_under_maintenance" = "All servers in this city are under maintenance. Please connect to another city.";
+"_all_servers_in_city_under_maintenance" = "해당 도시의 모든 서버가 점검 중입니다. 다른 도시로 연결해 주세요.";
 
-"_all_servers_in_state_under_maintenance" = "All servers in this state are under maintenance. Please connect to another state.";
+"_all_servers_in_state_under_maintenance" = "해당 지역의 모든 서버가 점검 중입니다. 다른 도시로 연결해 주세요.";
 
-"_all_servers_in_gateway_under_maintenance" = "All servers in this gateway are under maintenance.";
+"_all_servers_in_gateway_under_maintenance" = "이 게이트웨이의 전체 서버가 유지 보수 중입니다.";
 
 "_unsecure_wifi" = "감지된 보안 WiFi 연결";
 
@@ -958,10 +958,10 @@
 "_kill_switch" = "킬 스위치";
 
 /* Used in MacOS app for Kill switch button in quick settings to turn on */
-"_kill_switch_status_on" = "Kill switch On";
+"_kill_switch_status_on" = "킬 스위치 켬";
 
 /* Used in MacOS app for Kill switch button in quick settings to turn off */
-"_kill_switch_status_off" = "Kill switch Off";
+"_kill_switch_status_off" = "킬 스위치 끔";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "VPN 터널이 끊기면 모든 네트워크 트래픽을 차단합니다.";
@@ -970,10 +970,10 @@
 "_port_forwarding" = "포트 포워딩";
 
 /* Used in MacOS app for Port forwarding button in quick settings to turn on */
-"_port_forwarding_status_on" = "Port forwarding On";
+"_port_forwarding_status_on" = "포트포워딩 켬";
 
 /* Used in MacOS app for Port forwarding button in quick settings to turn off */
-"_port_forwarding_status_off" = "Port forwarding Off";
+"_port_forwarding_status_off" = "포트포워딩 끔";
 
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "VPN 항상 켜기";
@@ -1070,7 +1070,7 @@
 "_wireguard_logs" = "WireGuard 로그";
 
 /* iOS Settings: ProTUN logs row */
-"_protun_logs" = "ProTUN Logs";
+"_protun_logs" = "ProTUN 로그";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "문제 보고하기";
@@ -1168,16 +1168,16 @@
 "_plans_footer" = "유료 요금제 구매를 확인하면, iTunes 계정에 세금과 추가 플랫폼 수수료(Proton이 직접 청구하지 않음) 가 포함된 표시된 금액이 청구됩니다. 구매 후, 1년 동안 선택한 플랜으로 자동으로 업그레이드되며, 그 후 온라인 또는 iOS 앱을 통해 갱신하거나 취소할 수 있습니다.";
 
 /* Per year. Appended to plan price. */
-"_per_year" = " / year";
+"_per_year" = " / 연간";
 
 /* Per month. Appended to plan price. */
-"_per_month" = " / month";
+"_per_month" = " / 월간";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Web 전용";
 
 /* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
-"_introductory_price_footer" = "Welcome offer. Auto-renews on %1$@ at %2$@%3$@.";
+"_introductory_price_footer" = "환영 할인. 매년 %1$@ %2$@%3$@에 갱신됩니다.";
 
 /* iOS plan feature */
 "_feature_server_count" = "서버에 연결";
@@ -1440,7 +1440,7 @@
 "_netshield_level2" = "멀웨어, 광고 및 추적기 차단";
 
 /* Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_netshield_level3" = "Block ads, trackers, malware, & adult content";
+"_netshield_level3" = "광고, 트래커, 멀웨어 및 성인 콘텐츠 차단";
 
 "_netshield_alert_reconnect_description_on" = "연결이 NetShield 모드로 변경하기 위해 재시작됩니다.\n경고: 일부 사이트를 못 불러올 시, NetShield 해제를 시도하세요.";
 
@@ -1484,7 +1484,7 @@
 
 "_quick_settings_netShield_description" = "광고와 멀웨어 없이 인터넷을 즐겨보세요.";
 
-"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
+"_quick_settings_killSwitch_description" = "IP 유출 방지를 위해 VPN 연결이 중단된 경우 인터넷을 비활성화합니다. 서버 변경 중에 IP가 일시적으로 노출될 가능성이 있습니다.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "지정된 포트를 통해 직접 P2P 연결을 허용하여 토렌트 및 게임 속도를 향상시킵니다.";
@@ -1521,7 +1521,7 @@
 "_quick_settings_netshield_option_level2" = "멀웨어, 광고 및 추적기 차단";
 
 /* Quick Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_quick_settings_netshield_option_level3" = "Block ads, trackers, malware, & adult content";
+"_quick_settings_netshield_option_level3" = "광고, 트래커, 멀웨어 및 성인 콘텐츠 차단";
 
 "_upgrade_required_securecore_description" = "Secure Core은 Plus 요금제에서 사용 가능합니다. 개인 정보 보호 친화적인 국가에서 가장 안전한 서버를 통해 트래픽을 라우팅하려면 지금 업그레이드하세요.";
 
@@ -1634,7 +1634,7 @@
 "_sysex_error_description_subcase_authorization_required" = "계속하려면 사용자의 승인이 필요합니다.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
-"_sysex_error_description_subcase_default" = "please contact our support.";
+"_sysex_error_description_subcase_default" = "지원팀에 문의해주세요.";
 
 "_vpnauth_certfail_title" = "자동 연결 실패";
 
@@ -1725,7 +1725,7 @@
 
 "_performance_load_high" = "높음";
 
-"_locations_all" = "All locations (%@)";
+"_locations_all" = "모든 지역 (%@)";
 
 "_locations_free" = "무료 지역";
 
@@ -1985,10 +1985,10 @@
 "_connection_card_accessibility_fastest_sc" = "사용 가능한 가장 빠른 Secure Core 국가";
 
 /* The hint that the screen reader will provide to voiceover users for the random connection item in recents */
-"_connection_card_accessibility_random" = "A random server";
+"_connection_card_accessibility_random" = "무작위 서버";
 
 /* The hint that the screen reader will provide to voiceover users for a random connection item in recents when secure core is enabled */
-"_connection_card_accessibility_random_sc" = "A random Secure Core country";
+"_connection_card_accessibility_random_sc" = "Secure Core 지원 무작위 국가";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "IP 주소를 보려면 더블 탭하기";
@@ -2096,7 +2096,7 @@
 "_secure_core_via_country" = "%@ 경유";
 
 /* Secure core: connected to a country via the fastest hop. */
-"_secure_core_via_fastest" = "via fastest country";
+"_secure_core_via_fastest" = "가장 빠른 국가 경유";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "노출됨";
@@ -2386,10 +2386,10 @@
 "_prompt_kill_switch_due_to_bad_interface_ip_range" = "사용자의 로컬 네트워크가 안전하지 않을 수 있습니다(인터페이스 '%@'에 IP와 접두사 '%@'가 있음). 사용자 데이터가 암호화되지 않은 상태로 로컬 네트워크에 전송될 수 있습니다. 킬 스위치를 사용하면 이 트래픽을 차단할 수 있습니다. 로컬 네트워크 주변 장치에 대한 연결이 중단됩니다.";
 
 /* Section header with count */
-"cities_section_title" = "Cities (%@)";
+"cities_section_title" = "도시 (%@)";
 
 /* Section header with count */
-"states_section_title" = "States (%@)";
+"states_section_title" = "주/도 (%@)";
 
 /* Title of the search screen */
 "search_title" = "검색";
@@ -2407,7 +2407,7 @@
 "search_cities" = "도시";
 
 /* Section header in search */
-"search_states" = "States";
+"search_states" = "주/도";
 
 /* Sample cities the user can search for */
 "search_cities_sample" = "뉴욕, 런던, 도쿄...";
@@ -2467,19 +2467,19 @@
 "_plus_servers" = "Plus 서버";
 
 /* Section header in search (RTL/LTR) */
-"search_results_countries_count" = "Countries (%d)";
+"search_results_countries_count" = "국가 (%d)";
 
 /* Section header in search (RTL/LTR) */
-"search_cities_count" = "Cities (%d)";
+"search_cities_count" = "도시 (%d)";
 
 /* Section header in search (RTL/LTR) */
-"search_secure_core_countries_count" = "Secure Core countries (%d)";
+"search_secure_core_countries_count" = "Secure Core 도시 (%d)";
 
 /* Section header in search (RTL/LTR) */
-"_free_servers_count" = "Free Servers (%d)";
+"_free_servers_count" = "무료 서버 (%d)";
 
 /* Section header in search (RTL/LTR) */
-"_plus_servers_count" = "Plus Servers (%d)";
+"_plus_servers_count" = "Plus 서버 (%d)";
 
 /* Upgrade plan button title */
 "modals_get_plus" = "업그레이드";
@@ -3043,40 +3043,40 @@
 "_generic_error_title" = "오류";
 
 /* %@1 is description of the error, %@2 is an error code in the format "0x1234ABCD". */
-"_error_code_and_description" = "%1$@\n(Error %2$@)";
+"_error_code_and_description" = "%1$@\n(오류 %2$@)";
 
 /* Error message: Catch-all error description. */
-"_generic_error_description" = "The operation could not be completed.";
+"_generic_error_description" = "이 작업을 완료하지 못했습니다.";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "연결 오류";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. */
-"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.";
+"_connection_error_unexpected_protocol" = "선택한 연결이 이 응용 프로그램에서 더 이상 지원하지 않는 프로토콜(%@)을 사용합니다. 다른 연결을 선택하세요.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. */
-"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server.";
+"_connection_error_certificate_authentication" = "서버를 인증하는데 오류가 발생했습니다.";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. */
-"_connection_error_tunnel_connection" = "There was an issue starting the VPN.";
+"_connection_error_tunnel_connection" = "VPN을 시작하는데 문제가 발생했습니다.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. */
-"_connection_error_local_agent" = "An unexpected error occurred while connecting.";
+"_connection_error_local_agent" = "연결 도중 알 수 없는 오류가 발생했습니다.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "We were unable to connect to the server..";
+"_connection_error_intent_missing" = "서버에 연결하는데 실패했습니다.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "There was a problem preparing the connection";
+"_connection_error_preparation" = "연결 준비 중 오류가 발생했습니다";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";
+"_connection_error_server_missing" = "선택한 서버를 더 이상 사용할 수 없습니다. 다른 서버를 선택해 주세요.";
 
 /* Error message: we tried to connect, but something took too long. */
-"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again.";
+"_connection_error_timeout" = "연결 시도 중 오류가 발생했습니다: 서버가 재시간에 응답하지 않았습니다. 나중에 다시 시도하세요.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. */
-"_provider_message_error" = "There was a problem with the connection.";
+"_provider_message_error" = "연결 도중 문제가 발생했습니다.";
 
 /* The connection status text for widget when unprotected. */
 "widget_unprotected_header" = "보호되지 않음";
@@ -3265,13 +3265,13 @@
 "_transaction_recovered" = "거래가 복원되었습니다.";
 
 /* No purchases were found or transactions recovered */
-"_payment_restoration_error" = "No recoverable purchases could be found at this time.";
+"_payment_restoration_error" = "현재 복구 가능한 구매 내역을 찾을 수 없습니다.";
 
 /* Current transaction is pending and may need approval from the account managing this one, i.e. from a parent or guardian. */
 "_payment_pending_error" = "구매가 보류 중이며 승인되면 이용 가능합니다.";
 
 /* There is no transaction log present */
-"_transaction_log_not_available_" = "Transaction log is not available";
+"_transaction_log_not_available_" = "거래 로그를 사용할 수 없습니다";
 
 /* Transaction log entry in logs */
-"_transaction_log_" = "Transaction Log";
+"_transaction_log_" = "거래 로그";

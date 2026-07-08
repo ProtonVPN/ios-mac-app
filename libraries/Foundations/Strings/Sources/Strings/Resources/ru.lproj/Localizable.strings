@@ -1440,7 +1440,7 @@
 "_netshield_level2" = "Блокировать вредоносные программы, рекламу и трекеры";
 
 /* Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_netshield_level3" = "Block ads, trackers, malware, & adult content";
+"_netshield_level3" = "Блокируйте рекламу, трекеры, вредоносные программы и контент для взрослых";
 
 "_netshield_alert_reconnect_description_on" = "Ваше соединение будет перезапущено для изменения режима NetShield.\nЗаметьте: Если некоторые сайты не загружаются, попробуйте отключить NetShield.";
 
@@ -1521,7 +1521,7 @@
 "_quick_settings_netshield_option_level2" = "Блокировать вредоносные программы, рекламу и трекеры";
 
 /* Quick Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_quick_settings_netshield_option_level3" = "Block ads, trackers, malware, & adult content";
+"_quick_settings_netshield_option_level3" = "Блокируйте рекламу, трекеры, вредоносные программы и контент для взрослых";
 
 "_upgrade_required_securecore_description" = "Secure Core доступен с тарифом Plus. Улучшите тариф прямо сейчас, чтобы маршрутизировать трафик через наши самые безопасные серверы в дружелюбных по отношению к конфиденциальности странах.";
 

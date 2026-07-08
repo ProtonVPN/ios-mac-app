@@ -958,10 +958,10 @@
 "_kill_switch" = "Odklopno stikalo";
 
 /* Used in MacOS app for Kill switch button in quick settings to turn on */
-"_kill_switch_status_on" = "Kill switch On";
+"_kill_switch_status_on" = "Vklopi stikalo za izklop";
 
 /* Used in MacOS app for Kill switch button in quick settings to turn off */
-"_kill_switch_status_off" = "Kill switch Off";
+"_kill_switch_status_off" = "Izklopi stikalo za izklop";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blokira ves omrežni promet, ko je tunel VPN izgubljen.";
@@ -1168,10 +1168,10 @@
 "_plans_footer" = "Ko potrdite nakup izbranega paketa, bo vaš račun iTunes bremenjen za prikazani znesek, ki vključuje davke in dodatne pristojbine platforme (ki jih Proton ne zaračuna neposredno). Po opravljenem nakupu boste samodejno nadgrajeni na izbrani paket za obdobje 1 leta, po tem času pa ga lahko obnovite ali prekličete prek spleta ali prek naše aplikacije za iOS.";
 
 /* Per year. Appended to plan price. */
-"_per_year" = " / year";
+"_per_year" = " / leto";
 
 /* Per month. Appended to plan price. */
-"_per_month" = " / month";
+"_per_month" = " / mesec";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Web only";
@@ -3271,7 +3271,7 @@
 "_payment_pending_error" = "Nakup je v obdelavi in bo na voljo, ko bo odobren.";
 
 /* There is no transaction log present */
-"_transaction_log_not_available_" = "Transaction log is not available";
+"_transaction_log_not_available_" = "Dnevnik transakcij ni na voljo";
 
 /* Transaction log entry in logs */
-"_transaction_log_" = "Transaction Log";
+"_transaction_log_" = "Dnevnik transakcij";

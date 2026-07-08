@@ -94,10 +94,10 @@
 "_enable" = "Povolit";
 
 /* Common word */
-"_disabled" = "Zakázáno";
+"_disabled" = "Deaktivováno";
 
 /* Button in some alerts */
-"_disable" = "Zakázat";
+"_disable" = "Deaktivovat";
 
 /* Button in Kill switch error alert */
 "_report" = "Nahlásit";
@@ -2956,7 +2956,7 @@
 "_ike_deprecation_alert_message" = "Tento protokol bude brzy odstraněn. Zvažte přechod na protokol Smart. Více informací";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
-"_disable_plutonium_message" = "Tímto zakážete split tunneling.";
+"_disable_plutonium_message" = "Tímto deaktivujete Split tunneling.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Více informací";
