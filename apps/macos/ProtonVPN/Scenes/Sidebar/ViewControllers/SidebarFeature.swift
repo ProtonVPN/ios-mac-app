@@ -16,6 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Announcement
+import AppKit
 import Combine
 import ComposableArchitecture
 import Connection
@@ -128,6 +130,8 @@ struct SidebarFeature {
         case windowWillExitFullScreen
         case killSwitchSettingChanged(Bool)
         case planChanged(PlanChange)
+        /// Refresh API announcements if polling is enabled (on start and each time the app becomes active)
+        case refreshAnnouncementsIfNeeded
         case connectionStateChanged(ConnectionState)
         case syncNATPortMappingState
         case syncPlutoniumState
@@ -193,6 +197,7 @@ struct SidebarFeature {
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
     @Dependency(\.networkInterfacePropertiesProvider) private var networkInterfacePropertiesProvider
     @Dependency(\.sidebarProfileNameResolver) private var sidebarProfileNameResolver
+    @Dependency(\.announcementRefresher) private var announcementRefresher
 
     @Shared(.killSwitch) private var killSwitch: Bool
     @Shared(.connectionProtocol) private var sharedConnectionProtocol: ConnectionProtocol
@@ -236,6 +241,7 @@ struct SidebarFeature {
         case connectionConnectCommandEffect
         case plutoniumSync
         case planChange
+        case announcementRefresh
     }
 }
 
@@ -319,7 +325,17 @@ private extension SidebarFeature {
                             await send(.planChanged(planChange))
                         }
                     }
-                    .cancellable(id: CancelID.planChange)
+                    .cancellable(id: CancelID.planChange),
+                    // Refresh announcements now and whenever the app returns to the foreground.
+                    // Scoped to the logged-in sidebar (announcements are per-user).
+                    .send(.refreshAnnouncementsIfNeeded),
+                    .publisher {
+                        NotificationCenter.default
+                            .publisher(for: NSApplication.didBecomeActiveNotification)
+                            .receive(on: DispatchQueue.main)
+                            .map { _ in Action.refreshAnnouncementsIfNeeded }
+                    }
+                    .cancellable(id: CancelID.announcementRefresh)
                 )
             case .stopObservingEvents:
                 return .merge(
@@ -334,12 +350,19 @@ private extension SidebarFeature {
                     .cancel(id: CancelID.killSwitchSetting),
                     .cancel(id: CancelID.connectionConnectCommandEffect),
                     .cancel(id: CancelID.plutoniumSync),
-                    .cancel(id: CancelID.planChange)
+                    .cancel(id: CancelID.planChange),
+                    .cancel(id: CancelID.announcementRefresh)
                 )
             case let .planChanged(planChange):
                 // update the persisted feature settings so a downgrade clears paid features
                 // and an upgrade re-enables NetShield
                 return .run { _ in applyPlanChangeFeatureResets(planChange) }
+            case .refreshAnnouncementsIfNeeded:
+                return .run { _ in
+                    @Shared(.featureFlags) var featureFlags
+                    guard featureFlags.pollNotificationAPI else { return }
+                    announcementRefresher.tryRefreshing()
+                }
             case .viewDidAppear, .mouseDown:
                 return .none
             default:

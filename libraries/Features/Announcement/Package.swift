@@ -26,7 +26,6 @@ let package = Package(
         .package(path: "../../Foundations/Theme"),
 
         .package(path: "../../Core/NEHelper"),
-        .package(path: "../../Core/LegacyCommon"),
 
         .package(path: "../../Shared/CommonNetworking"),
         .package(path: "../../Shared/Connection"),
@@ -49,7 +48,6 @@ let package = Package(
                 "Timer",
                 "Theme",
                 "CommonNetworking",
-                "LegacyCommon",
                 "Connection",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
@@ -70,9 +68,11 @@ let package = Package(
             dependencies: [
                 "Announcement",
                 .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ]
         ),

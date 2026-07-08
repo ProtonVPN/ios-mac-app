@@ -349,7 +349,7 @@ struct AppSessionManagerImplementationTests {
             $0.authKeychain = authKeychain
             $0.unauthKeychain = unauthKeychain
             $0.vpnKeychain = vpnKeychain
-            $0.announcementRefresher = factory.announcementRefresherMock
+            $0.announcementRefresher = .init(tryRefreshing: {}, clear: {})
             $0.connectionCommandClient = .init(
                 send: { command in
                     guard case let .disconnect(_, completion) = command else { return }
@@ -513,16 +513,11 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     @Dependency(\.unauthKeychain) private var unauthKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
 
-    let announcementRefresherMock = AnnouncementRefresherMock()
     let appSessionRefreshTimerMock = AppSessionRefreshTimerMock()
 
     let profileManager = ProfileManager(
         profileStorage: ProfileStorage()
     )
-
-    func makeAnnouncementRefresher() -> AnnouncementRefresher {
-        announcementRefresherMock
-    }
 
     func makeAppSessionRefreshTimer() -> AppSessionRefreshTimer {
         appSessionRefreshTimerMock

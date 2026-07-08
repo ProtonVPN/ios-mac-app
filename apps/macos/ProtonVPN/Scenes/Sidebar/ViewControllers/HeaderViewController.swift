@@ -22,6 +22,8 @@
 
 import Announcement
 import Cocoa
+import Combine
+import Dependencies
 import Domain
 import Ergonomics
 import LegacyCommon
@@ -158,6 +160,9 @@ final class HeaderViewController: NSViewController {
 
     private var viewModel: HeaderViewModel!
 
+    @Dependency(\.announcementManager) private var announcementManager
+    private var announcementsCancellable: AnyCancellable?
+
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
@@ -184,7 +189,9 @@ final class HeaderViewController: NSViewController {
 
         setupAnnouncements()
 
-        AppEvent.announcementStorageContent.subscribe(self, selector: #selector(setupAnnouncements))
+        announcementsCancellable = announcementManager.announcementsPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.setupAnnouncements() }
     }
 
     override func viewDidAppear() {

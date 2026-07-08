@@ -45,6 +45,7 @@ public struct HomeFeature {
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.continuousClock) private var clock
     @Dependency(\.networkInterfacePropertiesProvider) private var networkInterfacePropertiesProvider
+    @Dependency(\.announcementRefresher) private var announcementRefresher
     #if os(iOS)
         @Dependency(\.openCredentiallessSignUp) private var openCredentiallessSignUp
     #endif
@@ -109,6 +110,7 @@ public struct HomeFeature {
         case connectionCommands
         case connectionConnectCommandEffect
         case planChange
+        case announcementRefresh
     }
 
     public enum Action {
@@ -124,6 +126,8 @@ public struct HomeFeature {
 
         case killSwitchSettingChanged(Bool)
         case planChanged(PlanChange)
+        /// Refresh API announcements if polling is enabled (on start and each time the app becomes active)
+        case refreshAnnouncementsIfNeeded
 
         case connection(ConnectionFeature.Action)
         case map(HomeMapFeature.Action)
@@ -272,7 +276,16 @@ private extension HomeFeature {
                             await send(.planChanged(planChange))
                         }
                     }
-                    .cancellable(id: CancelID.planChange)
+                    .cancellable(id: CancelID.planChange),
+                    // Refresh announcements now and whenever the app returns to the foreground
+                    .send(.refreshAnnouncementsIfNeeded),
+                    .publisher {
+                        NotificationCenter.default
+                            .publisher(for: didBecomeActiveNotification)
+                            .receive(on: DispatchQueue.main)
+                            .map { _ in Action.refreshAnnouncementsIfNeeded }
+                    }
+                    .cancellable(id: CancelID.announcementRefresh)
                 )
                 .cancellable(id: CancelID.connectionState)
             case .killSwitchSettingChanged:
@@ -286,6 +299,12 @@ private extension HomeFeature {
                 // update the persisted feature settings so a downgrade clears paid features
                 // and an upgrade re-enables NetShield
                 return .run { _ in applyPlanChangeFeatureResets(planChange) }
+            case .refreshAnnouncementsIfNeeded:
+                return .run { _ in
+                    @Shared(.featureFlags) var featureFlags
+                    guard featureFlags.pollNotificationAPI else { return }
+                    announcementRefresher.tryRefreshing()
+                }
             default:
                 return .none
             }

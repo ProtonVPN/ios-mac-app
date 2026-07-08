@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 @testable import CommonNetworking
 import ComposableArchitecture
 import Domain
@@ -50,6 +51,7 @@ final class SharedPropertiesFeatureTests: XCTestCase {
                 return []
             }
             $0.serverRepository.upsertLoads = { _ in loadsUpserted.fulfill() }
+            $0.announcementManager.announcementsPublisher = { Empty(completeImmediately: false).eraseToAnyPublisher() }
         }
         store.exhaustivity = .off
 
@@ -71,6 +73,7 @@ final class SharedPropertiesFeatureTests: XCTestCase {
             $0.continuousClock = clock
             $0.logicalsClient.fetchLoads = { _ in [] }
             $0.serverRepository.upsertLoads = { _ in }
+            $0.announcementManager.announcementsPublisher = { Empty(completeImmediately: false).eraseToAnyPublisher() }
         }
         store.exhaustivity = .off
 

@@ -54,13 +54,12 @@ final class HeaderViewModel {
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.serverRepository) private var serverRepository
 
-    typealias Factory = AnnouncementsViewModelFactory & ProfileManagerFactory
+    typealias Factory = ProfileManagerFactory
     private let factory: Factory
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
 
     @Dependency(\.propertiesManager) private var propertiesManager
-    @Dependency(\.announcementManager) var announcementManager
-    private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
+    @Dependency(\.announcementManager) private var announcementManager
     @Dependency(\.notificationManager) private var notificationManager
 
     var contentChanged: (() -> Void)?
@@ -195,18 +194,15 @@ final class HeaderViewModel {
     }
 
     var hasUnreadAnnouncements: Bool {
-        announcementManager.hasUnreadAnnouncements
+        announcementManager.hasUnreadAnnouncements()
     }
 
     var announcementIconUrl: URL? {
-        if let icon = announcementsViewModel.currentItem?.offer?.icon, let url = URL(string: icon) {
-            return url
-        }
-        return nil
+        announcementManager.announcementIconURL
     }
 
     func prefetchImages() async {
-        let urls = announcementsViewModel.backgroundURLs()
+        let urls = announcementManager.offerImagePrefetchURLs()
         guard !urls.isEmpty else {
             log.debug("No URLs to prefetch")
             return
@@ -217,7 +213,8 @@ final class HeaderViewModel {
     }
 
     var announcementTooltip: String? {
-        announcementsViewModel.currentItem?.offer?.panel?.title ?? announcementsViewModel.currentItem?.offer?.label
+        let offer = announcementManager.currentOfferAnnouncement?.offer
+        return offer?.panel?.title ?? offer?.label
     }
 
     // MARK: - Private functions

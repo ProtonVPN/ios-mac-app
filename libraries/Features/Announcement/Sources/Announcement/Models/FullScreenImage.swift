@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct FullScreenImage: Codable, Sendable {
+public struct FullScreenImage: Codable, Sendable, Equatable {
     public let source: [Source]
     public let alternativeText: String
 
@@ -29,7 +29,7 @@ public struct FullScreenImage: Codable, Sendable {
         return URL(string: urlString)
     }
 
-    public struct Source: Codable, Sendable {
+    public struct Source: Codable, Sendable, Equatable {
         public let url: String
         public let type: String
         public let width: CGFloat?

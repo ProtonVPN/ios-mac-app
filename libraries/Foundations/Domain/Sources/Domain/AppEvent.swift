@@ -38,8 +38,6 @@ public enum AppEvent: String {
 
     // MARK: API-Driven
 
-    /// New announcements are available.
-    case announcementStorageContent
     /// The user's VPN credentials changed on the backend.
     case credentialsChanged
     /// The user's VPN plan changed on the backend.

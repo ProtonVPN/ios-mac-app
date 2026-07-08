@@ -32,7 +32,6 @@ import VPNAppCore
 
 final class IosAlertService {
     private lazy var uiAlertService = IosUiAlertService()
-    @Dependency(\.windowService) private var windowService
 }
 
 // MARK: - Live dependency
@@ -100,9 +99,6 @@ extension IosAlertService {
         case is ReconnectOnSettingsChangeAlert:
             showDefaultSystemAlert(alert)
 
-        case let announcementOfferAlert as AnnouncementOfferAlert:
-            show(announcementOfferAlert)
-
         case is ProtocolNotAvailableForServerAlert:
             showDefaultSystemAlert(alert)
 
@@ -142,34 +138,6 @@ extension IosAlertService {
 
     private func showNotificationStyleAlert(message: String, type: NotificationStyleAlertType = .error, accessibilityIdentifier: String? = nil) {
         uiAlertService.displayNotificationStyleAlert(message: message, type: type, accessibilityIdentifier: accessibilityIdentifier)
-    }
-
-    private func show(_ alert: AnnouncementOfferAlert) {
-        guard let panelMode = alert.data.panelMode() else {
-            log.warning("Couldn't determine panelMode from: \(alert.data)")
-            return
-        }
-        let announcement: AnnouncementViewController
-        switch panelMode {
-        case let .legacy(legacyPanel):
-            announcement = AnnouncementDetailViewController(legacyPanel)
-            announcement.modalPresentationStyle = .fullScreen
-        case let .image(imagePanel):
-            announcement = AnnouncementImageViewController(data: imagePanel, offerReference: alert.offerReference)
-            announcement.modalPresentationStyle = UIDevice.current.isIpad ? .pageSheet : .overFullScreen
-        }
-        announcement.cancelled = { [weak self] in
-            self?.windowService.dismissModal {}
-        }
-        announcement.urlRequested = { url in
-            @Dependency(\.linkOpener) var linkOpener
-            linkOpener.open(url)
-
-            DispatchQueue.main.async {
-                AppEvent.userEngagedWithAnnouncement.post(alert.offerReference)
-            }
-        }
-        windowService.present(modal: announcement)
     }
 }
 

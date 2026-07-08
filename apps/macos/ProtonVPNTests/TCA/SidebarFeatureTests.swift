@@ -706,6 +706,7 @@ struct SidebarFeatureTests {
             $0.pendingDisconnectCompletions = pendingDisconnectCompletions
             $0.portForwardingPropertyProvider.setPortForwarding(portForwardingEnabled)
             $0.serverChangeAuthorizer = serverChangeAuthorizer
+            $0.announcementRefresher.tryRefreshing = {}
         }
     }
 }

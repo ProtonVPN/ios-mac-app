@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Announcement
 import AppIntents
 import Combine
 import Connection
@@ -55,7 +54,6 @@ public final class AppDelegateService: AppDelegateProtocol {
     private static let sessionAcquisitionTimeout: Duration = .seconds(30)
 
     @Dependency(\.networking) private var networking
-    @Dependency(\.defaultsProvider) private var defaultsProvider
     @Dependency(\.cryptoService) private var cryptoService
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
@@ -110,8 +108,6 @@ public final class AppDelegateService: AppDelegateProtocol {
         MainActor.assumeIsolated {
             navigationService.showLaunchScreen()
         }
-
-        AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
 
         Task { @MainActor in
             setupDebugHelpers()
@@ -183,13 +179,6 @@ public final class AppDelegateService: AppDelegateProtocol {
     public func applicationDidBecomeActive() {
         log.info("applicationDidBecomeActive", category: .os)
         switchToHomeIfConnecting()
-
-        // Refresh API announcements
-        @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
-        @Shared(.featureFlags) var featureFlags
-        if featureFlags.pollNotificationAPI, authKeychain.username != nil {
-            announcementRefresher.tryRefreshing()
-        }
     }
 
     public func handleOpenURL(_ url: URL, options _: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {

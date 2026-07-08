@@ -35,7 +35,6 @@ public protocol PropertiesManagerProtocol: AnyObject {
     func getAutoConnect(for username: String) -> (enabled: Bool, profileId: String?)
     func setAutoConnect(for username: String, enabled: Bool, profileId: String?)
 
-    var blockOneTimeAnnouncement: Bool { get }
     var hasConnected: Bool { get set }
     var isSubsequentLaunch: Bool { get set }
     var firstLaunchReported: Bool { get set }
@@ -104,7 +103,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case isSubsequentLaunch
         case firstLaunchReported
         case autoConnect = "AutoConnect"
-        case blockOneTimeAnnouncement = "BlockOneTimeAnnouncement"
         case autoConnectProfile = "AutoConnect_"
         case connectOnDemand = "ConnectOnDemand"
         case lastPreparingServer = "LastPreparingServer"
@@ -166,10 +164,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
     public var userInfo: UserInfo?
     public var userSettings: UserSettings?
-
-    public var blockOneTimeAnnouncement: Bool {
-        defaults.bool(forKey: Keys.blockOneTimeAnnouncement.rawValue)
-    }
 
     public func getAutoConnect(for username: String) -> (enabled: Bool, profileId: String?) {
         let autoConnectEnabled = defaults.bool(forKey: Keys.autoConnect.rawValue)

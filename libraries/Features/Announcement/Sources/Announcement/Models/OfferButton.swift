@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct OfferButton: Codable, Sendable {
+public struct OfferButton: Codable, Sendable, Equatable {
     public let url: String
     public let text: String?
     public let action: Offer.Action?

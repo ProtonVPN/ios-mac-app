@@ -23,6 +23,7 @@
 import Combine
 import CommonNetworking
 import Dependencies
+import DependenciesMacros
 import Domain
 import Ergonomics
 import Foundation
@@ -30,11 +31,29 @@ import ProtonCoreFeatureFlags
 import Sharing
 import VPNAppCore
 
-/// Class that can refresh announcements from API
-public protocol AnnouncementRefresher {
-    func tryRefreshing()
-    func tryRefreshingAsync() async
-    func clear()
+@DependencyClient
+public struct AnnouncementRefresher: Sendable {
+    /// Refreshes if the throttle interval has elapsed since the last refresh
+    public var tryRefreshing: @Sendable () -> Void
+    /// Clears stored announcements and the last-refresh timestamp
+    public var clear: @Sendable () -> Void
+}
+
+extension AnnouncementRefresher: DependencyKey {
+    public static let liveValue: AnnouncementRefresher = {
+        let implementation = AnnouncementRefresherImplementation()
+        return AnnouncementRefresher(
+            tryRefreshing: { implementation.tryRefreshing() },
+            clear: { implementation.clear() }
+        )
+    }()
+}
+
+public extension DependencyValues {
+    var announcementRefresher: AnnouncementRefresher {
+        get { self[AnnouncementRefresher.self] }
+        set { self[AnnouncementRefresher.self] = newValue }
+    }
 }
 
 public extension SharedKey where Self == AppStorageKey<Date?> {
@@ -43,19 +62,21 @@ public extension SharedKey where Self == AppStorageKey<Date?> {
     }
 }
 
-public class AnnouncementRefresherImplementation: AnnouncementRefresher {
-    public static let defaultRefreshInterval: TimeInterval = .hours(3)
+/// Holds the throttle state and the long-lived feature-flag / deep-link observations that drive
+/// refreshing. Wrapped by ``AnnouncementRefresher/liveValue``.
+final class AnnouncementRefresherImplementation: @unchecked Sendable {
+    static let defaultRefreshInterval: TimeInterval = .hours(3)
 
-    @Dependency(\.announcementStorage) private var announcementStorage
+    @Shared(.announcements) private var announcements: [Announcement]?
 
     private let refreshInterval: TimeInterval
 
-    @Shared(.lastAnnouncementRefreshDate) public var lastRefreshDate
+    @Shared(.lastAnnouncementRefreshDate) var lastRefreshDate
 
     @Shared(.featureFlags) private var featureFlags: Domain.FeatureFlags
     private var featureFlagsObservation: AnyCancellable?
 
-    public init(refreshInterval: TimeInterval = AnnouncementRefresherImplementation.defaultRefreshInterval) {
+    init(refreshInterval: TimeInterval = AnnouncementRefresherImplementation.defaultRefreshInterval) {
         self.refreshInterval = refreshInterval
 
         self.featureFlagsObservation = $featureFlags.publisher
@@ -66,26 +87,17 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     }
 
     @objc
-    public func tryRefreshing() {
-        if let lastRefresh = lastRefreshDate,
-           Date().timeIntervalSince(lastRefresh) < refreshInterval {
-            return
+    func tryRefreshing() {
+        // a single lock
+        let shouldRefresh = $lastRefreshDate.withLock { lastRefresh -> Bool in
+            if let last = lastRefresh, Date().timeIntervalSince(last) < refreshInterval {
+                return false
+            }
+            lastRefresh = Date()
+            return true
         }
-        $lastRefreshDate.withLock {
-            $0 = Date()
-        }
+        guard shouldRefresh else { return }
         refresh()
-    }
-
-    public func tryRefreshingAsync() async {
-        if let lastRefresh = lastRefreshDate,
-           Date().timeIntervalSince(lastRefresh) < refreshInterval {
-            return
-        }
-        $lastRefreshDate.withLock {
-            $0 = Date()
-        }
-        await refreshAsync()
     }
 
     private func refresh() {
@@ -98,18 +110,33 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         do {
             @Dependency(\.announcementClient) var announcementClient
 
-            let announcements = try await announcementClient.fetchAnnouncements()
-            announcementStorage.store(announcements.notifications)
+            let response = try await announcementClient.fetchAnnouncements()
+            store(response.notifications)
         } catch {
             log.error("Error getting announcements", category: .api, metadata: ["error": "\(error)"])
         }
     }
 
-    public func clear() {
+    /// Persists freshly fetched announcements, carrying over the read flags of any currently-stored
+    /// announcements (this merge previously lived inside `AnnouncementStorage.store`).
+    private func store(_ newAnnouncements: [Announcement]) {
+        $announcements.withLock { stored in
+            let readFlags = (stored ?? []).reduce(into: [String: Bool]()) { flags, announcement in
+                flags[announcement.notificationID] = announcement.isRead
+            }
+            stored = newAnnouncements.map { announcement in
+                var announcement = announcement
+                announcement.setAsRead((readFlags[announcement.notificationID] ?? false) || announcement.wasRead)
+                return announcement
+            }
+        }
+    }
+
+    func clear() {
         $lastRefreshDate.withLock {
             $0 = nil
         }
-        announcementStorage.clear()
+        $announcements.withLock { $0 = nil }
     }
 
     func featureFlagsChanged(_ featureFlags: Domain.FeatureFlags) {

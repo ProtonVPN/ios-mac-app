@@ -95,8 +95,7 @@ extension DependencyValues {
 
 // this need to abstract class for common functions. for sharing code. ios/mac should have different implementation
 final class WindowServiceImplementation: WindowService {
-    typealias Factory = AnnouncementsViewModelFactory
-        & CreateNewProfileViewModelFactory
+    typealias Factory = CreateNewProfileViewModelFactory
         & DynamicBugReportManagerFactory
         & HeaderViewModelFactory
         & MapSectionViewModelFactory

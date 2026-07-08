@@ -93,6 +93,11 @@ public extension SharedKey where Self == AppStorageKey<Bool>.Default {
         static var blockUpdatePrompt: Self {
             Self[.appStorage("BlockUpdatePrompt"), default: false]
         }
+
+        /// When set, suppresses the one-time announcement auto-popup shown right after launch.
+        static var blockOneTimeAnnouncement: Self {
+            Self[.appStorage("BlockOneTimeAnnouncement"), default: false]
+        }
     }
 #endif
 

@@ -129,8 +129,7 @@ public struct CountriesListFeature: Sendable {
 
     private var longLivingAnnouncementBannerEffect: Effect<Action> {
         .publisher {
-            AppEvent.announcementStorageContent
-                .publisher
+            announcementManager.announcementsPublisher()
                 .receive(on: UIScheduler.shared)
                 .map { _ in Action.refreshOfferBanner }
         }
