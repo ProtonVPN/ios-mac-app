@@ -37,13 +37,20 @@ struct DisconnectedCountriesSnapshotsTests {
     @MainActor
     func countries(countryCode: String) throws {
         let countryCode = countryCode.uppercased()
-        let store = Store(initialState: HomeMapFeature.State(), reducer: HomeMapFeature.init)
+        let store = Store(initialState: HomeMapFeature.State(), reducer: HomeMapFeature.init) {
+            $0.locale = Locale(identifier: "en")
+            $0.date = .constant(Date())
+            $0.continuousClock = TestClock()
+        }
         let size = try #require(ViewImageConfig.iPhoneSe.size)
         let mapView = MapSnapshotScreen(store: store, title: countryCode, size: size)
 
         withDependencies {
             $0.locale = Locale(identifier: "en")
             $0.date = .constant(Date())
+            // The map view re-samples the Sun and Moon on a sleep loop over this clock. A TestClock
+            // never ticks, so the render stays a single deterministic frame.
+            $0.continuousClock = TestClock()
         } operation: {
             $userCountry.withLock { $0 = countryCode }
             store.send(.newMapState(.disconnected))

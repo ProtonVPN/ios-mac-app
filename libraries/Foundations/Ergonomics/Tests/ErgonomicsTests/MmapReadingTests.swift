@@ -18,59 +18,67 @@
 
 import Darwin
 import Ergonomics
-import XCTest
+import Foundation
+import Testing
 
 /// `MmapBuffer(readingPath:)`, the read-only sibling of the IPC initializer: it must map exactly the
 /// file's bytes, never create or grow anything, and report the page-rounded size a whole-region adopter
 /// (like a Metal no-copy buffer) must use.
-final class MmapReadingTests: XCTestCase {
+@Suite("Mmap reading")
+struct MmapReadingTests {
     private func temporaryFile(bytes: [UInt8]) throws -> URL {
         let url = FileManager.default.temporaryDirectory.appendingPathComponent("mmap-\(UUID().uuidString).bin")
         try Data(bytes).write(to: url)
-        addTeardownBlock { try? FileManager.default.removeItem(at: url) }
         return url
     }
 
-    func testMapsWholeFile() throws {
+    @Test("Maps the whole file")
+    func mapsWholeFile() throws {
         let pattern = (0 ..< 10000).map { UInt8(($0 &* 31) & 0xFF) }
         let url = try temporaryFile(bytes: pattern)
+        defer { try? FileManager.default.removeItem(at: url) }
 
         let mapping = try MmapBuffer(readingPath: url.path)
-        XCTAssertEqual(mapping.totalSize, pattern.count)
+        #expect(mapping.totalSize == pattern.count)
         mapping.withUnsafeBytes { bytes in
-            XCTAssertTrue(bytes.elementsEqual(pattern))
+            #expect(bytes.elementsEqual(pattern))
         }
     }
 
-    func testPageAlignedSizeRoundsUpToWholePages() throws {
+    @Test("Page-aligned size rounds up to whole pages")
+    func pageAlignedSizeRoundsUpToWholePages() throws {
         let url = try temporaryFile(bytes: [UInt8](repeating: 1, count: 10000))
+        defer { try? FileManager.default.removeItem(at: url) }
         let mapping = try MmapBuffer(readingPath: url.path)
 
         let page = Int(getpagesize())
-        XCTAssertEqual(mapping.pageAlignedSize % page, 0)
-        XCTAssertGreaterThanOrEqual(mapping.pageAlignedSize, mapping.totalSize)
-        XCTAssertLessThan(mapping.pageAlignedSize - mapping.totalSize, page)
+        #expect(mapping.pageAlignedSize % page == 0)
+        #expect(mapping.pageAlignedSize >= mapping.totalSize)
+        #expect(mapping.pageAlignedSize - mapping.totalSize < page)
     }
 
-    func testEmptyFileThrows() throws {
-        // Not XCTAssertThrowsError: its generic result requires Copyable, which MmapBuffer is not.
+    @Test("Mapping an empty file throws")
+    func emptyFileThrows() throws {
         let url = try temporaryFile(bytes: [])
-        do {
+        defer { try? FileManager.default.removeItem(at: url) }
+        // MmapBuffer is ~Copyable, so the throwing call's result is discarded in place rather than returned.
+        let error = #expect(throws: MmapBufferError.self) {
             _ = try MmapBuffer(readingPath: url.path)
-            XCTFail("mapping an empty file should throw")
-        } catch {
-            XCTAssertEqual(error as? MmapBufferError, .zeroSizePayload)
+        }
+        guard case .zeroSizePayload? = error else {
+            Issue.record("expected zeroSizePayload, got \(String(describing: error))")
+            return
         }
     }
 
-    func testMissingFileThrows() {
-        do {
+    @Test("Mapping a missing file throws")
+    func missingFileThrows() {
+        let error = #expect(throws: MmapBufferError.self) {
             _ = try MmapBuffer(readingPath: "/nonexistent/\(UUID().uuidString)")
-            XCTFail("mapping a missing file should throw")
-        } catch {
-            guard case .openFailed = error as? MmapBufferError else {
-                return XCTFail("expected openFailed, got \(error)")
-            }
+        }
+        guard case .openFailed? = error else {
+            Issue.record("expected openFailed, got \(String(describing: error))")
+            return
         }
     }
 }

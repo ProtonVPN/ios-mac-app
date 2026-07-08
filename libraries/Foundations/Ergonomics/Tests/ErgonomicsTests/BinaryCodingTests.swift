@@ -17,13 +17,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Ergonomics
-import XCTest
+import Foundation
+import Testing
 
 /// The decode-hardening contracts of `BinaryCoding`: a corrupt length prefix must throw rather than
 /// allocate, the scalar wire format must stay in step between `append`, which writes by size, and `read`,
 /// which advances by stride, and aligned binary arrays must round-trip identically through the copying and
 /// the zero-copy (blob slice) decode paths.
-final class BinaryCodingTests: XCTestCase {
+@Suite("Binary coding")
+struct BinaryCodingTests {
     private struct Entry: BinaryCodable, Equatable {
         var id: UInt32 = 0
 
@@ -40,64 +42,79 @@ final class BinaryCodingTests: XCTestCase {
         var flag: UInt8 = 0
     }
 
+    /// `#expect` decomposes a member access into `__checkPropertyAccess`, which requires the base be
+    /// `Escapable`; the decoder is `~Escapable`, so route its `isAtEnd` through a plain `Bool` here.
+    private func expectAtEnd(
+        _ isAtEnd: Bool,
+        is expected: Bool,
+        sourceLocation: SourceLocation = #_sourceLocation
+    ) {
+        #expect(isAtEnd == expected, sourceLocation: sourceLocation)
+    }
+
     /// A count the remaining input can't possibly satisfy must throw `.truncated` up front. Sizing the
     /// destination collection from the raw count would turn one corrupt byte into a huge allocation and an
     /// out-of-memory crash instead of an error.
-    func testHostileElementCountThrowsInsteadOfAllocating() throws {
+    @Test("A hostile element count throws instead of allocating")
+    func hostileElementCountThrowsInsteadOfAllocating() throws {
         var encoder = BinaryEncoder()
         encoder.append(UInt32.max)
 
         try BinaryDecoder<InMemory>.decode(encoder.data) { decoder in
             var array: [Entry] = []
-            XCTAssertThrowsError(try decoder.elements(&array)) { error in
-                XCTAssertEqual(error as? BinaryDecodeError, .truncated)
+            #expect(throws: BinaryDecodeError.truncated) {
+                try decoder.elements(&array)
             }
-            XCTAssertTrue(array.isEmpty)
+            #expect(array.isEmpty)
         }
     }
 
-    func testHostileRangeCountThrowsInsteadOfAllocating() throws {
+    @Test("A hostile range count throws instead of allocating")
+    func hostileRangeCountThrowsInsteadOfAllocating() throws {
         var encoder = BinaryEncoder()
         encoder.append(UInt32.max)
 
         try BinaryDecoder<InMemory>.decode(encoder.data) { decoder in
             var ranges: [Range<Int>] = []
-            XCTAssertThrowsError(try decoder.rangeArray(&ranges)) { error in
-                XCTAssertEqual(error as? BinaryDecodeError, .truncated)
+            #expect(throws: BinaryDecodeError.truncated) {
+                try decoder.rangeArray(&ranges)
             }
-            XCTAssertTrue(ranges.isEmpty)
+            #expect(ranges.isEmpty)
         }
     }
 
-    func testHostileDictionaryCountThrowsInsteadOfAllocating() throws {
+    @Test("A hostile dictionary count throws instead of allocating")
+    func hostileDictionaryCountThrowsInsteadOfAllocating() throws {
         var encoder = BinaryEncoder()
         encoder.append(UInt32.max)
 
         try BinaryDecoder<InMemory>.decode(encoder.data) { decoder in
             var dictionary: [String: Entry] = [:]
-            XCTAssertThrowsError(try decoder.dictionary(&dictionary)) { error in
-                XCTAssertEqual(error as? BinaryDecodeError, .truncated)
+            #expect(throws: BinaryDecodeError.truncated) {
+                try decoder.dictionary(&dictionary)
             }
-            XCTAssertTrue(dictionary.isEmpty)
+            #expect(dictionary.isEmpty)
         }
     }
 
-    func testHostileBinaryArrayCountThrowsInsteadOfAllocating() throws {
+    @Test("A hostile binary-array count throws instead of allocating")
+    func hostileBinaryArrayCountThrowsInsteadOfAllocating() throws {
         var encoder = BinaryEncoder()
         encoder.append(UInt32.max)
 
         try BinaryDecoder<InMemory>.decode(encoder.data) { decoder in
             var array = BinaryArray<UInt32, InMemory>()
-            XCTAssertThrowsError(try decoder.binaryArray(&array, alignedTo: 16)) { error in
-                XCTAssertEqual(error as? BinaryDecodeError, .truncated)
+            #expect(throws: BinaryDecodeError.truncated) {
+                try decoder.binaryArray(&array, alignedTo: 16)
             }
-            XCTAssertTrue(array.isEmpty)
+            #expect(array.isEmpty)
         }
     }
 
     /// A plausible but oversized count, small enough to pass a naive sanity check yet larger than the
     /// input can hold, must also throw rather than allocate and partially fill.
-    func testOversizedElementCountThrows() throws {
+    @Test("An oversized element count throws")
+    func oversizedElementCountThrows() throws {
         var encoder = BinaryEncoder()
         var entries = [Entry](repeating: Entry(), count: 3)
         try encoder.elements(&entries)
@@ -107,15 +124,16 @@ final class BinaryCodingTests: XCTestCase {
 
         try BinaryDecoder<InMemory>.decode(data) { decoder in
             var decoded: [Entry] = []
-            XCTAssertThrowsError(try decoder.elements(&decoded)) { error in
-                XCTAssertEqual(error as? BinaryDecodeError, .truncated)
+            #expect(throws: BinaryDecodeError.truncated) {
+                try decoder.elements(&decoded)
             }
         }
     }
 
     /// `append` writes a value's size but `read` advances its stride. The writer pads the difference so a
     /// tail-padded type can't silently desync every field written after it.
-    func testTailPaddedValueStaysInStep() throws {
+    @Test("A tail-padded value stays in step")
+    func tailPaddedValueStaysInStep() throws {
         var padded = Padded(id: 0xDECA_FBAD, flag: 7)
         var sentinel: UInt32 = 0xCAFE_D00D
 
@@ -129,23 +147,26 @@ final class BinaryCodingTests: XCTestCase {
             try decoder.value(&decodedPadded)
             try decoder.value(&decodedSentinel)
 
-            XCTAssertEqual(decodedPadded, padded)
-            XCTAssertEqual(decodedSentinel, sentinel)
-            XCTAssertTrue(decoder.isAtEnd)
+            #expect(decodedPadded == padded)
+            #expect(decodedSentinel == sentinel)
+            expectAtEnd(decoder.isAtEnd, is: true)
         }
     }
 
-    func testIsAtEndFlipsOnlyOnceInputIsConsumed() throws {
+    @Test("isAtEnd flips only once input is consumed")
+    func isAtEndFlipsOnlyOnceInputIsConsumed() throws {
         var encoder = BinaryEncoder()
         encoder.append(UInt32(42))
         encoder.append(UInt32(43))
 
         try BinaryDecoder<InMemory>.decode(encoder.data) { decoder in
-            XCTAssertFalse(decoder.isAtEnd)
-            XCTAssertEqual(try decoder.read() as UInt32, 42)
-            XCTAssertFalse(decoder.isAtEnd)
-            XCTAssertEqual(try decoder.read() as UInt32, 43)
-            XCTAssertTrue(decoder.isAtEnd)
+            expectAtEnd(decoder.isAtEnd, is: false)
+            let first = try decoder.read() as UInt32
+            #expect(first == 42)
+            expectAtEnd(decoder.isAtEnd, is: false)
+            let second = try decoder.read() as UInt32
+            #expect(second == 43)
+            expectAtEnd(decoder.isAtEnd, is: true)
         }
     }
 
@@ -153,7 +174,8 @@ final class BinaryCodingTests: XCTestCase {
 
     /// The payload must start on the alignment boundary with deterministic zero padding before it, and the
     /// copying decode must walk the identical layout back out.
-    func testBinaryArrayAlignsPayloadAndRoundTripsCopied() throws {
+    @Test("A binary array aligns its payload and round-trips copied")
+    func binaryArrayAlignsPayloadAndRoundTripsCopied() throws {
         var payload = BinaryArray<UInt32, InMemory>([1, 2, 3])
         var sentinel: UInt32 = 0xFEED_FACE
 
@@ -163,18 +185,19 @@ final class BinaryCodingTests: XCTestCase {
         encoder.value(&sentinel)
 
         // 4 (lead) + 4 (count), zero-padded to 64, then 12 payload + 4 sentinel bytes.
-        XCTAssertEqual(encoder.data.count, 64 + 12 + 4)
-        XCTAssertTrue(encoder.data[8 ..< 64].allSatisfy { $0 == 0 })
+        #expect(encoder.data.count == 64 + 12 + 4)
+        #expect(encoder.data[8 ..< 64].allSatisfy { $0 == 0 })
 
         try BinaryDecoder<InMemory>.decode(encoder.data) { decoder in
-            XCTAssertEqual(try decoder.read() as UInt32, 0xAA)
+            let lead = try decoder.read() as UInt32
+            #expect(lead == 0xAA)
             var decoded = BinaryArray<UInt32, InMemory>()
             try decoder.binaryArray(&decoded, alignedTo: 64)
-            XCTAssertEqual(decoded.elements, [1, 2, 3]) // the copying path owns its elements
+            #expect(decoded.elements == [1, 2, 3]) // the copying path owns its elements
             var end: UInt32 = 0
             try decoder.value(&end)
-            XCTAssertEqual(end, sentinel)
-            XCTAssertTrue(decoder.isAtEnd)
+            #expect(end == sentinel)
+            expectAtEnd(decoder.isAtEnd, is: true)
         }
     }
 
@@ -182,7 +205,8 @@ final class BinaryCodingTests: XCTestCase {
     /// slices that resolve to the encoded elements. Together with the copying round-trip above, which
     /// proves encode and decode are exact inverses, this pins the sliced decoder's offset bookkeeping
     /// without ever needing to write a slice back out.
-    func testBinaryArraySlicedDecodeResolvesAlignedSlicesInPlace() throws {
+    @Test("A sliced decode resolves aligned slices in place")
+    func binaryArraySlicedDecodeResolvesAlignedSlicesInPlace() throws {
         var payload = BinaryArray<UInt32, InMemory>([7, 8, 9, 10])
         var encoder = BinaryEncoder()
         encoder.binaryArray(&payload, alignedTo: 32)
@@ -197,17 +221,17 @@ final class BinaryCodingTests: XCTestCase {
             try BinaryDecoder<Mapped>.decode(slicing: blob) { decoder in
                 var array = BinaryArray<UInt32, Mapped>()
                 try decoder.binaryArray(&array, alignedTo: 32)
-                XCTAssertTrue(decoder.isAtEnd) // the sliced traversal consumed exactly the encoded layout
+                expectAtEnd(decoder.isAtEnd, is: true) // the sliced traversal consumed exactly the encoded layout
                 return array
             }
         }
 
         let region = decoded.blobSliceRegion
-        XCTAssertEqual(region.byteOffset % 32, 0)
-        XCTAssertEqual(region.byteCount, 16)
+        #expect(region.byteOffset % 32 == 0)
+        #expect(region.byteCount == 16)
 
         mapping.withUnsafeBytes { blob in
-            XCTAssertEqual(decoded.elements(in: blob), [7, 8, 9, 10])
+            #expect(decoded.elements(in: blob) == [7, 8, 9, 10])
         }
         try mapping.withRawSpan { blob in
             let sum = decoded.withSpan(in: blob) { span in
@@ -217,13 +241,14 @@ final class BinaryCodingTests: XCTestCase {
                 }
                 return total
             }
-            XCTAssertEqual(sum, 34)
+            #expect(sum == 34)
         }
     }
 
     /// An empty binary array decodes to owned storage even on the zero-copy path, so it resolves anywhere
     /// with no blob at all.
-    func testEmptyBinaryArrayStaysOwnedInSlicedMode() throws {
+    @Test("An empty binary array stays owned in sliced mode")
+    func emptyBinaryArrayStaysOwnedInSlicedMode() throws {
         var empty = BinaryArray<UInt32, InMemory>()
         var encoder = BinaryEncoder()
         encoder.binaryArray(&empty, alignedTo: 16)
@@ -232,16 +257,17 @@ final class BinaryCodingTests: XCTestCase {
             try BinaryDecoder<Mapped>.decode(slicing: bytes.bytes) { decoder in
                 var array = BinaryArray<UInt32, Mapped>()
                 try decoder.binaryArray(&array, alignedTo: 16)
-                XCTAssertTrue(array.isEmpty)
-                XCTAssertEqual(array.blobSliceRegion.byteCount, 0)
-                XCTAssertEqual(array.elements(in: bytes), [])
-                XCTAssertTrue(decoder.isAtEnd)
+                #expect(array.isEmpty)
+                #expect(array.blobSliceRegion.byteCount == 0)
+                #expect(array.elements(in: bytes) == [])
+                expectAtEnd(decoder.isAtEnd, is: true)
             }
         }
     }
 
     /// A cut inside the alignment padding is truncation like any other, thrown before the offset moves.
-    func testBinaryArrayTruncatedInsidePaddingThrows() throws {
+    @Test("A binary array truncated inside its padding throws")
+    func binaryArrayTruncatedInsidePaddingThrows() throws {
         var payload = BinaryArray<UInt32, InMemory>([5])
         var encoder = BinaryEncoder()
         encoder.binaryArray(&payload, alignedTo: 64)
@@ -249,8 +275,8 @@ final class BinaryCodingTests: XCTestCase {
         let truncated = encoder.data.prefix(10) // count survives, the pad does not
         try BinaryDecoder<InMemory>.decode(Data(truncated)) { decoder in
             var array = BinaryArray<UInt32, InMemory>()
-            XCTAssertThrowsError(try decoder.binaryArray(&array, alignedTo: 64)) { error in
-                XCTAssertEqual(error as? BinaryDecodeError, .truncated)
+            #expect(throws: BinaryDecodeError.truncated) {
+                try decoder.binaryArray(&array, alignedTo: 64)
             }
         }
     }

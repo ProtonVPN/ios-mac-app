@@ -17,39 +17,43 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import simd
+import Testing
 import Triangulation
-import XCTest
 
-final class SphericalTriangleTests: XCTestCase {
+@Suite("Spherical triangle")
+struct SphericalTriangleTests {
     private let a = GlobeGeometry.unitSphere(latitudeDegrees: 0, longitudeDegrees: 0)
     private let b = GlobeGeometry.unitSphere(latitudeDegrees: 0, longitudeDegrees: 2)
     private let c = GlobeGeometry.unitSphere(latitudeDegrees: 2, longitudeDegrees: 0)
 
-    func testContainsInteriorPointEitherWinding() {
+    @Test("Contains an interior point regardless of winding")
+    func containsInteriorPointEitherWinding() {
         let inside = GlobeGeometry.unitSphere(latitudeDegrees: 0.5, longitudeDegrees: 0.5)
-        XCTAssertTrue(SphericalTriangle(a, b, c).contains(inside))
-        XCTAssertTrue(SphericalTriangle(a, c, b).contains(inside), "containment is winding-independent")
+        #expect(SphericalTriangle(a, b, c).contains(inside))
+        #expect(SphericalTriangle(a, c, b).contains(inside), "containment is winding-independent")
     }
 
-    func testDoesNotContainOutsidePoint() {
+    @Test("Does not contain an outside point")
+    func doesNotContainOutsidePoint() {
         let outside = GlobeGeometry.unitSphere(latitudeDegrees: -0.5, longitudeDegrees: -0.5)
-        XCTAssertFalse(SphericalTriangle(a, b, c).contains(outside))
+        #expect(!SphericalTriangle(a, b, c).contains(outside))
     }
 
     /// A duplicate vertex zeroes an edge normal, and a raw sign test would then hold (`0 >= 0`) for every
     /// point on the sphere, making one weld-collapsed sliver in a country's mesh claim the whole ocean as
     /// land. A degenerate triangle must contain nothing.
-    func testDegenerateTriangleContainsNothing() {
+    @Test("A degenerate triangle contains nothing")
+    func degenerateTriangleContainsNothing() {
         let degenerate = SphericalTriangle(a, a, c)
-        XCTAssertFalse(degenerate.contains(a))
-        XCTAssertFalse(degenerate.contains(GlobeGeometry.unitSphere(latitudeDegrees: 0.5, longitudeDegrees: 0.5)))
-        XCTAssertFalse(degenerate.contains(GlobeGeometry.unitSphere(latitudeDegrees: -40, longitudeDegrees: 60)))
+        #expect(!degenerate.contains(a))
+        #expect(!degenerate.contains(GlobeGeometry.unitSphere(latitudeDegrees: 0.5, longitudeDegrees: 0.5)))
+        #expect(!degenerate.contains(GlobeGeometry.unitSphere(latitudeDegrees: -40, longitudeDegrees: 60)))
 
         let collinear = SphericalTriangle(
             GlobeGeometry.unitSphere(latitudeDegrees: 0, longitudeDegrees: 0),
             GlobeGeometry.unitSphere(latitudeDegrees: 0, longitudeDegrees: 1),
             GlobeGeometry.unitSphere(latitudeDegrees: 0, longitudeDegrees: 2)
         )
-        XCTAssertFalse(collinear.contains(GlobeGeometry.unitSphere(latitudeDegrees: 20, longitudeDegrees: 1)))
+        #expect(!collinear.contains(GlobeGeometry.unitSphere(latitudeDegrees: 20, longitudeDegrees: 1)))
     }
 }

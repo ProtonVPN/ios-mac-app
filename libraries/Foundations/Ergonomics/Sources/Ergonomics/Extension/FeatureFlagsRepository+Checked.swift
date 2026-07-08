@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Foundation
 import ProtonCoreFeatureFlags
 import ProtonCoreServices
@@ -62,7 +63,11 @@ public final class CheckedFeatureFlagsRepository {
 }
 
 public extension FeatureFlagTypeProtocol {
+    /// Reads through `\.featureFlags`, so the live app consults `CheckedFeatureFlagsRepository`
+    /// (keeping its fetched-before-read assertion) while tests control flags by overriding the
+    /// dependency.
     var enabled: Bool {
-        CheckedFeatureFlagsRepository.shared.isEnabled(self)
+        @Dependency(\.featureFlags) var featureFlags
+        return featureFlags.isEnabled(self)
     }
 }

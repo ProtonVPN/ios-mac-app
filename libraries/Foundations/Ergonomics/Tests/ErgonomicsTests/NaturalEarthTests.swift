@@ -16,57 +16,78 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Testing
 import Triangulation
-import XCTest
 
 /// Reference values and a round-trip for the Natural Earth projection. This is the single source of the
 /// projection's polynomials, and the globe baker inverts it to place every coastline vertex, so these
 /// assertions guard the maths the whole map depends on.
-final class NaturalEarthTests: XCTestCase {
-    private static let accuracy = 1e-5
+@Suite("Natural Earth projection")
+struct NaturalEarthTests {
+    private let accuracy = 1e-5
 
     private func project(lat: Double, lon: Double) -> SIMD2<Double> {
         NaturalEarth.project(GeographicCoordinate(latitude: .degrees(lat), longitude: .degrees(lon)))
     }
 
-    func testOrigin() {
+    private func expectClose(
+        _ value: Double,
+        _ expected: Double,
+        tolerance: Double? = nil,
+        sourceLocation: SourceLocation = #_sourceLocation
+    ) {
+        let tolerance = tolerance ?? accuracy
+        #expect(
+            abs(value - expected) < tolerance,
+            "\(value) is not within \(tolerance) of \(expected)",
+            sourceLocation: sourceLocation
+        )
+    }
+
+    @Test("Origin projects to zero")
+    func origin() {
         let p = project(lat: 0, lon: 0)
-        XCTAssertEqual(p.x, 0)
-        XCTAssertEqual(p.y, 0)
+        #expect(p.x == 0)
+        #expect(p.y == 0)
     }
 
-    func testNorthPoleMapsToTopHalfHeight() {
+    @Test("North pole maps to +halfHeight")
+    func northPoleMapsToTopHalfHeight() {
         let p = project(lat: 90, lon: 0)
-        XCTAssertEqual(p.y, NaturalEarth.halfHeight, accuracy: Self.accuracy)
-        XCTAssertEqual(p.x, 0)
+        expectClose(p.y, NaturalEarth.halfHeight)
+        #expect(p.x == 0)
     }
 
-    func testSouthPoleMapsToBottomHalfHeight() {
+    @Test("South pole maps to -halfHeight")
+    func southPoleMapsToBottomHalfHeight() {
         let p = project(lat: -90, lon: 0)
-        XCTAssertEqual(p.y, -NaturalEarth.halfHeight, accuracy: Self.accuracy)
-        XCTAssertEqual(p.x, 0)
+        expectClose(p.y, -NaturalEarth.halfHeight)
+        #expect(p.x == 0)
     }
 
-    func testEastEdgeMapsToHalfWidth() {
+    @Test("East edge maps to +halfWidth")
+    func eastEdgeMapsToHalfWidth() {
         let p = project(lat: 0, lon: 180)
-        XCTAssertEqual(p.x, NaturalEarth.halfWidth, accuracy: Self.accuracy)
-        XCTAssertEqual(p.y, 0)
+        expectClose(p.x, NaturalEarth.halfWidth)
+        #expect(p.y == 0)
     }
 
-    func testWestEdgeMapsToMinusHalfWidth() {
+    @Test("West edge maps to -halfWidth")
+    func westEdgeMapsToMinusHalfWidth() {
         let p = project(lat: 0, lon: -180)
-        XCTAssertEqual(p.x, -NaturalEarth.halfWidth, accuracy: Self.accuracy)
-        XCTAssertEqual(p.y, 0)
+        expectClose(p.x, -NaturalEarth.halfWidth)
+        #expect(p.y == 0)
     }
 
     /// Unprojecting a projected point recovers it. This is the baker's inverse path, so it must round-trip
     /// tightly.
-    func testProjectUnprojectRoundTrips() {
+    @Test("Project and unproject round-trip")
+    func projectUnprojectRoundTrips() {
         for lat in stride(from: -85.0, through: 85.0, by: 17.0) {
             for lon in stride(from: -170.0, through: 170.0, by: 31.0) {
                 let recovered = NaturalEarth.unproject(project(lat: lat, lon: lon))
-                XCTAssertEqual(recovered.latitude.degrees, lat, accuracy: 1e-9)
-                XCTAssertEqual(recovered.longitude.degrees, lon, accuracy: 1e-9)
+                expectClose(recovered.latitude.degrees, lat, tolerance: 1e-9)
+                expectClose(recovered.longitude.degrees, lon, tolerance: 1e-9)
             }
         }
     }

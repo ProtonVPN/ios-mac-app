@@ -16,41 +16,57 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Testing
 import Triangulation
-import XCTest
 
-final class AngleTests: XCTestCase {
-    private static let accuracy = 1e-12
+@Suite("Angle")
+struct AngleTests {
+    private let accuracy = 1e-12
 
     private func normalized(_ degrees: Double) -> Double {
         Angle.degrees(degrees).normalizedSigned.degrees
     }
 
-    /// The documented interval is (-180, 180] degrees: the antimeridian has one normal form, +180,
-    /// whichever side it's approached from, so equal meridians can't compare unequal after wrapping.
-    func testNormalizedSignedWrapsIntoHalfOpenInterval() {
-        XCTAssertEqual(normalized(0), 0, accuracy: Self.accuracy)
-        XCTAssertEqual(normalized(180), 180, accuracy: Self.accuracy)
-        XCTAssertEqual(normalized(-180), 180, accuracy: Self.accuracy)
-        XCTAssertEqual(normalized(540), 180, accuracy: Self.accuracy)
-        XCTAssertEqual(normalized(-540), 180, accuracy: Self.accuracy)
-        XCTAssertEqual(normalized(190), -170, accuracy: Self.accuracy)
-        XCTAssertEqual(normalized(-190), 170, accuracy: Self.accuracy)
-        XCTAssertEqual(normalized(360), 0, accuracy: Self.accuracy)
-        XCTAssertEqual(normalized(725), 5, accuracy: Self.accuracy)
-        XCTAssertEqual(normalized(-725), -5, accuracy: Self.accuracy)
+    private func expectClose(
+        _ value: Double,
+        _ expected: Double,
+        sourceLocation: SourceLocation = #_sourceLocation
+    ) {
+        #expect(
+            abs(value - expected) < accuracy,
+            "\(value) is not within \(accuracy) of \(expected)",
+            sourceLocation: sourceLocation
+        )
     }
 
-    func testDegreeRadianRoundTrip() {
-        XCTAssertEqual(Angle.degrees(90).radians, .pi / 2, accuracy: Self.accuracy)
-        XCTAssertEqual(Angle.radians(.pi).degrees, 180, accuracy: Self.accuracy)
+    /// The documented interval is (-180, 180] degrees: the antimeridian has one normal form, +180,
+    /// whichever side it's approached from, so equal meridians can't compare unequal after wrapping.
+    @Test("normalizedSigned wraps into the half-open interval (-180, 180]")
+    func normalizedSignedWrapsIntoHalfOpenInterval() {
+        expectClose(normalized(0), 0)
+        expectClose(normalized(180), 180)
+        expectClose(normalized(-180), 180)
+        expectClose(normalized(540), 180)
+        expectClose(normalized(-540), 180)
+        expectClose(normalized(190), -170)
+        expectClose(normalized(-190), 170)
+        expectClose(normalized(360), 0)
+        expectClose(normalized(725), 5)
+        expectClose(normalized(-725), -5)
+    }
+
+    @Test("Degrees and radians round-trip")
+    func degreeRadianRoundTrip() {
+        expectClose(Angle.degrees(90).radians, .pi / 2)
+        expectClose(Angle.radians(.pi).degrees, 180)
     }
 
     /// `<` is a signed compare (minus 90 degrees is less than 45), not magnitude, which is what
     /// `max`-reducing non-negative cap radii relies on.
-    func testComparableIsSignedNotMagnitude() {
-        XCTAssertLessThan(Angle.degrees(-90), Angle.degrees(45))
-        XCTAssertLessThan(Angle.degrees(10), Angle.degrees(20))
-        XCTAssertFalse(Angle.degrees(45) < Angle.degrees(-90))
+    @Test("Comparable is a signed compare, not magnitude")
+    func comparableIsSignedNotMagnitude() {
+        #expect(Angle.degrees(-90) < Angle.degrees(45))
+        #expect(Angle.degrees(10) < Angle.degrees(20))
+        #expect(!(Angle.degrees(45) < Angle.degrees(-90)))
     }
 }

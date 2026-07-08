@@ -40,13 +40,18 @@ struct MapCitiesScreenTests {
     @MainActor
     func cities(city: (code: String, cityName: String, lat: Double, long: Double)) throws {
         let countryCode = city.0
-        let store = Store(initialState: HomeMapFeature.State(), reducer: HomeMapFeature.init)
+        let store = Store(initialState: HomeMapFeature.State(), reducer: HomeMapFeature.init) {
+            $0.locale = Locale(identifier: "en")
+            $0.date = .constant(Date())
+            $0.continuousClock = TestClock()
+        }
         let size = try #require(ViewImageConfig.iPhoneSe.size)
         let mapView = MapSnapshotScreen(store: store, title: "\(countryCode), \(city.cityName)", size: size)
 
         withDependencies {
             $0.locale = Locale(identifier: "en")
             $0.date = .constant(Date())
+            $0.continuousClock = TestClock()
         } operation: {
             $userCountry.withLock { $0 = countryCode }
             let server: Server = .mock(country: countryCode, coordinates: .init(latitude: city.lat, longitude: city.long))

@@ -105,6 +105,7 @@ struct HomeScreenTests {
         withDependencies {
             $0.locale = Locale(identifier: "en")
             $0.date = .constant(Date())
+            $0.continuousClock = TestClock()
         } operation: {
             $netShieldLevel.withLock { $0 = .level2 }
             $recents.withLock { $0 = [.connectionRegion, .connectionSecureCoreFastest, .connectionSecureCore] }
