@@ -30,8 +30,7 @@ import VPNShared
 import WidgetKit
 
 extension SharedKey where Self == UserScopedAppStorageKey<Date?> {
-    /// The timestamp of the last settings heartbeat, per user. Legacy key:
-    /// `telemetry_lastSettingsHeartbeatTimestamp<username>` (native `Date`).
+    /// The timestamp of the last settings heartbeat, per user
     static var telemetryLastSettingsHeartbeat: Self {
         .date("telemetry_lastSettingsHeartbeatTimestamp")
     }

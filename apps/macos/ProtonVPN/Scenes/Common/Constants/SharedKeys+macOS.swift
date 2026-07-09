@@ -64,7 +64,7 @@ extension SharedKey where Self == AppStorageKey<Bool>.Default {
 }
 
 extension SharedKey where Self == AppStorageKey<Int>.Default {
-    /// The persisted map container width, in points (stored as an integer). Legacy key: `MapWidth`.
+    /// The persisted map container width, in points (stored as an integer)
     static var mapWidth: Self {
         Self[.appStorage("MapWidth"), default: 0]
     }

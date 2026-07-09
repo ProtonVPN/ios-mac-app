@@ -24,11 +24,6 @@ import Sharing
 /// A `SharedKey` that persists a `Codable` value as JSON `Data` in `UserDefaults`, under a fixed
 /// (non-per-user) key.
 ///
-/// This reproduces the legacy `PropertiesManager` `@Property` / `@InitializedProperty`
-/// representation byte-for-byte (a JSON-encoded `Data` blob stored via
-/// `Storage.set`/`Storage.get`), so values written by previous app versions are read
-/// transparently, with no migration step.
-///
 /// The underlying `UserDefaults` suite is the one configured for swift-sharing
 /// (`\.defaultAppStorage`) — the same suite the legacy storage targeted once the app aligns its
 /// default store. Use the ``json(_:)`` factory for an optional value (absence reads as `nil`) or
@@ -39,8 +34,8 @@ import Sharing
 /// redundant emission.
 public final class JSONAppStorageKey<Value: Sendable>: SharedKey {
     private let key: String
-    private let decode: @Sendable (UserDefaults, String) -> Value
-    private let encode: @Sendable (Value, UserDefaults, String) -> Void
+    private let decode: @Sendable (UserDefaults, String) throws -> Value
+    private let encode: @Sendable (Value, UserDefaults, String) throws -> Void
 
     public var id: some Hashable {
         key
@@ -48,8 +43,8 @@ public final class JSONAppStorageKey<Value: Sendable>: SharedKey {
 
     init(
         key: String,
-        decode: @escaping @Sendable (UserDefaults, String) -> Value,
-        encode: @escaping @Sendable (Value, UserDefaults, String) -> Void
+        decode: @escaping @Sendable (UserDefaults, String) throws -> Value,
+        encode: @escaping @Sendable (Value, UserDefaults, String) throws -> Void
     ) {
         self.key = key
         self.decode = decode
@@ -58,51 +53,36 @@ public final class JSONAppStorageKey<Value: Sendable>: SharedKey {
 
     public func load(context _: LoadContext<Value>, continuation: LoadContinuation<Value>) {
         @Dependency(\.defaultAppStorage) var store
-        continuation.resume(returning: decode(store, key))
+        do {
+            try continuation.resume(returning: decode(store, key))
+        } catch {
+            continuation.resume(throwing: error)
+        }
     }
 
     public func subscribe(
         context _: LoadContext<Value>,
-        subscriber: SharedSubscriber<Value>
+        subscriber _: SharedSubscriber<Value>
     ) -> SharedSubscription {
-        @Dependency(\.defaultAppStorage) var store
-        let key = key
-        let decode = decode
-        let lastData = OSAllocatedUnfairLock<Data?>(initialState: store.data(forKey: key))
-        let observer = NotificationCenter.default.addObserver(
-            forName: UserDefaults.didChangeNotification,
-            object: store,
-            queue: nil
-        ) { _ in
-            // `didChangeNotification` fires for *any* key in the suite; forward only on real
-            // changes to this key's stored bytes.
-            let newData = store.data(forKey: key)
-            let changed = lastData.withLock { current -> Bool in
-                guard current != newData else { return false }
-                current = newData
-                return true
-            }
-            guard changed else { return }
-            subscriber.yield(decode(store, key))
-        }
-        return SharedSubscription {
-            NotificationCenter.default.removeObserver(observer)
-        }
+        SharedSubscription {}
     }
 
     public func save(_ value: Value, context _: SaveContext, continuation: SaveContinuation) {
         @Dependency(\.defaultAppStorage) var store
-        encode(value, store, key)
-        continuation.resume()
+        do {
+            try encode(value, store, key)
+            continuation.resume()
+        } catch {
+            continuation.resume(throwing: error)
+        }
     }
 }
 
 // MARK: - Encodings
 
 public extension JSONAppStorageKey {
-    /// A key for an optional `Codable` value stored as JSON `Data` (matching the legacy
-    /// `@Property` representation). Absence of a stored value reads as `nil`; writing `nil`
-    /// removes the key.
+    /// A key for an optional `Codable` value stored as JSON `Data`.
+    /// Absence of a stored value reads as `nil`; writing `nil` removes the key. Corrupt stored data throws
     static func json<Wrapped: Codable & Sendable>(
         _ key: String
     ) -> JSONAppStorageKey<Wrapped?> {
@@ -110,10 +90,11 @@ public extension JSONAppStorageKey {
             key: key,
             decode: { store, key in
                 guard let data = store.data(forKey: key) else { return nil }
-                return try? JSONDecoder().decode(Wrapped.self, from: data)
+                return try JSONDecoder().decode(Wrapped.self, from: data)
             },
             encode: { value, store, key in
-                if let value, let data = try? JSONEncoder().encode(value) {
+                if let value {
+                    let data = try JSONEncoder().encode(value)
                     store.set(data, forKey: key)
                 } else {
                     store.removeObject(forKey: key)
@@ -123,8 +104,7 @@ public extension JSONAppStorageKey {
     }
 
     /// A key for a non-optional `Codable` value stored as JSON `Data`, falling back to
-    /// `defaultValue` when nothing is stored (matching the legacy `@InitializedProperty`
-    /// representation).
+    /// `defaultValue` when nothing is stored . Corrupt stored data throws
     static func json<Wrapped: Codable & Sendable>(
         _ key: String,
         default defaultValue: Wrapped
@@ -132,16 +112,12 @@ public extension JSONAppStorageKey {
         JSONAppStorageKey<Wrapped>(
             key: key,
             decode: { store, key in
-                guard
-                    let data = store.data(forKey: key),
-                    let value = try? JSONDecoder().decode(Wrapped.self, from: data)
-                else { return defaultValue }
-                return value
+                guard let data = store.data(forKey: key) else { return defaultValue }
+                return try JSONDecoder().decode(Wrapped.self, from: data)
             },
             encode: { value, store, key in
-                if let data = try? JSONEncoder().encode(value) {
-                    store.set(data, forKey: key)
-                }
+                let data = try JSONEncoder().encode(value)
+                store.set(data, forKey: key)
             }
         )
     }

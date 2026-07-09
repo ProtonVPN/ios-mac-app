@@ -20,7 +20,7 @@ import Domain
 import Sharing
 
 public extension SharedKey where Self == JSONAppStorageKey<BugReportModel?> {
-    /// The persisted dynamic bug-report model. Legacy key: `DynamicBugReport` (JSON).
+    /// The persisted dynamic bug-report model
     static var dynamicBugReport: Self {
         .json("DynamicBugReport")
     }

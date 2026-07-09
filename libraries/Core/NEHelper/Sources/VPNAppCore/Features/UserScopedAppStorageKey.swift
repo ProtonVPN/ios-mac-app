@@ -37,9 +37,9 @@ import VPNShared
 /// logged-in user is reflected on the next load.
 /// Which authenticated-user identifier a ``UserScopedAppStorageKey``'s on-disk key is scoped to.
 public enum UserScope: Sendable {
-    /// `baseKey + authKeychain.username` — the default, matching legacy `Storage.setForUser`.
+    /// `baseKey + authKeychain.username` — the default
     case username
-    /// `baseKey + authKeychain.userId` — matching the legacy `RecentConnections<userID>` keying.
+    /// `baseKey + authKeychain.userId`
     case userId
 }
 
@@ -193,9 +193,8 @@ public final class UserScopedAppStorageKey<Value: Sendable>: SharedKey {
 // MARK: - Encodings
 
 public extension UserScopedAppStorageKey {
-    /// A per-user key for an optional `Codable` value, stored as JSON `Data` (matching the legacy
-    /// `Storage.setForUser` representation). Absence of a stored value (or no logged-in user) reads
-    /// as `nil`.
+    /// A per-user key for an optional `Codable` value, stored as JSON `Data`
+    /// Absence of a stored value (or no logged-in user) reads as `nil`.
     static func json<Wrapped: Codable & Sendable>(
         _ baseKey: String,
         scope: UserScope = .username
@@ -219,7 +218,6 @@ public extension UserScopedAppStorageKey {
     }
 
     /// A per-user key for an optional `RawRepresentable<Int>` value, stored as a native `Int`
-    /// (matching the legacy `UserDefaults.setUserValue(rawValue)` representation).
     static func rawInt<Wrapped: RawRepresentable & Sendable>(
         _ baseKey: String
     ) -> UserScopedAppStorageKey<Wrapped?> where Wrapped.RawValue == Int {
@@ -240,8 +238,7 @@ public extension UserScopedAppStorageKey {
         )
     }
 
-    /// A per-user key for an optional `Bool`, stored as a native `Bool` (matching the legacy
-    /// `UserDefaults.setUserValue(bool)` representation).
+    /// A per-user key for an optional `Bool`, stored as a native `Bool
     static func bool(
         _ baseKey: String
     ) -> UserScopedAppStorageKey<Bool?> {
@@ -262,9 +259,8 @@ public extension UserScopedAppStorageKey {
         )
     }
 
-    /// A per-user key for an optional `String`, stored as a native `String` (matching the legacy
-    /// `storage.setValue(_:forKey:)` representation used for auto-connect / quick-connect profile
-    /// IDs). Absence of a stored value (or no logged-in user) reads as `nil`.
+    /// A per-user key for an optional `String`, stored as a native `String`
+    /// Absence of a stored value (or no logged-in user) reads as `nil`.
     static func string(
         _ baseKey: String
     ) -> UserScopedAppStorageKey<String?> {
@@ -284,8 +280,7 @@ public extension UserScopedAppStorageKey {
         )
     }
 
-    /// A per-user key for an optional `Date`, stored natively (matching the legacy
-    /// `UserDefaults.setUserValue(date)` / `userObject(forKey:)` representation).
+    /// A per-user key for an optional `Date`, stored natively
     static func date(
         _ baseKey: String
     ) -> UserScopedAppStorageKey<Date?> {

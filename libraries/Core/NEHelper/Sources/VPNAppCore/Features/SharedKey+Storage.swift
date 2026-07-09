@@ -24,15 +24,14 @@ import Sharing
 // and JSON representation the legacy `Storage.get/set` / `Storage.getForUser/setForUser` used.
 
 public extension SharedKey where Self == UserScopedAppStorageKey<OrderedSet<RecentConnection>?> {
-    /// The user's recent connections. Legacy key: `RecentConnections<userID>` (JSON, scoped by userID).
+    /// The user's recent connections
     static var recentConnections: Self {
         .json("RecentConnections", scope: .userId)
     }
 }
 
 public extension SharedKey where Self == UserScopedAppStorageKey<DefaultConnectionPreference?> {
-    /// The user's *persisted* default-connection preference. Legacy key:
-    /// `DefaultConnectionPreference<username>` (JSON).
+    /// The user's *persisted* default-connection preference
     ///
     /// - Note: distinct from the in-memory `.defaultConnectionPreference` runtime value; this is the
     ///   on-disk backing that survives launches.

@@ -61,7 +61,7 @@ final class MainFeatureSnapshotTests {
     }
 
     func mainLoaded(trait: UIUserInterfaceStyle) {
-        @Shared(.userLocationInMemory) var userLocation: UserLocation?
+        @Shared(.userLocation) var userLocation: UserLocation?
         $userLocation.withLock { $0 = .init(ip: "1.2.3.4", country: "CA", isp: "") }
 
         let loadedHomeState = makeLoadedHomeState()

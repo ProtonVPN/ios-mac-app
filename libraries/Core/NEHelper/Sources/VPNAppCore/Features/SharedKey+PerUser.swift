@@ -23,12 +23,12 @@ import Sharing
 // the legacy representation, so existing profiles are read transparently.
 
 public extension SharedKey where Self == UserScopedAppStorageKey<String?> {
-    /// The auto-connect profile id for the current user. Legacy key: `AutoConnect_<username>`.
+    /// The auto-connect profile id for the current user
     static var autoConnectProfileId: Self {
         .string("AutoConnect_")
     }
 
-    /// The quick-connect profile id for the current user. Legacy key: `QuickConnect_<username>`.
+    /// The quick-connect profile id for the current user
     static var quickConnect: Self {
         .string("QuickConnect_")
     }

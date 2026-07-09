@@ -86,15 +86,15 @@ struct PropertiesSharedKeyTests {
     @Test("userLocation reads legacy JSON data and round-trips")
     func userLocation() throws {
         try withStore { defaults in
-            @Shared(.userLocation) var userLocation
-            #expect(userLocation == nil)
-
             let legacy = UserLocation(ip: "1.2.3.4", country: "PL", isp: "Play")
             try defaults.set(JSONEncoder().encode(legacy), forKey: "UserLocation")
+
+            @Shared(.userLocation) var userLocation
             #expect(userLocation == legacy)
 
             $userLocation.withLock { $0 = nil }
             #expect(defaults.data(forKey: "UserLocation") == nil)
+            #expect(userLocation == nil)
         }
     }
 

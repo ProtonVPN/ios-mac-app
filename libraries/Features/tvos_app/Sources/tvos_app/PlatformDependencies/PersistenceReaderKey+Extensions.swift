@@ -41,11 +41,3 @@ extension SharedKey where Self == AppStorageKey<TimeInterval> {
         .appStorage("lastLogicalsRefresh")
     }
 }
-
-extension SharedKey where Self == InMemoryKey<UserLocation?> {
-    /// tvOS-only in-memory runtime location (reset each launch, populated by `UserLocationService`).
-    /// Distinct from the persisted `Domain.userLocation` key used by iOS/macOS.
-    static var userLocationInMemory: Self {
-        .inMemory("userLocation")
-    }
-}

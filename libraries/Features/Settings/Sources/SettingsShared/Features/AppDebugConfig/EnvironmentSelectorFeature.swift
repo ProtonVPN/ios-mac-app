@@ -26,8 +26,6 @@
     import Sharing
     import Theme
 
-    /// The dev-environment settings, read from / written to their `@Shared` keys. Replaces the
-    /// removed `SettingsStorage` dependency (which was just a wrapper around these keys).
     private struct EnvironmentSettings {
         let apiEndpoint: String
         let atlasSecret: String

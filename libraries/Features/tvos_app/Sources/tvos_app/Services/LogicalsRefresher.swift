@@ -33,7 +33,7 @@ struct LogicalsRefresher {
 
 struct LogicalsRefresherProvider {
     @Shared(.lastLogicalsRefresh) private var lastLogicalsRefresh: TimeInterval = 0
-    @SharedReader(.userLocationInMemory) var userLocation: UserLocation?
+    @SharedReader(.userLocation) var userLocation: UserLocation?
 
     var liveValue: LogicalsRefresher {
         .init(

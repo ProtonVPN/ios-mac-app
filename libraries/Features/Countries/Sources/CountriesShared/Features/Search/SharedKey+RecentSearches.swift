@@ -20,7 +20,7 @@ import Domain
 import Sharing
 
 public extension SharedKey where Self == JSONAppStorageKey<[String]?> {
-    /// The user's recent search queries. Legacy key: `RECENT_SEARCHES` (JSON).
+    /// The user's recent search queries
     static var recentSearches: Self {
         .json("RECENT_SEARCHES")
     }

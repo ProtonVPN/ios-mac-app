@@ -35,7 +35,6 @@ public extension SharedKey where Self == AppStorageKey<Bool>.Default {
     }
 
     /// Whether the user has connected at least once (used for first-time-connect behaviour).
-    /// Legacy key: `ConnectOnDemand`.
     static var hasConnected: Self {
         Self[.appStorage("ConnectOnDemand"), default: false]
     }
@@ -45,7 +44,7 @@ public extension SharedKey where Self == AppStorageKey<Bool>.Default {
         Self[.appStorage("ShowWhatsNewModal_Redesign_Phase_1"), default: true]
     }
 
-    /// Whether auto-connect on launch is enabled (the global flag; the profile is stored per-user).
+    /// Whether auto-connect on launch is enabled
     static var autoConnect: Self {
         Self[.appStorage("AutoConnect"), default: false]
     }
@@ -61,12 +60,12 @@ public extension SharedKey where Self == AppStorageKey<Bool>.Default {
 // MARK: - String?
 
 public extension SharedKey where Self == AppStorageKey<String?>.Default {
-    /// The last email address entered in the bug report form. Legacy key: `LastBugReportEmail`.
+    /// The last email address entered in the bug report form
     static var reportBugEmail: Self {
         Self[.appStorage("LastBugReportEmail"), default: nil]
     }
 
-    /// The custom API endpoint (development builds). Legacy key: `ApiEndpoint`.
+    /// The custom API endpoint (development builds)
     static var apiEndpoint: Self {
         Self[.appStorage("ApiEndpoint"), default: nil]
     }
@@ -81,12 +80,12 @@ public extension SharedKey where Self == AppStorageKey<String?>.Default {
         Self[.appStorage("DidShowDeprecationWarningForOSVersion"), default: nil]
     }
 
-    /// The Atlas environment secret (development builds). Legacy key: `AtlasSecret`.
+    /// The Atlas environment secret (development builds)
     static var atlasSecret: Self {
         Self[.appStorage("AtlasSecret"), default: nil]
     }
 
-    /// The URL used to fetch the Atlas secret (development builds). Legacy key: `AtlasSecretFetchURL`.
+    /// The URL used to fetch the Atlas secret (development builds)
     static var atlasSecretFetchURLString: Self {
         Self[.appStorage("AtlasSecretFetchURL"), default: nil]
     }
@@ -105,27 +104,38 @@ public extension SharedKey where Self == AppStorageKey<Int>.Default {
     }
 }
 
+#if os(tvOS)
+    public extension SharedKey where Self == InMemoryKey<UserLocation?> {
+        /// tvOS-only in-memory runtime location (reset each launch, populated by `UserLocationService`).
+        static var userLocation: Self {
+            .inMemory("userLocation")
+        }
+    }
+#endif
+
 // MARK: - JSON-encoded Codable
 
-public extension SharedKey where Self == JSONAppStorageKey<UserLocation?> {
-    /// The user's IP location (outside of the VPN). Legacy key: `UserLocation` (JSON).
-    ///
-    /// Observe changes via `$userLocation.publisher` — this replaces the legacy `AppEvent.userIp`
-    /// notification the property used to post on every write.
-    static var userLocation: Self {
-        .json("UserLocation")
+#if !os(tvOS)
+    public extension SharedKey where Self == JSONAppStorageKey<UserLocation?> {
+        /// The user's IP location (outside of the VPN)
+        ///
+        /// Observe changes via `$userLocation.publisher` — this replaces the legacy `AppEvent.userIp`
+        /// notification the property used to post on every write.
+        static var userLocation: Self {
+            .json("UserLocation")
+        }
     }
-}
+#endif
 
 public extension SharedKey where Self == JSONAppStorageKey<[String: Bool]?> {
-    /// Manual feature-flag overrides (development builds). Legacy key: `FeatureFlagOverrides` (JSON).
+    /// Manual feature-flag overrides (development builds)
     static var featureFlagOverrides: Self {
         .json("FeatureFlagOverrides")
     }
 }
 
 public extension SharedKey where Self == JSONAppStorageKey<[String: String]?> {
-    /// Manual local-value overrides (development builds). Legacy key: `LocalValuesOverrides` (JSON).
+    /// Manual local-value overrides (development builds)
     static var localValuesOverrides: Self {
         .json("LocalValuesOverrides")
     }

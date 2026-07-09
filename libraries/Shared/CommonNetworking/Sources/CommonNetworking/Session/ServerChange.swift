@@ -36,8 +36,7 @@ public struct ConnectionStackItem: Codable, Equatable, @unchecked Sendable {
 }
 
 public extension SharedKey where Self == UserScopedAppStorageKey<[ConnectionStackItem]?> {
-    /// The recent server-change events for the current user. Legacy key:
-    /// `ServerChangeConnectionStack<username>` (JSON).
+    /// The recent server-change events for the current user
     static var serverChangeConnectionStack: Self {
         .json("ServerChangeConnectionStack")
     }
