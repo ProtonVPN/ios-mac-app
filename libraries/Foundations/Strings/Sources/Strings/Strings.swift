@@ -610,7 +610,7 @@ public enum Localizable {
   public static var getVerificationEmail: String { return Localizable.tr("Localizable", "_get_verification_email", fallback: "Get verification email") }
   /// iOS: Button in SMS verification screen
   public static var getVerificationSms: String { return Localizable.tr("Localizable", "_get_verification_sms", fallback: "Get verification SMS") }
-  /// Got it
+  /// Commonly used title of a button
   public static var gotIt: String { return Localizable.tr("Localizable", "_got_it", fallback: "Got it") }
   /// Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page.
   public static var help: String { return Localizable.tr("Localizable", "_help", fallback: "Help") }
@@ -1078,55 +1078,47 @@ public enum Localizable {
   public static var paymentRestorationError: String { return Localizable.tr("Localizable", "_payment_restoration_error", fallback: "No recoverable purchases could be found at this time.") }
   /// This leads to a menu where you can restore previous purchases.
   public static var paymentsOptions: String { return Localizable.tr("Localizable", "_payments_options", fallback: "Payments options") }
-  /// Discard file
+  /// Button title in an alert
   public static var pcapCaptureDiscardButton: String { return Localizable.tr("Localizable", "_pcap_capture_discard_button", fallback: "Discard file") }
-  /// The file will not be stored in the app. Make sure you’ve exported it before discarding.
+  /// Description of an alert when user tries dismissing the PCAP sheet
   public static var pcapCaptureDiscardDescription: String { return Localizable.tr("Localizable", "_pcap_capture_discard_description", fallback: "The file will not be stored in the app. Make sure you’ve exported it before discarding.") }
-  /// Discard file?
+  /// Title of an alert when user tries dismissing the PCAP sheet
   public static var pcapCaptureDiscardTitle: String { return Localizable.tr("Localizable", "_pcap_capture_discard_title", fallback: "Discard file?") }
-  /// Capture failed
+  /// Title of an alert that presents the reason for PCAP failure
   public static var pcapCaptureFailed: String { return Localizable.tr("Localizable", "_pcap_capture_failed", fallback: "Capture failed") }
-  /// Reproduce a specific issue you’re facing when using Proton VPN to get help from our customer support team.
-  /// 
-  /// The app will create a file containing technical details about your VPN connection.
+  /// Description of the PCAP feature presented to the user before they start the PCAP session
   public static var pcapCaptureFeatureDescription: String { return Localizable.tr("Localizable", "_pcap_capture_feature_description", fallback: "Reproduce a specific issue you’re facing when using Proton VPN to get help from our customer support team.\n\nThe app will create a file containing technical details about your VPN connection.") }
-  /// You can now share it with our customer support by attaching it in your conversation, or by storing it securely on [Proton Drive](%@) and sharing a public link.
+  /// `it` refers to the exportable `<date>.pcap` file that is available while user sees this text
   public static func pcapCaptureFileSharing(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_pcap_capture_file_sharing", String(describing: p1), fallback: "You can now share it with our customer support by attaching it in your conversation, or by storing it securely on [Proton Drive](%@) and sharing a public link.")
   }
-  /// The troubleshooting file is stored on your device and is not sent to Proton unless you share it. It captures your VPN traffic, which may include the websites you visit. [Learn more](%@)
+  /// Footer note that is visible across the whole flow of the PCAP session
   public static func pcapCaptureFileStorage(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_pcap_capture_file_storage", String(describing: p1), fallback: "The troubleshooting file is stored on your device and is not sent to Proton unless you share it. It captures your VPN traffic, which may include the websites you visit. [Learn more](%@)")
   }
-  /// Not enough storage
+  /// Title of an alert that presents the reason for PCAP failure
   public static var pcapCaptureLowStorage: String { return Localizable.tr("Localizable", "_pcap_capture_low_storage", fallback: "Not enough storage") }
-  /// Make sure you have at least 200 MB of free space and try again.
-  public static var pcapCaptureLowStorageActionDescription: String { return Localizable.tr("Localizable", "_pcap_capture_low_storage_action_description", fallback: "Make sure you have at least 200 MB of free space and try again.") }
-  /// Capture again
-  public static var pcapCaptureSessionCaptureAgain: String { return Localizable.tr("Localizable", "_pcap_capture_session_capture_again", fallback: "Capture again") }
-  /// VPN session captured
+  /// Description of an alert that presents the reason for PCAP failure
+  public static var pcapCaptureLowStorageActionDescription: String { return Localizable.tr("Localizable", "_pcap_capture_low_storage_action_description", fallback: "You need at least 200MB of available space to start a capture") }
+  /// Header of the PCAP export view
   public static var pcapCaptureSessionCaptured: String { return Localizable.tr("Localizable", "_pcap_capture_session_captured", fallback: "VPN session captured") }
-  /// Capturing
+  /// Header of the active PCAP session view
   public static var pcapCaptureSessionCapturing: String { return Localizable.tr("Localizable", "_pcap_capture_session_capturing", fallback: "Capturing") }
-  /// Reproduce the issue then stop the capture.
+  /// Directions to the user shown on the active PCAP session view
   public static var pcapCaptureSessionDirections: String { return Localizable.tr("Localizable", "_pcap_capture_session_directions", fallback: "Reproduce the issue then stop the capture.") }
   /// Format: mm:ss / mm:ss. Left hand side is the counter, right hand side is the maximum allowed time
   public static func pcapCaptureSessionDuration(_ p1: Any, _ p2: Any) -> String {
     return Localizable.tr("Localizable", "_pcap_capture_session_duration", String(describing: p1), String(describing: p2), fallback: "%@ / %@")
   }
-  /// Save file
+  /// Button title on the PCAP export view. Presents a share sheet to save the file outside of the app
   public static var pcapCaptureSessionExport: String { return Localizable.tr("Localizable", "_pcap_capture_session_export", fallback: "Save file") }
-  /// If possible, apply the same settings and type of connection you used when you first faced the issue.
-  /// 
-  /// Aim to reproduce the issue in the same way it first happened (browsing the web, using an app, etc.)
-  /// 
-  /// When you’ve reproduced the issue, you can stop the capture and share the file with the customer support team.
+  /// Description of an alert when user starts the PCAP session
   public static var pcapCaptureSessionIssueReproduction: String { return Localizable.tr("Localizable", "_pcap_capture_session_issue_reproduction", fallback: "If possible, apply the same settings and type of connection you used when you first faced the issue.\n\nAim to reproduce the issue in the same way it first happened (browsing the web, using an app, etc.)\n\nWhen you’ve reproduced the issue, you can stop the capture and share the file with the customer support team.") }
-  /// Start capturing VPN session?
+  /// Title of an alert when user starts the PCAP session
   public static var pcapCaptureSessionShouldStartSession: String { return Localizable.tr("Localizable", "_pcap_capture_session_should_start_session", fallback: "Start capturing VPN session?") }
-  /// Start
+  /// Button title in the PCAP view. Starts the PCAP session
   public static var pcapCaptureSessionStart: String { return Localizable.tr("Localizable", "_pcap_capture_session_start", fallback: "Start") }
-  /// Stop
+  /// Button title in the PCAP view. Stops the PCAP session
   public static var pcapCaptureSessionStop: String { return Localizable.tr("Localizable", "_pcap_capture_session_stop", fallback: "Stop") }
   /// Per month. Appended to plan price.
   public static var perMonth: String { return Localizable.tr("Localizable", "_per_month", fallback: " / month") }
