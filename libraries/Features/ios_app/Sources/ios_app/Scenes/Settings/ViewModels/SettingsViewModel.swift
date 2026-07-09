@@ -54,12 +54,11 @@ final class SettingsViewModel {
 
     private let factory: Factory
 
-    @Dependency(\.propertiesManager) private var propertiesManager
-    @Shared(.connectionState) private var connectionState: ConnectionState
-    @Shared(.featureFlags) private var featureFlags: Domain.FeatureFlags
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.featureFlags) private var featureFlags: Domain.FeatureFlags
     @Shared(.connectionProtocol) private var sharedConnectionProtocol: Domain.ConnectionProtocol
     @Shared(.killSwitch) private var killSwitch: Bool
-    @Shared(.sessionStatus) private var sessionStatus: SessionStatus
+    @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.upsellManager) private var upsellManager
@@ -257,7 +256,7 @@ final class SettingsViewModel {
 
                 // Check if we are connected. Changing the user's session means we will need to reconnect them.
                 // Let the user know they will be disconnected if they proceed
-                @Shared(.connectionState) var connectionState
+                @SharedReader(.connectionState) var connectionState
                 let isDisconnected = connectionState.is(\.disconnected)
 
                 if isDisconnected {
@@ -304,7 +303,8 @@ final class SettingsViewModel {
             cells = [cell]
         }
 
-        let qrLoginOptedOut = propertiesManager.userInfo?.edmOptOut == 1
+        @SharedReader(.userInfo) var userInfo
+        let qrLoginOptedOut = userInfo?.edmOptOut == 1
         let qrLoginFeatureDisabled = CoreFeatureFlagType.easyDeviceMigrationDisabled.enabled
         let isDeviceSecured: Bool = {
             #if targetEnvironment(simulator)
@@ -333,7 +333,8 @@ final class SettingsViewModel {
     }
 
     private var accountRecoveryStatus: AccountRecovery? {
-        propertiesManager.userAccountRecovery
+        @SharedReader(.userAccountRecovery) var userAccountRecovery
+        return userAccountRecovery
     }
 
     private var securitySection: TableViewSection {
@@ -812,7 +813,7 @@ final class SettingsViewModel {
     }
 
     private func pushProtocolViewController() {
-        @Shared(.smartProtocolConfig) var smartProtocolConfig
+        @SharedReader(.smartProtocolConfig) var smartProtocolConfig
         let vpnProtocolViewModel = VpnProtocolViewModel(
             connectionProtocol: sharedConnectionProtocol,
             smartProtocolConfig: smartProtocolConfig,
@@ -1076,7 +1077,7 @@ final class SettingsViewModel {
     }
 
     private func retryConnection() {
-        @Shared(.connectionProtocol) var connectionProtocol
+        @SharedReader(.connectionProtocol) var connectionProtocol
         connectionCommandClient.send(.reconnect(connectionProtocol))
     }
 

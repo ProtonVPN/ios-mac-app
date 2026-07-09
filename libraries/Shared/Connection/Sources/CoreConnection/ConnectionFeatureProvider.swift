@@ -46,14 +46,14 @@ extension ConnectionFeatureProvider: DependencyKey {
                 )
             },
             requestedFeatures: {
-                @Shared(.killSwitch) var killSwitch
+                @SharedReader(.killSwitch) var killSwitch
                 return LocalTunnelFeatures(
                     killSwitch: killSwitch,
                     excludeLocalNetworks: AuthorizedFeatureValue<ExcludeLocalNetworks>().value() == .on
                 )
             },
             connectionProtocol: {
-                @Shared(.connectionProtocol) var connectionProtocol
+                @SharedReader(.connectionProtocol) var connectionProtocol
                 return connectionProtocol
             }
         )

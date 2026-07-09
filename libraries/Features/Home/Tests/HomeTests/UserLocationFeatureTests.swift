@@ -29,7 +29,7 @@ import Testing
 struct UserLocationFeatureTests {
     @Test("Fetches location on launch")
     func fetchesLocationOnLaunch() async {
-        @Shared(.connectionState) var connectionState = .disconnected
+        @SharedReader(.connectionState) var connectionState = .disconnected
 
         let now = Date.now
         let clock = TestClock()
@@ -66,7 +66,7 @@ struct UserLocationFeatureTests {
 
     @Test("Fetches location on interval when disconnected")
     func fetchesLocationOnIntervalPassingWhenDisconnected() async {
-        @Shared(.connectionState) var connectionState = .disconnected
+        @SharedReader(.connectionState) var connectionState = .disconnected
 
         let now = Date.now
         let nextRefreshDate = now.addingTimeInterval(.hours(1))
@@ -217,7 +217,7 @@ struct UserLocationFeatureTests {
 
     @Test("Unchanged location still refreshes cooldown")
     func unchangedLocationStillRefreshesCooldown() async {
-        @Shared(.connectionState) var connectionState = .disconnected
+        @SharedReader(.connectionState) var connectionState = .disconnected
 
         let now = Date.now
         let firstRefreshDate = now.addingTimeInterval(.hours(1))

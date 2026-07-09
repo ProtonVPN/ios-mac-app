@@ -57,14 +57,13 @@ public final class AppDelegateService: AppDelegateProtocol {
     @Dependency(\.cryptoService) private var cryptoService
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
     private let container: DependencyContainer
     private lazy var appSessionManager: AppSessionManager = container.makeAppSessionManager()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var pushNotificationService = container.makePushNotificationService()
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
 
     private var tokens: [NotificationToken] = []
     private var cancellables = Set<AnyCancellable>()
@@ -72,7 +71,7 @@ public final class AppDelegateService: AppDelegateProtocol {
 
     public init() {
         prepareDependencies {
-            $0.defaultAppStorage = UserDefaultsClient.getUserDefaults ?? .standard
+            $0.defaultAppStorage = .domainUserDefaults
         }
         self.container = DependencyContainer.shared
     }
@@ -85,7 +84,8 @@ public final class AppDelegateService: AppDelegateProtocol {
         FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan, true)
 
         // Next, properly set the feature flag overrides in the repository.
-        for (name, value) in propertiesManager.featureFlagOverrides ?? [:] {
+        @SharedReader(.featureFlagOverrides) var featureFlagOverrides
+        for (name, value) in featureFlagOverrides ?? [:] {
             guard let feature = ManuallySpecifiedFeatureFlag(rawValue: name) else { continue }
             FeatureFlagsRepository.shared.setFlagOverride(feature, value)
         }
@@ -168,8 +168,8 @@ public final class AppDelegateService: AppDelegateProtocol {
         } else {
             [WidgetIntents.ShortcutItem.connect.shortcutItem]
         }
-        @Dependency(\.recentsStorage) var recentsStorage
-        let pinned = recentsStorage.readFromStorage().first { $0.pinned }
+        @SharedReader(.recentConnections) var recentConnections
+        let pinned = (recentConnections ?? []).first { $0.pinned }
         if let pinned {
             UIApplication.shared.shortcutItems?.append(WidgetIntents.ShortcutItem.connectToFirstPinnedRecent(pinned).shortcutItem)
         }

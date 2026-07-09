@@ -56,13 +56,12 @@ class DefaultProfileViewModel {
     @Dependency(\.upsellManager) private var upsellManager
 
     private let serverOffering: ServerOffering
-    @Dependency(\.propertiesManager) private var propertiesManager
     private let connectionStatusService: ConnectionStatusService
 
     private let defaultAccessTier: Int
 
     private var profile: Profile {
-        @Shared(.connectionProtocol) var connectionProtocol
+        @SharedReader(.connectionProtocol) var connectionProtocol
         switch serverOffering {
         case .random:
             return Profile(

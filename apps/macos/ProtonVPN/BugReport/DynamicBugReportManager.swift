@@ -19,10 +19,12 @@
 import BugReport
 import CommonNetworking
 import Dependencies
+import Domain
 import Foundation
 import LegacyCommon
 import PMLogger
 import ProtonCoreAPIClient
+import Sharing
 import VPNAppCore
 import VPNShared
 
@@ -37,12 +39,14 @@ public class DynamicBugReportManager {
         return credentiallessHelper.isCredentialLess()
     }
 
+    @Shared(.reportBugEmail) var reportBugEmail
+
     public var prefilledEmail: String {
         get {
-            propertiesManager.reportBugEmail ?? ""
+            reportBugEmail ?? ""
         }
         set {
-            propertiesManager.reportBugEmail = newValue
+            $reportBugEmail.withLock { $0 = newValue }
         }
     }
 
@@ -55,8 +59,6 @@ public class DynamicBugReportManager {
     public var signInCallback: (() -> Void)? // To not have a depdendency on navigationService
 
     @Dependency(\.reportsApiClient) private var reportsApiClient
-    @Dependency(\.dynamicBugReportStorage) private var storage
-    @Dependency(\.propertiesManager) private var propertiesManager
     private var timer: Timer?
     @Dependency(\.updateManager) private var updateManager
     @Dependency(\.vpnKeychain) private var vpnKeychain
@@ -68,8 +70,8 @@ public class DynamicBugReportManager {
     ) {
         self.logSources = logSources
 
-        @Dependency(\.dynamicBugReportStorage) var storage
-        self.model = storage.fetch() ?? Self.getDefaultConfig()
+        @SharedReader(.dynamicBugReport) var dynamicBugReport
+        self.model = dynamicBugReport ?? Self.getDefaultConfig()
         setupRefresh()
     }
 
@@ -89,7 +91,8 @@ public class DynamicBugReportManager {
         do {
             let config = try await reportsApiClient.dynamicBugReportConfig()
             model = config
-            storage.store(config)
+            @Shared(.dynamicBugReport) var dynamicBugReport
+            $dynamicBugReport.withLock { $0 = config }
             log.debug("Dynamic bug report config downloaded and saved", category: .app)
         } catch {
             log.debug("Dynamic bug report config download error", category: .app, event: .error, metadata: ["error": "\(error)"])
@@ -119,6 +122,7 @@ public class DynamicBugReportManager {
         let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
 
         @Dependency(\.appInfo) var appInfo
+        @SharedReader(.userLocation) var userLocation
 
         return ReportBug(
             os: os,
@@ -130,8 +134,8 @@ public class DynamicBugReportManager {
             description: data.text,
             username: data.username,
             email: data.email,
-            country: propertiesManager.userLocation?.country ?? "",
-            ISP: propertiesManager.userLocation?.isp ?? "",
+            country: userLocation?.country ?? "",
+            ISP: userLocation?.isp ?? "",
             plan: (try? vpnKeychain.fetchCached().planTitle) ?? ""
         )
     }
@@ -148,7 +152,6 @@ extension DynamicBugReportManager: BugReportDelegate {
             return try await send(report: report)
         }
 
-        propertiesManager.logCurrentState()
         let tempLogFilesStorage = LogFilesTemporaryStorage(logSources: logSources)
 
         let logFiles = await withCheckedContinuation { continuation in

@@ -59,7 +59,7 @@ class CountryAnnotationViewModel: CustomStyleContext {
     // triggered by any state change
     var viewStateChange: (() -> Void)?
 
-    @Shared(.connectionState) fileprivate var connectionState: ConnectionState
+    @SharedReader(.connectionState) fileprivate var connectionState: ConnectionState
 
     let available: Bool
     let countryCode: String

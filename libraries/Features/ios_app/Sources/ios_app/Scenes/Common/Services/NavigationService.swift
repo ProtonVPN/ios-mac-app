@@ -110,12 +110,11 @@ final class NavigationService {
 
     // MARK: Properties
 
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.windowService) private var windowService
     @Dependency(\.vpnApiClient) private var vpnApiClient
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
-    @Shared(.sessionStatus) private var sessionStatus: SessionStatus
-    @Shared(.sessionLogoutReason) private var sessionLogoutReason: String?
+    @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
+    @SharedReader(.sessionLogoutReason) private var sessionLogoutReason: String?
     private var cancellables = Set<AnyCancellable>()
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.coreAlertService) private var alertService
@@ -217,10 +216,11 @@ final class NavigationService {
     }
 
     func showInitialModals() {
-        guard propertiesManager.showWhatsNewModal else {
+        @Shared(.showWhatsNewModal) var showWhatsNewModal
+        guard showWhatsNewModal else {
             return
         }
-        propertiesManager.showWhatsNewModal = false
+        $showWhatsNewModal.withLock { $0 = false }
 
         let variant: WhatsNewView.PlanVariant
         switch CredentialsProvider.liveValue.tier {
@@ -382,8 +382,9 @@ extension NavigationService: SettingsService {
     }
 
     func makeAccountRecoveryViewController() -> AccountRecoveryViewController {
-        AccountRecoveryModule.settingsViewController(networking.apiService) { [weak self] accountRecovery in
-            self?.propertiesManager.userAccountRecovery = accountRecovery
+        @Shared(.userAccountRecovery) var userAccountRecovery
+        return AccountRecoveryModule.settingsViewController(networking.apiService) { accountRecovery in
+            $userAccountRecovery.withLock { $0 = accountRecovery }
         }
     }
 
@@ -393,11 +394,13 @@ extension NavigationService: SettingsService {
             log.error("AuthCredentials not found", category: .app)
             return nil
         }
-        guard let userInfo = propertiesManager.userInfo else {
+        @SharedReader(.userInfo) var userInfo
+        guard let userInfo else {
             log.error("UserInfo not found", category: .app)
             return nil
         }
-        guard let userSettings = propertiesManager.userSettings else {
+        @SharedReader(.userSettings) var userSettings
+        guard let userSettings else {
             log.error("UserSettings not found", category: .app)
             return nil
         }
@@ -421,7 +424,8 @@ extension NavigationService: SettingsService {
     private func processPasswordChange(authCredential: AuthCredential, userInfo: UserInfo) {
         do {
             try authKeychain.store(AuthCredentials(.init(authCredential)), source: .passwordChange)
-            propertiesManager.userInfo = userInfo
+            @Shared(.userInfo) var sharedUserInfo
+            $sharedUserInfo.withLock { $0 = userInfo }
             windowService.popStackToRoot()
             windowService.presentMessage(Localizable.passwordChangedSuccessfully, type: .success, accessibilityIdentifier: nil)
         } catch {

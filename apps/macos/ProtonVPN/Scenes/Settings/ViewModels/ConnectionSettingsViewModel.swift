@@ -50,17 +50,15 @@ final class ConnectionSettingsViewModel {
     private let factory: Factory
     private typealias ProtocolSwitchAction = VpnProtocolChangeManagerImplementation.ProtocolSwitchAction
 
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.profileManager) private var profileManager
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.upsellManager) private var upsellManager
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
-    @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     private lazy var navService: NavigationService = factory.makeNavigationService()
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
 
     var selectedProtocol: ConnectionProtocol {
         didSet {
@@ -76,8 +74,8 @@ final class ConnectionSettingsViewModel {
         }
     }
 
-    @Shared(.featureFlags) private var featureFlags: FeatureFlags
-    @Shared(.connectionProtocol) private var sharedConnectionProtocol: ConnectionProtocol
+    @SharedReader(.featureFlags) private var featureFlags: FeatureFlags
+    @SharedReader(.connectionProtocol) private var sharedConnectionProtocol: ConnectionProtocol
     @Shared(.smartProtocol) private var sharedSmartProtocol: Bool
     @Shared(.killSwitch) private var killSwitch: Bool
 
@@ -154,26 +152,30 @@ final class ConnectionSettingsViewModel {
 
     // MARK: - Quick and auto connect for current user
 
+    @Shared(.autoConnect) private var sharedAutoConnect
+    @Shared(.autoConnectProfileId) private var sharedAutoConnectProfileId
+
     var autoConnect: (enabled: Bool, profileId: String?)? {
         get {
-            guard let username = authKeychain.username else { return nil }
-            return propertiesManager.getAutoConnect(for: username)
+            (sharedAutoConnect, sharedAutoConnectProfileId)
         }
         set {
             guard let newValue else { return }
-            guard let username = authKeychain.username else { return }
-            propertiesManager.setAutoConnect(for: username, enabled: newValue.enabled, profileId: newValue.profileId)
+            $sharedAutoConnect.withLock { $0 = newValue.enabled }
+            if let profileId = newValue.profileId {
+                $sharedAutoConnectProfileId.withLock { $0 = profileId }
+            }
         }
     }
 
+    @Shared(.quickConnect) private var sharedQuickConnect
+
     var quickConnect: String? {
         get {
-            guard let username = authKeychain.username else { return nil }
-            return propertiesManager.getQuickConnect(for: username)
+            sharedQuickConnect
         }
         set {
-            guard let username = authKeychain.username else { return }
-            propertiesManager.setQuickConnect(for: username, quickConnect: newValue)
+            $sharedQuickConnect.withLock { $0 = newValue }
         }
     }
 
@@ -338,7 +340,7 @@ final class ConnectionSettingsViewModel {
     func confirmEnableSmartProtocol(_ completion: @escaping (Result<Void, Error>) -> Void) {
         switch connectionState {
         case .connected, .connecting:
-            @Shared(.smartProtocolConfig) var smartProtocolConfig
+            @SharedReader(.smartProtocolConfig) var smartProtocolConfig
             let config = smartProtocolConfig
             let supported = connectionState.resolvedServer?.endpoint.supports(protocolSet: ProtocolSupport(vpnProtocols: config.supportedProtocols)) ?? false
 

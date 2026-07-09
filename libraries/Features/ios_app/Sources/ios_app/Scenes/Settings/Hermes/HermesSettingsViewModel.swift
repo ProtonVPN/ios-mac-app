@@ -70,7 +70,7 @@ final class HermesSettingsViewModel {
     @ObservationIgnored
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
     @ObservationIgnored
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
 
     private var initialState: State
 

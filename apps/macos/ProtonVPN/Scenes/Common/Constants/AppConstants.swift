@@ -25,20 +25,6 @@ import Domain
 import VPNShared
 
 enum AppConstants {
-    enum UserDefaults {
-        static let launchedBefore = "LaunchedBefore"
-        static let startOnBoot = "StartOnBoot"
-        static let startMinimized = "StartMinimized"
-        static let systemNotifications = "SystemNotifications"
-        static let unprotectedNetworkNotifications = "UnprotectedNetwork"
-        static let mapWidth = "MapWidth"
-        static let welcomed = "Welcomed"
-        static let trialWelcomed = "TrialWelcomed"
-        static let warnedTrialExpiring = "WarnedTrialExpiring"
-        static let warnedTrialExpired = "WarnedTrialExpired"
-        static let uninstallSysexesOnTerminate = "UninstallSysexesOnTerminate"
-    }
-
     enum Filenames {
         static let appLogFilename = "ProtonVPN.log"
         static let openVpnLogFilename = "OpenVPN.log"
@@ -48,8 +34,6 @@ enum AppConstants {
 
     enum Time {
         static let recentlyActiveThreshold: TimeInterval = .minutes(10)
-
-        static let maintenanceMessageTimeThreshold: TimeInterval = .hours(12)
 
         // Servers list refresh
         static let fullServerRefresh: TimeInterval = .hours(3)

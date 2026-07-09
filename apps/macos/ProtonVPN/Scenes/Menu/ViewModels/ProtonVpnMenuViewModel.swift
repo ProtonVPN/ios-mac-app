@@ -44,7 +44,7 @@ class ProtonVpnMenuViewModel {
 
     private let navService: NavigationService
 
-    @Shared(.sessionStatus) private var sessionStatus: SessionStatus
+    @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
 
     var contentChanged: (() -> Void)?
 

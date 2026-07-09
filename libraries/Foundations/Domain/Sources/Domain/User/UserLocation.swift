@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct UserLocation: Codable, Equatable {
+public struct UserLocation: Codable, Equatable, Sendable {
     public let ip: String
     public let country: String
     public let isp: String

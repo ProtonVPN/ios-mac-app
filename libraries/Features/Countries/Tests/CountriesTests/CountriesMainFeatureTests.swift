@@ -63,7 +63,7 @@ struct CountriesMainFeatureTests {
 
     @Test("Reload content with secure core server type")
     func reloadContentWithSecureCoreServerType() async {
-        @Shared(.secureCoreToggle) var isSecureCore = true
+        @SharedReader(.secureCoreToggle) var isSecureCore = true
         let mockSections = IdentifiedArrayOf<CountrySectionFeature.State>()
 
         let store = TestStore(initialState: .loading) {
@@ -143,7 +143,7 @@ struct CountriesMainFeatureTests {
                 Issue.record("Expected standard state")
                 return
             }
-            state.$isSecureCore.withLock { $0 = true }
+            $isSecureCore.withLock { $0 = true }
             $0 = .standard(state)
         }
         await store.receive(\.reloadContent) {
@@ -170,7 +170,7 @@ struct CountriesMainFeatureTests {
                 Issue.record("Expected secure core state")
                 return
             }
-            state.$isSecureCore.withLock { $0 = false }
+            $isSecureCore.withLock { $0 = false }
             $0 = .secureCore(state)
         }
         await store.receive(\.reloadContent) {

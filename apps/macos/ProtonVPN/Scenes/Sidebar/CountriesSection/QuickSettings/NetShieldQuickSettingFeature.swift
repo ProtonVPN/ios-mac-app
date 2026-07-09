@@ -91,7 +91,7 @@ struct NetShieldQuickSettingFeature {
     }
 
     @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
-    @Shared(.featureFlags) var featureFlags
+    @SharedReader(.featureFlags) var featureFlags
 
     private enum CancelID { case netShieldObservations }
 

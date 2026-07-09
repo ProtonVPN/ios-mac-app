@@ -1,7 +1,7 @@
 //
-//  Created on 13/01/2026 by Chris Janusiewicz.
+//  Created on 02/07/2026 by Max Kupetskyi.
 //
-//  Copyright (c) 2025 Proton AG
+//  Copyright (c) 2026 Proton AG
 //
 //  Proton VPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,20 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Dependencies
-import SharedErgonomics
+import Domain
+import Sharing
 
-public enum SharedConnectionStorage {
-    static let lastDisconnectErrorKey: String = "LastDisconnectError"
-
-    public static var lastDisconnectError: String? {
-        get {
-            @Dependency(\.defaultsProvider) var provider
-            return provider.getDefaults().string(forKey: lastDisconnectErrorKey)
-        }
-        set {
-            @Dependency(\.defaultsProvider) var provider
-            provider.getDefaults().set(newValue, forKey: lastDisconnectErrorKey)
-        }
+public extension SharedKey where Self == JSONAppStorageKey<[String]?> {
+    /// The user's recent search queries
+    static var recentSearches: Self {
+        .json("RECENT_SEARCHES")
     }
 }

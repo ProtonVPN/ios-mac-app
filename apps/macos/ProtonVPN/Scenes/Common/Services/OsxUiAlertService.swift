@@ -33,7 +33,7 @@ import SwiftUI
 import VPNAppCore
 
 final class OsxUiAlertService {
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
 
     private var currentAlerts: [SystemAlert] = []
     /// Alerts pushed while no window was available to host them; flushed once one appears.

@@ -43,9 +43,9 @@ class StatusMenuWindowModel {
     typealias Factory = StatusMenuViewModelFactory
     private let factory: Factory
 
-    @Shared(.sessionStatus) private var sessionStatus: SessionStatus
-    @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
+    @SharedReader(.secureCoreToggle) private var secureCoreToggle: Bool
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
 
     var contentChanged: (() -> Void)?
 

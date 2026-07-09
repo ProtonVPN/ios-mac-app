@@ -23,6 +23,7 @@ import Dependencies
 import DependenciesMacros
 import Domain
 import Foundation
+import Sharing
 import VPNShared
 
 public enum StorageVersion: Int, CaseIterable {
@@ -50,7 +51,7 @@ public final class ProfileStorageImplementation {
     public init() {}
 
     func fetch() -> [Profile] {
-        @Dependency(\.defaultsProvider) var provider
+        @Dependency(\.defaultAppStorage) var defaults
 
         var profiles: [Profile] = []
 
@@ -59,7 +60,7 @@ public final class ProfileStorageImplementation {
                 return []
             }
 
-            let version = provider.getDefaults().integer(forKey: Self.versionKey)
+            let version = defaults.integer(forKey: Self.versionKey)
             if version == versionCheck.rawValue {
                 profiles.append(contentsOf: fetchFromMemory(storageKey: storageKey))
             }
@@ -93,8 +94,8 @@ public final class ProfileStorageImplementation {
     }
 
     private func fetchFromMemory(storageKey: String) -> [Profile] {
-        @Dependency(\.defaultsProvider) var provider
-        guard let data = provider.getDefaults().data(forKey: storageKey) else {
+        @Dependency(\.defaultAppStorage) var defaults
+        guard let data = defaults.data(forKey: storageKey) else {
             log.warning("No profile data stored under key \(storageKey)", category: .persistence)
             return []
         }
@@ -107,10 +108,10 @@ public final class ProfileStorageImplementation {
     }
 
     private func storeInMemory(_ profiles: [Profile], storageKey: String) {
-        @Dependency(\.defaultsProvider) var provider
-        provider.getDefaults().set(Self.storageVersion.rawValue, forKey: Self.versionKey)
+        @Dependency(\.defaultAppStorage) var defaults
+        defaults.set(Self.storageVersion.rawValue, forKey: Self.versionKey)
         let archivedData = try? encoder.encode(profiles)
-        provider.getDefaults().set(archivedData, forKey: storageKey)
+        defaults.set(archivedData, forKey: storageKey)
     }
 
     private func removeSystemProfiles(in profiles: [Profile]) -> [Profile] {

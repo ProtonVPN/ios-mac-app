@@ -18,6 +18,7 @@
 
 import CommonNetworking
 import ComposableArchitecture
+import Domain
 import Foundation
 
 @Reducer
@@ -37,8 +38,8 @@ public struct StreamingServiceItem {
         }
 
         public var imageURL: URL? {
-            @Dependency(\.propertiesManager) var propertiesManager
-            guard let baseUrl = propertiesManager.streamingResourcesUrl,
+            @SharedReader(.streamingResourcesUrl) var streamingResourcesUrl
+            guard let baseUrl = streamingResourcesUrl,
                   let url = URL(string: baseUrl + service.icon) else { return nil }
             return url
         }

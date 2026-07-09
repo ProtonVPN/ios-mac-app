@@ -20,6 +20,7 @@ import Dependencies
 import Domain
 import Ergonomics
 import Foundation
+import Sharing
 
 extension MigrationManager {
     /// V1 -> V2: Expands our `ConnectionSpec.Location` to better represent random locations
@@ -29,10 +30,10 @@ extension MigrationManager {
         // executed properly since it was operating on the "ServerConnectionIntent" key entry, while intents were
         // stored per user, e.g: ServerConnectionIntent<username>.
         checking(.platform(iOS: "7.4.2", macOS: "6.5.2", tvOS: "1.6.1")) { _ in
-            @Dependency(\.defaultsProvider) var provider
+            @Dependency(\.defaultAppStorage) var defaults
             migrateUserSpecificEntries(
                 withKeyPrefix: "ServerConnectionIntent",
-                in: provider.getDefaults()
+                in: defaults
             ) { key, defaults in
                 guard let data = defaults.data(forKey: key) else { return }
                 let migratedIntent = try migrateOldServerConnectionIntent(from: data)

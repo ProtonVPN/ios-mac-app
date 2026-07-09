@@ -172,32 +172,32 @@ public struct ConnectionStatusView: View {
 }
 
 #Preview("protected", traits: .sizeThatFitsLayout) {
-    @Shared(.protectionState) var protectionState: ProtectionState = .protected
+    @SharedReader(.protectionState) var protectionState: ProtectionState = .protected
     return ConnectionStatusView(store: Store(initialState: .init()) {
         ConnectionStatusFeature()
     })
 }
 
 #Preview("unprotected", traits: .sizeThatFitsLayout) {
-    @Shared(.protectionState) var protectionState: ProtectionState = .unprotected
-    @Shared(.userCountry) var userCountry: String? = "PL"
-    @Shared(.userIP) var userIP: String? = "123.456.789.0"
+    @SharedReader(.protectionState) var protectionState: ProtectionState = .unprotected
+    @SharedReader(.userCountry) var userCountry: String? = "PL"
+    @SharedReader(.userIP) var userIP: String? = "123.456.789.0"
     return ConnectionStatusView(store: Store(initialState: .init()) {
         ConnectionStatusFeature()
     })
 }
 
 #Preview("resolving", traits: .sizeThatFitsLayout) {
-    @Shared(.protectionState) var protectionState: ProtectionState = .resolving
-    @Shared(.userCountry) var userCountry: String? = "PL"
-    @Shared(.userIP) var userIP: String? = "123.456.789.0"
+    @SharedReader(.protectionState) var protectionState: ProtectionState = .resolving
+    @SharedReader(.userCountry) var userCountry: String? = "PL"
+    @SharedReader(.userIP) var userIP: String? = "123.456.789.0"
     ConnectionStatusView(store: Store(initialState: .init()) {
         ConnectionStatusFeature()
     })
 }
 
 #Preview("protecting", traits: .sizeThatFitsLayout) {
-    @Shared(.protectionState) var protectionState: ProtectionState = .protecting(country: "PL", ip: "123.456.789.0")
+    @SharedReader(.protectionState) var protectionState: ProtectionState = .protecting(country: "PL", ip: "123.456.789.0")
     return ConnectionStatusView(store: Store(initialState: .init()) {
         ConnectionStatusFeature()
     })

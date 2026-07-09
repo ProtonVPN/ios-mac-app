@@ -16,9 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import Dependencies
 import Domain
 import Foundation
+import Sharing
 
 /// This exists because the `attemptSilentLogIn()` function needs to be overridden.
 class AppSessionRefresherMock: AppSessionRefresherImplementation {
@@ -43,12 +45,13 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
             }
 
             dependencies.yield {
-                @Dependency(\.propertiesManager) var propertiesManager
                 if let userLocation = properties.location {
-                    propertiesManager.userLocation = userLocation
+                    @Shared(.userLocation) var sharedUserLocation
+                    $sharedUserLocation.withLock { $0 = userLocation }
                 }
                 if let services = properties.streamingServices {
-                    propertiesManager.streamingServices = services.streamingServices
+                    @Shared(.streamingServices) var streamingServices
+                    $streamingServices.withLock { $0 = services.streamingServices }
                 }
 
                 @Dependency(\.serverManager) var serverManager

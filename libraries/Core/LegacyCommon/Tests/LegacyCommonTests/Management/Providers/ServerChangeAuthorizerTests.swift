@@ -20,28 +20,54 @@ import CommonNetworking
 import Dependencies
 import Foundation
 @testable import LegacyCommon
+import Sharing
 @testable import VPNAppCore
+import VPNShared
 import XCTest
 
 public class ServerChangeAuthorizerTests: XCTestCase {
+    private static let username = "test-user"
+
+    /// Runs `body` with an isolated `defaultAppStorage` + mock keychain (so the per-user
+    /// `.serverChangeConnectionStack` resolves), seeding the given `config` and `connectionStack`.
+    private func withServerChange(
+        date: Date,
+        freeTier: Bool = true,
+        config: ServerChangeConfig,
+        connectionStack: [ConnectionStackItem] = [],
+        _ body: () -> Void
+    ) {
+        let suiteName = "ServerChangeAuthorizerTests-\(Self.username)"
+        let defaults = UserDefaults(suiteName: suiteName)!
+        defaults.removePersistentDomain(forName: suiteName)
+        let keychain = MockAuthKeychain()
+        keychain.setMockUsername(Self.username)
+
+        withDependencies {
+            $0.date = .constant(date)
+            $0.credentialsProvider = .constant(credentials: .tier(freeTier ? .freeTier : .paidTier))
+            $0.defaultAppStorage = defaults
+            $0.authKeychain = keychain
+        } operation: {
+            @Shared(.serverChangeConfig) var sharedConfig
+            $sharedConfig.withLock { $0 = config }
+            @Shared(.serverChangeConnectionStack) var sharedStack
+            $sharedStack.withLock { $0 = connectionStack }
+            body()
+        }
+    }
+
+    private static let config: ServerChangeConfig = .init(
+        changeServerAttemptLimit: 3,
+        changeServerShortDelayInSeconds: 5,
+        changeServerLongDelayInSeconds: 10
+    )
+
     func testAuthorizesServerChangeWhenStackIsEmpty() {
         let sut = ServerChangeAuthorizerImplementation()
         let now = Date()
 
-        let config: ServerChangeConfig = .init(
-            changeServerAttemptLimit: 3,
-            changeServerShortDelayInSeconds: 5,
-            changeServerLongDelayInSeconds: 10
-        )
-
-        withDependencies {
-            $0.date = .constant(now)
-            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-            $0.serverChangeStorage = .init(
-                getConfig: { config },
-                getConnectionStack: { [] }
-            )
-        } operation: {
+        withServerChange(date: now, config: Self.config, connectionStack: []) {
             XCTAssertEqual(sut.serverChangeAvailability(), .available)
         }
     }
@@ -50,32 +76,13 @@ public class ServerChangeAuthorizerTests: XCTestCase {
         let sut = ServerChangeAuthorizerImplementation()
         let start = Date()
         let delayExpiryDate = start.addingTimeInterval(5)
+        let connectionStack: [ConnectionStackItem] = [.init(intent: .random, date: start, upsellNext: false)]
 
-        let connectionStack: [ServerChangeStorage.ConnectionStackItem] = [.init(intent: .random, date: start, upsellNext: false)]
-        let config: ServerChangeConfig = .init(
-            changeServerAttemptLimit: 3,
-            changeServerShortDelayInSeconds: 5,
-            changeServerLongDelayInSeconds: 10
-        )
-
-        withDependencies {
-            $0.date = .constant(start)
-            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-            $0.serverChangeStorage = .init(
-                getConfig: { config },
-                getConnectionStack: { connectionStack }
-            )
-        } operation: {
+        withServerChange(date: start, config: Self.config, connectionStack: connectionStack) {
             XCTAssertEqual(sut.serverChangeAvailability(), .unavailable(until: delayExpiryDate, duration: 5, exhaustedSkips: false))
         }
 
-        withDependencies {
-            $0.date = .constant(delayExpiryDate)
-            $0.serverChangeStorage = .init(
-                getConfig: { config },
-                getConnectionStack: { connectionStack }
-            )
-        } operation: {
+        withServerChange(date: delayExpiryDate, config: Self.config, connectionStack: connectionStack) {
             XCTAssertEqual(sut.serverChangeAvailability(), .available)
         }
     }
@@ -86,32 +93,20 @@ public class ServerChangeAuthorizerTests: XCTestCase {
         let later = start.addingTimeInterval(1)
         let delayExpiryDate = start.addingTimeInterval(5)
 
-        var connectionStack: [ServerChangeStorage.ConnectionStackItem] = []
-        let config: ServerChangeConfig = .init(
-            changeServerAttemptLimit: 3,
-            changeServerShortDelayInSeconds: 5,
-            changeServerLongDelayInSeconds: 10
-        )
-
-        withDependencies {
-            $0.date = .constant(start)
-            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-            $0.serverChangeStorage = .init(
-                getConfig: { config },
-                getConnectionStack: { connectionStack }
-            )
-        } operation: {
-            connectionStack = [.init(intent: .fastest, date: start, upsellNext: false)]
+        withServerChange(date: start, config: Self.config, connectionStack: [.init(intent: .fastest, date: start, upsellNext: false)]) {
             XCTAssertEqual(sut.serverChangeAvailability(), .available)
 
-            connectionStack = [
-                .init(intent: .fastest, date: later, upsellNext: false),
-                .init(intent: .fastest, date: later, upsellNext: false),
-                .init(intent: .fastest, date: later, upsellNext: false),
-                .init(intent: .fastest, date: later, upsellNext: false),
-                .init(intent: .fastest, date: later, upsellNext: false),
-                .init(intent: .random, date: start, upsellNext: false),
-            ]
+            @Shared(.serverChangeConnectionStack) var sharedStack
+            $sharedStack.withLock {
+                $0 = [
+                    .init(intent: .fastest, date: later, upsellNext: false),
+                    .init(intent: .fastest, date: later, upsellNext: false),
+                    .init(intent: .fastest, date: later, upsellNext: false),
+                    .init(intent: .fastest, date: later, upsellNext: false),
+                    .init(intent: .fastest, date: later, upsellNext: false),
+                    .init(intent: .random, date: start, upsellNext: false),
+                ]
+            }
             XCTAssertEqual(sut.serverChangeAvailability(), .unavailable(until: delayExpiryDate, duration: 5, exhaustedSkips: false))
         }
     }
@@ -120,33 +115,13 @@ public class ServerChangeAuthorizerTests: XCTestCase {
         let sut = ServerChangeAuthorizerImplementation()
         let start = Date()
         let delayExpiryDate = start.addingTimeInterval(5)
+        let connectionStack: [ConnectionStackItem] = [.init(intent: .random, date: start, upsellNext: false)]
 
-        let connectionStack: [ServerChangeStorage.ConnectionStackItem] = [.init(intent: .random, date: start, upsellNext: false)]
-        let config: ServerChangeConfig = .init(
-            changeServerAttemptLimit: 3,
-            changeServerShortDelayInSeconds: 5,
-            changeServerLongDelayInSeconds: 10
-        )
-
-        withDependencies {
-            $0.date = .constant(start)
-            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-            $0.serverChangeStorage = .init(
-                getConfig: { config },
-                getConnectionStack: { connectionStack }
-            )
-        } operation: {
+        withServerChange(date: start, freeTier: true, config: Self.config, connectionStack: connectionStack) {
             XCTAssertEqual(sut.serverChangeAvailability(), .unavailable(until: delayExpiryDate, duration: 5, exhaustedSkips: false))
         }
 
-        withDependencies {
-            $0.date = .constant(start)
-            $0.credentialsProvider = .constant(credentials: .tier(.paidTier))
-            $0.serverChangeStorage = .init(
-                getConfig: { config },
-                getConnectionStack: { connectionStack }
-            )
-        } operation: {
+        withServerChange(date: start, freeTier: false, config: Self.config, connectionStack: connectionStack) {
             XCTAssertEqual(sut.serverChangeAvailability(), .available)
         }
     }
@@ -156,44 +131,17 @@ public class ServerChangeAuthorizerTests: XCTestCase {
         let start = Date()
         let midDelay = start.addingTimeInterval(5)
         let delayExpiryDate = start.addingTimeInterval(10)
+        let connectionStack: [ConnectionStackItem] = [.init(intent: .random, date: start, upsellNext: true)]
 
-        let connectionStack: [ServerChangeStorage.ConnectionStackItem] = [.init(intent: .random, date: start, upsellNext: true)]
-        let config: ServerChangeConfig = .init(
-            changeServerAttemptLimit: 3,
-            changeServerShortDelayInSeconds: 5,
-            changeServerLongDelayInSeconds: 10
-        )
-
-        withDependencies {
-            $0.date = .constant(start)
-            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-            $0.serverChangeStorage = .init(
-                getConfig: { config },
-                getConnectionStack: { connectionStack }
-            )
-        } operation: {
+        withServerChange(date: start, config: Self.config, connectionStack: connectionStack) {
             XCTAssertEqual(sut.serverChangeAvailability(), .unavailable(until: delayExpiryDate, duration: 10, exhaustedSkips: true))
         }
 
-        withDependencies {
-            $0.date = .constant(midDelay)
-            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-            $0.serverChangeStorage = .init(
-                getConfig: { config },
-                getConnectionStack: { connectionStack }
-            )
-        } operation: {
+        withServerChange(date: midDelay, config: Self.config, connectionStack: connectionStack) {
             XCTAssertEqual(sut.serverChangeAvailability(), .unavailable(until: delayExpiryDate, duration: 10, exhaustedSkips: true))
         }
 
-        withDependencies {
-            $0.date = .constant(delayExpiryDate)
-            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-            $0.serverChangeStorage = .init(
-                getConfig: { config },
-                getConnectionStack: { connectionStack }
-            )
-        } operation: {
+        withServerChange(date: delayExpiryDate, config: Self.config, connectionStack: connectionStack) {
             XCTAssertEqual(sut.serverChangeAvailability(), .available)
         }
     }
@@ -203,42 +151,32 @@ public class ServerChangeAuthorizerTests: XCTestCase {
         let start = Date()
         let second = start.addingTimeInterval(5)
         let third = start.addingTimeInterval(10)
-
-        var connectionStack: [ServerChangeStorage.ConnectionStackItem] = []
         let config: ServerChangeConfig = .init(
             changeServerAttemptLimit: 2,
             changeServerShortDelayInSeconds: 5,
             changeServerLongDelayInSeconds: 10
         )
 
-        withDependencies {
-            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-            $0.serverChangeStorage = .init(
-                getConfig: { config },
-                getConnectionStack: { connectionStack },
-                setConnectionStack: { connectionStack = $0 }
-            )
-        } operation: {
-            var expectedItems = [
-                ServerChangeStorage.ConnectionStackItem(intent: .random, date: start, upsellNext: false),
-            ]
+        withServerChange(date: start, config: config, connectionStack: []) {
+            @SharedReader(.serverChangeConnectionStack) var sharedStack
+
             sut.registerServerChange(connectedAt: start)
-            XCTAssertEqual(connectionStack, expectedItems)
+            XCTAssertEqual(sharedStack ?? [], [
+                ConnectionStackItem(intent: .random, date: start, upsellNext: false),
+            ])
 
-            expectedItems = [
-                ServerChangeStorage.ConnectionStackItem(intent: .random, date: second, upsellNext: true),
-                ServerChangeStorage.ConnectionStackItem(intent: .random, date: start, upsellNext: false),
-            ]
             sut.registerServerChange(connectedAt: second)
-            XCTAssertEqual(connectionStack, expectedItems)
+            XCTAssertEqual(sharedStack ?? [], [
+                ConnectionStackItem(intent: .random, date: second, upsellNext: true),
+                ConnectionStackItem(intent: .random, date: start, upsellNext: false),
+            ])
 
-            expectedItems = [
-                ServerChangeStorage.ConnectionStackItem(intent: .random, date: third, upsellNext: false),
-                ServerChangeStorage.ConnectionStackItem(intent: .random, date: second, upsellNext: true),
-                ServerChangeStorage.ConnectionStackItem(intent: .random, date: start, upsellNext: false),
-            ]
             sut.registerServerChange(connectedAt: third)
-            XCTAssertEqual(connectionStack, expectedItems)
+            XCTAssertEqual(sharedStack ?? [], [
+                ConnectionStackItem(intent: .random, date: third, upsellNext: false),
+                ConnectionStackItem(intent: .random, date: second, upsellNext: true),
+                ConnectionStackItem(intent: .random, date: start, upsellNext: false),
+            ])
         }
     }
 }

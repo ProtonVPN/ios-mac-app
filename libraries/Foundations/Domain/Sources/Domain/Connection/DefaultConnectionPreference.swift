@@ -18,7 +18,7 @@
 
 import Foundation
 
-public enum DefaultConnectionPreference: Equatable, Hashable, Codable {
+public enum DefaultConnectionPreference: Equatable, Hashable, Codable, Sendable {
     /// Fastest normal (non-secure core) server
     /// The reason for excluding secure core servers is that when allowing the user to specify their connection
     /// preference, we filter out the "Fastest normal" connection spec, but leave the "Fastest Secure Core" option.

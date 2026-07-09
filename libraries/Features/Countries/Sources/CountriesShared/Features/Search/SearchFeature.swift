@@ -72,8 +72,6 @@ public struct SearchFeature {
         }
     }
 
-    @Dependency(\.searchStorageNew) private var searchStorage
-
     public var body: some ReducerOf<Self> {
         BindingReducer()
 
@@ -101,7 +99,8 @@ public struct SearchFeature {
 
                 // Empty search - show recent searches or placeholder
                 guard !trimmedText.isEmpty else {
-                    let recentSearches = searchStorage.get()
+                    @SharedReader(.recentSearches) var storedSearches
+                    let recentSearches = storedSearches ?? []
                     state.searchResults = recentSearches.isEmpty ? .placeholder :
                         .recentSearches(.init(recentSearches: recentSearches))
                     return .none
@@ -277,7 +276,8 @@ public struct SearchFeature {
         let trimmedText = searchText.trimmingCharacters(in: .whitespaces)
         guard !trimmedText.isEmpty else { return }
 
-        var recentSearches = searchStorage.get()
+        @Shared(.recentSearches) var storedSearches
+        var recentSearches = storedSearches ?? []
         // Remove if exists and add to front
         recentSearches.removeAll { $0 == trimmedText }
 
@@ -287,6 +287,6 @@ public struct SearchFeature {
         }
 
         recentSearches.insert(trimmedText, at: 0)
-        searchStorage.save(data: recentSearches)
+        $storedSearches.withLock { $0 = recentSearches }
     }
 }

@@ -20,6 +20,8 @@ import Collections
 import ComposableArchitecture
 import ConnectionInventory
 import Domain
+import VPNAppCore
+import WidgetKit
 
 @Reducer
 public struct DefaultConnectionFeature {
@@ -50,10 +52,9 @@ public struct DefaultConnectionFeature {
             case let .preferenceSelected(preference):
                 state.$defaultConnectionPreference.withLock { $0 = preference }
                 return .run { _ in
-                    @Dependency(\.defaultConnectionStorage) var storage
-                    try storage.set(preference: preference)
-                } catch: { error, _ in
-                    log.error("Error saving default connection preference", metadata: ["error": "\(error)"])
+                    @Shared(.storedDefaultConnectionPreference) var storedPreference
+                    $storedPreference.withLock { $0 = preference }
+                    WidgetCenter.shared.reloadAllTimelines()
                 }
             }
         }

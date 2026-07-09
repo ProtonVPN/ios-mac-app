@@ -125,7 +125,8 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
 
         do {
             @Dependencies.Dependency(\.connectionCommandClient) var connectionCommandClient
-            try connectionCommandClient.send(.connect(spec, defaultConnectionStorage.getDefaultProtocol(), .widget))
+            @SharedReader(.connectionProtocol) var connectionProtocol
+            try connectionCommandClient.send(.connect(spec, connectionProtocol, .widget))
             try await finishConnecting()
         } catch {
             log.error("Failed to connect to VPN from widget with error: \(error)")
@@ -141,26 +142,26 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
 
     // MARK: - Private helpers:
 
-    @Dependencies.Dependency(\.recentsStorage) private var recentsStorage
-    @Dependencies.Dependency(\.defaultConnectionStorage) private var defaultConnectionStorage
+    @SharedReader(.recentConnections) private var recentConnections
+    @SharedReader(.storedDefaultConnectionPreference) private var storedDefaultConnectionPreference
 
     private func getRecentConnection(_ index: Int) -> ConnectionSpec? {
         @Dependencies.Dependency(\.connectionInventory) var connectionInventory
 
         return connectionInventory.recentConnectionList(
             .fastest,
-            recentsStorage.readFromStorage(),
+            recentConnections ?? [],
             ConnectionSpec.defaultFastest
         ).elements[safe: index]?.connection
     }
 
     private func getDefaultConnection() -> ConnectionSpec? {
-        let preference = try? defaultConnectionStorage.getPreference()
+        let preference = storedDefaultConnectionPreference
         switch preference ?? .fastest {
         case .fastest:
             return .defaultFastest
         case .mostRecent:
-            let recents = recentsStorage.readFromStorage()
+            let recents = recentConnections ?? []
             return recents.elements.first?.connection ?? .defaultFastest
         case let .recent(spec):
             return spec

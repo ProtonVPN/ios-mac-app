@@ -18,38 +18,55 @@
 
 import ComposableArchitecture
 @testable import CountriesShared
+import Foundation
 import Testing
 
 @Suite("SearchRoot Tests")
 @MainActor
 struct SearchRootTests {
     @Test("onAppear triggers preprocessing and loads placeholder")
-    func onAppearLoadsPlaceholderWhenNoRecents() async {
-        let store = TestStore(initialState: SearchRoot.State.loading([])) {
-            SearchRoot()
-        } withDependencies: {
-            $0.searchStorageNew.get = { [] }
-        }
+    func onAppearLoadsPlaceholderWhenNoRecents() async throws {
+        let suiteName = "SearchRootTests-\(#function)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defaults.removePersistentDomain(forName: suiteName)
+        await withDependencies {
+            $0.defaultAppStorage = defaults
+        } operation: {
+            @Shared(.recentSearches) var recentSearches
+            $recentSearches.withLock { $0 = [] }
 
-        await store.send(.onAppear)
-        await store.receive(\.performComputation)
-        await store.receive(\.dataLoaded) {
-            $0 = .loaded(.init(searchResults: .placeholder))
+            let store = TestStore(initialState: SearchRoot.State.loading([])) {
+                SearchRoot()
+            }
+
+            await store.send(.onAppear)
+            await store.receive(\.performComputation)
+            await store.receive(\.dataLoaded) {
+                $0 = .loaded(.init(searchResults: .placeholder))
+            }
         }
     }
 
     @Test("onAppear initializes recent searches state when storage has data")
-    func onAppearLoadsRecentSearchesState() async {
-        let store = TestStore(initialState: SearchRoot.State.loading([])) {
-            SearchRoot()
-        } withDependencies: {
-            $0.searchStorageNew.get = { ["uk"] }
-        }
+    func onAppearLoadsRecentSearchesState() async throws {
+        let suiteName = "SearchRootTests-\(#function)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defaults.removePersistentDomain(forName: suiteName)
+        await withDependencies {
+            $0.defaultAppStorage = defaults
+        } operation: {
+            @Shared(.recentSearches) var recentSearches
+            $recentSearches.withLock { $0 = ["uk"] }
 
-        await store.send(.onAppear)
-        await store.receive(\.performComputation)
-        await store.receive(\.dataLoaded) {
-            $0 = .loaded(.init(searchResults: .recentSearches(.init())))
+            let store = TestStore(initialState: SearchRoot.State.loading([])) {
+                SearchRoot()
+            }
+
+            await store.send(.onAppear)
+            await store.receive(\.performComputation)
+            await store.receive(\.dataLoaded) {
+                $0 = .loaded(.init(searchResults: .recentSearches(.init())))
+            }
         }
     }
 

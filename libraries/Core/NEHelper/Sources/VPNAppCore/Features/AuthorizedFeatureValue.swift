@@ -25,8 +25,7 @@ import Sharing
 /// (effective) reads — the "raw vs effective" split.
 ///
 /// - The raw user setting is stored per-user in `UserDefaults` (via ``UserScopedAppStorageKey``),
-///   JSON-encoded under the feature's `storageKey` — matching the legacy
-///   `AppFeaturePropertyProvider` representation so existing values are read transparently.
+///   JSON-encoded under the feature's `storageKey`
 /// - ``effectiveValue(userTier:featureFlags:)`` applies tier + feature-flag authorization on read,
 ///   returning the feature's default (or clamping) when the user is not authorized — reproducing
 ///   the previous `AppFeaturePropertyProviderImplementation.getValue` semantics, but as a separate
@@ -87,7 +86,7 @@ public struct AuthorizedFeatureValue<Feature: ProvidableFeature & Sendable>: Sen
     /// the effective value.
     public func value() -> Feature {
         @SharedReader(.userTier) var userTier: Int?
-        @Shared(.featureFlags) var featureFlags: FeatureFlags
+        @SharedReader(.featureFlags) var featureFlags: FeatureFlags
         return effectiveValue(userTier: userTier ?? .freeTier, featureFlags: featureFlags)
     }
 

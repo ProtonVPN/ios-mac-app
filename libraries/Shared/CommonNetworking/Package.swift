@@ -30,6 +30,7 @@ let package = Package(
 
         .package(url: "https://github.com/ProtonMail/TrustKit", revision: "d107d7cc825f38ae2d6dc7c54af71d58145c3506"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
+        .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.9.0")),
     ],
     targets: [
@@ -61,6 +62,7 @@ let package = Package(
                 // External
                 .product(name: "TrustKit", package: "TrustKit"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         ),

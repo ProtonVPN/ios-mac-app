@@ -23,7 +23,7 @@ import Sharing
 import VPNShared
 
 public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
-    @Shared(.featureFlags) private var featureFlags: FeatureFlags
+    @SharedReader(.featureFlags) private var featureFlags: FeatureFlags
     @Dependency(\.credentialsProvider) var credentialsProvider
 
     public init() {}

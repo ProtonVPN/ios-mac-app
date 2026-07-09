@@ -30,7 +30,7 @@ class PlutoniumWindowController: WindowController {
     let store: StoreOf<PlutoniumFeature>
 
     @Dependency(\.coreAlertService) private var alertService
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
 
     @available(*, unavailable)

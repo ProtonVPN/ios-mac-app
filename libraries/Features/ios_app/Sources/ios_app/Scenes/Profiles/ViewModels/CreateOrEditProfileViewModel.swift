@@ -38,14 +38,13 @@ import VPNShared
 class CreateOrEditProfileViewModel: NSObject {
     @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.upsellManager) private var upsellManager
-    @Shared(.connectionState) private var connectionState: ConnectionState
-    @Shared(.smartProtocolConfig) private var smartProtocolConfig: SmartProtocolConfig
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.smartProtocolConfig) private var smartProtocolConfig: SmartProtocolConfig
 
     private let username: String?
     private let profileService: ProfileService
     private let protocolService: ProtocolService
     @Dependency(\.profileManager) private var profileManager
-    @Dependency(\.propertiesManager) private var propertiesManager
     private let editedProfile: Profile?
     @Dependency(\.serverRepository) private var serverRepository
 
@@ -94,12 +93,11 @@ class CreateOrEditProfileViewModel: NSObject {
         profileService: ProfileService,
         protocolSelectionService: ProtocolService
     ) {
-        @Dependency(\.propertiesManager) var propertiesManager
         self.username = username
         self.editedProfile = profile
         self.profileService = profileService
         self.protocolService = protocolSelectionService
-        @Shared(.connectionProtocol) var connectionProtocol
+        @SharedReader(.connectionProtocol) var connectionProtocol
         self.selectedProtocol = connectionProtocol
 
         if case let .circle(color) = profile?.profileIcon {
@@ -109,9 +107,9 @@ class CreateOrEditProfileViewModel: NSObject {
         }
 
         @Dependency(\.profileManager) var profileManager
+        @SharedReader(.quickConnect) var quickConnect
         if let profile,
-           let username,
-           let quickConnectProfileId = propertiesManager.getQuickConnect(for: username),
+           let quickConnectProfileId = quickConnect,
            let quickConnectProfile = profileManager.profile(id: quickConnectProfileId) {
             self.isDefaultProfile = profile.id == quickConnectProfile.id
         }
@@ -204,17 +202,18 @@ class CreateOrEditProfileViewModel: NSObject {
             return
         }
 
-        guard let username else {
+        guard username != nil else {
             messageHandler?(Localizable.vpnstatusNotLoggedin, GSMessageType.warning, UIConstants.messageOptions)
             completion(false)
             return
         }
 
         state = .standard
+        @Shared(.quickConnect) var quickConnect
         if isDefaultProfile {
-            propertiesManager.setQuickConnect(for: username, quickConnect: profile.id)
-        } else if let quickConnectId = propertiesManager.getQuickConnect(for: username), quickConnectId == profile.id { // default was on and has now been turned off for this profile
-            propertiesManager.setQuickConnect(for: username, quickConnect: nil)
+            $quickConnect.withLock { $0 = profile.id }
+        } else if let quickConnectId = quickConnect, quickConnectId == profile.id { // default was on and has now been turned off for this profile
+            $quickConnect.withLock { $0 = nil }
         }
 
         completion(true)
@@ -425,7 +424,7 @@ class CreateOrEditProfileViewModel: NSObject {
             return
         }
 
-        @Shared(.connectionProtocol) var preferredProtocol
+        @SharedReader(.connectionProtocol) var preferredProtocol
         if selectedProtocol != preferredProtocol,
            selectedServerOfferingSupports(connectionProtocol: preferredProtocol) {
             selectedProtocol = preferredProtocol
@@ -443,7 +442,7 @@ class CreateOrEditProfileViewModel: NSObject {
         let supportedProtocols = ConnectionProtocol.allCases
             .filter { !$0.isDeprecated && selectedServerOfferingSupports(connectionProtocol: $0) }
 
-        @Shared(.featureFlags) var featureFlags
+        @SharedReader(.featureFlags) var featureFlags
         let vpnProtocolViewModel = VpnProtocolViewModel(
             connectionProtocol: selectedProtocol,
             smartProtocolConfig: smartProtocolConfig,

@@ -14,6 +14,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
+import Domain
 import ProTUNExtension
+import Sharing
 
-final class PacketTunnelProvider: ProTUNPacketTunnelProvider {}
+final class PacketTunnelProvider: ProTUNPacketTunnelProvider {
+    override init() {
+        prepareDependencies {
+            // Align swift-sharing's default store with the app-group suite so `@Shared`
+            // keys read the same UserDefaults values as the containing app.
+            $0.defaultAppStorage = .domainUserDefaults
+        }
+        super.init()
+    }
+}

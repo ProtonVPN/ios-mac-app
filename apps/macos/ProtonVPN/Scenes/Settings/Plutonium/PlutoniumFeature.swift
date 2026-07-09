@@ -52,9 +52,9 @@ public struct PlutoniumFeature {
         @Shared(.inclusionActivated) var inclusionActivated: PlutoniumActivated
         @Shared(.exclusionActivated) var exclusionActivated: PlutoniumActivated
 
-        @Shared(.plutoniumFeatureApplied) var featureApplied: PlutoniumFeatureToggle
-        @Shared(.inclusionActivatedApplied) var inclusionActivatedApplied: PlutoniumActivated
-        @Shared(.exclusionActivatedApplied) var exclusionActivatedApplied: PlutoniumActivated
+        @SharedReader(.plutoniumFeatureApplied) var featureApplied: PlutoniumFeatureToggle
+        @SharedReader(.inclusionActivatedApplied) var inclusionActivatedApplied: PlutoniumActivated
+        @SharedReader(.exclusionActivatedApplied) var exclusionActivatedApplied: PlutoniumActivated
 
         var requiresReconnection: Bool {
             if case .disabled = feature {
@@ -104,7 +104,7 @@ public struct PlutoniumFeature {
     }
 
     @Shared(.killSwitch) var killSwitch: Bool
-    @Shared(.connectionState) var connectionState: ConnectionState
+    @SharedReader(.connectionState) var connectionState: ConnectionState
 
     public init() {
         // Start the scanner when user first enters plutonium settings.
@@ -123,7 +123,7 @@ public struct PlutoniumFeature {
                 }
 
                 // is IKEv2 selected in general settings? We need to disable it
-                @Shared(.connectionProtocol) var connectionProtocol
+                @SharedReader(.connectionProtocol) var connectionProtocol
                 if connectionProtocol == .vpnProtocol(.ike) {
                     state.alert = Self.unsupportedProtocolErrorAlert
                     return .none

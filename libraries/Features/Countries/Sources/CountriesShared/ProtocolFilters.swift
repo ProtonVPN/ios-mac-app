@@ -24,8 +24,8 @@ import Sharing
 package struct ProtocolFilters {
     // MARK: - Server and Group query filters
 
-    @Shared(.connectionProtocol) private var connectionProtocol: ConnectionProtocol
-    @Shared(.smartProtocolConfig) private var smartProtocolConfig: SmartProtocolConfig
+    @SharedReader(.connectionProtocol) private var connectionProtocol: ConnectionProtocol
+    @SharedReader(.smartProtocolConfig) private var smartProtocolConfig: SmartProtocolConfig
 
     package init() {}
 

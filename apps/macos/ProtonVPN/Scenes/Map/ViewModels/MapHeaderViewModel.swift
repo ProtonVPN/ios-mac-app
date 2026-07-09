@@ -30,7 +30,7 @@ import Theme
 import VPNAppCore
 
 class MapHeaderViewModel {
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
     private var cancellables = Set<AnyCancellable>()
 
     var contentChanged: (() -> Void)?

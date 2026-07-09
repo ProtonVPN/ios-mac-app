@@ -29,7 +29,7 @@ import VPNAppCore
 struct CountriesQuickSettingsFeatureTests {
     @Test("each quick setting has distinct detail options")
     func quickSettingDetailOptionsDifferByType() async {
-        @Shared(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.userTier) var userTier: Int? = .paidTier
         let store = makeStore()
 
         await store.send(.buttonTapped(.secureCoreDisplay)) {
@@ -67,7 +67,7 @@ struct CountriesQuickSettingsFeatureTests {
 
     @Test("tapping active quick setting closes detail and clears selection")
     func tappingActiveSettingClosesDetail() async {
-        @Shared(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.userTier) var userTier: Int? = .paidTier
         let store = makeStore()
 
         await store.send(.buttonTapped(.secureCoreDisplay)) {
@@ -89,7 +89,7 @@ struct CountriesQuickSettingsFeatureTests {
 
     @Test("upgrade delegate calls environment callback with selected type")
     func upgradeDelegatePresentsUpsell() async {
-        @Shared(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.userTier) var userTier: Int? = .paidTier
         let store = makeStore()
 
         await store.send(.buttonTapped(.portForwardingDisplay)) {
@@ -111,7 +111,7 @@ struct CountriesQuickSettingsFeatureTests {
 
     @Test("dismiss details does not clear upsell destination")
     func dismissDetailsDoesNotClearUpsellDestination() async {
-        @Shared(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.userTier) var userTier: Int? = .paidTier
         let store = makeStore()
 
         await store.send(.buttonTapped(.portForwardingDisplay)) {
@@ -135,7 +135,7 @@ struct CountriesQuickSettingsFeatureTests {
 
     @Test("option delegate forwards selected type and option")
     func optionDelegateForwardsSelection() async {
-        @Shared(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.userTier) var userTier: Int? = .paidTier
         let store = makeStore()
 
         await store.send(.buttonTapped(.netShieldDisplay)) {
@@ -166,7 +166,7 @@ struct CountriesQuickSettingsFeatureTests {
 
     @Test("free tier marks paid quick setting options")
     func freeTierRequiresUpgradeForPaidOptions() async {
-        @Shared(.userTier) var userTier: Int? = .freeTier
+        @SharedReader(.userTier) var userTier: Int? = .freeTier
         let store = makeStore()
 
         await store.send(.buttonTapped(.secureCoreDisplay)) {
@@ -195,7 +195,7 @@ struct CountriesQuickSettingsFeatureTests {
 
     @Test("free user secure core option shows secure core upsell")
     func freeUserSecureCoreOptionShowsUpsell() async {
-        @Shared(.userTier) var userTier: Int? = .freeTier
+        @SharedReader(.userTier) var userTier: Int? = .freeTier
         let store = makeStore()
 
         await store.send(.buttonTapped(.secureCoreDisplay)) {
@@ -214,8 +214,8 @@ struct CountriesQuickSettingsFeatureTests {
 
     @Test("paid user secure core option shows discourage secure core view when enabled")
     func paidUserSecureCoreOptionShowsDiscourageView() async {
-        @Shared(.discourageSecureCore) var discourageSecureCore = true
-        @Shared(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.discourageSecureCore) var discourageSecureCore = true
+        @SharedReader(.userTier) var userTier: Int? = .paidTier
         let store = makeStore()
 
         await store.send(.buttonTapped(.secureCoreDisplay)) {
@@ -237,9 +237,9 @@ struct CountriesQuickSettingsFeatureTests {
 
     @Test("discourage secure core activate performs selection and dismisses")
     func discourageSecureCoreActivatePerformsSelectionAndDismisses() async {
-        @Shared(.discourageSecureCore) var discourageSecureCore = true
+        @SharedReader(.discourageSecureCore) var discourageSecureCore = true
         @Shared(.secureCoreToggle) var secureCoreToggle = false
-        @Shared(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.userTier) var userTier: Int? = .paidTier
 
         let store = makeStore()
 
@@ -261,7 +261,7 @@ struct CountriesQuickSettingsFeatureTests {
 
         await store.send(.destination(.presented(.discourageSecureCoreView(.delegate(.activateTapped))))) {
             $0.destination = nil
-            $0.secureCore.$isEnabled.withLock { $0 = true }
+            $secureCoreToggle.withLock { $0 = true }
         }
         await store.receive(\.dismissDetails)
         #expect(secureCoreToggle == true)
@@ -269,7 +269,7 @@ struct CountriesQuickSettingsFeatureTests {
 
     @Test("free user netshield paid option shows netshield upsell")
     func freeUserNetShieldPaidOptionShowsUpsell() async {
-        @Shared(.userTier) var userTier: Int? = .freeTier
+        @SharedReader(.userTier) var userTier: Int? = .freeTier
         let store = makeStore()
 
         await store.send(.buttonTapped(.netShieldDisplay)) {
@@ -291,7 +291,7 @@ struct CountriesQuickSettingsFeatureTests {
 
     @Test("free user port forwarding option shows port forwarding upsell")
     func freeUserPortForwardingOptionShowsUpsell() async {
-        @Shared(.userTier) var userTier: Int? = .freeTier
+        @SharedReader(.userTier) var userTier: Int? = .freeTier
         let store = makeStore()
 
         await store.send(.buttonTapped(.portForwardingDisplay)) {
@@ -313,7 +313,7 @@ struct CountriesQuickSettingsFeatureTests {
 
     @Test("paid tier does not require upgrade for paid options")
     func paidTierDoesNotRequireUpgradeForPaidOptions() async {
-        @Shared(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.userTier) var userTier: Int? = .paidTier
         let store = makeStore()
 
         await store.send(.buttonTapped(.secureCoreDisplay)) {
@@ -336,7 +336,7 @@ struct CountriesQuickSettingsFeatureTests {
 
     @Test("netshield detail stays in sync with external netshield updates")
     func netShieldDetailSyncsOnExternalUpdates() async {
-        @Shared(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.userTier) var userTier: Int? = .paidTier
         let store = TestStore(initialState: QuickSettingsFeature.State(
             netShield: .init(
                 isSelected: false,
@@ -373,7 +373,7 @@ struct CountriesQuickSettingsFeatureTests {
 
     @Test("kill switch on presents conflict alert")
     func killSwitchOnPresentsConflictAlert() async {
-        @Shared(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.userTier) var userTier: Int? = .paidTier
 
         let store = makeStore()
 
@@ -391,7 +391,7 @@ struct CountriesQuickSettingsFeatureTests {
 
     @Test("netshield option presents hermes conflict alert")
     func netShieldOptionPresentsHermesConflictAlert() async {
-        @Shared(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.userTier) var userTier: Int? = .paidTier
 
         let store = TestStore(initialState: QuickSettingsFeature.State()) {
             QuickSettingsFeature()

@@ -78,7 +78,7 @@ public struct MigrationManagerImplementation: MigrationManager {
     /// Adding steps is done through the ``checking(version:with:)`` function, which returns a modified instance
     /// containing the new migration step. Once all steps are added, you can call ``migrate()`` on the final result.
     public init(finalVersion: Version? = nil) {
-        @Shared(.lastAppVersion) var lastAppVersion
+        @SharedReader(.lastAppVersion) var lastAppVersion
 
         // The current version of the app
         var finalVersion = finalVersion ?? Bundle.main.buildVersion

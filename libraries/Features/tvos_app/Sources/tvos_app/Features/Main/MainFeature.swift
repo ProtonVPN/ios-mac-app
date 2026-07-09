@@ -39,8 +39,8 @@ struct MainFeature {
         var homeLoading = HomeLoadingFeature.State.loading
         var settings = SettingsFeature.State()
 
-        @Shared(.connectionState) var connectionState: ConnectionState = .resolving
-        @Shared(.userLocation) var userLocation: UserLocation?
+        @SharedReader(.connectionState) var connectionState: ConnectionState = .resolving
+        @SharedReader(.userLocation) var userLocation: UserLocation?
         @Shared(.mainBackground) var mainBackground: MainBackground = .clear
     }
 

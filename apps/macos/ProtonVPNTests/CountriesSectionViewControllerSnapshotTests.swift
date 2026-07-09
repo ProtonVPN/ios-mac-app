@@ -38,8 +38,8 @@ struct CountriesSectionViewControllerSnapshotTests {
 
     @Test("Countries screen", arguments: ["light", "dark"])
     func countriesScreen(appearance: String) {
-        @Shared(.secureCoreToggle) var secureCoreToggle = false
-        @Shared(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.secureCoreToggle) var secureCoreToggle = false
+        @SharedReader(.userTier) var userTier: Int? = .paidTier
         let appearanceName: NSAppearance.Name = appearance == "dark" ? .darkAqua : .aqua
         withMockedDeps {
             let (viewController, window) = makeViewController(appearance: appearanceName)
@@ -55,8 +55,8 @@ struct CountriesSectionViewControllerSnapshotTests {
 
     @Test("Countries screen free tier", arguments: ["light", "dark"])
     func countriesScreenFreeTier(appearance: String) {
-        @Shared(.secureCoreToggle) var secureCoreToggle = false
-        @Shared(.userTier) var userTier: Int? = .freeTier
+        @SharedReader(.secureCoreToggle) var secureCoreToggle = false
+        @SharedReader(.userTier) var userTier: Int? = .freeTier
         let appearanceName: NSAppearance.Name = appearance == "dark" ? .darkAqua : .aqua
         withMockedDeps {
             let (viewController, window) = makeViewController(appearance: appearanceName)

@@ -38,7 +38,7 @@ struct WelcomeFeature {
     @ObservableState
     struct State: Equatable {
         @Presents var destination: Destination.State?
-        @Shared(.userTier) var userTier: Int?
+        @SharedReader(.userTier) var userTier: Int?
     }
 
     enum Action {

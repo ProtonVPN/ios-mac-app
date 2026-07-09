@@ -37,7 +37,7 @@ public enum QuickConnectIntent {
     /// Resolves the `(spec, protocol)` that the new layer should connect with.
     public static func resolve() -> (spec: ConnectionSpec, connectionProtocol: ConnectionProtocol?) {
         @Dependency(\.profileAuthorizer) var profileAuthorizer
-        @Shared(.connectionProtocol) var connectionProtocol
+        @SharedReader(.connectionProtocol) var connectionProtocol
         @SharedReader(.userTier) var userTier
         @SharedReader(.secureCoreToggle) var secureCoreToggle
         @Dependency(\.profileManager) var profileManager

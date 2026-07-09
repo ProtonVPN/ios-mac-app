@@ -48,16 +48,15 @@ extension NotificationManager: @retroactive DependencyKey {
 
 private final class NotificationManagerImplementation: NSObject {
     private let delayBeforeDismissing: Duration = .seconds(5)
-    @Shared(.sessionStatus) private var sessionStatus: SessionStatus
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
 
     private var cancellables = Set<AnyCancellable>()
 
     private var shouldShowNotification: Bool {
-        @Dependency(\.defaultsProvider) var provider
+        @SharedReader(.systemNotifications) var systemNotifications
 
-        return sessionStatus == .established
-            && provider.getDefaults().bool(forKey: AppConstants.UserDefaults.systemNotifications)
+        return sessionStatus == .established && systemNotifications
     }
 
     override init() {

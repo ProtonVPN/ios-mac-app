@@ -39,7 +39,7 @@ final class SparkleUpdateManager: NSObject {
     @Dependency(\.appInfo) private var appInfo
 
     /// Beta-channel opt-in. Toggled from Settings
-    @Shared(.earlyAccess) private var earlyAccess
+    @SharedReader(.earlyAccess) private var earlyAccess
     #if DEBUG
         /// When set, suppresses update prompts (used in UI tests)
         @SharedReader(.blockUpdatePrompt) private var blockUpdatePrompt

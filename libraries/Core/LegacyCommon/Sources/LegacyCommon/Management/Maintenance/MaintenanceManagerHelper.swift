@@ -40,7 +40,6 @@ public class MaintenanceManagerHelper {
 
     private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager()
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.notificationManager) private var notificationManager
 
     /// Throttles the "server going on maintenance" notification so repeated maintenance checks
@@ -48,7 +47,7 @@ public class MaintenanceManagerHelper {
     private static let maintenanceNotificationThreshold: TimeInterval = 60 * 60 * 12
     private var lastMaintenanceNotification = Date(timeIntervalSince1970: 0)
 
-    @Shared(.featureFlags) private var featureFlags: FeatureFlags
+    @SharedReader(.featureFlags) private var featureFlags: FeatureFlags
     private var featureFlagsObservation: AnyCancellable?
 
     public init() {
@@ -68,7 +67,8 @@ public class MaintenanceManagerHelper {
             return // Feature is disabled
         }
 
-        let time = TimeInterval(propertiesManager.maintenanceServerRefreshIntereval * 60)
+        @SharedReader(.maintenanceServerRefreshIntereval) var maintenanceServerRefreshIntereval
+        let time = TimeInterval(maintenanceServerRefreshIntereval * 60)
         let jitter = (TimeInterval(Self.randomJitterPercentage) / 100) * time
         maintenanceManager.observeCurrentServerState(every: time + jitter, repeats: true, completion: { [weak self] isMaintenance in
             guard isMaintenance else {

@@ -26,6 +26,7 @@ import Domain
 import LegacyCommon
 import PMLogger
 import Settings
+import Sharing
 import SwiftUI
 import VPNShared
 
@@ -140,8 +141,7 @@ class HelpMenuViewModel {
 
         // app data
         if let bundleIdentifier = Bundle.main.bundleIdentifier {
-            @Dependency(\.defaultsProvider) var provider
-            let defaults = provider.getDefaults()
+            @Dependency(\.defaultAppStorage) var defaults
             if let domain = defaults.persistentDomain(forName: bundleIdentifier) {
                 for key in domain.keys {
                     defaults.removeObject(forKey: key)

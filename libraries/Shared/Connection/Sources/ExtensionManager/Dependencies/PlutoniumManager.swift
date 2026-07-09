@@ -39,7 +39,7 @@
 
         @PlutoniumActor
         private final class ManagerCoordinator {
-            @Shared(.plutoniumFeature) private var feature: PlutoniumFeatureToggle
+            @SharedReader(.plutoniumFeature) private var feature: PlutoniumFeatureToggle
             @Dependency(\.hermesClient) private var hermesClient
 
             private var rawProviderConfig: [String: Any] {
@@ -213,9 +213,9 @@
         }
 
         private static func updateAppliedConfiguration() {
-            @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
-            @Shared(.inclusionActivated) var inclusionActivated: PlutoniumActivated
-            @Shared(.exclusionActivated) var exclusionActivated: PlutoniumActivated
+            @SharedReader(.plutoniumFeature) var feature: PlutoniumFeatureToggle
+            @SharedReader(.inclusionActivated) var inclusionActivated: PlutoniumActivated
+            @SharedReader(.exclusionActivated) var exclusionActivated: PlutoniumActivated
 
             @Shared(.plutoniumFeatureApplied) var featureApplied: PlutoniumFeatureToggle
             @Shared(.inclusionActivatedApplied) var inclusionActivatedApplied: PlutoniumActivated

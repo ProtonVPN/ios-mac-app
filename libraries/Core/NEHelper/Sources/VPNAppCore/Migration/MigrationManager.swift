@@ -21,6 +21,7 @@ import Domain
 import Ergonomics
 import Foundation
 import ProtonCoreFeatureFlags
+import Sharing
 
 /// Iterates over UserDefaults entries with keys starting with `keyPrefix` and runs `migration` on them.
 /// On failure, the error is logged and the offending entry is removed.
@@ -56,8 +57,7 @@ extension MigrationManagerImplementation: @retroactive DependencyKey {
         }
         // Migrate from when the server list was stored in UserDefaults.
         .checking(.platform(iOS: "4.1.18", macOS: "3.0.15")) { _ in
-            @Dependency(\.defaultsProvider) var provider
-            let defaults = provider.getDefaults()
+            @Dependency(\.defaultAppStorage) var defaults
             let key = "servers"
             if defaults.data(forKey: key) != nil {
                 log.debug("Removing value for key \(key)", category: .persistence)

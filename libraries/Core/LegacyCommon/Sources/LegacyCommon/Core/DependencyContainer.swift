@@ -18,8 +18,10 @@
 
 import CommonNetworking
 import Dependencies
+import Domain
 import Foundation
 import ProtonCorePushNotifications
+import Sharing
 import Telemetry
 import VPNShared
 
@@ -43,16 +45,17 @@ open class Container {
             // TelemetryService listens to notifications and sends telemetry events based on that.
             @Dependency(\.telemetryService) var telemetryService
             @Dependency(\.vpnKeychain) var vpnKeychain
-            @Dependency(\.propertiesManager) var propertiesManager
+            @Shared(.firstLaunchReported) var firstLaunchReported
+            @Shared(.isSubsequentLaunch) var isSubsequentLaunch
 
-            if !propertiesManager.firstLaunchReported {
+            if !firstLaunchReported {
                 // The app launched for the first time since the last install.
                 // Since the telemetry is on by default, there is no way of disabling this event.
                 // If we remove the app, we'll still be logged in, but the telemetry settings will be reset to it's default, "On" state.
                 try? await telemetryService.onboardingEvent(.firstLaunch)
-                propertiesManager.firstLaunchReported = true
+                $firstLaunchReported.withLock { $0 = true }
             } else if vpnKeychain.userIsLoggedIn { // we flip this bool only on the second launch and only when the user is logged in
-                propertiesManager.isSubsequentLaunch = true
+                $isSubsequentLaunch.withLock { $0 = true }
             }
 
             // Start settingsHeartbeat scheduled telemetry report

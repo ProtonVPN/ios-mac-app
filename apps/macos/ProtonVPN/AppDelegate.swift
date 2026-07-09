@@ -65,7 +65,6 @@ import VPNShared
     class AppDelegate: NSObject {
         let container = DependencyContainer()
         lazy var navigationService = container.makeNavigationService()
-        @Dependency(\.propertiesManager) private var propertiesManager
         @Dependency(\.authKeychain) private var authKeychain
         @Dependency(\.vpnKeychain) private var vpnKeychain
         @Dependency(\.networking) private var networking
@@ -80,17 +79,16 @@ import VPNShared
         private var tokens: [NotificationToken] = []
         private var cancellables = Set<AnyCancellable>()
 
-        @Dependency(\.defaultsProvider) private var provider
+        @Dependency(\.defaultAppStorage) private var defaults
         private(set) static var wasRecentlyActive = false
         private var appHasCompletedInitialSetup: Bool = false
     }
 #else
     class AppDelegate: NSObject {
-        @Dependency(\.defaultsProvider) var provider
+        @Dependency(\.defaultAppStorage) var defaults
         private(set) static var wasRecentlyActive = false
         let container = DependencyContainer()
         lazy var navigationService = container.makeNavigationService()
-        @Dependency(\.propertiesManager) private var propertiesManager
         @Dependency(\.appInfo) private var appInfo
         @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
         private var appInactivityTask: Task<Void, Error>?
@@ -110,7 +108,8 @@ extension AppDelegate: NSApplicationDelegate {
             Atlantis.start()
         #endif
 
-        for (featureFlagOverride, value) in propertiesManager.featureFlagOverrides ?? [:] {
+        @SharedReader(.featureFlagOverrides) var featureFlagOverrides
+        for (featureFlagOverride, value) in featureFlagOverrides ?? [:] {
             guard let feature = ManuallySpecifiedFeatureFlag(rawValue: featureFlagOverride) else { continue }
             FeatureFlagsRepository.shared.setFlagOverride(feature, value)
         }
@@ -246,7 +245,7 @@ extension AppDelegate: NSApplicationDelegate {
 
     func applicationShouldTerminate(_: NSApplication) -> NSApplication.TerminateReply {
         log.info("applicationShouldTerminate", category: .os)
-        provider.getDefaults().set(500, forKey: "NSInitialToolTipDelay")
+        defaults.set(500, forKey: "NSInitialToolTipDelay")
         return navigationService.handleApplicationShouldTerminate()
     }
 
@@ -259,7 +258,8 @@ extension AppDelegate: NSApplicationDelegate {
         }
 
         // For new installations, we also ask for plutonium extension installation.
-        let includedExtensionTypes: [SystemExtensionType] = propertiesManager.isSubsequentLaunch ? [.proTUN] : [.proTUN, .plutonium]
+        @SharedReader(.isSubsequentLaunch) var isSubsequentLaunch
+        let includedExtensionTypes: [SystemExtensionType] = isSubsequentLaunch ? [.proTUN] : [.proTUN, .plutonium]
 
         Task { [weak self] in
             guard let self else { return }

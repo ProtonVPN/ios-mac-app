@@ -20,6 +20,7 @@ import Dependencies
 import Domain
 import Ergonomics
 import Foundation
+import Sharing
 
 extension MigrationManager {
     /// Profiles created before the deprecation of OpenVPN can specify it as a custom connection protocol.
@@ -27,10 +28,10 @@ extension MigrationManager {
     /// such protocols to defult to Smart protocol instead.
     func checkingProfiles() -> Self {
         checking(.platform(iOS: "7.2.2", macOS: "6.4.1", tvOS: nil)) { _ in
-            @Dependency(\.defaultsProvider) var provider
+            @Dependency(\.defaultAppStorage) var defaults
             migrateUserSpecificEntries(
                 withKeyPrefix: "profiles_",
-                in: provider.getDefaults()
+                in: defaults
             ) { key, defaults in
                 let affectedProfileCount = try migrateProfiles(storageKey: key, defaults: defaults)
                 log.info(

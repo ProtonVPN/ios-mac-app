@@ -22,6 +22,7 @@ import Domain
 import Foundation
 import os
 import ProtonCorePaymentsV2
+import Sharing
 import StoreKit
 import Strings
 import VPNAppCore
@@ -60,9 +61,9 @@ extension PaymentsClient: DependencyKey {
         },
         retrievePlans: {
             @Dependency(\.paymentsPlanServiceV2) var planService
-            @Dependency(\.settingsStorage) var settingsStorage
+            @SharedReader(.localValuesOverrides) var localValuesOverrides
 
-            let appStoreCountryCodeOverride = settingsStorage.getEnvironment().localValuesOverrides["AppStoreCC"]?.lowercased()
+            let appStoreCountryCodeOverride = localValuesOverrides?["AppStoreCC"]?.lowercased()
             let userAppStoreCountryCode: String? = if let appStoreCountryCodeOverride {
                 appStoreCountryCodeOverride
             } else {

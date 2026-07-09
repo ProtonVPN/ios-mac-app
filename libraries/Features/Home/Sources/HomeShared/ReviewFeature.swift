@@ -43,8 +43,8 @@ public struct ReviewFeature {
             return format
         }()
 
-        @Shared(.userPlan) var userPlan
-        @Shared(.ratingSettings) var ratingSettings
+        @SharedReader(.userPlan) var userPlan
+        @SharedReader(.ratingSettings) var ratingSettings
         @Shared(.whenLastReviewShown) var reviewTimestamp
         @Shared(.whenFirstSuccessfulConnectionStarted) var successfulTimestamp
         @Shared(.whenActiveConnectionStarted) var activeConnectionStartTimestamp
@@ -143,7 +143,7 @@ public struct ReviewFeature {
     }
 
     private let longLivingUserPlanEffect: Effect<Action> = .publisher {
-        @Shared(.userPlan) var userPlan
+        @SharedReader(.userPlan) var userPlan
         return $userPlan.publisher
             .filter { $0 == nil }
             .map { _ in Action.clear }

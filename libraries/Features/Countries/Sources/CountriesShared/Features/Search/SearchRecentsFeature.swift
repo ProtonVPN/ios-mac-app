@@ -52,8 +52,6 @@ public struct SearchRecentsFeature {
         }
     }
 
-    @Dependency(\.searchStorageNew) private var searchStorage
-
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -61,8 +59,8 @@ public struct SearchRecentsFeature {
                 return .send(.load)
 
             case .load:
-                let recent = searchStorage.get()
-                state.recentSearches = recent
+                @SharedReader(.recentSearches) var storedSearches
+                state.recentSearches = storedSearches ?? []
                 return .none
 
             case .clear:
@@ -72,7 +70,8 @@ public struct SearchRecentsFeature {
             case .alert(.presented(.confirmClear)):
                 state.alert = nil
                 state.recentSearches = []
-                searchStorage.clear()
+                @Shared(.recentSearches) var storedSearches
+                $storedSearches.withLock { $0 = nil }
                 return .send(.recentsCleared)
 
             case .recentsCleared:

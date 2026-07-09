@@ -52,7 +52,7 @@ extension NATTypePropertyProvider: DependencyKey {
 
         let canUse: () -> Bool = {
             @SharedReader(.userTier) var userTier: Int?
-            @Shared(.featureFlags) var featureFlags: FeatureFlags
+            @SharedReader(.featureFlags) var featureFlags: FeatureFlags
             return NATFeature.canUse(userTier: userTier ?? .freeTier, featureFlags: featureFlags).isAllowed
         }
 

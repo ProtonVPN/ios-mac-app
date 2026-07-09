@@ -41,9 +41,3 @@ extension SharedKey where Self == AppStorageKey<TimeInterval> {
         .appStorage("lastLogicalsRefresh")
     }
 }
-
-extension SharedKey where Self == InMemoryKey<UserLocation?> {
-    static var userLocation: Self {
-        .inMemory("userLocation")
-    }
-}

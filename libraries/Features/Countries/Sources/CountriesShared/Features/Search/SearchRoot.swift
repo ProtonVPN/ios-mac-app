@@ -46,8 +46,6 @@ public struct SearchRoot {
         }
     }
 
-    @Dependency(\.searchStorageNew) private var searchStorage
-
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -56,7 +54,7 @@ public struct SearchRoot {
 
             case .performComputation:
                 guard let sections = state.sections else { return .none }
-                return .run { [sections, searchStorage] send in
+                return .run { [sections] send in
                     // Run expensive preprocessing work off the reducer path
                     let countryStates = try sections.flatMap { section -> [CountryFeature.State] in
                         try Task.checkCancellation()
@@ -77,7 +75,8 @@ public struct SearchRoot {
                     let (cities, states, freeServers, plusServers) = try Self.computeSearchableData(from: countryStates)
                     try Task.checkCancellation()
 
-                    let recentSearches = searchStorage.get()
+                    @SharedReader(.recentSearches) var storedSearches
+                    let recentSearches = storedSearches ?? []
                     let searchResultsViewState = if recentSearches.isEmpty {
                         SearchResultsFeature.State.placeholder
                     } else {
@@ -128,7 +127,6 @@ public struct SearchRoot {
         from countries: [CountryFeature.State]
     ) throws -> (cities: [SearchCityIndex], states: [SearchCityIndex], freeServers: [SearchServerIndex], plusServers: [SearchServerIndex]) {
         @Dependency(\.serverRepository) var serverRepository
-        @Dependency(\.propertiesManager) var propertiesManager
         @SharedReader(.secureCoreToggle) var isSecureCore: Bool
         @SharedReader(.userTier) var userTier: Int?
 

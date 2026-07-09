@@ -49,7 +49,3 @@ extension VPNNetworkingKey: @retroactive DependencyKey {
         return CoreNetworkingWrapper(wrapped: networking)
     }()
 }
-
-extension DefaultsProvider: @retroactive DependencyKey {
-    public static let liveValue: DefaultsProvider = .init(getDefaults: { .domainUserDefaults })
-}

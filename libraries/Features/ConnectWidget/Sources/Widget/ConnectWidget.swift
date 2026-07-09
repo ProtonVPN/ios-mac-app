@@ -16,6 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
+import Dependencies
+import Domain
 import Strings
 import SwiftUI
 import WidgetKit
@@ -30,7 +33,13 @@ struct ConnectWidgetBundle: WidgetBundle {
 public struct ConnectWidget: Widget {
     static let kind: String = "ConnectWidget"
 
-    public init() {}
+    public init() {
+        prepareDependencies {
+            // Align swift-sharing's default store with the app-group suite so `@Shared`
+            // keys read the same UserDefaults values as the containing app.
+            $0.defaultAppStorage = .domainUserDefaults
+        }
+    }
 
     public var body: some WidgetConfiguration {
         StaticConfiguration(kind: Self.kind, provider: Provider()) { entry in

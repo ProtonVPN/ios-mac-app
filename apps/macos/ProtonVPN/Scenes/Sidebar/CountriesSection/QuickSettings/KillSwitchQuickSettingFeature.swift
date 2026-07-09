@@ -25,7 +25,7 @@ struct KillSwitchQuickSettingFeature {
     @ObservableState
     struct State: Equatable {
         var isSelected: Bool
-        @Shared(.killSwitch) var isEnabled: Bool
+        @SharedReader(.killSwitch) var isEnabled: Bool
 
         var icon: Image {
             isEnabled ? Theme.Asset.Icons.switchOn.swiftUIImage : Theme.Asset.Icons.switchOff.swiftUIImage

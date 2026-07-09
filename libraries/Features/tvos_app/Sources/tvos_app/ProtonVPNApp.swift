@@ -24,6 +24,7 @@ import Logging
 import PMLogger
 import ProtonCoreFeatureFlags
 import ProtonCoreLog
+import Sharing
 import SwiftUI
 import VPNAppCore
 import VPNShared
@@ -35,6 +36,11 @@ import VPNShared
 @main
 struct ProtonVPNApp: App {
     init() {
+        prepareDependencies {
+            // Align swift-sharing's default store with the app-group suite so migrated
+            // `@Shared` keys read the same UserDefaults values.
+            $0.defaultAppStorage = .domainUserDefaults
+        }
         setupLogsForApp()
         setupCoreLogging()
         #if DEBUG

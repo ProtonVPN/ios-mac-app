@@ -25,6 +25,7 @@ import DependenciesMacros
 import Domain
 import Foundation
 import Sharing
+import VPNAppCore
 import VPNShared
 
 public enum ProfileManagerOperationOutcome {
@@ -59,11 +60,10 @@ public struct ProfileManager {
 public final class ProfileManagerImplementation {
     public var customProfiles: [Profile] = []
     public var defaultProfiles: [Profile] {
-        @Shared(.connectionProtocol) var connectionProtocol
+        @SharedReader(.connectionProtocol) var connectionProtocol
         return ProfileConstants.defaultProfiles(connectionProtocol: connectionProtocol)
     }
 
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.profileStorage) private var profileStorage
 
     public var allProfiles: [Profile] {
@@ -84,10 +84,12 @@ public final class ProfileManagerImplementation {
     }
 
     public var autoConnectProfile: Profile? {
-        guard let username else {
+        guard username != nil else {
             return nil
         }
-        let (enabled, profileID) = propertiesManager.getAutoConnect(for: username)
+        @SharedReader(.autoConnect) var autoConnect
+        @SharedReader(.autoConnectProfileId) var autoConnectProfileId
+        let (enabled, profileID) = (autoConnect, autoConnectProfileId)
         guard enabled, let profileID else {
             return nil
         }
@@ -95,10 +97,11 @@ public final class ProfileManagerImplementation {
     }
 
     public var quickConnectProfile: Profile? {
-        guard let username else {
+        guard username != nil else {
             return nil
         }
-        guard let profileID = propertiesManager.getQuickConnect(for: username) else {
+        @SharedReader(.quickConnect) var quickConnect
+        guard let profileID = quickConnect else {
             return nil
         }
         return profile(withId: profileID)

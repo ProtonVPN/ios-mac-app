@@ -71,7 +71,7 @@ public struct AnnouncementDetailView: View {
     // MARK: - Sections
 
     /// Renders the incentive copy, substituting the `%IncentivePrice%` token with the price line
-    /// (emphasised copy around a larger price line), matching the legacy attributed-string layout
+    /// (emphasised copy around a larger price line)
     private var incentive: some View {
         let parts = panel.incentive.components(separatedBy: "%IncentivePrice%")
         return Group {

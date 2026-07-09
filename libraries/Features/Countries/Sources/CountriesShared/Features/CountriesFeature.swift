@@ -59,7 +59,7 @@ public struct CountriesFeature {
         @Presents public var destination: Destination.State?
         @Presents public var alert: AlertState<Action.Alert>?
 
-        @Shared(.secureCoreToggle) public var isSecureCore: Bool
+        @SharedReader(.secureCoreToggle) public var isSecureCore: Bool
         @SharedReader(.userTier) var userTier: Int?
         @SharedReader(.connectionState) var connectionState: ConnectionState
 

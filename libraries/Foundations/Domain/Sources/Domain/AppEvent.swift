@@ -29,8 +29,6 @@ import IssueReporting
 public enum AppEvent: String {
     // MARK: User settings
 
-    /// The user's IP (outside of the VPN) has changed.
-    case userIp
     /// The visible content in the profile settings has changed.
     case profileContentChanged
 

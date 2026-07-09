@@ -50,9 +50,9 @@ class MapSectionViewModel {
     private let scEntryCountrySelected = Notification.Name("MapSectionViewModelScEntryCountrySelected")
     private let scExitCountrySelected = Notification.Name("MapSectionViewModelScExitCountrySelected")
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
-    @Shared(.connectionState) private var connectionState: ConnectionState
-    @Shared(.connectionProtocol) private var connectionProtocol: ConnectionProtocol
+    @SharedReader(.secureCoreToggle) private var secureCoreToggle: Bool
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.connectionProtocol) private var connectionProtocol: ConnectionProtocol
     private var cancellables = Set<AnyCancellable>()
 
     var contentChanged: ((AnnotationChange) -> Void)?

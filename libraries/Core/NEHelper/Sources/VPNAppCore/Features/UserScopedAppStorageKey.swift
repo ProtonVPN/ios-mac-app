@@ -35,8 +35,17 @@ import VPNShared
 /// The key's identity is *feature-scoped* (the `baseKey`, not the resolved per-user key), matching
 /// the previous `FeatureSharedKey`. The per-user value is resolved on each access, so a change of
 /// logged-in user is reflected on the next load.
+/// Which authenticated-user identifier a ``UserScopedAppStorageKey``'s on-disk key is scoped to.
+public enum UserScope: Sendable {
+    /// `baseKey + authKeychain.username` — the default
+    case username
+    /// `baseKey + authKeychain.userId`
+    case userId
+}
+
 public final class UserScopedAppStorageKey<Value: Sendable>: SharedKey {
     private let baseKey: String
+    private let scope: UserScope
     private let valueWhenNoUser: Value
     private let decode: @Sendable (UserDefaults, String) -> Value
     private let encode: @Sendable (Value, UserDefaults, String) -> Void
@@ -47,11 +56,13 @@ public final class UserScopedAppStorageKey<Value: Sendable>: SharedKey {
 
     init(
         baseKey: String,
+        scope: UserScope = .username,
         valueWhenNoUser: Value,
         decode: @escaping @Sendable (UserDefaults, String) -> Value,
         encode: @escaping @Sendable (Value, UserDefaults, String) -> Void
     ) {
         self.baseKey = baseKey
+        self.scope = scope
         self.valueWhenNoUser = valueWhenNoUser
         self.decode = decode
         self.encode = encode
@@ -59,8 +70,14 @@ public final class UserScopedAppStorageKey<Value: Sendable>: SharedKey {
 
     private func resolvedKey() -> String? {
         @Dependency(\.authKeychain) var authKeychain
-        guard let username = authKeychain.username else { return nil }
-        return baseKey + username
+        let identifier: String? = switch scope {
+        case .username:
+            authKeychain.username
+        case .userId:
+            authKeychain.userId
+        }
+        guard let identifier else { return nil }
+        return baseKey + identifier
     }
 
     public func load(context _: LoadContext<Value>, continuation: LoadContinuation<Value>) {
@@ -176,14 +193,15 @@ public final class UserScopedAppStorageKey<Value: Sendable>: SharedKey {
 // MARK: - Encodings
 
 public extension UserScopedAppStorageKey {
-    /// A per-user key for an optional `Codable` value, stored as JSON `Data` (matching the legacy
-    /// `Storage.setForUser` representation). Absence of a stored value (or no logged-in user) reads
-    /// as `nil`.
+    /// A per-user key for an optional `Codable` value, stored as JSON `Data`
+    /// Absence of a stored value (or no logged-in user) reads as `nil`.
     static func json<Wrapped: Codable & Sendable>(
-        _ baseKey: String
+        _ baseKey: String,
+        scope: UserScope = .username
     ) -> UserScopedAppStorageKey<Wrapped?> {
         UserScopedAppStorageKey<Wrapped?>(
             baseKey: baseKey,
+            scope: scope,
             valueWhenNoUser: nil,
             decode: { store, key in
                 guard let data = store.data(forKey: key) else { return nil }
@@ -200,7 +218,6 @@ public extension UserScopedAppStorageKey {
     }
 
     /// A per-user key for an optional `RawRepresentable<Int>` value, stored as a native `Int`
-    /// (matching the legacy `UserDefaults.setUserValue(rawValue)` representation).
     static func rawInt<Wrapped: RawRepresentable & Sendable>(
         _ baseKey: String
     ) -> UserScopedAppStorageKey<Wrapped?> where Wrapped.RawValue == Int {
@@ -221,8 +238,7 @@ public extension UserScopedAppStorageKey {
         )
     }
 
-    /// A per-user key for an optional `Bool`, stored as a native `Bool` (matching the legacy
-    /// `UserDefaults.setUserValue(bool)` representation).
+    /// A per-user key for an optional `Bool`, stored as a native `Bool
     static func bool(
         _ baseKey: String
     ) -> UserScopedAppStorageKey<Bool?> {
@@ -232,6 +248,47 @@ public extension UserScopedAppStorageKey {
             decode: { store, key in
                 guard store.object(forKey: key) != nil else { return nil }
                 return store.bool(forKey: key)
+            },
+            encode: { value, store, key in
+                if let value {
+                    store.set(value, forKey: key)
+                } else {
+                    store.removeObject(forKey: key)
+                }
+            }
+        )
+    }
+
+    /// A per-user key for an optional `String`, stored as a native `String`
+    /// Absence of a stored value (or no logged-in user) reads as `nil`.
+    static func string(
+        _ baseKey: String
+    ) -> UserScopedAppStorageKey<String?> {
+        UserScopedAppStorageKey<String?>(
+            baseKey: baseKey,
+            valueWhenNoUser: nil,
+            decode: { store, key in
+                store.string(forKey: key)
+            },
+            encode: { value, store, key in
+                if let value {
+                    store.set(value, forKey: key)
+                } else {
+                    store.removeObject(forKey: key)
+                }
+            }
+        )
+    }
+
+    /// A per-user key for an optional `Date`, stored natively
+    static func date(
+        _ baseKey: String
+    ) -> UserScopedAppStorageKey<Date?> {
+        UserScopedAppStorageKey<Date?>(
+            baseKey: baseKey,
+            valueWhenNoUser: nil,
+            decode: { store, key in
+                store.object(forKey: key) as? Date
             },
             encode: { value, store, key in
                 if let value {

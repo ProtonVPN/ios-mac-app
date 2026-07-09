@@ -54,7 +54,7 @@ extension PortForwardingPropertyProvider: DependencyKey {
 
         let canUse: () -> Bool = {
             @SharedReader(.userTier) var userTier: Int?
-            @Shared(.featureFlags) var featureFlags: FeatureFlags
+            @SharedReader(.featureFlags) var featureFlags: FeatureFlags
             return PortForwardingFeature.canUse(userTier: userTier ?? .freeTier, featureFlags: featureFlags).isAllowed
         }
 

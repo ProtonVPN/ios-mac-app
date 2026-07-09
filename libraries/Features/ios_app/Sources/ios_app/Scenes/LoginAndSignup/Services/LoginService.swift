@@ -78,7 +78,6 @@ final class CoreLoginService {
     private let appSessionRefresher: AppSessionRefresher
     @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.networking) private var networking
-    @Dependency(\.propertiesManager) private var propertiesManager
     @Dependency(\.welcomeFlowPresenter) private var welcomeFlowPresenter
     @Dependency(\.windowService) private var windowService
     private let doh: DoHVPN
@@ -121,9 +120,11 @@ final class CoreLoginService {
             Task { @MainActor [weak self] in
                 do {
                     @Dependency(\.userSettingsClient) var userSettingsClient
-                    let userSettings = try await userSettingsClient.fetchUserSettings(authCredentials: authCredentials)
-                    self?.propertiesManager.userSettings = userSettings
-                    self?.propertiesManager.userInfo?.apply(userSettings)
+                    @Shared(.userSettings) var userSettings
+                    @Shared(.userInfo) var userInfo
+                    let fetchedSettings = try await userSettingsClient.fetchUserSettings(authCredentials: authCredentials)
+                    $userSettings.withLock { $0 = fetchedSettings }
+                    $userInfo.withLock { $0?.apply(fetchedSettings) }
                     try await self?.appSessionManager.finishLogin(authCredentials: authCredentials)
                     completion(.success(()))
                 } catch {
@@ -319,7 +320,7 @@ extension CoreLoginService: LoginService {
                 await appSessionRefresher.refreshData()
             }
 
-            @Shared(.sessionStatus) var sessionStatus
+            @SharedReader(.sessionStatus) var sessionStatus
             return sessionStatus == .established ? .loggedIn : .notLoggedIn(.sessionNotEstablished)
         }
 

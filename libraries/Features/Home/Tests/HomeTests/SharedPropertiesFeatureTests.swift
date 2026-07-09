@@ -27,7 +27,7 @@ import XCTest
 @MainActor
 final class SharedPropertiesFeatureTests: XCTestCase {
     func testFetchesLoadsOnIPChange() async {
-        @Shared(.connectionState) var connectionState = .disconnected
+        @SharedReader(.connectionState) var connectionState = .disconnected
         let loadsFetched = XCTestExpectation(description: "We should hit the API to fetch server loads")
         let loadsUpserted = XCTestExpectation(description: "We should update server loads in the database")
         let loadsNotificationPosted = XCTestExpectation(description: "We should post ServerListUpdateNotification(.loads) so observers refresh")
@@ -62,7 +62,7 @@ final class SharedPropertiesFeatureTests: XCTestCase {
     }
 
     func testFetchesLocationOnDisconnection() async {
-        @Shared(.connectionState) var connectionState = .disconnected
+        @SharedReader(.connectionState) var connectionState = .disconnected
 
         let now = Date.now
         let clock = TestClock()
