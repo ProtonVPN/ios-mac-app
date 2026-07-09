@@ -113,8 +113,8 @@ final class NavigationService {
     @Dependency(\.windowService) private var windowService
     @Dependency(\.vpnApiClient) private var vpnApiClient
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
-    @Shared(.sessionStatus) private var sessionStatus: SessionStatus
-    @Shared(.sessionLogoutReason) private var sessionLogoutReason: String?
+    @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
+    @SharedReader(.sessionLogoutReason) private var sessionLogoutReason: String?
     private var cancellables = Set<AnyCancellable>()
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.coreAlertService) private var alertService
@@ -394,12 +394,12 @@ extension NavigationService: SettingsService {
             log.error("AuthCredentials not found", category: .app)
             return nil
         }
-        @Shared(.userInfo) var userInfo
+        @SharedReader(.userInfo) var userInfo
         guard let userInfo else {
             log.error("UserInfo not found", category: .app)
             return nil
         }
-        @Shared(.userSettings) var userSettings
+        @SharedReader(.userSettings) var userSettings
         guard let userSettings else {
             log.error("UserSettings not found", category: .app)
             return nil

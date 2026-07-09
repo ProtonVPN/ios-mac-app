@@ -49,7 +49,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
 
     /// What to do after switching protocols
     enum ProtocolSwitchAction {

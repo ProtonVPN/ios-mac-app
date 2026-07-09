@@ -67,7 +67,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.activeTunnelInspector) private var activeTunnelInspector
     @Dependency(\.updateManager) private var updateManager
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
     /// session status, single source of truth
     @Shared(.sessionStatus) private var sharedSessionStatus: SessionStatus
     /// Reason for a forced logout to login/welcome screens
@@ -190,7 +190,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             @Shared(.streamingResourcesUrl) var streamingResourcesUrl
             $streamingResourcesUrl.withLock { $0 = streamingResponse.resourceBaseURL }
         }
-        @Shared(.featureFlags) var pollFeatureFlags
+        @SharedReader(.featureFlags) var pollFeatureFlags
         if pollFeatureFlags.pollNotificationAPI {
             Task { @MainActor in
                 self.announcementRefresher.tryRefreshing()
@@ -211,7 +211,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     /// - We hit a keychain error
     private func getVPNProperties() async throws -> VpnProperties? {
         let isDisconnected = isDisconnectedForPropertiesRefresh
-        @Shared(.userLocation) var userLocation
+        @SharedReader(.userLocation) var userLocation
         let location = userLocation
 
         let shouldRefreshServersAccordingToUserTier = !serverManager.shouldFetchFullServerList
@@ -378,7 +378,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         Task { @MainActor [weak self] in
             guard let self else { return }
 
-            @Shared(.uninstallSysexesOnTerminate) var uninstallSysexesOnTerminate
+            @SharedReader(.uninstallSysexesOnTerminate) var uninstallSysexesOnTerminate
             if uninstallSysexesOnTerminate {
                 await systemExtensionsCoordinator.uninstallAll(origin: .termination, userInitiated: false)
             }
@@ -398,7 +398,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             }
 
             // ensure application data hasn't been cleared
-            @Shared(.launchedBefore) var launchedBefore
+            @SharedReader(.launchedBefore) var launchedBefore
             guard launchedBefore else {
                 confirmationClosure()
                 return

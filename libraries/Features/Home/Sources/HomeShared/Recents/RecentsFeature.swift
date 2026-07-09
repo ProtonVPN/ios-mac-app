@@ -50,7 +50,7 @@ public struct RecentsFeature {
         @SharedReader(.userTier) public var userTier: Int?
 
         public init() {
-            @Shared(.recentConnections) var recentConnections
+            @SharedReader(.recentConnections) var recentConnections
             $recents.withLock { $0 = recentConnections ?? [] }
         }
     }

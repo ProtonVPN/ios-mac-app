@@ -52,10 +52,10 @@ final class StatusMenuViewModel {
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.linkOpener) var linkOpener
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
-    @Shared(.connectionState) private var connectionState: ConnectionState
-    @Shared(.sessionStatus) private var sessionStatus: SessionStatus
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
 
-    @Shared(.userLocation) private var userLocation: UserLocation?
+    @SharedReader(.userLocation) private var userLocation: UserLocation?
     private lazy var navService: NavigationService = factory.makeNavigationService()
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.upsellManager) private var upsellManager
@@ -222,7 +222,7 @@ final class StatusMenuViewModel {
 
     func changeServerAction() {
         let spec = ConnectionSpec(location: .any(.random), features: [])
-        @Shared(.connectionProtocol) var connectionProtocol
+        @SharedReader(.connectionProtocol) var connectionProtocol
         connectionCommandClient.send(.connect(spec, connectionProtocol, .changeServer))
     }
 
@@ -634,7 +634,7 @@ final class StatusMenuViewModel {
             return nil
         }
 
-        @Shared(.hasConnected) var hasConnected
+        @SharedReader(.hasConnected) var hasConnected
         let description = hasConnected ? Localizable.enabled.lowercased() : Localizable.disabled.lowercased()
         return Localizable.killSwitch + " " + description
     }

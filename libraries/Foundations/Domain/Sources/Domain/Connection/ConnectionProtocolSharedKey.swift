@@ -47,10 +47,10 @@ public extension SharedKey where Self == ConnectionProtocolSharedKey.Default {
 
 /// All protocols that are supported
 public func currentProtocolSupport() -> ProtocolSupport {
-    @Shared(.connectionProtocol) var connectionProtocol
+    @SharedReader(.connectionProtocol) var connectionProtocol
     switch connectionProtocol {
     case .smartProtocol:
-        @Shared(.smartProtocolConfig) var smartProtocolConfig
+        @SharedReader(.smartProtocolConfig) var smartProtocolConfig
         return ProtocolSupport(vpnProtocols: smartProtocolConfig.supportedProtocols)
     case let .vpnProtocol(vpnProtocol):
         return vpnProtocol.protocolSupport

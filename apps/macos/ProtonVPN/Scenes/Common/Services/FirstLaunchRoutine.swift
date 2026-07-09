@@ -34,8 +34,7 @@ class AppLaunchRoutine {
         @Shared(.launchedBefore) var launchedBefore
         if !launchedBefore {
             Self.launchedBefore = false
-            @Shared(.startOnBoot) var startOnBoot
-            $startOnBoot.withLock { $0 = false }
+            setStartOnBoot(false)
             @Shared(.startMinimized) var startMinimized
             $startMinimized.withLock { $0 = false }
             @Shared(.hasConnected) var hasConnected

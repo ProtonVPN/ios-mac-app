@@ -32,7 +32,7 @@ enum HomeFeatureCreator {
     static func loadInitialState() -> HomeFeature.State {
         // Seed the in-memory default-connection preference from its persisted value.
         @Shared(.defaultConnectionPreference) var defaultConnectionPreference
-        @Shared(.storedDefaultConnectionPreference) var storedPreference
+        @SharedReader(.storedDefaultConnectionPreference) var storedPreference
         $defaultConnectionPreference.withLock { $0 = storedPreference ?? .fastest }
 
         return .init()

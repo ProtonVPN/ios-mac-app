@@ -40,10 +40,10 @@ class ProfilesSectionViewModel {
     private let navService: NavigationService
     @Dependency(\.upsellManager) private var upsellManager
 
-    @Shared(.featureFlags) private var featureFlags: FeatureFlags
+    @SharedReader(.featureFlags) private var featureFlags: FeatureFlags
     private var featureFlagsObservation: AnyCancellable?
 
-    @Shared(.connectionProtocol) private var connectionProtocol: ConnectionProtocol
+    @SharedReader(.connectionProtocol) private var connectionProtocol: ConnectionProtocol
     private var connectionProtocolObservation: AnyCancellable?
 
     var contentChanged: (() -> Void)?

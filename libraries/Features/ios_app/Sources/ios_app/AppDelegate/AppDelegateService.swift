@@ -63,7 +63,7 @@ public final class AppDelegateService: AppDelegateProtocol {
     private lazy var appSessionManager: AppSessionManager = container.makeAppSessionManager()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var pushNotificationService = container.makePushNotificationService()
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
 
     private var tokens: [NotificationToken] = []
     private var cancellables = Set<AnyCancellable>()
@@ -84,7 +84,7 @@ public final class AppDelegateService: AppDelegateProtocol {
         FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan, true)
 
         // Next, properly set the feature flag overrides in the repository.
-        @Shared(.featureFlagOverrides) var featureFlagOverrides
+        @SharedReader(.featureFlagOverrides) var featureFlagOverrides
         for (name, value) in featureFlagOverrides ?? [:] {
             guard let feature = ManuallySpecifiedFeatureFlag(rawValue: name) else { continue }
             FeatureFlagsRepository.shared.setFlagOverride(feature, value)
@@ -168,7 +168,7 @@ public final class AppDelegateService: AppDelegateProtocol {
         } else {
             [WidgetIntents.ShortcutItem.connect.shortcutItem]
         }
-        @Shared(.recentConnections) var recentConnections
+        @SharedReader(.recentConnections) var recentConnections
         let pinned = (recentConnections ?? []).first { $0.pinned }
         if let pinned {
             UIApplication.shared.shortcutItems?.append(WidgetIntents.ShortcutItem.connectToFirstPinnedRecent(pinned).shortcutItem)

@@ -99,7 +99,7 @@ public struct SearchFeature {
 
                 // Empty search - show recent searches or placeholder
                 guard !trimmedText.isEmpty else {
-                    @Shared(.recentSearches) var storedSearches
+                    @SharedReader(.recentSearches) var storedSearches
                     let recentSearches = storedSearches ?? []
                     state.searchResults = recentSearches.isEmpty ? .placeholder :
                         .recentSearches(.init(recentSearches: recentSearches))

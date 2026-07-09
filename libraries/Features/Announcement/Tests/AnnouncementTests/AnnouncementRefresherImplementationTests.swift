@@ -59,7 +59,7 @@ struct AnnouncementRefresherImplementationTests {
     }
 
     private func stored() -> [Announcement] {
-        @Shared(.announcements) var stored: [Announcement]?
+        @SharedReader(.announcements) var stored: [Announcement]?
         return stored ?? []
     }
 

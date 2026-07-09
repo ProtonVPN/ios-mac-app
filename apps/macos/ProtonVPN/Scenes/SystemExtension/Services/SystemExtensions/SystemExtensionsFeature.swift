@@ -108,7 +108,7 @@ struct SystemExtensionsFeature {
                 state.queuedRequests.removeFirst()
 
                 state.inFlightRequestID = nextRequest.id
-                @Shared(.forceExtensionUpgrade) var forceExtensionUpgrade
+                @SharedReader(.forceExtensionUpgrade) var forceExtensionUpgrade
                 let forceUpgrade = forceExtensionUpgrade
 
                 switch nextRequest.kind {
@@ -219,7 +219,7 @@ struct SystemExtensionsFeature {
                     return .none
                 }
 
-                @Shared(.isSubsequentLaunch) var isSubsequentLaunch
+                @SharedReader(.isSubsequentLaunch) var isSubsequentLaunch
                 let origin: SystemExtensionTourAlert.Origin = if isSubsequentLaunch {
                     .inAppPrompt(requiringApprovalTypes.map(\.tourFeature))
                 } else {
@@ -322,7 +322,7 @@ struct SystemExtensionsFeature {
     }
 
     private func shouldPerformInstallCheck() -> Bool {
-        @Shared(.connectionProtocol) var connectionProtocol
+        @SharedReader(.connectionProtocol) var connectionProtocol
         return vpnKeychain.userIsLoggedIn &&
             (
                 connectionProtocol.requiresSystemExtension ||

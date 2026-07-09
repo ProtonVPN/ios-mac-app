@@ -45,7 +45,7 @@ public struct DefaultProfileFeature {
 
         // Computed properties
         var profile: Profile {
-            @Shared(.connectionProtocol) var connectionProtocol
+            @SharedReader(.connectionProtocol) var connectionProtocol
             switch serverOffering {
             case .random:
                 return Profile(

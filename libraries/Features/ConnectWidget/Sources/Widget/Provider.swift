@@ -28,8 +28,8 @@ import WidgetKit
 
 struct Provider: TimelineProvider {
     @Dependency(\.authKeychain) var authKeychain
-    @Shared(.recentConnections) var recentConnections
-    @Shared(.storedDefaultConnectionPreference) var storedDefaultConnectionPreference
+    @SharedReader(.recentConnections) var recentConnections
+    @SharedReader(.storedDefaultConnectionPreference) var storedDefaultConnectionPreference
     @Dependency(\.connectionInventory) var connectionInventory
     @SharedReader(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse: VPNConnectionStatusDoNotUse
 

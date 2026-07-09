@@ -31,7 +31,7 @@ struct SettingsFeature {
 
     @ObservableState
     struct State: Equatable {
-        @Shared(.userDisplayName) var userDisplayName: String?
+        @SharedReader(.userDisplayName) var userDisplayName: String?
         @Shared(.mainBackground) var mainBackground: MainBackground
 
         var path = StackState<Path.State>()

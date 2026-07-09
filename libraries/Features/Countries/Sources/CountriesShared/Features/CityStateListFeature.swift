@@ -152,7 +152,7 @@ public struct CityStateListFeature: Sendable {
                 return .none
             case let .connect(location, trigger):
                 let spec = CityStateConnectionSpecFactory.makeSpec(location: location)
-                @Shared(.connectionProtocol) var sharedConnectionProtocol
+                @SharedReader(.connectionProtocol) var sharedConnectionProtocol
                 let connectionProtocol = sharedConnectionProtocol
                 let listTrigger = if let listType = state.listState.loadedType {
                     listType.telemetryTrigger

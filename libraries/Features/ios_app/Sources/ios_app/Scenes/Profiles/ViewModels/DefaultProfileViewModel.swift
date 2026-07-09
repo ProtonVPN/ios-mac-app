@@ -61,7 +61,7 @@ class DefaultProfileViewModel {
     private let defaultAccessTier: Int
 
     private var profile: Profile {
-        @Shared(.connectionProtocol) var connectionProtocol
+        @SharedReader(.connectionProtocol) var connectionProtocol
         switch serverOffering {
         case .random:
             return Profile(

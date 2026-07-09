@@ -491,7 +491,7 @@ struct AppSessionManagerImplementationTests {
     }
 
     private func assertConnectedStatus(_ message: String = "Expected connection status to be connected") {
-        @Shared(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse
+        @SharedReader(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse
         if case .connected = vpnConnectionStatusDoNotUse {
             return
         }
@@ -499,7 +499,7 @@ struct AppSessionManagerImplementationTests {
     }
 
     private func assertDisconnectedStatus(_ message: String = "Expected connection status to be disconnected") {
-        @Shared(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse
+        @SharedReader(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse
         if case .disconnected = vpnConnectionStatusDoNotUse {
             return
         }

@@ -328,7 +328,7 @@ private extension HomeFeature {
                 return .run { _ in applyPlanChangeFeatureResets(planChange) }
             case .refreshAnnouncementsIfNeeded:
                 return .run { _ in
-                    @Shared(.featureFlags) var featureFlags
+                    @SharedReader(.featureFlags) var featureFlags
                     guard featureFlags.pollNotificationAPI else { return }
                     announcementRefresher.tryRefreshing()
                 }
@@ -693,7 +693,7 @@ private extension HomeFeature {
     /// Returns an alert if any pre-connect intercept (e.g. misconfigured LAN) applies to the
     /// pending connect; otherwise `nil`.
     func interceptAlert(for pending: PendingConnect) -> AlertState<Action.HomeAlert>? {
-        @Shared(.featureFlags) var featureFlags
+        @SharedReader(.featureFlags) var featureFlags
         if featureFlags.unsafeLanWarnings,
            !killSwitch,
            let bad = networkInterfacePropertiesProvider.firstBadInterface() {

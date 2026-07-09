@@ -59,7 +59,7 @@ public struct SearchRecentsFeature {
                 return .send(.load)
 
             case .load:
-                @Shared(.recentSearches) var storedSearches
+                @SharedReader(.recentSearches) var storedSearches
                 state.recentSearches = storedSearches ?? []
                 return .none
 

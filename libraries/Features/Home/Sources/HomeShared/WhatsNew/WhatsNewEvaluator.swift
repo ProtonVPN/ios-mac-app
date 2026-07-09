@@ -115,7 +115,7 @@ extension WhatsNewEvaluatorClient: DependencyKey {
     } systemOSVersion: {
         UIDevice.current.systemVersion
     } itemPresentationData: { item in
-        @Shared(.whatsNew) var whatsNewData
+        @SharedReader(.whatsNew) var whatsNewData
         return whatsNewData?.items[item.id]
     }
 

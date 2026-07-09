@@ -85,7 +85,7 @@ public struct DesktopCityStateListFeature: Sendable {
                 return .send(.connect(location: groupInfo.kind.locationWithOrder(), trigger: nil))
             case let .connect(location, trigger):
                 let spec = CityStateConnectionSpecFactory.makeSpec(location: location)
-                @Shared(.connectionProtocol) var sharedConnectionProtocol
+                @SharedReader(.connectionProtocol) var sharedConnectionProtocol
                 let connectionProtocol = sharedConnectionProtocol
                 let listTrigger = state.listType.telemetryTrigger
                 connectionCommandClient.send(.connect(spec, connectionProtocol, trigger ?? listTrigger))

@@ -83,7 +83,7 @@ func setStartOnBoot(_ enabled: Bool) {
 /// Re-applies the current start-on-boot preference to the system login-item registration.
 /// Replaces the legacy `PropertiesManager.restoreStartOnBootStatus()`.
 func restoreStartOnBootStatus() {
-    @Shared(.startOnBoot) var startOnBoot
+    @SharedReader(.startOnBoot) var startOnBoot
     setLoginItem(enabled: startOnBoot)
 }
 

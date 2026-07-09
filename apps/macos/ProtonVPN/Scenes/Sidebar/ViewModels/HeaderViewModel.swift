@@ -49,7 +49,7 @@ final class HeaderViewModel {
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.serverRepository) private var serverRepository
-    @Shared(.userLocation) private var userLocation: UserLocation?
+    @SharedReader(.userLocation) private var userLocation: UserLocation?
     @Dependency(\.announcementManager) private var announcementManager
     @Dependency(\.notificationManager) private var notificationManager
 
@@ -76,7 +76,7 @@ final class HeaderViewModel {
 
     private var natPmpCancellable: AnyCancellable?
     private var portForwardingObserverTask: Task<Void, Never>?
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
     private var cancellables = Set<AnyCancellable>()
 
     var statistics: NetworkStatistics?
@@ -158,7 +158,7 @@ final class HeaderViewModel {
 
     func changeServerAction() {
         let spec = ConnectionSpec(location: .any(.random), features: [])
-        @Shared(.connectionProtocol) var connectionProtocol
+        @SharedReader(.connectionProtocol) var connectionProtocol
         connectionCommandClient.send(.connect(spec, connectionProtocol, .changeServer))
     }
 
@@ -176,7 +176,7 @@ final class HeaderViewModel {
     // MARK: - Announcements bell
 
     var showAnnouncements: Bool {
-        @Shared(.featureFlags) var featureFlags
+        @SharedReader(.featureFlags) var featureFlags
         guard featureFlags.pollNotificationAPI else {
             return false
         }

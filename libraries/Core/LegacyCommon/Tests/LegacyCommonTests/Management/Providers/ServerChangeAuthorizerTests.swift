@@ -158,7 +158,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
         )
 
         withServerChange(date: start, config: config, connectionStack: []) {
-            @Shared(.serverChangeConnectionStack) var sharedStack
+            @SharedReader(.serverChangeConnectionStack) var sharedStack
 
             sut.registerServerChange(connectedAt: start)
             XCTAssertEqual(sharedStack ?? [], [

@@ -87,7 +87,7 @@ public struct AuthorizedFeatureValue<Feature: ProvidableFeature & Sendable>: Sen
     /// the effective value.
     public func value() -> Feature {
         @SharedReader(.userTier) var userTier: Int?
-        @Shared(.featureFlags) var featureFlags: FeatureFlags
+        @SharedReader(.featureFlags) var featureFlags: FeatureFlags
         return effectiveValue(userTier: userTier ?? .freeTier, featureFlags: featureFlags)
     }
 

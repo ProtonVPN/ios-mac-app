@@ -68,7 +68,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
     @Dependency(\.paymentsPlanServiceV2) private var planServiceV2
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
     /// session status, single source of truth
     @Shared(.sessionStatus) private var sharedSessionStatus: SessionStatus
     /// Reason for a forced logout to login/welcome screens
@@ -165,7 +165,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     func canPreviewApp() -> Bool {
-        @Shared(.userLocation) var userLocation
+        @SharedReader(.userLocation) var userLocation
         return !isServerRepositoryEmpty && userLocation?.ip != nil
     }
 
@@ -266,7 +266,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             $userAccountRecovery.withLock { $0 = properties.userAccountRecovery }
             @Shared(.userInfo) var userInfo
             $userInfo.withLock { $0 = properties.userInfo }
-            @Shared(.userSettings) var userSettings
+            @SharedReader(.userSettings) var userSettings
             if let userSettings {
                 $userInfo.withLock { $0?.apply(userSettings) }
             }
@@ -290,7 +290,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 $streamingServices.withLock { $0 = streamingResponse.streamingServices }
                 $streamingResourcesUrl.withLock { $0 = streamingResponse.resourceBaseURL }
             }
-            @Shared(.featureFlags) var pollFeatureFlags
+            @SharedReader(.featureFlags) var pollFeatureFlags
             if pollFeatureFlags.pollNotificationAPI {
                 announcementRefresher.tryRefreshing()
             }

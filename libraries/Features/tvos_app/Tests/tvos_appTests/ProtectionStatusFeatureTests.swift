@@ -40,7 +40,7 @@ final class ProtectionStatusFeatureTests: XCTestCase {
         let store = TestStore(initialState: ProtectionStatusFeature.State()) {
             ProtectionStatusFeature()
         }
-        @Shared(.connectionState) var connectionState: ConnectionState = .disconnected
+        @SharedReader(.connectionState) var connectionState: ConnectionState = .disconnected
 
         await store.send(.userTappedButton)
         await store.receive(\.delegate.userClickedConnect)

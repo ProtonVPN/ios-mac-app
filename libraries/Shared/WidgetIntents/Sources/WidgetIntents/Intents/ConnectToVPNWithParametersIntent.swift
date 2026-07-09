@@ -125,7 +125,7 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
 
         do {
             @Dependencies.Dependency(\.connectionCommandClient) var connectionCommandClient
-            @Shared(.connectionProtocol) var connectionProtocol
+            @SharedReader(.connectionProtocol) var connectionProtocol
             try connectionCommandClient.send(.connect(spec, connectionProtocol, .widget))
             try await finishConnecting()
         } catch {
@@ -142,8 +142,8 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
 
     // MARK: - Private helpers:
 
-    @Shared(.recentConnections) private var recentConnections
-    @Shared(.storedDefaultConnectionPreference) private var storedDefaultConnectionPreference
+    @SharedReader(.recentConnections) private var recentConnections
+    @SharedReader(.storedDefaultConnectionPreference) private var storedDefaultConnectionPreference
 
     private func getRecentConnection(_ index: Int) -> ConnectionSpec? {
         @Dependencies.Dependency(\.connectionInventory) var connectionInventory

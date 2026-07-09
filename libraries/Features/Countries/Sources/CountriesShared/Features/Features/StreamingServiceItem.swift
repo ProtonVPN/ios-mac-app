@@ -38,7 +38,7 @@ public struct StreamingServiceItem {
         }
 
         public var imageURL: URL? {
-            @Shared(.streamingResourcesUrl) var streamingResourcesUrl
+            @SharedReader(.streamingResourcesUrl) var streamingResourcesUrl
             guard let baseUrl = streamingResourcesUrl,
                   let url = URL(string: baseUrl + service.icon) else { return nil }
             return url

@@ -138,7 +138,7 @@ public final class TelemetrySettingsReporter {
     // Dimensions helpers
 
     private func defaultConnectionType() -> SettingsDimensions.DefaultConnectionType {
-        @Shared(.storedDefaultConnectionPreference) var storedDefaultConnectionPreference
+        @SharedReader(.storedDefaultConnectionPreference) var storedDefaultConnectionPreference
         switch storedDefaultConnectionPreference ?? .fastest {
         case .fastest:
             return .fastest

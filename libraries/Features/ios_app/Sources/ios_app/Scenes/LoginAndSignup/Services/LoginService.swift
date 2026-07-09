@@ -320,7 +320,7 @@ extension CoreLoginService: LoginService {
                 await appSessionRefresher.refreshData()
             }
 
-            @Shared(.sessionStatus) var sessionStatus
+            @SharedReader(.sessionStatus) var sessionStatus
             return sessionStatus == .established ? .loggedIn : .notLoggedIn(.sessionNotEstablished)
         }
 

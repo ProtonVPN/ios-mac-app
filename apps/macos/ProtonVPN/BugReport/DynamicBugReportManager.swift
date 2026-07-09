@@ -39,13 +39,13 @@ public class DynamicBugReportManager {
         return credentiallessHelper.isCredentialLess()
     }
 
+    @Shared(.reportBugEmail) var reportBugEmail
+
     public var prefilledEmail: String {
         get {
-            @Shared(.reportBugEmail) var reportBugEmail
-            return reportBugEmail ?? ""
+            reportBugEmail ?? ""
         }
         set {
-            @Shared(.reportBugEmail) var reportBugEmail
             $reportBugEmail.withLock { $0 = newValue }
         }
     }
@@ -70,7 +70,7 @@ public class DynamicBugReportManager {
     ) {
         self.logSources = logSources
 
-        @Shared(.dynamicBugReport) var dynamicBugReport
+        @SharedReader(.dynamicBugReport) var dynamicBugReport
         self.model = dynamicBugReport ?? Self.getDefaultConfig()
         setupRefresh()
     }
@@ -122,7 +122,7 @@ public class DynamicBugReportManager {
         let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
 
         @Dependency(\.appInfo) var appInfo
-        @Shared(.userLocation) var userLocation
+        @SharedReader(.userLocation) var userLocation
 
         return ReportBug(
             os: os,

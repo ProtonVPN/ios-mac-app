@@ -60,7 +60,7 @@ public struct ProfileManager {
 public final class ProfileManagerImplementation {
     public var customProfiles: [Profile] = []
     public var defaultProfiles: [Profile] {
-        @Shared(.connectionProtocol) var connectionProtocol
+        @SharedReader(.connectionProtocol) var connectionProtocol
         return ProfileConstants.defaultProfiles(connectionProtocol: connectionProtocol)
     }
 
@@ -87,8 +87,8 @@ public final class ProfileManagerImplementation {
         guard username != nil else {
             return nil
         }
-        @Shared(.autoConnect) var autoConnect
-        @Shared(.autoConnectProfileId) var autoConnectProfileId
+        @SharedReader(.autoConnect) var autoConnect
+        @SharedReader(.autoConnectProfileId) var autoConnectProfileId
         let (enabled, profileID) = (autoConnect, autoConnectProfileId)
         guard enabled, let profileID else {
             return nil
@@ -100,7 +100,7 @@ public final class ProfileManagerImplementation {
         guard username != nil else {
             return nil
         }
-        @Shared(.quickConnect) var quickConnect
+        @SharedReader(.quickConnect) var quickConnect
         guard let profileID = quickConnect else {
             return nil
         }

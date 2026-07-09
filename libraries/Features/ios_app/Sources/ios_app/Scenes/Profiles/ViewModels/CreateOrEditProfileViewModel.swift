@@ -38,8 +38,8 @@ import VPNShared
 class CreateOrEditProfileViewModel: NSObject {
     @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.upsellManager) private var upsellManager
-    @Shared(.connectionState) private var connectionState: ConnectionState
-    @Shared(.smartProtocolConfig) private var smartProtocolConfig: SmartProtocolConfig
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.smartProtocolConfig) private var smartProtocolConfig: SmartProtocolConfig
 
     private let username: String?
     private let profileService: ProfileService
@@ -97,7 +97,7 @@ class CreateOrEditProfileViewModel: NSObject {
         self.editedProfile = profile
         self.profileService = profileService
         self.protocolService = protocolSelectionService
-        @Shared(.connectionProtocol) var connectionProtocol
+        @SharedReader(.connectionProtocol) var connectionProtocol
         self.selectedProtocol = connectionProtocol
 
         if case let .circle(color) = profile?.profileIcon {
@@ -107,7 +107,7 @@ class CreateOrEditProfileViewModel: NSObject {
         }
 
         @Dependency(\.profileManager) var profileManager
-        @Shared(.quickConnect) var quickConnect
+        @SharedReader(.quickConnect) var quickConnect
         if let profile,
            let quickConnectProfileId = quickConnect,
            let quickConnectProfile = profileManager.profile(id: quickConnectProfileId) {
@@ -424,7 +424,7 @@ class CreateOrEditProfileViewModel: NSObject {
             return
         }
 
-        @Shared(.connectionProtocol) var preferredProtocol
+        @SharedReader(.connectionProtocol) var preferredProtocol
         if selectedProtocol != preferredProtocol,
            selectedServerOfferingSupports(connectionProtocol: preferredProtocol) {
             selectedProtocol = preferredProtocol
@@ -442,7 +442,7 @@ class CreateOrEditProfileViewModel: NSObject {
         let supportedProtocols = ConnectionProtocol.allCases
             .filter { !$0.isDeprecated && selectedServerOfferingSupports(connectionProtocol: $0) }
 
-        @Shared(.featureFlags) var featureFlags
+        @SharedReader(.featureFlags) var featureFlags
         let vpnProtocolViewModel = VpnProtocolViewModel(
             connectionProtocol: selectedProtocol,
             smartProtocolConfig: smartProtocolConfig,

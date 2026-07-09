@@ -25,7 +25,7 @@ import Strings
 public struct SessionCapturedFeature: Equatable {
     @ObservableState
     public struct State: Equatable {
-        @Shared(.captureSession) public var captureSession
+        @SharedReader(.captureSession) public var captureSession
         @Presents public var alert: AlertState<Action.Alert>?
 
         public init() {}

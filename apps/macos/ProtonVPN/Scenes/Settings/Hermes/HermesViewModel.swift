@@ -55,7 +55,7 @@ final class HermesViewModel {
     @Dependency(\.sessionService) private var sessionService: SessionService
     @Dependency(\.linkOpener) private var linkOpener
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
 
     @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.upsellManager) private var upsellManager

@@ -41,12 +41,12 @@
                 screen: .main(.init(
                     currentTab: .settings,
                     settings: .init(
-                        userDisplayName: Shared<String?>(value: ""),
+                        userDisplayName: SharedReader<String?>(value: ""),
                         mainBackground: .init(value: .clear),
                         alert: SettingsFeature.signOutAlert,
                         isLoading: false
                     ),
-                    userLocation: Shared<UserLocation?>(value: UserLocation(ip: "", country: "", isp: ""))
+                    userLocation: SharedReader<UserLocation?>(value: UserLocation(ip: "", country: "", isp: ""))
                 )),
                 networking: .authenticated(.auth(uid: "sessionID"))
             )
@@ -89,11 +89,11 @@
                 screen: .main(.init(
                     currentTab: .settings,
                     settings: .init(
-                        userDisplayName: Shared<String?>(value: ""),
+                        userDisplayName: SharedReader<String?>(value: ""),
                         mainBackground: .init(value: .clear),
                         isLoading: false
                     ),
-                    userLocation: Shared<UserLocation?>(value: UserLocation(ip: "", country: "", isp: ""))
+                    userLocation: SharedReader<UserLocation?>(value: UserLocation(ip: "", country: "", isp: ""))
                 )),
                 networking: .authenticated(.auth(uid: "sessionID"))
             )

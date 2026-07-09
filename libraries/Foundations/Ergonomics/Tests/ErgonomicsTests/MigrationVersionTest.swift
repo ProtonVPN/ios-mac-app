@@ -31,7 +31,7 @@ class MigrationVersionTest: XCTestCase {
 
     func testSimpleMigration() async throws {
         var checkValue = 0
-        @Shared(.appStorage(Self.sharedKey)) var lastAppVersion = "0.0.0+0.0"
+        @SharedReader(.appStorage(Self.sharedKey)) var lastAppVersion = "0.0.0+0.0"
 
         try await MigrationManagerImplementation(finalVersion: "1.6.0")
             .checking("1.5.1") { @MainActor currentVersion in
@@ -45,7 +45,7 @@ class MigrationVersionTest: XCTestCase {
 
     func testNoMigrationWhenNotNeeded() async throws {
         var checkValue = 0
-        @Shared(.appStorage(Self.sharedKey)) var lastAppVersion = "1.6.0"
+        @SharedReader(.appStorage(Self.sharedKey)) var lastAppVersion = "1.6.0"
 
         try await MigrationManagerImplementation(finalVersion: "1.6.0")
             .checking("1.5.9") { @MainActor _ in
@@ -61,7 +61,7 @@ class MigrationVersionTest: XCTestCase {
 
     func testMigratesOnlyWhatIsNeeded() async throws {
         var checkValue = 0
-        @Shared(.appStorage(Self.sharedKey)) var lastAppVersion = "1.6.0"
+        @SharedReader(.appStorage(Self.sharedKey)) var lastAppVersion = "1.6.0"
 
         try await MigrationManagerImplementation(finalVersion: "1.8.0")
             .checking("1.5.9") { @MainActor _ in
@@ -83,7 +83,7 @@ class MigrationVersionTest: XCTestCase {
 
     func testMigrationSavesCurrentAppVersionToProperties() async throws {
         var checkValue = 0
-        @Shared(.appStorage(Self.sharedKey)) var lastAppVersion = "0.0.0"
+        @SharedReader(.appStorage(Self.sharedKey)) var lastAppVersion = "0.0.0"
 
         let currentVersionString = "7.0.0+2804198.2512171751"
         try await MigrationManagerImplementation(finalVersion: XCTUnwrap(.init(currentVersionString)))
@@ -96,7 +96,7 @@ class MigrationVersionTest: XCTestCase {
     }
 
     func testMigrationSavesMigratedVersionToPropertiesAfterEachStep() async throws {
-        @Shared(.appStorage(Self.sharedKey)) var lastAppVersion = "0.0.0"
+        @SharedReader(.appStorage(Self.sharedKey)) var lastAppVersion = "0.0.0"
 
         let currentVersionString = "7.0.0+2804198.2512171751"
         try await MigrationManagerImplementation(finalVersion: XCTUnwrap(.init(currentVersionString)))
@@ -111,7 +111,7 @@ class MigrationVersionTest: XCTestCase {
     }
 
     func testMigrationDoesntSaveVersionToPropertiesAfterError() async throws {
-        @Shared(.appStorage(Self.sharedKey)) var lastAppVersion = "1.6.0"
+        @SharedReader(.appStorage(Self.sharedKey)) var lastAppVersion = "1.6.0"
 
         do {
             let currentVersionString = "7.0.0"
@@ -130,7 +130,7 @@ class MigrationVersionTest: XCTestCase {
     }
 
     func testMigrationDoesntRunForMigrationsWithSameShortVersion() async throws {
-        @Shared(.appStorage(Self.sharedKey)) var lastAppVersion = "7.0.0+2804198.2512171751"
+        @SharedReader(.appStorage(Self.sharedKey)) var lastAppVersion = "7.0.0+2804198.2512171751"
         var checkValue = 0
 
         let currentVersionString = "7.0.2"

@@ -61,7 +61,7 @@ class CreateNewProfileViewModel {
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.profileManager) private var profileManager
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
-    @Shared(.smartProtocolConfig) private var smartProtocolConfig: SmartProtocolConfig
+    @SharedReader(.smartProtocolConfig) private var smartProtocolConfig: SmartProtocolConfig
     @Dependency(\.serverRepository) private var serverRepository
 
     let colorPickerViewModel = ColorPickerViewModel()
@@ -95,7 +95,7 @@ class CreateNewProfileViewModel {
     /// non-essential refactors on viewmodels that will be removed during redesign.
     private func createStartingState() -> ModelState {
         let defaultServerType = ModelState.default.serverType
-        @Shared(.connectionProtocol) var sharedConnectionProtocol
+        @SharedReader(.connectionProtocol) var sharedConnectionProtocol
         var connectionProtocol = sharedConnectionProtocol
         // If IKEv2 is the user's selected protocol, we will switch to smart protocol instead.
         if connectionProtocol == .vpnProtocol(.ike) {
@@ -252,7 +252,7 @@ class CreateNewProfileViewModel {
     /// the protocol list will not show it. If the selected protocol requires a system extension, and that
     /// extension is not installed or unavailable, it will be switched to one that doesn't require one.
     var protocolMenuItems: [PopUpButtonItemViewModel] {
-        @Shared(.featureFlags) var featureFlags
+        @SharedReader(.featureFlags) var featureFlags
         return ConnectionProtocol.availableProtocols(wireguardTLSEnabled: featureFlags.wireGuardTls)
             .sorted(by: ConnectionProtocol.uiSort)
             .filter { `protocol` in

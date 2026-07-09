@@ -31,7 +31,7 @@ final class LogicalsRefresherTests: XCTestCase {
 
     @MainActor
     func testShouldRefreshLogicalsWithEmptyRepository() {
-        @Shared(.lastLogicalsRefresh) var lastLogicalsRefresh: TimeInterval = notEnoughTimePassed
+        @SharedReader(.lastLogicalsRefresh) var lastLogicalsRefresh: TimeInterval = notEnoughTimePassed
 
         withDependencies {
             $0.serverRepository = .empty()
@@ -44,7 +44,7 @@ final class LogicalsRefresherTests: XCTestCase {
 
     @MainActor
     func testShouldRefreshLogicalsWithTimeInterval() {
-        @Shared(.lastLogicalsRefresh) var lastLogicalsRefresh: TimeInterval = enoughTimePassed
+        @SharedReader(.lastLogicalsRefresh) var lastLogicalsRefresh: TimeInterval = enoughTimePassed
 
         withDependencies {
             $0.serverRepository = .notEmpty()
@@ -57,7 +57,7 @@ final class LogicalsRefresherTests: XCTestCase {
 
     @MainActor
     func testShouldNotRefreshLogicals() {
-        @Shared(.lastLogicalsRefresh) var lastLogicalsRefresh: TimeInterval = notEnoughTimePassed
+        @SharedReader(.lastLogicalsRefresh) var lastLogicalsRefresh: TimeInterval = notEnoughTimePassed
 
         withDependencies {
             $0.serverRepository = .notEmpty()
@@ -70,7 +70,7 @@ final class LogicalsRefresherTests: XCTestCase {
 
     @MainActor
     func testRefreshLogicals() async throws {
-        @Shared(.lastLogicalsRefresh) var lastLogicalsRefresh: TimeInterval = enoughTimePassed
+        @SharedReader(.lastLogicalsRefresh) var lastLogicalsRefresh: TimeInterval = enoughTimePassed
 
         var upserted: [VPNServer] = []
 

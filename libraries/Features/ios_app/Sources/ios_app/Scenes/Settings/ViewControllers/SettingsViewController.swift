@@ -166,7 +166,7 @@ final class SettingsViewController: UIViewController {
     // MARK: - Announcements
 
     private var showAnnouncements: Bool {
-        @Shared(.featureFlags) var featureFlags
+        @SharedReader(.featureFlags) var featureFlags
         guard featureFlags.pollNotificationAPI else { return false }
         return announcementManager.shouldShowAnnouncementsIcon()
     }

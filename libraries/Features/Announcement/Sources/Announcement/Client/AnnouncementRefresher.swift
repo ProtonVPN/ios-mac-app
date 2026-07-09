@@ -73,7 +73,7 @@ final class AnnouncementRefresherImplementation: @unchecked Sendable {
 
     @Shared(.lastAnnouncementRefreshDate) var lastRefreshDate
 
-    @Shared(.featureFlags) private var featureFlags: Domain.FeatureFlags
+    @SharedReader(.featureFlags) private var featureFlags: Domain.FeatureFlags
     private var featureFlagsObservation: AnyCancellable?
 
     init(refreshInterval: TimeInterval = AnnouncementRefresherImplementation.defaultRefreshInterval) {

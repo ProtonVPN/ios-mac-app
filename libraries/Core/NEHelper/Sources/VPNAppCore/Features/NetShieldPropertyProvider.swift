@@ -98,7 +98,7 @@ extension NetShieldPropertyProvider: DependencyKey {
 
         let authorize: (NetShieldType) -> FeatureAuthorizationResult = { level in
             @SharedReader(.userTier) var userTier: Int?
-            @Shared(.featureFlags) var featureFlags: FeatureFlags
+            @SharedReader(.featureFlags) var featureFlags: FeatureFlags
             @Dependency(\.vpnKeychain) var vpnKeychain
             let credentials = try? vpnKeychain.fetchCached()
             return level.canUse(

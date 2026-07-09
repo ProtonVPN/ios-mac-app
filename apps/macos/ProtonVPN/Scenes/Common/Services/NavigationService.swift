@@ -106,7 +106,7 @@ class NavigationService {
             object: nil
         )
 
-        @Shared(.startMinimized) var startMinimized
+        @SharedReader(.startMinimized) var startMinimized
         if startMinimized {
             await attemptSilentLogIn()
         } else {
@@ -158,7 +158,7 @@ class NavigationService {
             return false
         }
 
-        @Shared(.autoConnect) var autoConnect
+        @SharedReader(.autoConnect) var autoConnect
         guard autoConnect else {
             log.debug("Skipping auto-connect: auto-connect disabled for user", category: .app)
             return false
@@ -264,7 +264,7 @@ class NavigationService {
             return
         }
 
-        @Shared(.secureCoreToggle) var secureCoreToggle
+        @SharedReader(.secureCoreToggle) var secureCoreToggle
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: secureCoreToggle,
             connectedExitCountryCode: nil,

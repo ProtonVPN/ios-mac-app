@@ -75,7 +75,7 @@ public struct SearchRoot {
                     let (cities, states, freeServers, plusServers) = try Self.computeSearchableData(from: countryStates)
                     try Task.checkCancellation()
 
-                    @Shared(.recentSearches) var storedSearches
+                    @SharedReader(.recentSearches) var storedSearches
                     let recentSearches = storedSearches ?? []
                     let searchResultsViewState = if recentSearches.isEmpty {
                         SearchResultsFeature.State.placeholder

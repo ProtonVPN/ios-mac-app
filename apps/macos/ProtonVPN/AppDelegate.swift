@@ -108,7 +108,7 @@ extension AppDelegate: NSApplicationDelegate {
             Atlantis.start()
         #endif
 
-        @Shared(.featureFlagOverrides) var featureFlagOverrides
+        @SharedReader(.featureFlagOverrides) var featureFlagOverrides
         for (featureFlagOverride, value) in featureFlagOverrides ?? [:] {
             guard let feature = ManuallySpecifiedFeatureFlag(rawValue: featureFlagOverride) else { continue }
             FeatureFlagsRepository.shared.setFlagOverride(feature, value)
@@ -258,7 +258,7 @@ extension AppDelegate: NSApplicationDelegate {
         }
 
         // For new installations, we also ask for plutonium extension installation.
-        @Shared(.isSubsequentLaunch) var isSubsequentLaunch
+        @SharedReader(.isSubsequentLaunch) var isSubsequentLaunch
         let includedExtensionTypes: [SystemExtensionType] = isSubsequentLaunch ? [.proTUN] : [.proTUN, .plutonium]
 
         Task { [weak self] in

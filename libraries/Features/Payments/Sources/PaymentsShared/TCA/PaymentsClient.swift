@@ -61,7 +61,7 @@ extension PaymentsClient: DependencyKey {
         },
         retrievePlans: {
             @Dependency(\.paymentsPlanServiceV2) var planService
-            @Shared(.localValuesOverrides) var localValuesOverrides
+            @SharedReader(.localValuesOverrides) var localValuesOverrides
 
             let appStoreCountryCodeOverride = localValuesOverrides?["AppStoreCC"]?.lowercased()
             let userAppStoreCountryCode: String? = if let appStoreCountryCodeOverride {

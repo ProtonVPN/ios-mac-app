@@ -133,7 +133,7 @@ public struct CountryFeature {
         }
 
         var streamingServices: [VpnStreamingOption] {
-            @Shared(.streamingServices) var streamingServices
+            @SharedReader(.streamingServices) var streamingServices
             return streamingServices[countryCode]?["2"] ?? []
         }
     }

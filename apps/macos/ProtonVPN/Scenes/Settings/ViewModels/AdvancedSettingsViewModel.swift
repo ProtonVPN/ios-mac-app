@@ -42,10 +42,10 @@ final class AdvancedSettingsViewModel {
 
     @Shared(.telemetryUsageData) var telemetryUsageData
     @Shared(.telemetryCrashReports) var telemetryCrashReports
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
     @SharedReader(.appliedFeatures) private var appliedFeatures: AgentTunnelFeatures?
 
-    @Shared(.featureFlags) private var featureFlags: FeatureFlags
+    @SharedReader(.featureFlags) private var featureFlags: FeatureFlags
 
     var reloadNeeded: (() -> Void)?
 
@@ -80,7 +80,7 @@ final class AdvancedSettingsViewModel {
     }
 
     var alternativeRouting: Bool {
-        @Shared(.alternativeRouting) var alternativeRouting
+        @SharedReader(.alternativeRouting) var alternativeRouting
         return alternativeRouting
     }
 

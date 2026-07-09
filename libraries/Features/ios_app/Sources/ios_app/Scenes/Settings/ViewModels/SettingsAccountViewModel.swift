@@ -48,7 +48,7 @@ final class SettingsAccountViewModel {
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.settingsClient) private var settingsClient
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
 
     var pushHandler: ((UIViewController) -> Void)?
     var viewControllerFetcher: (() -> UIViewController?)?
@@ -144,7 +144,7 @@ final class SettingsAccountViewModel {
             .pushStandard(title: Localizable.changePassword, handler: { [weak self] in
                 guard let self, let pushHandler else { return }
                 Task { @MainActor [weak self] in
-                    @Shared(.userSettings) var userSettings
+                    @SharedReader(.userSettings) var userSettings
                     guard let self, let userSettings else {
                         log.debug("No user settings found, not displaying password change menu")
                         return
@@ -188,8 +188,8 @@ final class SettingsAccountViewModel {
               !mailboxPassword.isEmpty else {
             return false
         }
-        @Shared(.userInfo) var userInfo
-        @Shared(.userSettings) var userSettings
+        @SharedReader(.userInfo) var userInfo
+        @SharedReader(.userSettings) var userSettings
         return FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.changePassword, reloadValue: true) && userInfo != nil && userSettings != nil
     }
 

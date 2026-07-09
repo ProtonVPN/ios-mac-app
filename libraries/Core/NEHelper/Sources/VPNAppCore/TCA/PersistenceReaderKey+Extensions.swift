@@ -103,7 +103,7 @@ public extension SharedKey where Self == AppStorageKey<Bool>.Default {
 
 public extension ServerType {
     static var current: ServerType {
-        @Shared(.secureCoreToggle) var secureCoreToggle
+        @SharedReader(.secureCoreToggle) var secureCoreToggle
         return secureCoreToggle ? .secureCore : .standard
     }
 }

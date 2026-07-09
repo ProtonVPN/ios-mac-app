@@ -76,9 +76,9 @@ struct SearchFeatureReducerTests {
         await withDependencies {
             $0.defaultAppStorage = defaults
         } operation: {
-            @Shared(.secureCoreToggle) var secureCoreToggle = false
-            @Shared(.userTier) var userTier: Int? = 0
-            @Shared(.recentSearches) var recentSearches
+            @SharedReader(.secureCoreToggle) var secureCoreToggle = false
+            @SharedReader(.userTier) var userTier: Int? = 0
+            @SharedReader(.recentSearches) var recentSearches
 
             let initialState = SearchFeature.State(
                 allCountries: [
@@ -139,8 +139,8 @@ struct SearchFeatureReducerTests {
         await withDependencies {
             $0.defaultAppStorage = defaults
         } operation: {
-            @Shared(.secureCoreToggle) var secureCoreToggle = true
-            @Shared(.userTier) var userTier: Int? = 2
+            @SharedReader(.secureCoreToggle) var secureCoreToggle = true
+            @SharedReader(.userTier) var userTier: Int? = 2
 
             let initialState = SearchFeature.State(
                 allCountries: [
@@ -197,8 +197,8 @@ struct SearchFeatureReducerTests {
         await withDependencies {
             $0.defaultAppStorage = defaults
         } operation: {
-            @Shared(.secureCoreToggle) var secureCoreToggle = false
-            @Shared(.userTier) var userTier: Int? = 2
+            @SharedReader(.secureCoreToggle) var secureCoreToggle = false
+            @SharedReader(.userTier) var userTier: Int? = 2
 
             let initialState = SearchFeature.State(
                 allCountries: [],

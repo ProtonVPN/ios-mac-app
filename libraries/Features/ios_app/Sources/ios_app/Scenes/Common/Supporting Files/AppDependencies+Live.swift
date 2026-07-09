@@ -46,15 +46,15 @@ extension ChallengeParametersProviderKey: @retroactive DependencyKey {
 
 extension DoHConfigurationKey: @retroactive DependencyKey {
     public static var liveValue: DoHVPN {
-        @Shared(.apiEndpoint) var apiEndpoint
-        @Shared(.atlasSecret) var atlasSecretSetting
+        @SharedReader(.apiEndpoint) var apiEndpoint
+        @SharedReader(.atlasSecret) var atlasSecretSetting
         var cancellables: Set<AnyCancellable> = []
 
         let customHost = Bundle.dynamicDomain ?? apiEndpoint
         let atlasSecret = Bundle.atlasSecret ?? atlasSecretSetting
         log.info("Custom host: \(optional: customHost), atlasSecret: \(optional: atlasSecret)")
 
-        @Shared(.alternativeRouting) var alternativeRouting
+        @SharedReader(.alternativeRouting) var alternativeRouting
 
         let doh = DoHVPN(
             alternativeRouting: alternativeRouting,
@@ -72,7 +72,7 @@ extension DoHConfigurationKey: @retroactive DependencyKey {
 
 extension DoHVPN {
     convenience init(alternativeRouting: Bool, customHost: String?, atlasSecret: String?) {
-        @Shared(.connectionState) var connectionState
+        @SharedReader(.connectionState) var connectionState
         self.init(
             apiHost: ObfuscatedConstants.apiHost,
             verifyHost: ObfuscatedConstants.humanVerificationV3Host,

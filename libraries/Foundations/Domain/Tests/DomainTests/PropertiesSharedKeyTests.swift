@@ -56,7 +56,7 @@ struct PropertiesSharedKeyTests {
     @Test("showWhatsNewModal defaults to true")
     func showWhatsNewModal() {
         withStore { _ in
-            @Shared(.showWhatsNewModal) var showWhatsNewModal
+            @SharedReader(.showWhatsNewModal) var showWhatsNewModal
             #expect(showWhatsNewModal == true)
         }
     }
@@ -64,7 +64,7 @@ struct PropertiesSharedKeyTests {
     @Test("maintenanceServerRefreshIntereval uses the domain default and reads a stored Int")
     func maintenanceInterval() {
         withStore { defaults in
-            @Shared(.maintenanceServerRefreshIntereval) var interval
+            @SharedReader(.maintenanceServerRefreshIntereval) var interval
             #expect(interval == DomainConstants.Maintenance.defaultMaintenanceCheckTime)
 
             defaults.set(42, forKey: "MaintenanceServerRefreshIntereval")
@@ -75,7 +75,7 @@ struct PropertiesSharedKeyTests {
     @Test("reportBugEmail round-trips and reads the legacy LastBugReportEmail string")
     func reportBugEmail() {
         withStore { defaults in
-            @Shared(.reportBugEmail) var reportBugEmail
+            @SharedReader(.reportBugEmail) var reportBugEmail
             #expect(reportBugEmail == nil)
 
             defaults.set("a@b.com", forKey: "LastBugReportEmail")

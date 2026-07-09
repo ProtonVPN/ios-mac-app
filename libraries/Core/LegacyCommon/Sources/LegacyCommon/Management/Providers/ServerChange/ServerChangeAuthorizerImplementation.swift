@@ -33,8 +33,8 @@ public struct ServerChangeAuthorizerImplementation {
         @Dependency(\.date) var date
         let now = date.now
 
-        @Shared(.serverChangeConnectionStack) var connectionStack
-        @Shared(.serverChangeConfig) var config
+        @SharedReader(.serverChangeConnectionStack) var connectionStack
+        @SharedReader(.serverChangeConfig) var config
 
         let skips = (connectionStack ?? []).filter { $0.intent == .random }
 
@@ -61,8 +61,8 @@ public struct ServerChangeAuthorizerImplementation {
     }
 
     func registerServerChange(connectedAt connectionDate: Date) {
-        @Shared(.serverChangeConfig) var config
-        @Shared(.serverChangeConnectionStack) var connectionStack
+        @SharedReader(.serverChangeConfig) var config
+        @SharedReader(.serverChangeConnectionStack) var connectionStack
 
         let recentConnections = (connectionStack ?? [])
             .prefix(max(0, config.changeServerAttemptLimit - 1))

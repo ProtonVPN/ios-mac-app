@@ -42,7 +42,7 @@ public class DynamicBugReportManager {
 
     public var prefilledEmail: String {
         get {
-            @Shared(.reportBugEmail) var reportBugEmail
+            @SharedReader(.reportBugEmail) var reportBugEmail
             return reportBugEmail ?? ""
         }
         set {
@@ -72,7 +72,7 @@ public class DynamicBugReportManager {
     ) {
         self.logSources = logSources
 
-        @Shared(.dynamicBugReport) var dynamicBugReport
+        @SharedReader(.dynamicBugReport) var dynamicBugReport
         self.model = dynamicBugReport ?? Self.getDefaultConfig()
         setupRefresh()
     }
@@ -124,7 +124,7 @@ public class DynamicBugReportManager {
         let osVersion = UIDevice.current.systemVersion
 
         @Dependency(\.appInfo) var appInfo
-        @Shared(.userLocation) var userLocation
+        @SharedReader(.userLocation) var userLocation
 
         return ReportBug(
             os: os,

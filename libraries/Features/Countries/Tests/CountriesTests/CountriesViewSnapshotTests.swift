@@ -37,9 +37,9 @@
     struct CountriesViewSnapshotTests {
         @Test("Countries view - Standard mode with mixed countries")
         func countriesViewStandardMode() {
-            @Shared(.secureCoreToggle) var secureCoreToggle = false
-            @Shared(.userTier) var userTier: Int? = .paidTier
-            @Shared(.connectionState) var connectionState: ConnectionState = .disconnected
+            @SharedReader(.secureCoreToggle) var secureCoreToggle = false
+            @SharedReader(.userTier) var userTier: Int? = .paidTier
+            @SharedReader(.connectionState) var connectionState: ConnectionState = .disconnected
 
             withDependencies {
                 $0.continuousClock = TestClock()
@@ -58,9 +58,9 @@
 
         @Test("Countries view - Secure Core mode")
         func countriesViewSecureCoreMode() {
-            @Shared(.secureCoreToggle) var secureCoreToggle = true
-            @Shared(.userTier) var userTier: Int? = .paidTier
-            @Shared(.connectionState) var connectionState: ConnectionState = .disconnected
+            @SharedReader(.secureCoreToggle) var secureCoreToggle = true
+            @SharedReader(.userTier) var userTier: Int? = .paidTier
+            @SharedReader(.connectionState) var connectionState: ConnectionState = .disconnected
 
             withDependencies {
                 $0.continuousClock = TestClock()
@@ -79,9 +79,9 @@
 
         @Test("Countries view - With banners")
         func countriesViewWithBanners() {
-            @Shared(.secureCoreToggle) var secureCoreToggle = false
-            @Shared(.userTier) var userTier: Int? = .freeTier
-            @Shared(.connectionState) var connectionState: ConnectionState = .disconnected
+            @SharedReader(.secureCoreToggle) var secureCoreToggle = false
+            @SharedReader(.userTier) var userTier: Int? = .freeTier
+            @SharedReader(.connectionState) var connectionState: ConnectionState = .disconnected
 
             withDependencies {
                 $0.continuousClock = TestClock()
@@ -103,9 +103,9 @@
 
         @Test("Countries view - Free user view")
         func countriesViewFreeUser() {
-            @Shared(.secureCoreToggle) var secureCoreToggle = false
-            @Shared(.userTier) var userTier: Int? = .freeTier
-            @Shared(.connectionState) var connectionState: ConnectionState = .disconnected
+            @SharedReader(.secureCoreToggle) var secureCoreToggle = false
+            @SharedReader(.userTier) var userTier: Int? = .freeTier
+            @SharedReader(.connectionState) var connectionState: ConnectionState = .disconnected
 
             withDependencies {
                 $0.continuousClock = TestClock()

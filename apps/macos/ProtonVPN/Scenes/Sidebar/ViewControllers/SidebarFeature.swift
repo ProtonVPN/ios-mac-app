@@ -199,7 +199,7 @@ struct SidebarFeature {
     @Dependency(\.announcementRefresher) private var announcementRefresher
 
     @Shared(.killSwitch) private var killSwitch: Bool
-    @Shared(.connectionProtocol) private var sharedConnectionProtocol: ConnectionProtocol
+    @SharedReader(.connectionProtocol) private var sharedConnectionProtocol: ConnectionProtocol
     @Shared(.plutoniumFeature) private var plutoniumFeature: PlutoniumFeatureToggle
 
     var body: some ReducerOf<Self> {
@@ -260,7 +260,7 @@ private extension SidebarFeature {
             switch action {
             case .viewDidLoad:
                 state.selectedTab = .countries
-                @Shared(.mapWidth) var mapWidth
+                @SharedReader(.mapWidth) var mapWidth
                 let loadedMapWidth = mapWidth
                 state.mapWidth = loadedMapWidth > Int(environment.expandButtonWidth) ? CGFloat(loadedMapWidth) : environment.defaultMapWidth
                 return .merge(
@@ -359,7 +359,7 @@ private extension SidebarFeature {
                 return .run { _ in applyPlanChangeFeatureResets(planChange) }
             case .refreshAnnouncementsIfNeeded:
                 return .run { _ in
-                    @Shared(.featureFlags) var featureFlags
+                    @SharedReader(.featureFlags) var featureFlags
                     guard featureFlags.pollNotificationAPI else { return }
                     announcementRefresher.tryRefreshing()
                 }
@@ -851,7 +851,7 @@ private extension SidebarFeature {
 
         // Misconfigured LAN. Fires when an interface uses a non-RFC1918 subnet that the OS
         // would otherwise route around the tunnel. Kill Switch fully mitigates the issue.
-        @Shared(.featureFlags) var featureFlags
+        @SharedReader(.featureFlags) var featureFlags
         if !pending.resolvedIntercepts.contains(.badLAN),
            featureFlags.unsafeLanWarnings,
            !killSwitch,
@@ -916,7 +916,7 @@ private extension SidebarFeature {
         connectionProtocol: ConnectionProtocol
     ) -> ConnectionPreparationIntent {
         let spec = enforceP2PIfPortForwardingEnabled(spec)
-        @Shared(.smartProtocolConfig) var smartProtocolConfig
+        @SharedReader(.smartProtocolConfig) var smartProtocolConfig
         let acceptableProtocols: ProtocolSupport = switch connectionProtocol {
         case let .vpnProtocol(vpnProtocol):
             vpnProtocol.protocolSupport

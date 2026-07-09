@@ -36,11 +36,11 @@
         let localValuesOverrides: [String: String]
 
         static func current() -> EnvironmentSettings {
-            @Shared(.apiEndpoint) var apiEndpoint
-            @Shared(.atlasSecret) var atlasSecret
-            @Shared(.atlasSecretFetchURLString) var atlasSecretFetchURLString
-            @Shared(.featureFlagOverrides) var featureFlagOverrides
-            @Shared(.localValuesOverrides) var localValuesOverrides
+            @SharedReader(.apiEndpoint) var apiEndpoint
+            @SharedReader(.atlasSecret) var atlasSecret
+            @SharedReader(.atlasSecretFetchURLString) var atlasSecretFetchURLString
+            @SharedReader(.featureFlagOverrides) var featureFlagOverrides
+            @SharedReader(.localValuesOverrides) var localValuesOverrides
             return .init(
                 apiEndpoint: apiEndpoint ?? Bundle.dynamicDomain ?? "",
                 atlasSecret: atlasSecret ?? Bundle.atlasSecret ?? "",

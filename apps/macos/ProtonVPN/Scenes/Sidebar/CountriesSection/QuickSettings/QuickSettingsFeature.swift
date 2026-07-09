@@ -117,7 +117,7 @@ struct QuickSettingsFeature {
     }
 
     @SharedReader(.discourageSecureCore) private var discourageSecureCore: Bool
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
     @Shared(.killSwitch) private var killSwitch: Bool
     @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
@@ -601,7 +601,7 @@ extension QuickSettingsFeature {
     /// Kill Switch conflicts with LAN access and with Plutonium split-tunneling. When neither
     /// is on, enabling KS is uncontroversial — skip the confirmation alert.
     static func requiresKillSwitchConflictConfirmation() -> Bool {
-        @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
+        @SharedReader(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
         let excludeLocalNetworksIsOff = featureValue(for: ExcludeLocalNetworks.self) == .off
         guard excludeLocalNetworksIsOff, case .disabled = plutonium else { return true }
         return false

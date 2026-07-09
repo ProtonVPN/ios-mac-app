@@ -59,7 +59,7 @@ final class ConnectionSettingsViewModel {
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     private lazy var navService: NavigationService = factory.makeNavigationService()
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
 
     var selectedProtocol: ConnectionProtocol {
         didSet {
@@ -75,8 +75,8 @@ final class ConnectionSettingsViewModel {
         }
     }
 
-    @Shared(.featureFlags) private var featureFlags: FeatureFlags
-    @Shared(.connectionProtocol) private var sharedConnectionProtocol: ConnectionProtocol
+    @SharedReader(.featureFlags) private var featureFlags: FeatureFlags
+    @SharedReader(.connectionProtocol) private var sharedConnectionProtocol: ConnectionProtocol
     @Shared(.smartProtocol) private var sharedSmartProtocol: Bool
     @Shared(.killSwitch) private var killSwitch: Bool
 
@@ -156,8 +156,8 @@ final class ConnectionSettingsViewModel {
     var autoConnect: (enabled: Bool, profileId: String?)? {
         get {
             guard authKeychain.username != nil else { return nil }
-            @Shared(.autoConnect) var autoConnect
-            @Shared(.autoConnectProfileId) var autoConnectProfileId
+            @SharedReader(.autoConnect) var autoConnect
+            @SharedReader(.autoConnectProfileId) var autoConnectProfileId
             return (autoConnect, autoConnectProfileId)
         }
         set {
@@ -175,7 +175,7 @@ final class ConnectionSettingsViewModel {
     var quickConnect: String? {
         get {
             guard authKeychain.username != nil else { return nil }
-            @Shared(.quickConnect) var quickConnect
+            @SharedReader(.quickConnect) var quickConnect
             return quickConnect
         }
         set {
@@ -346,7 +346,7 @@ final class ConnectionSettingsViewModel {
     func confirmEnableSmartProtocol(_ completion: @escaping (Result<Void, Error>) -> Void) {
         switch connectionState {
         case .connected, .connecting:
-            @Shared(.smartProtocolConfig) var smartProtocolConfig
+            @SharedReader(.smartProtocolConfig) var smartProtocolConfig
             let config = smartProtocolConfig
             let supported = connectionState.resolvedServer?.endpoint.supports(protocolSet: ProtocolSupport(vpnProtocols: config.supportedProtocols)) ?? false
 

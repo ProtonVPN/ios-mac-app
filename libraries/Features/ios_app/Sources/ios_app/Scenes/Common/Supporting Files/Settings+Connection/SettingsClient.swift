@@ -25,11 +25,11 @@ import VPNAppCore
 extension SettingsClient: @retroactive DependencyKey {
     public static let liveValue = SettingsClient(
         isActive: {
-            @Shared(.connectionState) var connectionState
+            @SharedReader(.connectionState) var connectionState
             return !(connectionState.is(\.disconnected) || connectionState.is(\.resolving))
         },
         featureChangeAvailability: { feature in
-            @Shared(.connectionState) var connectionState
+            @SharedReader(.connectionState) var connectionState
 
             if connectionState.is(\.disconnected) {
                 return .immediate
@@ -45,7 +45,7 @@ extension SettingsClient: @retroactive DependencyKey {
             }
         },
         protocolChangeAvailability: { _ in
-            @Shared(.connectionState) var connectionState
+            @SharedReader(.connectionState) var connectionState
             switch connectionState {
             case .disconnected, .disconnecting:
                 return .immediate
@@ -58,7 +58,7 @@ extension SettingsClient: @retroactive DependencyKey {
                 return .immediate
 
             case let .connecting(.resolved(intent)):
-                @Shared(.smartProtocolConfig) var smartProtocolConfig
+                @SharedReader(.smartProtocolConfig) var smartProtocolConfig
                 let supportedProtocols = smartProtocolConfig.supportedProtocols
 
                 let serverSupportsNewProtocol = intent.resolvedServer.endpoint
@@ -67,7 +67,7 @@ extension SettingsClient: @retroactive DependencyKey {
                 return serverSupportsNewProtocol ? .immediate : .protocolUnavailable
 
             case let .connected(_, connectionData):
-                @Shared(.smartProtocolConfig) var smartProtocolConfig
+                @SharedReader(.smartProtocolConfig) var smartProtocolConfig
                 let supportedProtocols = smartProtocolConfig.supportedProtocols
 
                 let serverSupportsNewProtocol = connectionData.currentPeer.endpoint

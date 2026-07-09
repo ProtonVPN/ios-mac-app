@@ -50,8 +50,8 @@ class ProfilesMenuViewModel {
 
     private var notificationTokens: [NotificationToken] = []
 
-    @Shared(.sessionStatus) private var sessionStatus: SessionStatus
-    @Shared(.featureFlags) private var featureFlags: FeatureFlags
+    @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
+    @SharedReader(.featureFlags) private var featureFlags: FeatureFlags
     private var cancellables = Set<AnyCancellable>()
 
     init(

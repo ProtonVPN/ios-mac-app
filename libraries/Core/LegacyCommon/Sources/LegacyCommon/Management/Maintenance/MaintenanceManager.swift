@@ -39,7 +39,7 @@ public protocol MaintenanceManagerProtocol {
 public class MaintenanceManager: MaintenanceManagerProtocol {
     @Dependency(\.vpnApiClient) private var vpnApiClient
     @Dependency(\.vpnKeychain) private var vpnKeychain
-    @Shared(.connectionState) private var connectionState: ConnectionState
+    @SharedReader(.connectionState) private var connectionState: ConnectionState
 
     private var observerTask: Task<Void, Error>?
     private var observerTimeInterval: TimeInterval?
@@ -85,7 +85,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
 
     @MainActor
     private func checkServerAsync() async throws -> Bool {
-        @Shared(.userLocation) var userLocation
+        @SharedReader(.userLocation) var userLocation
         let location = userLocation
         guard let activeServer = connectionState.resolvedServer else {
             log.info("No active connection", category: .app)
