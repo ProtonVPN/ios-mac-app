@@ -1,24 +1,22 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "A5D00C8D-43B0-46BF-9008-4445D4DA52F7",
-      "name" : "Test Scheme Action",
-      "options" : {
-
-      }
+      "id": "A5D00C8D-43B0-46BF-9008-4445D4DA52F7",
+      "name": "Test Scheme Action",
+      "options": {}
     }
   ],
-  "defaultOptions" : {
-    "performanceAntipatternCheckerEnabled" : true
+  "defaultOptions": {
+    "performanceAntipatternCheckerEnabled": true
   },
-  "testTargets" : [
+  "testTargets": [
     {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "PCAPTests",
-        "name" : "PCAPTests"
+      "target": {
+        "containerPath": "container:",
+        "identifier": "PCAPTests",
+        "name": "PCAPTests"
       }
     }
   ],
-  "version" : 1
+  "version": 1
 }

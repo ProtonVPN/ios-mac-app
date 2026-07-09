@@ -104,6 +104,13 @@
       }
     },
     {
+      "target": {
+        "containerPath": "container:../../libraries/Features/PCAP",
+        "identifier": "PCAPTests",
+        "name": "PCAPTests"
+      }
+    },
+    {
       "skippedTests": [
         "FileLogHandlerTests",
         "FileLogHandlerTests/testCreatesFile()",
@@ -180,13 +187,6 @@
         "containerPath": "container:../../libraries/Features/ios_app",
         "identifier": "ios_appTests",
         "name": "ios_appTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:../../libraries/Features/PCAP",
-        "identifier" : "PCAPTests",
-        "name" : "PCAPTests"
       }
     }
   ],
