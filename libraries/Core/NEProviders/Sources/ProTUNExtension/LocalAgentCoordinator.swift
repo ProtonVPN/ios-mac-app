@@ -91,14 +91,17 @@ private extension LocalAgentCoordinator {
                         estimatedRoundTripTime: rtt
                     )
                 )
-            case .error(.apiSessionExpired):
+            case let .error(.apiError(_, _, _, _, refreshTokenInvalid)) where refreshTokenInvalid:
+                fallthrough
+            case .error(.forkSelectorNeeded):
                 continuation.yield(.forkSelectorRequest)
-            case let .error(protunError):
-                // TODO: ProTUN: enable ZeroPeer KS here once it is available
-                // if protunError == .certificateRefreshFatalError {
-                // + adapter?.connection?.disconnectAndWait()
-                // }
-                await sendError(error: .init(protunError))
+            case let .error(.apiError(_, httpCode, bodyCode, _, _)):
+                Logger.localAgent.error("Encountered API error: \(event)")
+                await sendError(error: APIError(httpCode: httpCode ?? 0, bodyCode: bodyCode ?? 0))
+            case let .error(.localAgentSettingPolicyRefused(setting)):
+                await sendError(error: LocalAgent.Error.policyRefusedError(from: setting))
+            case .error(.certificateRefreshFatalError):
+                await sendError(error: ExtensionTunnelError.certificateRefreshFatalError)
             case .packetCaptureStarted, .packetCaptureStopped:
                 break
             @unknown default:
@@ -143,7 +146,7 @@ private extension LocalAgentCoordinator {
         extensionIPCServer.publishConnectionStats(stats)
     }
 
-    func sendError(error: LocalAgent.Error) async {
+    func sendError(error: Error) async {
         let id = await adapter.currentRequestId
 
         extensionIPCServer.publishError(error, id)
@@ -162,31 +165,22 @@ extension ConnectionState {
 }
 
 extension LocalAgent.Error {
-    init(_ protunError: ErrorEvent) {
-        switch protunError {
-        case .apiSessionExpired:
-            self = .apiSessionExpired
-        case .certificateRefreshFatalError:
-            self = .certificateRefreshFatalError
-        case let .localAgentSettingPolicyRefused(setting):
-            switch setting {
-            case .bouncing:
-                self = .localAgentBouncingSettingRefused
-            case .netshieldLevel:
-                self = .localAgentNetShieldSettingRefused
-            case .portForwarding:
-                self = .localAgentPortForwardingSettingRefused
-            case .randomNat:
-                self = .localAgentRandomNatSettingRefused
-            case .safeMode:
-                self = .localAgentSafeModeSettingRefused
-            case .splitTcp:
-                self = .localAgentSplitTcpSettingRefused
-            @unknown default:
-                self = .localAgentUnknownSettingRefused
-            }
+    static func policyRefusedError(from settingType: LocalAgentSettingType) -> Self {
+        switch settingType {
+        case .bouncing:
+            return .bouncingSettingRefused
+        case .netshieldLevel:
+            return .netShieldSettingRefused
+        case .portForwarding:
+            return .portForwardingSettingRefused
+        case .randomNat:
+            return .randomNatSettingRefused
+        case .safeMode:
+            return .safeModeSettingRefused
+        case .splitTcp:
+            return .splitTcpSettingRefused
         @unknown default:
-            self = .unknownProTUNError
+            return .unknownSettingRefused
         }
     }
 }

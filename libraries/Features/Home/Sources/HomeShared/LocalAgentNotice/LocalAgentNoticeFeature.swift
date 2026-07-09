@@ -18,16 +18,20 @@
 
 import CommonNetworking
 import ComposableArchitecture
-import Darwin
+import Connection
+import LocalAgent
 
 @Reducer
 public struct LocalAgentNoticeFeature {
     @ObservableState
     public struct State: Equatable {
-        public let localAgentNoticeErrorCode: FourCharCode?
+        /// The 2FA requirement that prompted this notice. The sheet is only presented for 2FA notices;
+        /// setting-refusal notices are surfaced as a plain alert by the parent instead.
+        public let twoFactorError: LocalAgent.Error
 
-        public init(code: FourCharCode? = nil) {
-            self.localAgentNoticeErrorCode = code
+        public init(twoFactorError: LocalAgent.Error) {
+            assert(twoFactorError.twoFactorRequired, "Non-2FA error presented in LocalAgentNoticeFeature?")
+            self.twoFactorError = twoFactorError
         }
     }
 
