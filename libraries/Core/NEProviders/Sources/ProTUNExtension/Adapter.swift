@@ -68,7 +68,13 @@ final class ProTUNAdapter: @unchecked Sendable {
 
     private var localAgentCoordinator: LocalAgentCoordinator?
 
-    private let networkPath: OSAllocatedUnfairLock<NetworkPath> = .init(uncheckedState: .init(status: .unsatisfied))
+    private let networkPath: OSAllocatedUnfairLock<NetworkPath> = .init(uncheckedState: .init(
+        status: .unsatisfied,
+        gateways: [],
+        supportsIPv4: false,
+        supportsIPv6: false
+    ))
+
     private var localAgentTask: Task<Void, Never>?
     private var pathUpdatesTask: Task<Void, Never>?
 
@@ -127,8 +133,12 @@ final class ProTUNAdapter: @unchecked Sendable {
             await withTaskCancellationHandler {
                 let stream = pathMonitor.subscribe()
                 pathMonitor.start()
+
+                var currentPath = networkPath.withLock { $0 }
                 for await newPath in stream {
-                    handleNetworkPathUpdate(newPath)
+                    handleNetworkPathUpdate(old: currentPath, new: newPath)
+                    currentPath = newPath
+                    networkPath.withLock { $0 = newPath }
                 }
             } onCancel: {
                 pathMonitor.stop()
@@ -136,10 +146,22 @@ final class ProTUNAdapter: @unchecked Sendable {
         }
     }
 
-    func handleNetworkPathUpdate(_ newPath: NetworkPath) {
-        Logger.adapter.info("Network path update: \(newPath, privacy: .public)")
-        networkPath.withLock { $0 = newPath }
-        connection?.onConnectivityChange(event: .networkSwitch)
+    func handleNetworkPathUpdate(old: NetworkPath, new: NetworkPath) {
+        let event: ConnectivityEvent? = switch (old.isUsable, new.isUsable) {
+        case (false, true): .up
+        case (true, false): .down
+        // avoid flapping connectivity events if the status hasn't meaningfully changed
+        case (false, false): nil
+        case (true, true): old == new ? nil : .networkSwitch
+        }
+
+        guard let event else {
+            Logger.adapter.debug("Ignoring connectivity event: \(new, privacy: .public)")
+            return
+        }
+
+        Logger.adapter.info("Network path update: \(new, privacy: .public) (now \(event))")
+        connection?.onConnectivityChange(event: event)
     }
 
     func start(config: Configuration) async throws {

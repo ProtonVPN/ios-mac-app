@@ -241,6 +241,17 @@ extension Event: @retroactive CustomStringConvertible {
     }
 }
 
+extension ConnectivityEvent: @retroactive CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .up: "up"
+        case .down: "down"
+        case .networkSwitch: "networkSwitch"
+        @unknown default: unknownDefault(value: "(unknown value)")
+        }
+    }
+}
+
 extension ErrorEvent: @retroactive CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {

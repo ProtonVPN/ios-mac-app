@@ -25,15 +25,15 @@ final class ProTUNLogger: ClientLogger {
         case .trace:
             Logger.library.trace("\(message, privacy: .public)")
         case .debug:
-            Logger.library.debug("\(message, privacy: .public)")
-        case .info:
             Logger.library.info("\(message, privacy: .public)")
+        case .info:
+            Logger.library.log("\(message, privacy: .public)")
         case .warn:
             Logger.library.warning("\(message, privacy: .public)")
         case .error:
             Logger.library.error("\(message, privacy: .public)")
         @unknown default:
-            Logger.library.info("\(message, privacy: .public)")
+            Logger.library.log("\(message, privacy: .public)")
         }
     }
 }
