@@ -172,7 +172,7 @@ private extension AgentConnectionWaitReason {
 
     var ipcAgentJailReason: IPCConnectionAgentJailReason {
         switch self {
-        case let .hardJailed(jails): jails.first?.ipcJailReason ?? .unset
+        case let .hardJailed(jails): jails.first?.reason.ipcJailReason ?? .unset
         default: .unset
         }
     }
