@@ -508,10 +508,10 @@ class CreateNewProfileViewModel {
 
         let profileId = profileId ?? .randomString(length: Profile.idLength)
 
-        let accessTier = serverRepository.serverProperties(
+        let accessTier = serverRepository.serverAvailability(
             for: serverOffering,
             serverType: state.serverType
-        ).requiredTier
+        ).lowestServerTier
 
         let profile = Profile(
             id: profileId,

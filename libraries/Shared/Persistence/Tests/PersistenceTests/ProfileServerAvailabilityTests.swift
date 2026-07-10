@@ -21,9 +21,9 @@ import Domain
 import PersistenceTestSupport
 import Testing
 
-struct ProfileServerPropertiesTests {
+struct ProfileServerAvailabilityTests {
     @Test
-    func resolvesCurrentCustomServerProperties() {
+    func resolvesCurrentCustomServerAvailability() {
         let fallback = serverModel(id: "server", tier: .freeTier, status: 1)
         var repository = ServerRepository.empty()
         repository.server = { _, _ in
@@ -34,13 +34,13 @@ struct ProfileServerPropertiesTests {
             )
         }
 
-        let properties = repository.serverProperties(
+        let availability = repository.serverAvailability(
             for: .custom(ServerWrapper(server: fallback)),
             serverType: .standard
         )
 
-        #expect(properties.requiredTier == .paidTier)
-        #expect(properties.isUnderMaintenance)
+        #expect(availability.lowestServerTier == .paidTier)
+        #expect(availability.isUnderMaintenance)
     }
 
     @Test
@@ -48,13 +48,13 @@ struct ProfileServerPropertiesTests {
         let fallback = serverModel(id: "missing", tier: .internalTier, status: 0)
         let repository = ServerRepository.empty()
 
-        let properties = repository.serverProperties(
+        let availability = repository.serverAvailability(
             for: .custom(ServerWrapper(server: fallback)),
             serverType: .standard
         )
 
-        #expect(properties.requiredTier == .internalTier)
-        #expect(properties.isUnderMaintenance)
+        #expect(availability.lowestServerTier == .internalTier)
+        #expect(availability.isUnderMaintenance)
     }
 
     @Test
@@ -79,39 +79,39 @@ struct ProfileServerPropertiesTests {
             ]
         }
 
-        let properties = repository.serverProperties(
+        let availability = repository.serverAvailability(
             for: .fastest("US"),
             serverType: .standard
         )
 
-        #expect(properties.requiredTier == .paidTier)
-        #expect(properties.isUnderMaintenance)
+        #expect(availability.lowestServerTier == .paidTier)
+        #expect(availability.isUnderMaintenance)
     }
 
     @Test
     func treatsCountrylessProfileAsFreeAndAvailable() {
         let repository = ServerRepository.empty()
 
-        let properties = repository.serverProperties(
+        let availability = repository.serverAvailability(
             for: .random(nil),
             serverType: .standard
         )
 
-        #expect(properties.requiredTier == .freeTier)
-        #expect(!properties.isUnderMaintenance)
+        #expect(availability.lowestServerTier == .freeTier)
+        #expect(!availability.isUnderMaintenance)
     }
 
     @Test
     func deniesProfileWhenCountryGroupIsMissing() {
         let repository = ServerRepository.empty()
 
-        let properties = repository.serverProperties(
+        let availability = repository.serverAvailability(
             for: .fastest("US"),
             serverType: .standard
         )
 
-        #expect(properties.requiredTier == .max)
-        #expect(properties.isUnderMaintenance)
+        #expect(availability.lowestServerTier == .max)
+        #expect(availability.isUnderMaintenance)
     }
 
     private func serverModel(id: String, tier: Int, status: Int) -> ServerModel {

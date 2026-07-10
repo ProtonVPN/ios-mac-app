@@ -39,6 +39,12 @@ public enum ProfileConstants {
     public static let defaultIds = [fastestId, randomId]
 
     // WARNING: consuming client must contain "fastest" and "random" image assets
+    //
+    // NOTE: this is old behaviour. These two default profiles used to split by plan: 'random' was
+    // free and 'fastest' was paid (that's why `randomProfile` hardcodes `accessTier` to 0 and
+    // ignores its parameter). This barely matters now — profiles are a paid-only feature (see
+    // `ProfileAuthorizer.canUseProfiles`), and free users get a free 'Fastest' connection instead of
+    // 'random' (see `CountriesMainFeature`). These `accessTier` values can be cleaned up in Profiles 2.0
     public static func defaultProfiles(connectionProtocol: ConnectionProtocol) -> [Profile] {
         [
             fastestProfile(connectionProtocol: connectionProtocol, defaultProfileAccessTier: .paidTier),

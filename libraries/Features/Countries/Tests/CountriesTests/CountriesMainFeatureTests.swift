@@ -47,6 +47,7 @@ struct CountriesMainFeatureTests {
 
     @Test("Reload content with standard server type")
     func reloadContentWithStandardServerType() async {
+        @SharedReader(.userTier) var userTier: Int? = .paidTier
         let mockSections = IdentifiedArrayOf<CountrySectionFeature.State>()
 
         let store = TestStore(initialState: .loading) {
@@ -64,6 +65,7 @@ struct CountriesMainFeatureTests {
     @Test("Reload content with secure core server type")
     func reloadContentWithSecureCoreServerType() async {
         @SharedReader(.secureCoreToggle) var isSecureCore = true
+        @SharedReader(.userTier) var userTier: Int? = .paidTier
         let mockSections = IdentifiedArrayOf<CountrySectionFeature.State>()
 
         let store = TestStore(initialState: .loading) {
@@ -112,6 +114,7 @@ struct CountriesMainFeatureTests {
 
     @Test("Plan changed triggers reload content")
     func planChagedTriggersReloadContent() async {
+        @SharedReader(.userTier) var userTier: Int? = .paidTier
         let store = TestStore(initialState: .loading) {
             CountriesMainFeature()
         } withDependencies: {
@@ -130,6 +133,7 @@ struct CountriesMainFeatureTests {
     @Test("Apply secure core toggle from standard state")
     func applySecureCoreToggleFromStandard() async {
         @Shared(.secureCoreToggle) var isSecureCore = false
+        @SharedReader(.userTier) var userTier: Int? = .paidTier
         let initialState = CountriesMainFeature.State.standard(.init(sections: []))
 
         let store = TestStore(initialState: initialState) {
@@ -139,7 +143,7 @@ struct CountriesMainFeatureTests {
         }
 
         await store.send(.standard(.applySecureCoreToggle)) {
-            guard case var .standard(state) = $0 else {
+            guard case let .standard(state) = $0 else {
                 Issue.record("Expected standard state")
                 return
             }
@@ -157,6 +161,7 @@ struct CountriesMainFeatureTests {
     @Test("Apply secure core toggle from secure core state")
     func applySecureCoreToggleFromSecureCore() async {
         @Shared(.secureCoreToggle) var isSecureCore = true
+        @SharedReader(.userTier) var userTier: Int? = .paidTier
         let initialState = CountriesMainFeature.State.secureCore(.init(sections: []))
 
         let store = TestStore(initialState: initialState) {
@@ -166,7 +171,7 @@ struct CountriesMainFeatureTests {
         }
 
         await store.send(.secureCore(.applySecureCoreToggle)) {
-            guard case var .secureCore(state) = $0 else {
+            guard case let .secureCore(state) = $0 else {
                 Issue.record("Expected secure core state")
                 return
             }

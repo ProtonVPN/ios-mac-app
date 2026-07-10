@@ -194,7 +194,7 @@ public class VpnKeychain: VpnKeychainProtocol {
             log.error("Error occurred during OpenVPN password storage", category: .keychain, metadata: ["error": "\(error)"])
         }
 
-        VpnCredentialsProjection.update(
+        VpnCredentialsMetadataMirror.update(
             afterStoring: vpnCredentials,
             succeeded: didStoreCredentials
         )
@@ -211,7 +211,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         log.debug("Clearing vpn credentials from keychain", category: .keychain)
         cached = nil
         appKeychain[data: StorageKey.vpnCredentials] = nil
-        VpnCredentialsProjection.clear()
+        VpnCredentialsMetadataMirror.clear()
         appKeychain[data: StorageKey.widgetPublicKey] = nil
         deleteServerCertificate()
         do {
@@ -422,7 +422,7 @@ public class VpnKeychain: VpnKeychainProtocol {
 
 /// Mirrors the non-secret facets of the stored VPN credentials (tier and plan) into shared storage,
 /// keeping them in sync with the keychain so features can read them without touching the keychain.
-enum VpnCredentialsProjection {
+enum VpnCredentialsMetadataMirror {
     static func update(afterStoring credentials: VpnCredentials, succeeded: Bool) {
         guard succeeded else { return }
         @Shared(.userTier) var userTier

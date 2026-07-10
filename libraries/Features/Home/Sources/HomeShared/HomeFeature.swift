@@ -503,7 +503,7 @@ private extension HomeFeature {
                 case .tapAction:
                     if let detailsState = state.connectionState.connectionScreenFeatureState() {
                         state.destination = .connectionDetails(detailsState)
-                    } else if userTier == .freeTier {
+                    } else if userTier.isFreeTier {
                         let freeCountries = Array(Set(
                             serverRepository.getServers(
                                 filteredBy: [.tier(.exact(tier: .freeTier))],

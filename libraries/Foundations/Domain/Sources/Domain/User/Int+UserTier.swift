@@ -36,3 +36,16 @@ public extension Int {
         static let `internal` = 3
     }
 }
+
+public extension Int? {
+    /// Whether the account is on the free tier, treating a missing tier (logged out or not yet
+    /// loaded) as free — matching the `nil == free` convention used by `CredentialsProvider.tier`.
+    var isFreeTier: Bool {
+        (self ?? .freeTier).isFreeTier
+    }
+
+    /// Whether the account is on a paid tier, treating a missing tier as free.
+    var isPaidTier: Bool {
+        (self ?? .freeTier).isPaidTier
+    }
+}

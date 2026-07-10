@@ -21,7 +21,7 @@ import Testing
 @testable import VPNShared
 
 @Suite(.serialized)
-struct VpnCredentialsProjectionTests {
+struct VpnCredentialsMetadataMirrorTests {
     @Test
     func projectsOnlySuccessfullyStoredCredentialsAndClearsThem() {
         @Shared(.userTier) var userTier
@@ -35,7 +35,7 @@ struct VpnCredentialsProjectionTests {
 
         $userTier.withLock { $0 = .internalTier }
         $userPlan.withLock { $0 = "internal" }
-        VpnCredentialsProjection.update(
+        VpnCredentialsMetadataMirror.update(
             afterStoring: VpnKeychainMock.vpnCredentials(
                 planName: "free",
                 maxTier: .freeTier
@@ -45,7 +45,7 @@ struct VpnCredentialsProjectionTests {
         #expect(userTier == .internalTier)
         #expect(userPlan == "internal")
 
-        VpnCredentialsProjection.update(
+        VpnCredentialsMetadataMirror.update(
             afterStoring: VpnKeychainMock.vpnCredentials(
                 planName: "plus",
                 maxTier: .paidTier
@@ -55,7 +55,7 @@ struct VpnCredentialsProjectionTests {
         #expect(userTier == .paidTier)
         #expect(userPlan == "plus")
 
-        VpnCredentialsProjection.clear()
+        VpnCredentialsMetadataMirror.clear()
         #expect(userTier == nil)
         #expect(userPlan == nil)
     }

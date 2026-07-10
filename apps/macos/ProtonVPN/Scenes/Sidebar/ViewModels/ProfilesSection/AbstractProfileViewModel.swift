@@ -39,9 +39,9 @@ class AbstractProfileViewModel {
         self.userTier = userTier
 
         @Dependency(\.serverRepository) var serverRepository
-        let serverProperties = serverRepository.serverProperties(for: profile)
-        self.lowestServerTier = serverProperties.requiredTier
-        self.underMaintenance = serverProperties.isUnderMaintenance
+        let serverAvailability = serverRepository.serverAvailability(for: profile)
+        self.lowestServerTier = serverAvailability.lowestServerTier
+        self.underMaintenance = serverAvailability.isUnderMaintenance
     }
 
     var canUseProfile: Bool {

@@ -343,6 +343,7 @@ struct CountriesFeatureTests {
 
     @Test("Country row tap shows city-state sheet when feature is enabled")
     func countryRowTapShowsCityStateSheet() async {
+        @SharedReader(.userTier) var userTier: Int? = .paidTier
         let group = ServerGroupInfo(
             kind: .country(code: "US"),
             featureIntersection: [],

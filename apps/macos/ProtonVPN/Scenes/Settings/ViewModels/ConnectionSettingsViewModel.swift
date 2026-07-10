@@ -542,9 +542,7 @@ final class ConnectionSettingsViewModel {
     }
 
     var shouldShowPFNotifications: Bool {
-        // Port-forwarding notifications are a paid feature and unrelated to profiles; gate on the
-        // account tier directly rather than reusing `profileAuthorizer.canUseProfiles` (which happens
-        // to evaluate to the same paid-tier check today, but couples two unrelated features).
+        // Port-forwarding notifications are a paid feature
         credentialsProvider.tier.isPaidTier
     }
 
@@ -587,12 +585,12 @@ final class ConnectionSettingsViewModel {
             return .init()
         }
         let profile = availableProfiles[index]
-        let requiredTier = serverRepository.serverProperties(for: profile).requiredTier
-        // `availableProfiles` already applies the profiles feature gate (free users only ever see the
-        // default 'fastest' profile here), so this row only needs a tier-sufficiency check. Using
-        // `canUseProfile` would re-apply the paid-tier gate and wrongly disable the free plan's default
-        // quick-connect option.
-        let enabled = credentialsProvider.tier >= requiredTier
+        let lowestServerTier = serverRepository.serverAvailability(for: profile).lowestServerTier
+        // Free users only see the default 'fastest' profile here, because `availableProfiles` already
+        // hides the rest from them. So here we just check the user's tier is high enough for this
+        // server. We don't use `canUseProfile` because it also requires a paid plan, which would
+        // wrongly grey out the free user's only option.
+        let enabled = credentialsProvider.tier >= lowestServerTier
         return concatenated(imageString: profile.profileIcon.attributedAttachment(), with: profile.name, enabled: enabled)
     }
 

@@ -48,7 +48,7 @@ public enum QuickConnectIntent {
         }
 
         // 2) Otherwise fall back to fastest with Secure Core / free-tier accommodations.
-        let isFreeTier = userTier?.isFreeTier ?? true
+        let isFreeTier = userTier.isFreeTier
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: secureCoreToggle,
             connectedExitCountryCode: nil,

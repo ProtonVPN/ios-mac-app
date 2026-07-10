@@ -59,7 +59,7 @@ struct ConnectOnClickButton: View {
                 }
             }
             Spacer(minLength: 0)
-            if isHovering, userTier?.isFreeTier == true {
+            if isHovering, userTier.isFreeTier {
                 Theme.Asset.vpnSubscriptionBadge.swiftUIImage.resizable()
                     .scaledToFit()
                     .frame(height: .themeSpacing20)
@@ -81,11 +81,11 @@ struct ConnectOnClickButton: View {
     }
 
     var isDisabled: Bool {
-        groupInfo.isUnderMaintenance || userTier?.isFreeTier == true
+        groupInfo.isUnderMaintenance || userTier.isFreeTier
     }
 
     var help: String {
-        guard userTier?.isFreeTier != true else {
+        guard userTier.isPaidTier else {
             return Localizable.upgradeToPlus
         }
 

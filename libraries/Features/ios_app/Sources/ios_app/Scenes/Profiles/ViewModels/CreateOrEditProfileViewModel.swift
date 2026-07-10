@@ -166,10 +166,10 @@ class CreateOrEditProfileViewModel: NSObject {
             return
         }
 
-        let accessTier = serverRepository.serverProperties(
+        let accessTier = serverRepository.serverAvailability(
             for: serverOffering,
             serverType: state
-        ).requiredTier
+        ).lowestServerTier
 
         let profileId: String = editedProfile?.id ?? .randomString(length: Profile.idLength)
         let profile = Profile(

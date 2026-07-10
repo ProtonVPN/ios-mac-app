@@ -67,7 +67,7 @@ struct HomeConnectionCardView: View {
         if store.connectionState.connectionStatusAvailable {
             IconProvider.chevronRight
                 .foregroundColor(Color(.icon, .weak))
-        } else if store.connectionState == .disconnected, (store.userTier ?? .freeTier).isFreeTier {
+        } else if store.connectionState == .disconnected, store.userTier.isFreeTier {
             IconProvider.infoCircle
                 .foregroundColor(Color(.icon, .weak))
         }
@@ -130,7 +130,7 @@ struct HomeConnectionCardView: View {
                     underMaintenance: false,
                     isPinned: false,
                     server: store.presentedServer,
-                    withServerNumber: (store.userTier ?? .freeTier).isFreeTier,
+                    withServerNumber: store.userTier.isFreeTier,
                     isConnected: false,
                     images: .coreImages
                 )
