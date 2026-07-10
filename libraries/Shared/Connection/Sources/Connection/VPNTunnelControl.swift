@@ -26,17 +26,26 @@ public struct VPNTunnelControl: Sendable {
     /// won't auto-restart
     public var stop: @Sendable () async throws -> Void
 
-    public init(stop: @escaping @Sendable () async throws -> Void) {
+    /// Switches the live tunnel to a peerless zero-peer blackhole in place, so Advanced kill switch keeps
+    /// blocking after sign-out without tearing the tunnel down
+    public var enterZeroPeerBlocking: @Sendable () async throws -> Void
+
+    public init(
+        stop: @escaping @Sendable () async throws -> Void,
+        enterZeroPeerBlocking: @escaping @Sendable () async throws -> Void
+    ) {
         self.stop = stop
+        self.enterZeroPeerBlocking = enterZeroPeerBlocking
     }
 }
 
 extension VPNTunnelControl: DependencyKey {
-    public static let liveValue = VPNTunnelControl(stop: {
-        try await stopActiveVPNTunnel()
-    })
+    public static let liveValue = VPNTunnelControl(
+        stop: { try await stopActiveVPNTunnel() },
+        enterZeroPeerBlocking: { try await enterZeroPeerBlockingTunnel() }
+    )
 
-    public static let testValue = VPNTunnelControl(stop: {})
+    public static let testValue = VPNTunnelControl(stop: {}, enterZeroPeerBlocking: {})
 }
 
 public extension DependencyValues {

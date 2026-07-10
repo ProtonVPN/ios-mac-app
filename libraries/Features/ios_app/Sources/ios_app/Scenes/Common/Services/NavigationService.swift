@@ -172,7 +172,12 @@ final class NavigationService {
 
     func presentWelcome(initialError: String?) {
         loginService.showWelcome(initialError: initialError, withOverlayViewController: nil)
-        tabBarController.viewControllers = nil
+        // Release the old tab bar and start fresh. Merely nilling `viewControllers` on the reused,
+        // already-presented instance is unreliable — UIKit reads it back as a non-nil/empty array, so
+        // `setupTabs`' `== nil` guard would skip the rebuild and re-show this stale instance (still holding
+        // the previous session's Settings nav with the tab bar hidden). A brand-new instance reports
+        // `viewControllers == nil` reliably, so the next login rebuilds the tabs with post-login data.
+        tabBarController = TabBarController()
     }
 
     func presentLogin(flow: LoginFlowType = .normal) {
@@ -247,8 +252,8 @@ final class NavigationService {
         defer {
             windowService.show(viewController: tabBarController)
         }
-        guard tabBarController.viewControllers == nil else {
-            // tabBarController is present from the guest mode
+        guard tabBarController.viewControllers?.isEmpty ?? true else {
+            // Tabs already built (e.g. guest mode) — just select the first tab.
             tabBarController.selectedIndex = 0
             return
         }

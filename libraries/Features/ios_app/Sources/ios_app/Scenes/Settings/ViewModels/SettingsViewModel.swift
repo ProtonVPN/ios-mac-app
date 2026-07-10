@@ -662,10 +662,20 @@ final class SettingsViewModel {
     }
 
     private func pushKillSwitchSelectionViewController() {
+        weak var hostingRef: UIViewController?
         let view = KillSwitchSettingsView(
-            onSelect: { [weak self] mode in self?.changeKillSwitchMode(to: mode, completion: { _ in }) }
+            onSelect: { [weak self] mode in
+                self?.changeKillSwitchMode(to: mode, completion: { applied in
+                    // Match the other settings option-lists (NetShield, protocol, …): pop back to Settings
+                    // once a mode is applied, don't pop back if was cancelled (not applied).
+                    if applied {
+                        hostingRef?.navigationController?.popViewController(animated: true)
+                    }
+                })
+            }
         )
         let hostingController = ShowingNavigationBarUIHostingController(rootView: AnyView(view))
+        hostingRef = hostingController
         hostingController.title = Localizable.settingsTitleKillSwitch
         push(viewController: hostingController)
     }
@@ -719,11 +729,21 @@ final class SettingsViewModel {
             confirmTitle = Localizable.killSwitchConfirmEnable
         case .advanced where current == .standard:
             title = Localizable.killSwitchSwitchAdvancedTitle
-            bullets = [Localizable.killSwitchBulletAdvancedPersists, Localizable.killSwitchBulletAdvancedRecover]
+            // Advanced now defers activation to the next connection, so the confirmation tells
+            // the user it won't take effect immediately
+            bullets = [
+                Localizable.killSwitchBulletAdvancedPersists,
+                Localizable.killSwitchBulletAdvancedRecover,
+                Localizable.killSwitchBulletAdvancedDeferred,
+            ]
             confirmTitle = Localizable.killSwitchConfirmSwitch
         case .advanced:
             title = Localizable.killSwitchEnableAdvancedTitle
-            bullets = [Localizable.killSwitchBulletNoLan, Localizable.killSwitchBulletAdvancedPersists]
+            bullets = [
+                Localizable.killSwitchBulletNoLan,
+                Localizable.killSwitchBulletAdvancedPersists,
+                Localizable.killSwitchBulletAdvancedDeferred,
+            ]
             confirmTitle = Localizable.killSwitchConfirmEnable
         case .off:
             return nil

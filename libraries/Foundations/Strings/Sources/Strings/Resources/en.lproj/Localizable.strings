@@ -1006,6 +1006,9 @@
 /* iOS: Kill switch confirmation - bullet: how to get back online with Advanced */
 "_kill_switch_bullet_advanced_recover" = "To get back online, connect to VPN or disable advanced kill switch";
 
+/* iOS: Kill switch confirmation - bullet: Advanced activates on the next connection (deferred activation) */
+"_kill_switch_bullet_advanced_deferred" = "Takes effect the next time you connect to VPN";
+
 /* iOS: Kill switch confirmation - primary button to enable */
 "_kill_switch_confirm_enable" = "Enable";
 

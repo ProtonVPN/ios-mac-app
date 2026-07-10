@@ -389,13 +389,19 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         let confirmationClosure: () -> Void = {
             @Shared(.killSwitchMode) var killSwitchMode
             if killSwitchMode.isAdvanced {
-                // Advanced KS persists across sign-out: keep blocking instead of tearing the tunnel
-                // down. The mode-aware connection logout switches the tunnel to zero-peer (it does NOT clean
-                // up for Advanced), keeping `killSwitchMode` and the actual blocking state consistent. The
-                // login screen then surfaces a banner to turn the kill switch off.
-                @Dependency(\.connectionCommandClient) var connectionCommandClient
-                connectionCommandClient.send(.clearConnectionData())
-                logOutRoutine()
+                // Advanced KS persists across sign-out: switch the live tunnel to a zero-peer blackhole so it
+                // keeps blocking on the login screen, without tearing it down. This must go through a
+                // process-level dependency and be awaited before we complete logout÷.
+                @Dependency(\.vpnTunnelControl) var vpnTunnelControl
+                @SharedReader(.connectionState) var connectionState
+                let isConnected = if case .connected = connectionState { true } else { false }
+                Task {
+                    // Only convert a live tunnel; if already blocking or disconnected there's nothing to switch.
+                    if isConnected {
+                        try? await vpnTunnelControl.enterZeroPeerBlocking()
+                    }
+                    logOutRoutine()
+                }
                 return
             }
 

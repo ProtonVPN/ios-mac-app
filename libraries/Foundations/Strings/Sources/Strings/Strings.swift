@@ -748,6 +748,8 @@ public enum Localizable {
   public static var killSwitchBlockingConnection: String { return Localizable.tr("Localizable", "_kill_switch_blocking_connection", fallback: "Kill switch blocking all connections") }
   /// iOS: Kill switch confirmation - bullet: Advanced blocking persists
   public static var killSwitchBulletAdvancedPersists: String { return Localizable.tr("Localizable", "_kill_switch_bullet_advanced_persists", fallback: "Internet stays blocked across reboots and intentional disconnects until you turn it off") }
+  /// iOS: Kill switch confirmation - bullet: Advanced activates on the next connection (deferred activation)
+  public static var killSwitchBulletAdvancedDeferred: String { return Localizable.tr("Localizable", "_kill_switch_bullet_advanced_deferred", fallback: "Takes effect the next time you connect to VPN") }
   /// iOS: Kill switch confirmation - bullet: how to get back online with Advanced
   public static var killSwitchBulletAdvancedRecover: String { return Localizable.tr("Localizable", "_kill_switch_bullet_advanced_recover", fallback: "To get back online, connect to VPN or disable advanced kill switch") }
   /// iOS: Kill switch confirmation - bullet: local network access is lost

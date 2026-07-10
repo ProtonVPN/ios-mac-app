@@ -320,16 +320,11 @@ private extension HomeFeature {
                 if !mode.isAdvanced, state.connectionState.is(\.killSwitchActive) {
                     return .send(.connection(.input(.disconnect)))
                 }
-                // Advanced enabled while disconnected: immediately enter zero-peer blocking,
-                // so protection is active even before the first connection.
-                if mode.isAdvanced, state.connectionState.is(\.disconnected) {
-                    return .merge(
-                        .send(.connection(.input(.applySettings([.tunnel(.killSwitch(true))])))),
-                        .send(.connection(.input(.enterZeroPeerBlocking)))
-                    )
-                }
-                // Push the updated tunnel settings to the ProTUN extension over IPC via dedicated channel.
-                return .send(.connection(.input(.applySettings([.tunnel(.killSwitch(mode.isProtected))]))))
+                // Otherwise: leave the live tunnel untouched. The mode is already persisted (@Shared, written
+                // by the settings picker) and takes effect on the NEXT connection — `.input(.connect)` arms
+                // `includeAllNetworks` from the mode, and the in-place zero-peer switch on disconnect works
+                // because the tunnel was armed at connect
+                return .none
             case let .planChanged(planChange):
                 // update the persisted feature settings so a downgrade clears paid features
                 // and an upgrade re-enables NetShield
