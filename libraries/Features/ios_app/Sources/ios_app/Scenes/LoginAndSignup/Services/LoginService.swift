@@ -8,6 +8,7 @@
 
 import BugReport
 import CommonNetworking
+import Connection
 import Dependencies
 import Domain
 import Ergonomics
@@ -209,7 +210,8 @@ final class CoreLoginService {
             performBeforeFlow: finishFlow(),
             customErrorPresenter: self,
             initialError: initialError,
-            helpDecorator: helpDecorator
+            helpDecorator: helpDecorator,
+            loginScreenBannerProvider: { [weak self] in self?.killSwitchBlockingBanner() }
         )
 
         let welcomeViewController = loginInterface.welcomeScreenForPresentingFlow(
@@ -225,6 +227,37 @@ final class CoreLoginService {
         if let overlay = withOverlayViewController {
             welcomeViewController.present(overlay, animated: false)
         }
+    }
+
+    /// When Advanced kill switch is active we need to show a banner with a "Disable kill switch" action.
+    /// Returns `nil` (no banner) otherwise
+    private func killSwitchBlockingBanner() -> LoginScreenBanner? {
+        @Shared(.killSwitchMode) var killSwitchMode
+        guard killSwitchMode.isAdvanced else { return nil }
+        return LoginScreenBanner(
+            style: .error,
+            message: Localizable.killSwitchLoginBlocking,
+            actionTitle: Localizable.killSwitchDisable,
+            action: { [weak self] in
+                self?.disableKillSwitchFromLoginBanner()
+                return LoginScreenBanner(style: .success, message: Localizable.killSwitchDisabledConfirmation)
+            },
+            // When the user tries to sign in / create an account / SSO as guest while blocked.
+            blockingAlert: LoginScreenBanner.BlockingAlert(
+                title: Localizable.killSwitchLoginBlocking,
+                message: Localizable.killSwitchTurnOffToGetOnline,
+                confirmTitle: Localizable.killSwitchTurnOff,
+                cancelTitle: Localizable.cancel
+            )
+        )
+    }
+
+    /// Disables the kill switch and tears down the zero-peer tunnel so the user can reach the auth servers
+    private func disableKillSwitchFromLoginBanner() {
+        @Shared(.killSwitchMode) var killSwitchMode
+        $killSwitchMode.withLock { $0 = .off }
+        @Dependency(\.vpnTunnelControl) var vpnTunnelControl
+        Task { try? await vpnTunnelControl.stop() }
     }
 
     private func convertError(from error: Error) -> Error {
@@ -390,7 +423,8 @@ extension CoreLoginService: LoginService {
             performBeforeFlow: finishFlow(),
             customErrorPresenter: self,
             helpDecorator: helpDecorator,
-            closeSignupFlowAlertConfirmation: closeSignupFlowAlertConfirmation
+            closeSignupFlowAlertConfirmation: closeSignupFlowAlertConfirmation,
+            loginScreenBannerProvider: { [weak self] in self?.killSwitchBlockingBanner() }
         )
 
         loginInterface = makeLoginInterface(isCloseButtonAvailable: true)
