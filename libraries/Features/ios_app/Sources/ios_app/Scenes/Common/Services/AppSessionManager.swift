@@ -387,16 +387,19 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
 
         let confirmationClosure: () -> Void = {
-            @Shared(.killSwitchMode) var killSwitchMode
-            if killSwitchMode.isAdvanced {
+            @SharedReader(.advancedKillSwitchActive) var advancedKillSwitchActive
+            // Gate on Advanced KS being active (armed at connect), not merely enabled. If it's only Armed
+            // (Advanced enabled while connected, effective from the next connection) KS isn't protecting yet,
+            // so sign-out follows the normal path below — no blackhole, no "you'll be offline" warning.
+            if advancedKillSwitchActive {
                 // Advanced KS persists across sign-out: switch the live tunnel to a zero-peer blackhole so it
                 // keeps blocking on the login screen, without tearing it down. This must go through a
-                // process-level dependency and be awaited before we complete logout÷.
+                // process-level dependency and be awaited before we complete logout.
                 @Dependency(\.vpnTunnelControl) var vpnTunnelControl
                 @SharedReader(.connectionState) var connectionState
                 let isConnected = if case .connected = connectionState { true } else { false }
                 Task {
-                    // Only convert a live tunnel; if already blocking or disconnected there's nothing to switch.
+                    // Only convert a live tunnel; if already blocking there's nothing to switch.
                     if isConnected {
                         try? await vpnTunnelControl.enterZeroPeerBlocking()
                     }
@@ -423,9 +426,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         if force {
             confirmationClosure()
         } else {
-            @Shared(.killSwitchMode) var killSwitchMode
-            if killSwitchMode.isAdvanced {
-                // signing out with Advanced KS keeps the device offline
+            @SharedReader(.advancedKillSwitchActive) var advancedKillSwitchActive
+            if advancedKillSwitchActive {
+                // signing out with active Advanced KS keeps the device offline; just armed uses the normal warning
                 alertService.push(alert: LogoutWithAdvancedKillSwitchAlert(username: authKeychain.username, confirmHandler: confirmationClosure))
             } else {
                 alertService.push(alert: LogoutWarningAlert(confirmHandler: confirmationClosure))

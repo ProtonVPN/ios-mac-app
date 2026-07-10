@@ -725,7 +725,12 @@ final class SettingsViewModel {
         switch mode {
         case .standard:
             title = Localizable.killSwitchEnableStandardTitle
-            bullets = [Localizable.killSwitchBulletNoLan]
+            // Standard also arms `includeAllNetworks` at connect, so it likewise takes effect only from the
+            // next connection — tell the user so enabling it mid-session isn't mistaken for instant protection.
+            bullets = [
+                Localizable.killSwitchBulletNoLan,
+                Localizable.killSwitchBulletDeferred,
+            ]
             confirmTitle = Localizable.killSwitchConfirmEnable
         case .advanced where current == .standard:
             title = Localizable.killSwitchSwitchAdvancedTitle
@@ -734,7 +739,7 @@ final class SettingsViewModel {
             bullets = [
                 Localizable.killSwitchBulletAdvancedPersists,
                 Localizable.killSwitchBulletAdvancedRecover,
-                Localizable.killSwitchBulletAdvancedDeferred,
+                Localizable.killSwitchBulletDeferred,
             ]
             confirmTitle = Localizable.killSwitchConfirmSwitch
         case .advanced:
@@ -742,7 +747,7 @@ final class SettingsViewModel {
             bullets = [
                 Localizable.killSwitchBulletNoLan,
                 Localizable.killSwitchBulletAdvancedPersists,
-                Localizable.killSwitchBulletAdvancedDeferred,
+                Localizable.killSwitchBulletDeferred,
             ]
             confirmTitle = Localizable.killSwitchConfirmEnable
         case .off:

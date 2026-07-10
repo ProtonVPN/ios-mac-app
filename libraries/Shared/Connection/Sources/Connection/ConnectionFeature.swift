@@ -48,8 +48,10 @@ public struct ConnectionFeature: Sendable {
         var tunnel: ExtensionFeature.State
 
         /// Whether the live tunnel was started with `includeAllNetworks = true`
-        /// Advanced KS disconnect can switch to zero-peer in place or must cold-start a fresh blocking tunnel
-        var tunnelArmedForKillSwitch: Bool = false
+        /// Advanced KS disconnect can switch to zero-peer in place or must cold-start a fresh blocking tunnel.
+        /// Public read so the parent (Home) can tell Advanced KS is *Active* (armed at connect) vs merely
+        /// *Armed* (enabled while connected, effective next connection) — e.g. to not show the disconnect warning.
+        public internal(set) var tunnelArmedForKillSwitch: Bool = false
         /// Intent flag: we are (or should be) blocking via zero-peer. Survives a tunnel drop so an
         /// unexpected disconnect while Advanced KS is on can re-block. Distinct from the resolved
         /// `connectionState.killSwitchActive`
@@ -177,34 +179,32 @@ public struct ConnectionFeature: Sendable {
 
             case .input(.disconnect):
                 let mode = connectionFeatureProvider.requestedFeatures().killSwitchMode
-                if mode.isAdvanced {
-                    // Advanced KS keeps blocking on an intentional disconnect
+                // Advanced KS keeps blocking on an intentional disconnect only when it's Active — i.e. the live
+                // tunnel was armed with `includeAllNetworks` at connect (a connection completed with KS on).
+                // Enabling Advanced *while already connected* leaves it Armed (effective only from the next
+                // connection), so disconnecting then is a normal release, not a blackhole.
+                if mode.isAdvanced, state.tunnelArmedForKillSwitch, case let .connected(tunnelConfig, _) = state.connectionState {
                     state.isBlockingIntended = true
-                    if state.tunnelArmedForKillSwitch, case let .connected(tunnelConfig, _) = state.connectionState {
-                        // Live armed tunnel: switch to zero-peer in place (gap-free). Optimistic: reconciled by
-                        // resolveProTUN once the applied requestId quiesces; on failure the .reconfigurationFailed
-                        // handler restores connectionState from the reported tunnel state.
-                        let zeroPeerConfig = TunnelConfiguration(
-                            connectionSpec: tunnelConfig.connectionSpec,
-                            tunnelProtocol: tunnelConfig.tunnelProtocol,
-                            peerIDs: []
-                        )
-                        state.$connectionState.withLock {
-                            $0 = .killSwitchActive(tunnelConfig.connectionSpec, zeroPeerConfig)
-                        }
-                        let update = ConnectionUpdate(
-                            location: .init(spec: tunnelConfig.connectionSpec, peers: []),
-                            killSwitch: true
-                        )
-                        return .send(.tunnel(.requestConfigChange(update)))
+                    // Live armed tunnel: switch to zero-peer in place (gap-free). Optimistic: reconciled by
+                    // resolveProTUN once the applied requestId quiesces; on failure the .reconfigurationFailed
+                    // handler restores connectionState from the reported tunnel state.
+                    let zeroPeerConfig = TunnelConfiguration(
+                        connectionSpec: tunnelConfig.connectionSpec,
+                        tunnelProtocol: tunnelConfig.tunnelProtocol,
+                        peerIDs: []
+                    )
+                    state.$connectionState.withLock {
+                        $0 = .killSwitchActive(tunnelConfig.connectionSpec, zeroPeerConfig)
                     }
-                    // Not armed, or cancelling a connect that never reached `.connected`: an in-place switch
-                    // wouldn't block, so stop the tunnel; the disconnect-driven re-block (gated on
-                    // `isBlockingIntended`) cold starts a fresh, armed zero-peer tunnel once we reach `.disconnected`
-                    return .merge(.cancel(id: CancelID.preparation), .send(.tunnel(.disconnect(nil))))
+                    let update = ConnectionUpdate(
+                        location: .init(spec: tunnelConfig.connectionSpec, peers: []),
+                        killSwitch: true
+                    )
+                    return .send(.tunnel(.requestConfigChange(update)))
                 }
-                // Standard / Off: release on user intent. Zero-peer mode has no peer to resume, so the tunnel
-                // stops; projection walks the state through `.disconnecting` to `.disconnected`.
+                // Off / Standard / Advanced-but-only-Armed: release on user intent. Zero-peer mode has no peer
+                // to resume, so the tunnel stops; projection walks the state through `.disconnecting` to
+                // `.disconnected`.
                 state.isBlockingIntended = false
                 return .merge(.cancel(id: CancelID.preparation), .send(.tunnel(.disconnect(nil))))
 
@@ -271,10 +271,10 @@ public struct ConnectionFeature: Sendable {
                 // (KS enabled mid-session). The guard prevents a retry loop.
                 state.isAttemptingZeroPeerReblock = true
                 state.tunnelArmedForKillSwitch = true // the cold-start config always sets includeAllNetworks
-                // Reflect blocking in the UI immediately so the Home banner shows: a peerless cold-start tunnel
-                // keeps the ProTUN state "disconnected", so the extension never publishes a requestId and
-                // `resolveProTUN` can't quiesce to `.killSwitchActive` on its own. A later `.connecting` echo is
-                // suppressed by `isTransientEcho`; a start failure surfaces as `.disconnected(.some)` and reverts.
+                // Reflect blocking in the UI immediately so the Home banner shows while the cold start is in
+                // flight. Transitional resolutions read as `.reasserting` and are held back by the status stream,
+                // so nothing clobbers this; once the extension settles into zero-peer mode the projection confirms
+                // `.killSwitchActive`, and a start failure surfaces as a disconnected state and reverts it.
                 state.connectionState = .killSwitchActive(
                     ConnectionSpec(),
                     TunnelConfiguration(connectionSpec: ConnectionSpec(), tunnelProtocol: .wireGuard, peerIDs: [])
@@ -368,7 +368,16 @@ public struct ConnectionFeature: Sendable {
             }
         }
         .onChange(of: \.connectionState) { _, newValue in
-            Reduce { _, _ in
+            Reduce { state, _ in
+                // Mirror "Advanced KS is Active" to a shared flag so out-of-feature consumers (the sign-out
+                // warning in AppSessionManager) can distinguish Active from Armed only
+                @Shared(.advancedKillSwitchActive) var advancedKillSwitchActive
+                let isActive = connectionFeatureProvider.requestedFeatures().killSwitchMode.isAdvanced
+                    && state.tunnelArmedForKillSwitch
+                    && (newValue.is(\.connected) || newValue.is(\.killSwitchActive))
+                if advancedKillSwitchActive != isActive {
+                    $advancedKillSwitchActive.withLock { $0 = isActive }
+                }
                 return .send(.connectionStateUpdated(newValue))
             }
         }

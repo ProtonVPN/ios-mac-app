@@ -389,9 +389,15 @@ private extension HomeFeature {
                 return performConnect(pending: pending)
 
             case let .connectionCommandReceived(.disconnect(trigger, completion)):
-                // confirm an intentional in-app disconnect while Advanced KS is active, since it
-                // leaves the device offline. Widget disconnects have a completion; let those proceed.
-                if completion == nil, killSwitchMode.isAdvanced, state.connectionState.is(\.connected) {
+                // Confirm an intentional in-app disconnect only when Advanced KS is active — i.e. the live
+                // tunnel was started with `includeAllNetworks` at connect, so disconnecting really would leave
+                // the device offline. Merely enabling Advanced while connected leaves it Armed (effective from
+                // the next connection), so a disconnect then is a normal release — no warning.
+                // Widget disconnects have a completion; let those proceed.
+                if completion == nil,
+                   killSwitchMode.isAdvanced,
+                   state.connection.tunnelArmedForKillSwitch,
+                   state.connectionState.is(\.connected) {
                     state.alert = confirmDisconnectWithAdvancedKillSwitchAlert(trigger: trigger)
                     return .none
                 }

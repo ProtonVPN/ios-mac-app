@@ -122,11 +122,6 @@ extension ManagerConfigurator {
         // once the extension settles into zero-peer mode; without it the app would stay `.connecting` forever.
         protocolConfiguration.requestId = UUID()
 
-        // The extension seeds its request id from the starting configuration and republishes it with the
-        // extension state. Stamping one here is what lets `resolveProTUN` treat the saved zero-peer intent
-        // as applied and resolve `.killSwitchActive` once the tunnel is up.
-        protocolConfiguration.requestId = UUID()
-
         @Dependency(\.authKeychain) var authKeychain
         guard let userID = authKeychain.userId else {
             throw ManagerConfigurationError.userIdMissing
