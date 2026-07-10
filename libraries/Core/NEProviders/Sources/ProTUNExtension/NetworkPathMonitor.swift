@@ -22,12 +22,39 @@ import Ergonomics
 import Network
 
 struct NetworkPath: Equatable {
+    static let tunnelInterfacePrefixes = ["utun", "tun", "ipsec", "tun", "tap", "wg"]
+
     private(set) var status: NWPath.Status
+    private(set) var interfaceName: String?
+    private(set) var interfaceType: NWInterface.InterfaceType?
+    private(set) var gateways: [String]
+    private(set) var supportsIPv4: Bool
+    private(set) var supportsIPv6: Bool
+
+    var isUsable: Bool {
+        status == .satisfied || status == .requiresConnection
+    }
 }
 
 extension NetworkPath {
-    init(rawValue: NWPath) {
-        self.status = rawValue.status
+    init(_ path: NWPath) {
+        self.status = path.status
+
+        // The first physical interface - `availableInterfaces` on NWPath is already sorted in order of preference.
+        let physical = path.availableInterfaces.first { interface in
+            switch interface.type {
+            case .wifi, .cellular, .wiredEthernet: true
+            case .loopback: false
+            case .other: Self.tunnelInterfacePrefixes.allSatisfy { !interface.name.hasPrefix($0) }
+            @unknown default: false
+            }
+        }
+
+        self.interfaceName = physical?.name
+        self.interfaceType = physical?.type
+        self.gateways = path.gateways.map(\.debugDescription).sorted()
+        self.supportsIPv4 = path.supportsIPv4
+        self.supportsIPv6 = path.supportsIPv6
     }
 }
 
@@ -65,7 +92,7 @@ extension NetworkPathMonitor: DependencyKey {
                 }
 
                 networkMonitor.pathUpdateHandler = { path in
-                    continuation.yield(.init(rawValue: path))
+                    continuation.yield(.init(path))
                 }
                 networkMonitor.start(queue: queue)
                 started = true
@@ -88,7 +115,14 @@ extension NetworkPathMonitor: DependencyKey {
         return .init {
             stream
         } start: {
-            continuation.yield(.init(status: .satisfied))
+            continuation.yield(.init(
+                status: .satisfied,
+                interfaceName: "en0",
+                interfaceType: .wiredEthernet,
+                gateways: ["192.168.1.1"],
+                supportsIPv4: true,
+                supportsIPv6: false
+            ))
         } stop: {
             ()
         }
@@ -104,15 +138,33 @@ extension DependencyValues {
 
 extension NetworkPath: CustomStringConvertible {
     var description: String {
-        switch status {
-        case .satisfied:
-            return "satisfied"
-        case .unsatisfied:
-            return "unsatisfied"
-        case .requiresConnection:
-            return "requiredConnection"
-        @unknown default:
-            return "unknown"
+        let status = switch status {
+        case .satisfied: "satisfied"
+        case .unsatisfied: "unsatisfied"
+        case .requiresConnection: "requiresConnection"
+        @unknown default: "unknown"
         }
+
+        let interfaceType = switch interfaceType {
+        case .cellular: "cellular"
+        case .wifi: "wifi"
+        case .wiredEthernet: "wiredEthernet"
+        case .loopback: "loopback"
+        case .other: "other"
+        case nil: "nil"
+        @unknown default: "unknown"
+        }
+
+        var supported: [String] = []
+        if supportsIPv4 {
+            supported.append("IPv4")
+        }
+        if supportsIPv6 {
+            supported.append("IPv6")
+        }
+
+        let supports = "supports \(supported.joined(separator: ", "))"
+
+        return "\(status) (\(optional: interfaceName) \(interfaceType)), \(supports)"
     }
 }
