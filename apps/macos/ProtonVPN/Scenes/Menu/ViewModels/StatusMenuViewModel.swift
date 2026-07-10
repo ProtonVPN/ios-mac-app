@@ -57,7 +57,6 @@ final class StatusMenuViewModel {
 
     @SharedReader(.userLocation) private var userLocation: UserLocation?
     private lazy var navService: NavigationService = factory.makeNavigationService()
-    @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.upsellManager) private var upsellManager
     private lazy var wifiSecurityMonitor: WiFiSecurityMonitor = factory.makeWiFiSecurityMonitor()
     @Dependency(\.windowService) private var windowService
@@ -341,8 +340,7 @@ final class StatusMenuViewModel {
     }
 
     private func isSufficientTierLevel() -> Bool {
-        let userTier: Int = (try? vpnKeychain.fetchCached().maxTier) ?? .freeTier
-        return userTier.isPaidTier
+        credentials.tier.isPaidTier
     }
 
     private func presentDiscourageSecureCoreAlert(reconnectNotice: String?, onActivate: (() -> Void)?) {
@@ -550,7 +548,7 @@ final class StatusMenuViewModel {
 
     @objc
     private func handlePlanChange() {
-        let tier = (try? vpnKeychain.fetchCached().maxTier) ?? .freeTier
+        let tier = credentials.tier
 
         // if Secure Core was enabled but the tier no longer allows its use
         if secureCoreToggle, tier.isFreeTier {

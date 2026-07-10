@@ -99,13 +99,12 @@ extension NetShieldPropertyProvider: DependencyKey {
         let authorize: (NetShieldType) -> FeatureAuthorizationResult = { level in
             @SharedReader(.userTier) var userTier: Int?
             @SharedReader(.featureFlags) var featureFlags: FeatureFlags
-            @Dependency(\.vpnKeychain) var vpnKeychain
-            let credentials = try? vpnKeychain.fetchCached()
+            @Dependency(\.credentialsProvider) var credentialsProvider
             return level.canUse(
                 userTier: userTier ?? .freeTier,
                 featureFlags: featureFlags,
-                netshieldSettings: credentials?.netshield,
-                isBusiness: credentials?.isBusiness ?? false
+                netshieldSettings: credentialsProvider.netShield,
+                isBusiness: credentialsProvider.isBusiness
             )
         }
 

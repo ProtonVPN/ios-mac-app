@@ -79,6 +79,7 @@ public class VpnKeychainMock: VpnKeychainProtocol {
         }
 
         credentials = newCredentials
+        VpnCredentialsProjection.update(afterStoring: newCredentials, succeeded: true)
 
         if oldCredentials != newCredentials {
             NotificationCenter.default.post(name: Self.vpnCredentialsChanged, object: newCredentials)
@@ -95,10 +96,16 @@ public class VpnKeychainMock: VpnKeychainProtocol {
 
     public func clear() {
         credentials = nil
+        VpnCredentialsProjection.clear()
     }
 
     public func setVpnCredentials(with planName: String, maxTier: Int = 0) {
-        credentials = VpnKeychainMock.vpnCredentials(planName: planName, maxTier: maxTier)
+        let credentials = VpnKeychainMock.vpnCredentials(planName: planName, maxTier: maxTier)
+        self.credentials = credentials
+        VpnCredentialsProjection.update(
+            afterStoring: credentials,
+            succeeded: true
+        )
     }
 
     public static func vpnCredentials(planName: String, maxTier: Int) -> VpnCredentials {

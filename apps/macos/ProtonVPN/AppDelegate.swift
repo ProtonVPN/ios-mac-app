@@ -66,7 +66,7 @@ import VPNShared
         let container = DependencyContainer()
         lazy var navigationService = container.makeNavigationService()
         @Dependency(\.authKeychain) private var authKeychain
-        @Dependency(\.vpnKeychain) private var vpnKeychain
+        @Dependency(\.credentialsProvider) private var credentialsProvider
         @Dependency(\.networking) private var networking
         @Dependency(\.appInfo) private var appInfo
         @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
@@ -156,7 +156,7 @@ extension AppDelegate: NSApplicationDelegate {
                 _ = container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.
 
                 // Check sysex approval and protocol deprecation and revert to Smart or IKE if necessary, but only if we're logged in
-                if (try? vpnKeychain.fetchCached()) != nil {
+                if credentialsProvider.hasCredentials {
                     checkSysexAndAdjustGlobalProtocol()
                 }
             }

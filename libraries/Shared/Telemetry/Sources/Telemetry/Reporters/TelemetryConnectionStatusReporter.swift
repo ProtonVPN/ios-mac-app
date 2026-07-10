@@ -33,7 +33,7 @@ actor TelemetryConnectionStatusReporter {
     @SharedReader(.userCountry) var userCountry
     @SharedReader(.userISP) var userISP
 
-    @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.credentialsProvider) private var credentialsProvider
 
     var networkType: ConnectionDimensions.NetworkType = .other
     var previousConnectionIntent: ServerConnectionIntent?

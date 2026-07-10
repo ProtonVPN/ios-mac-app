@@ -35,7 +35,7 @@ enum ProfilesSectionListCell {
 
 class ProfilesSectionViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
-    @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.credentialsProvider) private var credentialsProvider
     @Dependency(\.profileManager) private var profileManager
     private let navService: NavigationService
     @Dependency(\.upsellManager) private var upsellManager
@@ -53,11 +53,7 @@ class ProfilesSectionViewModel {
     }
 
     private var userTier: Int {
-        do {
-            return try vpnKeychain.fetchCached().maxTier
-        } catch {
-            return .freeTier
-        }
+        credentialsProvider.tier
     }
 
     init(navService: NavigationService) {

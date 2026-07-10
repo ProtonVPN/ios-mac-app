@@ -61,7 +61,7 @@ public class DynamicBugReportManager {
     @Dependency(\.reportsApiClient) private var reportsApiClient
     private var timer: Timer?
     @Dependency(\.updateManager) private var updateManager
-    @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.credentialsProvider) private var credentialsProvider
     @Dependency(\.logContentProvider) private var logContentProvider
     private let logSources: [LogSource]
 
@@ -136,7 +136,7 @@ public class DynamicBugReportManager {
             email: data.email,
             country: userLocation?.country ?? "",
             ISP: userLocation?.isp ?? "",
-            plan: (try? vpnKeychain.fetchCached().planTitle) ?? ""
+            plan: credentialsProvider.planTitle ?? ""
         )
     }
 

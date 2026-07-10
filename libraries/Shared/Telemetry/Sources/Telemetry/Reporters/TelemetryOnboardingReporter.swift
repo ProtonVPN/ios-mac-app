@@ -21,11 +21,12 @@ import Dependencies
 import Ergonomics
 import Foundation
 import Sharing
+import VPNAppCore
 
 public class TelemetryOnboardingReporter {
     public static var isOnboardingInProgress: Bool = false
 
-    @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.credentialsProvider) private var credentialsProvider
     @SharedReader(.userCountry) var userCountry
 
     private var telemetryEventScheduler: TelemetryEventScheduler
@@ -38,8 +39,7 @@ public class TelemetryOnboardingReporter {
         guard event != .paymentDone || Self.isOnboardingInProgress else {
             return
         }
-        let cached = try? vpnKeychain.fetchCached()
-        let planName = cached?.planName ?? "free"
+        let planName = credentialsProvider.planName
         @Dependency(\.credentiallessHelper) var credentiallessHelper
         let userIsCredentialLess = credentiallessHelper.isCredentialLess()
 

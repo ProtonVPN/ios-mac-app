@@ -208,9 +208,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         let credentials = properties.vpnCredentials
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
 
-        @Shared(.userPlan) var userPlan
-        $userPlan.withLock { $0 = credentials.planName }
-
         if case let .modified(lastModified, servers, isFreeTier) = properties.serverInfo {
             let isFreeTierRequest = shouldRefreshServers && properties.vpnCredentials.maxTier.isFreeTier
             assert(isFreeTierRequest == isFreeTier)
@@ -249,13 +246,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
             let credentials = properties.vpnCredentials
             vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-
-            // populate (possibly) updated userTier and plan
-            @Shared(.userTier) var userTier
-            $userTier.withLock { $0 = credentials.maxTier }
-
-            @Shared(.userPlan) var userPlan
-            $userPlan.withLock { $0 = credentials.planName }
 
             if case let .modified(lastModified, servers, isFreeTier) = properties.serverInfo {
                 let isFreeTierRequest = shouldRefreshServersAccordingToTier && credentials.maxTier.isFreeTier
@@ -476,9 +466,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         @Shared(.recentSearches) var storedSearches
         $storedSearches.withLock { $0 = nil }
         planServiceV2.clear()
-
-        @Shared(.userPlan) var userPlan
-        $userPlan.withLock { $0 = nil }
 
         @Dependency(\.serverManager) var serverManager
         serverManager.purgeAllServers()

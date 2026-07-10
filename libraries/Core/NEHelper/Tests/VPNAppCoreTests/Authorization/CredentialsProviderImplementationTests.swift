@@ -20,12 +20,13 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import VPNAppCore
+import Testing
+@testable import VPNAppCore
 @testable import VPNShared
-import XCTest
 
-class CredentialsProviderImplementationTests: XCTestCase {
-    func testReturnsTierSavedInKeychain() {
+struct CredentialsProviderTests {
+    @Test
+    func returnsValuesSavedInKeychain() {
         let testPairs: [(String, Int)] = [
             ("free", .freeTier),
             ("plus", .paidTier),
@@ -33,25 +34,30 @@ class CredentialsProviderImplementationTests: XCTestCase {
 
         for (plan, tier) in testPairs {
             let keychain = VpnKeychainMock(planName: plan, maxTier: tier)
+            let fetchCached: () throws -> CachedVpnCredentials = keychain.fetchCached
 
-            let provider = CredentialsProvider {
-                try? keychain.fetchCached()
-            }
+            let provider = CredentialsProvider(getCredentials: { try? fetchCached() })
 
-            XCTAssertEqual(provider.tier, tier)
-            XCTAssertEqual(provider.planName, plan)
+            #expect(provider.tier == tier)
+            #expect(provider.planName == plan)
+            #expect(provider.hasCredentials)
         }
     }
 
-    func testReturnsFreeTierIfNoneIsAvilable() {
+    @Test
+    func returnsSafeDefaultsWhenCredentialsAreUnavailable() {
         let keychain = VpnKeychainMock(planName: "plus", maxTier: .internalTier)
         keychain.throwsOnFetch = true
+        let fetchCached: () throws -> CachedVpnCredentials = keychain.fetchCached
 
-        let provider = CredentialsProvider {
-            try? keychain.fetchCached()
-        }
+        let provider = CredentialsProvider(getCredentials: { try? fetchCached() })
 
-        XCTAssertEqual(provider.planName, "free")
-        XCTAssertEqual(provider.tier, .freeTier)
+        #expect(provider.planName == "free")
+        #expect(provider.planTitle == nil)
+        #expect(provider.tier == .freeTier)
+        #expect(!provider.hasCredentials)
+        #expect(!provider.isBusiness)
+        #expect(!provider.businessEvents)
+        #expect(provider.netShield == nil)
     }
 }

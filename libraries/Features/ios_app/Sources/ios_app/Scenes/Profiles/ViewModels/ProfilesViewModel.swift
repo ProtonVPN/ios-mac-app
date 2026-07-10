@@ -36,12 +36,12 @@ class ProfilesViewModel {
     @Dependency(\.profileManager) private var profileManager
     private let connectionStatusService: ConnectionStatusService
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
-    @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.credentialsProvider) private var credentialsProvider
 
     private let sectionTitles = [Localizable.recommended, Localizable.myProfiles]
 
     private var userTier: Int {
-        (try? vpnKeychain.fetchCached().maxTier) ?? .freeTier
+        credentialsProvider.tier
     }
 
     init(

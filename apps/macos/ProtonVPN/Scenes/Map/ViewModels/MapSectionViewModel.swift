@@ -49,7 +49,7 @@ class MapSectionViewModel {
     private let countrySelected = Notification.Name("MapSectionViewModelCountrySelected")
     private let scEntryCountrySelected = Notification.Name("MapSectionViewModelScEntryCountrySelected")
     private let scExitCountrySelected = Notification.Name("MapSectionViewModelScExitCountrySelected")
-    @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.credentialsProvider) private var credentialsProvider
     @SharedReader(.secureCoreToggle) private var secureCoreToggle: Bool
     @SharedReader(.connectionState) private var connectionState: ConnectionState
     @SharedReader(.connectionProtocol) private var connectionProtocol: ConnectionProtocol
@@ -172,7 +172,7 @@ class MapSectionViewModel {
     }
 
     private func annotations(forView viewType: ServerType) -> [CountryAnnotationViewModel] {
-        guard let userTier = try? vpnKeychain.fetchCached().maxTier else { return [] }
+        let userTier = credentialsProvider.tier
 
         return switch viewType {
         case .standard, .p2p, .tor, .unspecified:

@@ -25,6 +25,7 @@ import Domain
 import Foundation
 import LegacyCommon
 import Persistence
+import VPNAppCore
 
 class AbstractProfileViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
@@ -37,39 +38,10 @@ class AbstractProfileViewModel {
         self.profile = profile
         self.userTier = userTier
 
-        switch profile.serverOffering {
-        case let .custom(serverWrapper):
-            self.lowestServerTier = serverWrapper.server.tier
-            self.underMaintenance = serverWrapper.server.underMaintenance
-
-        case let .fastest(countryCode), let .random(countryCode):
-            if countryCode == nil {
-                self.lowestServerTier = 0
-                self.underMaintenance = false
-                break
-            }
-
-            var minTier = Int.internalTier
-            var allServersUnderMaintenance = true
-            let filters: [VPNServerFilter] = [
-                .kind(.country(code: countryCode)),
-                .features(profile.serverType.serverTypeFilter),
-            ]
-
-            @Dependency(\.serverRepository) var repository
-            let serversOfProfileTypeAndCountry = repository.getServers(filteredBy: filters, orderedBy: .none)
-
-            for server in serversOfProfileTypeAndCountry {
-                if minTier > server.logical.tier {
-                    minTier = server.logical.tier
-                }
-                if !server.logical.isUnderMaintenance {
-                    allServersUnderMaintenance = false
-                }
-            }
-            self.lowestServerTier = minTier
-            self.underMaintenance = allServersUnderMaintenance
-        }
+        @Dependency(\.serverRepository) var serverRepository
+        let serverProperties = serverRepository.serverProperties(for: profile)
+        self.lowestServerTier = serverProperties.requiredTier
+        self.underMaintenance = serverProperties.isUnderMaintenance
     }
 
     var canUseProfile: Bool {

@@ -61,7 +61,7 @@ final class SettingsViewModel {
     @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.upsellManager) private var upsellManager
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
-    @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.credentialsProvider) private var credentialsProvider
     private lazy var connectionStatusService: ConnectionStatusService = factory.makeConnectionStatusService()
     @Dependency(\.natTypePropertyProvider) private var natTypePropertyProvider
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
@@ -277,11 +277,7 @@ final class SettingsViewModel {
         }
 
         let username: String = authKeychain.username ?? Localizable.unavailable
-        let accountPlanName: String = if let vpnCredentials = try? vpnKeychain.fetchCached() {
-            vpnCredentials.planTitle
-        } else {
-            Localizable.unavailable
-        }
+        let accountPlanName = credentialsProvider.planTitle ?? Localizable.unavailable
 
         let cell = TableViewCellModel.pushAccountDetails(
             initials: NSAttributedString(string: username.initials(), attributes: .CaptionStrong),
@@ -1033,12 +1029,7 @@ final class SettingsViewModel {
     }
 
     private var userTier: Int {
-        do {
-            return try vpnKeychain.fetchCached().maxTier
-        } catch {
-            log.warning("Failed to retrieve user tier, defaulting to free tier.", category: .keychain)
-            return .freeTier
-        }
+        credentialsProvider.tier
     }
 
     private func reportBug() {

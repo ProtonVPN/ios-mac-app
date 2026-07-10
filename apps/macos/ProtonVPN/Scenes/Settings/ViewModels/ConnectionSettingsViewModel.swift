@@ -27,6 +27,7 @@ import Connection
 import Dependencies
 import Domain
 import LegacyCommon
+import Persistence
 import Settings
 import Sharing
 import Strings
@@ -54,8 +55,9 @@ final class ConnectionSettingsViewModel {
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.upsellManager) private var upsellManager
+    @Dependency(\.serverRepository) private var serverRepository
+    @Dependency(\.credentialsProvider) private var credentialsProvider
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
-    @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     private lazy var navService: NavigationService = factory.makeNavigationService()
     @SharedReader(.connectionState) private var connectionState: ConnectionState
@@ -540,7 +542,10 @@ final class ConnectionSettingsViewModel {
     }
 
     var shouldShowPFNotifications: Bool {
-        userTier != .freeTier
+        // Port-forwarding notifications are a paid feature and unrelated to profiles; gate on the
+        // account tier directly rather than reusing `profileAuthorizer.canUseProfiles` (which happens
+        // to evaluate to the same paid-tier check today, but couples two unrelated features).
+        credentialsProvider.tier.isPaidTier
     }
 
     func quickConnectItem(for index: Int) -> NSAttributedString {
@@ -576,21 +581,18 @@ final class ConnectionSettingsViewModel {
         return attributedString
     }
 
-    private var userTier: Int {
-        do {
-            return try vpnKeychain.fetchCached().maxTier
-        } catch {
-            return .freeTier
-        }
-    }
-
     private func profileString(for index: Int) -> NSAttributedString {
         guard availableProfiles.indices.contains(index) else {
             log.error("Profile index (\(index)) out of bounds of available profiles array (\(availableProfiles.count).")
             return .init()
         }
         let profile = availableProfiles[index]
-        let enabled = profile.accessTier <= userTier
+        let requiredTier = serverRepository.serverProperties(for: profile).requiredTier
+        // `availableProfiles` already applies the profiles feature gate (free users only ever see the
+        // default 'fastest' profile here), so this row only needs a tier-sufficiency check. Using
+        // `canUseProfile` would re-apply the paid-tier gate and wrongly disable the free plan's default
+        // quick-connect option.
+        let enabled = credentialsProvider.tier >= requiredTier
         return concatenated(imageString: profile.profileIcon.attributedAttachment(), with: profile.name, enabled: enabled)
     }
 

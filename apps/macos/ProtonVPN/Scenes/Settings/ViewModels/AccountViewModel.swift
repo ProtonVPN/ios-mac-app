@@ -34,7 +34,7 @@ final class AccountViewModel {
     private(set) var planTitle: String?
     private(set) var maxTier: Int
 
-    @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.credentialsProvider) private var credentialsProvider
     @Dependency(\.authKeychain) private var authKeychain
 
     var reloadNeeded: (() -> Void)?
@@ -60,14 +60,8 @@ final class AccountViewModel {
     func reload() {
         if let username = authKeychain.username {
             self.username = username
-            do {
-                let vpnCredentials = try vpnKeychain.fetchCached()
-                planTitle = vpnCredentials.planTitle
-                maxTier = vpnCredentials.maxTier
-            } catch {
-                planTitle = nil
-                maxTier = .freeTier
-            }
+            planTitle = credentialsProvider.planTitle
+            maxTier = credentialsProvider.tier
         } else {
             username = Localizable.unavailable
             planTitle = nil

@@ -58,7 +58,7 @@ class CreateNewProfileViewModel {
     let sessionFinished = NSNotification.Name("CreateNewProfileViewModelSessionFinished") // two observers
 
     @Dependency(\.coreAlertService) private var alertService
-    @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.credentialsProvider) private var credentialsProvider
     @Dependency(\.profileManager) private var profileManager
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @SharedReader(.smartProtocolConfig) private var smartProtocolConfig: SmartProtocolConfig
@@ -293,7 +293,7 @@ class CreateNewProfileViewModel {
     }
 
     private func setupUserTier() {
-        userTier = (try? vpnKeychain.fetchCached().maxTier) ?? .freeTier
+        userTier = credentialsProvider.tier
     }
 
     init(editProfile: Notification.Name) {
@@ -500,7 +500,7 @@ class CreateNewProfileViewModel {
 
     func createProfile() {
         guard let name = profileName,
-              let selectedGroup = state.selectedGroup,
+              state.selectedGroup != nil,
               let connectionProtocol = state.connectionProtocol,
               let serverOffering = state.serverOffering else {
             return
@@ -508,12 +508,10 @@ class CreateNewProfileViewModel {
 
         let profileId = profileId ?? .randomString(length: Profile.idLength)
 
-        let accessTier: Int = switch serverOffering {
-        case .fastest, .random:
-            selectedGroup.minTier
-        case let .custom(wrapper):
-            wrapper.server.tier
-        }
+        let accessTier = serverRepository.serverProperties(
+            for: serverOffering,
+            serverType: state.serverType
+        ).requiredTier
 
         let profile = Profile(
             id: profileId,
