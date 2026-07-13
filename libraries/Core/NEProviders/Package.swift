@@ -12,8 +12,8 @@ enum ProTUNFFITargetKind {
         )
     #else
         static let current: Self = .remote(
-            url: "https://nexus.protontech.ch/repository/vpn-release-candidates/protun/2.1.0_3304705.2607081056.1/protun-release.xcframework.zip",
-            checksum: "8ea29c2d8165bae7f12d0d3b7f373aa51983b24eb6f9f06d068bda7000bd6570"
+            url: "https://nexus.protontech.ch/repository/vpn-release-candidates/protun/2.1.1_3321564.2607101847.1/protun-release.xcframework.zip",
+            checksum: "3db1449d720d783237a17480b28fd4a1710cef1f686171a701010844309936d7"
         )
     #endif
 
