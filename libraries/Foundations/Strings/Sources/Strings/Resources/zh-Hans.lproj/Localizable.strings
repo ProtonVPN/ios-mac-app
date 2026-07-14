@@ -904,9 +904,6 @@
 /* Mac: neagent help screen */
 "_neagent_second_step" = "(2)";
 
-/* Button in several different alerts */
-"_got_it" = "明白了！";
-
 /* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "在应用内无法升级";
 
@@ -1071,6 +1068,9 @@
 
 /* iOS Settings: ProTUN logs row */
 "_protun_logs" = "ProTUN 日志";
+
+/* iOS Settings: Troubleshooting logs row */
+"_create_troubleshooting_file" = "创建故障排查文件";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "报告问题";
@@ -1354,6 +1354,8 @@
 
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "故障排查";
+
+"_troubleshooting_file" = "故障排查文件";
 
 "_troubleshoot_item_alt_title" = "允许使用备用线路";
 
@@ -3275,3 +3277,69 @@
 
 /* Transaction log entry in logs */
 "_transaction_log_" = "交易记录";
+
+/* Footer note that is visible across the whole flow of the PCAP session */
+"_pcap_capture_file_storage" = "故障排查文件存储在您的设备上，除非您主动分享，否则不会发送给 Proton。该文件会捕获您的 VPN 流量，可能包含您访问的网站。[了解详情](%@)";
+
+/* Description of the PCAP feature presented to the user before they start the PCAP session */
+"_pcap_capture_feature_description" = "重现您在使用 Proton VPN 时遇到的具体问题，以便获取客户支持团队的帮助。\n\n应用将创建一个包含您 VPN 连接技术详情的文件。";
+
+/* Directions to the user shown on the active PCAP session view */
+"_pcap_capture_session_directions" = "重现问题，然后停止捕获。";
+
+/* Format: mm:ss / mm:ss. Left hand side is the counter, right hand side is the maximum allowed time */
+"_pcap_capture_session_duration" = "%@ / %@";
+
+/* Header of the active PCAP session view */
+"_pcap_capture_session_capturing" = "正在捕获";
+
+/* Button title on the PCAP export view. Presents a share sheet to save the file outside of the app */
+"_pcap_capture_session_export" = "保存文件";
+
+/* Header of the PCAP export view */
+"_pcap_capture_session_captured" = "VPN 会话已捕获";
+
+/* `it` refers to the exportable `<date>.pcap` file that is available while user sees this text */
+"_pcap_capture_file_sharing" = "您现在可以在会话中将其作为附件发送给客户支持，或安全地存储在 [Proton Drive](%@) 中并分享公共链接。";
+
+/* Button title in the PCAP view. Starts the PCAP session */
+"_pcap_capture_session_start" = "开始";
+
+/* Button title in the PCAP view. Stops the PCAP session */
+"_pcap_capture_session_stop" = "停止";
+
+/* Title of an alert when user starts the PCAP session */
+"_pcap_capture_session_should_start_session" = "开始捕获 VPN 会话？";
+
+/* Description of an alert when user starts the PCAP session */
+"_pcap_capture_session_issue_reproduction" = "如有可能，请使用您首次遇到该问题时的相同设置和连接类型。\n\n目标是以与首次发生相同的方式重现问题（浏览网页、使用应用等）。\n\n重现问题后，您可以停止捕获并将文件分享给客户支持团队。";
+
+/* Description of an alert when user tries dismissing the PCAP sheet */
+"_pcap_capture_discard_description" = "该文件不会存储在应用内，请确保在丢弃前已将其导出。";
+
+/* Title of an alert when user tries dismissing the PCAP sheet */
+"_pcap_capture_discard_title" = "丢弃文件？";
+
+/* Button title in an alert */
+"_pcap_capture_discard_button" = "丢弃文件";
+
+/* Commonly used title of a button */
+"_got_it" = "了解";
+
+/* Title of an alert that presents the reason for PCAP failure */
+"_pcap_capture_low_storage" = "存储空间不足";
+
+/* Description of an alert that presents the reason for PCAP failure */
+"_pcap_capture_low_storage_action_description" = "您至少需要 200 MB 的可用空间才能开始捕获";
+
+/* Title of an alert that presents the reason for PCAP failure */
+"_pcap_capture_failed" = "捕获失败";
+
+/* Title of the alert shown when the VPN server refuses one of the user's requested settings */
+"_local_agent_setting_refused_title" = "设置未应用";
+
+/* Alert body shown when the server refuses a named setting. %@ is the setting name, e.g. NetShield */
+"_local_agent_setting_refused_message" = "%@ 对此连接不是可用的设置！";
+
+/* Alert body shown when the server refuses a setting the app doesn't surface as a named control */
+"_local_agent_setting_refused_message_generic" = "您的某项设置对此连接不可用，现已被关闭。";

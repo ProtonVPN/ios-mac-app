@@ -904,9 +904,6 @@
 /* Mac: neagent help screen */
 "_neagent_second_step" = "(2)";
 
-/* Button in several different alerts */
-"_got_it" = "D'acord";
-
 /* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Actualització no disponible des de l'app";
 
@@ -1071,6 +1068,9 @@
 
 /* iOS Settings: ProTUN logs row */
 "_protun_logs" = "Registres de ProTUN";
+
+/* iOS Settings: Troubleshooting logs row */
+"_create_troubleshooting_file" = "Creeu un fitxer de resolució de problemes";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Informeu d'un problema";
@@ -1354,6 +1354,8 @@
 
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Resolució de problemes";
+
+"_troubleshooting_file" = "Fitxer de resolució de problemes";
 
 "_troubleshoot_item_alt_title" = "Permet l'encaminament alternatiu";
 
@@ -3275,3 +3277,69 @@
 
 /* Transaction log entry in logs */
 "_transaction_log_" = "Registre de transaccions";
+
+/* Footer note that is visible across the whole flow of the PCAP session */
+"_pcap_capture_file_storage" = "El fitxer de resolució de problemes s'emmagatzema al vostre dispositiu i no s'envia a Proton tret que el compartiu. Captura el vostre trànsit de VPN, que pot incloure els llocs web que visiteu. [Per saber-ne més](%@)";
+
+/* Description of the PCAP feature presented to the user before they start the PCAP session */
+"_pcap_capture_feature_description" = "Per obtenir ajuda del nostre equip de suport al client, reproduïu un problema específic que experimenteu quan utilitzeu Proton VPN .\n\nL'aplicació crearà un fitxer que conté detalls tècnics sobre la vostra connexió VPN.";
+
+/* Directions to the user shown on the active PCAP session view */
+"_pcap_capture_session_directions" = "Reproduïu el problema i, a continuació, atureu la captura.";
+
+/* Format: mm:ss / mm:ss. Left hand side is the counter, right hand side is the maximum allowed time */
+"_pcap_capture_session_duration" = "%@ / %@";
+
+/* Header of the active PCAP session view */
+"_pcap_capture_session_capturing" = "S'està capturant";
+
+/* Button title on the PCAP export view. Presents a share sheet to save the file outside of the app */
+"_pcap_capture_session_export" = "Deseu el fitxer";
+
+/* Header of the PCAP export view */
+"_pcap_capture_session_captured" = "S'ha capturat la sessió de VPN";
+
+/* `it` refers to the exportable `<date>.pcap` file that is available while user sees this text */
+"_pcap_capture_file_sharing" = "Ara podeu compartir-lo amb el nostre suport al client adjuntant-lo a la vostra conversa, o emmagatzemant-lo de manera segura a [Proton Drive](%@) i compartint un enllaç públic.";
+
+/* Button title in the PCAP view. Starts the PCAP session */
+"_pcap_capture_session_start" = "Començar";
+
+/* Button title in the PCAP view. Stops the PCAP session */
+"_pcap_capture_session_stop" = "Aturar";
+
+/* Title of an alert when user starts the PCAP session */
+"_pcap_capture_session_should_start_session" = "Voleu iniciar la captura de la sessió de VPN?";
+
+/* Description of an alert when user starts the PCAP session */
+"_pcap_capture_session_issue_reproduction" = "Si és possible, apliqueu les mateixes preferències i tipus de connexió que vau utilitzar quan us vau trobar amb el problema per primera vegada.\n\nL'objectiu és reproduir el problema de la mateixa manera que va passar la primera vegada (navegant per la web, utilitzant una aplicació, etc.)\n\nQuan hàgiu reproduït el problema, podeu aturar la captura i compartir el fitxer amb l'equip de suport al client.";
+
+/* Description of an alert when user tries dismissing the PCAP sheet */
+"_pcap_capture_discard_description" = "El fitxer no s'emmagatzemarà a l'aplicació. Assegureu-vos d'haver-lo exportat abans de desestimar-lo.";
+
+/* Title of an alert when user tries dismissing the PCAP sheet */
+"_pcap_capture_discard_title" = "Voleu descartar el fitxer?";
+
+/* Button title in an alert */
+"_pcap_capture_discard_button" = "Descartar el fitxer";
+
+/* Commonly used title of a button */
+"_got_it" = "Entesos";
+
+/* Title of an alert that presents the reason for PCAP failure */
+"_pcap_capture_low_storage" = "No hi ha prou espai d'emmagatzematge";
+
+/* Description of an alert that presents the reason for PCAP failure */
+"_pcap_capture_low_storage_action_description" = "Per iniciar una captura necessiteu almenys 200 MB d'espai disponible";
+
+/* Title of an alert that presents the reason for PCAP failure */
+"_pcap_capture_failed" = "S'ha produït un error en la captura";
+
+/* Title of the alert shown when the VPN server refuses one of the user's requested settings */
+"_local_agent_setting_refused_title" = "No s'ha aplicat la configuració";
+
+/* Alert body shown when the server refuses a named setting. %@ is the setting name, e.g. NetShield */
+"_local_agent_setting_refused_message" = "%@ no és una configuració disponible per aquesta connexió.";
+
+/* Alert body shown when the server refuses a setting the app doesn't surface as a named control */
+"_local_agent_setting_refused_message_generic" = "Un dels vostres paràmetres no està disponible per aquesta connexió, ja que ha estat desactivat.";
