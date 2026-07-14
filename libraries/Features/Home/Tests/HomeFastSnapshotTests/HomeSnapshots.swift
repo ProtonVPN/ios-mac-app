@@ -65,7 +65,6 @@ struct HomeScreenTests {
     @Shared(.userTier) var userTier
     @Shared(.userCountry) var userCountry
     @Shared(.userIP) var userIP
-    @Shared(.recents) var recents
     @Shared(.netShieldLevel) var netShieldLevel
 
     @Test("Home screen", arguments: [Int.freeTier, Int.paidTier], homeTestData)

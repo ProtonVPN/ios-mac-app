@@ -50,7 +50,7 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
         self.recentIndex = recentIndex
     }
 
-    public init(connectionSpec: ConnectionSpec, skipReconnect: Bool) {
+    public init(connectionSpec: ConnectionSpec, skipReconnect: Bool = true) {
         self.connectionSpec = connectionSpec
         self.skipReconnect = skipReconnect
     }
@@ -147,12 +147,13 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
 
     private func getRecentConnection(_ index: Int) -> ConnectionSpec? {
         @Dependencies.Dependency(\.connectionInventory) var connectionInventory
-
+        @SharedReader(.recentConnections) var recentConnections
+        @SharedReader(.storedDefaultConnectionPreference) var storedDefaultConnectionPreference
+        @SharedReader(.connectionState) var connectionState
         return connectionInventory.recentConnectionList(
-            .fastest,
+            storedDefaultConnectionPreference ?? .fastest,
             recentConnections ?? [],
-            ConnectionSpec.defaultFastest
-        ).elements[safe: index]?.connection
+            connectionState.resolvedSpec).elements[safe: index]?.connection
     }
 
     private func getDefaultConnection() -> ConnectionSpec? {

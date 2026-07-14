@@ -18,6 +18,7 @@
 
 import AppIntents
 import ComposableArchitecture
+import Connection
 import ConnectionInventory
 import Dependencies
 import Domain
@@ -30,18 +31,8 @@ struct Provider: TimelineProvider {
     @Dependency(\.authKeychain) var authKeychain
     @SharedReader(.recentConnections) var recentConnections
     @SharedReader(.storedDefaultConnectionPreference) var storedDefaultConnectionPreference
+    @SharedReader(.connectionState) public var connectionState
     @Dependency(\.connectionInventory) var connectionInventory
-    @SharedReader(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse: VPNConnectionStatusDoNotUse
-
-    func recentConnectionList() -> [RecentConnection] {
-        let preference = storedDefaultConnectionPreference
-
-        return connectionInventory.recentConnectionList(
-            preference ?? .fastest,
-            recentConnections ?? [],
-            ConnectionSpec.defaultFastest
-        ).elements
-    }
 
     func placeholder(in _: Context) -> ConnectWidgetEntry {
         .init(
@@ -49,21 +40,24 @@ struct Provider: TimelineProvider {
             connectionSpec: .defaultFastest,
             currentServer: nil,
             protectionState: .protected,
-            recentServers: []
+            recentServers: OrderedSet(RecentConnection.sampleData)
         )
     }
 
     func getSnapshot(in _: Context, completion: @escaping (ConnectWidgetEntry) -> Void) {
-        completion(createTimelineEntry())
+        Task {
+            completion(await createTimelineEntry())
+        }
     }
 
     func getTimeline(in _: Context, completion: @escaping (Timeline<Entry>) -> Void) {
-        completion(Timeline(entries: [createTimelineEntry()], policy: .never))
+        Task {
+            completion(Timeline(entries: [await createTimelineEntry()], policy: .never))
+        }
     }
 
-    private func connectionSpec() -> ConnectionSpec {
-        let preference = storedDefaultConnectionPreference
-        switch preference ?? .fastest {
+    private func connectionSpec(preference: DefaultConnectionPreference) -> ConnectionSpec {
+        switch preference {
         case .fastest:
             return .defaultFastest
         case .mostRecent:
@@ -74,32 +68,38 @@ struct Provider: TimelineProvider {
         }
     }
 
-    private func createTimelineEntry() -> ConnectWidgetEntry {
-        let credentials: AuthCredentials? = authKeychain.fetch()
-
-        guard credentials?.userId != nil else {
-            return ConnectWidgetEntry(
-                date: .now,
-                connectionSpec: nil,
-                currentServer: nil,
-                protectionState: .signedOut,
-                recentServers: []
-            )
+    private func createTimelineEntry() async -> ConnectWidgetEntry {
+        guard authKeychain.fetch()?.userId != nil else {
+            return ConnectWidgetEntry.loggedOutEntry
         }
 
-        let recents = recentConnectionList()
+        // We have to load the values here before accessing because swift sharing doesn't sync data
+        // between the widget and the app
+        _ = try? await ($recentConnections.load(),
+                        $storedDefaultConnectionPreference.load(),
+                        $connectionState.load())
+        let preference = storedDefaultConnectionPreference ?? .fastest
+        let resolvedSpec = connectionState.resolvedSpec
+
+        let recents = connectionInventory.recentConnectionList(
+            preference,
+            recentConnections ?? [],
+            resolvedSpec
+        )
+
+        let connectionSpec = resolvedSpec ?? connectionSpec(preference: preference)
 
         return ConnectWidgetEntry(
             date: .now,
-            connectionSpec: vpnConnectionStatusDoNotUse.connectionSpec ?? connectionSpec(),
-            currentServer: vpnConnectionStatusDoNotUse.server,
-            protectionState: vpnConnectionStatusDoNotUse.protectionState,
+            connectionSpec: connectionSpec,
+            currentServer: connectionState.resolvedServer,
+            protectionState: connectionState.protectionState,
             recentServers: recents
         )
     }
 }
 
-private extension VPNConnectionStatusDoNotUse {
+private extension ConnectionState {
     var protectionState: ConnectWidgetEntry.ProtectionState {
         switch self {
         case .resolving, .disconnected, .disconnecting:
@@ -108,15 +108,6 @@ private extension VPNConnectionStatusDoNotUse {
             .protecting
         case .connected:
             .protected
-        }
-    }
-
-    var connectionSpec: ConnectionSpec? {
-        switch self {
-        case .resolving, .disconnected, .disconnecting:
-            nil
-        case .connecting, .connected:
-            spec
         }
     }
 }

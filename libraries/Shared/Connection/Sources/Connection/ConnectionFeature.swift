@@ -240,7 +240,7 @@ public struct ConnectionFeature: Sendable {
 // User-facing connection state
 @DebugDescription
 @CasePathable
-public enum ConnectionState: Equatable, Sendable {
+public enum ConnectionState: Equatable, Sendable, Codable {
     case resolving
     case disconnected
     case disconnecting(TunnelProtocol, ConnectionSpec)
@@ -251,14 +251,14 @@ public enum ConnectionState: Equatable, Sendable {
 
     @DebugDescription
     @CasePathable
-    public enum Intent: Equatable, Sendable {
+    public enum Intent: Equatable, Sendable, Codable {
         case unresolved(ConnectionPreparationIntent)
         case resolved(ResolvedConnectionIntent)
     }
 
     /// Same as DynamicConnectionData, but the peerId string has been resolved to an actual server
     @DebugDescription
-    public struct ResolvedDynamicConnectionData: Equatable, Sendable {
+    public struct ResolvedDynamicConnectionData: Equatable, Sendable, Codable {
         /// The ID of the peer we are connected to
         public let currentPeer: Server
 

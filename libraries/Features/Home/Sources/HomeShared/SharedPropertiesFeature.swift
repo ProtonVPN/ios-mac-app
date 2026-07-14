@@ -26,6 +26,7 @@ import Foundation
 import Persistence
 import ProtonCoreFeatureFlags
 import VPNAppCore
+import WidgetKit
 
 @Reducer
 public struct SharedPropertiesFeature {
@@ -105,7 +106,7 @@ public struct SharedPropertiesFeature {
             case let .newConnectionState(newValue):
                 let oldValue = state.connectionState
                 state.$connectionState.withLock { $0 = newValue }
-
+                WidgetCenter.shared.reloadAllTimelines()
                 if newValue.is(\.connected), !oldValue.is(\.connected) {
                     return .send(.review(.connected))
                 } else if newValue.is(\.disconnected), !oldValue.is(\.disconnected) {

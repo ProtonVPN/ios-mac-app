@@ -87,7 +87,7 @@ public struct RecentsSectionView: View {
             initialState: .init(),
             reducer: RecentsFeature.init
         )
-        return ScrollView {
+        ScrollView {
             RecentsSectionView(store: store)
         }
         .background(Color(.background, .normal))
@@ -99,7 +99,7 @@ public struct RecentsSectionView: View {
             initialState: .init(),
             reducer: RecentsFeature.init
         )
-        return ScrollView {
+        ScrollView {
             RecentsSectionView(store: store)
         }
         .background(Color(.background, .normal))

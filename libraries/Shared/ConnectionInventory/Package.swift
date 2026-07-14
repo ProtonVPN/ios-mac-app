@@ -17,6 +17,8 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(path: "../Connection"),
+
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Strings"),
 
@@ -37,6 +39,7 @@ let package = Package(
                 "Domain",
                 "SharedViews",
                 "Strings",
+                "Connection",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Collections", package: "swift-collections"),

@@ -63,7 +63,6 @@ public final class AppDelegateService: AppDelegateProtocol {
     private lazy var appSessionManager: AppSessionManager = container.makeAppSessionManager()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var pushNotificationService = container.makePushNotificationService()
-    @SharedReader(.connectionState) private var connectionState: ConnectionState
 
     private var tokens: [NotificationToken] = []
     private var cancellables = Set<AnyCancellable>()
@@ -319,6 +318,7 @@ public final class AppDelegateService: AppDelegateProtocol {
 
     private func startListeningForDeepLinkConnectState() {
         deepLinkConnectStatusCancellable?.cancel()
+        @SharedReader(.connectionState) var connectionState
         deepLinkConnectStatusCancellable = $connectionState
             .publisher
             .sink { [weak self] state in

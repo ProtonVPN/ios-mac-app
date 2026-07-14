@@ -16,88 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ComposableArchitecture
 import CoreLocation
-
-#if canImport(WidgetKit)
-    import WidgetKit
-#endif
-
-import CasePaths
-import ConcurrencyExtras
-import Dependencies
 import Domain
-import Ergonomics
-import NetShield
-import Sharing
-
-// This struct is still WIP
-@CasePathable
-public enum VPNConnectionStatusDoNotUse: Sendable, Equatable, Codable {
-    case resolving(ConnectionSpec?, VPNConnectionActual?)
-    case disconnected
-    case connected(ConnectionSpec, VPNConnectionActual?)
-    case connecting(ConnectionSpec, Server?)
-    case disconnecting(ConnectionSpec, VPNConnectionActual?)
-
-    public var server: Server? {
-        if case let .connecting(_, server) = self {
-            return server
-        }
-        return actual?.server
-    }
-
-    public var actual: VPNConnectionActual? {
-        switch self {
-        case .disconnected:
-            nil
-        case let .connected(_, vpnConnectionActual),
-             let .resolving(_, vpnConnectionActual),
-             let .disconnecting(_, vpnConnectionActual):
-            vpnConnectionActual
-        case .connecting:
-            nil
-        }
-    }
-
-    public var spec: ConnectionSpec? {
-        switch self {
-        case .disconnected, .resolving(.none, _):
-            nil
-        case let .connected(spec, _),
-             let .connecting(spec, _),
-             let .resolving(.some(spec), _),
-             let .disconnecting(spec, _):
-            spec
-        }
-    }
-}
-
-private let persistentFileUrl: URL = (FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: DomainConstants.AppGroups.main) ?? .documentsDirectory).appendingPathComponent(
-    "shared/vpnConnectionStatus.json"
-)
-
-public extension SharedKey where Self == FileStorageKey<VPNConnectionStatusDoNotUse>.Default {
-    static var vpnConnectionStatusDoNotUse: Self {
-        Self[
-            .fileStorage(
-                persistentFileUrl,
-                decode: { data in
-                    try JSONDecoder().decode(VPNConnectionStatusDoNotUse.self, from: data)
-                },
-                encode: { status in
-                    #if canImport(WidgetKit)
-                        defer {
-                            WidgetCenter.shared.reloadAllTimelines()
-                        }
-                    #endif
-                    return try JSONEncoder().encode(status)
-                }
-            ),
-            default: .resolving(nil, nil)
-        ]
-    }
-}
+import Foundation
 
 public struct VPNConnectionActual: Equatable, Codable {
     public let connectedDate: Date?

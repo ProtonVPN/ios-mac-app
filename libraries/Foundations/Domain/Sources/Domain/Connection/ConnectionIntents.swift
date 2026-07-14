@@ -34,7 +34,7 @@ public struct ConnectionPreparationIntent: Equatable, Sendable, Codable {
     }
 }
 
-public struct ResolvedConnectionIntent: Equatable, Sendable {
+public struct ResolvedConnectionIntent: Equatable, Sendable, Codable {
     public let spec: ConnectionSpec
     public let tunnelProtocol: TunnelProtocol
     public let resolvedServer: Server

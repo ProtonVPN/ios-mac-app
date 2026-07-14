@@ -24,6 +24,7 @@ let package = Package(
         .package(path: "../../Core/NEHelper"),
         .package(path: "../../Core/SharedViews"),
 
+        .package(path: "../../Shared/Connection"),
         .package(path: "../../Shared/ConnectionInventory"),
         .package(path: "../../Shared/WidgetIntents"),
 
@@ -39,6 +40,7 @@ let package = Package(
                 "Strings",
                 "Domain",
                 "SharedViews",
+                "Connection",
                 "ConnectionInventory",
                 "WidgetIntents",
                 .product(name: "VPNAppCore", package: "NEHelper"),

@@ -20,19 +20,29 @@ import Domain
 import Foundation
 import SwiftUI
 import WidgetKit
+import Collections
 
 public struct ConnectWidgetEntry: TimelineEntry {
     public let date: Date
     public let connectionSpec: ConnectionSpec?
     public let currentServer: Server?
     public let protectionState: ProtectionState
-    public let recentServers: [RecentConnection]
+    public let recentServers: OrderedSet<RecentConnection>
 
     public enum ProtectionState: Equatable {
         case signedOut
         case protected
         case unprotected
         case protecting
+    }
+    static var loggedOutEntry: Self {
+        ConnectWidgetEntry(
+            date: .now,
+            connectionSpec: nil,
+            currentServer: nil,
+            protectionState: .signedOut,
+            recentServers: []
+        )
     }
 }
 

@@ -104,11 +104,11 @@ struct DefaultConnectionSheet: View {
 
     #Preview {
         ZStack { // Xcode 15: #Preview macro only supports a single View in its body
-            @SharedReader(.recents) var recents: OrderedSet<RecentConnection> = [
-                .pinnedFastest,
+            @SharedReader(.recentConnections) var recents = OrderedSet([
+                RecentConnection.pinnedFastest,
                 .connectionRegion,
                 .connectionSecureCoreFastest,
-            ]
+            ])
             let previewStore = Store(initialState: .init()) { DefaultConnectionFeature() }
             VStack {} // Any old view that we can hook the sheet onto
                 .sheet(isPresented: .constant(true)) {

@@ -97,7 +97,7 @@ public enum TunnelState: Equatable, Sendable {
 
 /// Data relating to the connection that is strongly tied to the tunnel's configuration.
 /// This data can only change when the configuration is written to, and reloaded
-public struct TunnelConfiguration: Equatable, Sendable {
+public struct TunnelConfiguration: Equatable, Sendable, Codable {
     /// The spec represents the user's original intent when initiating this connection
     /// The tunnel configuration must be updated accordingly whenever a change is applied
     ///
@@ -134,7 +134,7 @@ public struct DynamicConnectionData: Equatable, Sendable {
 /// Extra information reported by the tunnel.
 /// Type of data depends on the connection protocol.
 @CasePathable
-public enum ProtocolConnectionData: Equatable, Sendable {
+public enum ProtocolConnectionData: Equatable, Sendable, Codable {
     case ike
     case proTUN(ProTUNConnectionData)
 
@@ -143,7 +143,7 @@ public enum ProtocolConnectionData: Equatable, Sendable {
         return data
     }
 
-    public struct ProTUNConnectionData: Equatable, Sendable {
+    public struct ProTUNConnectionData: Equatable, Sendable, Codable {
         public let transport: Domain.WireGuardTransport
         public let serverExitV4: String?
         public let userISP: String?
