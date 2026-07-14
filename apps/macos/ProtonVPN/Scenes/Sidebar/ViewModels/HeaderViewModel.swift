@@ -48,6 +48,9 @@ final class HeaderViewModel {
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.coreAlertService) private var coreAlertService
     @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
+    /// Advanced KS is *Active* (armed at connect → a disconnect would keep blocking), as opposed to merely
+    /// *Armed* (enabled while connected → effective next connection). Gates the disconnect warning.
+    @SharedReader(.advancedKillSwitchActive) private var advancedKillSwitchActive: Bool
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.serverRepository) private var serverRepository
     @SharedReader(.userLocation) private var userLocation: UserLocation?
@@ -155,8 +158,10 @@ final class HeaderViewModel {
 
     func quickConnectAction() {
         if isConnected {
-            // Advanced KS keeps blocking after an intentional disconnect, so confirm first
-            if killSwitchMode.isAdvanced {
+            // Advanced KS keeps blocking after an intentional disconnect, so confirm first — but only when
+            // it's Active (armed at connect). If it's merely Armed (enabled mid-session), a disconnect is a
+            // normal release with no warning, since KS isn't in effect until the next connection.
+            if advancedKillSwitchActive {
                 coreAlertService.push(alert: DisconnectWithAdvancedKillSwitchAlert(confirmHandler: { [connectionCommandClient] in
                     log.debug("Disconnect confirmed with Advanced kill switch active", category: .connectionDisconnect, event: .trigger)
                     connectionCommandClient.send(.disconnect(.quick))

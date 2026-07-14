@@ -129,6 +129,9 @@ final class LoginViewController: NSViewController {
     // MARK: - Kill Switch login banner
 
     @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
+    /// True only when Advanced KS is *Active* and actually blocking (on the login screen that means the
+    /// zero-peer tunnel is up). Merely having Advanced selected (Armed) must not surface the blocking banner.
+    @SharedReader(.advancedKillSwitchActive) private var advancedKillSwitchActive: Bool
     @Dependency(\.vpnTunnelControl) private var vpnTunnelControl
 
     private lazy var killSwitchBanner: KillSwitchLoginBanner = {
@@ -147,7 +150,7 @@ final class LoginViewController: NSViewController {
     /// Shows the Advanced kill-switch blocking banner while the user is logged out but KS is still
     /// blocking. "Disable" tears down the zero-peer tunnel and switches KS off.
     private func updateKillSwitchBanner() {
-        guard killSwitchMode.isAdvanced else {
+        guard advancedKillSwitchActive else {
             killSwitchBanner.isHidden = true
             return
         }

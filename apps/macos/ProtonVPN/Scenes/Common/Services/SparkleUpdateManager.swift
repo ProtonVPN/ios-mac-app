@@ -50,6 +50,9 @@ final class SparkleUpdateManager: NSObject {
     /// Set while Advanced kill switch is temporarily disabled for an update; restored on the next launch
     @Shared(.restoreAdvancedKillSwitchAfterUpdate) private var restoreAdvancedKillSwitchAfterUpdate: Bool
     @SharedReader(.connectionState) private var connectionState: ConnectionState
+    /// Advanced KS is *Active* (armed at connect → would keep blocking across the update relaunch) vs merely
+    /// *Armed*. Gates the update warning copy + the temporary disable/restore dance.
+    @SharedReader(.advancedKillSwitchActive) private var advancedKillSwitchActive: Bool
     #if DEBUG
         /// When set, suppresses update prompts (used in UI tests)
         @SharedReader(.blockUpdatePrompt) private var blockUpdatePrompt
@@ -212,11 +215,13 @@ extension SparkleUpdateManager: SPUUpdaterDelegate {
     /// before Sparkle relaunches to install, warn that the update disconnects the VPN
     /// (and, when kill switch is on, temporarily disables it) so active connections are briefly unprotected
     func updater(_: SPUUpdater, shouldPostponeRelaunchForUpdate _: SUAppcastItem, untilInvokingBlock installHandler: @escaping () -> Void) -> Bool {
-        guard connectionState.isConnected || killSwitchMode.isProtected else {
+        guard connectionState.isConnected || advancedKillSwitchActive else {
             return false
         }
 
-        let body = killSwitchMode.isProtected
+        // "we'll temporarily disable kill switch" copy only when Advanced KS is Active (armed at connect →
+        // stays blocking across the relaunch). Standard just releases on the disconnect; Armed isn't blocking.
+        let body = advancedKillSwitchActive
             ? Localizable.killSwitchUpdateBodyKillSwitchOn
             : Localizable.killSwitchUpdateBody
 
@@ -243,9 +248,10 @@ extension SparkleUpdateManager: SPUUpdaterDelegate {
 
     /// Tears down the VPN (and Advanced kill switch) before invoking Sparkle's relaunch handler
     private func prepareForUpdateInstall(then installHandler: @escaping () -> Void) {
-        // Advanced kill switch keeps blocking across a clean disconnect, so temporarily disable it and flag
-        // it for restoration on the next launch. Standard releases automatically on the disconnect below.
-        if killSwitchMode.isAdvanced {
+        // Active Advanced kill switch keeps blocking across a clean disconnect (and the stop below would
+        // otherwise trip the drop-reblock), so temporarily disable it and flag it for restoration on the next
+        // launch. Standard releases automatically on the disconnect; merely-Armed Advanced isn't blocking.
+        if advancedKillSwitchActive {
             $restoreAdvancedKillSwitchAfterUpdate.withLock { $0 = true }
             $killSwitchMode.withLock { $0 = .off }
         }

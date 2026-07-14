@@ -612,12 +612,20 @@ extension QuickSettingsFeature {
         case .standard:
             // Off → Standard
             title = Localizable.killSwitchEnableStandardTitle
-            bullets = [Localizable.killSwitchBulletSplitTunneling, Localizable.killSwitchBulletNoLan]
+            bullets = [
+                Localizable.killSwitchBulletSplitTunneling,
+                Localizable.killSwitchBulletNoLan,
+                Localizable.killSwitchBulletDeferred,
+            ]
             confirmTitle = Localizable.killSwitchConfirmEnable
         case .advanced where current == .standard:
             // Standard → Advanced
             title = Localizable.killSwitchSwitchAdvancedTitle
-            bullets = [Localizable.killSwitchBulletAdvancedPersists, Localizable.killSwitchBulletAdvancedRecover]
+            bullets = [
+                Localizable.killSwitchBulletAdvancedPersists,
+                Localizable.killSwitchBulletAdvancedRecover,
+                Localizable.killSwitchBulletDeferred,
+            ]
             confirmTitle = Localizable.killSwitchConfirmSwitch
         case .advanced:
             // Off → Advanced
@@ -626,6 +634,7 @@ extension QuickSettingsFeature {
                 Localizable.killSwitchBulletSplitTunneling,
                 Localizable.killSwitchBulletNoLan,
                 Localizable.killSwitchBulletAdvancedPersists,
+                Localizable.killSwitchBulletDeferred,
             ]
             confirmTitle = Localizable.killSwitchConfirmEnable
         case .off:

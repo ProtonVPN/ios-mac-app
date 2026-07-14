@@ -62,9 +62,11 @@ public class QuitWarningAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     /// Quit confirmation while a VPN session is active. Standard releases KS on quit;
-    public init(killSwitchMode: KillSwitchMode, confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
+    public init(advancedKillSwitchActive: Bool, confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
         self.title = Localizable.killSwitchQuitTitle
-        self.message = killSwitchMode.isAdvanced
+        // Only warn "you'll stay blocked after quit" when Advanced KS is Active (armed at connect); merely
+        // Armed isn't blocking, so quitting is a normal disconnect.
+        self.message = advancedKillSwitchActive
             ? Localizable.killSwitchLogoutAdvancedBody
             : Localizable.killSwitchDisconnectedFromVpn
         actions.append(AlertAction(title: Localizable.quit, style: .confirmative, handler: confirmHandler))

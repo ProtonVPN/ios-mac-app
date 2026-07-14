@@ -69,6 +69,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.updateManager) private var updateManager
     @SharedReader(.connectionState) private var connectionState: ConnectionState
     @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
+    /// Advanced KS is *Active* (armed at connect → a logout would keep blocking) vs merely *Armed* (enabled
+    /// while connected → effective next connection). Gates the keep-blocking logout path + the warning.
+    @SharedReader(.advancedKillSwitchActive) private var advancedKillSwitchActive: Bool
     /// session status, single source of truth
     @Shared(.sessionStatus) private var sharedSessionStatus: SessionStatus
     /// Reason for a forced logout to login/welcome screens
@@ -315,16 +318,18 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         guard sessionStatus == .established else { return } // not logged in, nothing to do
         switch connectionState {
         case .connected, .killSwitchActive:
-            if killSwitchMode.isAdvanced {
-                // Advanced KS persists across logout: keep blocking and clear connection data
+            if advancedKillSwitchActive {
+                // Advanced KS is Active (armed at connect): persist it across logout and keep blocking on the
+                // login screen by switching the live tunnel to zero-peer.
                 confirmLogout(showAlert: !force) { [weak self] in
                     self?.connectionCommandClient.send(.clearConnectionData(completion: { [weak self] in
                         self?.logoutRoutine(reason: reason)
                     }))
                 }
             } else {
-                // Standard/Off auto-disable KS on logout so the user isn't locked out of the internet.
-                $killSwitchMode.withLock { $0 = .off }
+                // Standard auto-disables on logout so the user isn't locked out; Advanced-when-only-Armed and
+                // Off keep their mode. Either way KS isn't blocking, so this is a normal disconnect.
+                $killSwitchMode.withLock { if $0 == .standard { $0 = .off } }
                 confirmLogout(showAlert: !force) { [weak self] in
                     self?.connectionCommandClient.send(.disconnect(.signout, completion: { [weak self] in
                         self?.logoutRoutine(reason: reason)
@@ -347,8 +352,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             return
         }
 
-        // Advanced KS: Sign out from {username}?" confirmation
-        if killSwitchMode.isAdvanced {
+        // Active Advanced KS keeps the device offline after sign-out → "Sign out from {username}?" warning.
+        // Merely-Armed (not blocking yet) uses the normal logout warning below.
+        if advancedKillSwitchActive {
             let alert = LogoutWithAdvancedKillSwitchAlert(username: authKeychain.username, confirmHandler: { completion() })
             alertService.push(alert: alert)
             return
@@ -424,7 +430,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
             let cancellationClosure: () -> Void = { NSApp.reply(toApplicationShouldTerminate: false) }
 
-            let alert = QuitWarningAlert(killSwitchMode: killSwitchMode, confirmHandler: confirmationClosure, cancelHandler: cancellationClosure)
+            let alert = QuitWarningAlert(advancedKillSwitchActive: advancedKillSwitchActive, confirmHandler: confirmationClosure, cancelHandler: cancellationClosure)
             alertService.push(alert: alert)
         }
     }

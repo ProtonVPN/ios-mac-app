@@ -53,6 +53,9 @@ final class StatusMenuViewModel {
     @Dependency(\.linkOpener) var linkOpener
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
     @SharedReader(.killSwitchMode) private var killSwitchMode: KillSwitchMode
+    /// Advanced KS is *Active* (armed at connect → a disconnect would keep blocking) vs merely *Armed*
+    /// (enabled while connected → effective next connection). Gates the disconnect warning.
+    @SharedReader(.advancedKillSwitchActive) private var advancedKillSwitchActive: Bool
     @SharedReader(.connectionState) private var connectionState: ConnectionState
     @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
 
@@ -169,7 +172,7 @@ final class StatusMenuViewModel {
     /// Advanced kill switch keeps blocking after an intentional disconnect, so confirm first when
     /// connected. Other states disconnect immediately
     private func disconnectFromTray() {
-        guard killSwitchMode.isAdvanced, connectionState.isConnected else {
+        guard advancedKillSwitchActive, connectionState.isConnected else {
             connectionCommandClient.send(.disconnect(.tray))
             return
         }
