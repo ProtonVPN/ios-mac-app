@@ -904,9 +904,6 @@
 /* Mac: neagent help screen */
 "_neagent_second_step" = "(2)";
 
-/* Button in several different alerts */
-"_got_it" = "Rozumiem!";
-
 /* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "V aplikácii je dostupná aktualizácia";
 
@@ -1071,6 +1068,9 @@
 
 /* iOS Settings: ProTUN logs row */
 "_protun_logs" = "ProTUN záznamy";
+
+/* iOS Settings: Troubleshooting logs row */
+"_create_troubleshooting_file" = "Vytvoriť súbor na riešenie problémov";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Nahlásiť problém";
@@ -1354,6 +1354,8 @@
 
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Riešenie problémov";
+
+"_troubleshooting_file" = "Súbor na riešenie problémov";
 
 "_troubleshoot_item_alt_title" = "Povoliť alternatívne smerovanie";
 
@@ -3275,3 +3277,69 @@
 
 /* Transaction log entry in logs */
 "_transaction_log_" = "Záznam transakcie";
+
+/* Footer note that is visible across the whole flow of the PCAP session */
+"_pcap_capture_file_storage" = "Súbor na riešenie problémov je uložený vo vašom zariadení a nie je odosielaný spoločnosti Proton, pokiaľ ho sami nezdieľate. Zachytáva vašu prevádzku cez VPN, ktorá môže zahŕňať aj webové stránky, ktoré navštevujete. [Viac informácií](%@)";
+
+/* Description of the PCAP feature presented to the user before they start the PCAP session */
+"_pcap_capture_feature_description" = "Zrekonštruujte konkrétny problém, s ktorým sa stretávate pri používaní služby Proton VPN, aby vám mohol pomôcť náš tím zákazníckej podpory.\n\nAplikácia vytvorí súbor obsahujúci technické údaje o vašom pripojení cez VPN.";
+
+/* Directions to the user shown on the active PCAP session view */
+"_pcap_capture_session_directions" = "Problém znovu reprodukujte a potom zastavte zaznamenávanie.";
+
+/* Format: mm:ss / mm:ss. Left hand side is the counter, right hand side is the maximum allowed time */
+"_pcap_capture_session_duration" = "%@ / %@";
+
+/* Header of the active PCAP session view */
+"_pcap_capture_session_capturing" = "Zaznamenávanie";
+
+/* Button title on the PCAP export view. Presents a share sheet to save the file outside of the app */
+"_pcap_capture_session_export" = "Uložiť súbor";
+
+/* Header of the PCAP export view */
+"_pcap_capture_session_captured" = "Zaznamenaná VPN relácia";
+
+/* `it` refers to the exportable `<date>.pcap` file that is available while user sees this text */
+"_pcap_capture_file_sharing" = "Teraz ho môžete zdieľať s našou zákazníckou podporou tak, že ho priložíte do konverzácie, alebo ho bezpečne uložíte na [Proton Drive](%@) a zdieľate verejný odkaz.";
+
+/* Button title in the PCAP view. Starts the PCAP session */
+"_pcap_capture_session_start" = "Spustiť";
+
+/* Button title in the PCAP view. Stops the PCAP session */
+"_pcap_capture_session_stop" = "Zastaviť";
+
+/* Title of an alert when user starts the PCAP session */
+"_pcap_capture_session_should_start_session" = "Spustiť zaznamenávanie VPN relácie?";
+
+/* Description of an alert when user starts the PCAP session */
+"_pcap_capture_session_issue_reproduction" = "Ak je to možné, použite rovnaké nastavenia a typ pripojenia, aké ste mali v čase, keď sa problém prvýkrát vyskytol.\n\nSnažte sa problém reprodukovať rovnakým spôsobom, ako sa vyskytol po prvýkrát (prehliadanie webu, používanie aplikácie atď.).\n\nKeď sa vám podarí problém reprodukovať, môžete zaznamenávanie ukončiť a súbor poslať tímu zákazníckej podpory.";
+
+/* Description of an alert when user tries dismissing the PCAP sheet */
+"_pcap_capture_discard_description" = "Súbor sa v aplikácii neuloží. Pred jeho odstránením sa uistite, že ste ho exportovali.";
+
+/* Title of an alert when user tries dismissing the PCAP sheet */
+"_pcap_capture_discard_title" = "Zahodiť súbor?";
+
+/* Button title in an alert */
+"_pcap_capture_discard_button" = "Zahodiť súbor";
+
+/* Commonly used title of a button */
+"_got_it" = "Rozumiem";
+
+/* Title of an alert that presents the reason for PCAP failure */
+"_pcap_capture_low_storage" = "Nedostatok úložného priestoru";
+
+/* Description of an alert that presents the reason for PCAP failure */
+"_pcap_capture_low_storage_action_description" = "Na spustenie zaznamenávania potrebujete aspoň 200 MB voľného miesta";
+
+/* Title of an alert that presents the reason for PCAP failure */
+"_pcap_capture_failed" = "Zaznamenávanie zlyhalo";
+
+/* Title of the alert shown when the VPN server refuses one of the user's requested settings */
+"_local_agent_setting_refused_title" = "Nastavenie nie je použité";
+
+/* Alert body shown when the server refuses a named setting. %@ is the setting name, e.g. NetShield */
+"_local_agent_setting_refused_message" = "%@ nie je pre toto pripojenie k dispozícii.";
+
+/* Alert body shown when the server refuses a setting the app doesn't surface as a named control */
+"_local_agent_setting_refused_message_generic" = "Jedno z vašich nastavení nie je pre toto pripojenie k dispozícii, bolo vypnuté.";

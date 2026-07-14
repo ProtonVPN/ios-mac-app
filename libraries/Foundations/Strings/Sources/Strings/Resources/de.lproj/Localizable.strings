@@ -904,9 +904,6 @@
 /* Mac: neagent help screen */
 "_neagent_second_step" = "(2)";
 
-/* Button in several different alerts */
-"_got_it" = "Verstanden!";
-
 /* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Ein Umstieg innerhalb der App ist nicht möglich";
 
@@ -1071,6 +1068,9 @@
 
 /* iOS Settings: ProTUN logs row */
 "_protun_logs" = "ProTUN-Protokolle";
+
+/* iOS Settings: Troubleshooting logs row */
+"_create_troubleshooting_file" = "Erstelle eine Fehlerbehebungsdatei";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Problem melden";
@@ -1354,6 +1354,8 @@
 
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Problembehebung";
+
+"_troubleshooting_file" = "Fehlerbehebungsdatei";
 
 "_troubleshoot_item_alt_title" = "Alternatives Routing erlauben";
 
@@ -3275,3 +3277,69 @@
 
 /* Transaction log entry in logs */
 "_transaction_log_" = "Transaktionsprotokoll";
+
+/* Footer note that is visible across the whole flow of the PCAP session */
+"_pcap_capture_file_storage" = "Die Fehlerbehebungsdatei wird auf Ihrem Gerät gespeichert und nicht an Proton gesendet, es sei denn, Sie teilen sie mit uns. Sie erfasst Ihren VPN-Datenverkehr, der auch die von Ihnen besuchten Websites enthalten kann. [Weitere Informationen](%@)";
+
+/* Description of the PCAP feature presented to the user before they start the PCAP session */
+"_pcap_capture_feature_description" = "Stelle das konkrete Problem nach, das bei der Nutzung von Proton VPN auftritt, um Unterstützung von unserem Kundensupport-Team zu erhalten.\n\nDie App erstellt eine Datei mit technischen Details zu Ihrer VPN-Verbindung.";
+
+/* Directions to the user shown on the active PCAP session view */
+"_pcap_capture_session_directions" = "Stelle das Problem nach und beenden Sie anschließend die Aufzeichnung.";
+
+/* Format: mm:ss / mm:ss. Left hand side is the counter, right hand side is the maximum allowed time */
+"_pcap_capture_session_duration" = "%@ / %@";
+
+/* Header of the active PCAP session view */
+"_pcap_capture_session_capturing" = "Aufzeichnung";
+
+/* Button title on the PCAP export view. Presents a share sheet to save the file outside of the app */
+"_pcap_capture_session_export" = "Datei speichern";
+
+/* Header of the PCAP export view */
+"_pcap_capture_session_captured" = "VPN-Sitzung aufgezeichnet";
+
+/* `it` refers to the exportable `<date>.pcap` file that is available while user sees this text */
+"_pcap_capture_file_sharing" = "Die Datei kann nun an unseren Kundensupport weitergeleitet werden, indem du sie an deine Nachricht anhängst oder sie sicher auf [Proton Drive](%@) speicherst und einen öffentlichen Link teilst.";
+
+/* Button title in the PCAP view. Starts the PCAP session */
+"_pcap_capture_session_start" = "Start";
+
+/* Button title in the PCAP view. Stops the PCAP session */
+"_pcap_capture_session_stop" = "Beenden";
+
+/* Title of an alert when user starts the PCAP session */
+"_pcap_capture_session_should_start_session" = "VPN-Sitzung jetzt aufzeichnen?";
+
+/* Description of an alert when user starts the PCAP session */
+"_pcap_capture_session_issue_reproduction" = "Verwende nach Möglichkeit dieselben Einstellungen und dieselbe Verbindungsart wie bei dem ersten Auftreten des Problems.\n\nVersuche, das Problem auf dieselbe Weise zu reproduzieren, wie es ursprünglich aufgetreten ist (beim Surfen im Internet, bei der Nutzung einer App usw.).\n\nWenn du das Problem reproduziert hast, kannst du die Aufzeichnung beenden und die Datei an den Kundensupport weiterleiten.";
+
+/* Description of an alert when user tries dismissing the PCAP sheet */
+"_pcap_capture_discard_description" = "Die Datei wird nicht in der App gespeichert. Stelle sicher, dass du sie exportiert hast, bevor du sie löschst.";
+
+/* Title of an alert when user tries dismissing the PCAP sheet */
+"_pcap_capture_discard_title" = "Datei verwerfen?";
+
+/* Button title in an alert */
+"_pcap_capture_discard_button" = "Datei verwerfen";
+
+/* Commonly used title of a button */
+"_got_it" = "Verstanden";
+
+/* Title of an alert that presents the reason for PCAP failure */
+"_pcap_capture_low_storage" = "Nicht genügend freier Speicherplatz";
+
+/* Description of an alert that presents the reason for PCAP failure */
+"_pcap_capture_low_storage_action_description" = "Es wird mindestens 200 MB freier Speicherplatz benötigt, um eine Aufzeichnung zu starten.";
+
+/* Title of an alert that presents the reason for PCAP failure */
+"_pcap_capture_failed" = "Aufzeichnung fehlgeschlagen";
+
+/* Title of the alert shown when the VPN server refuses one of the user's requested settings */
+"_local_agent_setting_refused_title" = "Einstellung nicht übernommen";
+
+/* Alert body shown when the server refuses a named setting. %@ is the setting name, e.g. NetShield */
+"_local_agent_setting_refused_message" = "%@ ist für diese Verbindung keine verfügbare Einstellung.";
+
+/* Alert body shown when the server refuses a setting the app doesn't surface as a named control */
+"_local_agent_setting_refused_message_generic" = "Eine Ihrer Einstellungen ist für diese Verbindung nicht verfügbar und wurde daher deaktiviert.";

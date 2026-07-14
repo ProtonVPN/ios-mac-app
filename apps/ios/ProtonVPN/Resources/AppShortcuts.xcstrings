@@ -147,6 +147,17 @@
             ]
           }
         },
+        "hu" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Védelmet nyújt-e nekem a ${applicationName}",
+              "A ${applicationName} csatlakozik?",
+              "${applicationName} állapot",
+              "${applicationName} állapotának megjelenítése"
+            ]
+          }
+        },
         "id" : {
           "stringSet" : {
             "state" : "translated",

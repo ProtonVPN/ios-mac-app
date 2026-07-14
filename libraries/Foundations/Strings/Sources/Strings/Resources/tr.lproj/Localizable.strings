@@ -904,9 +904,6 @@
 /* Mac: neagent help screen */
 "_neagent_second_step" = "(2)";
 
-/* Button in several different alerts */
-"_got_it" = "Anladım!";
-
 /* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Yükseltme uygulama içinden yapılamaz";
 
@@ -1071,6 +1068,9 @@
 
 /* iOS Settings: ProTUN logs row */
 "_protun_logs" = "ProTUN günlükleri";
+
+/* iOS Settings: Troubleshooting logs row */
+"_create_troubleshooting_file" = "Sorun giderme dosyası oluştur";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Sorun bildireceğim";
@@ -1354,6 +1354,8 @@
 
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Sorun giderme";
+
+"_troubleshooting_file" = "Sorun giderme dosyası";
 
 "_troubleshoot_item_alt_title" = "Alternatif yönlendirme kullanılabilsin";
 
@@ -3275,3 +3277,69 @@
 
 /* Transaction log entry in logs */
 "_transaction_log_" = "İşlem günlüğü";
+
+/* Footer note that is visible across the whole flow of the PCAP session */
+"_pcap_capture_file_storage" = "Sorun giderme dosyası aygıtınızda saklanır ve siz paylaşmadığınız sürece Proton’a gönderilmez. Bu dosya ziyaret ettiğiniz web sitelerini de içerebilecek olan VPN trafiğinizi kaydeder. [Ayrıntılı bilgi alın](%@)";
+
+/* Description of the PCAP feature presented to the user before they start the PCAP session */
+"_pcap_capture_feature_description" = "Proton VPN'i kullanırken karşılaştığınız belirli bir sorunu yeniden canlandırarak müşteri destek ekibimizden yardım alabilirsiniz.\n\nUygulama VPN bağlantınızla ilgili teknik ayrıntıları içeren bir dosya oluşturacaktır.";
+
+/* Directions to the user shown on the active PCAP session view */
+"_pcap_capture_session_directions" = "Sorunu yeniden oluşturun ardından yakalamayı durdurun.";
+
+/* Format: mm:ss / mm:ss. Left hand side is the counter, right hand side is the maximum allowed time */
+"_pcap_capture_session_duration" = "%@ / %@";
+
+/* Header of the active PCAP session view */
+"_pcap_capture_session_capturing" = "Yakalanıyor";
+
+/* Button title on the PCAP export view. Presents a share sheet to save the file outside of the app */
+"_pcap_capture_session_export" = "Dosyayı kaydet";
+
+/* Header of the PCAP export view */
+"_pcap_capture_session_captured" = "VPN oturumu kaydedildi";
+
+/* `it` refers to the exportable `<date>.pcap` file that is available while user sees this text */
+"_pcap_capture_file_sharing" = "Artık bunu sohbetinize ekleyerek veya [Proton Drive](%@) üzerinde güvenli bir şekilde saklayıp herkese açık bir bağlantı paylaşarak müşteri destek ekibimizle paylaşabilirsiniz.";
+
+/* Button title in the PCAP view. Starts the PCAP session */
+"_pcap_capture_session_start" = "Başlat";
+
+/* Button title in the PCAP view. Stops the PCAP session */
+"_pcap_capture_session_stop" = "Durdur";
+
+/* Title of an alert when user starts the PCAP session */
+"_pcap_capture_session_should_start_session" = "VPN oturumunu yakalama başlatılsın mı?";
+
+/* Description of an alert when user starts the PCAP session */
+"_pcap_capture_session_issue_reproduction" = "Mümkünse sorunla ilk kez karşılaştığınızda kullandığınız ayarları ve bağlantı türünü uygulayın.\n\nSorunu ilk kez ortaya çıktığı şekilde (internette gezinirken, bir uygulamayı kullanırken vb.) yeniden canlandırmaya çalışın.\n\nSorunu yeniden canlandırdıktan sonra kayıt işlemini durdurabilir ve dosyayı müşteri destek ekibiyle paylaşabilirsiniz.";
+
+/* Description of an alert when user tries dismissing the PCAP sheet */
+"_pcap_capture_discard_description" = "Dosya uygulamada saklanmayacak. Silmeden önce dosyayı dışa aktardığınızdan emin olun.";
+
+/* Title of an alert when user tries dismissing the PCAP sheet */
+"_pcap_capture_discard_title" = "Dosya silinsin mi?";
+
+/* Button title in an alert */
+"_pcap_capture_discard_button" = "Dosyayı sil";
+
+/* Commonly used title of a button */
+"_got_it" = "Anlaşıldı";
+
+/* Title of an alert that presents the reason for PCAP failure */
+"_pcap_capture_low_storage" = "Yeterli depolama alanı yok";
+
+/* Description of an alert that presents the reason for PCAP failure */
+"_pcap_capture_low_storage_action_description" = "Kaydı başlatmak için en az 200 MB boş alana ihtiyacınız var";
+
+/* Title of an alert that presents the reason for PCAP failure */
+"_pcap_capture_failed" = "Yakalama başarısız oldu";
+
+/* Title of the alert shown when the VPN server refuses one of the user's requested settings */
+"_local_agent_setting_refused_title" = "Ayar uygulanmadı";
+
+/* Alert body shown when the server refuses a named setting. %@ is the setting name, e.g. NetShield */
+"_local_agent_setting_refused_message" = "%@ bu bağlantı için kullanılabilir bir ayar değil.";
+
+/* Alert body shown when the server refuses a setting the app doesn't surface as a named control */
+"_local_agent_setting_refused_message_generic" = "Ayarlarınızdan biri bu bağlantı için kullanılamıyor. Bu ayar devre dışı bırakılmış.";

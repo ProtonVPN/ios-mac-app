@@ -904,9 +904,6 @@
 /* Mac: neagent help screen */
 "_neagent_second_step" = "(2)";
 
-/* Button in several different alerts */
-"_got_it" = "Зразумела!";
-
 /* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Паляпшэнне недаступна ў праграме";
 
@@ -1071,6 +1068,9 @@
 
 /* iOS Settings: ProTUN logs row */
 "_protun_logs" = "Журналы ProTUN";
+
+/* iOS Settings: Troubleshooting logs row */
+"_create_troubleshooting_file" = "Стварыць файл выпраўлення непаладак";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Паведаміць аб праблеме";
@@ -1354,6 +1354,8 @@
 
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Выпраўленне непаладак";
+
+"_troubleshooting_file" = "Файл выпраўленне непаладак";
 
 "_troubleshoot_item_alt_title" = "Дазволіць альтэрнатыўную маршрутызацыю";
 
@@ -3275,3 +3277,69 @@
 
 /* Transaction log entry in logs */
 "_transaction_log_" = "Журнал трансакцый";
+
+/* Footer note that is visible across the whole flow of the PCAP session */
+"_pcap_capture_file_storage" = "Файл выпраўлення непаладак захоўваецца на вашай прыладзе і не будзе адпраўлены ў Proton, пакуль вы не абагуліце яго. Ён можа захопліваць трафік VPN і ўключаць вэб-сайты, якія вы наведваеце. [Даведацца больш](%@)";
+
+/* Description of the PCAP feature presented to the user before they start the PCAP session */
+"_pcap_capture_feature_description" = "Узнавіце ўказаную праблему з якой вы сутыкнуліся пры выкарыстанні Proton VPN, каб атрымаць дапамогу ад нашай службы падтрымкі кліентаў.\n\nПраграма створыць файл, які змяшчае тэхнічныя падрабязнасці аб вашым падключэнні па VPN.";
+
+/* Directions to the user shown on the active PCAP session view */
+"_pcap_capture_session_directions" = "Узнавіце праблему, а потым спыніце захоп.";
+
+/* Format: mm:ss / mm:ss. Left hand side is the counter, right hand side is the maximum allowed time */
+"_pcap_capture_session_duration" = "%@ / %@";
+
+/* Header of the active PCAP session view */
+"_pcap_capture_session_capturing" = "Захоп";
+
+/* Button title on the PCAP export view. Presents a share sheet to save the file outside of the app */
+"_pcap_capture_session_export" = "Захаваць файл";
+
+/* Header of the PCAP export view */
+"_pcap_capture_session_captured" = "Сеанс VPN захоплены";
+
+/* `it` refers to the exportable `<date>.pcap` file that is available while user sees this text */
+"_pcap_capture_file_sharing" = "Цяпер вы можаце абагуліць яго з нашай службай падтрымкі. Дастаткова далучыць захоплены файл да размовы або бяспечна захаваць яго ў [Proton Drive](%@) і абагуліць публічную спасылку.";
+
+/* Button title in the PCAP view. Starts the PCAP session */
+"_pcap_capture_session_start" = "Пачаць";
+
+/* Button title in the PCAP view. Stops the PCAP session */
+"_pcap_capture_session_stop" = "Спыніць";
+
+/* Title of an alert when user starts the PCAP session */
+"_pcap_capture_session_should_start_session" = "Пачаць захоп сеанса VPN?";
+
+/* Description of an alert when user starts the PCAP session */
+"_pcap_capture_session_issue_reproduction" = "Па магчымасці прымяніце аналагічныя налады і той тып падключэння, якія вы выкарыстоўвалі пры першым сутыкненні з праблемай.\n\nМэтай з'яўляецца ўзнавіць праблему такім чынам, калі яна ўзнікла ў першы раз (прагляд старонак у інтэрнэце, выкарыстанне праграмы і г.д.)\n\nПасля ўзнаўлення праблемы, вы можаце спыніць захоп і абагуліць файл з камандай падтрымкі.";
+
+/* Description of an alert when user tries dismissing the PCAP sheet */
+"_pcap_capture_discard_description" = "Файл не будзе захаваны ў праграме. Пераканайцеся, што вы экспартавалі яго перад адхіленнем.";
+
+/* Title of an alert when user tries dismissing the PCAP sheet */
+"_pcap_capture_discard_title" = "Адхіліць файл?";
+
+/* Button title in an alert */
+"_pcap_capture_discard_button" = "Адхіліць файл";
+
+/* Commonly used title of a button */
+"_got_it" = "Зразумела";
+
+/* Title of an alert that presents the reason for PCAP failure */
+"_pcap_capture_low_storage" = "Недастаткова месца ў сховішчы";
+
+/* Description of an alert that presents the reason for PCAP failure */
+"_pcap_capture_low_storage_action_description" = "Вам неабходна прынамсі 200 МБ даступнай прасторы, каб пачаць захоп";
+
+/* Title of an alert that presents the reason for PCAP failure */
+"_pcap_capture_failed" = "Збой захопу";
+
+/* Title of the alert shown when the VPN server refuses one of the user's requested settings */
+"_local_agent_setting_refused_title" = "Налады не прыменены";
+
+/* Alert body shown when the server refuses a named setting. %@ is the setting name, e.g. NetShield */
+"_local_agent_setting_refused_message" = "Налада %@ недаступна для гэтага падключэння.";
+
+/* Alert body shown when the server refuses a setting the app doesn't surface as a named control */
+"_local_agent_setting_refused_message_generic" = "Адна з вашых налад недаступна для гэтага падключэння. Яны была выключана.";
