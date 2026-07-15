@@ -144,13 +144,31 @@ typedef struct {
 
 IPC_DECLARE_SHARED_REGION(IPCAgentFeaturesRegion, IPCAgentFeaturesPayload);
 
+// OS-enforced provider properties the app must mirror into the real NE configuration. Unlike the other payloads this
+// carries configuration settings, which the guidance above discourages: it's necessary because on macOS the root System
+// Extension persists these to a private store the app can't read, so this channel is how the app learns the values to
+// write into the NE preferences it alone can save.
+typedef struct {
+    uint16_t                version;
+    uuid_t                  config_id;              // the provider configuration these bits belong to
+    uint8_t                 include_all_networks;   // bool — kill switch
+    uint8_t                 exclude_local_networks; // bool — !allowLAN
+    uint8_t                 on_demand;              // bool
+    uint8_t                 on_demand_set;          // bool — whether `on_demand` carries a meaningful value
+} IPCManagedConfigPayload;
+
+IPC_DECLARE_SHARED_REGION(IPCManagedConfigRegion, IPCManagedConfigPayload);
+
 // This is a single backing memory region for all of the connection data regions. Each subregion is padded to 1024 bytes
 // and has its own seqlock + versioning. iOS and tvOS share this using a file-backed mmap while macOS must accomplish
 // the same using an IOSurface sent over an XPC session.
+//
+// Append-only: new regions go at the end so existing field offsets stay stable across app/extension builds.
 typedef struct {
     IPCConnectionDataRegion   connection_data;
     IPCStatsRegion            stats;
     IPCConnectionStatsRegion  connection_stats;
     IPCErrorRegion            error;
     IPCAgentFeaturesRegion    agent_features;
+    IPCManagedConfigRegion    managed_config;
 } IPCTunnelData;

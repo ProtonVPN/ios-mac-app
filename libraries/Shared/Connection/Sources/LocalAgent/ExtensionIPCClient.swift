@@ -72,6 +72,8 @@ public struct ExtensionIPCClient: Sendable {
     public package(set) var observeFeatures: @Sendable () -> AsyncStream<AgentTunnelFeatures?> = { .finished }
     /// The extension's most-recent reported error (`nil` when the slot is empty), decoded from the raw payload.
     public package(set) var observeError: @Sendable () -> AsyncStream<ExtensionError?> = { .finished }
+    /// The live OS-enforced provider properties published by the extension (macOS mirror path).
+    public package(set) var observeManagedConfiguration: @Sendable () -> AsyncStream<ManagedConfiguration?> = { .finished }
     /// Commands the extension posts over the `.tunnelCmd` notification.
     public package(set) var observeCommands: @Sendable () -> AsyncStream<TunnelCommand> = { .finished }
 
@@ -171,6 +173,12 @@ public struct ExtensionIPCClient: Sendable {
                 } transform: { payload in
                     payload.extensionError
                 }
+            } observeManagedConfiguration: {
+                observe(attachSource: attachSource, reconcileOn: appBecameActiveTicks()) { store, since in
+                    store.channels.managedConfig.readIfChanged(since: since)
+                } transform: { payload in
+                    payload.managedConfiguration
+                }
             } observeCommands: {
                 IPCNotifications.streamRawState(.tunnelCmd)
                     .map { Int($0) }
@@ -203,6 +211,8 @@ public struct ExtensionIPCClient: Sendable {
                 store.channels.localAgentFeatures.agentFeaturesStream(reconcileOn: appBecameActiveTicks())
             } observeError: {
                 store.channels.localAgentError.errorStream(reconcileOn: appBecameActiveTicks())
+            } observeManagedConfiguration: {
+                store.channels.managedConfig.managedConfigurationStream(reconcileOn: appBecameActiveTicks())
             } observeCommands: {
                 IPCNotifications.streamRawState(.tunnelCmd)
                     .map { Int($0) }
@@ -243,6 +253,7 @@ public struct ExtensionIPCClient: Sendable {
             observeStats: { .finished },
             observeFeatures: { .finished },
             observeError: { .finished },
+            observeManagedConfiguration: { .finished },
             observeCommands: { .finished },
             attachRegion: { _ in }
         )

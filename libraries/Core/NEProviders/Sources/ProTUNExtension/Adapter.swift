@@ -94,7 +94,7 @@ final class ProTUNAdapter: @unchecked Sendable {
         self.eventDelegate = .init()
 
         let providerConfig = packetTunnelProvider.protocolConfiguration as? NETunnelProviderProtocol
-        self.configurationStore = ConfigurationStore(initial: providerConfig?.requestId)
+        self.configurationStore = ConfigurationStore(backing: .backing, initial: providerConfig?.requestId)
     }
 
     /// Acknowledges the app's receipt of the last reported error. If the error still pertains to the current request,
@@ -108,6 +108,25 @@ final class ProTUNAdapter: @unchecked Sendable {
         extensionIPCServer.restampConnectionData(errorId)
         extensionIPCServer.clearError()
     }
+
+    /// The app confirms it saved the OS-enforced properties for `requestId` into NE preferences (macOS). Restamps the
+    /// connection data so the app can settle on updates that don't otherwise re-publish `ExtensionState`.
+    func acknowledgeManagedConfiguration(_ requestId: UUID) async {
+        guard await currentRequestId == requestId else {
+            Logger.adapter.info("Ignoring stale managed-config ack \(requestId.uuidString, privacy: .public)")
+            return
+        }
+        // Restamp for updates that don't re-publish `ExtensionState`.
+        extensionIPCServer.restampConnectionData(requestId)
+        Logger.adapter.info("Managed configuration acknowledged for \(requestId.uuidString, privacy: .public)")
+    }
+
+    #if os(macOS)
+        /// Deletes the persisted config on teardown.
+        func clearPersistedConfiguration() async {
+            await configurationStore.clear()
+        }
+    #endif
 
     func prepare(with config: ProTUNConfiguration) async throws -> FileDescriptor {
         Logger.adapter.info("Preparing...")
@@ -172,6 +191,10 @@ final class ProTUNAdapter: @unchecked Sendable {
 
         Logger.adapter.info("Starting Adapter")
         extensionIPCServer.zeroAll()
+
+        #if os(macOS)
+            try await configurationStore.seed(adapter: self)
+        #endif
 
         let tunFd = try await prepare(with: config.proTUN)
         signposter.emitEvent("Tunnel prepared", id: signpostID)

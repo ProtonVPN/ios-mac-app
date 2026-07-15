@@ -99,6 +99,10 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
 
         adapter.stop(with: reason)
 
+        #if os(macOS)
+            await adapter.clearPersistedConfiguration()
+        #endif
+
         if case .perSession = loggingMode {
             _ = try? Logger.flushSession()
         }

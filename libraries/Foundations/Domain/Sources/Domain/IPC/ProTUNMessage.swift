@@ -50,6 +50,9 @@ public extension ProTUNMessage.Request {
         case pushForkInfo(selector: String, cookieName: String, cookieValue: String)
         case updateConfiguration(ConnectionUpdate)
         case ack(errorId: UUID)
+        /// The app confirms it has persisted the OS-enforced properties (kill switch / allow LAN / on-demand) into the
+        /// real NE preferences for this configuration id, so the extension can treat them as effective (macOS).
+        case acknowledgeManagedConfiguration(requestId: UUID)
         #if DEBUG
             case ping
         #endif
@@ -117,6 +120,7 @@ extension ProTUNMessage.Request.Payload: CustomStringConvertible {
         case .pushForkInfo: "pushForkInfo"
         case .updateConfiguration: "updateConfiguration"
         case let .ack(errorId): "ack(\(errorId))"
+        case let .acknowledgeManagedConfiguration(requestId): "acknowledgeManagedConfiguration(\(requestId))"
         }
     }
 }
