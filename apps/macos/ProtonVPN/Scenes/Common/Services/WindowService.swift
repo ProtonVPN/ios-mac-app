@@ -326,7 +326,7 @@ final class WindowServiceImplementation: WindowService {
             guard let parent else { return }
             self.replaceOldKeyModal(with: viewController, in: parent)
             if activatingApp {
-                NSRunningApplication.current.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+                NSRunningApplication.current.activate(options: [.activateAllWindows])
             }
         }
     }

@@ -41,7 +41,7 @@
                     protocolSettings: .init(protocol: .smartProtocol, connectionState: .disconnected, reconnectionAlert: nil),
                     theme: .light
                 ),
-                reducer: { SettingsFeature() }
+                reducer: { EmptyReducer() }
             ))
             .environment(\.colorScheme, .dark)
 

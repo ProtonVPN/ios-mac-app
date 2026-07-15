@@ -103,10 +103,17 @@ final class StatusMenuWindowController: WindowController {
         }
     }
 
+    private var lastAppIcon: AppIcon?
+
     private func setupIcon() {
         iconManager.setImage(windowModel?.statusIcon ?? .unknown)
         iconManager.isBlinking = windowModel?.isStatusIconBlinking ?? false
-        NSApp.applicationIconImage = (windowModel?.appIcon ?? .active).image
+
+        let appIcon = windowModel?.appIcon ?? .active
+        if appIcon != lastAppIcon {
+            lastAppIcon = appIcon
+            NSApp.applicationIconImage = appIcon.image
+        }
     }
 
     private func togglePopover() {

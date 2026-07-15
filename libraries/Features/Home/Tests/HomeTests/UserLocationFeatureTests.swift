@@ -27,6 +27,20 @@ import Testing
 @MainActor
 @Suite("User Location Feature Tests", .serialized)
 struct UserLocationFeatureTests {
+    @Shared(.connectionState) var connectionState
+    @Shared(.userCountry) var userCountry: String?
+    @Shared(.userIP) var userIP: String?
+    @Shared(.userISP) var userISP: String?
+    @Shared(.lastLocationRetrieval) var lastLocationRetrieval: Date?
+
+    init() {
+        $connectionState.withLock { $0 = .disconnected }
+        $userCountry.withLock { $0 = nil }
+        $userIP.withLock { $0 = nil }
+        $userISP.withLock { $0 = nil }
+        $lastLocationRetrieval.withLock { $0 = nil }
+    }
+
     @Test("Fetches location on launch")
     func fetchesLocationOnLaunch() async {
         @Shared(.connectionState) var connectionState
