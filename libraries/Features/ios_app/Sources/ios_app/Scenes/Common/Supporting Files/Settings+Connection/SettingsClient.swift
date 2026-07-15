@@ -88,9 +88,6 @@ extension SettingsClient: @retroactive DependencyKey {
         reconnect: { _ in
             // TODO: ProTUN: NO-OP now, should we remove the closure from the client?
             log.info("Reconnection endpoint is a NO-OP")
-            // @Dependency(\.connectionCommandClient) var connectionCommandClient
-            // connectionCommandClient.send(.reconnect(nil)) // Caused by feature change
-            // log.assertionFailure("With ProTUN, there is no need to explicitly reconnect")
         },
         update: { features in
             @Dependency(\.connectionCommandClient) var connectionCommandClient

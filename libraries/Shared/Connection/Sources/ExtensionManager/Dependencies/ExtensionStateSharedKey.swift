@@ -22,7 +22,7 @@ import ExtensionSync
 import Foundation
 import Sharing
 
-public extension SharedReaderKey where Self == StreamReaderKey<(state: ExtensionState, requestId: UUID?)> {
+public extension SharedReaderKey where Self == StreamReaderKey<ExtensionStateSnapshot> {
     static var extensionState: Self {
         StreamReaderKey(
             read: {

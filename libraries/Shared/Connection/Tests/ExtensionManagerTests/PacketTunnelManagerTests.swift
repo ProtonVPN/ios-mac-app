@@ -30,6 +30,7 @@
     import IPCErgonomics
     import class NetworkExtension.NETunnelProviderProtocol
     import os
+    import SharedErgonomics
     import Testing
     import VPNCoreCommon
     import VPNCoreTypes
@@ -53,12 +54,168 @@
 
             let status = try await withDependencies {
                 $0.vpnManagerRepository.managers = { [.ike: inactiveManager, .wireGuard: activeManager] }
-                $0.extensionIPC.currentExtensionState = { (.connecting(peerID: nil, waitReason: .unset), nil) }
+                $0.extensionIPC.currentExtensionState = {
+                    .init(
+                        state: .connecting(peerID: nil, waitReason: .unset),
+                        requestId: nil
+                    )
+                }
             } operation: {
                 try await PacketTunnelManager().status
             }
 
-            #expect(status == .connecting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: [])))
+            #expect(status == .reasserting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: [])))
+        }
+
+        @Test
+        func treatsConnectingEchoAsDisconnectingAfterOnDemandIsDisabled() async throws {
+            let providerManager = MockTunnelProviderManager(
+                session: VPNSessionMock(status: .connecting),
+                vpnProtocolConfiguration: NETunnelProviderProtocol(),
+                isOnDemandEnabled: false,
+                isEnabled: true
+            )
+            let config = try #require(providerManager.vpnProtocolConfiguration)
+            try config.setProviderConfiguration(
+                value: JSONEncoder().encode(ConnectionSpec.defaultFastest),
+                forKey: "connectionSpec"
+            )
+            try ProTUNConfigurationCoder.encode(
+                configuration: .init(preferredTransport: .udp, peers: [.mock(id: "peer-id")], dnsServers: []),
+                to: config
+            )
+
+            let status = try await withDependencies {
+                $0.vpnManagerRepository.managers = { [.wireGuard: providerManager] }
+                $0.extensionIPC.currentExtensionState = {
+                    .init(state: .connecting(peerID: nil, waitReason: .unset), requestId: nil)
+                }
+            } operation: {
+                try await PacketTunnelManager().status
+            }
+
+            #expect(status == .disconnecting(.init(
+                connectionSpec: .defaultFastest,
+                tunnelProtocol: .wireGuard,
+                peerIDs: []
+            )))
+        }
+
+        #if !os(tvOS)
+            @Test
+            func statusStreamDerivesZeroPeerKillSwitchFromAppliedConfiguration() async throws {
+                let providerManager = MockTunnelProviderManager(withBundleIdentifier: "wireguard", state: .ready)
+                providerManager.session = VPNSessionMock(status: .disconnected)
+
+                let requestId = UUID()
+                let config = NETunnelProviderProtocol()
+                try config.setProviderConfiguration(
+                    value: JSONEncoder().encode(ConnectionSpec.defaultFastest),
+                    forKey: "connectionSpec"
+                )
+                config.setProviderConfiguration(value: requestId.uuidString, forKey: "requestID")
+                config.includeAllNetworks = true
+                try ProTUNConfigurationCoder.encode(
+                    configuration: .init(preferredTransport: .udp, peers: [], dnsServers: []),
+                    to: config
+                )
+                providerManager.protocolConfiguration = config
+
+                let (extensionStateStream, extensionStateContinuation) = AsyncStream<ExtensionStateSnapshot>.makeStream()
+                defer { extensionStateContinuation.finish() }
+                let previousRequestId = UUID()
+
+                let (initial, updated) = try await withDependencies {
+                    $0.vpnManagerRepository.managers = { [.wireGuard: providerManager] }
+                    $0.extensionIPC.currentExtensionState = {
+                        .init(
+                            state: .disconnected(reason: .unset),
+                            requestId: previousRequestId
+                        )
+                    }
+                    $0.extensionIPC.observeExtensionState = { extensionStateStream }
+                } operation: {
+                    var iterator = PacketTunnelManager().statusStream.makeAsyncIterator()
+                    let initial = try await withTimeout(of: .seconds(1)) { await iterator.next() }
+
+                    extensionStateContinuation.yield(.init(
+                        state: .disconnected(reason: .unset),
+                        requestId: requestId
+                    ))
+                    let updated = try await withTimeout(of: .seconds(1)) { await iterator.next() }
+                    return (initial, updated)
+                }
+
+                let tunnelConfiguration = TunnelConfiguration(
+                    connectionSpec: .defaultFastest,
+                    tunnelProtocol: .wireGuard,
+                    peerIDs: []
+                )
+                #expect(initial == .some(.success(.reasserting(tunnelConfiguration))))
+                #expect(updated == .some(.success(.killSwitchActive(tunnelConfiguration))))
+            }
+        #endif
+
+        @Test
+        func statusStreamSkipsMixedConfigurationRevisions() async throws {
+            let providerManager = MockTunnelProviderManager(withBundleIdentifier: "wireguard", state: .ready)
+            providerManager.session = VPNSessionMock(status: .connected, connectedDate: .now)
+
+            let oldRequestId = UUID()
+            let config = NETunnelProviderProtocol()
+            try config.setProviderConfiguration(
+                value: JSONEncoder().encode(ConnectionSpec.defaultFastest),
+                forKey: "connectionSpec"
+            )
+            config.setProviderConfiguration(value: oldRequestId.uuidString, forKey: "requestID")
+            try ProTUNConfigurationCoder.encode(
+                configuration: .init(preferredTransport: .udp, peers: [.mock(id: "old-peer")], dnsServers: []),
+                to: config
+            )
+            providerManager.protocolConfiguration = config
+
+            let oldPeer = CurrentPeer(
+                peerID: "old-peer",
+                transport: .udp,
+                serverExitV4: nil,
+                serverExitV6: nil,
+                userISP: nil,
+                userIP: nil
+            )
+            let (stream, continuation) = AsyncStream<ExtensionStateSnapshot>.makeStream()
+            defer { continuation.finish() }
+
+            let next = try await withDependencies {
+                $0.vpnManagerRepository.managers = { [.wireGuard: providerManager] }
+                $0.extensionIPC.currentExtensionState = {
+                    .init(state: .connected(oldPeer), requestId: oldRequestId)
+                }
+                $0.extensionIPC.observeExtensionState = { stream }
+            } operation: {
+                var iterator = PacketTunnelManager().statusStream.makeAsyncIterator()
+                _ = try await withTimeout(of: .seconds(1)) { await iterator.next() }
+
+                let newRequestId = UUID()
+                config.setProviderConfiguration(value: newRequestId.uuidString, forKey: "requestID")
+                try ProTUNConfigurationCoder.encode(
+                    configuration: .init(preferredTransport: .udp, peers: [.mock(id: "new-peer")], dnsServers: []),
+                    to: config
+                )
+
+                // This combines the new saved intent with the extension's previous revision and must not escape.
+                continuation.yield(.init(state: .connected(oldPeer), requestId: oldRequestId))
+                continuation.yield(.init(
+                    state: .connecting(peerID: "new-peer", waitReason: .unset),
+                    requestId: newRequestId
+                ))
+                return try await withTimeout(of: .seconds(1)) { await iterator.next() }
+            }
+
+            #expect(next == .some(.success(.connecting(.init(
+                connectionSpec: .defaultFastest,
+                tunnelProtocol: .wireGuard,
+                peerIDs: ["new-peer"]
+            )))))
         }
 
         @Test
@@ -77,7 +234,7 @@
             config.setProviderConfiguration(value: specData, forKey: "connectionSpec")
             // `.connected` is gated on the applied request ID matching the config's, so they must agree.
             config.setProviderConfiguration(value: requestId.uuidString, forKey: "requestID")
-            try ProTUNConfigurationCoder.encode(configuration: .init(preferredTransport: .udp, peers: [], dnsServers: []), to: config)
+            try ProTUNConfigurationCoder.encode(configuration: .init(preferredTransport: .udp, peers: [.mock(id: "peer-id")], dnsServers: []), to: config)
             connectedManager.protocolConfiguration = config
 
             let status = try await withDependencies {
@@ -86,7 +243,10 @@
                     [.ike: disconnectingManager, .wireGuard: connectedManager]
                 }
                 $0.extensionIPC.currentExtensionState = {
-                    (.connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)), requestId)
+                    .init(
+                        state: .connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)),
+                        requestId: requestId
+                    )
                 }
             } operation: {
                 try await PacketTunnelManager().status
@@ -115,14 +275,17 @@
             let specData = try JSONEncoder().encode(ConnectionSpec.defaultFastest)
             config.setProviderConfiguration(value: specData, forKey: "connectionSpec")
             config.setProviderConfiguration(value: requestId.uuidString, forKey: "requestID")
-            try ProTUNConfigurationCoder.encode(configuration: .init(preferredTransport: .udp, peers: [], dnsServers: []), to: config)
+            try ProTUNConfigurationCoder.encode(configuration: .init(preferredTransport: .udp, peers: [.mock(id: "peer-id")], dnsServers: []), to: config)
             connectedManager.protocolConfiguration = config
 
             let status = try await withDependencies {
                 $0.date = .constant(now)
                 $0.vpnManagerRepository.managers = { [.wireGuard: connectedManager] }
                 $0.extensionIPC.currentExtensionState = {
-                    (.connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)), requestId)
+                    .init(
+                        state: .connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)),
+                        requestId: requestId
+                    )
                 }
             } operation: {
                 try await PacketTunnelManager().status
@@ -164,7 +327,10 @@
                 $0.date = .constant(now)
                 $0.vpnManagerRepository.managers = { [.wireGuard: connectedManager] }
                 $0.extensionIPC.currentExtensionState = {
-                    (.connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)), UUID())
+                    .init(
+                        state: .connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)),
+                        requestId: UUID()
+                    )
                 }
             } operation: {
                 try await PacketTunnelManager().status
@@ -178,10 +344,10 @@
             )
         }
 
-        /// The opposite case: a location change rewrites the intended peers, so the extension's stale `.connected`
-        /// state reads as `.connecting` until the tunnel lands on a peer the configuration intends.
+        /// A location change rewrites the intended peers, so the extension's stale `.connected` state is treated as
+        /// an internal reassertion until the tunnel lands on a peer the configuration intends.
         @Test
-        func returnsConnectingWhileTunnelSitsOnPeerConfigurationNoLongerIntends() async throws {
+        func returnsReassertingWhileTunnelSitsOnPeerConfigurationNoLongerIntends() async throws {
             let connectedManager = MockTunnelProviderManager(withBundleIdentifier: "connected", state: .ready)
             let now = Date.now
 
@@ -203,13 +369,16 @@
                 $0.date = .constant(now)
                 $0.vpnManagerRepository.managers = { [.wireGuard: connectedManager] }
                 $0.extensionIPC.currentExtensionState = {
-                    (.connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)), UUID())
+                    .init(
+                        state: .connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)),
+                        requestId: UUID()
+                    )
                 }
             } operation: {
                 try await PacketTunnelManager().status
             }
 
-            #expect(status == .connecting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"])))
+            #expect(status == .reasserting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"])))
         }
 
         /// The update must be recorded in NE preferences before the provider message goes out, so the saved requestId

@@ -53,8 +53,8 @@ private func appBecameActiveTicks() -> AsyncStream<Void> {
 @DependencyClient
 public struct ExtensionIPCClient: Sendable {
     /// The current connection state according to ProTUN in the network extension.
-    public package(set) var currentExtensionState: @Sendable () -> (ExtensionState, UUID?) = {
-        (.disconnected(reason: .unset), nil)
+    public package(set) var currentExtensionState: @Sendable () -> ExtensionStateSnapshot = {
+        .init(state: .disconnected(reason: .unset), requestId: nil)
     }
 
     /// The current NetShield / traffic stats, or `nil` before the extension has published any.
@@ -64,15 +64,8 @@ public struct ExtensionIPCClient: Sendable {
     /// The extension's most-recent reported error, or `nil` if it's empty.
     public package(set) var currentExtensionError: @Sendable () -> ExtensionError? = { nil }
 
-    /// The current tunnel-status flags (zero-peer KS, LAN exclusion, APNs), or `nil` until the extension publishes.
-    public package(set) var currentTunnelStatus: @Sendable () -> IPCTunnelStatusPayload? = { nil }
-    /// Whether the extension is currently in zero-peer kill-switch mode.
-    public package(set) var isZeroPeerKillSwitchActive: @Sendable () -> Bool = { false }
-    /// Stream of zero-peer kill-switch activation state, projected from the tunnel-status channel.
-    public package(set) var observeZeroPeerKillSwitchActive: @Sendable () -> AsyncStream<Bool> = { .finished }
-
     /// The live connection state according to ProTUN in the network extension.
-    public package(set) var observeExtensionState: @Sendable () -> AsyncStream<(state: ExtensionState, requestId: UUID?)> = { .finished }
+    public package(set) var observeExtensionState: @Sendable () -> AsyncStream<ExtensionStateSnapshot> = { .finished }
     /// The live NetShield / traffic stats.
     public package(set) var observeStats: @Sendable () -> AsyncStream<LocalAgent.Stats?> = { .finished }
     /// The server-applied Local Agent features.
@@ -147,28 +140,22 @@ public struct ExtensionIPCClient: Sendable {
             let attachSource = StreamSource.source(for: attachStream)
 
             return ExtensionIPCClient {
-                current.withLock { $0?.channels.connectionData.currentExtensionState() } ?? (.disconnected(reason: .unset), nil)
+                current.withLock { $0?.channels.connectionData.currentExtensionState() }
+                    ?? .init(state: .disconnected(reason: .unset), requestId: nil)
             } currentStats: {
                 current.withLock { $0?.channels.localAgentStats.stats() }
             } currentFeatures: {
                 current.withLock { $0?.channels.localAgentFeatures.agentFeatures() }
             } currentExtensionError: {
                 current.withLock { $0?.channels.localAgentError.currentExtensionError() }
-            } currentTunnelStatus: {
-                current.withLock { $0?.channels.tunnelStatus.tunnelStatus() }
-            } isZeroPeerKillSwitchActive: {
-                current.withLock { $0?.channels.tunnelStatus.tunnelStatus()?.isZeroPeerKillSwitchActive ?? false }
-            } observeZeroPeerKillSwitchActive: {
-                observe(attachSource: attachSource, reconcileOn: appBecameActiveTicks()) { store, since in
-                    store.channels.tunnelStatus.readIfChanged(since: since)
-                } transform: { payload in
-                    payload.isZeroPeerKillSwitchActive
-                }
             } observeExtensionState: {
                 observe(attachSource: attachSource, reconcileOn: appBecameActiveTicks()) { store, since in
                     store.channels.connectionData.readIfChanged(since: since)
                 } transform: { payload in
-                    (state: payload.extensionState, requestId: payload.requestId)
+                    .init(
+                        state: payload.extensionState,
+                        requestId: payload.requestId
+                    )
                 }
             } observeStats: {
                 observe(attachSource: attachSource, reconcileOn: appBecameActiveTicks()) { store, since in
@@ -212,12 +199,6 @@ public struct ExtensionIPCClient: Sendable {
                 store.channels.localAgentFeatures.agentFeatures()
             } currentExtensionError: {
                 store.channels.localAgentError.currentExtensionError()
-            } currentTunnelStatus: {
-                store.channels.tunnelStatus.tunnelStatus()
-            } isZeroPeerKillSwitchActive: {
-                store.channels.tunnelStatus.tunnelStatus()?.isZeroPeerKillSwitchActive ?? false
-            } observeZeroPeerKillSwitchActive: {
-                store.channels.tunnelStatus.zeroPeerKillSwitchActiveStream(reconcileOn: appBecameActiveTicks())
             } observeExtensionState: {
                 store.channels.connectionData.extensionStateStream(reconcileOn: appBecameActiveTicks())
             } observeStats: {
@@ -243,14 +224,11 @@ public struct ExtensionIPCClient: Sendable {
         public static let testValue = ExtensionIPCClient(
             currentExtensionState: {
                 @SharedReader(.mockExtensionState) var state
-                return (state, nil)
+                return .init(state: state, requestId: nil)
             },
             currentStats: { nil },
             currentFeatures: { nil },
             currentExtensionError: { nil },
-            currentTunnelStatus: { nil },
-            isZeroPeerKillSwitchActive: { false },
-            observeZeroPeerKillSwitchActive: { .finished },
             observeExtensionState: {
                 // The reader is resolved per call so each test / `withDependencies` scope binds to its own value.
                 @SharedReader(.mockExtensionState) var state
@@ -259,7 +237,10 @@ public struct ExtensionIPCClient: Sendable {
                     let task = Task {
                         // Drop the publisher's initial read so that the tests can define their own
                         for await value in reader.publisher.values.dropFirst() {
-                            continuation.yield((value, UUID()))
+                            continuation.yield(.init(
+                                state: value,
+                                requestId: UUID()
+                            ))
                         }
                         continuation.finish()
                     }

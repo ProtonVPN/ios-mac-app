@@ -162,6 +162,7 @@ let package = Package(
             dependencies: [
                 "ExtensionManager",
                 "CoreConnectionTestSupport",
+                .product(name: "SharedErgonomics", package: "Ergonomics"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
             ]

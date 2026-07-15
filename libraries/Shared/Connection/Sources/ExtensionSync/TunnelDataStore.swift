@@ -17,15 +17,15 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import IPCDefinitions
 @_spi(Internals) import IPCErgonomics
 import IssueReporting
-import IPCDefinitions
 import os
 #if os(macOS)
     import IOSurface
 #endif
 
-/// Commands sent by the tunnel to the extension, representing a single ping that indicate an action should be taken.
+/// Commands sent by the extension, representing a single ping that indicate an action should be taken.
 public enum TunnelCommand: Int, Sendable, CaseIterable {
     /// The extension needs a fresh API session; the app should fork its own and send it back as a provider message.
     case forkSelectorRequest = 1
@@ -46,7 +46,6 @@ final class TunnelDataStore<Role, Backing: RegionBacking & ~Copyable>: Sendable 
         let localAgentConnectionStats: IPCNotifications.RawChannel<IPCConnectionStatsPayload, Role, Backing>
         let localAgentError: IPCNotifications.RawChannel<IPCErrorPayload, Role, Backing>
         let localAgentFeatures: IPCNotifications.RawChannel<IPCAgentFeaturesPayload, Role, Backing>
-        let tunnelStatus: IPCNotifications.RawChannel<IPCTunnelStatusPayload, Role, Backing>
     }
 
     let channels: Channels
@@ -68,8 +67,7 @@ final class TunnelDataStore<Role, Backing: RegionBacking & ~Copyable>: Sendable 
             localAgentStats: Self.channel(from: region, for: \.stats, resultingType: IPCStatsPayload.self),
             localAgentConnectionStats: Self.channel(from: region, for: \.connection_stats, resultingType: IPCConnectionStatsPayload.self),
             localAgentError: Self.channel(from: region, for: \.error, resultingType: IPCErrorPayload.self),
-            localAgentFeatures: Self.channel(from: region, for: \.agent_features, resultingType: IPCAgentFeaturesPayload.self),
-            tunnelStatus: Self.channel(from: region, for: \.tunnel_status, resultingType: IPCTunnelStatusPayload.self)
+            localAgentFeatures: Self.channel(from: region, for: \.agent_features, resultingType: IPCAgentFeaturesPayload.self)
         )
     }
 }

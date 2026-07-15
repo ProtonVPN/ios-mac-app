@@ -114,9 +114,10 @@ private extension LocalAgentCoordinator {
         for await state in adapter.stateDelegate.stateSource.newStream {
             // Every state transition includes the UUID of the current (or last) request handled by the
             // ConfigurationStore, so the app can know if its requested settings have been applied.
-            let id = await adapter.currentRequestId
-
-            extensionIPCServer.publishExtensionState(state.connectionState.extensionState, id)
+            await extensionIPCServer.publishExtensionState(
+                state.connectionState.extensionState,
+                adapter.currentRequestId
+            )
 
             if let settings = state.connectionState.agentSettings {
                 extensionIPCServer.publishFeatures(settings.agentTunnelFeatures)

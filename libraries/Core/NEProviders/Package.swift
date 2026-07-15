@@ -59,6 +59,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
         .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
+        .package(url: "https://github.com/mattmassicotte/Queue", from: "0.2.2"),
         .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.62.2"),
     ],
     targets: [
@@ -81,6 +82,7 @@ let package = Package(
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "Queue", package: "Queue"),
             ],
             plugins: protunExtensionPlugins
         ),

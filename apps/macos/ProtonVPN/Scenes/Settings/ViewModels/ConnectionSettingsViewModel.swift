@@ -77,7 +77,6 @@ final class ConnectionSettingsViewModel {
     @SharedReader(.featureFlags) private var featureFlags: FeatureFlags
     @SharedReader(.connectionProtocol) private var sharedConnectionProtocol: ConnectionProtocol
     @Shared(.smartProtocol) private var sharedSmartProtocol: Bool
-    @Shared(.killSwitch) private var killSwitch: Bool
 
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     private let vpnAcceleratorReader = AuthorizedFeatureValue<VPNAccelerator>().sharedReader()
@@ -481,40 +480,29 @@ final class ConnectionSettingsViewModel {
     }
 
     func setAllowLANAccess(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
-        let isConnected = connectionState.isConnected
         let newValue: ExcludeLocalNetworks = enabled ? .on : .off
+        let changeState: VpnFeatureChangeState = connectionState.is(\.killSwitchActive)
+            ? .withConnectionUpdate
+            : .init(connectionState: connectionState)
 
-        if killSwitch {
-            let alert = LANConnectionsKillSwitchConflictAlert(connected: isConnected) {
+        switch changeState {
+        case .withConnectionUpdate:
+            setFeatureValue(newValue)
+            connectionCommandClient.send(.applySettings([.tunnel(.allowLAN(enabled))]))
+            completion(true)
+        case .withReconnect:
+            alertService.push(alert: ReconnectOnSettingsChangeAlert(confirmHandler: {
                 setFeatureValue(newValue)
-                self.$killSwitch.withLock { $0 = false }
-                if isConnected {
-                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks", "feature_additional": "killSwitch"])
-                    self.connectionCommandClient.send(.retry)
-                }
+                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])
+                self.connectionCommandClient.send(.retry)
                 completion(true)
-            } cancelHandler: {
+            }, cancelHandler: {
                 completion(false)
-            }
-
-            alertService.push(alert: alert)
-            return
-        }
-
-        guard isConnected else {
+            }))
+        case .immediate:
             setFeatureValue(newValue)
             completion(true)
-            return
         }
-
-        alertService.push(alert: ReconnectOnSettingsChangeAlert(confirmHandler: {
-            setFeatureValue(newValue)
-            log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])
-            self.connectionCommandClient.send(.retry)
-            completion(true)
-        }, cancelHandler: {
-            completion(false)
-        }))
     }
 
     // MARK: - Upsell Modals

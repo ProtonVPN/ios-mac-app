@@ -29,5 +29,6 @@ public enum ConfigurationUpdateError: FourCharCode, ProtonVPNError {
 
     case badConfiguration = "CUBC"
     case badEncoding = "CUBE"
+    case noConnection = "CUNC"
     case timeout = "CUTO"
 }

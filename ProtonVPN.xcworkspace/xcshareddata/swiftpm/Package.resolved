@@ -127,6 +127,15 @@
       }
     },
     {
+      "identity" : "queue",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mattmassicotte/Queue",
+      "state" : {
+        "revision" : "38826d0b8838ce5edcdafa1ffb2f507693d5abcb",
+        "version" : "0.2.2"
+      }
+    },
+    {
       "identity" : "reachability.swift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ashleymills/Reachability.swift",

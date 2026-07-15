@@ -2,15 +2,7 @@
 #include <stdint.h>
 #include <uuid/uuid.h>
 #include <IPCSeqlockHelpers.h>
-
-// Mirrors CF_ENUM / NS_ENUM, tells Swift's clang importer to create a proper enum and strip the common prefix.
-#if __has_attribute(enum_extensibility)
-#  define IPC_ENUM(_type, _name)                                                  \
-       typedef enum __attribute__((enum_extensibility(open))) _name : _type _name; \
-       enum __attribute__((enum_extensibility(open))) _name : _type
-#else
-#  define IPC_ENUM(_type, _name) typedef enum _name : _type _name; enum _name : _type
-#endif
+#include "Macros.h"
 
 // Tunnel data payloads coming from the extension
 //
@@ -68,12 +60,6 @@ IPC_ENUM(int8_t, IPCConnectionAgentJailReason) {
     IPCConnectionAgentJailReasonWaitingClientChallengeReply = 7,
     IPCConnectionAgentJailReasonInternal                    = 8,
     IPCConnectionAgentJailReasonOther                       = 9,
-};
-
-IPC_ENUM(int8_t, IPCTunnelSettingsToggle) {
-    IPCTunnelSettingsToggleUnset    = 0,
-    IPCTunnelSettingsToggleDisabled = 1,
-    IPCTunnelSettingsToggleEnabled  = 2,
 };
 
 // Field sizes
@@ -150,25 +136,15 @@ typedef struct {
 
 IPC_DECLARE_SHARED_REGION(IPCAgentFeaturesRegion, IPCAgentFeaturesPayload);
 
-typedef struct {
-    uint16_t                    version;
-    IPCTunnelSettingsToggle     zeroPeerKillSwitchActive;
-    IPCTunnelSettingsToggle     excludingLocalAreaNetwork;
-    IPCTunnelSettingsToggle     excludingAPNs;
-} IPCTunnelStatusPayload;
-
-IPC_DECLARE_SHARED_REGION(IPCTunnelStatusRegion, IPCTunnelStatusPayload);
-
 // This is a single backing memory region for all of the connection data regions. Each subregion is padded to 1024 bytes
 // and has its own seqlock + versioning. iOS and tvOS share this using a file-backed mmap while macOS must accomplish
 // the same using an IOSurface sent over an XPC session.
 //
 // Append-only: new regions go at the end so existing field offsets stay stable across app/extension builds.
 typedef struct {
-    IPCConnectionDataRegion   connection_data;
-    IPCStatsRegion            stats;
-    IPCConnectionStatsRegion  connection_stats;
-    IPCErrorRegion            error;
-    IPCAgentFeaturesRegion    agent_features;
-    IPCTunnelStatusRegion     tunnel_status;
+    IPCConnectionDataRegion     connection_data;
+    IPCStatsRegion              stats;
+    IPCConnectionStatsRegion    connection_stats;
+    IPCErrorRegion              error;
+    IPCAgentFeaturesRegion      agent_features;
 } IPCTunnelData;

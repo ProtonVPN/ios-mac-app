@@ -33,6 +33,7 @@ public struct ConnectionFeature: Sendable {
     @Dependency(\.sessionChangeNotifier) private var sessionChangeNotifier
     @Dependency(\.connectionIntentResolver) private var intentResolver
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
+    @Dependency(\.connectionFeatureProvider) private var features
 
     public init() {}
 
@@ -141,8 +142,8 @@ public struct ConnectionFeature: Sendable {
                 }
                 log.debug("Connection update", category: .connection, metadata: ["update": "\(update)"])
                 if update.killSwitch == false, state.connectionState.is(\.killSwitchActive) {
-                    // TODO: ProTUN: KS UI, Display an alert?
-                    state.connectionState = .disconnected
+                    // Zero-peer mode has no peer to resume, so disabling Kill Switch intentionally stops the tunnel.
+                    // The next connection will rebuild it with the location selected by the user.
                     return .merge(
                         .cancel(id: CancelID.preparation),
                         .send(.tunnel(.disconnect(nil))) // this sets `onDemand` to `false`
@@ -154,19 +155,20 @@ public struct ConnectionFeature: Sendable {
                 // Zero-peer KS: when the user requests a disconnect while KS is enabled and the tunnel is connected,
                 // strip peers in place (preserving the tunnel interface) rather than tearing it down. Otherwise, fall
                 // through to the normal disconnect path.
-                @Dependency(\.connectionFeatureProvider) var features
                 if case let .connected(tunnelConfig, _) = state.connectionState, features.requestedFeatures().killSwitch {
-                    // Flip to killSwitchActive eagerly for a snappy UI; `TunnelState.killSwitchActive` (once the
-                    // extension confirms) will independently resolve to the same state, so there's no guard needed
-                    // to protect this from being clobbered by transient tunnelStatusChanged events below.
-                    state.connectionState = .killSwitchActive(tunnelConfig.connectionSpec, tunnelConfig)
-                    let update = ConnectionUpdate(enterZeroPeerMode: true)
+                    // Optimistic: reconciled by resolveProTUN once the applied requestId quiesces; on failure the
+                    // .reconfigurationFailed handler restores connectionState from the reported tunnel state.
+                    let zeroPeerConfig = TunnelConfiguration(
+                        connectionSpec: tunnelConfig.connectionSpec,
+                        tunnelProtocol: tunnelConfig.tunnelProtocol,
+                        peerIDs: []
+                    )
+                    state.connectionState = .killSwitchActive(tunnelConfig.connectionSpec, zeroPeerConfig)
+                    let update = ConnectionUpdate(
+                        location: .init(spec: tunnelConfig.connectionSpec, peers: []),
+                        killSwitch: true
+                    )
                     return .send(.tunnel(.requestConfigChange(update)))
-                }
-                if state.connectionState.is(\.killSwitchActive) {
-                    // Already blackholed; a second disconnect means the user wants out entirely. Set the state
-                    // eagerly for the same reason as above — snappy UI, not correctness.
-                    state.connectionState = .disconnected
                 }
                 return .merge(
                     .cancel(id: CancelID.preparation),
@@ -217,15 +219,7 @@ public struct ConnectionFeature: Sendable {
                 return .none
 
             case .tunnel(.tunnelStatusChanged):
-                let incoming = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
-                if incoming.isTransientEcho(from: state.connectionState) {
-                    log.debug("Ignoring transient tunnel status echo", category: .connection, metadata: [
-                        "incoming": "\(incoming)",
-                        "current": "\(state.connectionState)",
-                    ])
-                    return .none
-                }
-                state.connectionState = incoming
+                state.connectionState = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
                 return .none
 
             case let .tunnel(.delegate(.timedOut(stage))):
@@ -375,20 +369,6 @@ extension ConnectionFeature.Action.Delegate: CustomDebugStringConvertible {
     }
 }
 
-extension ConnectionState {
-    func isTransientEcho(from current: ConnectionState) -> Bool {
-        switch self {
-        case .connecting:
-            current.is(\.killSwitchActive) || current.is(\.disconnecting) || current.is(\.disconnected)
-        case .resolving:
-            current.is(\.connecting) || current.is(\.connected)
-                || current.is(\.disconnecting) || current.is(\.disconnected)
-        default:
-            false
-        }
-    }
-}
-
 extension ConnectionState: CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
@@ -433,16 +413,6 @@ extension ConnectionState {
             #endif
         }
 
-        // Reconfiguring an already-alive tunnel in place to a new location (e.g. switching country without
-        // dropping the tunnel) can transiently echo a `connectionSpec` that's already updated to the new
-        // location while the peer ID still refers to the previous location's server, pairing a resolved server
-        // with a mismatched spec (wrong flag/map pin) for one update. Reject that pairing so callers fall back
-        // to treating the location as still-unresolved until the peer catches up with the new spec.
-        func matchesRequestedLocation(_ server: Domain.Server, _ spec: ConnectionSpec) -> Bool {
-            guard case let .exact(_, logicalID?, _, _, _) = spec.location else { return true }
-            return server.logical.id == logicalID
-        }
-
         switch tunnel {
         case .unknown:
             self = .resolving
@@ -455,8 +425,7 @@ extension ConnectionState {
 
         case let .connecting(tunnelConfig):
             @Dependency(\.serverIdentifier) var identifier
-            guard let peerID = tunnelConfig.peerIDs.first, let server = identifier.fullServerInfo(peerID),
-                  matchesRequestedLocation(server, tunnelConfig.connectionSpec) else {
+            guard let peerID = tunnelConfig.peerIDs.first, let server = identifier.fullServerInfo(peerID) else {
                 self = .resolving
                 return
             }
@@ -476,10 +445,6 @@ extension ConnectionState {
             guard let peerID = connectionData.currentPeerId,
                   let server = identifier.fullServerInfo(peerID) else {
                 log.error("Server with id \(optional: connectionData.currentPeerId) not found")
-                self = .resolving
-                return
-            }
-            guard matchesRequestedLocation(server, tunnelConfig.connectionSpec) else {
                 self = .resolving
                 return
             }

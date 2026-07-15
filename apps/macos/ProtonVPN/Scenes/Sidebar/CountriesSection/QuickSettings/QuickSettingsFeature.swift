@@ -278,7 +278,7 @@ private extension QuickSettingsFeature {
                 return .none
 
             case let .destination(.presented(.quickSettingDetail(.delegate(.option(type, option))))):
-                // Alerts before applying: Kill Switch conflict alert, NetShield/Hermes
+                // Alerts before applying: Kill Switch/Plutonium conflict alert, NetShield/Hermes
                 // conflict alert, paywall upsell, Secure Core discourage modal. Only after all
                 // of these pass do we hand off to `applyQuickSettingOptionSelection`.
                 if type == .killSwitchDisplay, option == .killSwitchOn,
@@ -476,19 +476,13 @@ private extension QuickSettingsFeature {
             quickSettingsDisplayReconnectionFeedback()
 
         case let .killSwitch(enabled):
-            // KS is mutually exclusive with both ExcludeLocalNetworks (LAN) and Plutonium (Split
-            // Tunneling). When enabling, force them off; the conflict-confirmation alert already
-            // informed the user before we got here.
             $killSwitch.withLock { $0 = enabled }
-            var changes: Set<ConnectionFeatureChange> = [.tunnel(.killSwitch(enabled))]
             if enabled {
-                setFeatureValue(ExcludeLocalNetworks.off)
                 $plutonium.withLock { $0 = .disabled(plutonium.mode) }
-                changes.insert(.tunnel(.allowLAN(false)))
             }
             if connectionState.isConnected {
                 log.info("Applying killSwitch feature change in place", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
-                connectionCommandClient.send(.applySettings(changes))
+                connectionCommandClient.send(.applySettings([.tunnel(.killSwitch(enabled))]))
             }
 
         case let .netShield(level):
@@ -600,12 +594,10 @@ extension QuickSettingsFeature {
         }
     }
 
-    /// Kill Switch conflicts with LAN access and with Plutonium split-tunneling. When neither
-    /// is on, enabling KS is uncontroversial — skip the confirmation alert.
+    /// Kill Switch conflicts with Plutonium split tunneling.
     static func requiresKillSwitchConflictConfirmation() -> Bool {
         @SharedReader(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
-        let excludeLocalNetworksIsOff = featureValue(for: ExcludeLocalNetworks.self) == .off
-        guard excludeLocalNetworksIsOff, case .disabled = plutonium else { return true }
+        if case .enabled = plutonium { return true }
         return false
     }
 
@@ -623,7 +615,7 @@ extension QuickSettingsFeature {
                     label: { TextState(Localizable.cancel) }
                 )
             },
-            message: { TextState(Localizable.turnKsOnDescriptionMacosStConflict + "\n" + Localizable.turnKsOnDescriptionMacosLanConflict) }
+            message: { TextState(Localizable.turnKsOnDescriptionMacosStConflict) }
         )
     }
 

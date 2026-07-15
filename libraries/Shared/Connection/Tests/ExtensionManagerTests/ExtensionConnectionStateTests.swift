@@ -19,6 +19,7 @@
 #if DEBUG
     import Domain
     import ExtensionSync
+    import Foundation
     import IPCDefinitions
     import XCTest
 

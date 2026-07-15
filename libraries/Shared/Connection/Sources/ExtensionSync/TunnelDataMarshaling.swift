@@ -19,11 +19,11 @@
 import Domain
 import Ergonomics
 import Foundation
-import IPCErgonomics
 import IPCDefinitions
+import IPCErgonomics
 import Network
 
-// Marshaling between the live tunnel-data C payloads (IPCDefinitions) and their Swift domain types.
+// Marshaling between the live tunnel-data C payloads (LocalAgentIPC) and their Swift domain types.
 
 /// Versions of the different RawChannel structs. Bump when changing formats to avoid ABI mismatch issues.
 public enum IPCTunnelDataVersion {
@@ -32,7 +32,6 @@ public enum IPCTunnelDataVersion {
     public static let connectionStats: UInt16 = 1
     public static let error: UInt16 = 1
     public static let agentFeatures: UInt16 = 1
-    public static let tunnelStatus: UInt16 = 1
 }
 
 public extension IPCConnectionTransport {
@@ -300,44 +299,6 @@ public extension IPCAgentFeaturesPayload {
             natType: moderate_nat != 0 ? .moderateNAT : .strictNAT,
             portForwarding: port_forwarding != 0
         )
-    }
-}
-
-public extension IPCTunnelSettingsToggle {
-    init(_ enabled: Bool) {
-        self = enabled ? .enabled : .disabled
-    }
-
-    var isEnabled: Bool {
-        self == .enabled
-    }
-}
-
-public extension IPCTunnelStatusPayload {
-    init(_ features: LocalTunnelFeatures) {
-        self.init()
-        version = IPCTunnelDataVersion.tunnelStatus
-        zeroPeerKillSwitchActive = .unset
-        excludingLocalAreaNetwork = features.excludeLocalNetworks ? .enabled : .disabled
-        excludingAPNs = .unset
-    }
-
-    var isZeroPeerKillSwitchActive: Bool {
-        zeroPeerKillSwitchActive.isEnabled
-    }
-
-    var isExcludingLocalAreaNetwork: Bool {
-        excludingLocalAreaNetwork.isEnabled
-    }
-
-    var isExcludingAPNs: Bool {
-        excludingAPNs.isEnabled
-    }
-
-    var hasValues: Bool {
-        zeroPeerKillSwitchActive != .unset
-            || excludingLocalAreaNetwork != .unset
-            || excludingAPNs != .unset
     }
 }
 

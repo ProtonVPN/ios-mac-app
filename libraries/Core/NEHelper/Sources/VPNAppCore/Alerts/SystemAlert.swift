@@ -313,54 +313,6 @@ public final class ReconnectOnActionAlert: SystemAlert {
     }
 }
 
-public final class KillSwitchConflictAlert: SystemAlert {
-    public var title: String? = Localizable.turnKsOnTitle
-    #if os(iOS)
-        public var message: String? = Localizable.turnKsOnDescriptionIos
-    #else
-        public var message: String? {
-            get {
-                if VPNFeatureFlagType.plutoniumMacOS.enabled {
-                    Localizable.turnKsOnDescriptionMacosStConflict + "\n" + Localizable.turnKsOnDescriptionMacosLanConflict
-                } else {
-                    Localizable.turnKsOnDescriptionMacosLanConflict
-                }
-            }
-            set {}
-        }
-    #endif
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-
-    public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
-            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
-            confirmHandler()
-        }))
-        actions.append(AlertAction(title: Localizable.notNow, style: .cancel, handler: cancelHandler))
-    }
-}
-
-public final class LANConnectionsKillSwitchConflictAlert: SystemAlert {
-    public var title: String? = Localizable.allowLanTitle
-    public var message: String? = Localizable.allowLanDescription
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-
-    public init(connected: Bool, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        if connected {
-            message! += "\n\n" + Localizable.allowLanNote
-        }
-        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
-            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
-            confirmHandler()
-        }))
-        actions.append(AlertAction(title: Localizable.notNow, style: .cancel, handler: cancelHandler))
-    }
-}
-
 public final class ReconnectOnSmartProtocolChangeAlert: SystemAlert {
     public struct UserCancelledReconnect: Error, CustomStringConvertible {
         public let description = "User selected smart protocol, but cancelled reconnecting."

@@ -638,40 +638,12 @@ final class SettingsViewModel {
 
     private func switchLANCallback() -> ((Bool, @escaping (Bool) -> Void) -> Void) {
         { toggleOn, callback in
-            let isActive = self.isActive()
-            let excludeLAN = featureValue(for: ExcludeLocalNetworks.self)
-
-            var alert: SystemAlert
-
-            if self.killSwitch, excludeLAN == .off {
-                alert = LANConnectionsKillSwitchConflictAlert(connected: isActive) {
-                    setFeatureValue(ExcludeLocalNetworks.on)
-                    self.$killSwitch.withLock { $0 = false }
-                    if isActive {
-                        log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks", "feature_additional": "killSwitch"])
-                        self.reconnect(with: .allowLAN(false))
-                    }
-                    self.reloadNeeded?()
-                    callback(true)
-                } cancelHandler: {
-                    callback(false)
-                }
-            } else if isActive {
-                alert = ReconnectOnSettingsChangeAlert(confirmHandler: {
-                    setFeatureValue(toggleOn ? ExcludeLocalNetworks.on : .off)
-                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])
-                    self.reconnect(with: .allowLAN(false))
-                    callback(toggleOn)
-                }, cancelHandler: {
-                    callback(featureValue(for: ExcludeLocalNetworks.self) == .on)
-                })
-            } else {
-                setFeatureValue(toggleOn ? ExcludeLocalNetworks.on : .off)
-                callback(toggleOn)
-                return
+            setFeatureValue(toggleOn ? ExcludeLocalNetworks.on : .off)
+            if self.isActive() {
+                log.info("Applying LAN access feature change in place", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])
+                self.apply(tunnelFeatureChange: .allowLAN(toggleOn))
             }
-
-            self.alertService.push(alert: alert)
+            callback(toggleOn)
         }
     }
 
@@ -679,34 +651,13 @@ final class SettingsViewModel {
         { toggleOn, callback in
             let isActive = self.isActive()
 
-            // Enabling killSwitch conflicts with ExcludeLocalNetworks (LAN) and Plutonium (Split
-            // Tunneling). When enabling while LAN access is on, surface a conflict alert that,
-            // once confirmed, disables LAN and applies the killSwitch change.
-            if toggleOn, featureValue(for: ExcludeLocalNetworks.self) == .on, !self.killSwitch {
-                let alert = KillSwitchConflictAlert {
-                    setFeatureValue(ExcludeLocalNetworks.off)
-                    self.$killSwitch.withLock { $0 = true }
-                    if isActive {
-                        log.info("Applying killSwitch feature change in place", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch", "feature_additional": "excludeLocalNetworks"])
-                        self.apply(tunnelFeatureChanges: [.killSwitch(toggleOn), .allowLAN(false)])
-                    }
-                    self.reloadNeeded?()
-                    callback(true)
-                } cancelHandler: {
-                    callback(false)
-                }
-                self.alertService.push(alert: alert)
-                return
-            }
-
-            // KillSwitch can now be updated on the fly via the tunnel config, so we apply it in
-            // place regardless of connection state (no reconnect alert is needed).
-            self.$killSwitch.withLock { $0.toggle() }
+            // Persist immediately and update an active tunnel in place; no reconnect alert is needed.
+            self.$killSwitch.withLock { $0 = toggleOn }
             log.info("Applying killSwitch feature change in place", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
             if isActive {
                 self.apply(tunnelFeatureChange: .killSwitch(toggleOn))
             }
-            callback(self.killSwitch)
+            callback(toggleOn)
         }
     }
 
@@ -1051,12 +1002,6 @@ final class SettingsViewModel {
     private func apply(tunnelFeatureChange: ConnectionFeatureChange.TunnelFeature) {
         DispatchQueue.main.async {
             self.settingsClient.update(Set([.tunnel(tunnelFeatureChange)]))
-        }
-    }
-
-    private func apply(tunnelFeatureChanges: [ConnectionFeatureChange.TunnelFeature]) {
-        DispatchQueue.main.async {
-            self.settingsClient.update(Set(tunnelFeatureChanges.map { .tunnel($0) }))
         }
     }
 

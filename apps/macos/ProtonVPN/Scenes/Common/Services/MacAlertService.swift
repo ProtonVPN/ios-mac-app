@@ -100,12 +100,6 @@ extension MacAlertService {
         case is IkeDeprecatedAlert:
             showDefaultSystemAlert(alert)
 
-        case is KillSwitchConflictAlert:
-            showDefaultSystemAlert(alert)
-
-        case is LANConnectionsKillSwitchConflictAlert:
-            showDefaultSystemAlert(alert)
-
         case is ProtonUnreachableAlert:
             showDefaultSystemAlert(alert)
 

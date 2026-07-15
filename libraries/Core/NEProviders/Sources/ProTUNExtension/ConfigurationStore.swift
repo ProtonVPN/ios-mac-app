@@ -19,12 +19,13 @@
 import ConnectionShared
 import Dependencies
 import Domain
-import IPCErgonomics
 import ExtensionSync
 import IPCDefinitions
+import IPCErgonomics
 import NetworkExtension
 import OSLog
 import protun
+import Queue
 import SharedErgonomics
 import VPNCoreCommon
 import VPNCoreTypes
@@ -36,11 +37,9 @@ import VPNCoreTypes
 /// effectively mimicking one in file form. Each transaction initiated by the user applies the update through here,
 /// which derives which peers/LA settings have changed and hands it over to ProTUN if necessary.
 actor ConfigurationStore {
-    var requestId: UUID?
+    private(set) var requestId: UUID?
 
-    /// Tail of the serial transaction chain. Each enqueued transaction awaits the previous one to avoid reading from
-    /// or writing to a stale working configuration.
-    private var tail: Task<Void, Never> = Task {}
+    private let queue = AsyncQueue()
 
     /// How long a single transaction may run before it's abandoned (to avoid holding up others).
     private static let transactionTimeout: Duration = .seconds(5)
@@ -49,10 +48,16 @@ actor ConfigurationStore {
         self.requestId = initial
     }
 
+    private func setRequestId(_ uuid: UUID) {
+        requestId = uuid
+    }
+
     /// Applies an app-initiated configuration update request that was sent over XPC.
     func apply(_ update: ConnectionUpdate, adapter: ProTUNAdapter) {
-        enqueue(id: update.id) { [weak self, weak adapter] in
+        queue.addOperation { [weak self, weak adapter] in
             guard let self, let adapter else { return }
+
+            await setRequestId(update.id)
 
             do {
                 try await withTimeout(of: Self.transactionTimeout) {
@@ -80,23 +85,6 @@ actor ConfigurationStore {
         extensionIPCServer.publishError(error, requestId)
     }
 
-    /// Appends `work` to the queue. Since mutating `tail` is actor-isolated, awaiting the previous task is what
-    /// serializes the `load -> modify -> save` loop in an async way. When `id` is given, the store's `requestId`
-    /// adopts it as the transaction dequeues, so state and error publishes carry the request being processed.
-    @discardableResult
-    private func enqueue(id: UUID? = nil, _ work: @escaping @Sendable () async -> Void) -> Task<Void, Never> {
-        let previous = tail
-        tail = Task {
-            await previous.value
-
-            if let id {
-                self.requestId = id
-            }
-            await work()
-        }
-        return tail
-    }
-
     /// Update the tunnel by checking which settings are managed by the server (netshield, nattype, etc), and dispatch
     /// the configuration changes to ProTUN if necessary
     private static func performUpdate(_ update: ConnectionUpdate, adapter: ProTUNAdapter) async throws(ConfigurationUpdateError) {
@@ -116,34 +104,43 @@ actor ConfigurationStore {
             throw ConfigurationUpdateError.badEncoding
         }
 
-        // `reasserting` covers the reconfiguration of ProTUN.
-        try await adapter.whileReasserting { () async throws(ConfigurationUpdateError) in
-            do {
-                if let peersToApply {
-                    Logger.adapter.info("Updating peers: \(peersToApply.map(\.description))")
-                    try adapter.handlePeersUpdate(peersToApply)
-                    adapter.publishZeroPeerMode(active: peersToApply.isEmpty)
+        do {
+            if update.hasConfigurationChanges {
+                try await adapter.whileReasserting { () async throws(ProTUNAdapter.Error) in
+                    try performReconfiguration(peersToApply, agentSettingsToApply, adapter: adapter)
                 }
-
-                if let agentSettingsToApply {
-                    Logger.adapter.info("Applying settings: \(agentSettingsToApply)")
-                    try adapter.applyLocalAgentSettings(agentSettingsToApply)
-                }
-            } catch ProTUNAdapter.Error.noConnection {
-                throw .noConnection
-            } catch {
-                Logger.adapter.error("Reconfiguration failed: \(error, privacy: .public)")
-                throw .couldntSave
+            } else {
+                try performReconfiguration(peersToApply, agentSettingsToApply, adapter: adapter)
             }
+        } catch ProTUNAdapter.Error.noConnection {
+            throw .noConnection
+        } catch {
+            assertionFailure("Unexpected Adapter error: \(error)")
+            throw .badConfiguration
+        }
+    }
+
+    private static func performReconfiguration(
+        _ peers: [PeerInfo]?,
+        _ settings: LocalAgentSettings?,
+        adapter: ProTUNAdapter
+    ) throws(ProTUNAdapter.Error) {
+        if let peers {
+            Logger.adapter.info("Updating peers: \(peers.map(\.description))")
+            try adapter.handlePeersUpdate(peers)
+        }
+
+        if let settings {
+            Logger.adapter.info("Applying settings: \(settings)")
+            try adapter.applyLocalAgentSettings(settings)
         }
     }
 }
 
 extension NETunnelProviderProtocol {
-    func liveUpdates(for update: ConnectionUpdate) throws -> (
-        newPeers: [PeerInfo]?,
-        newSettings: LocalAgentSettings?
-    ) {
+    typealias ConnectionUpdateResult = (newPeers: [PeerInfo]?, newSettings: LocalAgentSettings?)
+
+    func liveUpdates(for update: ConnectionUpdate) throws -> ConnectionUpdateResult {
         guard update.hasConfigurationChanges else { return (nil, nil) }
 
         let protunConfig = try ProTUNConfigurationCoder.decode(from: self)

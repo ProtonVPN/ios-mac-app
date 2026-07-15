@@ -20,24 +20,33 @@ import ConcurrencyExtras
 import CoreConnection
 import Domain
 import Foundation
-import IPCErgonomics
 import IPCDefinitions
+import IPCErgonomics
 
 // Typed accessors over the live tunnel-data channels. Each exposes the Swift struct that wraps the raw C payload as
 // a getter + an `AsyncStream`.
 
 public extension IPCNotifications.RawChannel where Payload == IPCConnectionDataPayload, Role == ReaderRole, Backing: ~Copyable {
-    func currentExtensionState() -> (ExtensionState, UUID?) {
+    func currentExtensionState() -> ExtensionStateSnapshot {
         if let payload = try? read() {
-            (payload.extensionState, payload.requestId)
+            ExtensionStateSnapshot(
+                state: payload.extensionState,
+                requestId: payload.requestId
+            )
         } else {
-            (.disconnected(reason: .unset), nil)
+            ExtensionStateSnapshot(
+                state: .disconnected(reason: .unset),
+                requestId: nil
+            )
         }
     }
 
-    func extensionStateStream(reconcileOn resumeSignals: AsyncStream<Void>...) -> AsyncStream<(state: ExtensionState, requestId: UUID?)> {
+    func extensionStateStream(reconcileOn resumeSignals: AsyncStream<Void>...) -> AsyncStream<ExtensionStateSnapshot> {
         stream(reconcileOn: resumeSignals) { payload in
-            (payload.extensionState, payload.requestId)
+            ExtensionStateSnapshot(
+                state: payload.extensionState,
+                requestId: payload.requestId
+            )
         }
     }
 }
@@ -81,25 +90,5 @@ public extension IPCNotifications.RawChannel where Payload == IPCErrorPayload, R
     /// The extension's most-recent reported error, or `nil` if the value is empty.
     func errorStream(reconcileOn resumeSignals: AsyncStream<Void>...) -> AsyncStream<ExtensionError?> {
         stream(reconcileOn: resumeSignals) { $0.extensionError }
-    }
-}
-
-public extension IPCNotifications.RawChannel where Payload == IPCTunnelStatusPayload, Role == ReaderRole, Backing: ~Copyable {
-    func tunnelStatus() -> IPCTunnelStatusPayload? {
-        try? read()
-    }
-
-    func tunnelStatusStream(reconcileOn resumeSignals: AsyncStream<Void>...) -> AsyncStream<IPCTunnelStatusPayload> {
-        stream(reconcileOn: resumeSignals) { $0 }
-    }
-
-    func zeroPeerKillSwitchActiveStream(reconcileOn resumeSignals: AsyncStream<Void>...) -> AsyncStream<Bool> {
-        stream(reconcileOn: resumeSignals) { $0.zeroPeerKillSwitchActive == .enabled }
-    }
-}
-
-public extension IPCNotifications.RawChannel where Payload == IPCTunnelStatusPayload, Role == WriterRole, Backing: ~Copyable {
-    func setZeroPeerKillSwitchActive(_ active: Bool) {
-        mutate { $0.zeroPeerKillSwitchActive = active ? .enabled : .disabled }
     }
 }

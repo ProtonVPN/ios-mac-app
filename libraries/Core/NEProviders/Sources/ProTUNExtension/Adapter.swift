@@ -208,12 +208,14 @@ final class ProTUNAdapter: @unchecked Sendable {
         )
         signposter.emitEvent("Connection established", id: signpostID)
 
-        if config.proTUN.hasZeroPeers {
+        if config.proTUN.peers.isEmpty {
             // Lib connection object will never transition to connected with 0 peers so completing immediately
             // (this allows starts of the extension via onDemand rules or after any termination to start anyway)
             Logger.adapter.info("Adapter is started in 0 peers mode, `startTunnel` can complete")
-            // Re-publish the zero-peer KS flag in case we're resuming from a persisted config after an extension crash.
-            publishZeroPeerMode(active: true)
+            await extensionIPCServer.publishExtensionState(
+                .disconnected(reason: .unset),
+                currentRequestId
+            )
         } else {
             try await stateDelegate.stateSource.newStream
                 .debounce(for: Self.protunStateDebounceInterval)
@@ -289,18 +291,20 @@ extension ProTUNAdapter {
         connection?.provideApiForkSelector(forkSelectorInfo: forkSelectorInfo)
     }
 
-    func handlePeersUpdate(_ newPeers: [PeerInfo]) throws(ProTUNAdapter.Error) {
-        guard let connection else { throw .noConnection }
-        connection.updatePeers(peers: newPeers)
-    }
-
-    func publishZeroPeerMode(active: Bool) {
-        extensionIPCServer.setZeroPeerKillSwitchActive(active)
+    func handlePeersUpdate(_ peers: [PeerInfo]) throws(Error) {
+        guard let connection else {
+            Logger.adapter.error("Cannot update peers: ProTUN connection is unavailable")
+            throw .noConnection
+        }
+        connection.updatePeers(peers: peers)
     }
 
     /// Single entry point for updating LocalAgentSettings.
-    func applyLocalAgentSettings(_ settings: LocalAgentSettings) throws(ProTUNAdapter.Error) {
-        guard let connection else { throw .noConnection }
+    func applyLocalAgentSettings(_ settings: LocalAgentSettings) throws(Error) {
+        guard let connection else {
+            Logger.adapter.error("Cannot update Local Agent settings: ProTUN connection is unavailable")
+            throw .noConnection
+        }
         connection.updateLocalAgentSettings(settings: settings)
     }
 
@@ -402,12 +406,6 @@ extension ProTUNAdapter {
 }
 
 // MARK: - Helpers
-
-extension ProTUNConfiguration {
-    var hasZeroPeers: Bool {
-        peers.isEmpty
-    }
-}
 
 extension ProTUNAdapter {
     func initialConnectionConfig(
