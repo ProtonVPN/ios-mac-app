@@ -72,6 +72,10 @@ final class StatusMenuViewModel {
     var contentChanged: (() -> Void)?
     var changeServerStateChanged: ((ServerChangeViewState) -> Void)?
 
+    /// The currently displayed unsecure-Wi-Fi warning, retained so it can be dismissed when the
+    /// connection becomes secure again (``secureConnectionRestored()``).
+    private var unsecureWiFiAlert: WarningAlert?
+
     var serverType: ServerType = .standard
     var standardCountries: [ServerGroupInfo]?
     var secureCoreCountries: [ServerGroupInfo]?
@@ -502,14 +506,16 @@ final class StatusMenuViewModel {
 
     private func presentUnsecureWiFiWarning() {
         guard let wifiName = wifiSecurityMonitor.wifiName else { return }
-        coreAlertService.push(alert: WarningAlert(
+        let alert = WarningAlert(
             title: Localizable.unsecureWifiTitle,
             message: "\(Localizable.unsecureWifi): \(wifiName). \(Localizable.unsecureWifiLearnMore)",
             confirmTitle: Localizable.ok,
             onConfirm: { log.info("User accepted unsecure WiFi option", category: .net) },
             showCancel: false,
             learnMore: (Localizable.unsecureWifiLearnMore, VPNLink.unsecureWiFi.urlString)
-        ))
+        )
+        unsecureWiFiAlert = alert
+        coreAlertService.push(alert: alert)
     }
 
     private func updateCountryList() {
@@ -666,5 +672,12 @@ extension StatusMenuViewModel: WiFiSecurityMonitorDelegate {
     func unsecureWiFiDetected() {
         guard unprotectedNetworkNotifications, !isConnecting, !isConnected else { return }
         presentUnsecureWiFiWarning()
+    }
+
+    func secureConnectionRestored() {
+        // The reported insecure connection is gone (secure Wi-Fi / cellular / wired / VPN up), so dismiss
+        // the warning if it's still on screen.
+        unsecureWiFiAlert?.dismiss?()
+        unsecureWiFiAlert = nil
     }
 }
