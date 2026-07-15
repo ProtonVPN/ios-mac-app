@@ -24,11 +24,13 @@
     @testable import ExtensionManager
     import Foundation
     import os
-    import XCTest
+    import Testing
 
-    final class ExtensionManagerFeatureTests: XCTestCase {
+    @Suite(.serialized)
+    struct ExtensionManagerFeatureTests {
+        @Test
         @MainActor
-        func testRequestsTunnelStart() async {
+        func requestsTunnelStart() async {
             let mockManager = MockTunnelManager()
             let mockClock = TestClock()
 
@@ -43,6 +45,11 @@
                 connectedDate: nil,
                 lastDisconnectError: nil
             )
+            // Drive the `.connecting` transition manually so the tunnel-start request and the observed status change
+            // can't race. With the default `startupDuration` of zero, `startTunnel()` flips the status to `.connecting`
+            // synchronously (yielding through the observation stream) before the same effect sends
+            // `.tunnelStartRequestFinished`, leaving the delivery order of those two actions non-deterministic.
+            mockManager.connection.startupDuration = nil
 
             let store = TestStore(initialState: TunnelState.disconnected(nil)) {
                 ExtensionFeature()
@@ -57,6 +64,9 @@
 
             await store.send(.connect(intent))
             await store.receive(\.tunnelStartRequestFinished)
+
+            // Now that the start request has completed, simulate the extension reporting the connecting state.
+            mockManager.connection.status = .connecting
             await store.receive(\.tunnelStatusChanged.connecting) {
                 $0 = .connecting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"]))
             }
@@ -64,8 +74,9 @@
             await store.send(.stopObserving)
         }
 
+        @Test
         @MainActor
-        func testStateSetToConnectedIfExistingTunnelIsConnected() async {
+        func stateSetToConnectedIfExistingTunnelIsConnected() async {
             let mockManager = MockTunnelManager()
             mockManager.connection = VPNSessionMock(
                 status: .connected,
@@ -96,15 +107,16 @@
         /// A server change while connected over IKEv2 must start a fresh tunnel: there is no extension to message, so
         /// the in-place update route is unavailable. The exhaustive store fails this test if the reducer emits
         /// `requestConfigChange` instead, and the message handler fails it if anything reaches the provider rail.
+        @Test
         @MainActor
-        func testServerChangeWhileConnectedOverIKEStartsFreshTunnel() async {
+        func serverChangeWhileConnectedOverIKEStartsFreshTunnel() async {
             let mockManager = MockTunnelManager()
             let mockClock = TestClock()
             let now = Date.now
 
             mockManager.connection = VPNSessionMock(status: .connected, connectedDate: now, lastDisconnectError: nil)
             mockManager.connection.messageHandler = { _, request in
-                XCTFail("No provider message expected when changing servers from IKEv2, got: \(request.payload)")
+                Issue.record("No provider message expected when changing servers from IKEv2, got: \(request.payload)")
                 return .init(payload: .ack)
             }
 
@@ -135,8 +147,9 @@
 
         /// The counterpart: over WireGuard the same server change stays on the in-place route, and the derived
         /// update reaches the extension as a provider message.
+        @Test
         @MainActor
-        func testServerChangeWhileConnectedOverWireGuardUpdatesInPlace() async {
+        func serverChangeWhileConnectedOverWireGuardUpdatesInPlace() async {
             let mockManager = MockTunnelManager()
             let now = Date.now
             let sentUpdate = OSAllocatedUnfairLock<ConnectionUpdate?>(initialState: nil)
@@ -144,7 +157,7 @@
             mockManager.connection = VPNSessionMock(status: .connected, connectedDate: now, lastDisconnectError: nil)
             mockManager.connection.messageHandler = { _, request in
                 guard case let .updateConfiguration(update) = request.payload else {
-                    XCTFail("Expected a configuration update, got: \(request.payload)")
+                    Issue.record("Expected a configuration update, got: \(request.payload)")
                     return .init(payload: .ack)
                 }
                 sentUpdate.withLock { $0 = update }
@@ -175,11 +188,12 @@
             await store.send(.connect(intent))
             await store.receive(\.requestConfigChange)
 
-            XCTAssertEqual(sentUpdate.withLock { $0 }?.location?.spec, intent.spec)
+            #expect(sentUpdate.withLock { $0 }?.location?.spec == intent.spec)
         }
 
+        @Test
         @MainActor
-        func testDisconnectsWhenVPNConfigurationPermissionDenied() async {
+        func disconnectsWhenVPNConfigurationPermissionDenied() async {
             let mockClock = TestClock()
             let mockManager = MockTunnelManager()
             mockManager.connection = VPNSessionMock(
