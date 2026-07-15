@@ -31,22 +31,18 @@ extension MigrationManager {
         checking(.platform(iOS: "7.5.2", macOS: nil, tvOS: nil)) { _ in
             @Dependency(\.defaultAppStorage) var defaults
 
-            let migratedFlagKey = "KillSwitchModeMigrated"
-            guard !defaults.bool(forKey: migratedFlagKey) else { return }
-
             // Don't overwrite a mode the user may already have chosen via the new picker.
             let killSwitchModeKey = "KillSwitchMode"
-            if defaults.object(forKey: killSwitchModeKey) == nil {
-                let wasEnabled = defaults.bool(forKey: "Firewall")
-                let mode: KillSwitchMode = wasEnabled ? .standard : .off
-                defaults.set(mode.rawValue, forKey: killSwitchModeKey)
-                log.info(
-                    "Migrated kill switch to 3-state mode",
-                    category: .persistence,
-                    metadata: ["wasEnabled": "\(wasEnabled)", "mode": "\(mode)"]
-                )
-            }
-            defaults.set(true, forKey: migratedFlagKey)
+            guard defaults.object(forKey: killSwitchModeKey) == nil else { return }
+
+            let wasEnabled = defaults.bool(forKey: "Firewall")
+            let mode: KillSwitchMode = wasEnabled ? .standard : .off
+            defaults.set(mode.rawValue, forKey: killSwitchModeKey)
+            log.info(
+                "Migrated kill switch to 3-state mode",
+                category: .persistence,
+                metadata: ["wasEnabled": "\(wasEnabled)", "mode": "\(mode)"]
+            )
         }
     }
 }

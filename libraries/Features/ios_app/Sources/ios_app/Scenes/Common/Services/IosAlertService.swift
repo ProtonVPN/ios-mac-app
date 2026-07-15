@@ -93,6 +93,10 @@ extension IosAlertService {
         case is LANConnectionsKillSwitchConflictAlert:
             showDefaultSystemAlert(alert)
 
+        case is KillSwitchLogoutBlockingFailedAlert:
+            showDefaultSystemAlert(alert)
+
+
         case is ProtocolNotAvailableForServerAlert:
             showDefaultSystemAlert(alert)
 

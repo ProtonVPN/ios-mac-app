@@ -778,6 +778,10 @@ public enum Localizable {
   public static func killSwitchLogoutAdvancedTitle(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_kill_switch_logout_advanced_title", String(describing: p1), fallback: "Sign out from %@?")
   }
+  /// iOS: Body of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out
+  public static var killSwitchLogoutBlockingFailedBody: String { return Localizable.tr("Localizable", "_kill_switch_logout_blocking_failed_body", fallback: "You've been signed out, but the kill switch couldn't be kept active, so your device may be exposed. Open Proton VPN and connect again to stay protected.") }
+  /// iOS: Title of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out
+  public static var killSwitchLogoutBlockingFailedTitle: String { return Localizable.tr("Localizable", "_kill_switch_logout_blocking_failed_title", fallback: "Kill switch could not stay active") }
   /// iOS: Kill switch settings - "Advanced" option title
   public static var killSwitchModeAdvanced: String { return Localizable.tr("Localizable", "_kill_switch_mode_advanced", fallback: "Advanced") }
   /// iOS: Kill switch settings - description of the Advanced option

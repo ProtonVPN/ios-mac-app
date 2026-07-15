@@ -117,7 +117,6 @@ final class NavigationService {
     @SharedReader(.sessionLogoutReason) private var sessionLogoutReason: String?
     private var cancellables = Set<AnyCancellable>()
     @Dependency(\.authKeychain) private var authKeychain
-    @Dependency(\.coreAlertService) private var alertService
     private lazy var loginService: LoginService = {
         let loginService = factory.makeLoginService()
         loginService.delegate = self

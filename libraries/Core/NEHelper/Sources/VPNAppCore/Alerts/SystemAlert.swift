@@ -386,6 +386,20 @@ public final class LogoutWithAdvancedKillSwitchAlert: LogoutWarningAlert {
     }
 }
 
+/// Shown after sign-out when the app failed to switch the tunnel into Advanced kill switch blocking,
+/// so the device may no longer be protected.
+public final class KillSwitchLogoutBlockingFailedAlert: SystemAlert {
+    public var title: String? = Localizable.killSwitchLogoutBlockingFailedTitle
+    public var message: String? = Localizable.killSwitchLogoutBlockingFailedBody
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    public init() {
+        actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: nil))
+    }
+}
+
 public final class UnreachableNetworkAlert: SystemAlert {
     public var title: String? = Localizable.warning
     public var message: String? = Localizable.neUnableToConnectToHost

@@ -108,7 +108,7 @@ extension ManagerConfigurator {
         protocolConfiguration.serverAddress = "" // If nil, start fails. Empty string is accepted.
         protocolConfiguration.username = nil
 
-        #if os(iOS)
+        #if !os(tvOS)
             protocolConfiguration.includeAllNetworks = true
         #endif
 

@@ -371,6 +371,7 @@ public struct ConnectionFeature: Sendable {
             Reduce { state, _ in
                 // Mirror "Advanced KS is Active" to a shared flag so out-of-feature consumers (the sign-out
                 // warning in AppSessionManager) can distinguish Active from Armed only
+                // TODO: address it in VPNAPPL-3153
                 @Shared(.advancedKillSwitchActive) var advancedKillSwitchActive
                 let isActive = connectionFeatureProvider.requestedFeatures().killSwitchMode.isAdvanced
                     && state.tunnelArmedForKillSwitch
