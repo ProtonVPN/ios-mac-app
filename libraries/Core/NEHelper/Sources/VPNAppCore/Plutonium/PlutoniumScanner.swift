@@ -20,6 +20,7 @@
 
     import Combine
     import CombineSchedulers
+    import ConcurrencyExtras
     import Dependencies
     import Foundation
     import Sharing
@@ -34,8 +35,10 @@
 
         private var cancellables: Set<AnyCancellable> = []
 
-        private var task: Task<Void, any Error>?
-        private var continuation: AsyncStream<[PlutoniumApp]>.Continuation?
+        /// The most recently requested scan. Captured synchronously when a list
+        /// change is observed so that `waitForScanToComplete()` always awaits the
+        /// scan that the latest change triggered, rather than racing its creation.
+        private let currentScan = LockIsolated<Task<Void, Never>?>(nil)
 
         private let debounceAmount: DispatchQueue.SchedulerTimeType.Stride
         private let scheduler: AnySchedulerOf<DispatchQueue>
@@ -50,33 +53,37 @@
 
         public func startObservation() {
             cancellables.removeAll()
-            self.continuation?.finish()
 
             @SharedReader(.exclusionActivated) var exclusionActivated: PlutoniumActivated
             @SharedReader(.inclusionActivated) var inclusionActivated: PlutoniumActivated
 
-            let (asyncStream, continuation) = AsyncStream<[PlutoniumApp]>.makeStream()
             Publishers.Merge(
                 $exclusionActivated.apps.publisher,
                 $inclusionActivated.apps.publisher
             )
             .debounce(for: debounceAmount, scheduler: scheduler)
-            .filter { !$0.isEmpty } // when we finish the stream, we get an empty array, which we can ignore
-            .sink {
-                continuation.yield($0)
+            .filter { !$0.isEmpty } // an empty array is emitted when the reader tears down; ignore it
+            .sink { [weak self] apps in
+                self?.scheduleScan(apps)
             }.store(in: &cancellables)
+        }
 
-            self.continuation = continuation
-
-            Task {
-                for await apps in asyncStream {
-                    await startScanning(apps)
+        /// Enqueues a scan for `apps`, superseding any in-flight scan. Runs
+        /// synchronously on the subscription's thread so the resulting task is
+        /// visible to `waitForScanToComplete()` the moment the change is observed.
+        private nonisolated func scheduleScan(_ apps: [PlutoniumApp]) {
+            currentScan.withValue { current in
+                let previous = current
+                current = Task { [weak self] in
+                    previous?.cancel() // don't start more operations
+                    _ = await previous?.value // but finish the ones that are started
+                    await self?.scan(apps)
                 }
             }
         }
 
         public func waitForScanToComplete() async {
-            _ = await task?.result
+            await currentScan.value?.value
         }
 
         private func shouldScan(_ app: PlutoniumApp) -> Bool {
@@ -111,24 +118,20 @@
             return values
         }
 
-        private func startScanning(_ apps: [PlutoniumApp]) async {
-            task?.cancel() // don't start more operations
-            _ = await task?.result // but finish the ones that are started
-            task = Task {
-                await Task.yield() // allow time for childBundles to update from the last scan
-                let operations = apps
-                    .uniques(by: \.bundleIdentifier)
-                    .filter(shouldScan)
-                    .map(enumerationOperation)
-                let collected = await withThrowingTaskGroup(of: (String, ChildBundle).self) { group in
-                    operations
-                        .forEach { group.addTask(operation: $0) }
-                    return await collect(from: group)
-                }
-                $childBundles.withLock {
-                    $0.merge(collected) { _, new in
-                        new
-                    }
+        private func scan(_ apps: [PlutoniumApp]) async {
+            await Task.yield() // allow time for childBundles to update from the last scan
+            let operations = apps
+                .uniques(by: \.bundleIdentifier)
+                .filter(shouldScan)
+                .map(enumerationOperation)
+            let collected = await withThrowingTaskGroup(of: (String, ChildBundle).self) { group in
+                operations
+                    .forEach { group.addTask(operation: $0) }
+                return await collect(from: group)
+            }
+            $childBundles.withLock {
+                $0.merge(collected) { _, new in
+                    new
                 }
             }
         }

@@ -18,49 +18,69 @@
 
 #if canImport(AppKit)
 
+    import ConcurrencyExtras
     import Sharing
     import Testing
     @testable import VPNAppCore
 
+    // Serialized because every test mutates the same file-backed `@Shared` state
+    // (`exclusionActivated`/`inclusionActivated`/`childBundles`) and each scanner
+    // observes *both* lists, so parallel tests would cross-trigger each other.
+    @Suite(.serialized)
     struct PlutoniumScannerTests {
         @Shared(.exclusionActivated) var exclusionActivated: PlutoniumActivated
         @Shared(.inclusionActivated) var inclusionActivated: PlutoniumActivated
-        @SharedReader(.childBundles) var childBundles: [String: ChildBundle]
+        @Shared(.childBundles) var childBundles: [String: ChildBundle]
+
+        /// Clears the shared state that persists on disk between tests and runs.
+        private func resetSharedState() {
+            $exclusionActivated.withLock { $0 = .init() }
+            $inclusionActivated.withLock { $0 = .init() }
+            $childBundles.withLock { $0 = [:] }
+        }
 
         @Test
         func exclusionTriggersScanner() async {
-            let scanner = PlutoniumScanner(
-                debounce: 0,
-                scheduler: .immediate
-            )
-            await scanner.startObservation()
+            // `withMainSerialExecutor` pins the observation pipeline to a single
+            // executor so the scan the change triggers runs before we assert.
+            await withMainSerialExecutor {
+                resetSharedState()
 
-            #expect(childBundles.isEmpty)
+                let scanner = PlutoniumScanner(
+                    debounce: 0,
+                    scheduler: .immediate
+                )
+                await scanner.startObservation()
 
-            $exclusionActivated.apps.withLock {
-                $0 = [.huzza]
+                #expect(childBundles.isEmpty)
+
+                $exclusionActivated.apps.withLock {
+                    $0 = [.huzza]
+                }
+                await scanner.waitForScanToComplete()
+                #expect(!childBundles.isEmpty)
             }
-            #expect(childBundles.isEmpty)
-            await scanner.waitForScanToComplete()
-            #expect(!childBundles.isEmpty)
         }
 
         @Test
         func inclusionTriggersScanner() async {
-            let scanner = PlutoniumScanner(
-                debounce: 0,
-                scheduler: .immediate
-            )
-            await scanner.startObservation()
+            await withMainSerialExecutor {
+                resetSharedState()
 
-            #expect(childBundles.isEmpty)
+                let scanner = PlutoniumScanner(
+                    debounce: 0,
+                    scheduler: .immediate
+                )
+                await scanner.startObservation()
 
-            $inclusionActivated.withLock {
-                $0.apps = [.huzza]
+                #expect(childBundles.isEmpty)
+
+                $inclusionActivated.withLock {
+                    $0.apps = [.huzza]
+                }
+                await scanner.waitForScanToComplete()
+                #expect(!childBundles.isEmpty)
             }
-            #expect(childBundles.isEmpty)
-            await scanner.waitForScanToComplete()
-            #expect(!childBundles.isEmpty)
         }
     }
 
