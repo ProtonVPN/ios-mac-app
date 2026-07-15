@@ -45,7 +45,7 @@ public struct HomeMapFeature {
 
         var pinOffset: CGSize = .zero
 
-        @SharedReader(.connectionState) public var connectionState: ConnectionState
+        @SharedReader(.connectionState) var connectionState: ConnectionState
         @SharedReader(.userCountry) public var userCountry: String?
 
         public init() {}

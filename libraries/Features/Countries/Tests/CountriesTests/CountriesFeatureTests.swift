@@ -178,7 +178,8 @@ struct CountriesFeatureTests {
     func secureCoreToggleOnConnectedNoDiscourageShowsAlert() async {
         @SharedReader(.secureCoreToggle) var isSecureCore = false
         @SharedReader(.userTier) var userTier: Int? = 2
-        @SharedReader(.connectionState) var connectionState: ConnectionState = .fakeConnected
+        @Shared(.connectionState) var connectionState
+        $connectionState.withLock { $0 = .fakeConnected }
         @SharedReader(.discourageSecureCore) var discourageSecureCore = false
 
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
@@ -203,7 +204,8 @@ struct CountriesFeatureTests {
     func secureCoreToggleOnConnectedWithDiscourageShowsViewWithNotice() async {
         @SharedReader(.secureCoreToggle) var isSecureCore = false
         @SharedReader(.userTier) var userTier: Int? = 2
-        @SharedReader(.connectionState) var connectionState: ConnectionState = .fakeConnected
+        @Shared(.connectionState) var connectionState
+        $connectionState.withLock { $0 = .fakeConnected }
         @SharedReader(.discourageSecureCore) var discourageSecureCore = true
 
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
@@ -239,7 +241,8 @@ struct CountriesFeatureTests {
     func secureCoreToggleOffConnectedShowsAlert() async {
         @SharedReader(.secureCoreToggle) var isSecureCore = true
         @SharedReader(.userTier) var userTier: Int? = 2
-        @SharedReader(.connectionState) var connectionState: ConnectionState = .fakeConnected
+        @Shared(.connectionState) var connectionState
+        $connectionState.withLock { $0 = .fakeConnected }
 
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
             CountriesFeature()
@@ -261,8 +264,8 @@ struct CountriesFeatureTests {
     func turningOffSecureCoreWhenDisconnected() async {
         @SharedReader(.secureCoreToggle) var isSecureCore = true
         @SharedReader(.userTier) var userTier: Int? = 2
-        @SharedReader(.connectionState) var connectionState: ConnectionState = .disconnected
-
+        @Shared(.connectionState) var connectionState
+        $connectionState.withLock { $0 = .disconnected }
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
             CountriesFeature()
         }
@@ -667,24 +670,24 @@ struct CountriesFeatureTests {
 
     @Test("isConnectedToVPN returns true when connected")
     func isConnectedToVPNWhenConnected() {
-        @SharedReader(.connectionState) var connectionState: ConnectionState = .fakeConnected
-
+        @Shared(.connectionState) var connectionState
+        $connectionState.withLock { $0 = .fakeConnected }
         let state = CountriesFeature.State(sections: [])
         #expect(state.isConnectedToVPN)
     }
 
     @Test("isConnectedToVPN returns false when disconnected")
     func isConnectedToVPNWhenDisconnected() {
-        @SharedReader(.connectionState) var connectionState: ConnectionState = .disconnected
-
+        @Shared(.connectionState) var connectionState
+        $connectionState.withLock { $0 = .disconnected }
         let state = CountriesFeature.State(sections: [])
         #expect(!state.isConnectedToVPN)
     }
 
     @Test("enableViewToggle returns false when connecting")
     func enableViewToggleWhenConnecting() {
-        @SharedReader(.connectionState) var connectionState: ConnectionState = .fakeConnecting
-
+        @Shared(.connectionState) var connectionState
+        $connectionState.withLock { $0 = .fakeConnecting }
         let state = CountriesFeature.State(sections: [])
         #expect(!state.enableViewToggle)
     }

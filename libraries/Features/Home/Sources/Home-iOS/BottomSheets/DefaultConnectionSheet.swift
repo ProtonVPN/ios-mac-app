@@ -103,7 +103,7 @@ struct DefaultConnectionSheet: View {
 #if DEBUG
 
     #Preview {
-        ZStack { // Xcode 15: #Preview macro only supports a single View in its body
+        ZStack {
             @SharedReader(.recentConnections) var recents = OrderedSet([
                 RecentConnection.pinnedFastest,
                 .connectionRegion,

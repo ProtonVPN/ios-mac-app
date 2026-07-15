@@ -81,7 +81,9 @@ final class MainFeatureTests: XCTestCase {
     @MainActor
     func testUserClickedCityItemWhileConnectedToThatCityShouldDisconnect() async {
         let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now)
-        let store = TestStore(initialState: MainFeature.State(connectionState: connectionState)) {
+        @Shared(.connectionState) var sharedConnectionState
+        $sharedConnectionState.withLock { $0 = connectionState }
+        let store = TestStore(initialState: .init()) {
             MainFeature()
         } withDependencies: {
             $0.serverRepository = .empty()
@@ -119,7 +121,9 @@ final class MainFeatureTests: XCTestCase {
     @MainActor
     func testUserClickedCountryItemWhileConnectedToCityInThatCountryShouldDisconnect() async {
         let connectionState = ConnectionState.connected(.mock(withSpecLocation: .city(name: "irrelevant", code: "CA", order: .fastest)), .ca, .now)
-        let store = TestStore(initialState: MainFeature.State(connectionState: connectionState)) {
+        @Shared(.connectionState) var sharedConnectionState
+        $sharedConnectionState.withLock { $0 = connectionState }
+        let store = TestStore(initialState: .init()) {
             MainFeature()
         } withDependencies: {
             $0.serverRepository = .empty()

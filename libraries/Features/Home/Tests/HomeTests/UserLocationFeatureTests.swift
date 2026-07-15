@@ -29,7 +29,8 @@ import Testing
 struct UserLocationFeatureTests {
     @Test("Fetches location on launch")
     func fetchesLocationOnLaunch() async {
-        @SharedReader(.connectionState) var connectionState = .disconnected
+        @Shared(.connectionState) var connectionState
+        $connectionState.withLock { $0 = .disconnected }
 
         let now = Date.now
         let clock = TestClock()
@@ -66,7 +67,8 @@ struct UserLocationFeatureTests {
 
     @Test("Fetches location on interval when disconnected")
     func fetchesLocationOnIntervalPassingWhenDisconnected() async {
-        @SharedReader(.connectionState) var connectionState = .disconnected
+        @Shared(.connectionState) var connectionState
+        $connectionState.withLock { $0 = .disconnected }
 
         let now = Date.now
         let nextRefreshDate = now.addingTimeInterval(.hours(1))
@@ -118,7 +120,8 @@ struct UserLocationFeatureTests {
 
     @Test("Skips location fetch on interval when not disconnected")
     func skipsFetchingLocationOnIntervalPassingWhenNotDisconnected() async {
-        @Shared(.connectionState) var connectionState = .disconnected
+        @Shared(.connectionState) var connectionState
+        $connectionState.withLock { $0 = .disconnected }
 
         let now = Date.now
         let nextRefreshDate = now.addingTimeInterval(.hours(1))
@@ -169,7 +172,8 @@ struct UserLocationFeatureTests {
 
     @Test("Does not fetch location more often than cooldown interval")
     func doesNotFetchLocationMoreOftenThanInterval() async {
-        @Shared(.connectionState) var connectionState = .disconnected
+        @Shared(.connectionState) var connectionState
+        $connectionState.withLock { $0 = .disconnected }
 
         let now = Date.now
         let halfwayThroughRefreshInterval = now.addingTimeInterval(.minutes(30))
@@ -217,7 +221,8 @@ struct UserLocationFeatureTests {
 
     @Test("Unchanged location still refreshes cooldown")
     func unchangedLocationStillRefreshesCooldown() async {
-        @SharedReader(.connectionState) var connectionState = .disconnected
+        @Shared(.connectionState) var connectionState
+        $connectionState.withLock { $0 = .disconnected }
 
         let now = Date.now
         let firstRefreshDate = now.addingTimeInterval(.hours(1))

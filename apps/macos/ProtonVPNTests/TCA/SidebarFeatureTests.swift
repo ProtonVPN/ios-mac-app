@@ -62,7 +62,6 @@ struct SidebarFeatureTests {
                     acceptableProtocols: .ikev2
                 )))
             }
-            $0.$vpnConnectionStatusDoNotUse.withLock { $0 = .connecting(spec, nil) }
         }
         await store.receive(\.connection.delegate.stateChanged.connecting.unresolved)
         await store.receive(\.connectionStateChanged.connecting) {
@@ -143,7 +142,6 @@ struct SidebarFeatureTests {
                     acceptableProtocols: .ikev2
                 )))
             }
-            $0.$vpnConnectionStatusDoNotUse.withLock { $0 = .connecting(spec, nil) }
         }
     }
 
@@ -185,7 +183,6 @@ struct SidebarFeatureTests {
                     acceptableProtocols: .ikev2
                 )))
             }
-            $0.$vpnConnectionStatusDoNotUse.withLock { $0 = .connecting(spec, nil) }
         }
         await store.receive(\.connection.delegate.stateChanged.connecting.unresolved)
         await store.receive(\.connectionStateChanged.connecting) {
@@ -227,7 +224,6 @@ struct SidebarFeatureTests {
                     acceptableProtocols: .ikev2
                 )))
             }
-            $0.$vpnConnectionStatusDoNotUse.withLock { $0 = .connecting(p2pSpec, nil) }
         }
         await store.receive(\.connection.delegate.stateChanged.connecting.unresolved)
         await store.receive(\.connectionStateChanged.connecting) {
@@ -557,7 +553,6 @@ struct SidebarFeatureTests {
                     acceptableProtocols: .ikev2
                 )))
             }
-            $0.$vpnConnectionStatusDoNotUse.withLock { $0 = .connecting(spec, nil) }
         }
         await store.receive(\.connection.input.connect) {
             // TODO: ProTUN: Revisit
@@ -660,7 +655,6 @@ struct SidebarFeatureTests {
 
         await store.send(.connection(.delegate(.stateChanged(.disconnected)))) {
             $0.$connectionState.withLock { $0 = .disconnected }
-            $0.$vpnConnectionStatusDoNotUse.withLock { $0 = .disconnected }
         }
         await store.receive(\.connectionStateChanged.disconnected)
         await store.receive(\.syncNATPortMappingState)
@@ -682,12 +676,10 @@ struct SidebarFeatureTests {
         portForwardingEnabled: Bool = false,
         serverChangeAuthorizer: ServerChangeAuthorizer = .availableValue
     ) -> TestStoreOf<SidebarFeature> {
-        @Shared(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse
         @Shared(.connectionState) var connectionState
         @Shared(.intentionallyDisconnected) var intentionallyDisconnected
         @Shared(.connectionProtocol) var connectionProtocol
 
-        $vpnConnectionStatusDoNotUse.withLock { $0 = .resolving(nil, nil) }
         $connectionState.withLock { $0 = .resolving }
         $intentionallyDisconnected.withLock { $0 = false }
         $connectionProtocol.withLock { $0 = .vpnProtocol(.ike) }
@@ -762,13 +754,12 @@ private extension SidebarFeature.State.OverlayState {
 }
 
 private extension ConnectionState {
-    /// Build a `.connecting(.unresolved)` state from a spec, mirroring `VPNConnectionStatusDoNotUse.connecting(spec, nil)`.
+    /// Build a `.connecting(.unresolved)` state from a spec
     static func testConnecting(_ spec: ConnectionSpec) -> ConnectionState {
         .connecting(.unresolved(ConnectionPreparationIntent(spec: spec, acceptableProtocols: .ikev2)))
     }
 
-    /// Build a `.connected` state from a spec and a `VPNConnectionActual`, mirroring
-    /// `VPNConnectionStatusDoNotUse.connected(spec, actual)`.
+    /// Build a `.connected` state from a spec and a `VPNConnectionActual`
     static func testConnected(_ spec: ConnectionSpec, _: VPNConnectionActual) -> ConnectionState {
         let actual = VPNConnectionActual.mock()
         return .connected(

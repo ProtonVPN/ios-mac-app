@@ -31,7 +31,7 @@ struct Provider: TimelineProvider {
     @Dependency(\.authKeychain) var authKeychain
     @SharedReader(.recentConnections) var recentConnections
     @SharedReader(.storedDefaultConnectionPreference) var storedDefaultConnectionPreference
-    @SharedReader(.connectionState) public var connectionState
+    @SharedReader(.connectionState) var connectionState
     @Dependency(\.connectionInventory) var connectionInventory
 
     func placeholder(in _: Context) -> ConnectWidgetEntry {

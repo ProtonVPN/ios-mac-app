@@ -201,7 +201,6 @@ struct AppSessionManagerImplementationTests {
             try await context.manager.attemptSilentLogIn()
 
             #expect(context.manager.loggedIn)
-            assertConnectedStatus()
         }
     }
 
@@ -215,7 +214,6 @@ struct AppSessionManagerImplementationTests {
 
             try await context.manager.attemptSilentLogIn()
 
-            assertConnectedStatus()
             #expect(context.manager.loggedIn)
         }
     }
@@ -230,7 +228,6 @@ struct AppSessionManagerImplementationTests {
 
             try await context.manager.attemptSilentLogIn()
 
-            assertConnectedStatus()
             #expect(context.manager.loggedIn)
         }
     }
@@ -250,7 +247,7 @@ struct AppSessionManagerImplementationTests {
     func noAlertShownOnLogoutWhenNotDisconnected() async throws {
         try await withTestContext { context in
             try await login(with: testAuthCredentials(), context: context)
-            setConnectionStatus(vpnStatus: .disconnected, connectionState: .disconnected)
+            setConnectionStatus(connectionState: .disconnected)
 
             context.manager.logOut()
             #expect(await waitForSessionStatus(.notEstablished, on: context.manager))
@@ -262,12 +259,11 @@ struct AppSessionManagerImplementationTests {
     func logoutShowsNoAlertWhenConnecting() async throws {
         try await withTestContext { context in
             try await login(with: testAuthCredentials(), context: context)
-            setConnectionStatus(vpnStatus: .connecting(.defaultFastest, nil), connectionState: .resolving)
+            setConnectionStatus(connectionState: .resolving)
 
             context.manager.logOut()
             #expect(await waitForSessionStatus(.notEstablished, on: context.manager))
             #expect(context.manager.loggedIn == false)
-            assertDisconnectedStatus()
         }
     }
 
@@ -280,7 +276,6 @@ struct AppSessionManagerImplementationTests {
             context.manager.logOut(force: true, reason: "")
             #expect(await waitForSessionStatus(.notEstablished, on: context.manager))
             #expect(context.manager.loggedIn == false)
-            assertDisconnectedStatus()
         }
     }
 
@@ -297,7 +292,6 @@ struct AppSessionManagerImplementationTests {
             context.manager.logOut()
             #expect(await waitForSessionStatus(.notEstablished, on: context.manager))
             #expect(context.manager.loggedIn == false)
-            assertDisconnectedStatus()
         }
     }
 
@@ -313,7 +307,6 @@ struct AppSessionManagerImplementationTests {
             context.manager.logOut()
 
             #expect(context.manager.loggedIn)
-            assertConnectedStatus()
         }
     }
 
@@ -354,9 +347,7 @@ struct AppSessionManagerImplementationTests {
             $0.connectionCommandClient = .init(
                 send: { command in
                     guard case let .disconnect(_, completion) = command else { return }
-                    @Shared(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse
                     @Shared(.connectionState) var connectionState
-                    $vpnConnectionStatusDoNotUse.withLock { $0 = .disconnected }
                     $connectionState.withLock { $0 = .disconnected }
                     Task { @MainActor in completion?() }
                 },
@@ -404,7 +395,6 @@ struct AppSessionManagerImplementationTests {
             )
 
             setConnectionStatus(
-                vpnStatus: .disconnected,
                 connectionState: .disconnected
             )
 
@@ -460,10 +450,8 @@ struct AppSessionManagerImplementationTests {
         return manager.sessionStatus == target
     }
 
-    private func setConnectionStatus(vpnStatus: VPNConnectionStatusDoNotUse, connectionState: ConnectionState) {
-        @Shared(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse
+    private func setConnectionStatus(connectionState: ConnectionState) {
         @Shared(.connectionState) var sharedConnectionState
-        $vpnConnectionStatusDoNotUse.withLock { $0 = vpnStatus }
         $sharedConnectionState.withLock { $0 = connectionState }
     }
 
@@ -482,28 +470,11 @@ struct AppSessionManagerImplementationTests {
         )
         let actual = VPNConnectionActual(data: .init(currentPeer: server, connectionDate: .now, protocolConnectionData: .ike))
         setConnectionStatus(
-            vpnStatus: .connected(.defaultFastest, actual),
             connectionState: .connected(
                 .init(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
                 .init(currentPeer: server, connectionDate: .now, protocolConnectionData: .ike)
             )
         )
-    }
-
-    private func assertConnectedStatus(_ message: String = "Expected connection status to be connected") {
-        @SharedReader(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse
-        if case .connected = vpnConnectionStatusDoNotUse {
-            return
-        }
-        Issue.record("\(message), actual: \(vpnConnectionStatusDoNotUse)")
-    }
-
-    private func assertDisconnectedStatus(_ message: String = "Expected connection status to be disconnected") {
-        @SharedReader(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse
-        if case .disconnected = vpnConnectionStatusDoNotUse {
-            return
-        }
-        Issue.record("\(message), actual: \(vpnConnectionStatusDoNotUse)")
     }
 }
 
