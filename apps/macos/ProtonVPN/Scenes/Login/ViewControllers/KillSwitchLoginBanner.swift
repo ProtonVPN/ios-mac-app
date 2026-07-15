@@ -100,8 +100,8 @@ final class KillSwitchLoginBanner: NSView {
         NSLayoutConstraint.activate([
             iconView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .themeSpacing12),
             iconView.topAnchor.constraint(equalTo: topAnchor, constant: .themeSpacing12),
-            iconView.widthAnchor.constraint(equalToConstant: 16),
-            iconView.heightAnchor.constraint(equalToConstant: 16),
+            iconView.widthAnchor.constraint(equalToConstant: .themeSpacing16),
+            iconView.heightAnchor.constraint(equalToConstant: .themeSpacing16),
 
             messageLabel.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: .themeSpacing8),
             messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: .themeSpacing12),

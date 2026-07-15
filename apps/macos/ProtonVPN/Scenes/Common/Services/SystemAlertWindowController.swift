@@ -204,8 +204,8 @@ private struct SystemAlertCardView: View {
             buttons
         }
         .padding(.themeSpacing16)
-        .frame(width: 260)
-        .background(BehindWindowBlur(material: .sheet, cornerRadius: 20))
+        .frame(width: Dimensions.suiAlertWidth)
+        .background(BehindWindowBlur(material: .sheet, cornerRadius: Dimensions.suiAlertCornerRadius))
         .fixedSize(horizontal: false, vertical: true)
     }
 
@@ -266,6 +266,11 @@ private struct SystemAlertCardView: View {
         if action.style == .cancel { return .cancelAction }
         if isDefault { return .defaultAction }
         return nil
+    }
+
+    private enum Dimensions {
+        static let suiAlertWidth: CGFloat = 260
+        static let suiAlertCornerRadius: CGFloat = 20
     }
 }
 

@@ -353,7 +353,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
 
         // Active Advanced KS keeps the device offline after sign-out → "Sign out from {username}?" warning.
-        // Merely-Armed (not blocking yet) uses the normal logout warning below.
+        // If advanced KS was set but not connect with, use the normal logout warning below.
         if advancedKillSwitchActive {
             let alert = LogoutWithAdvancedKillSwitchAlert(username: authKeychain.username, confirmHandler: { completion() })
             alertService.push(alert: alert)

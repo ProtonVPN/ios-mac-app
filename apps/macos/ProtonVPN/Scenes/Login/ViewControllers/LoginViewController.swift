@@ -161,7 +161,13 @@ final class LoginViewController: NSViewController {
 
     private func disableKillSwitchFromBanner() {
         let control = vpnTunnelControl
-        Task { try? await control.stop() }
+        Task {
+            do {
+                try await control.stop()
+            } catch {
+                log.error("Disable killswitch from banner failed with error: \(error)", category: .connection)
+            }
+        }
         $killSwitchMode.withLock { $0 = .off }
         killSwitchBanner.configureDisabled { [weak self] in
             self?.killSwitchBanner.isHidden = true

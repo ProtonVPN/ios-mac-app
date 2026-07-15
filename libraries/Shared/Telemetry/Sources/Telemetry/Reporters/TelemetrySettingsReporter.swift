@@ -176,22 +176,16 @@ public final class TelemetrySettingsReporter {
     }
 
     private func killSwitchLevel() -> SettingsDimensions.KillSwitchLevel {
-        #if os(tvOS)
-            // tvOS has no kill switch UI; keep deriving from the legacy bool.
-            @SharedReader(.killSwitch) var killSwitch: Bool
-            return killSwitch ? .standard : .off
-        #else
-            // iOS and macOS use the three-state kill switch mode.
-            @SharedReader(.killSwitchMode) var mode: KillSwitchMode
-            switch mode {
-            case .off:
-                return .off
-            case .standard:
-                return .standard
-            case .advanced:
-                return .advanced
-            }
-        #endif
+        // tvOS has no kill switch UI, so its mode never leaves `.off`.
+        @SharedReader(.killSwitchMode) var mode: KillSwitchMode
+        switch mode {
+        case .off:
+            return .off
+        case .standard:
+            return .standard
+        case .advanced:
+            return .advanced
+        }
     }
 
     private func widgetCount() async -> SettingsDimensions.WidgetCount? {

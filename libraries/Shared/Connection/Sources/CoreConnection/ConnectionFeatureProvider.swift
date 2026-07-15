@@ -46,7 +46,6 @@ extension ConnectionFeatureProvider: DependencyKey {
                 )
             },
             requestedFeatures: {
-                // Kill switch is a three-state mode (Off / Standard / Advanced) on both iOS and macOS.
                 @SharedReader(.killSwitchMode) var killSwitchMode
                 return LocalTunnelFeatures(
                     killSwitchMode: killSwitchMode,

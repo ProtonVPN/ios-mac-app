@@ -49,7 +49,9 @@ final class OsxUiAlertService {
             if NSApp.keyWindow is StatusWindow {
                 // Triggered from the non-activating popover, so the app may be inactive and
                 // a sheet on a background window would be unreachable. Activate and bring the
-                // host forward; the popover closes as it resigns key.
+                // host forward; taking keyboard focus (key-window status) away from the popover
+                // makes it close itself — StatusMenuWindowController dismisses it on
+                // windowDidResignKey, matching the old NSAlert behaviour.
                 NSRunningApplication.current.activate(options: [.activateAllWindows])
                 window.makeKeyAndOrderFront(nil)
             }

@@ -234,6 +234,7 @@ extension SparkleUpdateManager: SPUUpdaterDelegate {
                     installHandler()
                     return
                 }
+                log.info("User confirmed the update from the kill switch update confirmation")
                 prepareForUpdateInstall(then: installHandler)
             },
             showCancel: true,
