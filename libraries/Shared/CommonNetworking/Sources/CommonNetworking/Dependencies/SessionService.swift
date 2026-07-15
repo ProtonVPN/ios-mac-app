@@ -21,6 +21,7 @@ import Domain
 import Foundation
 import IssueReporting
 import PMLogger
+import VPNAppCore
 
 public enum PlanSession {
     case upgrade
@@ -101,9 +102,18 @@ public struct SessionService: DependencyKey {
 
     public static let liveValue: SessionService = {
         @Dependency(\.networking) var networking
+        @Dependency(\.credentiallessHelper) var credentiallessHelper
 
         return SessionService(
             selector: { context in
+                // Every part of the code which attempts to login to a web session gets routed through here. Make sure
+                // that this is impossible for credentialless users, since they have no web account to log into. It's ok
+                // to throw here, since callers can just catch the error and return the bare URL without the selector.
+                // All other forks (e.g. for sessions in extensions) should succeed.
+                if case .webLogin = context, credentiallessHelper.isCredentialLess() {
+                    throw SessionServiceError.forkingCredentiallessWebLogin
+                }
+
                 let forkRequest = ForkSessionRequest(
                     useCase: .getSelector(
                         clientId: context.clientId,
@@ -159,6 +169,11 @@ public extension SessionService {
     func getExtensionSessionSelector(extensionContext: AppContext) async throws -> String {
         try await selector(.appContext(extensionContext))
     }
+}
+
+public enum SessionServiceError: FourCharCode, ProtonVPNError {
+    /// Credentialless users shouldn't be able to login to a web session.
+    case forkingCredentiallessWebLogin = "FCWL"
 }
 
 public extension DependencyValues {
