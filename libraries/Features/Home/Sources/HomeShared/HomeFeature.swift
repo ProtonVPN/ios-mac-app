@@ -86,12 +86,6 @@ public struct HomeFeature {
 
         @SharedReader(.captureSession) public var captureSession
         @SharedReader(.connectionState) public var connectionState: ConnectionState
-        /// Widget-only shadow of `connectionState`. The widget extension cannot read
-        /// `connectionState` (in-memory, process-local), so we keep a file-backed projection
-        /// in App Group storage and write it from `connection.delegate.stateChanged`.
-        /// **In-process callers must read `connectionState` directly, not this.**
-        // TODO: VPNAPPL-3545
-        @Shared(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse: VPNConnectionStatusDoNotUse
 
         @Presents public var destination: Destination.State?
         @Presents public var alert: AlertState<Action.HomeAlert>?
@@ -554,7 +548,6 @@ private extension HomeFeature {
                 return .send(.sharedProperties(.connectionFailed(error)))
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
-                state.$vpnConnectionStatusDoNotUse.withLock { $0 = connectionState.status }
                 // ProTUN's `ConnectionFeature` no longer emits `.delegate(.disconnected)`; drain
                 // any queued disconnect completions when the layer reports a disconnected state.
                 return .merge(

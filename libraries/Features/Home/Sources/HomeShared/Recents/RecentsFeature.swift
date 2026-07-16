@@ -34,24 +34,26 @@ public struct RecentsFeature {
     public struct State: Equatable {
         @SharedReader(.connectionState) public var connectionState: ConnectionState
 
-        @SharedReader(.defaultConnectionPreference) private var defaultConnectionPreference
-        @Shared(.recents) fileprivate var recents: OrderedSet<RecentConnection>
+        @SharedReader(.storedDefaultConnectionPreference) private var defaultConnectionPreference
+        @Shared(.recentConnections) fileprivate var recentConnections
 
         /// List of recent connections, minus the default connection if its not pinned
         public var recentConnectionList: OrderedSet<RecentConnection> {
             @Dependency(\.connectionInventory) var presenter
             return presenter.recentConnectionList(
-                defaultConnectionPreference: defaultConnectionPreference,
-                recents: recents,
+                defaultConnectionPreference: defaultConnectionPreference ?? .fastest,
+                recents: recentConnections ?? [],
                 currentConnection: connectionState.resolvedSpec
             )
         }
 
         @SharedReader(.userTier) public var userTier: Int?
-
         public init() {
-            @SharedReader(.recentConnections) var recentConnections
-            $recents.withLock { $0 = recentConnections ?? [] }
+            if recentConnections == nil {
+                $recentConnections.withLock {
+                    $0 = []
+                }
+            }
         }
     }
 
@@ -77,7 +79,6 @@ public struct RecentsFeature {
         case watchConnectionStatus
     }
 
-    @Shared(.recentConnections) var recentConnections
     @Dependency(\.date) var date
 
     public init() {}
@@ -105,35 +106,31 @@ public struct RecentsFeature {
 
             case let .connectionEstablished(spec):
                 withAnimation {
-                    state.$recents.withLock { $0.updateList(with: spec) }
+                    state.$recentConnections.withLock { $0?.updateList(with: spec) }
+                    WidgetCenter.shared.reloadAllTimelines()
                 }
-                $recentConnections.withLock { $0 = state.recents }
-                WidgetCenter.shared.reloadAllTimelines()
 
                 return .none
 
             case let .pin(recent):
                 withAnimation {
-                    state.$recents.withLock { $0.pin(recent: recent, pinnedDate: date.now) }
+                    state.$recentConnections.withLock { $0?.pin(recent: recent, pinnedDate: date.now) }
+                    WidgetCenter.shared.reloadAllTimelines()
                 }
-                $recentConnections.withLock { $0 = state.recents }
-                WidgetCenter.shared.reloadAllTimelines()
                 return .none
 
             case let .unpin(recent):
                 withAnimation {
-                    state.$recents.withLock { $0.unpin(recent: recent) }
+                    state.$recentConnections.withLock { $0?.unpin(recent: recent) }
+                    WidgetCenter.shared.reloadAllTimelines()
                 }
-                $recentConnections.withLock { $0 = state.recents }
-                WidgetCenter.shared.reloadAllTimelines()
                 return .none
 
             case let .remove(recent):
-                _ = withAnimation {
-                    state.$recents.withLock { $0.remove(recent) }
+                withAnimation {
+                    _ = state.$recentConnections.withLock { $0?.remove(recent) }
+                    WidgetCenter.shared.reloadAllTimelines()
                 }
-                $recentConnections.withLock { $0 = state.recents }
-                WidgetCenter.shared.reloadAllTimelines()
                 return .none
 
             case .delegate:

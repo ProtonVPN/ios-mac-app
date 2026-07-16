@@ -130,42 +130,6 @@ public extension ConnectionState {
         guard case let .connected(_, connectionData) = self else { return nil }
         return VPNConnectionActual(data: connectionData)
     }
-
-    /// Mapping of `ConnectionState` into the legacy `VPNConnectionStatusDoNotUse`.
-    /// Used only in the widget. DO NOT USE OTHERWISE
-    var status: VPNConnectionStatusDoNotUse {
-        switch self {
-        case .resolving:
-            .resolving(nil, nil) // TODO: ProTUN: check what we can do to restore the code below somehow without associated values
-//            let actual = intent.map { VPNConnectionActual(server: server ?? $0.server, intent: $0, connectedDate: nil) }
-//            return .resolving(intent?.spec, actual)
-//        case .disconnected:
-//            .disconnected
-//        case let .connecting(.unresolved(intent)):
-//            .connecting(intent.spec, nil)
-//        case let .connecting(.resolved(intent, server)):
-//            .connecting(intent.spec, server)
-//        case let .disconnecting(intent, server):
-//            .disconnecting(intent.spec, VPNConnectionActual(server: server, intent: intent, connectedDate: nil))
-//        case let .connected(intent, server, date, _):
-//            .connected(intent.spec, VPNConnectionActual(server: server, intent: intent, connectedDate: date))
-
-        case .disconnected:
-            .disconnected
-
-        case let .connecting(.unresolved(intent)):
-            .connecting(intent.spec, nil)
-
-        case let .connecting(.resolved(intent)):
-            .connecting(intent.spec, nil)
-
-        case let .disconnecting(_, spec):
-            .disconnecting(spec, nil)
-
-        case let .connected(tunnelConfig, _):
-            .connected(tunnelConfig.connectionSpec, connectedActual)
-        }
-    }
 }
 
 public extension VPNConnectionActual {

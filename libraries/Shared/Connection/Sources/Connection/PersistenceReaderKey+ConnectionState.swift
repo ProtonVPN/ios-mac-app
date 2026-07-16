@@ -20,9 +20,9 @@ import ComposableArchitecture
 import Domain
 import Foundation
 
-public extension SharedKey where Self == InMemoryKey<ConnectionState>.Default {
+public extension SharedKey where Self == JSONAppStorageKey<ConnectionState>.Default {
     static var connectionState: Self {
-        Self[.inMemory("connectionState"), default: .resolving]
+        Self[.json("connectionState", default: .resolving), default: .resolving]
     }
 }
 

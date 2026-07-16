@@ -36,7 +36,7 @@ public struct WireGuardSettings: Equatable, Sendable, Codable {
     }
 }
 
-public enum TunnelProtocol: Equatable, Hashable, Sendable {
+public enum TunnelProtocol: Equatable, Hashable, Sendable, Codable {
     case ike
 
     case wireGuard

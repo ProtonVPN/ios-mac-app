@@ -66,12 +66,6 @@ struct SidebarFeature {
         }
 
         @Shared(.connectionState) var connectionState: ConnectionState
-        // TODO: VPNAPPL-3545
-        /// Widget-only shadow of `connectionState`. The widget extension cannot read
-        /// `connectionState` (in-memory, process-local), so we keep a file-backed projection
-        /// in App Group storage and write it from `connection.delegate.stateChanged`.
-        /// **In-process callers must read `connectionState` directly, not this.**
-        @Shared(.vpnConnectionStatusDoNotUse) var vpnConnectionStatusDoNotUse: VPNConnectionStatusDoNotUse
         var connection: ConnectionFeature.State = .initialState
 
         enum ExpandState: Equatable {
@@ -642,7 +636,6 @@ private extension SidebarFeature {
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
                 state.$connectionState.withLock { $0 = connectionState }
-                state.$vpnConnectionStatusDoNotUse.withLock { $0 = connectionState.status }
                 return .merge(
                     .send(.connectionStateChanged(connectionState)),
                     .send(.syncNATPortMappingState),

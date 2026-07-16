@@ -204,14 +204,26 @@ public extension UserScopedAppStorageKey {
             scope: scope,
             valueWhenNoUser: nil,
             decode: { store, key in
-                guard let data = store.data(forKey: key) else { return nil }
-                return try? JSONDecoder().decode(Wrapped.self, from: data)
+                guard let data = store.data(forKey: key) else {
+                    return nil
+                }
+                do {
+                    return try JSONDecoder().decode(Wrapped.self, from: data)
+                } catch {
+                    log.error("UserScopedAppStorageKey failed to decode value for key: \(key)", category: .persistence, metadata: ["error": "\(error)"])
+                    return nil
+                }
             },
             encode: { value, store, key in
-                if let value, let data = try? JSONEncoder().encode(value) {
-                    store.set(data, forKey: key)
-                } else {
-                    store.removeObject(forKey: key)
+                do {
+                    if let value {
+                        let data = try JSONEncoder().encode(value)
+                        store.set(data, forKey: key)
+                    } else {
+                        store.removeObject(forKey: key)
+                    }
+                } catch {
+                    log.error("UserScopedAppStorageKey failed to encode value for key: \(key)", category: .persistence, metadata: ["error": "\(error)"])
                 }
             }
         )

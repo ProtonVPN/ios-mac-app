@@ -31,12 +31,12 @@ public struct DefaultConnectionFeature {
 
     @ObservableState
     public struct State: Equatable {
-        @SharedReader(.recents) var recents: OrderedSet<RecentConnection>
-        @Shared(.defaultConnectionPreference) public var defaultConnectionPreference: DefaultConnectionPreference
+        @SharedReader(.recentConnections) var recents
+        @Shared(.storedDefaultConnectionPreference) public var defaultConnectionPreference: DefaultConnectionPreference?
 
         public var dynamicPreferenceModels: [ConnectionPreferenceModel] {
             @Dependency(\.defaultConnectionResolver) var resolver
-            return resolver.preferenceModels(recents: recents)
+            return resolver.preferenceModels(recents: recents ?? [])
         }
 
         public init() {}
@@ -51,11 +51,8 @@ public struct DefaultConnectionFeature {
             switch action {
             case let .preferenceSelected(preference):
                 state.$defaultConnectionPreference.withLock { $0 = preference }
-                return .run { _ in
-                    @Shared(.storedDefaultConnectionPreference) var storedPreference
-                    $storedPreference.withLock { $0 = preference }
-                    WidgetCenter.shared.reloadAllTimelines()
-                }
+                WidgetCenter.shared.reloadAllTimelines()
+                return .none
             }
         }
     }

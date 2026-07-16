@@ -29,17 +29,8 @@ import UIKit
 import VPNAppCore
 
 enum HomeFeatureCreator {
-    static func loadInitialState() -> HomeFeature.State {
-        // Seed the in-memory default-connection preference from its persisted value.
-        @Shared(.defaultConnectionPreference) var defaultConnectionPreference
-        @SharedReader(.storedDefaultConnectionPreference) var storedPreference
-        $defaultConnectionPreference.withLock { $0 = storedPreference ?? .fastest }
-
-        return .init()
-    }
-
     static func homeViewController() -> UINavigationController {
-        let homeStore = StoreOf<HomeFeature>(initialState: loadInitialState()) {
+        let homeStore = StoreOf<HomeFeature>(initialState: .init()) {
             log.info("Creating HomeFeature", category: .app)
             return HomeFeature()
         } withDependencies: {

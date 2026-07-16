@@ -32,8 +32,8 @@ public struct HomeConnectionCardFeature {
     public struct State: Equatable {
         @SharedReader(.userTier) public var userTier: Int?
         @SharedReader(.connectionState) public var connectionState: ConnectionState
-        @SharedReader(.recents) public var recents: OrderedSet<RecentConnection>
-        @SharedReader(.defaultConnectionPreference) var defaultConnectionPreference: DefaultConnectionPreference
+        @SharedReader(.recentConnections) public var recents
+        @SharedReader(.storedDefaultConnectionPreference) var defaultConnectionPreference
         @SharedReader(.secureCoreToggle) var secureCoreToggle: Bool
 
         public var showChangeServerButton: Bool {
@@ -60,8 +60,8 @@ public struct HomeConnectionCardFeature {
             }
             @Dependency(\.defaultConnectionResolver) var resolver
             return resolver.connectionSpec(
-                preference: defaultConnectionPreference,
-                recents: recents,
+                preference: defaultConnectionPreference ?? .fastest,
+                recents: recents ?? [],
                 secureCore: secureCoreToggle
             )
         }
