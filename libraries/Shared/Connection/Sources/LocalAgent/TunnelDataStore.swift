@@ -46,7 +46,6 @@ final class TunnelDataStore<Role, Backing: RegionBacking & ~Copyable>: Sendable 
         let localAgentConnectionStats: IPCNotifications.RawChannel<IPCConnectionStatsPayload, Role, Backing>
         let localAgentError: IPCNotifications.RawChannel<IPCErrorPayload, Role, Backing>
         let localAgentFeatures: IPCNotifications.RawChannel<IPCAgentFeaturesPayload, Role, Backing>
-        let managedConfig: IPCNotifications.RawChannel<IPCManagedConfigPayload, Role, Backing>
     }
 
     let channels: Channels
@@ -68,8 +67,7 @@ final class TunnelDataStore<Role, Backing: RegionBacking & ~Copyable>: Sendable 
             localAgentStats: Self.channel(from: region, for: \.stats, resultingType: IPCStatsPayload.self),
             localAgentConnectionStats: Self.channel(from: region, for: \.connection_stats, resultingType: IPCConnectionStatsPayload.self),
             localAgentError: Self.channel(from: region, for: \.error, resultingType: IPCErrorPayload.self),
-            localAgentFeatures: Self.channel(from: region, for: \.agent_features, resultingType: IPCAgentFeaturesPayload.self),
-            managedConfig: Self.channel(from: region, for: \.managed_config, resultingType: IPCManagedConfigPayload.self)
+            localAgentFeatures: Self.channel(from: region, for: \.agent_features, resultingType: IPCAgentFeaturesPayload.self)
         )
     }
 }

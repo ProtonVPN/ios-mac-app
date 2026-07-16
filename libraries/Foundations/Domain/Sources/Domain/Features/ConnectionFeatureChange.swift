@@ -19,11 +19,6 @@
 import Foundation
 import VPNCoreTypes
 
-public enum ConnectionChange: Sendable, Hashable, Codable {
-    case location(ConnectionSpec, [ProTUNConfiguration.Peer])
-    case feature(ConnectionFeatureChange)
-}
-
 extension ProTUNConfiguration.Peer: Sendable, Hashable, Codable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
@@ -46,7 +41,6 @@ public enum ConnectionFeatureChange: Hashable, Sendable, Codable {
         case killSwitch(Bool)
         case allowLAN(Bool)
         case customDNS(Bool)
-        case onDemand(Bool)
     }
 }
 

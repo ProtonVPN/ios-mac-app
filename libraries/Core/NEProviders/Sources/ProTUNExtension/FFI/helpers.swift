@@ -44,15 +44,6 @@ extension LocalAgentSettings {
         )
     }
 
-    /// Overrides LocalAgent settings according to an update, leaving the rest unchanged. Used to build the
-    /// settings forwarded to ProTUN from a partial update without persisting them to the configuration.
-    mutating func apply(_ update: ConnectionUpdate) {
-        if let netShield = update.netShield { netshieldLevel = netShield.toRustNetShieldLevel }
-        if let vpnAccelerator = update.vpnAccelerator { splitTcp = vpnAccelerator }
-        if let moderateNAT = update.moderateNAT { randomNat = moderateNAT.flag }
-        if let portForwarding = update.portForwarding { self.portForwarding = portForwarding }
-    }
-
     public var agentTunnelFeatures: AgentTunnelFeatures {
         AgentTunnelFeatures(
             netshield: netshieldLevel?.netShieldType ?? .off,

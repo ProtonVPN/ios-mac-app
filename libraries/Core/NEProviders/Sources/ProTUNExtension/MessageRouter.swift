@@ -48,8 +48,6 @@ enum MessageRouter {
             return await handleConfigurationUpdate(update: update, with: adapter)
         case let .ack(errorId):
             return await handleAcknowledgeError(errorId, with: adapter)
-        case let .acknowledgeManagedConfiguration(requestId):
-            return await handleAcknowledgeManagedConfiguration(requestId, with: adapter)
         }
     }
 }
@@ -133,11 +131,6 @@ private extension MessageRouter {
 
     static func handleAcknowledgeError(_ errorId: UUID, with adapter: ProTUNAdapter) async -> Response {
         await adapter.acknowledgeError(errorId)
-        return .init(payload: .ack)
-    }
-
-    static func handleAcknowledgeManagedConfiguration(_ requestId: UUID, with adapter: ProTUNAdapter) async -> Response {
-        await adapter.acknowledgeManagedConfiguration(requestId)
         return .init(payload: .ack)
     }
 

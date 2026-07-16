@@ -43,6 +43,16 @@ struct VPNManagerRepository {
     var removeAllManagers: @Sendable () async throws -> Void
 }
 
+extension VPNManagerRepository {
+    /// The saved manager for a single protocol. Throws `noManagerFound` when the system has none.
+    func manager(for tunnelProtocol: TunnelProtocol) async throws -> any TunnelProviderManager {
+        guard let manager = try await managers()[tunnelProtocol] else {
+            throw TunnelManagerError.noManagerFound
+        }
+        return manager
+    }
+}
+
 /// Default implementation of TunnelConfigurationProvider.
 actor VPNManagerRepositoryImplementation {
     private var cachedManagers: [TunnelProtocol: any TunnelProviderManager]?
@@ -122,6 +132,9 @@ actor VPNManagerRepositoryImplementation {
         var manager: any TunnelProviderManager
         if let cached = try await managers()[tunnelProtocol] {
             manager = cached
+            // Preferences can still change outside the repository (profile edits in Settings, MDM), so refresh the
+            // cached instance before configuring to avoid saving through a stale snapshot.
+            try await manager.loadFromPreferences()
         } else {
             let type: ProtocolType = (tunnelProtocol == .ike) ? .ike : .custom
             manager = managerFactory.create(type)

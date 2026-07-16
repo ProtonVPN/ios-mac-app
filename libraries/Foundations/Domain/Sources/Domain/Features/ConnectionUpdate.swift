@@ -38,8 +38,6 @@ public struct ConnectionUpdate: Identifiable, Sendable, Equatable, Codable {
     public var connectionProtocol: ConnectionProtocol?
     public var killSwitch: Bool?
     public var allowLAN: Bool?
-    public var customDNS: Bool?
-    public var onDemand: Bool?
 
     // LocalAgent features
     public var netShield: NetShieldType?
@@ -52,8 +50,6 @@ public struct ConnectionUpdate: Identifiable, Sendable, Equatable, Codable {
         connectionProtocol: ConnectionProtocol? = nil,
         killSwitch: Bool? = nil,
         allowLAN: Bool? = nil,
-        customDNS: Bool? = nil,
-        onDemand: Bool? = nil,
         netShield: NetShieldType? = nil,
         vpnAccelerator: Bool? = nil,
         moderateNAT: NATType? = nil,
@@ -64,8 +60,6 @@ public struct ConnectionUpdate: Identifiable, Sendable, Equatable, Codable {
         self.connectionProtocol = connectionProtocol
         self.killSwitch = killSwitch
         self.allowLAN = allowLAN
-        self.customDNS = customDNS
-        self.onDemand = onDemand
         self.netShield = netShield
         self.vpnAccelerator = vpnAccelerator
         self.moderateNAT = moderateNAT

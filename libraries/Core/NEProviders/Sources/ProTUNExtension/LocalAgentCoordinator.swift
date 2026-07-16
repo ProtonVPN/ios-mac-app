@@ -110,7 +110,7 @@ private extension LocalAgentCoordinator {
         }
     }
 
-    /// Listen for connection-state updates from ProTUN and dispatch updates to the raw channels and protocol config.
+    /// Listen for connection-state updates from ProTUN and dispatch updates to the raw channels.
     func listenToConnectionState() async {
         for await state in adapter.stateDelegate.stateSource.newStream {
             // Every state transition includes the UUID of the current (or last) request handled by the
@@ -120,10 +120,7 @@ private extension LocalAgentCoordinator {
             extensionIPCServer.publishExtensionState(state.connectionState.extensionState, id)
 
             if let settings = state.connectionState.agentSettings {
-                // Publish changes to the app, and persist actual settings to disk in case we crash (or if user
-                // manually starts/stops the protocol from settings).
                 extensionIPCServer.publishFeatures(settings.agentTunnelFeatures)
-                await adapter?.enqueueEffectiveLocalAgentSettings(settings)
             }
         }
     }

@@ -23,16 +23,11 @@ import Foundation
 ///
 /// - Important: These errors get reported *regardless of the request UUID matching*, and can leave the app stuck
 ///              in a "resolving" state until the next configuration update request. Make sure the update has
-///              actually failed to save to the protocol configuration, i.e., that the failure happened at or before
-///              the call to `saveToPreferences`.
+///              actually failed to apply, i.e., that the failure happened before ProTUN was reconfigured.
 public enum ConfigurationUpdateError: FourCharCode, ProtonVPNError {
     public static let errorDomain = "ConfigurationUpdateErrorDomain"
 
     case badConfiguration = "CUBC"
-    case missingManager = "CUMM"
-    case noConnection = "CUNC"
     case badEncoding = "CUBE"
-    case couldntSave = "CUCS"
-    case badPeers = "CULP"
     case timeout = "CUTO"
 }

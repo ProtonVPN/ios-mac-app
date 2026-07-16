@@ -180,16 +180,6 @@ final class PacketTunnelManager: TunnelManager {
     let forkRequestsStream: AsyncStream<Void>
     let lastConnectionSpec: OSAllocatedUnfairLock<ConnectionSpec?> = .init(initialState: nil)
 
-    /// An app-initiated configuration update awaiting extension confirmation.
-    /// On macOS, the extension may apply it before the app mirrors its request ID into NE preferences.
-    struct InFlightConfigurationUpdate: Sendable {
-        let id: UUID
-        /// If `false`, status can remain `.connected` while the request ID is mirrored to NE preferences.
-        let affectsPeer: Bool
-    }
-
-    let inFlightConfigurationUpdate: OSAllocatedUnfairLock<InFlightConfigurationUpdate?> = .init(initialState: nil)
-
     @Dependency(\.vpnManagerRepository) private var managerRepository
 
     #if os(macOS)
@@ -221,11 +211,6 @@ final class PacketTunnelManager: TunnelManager {
                 }
             }
         }
-
-        // On macOS the extension can't write NE preferences itself, so mirror the OS-enforced properties it publishes
-        // into the real configuration here. No-op on iOS/tvOS, where the extension writes them directly.
-        @Dependency(\.managedConfigurationMirror) var managedConfigurationMirror
-        Task { await managedConfigurationMirror.run() }
     }
 
     func startTunnel(with intent: ServerConnectionIntent) async throws {
@@ -234,9 +219,6 @@ final class PacketTunnelManager: TunnelManager {
         // Stash the connection spec on the tunnel manager. During connection, the extension can check in with us faster
         // than the Network Extension framework is able to persist the protocol configuration by the time that it pings.
         lastConnectionSpec.withLock { $0 = intent.spec }
-        // A fresh connection resets the in-flight-update tracking; the connect config id in NE preferences is the
-        // reference until the next in-place update.
-        inFlightConfigurationUpdate.withLock { $0 = nil }
 
         // Prepare the configuration - this may prompt the user for VPN permissions
         let manager = try await managerRepository.prepareManager(intent.tunnelProtocol, .connection(intent))
@@ -253,8 +235,6 @@ final class PacketTunnelManager: TunnelManager {
     }
 
     func stopTunnel() async throws {
-        inFlightConfigurationUpdate.withLock { $0 = nil }
-
         let managers = try await managerRepository.managers()
         let activeProtocols = managers
             .filter { $0.value.session.status != .disconnected && $0.value.session.status != .invalid }
@@ -267,31 +247,21 @@ final class PacketTunnelManager: TunnelManager {
         // Disable on-demand before stopping, to prevent auto-reconnect.
         // Stop all active managers to avoid ending up with concurrent protocol sessions.
         for proto in activeProtocols {
-            let onDemand = TunnelConfigurationOperation.reconfiguration([.feature(.tunnel(.onDemand(false)))])
-            let manager = try await managerRepository.prepareManager(proto, onDemand)
+            let manager = try await managerRepository.prepareManager(proto, .disconnection)
             log.debug("Stopping tunnel for protocol \(proto)")
             manager.session.stopTunnel()
         }
     }
 
-    private struct TrackedConfigurationUpdate: Sendable {
-        let current: InFlightConfigurationUpdate
-        let previous: InFlightConfigurationUpdate?
-    }
-
     func sendProTUN(request: ProTUNMessage.Request) async throws(ProviderMessageError) -> ProTUNMessage.Response {
-        // Tracked so status resolution can tell when the extension has applied this exact request.
-        let trackedConfigurationUpdate = beginConfigurationTracking(request)
         do {
-            guard let manager = try await managerRepository.managers()[.wireGuard] else {
-                throw TunnelManagerError.noManagerFound
+            let manager = if case let .updateConfiguration(update) = request.payload {
+                try await managerRepository.prepareManager(.wireGuard, .update(update))
+            } else {
+                try await managerRepository.manager(for: .wireGuard)
             }
             return try await manager.session.sendProTUNRequest(request)
         } catch {
-            if let trackedConfigurationUpdate {
-                rollback(trackedConfigurationUpdate)
-            }
-
             if let error = error as? ProviderMessageError {
                 throw error
             }
@@ -302,27 +272,6 @@ final class PacketTunnelManager: TunnelManager {
                 metadata: ["error": "\(error)"]
             )
             throw .sendingError(.managerUnavailable(error))
-        }
-    }
-
-    private func beginConfigurationTracking(_ request: ProTUNMessage.Request) -> TrackedConfigurationUpdate? {
-        guard case let .updateConfiguration(update) = request.payload else { return nil }
-
-        return inFlightConfigurationUpdate.withLock { state in
-            let tracked = TrackedConfigurationUpdate(
-                current: InFlightConfigurationUpdate(id: update.id, affectsPeer: update.hasPeerChanges),
-                previous: state
-            )
-            state = tracked.current
-            return tracked
-        }
-    }
-
-    private func rollback(_ tracked: TrackedConfigurationUpdate) {
-        inFlightConfigurationUpdate.withLock {
-            if $0?.id == tracked.current.id {
-                $0 = tracked.previous
-            }
         }
     }
 
@@ -503,23 +452,11 @@ final class PacketTunnelManager: TunnelManager {
     ) -> Result<TunnelState, ExtensionError> {
         guard let configuration else { return .success(.disconnected(nil)) }
 
-        // Immediately after we send a configuration change request to the extension, there is a brief window where the
-        // `ExtensionState` still represents the current "connected" state, since the extension hasn't yet had time to
-        // react to the request. `quiesced` means the extension has caught up to whichever id we're resolving against:
-        // the in-flight update if there is one (see `inFlightConfigurationUpdate`), otherwise the persisted config id at
-        // launch/reconnect. Read once so the whole resolution uses a consistent value.
-        let inFlight = inFlightConfigurationUpdate.withLock { $0 }
-        let expectedRequestId = inFlight?.id ?? configuration.requestId
-        let quiesced = appliedRequestId != nil && appliedRequestId == expectedRequestId
-
-        // Once the extension has caught up, clear the marker so a later real reconnect isn't hidden by the in-place-
-        // update shortcut below. Only clear the value we read above, in case a newer request raced in.
-        if quiesced, let inFlight {
-            inFlightConfigurationUpdate.withLock { if $0?.id == inFlight.id { $0 = nil } }
-        }
-
-        // If the state is consistent and we find an error that hasn't yet been "acked" through a provider message, then
-        // surface that to the user.
+        // NE preferences record intent (the app writes them before every request) and add a UUID to every configuration
+        // update to allow the app to know what the extension is still awiting on. Equal IDs mean nothing is pending, so
+        // an error comes in and the IDs are different, then the error in question is directly relevant to the
+        // configuration we just applied. Surface to the user if possible.
+        let quiesced = appliedRequestId != nil && appliedRequestId == configuration.requestId
         if quiesced, let error {
             return .failure(error)
         }
@@ -537,11 +474,12 @@ final class PacketTunnelManager: TunnelManager {
             tunnelProtocol: .wireGuard,
             peerIDs: extensionState?.peerID.map { [$0] } ?? []
         )
+        let intendedPeers = (try? configuration.peerIDs) ?? []
 
         // Defers mostly to the NE framework for the disconnected cases, and mostly to ProTUN for the connected cases.
         // Notable special cases include the NEVPNStatus.connected case, where we attach the ExtensionState backing
-        // store on macOS, and the ExtensionState.connected case, where we make sure that the requests have finished
-        // flying around before reporting a connected state.
+        // store on macOS, and the ExtensionState.connected case, where we check the tunnel sits on a peer the saved
+        // configuration intends before reporting a connected state.
         switch (session.status, extensionState) {
         case (_, nil):
             return .success(.unknown)
@@ -554,10 +492,11 @@ final class PacketTunnelManager: TunnelManager {
         case let (_, .connected(peer)):
             // Checked ahead of the `.connecting` cases below: saving NE preferences in place for a config update
             // (e.g. custom DNS) can briefly flip the reported `NEVPNStatus` to `.connecting` on macOS even though
-            // nothing is actually reconnecting. Trust the extension's own `.connected` state once quiesced, or
-            // immediately for a feature-only update that can't move the tunnel off its peer (`InFlightConfigurationUpdate.affectsPeer`).
-            let inPlaceUpdate = inFlight.map { !$0.affectsPeer } ?? false
-            guard quiesced || inPlaceUpdate else {
+            // nothing is actually reconnecting. Trust the extension's own `.connected` state while the tunnel is on
+            // an intended peer: a pending feature-only update never moves the peer, and a location change either
+            // rewrites the intended peers (failing this check) or flips the extension to a connecting state the
+            // moment it starts reasserting.
+            guard intendedPeers.isEmpty || intendedPeers.contains(peer.peerID) else {
                 return .success(.connecting(config))
             }
 
@@ -646,15 +585,12 @@ final class PacketTunnelManager: TunnelManager {
                 }
             }
 
-            // Feeds `ExtensionState` updates to the resolver. With the `NEVPNStatusDidChange` notifications we were
-            // fortunate to have the OS hand us a fresh manager, however for ExtensionState updates we need to take the
-            // manager from the accumulator and refresh it to make sure it's up to date for the resolver.
+            // Feeds `ExtensionState` updates to the resolver. The app is the only process that moves anything the
+            // resolver reads from NE preferences, and it reloads after its own saves, so the accumulator's manager
+            // is already fresh here.
             let extensionStateTask = Task {
                 _ = await seedTask.value
                 for await extensionState in $extensionState.publisher.values {
-                    let provider = tracked.withLockUnchecked { $0.tunnelProviderManager }
-                    try? await provider?.loadFromPreferences()
-
                     guard let state = resolved(after: {
                         let (state, requestId) = extensionState
                         $0.extensionState = state
@@ -664,14 +600,10 @@ final class PacketTunnelManager: TunnelManager {
                 }
             }
 
-            // Feeds error-channel updates to the resolver. Still needs to refresh the VPN manager just in case the
-            // UUID persisted to the configuration has changed.
+            // Feeds error-channel updates to the resolver.
             let errorTask = Task {
                 _ = await seedTask.value
                 for await error in $extensionError.publisher.values {
-                    let provider = tracked.withLockUnchecked { $0.tunnelProviderManager }
-                    try? await provider?.loadFromPreferences()
-
                     guard let state = resolved(after: {
                         $0.error = error
                         if let requestId = error?.id { $0.appliedRequestId = requestId }

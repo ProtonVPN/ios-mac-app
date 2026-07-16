@@ -32,6 +32,7 @@
     import os
     import Testing
     import VPNCoreCommon
+    import VPNCoreTypes
 
     @Suite(.serialized)
     struct PacketTunnelManagerTests {
@@ -135,10 +136,10 @@
             )
         }
 
-        /// Covers the `inPlaceUpdate` path rather than `quiesced`: the persisted id hasn't caught up to the requested
-        /// one yet, but a feature-only update can't move the tunnel off its peer, so `.connected` still wins.
+        /// A pending feature-only update: the recorded request id is ahead of the extension's, but the tunnel still
+        /// sits on a peer the saved configuration intends, so `.connected` wins over the in-place-save blip.
         @Test
-        func returnsConnectedForInPlaceFeatureUpdateBeforePersistedIdCatchesUp() async throws {
+        func returnsConnectedForPendingFeatureOnlyUpdate() async throws {
             let connectedManager = MockTunnelProviderManager(withBundleIdentifier: "connected", state: .ready)
             let now = Date.now
 
@@ -147,28 +148,26 @@
             (connectedManager.session as? VPNSessionMock)?.connectedServerID = "server-id"
             (connectedManager.session as? VPNSessionMock)?.messageHandler = MessageHandler.full
 
-            // Both the persisted config and the extension still report the previous request id.
-            let previousId = UUID()
+            // The recorded config is ahead of the extension (the app writes it before sending the request), but a
+            // feature-only update leaves the intended peers untouched.
             let config = NETunnelProviderProtocol()
             let specData = try JSONEncoder().encode(ConnectionSpec.defaultFastest)
             config.setProviderConfiguration(value: specData, forKey: "connectionSpec")
-            config.setProviderConfiguration(value: previousId.uuidString, forKey: "requestID")
-            try ProTUNConfigurationCoder.encode(configuration: .init(preferredTransport: .udp, peers: [], dnsServers: []), to: config)
+            config.setProviderConfiguration(value: UUID().uuidString, forKey: "requestID")
+            try ProTUNConfigurationCoder.encode(
+                configuration: .init(preferredTransport: .udp, peers: [.mock(id: "peer-id")], dnsServers: []),
+                to: config
+            )
             connectedManager.protocolConfiguration = config
-
-            // A feature-only update (no peer change), so the shortcut applies even though the ids don't match yet.
-            let update = ConnectionUpdate(customDNS: true)
 
             let status = try await withDependencies {
                 $0.date = .constant(now)
                 $0.vpnManagerRepository.managers = { [.wireGuard: connectedManager] }
                 $0.extensionIPC.currentExtensionState = {
-                    (.connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)), previousId)
+                    (.connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)), UUID())
                 }
             } operation: {
-                let manager = PacketTunnelManager()
-                _ = try await manager.sendProTUN(request: .init(payload: .updateConfiguration(update)))
-                return try await manager.status
+                try await PacketTunnelManager().status
             }
 
             #expect(
@@ -179,10 +178,10 @@
             )
         }
 
-        /// The opposite case: a peer-affecting update disables the shortcut, so `.connecting` is reported as-is until
-        /// the extension confirms it applied the update.
+        /// The opposite case: a location change rewrites the intended peers, so the extension's stale `.connected`
+        /// state reads as `.connecting` until the tunnel lands on a peer the configuration intends.
         @Test
-        func returnsConnectingForPeerAffectingUpdateUntilExtensionConfirms() async throws {
+        func returnsConnectingWhileTunnelSitsOnPeerConfigurationNoLongerIntends() async throws {
             let connectedManager = MockTunnelProviderManager(withBundleIdentifier: "connected", state: .ready)
             let now = Date.now
 
@@ -190,132 +189,113 @@
             (connectedManager.session as? VPNSessionMock)?.connectedServerID = "server-id"
             (connectedManager.session as? VPNSessionMock)?.messageHandler = MessageHandler.full
 
-            let previousId = UUID()
             let config = NETunnelProviderProtocol()
             let specData = try JSONEncoder().encode(ConnectionSpec.defaultFastest)
             config.setProviderConfiguration(value: specData, forKey: "connectionSpec")
-            config.setProviderConfiguration(value: previousId.uuidString, forKey: "requestID")
-            try ProTUNConfigurationCoder.encode(configuration: .init(preferredTransport: .udp, peers: [], dnsServers: []), to: config)
+            config.setProviderConfiguration(value: UUID().uuidString, forKey: "requestID")
+            try ProTUNConfigurationCoder.encode(
+                configuration: .init(preferredTransport: .udp, peers: [.mock(id: "new-peer")], dnsServers: []),
+                to: config
+            )
             connectedManager.protocolConfiguration = config
-
-            // A peer-affecting update (new location): the shortcut must not apply.
-            let update = ConnectionUpdate(location: .init(spec: .defaultFastest, peers: []))
 
             let status = try await withDependencies {
                 $0.date = .constant(now)
                 $0.vpnManagerRepository.managers = { [.wireGuard: connectedManager] }
                 $0.extensionIPC.currentExtensionState = {
-                    (.connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)), previousId)
+                    (.connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)), UUID())
                 }
             } operation: {
-                let manager = PacketTunnelManager()
-                _ = try await manager.sendProTUN(request: .init(payload: .updateConfiguration(update)))
-                return try await manager.status
+                try await PacketTunnelManager().status
             }
 
             #expect(status == .connecting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"])))
         }
 
-        /// The in-flight marker must be cleared once the extension catches up, or it would keep hiding a later real
-        /// reconnect for the rest of the session.
+        /// The update must be recorded in NE preferences before the provider message goes out, so the saved requestId
+        /// always leads what the extension reports back.
         @Test
-        func clearsInFlightUpdateOnceExtensionQuiesces() async throws {
-            let connectedManager = MockTunnelProviderManager(withBundleIdentifier: "connected", state: .ready)
-            let now = Date.now
+        func recordsConfigurationUpdateBeforeSendingProviderMessage() async throws {
+            let providerManager = MockTunnelProviderManager(withBundleIdentifier: "wg")
+            let update = ConnectionUpdate(netShield: .off)
+            let recorded = OSAllocatedUnfairLock(initialState: false)
 
-            connectedManager.session = VPNSessionMock(status: .connected, connectedDate: now)
-            (connectedManager.session as? VPNSessionMock)?.connectedServerID = "server-id"
-            (connectedManager.session as? VPNSessionMock)?.messageHandler = MessageHandler.full
+            (providerManager.session as? VPNSessionMock)?.messageHandler = { _, _ in
+                #expect(recorded.withLock { $0 }, "The update must be recorded before the message is sent")
+                return .init(payload: .ack)
+            }
 
-            // The persisted config has caught up to the requested id — the state the extension settles on.
-            let update = ConnectionUpdate(customDNS: true)
-            let config = NETunnelProviderProtocol()
-            let specData = try JSONEncoder().encode(ConnectionSpec.defaultFastest)
-            config.setProviderConfiguration(value: specData, forKey: "connectionSpec")
-            config.setProviderConfiguration(value: update.id.uuidString, forKey: "requestID")
-            try ProTUNConfigurationCoder.encode(configuration: .init(preferredTransport: .udp, peers: [], dnsServers: []), to: config)
-            connectedManager.protocolConfiguration = config
-
-            let inFlightAfterQuiesce = try await withDependencies {
-                $0.date = .constant(now)
-                $0.vpnManagerRepository.managers = { [.wireGuard: connectedManager] }
-                // The extension reports it applied exactly the update we requested.
-                $0.extensionIPC.currentExtensionState = {
-                    (.connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)), update.id)
+            _ = try await withDependencies {
+                $0.vpnManagerRepository.prepareManager = { proto, operation in
+                    #expect(proto == .wireGuard)
+                    guard case let .update(recordedUpdate) = operation else {
+                        Issue.record("Expected an update operation, got \(operation)")
+                        return providerManager
+                    }
+                    #expect(recordedUpdate.id == update.id)
+                    recorded.withLock { $0 = true }
+                    return providerManager
                 }
             } operation: {
-                let manager = PacketTunnelManager()
-                _ = try await manager.sendProTUN(request: .init(payload: .updateConfiguration(update)))
-                _ = try await manager.status // reading status once caught up clears the marker
-                return manager.inFlightConfigurationUpdate.withLock { $0 }
+                try await PacketTunnelManager().sendProTUN(request: .init(payload: .updateConfiguration(update)))
             }
 
-            #expect(inFlightAfterQuiesce == nil)
-        }
-
-        @Test
-        func rollsBackInFlightUpdateWhenSendingFails() async {
-            let providerManager = MockTunnelProviderManager(withBundleIdentifier: "connected")
-            (providerManager.session as? VPNSessionMock)?.messageHandler = { _, _ throws(ProviderMessageError) in
-                throw .notSupported
-            }
-            let manager = PacketTunnelManager()
-
-            do {
-                _ = try await withDependencies {
-                    $0.vpnManagerRepository.managers = { [.wireGuard: providerManager] }
-                } operation: {
-                    try await manager.sendProTUN(request: .init(payload: .updateConfiguration(.init(customDNS: true))))
-                }
-                #expect(Bool(false), "Expected provider message send to fail")
-            } catch {}
-
-            #expect(manager.inFlightConfigurationUpdate.withLock { $0 } == nil)
+            #expect(recorded.withLock { $0 })
         }
 
         #if !os(tvOS)
+            /// The `.update` operation is the app-side half of a configuration update: it records the request id and the
+            /// OS-enforced properties into the provider configuration the repository is about to save.
             @Test
-            func managedConfigurationUpdatesCachedWireGuardManager() async throws {
-                let manager = MockTunnelProviderManager(withBundleIdentifier: "wireguard")
-                let requestId = UUID()
-                let counts = OSAllocatedUnfairLock(initialState: (saves: 0, loads: 0))
-                manager.saveToPreferencesBlock = { counts.withLock { $0.saves += 1 } }
-                manager.loadFromPreferencesBlock = { counts.withLock { $0.loads += 1 } }
+            func updateOperationRecordsChangesInProviderConfiguration() async throws {
+                var manager: TunnelProviderManager = MockTunnelProviderManager(withBundleIdentifier: "wireguard")
+                let config = NETunnelProviderProtocol()
+                config.providerConfiguration = [:]
+                manager.protocolConfiguration = config
 
-                try await withDependencies {
-                    $0.vpnManagerRepository.managers = { [.wireGuard: manager] }
-                } operation: {
-                    try await ManagedConfigurationMirror.apply(.init(
-                        includeAllNetworks: true,
-                        excludeLocalNetworks: true,
-                        isOnDemandEnabled: false,
-                        requestId: requestId
-                    ))
-                }
+                let update = ConnectionUpdate(killSwitch: true, allowLAN: true)
+                try await ManagerConfigurator.wireGuardConfigurator.configure(&manager, for: .update(update))
 
+                #expect(manager.vpnProtocolConfiguration?.requestId == update.id)
                 #expect(manager.vpnProtocolConfiguration?.includeAllNetworks == true)
-                #expect(manager.vpnProtocolConfiguration?.excludeLocalNetworks == true)
-                #expect(manager.vpnProtocolConfiguration?.requestId == requestId)
-                #expect(manager.isOnDemandEnabled == false)
-                #expect(counts.withLock { $0.saves } == 1)
-                #expect(counts.withLock { $0.loads } == 1)
+                #expect(manager.vpnProtocolConfiguration?.excludeLocalNetworks == false)
             }
         #endif
 
+        /// Requested Local Agent features are part of the write-ahead record, so a quiesced request id implies the
+        /// stored configuration reflects them.
         @Test
-        func managedConfigurationFailsWithoutWireGuardManager() async {
+        func updateOperationRecordsAgentFeaturesInProviderConfiguration() async throws {
+            var manager: TunnelProviderManager = MockTunnelProviderManager(withBundleIdentifier: "wireguard")
+            let config = NETunnelProviderProtocol()
+            config.providerConfiguration = [:]
+            try ProTUNConfigurationCoder.encode(configuration: .init(preferredTransport: .udp, peers: [], dnsServers: []), to: config)
+            manager.protocolConfiguration = config
+
+            let update = ConnectionUpdate(netShield: .level1, vpnAccelerator: true, moderateNAT: .moderateNAT, portForwarding: true)
+            try await ManagerConfigurator.wireGuardConfigurator.configure(&manager, for: .update(update))
+
+            let recorded = try #require(manager.vpnProtocolConfiguration)
+            let stored = try ProTUNConfigurationCoder.decode(from: recorded)
+            #expect(recorded.requestId == update.id)
+            #expect(stored.netShieldLevel == NetShieldType.level1.rawValue)
+            #expect(stored.vpnAccelerator == true)
+            #expect(stored.portForwarding == true)
+            #expect(stored.randomNat == NATType.moderateNAT.flag)
+        }
+
+        @Test
+        func updateOperationFailsWithoutProviderConfiguration() async {
+            var manager: TunnelProviderManager = MockTunnelProviderManager(
+                session: VPNSessionMock(status: .disconnected),
+                vpnProtocolConfiguration: nil,
+                isOnDemandEnabled: false,
+                isEnabled: true
+            )
+
             do {
-                try await withDependencies {
-                    $0.vpnManagerRepository.managers = { [:] }
-                } operation: {
-                    try await ManagedConfigurationMirror.apply(.init(
-                        includeAllNetworks: true,
-                        excludeLocalNetworks: false,
-                        isOnDemandEnabled: nil,
-                        requestId: UUID()
-                    ))
-                }
-                #expect(Bool(false), "Expected missing manager to fail")
+                try await ManagerConfigurator.wireGuardConfigurator.configure(&manager, for: .update(.init(netShield: .off)))
+                #expect(Bool(false), "Expected a missing provider configuration to fail")
             } catch {}
         }
 
@@ -396,6 +376,21 @@
 
             #expect(ikeManager.session.status == .disconnecting)
             #expect(wgManager.session.status == .disconnecting)
+        }
+    }
+
+    private extension ProTUNConfiguration.Peer {
+        static func mock(id: String) -> Self {
+            .init(
+                id: id,
+                serverIP: "10.0.0.1",
+                serverPublicKey: "public-key",
+                udpPorts: [51820],
+                tcpPorts: [],
+                tlsPorts: [],
+                priority: 0,
+                exitLabel: nil
+            )
         }
     }
 #endif

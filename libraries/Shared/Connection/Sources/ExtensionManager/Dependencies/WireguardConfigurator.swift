@@ -155,8 +155,16 @@ extension ManagerConfigurator {
                     manager.isOnDemandEnabled = true
                     manager.isEnabled = true
 
-                case .reconfiguration:
-                    // TODO: ProTUN: Distinguish between changes and only apply on-demand when disconnecting
+                case let .update(update):
+                    guard let protocolConfig = manager.vpnProtocolConfiguration else {
+                        throw WireguardConfiguratorError.incorrectProtocolConfiguration
+                    }
+                    // The app applies the updated protocol configuration, but we still need to send the change request
+                    // to ProTUN so it can confirm the change.
+                    try protocolConfig.apply(update: update)
+                    manager.vpnProtocolConfiguration = protocolConfig
+
+                case .disconnection:
                     manager.isOnDemandEnabled = false
                     manager.isEnabled = true
                 }

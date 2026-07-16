@@ -24,8 +24,11 @@ import class NetworkExtension.NETunnelProviderProtocol
 
 public enum TunnelConfigurationOperation {
     case connection(ServerConnectionIntent)
-    // This could be a set, but involves plumbing a lot of types to be Hashable
-    case reconfiguration(Set<ConnectionChange>)
+    /// An in-place configuration update, recorded into NE preferences before it is sent to the WireGuard extension.
+    case update(ConnectionUpdate)
+    /// Prepares a manager for stopping its tunnel, and disables on-demand so the OS doesn't reconnect. Used for both
+    /// WireGuard and IKEv2.
+    case disconnection
 }
 
 package struct ManagerConfigurator {

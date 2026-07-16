@@ -32,7 +32,6 @@ public enum IPCTunnelDataVersion {
     public static let connectionStats: UInt16 = 1
     public static let error: UInt16 = 1
     public static let agentFeatures: UInt16 = 1
-    public static let managedConfig: UInt16 = 1
 }
 
 public extension IPCConnectionTransport {
@@ -299,32 +298,6 @@ public extension IPCAgentFeaturesPayload {
             vpnAccelerator: vpn_accelerator != 0,
             natType: moderate_nat != 0 ? .moderateNAT : .strictNAT,
             portForwarding: port_forwarding != 0
-        )
-    }
-}
-
-public extension IPCManagedConfigPayload {
-    init(_ configuration: ManagedConfiguration) {
-        self.init()
-        version = IPCTunnelDataVersion.managedConfig
-        include_all_networks = configuration.includeAllNetworks ? 1 : 0
-        exclude_local_networks = configuration.excludeLocalNetworks ? 1 : 0
-        if let onDemand = configuration.isOnDemandEnabled {
-            on_demand = onDemand ? 1 : 0
-            on_demand_set = 1
-        }
-        config_id = configuration.requestId?.uuid ?? zero(value: uuid_t.self)
-    }
-
-    /// The OS-enforced properties, or `nil` if nothing has been written yet (a zeroed region has `version == 0`).
-    var managedConfiguration: ManagedConfiguration? {
-        guard version != 0 else { return nil }
-        let requestId = withUnsafeBytes(of: config_id) { $0.contains { $0 != 0 } } ? UUID(uuid: config_id) : nil
-        return ManagedConfiguration(
-            includeAllNetworks: include_all_networks != 0,
-            excludeLocalNetworks: exclude_local_networks != 0,
-            isOnDemandEnabled: on_demand_set != 0 ? (on_demand != 0) : nil,
-            requestId: requestId
         )
     }
 }

@@ -330,8 +330,10 @@ extension TunnelState {
         case .disconnected, .disconnecting:
             // We can't simply update the config, since the tunnel will have to be started
             false
-        case .reasserting, .connecting, .connectingToLocalAgent, .connected:
-            true
+        case let .reasserting(config), let .connecting(config), let .connectingToLocalAgent(config), let .connected(config, _):
+            // Only ProTUN accepts in-place updates. IKEv2 has no extension to message, so its changes
+            // always go through a fresh connection.
+            config.tunnelProtocol == .wireGuard
         }
     }
 }

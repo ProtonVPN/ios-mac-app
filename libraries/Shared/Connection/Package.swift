@@ -62,6 +62,7 @@ let package = Package(
                 "Domain",
                 .product(name: "SharedErgonomics", package: "Ergonomics"),
                 .product(name: "VPNCore", package: "vpn-core-apple"),
+                .product(name: "VPNCoreCommon", package: "vpn-core-apple"),
             ]
         ),
         .target(

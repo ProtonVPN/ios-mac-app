@@ -83,14 +83,3 @@ public extension IPCNotifications.RawChannel where Payload == IPCErrorPayload, R
         stream(reconcileOn: resumeSignals) { $0.extensionError }
     }
 }
-
-public extension IPCNotifications.RawChannel where Payload == IPCManagedConfigPayload, Role == ReaderRole, Backing: ~Copyable {
-    /// The OS-enforced properties, or `nil` until the extension has published them.
-    func managedConfiguration() -> ManagedConfiguration? {
-        (try? read())?.managedConfiguration
-    }
-
-    func managedConfigurationStream(reconcileOn resumeSignals: AsyncStream<Void>...) -> AsyncStream<ManagedConfiguration?> {
-        stream(reconcileOn: resumeSignals) { $0.managedConfiguration }
-    }
-}
