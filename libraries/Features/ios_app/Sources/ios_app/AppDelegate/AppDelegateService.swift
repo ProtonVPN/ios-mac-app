@@ -215,11 +215,11 @@ public final class AppDelegateService: AppDelegateProtocol {
     public func performAction(for shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         let intent: (any AppIntent)? = switch shortcutItem.type {
         case ShortcutItem.connect.type:
-            WidgetIntents.ConnectToVPNIntent()
+            WidgetIntents.ConnectVPNAndReturnIntent()
         case ShortcutItem.disconnect.type:
-            WidgetIntents.DisconnectVPNIntent()
+            WidgetIntents.DisconnectVPNAndReturnIntent()
         case ShortcutItem.connectToFirstPinnedRecent(.defaultFastest).type:
-            WidgetIntents.ConnectToVPNWithParametersIntent(recentIndex: 0)
+            WidgetIntents.ConnectVPNWithParametersAndReturnIntent(recentIndex: 0)
         default:
             nil
         }
@@ -227,7 +227,7 @@ public final class AppDelegateService: AppDelegateProtocol {
             completionHandler(false)
             return
         }
-        Task {
+        Task { @MainActor in
             do {
                 let result = try await intent.perform().value as? Bool
                 completionHandler(result ?? false)

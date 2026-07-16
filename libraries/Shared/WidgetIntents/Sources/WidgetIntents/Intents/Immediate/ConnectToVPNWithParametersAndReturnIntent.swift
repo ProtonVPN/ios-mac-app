@@ -26,12 +26,10 @@ import Sharing
 import UIKit
 import VPNAppCore
 
-public struct ConnectToVPNWithParametersIntent: AppIntent {
+public struct ConnectVPNWithParametersAndReturnIntent: AppIntent {
     public static let title: LocalizedStringResource = "Connect to VPN with parameters"
     public static let openAppWhenRun = true
     public static let isDiscoverable: Bool = false
-
-    private static let timeOut: Duration = .seconds(30)
 
     public var skipReconnect: Bool = true
     /// We need this property to be marked as @Parameter, even though it's not visible to the user
@@ -60,41 +58,6 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
         connectionSpec ?? recentIndex.flatMap(getRecentConnection) ?? getDefaultConnection()
     }
 
-    func finishResolving() async throws {
-        // Wait until the connection state is not .resolving
-        try await $connectionState.when(
-            willMatch: { !$0.is(\.resolving) },
-            every: .milliseconds(200),
-            deadline: Self.timeOut,
-            operation: { _ in }
-        )
-    }
-
-    func finishConnecting() async throws {
-        // Wait until the connection state either goes into .connected or .disconnecting.
-        try await $connectionState.when(willMatch: { state in
-            switch state {
-            case let .connected(tunnelConfig, _):
-                tunnelConfig.connectionSpec == spec
-
-            case .disconnecting(_, connectionSpec):
-                connectionSpec == spec
-
-            default:
-                false
-            }
-        }, every: .milliseconds(200), deadline: Self.timeOut, operation: { state in
-            if case .connected = state {
-                if connectionSpec == nil { // don't close the app when connecting with a spec
-                    // VPN connection established, now suspending the app.
-                    await suspendAppIfSupported()
-                }
-            } else {
-                throw IntentConnectionError()
-            }
-        })
-    }
-
     public func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
         guard let spec else {
             return .result(value: false)
@@ -103,21 +66,16 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
         guard userTier?.isFreeTier == false || spec.location == .any(.fastest) else {
             return .result(value: false)
         }
-        do {
-            try await finishResolving()
-        } catch {
-            log.error("The connectionState hasn’t been changed from `resolving` in \(Self.timeOut) seconds. Skipping the widget connection intent.")
-            return .result(value: false)
-        }
+
 
         if skipReconnect {
             /// We can check if the desired connection spec falls under the current spec.
             /// So if current spec is Sydney and user wants to connect to Australia, which is a different spec,
             /// but the current spec falls under it - we can skip the reconnect.
             /// For now just compare the exact specs, so the same shortcut launched multiple times will not re-trigger a connection
+            try await $connectionState.load()
             if case let .connected(tunnelConfig, _) = connectionState {
                 if tunnelConfig.connectionSpec == spec {
-                    await suspendAppIfSupported()
                     return .result(value: true)
                 }
             }
@@ -127,17 +85,11 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
             @Dependencies.Dependency(\.connectionCommandClient) var connectionCommandClient
             @SharedReader(.connectionProtocol) var connectionProtocol
             try connectionCommandClient.send(.connect(spec, connectionProtocol, .widget))
-            try await finishConnecting()
         } catch {
             log.error("Failed to connect to VPN from widget with error: \(error)")
             return .result(value: false)
         }
-
-        if case .connected = connectionState {
-            return .result(value: true)
-        } else {
-            return .result(value: false)
-        }
+        return .result(value: true)
     }
 
     // MARK: - Private helpers:
@@ -149,7 +101,6 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
         @Dependencies.Dependency(\.connectionInventory) var connectionInventory
         @SharedReader(.recentConnections) var recentConnections
         @SharedReader(.storedDefaultConnectionPreference) var storedDefaultConnectionPreference
-        @SharedReader(.connectionState) var connectionState
         return connectionInventory.recentConnectionList(
             storedDefaultConnectionPreference ?? .fastest,
             recentConnections ?? [],

@@ -44,6 +44,7 @@ public extension SharedReader {
         let deadline = clock.now.advanced(by: deadlineDuration)
 
         for await (newValue, _) in combinedSequence {
+            try await load()
             try Task.checkCancellation()
             guard clock.now < deadline else {
                 throw SharedReaderTimeoutError()

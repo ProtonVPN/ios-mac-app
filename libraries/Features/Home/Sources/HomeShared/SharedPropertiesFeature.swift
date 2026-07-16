@@ -39,7 +39,7 @@ public struct SharedPropertiesFeature {
 
     @ObservableState
     public struct State: Equatable {
-        @Shared(.connectionState) var connectionState: ConnectionState
+        @SharedReader(.connectionState) var connectionState: ConnectionState
         @Shared(.lastConnectionError) var lastConnectionError: ConnectionError?
 
         var userLocation: UserLocationFeature.State = .init()
@@ -105,8 +105,6 @@ public struct SharedPropertiesFeature {
 
             case let .newConnectionState(newValue):
                 let oldValue = state.connectionState
-                state.$connectionState.withLock { $0 = newValue }
-                WidgetCenter.shared.reloadAllTimelines()
                 if newValue.is(\.connected), !oldValue.is(\.connected) {
                     return .send(.review(.connected))
                 } else if newValue.is(\.disconnected), !oldValue.is(\.disconnected) {

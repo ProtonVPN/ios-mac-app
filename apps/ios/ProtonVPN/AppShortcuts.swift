@@ -33,7 +33,7 @@ enum AppShortcuts: AppShortcutsProvider { // these are visible as standalone sho
             systemImageName: "info.circle"
         )
         AppShortcut(
-            intent: DisconnectVPNIntent(),
+            intent: DisconnectVPNAndWaitIntent(),
             phrases: [
                 "Disconnect \(.applicationName)",
                 "Disconnect from \(.applicationName)",
@@ -45,7 +45,7 @@ enum AppShortcuts: AppShortcutsProvider { // these are visible as standalone sho
             systemImageName: "lock.open"
         )
         AppShortcut(
-            intent: ConnectToVPNIntent(),
+            intent: ConnectVPNAndWaitIntent(),
             phrases: [
                 "Connect \(.applicationName)",
                 "Connect with \(.applicationName)",
@@ -58,7 +58,7 @@ enum AppShortcuts: AppShortcutsProvider { // these are visible as standalone sho
             systemImageName: "lock.fill"
         )
         AppShortcut(
-            intent: ConnectToRegionIntent(),
+            intent: ConnectToRegionAndWaitIntent(),
             phrases: [
                 "Connect to \(\.$country) with \(.applicationName)",
                 "Connect to \(\.$city) with \(.applicationName)",

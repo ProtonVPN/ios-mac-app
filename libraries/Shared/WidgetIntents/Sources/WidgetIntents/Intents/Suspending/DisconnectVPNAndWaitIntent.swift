@@ -22,7 +22,7 @@ import Ergonomics
 import Sharing
 import UIKit
 
-public struct DisconnectVPNIntent: AppIntent {
+public struct DisconnectVPNAndWaitIntent: AppIntent {
     public static let title: LocalizedStringResource = "Disconnect from VPN"
     static let description = IntentDescription(
         "Disconnects your active VPN connection.",
@@ -30,6 +30,7 @@ public struct DisconnectVPNIntent: AppIntent {
     )
 
     public static let openAppWhenRun = true
+    public static let isDiscoverable = true
 
     private static let timeOut: Duration = .seconds(30)
 
@@ -65,12 +66,7 @@ public struct DisconnectVPNIntent: AppIntent {
                 willMatch: { $0.is(\.disconnected) },
                 every: .milliseconds(200),
                 deadline: Self.timeOut,
-                operation: { state in
-                    // VPN connection aborted, now suspending the app.
-                    if state.is(\.disconnected) {
-                        await suspendAppIfSupported()
-                    }
-                }
+                operation: { _ in }
             )
         } catch {
             log.error("Timed out waiting for disconnected state after widget action", category: .connectionDisconnect, metadata: ["error": "\(error)"])

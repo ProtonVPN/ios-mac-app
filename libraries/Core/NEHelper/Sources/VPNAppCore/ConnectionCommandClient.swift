@@ -66,14 +66,29 @@ public extension DependencyValues {
 private actor ConnectionCommandBroadcaster {
     private var continuations: [UUID: AsyncStream<ConnectionCommand>.Continuation] = [:]
 
+    // When user interacts with the widget while the app is killed, the app receives a connection
+    // command before it registers any continuations. We can account for that by trying to save
+    // the last command that was not broadcasted because of the lack of continuations and replaying it
+    // when the first continuation arrives.
+    var unsentCommand: ConnectionCommand?
+
     func send(_ command: ConnectionCommand) {
         let activeContinuations = Array(continuations.values)
+        if activeContinuations.isEmpty {
+            unsentCommand = command
+        }
         for continuation in activeContinuations {
             continuation.yield(command)
         }
     }
 
     func stream() -> AsyncStream<ConnectionCommand> {
+        defer {
+            if let command = unsentCommand {
+                send(command)
+                unsentCommand = nil
+            }
+        }
         let id = UUID()
         let (stream, continuation) = AsyncStream.makeStream(of: ConnectionCommand.self)
         continuations[id] = continuation
