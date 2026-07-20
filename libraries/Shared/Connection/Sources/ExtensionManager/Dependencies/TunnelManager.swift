@@ -310,14 +310,14 @@ final class PacketTunnelManager: TunnelManager {
     /// Stale entries are left in place so that the next update to the status stream from one of the two sources can use
     /// the other stream's latest value.
     private struct Accumulator {
-        var tunnelProviderManager: NETunnelProviderManager?
+        var tunnelProviderManager: (any TunnelProviderManager)?
         var extensionState: ExtensionState?
         var appliedRequestId: UUID?
         var error: ExtensionError?
         var lastEmitted: Result<TunnelState, ExtensionError>?
 
         #if os(macOS)
-            var vpnManager: NEVPNManager?
+            var vpnManager: (any TunnelProviderManager)?
         #endif
     }
 
@@ -487,9 +487,9 @@ final class PacketTunnelManager: TunnelManager {
         )
         let intendedPeers = (try? configuration.peerIDs) ?? []
         #if os(tvOS)
-            let wantsZeroPeerKillSwitch = false
+            let requestsZeroPeerKillSwitch = false
         #else
-            let wantsZeroPeerKillSwitch = configuration.includeAllNetworks && intendedPeers.isEmpty
+            let requestsZeroPeerKillSwitch = configuration.includeAllNetworks && intendedPeers.isEmpty
         #endif
 
         // Disabling on-demand is persisted before stopTunnel(), so it is a reliable teardown intent even when
@@ -507,13 +507,15 @@ final class PacketTunnelManager: TunnelManager {
             return .success(.unknown)
         case (.invalid, _):
             return .success(.connecting(config))
-        case (.disconnected, _), (_, .disconnected):
+        case (_, .disconnected):
             // With no peer, Rust reports `.disconnected` even though the tunnel interface is alive and blackholing
             // traffic. The saved configuration describes that intent; the matching request id confirms it was applied.
-            if wantsZeroPeerKillSwitch {
+            if requestsZeroPeerKillSwitch, isOnDemandEnabled {
                 guard quiesced else { return .success(.reasserting(config)) }
                 return .success(.killSwitchActive(config))
             }
+            return .success(.disconnected(nil))
+        case (.disconnected, _):
             return .success(.disconnected(nil))
         case (.disconnecting, _):
             return .success(.disconnecting(config))
@@ -594,9 +596,10 @@ final class PacketTunnelManager: TunnelManager {
                 let error = self.extensionError
 
                 if let state = resolved(after: { tracked in
-                    for manager in managers.values {
-                        if let manager = manager as? NEVPNManager { track(manager, into: &tracked) }
-                    }
+                    tracked.tunnelProviderManager = managers[.wireGuard]
+                    #if os(macOS)
+                        tracked.vpnManager = managers[.ike]
+                    #endif
                     tracked.extensionState = snapshot.state
                     // Prefer a pending error's request id, so an unacked error can still surface.
                     tracked.appliedRequestId = error?.id ?? snapshot.requestId

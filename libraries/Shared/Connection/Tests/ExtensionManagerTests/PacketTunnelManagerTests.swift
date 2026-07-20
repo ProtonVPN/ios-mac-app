@@ -84,6 +84,7 @@
                 configuration: .init(preferredTransport: .udp, peers: [.mock(id: "peer-id")], dnsServers: []),
                 to: config
             )
+            providerManager.protocolConfiguration = config
 
             let status = try await withDependencies {
                 $0.vpnManagerRepository.managers = { [.wireGuard: providerManager] }
@@ -126,10 +127,11 @@
                 let previousRequestId = UUID()
 
                 let (initial, updated) = try await withDependencies {
+                    $0.continuousClock = ContinuousClock()
                     $0.vpnManagerRepository.managers = { [.wireGuard: providerManager] }
                     $0.extensionIPC.currentExtensionState = {
                         .init(
-                            state: .disconnected(reason: .unset),
+                            state: .connected(VPNSessionMock.testPeer),
                             requestId: previousRequestId
                         )
                     }
@@ -151,7 +153,7 @@
                     tunnelProtocol: .wireGuard,
                     peerIDs: []
                 )
-                #expect(initial == .some(.success(.reasserting(tunnelConfiguration))))
+                #expect(initial == .some(.success(.disconnected(nil))))
                 #expect(updated == .some(.success(.killSwitchActive(tunnelConfiguration))))
             }
         #endif
@@ -186,6 +188,7 @@
             defer { continuation.finish() }
 
             let next = try await withDependencies {
+                $0.continuousClock = ContinuousClock()
                 $0.vpnManagerRepository.managers = { [.wireGuard: providerManager] }
                 $0.extensionIPC.currentExtensionState = {
                     .init(state: .connected(oldPeer), requestId: oldRequestId)

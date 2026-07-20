@@ -33,58 +33,60 @@
     import VPNSharedTesting
     import XCTest
 
-    struct ConnectionFeatureTransitionTests {
-        @Test
-        @MainActor
-        func disconnectWithKillSwitchUpdatesStateImmediately() async {
-            let spec = ConnectionSpec(location: .country(code: "IT", order: .fastest), features: [])
-            let configuration = TunnelConfiguration(
-                connectionSpec: spec,
-                tunnelProtocol: .wireGuard,
-                peerIDs: ["old-peer"]
-            )
-            let zeroPeerConfiguration = TunnelConfiguration(
-                connectionSpec: spec,
-                tunnelProtocol: .wireGuard,
-                peerIDs: []
-            )
-            let session = VPNSessionMock(status: .connected)
-            session.messageHandler = MessageHandler.full
-            let store = TestStore(initialState: ConnectionFeature.State(
-                connectionState: .connected(
-                    configuration,
-                    .init(
-                        currentPeer: .mock,
-                        connectionDate: .now,
-                        protocolConnectionData: .proTUN(.init(transport: .udp))
-                    )
-                ),
-                shouldRegisterServerChangeOnConnection: false,
-                tunnel: .unknown
-            )) {
-                ConnectionFeature()
-            } withDependencies: {
-                $0.connectionFeatureProvider = .init(
-                    connectionFeatures: { .mock },
-                    requestedFeatures: {
-                        #if !os(tvOS)
-                            .init(killSwitch: true, excludeLocalNetworks: false)
-                        #else
-                            .tvFeatures
-                        #endif
-                    },
-                    connectionProtocol: { .smartProtocol }
+    #if !os(tvOS)
+        struct ConnectionFeatureTransitionTests {
+            @Test
+            @MainActor
+            func disconnectWithKillSwitchUpdatesStateImmediately() async {
+                let spec = ConnectionSpec(location: .country(code: "IT", order: .fastest), features: [])
+                let configuration = TunnelConfiguration(
+                    connectionSpec: spec,
+                    tunnelProtocol: .wireGuard,
+                    peerIDs: ["old-peer"]
                 )
-                $0.tunnelManager = MockTunnelManager(connection: session)
-                $0.defaultAppStorage = .testValue()
-            }
-            store.exhaustivity = .off
+                let zeroPeerConfiguration = TunnelConfiguration(
+                    connectionSpec: spec,
+                    tunnelProtocol: .wireGuard,
+                    peerIDs: []
+                )
+                let session = VPNSessionMock(status: .connected)
+                session.messageHandler = MessageHandler.full
+                let store = TestStore(initialState: ConnectionFeature.State(
+                    connectionState: .connected(
+                        configuration,
+                        .init(
+                            currentPeer: .mock,
+                            connectionDate: .now,
+                            protocolConnectionData: .proTUN(.init(transport: .udp))
+                        )
+                    ),
+                    shouldRegisterServerChangeOnConnection: false,
+                    tunnel: .unknown
+                )) {
+                    ConnectionFeature()
+                } withDependencies: {
+                    $0.connectionFeatureProvider = .init(
+                        connectionFeatures: { .mock },
+                        requestedFeatures: {
+                            #if !os(tvOS)
+                                .init(killSwitch: true, excludeLocalNetworks: false)
+                            #else
+                                .tvFeatures
+                            #endif
+                        },
+                        connectionProtocol: { .smartProtocol }
+                    )
+                    $0.tunnelManager = MockTunnelManager(connection: session)
+                    $0.defaultAppStorage = .testValue()
+                }
+                store.exhaustivity = .off
 
-            await store.send(.input(.disconnect)) {
-                $0.connectionState = .killSwitchActive(spec, zeroPeerConfiguration)
+                await store.send(.input(.disconnect)) {
+                    $0.connectionState = .killSwitchActive(spec, zeroPeerConfiguration)
+                }
             }
         }
-    }
+    #endif
 
     // TODO: ProTUN: Revisit and update tests that are still relevant
 //    final class ConnectionFeatureTests: XCTestCase {
