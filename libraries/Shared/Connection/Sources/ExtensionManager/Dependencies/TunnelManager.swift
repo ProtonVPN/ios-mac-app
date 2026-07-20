@@ -575,7 +575,12 @@ final class PacketTunnelManager: TunnelManager {
                 _ = await seedTask.value
                 for await notification in NotificationCenter.default.notifications(named: .NEVPNStatusDidChange) {
                     guard let manager = (notification.object as? NEVPNConnection)?.manager else {
-                        assertionFailure("Received an NEVPNStatusDidChange notification without a manager?")
+                        let configName = if let tunnelProviderSession = notification.object as? NETunnelProviderSession {
+                            tunnelProviderSession.manager.localizedDescription ?? "unknown config"
+                        } else {
+                            "unknown config"
+                        }
+                        log.info("Tunnel manager ignoring config update for \(configName).")
                         continue
                     }
 
