@@ -21,25 +21,20 @@ import NetworkExtension
 import os
 
 enum SettingsGenerator {
-    private static let ipv4Loopback: String = "127.0.0.1"
-
     static func settings(excludingRoute: String?, dnsServers: [String]) -> NETunnelNetworkSettings {
-        let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: Self.ipv4Loopback)
+        let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: .ipv4Loopback)
 
         settings.dnsSettings = dnsSettings(from: dnsServers)
         settings.dnsSettings?.matchDomains = [""]
 
-        let ipv4Settings = NEIPv4Settings(
-            addresses: ["10.2.0.2"],
-            subnetMasks: ["255.255.255.255"]
-        )
+        let ipv4Settings = NEIPv4Settings(addresses: [.tunnelAddress], subnetMasks: [.hostMask])
         ipv4Settings.includedRoutes = [
-            NEIPv4Route.localAgent,
-            NEIPv4Route(destinationAddress: "10.2.0.2", subnetMask: "255.255.255.255"),
-            NEIPv4Route(destinationAddress: "0.0.0.0", subnetMask: "0.0.0.0"),
+            NEIPv4Route(destinationAddress: .localAgentAddress, subnetMask: .hostMask),
+            NEIPv4Route(destinationAddress: .tunnelAddress, subnetMask: .hostMask),
+            NEIPv4Route(destinationAddress: .defaultRouteAddress, subnetMask: .anyMask),
         ]
         if let excludingRoute {
-            ipv4Settings.excludedRoutes = [NEIPv4Route(destinationAddress: excludingRoute, subnetMask: "255.255.255.255")]
+            ipv4Settings.excludedRoutes = [NEIPv4Route(destinationAddress: excludingRoute, subnetMask: .hostMask)]
         }
 
         settings.ipv4Settings = ipv4Settings
@@ -68,6 +63,13 @@ enum SettingsGenerator {
     }
 }
 
-extension NEIPv4Route {
-    nonisolated(unsafe) static let localAgent: NEIPv4Route = .init(destinationAddress: "10.2.0.1", subnetMask: "255.255.255.255")
+private extension String {
+    static let ipv4Loopback: String = "127.0.0.1"
+
+    static let localAgentAddress = "10.2.0.1"
+    static let tunnelAddress = "10.2.0.2"
+    static let defaultRouteAddress = "0.0.0.0"
+
+    static let hostMask = "255.255.255.255"
+    static let anyMask = "0.0.0.0"
 }

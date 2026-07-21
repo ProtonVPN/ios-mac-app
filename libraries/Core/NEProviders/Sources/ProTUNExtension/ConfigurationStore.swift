@@ -63,7 +63,6 @@ actor ConfigurationStore {
                 try await withTimeout(of: Self.transactionTimeout) {
                     try await Self.performUpdate(update, adapter: adapter)
                 }
-                // TODO: av/chore/confupdate_transaction will coalesce state publications and this restamp.
                 @Dependency(\.extensionIPCServer) var extensionIPCServer
                 extensionIPCServer.restampConnectionData(update.id)
             } catch let error as ConfigurationUpdateError {
@@ -108,16 +107,7 @@ actor ConfigurationStore {
             throw ConfigurationUpdateError.badEncoding
         }
 
-        if update.requiresReassertion {
-            try await adapter.whileReasserting { () async throws(ConfigurationUpdateError) in
-                try await performReconfiguration(
-                    peersToApply,
-                    agentSettingsToApply,
-                    networkSettingsUpdate: networkSettingsUpdate,
-                    adapter: adapter
-                )
-            }
-        } else {
+        try await adapter.reassertingIfRequired(for: update) { () async throws(ConfigurationUpdateError) in
             try await performReconfiguration(
                 peersToApply,
                 agentSettingsToApply,

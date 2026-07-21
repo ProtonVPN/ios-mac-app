@@ -312,10 +312,17 @@ extension ProTUNAdapter {
         await configurationStore.apply(update, adapter: self)
     }
 
-    func whileReasserting<T, E: Swift.Error>(_ closure: () async throws(E) -> T) async throws(E) -> T {
-        packetTunnelProvider?.reasserting = true
-        defer { packetTunnelProvider?.reasserting = false }
-        return try await closure()
+    func reassertingIfRequired<T, E: Swift.Error>(
+        for update: ConnectionUpdate,
+        _ closure: () async throws(E) -> sending T
+    ) async throws(E) -> sending T {
+        if update.requiresReassertion {
+            packetTunnelProvider?.reasserting = true
+            defer { packetTunnelProvider?.reasserting = false }
+            return try await closure()
+        } else {
+            return try await closure()
+        }
     }
 }
 
