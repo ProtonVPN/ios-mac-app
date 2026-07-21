@@ -141,7 +141,7 @@ package enum ConnectionCardHeaderModel: Equatable {
         case .resolving:
             self = .resolving
 
-        case .disconnected, .disconnecting:
+        case .disconnected, .disconnecting, .killSwitchActive:
             self = .disconnected(isPaid: userTier.isPaidTier)
 
         case .connected:

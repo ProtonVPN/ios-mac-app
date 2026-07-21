@@ -21,9 +21,9 @@ import ConnectionShared
 import Dependencies
 import Domain
 import Ergonomics
+import ExtensionSync
+import IPCDefinitions
 import IPCErgonomics
-import LocalAgent
-import LocalAgentIPC
 import NetworkExtension
 import NetworkingErgonomics
 import OSLog
@@ -41,6 +41,7 @@ final class ProTUNAdapter: @unchecked Sendable {
         case invalidKeys
         case missingUserID
         case missingConfiguration
+        case noConnection
     }
 
     private(set) weak var packetTunnelProvider: NEPacketTunnelProvider?
@@ -114,12 +115,14 @@ final class ProTUNAdapter: @unchecked Sendable {
 
         // VPNAPPL-3344 For multi-peer support, it's likely that we will need to set the
         // server IP address to something other than the address of the first peer in the list
-        guard let peer = config.peers.first else {
-            Logger.adapter.error("Configuration does not contain any peers")
-            throw Error.noPeers
+        if let peer = config.peers.first {
+            try await setNetworkSettings(serverIpAddress: peer.serverIP)
+        } else {
+            // Preparing the Adapter without any peer is allowed
+            // Just generate the network settings intercepting all possible routes
+            Logger.adapter.info("Preparing in zero-peer killswitch mode (no peers)")
+            try await setNetworkSettings(serverIpAddress: nil)
         }
-
-        try await setNetworkSettings(serverIpAddress: peer.serverIP)
 
         return try setupTunnelDescriptor()
     }
@@ -205,17 +208,27 @@ final class ProTUNAdapter: @unchecked Sendable {
         )
         signposter.emitEvent("Connection established", id: signpostID)
 
-        try await stateDelegate.stateSource.newStream
-            .debounce(for: Self.protunStateDebounceInterval)
-            .when(
-                willMatch: \.canCompleteStart,
-                every: Self.protunStateCheckInterval,
-                deadline: Self.waitConnectedStateDuration
-            ) {
-                // Reached `.connected` / `.connectingToLocalAgent`: the tunnel is up.
-                self.signposter.emitEvent("Connected", id: signpostID)
-                Logger.adapter.debug("Adapter is started, `startTunnel` can complete")
-            }
+        if config.proTUN.peers.isEmpty {
+            // Lib connection object will never transition to connected with 0 peers so completing immediately
+            // (this allows starts of the extension via onDemand rules or after any termination to start anyway)
+            Logger.adapter.info("Adapter is started in 0 peers mode, `startTunnel` can complete")
+            await extensionIPCServer.publishExtensionState(
+                .disconnected(reason: .unset),
+                currentRequestId
+            )
+        } else {
+            try await stateDelegate.stateSource.newStream
+                .debounce(for: Self.protunStateDebounceInterval)
+                .when(
+                    willMatch: \.canCompleteStart,
+                    every: Self.protunStateCheckInterval,
+                    deadline: Self.waitConnectedStateDuration
+                ) {
+                    // Reached `.connected` / `.connectingToLocalAgent`: the tunnel is up.
+                    self.signposter.emitEvent("Connected", id: signpostID)
+                    Logger.adapter.debug("Adapter is started, `startTunnel` can complete")
+                }
+        }
     }
 
     private func startLocalAgentRunLoop() {
@@ -278,9 +291,21 @@ extension ProTUNAdapter {
         connection?.provideApiForkSelector(forkSelectorInfo: forkSelectorInfo)
     }
 
+    func handlePeersUpdate(_ peers: [PeerInfo]) throws(Error) {
+        guard let connection else {
+            Logger.adapter.error("Cannot update peers: ProTUN connection is unavailable")
+            throw .noConnection
+        }
+        connection.updatePeers(peers: peers)
+    }
+
     /// Single entry point for updating LocalAgentSettings.
-    func applyLocalAgentSettings(_ settings: LocalAgentSettings) {
-        connection?.updateLocalAgentSettings(settings: settings)
+    func applyLocalAgentSettings(_ settings: LocalAgentSettings) throws(Error) {
+        guard let connection else {
+            Logger.adapter.error("Cannot update Local Agent settings: ProTUN connection is unavailable")
+            throw .noConnection
+        }
+        connection.updateLocalAgentSettings(settings: settings)
     }
 
     func enqueueConfigurationUpdate(_ update: ConnectionUpdate) async {
@@ -297,7 +322,7 @@ extension ProTUNAdapter {
 // MARK: - Network setup
 
 extension ProTUNAdapter {
-    func setNetworkSettings(serverIpAddress: String) async throws {
+    func setNetworkSettings(serverIpAddress: String?) async throws {
         let networkSettings = SettingsGenerator.settings(excludingRoute: serverIpAddress)
         try await packetTunnelProvider?.setTunnelNetworkSettings(networkSettings)
     }

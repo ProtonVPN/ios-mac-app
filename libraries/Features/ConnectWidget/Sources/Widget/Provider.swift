@@ -102,7 +102,7 @@ struct Provider: TimelineProvider {
 private extension ConnectionState {
     var protectionState: ConnectWidgetEntry.ProtectionState {
         switch self {
-        case .resolving, .disconnected, .disconnecting:
+        case .resolving, .disconnected, .disconnecting, .killSwitchActive:
             .unprotected
         case .connecting:
             .protecting

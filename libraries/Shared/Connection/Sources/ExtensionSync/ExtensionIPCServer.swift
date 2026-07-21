@@ -23,8 +23,8 @@ import Domain
 import Ergonomics
 import Foundation
 import IOSurface
+import IPCDefinitions
 import IPCErgonomics
-import LocalAgentIPC
 import Logging
 import os
 
@@ -74,7 +74,11 @@ extension ExtensionIPCServer: DependencyKey {
 
         return ExtensionIPCServer(
             publishExtensionState: { connectionState, uuid in
-                withStore { $0.channels.connectionData.mutate { $0 = IPCConnectionDataPayload(connectionState, id: uuid) } }
+                withStore {
+                    $0.channels.connectionData.mutate {
+                        $0 = IPCConnectionDataPayload(connectionState, id: uuid)
+                    }
+                }
             },
             publishStats: { stats in
                 withStore { $0.channels.localAgentStats.mutate { $0 = IPCStatsPayload(stats) } }

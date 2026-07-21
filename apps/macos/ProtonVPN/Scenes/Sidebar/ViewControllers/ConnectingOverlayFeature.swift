@@ -165,6 +165,8 @@ extension ConnectingOverlayFeature.State {
             return serverName.map { .connected(serverName: $0) } ?? .preparing
         case .disconnected:
             return isReconnecting ? .reconnecting : .preparing
+        case .killSwitchActive:
+            return .preparing // TODO: ProTUN: is this correct?
         case .resolving, .connecting, .disconnecting:
             if isReconnecting { return .reconnecting }
             return serverName.map { .connecting(serverName: $0) } ?? .preparing

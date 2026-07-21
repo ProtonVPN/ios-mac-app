@@ -38,6 +38,8 @@ public extension ConnectionState {
             nil
         case let .connecting(.unresolved(intent)):
             intent.spec
+        case let .killSwitchActive(spec, _):
+            spec
         }
     }
 
@@ -52,7 +54,7 @@ public extension ConnectionState {
             intent.resolvedServer
         case .resolving:
             nil // TODO: ProTUN: check if this makes sense
-        case .disconnected, .connecting(.unresolved):
+        case .disconnected, .connecting(.unresolved), .killSwitchActive:
             nil
         }
     }
@@ -85,7 +87,7 @@ public extension ConnectionState {
         switch self {
         case .connected, .disconnecting:
             true
-        case .resolving, .disconnected, .connecting:
+        case .resolving, .disconnected, .connecting, .killSwitchActive:
             false
         }
     }
@@ -95,7 +97,7 @@ public extension ConnectionState {
         switch self {
         case .connected, .disconnecting:
             false
-        case .resolving, .disconnected, .connecting:
+        case .resolving, .disconnected, .connecting, .killSwitchActive:
             true
         }
     }
@@ -103,7 +105,7 @@ public extension ConnectionState {
     /// App-quit predicate: safe to terminate without disconnecting (no in-flight tunnel).
     var isSafeToEnd: Bool {
         switch self {
-        case .connected, .connecting, .disconnecting:
+        case .connected, .connecting, .disconnecting, .killSwitchActive:
             false
         case .resolving, .disconnected:
             true

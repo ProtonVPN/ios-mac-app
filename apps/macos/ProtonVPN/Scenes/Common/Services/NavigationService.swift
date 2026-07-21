@@ -149,6 +149,9 @@ class NavigationService {
         case .disconnecting:
             log.debug("Skipping auto-connect: connection state is \(connectionState)", category: .app)
             return false
+        case .killSwitchActive:
+            log.debug("Skipping auto-connect: killswitch is active", category: .app)
+            return false
         case .disconnected:
             break
         }

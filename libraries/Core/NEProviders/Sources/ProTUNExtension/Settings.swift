@@ -22,13 +22,7 @@ enum SettingsGenerator {
     private static let ipv4Loopback: String = "127.0.0.1"
     private static let protonDNSServer: String = "10.2.0.1"
 
-    // Very trivial settings generator for now
-    // It should:
-    // * remove hardcoded values
-    // * handle custom DNS
-    // * handle ipv6?
-    // * ...
-    static func settings(excludingRoute: String) -> NETunnelNetworkSettings {
+    static func settings(excludingRoute: String?) -> NETunnelNetworkSettings {
         let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: Self.ipv4Loopback)
 
         let dnsSettings = NEDNSSettings(servers: [Self.protonDNSServer])
@@ -45,7 +39,9 @@ enum SettingsGenerator {
             NEIPv4Route(destinationAddress: "10.2.0.2", subnetMask: "255.255.255.255"),
             NEIPv4Route(destinationAddress: "0.0.0.0", subnetMask: "0.0.0.0"),
         ]
-        ipv4Settings.excludedRoutes = [NEIPv4Route(destinationAddress: excludingRoute, subnetMask: "255.255.255.255")]
+        if let excludingRoute {
+            ipv4Settings.excludedRoutes = [NEIPv4Route(destinationAddress: excludingRoute, subnetMask: "255.255.255.255")]
+        }
 
         settings.ipv4Settings = ipv4Settings
         return settings

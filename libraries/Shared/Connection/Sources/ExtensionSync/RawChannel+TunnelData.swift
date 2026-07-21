@@ -20,24 +20,33 @@ import ConcurrencyExtras
 import CoreConnection
 import Domain
 import Foundation
+import IPCDefinitions
 import IPCErgonomics
-import LocalAgentIPC
 
 // Typed accessors over the live tunnel-data channels. Each exposes the Swift struct that wraps the raw C payload as
 // a getter + an `AsyncStream`.
 
 public extension IPCNotifications.RawChannel where Payload == IPCConnectionDataPayload, Role == ReaderRole, Backing: ~Copyable {
-    func currentExtensionState() -> (ExtensionState, UUID?) {
+    func currentExtensionState() -> ExtensionStateSnapshot {
         if let payload = try? read() {
-            (payload.extensionState, payload.requestId)
+            ExtensionStateSnapshot(
+                state: payload.extensionState,
+                requestId: payload.requestId
+            )
         } else {
-            (.disconnected(reason: .unset), nil)
+            ExtensionStateSnapshot(
+                state: .disconnected(reason: .unset),
+                requestId: nil
+            )
         }
     }
 
-    func extensionStateStream(reconcileOn resumeSignals: AsyncStream<Void>...) -> AsyncStream<(state: ExtensionState, requestId: UUID?)> {
+    func extensionStateStream(reconcileOn resumeSignals: AsyncStream<Void>...) -> AsyncStream<ExtensionStateSnapshot> {
         stream(reconcileOn: resumeSignals) { payload in
-            (payload.extensionState, payload.requestId)
+            ExtensionStateSnapshot(
+                state: payload.extensionState,
+                requestId: payload.requestId
+            )
         }
     }
 }

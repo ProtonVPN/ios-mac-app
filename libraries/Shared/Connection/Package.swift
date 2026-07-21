@@ -11,12 +11,12 @@ let package = Package(
         .tvOS(.v17),
     ],
     products: [
-        .library(name: "LocalAgent", targets: ["LocalAgent"]),
-        .library(name: "LocalAgentIPC", targets: ["LocalAgentIPC"]),
         .library(name: "Connection", targets: ["Connection"]),
         .library(name: "ExtensionManager", targets: ["ExtensionManager"]),
         .library(name: "CoreConnection", targets: ["CoreConnection"]),
         .library(name: "ConnectionShared", targets: ["ConnectionShared"]), // Models shared between network extension and app targets
+        .library(name: "IPCDefinitions", targets: ["IPCDefinitions"]),
+        .library(name: "ExtensionSync", targets: ["ExtensionSync"]),
         .library(name: "Hermes", targets: ["Hermes"]),
         .library(name: "ConnectionTestSupport", targets: ["CoreConnectionTestSupport", "ConnectionTestSupport"]),
     ],
@@ -36,6 +36,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-async-algorithms", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
         .package(url: "https://github.com/pointfreeco/swift-custom-dump", .upToNextMajor(from: "1.5.0")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.9.0")),
     ],
@@ -66,10 +67,21 @@ let package = Package(
             ]
         ),
         .target(
-            name: "LocalAgent",
+            name: "IPCDefinitions",
             dependencies: [
+                .product(name: "IPCSeqlockHelpers", package: "Ergonomics"),
+            ],
+            path: "Sources/IPCDefinitions",
+            publicHeadersPath: "include"
+        ),
+        .target(
+            name: "ExtensionSync",
+            dependencies: [
+                "IPCDefinitions",
                 "CoreConnection",
-                "LocalAgentIPC",
+                .product(name: "IPCErgonomics", package: "Ergonomics"),
+                .product(name: "VPNAppCore", package: "NEHelper"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "IPCErgonomics", package: "Ergonomics"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
@@ -79,20 +91,12 @@ let package = Package(
             ]
         ),
         .target(
-            name: "LocalAgentIPC",
-            dependencies: [
-                .product(name: "IPCSeqlockHelpers", package: "Ergonomics"),
-            ],
-            path: "Sources/LocalAgentIPC",
-            publicHeadersPath: "include"
-        ),
-        .target(
             name: "ExtensionManager",
             dependencies: [
-                "LocalAgent",
                 "CoreConnection",
                 "Domain",
                 "ExtensionIPC",
+                "ExtensionSync",
                 "Localization",
                 "Hermes",
                 "CommonNetworking",
@@ -109,9 +113,10 @@ let package = Package(
             name: "Connection",
             dependencies: [
                 "ExtensionManager",
-                "LocalAgent",
+                "IPCDefinitions",
                 "Domain",
                 "Localization",
+                "ExtensionSync",
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "Sharing", package: "swift-sharing"),
@@ -157,6 +162,7 @@ let package = Package(
             dependencies: [
                 "ExtensionManager",
                 "CoreConnectionTestSupport",
+                .product(name: "SharedErgonomics", package: "Ergonomics"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
             ]

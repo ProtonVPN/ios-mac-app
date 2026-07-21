@@ -17,9 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-
-    import LocalAgent
-    import LocalAgentIPC
+    import ExtensionSync
+    import IPCDefinitions
     import XCTest
 
     /// Verifies the exit/user IP fields pack into their binary v4/v6 slots and round-trip back to the same string.

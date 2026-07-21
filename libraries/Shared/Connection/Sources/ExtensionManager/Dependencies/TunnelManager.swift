@@ -23,10 +23,10 @@ import CoreConnection
 import Dependencies
 import Domain
 import ExtensionIPC
+import ExtensionSync
 import Foundation
+import IPCDefinitions
 import IPCErgonomics
-import LocalAgent
-import LocalAgentIPC
 import NetworkExtension
 import os
 import Sharing
@@ -93,6 +93,9 @@ public enum TunnelState: Equatable, Sendable {
     case connected(TunnelConfiguration, DynamicConnectionData)
     case reasserting(TunnelConfiguration) // Briefly re-establishing an existing connection
     case disconnecting(TunnelConfiguration)
+    /// Zero-peer kill-switch: the tunnel interface is alive but every peer has been stripped, so traffic is
+    /// captured and blackholed rather than routed anywhere.
+    case killSwitchActive(TunnelConfiguration)
 }
 
 /// Data relating to the connection that is strongly tied to the tunnel's configuration.
@@ -189,7 +192,10 @@ final class PacketTunnelManager: TunnelManager {
     /// The NEPacketTunnelProvider connection state, as reported by the ProTUN framework. Sent over a shared memory
     /// channel directly from the extension.
     /// - Note: If the selected protocol is IKEv2, this will read as `.disconnected`.
-    @SharedReader(.extensionState) private var extensionState = (.disconnected(reason: .unset), nil)
+    @SharedReader(.extensionState) private var extensionState = ExtensionStateSnapshot(
+        state: .disconnected(reason: .unset),
+        requestId: nil
+    )
 
     /// The extension's most-recent reported error (carrying the request id it pertains to), sent over the error channel.
     @SharedReader(.extensionError) private var extensionError: ExtensionError? = nil
@@ -284,15 +290,16 @@ final class PacketTunnelManager: TunnelManager {
                 return .disconnected(nil)
             }
 
-            let (state, requestId) = extensionState
+            let snapshot = extensionState
 
             // Error surfacing is the streaming path's job, so passing `nil` as the error guarantees a `.success` result
             return try resolve(
                 tunnelProtocol: tunnelProtocol,
                 session: manager.session,
                 configuration: manager.protocolConfiguration,
-                extensionState: state,
-                appliedRequestId: requestId,
+                extensionState: snapshot.state,
+                appliedRequestId: snapshot.requestId,
+                isOnDemandEnabled: manager.isOnDemandEnabled,
                 error: nil
             ).get()
         }
@@ -303,14 +310,14 @@ final class PacketTunnelManager: TunnelManager {
     /// Stale entries are left in place so that the next update to the status stream from one of the two sources can use
     /// the other stream's latest value.
     private struct Accumulator {
-        var tunnelProviderManager: NETunnelProviderManager?
+        var tunnelProviderManager: (any TunnelProviderManager)?
         var extensionState: ExtensionState?
         var appliedRequestId: UUID?
         var error: ExtensionError?
         var lastEmitted: Result<TunnelState, ExtensionError>?
 
         #if os(macOS)
-            var vpnManager: NEVPNManager?
+            var vpnManager: (any TunnelProviderManager)?
         #endif
     }
 
@@ -354,6 +361,7 @@ final class PacketTunnelManager: TunnelManager {
             configuration: manager.protocolConfiguration,
             extensionState: tracked.extensionState,
             appliedRequestId: tracked.appliedRequestId,
+            isOnDemandEnabled: manager.isOnDemandEnabled,
             error: tracked.error
         )
     }
@@ -367,6 +375,7 @@ final class PacketTunnelManager: TunnelManager {
         configuration: NEVPNProtocol?,
         extensionState: ExtensionState?,
         appliedRequestId: UUID?,
+        isOnDemandEnabled: Bool,
         error: ExtensionError?
     ) -> Result<TunnelState, ExtensionError> {
         switch tunnelProtocol {
@@ -383,6 +392,7 @@ final class PacketTunnelManager: TunnelManager {
                 configuration: configuration as? NETunnelProviderProtocol,
                 extensionState: extensionState,
                 appliedRequestId: appliedRequestId,
+                isOnDemandEnabled: isOnDemandEnabled,
                 error: error
             )
         }
@@ -448,6 +458,7 @@ final class PacketTunnelManager: TunnelManager {
         configuration: NETunnelProviderProtocol?,
         extensionState: ExtensionState?,
         appliedRequestId: UUID?,
+        isOnDemandEnabled: Bool,
         error: ExtensionError?
     ) -> Result<TunnelState, ExtensionError> {
         guard let configuration else { return .success(.disconnected(nil)) }
@@ -475,6 +486,17 @@ final class PacketTunnelManager: TunnelManager {
             peerIDs: extensionState?.peerID.map { [$0] } ?? []
         )
         let intendedPeers = (try? configuration.peerIDs) ?? []
+        #if os(tvOS)
+            let requestsZeroPeerKillSwitch = false
+        #else
+            let requestsZeroPeerKillSwitch = configuration.includeAllNetworks && intendedPeers.isEmpty
+        #endif
+
+        // Disabling on-demand is persisted before stopTunnel(), so it is a reliable teardown intent even when
+        // NetworkExtension briefly echoes `.connecting` while saving preferences.
+        if !isOnDemandEnabled, session.status != .disconnected, session.status != .invalid {
+            return .success(.disconnecting(config))
+        }
 
         // Defers mostly to the NE framework for the disconnected cases, and mostly to ProTUN for the connected cases.
         // Notable special cases include the NEVPNStatus.connected case, where we attach the ExtensionState backing
@@ -485,7 +507,15 @@ final class PacketTunnelManager: TunnelManager {
             return .success(.unknown)
         case (.invalid, _):
             return .success(.connecting(config))
-        case (.disconnected, _), (_, .disconnected):
+        case (_, .disconnected):
+            // With no peer, Rust reports `.disconnected` even though the tunnel interface is alive and blackholing
+            // traffic. The saved configuration describes that intent; the matching request id confirms it was applied.
+            if requestsZeroPeerKillSwitch, isOnDemandEnabled {
+                guard quiesced else { return .success(.reasserting(config)) }
+                return .success(.killSwitchActive(config))
+            }
+            return .success(.disconnected(nil))
+        case (.disconnected, _):
             return .success(.disconnected(nil))
         case (.disconnecting, _):
             return .success(.disconnecting(config))
@@ -496,8 +526,8 @@ final class PacketTunnelManager: TunnelManager {
             // an intended peer: a pending feature-only update never moves the peer, and a location change either
             // rewrites the intended peers (failing this check) or flips the extension to a connecting state the
             // moment it starts reasserting.
-            guard intendedPeers.isEmpty || intendedPeers.contains(peer.peerID) else {
-                return .success(.connecting(config))
+            guard intendedPeers.contains(peer.peerID) else {
+                return .success(.reasserting(config))
             }
 
             @Dependency(\.date) var date
@@ -522,8 +552,14 @@ final class PacketTunnelManager: TunnelManager {
             #endif
             fallthrough
         case (_, .connecting):
+            guard quiesced, let peerID = extensionState?.peerID, intendedPeers.contains(peerID) else {
+                return .success(.reasserting(config))
+            }
             return .success(.connecting(config))
         case (_, .connectingToLocalAgent):
+            guard quiesced, let peerID = extensionState?.peerID, intendedPeers.contains(peerID) else {
+                return .success(.reasserting(config))
+            }
             return .success(.connectingToLocalAgent(config))
         }
     }
@@ -531,9 +567,8 @@ final class PacketTunnelManager: TunnelManager {
     var statusStream: AsyncStream<Result<TunnelState, ExtensionError>> {
         log.debug("Creating TunnelState stream for tunnel observation", category: .connection)
         return AsyncStream { continuation in
-            // `NEVPNStatusDidChange`, the extension-state channel and the error channel each update their value in
-            // `tracked`, and every update re-resolves from the latest of all sources and emits only when the resolved
-            // result changes.
+            // Every source updates its value in `tracked`, re-resolves from the latest snapshot and emits only when the
+            // resolved result changes.
             let tracked = OSAllocatedUnfairLock(uncheckedState: Accumulator())
 
             // Helper function for state resolution. Calls the closure with the accumulator, checks if the resolved
@@ -542,6 +577,9 @@ final class PacketTunnelManager: TunnelManager {
                 tracked.withLockUnchecked { state in
                     update(&state)
                     let resolved = resolve(state)
+                    if case .success(.reasserting(_)) = resolved, state.lastEmitted != nil {
+                        return nil
+                    }
                     let squelched = resolved == state.lastEmitted
                     guard !squelched else { return nil }
                     state.lastEmitted = resolved
@@ -554,16 +592,17 @@ final class PacketTunnelManager: TunnelManager {
             let seedTask = Task {
                 @Dependency(\.vpnManagerRepository) var managerRepository
                 guard let managers = try? await managerRepository.managers() else { return }
-                let (extensionState, requestId) = extensionState
+                let snapshot = extensionState
                 let error = self.extensionError
 
                 if let state = resolved(after: { tracked in
-                    for manager in managers.values {
-                        if let manager = manager as? NEVPNManager { track(manager, into: &tracked) }
-                    }
-                    tracked.extensionState = extensionState
+                    tracked.tunnelProviderManager = managers[.wireGuard]
+                    #if os(macOS)
+                        tracked.vpnManager = managers[.ike]
+                    #endif
+                    tracked.extensionState = snapshot.state
                     // Prefer a pending error's request id, so an unacked error can still surface.
-                    tracked.appliedRequestId = error?.id ?? requestId
+                    tracked.appliedRequestId = error?.id ?? snapshot.requestId
                     tracked.error = error
                 }) {
                     continuation.yield(state)
@@ -597,9 +636,8 @@ final class PacketTunnelManager: TunnelManager {
                 _ = await seedTask.value
                 for await extensionState in $extensionState.publisher.values {
                     guard let state = resolved(after: {
-                        let (state, requestId) = extensionState
-                        $0.extensionState = state
-                        $0.appliedRequestId = requestId
+                        $0.extensionState = extensionState.state
+                        $0.appliedRequestId = extensionState.requestId
                     }) else { continue }
                     continuation.yield(state)
                 }
@@ -627,7 +665,6 @@ final class PacketTunnelManager: TunnelManager {
     }
 
     private func activeManager() async throws -> (TunnelProtocol, any TunnelProviderManager)? {
-        @Dependency(\.vpnManagerRepository) var managerRepository
         let managers = try await managerRepository.managers()
         let activeManagers = managers.filter { _, manager in
             manager.session.status != .disconnected && manager.session.status != .invalid
@@ -641,7 +678,6 @@ final class PacketTunnelManager: TunnelManager {
     }
 
     func cleanup() async throws {
-        @Dependency(\.vpnManagerRepository) var managerRepository
         try await managerRepository.removeAllManagers()
     }
 }

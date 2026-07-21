@@ -2,15 +2,7 @@
 #include <stdint.h>
 #include <uuid/uuid.h>
 #include <IPCSeqlockHelpers.h>
-
-// Mirrors CF_ENUM / NS_ENUM, tells Swift's clang importer to create a proper enum and strip the common prefix.
-#if __has_attribute(enum_extensibility)
-#  define IPC_ENUM(_type, _name)                                                  \
-       typedef enum __attribute__((enum_extensibility(open))) _name : _type _name; \
-       enum __attribute__((enum_extensibility(open))) _name : _type
-#else
-#  define IPC_ENUM(_type, _name) typedef enum _name : _type _name; enum _name : _type
-#endif
+#include "Macros.h"
 
 // Tunnel data payloads coming from the extension
 //
@@ -150,9 +142,9 @@ IPC_DECLARE_SHARED_REGION(IPCAgentFeaturesRegion, IPCAgentFeaturesPayload);
 //
 // Append-only: new regions go at the end so existing field offsets stay stable across app/extension builds.
 typedef struct {
-    IPCConnectionDataRegion   connection_data;
-    IPCStatsRegion            stats;
-    IPCConnectionStatsRegion  connection_stats;
-    IPCErrorRegion            error;
-    IPCAgentFeaturesRegion    agent_features;
+    IPCConnectionDataRegion     connection_data;
+    IPCStatsRegion              stats;
+    IPCConnectionStatsRegion    connection_stats;
+    IPCErrorRegion              error;
+    IPCAgentFeaturesRegion      agent_features;
 } IPCTunnelData;

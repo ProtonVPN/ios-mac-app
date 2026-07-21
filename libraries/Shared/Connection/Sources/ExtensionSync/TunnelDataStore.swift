@@ -17,15 +17,15 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import IPCDefinitions
 @_spi(Internals) import IPCErgonomics
 import IssueReporting
-import LocalAgentIPC
 import os
 #if os(macOS)
     import IOSurface
 #endif
 
-/// Commands sent by the tunnel to the extension, representing a single ping that indicate an action should be taken.
+/// Commands sent by the extension, representing a single ping that indicate an action should be taken.
 public enum TunnelCommand: Int, Sendable, CaseIterable {
     /// The extension needs a fresh API session; the app should fork its own and send it back as a provider message.
     case forkSelectorRequest = 1

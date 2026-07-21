@@ -638,40 +638,12 @@ final class SettingsViewModel {
 
     private func switchLANCallback() -> ((Bool, @escaping (Bool) -> Void) -> Void) {
         { toggleOn, callback in
-            let isActive = self.isActive()
-            let excludeLAN = featureValue(for: ExcludeLocalNetworks.self)
-
-            var alert: SystemAlert
-
-            if self.killSwitch, excludeLAN == .off {
-                alert = LANConnectionsKillSwitchConflictAlert(connected: isActive) {
-                    setFeatureValue(ExcludeLocalNetworks.on)
-                    self.$killSwitch.withLock { $0 = false }
-                    if isActive {
-                        log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks", "feature_additional": "killSwitch"])
-                        self.reconnect(with: .allowLAN(false))
-                    }
-                    self.reloadNeeded?()
-                    callback(true)
-                } cancelHandler: {
-                    callback(false)
-                }
-            } else if isActive {
-                alert = ReconnectOnSettingsChangeAlert(confirmHandler: {
-                    setFeatureValue(toggleOn ? ExcludeLocalNetworks.on : .off)
-                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])
-                    self.reconnect(with: .allowLAN(false))
-                    callback(toggleOn)
-                }, cancelHandler: {
-                    callback(featureValue(for: ExcludeLocalNetworks.self) == .on)
-                })
-            } else {
-                setFeatureValue(toggleOn ? ExcludeLocalNetworks.on : .off)
-                callback(toggleOn)
-                return
+            setFeatureValue(toggleOn ? ExcludeLocalNetworks.on : .off)
+            if self.isActive() {
+                log.info("Applying LAN access feature change in place", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])
+                self.apply(tunnelFeatureChange: .allowLAN(toggleOn))
             }
-
-            self.alertService.push(alert: alert)
+            callback(toggleOn)
         }
     }
 
@@ -679,37 +651,13 @@ final class SettingsViewModel {
         { toggleOn, callback in
             let isActive = self.isActive()
 
-            var alert: SystemAlert
-
-            if featureValue(for: ExcludeLocalNetworks.self) == .on, !self.killSwitch {
-                alert = KillSwitchConflictAlert {
-                    setFeatureValue(ExcludeLocalNetworks.off)
-                    self.$killSwitch.withLock { $0 = true }
-                    if isActive {
-                        log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch", "feature_additional": "excludeLocalNetworks"])
-                        self.reconnect(with: .killSwitch(toggleOn))
-                    }
-                    self.reloadNeeded?()
-                    callback(true)
-                } cancelHandler: {
-                    callback(false)
-                }
-            } else if isActive {
-                alert = ReconnectOnSettingsChangeAlert(confirmHandler: {
-                    self.$killSwitch.withLock { $0.toggle() }
-                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
-                    self.reconnect(with: .killSwitch(toggleOn))
-                    callback(self.killSwitch)
-                }, cancelHandler: {
-                    callback(self.killSwitch)
-                })
-            } else {
-                self.$killSwitch.withLock { $0.toggle() }
-                callback(self.killSwitch)
-                return
+            // Persist immediately and update an active tunnel in place; no reconnect alert is needed.
+            self.$killSwitch.withLock { $0 = toggleOn }
+            log.info("Applying killSwitch feature change in place", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
+            if isActive {
+                self.apply(tunnelFeatureChange: .killSwitch(toggleOn))
             }
-
-            self.alertService.push(alert: alert)
+            callback(toggleOn)
         }
     }
 

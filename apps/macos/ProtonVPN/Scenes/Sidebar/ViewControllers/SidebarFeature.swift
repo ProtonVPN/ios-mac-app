@@ -122,7 +122,6 @@ struct SidebarFeature {
         case windowDidEndLiveResize(width: CGFloat, isFullscreen: Bool)
         case windowWillEnterFullScreen
         case windowWillExitFullScreen
-        case killSwitchSettingChanged(Bool)
         case planChanged(PlanChange)
         /// Refresh API announcements if polling is enabled (on start and each time the app becomes active)
         case refreshAnnouncementsIfNeeded
@@ -230,7 +229,6 @@ struct SidebarFeature {
         case connectionCommands
         case portForwardingSetting
         case plutoniumSetting
-        case killSwitchSetting
         case connectionConnectCommandEffect
         case plutoniumSync
         case planChange
@@ -308,12 +306,6 @@ private extension SidebarFeature {
                         }
                     }
                     .cancellable(id: CancelID.plutoniumSetting),
-                    .run { [killSwitch = $killSwitch] send in
-                        for await value in killSwitch.publisher.removeDuplicates().values.dropFirst() {
-                            await send(.killSwitchSettingChanged(value))
-                        }
-                    }
-                    .cancellable(id: CancelID.killSwitchSetting),
                     .run { send in
                         for await planChange in planChangeClient.events() {
                             await send(.planChanged(planChange))
@@ -341,7 +333,6 @@ private extension SidebarFeature {
                     .cancel(id: CancelID.connectionCommands),
                     .cancel(id: CancelID.portForwardingSetting),
                     .cancel(id: CancelID.plutoniumSetting),
-                    .cancel(id: CancelID.killSwitchSetting),
                     .cancel(id: CancelID.connectionConnectCommandEffect),
                     .cancel(id: CancelID.plutoniumSync),
                     .cancel(id: CancelID.planChange),
@@ -396,25 +387,6 @@ private extension SidebarFeature {
     var overlayReducer: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .killSwitchSettingChanged:
-                guard state.connectionState.isConnected else {
-                    return .none
-                }
-                let spec = state.connectionState.resolvedSpec ?? ConnectionSpec()
-                let intent = connectionPreparationIntent(
-                    spec: spec,
-                    connectionProtocol: sharedConnectionProtocol
-                )
-                log.info(
-                    "Reconnecting due to killSwitch setting change",
-                    category: .connectionConnect,
-                    metadata: ["spec.location": "\(spec.location)"]
-                )
-                beginConnectingOverlay(&state)
-                return .merge(
-                    .cancel(id: CancelID.overlayDelay),
-                    .send(.connection(.input(.connect(intent))))
-                )
             case let .connectionStateChanged(connectionState):
                 switch connectionState {
                 case .resolving:
@@ -452,7 +424,7 @@ private extension SidebarFeature {
                         await send(.connectedOverlayDelayElapsed)
                     }
                     .cancellable(id: CancelID.overlayDelay, cancelInFlight: true)
-                case .disconnecting, .disconnected:
+                case .disconnecting, .disconnected, .killSwitchActive:
                     state.overlayState = .hidden
                     return .cancel(id: CancelID.overlayDelay)
                 }

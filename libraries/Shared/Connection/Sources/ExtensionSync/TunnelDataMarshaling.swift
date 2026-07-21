@@ -19,8 +19,8 @@
 import Domain
 import Ergonomics
 import Foundation
+import IPCDefinitions
 import IPCErgonomics
-import LocalAgentIPC
 import Network
 
 // Marshaling between the live tunnel-data C payloads (LocalAgentIPC) and their Swift domain types.

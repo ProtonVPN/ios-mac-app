@@ -65,7 +65,7 @@ let package = Package(
             dependencies: [
                 "CommonNetworking",
                 "Connection",
-                .product(name: "LocalAgent", package: "Connection"),
+                .product(name: "ExtensionSync", package: "Connection"),
                 "Localization",
                 "Persistence",
                 "Theme",
@@ -82,6 +82,7 @@ let package = Package(
                 .product(name: "Modals", package: "Modals"),
                 .product(name: "ModalsServices", package: "Modals"),
                 .product(name: "Payments", package: "Payments", condition: .when(platforms: [.iOS])),
+                .product(name: "PaymentsShared", package: "Payments", condition: .when(platforms: [.iOS])),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "CoreConnection", package: "Connection"),

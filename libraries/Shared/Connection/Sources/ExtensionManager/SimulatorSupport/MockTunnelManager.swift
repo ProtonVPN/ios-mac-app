@@ -21,8 +21,8 @@
     import Dependencies
     import Domain
     import ExtensionIPC
+    import ExtensionSync
     import Foundation
-    import LocalAgent
     import enum NetworkExtension.NEVPNStatus
     import Sharing
     import VPNShared

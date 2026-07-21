@@ -201,7 +201,7 @@ struct MainFeature {
             intent.spec.location
         case let .connecting(.resolved(intent)):
             intent.spec.location
-        case .disconnected, .disconnecting, .resolving:
+        case .disconnected, .disconnecting, .resolving, .killSwitchActive:
             nil
         }
     }

@@ -371,9 +371,14 @@ struct CountriesQuickSettingsFeatureTests {
         }
     }
 
-    @Test("kill switch on presents conflict alert")
-    func killSwitchOnPresentsConflictAlert() async {
+    @Test("kill switch on presents Plutonium conflict alert")
+    func killSwitchOnPresentsPlutoniumConflictAlert() async {
         @SharedReader(.userTier) var userTier: Int? = .paidTier
+        @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
+        $plutonium.withLock { $0 = .disabled(.exclusion) }
+        #expect(!QuickSettingsFeature.requiresKillSwitchConflictConfirmation())
+        $plutonium.withLock { $0 = .enabled(.exclusion) }
+        defer { $plutonium.withLock { $0 = .disabled(.exclusion) } }
 
         let store = makeStore()
 

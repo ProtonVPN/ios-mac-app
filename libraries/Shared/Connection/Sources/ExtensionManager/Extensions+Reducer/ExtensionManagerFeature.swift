@@ -24,8 +24,8 @@ import Dependencies
 import Domain
 import Ergonomics
 import ExtensionIPC
+import ExtensionSync
 import Foundation
-import LocalAgent
 import ProtonCoreFeatureFlags
 import Strings
 import VPNAppCore
@@ -280,7 +280,7 @@ public struct ExtensionFeature: Sendable {
         case .invalid, .reasserting, .disconnecting, .unknown:
             // TODO: ProTUN: Error reporting - more connection stages
             nil
-        case .connected:
+        case .connected, .killSwitchActive:
             nil
         }
     }
@@ -330,7 +330,11 @@ extension TunnelState {
         case .disconnected, .disconnecting:
             // We can't simply update the config, since the tunnel will have to be started
             false
-        case let .reasserting(config), let .connecting(config), let .connectingToLocalAgent(config), let .connected(config, _):
+        case let .connecting(config), let .connectingToLocalAgent(config):
+            // An empty peer list is either zero-peer kill switch or a stale on-demand echo, neither of which can
+            // accept a location update through this transitional state.
+            config.tunnelProtocol == .wireGuard && !config.peerIDs.isEmpty
+        case let .reasserting(config), let .connected(config, _), let .killSwitchActive(config):
             // Only ProTUN accepts in-place updates. IKEv2 has no extension to message, so its changes
             // always go through a fresh connection.
             config.tunnelProtocol == .wireGuard

@@ -49,6 +49,8 @@ public struct ConnectionStatusView: View {
             Localizable.connectionStatusUnprotected
         case .protecting:
             Localizable.connectionStatusProtecting
+        case .killSwitchActive:
+            Localizable.connectionStatusDisconnectedByKillswitch
         }
     }
 
@@ -56,7 +58,7 @@ public struct ConnectionStatusView: View {
         switch protectionState {
         case .protected, .protectedSecureCore:
             Color(.background, .success)
-        case .unprotected:
+        case .unprotected, .killSwitchActive:
             Color(.background, .danger)
         case .protecting, .resolving:
             .white
@@ -88,6 +90,10 @@ public struct ConnectionStatusView: View {
             IconProvider.lockOpenFilled2
                 .styled(.danger)
                 .accessibilityHidden(true)
+        case .killSwitchActive:
+            IconProvider.lockFilled
+                .styled(.danger)
+                .accessibilityHidden(true)
         }
     }
 
@@ -114,6 +120,9 @@ public struct ConnectionStatusView: View {
                     .tint(.white)
             case .unprotected:
                 IconProvider.lockOpenFilled2
+                    .styled(.danger)
+            case .killSwitchActive:
+                IconProvider.lockFilled
                     .styled(.danger)
             }
         }

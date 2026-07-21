@@ -80,7 +80,7 @@ struct HomeConnectionCardView: View {
         Button {
             withAnimation(.linear) {
                 switch store.connectionState {
-                case .disconnected, .disconnecting:
+                case .disconnected, .disconnecting, .killSwitchActive:
                     store.send(.delegate(.connect(store.presentedSpec)))
                 case .connected:
                     store.send(.delegate(.disconnect))

@@ -18,8 +18,8 @@
 
 import Dependencies
 import Domain
+import ExtensionSync
 import Foundation
-import LocalAgent
 import Sharing
 
 public extension SharedReaderKey where Self == StreamReaderKey<ExtensionError?> {

@@ -22,9 +22,9 @@ import CoreConnection
 import Dependencies
 import Domain
 import ExtensionManager
+import ExtensionSync
 import Foundation
-import LocalAgent
-import LocalAgentIPC
+import IPCDefinitions
 import Sharing
 import VPNAppCore
 
@@ -33,6 +33,7 @@ public struct ConnectionFeature: Sendable {
     @Dependency(\.sessionChangeNotifier) private var sessionChangeNotifier
     @Dependency(\.connectionIntentResolver) private var intentResolver
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
+    @Dependency(\.connectionFeatureProvider) private var features
 
     public init() {}
 
@@ -140,9 +141,35 @@ public struct ConnectionFeature: Sendable {
                     }
                 }
                 log.debug("Connection update", category: .connection, metadata: ["update": "\(update)"])
+                if update.killSwitch == false, state.connectionState.is(\.killSwitchActive) {
+                    // Zero-peer mode has no peer to resume, so disabling Kill Switch intentionally stops the tunnel.
+                    // The next connection will rebuild it with the location selected by the user.
+                    return .merge(
+                        .cancel(id: CancelID.preparation),
+                        .send(.tunnel(.disconnect(nil))) // this sets `onDemand` to `false`
+                    )
+                }
                 return .send(.tunnel(.requestConfigChange(update)))
 
             case .input(.disconnect):
+                // Zero-peer KS: when the user requests a disconnect while KS is enabled and the tunnel is connected,
+                // strip peers in place (preserving the tunnel interface) rather than tearing it down. Otherwise, fall
+                // through to the normal disconnect path.
+                if case let .connected(tunnelConfig, _) = state.connectionState, features.requestedFeatures().killSwitch {
+                    // Optimistic: reconciled by resolveProTUN once the applied requestId quiesces; on failure the
+                    // .reconfigurationFailed handler restores connectionState from the reported tunnel state.
+                    let zeroPeerConfig = TunnelConfiguration(
+                        connectionSpec: tunnelConfig.connectionSpec,
+                        tunnelProtocol: tunnelConfig.tunnelProtocol,
+                        peerIDs: []
+                    )
+                    state.connectionState = .killSwitchActive(tunnelConfig.connectionSpec, zeroPeerConfig)
+                    let update = ConnectionUpdate(
+                        location: .init(spec: tunnelConfig.connectionSpec, peers: []),
+                        killSwitch: true
+                    )
+                    return .send(.tunnel(.requestConfigChange(update)))
+                }
                 return .merge(
                     .cancel(id: CancelID.preparation),
                     .send(.tunnel(.disconnect(nil)))
@@ -248,6 +275,7 @@ public enum ConnectionState: Equatable, Sendable, Codable {
     /// The connected state is split across ``TunnelConfiguration`` (which is unlikely to change without user interaction),
     /// and `ResolvedDynamicConnectionData` which is the more transient/dynamic data.
     case connected(TunnelConfiguration, ResolvedDynamicConnectionData)
+    case killSwitchActive(ConnectionSpec, TunnelConfiguration)
 
     @DebugDescription
     @CasePathable
@@ -354,6 +382,8 @@ extension ConnectionState: CustomDebugStringConvertible {
             ".connecting(\(intent))"
         case let .connected(tunnelConfig, connectionData):
             ".connected (\(tunnelConfig), \(connectionData))"
+        case let .killSwitchActive(spec, tunnelConfig):
+            ".killSwitchActive(\(spec), \(tunnelConfig))"
         }
     }
 }
@@ -440,6 +470,9 @@ extension ConnectionState {
 
         case .invalid:
             self = .disconnected
+
+        case let .killSwitchActive(tunnelConfig):
+            self = .killSwitchActive(resolvedSpec(for: tunnelConfig), tunnelConfig)
         }
     }
 }

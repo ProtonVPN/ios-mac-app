@@ -62,6 +62,9 @@ public struct HomeMapFeature {
             case .disconnected:
                 self = .disconnected
 
+            case .killSwitchActive:
+                self = .disconnected
+
             case .disconnecting:
                 // VPNAPPL-2654: Discrepancy between connection state and what we're showing in the map
                 self = .disconnected

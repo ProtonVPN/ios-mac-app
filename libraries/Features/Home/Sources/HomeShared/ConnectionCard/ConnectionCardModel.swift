@@ -27,7 +27,7 @@ package struct ConnectionCardModel {
 
     package func accessibilityText(for connectionState: ConnectionState, countryName: String) -> String {
         switch connectionState {
-        case .disconnected, .disconnecting:
+        case .disconnected, .disconnecting, .killSwitchActive:
             return Localizable.connectionCardAccessibilityLastConnectedTo(countryName)
         case let .connected(_, connectionData):
             if let browsingFrom = LocalizationUtility.default.countryName(forCode: connectionData.currentPeer.logical.exitCountryCode),
@@ -55,7 +55,7 @@ package struct ConnectionCardModel {
 
     package func buttonText(for connectionState: ConnectionState) -> String {
         switch connectionState {
-        case .disconnected, .disconnecting:
+        case .disconnected, .disconnecting, .killSwitchActive:
             Localizable.actionConnect
         case .connected:
             Localizable.actionDisconnect

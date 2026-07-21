@@ -103,6 +103,9 @@ actor TelemetryConnectionStatusReporter {
         case .resolving:
             // Ignoring the `resolving` status
             return
+        case .killSwitchActive:
+            timer.markConnectionStopped()
+            eventType = try connectionEventType(state: connectionState)
         }
         guard let eventType else {
             return
@@ -208,7 +211,7 @@ actor TelemetryConnectionStatusReporter {
             case .disconnected:
                 log.debug("Ignoring disconnected event, was previously disconnected.")
                 return nil
-            case .resolving, .disconnecting:
+            case .resolving, .disconnecting, .killSwitchActive:
                 // Ignoring resolving and disconnecting states
                 return nil
             }
@@ -217,6 +220,8 @@ actor TelemetryConnectionStatusReporter {
                 return try .vpnDisconnection(sessionLength: timer.connectionDuration)
             }
             return nil
+        case .killSwitchActive:
+            return try .vpnDisconnection(sessionLength: timer.connectionDuration)
         case .disconnecting, .resolving:
             return nil
         }
@@ -253,6 +258,8 @@ actor TelemetryConnectionStatusReporter {
                 return .success
             }
             return .failure
+        case .killSwitchActive:
+            return .success
         case .disconnecting, .resolving:
             return .failure // We do not use this anyway
         }

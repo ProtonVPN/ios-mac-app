@@ -25,8 +25,8 @@ import Domain
 import Ergonomics
 import Foundation
 import IOSurface
+import IPCDefinitions
 import IPCErgonomics
-import LocalAgentIPC
 import os
 import Sharing
 
@@ -53,8 +53,8 @@ private func appBecameActiveTicks() -> AsyncStream<Void> {
 @DependencyClient
 public struct ExtensionIPCClient: Sendable {
     /// The current connection state according to ProTUN in the network extension.
-    public package(set) var currentExtensionState: @Sendable () -> (ExtensionState, UUID?) = {
-        (.disconnected(reason: .unset), nil)
+    public package(set) var currentExtensionState: @Sendable () -> ExtensionStateSnapshot = {
+        .init(state: .disconnected(reason: .unset), requestId: nil)
     }
 
     /// The current NetShield / traffic stats, or `nil` before the extension has published any.
@@ -65,7 +65,7 @@ public struct ExtensionIPCClient: Sendable {
     public package(set) var currentExtensionError: @Sendable () -> ExtensionError? = { nil }
 
     /// The live connection state according to ProTUN in the network extension.
-    public package(set) var observeExtensionState: @Sendable () -> AsyncStream<(state: ExtensionState, requestId: UUID?)> = { .finished }
+    public package(set) var observeExtensionState: @Sendable () -> AsyncStream<ExtensionStateSnapshot> = { .finished }
     /// The live NetShield / traffic stats.
     public package(set) var observeStats: @Sendable () -> AsyncStream<LocalAgent.Stats?> = { .finished }
     /// The server-applied Local Agent features.
@@ -140,7 +140,8 @@ public struct ExtensionIPCClient: Sendable {
             let attachSource = StreamSource.source(for: attachStream)
 
             return ExtensionIPCClient {
-                current.withLock { $0?.channels.connectionData.currentExtensionState() } ?? (.disconnected(reason: .unset), nil)
+                current.withLock { $0?.channels.connectionData.currentExtensionState() }
+                    ?? .init(state: .disconnected(reason: .unset), requestId: nil)
             } currentStats: {
                 current.withLock { $0?.channels.localAgentStats.stats() }
             } currentFeatures: {
@@ -151,7 +152,10 @@ public struct ExtensionIPCClient: Sendable {
                 observe(attachSource: attachSource, reconcileOn: appBecameActiveTicks()) { store, since in
                     store.channels.connectionData.readIfChanged(since: since)
                 } transform: { payload in
-                    (state: payload.extensionState, requestId: payload.requestId)
+                    .init(
+                        state: payload.extensionState,
+                        requestId: payload.requestId
+                    )
                 }
             } observeStats: {
                 observe(attachSource: attachSource, reconcileOn: appBecameActiveTicks()) { store, since in
@@ -220,7 +224,7 @@ public struct ExtensionIPCClient: Sendable {
         public static let testValue = ExtensionIPCClient(
             currentExtensionState: {
                 @SharedReader(.mockExtensionState) var state
-                return (state, nil)
+                return .init(state: state, requestId: nil)
             },
             currentStats: { nil },
             currentFeatures: { nil },
@@ -233,7 +237,10 @@ public struct ExtensionIPCClient: Sendable {
                     let task = Task {
                         // Drop the publisher's initial read so that the tests can define their own
                         for await value in reader.publisher.values.dropFirst() {
-                            continuation.yield((value, UUID()))
+                            continuation.yield(.init(
+                                state: value,
+                                requestId: UUID()
+                            ))
                         }
                         continuation.finish()
                     }

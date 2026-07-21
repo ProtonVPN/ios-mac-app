@@ -2100,6 +2100,8 @@ public enum Localizable {
   public static func citiesSectionTitle(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "cities_section_title", String(describing: p1), fallback: "Cities (%@)")
   }
+  /// Connection status when zero peer killswitch is enabled
+  public static var connectionStatusDisconnectedByKillswitch: String { return Localizable.tr("Localizable", "connection_status_disconnectedByKillswitch", fallback: "Disconnected due to Kill Switch") }
   /// Connection status title while VPN status is unknown
   public static var connectionStatusLoading: String { return Localizable.tr("Localizable", "connection_status_loading", fallback: "Loading") }
   /// Connection status title when user is connected to a VPN [Redesign_2023]

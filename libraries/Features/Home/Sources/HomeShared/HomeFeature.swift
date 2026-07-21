@@ -26,11 +26,12 @@ import ConnectionInventory
 import CoreConnection // LocalAgent
 import Dependencies
 import Domain
+import ExtensionSync
 import Foundation
-import LocalAgent
 import ModalsServices
 import NetShield
 import Payments
+import PaymentsShared
 import PCAP
 import PCAPShared
 import ProtonCoreFeatureFlags
@@ -126,7 +127,6 @@ public struct HomeFeature {
         /// translates a `ConnectionCommand` into `ConnectionFeature.input(...)`.
         case connectionCommandReceived(ConnectionCommand)
 
-        case killSwitchSettingChanged(Bool)
         case planChanged(PlanChange)
         /// Refresh API announcements if polling is enabled (on start and each time the app becomes active)
         case refreshAnnouncementsIfNeeded
@@ -273,11 +273,6 @@ private extension HomeFeature {
                         try await clock.sleep(for: Self.whatsNewPresentationDelay)
                         await send(.whatsNewChecker(.check))
                     },
-                    .run { [killSwitch = $killSwitch] send in
-                        for await value in killSwitch.publisher.removeDuplicates().values.dropFirst() {
-                            await send(.killSwitchSettingChanged(value))
-                        }
-                    },
                     .run { send in
                         let stream = await connectionCommandClient.stream()
                         for await command in stream {
@@ -309,13 +304,6 @@ private extension HomeFeature {
                     state.destination = nil
                 }
                 return .none
-            case .killSwitchSettingChanged:
-                guard state.connectionState.isConnected,
-                      let spec = state.connectionState.resolvedSpec
-                else {
-                    return .none
-                }
-                return .send(.connection(.input(.connect(.init(spec: spec, acceptableProtocols: .all)))))
             case let .planChanged(planChange):
                 // update the persisted feature settings so a downgrade clears paid features
                 // and an upgrade re-enables NetShield
@@ -380,7 +368,7 @@ private extension HomeFeature {
                 return performConnect(pending: pending)
 
             case let .connectionCommandReceived(.disconnect(trigger, completion)):
-                let alreadyDisconnected = state.connectionState.is(\.disconnected)
+                let alreadyDisconnected = state.connectionState.is(\.disconnected) || state.connectionState.is(\.killSwitchActive)
                 return .merge(
                     .cancel(id: CancelID.connectionConnectCommandEffect),
                     .run { send in
@@ -549,11 +537,12 @@ private extension HomeFeature {
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
                 // ProTUN's `ConnectionFeature` no longer emits `.delegate(.disconnected)`; drain
-                // any queued disconnect completions when the layer reports a disconnected state.
+                // any queued disconnect completions when the layer reports a disconnected state
+                // (or zero-peer KS, which fulfils the user's disconnect intent).
                 return .merge(
                     .send(.sharedProperties(.newConnectionState(connectionState))),
                     .run { _ in
-                        if connectionState.is(\.disconnected) {
+                        if connectionState.is(\.disconnected) || connectionState.is(\.killSwitchActive) {
                             await pendingDisconnectCompletions.drainAndInvoke()
                         }
                     }

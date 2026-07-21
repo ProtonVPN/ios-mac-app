@@ -17,7 +17,8 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Domain
-import LocalAgentIPC
+import Foundation
+import IPCDefinitions
 
 /// Loosely mirrors the `ConnectionState` enum in `protun`.
 public enum ExtensionState: Sendable, Equatable {
@@ -25,6 +26,16 @@ public enum ExtensionState: Sendable, Equatable {
     case connecting(peerID: String?, waitReason: IPCConnectionPeerWaitReason)
     case connectingToLocalAgent(peerID: String?, waitReason: IPCConnectionAgentWaitReason, jail: IPCConnectionAgentJailReason)
     case connected(CurrentPeer)
+}
+
+public struct ExtensionStateSnapshot: Sendable, Equatable {
+    public let state: ExtensionState
+    public let requestId: UUID?
+
+    public init(state: ExtensionState, requestId: UUID?) {
+        self.state = state
+        self.requestId = requestId
+    }
 }
 
 extension ExtensionState {

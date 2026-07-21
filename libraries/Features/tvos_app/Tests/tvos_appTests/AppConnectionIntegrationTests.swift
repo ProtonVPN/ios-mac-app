@@ -24,7 +24,7 @@
     @testable import CoreConnection
     import Domain
     @testable import ExtensionManager
-    @testable import LocalAgent
+    @testable import ExtensionSync
     import Network
     @testable import tvos_app
     import VPNShared
@@ -64,6 +64,7 @@
                 $0.wireguardIOSLogProvider.clearLogsForAppGroup = { _ in }
                 $0.date = .constant(.distantFuture)
                 $0.connectionFeatureProvider.connectionFeatures = { .mock }
+                $0.connectionFeatureProvider.requestedFeatures = { .mock }
             }
             store.exhaustivity = .off
 
