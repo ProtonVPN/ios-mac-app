@@ -876,9 +876,9 @@
 
 "_error_mitm_title" = "Güvenli olmayan bağlantı";
 
-"_error_mitm_description" = "Proton VPN API hizmeti ile bağlantı kurulmaya çalışılırken TLS sertifikası doğrulanamadı. Geçerli internet bağlantınız izlenebilir. Verilerinizi güvende tutmak için, uygulamanın Proton VPN API hizmetine erişmesini engelliyoruz.\nOturum açmak veya hesabınıza erişmek için başka bir ağa geçin ve yeniden bağlanmayı deneyin.";
+"_error_mitm_description" = "Proton VPN API hizmeti ile bağlantı kurulurken TLS sertifikası doğrulanamadı. Geçerli internet bağlantınız izlenebilir. Verilerinizi güvende tutmak için, uygulamanın Proton VPN API hizmetine erişmesini engelliyoruz.\nOturum açmak veya hesabınıza erişmek için başka bir ağa geçin ve yeniden bağlanmayı deneyin.";
 
-"_error_mitm_vpn_description" = "VPN sunucusuna bağlanmaya çalışılırken TLS sertifikası doğrulanamadı. Geçerli internet bağlantınız izlenebilir. Verilerinizi güvende tutmak için, uygulamanın bu VPN sunucusuna erişmesini engelliyoruz.\nLütfen başka bir sunucu seçin.";
+"_error_mitm_vpn_description" = "VPN sunucusu ile bağlantı kurulurken TLS sertifikası doğrulanamadı. Geçerli internet bağlantınız izlenebilir. Verilerinizi güvende tutmak için, uygulamanın bu VPN sunucusuna erişmesini engelliyoruz.\nLütfen başka bir sunucu seçin.";
 
 /* Internal error message when there is a problem with initializing tls and connection cannot be established. */
 "_error_tls_initialisation" = "TLS başlatma sorunu";
@@ -2103,6 +2103,9 @@
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "Korunmuyorsunuz";
 
+/* Connection status when zero peer killswitch is enabled */
+"connection_status_disconnectedByKillswitch" = "Disconnected due to Kill Switch";
+
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
 "connection_status_protecting" = "Dijital kimliğiniz korunuyor";
 
@@ -2373,7 +2376,7 @@
 "_settings_protocol_alert_title" = "VPN bağlantısı etkin";
 
 /* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_body" = "İletişim kurallarını değiştirmek, var olan VPN oturumunuzu sonlandıracak.";
+"_settings_protocol_alert_body" = "İletişim kurallarını değiştirmek, geçerli VPN oturumunuzu sonlandıracak.";
 
 /* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
 "_settings_protocol_alert_button_cancel" = "İptal";
@@ -3279,28 +3282,28 @@
 "_transaction_log_" = "İşlem günlüğü";
 
 /* Footer note that is visible across the whole flow of the PCAP session */
-"_pcap_capture_file_storage" = "Sorun giderme dosyası aygıtınızda saklanır ve siz paylaşmadığınız sürece Proton’a gönderilmez. Bu dosya ziyaret ettiğiniz web sitelerini de içerebilecek olan VPN trafiğinizi kaydeder. [Ayrıntılı bilgi alın](%@)";
+"_pcap_capture_file_storage" = "Sorun giderme dosyası aygıtınızda tutulur ve siz paylaşmadığınız sürece Proton tarafına gönderilmez. Bu dosyada ziyaret ettiğiniz sitelerin de bulunabileceği VPN trafiğiniz kayıtlıdır. [Ayrıntılı bilgi alın](%@)";
 
 /* Description of the PCAP feature presented to the user before they start the PCAP session */
-"_pcap_capture_feature_description" = "Proton VPN'i kullanırken karşılaştığınız belirli bir sorunu yeniden canlandırarak müşteri destek ekibimizden yardım alabilirsiniz.\n\nUygulama VPN bağlantınızla ilgili teknik ayrıntıları içeren bir dosya oluşturacaktır.";
+"_pcap_capture_feature_description" = "Proton VPN kullanırken karşılaştığınız bir sorunun kaydını alarak müşteri destek ekibimizden yardım isteyebilirsiniz.\n\nUygulama VPN bağlantınızla ilgili teknik bilgilerin bulunduğu bir dosya oluşturur.";
 
 /* Directions to the user shown on the active PCAP session view */
-"_pcap_capture_session_directions" = "Sorunu yeniden oluşturun ardından yakalamayı durdurun.";
+"_pcap_capture_session_directions" = "Sorunu yeniden oluşturun ardından kaydı durdurun.";
 
 /* Format: mm:ss / mm:ss. Left hand side is the counter, right hand side is the maximum allowed time */
 "_pcap_capture_session_duration" = "%@ / %@";
 
 /* Header of the active PCAP session view */
-"_pcap_capture_session_capturing" = "Yakalanıyor";
+"_pcap_capture_session_capturing" = "Kayıt alınıyor";
 
 /* Button title on the PCAP export view. Presents a share sheet to save the file outside of the app */
 "_pcap_capture_session_export" = "Dosyayı kaydet";
 
 /* Header of the PCAP export view */
-"_pcap_capture_session_captured" = "VPN oturumu kaydedildi";
+"_pcap_capture_session_captured" = "VPN oturumunun kaydı alındı";
 
 /* `it` refers to the exportable `<date>.pcap` file that is available while user sees this text */
-"_pcap_capture_file_sharing" = "Artık bunu sohbetinize ekleyerek veya [Proton Drive](%@) üzerinde güvenli bir şekilde saklayıp herkese açık bir bağlantı paylaşarak müşteri destek ekibimizle paylaşabilirsiniz.";
+"_pcap_capture_file_sharing" = "Artık bu kaydı görüşmenize ekleyerek veya [Proton Drive](%@) üzerinde güvenli bir şekilde kaydedip herkese açık bir bağlantı ile paylaşarak müşteri destek ekibimize iletebilirsiniz.";
 
 /* Button title in the PCAP view. Starts the PCAP session */
 "_pcap_capture_session_start" = "Başlat";
@@ -3309,13 +3312,13 @@
 "_pcap_capture_session_stop" = "Durdur";
 
 /* Title of an alert when user starts the PCAP session */
-"_pcap_capture_session_should_start_session" = "VPN oturumunu yakalama başlatılsın mı?";
+"_pcap_capture_session_should_start_session" = "VPN oturumunu kaydı başlatılsın mı?";
 
 /* Description of an alert when user starts the PCAP session */
-"_pcap_capture_session_issue_reproduction" = "Mümkünse sorunla ilk kez karşılaştığınızda kullandığınız ayarları ve bağlantı türünü uygulayın.\n\nSorunu ilk kez ortaya çıktığı şekilde (internette gezinirken, bir uygulamayı kullanırken vb.) yeniden canlandırmaya çalışın.\n\nSorunu yeniden canlandırdıktan sonra kayıt işlemini durdurabilir ve dosyayı müşteri destek ekibiyle paylaşabilirsiniz.";
+"_pcap_capture_session_issue_reproduction" = "Yapabiliyorsanız, sorunla ilk kez karşılaştığınızda kullandığınız ayarları ve bağlantı türünü uygulayın.\n\nSorunu ilk kez ortaya çıktığı şekilde (internet üzerinde gezinirken, bir uygulamayı kullanırken vb.) yeniden ortaya çıkarmaya çalışın.\n\nSorunu yeniden ortaya çıkardıktan sonra kayıt işlemini durdurabilir ve dosyayı müşteri destek ekibiyle paylaşabilirsiniz.";
 
 /* Description of an alert when user tries dismissing the PCAP sheet */
-"_pcap_capture_discard_description" = "Dosya uygulamada saklanmayacak. Silmeden önce dosyayı dışa aktardığınızdan emin olun.";
+"_pcap_capture_discard_description" = "Dosya uygulama içinde kaydedilmez. Silmeden önce dosyayı dışa aktardığınıza emin olun.";
 
 /* Title of an alert when user tries dismissing the PCAP sheet */
 "_pcap_capture_discard_title" = "Dosya silinsin mi?";
@@ -3324,16 +3327,16 @@
 "_pcap_capture_discard_button" = "Dosyayı sil";
 
 /* Commonly used title of a button */
-"_got_it" = "Anlaşıldı";
+"_got_it" = "Anladım";
 
 /* Title of an alert that presents the reason for PCAP failure */
 "_pcap_capture_low_storage" = "Yeterli depolama alanı yok";
 
 /* Description of an alert that presents the reason for PCAP failure */
-"_pcap_capture_low_storage_action_description" = "Kaydı başlatmak için en az 200 MB boş alana ihtiyacınız var";
+"_pcap_capture_low_storage_action_description" = "Kaydı başlatmak için en az 200 MB boş depolama alanı gerekir";
 
 /* Title of an alert that presents the reason for PCAP failure */
-"_pcap_capture_failed" = "Yakalama başarısız oldu";
+"_pcap_capture_failed" = "Kayıt yapılamadı";
 
 /* Title of the alert shown when the VPN server refuses one of the user's requested settings */
 "_local_agent_setting_refused_title" = "Ayar uygulanmadı";
@@ -3342,4 +3345,4 @@
 "_local_agent_setting_refused_message" = "%@ bu bağlantı için kullanılabilir bir ayar değil.";
 
 /* Alert body shown when the server refuses a setting the app doesn't surface as a named control */
-"_local_agent_setting_refused_message_generic" = "Ayarlarınızdan biri bu bağlantı için kullanılamıyor. Bu ayar devre dışı bırakılmış.";
+"_local_agent_setting_refused_message_generic" = "Ayarlarınızdan biri bu bağlantı için kullanılamıyor. Bu ayar kapatılmış.";

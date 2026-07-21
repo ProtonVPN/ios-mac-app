@@ -1070,7 +1070,7 @@
 "_protun_logs" = "Dnevniki ProTUN-a";
 
 /* iOS Settings: Troubleshooting logs row */
-"_create_troubleshooting_file" = "Create a troubleshooting file";
+"_create_troubleshooting_file" = "Ustvari datoteko za odpravljanje težav";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Prijava napake";
@@ -1355,7 +1355,7 @@
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Odpravljanje težav";
 
-"_troubleshooting_file" = "Troubleshooting file";
+"_troubleshooting_file" = "Datoteka za odpravljanje težav";
 
 "_troubleshoot_item_alt_title" = "Dovoli alternativno usmerjanje";
 
@@ -2102,6 +2102,9 @@
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "Ste nezaščiteni";
+
+/* Connection status when zero peer killswitch is enabled */
+"connection_status_disconnectedByKillswitch" = "Disconnected due to Kill Switch";
 
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
 "connection_status_protecting" = "Zaščita vaše digitalne identitete";
@@ -3279,34 +3282,34 @@
 "_transaction_log_" = "Dnevnik transakcij";
 
 /* Footer note that is visible across the whole flow of the PCAP session */
-"_pcap_capture_file_storage" = "The troubleshooting file is stored on your device and is not sent to Proton unless you share it. It captures your VPN traffic, which may include the websites you visit. [Learn more](%@)";
+"_pcap_capture_file_storage" = "Datoteka za odpravljanje težav je shranjena na vaši napravi in se ne pošilja podjetju Proton, razen, če jo sami delite. V njej se beleži vaš promet preko VPN, ki lahko vključuje tudi spletne strani, ki jih obiščete. [Več informacij](%@)";
 
 /* Description of the PCAP feature presented to the user before they start the PCAP session */
-"_pcap_capture_feature_description" = "Reproduce a specific issue you’re facing when using Proton VPN to get help from our customer support team.\n\nThe app will create a file containing technical details about your VPN connection.";
+"_pcap_capture_feature_description" = "Poskusite ponoviti konkretno težavo, s katero se srečujete pri uporabi Proton VPN, da boste lahko zaprosili za pomoč našo službo za podporo strankam.\n\nAplikacija bo ustvarila datoteko s tehničnimi podatki o vaši VPN povezavi.";
 
 /* Directions to the user shown on the active PCAP session view */
-"_pcap_capture_session_directions" = "Reproduce the issue then stop the capture.";
+"_pcap_capture_session_directions" = "Poustvarite napako in nato ustavite zajem.";
 
 /* Format: mm:ss / mm:ss. Left hand side is the counter, right hand side is the maximum allowed time */
 "_pcap_capture_session_duration" = "%@ / %@";
 
 /* Header of the active PCAP session view */
-"_pcap_capture_session_capturing" = "Capturing";
+"_pcap_capture_session_capturing" = "Zajemanje v teku";
 
 /* Button title on the PCAP export view. Presents a share sheet to save the file outside of the app */
-"_pcap_capture_session_export" = "Save file";
+"_pcap_capture_session_export" = "Shrani datoteko";
 
 /* Header of the PCAP export view */
-"_pcap_capture_session_captured" = "VPN session captured";
+"_pcap_capture_session_captured" = "VPN seja je zajeta";
 
 /* `it` refers to the exportable `<date>.pcap` file that is available while user sees this text */
 "_pcap_capture_file_sharing" = "You can now share it with our customer support by attaching it in your conversation, or by storing it securely on [Proton Drive](%@) and sharing a public link.";
 
 /* Button title in the PCAP view. Starts the PCAP session */
-"_pcap_capture_session_start" = "Start";
+"_pcap_capture_session_start" = "Zaženi";
 
 /* Button title in the PCAP view. Stops the PCAP session */
-"_pcap_capture_session_stop" = "Stop";
+"_pcap_capture_session_stop" = "Ustavi";
 
 /* Title of an alert when user starts the PCAP session */
 "_pcap_capture_session_should_start_session" = "Start capturing VPN session?";

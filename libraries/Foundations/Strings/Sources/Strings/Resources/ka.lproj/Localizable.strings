@@ -1070,7 +1070,7 @@
 "_protun_logs" = "ProTUN-ის ჟურნალი";
 
 /* iOS Settings: Troubleshooting logs row */
-"_create_troubleshooting_file" = "Create a troubleshooting file";
+"_create_troubleshooting_file" = "პრობლემების გადაჭრის ფაილის შექმნა";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "პრობლემის ანგარიშის გადაგზავნა";
@@ -1355,7 +1355,7 @@
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "შეცდომების გასწორება";
 
-"_troubleshooting_file" = "Troubleshooting file";
+"_troubleshooting_file" = "შეცდომების გასწორების ფაილი";
 
 "_troubleshoot_item_alt_title" = "ალტერნატიული რაუტინგის ჩართვა";
 
@@ -2102,6 +2102,9 @@
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "დაცული არ ბრძანდებით";
+
+/* Connection status when zero peer killswitch is enabled */
+"connection_status_disconnectedByKillswitch" = "Disconnected due to Kill Switch";
 
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
 "connection_status_protecting" = "ვიცავთ თქვენს ციფრულ მონაცემებს";
@@ -3279,67 +3282,67 @@
 "_transaction_log_" = "ტრანზაქციის ჟურნალი";
 
 /* Footer note that is visible across the whole flow of the PCAP session */
-"_pcap_capture_file_storage" = "The troubleshooting file is stored on your device and is not sent to Proton unless you share it. It captures your VPN traffic, which may include the websites you visit. [Learn more](%@)";
+"_pcap_capture_file_storage" = "პრობლემების გადაწყვეტის ფაილის დამახსოვრებულია თქვენს მოწყობილობაზე და ის არ გაიგზავნება Proton-თან, სანამ ამას თქვენ არ იზამთ. ის ჩაიჭერს თქვენი VPN-ის ტრაფიკს, რომელიც შეიძლება შეიცავდეს ვებსაიტებს, სადაც შედიხართ [გაიგეთ მეტი](%@)";
 
 /* Description of the PCAP feature presented to the user before they start the PCAP session */
-"_pcap_capture_feature_description" = "Reproduce a specific issue you’re facing when using Proton VPN to get help from our customer support team.\n\nThe app will create a file containing technical details about your VPN connection.";
+"_pcap_capture_feature_description" = "გამეორეთ სპეფიციკური შეცდომა, რომელსაც აწყდებით Proton VPN-ის გამოყენებისას, რომ მიიღოთ დახმარება ჩვენი მხარდაჭერის გუნდისგან.\n\nაპი შექმნის ფაილს, რომელიც შეიცავს ტექნიკურ დეტალებს თქვენი VPN კავშირის შესახებ.";
 
 /* Directions to the user shown on the active PCAP session view */
-"_pcap_capture_session_directions" = "Reproduce the issue then stop the capture.";
+"_pcap_capture_session_directions" = "ქენით ისე, რომ პრობლემა გამეორდეს, შემდეგ კი გააჩერეთ ჩაჭერა.";
 
 /* Format: mm:ss / mm:ss. Left hand side is the counter, right hand side is the maximum allowed time */
 "_pcap_capture_session_duration" = "%@ / %@";
 
 /* Header of the active PCAP session view */
-"_pcap_capture_session_capturing" = "Capturing";
+"_pcap_capture_session_capturing" = "ჩაწერა";
 
 /* Button title on the PCAP export view. Presents a share sheet to save the file outside of the app */
-"_pcap_capture_session_export" = "Save file";
+"_pcap_capture_session_export" = "ფაილის შენახვა";
 
 /* Header of the PCAP export view */
-"_pcap_capture_session_captured" = "VPN session captured";
+"_pcap_capture_session_captured" = "VPN-ის სესია ჩაჭერილია";
 
 /* `it` refers to the exportable `<date>.pcap` file that is available while user sees this text */
-"_pcap_capture_file_sharing" = "You can now share it with our customer support by attaching it in your conversation, or by storing it securely on [Proton Drive](%@) and sharing a public link.";
+"_pcap_capture_file_sharing" = "ახლა შეგიძლიათ, გაუზიაროთ ის ჩვენი მხარდაჭერის გუნდს მისი საუბარზე მიმაგრებით, ან მისი უსაფრთხოდ შენახვით [Proton Drive](%@]-ზე და მისი საჯარო ბმულის გაზიარებით.";
 
 /* Button title in the PCAP view. Starts the PCAP session */
-"_pcap_capture_session_start" = "Start";
+"_pcap_capture_session_start" = "დაწყება";
 
 /* Button title in the PCAP view. Stops the PCAP session */
-"_pcap_capture_session_stop" = "Stop";
+"_pcap_capture_session_stop" = "გაჩერება";
 
 /* Title of an alert when user starts the PCAP session */
-"_pcap_capture_session_should_start_session" = "Start capturing VPN session?";
+"_pcap_capture_session_should_start_session" = "დავიწყო VPN-ის სესიის ჩაწერა?";
 
 /* Description of an alert when user starts the PCAP session */
-"_pcap_capture_session_issue_reproduction" = "If possible, apply the same settings and type of connection you used when you first faced the issue.\n\nAim to reproduce the issue in the same way it first happened (browsing the web, using an app, etc.)\n\nWhen you’ve reproduced the issue, you can stop the capture and share the file with the customer support team.";
+"_pcap_capture_session_issue_reproduction" = "თუ შესაძლებელია, გამოიყენეთ იგივე პარამეტრები და კავშირის ტიპი, რომელსაც იყენებდით მაშინ, როცა ამ პრობლემას პირველად გადააწყდით.\n\nდაისახეთ მიზნად, განმეორებით მიიღოთ ეს შეცდომა იგივენაირად, როგორც პირველად (ინტერნეტში მუშაობა, აპის გამოყენება და ა.შ.)\n\nროცა პრობლემას გაიმეორებთ, შეგიძლიათ, გააჩეროთ ჩაჭერა და გაუზიაროთ ფაილი ჩვენი მომხმარებლის მხარდაჭერის გუნდს.";
 
 /* Description of an alert when user tries dismissing the PCAP sheet */
-"_pcap_capture_discard_description" = "The file will not be stored in the app. Make sure you’ve exported it before discarding.";
+"_pcap_capture_discard_description" = "ეს ფაილი აპში დამახსოვრებული არ იქნება. მოცილებამდე დარწმუნდით, რომ გაიტანეთ ის.";
 
 /* Title of an alert when user tries dismissing the PCAP sheet */
-"_pcap_capture_discard_title" = "Discard file?";
+"_pcap_capture_discard_title" = "მოვაცილო ფაილი?";
 
 /* Button title in an alert */
-"_pcap_capture_discard_button" = "Discard file";
+"_pcap_capture_discard_button" = "ფაილის მოცილება";
 
 /* Commonly used title of a button */
-"_got_it" = "Got it";
+"_got_it" = "გავიგე";
 
 /* Title of an alert that presents the reason for PCAP failure */
-"_pcap_capture_low_storage" = "Not enough storage";
+"_pcap_capture_low_storage" = "არასაკმარისი საცავი";
 
 /* Description of an alert that presents the reason for PCAP failure */
-"_pcap_capture_low_storage_action_description" = "You need at least 200MB of available space to start a capture";
+"_pcap_capture_low_storage_action_description" = "ჩაჭერის დასაწყებადლ დისკზე, მინიმუმ 200მბ უნდა გქონდეთ თავისუფალი";
 
 /* Title of an alert that presents the reason for PCAP failure */
-"_pcap_capture_failed" = "Capture failed";
+"_pcap_capture_failed" = "ჩაწერა ჩავარდა";
 
 /* Title of the alert shown when the VPN server refuses one of the user's requested settings */
-"_local_agent_setting_refused_title" = "Setting not applied";
+"_local_agent_setting_refused_title" = "პარამეტრები არ გადატარებულა";
 
 /* Alert body shown when the server refuses a named setting. %@ is the setting name, e.g. NetShield */
-"_local_agent_setting_refused_message" = "%@ is not an available setting for this connection.";
+"_local_agent_setting_refused_message" = "%@ ამ კავშირისთვის ხელმისაწვდომი პარამეტრი არაა.";
 
 /* Alert body shown when the server refuses a setting the app doesn't surface as a named control */
-"_local_agent_setting_refused_message_generic" = "One of your settings is not available for this connection, it has been turned off.";
+"_local_agent_setting_refused_message_generic" = "ერთერთი ტქვენი პარამეტრი ამ კავშირისთვის ხელმისაწვდომი არაა. ის გაითიშა.";
