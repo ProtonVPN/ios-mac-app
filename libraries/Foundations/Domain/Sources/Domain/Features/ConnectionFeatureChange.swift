@@ -40,7 +40,7 @@ public enum ConnectionFeatureChange: Hashable, Sendable, Codable {
         case connectionProtocol(ConnectionProtocol)
         case killSwitch(Bool)
         case allowLAN(Bool)
-        case customDNS(Bool)
+        case customDNS([String])
     }
 }
 

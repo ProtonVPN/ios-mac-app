@@ -40,8 +40,6 @@ final class HermesSettingsViewModel {
     enum Alert {
         case hermesOnConflict
         case netShieldOnConflict
-        case netShieldOnConflictAndShouldReconnect
-        case confirmChanges
         case duplicate
         case invalid
         case unexpectedError
@@ -99,28 +97,16 @@ final class HermesSettingsViewModel {
         }
     }
 
-    func isReconnectionNecessaryFromHermesChange(completionHandler: @escaping (_ reconnectionIsNecessary: Bool) -> Void) {
+    /// How a pending Hermes (enabled flag or resolver list) change should be applied, or `nil` if nothing changed
+    /// since the view last appeared.
+    func hermesChangeAvailability(completionHandler: @escaping (_ availability: VpnFeatureChangeState?) -> Void) {
         let newState = State(enabled: isEnabled, resolvers: activeHermesResolvers)
         guard newState != initialState else {
-            completionHandler(false)
+            completionHandler(nil)
             return
         }
-        switch VpnFeatureChangeState(connectionState: connectionState) {
-        case .immediate:
-            completionHandler(false)
-        case .withConnectionUpdate, .withReconnect:
-            completionHandler(true)
-        }
         initialState = newState
-    }
-
-    func isReconnectionNecessaryFromNetShieldChange(completionHandler: @escaping (_ reconnectionIsNecessary: Bool) -> Void) {
-        switch VpnFeatureChangeState(connectionState: connectionState) {
-        case .immediate:
-            completionHandler(false)
-        case .withConnectionUpdate, .withReconnect:
-            completionHandler(true)
-        }
+        completionHandler(VpnFeatureChangeState(connectionState: connectionState))
     }
 
     func userEnablingHermesConfirmation() {
@@ -184,10 +170,8 @@ extension HermesSettingsViewModel.Alert {
         switch self {
         case .hermesOnConflict:
             Localizable.hermesConflictHermesOnTitle
-        case .netShieldOnConflict, .netShieldOnConflictAndShouldReconnect:
+        case .netShieldOnConflict:
             Localizable.hermesConflictNetshieldOnTitle
-        case .confirmChanges:
-            Localizable.hermesApplyChangesAlertTitle
         case .duplicate, .invalid, .unexpectedError:
             Localizable.genericErrorTitle
         }
@@ -205,10 +189,6 @@ extension HermesSettingsViewModel.Alert {
             Localizable.hermesConflictHermesOnDescription
         case .netShieldOnConflict:
             Localizable.hermesConflictNetshieldOnDescription
-        case .netShieldOnConflictAndShouldReconnect:
-            Localizable.hermesConflictNetshieldOnAndShouldReconnectDescription
-        case .confirmChanges:
-            Localizable.hermesApplyChangesDescription
         }
     }
 }
@@ -230,36 +210,6 @@ extension HermesSettingsViewModel {
             completionHandler(false)
         }))
         alertController.addAction(.init(title: Localizable.enable, style: .default, handler: { _ in completionHandler(true) }))
-        alertController.addAction(.init(title: Localizable.cancel, style: .cancel, handler: { _ in completionHandler(false) }))
-        return alertController
-    }
-
-    func netShieldOnConflictAndShouldReconnectAlertController(
-        completionHandler: @escaping (_ shouldEnableNetShield: Bool, _ shouldReconnect: Bool) -> Void
-    ) -> UIAlertController {
-        let alertController = UIAlertController(
-            title: Alert.netShieldOnConflict.title,
-            message: Alert.netShieldOnConflict.message,
-            preferredStyle: .alert
-        )
-        alertController.addAction(.init(title: Localizable.learnMore, style: .default, handler: { [weak self] _ in
-            self?.openLearnMore()
-            completionHandler(false, false)
-        }))
-        alertController.addAction(.init(title: Localizable.hermesConflictNetshieldOnEnableAndReconnect, style: .default, handler: { _ in completionHandler(true, true) }))
-        alertController.addAction(.init(title: Localizable.cancel, style: .cancel, handler: { _ in completionHandler(false, false) }))
-        return alertController
-    }
-
-    func reconnectionAlertController(
-        completionHandler: @escaping (_ shouldReconnect: Bool) -> Void
-    ) -> UIAlertController {
-        let alertController = UIAlertController(
-            title: Alert.confirmChanges.title,
-            message: Alert.confirmChanges.message,
-            preferredStyle: .alert
-        )
-        alertController.addAction(.init(title: Localizable.continue, style: .default, handler: { _ in completionHandler(true) }))
         alertController.addAction(.init(title: Localizable.cancel, style: .cancel, handler: { _ in completionHandler(false) }))
         return alertController
     }

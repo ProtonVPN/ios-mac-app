@@ -16,34 +16,60 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Hermes
 import NetworkExtension
+import os
 
 enum SettingsGenerator {
-    private static let ipv4Loopback: String = "127.0.0.1"
-    private static let protonDNSServer: String = "10.2.0.1"
+    static func settings(excludingRoute: String?, dnsServers: [String]) -> NETunnelNetworkSettings {
+        let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: .ipv4Loopback)
 
-    static func settings(excludingRoute: String?) -> NETunnelNetworkSettings {
-        let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: Self.ipv4Loopback)
+        settings.dnsSettings = dnsSettings(from: dnsServers)
+        settings.dnsSettings?.matchDomains = [""]
 
-        let dnsSettings = NEDNSSettings(servers: [Self.protonDNSServer])
-        dnsSettings.matchDomains = [""]
-
-        settings.dnsSettings = dnsSettings
-
-        let ipv4Settings = NEIPv4Settings(
-            addresses: ["10.2.0.2"],
-            subnetMasks: ["255.255.255.255"]
-        )
+        let ipv4Settings = NEIPv4Settings(addresses: [.tunnelAddress], subnetMasks: [.hostMask])
         ipv4Settings.includedRoutes = [
-            NEIPv4Route(destinationAddress: "10.2.0.1", subnetMask: "255.255.255.255"), // local agent
-            NEIPv4Route(destinationAddress: "10.2.0.2", subnetMask: "255.255.255.255"),
-            NEIPv4Route(destinationAddress: "0.0.0.0", subnetMask: "0.0.0.0"),
+            NEIPv4Route(destinationAddress: .localAgentAddress, subnetMask: .hostMask),
+            NEIPv4Route(destinationAddress: .tunnelAddress, subnetMask: .hostMask),
+            NEIPv4Route(destinationAddress: .defaultRouteAddress, subnetMask: .anyMask),
         ]
         if let excludingRoute {
-            ipv4Settings.excludedRoutes = [NEIPv4Route(destinationAddress: excludingRoute, subnetMask: "255.255.255.255")]
+            ipv4Settings.excludedRoutes = [NEIPv4Route(destinationAddress: excludingRoute, subnetMask: .hostMask)]
         }
 
         settings.ipv4Settings = ipv4Settings
+
         return settings
     }
+
+    private static func dnsSettings(from resolverLocations: [String] = [HermesResolver.proton.location]) -> NEDNSSettings {
+        let dnsServers = resolverLocations.compactMap(DNSResolver.init).sorted()
+
+        // When using DoH/DoT, it seems we can only set one serverName/serverURL
+        // So for now, we would expect that DNS resolvers are sorted by transport so TLS/HTTPS related entries would be first.
+        let firstElement = dnsServers.first ?? .proton
+        switch firstElement.transport {
+        case .tls:
+            let dnsSettings = NEDNSOverTLSSettings()
+            dnsSettings.serverName = firstElement.stringRepresentation
+            return dnsSettings
+        case .https:
+            let dnsSettings = NEDNSOverHTTPSSettings()
+            dnsSettings.serverURL = URL(string: firstElement.stringRepresentation)
+            return dnsSettings
+        case .classic:
+            return NEDNSSettings(servers: dnsServers.map(\.stringRepresentation))
+        }
+    }
+}
+
+private extension String {
+    static let ipv4Loopback: String = "127.0.0.1"
+
+    static let localAgentAddress = "10.2.0.1"
+    static let tunnelAddress = "10.2.0.2"
+    static let defaultRouteAddress = "0.0.0.0"
+
+    static let hostMask = "255.255.255.255"
+    static let anyMask = "0.0.0.0"
 }

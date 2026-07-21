@@ -56,6 +56,10 @@ public extension NETunnelProviderProtocol {
                 protunConfig = protunConfig.with(preferredTransport: .some(newProtocol.wireGuardTransport))
             }
 
+            if let customDNS = update.customDNS {
+                protunConfig = protunConfig.with(dnsServers: customDNS)
+            }
+
             // Record the requested Local Agent features. The configuration always carries the user's latest request.
             protunConfig = protunConfig.with(
                 netShieldLevel: update.netShield?.rawValue,

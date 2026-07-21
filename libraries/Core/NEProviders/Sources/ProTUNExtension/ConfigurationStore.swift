@@ -63,6 +63,8 @@ actor ConfigurationStore {
                 try await withTimeout(of: Self.transactionTimeout) {
                     try await Self.performUpdate(update, adapter: adapter)
                 }
+                @Dependency(\.extensionIPCServer) var extensionIPCServer
+                extensionIPCServer.restampConnectionData(update.id)
             } catch let error as ConfigurationUpdateError {
                 Logger.adapter.error("Configuration update failed: \(error, privacy: .public)")
                 await self.reportConfigChangeFailure(error)
@@ -96,52 +98,67 @@ actor ConfigurationStore {
         let peersToApply: [PeerInfo]?
         let agentSettingsToApply: LocalAgentSettings?
 
+        let networkSettingsUpdate: (dnsServers: [String], excludingRoute: String?)?
         do {
             try configuration.apply(update: update)
-            (peersToApply, agentSettingsToApply) = try configuration.liveUpdates(for: update)
+            (peersToApply, agentSettingsToApply, networkSettingsUpdate) = try configuration.liveUpdates(for: update)
         } catch {
             Logger.adapter.error("Encountered encoding error when applying config update: \(error, privacy: .public)")
             throw ConfigurationUpdateError.badEncoding
         }
 
-        do {
-            if update.hasConfigurationChanges {
-                try await adapter.whileReasserting { () async throws(ProTUNAdapter.Error) in
-                    try performReconfiguration(peersToApply, agentSettingsToApply, adapter: adapter)
-                }
-            } else {
-                try performReconfiguration(peersToApply, agentSettingsToApply, adapter: adapter)
-            }
-        } catch ProTUNAdapter.Error.noConnection {
-            throw .noConnection
-        } catch {
-            assertionFailure("Unexpected Adapter error: \(error)")
-            throw .badConfiguration
+        try await adapter.reassertingIfRequired(for: update) { () async throws(ConfigurationUpdateError) in
+            try await performReconfiguration(
+                peersToApply,
+                agentSettingsToApply,
+                networkSettingsUpdate: networkSettingsUpdate,
+                adapter: adapter
+            )
         }
     }
 
     private static func performReconfiguration(
         _ peers: [PeerInfo]?,
         _ settings: LocalAgentSettings?,
+        networkSettingsUpdate: (dnsServers: [String], excludingRoute: String?)?,
         adapter: ProTUNAdapter
-    ) throws(ProTUNAdapter.Error) {
-        if let peers {
-            Logger.adapter.info("Updating peers: \(peers.map(\.description))")
-            try adapter.handlePeersUpdate(peers)
-        }
+    ) async throws(ConfigurationUpdateError) {
+        do {
+            if let peers {
+                Logger.adapter.info("Updating peers: \(peers.map(\.description))")
+                try adapter.handlePeersUpdate(peers)
+            }
 
-        if let settings {
-            Logger.adapter.info("Applying settings: \(settings)")
-            try adapter.applyLocalAgentSettings(settings)
+            if let settings {
+                Logger.adapter.info("Applying settings: \(settings)")
+                try adapter.applyLocalAgentSettings(settings)
+            }
+
+            if let networkSettingsUpdate {
+                Logger.adapter.info("Refreshing Network settings: \(networkSettingsUpdate.dnsServers)")
+                try await adapter.setNetworkSettings(
+                    excludingRoute: networkSettingsUpdate.excludingRoute,
+                    dnsServers: networkSettingsUpdate.dnsServers
+                )
+            }
+        } catch ProTUNAdapter.Error.noConnection {
+            throw .noConnection
+        } catch {
+            Logger.adapter.error("Reconfiguration failed: \(error, privacy: .public)")
+            throw .badConfiguration
         }
     }
 }
 
 extension NETunnelProviderProtocol {
-    typealias ConnectionUpdateResult = (newPeers: [PeerInfo]?, newSettings: LocalAgentSettings?)
+    typealias ConnectionUpdateResult = (
+        newPeers: [PeerInfo]?,
+        newSettings: LocalAgentSettings?,
+        networkSettingsUpdate: (dnsServers: [String], excludingRoute: String?)?
+    )
 
     func liveUpdates(for update: ConnectionUpdate) throws -> ConnectionUpdateResult {
-        guard update.hasConfigurationChanges else { return (nil, nil) }
+        guard update.hasConfigurationChanges else { return (nil, nil, nil) }
 
         let protunConfig = try ProTUNConfigurationCoder.decode(from: self)
 
@@ -153,7 +170,11 @@ extension NETunnelProviderProtocol {
                 .map(PeerInfo.init)
         }
 
-        guard update.hasAgentChanges else { return (newPeers, nil) }
-        return (newPeers, LocalAgentSettings(protunConfig))
+        let networkSettingsUpdate: (dnsServers: [String], excludingRoute: String?)? = update.customDNS.map {
+            (dnsServers: $0, excludingRoute: protunConfig.peers.first?.serverIP)
+        }
+
+        guard update.hasAgentChanges else { return (newPeers, nil, networkSettingsUpdate) }
+        return (newPeers, LocalAgentSettings(protunConfig), networkSettingsUpdate)
     }
 }

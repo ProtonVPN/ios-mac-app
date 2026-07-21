@@ -43,8 +43,6 @@ import UIKit
 import VPNAppCore
 import VPNShared
 
-// TODO: Migrate to @MainActor once overall codebase is ready for it
-
 final class SettingsViewModel {
     typealias Factory =
         AppSessionManagerFactory &
@@ -540,7 +538,7 @@ final class SettingsViewModel {
         DispatchQueue.main.async {
             let viewController = self.settingsService.makeHermesSettingsViewController(viewModel: self.hermesSettingsViewModel)
             viewController.onDidDisappear = { [weak self] in
-                self?.showHermesReconnectionAlertIfNecessary()
+                self?.applyHermesChangesIfNecessary()
             }
             self.push(viewController: viewController, hidesTranslucentNarBar: true, hidesBackBarButton: true)
         }
@@ -911,33 +909,22 @@ final class SettingsViewModel {
         showModalController?(alertController)
     }
 
-    private func showHermesReconnectionAlertIfNecessary() {
-        hermesSettingsViewModel.isReconnectionNecessaryFromHermesChange { [weak self] reconnectionIsNecessary in
-            guard reconnectionIsNecessary else {
+    private func applyHermesChangesIfNecessary() {
+        hermesSettingsViewModel.hermesChangeAvailability { [weak self] availability in
+            guard let self, let availability else {
+                log.assertionFailure("Hermes change availability callback called but unable to handle the change")
                 return
             }
-            self?.showReconnectionAlertController(hermesWillBeEnabled: true)
-        }
-    }
-
-    private func showNetShieldReconnectionAlertIfNecessary(cancelHandler: (() -> Void)? = nil) {
-        hermesSettingsViewModel.isReconnectionNecessaryFromNetShieldChange { [weak self] reconnectionIsNecessary in
-            guard reconnectionIsNecessary else {
-                return
-            }
-            self?.showReconnectionAlertController(hermesWillBeEnabled: false, cancelHandler: cancelHandler)
-        }
-    }
-
-    private func showReconnectionAlertController(hermesWillBeEnabled: Bool, cancelHandler: (() -> Void)? = nil) {
-        let alertController = hermesSettingsViewModel.reconnectionAlertController { [weak self] shouldReconnect in
-            if shouldReconnect {
-                self?.reconnect(with: .customDNS(hermesWillBeEnabled), showStatusViewController: true)
-            } else {
-                cancelHandler?()
+            switch availability {
+            case .immediate:
+                break
+            case .withReconnect:
+                log.assertionFailure("Hermes DNS changes should never require a reconnect")
+                fallthrough
+            case .withConnectionUpdate:
+                apply(tunnelFeatureChange: .customDNS(hermesClient.currentResolvers.map(\.location)))
             }
         }
-        showModalController?(alertController)
     }
 
     private var userTier: Int {

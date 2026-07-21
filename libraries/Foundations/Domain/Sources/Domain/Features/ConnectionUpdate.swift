@@ -38,6 +38,7 @@ public struct ConnectionUpdate: Identifiable, Sendable, Equatable, Codable {
     public var connectionProtocol: ConnectionProtocol?
     public var killSwitch: Bool?
     public var allowLAN: Bool?
+    public var customDNS: [String]?
 
     // LocalAgent features
     public var netShield: NetShieldType?
@@ -50,6 +51,7 @@ public struct ConnectionUpdate: Identifiable, Sendable, Equatable, Codable {
         connectionProtocol: ConnectionProtocol? = nil,
         killSwitch: Bool? = nil,
         allowLAN: Bool? = nil,
+        customDNS: [String]? = nil,
         netShield: NetShieldType? = nil,
         vpnAccelerator: Bool? = nil,
         moderateNAT: NATType? = nil,
@@ -60,6 +62,7 @@ public struct ConnectionUpdate: Identifiable, Sendable, Equatable, Codable {
         self.connectionProtocol = connectionProtocol
         self.killSwitch = killSwitch
         self.allowLAN = allowLAN
+        self.customDNS = customDNS
         self.netShield = netShield
         self.vpnAccelerator = vpnAccelerator
         self.moderateNAT = moderateNAT
@@ -70,7 +73,7 @@ public struct ConnectionUpdate: Identifiable, Sendable, Equatable, Codable {
 public extension ConnectionUpdate {
     /// Whether this update requests any feature changes that require touching the ``ProTUNConfiguration``.
     var hasConfigurationChanges: Bool {
-        location != nil || connectionProtocol != nil || hasAgentChanges
+        location != nil || connectionProtocol != nil || hasAgentChanges || customDNS != nil
     }
 
     // Whether this update requires the ProTUN connection to be updated with a new set of peers
@@ -81,5 +84,9 @@ public extension ConnectionUpdate {
     /// Whether this update requests any Local Agent feature change (a feature that is provided by the server).
     var hasAgentChanges: Bool {
         netShield != nil || vpnAccelerator != nil || moderateNAT != nil || portForwarding != nil
+    }
+
+    var requiresReassertion: Bool {
+        location != nil || connectionProtocol != nil
     }
 }
