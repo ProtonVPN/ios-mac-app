@@ -39,7 +39,6 @@ public struct SharedPropertiesFeature {
 
     @ObservableState
     public struct State: Equatable {
-        @SharedReader(.connectionState) var connectionState: ConnectionState
         @Shared(.lastConnectionError) var lastConnectionError: ConnectionError?
 
         var userLocation: UserLocationFeature.State = .init()
@@ -51,7 +50,6 @@ public struct SharedPropertiesFeature {
         case userLocation(UserLocationFeature.Action)
         case review(ReviewFeature.Action)
 
-        case newConnectionState(ConnectionState)
         case connectionFailed(ConnectionError)
         case newAnnouncementBanner
 
@@ -101,21 +99,6 @@ public struct SharedPropertiesFeature {
                 }
 
             case .userLocation, .review:
-                return .none
-
-            case let .newConnectionState(newValue):
-                let oldValue = state.connectionState
-                if newValue.is(\.connected), !oldValue.is(\.connected) {
-                    return .send(.review(.connected))
-                } else if newValue.is(\.disconnected), !oldValue.is(\.disconnected) {
-                    // User location will be fetched if it hasn't already been done recently
-                    // e.g. if we were connected while the long living effect timer was ticking.
-                    return .merge(
-                        .send(.userLocation(.fetchUserLocation)),
-                        .send(.review(.disconnected))
-                    )
-                }
-
                 return .none
 
             case let .connectionFailed(error):

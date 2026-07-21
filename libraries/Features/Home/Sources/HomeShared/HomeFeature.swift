@@ -537,16 +537,12 @@ private extension HomeFeature {
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
                 // ProTUN's `ConnectionFeature` no longer emits `.delegate(.disconnected)`; drain
-                // any queued disconnect completions when the layer reports a disconnected state
-                // (or zero-peer KS, which fulfils the user's disconnect intent).
-                return .merge(
-                    .send(.sharedProperties(.newConnectionState(connectionState))),
-                    .run { _ in
-                        if connectionState.is(\.disconnected) || connectionState.is(\.killSwitchActive) {
-                            await pendingDisconnectCompletions.drainAndInvoke()
-                        }
+                // any queued disconnect completions when the layer reports a disconnected state.
+                return .run { _ in
+                    if connectionState.is(\.disconnected) || connectionState.is(\.killSwitchActive) {
+                        await pendingDisconnectCompletions.drainAndInvoke()
                     }
-                )
+                }
             case let .connection(.delegate(.intentResolutionFailed(intent, resolutionError))):
                 SentryHelper.shared?.log(error: resolutionError)
                 switch resolutionError {

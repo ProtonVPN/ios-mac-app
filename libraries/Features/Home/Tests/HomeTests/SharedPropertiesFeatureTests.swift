@@ -61,26 +61,4 @@ final class SharedPropertiesFeatureTests: XCTestCase {
         await store.receive(\.refreshServerLoads)
         await fulfillment(of: [loadsFetched, loadsUpserted, loadsNotificationPosted], timeout: 0, enforceOrder: true)
     }
-
-    func testFetchesLocationOnDisconnection() async {
-        @Shared(.connectionState) var connectionState
-        $connectionState.withLock { $0 = .disconnected }
-        let now = Date.now
-        let clock = TestClock()
-        let store = TestStore(initialState: .init()) {
-            SharedPropertiesFeature()
-        } withDependencies: {
-            $0.date = .constant(now)
-            $0.continuousClock = clock
-            $0.logicalsClient.fetchLoads = { _ in [] }
-            $0.serverRepository.upsertLoads = { _ in }
-            $0.announcementManager.announcementsPublisher = { Empty(completeImmediately: false).eraseToAnyPublisher() }
-        }
-        store.exhaustivity = .off
-
-        await store.send(.listen)
-        await store.send(.newConnectionState(.resolving))
-        await store.send(.newConnectionState(.disconnected))
-        await store.receive(\.userLocation.fetchUserLocation)
-    }
 }

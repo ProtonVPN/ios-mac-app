@@ -30,11 +30,6 @@ public extension ConnectionFeature.State {
         let tomorrow = now.addingTimeInterval(.days(1))
 
         return ConnectionFeature.State(
-            connectionState: .connected(
-                TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
-                .init(currentPeer: .mock, connectionDate: now, protocolConnectionData: .ike)
-
-            ),
             shouldRegisterServerChangeOnConnection: false,
             tunnel: .connected(
                 TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),

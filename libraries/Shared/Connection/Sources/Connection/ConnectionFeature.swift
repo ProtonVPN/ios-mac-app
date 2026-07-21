@@ -63,6 +63,8 @@ public struct ConnectionFeature: Sendable {
         case tunnel(ExtensionFeature.Action)
         case input(Input)
         case delegate(Delegate)
+        case connectionStateUpdated(ConnectionState)
+        case reloadWidgetTimelines
         case stopObserving
 
         /// A subset of this reducer's actions suitable to be sent from outside
@@ -165,7 +167,9 @@ public struct ConnectionFeature: Sendable {
                         tunnelProtocol: tunnelConfig.tunnelProtocol,
                         peerIDs: []
                     )
-                    state.connectionState = .killSwitchActive(tunnelConfig.connectionSpec, zeroPeerConfig)
+                    state.$connectionState.withLock {
+                        $0 = .killSwitchActive(tunnelConfig.connectionSpec, zeroPeerConfig)
+                    }
                     let update = ConnectionUpdate(
                         location: .init(spec: tunnelConfig.connectionSpec, peers: []),
                         killSwitch: true
@@ -262,7 +266,16 @@ public struct ConnectionFeature: Sendable {
 
             case .tunnel:
                 return .none
-
+            case let .connectionStateUpdated(newValue):
+                return .merge(
+                    .send(.delegate(.stateChanged(newValue))),
+                    .send(.reloadWidgetTimelines)
+                )
+            case .reloadWidgetTimelines:
+#if canImport(WidgetKit)
+                WidgetCenter.shared.reloadAllTimelines()
+#endif
+                return .none
             case .delegate:
                 // It's up to the parent feature to respond to delegate actions
                 return .none
@@ -270,10 +283,7 @@ public struct ConnectionFeature: Sendable {
         }
         .onChange(of: \.connectionState) { _, newValue in
             Reduce { _, _ in
-#if canImport(WidgetKit)
-                WidgetCenter.shared.reloadAllTimelines()
-#endif
-                return .send(.delegate(.stateChanged(newValue)))
+                return .send(.connectionStateUpdated(newValue))
             }
         }
     }
@@ -345,6 +355,10 @@ extension ConnectionFeature.Action: CustomDebugStringConvertible {
             ".delegate(\(delegate.debugDescription))"
         case .stopObserving:
             ".stopObserving"
+        case let .connectionStateUpdated(connectionState):
+            ".connectionStateUpdated(\(connectionState.debugDescription)"
+        case .reloadWidgetTimelines:
+            ".reloadWidgetTimelines"
         }
     }
 }

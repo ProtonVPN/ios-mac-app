@@ -50,12 +50,7 @@ struct SidebarFeatureTests {
 //                connectionProtocol: .vpnProtocol(.ike),
 //                acceptableProtocols: .ikev2
 //            )
-            $0.connection.connectionState = .connecting(.unresolved(ConnectionPreparationIntent(
-                spec: spec,
-                connectionProtocol: .vpnProtocol(.ike),
-                acceptableProtocols: .ikev2
-            )))
-            $0.$connectionState.withLock {
+            $0.connection.$connectionState.withLock {
                 $0 = .connecting(.unresolved(ConnectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: .vpnProtocol(.ike),
@@ -130,12 +125,7 @@ struct SidebarFeatureTests {
 //                connectionProtocol: .vpnProtocol(.ike),
 //                acceptableProtocols: .ikev2
 //            )
-            $0.connection.connectionState = .connecting(.unresolved(ConnectionPreparationIntent(
-                spec: spec,
-                connectionProtocol: .vpnProtocol(.ike),
-                acceptableProtocols: .ikev2
-            )))
-            $0.$connectionState.withLock {
+            $0.connection.$connectionState.withLock {
                 $0 = .connecting(.unresolved(ConnectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: .vpnProtocol(.ike),
@@ -171,12 +161,7 @@ struct SidebarFeatureTests {
 //                connectionProtocol: .vpnProtocol(.ike),
 //                acceptableProtocols: .ikev2
 //            )
-            $0.connection.connectionState = .connecting(.unresolved(ConnectionPreparationIntent(
-                spec: spec,
-                connectionProtocol: .vpnProtocol(.ike),
-                acceptableProtocols: .ikev2
-            )))
-            $0.$connectionState.withLock {
+            $0.connection.$connectionState.withLock {
                 $0 = .connecting(.unresolved(ConnectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: .vpnProtocol(.ike),
@@ -212,12 +197,7 @@ struct SidebarFeatureTests {
 //                connectionProtocol: .vpnProtocol(.ike),
 //                acceptableProtocols: .ikev2
 //            )
-            $0.connection.connectionState = .connecting(.unresolved(ConnectionPreparationIntent(
-                spec: p2pSpec,
-                connectionProtocol: .vpnProtocol(.ike),
-                acceptableProtocols: .ikev2
-            )))
-            $0.$connectionState.withLock {
+            $0.connection.$connectionState.withLock {
                 $0 = .connecting(.unresolved(ConnectionPreparationIntent(
                     spec: p2pSpec,
                     connectionProtocol: .vpnProtocol(.ike),
@@ -546,7 +526,7 @@ struct SidebarFeatureTests {
             $0.countriesSection.quickSettings.destination = nil
             $0.pendingReconnectIntent = nil
             $0.overlayState = .connecting(spec: spec)
-            $0.$connectionState.withLock {
+            $0.connection.$connectionState.withLock {
                 $0 = .connecting(.unresolved(ConnectionPreparationIntent(
                     spec: spec,
                     connectionProtocol: .vpnProtocol(.ike),
@@ -561,11 +541,13 @@ struct SidebarFeatureTests {
 //                connectionProtocol: .vpnProtocol(.ike),
 //                acceptableProtocols: .ikev2
 //            )
-            $0.connection.connectionState = .connecting(.unresolved(ConnectionPreparationIntent(
-                spec: spec,
-                connectionProtocol: .vpnProtocol(.ike),
-                acceptableProtocols: .ikev2
-            )))
+            $0.connection.$connectionState.withLock {
+                $0 = .connecting(.unresolved(ConnectionPreparationIntent(
+                    spec: spec,
+                    connectionProtocol: .vpnProtocol(.ike),
+                    acceptableProtocols: .ikev2
+                )))
+            }
         }
         await store.receive(\.connection.delegate.stateChanged.connecting.unresolved)
         await store.receive(\.connectionStateChanged.connecting) {
@@ -654,7 +636,7 @@ struct SidebarFeatureTests {
         #expect(store.state.connectionState == .resolving)
 
         await store.send(.connection(.delegate(.stateChanged(.disconnected)))) {
-            $0.$connectionState.withLock { $0 = .disconnected }
+            $0.connection.$connectionState.withLock { $0 = .disconnected }
         }
         await store.receive(\.connectionStateChanged.disconnected)
         await store.receive(\.syncNATPortMappingState)

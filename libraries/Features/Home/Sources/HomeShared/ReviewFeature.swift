@@ -29,6 +29,7 @@ import Foundation
 #endif
 
 import ComposableArchitecture
+import Connection
 import Domain
 import Sharing
 
@@ -135,11 +136,14 @@ public struct ReviewFeature {
 
         /// Clear the review settings from defaults.
         case clear
+
+        case connectionStateUpdate(old: ConnectionState, new: ConnectionState)
     }
 
     private enum CancelIDs {
         case watchUserPlan
         case watchDidBecomeActive
+        case watchConnectionState
     }
 
     private let longLivingUserPlanEffect: Effect<Action> = .publisher {
@@ -148,6 +152,16 @@ public struct ReviewFeature {
             .filter { $0 == nil }
             .map { _ in Action.clear }
     }.cancellable(id: CancelIDs.watchUserPlan)
+
+    private let longLivingConnectionStateEffect: Effect<Action> = .publisher {
+        @SharedReader(.connectionState) var connectionState
+        let publisher = $connectionState.publisher
+        return publisher
+            .zip(publisher.dropFirst())
+            .map { oldValue, newValue in
+                Action.connectionStateUpdate(old: oldValue, new: newValue)
+            }
+    }.cancellable(id: CancelIDs.watchConnectionState)
 
     private let longLivingDidBecomeActiveEffect: Effect<Action> = .publisher {
         NotificationCenter.default
@@ -163,7 +177,8 @@ public struct ReviewFeature {
             case .listen:
                 return .merge(
                     longLivingUserPlanEffect,
-                    longLivingDidBecomeActiveEffect
+                    longLivingDidBecomeActiveEffect,
+                    longLivingConnectionStateEffect
                 )
 
             case .activate:
@@ -205,6 +220,13 @@ public struct ReviewFeature {
                 state.$activeConnectionStartTimestamp.withLock { $0 = nil }
                 state.$successfulTimestamp.withLock { $0 = nil }
                 state.$reviewTimestamp.withLock { $0 = nil }
+                return .none
+            case let .connectionStateUpdate(oldValue, newValue):
+                if newValue.is(\.connected), !oldValue.is(\.connected) {
+                    return .send(.connected)
+                } else if newValue.is(\.disconnected), !oldValue.is(\.disconnected) {
+                    return .send(.disconnected)
+                }
                 return .none
             }
         }
