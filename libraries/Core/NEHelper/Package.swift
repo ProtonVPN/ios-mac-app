@@ -68,6 +68,7 @@ let package = Package(
                 "VPNCrypto",
                 "Strings",
                 "Localization",
+                .product(name: "Ergonomics", package: "Ergonomics"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "CasePaths", package: "swift-case-paths"),
                 .product(name: "Sharing", package: "swift-sharing"),
