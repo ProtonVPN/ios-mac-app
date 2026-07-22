@@ -26,7 +26,7 @@ import Sharing
 import UIKit
 import VPNAppCore
 
-public struct ConnectVPNWithParametersAndReturnIntent: AppIntent {
+public struct ConnectVPNWithParametersIntent: AppIntent {
     public static let title: LocalizedStringResource = "Connect to VPN with parameters"
     public static let openAppWhenRun = true
     public static let isDiscoverable: Bool = false

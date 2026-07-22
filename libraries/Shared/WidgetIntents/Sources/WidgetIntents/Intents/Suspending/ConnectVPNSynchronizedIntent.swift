@@ -17,30 +17,21 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppIntents
-import Dependencies
 import Strings
-import NetworkExtension
-import Sharing
-import WidgetKit
-import Connection
-import VPNAppCore
 
-public struct ConnectVPNAndReturnIntent: AppIntent {
+public struct ConnectVPNSynchronizedIntent: AppIntent {
     public static let title: LocalizedStringResource = "Connect to VPN"
     static let description = IntentDescription(
         "Connects to Proton VPN using your default connection settings.",
         resultValueName: "connected"
     )
     public static let openAppWhenRun = true
-    public static let isDiscoverable = false
-
-    private static let timeOut: Duration = .seconds(30)
+    public static let isDiscoverable = true
 
     public init() {}
 
     public func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
-        @Dependencies.Dependency(\.connectionCommandClient) var connectionCommandClient
-        connectionCommandClient.send(.connect(.defaultFastest, .smartProtocol, .widget))
-        return .result(value: true)
+        let value = try await ConnectVPNWithParametersSynchronizedIntent().perform().value ?? false
+        return .result(value: value)
     }
 }

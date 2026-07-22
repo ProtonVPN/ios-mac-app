@@ -28,7 +28,7 @@ import Sharing
 import UIKit
 import WidgetKit
 
-public struct DisconnectVPNAndReturnIntent: AppIntent {
+public struct DisconnectVPNIntent: AppIntent {
     public static let title: LocalizedStringResource = "Disconnect from VPN"
 
     public static let isDiscoverable: Bool = false

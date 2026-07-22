@@ -26,7 +26,7 @@ import Persistence
 import Sharing
 import SwiftUI
 
-public struct ConnectToRegionAndWaitIntent: AppIntent {
+public struct ConnectToRegionSynchronizedIntent: AppIntent {
     public static let title: LocalizedStringResource = "Connect to region"
     static let description = IntentDescription(
         "This intent allows to connect to a selected country, city or state",
@@ -66,10 +66,10 @@ public struct ConnectToRegionAndWaitIntent: AppIntent {
     public func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
         // First see if city, state, or country is specified, if yes, connect to that.
         if let simpleSpec = specForSelection() {
-            let value = try await ConnectVPNWithParametersAndWaitIntent(connectionSpec: simpleSpec, skipReconnect: skipReconnect).perform().value ?? false
+            let value = try await ConnectVPNWithParametersSynchronizedIntent(connectionSpec: simpleSpec, skipReconnect: skipReconnect).perform().value ?? false
             return .result(value: value)
         }
-        let value = try await ConnectVPNWithParametersAndWaitIntent().perform().value ?? false
+        let value = try await ConnectVPNWithParametersSynchronizedIntent().perform().value ?? false
         return .result(value: value)
     }
 

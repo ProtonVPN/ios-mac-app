@@ -39,11 +39,11 @@ public struct ConnectionCommandClient {
 
 extension ConnectionCommandClient: DependencyKey {
     public static let liveValue: ConnectionCommandClient = {
-        let (stream, continuation) = AsyncStream<ConnectionCommand>.makeStream()
+        let (stream, continuation) = AsyncStream<ConnectionCommand>.makeStream(bufferingPolicy: .bufferingNewest(1))
 
         let streamSource: StreamSource<ConnectionCommand>
         if #available(macOS 15, iOS 18.0, tvOS 18.0, *) {
-            let shared = stream.share(bufferingPolicy: .bufferingLatest(1))
+            let shared = stream.share()
             streamSource = .asyncAlgorithms { shared.eraseToStream() }
         } else {
             streamSource = .sharedStream(stream.sharedStream)

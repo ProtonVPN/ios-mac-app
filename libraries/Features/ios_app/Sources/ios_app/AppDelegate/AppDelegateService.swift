@@ -215,11 +215,11 @@ public final class AppDelegateService: AppDelegateProtocol {
     public func performAction(for shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         let intent: (any AppIntent)? = switch shortcutItem.type {
         case ShortcutItem.connect.type:
-            WidgetIntents.ConnectVPNAndReturnIntent()
+            WidgetIntents.ConnectVPNIntent()
         case ShortcutItem.disconnect.type:
-            WidgetIntents.DisconnectVPNAndReturnIntent()
+            WidgetIntents.DisconnectVPNIntent()
         case ShortcutItem.connectToFirstPinnedRecent(.defaultFastest).type:
-            WidgetIntents.ConnectVPNWithParametersAndReturnIntent(recentIndex: 0)
+            WidgetIntents.ConnectVPNWithParametersIntent(recentIndex: 0)
         default:
             nil
         }
