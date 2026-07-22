@@ -36,6 +36,15 @@ import UIKit
 import VPNAppCore
 import VPNShared
 
+/// Advanced kill switch is Active when the mode is Advanced and the reported tunnel actually carries
+/// the kill switch flag, meaning it is connected with it or already blocking. A mode that was enabled
+/// mid-session only applies to the next connection and does not count as Active.
+private func isAdvancedKillSwitchActive() -> Bool {
+    @SharedReader(.connectionState) var connectionState
+    @SharedReader(.killSwitchMode) var killSwitchMode
+    return killSwitchMode.isAdvanced && connectionState.tunnelKillSwitch
+}
+
 protocol AppSessionManagerFactory {
     func makeAppSessionManager() -> AppSessionManager
 }
@@ -387,33 +396,32 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
 
         let confirmationClosure: () -> Void = {
-            @SharedReader(.advancedKillSwitchActive) var advancedKillSwitchActive
-            // Only show the offline warning if Advanced Kill Switch was actually
-            // applied to the connection (i.e. applied and connected with it)
-            if advancedKillSwitchActive {
+            // Only keep blocking if Advanced Kill Switch was actually applied to the connection
+            // (i.e. the reported tunnel carries the flag), not merely requested for the next one.
+            if isAdvancedKillSwitchActive() {
                 // Advanced KS persists across sign-out: switch the live tunnel to a zero-peer blackhole so it
-                // keeps blocking on the login screen, without tearing it down. This must go through a
-                // process-level dependency and be awaited before we complete logout.
+                // keeps blocking on the login screen, without tearing it down. This goes through a
+                // process-level dependency because sign-out tears down the TCA store that would
+                // otherwise own the transition.
                 @Dependency(\.vpnTunnelControl) var vpnTunnelControl
                 @SharedReader(.connectionState) var connectionState
                 let isConnected = if case .connected = connectionState { true } else { false }
                 Task { [weak self] in
-                    var blockingFailed = false
-                    // Only convert a live tunnel; if already blocking there's nothing to switch.
-                    if isConnected {
-                        do {
-                            try await vpnTunnelControl.enterZeroPeerBlocking()
-                        } catch {
-                            // Advanced KS is meant to keep blocking after sign-out; a failure here means the
-                            // device may no longer be protected, so show an alert
-                            blockingFailed = true
-                            log.error("Failed to enter zero-peer kill switch blocking on sign-out: \(error)", category: .connection)
-                        }
-                    }
-                    // Sign out regardless: the user confirmed it and the original tunnel is still up.
+                    // Sign out first: session teardown fires network calls (server-side session
+                    // invalidation, unauthenticated session acquisition) that the blackhole would cut
+                    // off. Running it before the switch below only gives those calls a head start,
+                    // not a guarantee, since logOutRoutine dispatches them asynchronously. The tunnel
+                    // keeps protecting traffic the whole time.
                     logOutRoutine()
-                    // Warn the user that the kill switch may no longer be protecting the device.
-                    if blockingFailed {
+
+                    // Only convert a live tunnel; if already blocking there's nothing to switch.
+                    guard isConnected else { return }
+                    do {
+                        try await vpnTunnelControl.enterZeroPeerBlocking()
+                    } catch {
+                        // Advanced KS is meant to keep blocking after sign-out; a failure here means the
+                        // device may no longer be protected, so log it and warn the user.
+                        log.error("Failed to enter zero-peer kill switch blocking on sign-out: \(error)", category: .connection)
                         self?.alertService.push(alert: KillSwitchLogoutBlockingFailedAlert())
                     }
                 }
@@ -438,9 +446,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         if force {
             confirmationClosure()
         } else {
-            @SharedReader(.advancedKillSwitchActive) var advancedKillSwitchActive
-            if advancedKillSwitchActive {
-                // signing out with active Advanced KS keeps the device offline; just armed uses the normal warning
+            if isAdvancedKillSwitchActive() {
+                // Signing out with active Advanced KS keeps the device offline; a mode that is merely
+                // requested for the next connection uses the normal warning.
                 alertService.push(alert: LogoutWithAdvancedKillSwitchAlert(username: authKeychain.username, confirmHandler: confirmationClosure))
             } else {
                 alertService.push(alert: LogoutWarningAlert(confirmHandler: confirmationClosure))
@@ -455,9 +463,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         // Standard kill switch auto-disables on logout so the user isn't locked out of the
         // internet. Advanced persists until explicitly disabled.
         @Shared(.killSwitchMode) var killSwitchMode
-        if killSwitchMode == .standard {
-            $killSwitchMode.withLock { $0 = .off }
-        }
+        $killSwitchMode.withLock { if $0 == .standard { $0 = .off } }
 
         if let userId = authKeychain.userId {
             FeatureFlagsRepository.shared.resetFlags(for: userId)

@@ -40,7 +40,6 @@ public extension Asset {
         public static let bug = ThemeIcon(iconProviderKeyPath: \.bug)
         public static let chartLine = ThemeIcon(iconProviderKeyPath: \.chartLine)
         public static let checkmark = ThemeIcon(iconProviderKeyPath: \.checkmark)
-        public static let checkmarkCircle = ThemeIcon(iconProviderKeyPath: \.checkmarkCircle)
         public static let checkmarkCircleFilled = ThemeIcon(iconProviderKeyPath: \.checkmarkCircleFilled)
         public static let chevronDownFilled = ThemeIcon(iconProviderKeyPath: \.chevronDownFilled)
         public static let chevronLeft = ThemeIcon(iconProviderKeyPath: \.chevronLeft)

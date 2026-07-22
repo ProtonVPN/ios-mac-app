@@ -178,7 +178,7 @@ public final class TelemetrySettingsReporter {
 
     private func killSwitchLevel() -> SettingsDimensions.KillSwitchLevel {
         #if os(iOS)
-            @Shared(.killSwitchMode) var mode: KillSwitchMode
+            @SharedReader(.killSwitchMode) var mode: KillSwitchMode
             switch mode {
             case .off:
                 return .off
@@ -189,7 +189,7 @@ public final class TelemetrySettingsReporter {
             }
         #else
             // macOS still uses the bool toggle
-            @Shared(.killSwitch) var killSwitch: Bool
+            @SharedReader(.killSwitch) var killSwitch: Bool
             return killSwitch ? .standard : .off
         #endif
     }

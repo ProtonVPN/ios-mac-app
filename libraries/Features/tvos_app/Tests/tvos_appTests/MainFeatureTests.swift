@@ -159,7 +159,7 @@ extension ConnectionState {
     /// Helper to translate between the old and new associated values of `ConnectionState.connected`
     static func connected(_ intent: ServerConnectionIntent, _ server: Server, _ date: Date) -> Self {
         .connected(
-            .init(connectionSpec: intent.spec, tunnelProtocol: .ike, peerIDs: []),
+            .init(connectionSpec: intent.spec, tunnelProtocol: .ike, peerIDs: [], killSwitch: false),
             .init(currentPeer: server, connectionDate: date, protocolConnectionData: .ike)
         )
     }

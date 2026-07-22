@@ -471,7 +471,7 @@ struct AppSessionManagerImplementationTests {
         let actual = VPNConnectionActual(data: .init(currentPeer: server, connectionDate: .now, protocolConnectionData: .ike))
         setConnectionStatus(
             connectionState: .connected(
-                .init(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+                .init(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"], killSwitch: false),
                 .init(currentPeer: server, connectionDate: .now, protocolConnectionData: .ike)
             )
         )

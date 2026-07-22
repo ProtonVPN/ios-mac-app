@@ -71,6 +71,15 @@ public struct ConnectionUpdate: Identifiable, Sendable, Equatable, Codable {
 }
 
 public extension ConnectionUpdate {
+    static func zeroPeer(using spec: ConnectionSpec) -> Self {
+        Self(
+            location: .init(spec: spec, peers: []),
+            killSwitch: true
+        )
+    }
+}
+
+public extension ConnectionUpdate {
     /// Whether this update requests any feature changes that require touching the ``ProTUNConfiguration``.
     var hasConfigurationChanges: Bool {
         location != nil || connectionProtocol != nil || hasAgentChanges || customDNS != nil

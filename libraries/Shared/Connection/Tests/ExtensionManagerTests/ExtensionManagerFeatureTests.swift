@@ -68,7 +68,7 @@
             // Now that the start request has completed, simulate the extension reporting the connecting state.
             mockManager.connection.status = .connecting
             await store.receive(\.tunnelStatusChanged.connecting) {
-                $0 = .connecting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"]))
+                $0 = .connecting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"], killSwitch: false))
             }
 
             await store.send(.stopObserving)
@@ -96,7 +96,7 @@
             await store.send(.startObserving)
             await store.receive(\.tunnelStatusChanged.connected) {
                 $0 = .connected(
-                    TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"]),
+                    TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"], killSwitch: false),
                     DynamicConnectionData(currentPeerId: "peer-id", connectionDate: now, protocolConnectionData: .proTUN(.init(transport: .udp)))
                 )
             }
@@ -127,7 +127,7 @@
                 features: .mock
             )
             let connectedOverIKE = TunnelState.connected(
-                TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["server-id"]),
+                TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["server-id"], killSwitch: false),
                 DynamicConnectionData(currentPeerId: "server-id", connectionDate: now, protocolConnectionData: .ike)
             )
 
@@ -171,7 +171,7 @@
                 features: .mock
             )
             let connectedOverWireGuard = TunnelState.connected(
-                TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["server-id"]),
+                TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["server-id"], killSwitch: false),
                 DynamicConnectionData(currentPeerId: "server-id", connectionDate: now, protocolConnectionData: .proTUN(.init(transport: .udp)))
             )
 

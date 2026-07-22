@@ -315,15 +315,17 @@ public final class ReconnectOnActionAlert: SystemAlert {
 
 public final class LANConnectionsKillSwitchConflictAlert: SystemAlert {
     public var title: String? = Localizable.allowLanTitle
-    public var message: String? = Localizable.allowLanDescription
+    public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
     public init(connected: Bool, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        if connected {
-            message! += "\n\n" + Localizable.allowLanNote
-        }
+        let paragraphs = [
+            Localizable.allowLanDescription,
+            connected ? Localizable.allowLanNote : nil,
+        ]
+        self.message = paragraphs.compactMap { $0 }.joined(separator: "\n\n")
         actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
             confirmHandler()

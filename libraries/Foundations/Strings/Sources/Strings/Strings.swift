@@ -784,14 +784,10 @@ public enum Localizable {
   public static var killSwitchLogoutBlockingFailedTitle: String { return Localizable.tr("Localizable", "_kill_switch_logout_blocking_failed_title", fallback: "Kill switch could not stay active") }
   /// iOS: Kill switch settings - "Advanced" option title
   public static var killSwitchModeAdvanced: String { return Localizable.tr("Localizable", "_kill_switch_mode_advanced", fallback: "Advanced") }
-  /// iOS: Kill switch settings - description of the Advanced option
-  public static var killSwitchModeAdvancedDescription: String { return Localizable.tr("Localizable", "_kill_switch_mode_advanced_description", fallback: "Only allow internet access when connected to Proton VPN. Advanced kill switch will remain active even when you restart your device.") }
   /// iOS: Kill switch settings - "Off" option title
   public static var killSwitchModeOff: String { return Localizable.tr("Localizable", "_kill_switch_mode_off", fallback: "Off") }
   /// iOS: Kill switch settings - "Standard" option title
   public static var killSwitchModeStandard: String { return Localizable.tr("Localizable", "_kill_switch_mode_standard", fallback: "Standard") }
-  /// iOS: Kill switch settings - description of the Standard option
-  public static var killSwitchModeStandardDescription: String { return Localizable.tr("Localizable", "_kill_switch_mode_standard_description", fallback: "Automatically disconnect from the internet if VPN connection is lost.") }
   /// MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect
   public static var killSwitchReconnection: String { return Localizable.tr("Localizable", "_kill_switch_reconnection", fallback: "Your internet connection will resume as soon as Proton VPN reconnects to a server.\nTo use the internet without VPN and kill switch protection, cancel the reconnection to the server.") }
   /// MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded

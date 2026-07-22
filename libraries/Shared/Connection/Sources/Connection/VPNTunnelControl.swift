@@ -17,26 +17,22 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import DependenciesMacros
 import ExtensionManager
 
-/// currently used only for disabling advanced KS from the login screen.
-/// revisit when we have more TCA, and if connection state is moved out of HomeFeature/SidebarFeature
+/// Process-level tunnel control for the kill switch flows that outlive the TCA store: the login
+/// screen (disable an Advanced blackhole) and sign-out (keep the blackhole up while the store is
+/// torn down). Revisit once connection state moves out of HomeFeature/SidebarFeature, so these
+/// flows can go through the reducer instead.
+@DependencyClient
 public struct VPNTunnelControl: Sendable {
-    /// Stops the active tunnel (including the zero-peer kill switch tunnel) and disables on-demand so it
-    /// won't auto-restart
+    /// Stops the active tunnel (including the zero-peer kill switch tunnel) and disables on-demand
+    /// so it won't auto-restart. Finding no tunnel to stop counts as success.
     public var stop: @Sendable () async throws -> Void
 
-    /// Switches the live tunnel to a peerless zero-peer blackhole in place, so Advanced kill switch keeps
-    /// blocking after sign-out without tearing the tunnel down
+    /// Switches the live tunnel to a peerless zero-peer blackhole in place, so Advanced kill switch
+    /// keeps blocking after sign-out without tearing the tunnel down.
     public var enterZeroPeerBlocking: @Sendable () async throws -> Void
-
-    public init(
-        stop: @escaping @Sendable () async throws -> Void,
-        enterZeroPeerBlocking: @escaping @Sendable () async throws -> Void
-    ) {
-        self.stop = stop
-        self.enterZeroPeerBlocking = enterZeroPeerBlocking
-    }
 }
 
 extension VPNTunnelControl: DependencyKey {
@@ -45,7 +41,8 @@ extension VPNTunnelControl: DependencyKey {
         enterZeroPeerBlocking: { try await enterZeroPeerBlockingTunnel() }
     )
 
-    public static let testValue = VPNTunnelControl(stop: {}, enterZeroPeerBlocking: {})
+    /// Endpoints report an issue and throw when tests exercise them without an override.
+    public static let testValue = VPNTunnelControl()
 }
 
 public extension DependencyValues {

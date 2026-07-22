@@ -54,7 +54,7 @@ public struct HomeFeature {
     #endif
 
     @SharedReader(.userTier) private var userTier: Int?
-    @Shared(.killSwitchMode) var killSwitchMode: KillSwitchMode
+    @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
 
     @Reducer
     public enum Destination {
@@ -176,6 +176,12 @@ public struct HomeFeature {
     }
 
     private static let whatsNewPresentationDelay: Duration = .seconds(3)
+
+    /// Disconnects that are part of a larger flow the user already confirmed (or never initiated directly),
+    /// which must not be interrupted by the Advanced kill switch confirmation.
+    private static let advancedKillSwitchConfirmationExemptTriggers: Set<UserInitiatedVPNChange.VPNTrigger> = [
+        .auto, .exit, .fidoAuthentication, .signout, .widget,
+    ]
 
     public init() {}
 
@@ -314,20 +320,20 @@ private extension HomeFeature {
                 }
                 return .none
             case let .killSwitchModeChanged(mode):
-                // If we're actively blocking (zero-peer) and the new mode no longer wants persistent
-                // blocking (Off or Standard), tear the tunnel down so the user regains connectivity.
-                // Otherwise the user is stuck behind a blackholed tunnel.
+                // If we're actively blocking (zero-peer) and the new mode no longer wants persistent blocking (Off or
+                // Standard), tear the tunnel down so the user regains connectivity. Otherwise the user is stuck behind
+                // a blackholed tunnel.
                 if !mode.isAdvanced, state.connectionState.is(\.killSwitchActive) {
                     return .send(.connection(.input(.disconnect)))
                 }
-                // Otherwise: leave the live tunnel untouched. The mode is already persisted (@Shared, written
-                // by the settings picker) and takes effect on the NEXT connection — `.input(.connect)` arms
-                // `includeAllNetworks` from the mode, and the in-place zero-peer switch on disconnect works
-                // because the tunnel was armed at connect
+                // Otherwise: leave the live tunnel untouched. The mode is already persisted (@Shared, written by the
+                // settings picker) and takes effect on the next connection. `.input(.connect)` enables
+                // `includeAllNetworks` from the mode, and the existing zero-peer switch on disconnect works because the
+                // tunnel was armed at connect.
                 return .none
             case let .planChanged(planChange):
-                // update the persisted feature settings so a downgrade clears paid features
-                // and an upgrade re-enables NetShield
+                // update the persisted feature settings so a downgrade clears paid features and an upgrade re-enables
+                // NetShield.
                 return .run { _ in applyPlanChangeFeatureResets(planChange) }
             case .refreshAnnouncementsIfNeeded:
                 return .run { _ in
@@ -389,33 +395,21 @@ private extension HomeFeature {
                 return performConnect(pending: pending)
 
             case let .connectionCommandReceived(.disconnect(trigger, completion)):
-                // Confirm an intentional in-app disconnect only when Advanced KS is active — i.e. the live
-                // tunnel was started with `includeAllNetworks` at connect, so disconnecting really would leave
-                // the device offline. Merely enabling Advanced while connected leaves it Armed (effective from
-                // the next connection), so a disconnect then is a normal release — no warning.
-                // Widget disconnects have a completion; let those proceed.
+                // Warn before an intentional disconnect that would leave the device offline, which is the case only
+                // when the live tunnel actually carries the kill switch flag. Enabling Advanced while connected only
+                // affects the next connection, so no warning then. Disconnects that carry a completion are never held
+                // up by an alert, because the caller (the widget) needs the completion to resolve. Exempt triggers skip
+                // the warning too: sign-out shows its own, and programmatic or mid-flow disconnects were not directly
+                // asked for by the user.
                 if completion == nil,
+                   !Self.advancedKillSwitchConfirmationExemptTriggers.contains(trigger),
                    killSwitchMode.isAdvanced,
-                   state.connection.tunnelArmedForKillSwitch,
-                   state.connectionState.is(\.connected) {
+                   state.connectionState.is(\.connected),
+                   state.connectionState.tunnelKillSwitch {
                     state.alert = confirmDisconnectWithAdvancedKillSwitchAlert(trigger: trigger)
                     return .none
                 }
-                let alreadyDisconnected = state.connectionState.is(\.disconnected) || state.connectionState.is(\.killSwitchActive)
-                return .merge(
-                    .cancel(id: CancelID.connectionConnectCommandEffect),
-                    .run { send in
-                        if let completion {
-                            if alreadyDisconnected {
-                                await MainActor.run { completion() }
-                            } else {
-                                await pendingDisconnectCompletions.enqueue(completion)
-                            }
-                        }
-                        AppEvent.userInitiatedVPNChange.post(trigger)
-                        await send(.connection(.input(.disconnect)))
-                    }
-                )
+                return performDisconnect(trigger: trigger, completion: completion, state: state)
 
             case .connectionCommandReceived(.retry):
                 let spec = ConnectionSpec.defaultFastest // TODO: ProTUN: Fix this!
@@ -470,10 +464,9 @@ private extension HomeFeature {
                 return performConnect(pending: pending)
 
             case let .alert(.presented(.confirmDisconnectWithAdvancedKillSwitch(trigger))):
-                return .run { send in
-                    AppEvent.userInitiatedVPNChange.post(trigger)
-                    await send(.connection(.input(.disconnect)))
-                }
+                // The intercept only fires for completion-less commands, so there is no completion
+                // left to settle here.
+                return performDisconnect(trigger: trigger, completion: nil, state: state)
 
             case let .connectionStatus(.connectionStatusBanner(.delegate(.upsellTapped(mode)))):
                 let upsellModalType: UpsellModalType = switch mode {
@@ -706,6 +699,32 @@ private extension HomeFeature {
                 TextState(Localizable.settingsProtocolAlertButtonContinue)
             }
         }
+    }
+
+    /// Encapsulates the side effects of dispatching a `.disconnect` command once the Advanced kill
+    /// switch confirmation (if any) has been resolved: cancel any in-flight connect command, settle
+    /// the completion, post the trigger, and hand the disconnect to the connection. Both the direct
+    /// path and the alert confirmation go through here so they cannot drift apart.
+    func performDisconnect(
+        trigger: UserInitiatedVPNChange.VPNTrigger,
+        completion: (@MainActor @Sendable () -> Void)?,
+        state: State
+    ) -> Effect<Action> {
+        let alreadyDisconnected = state.connectionState.is(\.disconnected) || state.connectionState.is(\.killSwitchActive)
+        return .merge(
+            .cancel(id: CancelID.connectionConnectCommandEffect),
+            .run { send in
+                if let completion {
+                    if alreadyDisconnected {
+                        await MainActor.run { completion() }
+                    } else {
+                        await pendingDisconnectCompletions.enqueue(completion)
+                    }
+                }
+                AppEvent.userInitiatedVPNChange.post(trigger)
+                await send(.connection(.input(.disconnect)))
+            }
+        )
     }
 
     /// Encapsulates the side effects of dispatching a `.connect` command after intercept checks

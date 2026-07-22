@@ -39,21 +39,17 @@
             /// zero-peer blocking in place, reflected in the state immediately.
             @Test
             @MainActor
-            func disconnectWithActiveAdvancedKillSwitchUpdatesStateImmediately() async {
+            func disconnectWithActiveAdvancedKillSwitchSwitchesToZeroPeerInPlace() async {
                 let spec = ConnectionSpec(location: .country(code: "IT", order: .fastest), features: [])
                 let configuration = TunnelConfiguration(
                     connectionSpec: spec,
                     tunnelProtocol: .wireGuard,
-                    peerIDs: ["old-peer"]
-                )
-                let zeroPeerConfiguration = TunnelConfiguration(
-                    connectionSpec: spec,
-                    tunnelProtocol: .wireGuard,
-                    peerIDs: []
+                    peerIDs: ["old-peer"],
+                    killSwitch: true
                 )
                 let session = VPNSessionMock(status: .connected)
                 session.messageHandler = MessageHandler.full
-                var initialState = ConnectionFeature.State(
+                let initialState = ConnectionFeature.State(
                     connectionState: .connected(
                         configuration,
                         .init(
@@ -65,7 +61,6 @@
                     shouldRegisterServerChangeOnConnection: false,
                     tunnel: .unknown
                 )
-                initialState.tunnelArmedForKillSwitch = true
                 let store = TestStore(initialState: initialState) {
                     ConnectionFeature()
                 } withDependencies: {
@@ -87,8 +82,58 @@
 
                 await store.send(.input(.disconnect)) {
                     $0.isBlockingIntended = true
-                    $0.connectionState = .killSwitchActive(spec, zeroPeerConfiguration)
                 }
+                // The zero-peer switch goes to the extension as a config change. The connection state
+                // keeps reporting the tunnel as connected and only becomes `.killSwitchActive` once the
+                // extension confirms the applied request.
+                await store.receive(\.tunnel.requestConfigChange)
+                #expect(store.state.connectionState.is(\.connected))
+            }
+
+            /// The projection rebuilds the tunnel configuration to resolve the spec, and it must carry the
+            /// kill switch flag along. The disconnect handler decides between blocking and releasing based
+            /// on the projected value, so losing the flag here silently downgrades Advanced kill switch.
+            @Test
+            @MainActor
+            func projectionPreservesKillSwitchFlag() async {
+                let armedConfiguration = TunnelConfiguration(
+                    connectionSpec: ConnectionSpec(location: .country(code: "IT", order: .fastest), features: []),
+                    tunnelProtocol: .wireGuard,
+                    peerIDs: ["peer-id"],
+                    killSwitch: true
+                )
+                let store = TestStore(initialState: ConnectionFeature.State(
+                    connectionState: .disconnected,
+                    shouldRegisterServerChangeOnConnection: false,
+                    tunnel: .unknown
+                )) {
+                    ConnectionFeature()
+                } withDependencies: {
+                    $0.connectionFeatureProvider = .init(
+                        connectionFeatures: { .mock },
+                        requestedFeatures: {
+                            #if !os(tvOS)
+                                .init(killSwitchMode: .advanced, excludeLocalNetworks: false)
+                            #else
+                                .tvFeatures
+                            #endif
+                        },
+                        connectionProtocol: { .smartProtocol }
+                    )
+                    $0.serverIdentifier = .init(fullServerInfo: { _ in .ca })
+                    $0.defaultAppStorage = .testValue()
+                }
+                store.exhaustivity = .off
+
+                await store.send(.tunnel(.tunnelStatusChanged(.connected(
+                    armedConfiguration,
+                    DynamicConnectionData(
+                        currentPeerId: "peer-id",
+                        connectionDate: .now,
+                        protocolConnectionData: .proTUN(.init(transport: .udp))
+                    )
+                ))))
+                #expect(store.state.connectionState.tunnelKillSwitch)
             }
 
             /// Disconnecting with Standard kill switch releases the tunnel instead of blackholing: the state is
@@ -100,11 +145,12 @@
                 let configuration = TunnelConfiguration(
                     connectionSpec: spec,
                     tunnelProtocol: .wireGuard,
-                    peerIDs: ["old-peer"]
+                    peerIDs: ["old-peer"],
+                    killSwitch: true
                 )
                 let session = VPNSessionMock(status: .connected)
                 session.messageHandler = MessageHandler.full
-                var initialState = ConnectionFeature.State(
+                let initialState = ConnectionFeature.State(
                     connectionState: .connected(
                         configuration,
                         .init(
@@ -116,7 +162,6 @@
                     shouldRegisterServerChangeOnConnection: false,
                     tunnel: .unknown
                 )
-                initialState.tunnelArmedForKillSwitch = true
                 let store = TestStore(initialState: initialState) {
                     ConnectionFeature()
                 } withDependencies: {
@@ -139,6 +184,96 @@
 
                 await store.send(.input(.disconnect))
                 #expect(store.state.connectionState.is(\.connected))
+            }
+
+            /// A disconnect request while zero-peer blocking is active (e.g. sent by the widget) must
+            /// not tear down the blackhole as long as the mode stays Advanced. Only leaving Advanced
+            /// releases it, via this same action sent after the mode change. The store is exhaustive,
+            /// so the test fails if the disconnect starts mutating state or emitting effects.
+            @Test
+            @MainActor
+            func disconnectWhileBlockingUnderAdvancedKeepsTheBlackhole() async {
+                let spec = ConnectionSpec(location: .country(code: "IT", order: .fastest), features: [])
+                let zeroPeerConfiguration = TunnelConfiguration(
+                    connectionSpec: spec,
+                    tunnelProtocol: .wireGuard,
+                    peerIDs: [],
+                    killSwitch: true
+                )
+                let store = TestStore(initialState: ConnectionFeature.State(
+                    connectionState: .killSwitchActive(spec, zeroPeerConfiguration),
+                    shouldRegisterServerChangeOnConnection: false,
+                    tunnel: .killSwitchActive(zeroPeerConfiguration)
+                )) {
+                    ConnectionFeature()
+                } withDependencies: {
+                    $0.connectionFeatureProvider = .init(
+                        connectionFeatures: { .mock },
+                        requestedFeatures: { .init(killSwitchMode: .advanced, excludeLocalNetworks: false) },
+                        connectionProtocol: { .smartProtocol }
+                    )
+                }
+
+                await store.send(.input(.disconnect))
+            }
+
+            /// An unexpected drop while Advanced kill switch is blocking (or armed) cold-starts a fresh
+            /// zero-peer tunnel, and the disconnect error is deliberately swallowed: reporting
+            /// `.delegate(.connectionFailed)` would invite failure handling while the protection is
+            /// being restored. The store is exhaustive, so the test fails if the handler starts
+            /// emitting the failure delegate (or anything else) alongside the restart.
+            @Test
+            @MainActor
+            func unexpectedDropWithAdvancedKillSwitchColdStartsBlockingWithoutReportingFailure() async {
+                let spec = ConnectionSpec(location: .country(code: "IT", order: .fastest), features: [])
+                let configuration = TunnelConfiguration(
+                    connectionSpec: spec,
+                    tunnelProtocol: .wireGuard,
+                    peerIDs: ["old-peer"],
+                    killSwitch: true
+                )
+                let connectionData = DynamicConnectionData(
+                    currentPeerId: "old-peer",
+                    connectionDate: .now,
+                    protocolConnectionData: .proTUN(.init(transport: .udp))
+                )
+                var initialState = ConnectionFeature.State(
+                    connectionState: .connected(
+                        configuration,
+                        .init(
+                            currentPeer: .mock,
+                            connectionDate: .now,
+                            protocolConnectionData: .proTUN(.init(transport: .udp))
+                        )
+                    ),
+                    shouldRegisterServerChangeOnConnection: false,
+                    tunnel: .connected(configuration, connectionData)
+                )
+                initialState.isBlockingIntended = true
+                // A nil startup duration stops the session mock right after the start request, so no
+                // detached status-transition task outlives this test and pollutes parallel suites.
+                let session = VPNSessionMock(status: .disconnected)
+                session.startupDuration = nil
+                let store = TestStore(initialState: initialState) {
+                    ConnectionFeature()
+                } withDependencies: {
+                    $0.connectionFeatureProvider = .init(
+                        connectionFeatures: { .mock },
+                        requestedFeatures: { .init(killSwitchMode: .advanced, excludeLocalNetworks: false) },
+                        connectionProtocol: { .smartProtocol }
+                    )
+                    $0.tunnelManager = MockTunnelManager(connection: session)
+                    $0.continuousClock = ImmediateClock()
+                    $0.date = .constant(.now)
+                }
+
+                await store.send(.tunnel(.tunnelStatusChanged(.disconnected(.tunnelAborted)))) {
+                    $0.tunnel = .disconnected(.tunnelAborted)
+                    $0.connectionState = .disconnected
+                }
+                await store.receive(\.tunnel.startZeroPeerColdStart)
+                await store.receive(\.delegate.stateChanged)
+                await store.receive(\.tunnel.tunnelStartRequestFinished)
             }
         }
     #endif

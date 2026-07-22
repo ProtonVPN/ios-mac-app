@@ -687,30 +687,34 @@ final class SettingsViewModel {
             return
         }
 
-        let apply: () -> Void = { [weak self] in
-            guard let self else { return }
-            // Kill switch and "Allow LAN" are mutually exclusive: enabling protection turns Allow LAN off.
-            if mode.isProtected, featureValue(for: ExcludeLocalNetworks.self) == .on {
-                setFeatureValue(ExcludeLocalNetworks.off)
-            }
-            $killSwitchMode.withLock { $0 = mode }
-            // HomeFeature observes `killSwitchMode` and pushes the change to the ProTUN extension over IPC.
-            reloadNeeded?()
-        }
-
         // Confirm only on up changes; downgrades and Off apply immediately.
-        guard mode.rawValue > current.rawValue,
+        guard mode > current,
               let alert = killSwitchUpgradeAlert(
                   from: current,
                   to: mode,
-                  confirm: { apply(); completion(true) },
+                  confirm: { [weak self] in
+                      self?.applyKillSwitchMode(mode)
+                      completion(true)
+                  },
                   cancel: { completion(false) }
               ) else {
-            apply()
+            applyKillSwitchMode(mode)
             completion(true)
             return
         }
         showModalController?(alert)
+    }
+
+    private func applyKillSwitchMode(_ mode: KillSwitchMode) {
+        // Kill switch and "Allow LAN" are mutually exclusive: enabling protection turns Allow LAN off.
+        if mode.isProtected, featureValue(for: ExcludeLocalNetworks.self) == .on {
+            setFeatureValue(ExcludeLocalNetworks.off)
+        }
+        $killSwitchMode.withLock { $0 = mode }
+        // A live tunnel is deliberately left untouched: the new mode arms `includeAllNetworks` at the
+        // next connect. HomeFeature observes `killSwitchMode` only to release an active zero-peer
+        // blackhole when the new mode no longer allows persistent blocking.
+        reloadNeeded?()
     }
 
     private func killSwitchUpgradeAlert(

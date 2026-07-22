@@ -51,16 +51,15 @@ struct HomeScreenTests {
         (
             ProtectionState.protected,
             ConnectionState.connected(
-                .init(connectionSpec: .specificCountryServer, tunnelProtocol: .ike, peerIDs: []),
+                .init(connectionSpec: .specificCountryServer, tunnelProtocol: .ike, peerIDs: [], killSwitch: false),
                 .init(currentPeer: polandServer, connectionDate: Date(), protocolConnectionData: .ike)
             )
         ),
         (
-            // Advanced kill switch blocking (zero-peer tunnel): Home shows the grey KillSwitchBlockingBanner.
-            ProtectionState.killSwitchBlocking(.specificCountryServer),
+            ProtectionState.killSwitchActive,
             ConnectionState.killSwitchActive(
                 .specificCountryServer,
-                .init(connectionSpec: .specificCountryServer, tunnelProtocol: .ike, peerIDs: [])
+                .init(connectionSpec: .specificCountryServer, tunnelProtocol: .ike, peerIDs: [], killSwitch: true)
             )
         ),
     ]
@@ -71,6 +70,7 @@ struct HomeScreenTests {
     @Shared(.userCountry) var userCountry
     @Shared(.userIP) var userIP
     @Shared(.netShieldLevel) var netShieldLevel
+    @Shared(.recentConnections) var recents
 
     @Test("Home screen", arguments: [Int.freeTier, Int.paidTier], homeTestData)
     @MainActor
@@ -136,7 +136,7 @@ extension ProtectionState {
         case .protected: "Protected"
         case .protectedSecureCore: "ProtectedSecureCore"
         case .resolving: "Loading"
-        case .killSwitchBlocking: "KillSwitchBlocking"
+        case .killSwitchActive: "KillSwitchBlocking"
         }
     }
 }

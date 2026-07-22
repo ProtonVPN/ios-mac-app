@@ -745,7 +745,7 @@ private extension ConnectionState {
     static func testConnected(_ spec: ConnectionSpec, _: VPNConnectionActual) -> ConnectionState {
         let actual = VPNConnectionActual.mock()
         return .connected(
-            .init(connectionSpec: spec, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+            .init(connectionSpec: spec, tunnelProtocol: .ike, peerIDs: ["peer-id"], killSwitch: false),
             .init(currentPeer: actual.server, connectionDate: actual.connectedDate ?? .now, protocolConnectionData: .ike)
         )
     }

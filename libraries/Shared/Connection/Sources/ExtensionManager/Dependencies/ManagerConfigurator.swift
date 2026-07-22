@@ -29,10 +29,12 @@ public enum TunnelConfigurationOperation {
     /// Prepares a manager for stopping its tunnel, and disables on-demand so the OS doesn't reconnect. Used for both
     /// WireGuard and IKEv2.
     case disconnection
-    /// Build/start a zero-peer ProTUN tunnel with no server, used to enforce Advanced kill switch
-    /// blocking from a fully disconnected state. The tunnel intercepts all traffic and never
-    /// reaches a real peer, so it blocks until reconfigured/torn down
-    case zeroPeerColdStart
+    #if !os(tvOS)
+        /// Build/start a zero-peer ProTUN tunnel with no server, used to enforce Advanced kill switch
+        /// blocking from a fully disconnected state. The tunnel intercepts all traffic and never
+        /// reaches a real peer, so it blocks until reconfigured/torn down
+        case zeroPeerColdStart
+    #endif
 }
 
 package struct ManagerConfigurator {

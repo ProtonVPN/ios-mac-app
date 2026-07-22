@@ -39,13 +39,16 @@ public struct ConnectionStatusView: View {
     private static let viewHeight: CGFloat = 200
     private static let headerPaddingHeight: CGFloat = 13
 
+    // `.killSwitchActive` never reaches these helpers in practice: `body` renders the
+    // KillSwitchBlockingBanner for it instead. It is grouped with `.unprotected` throughout
+    // as the accurate fallback.
     private func title(protectionState: ProtectionState) -> String? {
         switch protectionState {
         case .resolving:
             Localizable.connectionStatusLoading
         case .protected, .protectedSecureCore:
             nil
-        case .unprotected, .killSwitchActive: // .killSwitchActive is rendered by KillSwitchBlockingBanner (see body)
+        case .unprotected, .killSwitchActive:
             Localizable.connectionStatusUnprotected
         case .protecting:
             Localizable.connectionStatusProtecting
@@ -84,7 +87,7 @@ public struct ConnectionStatusView: View {
             ProgressView()
                 .controlSize(.regular)
                 .tint(.white)
-        case .unprotected, .killSwitchActive: // .killSwitchActive is rendered by KillSwitchBlockingBanner (see body)
+        case .unprotected, .killSwitchActive:
             IconProvider.lockOpenFilled2
                 .styled(.danger)
                 .accessibilityHidden(true)
@@ -112,7 +115,7 @@ public struct ConnectionStatusView: View {
                 ProgressView()
                     .controlSize(.regular)
                     .tint(.white)
-            case .unprotected, .killSwitchActive: // .killSwitchActive is rendered by KillSwitchBlockingBanner (see body)
+            case .unprotected, .killSwitchActive:
                 IconProvider.lockOpenFilled2
                     .styled(.danger)
             }

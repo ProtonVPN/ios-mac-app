@@ -110,7 +110,7 @@ struct PlutoniumFeatureTests {
         let actual = VPNConnectionActual.mock(vpnProtocol: .ike)
         $connectionState.withLock {
             $0 = .connected(
-                .init(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+                .init(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"], killSwitch: false),
                 .init(currentPeer: actual.server, connectionDate: .now, protocolConnectionData: .ike)
             )
         }

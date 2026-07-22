@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct LocalTunnelFeatures: Hashable, Sendable, Codable {
+public struct LocalTunnelFeatures: Equatable, Sendable, Codable {
     public let killSwitchMode: KillSwitchMode
     public let excludeLocalNetworks: Bool
 

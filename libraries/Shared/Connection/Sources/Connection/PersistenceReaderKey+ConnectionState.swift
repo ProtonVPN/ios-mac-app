@@ -31,11 +31,3 @@ public extension SharedKey where Self == InMemoryKey<ConnectionError?>.Default {
         Self[.inMemory("lastConnectionError"), default: nil]
     }
 }
-
-/// Whether Advanced kill switch is *Active* — the live tunnel was armed with `includeAllNetworks` at connect
-/// (a connection completed with KS on), so a disconnect/sign-out would keep blocking
-public extension SharedKey where Self == InMemoryKey<Bool>.Default {
-    static var advancedKillSwitchActive: Self {
-        Self[.inMemory("advancedKillSwitchActive"), default: false]
-    }
-}

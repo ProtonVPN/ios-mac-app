@@ -25,7 +25,7 @@ import Theme
 import VPNAppCore
 
 struct KillSwitchSettingsView: View {
-    @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
+    @SharedReader(.killSwitchMode) private var killSwitchMode: KillSwitchMode
     @SharedReader(.connectionState) private var connectionState: ConnectionState
 
     let onSelect: (KillSwitchMode) -> Void
@@ -54,7 +54,7 @@ struct KillSwitchSettingsView: View {
         .scrollContentBackground(.hidden)
         .background(Color(.background, .strong).ignoresSafeArea())
         .animation(.default, value: killSwitchMode)
-        .animation(.default, value: isConnected)
+        .animation(.default, value: isKillSwitchArmed)
     }
 
     // MARK: - Header
@@ -100,7 +100,7 @@ struct KillSwitchSettingsView: View {
 
     private var messagesView: some View {
         VStack(alignment: .leading, spacing: .themeSpacing12) {
-            ForEach(Array(messages.enumerated()), id: \.offset) { _, message in
+            ForEach(messages) { message in
                 HStack(alignment: .top, spacing: .themeSpacing8) {
                     message.icon.swiftUIImage
                         .resizable()
@@ -136,7 +136,7 @@ struct KillSwitchSettingsView: View {
         switch killSwitchMode {
         case .off:
             return [ipExposed]
-        case .standard where isConnected:
+        case .standard where isKillSwitchArmed:
             return [
                 KillSwitchMessage(
                     icon: Theme.Asset.Icons.checkmarkCircleFilled,
@@ -148,7 +148,7 @@ struct KillSwitchSettingsView: View {
             ]
         case .standard:
             return [ipExposed, localNetworkHint]
-        case .advanced where isConnected:
+        case .advanced where isKillSwitchArmed:
             return [
                 KillSwitchMessage(
                     icon: Theme.Asset.Icons.checkmarkCircleFilled,
@@ -183,8 +183,10 @@ struct KillSwitchSettingsView: View {
         }
     }
 
-    private var isConnected: Bool {
-        if case .connected = connectionState { return true }
+    /// The live tunnel is connected and actually carries the kill switch flag. A mode selected
+    /// mid-session only arms the next connection, so it must not be reported as protecting yet.
+    private var isKillSwitchArmed: Bool {
+        if case .connected = connectionState { return connectionState.tunnelKillSwitch }
         return false
     }
 
@@ -193,11 +195,17 @@ struct KillSwitchSettingsView: View {
     }
 }
 
-private struct KillSwitchMessage {
+private struct KillSwitchMessage: Identifiable {
     let icon: ThemeIcon
     let iconStyle: AppTheme.Style
     let text: String
     let textStyle: AppTheme.Style
+
+    // The text is unique within any one list of messages, and identifying by content (rather than
+    // by position) lets the list animate replacements correctly.
+    var id: String {
+        text
+    }
 }
 
 extension KillSwitchMode {

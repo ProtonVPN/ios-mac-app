@@ -16,8 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 /// The three kill switch protection levels, matching the cross-platform (Windows/Linux) model.
 ///
 /// - `off`: no protection.
@@ -26,7 +24,7 @@ import Foundation
 /// - `advanced`: block *all* non-VPN traffic at all times (including before app launch, across reboots and
 ///   after intentional disconnects). Activates immediately on enabling and persists until the user switches
 ///   to `off`/`standard`.
-public enum KillSwitchMode: Int, CaseIterable, Codable, Sendable {
+public enum KillSwitchMode: Int, CaseIterable, Codable, Comparable, Sendable {
     case off = 0
     case standard = 1
     case advanced = 2
@@ -39,5 +37,11 @@ public enum KillSwitchMode: Int, CaseIterable, Codable, Sendable {
     /// Whether the Advanced level — persistent, always-on blocking — is selected.
     public var isAdvanced: Bool {
         self == .advanced
+    }
+
+    /// Modes are ordered by how much protection they provide, so confirmation flows can
+    /// distinguish upgrades from downgrades.
+    public static func < (lhs: Self, rhs: Self) -> Bool {
+        lhs.rawValue < rhs.rawValue
     }
 }

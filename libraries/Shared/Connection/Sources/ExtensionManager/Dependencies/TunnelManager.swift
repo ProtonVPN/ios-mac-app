@@ -71,7 +71,9 @@ enum TunnelMessageTarget {
 
 protocol TunnelManager {
     func startTunnel(with intent: ServerConnectionIntent) async throws
-    func startZeroPeerTunnel() async throws
+    #if !os(tvOS)
+        func startZeroPeerTunnel() async throws
+    #endif
     func stopTunnel() async throws
 
     func sendProTUN(request: ProTUNMessage.Request) async throws(ProviderMessageError) -> ProTUNMessage.Response
@@ -109,11 +111,17 @@ public struct TunnelConfiguration: Equatable, Sendable, Codable {
     public let connectionSpec: ConnectionSpec
     public let tunnelProtocol: TunnelProtocol
     public let peerIDs: [String]
+    /// Whether the saved configuration carries the kill switch flag (`includeAllNetworks`): the tunnel
+    /// blocks traffic when it drops or runs with zero peers. Because this is read off the configuration,
+    /// it reports what the tunnel was actually given, while the settings hold what the user requested
+    /// for the next connection.
+    public let killSwitch: Bool
 
-    public init(connectionSpec: ConnectionSpec, tunnelProtocol: TunnelProtocol, peerIDs: [String]) {
+    public init(connectionSpec: ConnectionSpec, tunnelProtocol: TunnelProtocol, peerIDs: [String], killSwitch: Bool) {
         self.connectionSpec = connectionSpec
         self.tunnelProtocol = tunnelProtocol
         self.peerIDs = peerIDs
+        self.killSwitch = killSwitch
     }
 }
 
@@ -241,15 +249,16 @@ final class PacketTunnelManager: TunnelManager {
         try manager.session.startTunnel()
     }
 
-    /// Starts a zero-peer ProTUN tunnel from a disconnected state to enforce Advanced kill switch blocking.
-    /// May prompt for VPN permission the first time. The tunnel comes up intercepting all traffic
-    /// with no peer, so it blocks until a real connection replaces the configuration
-    func startZeroPeerTunnel() async throws {
-        @Dependency(\.vpnManagerRepository) var managerRepository
-        let manager = try await managerRepository.prepareManager(.wireGuard, .zeroPeerColdStart)
-        try Task.checkCancellation()
-        try manager.session.startTunnel()
-    }
+    #if !os(tvOS)
+        /// Starts a zero-peer ProTUN tunnel from a disconnected state to enforce Advanced kill switch blocking.
+        /// May prompt for VPN permission the first time. The tunnel comes up intercepting all traffic
+        /// with no peer, so it blocks until a real connection replaces the configuration
+        func startZeroPeerTunnel() async throws {
+            let manager = try await managerRepository.prepareManager(.wireGuard, .zeroPeerColdStart)
+            try Task.checkCancellation()
+            try manager.session.startTunnel()
+        }
+    #endif
 
     func stopTunnel() async throws {
         let managers = try await managerRepository.managers()
@@ -426,7 +435,12 @@ final class PacketTunnelManager: TunnelManager {
 
             connectionSpec = lastConnectionSpec.withLock { $0 } ?? ConnectionSpec()
 
-            let config = TunnelConfiguration(connectionSpec: connectionSpec, tunnelProtocol: .ike, peerIDs: peerIDs)
+            let config = TunnelConfiguration(
+                connectionSpec: connectionSpec,
+                tunnelProtocol: .ike,
+                peerIDs: peerIDs,
+                killSwitch: configuration.includeAllNetworks
+            )
 
             switch session.status {
             case .invalid:
@@ -491,21 +505,25 @@ final class PacketTunnelManager: TunnelManager {
             lastConnectionSpec.withLock { $0 } ??
             ConnectionSpec()
 
+        #if os(tvOS)
+            let killSwitch = false
+        #else
+            let killSwitch = configuration.includeAllNetworks
+        #endif
         let config = TunnelConfiguration(
             connectionSpec: connectionSpec,
             tunnelProtocol: .wireGuard,
-            peerIDs: extensionState?.peerID.map { [$0] } ?? []
+            peerIDs: extensionState?.peerID.map { [$0] } ?? [],
+            killSwitch: killSwitch
         )
         let intendedPeers = (try? configuration.peerIDs) ?? []
-        #if os(tvOS)
-            let requestsZeroPeerKillSwitch = false
-        #else
-            let requestsZeroPeerKillSwitch = configuration.includeAllNetworks && intendedPeers.isEmpty
-        #endif
+        let requestsZeroPeerKillSwitch = killSwitch && intendedPeers.isEmpty
 
         // Disabling on-demand is persisted before stopTunnel(), so it is a reliable teardown intent even when
-        // NetworkExtension briefly echoes `.connecting` while saving preferences.
-        if !isOnDemandEnabled, session.status != .disconnected, session.status != .invalid {
+        // NetworkExtension briefly echoes `.connecting` while saving preferences. The zero-peer kill switch
+        // configuration is the exception: it always runs with on-demand disabled, so that the user can stop
+        // it from the system settings.
+        if !isOnDemandEnabled, !requestsZeroPeerKillSwitch, session.status != .disconnected, session.status != .invalid {
             return .success(.disconnecting(config))
         }
 
@@ -519,11 +537,26 @@ final class PacketTunnelManager: TunnelManager {
         case (.invalid, _):
             return .success(.connecting(config))
         case (_, .disconnected):
-            // With no peer, Rust reports `.disconnected` even though the tunnel interface is alive and blackholing
-            // traffic. The saved configuration describes that intent; the matching request id confirms it was applied.
-            if requestsZeroPeerKillSwitch, isOnDemandEnabled {
-                guard quiesced else { return .success(.reasserting(config)) }
-                return .success(.killSwitchActive(config))
+            // With no peer, Rust reports `.disconnected` even when the tunnel interface is alive and blackholing
+            // traffic. The saved configuration describes the zero-peer intent, the matching request id confirms
+            // the extension applied it, and the session status tells whether the interface is actually up.
+            let sessionIsUp = [.connected, .connecting, .reasserting].contains(session.status)
+            if requestsZeroPeerKillSwitch {
+                if sessionIsUp {
+                    guard quiesced else { return .success(.reasserting(config)) }
+                    return .success(.killSwitchActive(config))
+                }
+                if session.status == .disconnecting {
+                    return .success(.disconnecting(config))
+                }
+                return .success(.disconnected(nil))
+            }
+            // The reverse transition: the saved configuration intends peers again (connecting out of the
+            // zero-peer blackhole), but the extension has not applied the update yet and still reports the
+            // peerless state. The tunnel interface is up, so hold the last state instead of reporting a
+            // disconnection that is not happening.
+            if sessionIsUp, !quiesced, !intendedPeers.isEmpty {
+                return .success(.reasserting(config))
             }
             return .success(.disconnected(nil))
         case (.disconnected, _):

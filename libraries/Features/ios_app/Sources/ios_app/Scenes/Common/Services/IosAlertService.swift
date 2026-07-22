@@ -96,7 +96,6 @@ extension IosAlertService {
         case is KillSwitchLogoutBlockingFailedAlert:
             showDefaultSystemAlert(alert)
 
-
         case is ProtocolNotAvailableForServerAlert:
             showDefaultSystemAlert(alert)
 

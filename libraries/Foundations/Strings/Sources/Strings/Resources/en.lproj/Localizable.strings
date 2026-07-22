@@ -967,12 +967,6 @@
 /* iOS: Kill switch settings - "Advanced" option title */
 "_kill_switch_mode_advanced" = "Advanced";
 
-/* iOS: Kill switch settings - description of the Standard option */
-"_kill_switch_mode_standard_description" = "Automatically disconnect from the internet if VPN connection is lost.";
-
-/* iOS: Kill switch settings - description of the Advanced option */
-"_kill_switch_mode_advanced_description" = "Only allow internet access when connected to Proton VPN. Advanced kill switch will remain active even when you restart your device.";
-
 /* iOS: Kill switch status message when KS isn't protecting a dropped connection (Off, or Standard while disconnected) */
 "_kill_switch_status_exposed" = "Your IP address could be exposed if your VPN connection drops";
 
