@@ -66,7 +66,6 @@
                 startDate: now,
                 storedIntent: nil,
                 initialState: .init(
-                    connectionState: .resolving,
                     shouldRegisterServerChangeOnConnection: false,
                     tunnel: .unknown
                 ),

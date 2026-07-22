@@ -181,7 +181,7 @@ private struct RecentsView: View {
 
     private func recentItem(index: Int, recentConnection: RecentConnection) -> some View {
         let location = recentConnection.connection.location
-        return Button(intent: ConnectToVPNWithParametersIntent(recentIndex: index)) {
+        return Button(intent: ConnectVPNWithParametersIntent(recentIndex: index)) {
             VStack(alignment: .center, spacing: .themeSpacing8) {
                 if recentConnection.underMaintenance {
                     Theme.Asset.Icons.wrench.swiftUIImage
@@ -256,7 +256,7 @@ private struct ButtonsView: View {
             }
             .buttonStyle(SecondaryButtonStyle())
         case .unprotected:
-            Button(intent: ConnectToVPNIntent()) {
+            Button(intent: ConnectVPNIntent()) {
                 Text(Localizable.connect)
             }
             .buttonStyle(PrimaryButtonStyle())

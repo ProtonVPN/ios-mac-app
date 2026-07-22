@@ -20,6 +20,7 @@ import Dependencies
 import DependenciesMacros
 import Domain
 import Foundation
+import Ergonomics
 
 public enum ConnectionCommand: @unchecked Sendable {
     case connect(ConnectionSpec, ConnectionProtocol?, UserInitiatedVPNChange.VPNTrigger?)
@@ -37,18 +38,25 @@ public struct ConnectionCommandClient {
 }
 
 extension ConnectionCommandClient: DependencyKey {
-    private static let broadcaster = ConnectionCommandBroadcaster()
+    public static let liveValue: ConnectionCommandClient = {
+        let (stream, continuation) = AsyncStream<ConnectionCommand>.makeStream(bufferingPolicy: .bufferingNewest(1))
 
-    public static let liveValue = ConnectionCommandClient(
-        send: { command in
-            Task {
-                await broadcaster.send(command)
-            }
-        },
-        stream: {
-            await broadcaster.stream()
+        let streamSource: StreamSource<ConnectionCommand>
+        if #available(macOS 15, iOS 18.0, tvOS 18.0, *) {
+            let shared = stream.share()
+            streamSource = .asyncAlgorithms { shared.eraseToStream() }
+        } else {
+            streamSource = .sharedStream(stream.sharedStream)
         }
-    )
+        return ConnectionCommandClient(
+            send: { command in
+                continuation.yield(command)
+            },
+            stream: {
+                streamSource.newStream
+            }
+        )
+    }()
 
     public static let testValue = ConnectionCommandClient(
         send: { _ in },
@@ -60,33 +68,5 @@ public extension DependencyValues {
     var connectionCommandClient: ConnectionCommandClient {
         get { self[ConnectionCommandClient.self] }
         set { self[ConnectionCommandClient.self] = newValue }
-    }
-}
-
-private actor ConnectionCommandBroadcaster {
-    private var continuations: [UUID: AsyncStream<ConnectionCommand>.Continuation] = [:]
-
-    func send(_ command: ConnectionCommand) {
-        let activeContinuations = Array(continuations.values)
-        for continuation in activeContinuations {
-            continuation.yield(command)
-        }
-    }
-
-    func stream() -> AsyncStream<ConnectionCommand> {
-        let id = UUID()
-        let (stream, continuation) = AsyncStream.makeStream(of: ConnectionCommand.self)
-        continuations[id] = continuation
-        continuation.onTermination = { [weak self] _ in
-            guard let self else { return }
-            Task {
-                await self.removeContinuation(id)
-            }
-        }
-        return stream
-    }
-
-    private func removeContinuation(_ id: UUID) {
-        continuations.removeValue(forKey: id)
     }
 }

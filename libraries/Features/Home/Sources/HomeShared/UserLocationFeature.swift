@@ -65,6 +65,8 @@ public struct UserLocationFeature {
         case tearDown
         case delegate(Delegate)
 
+        case connectionStateUpdate(ConnectionState)
+
         @CasePathable
         public enum Delegate {
             case userLocationChanged(UserLocation)
@@ -75,9 +77,17 @@ public struct UserLocationFeature {
         case didBecomeActive
         case userLocationTimer
         case userLocation
+        case watchConnectionState
     }
 
     private static let locationCooldownInterval: TimeInterval = .hours(1)
+
+    private let longLivingConnectionStateEffect: Effect<Action> = .publisher {
+        @SharedReader(.connectionState) var connectionState
+        return $connectionState.publisher
+            .removeDuplicates()
+            .map { state in Action.connectionStateUpdate(state) }
+    }.cancellable(id: CancelID.watchConnectionState)
 
     private let longLivingDidBecomeActiveEffect: Effect<Action> = .publisher {
         NotificationCenter.default
@@ -98,9 +108,9 @@ public struct UserLocationFeature {
             switch action {
             case .listen:
                 return .merge(
-                    .send(.fetchUserLocation),
                     longLivingDidBecomeActiveEffect,
-                    longLivingUserLocationTimerEffect
+                    longLivingUserLocationTimerEffect,
+                    longLivingConnectionStateEffect
                 )
 
             case .fetchUserLocation:
@@ -161,10 +171,17 @@ public struct UserLocationFeature {
                 return .merge(
                     .cancel(id: CancelID.userLocation),
                     .cancel(id: CancelID.didBecomeActive),
-                    .cancel(id: CancelID.userLocationTimer)
+                    .cancel(id: CancelID.userLocationTimer),
+                    .cancel(id: CancelID.watchConnectionState)
                 )
 
             case .delegate:
+                return .none
+                
+            case let .connectionStateUpdate(connectionState):
+                if connectionState.is(\.disconnected) {
+                    return .send(.fetchUserLocation)
+                }
                 return .none
             }
         }

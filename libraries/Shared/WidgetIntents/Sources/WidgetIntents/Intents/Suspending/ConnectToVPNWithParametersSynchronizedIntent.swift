@@ -26,7 +26,7 @@ import Sharing
 import UIKit
 import VPNAppCore
 
-public struct ConnectToVPNWithParametersIntent: AppIntent {
+public struct ConnectVPNWithParametersSynchronizedIntent: AppIntent {
     public static let title: LocalizedStringResource = "Connect to VPN with parameters"
     public static let openAppWhenRun = true
     public static let isDiscoverable: Bool = false
@@ -84,12 +84,7 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
                 false
             }
         }, every: .milliseconds(200), deadline: Self.timeOut, operation: { state in
-            if case .connected = state {
-                if connectionSpec == nil { // don't close the app when connecting with a spec
-                    // VPN connection established, now suspending the app.
-                    await suspendAppIfSupported()
-                }
-            } else {
+            guard case .connected = state else {
                 throw IntentConnectionError()
             }
         })
@@ -115,9 +110,9 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
             /// So if current spec is Sydney and user wants to connect to Australia, which is a different spec,
             /// but the current spec falls under it - we can skip the reconnect.
             /// For now just compare the exact specs, so the same shortcut launched multiple times will not re-trigger a connection
+            try await $connectionState.load()
             if case let .connected(tunnelConfig, _) = connectionState {
                 if tunnelConfig.connectionSpec == spec {
-                    await suspendAppIfSupported()
                     return .result(value: true)
                 }
             }
@@ -132,7 +127,7 @@ public struct ConnectToVPNWithParametersIntent: AppIntent {
             log.error("Failed to connect to VPN from widget with error: \(error)")
             return .result(value: false)
         }
-
+        try await $connectionState.load()
         if case .connected = connectionState {
             return .result(value: true)
         } else {

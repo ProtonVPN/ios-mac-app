@@ -27,6 +27,9 @@ import Foundation
 import IPCDefinitions
 import Sharing
 import VPNAppCore
+#if canImport(WidgetKit)
+import WidgetKit
+#endif
 
 @Reducer
 public struct ConnectionFeature: Sendable {
@@ -40,16 +43,14 @@ public struct ConnectionFeature: Sendable {
     public struct State: Equatable, Sendable {
         @SharedReader(.userTier) public var userTier: Int?
 
-        var connectionState: ConnectionState
+        @Shared(.connectionState) var connectionState
         var shouldRegisterServerChangeOnConnection: Bool // TODO: ProTUN: post connection events that some other component can hook into to do this, similarly to Telemetry
         var tunnel: ExtensionFeature.State
 
         package init(
-            connectionState: ConnectionState,
             shouldRegisterServerChangeOnConnection: Bool,
             tunnel: ExtensionFeature.State
         ) {
-            self.connectionState = connectionState
             self.shouldRegisterServerChangeOnConnection = shouldRegisterServerChangeOnConnection
             self.tunnel = tunnel
         }
@@ -62,6 +63,8 @@ public struct ConnectionFeature: Sendable {
         case tunnel(ExtensionFeature.Action)
         case input(Input)
         case delegate(Delegate)
+        case connectionStateUpdated(ConnectionState)
+        case reloadWidgetTimelines
         case stopObserving
 
         /// A subset of this reducer's actions suitable to be sent from outside
@@ -118,7 +121,9 @@ public struct ConnectionFeature: Sendable {
 
                 // Transition to connecting to give the user immediate feedback while
                 // we perform the somewhat expensive database operations to resolve the server
-                state.connectionState = ConnectionState.connecting(.unresolved(intent))
+                state.$connectionState.withLock {
+                    $0 = .connecting(.unresolved(intent))
+                }
                 return .send(.prepare(intent))
 
             case let .input(.applySettings(featureChanges)):
@@ -162,7 +167,9 @@ public struct ConnectionFeature: Sendable {
                         tunnelProtocol: tunnelConfig.tunnelProtocol,
                         peerIDs: []
                     )
-                    state.connectionState = .killSwitchActive(tunnelConfig.connectionSpec, zeroPeerConfig)
+                    state.$connectionState.withLock {
+                        $0 = .killSwitchActive(tunnelConfig.connectionSpec, zeroPeerConfig)
+                    }
                     let update = ConnectionUpdate(
                         location: .init(spec: tunnelConfig.connectionSpec, peers: []),
                         killSwitch: true
@@ -198,11 +205,15 @@ public struct ConnectionFeature: Sendable {
             case let .finishedPreparing(.failure(error)):
                 log.error("Failed to preparing connection with error: \(error)")
                 // Revert state to actual tunnel state
-                state.connectionState = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
+                state.$connectionState.withLock {
+                    $0 = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
+                }
                 return .send(.delegate(.connectionFailed(.preparation(.intentResolution(error)))))
 
             case let .tunnel(.tunnelStatusChanged(.disconnected(.some(error)))):
-                state.connectionState = .disconnected
+                state.$connectionState.withLock {
+                    $0 = .disconnected
+                }
                 return .send(.delegate(.connectionFailed(.tunnel(error))))
 
             case let .tunnel(.tunnelStatusChanged(.connected(_, connectionData))):
@@ -214,11 +225,15 @@ public struct ConnectionFeature: Sendable {
                 if state.shouldRegisterServerChangeOnConnection {
                     serverChangeAuthorizer.registerServerChange(connectedAt: connectionData.connectionDate)
                 }
-                state.connectionState = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
+                state.$connectionState.withLock {
+                    $0 = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
+                }
                 return .none
 
             case .tunnel(.tunnelStatusChanged):
-                state.connectionState = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
+                state.$connectionState.withLock {
+                    $0 = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
+                }
                 return .none
 
             case let .tunnel(.delegate(.timedOut(stage))):
@@ -227,7 +242,9 @@ public struct ConnectionFeature: Sendable {
             case let .tunnel(.delegate(.reconfigurationFailed(error))):
                 // Reconfiguring an already-running tunnel failed. Make sure we have an accurate view of the current
                 // tunnel state in case the extension couldn't notify us, and then surface the error.
-                state.connectionState = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
+                state.$connectionState.withLock {
+                    $0 = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
+                }
                 return .send(.delegate(.connectionFailed(.tunnel(.reconfigurationFailure(error)))))
 
             case let .tunnel(.delegate(.errorReported(error))):
@@ -249,7 +266,16 @@ public struct ConnectionFeature: Sendable {
 
             case .tunnel:
                 return .none
-
+            case let .connectionStateUpdated(newValue):
+                return .merge(
+                    .send(.delegate(.stateChanged(newValue))),
+                    .send(.reloadWidgetTimelines)
+                )
+            case .reloadWidgetTimelines:
+#if canImport(WidgetKit)
+                WidgetCenter.shared.reloadAllTimelines()
+#endif
+                return .none
             case .delegate:
                 // It's up to the parent feature to respond to delegate actions
                 return .none
@@ -257,7 +283,7 @@ public struct ConnectionFeature: Sendable {
         }
         .onChange(of: \.connectionState) { _, newValue in
             Reduce { _, _ in
-                .send(.delegate(.stateChanged(newValue)))
+                return .send(.connectionStateUpdated(newValue))
             }
         }
     }
@@ -309,7 +335,6 @@ public enum ConnectionState: Equatable, Sendable, Codable {
 
 public extension ConnectionFeature.State {
     static let initialState = ConnectionFeature.State(
-        connectionState: .resolving,
         shouldRegisterServerChangeOnConnection: false,
         tunnel: .unknown
     )
@@ -330,6 +355,10 @@ extension ConnectionFeature.Action: CustomDebugStringConvertible {
             ".delegate(\(delegate.debugDescription))"
         case .stopObserving:
             ".stopObserving"
+        case let .connectionStateUpdated(connectionState):
+            ".connectionStateUpdated(\(connectionState.debugDescription)"
+        case .reloadWidgetTimelines:
+            ".reloadWidgetTimelines"
         }
     }
 }

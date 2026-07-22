@@ -65,7 +65,7 @@ struct SidebarFeature {
             }
         }
 
-        @Shared(.connectionState) var connectionState: ConnectionState
+        @SharedReader(.connectionState) var connectionState: ConnectionState
         var connection: ConnectionFeature.State = .initialState
 
         enum ExpandState: Equatable {
@@ -227,6 +227,7 @@ struct SidebarFeature {
         case windowExitFullScreen
         case overlayDelay
         case connectionCommands
+        case connectionState
         case portForwardingSetting
         case plutoniumSetting
         case connectionConnectCommandEffect
@@ -321,7 +322,14 @@ private extension SidebarFeature {
                             .receive(on: DispatchQueue.main)
                             .map { _ in Action.refreshAnnouncementsIfNeeded }
                     }
-                    .cancellable(id: CancelID.announcementRefresh)
+                    .cancellable(id: CancelID.announcementRefresh),
+                    .publisher {
+                        @SharedReader(.connectionState) var connectionState
+                        return $connectionState.publisher
+                            .removeDuplicates()
+                            .map { state in Action.connectionStateChanged(state) }
+                    }
+                    .cancellable(id: CancelID.connectionState)
                 )
             case .stopObservingEvents:
                 return .merge(
@@ -331,6 +339,7 @@ private extension SidebarFeature {
                     .cancel(id: CancelID.windowExitFullScreen),
                     .cancel(id: CancelID.overlayDelay),
                     .cancel(id: CancelID.connectionCommands),
+                    .cancel(id: CancelID.connectionState),
                     .cancel(id: CancelID.portForwardingSetting),
                     .cancel(id: CancelID.plutoniumSetting),
                     .cancel(id: CancelID.connectionConnectCommandEffect),
@@ -607,9 +616,7 @@ private extension SidebarFeature {
                 return .cancel(id: CancelID.overlayDelay)
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
-                state.$connectionState.withLock { $0 = connectionState }
                 return .merge(
-                    .send(.connectionStateChanged(connectionState)),
                     .send(.syncNATPortMappingState),
                     .send(.syncPlutoniumState),
                     .run { _ in

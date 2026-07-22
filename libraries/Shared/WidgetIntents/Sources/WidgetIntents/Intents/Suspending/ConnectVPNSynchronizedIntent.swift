@@ -19,18 +19,19 @@
 import AppIntents
 import Strings
 
-public struct ConnectToVPNIntent: AppIntent {
+public struct ConnectVPNSynchronizedIntent: AppIntent {
     public static let title: LocalizedStringResource = "Connect to VPN"
     static let description = IntentDescription(
         "Connects to Proton VPN using your default connection settings.",
         resultValueName: "connected"
     )
     public static let openAppWhenRun = true
+    public static let isDiscoverable = true
 
     public init() {}
 
     public func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
-        let value = try await ConnectToVPNWithParametersIntent().perform().value ?? false
+        let value = try await ConnectVPNWithParametersSynchronizedIntent().perform().value ?? false
         return .result(value: value)
     }
 }
