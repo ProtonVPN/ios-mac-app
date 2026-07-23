@@ -1,5 +1,24 @@
 #!/bin/sh
 
+# Automatically re-configure the ProTUN Nexus mirror if Package.swift changed.
+if git diff --cached --name-only | grep -q "libraries/Core/NEProviders/Package.swift"; then
+    echo ""
+    if [ -z "${CI_NEXUS_URL:-}" ]; then
+        echo "NOTE: libraries/Core/NEProviders/Package.swift has changed."
+        echo "CI_NEXUS_URL is not set, so the mirror could not be updated automatically."
+        echo "Once it's set, run: ./Integration/Scripts/setup-mirrors.sh or retry your commit."
+    else
+        echo "🔎 pre-commit: Package.swift changed — updating ProTUN mirror..."
+        if ./Integration/Scripts/setup-mirrors.sh; then
+            echo "🟢 pre-commit: ProTUN mirror updated."
+        else
+            echo "⚠️  pre-commit: Could not update the ProTUN mirror automatically."
+            echo "   Run manually: ./Integration/Scripts/setup-mirrors.sh"
+        fi
+    fi
+    echo ""
+fi
+
 sh Integration/Scripts/swift-format-it.sh
 sh Integration/Scripts/format-xctestplans.sh
 
