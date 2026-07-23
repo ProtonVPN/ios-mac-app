@@ -88,7 +88,7 @@ public enum Localizable {
   /// Continue?
   public static var allowLanDescription: String { return Localizable.tr("Localizable", "_allow_lan_description", fallback: "In order to allow LAN access, kill switch must be turned off.\n\nContinue?") }
   /// Allows to bypass the VPN and connect to devices on your local network, like your printer.
-  public static var allowLanInfo: String { return Localizable.tr("Localizable", "_allow_lan_info", fallback: "Allows to bypass the VPN and connect to devices on your local network, like your printer.") }
+  public static var allowLanInfo: String { return Localizable.tr("Localizable", "_allow_lan_info", fallback: "Allows traffic to devices on your local network, like your printer, to bypass the VPN while Kill Switch is active.") }
   /// Note that your connection needs to be restarted to apply this change
   public static var allowLanNote: String { return Localizable.tr("Localizable", "_allow_lan_note", fallback: "Note that your connection needs to be restarted to apply this change") }
   /// Allow LAN connections

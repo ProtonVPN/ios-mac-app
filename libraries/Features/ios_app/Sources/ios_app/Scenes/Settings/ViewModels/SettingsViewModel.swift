@@ -363,6 +363,9 @@ final class SettingsViewModel {
         ))
         cells.append(.tooltip(text: Localizable.killSwitchTooltip))
 
+        // Grouped with KS in the security section, since it's only effective while KS is active.
+        cells.append(contentsOf: allowLanSection)
+
         return TableViewSection(title: Localizable.securityOptions, cells: cells)
     }
 
@@ -619,8 +622,6 @@ final class SettingsViewModel {
         if featureFlags.vpnAccelerator {
             cells.append(contentsOf: vpnAcceleratorSection)
         }
-
-        cells.append(contentsOf: allowLanSection)
 
         cells.append(contentsOf: hermesSection)
 

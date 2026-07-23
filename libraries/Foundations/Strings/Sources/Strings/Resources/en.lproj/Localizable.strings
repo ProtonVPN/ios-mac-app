@@ -1153,7 +1153,8 @@
 "_report_bug" = "Report an issue";
 
 "_allow_lan_title" = "Allow LAN connections";
-"_allow_lan_info" = "Allows to bypass the VPN and connect to devices on your local network, like your printer.";
+
+"_allow_lan_info" = "Allows traffic to devices on your local network, like your printer, to bypass the VPN while Kill Switch is active.";
 "_allow_lan_description" = "In order to allow LAN access, kill switch must be turned off.\n\nContinue?";
 "_allow_lan_note" = "Note that your connection needs to be restarted to apply this change";
 
