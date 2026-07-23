@@ -143,13 +143,12 @@ struct QuickSettingDetailFeature {
         }
 
         /// NetShield options, filtered for visibility:
-        /// - Globally-disabled levels (currently `.level3` when the kill-switch flag is off) are
-        ///   always hidden, regardless of tier or business status — there's no upsell for a feature
-        ///   that doesn't exist yet.
-        /// - For B2B accounts, per-account `netshieldSettings` further hide levels the plan doesn't
-        ///   include.
-        /// - For B2C accounts (free or paid), the full level list stays visible. Free users see
-        ///   paid levels with the existing upsell affordance via `requiresUpdate`.
+        ///
+        /// - Globally-disabled levels (currently `.level3` when the kill-switch flag is off) are always hidden,
+        ///   regardless of tier or business status — there's no upsell for a feature that doesn't exist yet.
+        /// - For B2B accounts, per-account `netshieldSettings` further hide levels the plan doesn't include.
+        /// - For B2C accounts (free or paid), the full level list stays visible. Free users see paid levels with the
+        ///   existing upsell affordance via `requiresUpdate`.
         private var netShieldOptions: [QuickSettingOptionRow] {
             let rows: [(level: NetShieldType, title: String, icon: Image)] = [
                 (.off, Localizable.quickSettingsNetshieldOptionOff, Theme.Asset.Icons.shield.swiftUIImage),
@@ -170,8 +169,8 @@ struct QuickSettingDetailFeature {
                 }
         }
 
-        /// Kill Switch status message(s) + LAN hint shown below the picker rows
-        /// (VPN status × KS mode) matrix. Empty for non-KS quick settings.
+        /// Kill Switch status message(s) + LAN hint shown below the picker rows (VPN status x KS mode) matrix. Empty
+        /// for non-KS quick settings.
         var killSwitchStatusMessages: [KillSwitchStatusMessage] {
             guard type == .killSwitchDisplay else { return [] }
             let lanHint = KillSwitchStatusMessage(

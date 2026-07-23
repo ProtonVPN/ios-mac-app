@@ -53,9 +53,14 @@ final class StatusMenuViewModel {
     @Dependency(\.linkOpener) var linkOpener
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
     @SharedReader(.killSwitchMode) private var killSwitchMode: KillSwitchMode
-    /// Advanced KS is *Active* (armed at connect → a disconnect would keep blocking) vs merely *Armed*
-    /// (enabled while connected → effective next connection). Gates the disconnect warning.
-    @SharedReader(.advancedKillSwitchActive) private var advancedKillSwitchActive: Bool
+
+    /// Advanced KS is *Active* vs merely *Armed*. Blocks the disconnect warning. Advanced kill switch is Active when
+    /// the mode is Advanced and the reported tunnel actually carries the kill switch flag, meaning it is connected with
+    /// it or already blocking.
+    private var advancedKillSwitchActive: Bool {
+        killSwitchMode.isAdvanced && connectionState.tunnelKillSwitch
+    }
+
     @SharedReader(.connectionState) private var connectionState: ConnectionState
     @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
 
@@ -169,8 +174,8 @@ final class StatusMenuViewModel {
         disconnectFromTray()
     }
 
-    /// Advanced kill switch keeps blocking after an intentional disconnect, so confirm first when
-    /// connected. Other states disconnect immediately
+    /// Advanced kill switch keeps blocking after an intentional disconnect, so confirm first when connected. Other
+    /// states disconnect immediately
     private func disconnectFromTray() {
         guard advancedKillSwitchActive, connectionState.isConnected else {
             connectionCommandClient.send(.disconnect(.tray))
@@ -445,8 +450,8 @@ final class StatusMenuViewModel {
             turningOn: turningOn,
             fallbackCountryName: fallbackCountryName(turningOn: turningOn)
         )
-        // Revert the optimistic switch flip until the user confirms; applying re-syncs it from
-        // `secureCoreToggle` on confirmation.
+        // Revert the optimistic switch flip until the user confirms; applying re-syncs it from `secureCoreToggle` on
+        // confirmation.
         viewController?.secureCoreSwitch.setState(turningOn ? .off : .on)
         coreAlertService.push(alert: WarningAlert(
             title: Localizable.vpnConnectionActive,
@@ -457,11 +462,11 @@ final class StatusMenuViewModel {
         ))
     }
 
-    /// Toggles the Secure Core setting. If we are connected, also dispatches a reconnect
-    /// using ``SecureCoreConnectionSpecResolver.toggleReconnectSpec`` to create the connection
-    /// spec, which will pick a Secure Core server with an exit in the same region if possible
-    /// when the new setting is `On`, or a random standard server in the same region if possible when
-    /// the new setting is `Off`. If no server can be found, the fallback behavior is to pick fastest server.
+    /// Toggles the Secure Core setting. If we are connected, also dispatches a reconnect using
+    /// ``SecureCoreConnectionSpecResolver.toggleReconnectSpec`` to create the connection spec, which will pick a Secure
+    /// Core server with an exit in the same region if possible when the new setting is `On`, or a random standard
+    /// server in the same region if possible when the new setting is `Off`. If no server can be found, the fallback
+    /// behavior is to pick fastest server.
     private func applySecureCoreToggle(turningOn: Bool) {
         let targetServerType: ServerType = turningOn ? .secureCore : .standard
         let wasConnected = isConnected

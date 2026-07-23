@@ -50,9 +50,14 @@ final class SparkleUpdateManager: NSObject {
     /// Set while Advanced kill switch is temporarily disabled for an update; restored on the next launch
     @Shared(.restoreAdvancedKillSwitchAfterUpdate) private var restoreAdvancedKillSwitchAfterUpdate: Bool
     @SharedReader(.connectionState) private var connectionState: ConnectionState
-    /// Advanced KS is *Active* (armed at connect → would keep blocking across the update relaunch) vs merely
-    /// *Armed*. Gates the update warning copy + the temporary disable/restore dance.
-    @SharedReader(.advancedKillSwitchActive) private var advancedKillSwitchActive: Bool
+
+    /// Advanced kill switch is Active when the mode is Advanced and the reported tunnel actually carries
+    /// the kill switch flag, so it would keep blocking across the update relaunch. A mode enabled
+    /// mid-session only applies to the next connection and needs no temporary disable.
+    private var advancedKillSwitchActive: Bool {
+        killSwitchMode.isAdvanced && connectionState.tunnelKillSwitch
+    }
+
     #if DEBUG
         /// When set, suppresses update prompts (used in UI tests)
         @SharedReader(.blockUpdatePrompt) private var blockUpdatePrompt
@@ -212,8 +217,8 @@ extension SparkleUpdateManager: SPUUpdaterDelegate {
         isRelaunchingForUpdate = true
     }
 
-    /// before Sparkle relaunches to install, warn that the update disconnects the VPN
-    /// (and, when kill switch is on, temporarily disables it) so active connections are briefly unprotected
+    /// Before Sparkle relaunches to install, warn that the update disconnects the VPN (and, when kill switch is on,
+    /// temporarily disables it) so active connections are therefore briefly unprotected.
     func updater(_: SPUUpdater, shouldPostponeRelaunchForUpdate _: SUAppcastItem, untilInvokingBlock installHandler: @escaping () -> Void) -> Bool {
         guard connectionState.isConnected || advancedKillSwitchActive else {
             return false
@@ -249,9 +254,9 @@ extension SparkleUpdateManager: SPUUpdaterDelegate {
 
     /// Tears down the VPN (and Advanced kill switch) before invoking Sparkle's relaunch handler
     private func prepareForUpdateInstall(then installHandler: @escaping () -> Void) {
-        // Active Advanced kill switch keeps blocking across a clean disconnect (and the stop below would
-        // otherwise trip the drop-reblock), so temporarily disable it and flag it for restoration on the next
-        // launch. Standard releases automatically on the disconnect; merely-Armed Advanced isn't blocking.
+        // Active Advanced kill switch keeps blocking across a clean disconnect (and the stop below would otherwise trip
+        // the switch to zero-peer), so temporarily disable it and flag it for restoration on the next launch. Standard
+        // releases automatically on the disconnect. An Advanced KS setting that hasn't taken effect also doesn't count.
         if advancedKillSwitchActive {
             $restoreAdvancedKillSwitchAfterUpdate.withLock { $0 = true }
             $killSwitchMode.withLock { $0 = .off }

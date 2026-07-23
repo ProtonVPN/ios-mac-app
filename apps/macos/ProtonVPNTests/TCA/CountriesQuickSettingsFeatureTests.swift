@@ -372,8 +372,8 @@ struct CountriesQuickSettingsFeatureTests {
         }
     }
 
-    @Test("enabling kill switch (mode-up) presents confirmation")
-    func killSwitchModeUpPresentsConfirmation() async {
+    @Test("increasing kill switch protection presents confirmation")
+    func killSwitchUpgradePresentsConfirmation() async {
         @SharedReader(.userTier) var userTier: VpnTier? = .paid
 
         let store = makeStore()
@@ -386,7 +386,7 @@ struct CountriesQuickSettingsFeatureTests {
             $0.portForwarding.isSelected = false
         }
         await store.send(.destination(.presented(.quickSettingDetail(.delegate(.option(.killSwitchDisplay, .killSwitchStandard)))))) {
-            $0.alert = QuickSettingsFeature.killSwitchModeUpAlert(from: .off, to: .standard)
+            $0.alert = QuickSettingsFeature.killSwitchUpgradeAlert(from: .off, to: .standard)
         }
     }
 

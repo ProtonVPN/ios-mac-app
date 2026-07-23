@@ -61,11 +61,11 @@ public class QuitWarningAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
 
-    /// Quit confirmation while a VPN session is active. Standard releases KS on quit;
+    /// Quit confirmation while a VPN session is active. Standard KS allows disconnecting on quit, whereas advanced KS
+    /// will warn the user that Kill Switch will engage if they quit, and they will lose access to the Internet.
     public init(advancedKillSwitchActive: Bool, confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
         self.title = Localizable.killSwitchQuitTitle
-        // Only warn "you'll stay blocked after quit" when Advanced KS is Active (armed at connect); merely
-        // Armed isn't blocking, so quitting is a normal disconnect.
+        // Only warn "you'll stay blocked after quit" when Advanced KS is ready.
         self.message = advancedKillSwitchActive
             ? Localizable.killSwitchLogoutAdvancedBody
             : Localizable.killSwitchDisconnectedFromVpn

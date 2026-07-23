@@ -666,6 +666,9 @@ struct SidebarFeatureTests {
         $intentionallyDisconnected.withLock { $0 = false }
         $connectionProtocol.withLock { $0 = .vpnProtocol(.ike) }
 
+        let session = VPNSessionMock(status: .disconnected)
+        session.messageHandler = MessageHandler.full
+
         return TestStore(initialState: SidebarFeature.State()) {
             SidebarFeature(
                 environment: environment
@@ -674,7 +677,14 @@ struct SidebarFeatureTests {
             if let clock {
                 $0.continuousClock = clock
             }
-            $0.tunnelManager = MockTunnelManager(connection: .init(status: .disconnected))
+            $0.connectionFeatureProvider = .init(
+                connectionFeatures: {
+                    .init(netshield: .off, vpnAccelerator: false, natType: .strictNAT, portForwarding: false)
+                },
+                requestedFeatures: { .init(killSwitchMode: .off, excludeLocalNetworks: false) },
+                connectionProtocol: { .smartProtocol }
+            )
+            $0.tunnelManager = MockTunnelManager(connection: session)
             $0.defaultAppStorage = defaults
             $0.connectionCommandClient = connectionCommandClient
             $0.pendingDisconnectCompletions = pendingDisconnectCompletions

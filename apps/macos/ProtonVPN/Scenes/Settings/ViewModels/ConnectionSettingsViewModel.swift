@@ -485,9 +485,8 @@ final class ConnectionSettingsViewModel {
     func setAllowLANAccess(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
         let newValue: ExcludeLocalNetworks = enabled ? .on : .off
 
-        // Turning LAN access on conflicts with an armed kill switch: ask the user to confirm dropping
-        // kill switch protection before applying the change. SidebarFeature observes `killSwitchMode`
-        // and handles the tunnel side of the mode change.
+        // Turning LAN access on conflicts with an armed kill switch. Ask the user to confirm dropping kill switch
+        // protection before applying the change.
         if enabled, killSwitchMode.isProtected {
             let alert = LANConnectionsKillSwitchConflictAlert(connected: connectionState.isConnected, confirmHandler: {
                 setFeatureValue(newValue)

@@ -47,26 +47,20 @@ final class OsxUiAlertService {
 
         if let window = hostWindow() {
             if NSApp.keyWindow is StatusWindow {
-                // Triggered from the non-activating popover, so the app may be inactive and
-                // a sheet on a background window would be unreachable. Activate and bring the
-                // host forward; taking keyboard focus (key-window status) away from the popover
-                // makes it close itself — StatusMenuWindowController dismisses it on
-                // windowDidResignKey, matching the old NSAlert behaviour.
+                // The app may be inactive, so bring it forward and take the keyboard's focus.
                 NSRunningApplication.current.activate(options: [.activateAllWindows])
                 window.makeKeyAndOrderFront(nil)
             }
             showAsSheet(alert, in: window)
         } else {
-            // No window can host a sheet (popover-only or none at all): show a standalone
-            // window styled like the native alert instead.
+            // No window can host a sheet, so show a standalone window styled like the native alert instead.
             showAsWindow(alert)
         }
     }
 
     // MARK: - Sheet path (a regular window exists)
 
-    /// Presents the alert as a native SwiftUI `.alert` hosted by a zero-size
-    /// `NSHostingView` mounted on the given window.
+    /// Presents the alert as a native SwiftUI `.alert` hosted by a zero-size `NSHostingView` on the given window.
     private func showAsSheet(_ alert: SystemAlert, in window: NSWindow) {
         log.info("Presenting \(alert.className) as a sheet on \(window.className)", category: .ui)
         sheetAlerts.append(alert)
@@ -96,10 +90,9 @@ final class OsxUiAlertService {
         return candidates.compactMap { $0 }.first(where: canHostAlertSheet)
     }
 
-    /// Whether a window can host a SwiftUI `.alert` sheet: it must be titled and able to
-    /// become key. This excludes the popover panel (borderless; a sheet just dims it), the
-    /// menu-bar status item window (always visible in `NSApp.windows` — alerts used to
-    /// attach to the menu bar itself), standalone alert windows, and other chrome windows.
+    /// Whether a window can host a SwiftUI `.alert` sheet: it must be titled and able to become key. This excludes the
+    /// popover panel, the menu-bar status item window (always visible in `NSApp.windows` even though alerts can't
+    /// attach), standalone alert windows, etc.
     private func canHostAlertSheet(_ window: NSWindow) -> Bool {
         window.styleMask.contains(.titled)
             && window.canBecomeKey
@@ -127,8 +120,8 @@ final class OsxUiAlertService {
         )
     }
 
-    /// The screen the user is interacting with: under the pointer first (they just clicked
-    /// the status item there), then the one with keyboard focus, then any.
+    /// The screen the user is interacting with: under the pointer first (they just clicked the status item there), then
+    /// the one with keyboard focus, then any.
     private func targetScreen() -> NSScreen? {
         let mouseLocation = NSEvent.mouseLocation
         return NSScreen.screens.first { NSMouseInRect(mouseLocation, $0.frame, false) }
@@ -136,14 +129,13 @@ final class OsxUiAlertService {
             ?? NSScreen.screens.first
     }
 
-    /// The menu-bar window hosting this app's status item on the given screen, located by
-    /// class name — the same heuristic `NSEvent.isStatusItemClicked` uses.
+    /// The menu-bar window hosting this app's status item on the given screen, located by class name — the same
+    /// heuristic `NSEvent.isStatusItemClicked` uses.
     ///
-    /// The match requires the window to actually sit in this screen's menu-bar strip:
-    /// after a display change (e.g. clamshell switch) `NSApp.windows` can still hold a
-    /// stale status-bar window with a frame from the old arrangement, and using its
-    /// coordinates puts the alert in the wrong place. No verified match means no anchor —
-    /// the alert then centres on the screen, which beats a confidently wrong position.
+    /// The match requires the status item to actually sit in this screen's menu-bar. After a display change,
+    /// `NSApp.windows` can still hold a stale status-bar window with a frame from the old arrangement, and using its
+    /// coordinates puts the alert in the wrong place. If there's no verified match, the alert then centres on the
+    /// screen.
     private func statusItemWindow(on screen: NSScreen?) -> NSWindow? {
         guard let screen else { return nil }
 
@@ -170,8 +162,8 @@ final class OsxUiAlertService {
     }
 
     private func updateOldAlert(with newAlert: SystemAlert) {
-        // Both presentation paths resolve the tapped action from the alert object at click
-        // time, so replacing the actions swaps in the new completion handlers.
+        // Both presentation paths resolve the tapped action from the alert object at click time, so replacing the
+        // actions swaps in the new completion handlers.
         if let oldAlert = sheetAlerts.first(where: { $0.className == newAlert.className }) {
             oldAlert.actions = newAlert.actions
         } else if let controller = alertWindows[newAlert.className] {
@@ -192,8 +184,7 @@ private final class LegacyAlertPresentation {
 
 /// Converts a legacy `SystemAlert` into a native SwiftUI `.alert`
 ///
-/// zero-size host view on the key window so SwiftUI can present the alert
-/// window-modally; the underlying view is never visible
+/// Zero-size hosting view on the key window so SwiftUI can present the alert.
 private struct LegacyAlertView: View {
     let alert: SystemAlert
     @Bindable var presentation: LegacyAlertPresentation

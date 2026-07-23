@@ -106,14 +106,14 @@ struct QuickSettingsFeature {
 
         @CasePathable
         enum Alert: Equatable {
-            /// Confirmed a mode-up Kill Switch transition (Off→Standard, Off→Advanced, Standard→Advanced).
-            /// The target mode is captured so the apply path doesn't re-derive it.
+            /// Confirmed a step-up Kill Switch transition (Off to Standard, Off to Advanced, Standard to Advanced). The
+            /// target mode is captured so the apply path doesn't re-derive it.
             case confirmKillSwitchMode(KillSwitchMode)
             case cancelKillSwitchMode
             case confirmDisableHermesAndSetNetShield(NetShieldType)
-            /// Confirmed mid-session Secure Core toggle. `turningOn` is captured at the moment
-            /// the alert is presented so the apply path doesn't have to re-derive direction
-            /// from the (potentially mutated) `secureCoreToggle` shared value.
+            /// Confirmed mid-session Secure Core toggle. `turningOn` is captured at the moment the alert is presented
+            /// so the apply path doesn't have to re-derive direction from the (potentially mutated) `secureCoreToggle`
+            /// shared value.
             case confirmSecureCoreToggle(turningOn: Bool)
         }
     }
@@ -280,14 +280,13 @@ private extension QuickSettingsFeature {
                 return .none
 
             case let .destination(.presented(.quickSettingDetail(.delegate(.option(type, option))))):
-                // Alerts before applying: Kill Switch mode-up confirmation, NetShield/Hermes
-                // conflict alert, paywall upsell, Secure Core discourage modal. Only after all
-                // of these pass do we hand off to `applyQuickSettingOptionSelection`.
+                // Alerts before applying: increase in KS protection, NetShield/Hermes conflict alert, paywall upsell,
+                // Secure Core discourage modal. Only after all of these pass do we hand off to
+                // `applyQuickSettingOptionSelection`.
                 if type == .killSwitchDisplay, let targetMode = option.killSwitchMode {
-                    // Confirm only on mode-up transitions (increasing protection); downgrades and Off
-                    // apply immediately
+                    // Confirm only when increasing protection. Downgrades and Off apply immediately.
                     if targetMode.rawValue > killSwitchMode.rawValue {
-                        state.alert = Self.killSwitchModeUpAlert(from: killSwitchMode, to: targetMode)
+                        state.alert = Self.killSwitchUpgradeAlert(from: killSwitchMode, to: targetMode)
                         return .none
                     }
                     apply(.killSwitch(mode: targetMode))
@@ -484,9 +483,9 @@ private extension QuickSettingsFeature {
             quickSettingsDisplayReconnectionFeedback()
 
         case let .killSwitch(mode):
-            // KS is mutually exclusive with both ExcludeLocalNetworks (LAN) and Plutonium (Split
-            // Tunneling). When enabling any protected mode, force them off; the mode-up confirmation
-            // already informed the user before we got here.
+            // KS is mutually exclusive with both ExcludeLocalNetworks (LAN) and Plutonium (Split Tunneling). When
+            // enabling any protected mode, force them off; the setting confirmation already informed the user before we
+            // got here.
             $killSwitchMode.withLock { $0 = mode }
             if mode.isProtected {
                 setFeatureValue(ExcludeLocalNetworks.off)
@@ -603,14 +602,14 @@ extension QuickSettingsFeature {
         }
     }
 
-    /// Mode-up confirmation for enabling/increasing Kill Switch protection
-    static func killSwitchModeUpAlert(from current: KillSwitchMode, to mode: KillSwitchMode) -> AlertState<Action.Alert> {
+    /// Confirmation shown before increasing Kill Switch protection.
+    static func killSwitchUpgradeAlert(from current: KillSwitchMode, to mode: KillSwitchMode) -> AlertState<Action.Alert> {
         let title: String
         let bullets: [String]
         let confirmTitle: String
         switch mode {
         case .standard:
-            // Off → Standard
+            // Off to Standard
             title = Localizable.killSwitchEnableStandardTitle
             bullets = [
                 Localizable.killSwitchBulletSplitTunneling,
@@ -619,7 +618,7 @@ extension QuickSettingsFeature {
             ]
             confirmTitle = Localizable.killSwitchConfirmEnable
         case .advanced where current == .standard:
-            // Standard → Advanced
+            // Standard to Advanced
             title = Localizable.killSwitchSwitchAdvancedTitle
             bullets = [
                 Localizable.killSwitchBulletAdvancedPersists,
@@ -628,7 +627,7 @@ extension QuickSettingsFeature {
             ]
             confirmTitle = Localizable.killSwitchConfirmSwitch
         case .advanced:
-            // Off → Advanced
+            // Off to Advanced
             title = Localizable.killSwitchEnableAdvancedTitle
             bullets = [
                 Localizable.killSwitchBulletSplitTunneling,
@@ -638,7 +637,8 @@ extension QuickSettingsFeature {
             ]
             confirmTitle = Localizable.killSwitchConfirmEnable
         case .off:
-            // Not a mode-up; never reached (downgrade/Off applies without a dialog).
+            // Never reached. Downgrades and Off apply without a dialog.
+            assertionFailure("Should be unreachable")
             title = ""
             bullets = []
             confirmTitle = Localizable.killSwitchConfirmEnable
@@ -678,10 +678,9 @@ extension QuickSettingsFeature {
         )
     }
 
-    /// A confirmation alert warning that toggling Secure Core mid-session
-    /// will trigger a reconnect.
-    /// If no Secure Core server is available in the currently connected country, the
-    /// message falls back to the generic "global fastest" copy instead of naming a country.
+    /// A confirmation alert warning that toggling Secure Core mid-session will trigger a reconnect. If no Secure Core
+    /// server is available in the currently connected country, the message falls back to the generic "global fastest"
+    /// copy instead of naming a country.
     static func secureCoreToggleAlert(turningOn: Bool, fallbackCountryName: String?) -> AlertState<Action.Alert> {
         let message = SecureCoreConnectionSpecResolver.toggleAlertMessage(
             turningOn: turningOn,
@@ -705,9 +704,8 @@ extension QuickSettingsFeature {
 }
 
 private extension QuickSettingsFeature {
-    /// Localized name of the connected exit country to show in the alert/discourage view when
-    /// no Secure Core server exits via it. Nil when turning off, disconnected, or an SC
-    /// server is available.
+    /// Localized name of the connected exit country to show in the alert/discourage view when no Secure Core server
+    /// exits via it. Nil when turning off, disconnected, or an SC server is available.
     func fallbackCountryName(turningOn: Bool) -> String? {
         guard turningOn, let cc = connectionState.resolvedServer?.logical.exitCountryCode,
               !serverRepository.hasServer(secureCore: true, exitCountryCode: cc) else { return nil }

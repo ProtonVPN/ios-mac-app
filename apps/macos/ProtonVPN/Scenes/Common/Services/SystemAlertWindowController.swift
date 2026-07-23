@@ -24,10 +24,9 @@ import VPNAppCore
 
 /// A standalone window that looks and behaves like a SwiftUI alert.
 ///
-/// Used when no regular window can host a native `.alert` sheet (status-menu popover
-/// frontmost, menu-bar-only mode, or launch before any window exists). Unlike a sheet it
-/// needs no host, so it can be sized and positioned before it is ever shown — no
-/// presentation timing to fight.
+/// Used when no regular window can host a native `.alert` sheet (status-menu popover frontmost, menu-bar-only mode, or
+/// launch before any window exists). Unlike a sheet, it needs no host, so it can be sized and positioned before it is
+/// ever shown.
 final class SystemAlertWindowController: NSWindowController {
     /// Gap between the menu bar and the top of the alert.
     private static let topMargin: CGFloat = 8
@@ -57,18 +56,18 @@ final class SystemAlertWindowController: NSWindowController {
         panel.isReleasedWhenClosed = false
         panel.isExcludedFromWindowsMenu = true
         panel.hidesOnDeactivate = false
-        // Keep the alert above normal windows so it isn't buried when the app deactivates;
-        // the popover still opens above it (.popUpMenu outranks .floating).
+        // Keep the alert above normal windows so it isn't buried when the app deactivates; the popover still opens
+        // above it (.popUpMenu outranks .floating).
         panel.level = .floating
         panel.collectionBehavior = [.transient, .ignoresCycle, .fullScreenAuxiliary]
-        // Match the status-menu popover (and how alerts rendered on the old sheet path);
-        // remove to follow the system appearance instead.
+        // Match the status-menu popover (and how alerts rendered on the old sheet path); remove to follow the system
+        // appearance instead.
         panel.appearance = NSAppearance(named: .darkAqua)
 
         super.init(window: panel)
 
-        // The card resolves the tapped action from `alert.actions` at click time, so
-        // handlers swapped in by a re-push (`updateOldAlert`) still apply.
+        // The card resolves the tapped action from `alert.actions` at click time, so handlers swapped in by a re-push
+        // (`updateOldAlert`) still apply.
         let card = SystemAlertCardView(
             title: alert.title,
             message: alert.message,
@@ -85,10 +84,9 @@ final class SystemAlertWindowController: NSWindowController {
         fatalError("Not implemented")
     }
 
-    /// Shows the alert under the menu bar of the given screen, horizontally centred on
-    /// `anchorMidX` (e.g. the status item), clamped to stay fully on screen. Falls back to
-    /// the screen centre when no anchor is given, and to the visible-frame centre plus a
-    /// small cascade offset so stacked alerts don't fully cover each other.
+    /// Shows the alert under the menu bar of the given screen, horizontally centered on `anchorMidX` (e.g. the status
+    /// item), fixed to stay on screen. Falls back to the screen center when no anchor is given, and to the
+    /// visible-frame center plus a small cascade offset so stacked alerts don't fully cover each other.
     func present(on screen: NSScreen?, anchorMidX: CGFloat?, cascadeIndex: Int) {
         guard let window else { return }
 
@@ -123,7 +121,6 @@ final class SystemAlertWindowController: NSWindowController {
     }
 
     /// Replaces the alert's actions so a re-push swaps in fresh completion handlers.
-    /// Button titles are fixed once shown; only handlers take effect.
     func update(actions: [AlertAction]) {
         alert.actions = actions
     }
@@ -161,8 +158,8 @@ final class SystemAlertWindowController: NSWindowController {
     }
 }
 
-/// Borderless windows refuse key status by default; the alert needs it for keyboard
-/// handling (Return/Escape) and so opening it closes the popover.
+/// Borderless windows refuse key status by default; the alert needs it for keyboard handling (Return/Escape) and so
+/// opening it closes the popover.
 private final class SystemAlertPanel: NSPanel {
     override var canBecomeKey: Bool {
         true
@@ -171,9 +168,9 @@ private final class SystemAlertPanel: NSPanel {
 
 // MARK: - Card view
 
-/// Recreates the look of a native SwiftUI alert. Metrics are matched by eye against the
-/// native panel on macOS 14+: 280 pt card, leading-aligned title and message, cancel on the
-/// left / default on the right, large capsule buttons, big continuous corner radius.
+/// Recreates the look of a native SwiftUI alert. Metrics are matched by eye against the native panel on macOS 14+: 280
+/// pt card, leading-aligned title and message, cancel on the left / default on the right, large capsule buttons, big
+/// continuous corner radius.
 private struct SystemAlertCardView: View {
     struct Action {
         let title: String
@@ -209,8 +206,8 @@ private struct SystemAlertCardView: View {
         .fixedSize(horizontal: false, vertical: true)
     }
 
-    /// Two buttons sit side by side (cancel left, default right, like the native alert);
-    /// one or three-plus stack vertically with the default on top and cancel last.
+    /// Two buttons sit side by side (cancel left, default right, like the native alert); one or three-plus stack
+    /// vertically with the default on top and cancel last.
     @ViewBuilder
     private var buttons: some View {
         if actions.count == 2 {
@@ -249,8 +246,8 @@ private struct SystemAlertCardView: View {
         actions.firstIndex { $0.style == .confirmative } ?? actions.indices.last ?? 0
     }
 
-    /// Original indices in native display order: side-by-side puts the default on the
-    /// right; stacked puts the default first and cancel-style actions last.
+    /// Original indices in native display order: side-by-side puts the default on the right, while stacked puts the
+    /// default first and cancel-style actions last.
     private var displayOrder: [Int] {
         let defaultIndex = defaultActionIndex
         var others = actions.indices.filter { $0 != defaultIndex }
@@ -276,11 +273,9 @@ private struct SystemAlertCardView: View {
 
 // MARK: - Behind-window blur
 
-/// Blurs the screen content behind the window, like the native alert panel does.
-/// (SwiftUI Materials blend within the window only; with nothing behind the card in this
-/// panel they render as a flat tint, so a real NSVisualEffectView in behind-window mode is
-/// required.) Rounded corners are applied via the effect view's own mask image — the
-/// supported way to shape an `NSVisualEffectView`.
+/// Blurs the screen content behind the window, like the native alert panel does. (SwiftUI Materials blend within the
+/// window only; with nothing behind the card in this panel they render as a flat tint, so a real NSVisualEffectView in
+/// behind-window mode is required.) Rounded corners are applied via the effect view's own mask image.
 private struct BehindWindowBlur: NSViewRepresentable {
     let material: NSVisualEffectView.Material
     let cornerRadius: CGFloat
@@ -298,8 +293,7 @@ private struct BehindWindowBlur: NSViewRepresentable {
 }
 
 private extension NSImage {
-    /// A stretchable rounded-rect mask: drawn once at minimal size, cap insets keep the
-    /// corners undistorted at any final size.
+    /// A stretchable rounded-rect mask.
     static func roundedCornerMask(radius: CGFloat) -> NSImage {
         let edge = radius * 2 + 1
         let image = NSImage(size: NSSize(width: edge, height: edge), flipped: false) { rect in

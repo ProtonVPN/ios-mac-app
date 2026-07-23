@@ -48,9 +48,11 @@ final class HeaderViewModel {
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.coreAlertService) private var coreAlertService
     @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
-    /// Advanced KS is *Active* (armed at connect → a disconnect would keep blocking), as opposed to merely
-    /// *Armed* (enabled while connected → effective next connection). Gates the disconnect warning.
-    @SharedReader(.advancedKillSwitchActive) private var advancedKillSwitchActive: Bool
+
+    private var advancedKillSwitchActive: Bool {
+        killSwitchMode.isAdvanced && connectionState.tunnelKillSwitch
+    }
+
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.serverRepository) private var serverRepository
     @SharedReader(.userLocation) private var userLocation: UserLocation?
@@ -73,7 +75,13 @@ final class HeaderViewModel {
         let freshState = authorizer.serverChangeAvailability()
 
         if case .unavailable = freshState, serverChangeTimer == nil {
-            serverChangeTimer = .scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerTicked), userInfo: nil, repeats: true)
+            serverChangeTimer = .scheduledTimer(
+                timeInterval: 1.0,
+                target: self,
+                selector: #selector(timerTicked),
+                userInfo: nil,
+                repeats: true
+            )
         }
         return freshState
     }
@@ -158,9 +166,9 @@ final class HeaderViewModel {
 
     func quickConnectAction() {
         if isConnected {
-            // Advanced KS keeps blocking after an intentional disconnect, so confirm first — but only when
-            // it's Active (armed at connect). If it's merely Armed (enabled mid-session), a disconnect is a
-            // normal release with no warning, since KS isn't in effect until the next connection.
+            // Advanced KS keeps blocking after an intentional disconnect, so confirm first, but only when it's Active
+            // (armed at connect). If it's merely Armed (enabled mid-session), a disconnect is a normal release with no
+            // warning, since KS isn't in effect until the next connection.
             if advancedKillSwitchActive {
                 coreAlertService.push(alert: DisconnectWithAdvancedKillSwitchAlert(confirmHandler: { [connectionCommandClient] in
                     log.debug("Disconnect confirmed with Advanced kill switch active", category: .connectionDisconnect, event: .trigger)
@@ -230,11 +238,10 @@ final class HeaderViewModel {
     // MARK: - Private functions
 
     private func startObserving() {
-        // Use the published `newValue` for decisions inside the sink — see Reference.swift in
-        // swift-sharing: `value.willSet { subject.send(newValue) }` fires the publisher BEFORE
-        // the property assignment, so `self.connectionState` reads stale inside the sink.
-        // Outside-of-sink callers read via the synchronous `connectionState.X` accessors as
-        // usual; by then the assignment has completed.
+        // Use the published `newValue` for decisions inside the sink — see Reference.swift in swift-sharing:
+        // `value.willSet { subject.send(newValue) }` fires the publisher BEFORE the property assignment, so
+        // `self.connectionState` reads stale inside the sink. Outside-of-sink callers read via the synchronous
+        // `connectionState.X` accessors as usual; by then the assignment has completed.
         $connectionState.publisher
             .sink { [weak self] newValue in
                 self?.vpnConnectionChanged(newValue)
@@ -273,16 +280,15 @@ final class HeaderViewModel {
 
     @objc
     private func vpnConnectionChanged() {
-        // Called from outside the publisher sink (e.g., the port-forwarding stream). It's
-        // safe to read `connectionState` synchronously here because we're not inside a willSet.
+        // Called from outside the publisher sink (e.g., the port-forwarding stream). It's safe to read
+        // `connectionState` synchronously here because we're not inside a willSet.
         vpnConnectionChanged(connectionState)
     }
 
     private func vpnConnectionChanged(_ state: ConnectionState) {
-        // Read `isConnected` from the `state` parameter rather than the `self.connectionState`
-        // accessor. swift-sharing fires the publisher inside the storage's `willSet`, so the
-        // synchronous accessor still returns the *previous* value at this point — using
-        // `state` ensures we react to the actual new value (e.g. starting NAT-PMP
+        // Read `isConnected` from the `state` parameter rather than the `self.connectionState` accessor. swift-sharing
+        // fires the publisher inside the storage's `willSet`, so the synchronous accessor still returns the *previous*
+        // value at this point. Using `state` ensures we react to the actual new value (e.g. starting NAT-PMP
         // observation when transitioning into `.connected`).
         let isConnected = state.isConnected
         if isConnected {

@@ -117,8 +117,8 @@ struct CountriesSectionRootView: View {
         .alert($quickSettingsStore.scope(state: \.alert, action: \.alert))
     }
 
-    /// Yellow warning-triangle overlay shown on the Kill Switch toolbar icon while Advanced KS is
-    /// actively blocking (zero-peer), so the user can identify the cause of "no internet"
+    /// Yellow warning-triangle overlay shown on the Kill Switch toolbar icon while Advanced KS is active, so the user
+    /// can identify the cause of "no internet"
     private var killSwitchWarningBadge: some View {
         Theme.Asset.Icons.exclamationTriangleFilled.swiftUIImage
             .resizable()
