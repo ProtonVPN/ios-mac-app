@@ -238,7 +238,7 @@ final class CoreLoginService {
             style: .error,
             message: Localizable.killSwitchLoginBlocking,
             actionTitle: Localizable.killSwitchDisable,
-            action: { [weak self] in await self?.disableKillSwitchFromLoginBanner() ?? nil },
+            action: { @MainActor [weak self] in await self?.disableKillSwitchFromLoginBanner() ?? nil },
             // When the user tries to sign in / create an account / SSO as guest while blocked.
             blockingAlert: LoginScreenBanner.BlockingAlert(
                 title: Localizable.killSwitchLoginBlocking,
@@ -253,6 +253,7 @@ final class CoreLoginService {
     /// the auth servers. The confirmation banner is only returned once the tunnel is actually gone.
     /// On failure both the blackhole and the setting stay in place, and the returned blocking banner
     /// offers the action again instead of claiming a success that didn't happen.
+    @MainActor
     private func disableKillSwitchFromLoginBanner() async -> LoginScreenBanner? {
         @Dependency(\.vpnTunnelControl) var vpnTunnelControl
         do {

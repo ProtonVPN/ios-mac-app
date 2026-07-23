@@ -29,18 +29,21 @@ public enum KillSwitchMode: Int, CaseIterable, Codable, Comparable, Sendable {
     case standard = 1
     case advanced = 2
 
+    /// The user-defaults key that persists the selected mode.
+    public static let storageKey = "KillSwitchMode"
+
     /// Whether any kill switch protection is enabled (Standard or Advanced).
     public var isProtected: Bool {
         self != .off
     }
 
-    /// Whether the Advanced level — persistent, always-on blocking — is selected.
+    /// Whether the Advanced level, persistent always-on blocking, is selected.
     public var isAdvanced: Bool {
         self == .advanced
     }
 
-    /// Modes are ordered by how much protection they provide, so confirmation flows can
-    /// distinguish upgrades from downgrades.
+    /// Modes are ordered by how much protection they provide, so confirmation flows can distinguish
+    /// upgrades from downgrades.
     public static func < (lhs: Self, rhs: Self) -> Bool {
         lhs.rawValue < rhs.rawValue
     }

@@ -396,16 +396,14 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
 
         let confirmationClosure: () -> Void = {
-            // Only keep blocking if Advanced Kill Switch was actually applied to the connection
-            // (i.e. the reported tunnel carries the flag), not merely requested for the next one.
+            // Only keep blocking if Advanced Kill Switch was actually applied to the connection, not merely requested
+            // for the next one.
             if isAdvancedKillSwitchActive() {
-                // Advanced KS persists across sign-out: switch the live tunnel to a zero-peer blackhole so it
-                // keeps blocking on the login screen, without tearing it down. This goes through a
-                // process-level dependency because sign-out tears down the TCA store that would
-                // otherwise own the transition.
+                // Advanced KS persists across sign-out. Switch the current tunnel to zero-peer mode so it keeps
+                // blocking on the login screen, without tearing it down. The switch works using the `vpnTunnelControl`
+                // dependency rather than the connection feature, because signout tears down its TCA store.
                 @Dependency(\.vpnTunnelControl) var vpnTunnelControl
                 @SharedReader(.connectionState) var connectionState
-                let isConnected = if case .connected = connectionState { true } else { false }
                 Task { [weak self] in
                     // Sign out first: session teardown fires network calls (server-side session
                     // invalidation, unauthenticated session acquisition) that the blackhole would cut
@@ -415,7 +413,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                     logOutRoutine()
 
                     // Only convert a live tunnel; if already blocking there's nothing to switch.
-                    guard isConnected else { return }
+                    guard connectionState.is(\.connected) else { return }
                     do {
                         try await vpnTunnelControl.enterZeroPeerBlocking()
                     } catch {

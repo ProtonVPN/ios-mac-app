@@ -32,12 +32,11 @@ extension MigrationManager {
             @Dependency(\.defaultAppStorage) var defaults
 
             // Don't overwrite a mode the user may already have chosen via the new picker.
-            let killSwitchModeKey = "KillSwitchMode"
-            guard defaults.object(forKey: killSwitchModeKey) == nil else { return }
+            guard defaults.object(forKey: KillSwitchMode.storageKey) == nil else { return }
 
             let wasEnabled = defaults.bool(forKey: "Firewall")
             let mode: KillSwitchMode = wasEnabled ? .standard : .off
-            defaults.set(mode.rawValue, forKey: killSwitchModeKey)
+            defaults.set(mode.rawValue, forKey: KillSwitchMode.storageKey)
             log.info(
                 "Migrated kill switch to 3-state mode",
                 category: .persistence,

@@ -29,19 +29,12 @@ public extension ConnectionFeature.State {
         let now = Date.now
         let tomorrow = now.addingTimeInterval(.days(1))
 
-        let state = ConnectionFeature.State(
+        return ConnectionFeature.State(
             shouldRegisterServerChangeOnConnection: false,
             tunnel: .connected(
                 TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"], killSwitch: false),
                 DynamicConnectionData(currentPeerId: "peer-id", connectionDate: now, protocolConnectionData: .ike)
             )
         )
-        state.$connectionState.withLock {
-            $0 = .connected(
-                TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"], killSwitch: false),
-                .init(currentPeer: .mock, connectionDate: now, protocolConnectionData: .ike)
-            )
-        }
-        return state
     }()
 }

@@ -28,7 +28,7 @@ import IPCDefinitions
 import Sharing
 import VPNAppCore
 #if canImport(WidgetKit)
-import WidgetKit
+    import WidgetKit
 #endif
 
 @Reducer
@@ -327,16 +327,19 @@ public struct ConnectionFeature: Sendable {
 
             case .tunnel:
                 return .none
+
             case let .connectionStateUpdated(newValue):
                 return .merge(
                     .send(.delegate(.stateChanged(newValue))),
                     .send(.reloadWidgetTimelines)
                 )
+
             case .reloadWidgetTimelines:
-#if canImport(WidgetKit)
-                WidgetCenter.shared.reloadAllTimelines()
-#endif
+                #if canImport(WidgetKit)
+                    WidgetCenter.shared.reloadAllTimelines()
+                #endif
                 return .none
+
             case .delegate:
                 // It's up to the parent feature to respond to delegate actions
                 return .none
@@ -344,7 +347,7 @@ public struct ConnectionFeature: Sendable {
         }
         .onChange(of: \.connectionState) { _, newValue in
             Reduce { _, _ in
-                .send(.delegate(.stateChanged(newValue)))
+                .send(.connectionStateUpdated(newValue))
             }
         }
     }

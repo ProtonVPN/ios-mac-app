@@ -54,7 +54,7 @@ public extension SharedKey where Self == AppStorageKey<KillSwitchMode>.Default {
     /// Three-state kill switch level (Off / Standard / Advanced), the source of truth on iOS.
     /// macOS still reads the legacy bool ``killSwitch`` key.
     static var killSwitchMode: Self {
-        Self[.appStorage("KillSwitchMode"), default: .off]
+        Self[.appStorage(KillSwitchMode.storageKey), default: .off]
     }
 }
 

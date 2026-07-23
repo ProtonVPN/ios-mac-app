@@ -119,7 +119,8 @@ extension ManagerConfigurator {
             try protocolConfiguration.setConnectionSpec(ConnectionSpec())
             // Required so `resolveProTUN` can quiesce (appliedRequestId == requestId) and report `.killSwitchActive`
             // once the extension settles into zero-peer mode; without it the app would stay `.connecting` forever.
-            protocolConfiguration.requestId = UUID()
+            @Dependency(\.uuid) var uuid
+            protocolConfiguration.requestId = uuid()
 
             @Dependency(\.authKeychain) var authKeychain
             guard let userID = authKeychain.userId else {

@@ -49,19 +49,21 @@
                 )
                 let session = VPNSessionMock(status: .connected)
                 session.messageHandler = MessageHandler.full
-                let initialState = ConnectionFeature.State(
-                    connectionState: .connected(
+                @Shared(.connectionState) var connectionState
+                $connectionState.withLock {
+                    $0 = .connected(
                         configuration,
                         .init(
                             currentPeer: .mock,
                             connectionDate: .now,
                             protocolConnectionData: .proTUN(.init(transport: .udp))
                         )
-                    ),
+                    )
+                }
+                let store = TestStore(initialState: ConnectionFeature.State(
                     shouldRegisterServerChangeOnConnection: false,
                     tunnel: .unknown
-                )
-                let store = TestStore(initialState: initialState) {
+                )) {
                     ConnectionFeature()
                 } withDependencies: {
                     $0.connectionFeatureProvider = .init(
@@ -76,7 +78,6 @@
                         connectionProtocol: { .smartProtocol }
                     )
                     $0.tunnelManager = MockTunnelManager(connection: session)
-                    $0.defaultAppStorage = .testValue()
                 }
                 store.exhaustivity = .off
 
@@ -103,7 +104,6 @@
                     killSwitch: true
                 )
                 let store = TestStore(initialState: ConnectionFeature.State(
-                    connectionState: .disconnected,
                     shouldRegisterServerChangeOnConnection: false,
                     tunnel: .unknown
                 )) {
@@ -150,19 +150,21 @@
                 )
                 let session = VPNSessionMock(status: .connected)
                 session.messageHandler = MessageHandler.full
-                let initialState = ConnectionFeature.State(
-                    connectionState: .connected(
+                @Shared(.connectionState) var connectionState
+                $connectionState.withLock {
+                    $0 = .connected(
                         configuration,
                         .init(
                             currentPeer: .mock,
                             connectionDate: .now,
                             protocolConnectionData: .proTUN(.init(transport: .udp))
                         )
-                    ),
+                    )
+                }
+                let store = TestStore(initialState: ConnectionFeature.State(
                     shouldRegisterServerChangeOnConnection: false,
                     tunnel: .unknown
-                )
-                let store = TestStore(initialState: initialState) {
+                )) {
                     ConnectionFeature()
                 } withDependencies: {
                     $0.connectionFeatureProvider = .init(
@@ -178,7 +180,6 @@
                     )
                     $0.tunnelManager = MockTunnelManager(connection: session)
                     $0.continuousClock = TestClock()
-                    $0.defaultAppStorage = .testValue()
                 }
                 store.exhaustivity = .off
 
@@ -200,8 +201,11 @@
                     peerIDs: [],
                     killSwitch: true
                 )
+                @Shared(.connectionState) var connectionState
+                $connectionState.withLock {
+                    $0 = .killSwitchActive(spec, zeroPeerConfiguration)
+                }
                 let store = TestStore(initialState: ConnectionFeature.State(
-                    connectionState: .killSwitchActive(spec, zeroPeerConfiguration),
                     shouldRegisterServerChangeOnConnection: false,
                     tunnel: .killSwitchActive(zeroPeerConfiguration)
                 )) {
@@ -238,14 +242,6 @@
                     protocolConnectionData: .proTUN(.init(transport: .udp))
                 )
                 var initialState = ConnectionFeature.State(
-                    connectionState: .connected(
-                        configuration,
-                        .init(
-                            currentPeer: .mock,
-                            connectionDate: .now,
-                            protocolConnectionData: .proTUN(.init(transport: .udp))
-                        )
-                    ),
                     shouldRegisterServerChangeOnConnection: false,
                     tunnel: .connected(configuration, connectionData)
                 )
@@ -254,6 +250,17 @@
                 // detached status-transition task outlives this test and pollutes parallel suites.
                 let session = VPNSessionMock(status: .disconnected)
                 session.startupDuration = nil
+                @Shared(.connectionState) var connectionState
+                $connectionState.withLock {
+                    $0 = .connected(
+                        configuration,
+                        .init(
+                            currentPeer: .mock,
+                            connectionDate: .now,
+                            protocolConnectionData: .proTUN(.init(transport: .udp))
+                        )
+                    )
+                }
                 let store = TestStore(initialState: initialState) {
                     ConnectionFeature()
                 } withDependencies: {
@@ -269,10 +276,12 @@
 
                 await store.send(.tunnel(.tunnelStatusChanged(.disconnected(.tunnelAborted)))) {
                     $0.tunnel = .disconnected(.tunnelAborted)
-                    $0.connectionState = .disconnected
+                    $0.$connectionState.withLock { $0 = .disconnected }
                 }
                 await store.receive(\.tunnel.startZeroPeerColdStart)
+                await store.receive(\.connectionStateUpdated)
                 await store.receive(\.delegate.stateChanged)
+                await store.receive(\.reloadWidgetTimelines)
                 await store.receive(\.tunnel.tunnelStartRequestFinished)
             }
         }

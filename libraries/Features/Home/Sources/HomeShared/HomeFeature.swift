@@ -320,6 +320,11 @@ private extension HomeFeature {
                 }
                 return .none
             case let .killSwitchModeChanged(mode):
+                log.info(
+                    "Kill switch mode changed",
+                    category: .connectionConnect,
+                    metadata: ["mode": "\(mode)"]
+                )
                 // If we're actively blocking (zero-peer) and the new mode no longer wants persistent blocking (Off or
                 // Standard), tear the tunnel down so the user regains connectivity. Otherwise the user is stuck behind
                 // a blackholed tunnel.
@@ -713,10 +718,10 @@ private extension HomeFeature {
         let alreadyDisconnected = state.connectionState.is(\.disconnected) || state.connectionState.is(\.killSwitchActive)
         return .merge(
             .cancel(id: CancelID.connectionConnectCommandEffect),
-            .run { send in
+            .run { @MainActor send in
                 if let completion {
                     if alreadyDisconnected {
-                        await MainActor.run { completion() }
+                        completion()
                     } else {
                         await pendingDisconnectCompletions.enqueue(completion)
                     }

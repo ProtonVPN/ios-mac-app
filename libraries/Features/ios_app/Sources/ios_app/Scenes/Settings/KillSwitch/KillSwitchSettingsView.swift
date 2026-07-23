@@ -186,8 +186,7 @@ struct KillSwitchSettingsView: View {
     /// The live tunnel is connected and actually carries the kill switch flag. A mode selected
     /// mid-session only arms the next connection, so it must not be reported as protecting yet.
     private var isKillSwitchArmed: Bool {
-        if case .connected = connectionState { return connectionState.tunnelKillSwitch }
-        return false
+        connectionState.is(\.connected) && connectionState.tunnelKillSwitch
     }
 
     private enum Dimensions {
