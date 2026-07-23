@@ -2103,6 +2103,9 @@
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "あなたは保護されていません";
 
+/* Connection status when zero peer killswitch is enabled */
+"connection_status_disconnectedByKillswitch" = "Disconnected due to Kill Switch";
+
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
 "connection_status_protecting" = "デジタルアイデンティティを保護する";
 

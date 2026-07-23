@@ -1070,7 +1070,7 @@
 "_protun_logs" = "ProTUN logninger";
 
 /* iOS Settings: Troubleshooting logs row */
-"_create_troubleshooting_file" = "Create a troubleshooting file";
+"_create_troubleshooting_file" = "Opret en fejlfindingsfil";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Anmeld en fejl";
@@ -1355,7 +1355,7 @@
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Fejlfinding";
 
-"_troubleshooting_file" = "Troubleshooting file";
+"_troubleshooting_file" = "Fejlfindingsfil";
 
 "_troubleshoot_item_alt_title" = "Tillad alternativ routing";
 
@@ -2102,6 +2102,9 @@
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "Du er ikke beskyttet";
+
+/* Connection status when zero peer killswitch is enabled */
+"connection_status_disconnectedByKillswitch" = "Afbrudt via Kill Switch";
 
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
 "connection_status_protecting" = "Beskyttelse af din digitale identitet";
@@ -3279,28 +3282,28 @@
 "_transaction_log_" = "Transaktionslog";
 
 /* Footer note that is visible across the whole flow of the PCAP session */
-"_pcap_capture_file_storage" = "The troubleshooting file is stored on your device and is not sent to Proton unless you share it. It captures your VPN traffic, which may include the websites you visit. [Learn more](%@)";
+"_pcap_capture_file_storage" = "Fejlfindingsfilen opbevares på din enhed, og bliver ikke sendt til Proton, medmindre du deler den. Den registrerer din VPN-trafik, som kan inkludere de websteder du besøger. [Få mere at vide](%@)";
 
 /* Description of the PCAP feature presented to the user before they start the PCAP session */
-"_pcap_capture_feature_description" = "Reproduce a specific issue you’re facing when using Proton VPN to get help from our customer support team.\n\nThe app will create a file containing technical details about your VPN connection.";
+"_pcap_capture_feature_description" = "Demonstrer det specifikke problem du har når du bruger Proton VPN for at få hjælp fra vores kundesupport.\n\nAppen opretter en fil, der indeholder tekniske detaljer om din VPN-forbindelse.";
 
 /* Directions to the user shown on the active PCAP session view */
-"_pcap_capture_session_directions" = "Reproduce the issue then stop the capture.";
+"_pcap_capture_session_directions" = "Demonstrer problemet, og stop derefter optagelsen.";
 
 /* Format: mm:ss / mm:ss. Left hand side is the counter, right hand side is the maximum allowed time */
 "_pcap_capture_session_duration" = "%@ / %@";
 
 /* Header of the active PCAP session view */
-"_pcap_capture_session_capturing" = "Capturing";
+"_pcap_capture_session_capturing" = "Optager";
 
 /* Button title on the PCAP export view. Presents a share sheet to save the file outside of the app */
-"_pcap_capture_session_export" = "Save file";
+"_pcap_capture_session_export" = "Gemmer filen";
 
 /* Header of the PCAP export view */
-"_pcap_capture_session_captured" = "VPN session captured";
+"_pcap_capture_session_captured" = "VPN-session optaget";
 
 /* `it` refers to the exportable `<date>.pcap` file that is available while user sees this text */
-"_pcap_capture_file_sharing" = "You can now share it with our customer support by attaching it in your conversation, or by storing it securely on [Proton Drive](%@) and sharing a public link.";
+"_pcap_capture_file_sharing" = "Du kan nu dele den med vores kundesupport ved at vedhæfte den i din samtale, eller ved at opbevare den sikkert på [Proton Drive](%@) og dele et offentligt link.";
 
 /* Button title in the PCAP view. Starts the PCAP session */
 "_pcap_capture_session_start" = "Start";
@@ -3309,31 +3312,31 @@
 "_pcap_capture_session_stop" = "Stop";
 
 /* Title of an alert when user starts the PCAP session */
-"_pcap_capture_session_should_start_session" = "Start capturing VPN session?";
+"_pcap_capture_session_should_start_session" = "Start optagelse af VPN-sessionen?";
 
 /* Description of an alert when user starts the PCAP session */
-"_pcap_capture_session_issue_reproduction" = "If possible, apply the same settings and type of connection you used when you first faced the issue.\n\nAim to reproduce the issue in the same way it first happened (browsing the web, using an app, etc.)\n\nWhen you’ve reproduced the issue, you can stop the capture and share the file with the customer support team.";
+"_pcap_capture_session_issue_reproduction" = "Anvend de samme indstillinger og den samme forbindelsestype du brugte, da du først oplevede problemet, hvis muligt.\n\nPrøv at demonstrere problemet på samme måde, som det først skete (browsing fra web, ved brug af en app, etc.)\n\nNår du har demonstreret problemet kan du stoppe optagelsen og dele filen med kundesupport.";
 
 /* Description of an alert when user tries dismissing the PCAP sheet */
-"_pcap_capture_discard_description" = "The file will not be stored in the app. Make sure you’ve exported it before discarding.";
+"_pcap_capture_discard_description" = "Filen bliver ikke opbevaret i appen. Sørg for at du har eksporteret den før du kasserer den.";
 
 /* Title of an alert when user tries dismissing the PCAP sheet */
-"_pcap_capture_discard_title" = "Discard file?";
+"_pcap_capture_discard_title" = "Kassér filen?";
 
 /* Button title in an alert */
-"_pcap_capture_discard_button" = "Discard file";
+"_pcap_capture_discard_button" = "Kassér filen";
 
 /* Commonly used title of a button */
-"_got_it" = "Got it";
+"_got_it" = "Forstået";
 
 /* Title of an alert that presents the reason for PCAP failure */
-"_pcap_capture_low_storage" = "Not enough storage";
+"_pcap_capture_low_storage" = "Ikke nok lagerplads";
 
 /* Description of an alert that presents the reason for PCAP failure */
 "_pcap_capture_low_storage_action_description" = "Du skal bruge mindst 200 MB ledig plads for at starte en optagelse";
 
 /* Title of an alert that presents the reason for PCAP failure */
-"_pcap_capture_failed" = "Capture failed";
+"_pcap_capture_failed" = "Optagelsen mislykkedes";
 
 /* Title of the alert shown when the VPN server refuses one of the user's requested settings */
 "_local_agent_setting_refused_title" = "Indstilling ikke anvendt";
@@ -3342,4 +3345,4 @@
 "_local_agent_setting_refused_message" = "%@ er ikke en tilgængelig indstilling for denne forbindelse.";
 
 /* Alert body shown when the server refuses a setting the app doesn't surface as a named control */
-"_local_agent_setting_refused_message_generic" = "En af dine indstillinger er ikke tilgængelig for denne forbindelse, den er blevet slået fra.";
+"_local_agent_setting_refused_message_generic" = "En af dine indstillinger er ikke tilgængelig for denne forbindelse, da den er blevet slået fra.";

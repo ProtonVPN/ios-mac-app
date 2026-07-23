@@ -5089,7 +5089,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Geçerli VPN bağlantı durumunu al"
+            "value" : "Geçerli VPN bağlantısı durumunu al"
           }
         },
         "uk" : {
@@ -5297,7 +5297,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Geçerli VPN bağlantı durumunu alır"
+            "value" : "Geçerli VPN bağlantısı durumunu alır"
           }
         },
         "uk" : {
@@ -6361,7 +6361,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bu özellik, geçerli VPN bağlantı durumunu denetlemenizi sağlar"
+            "value" : "Bu özellik, geçerli VPN bağlantısının durumunu denetlemenizi sağlar"
           }
         },
         "uk" : {
