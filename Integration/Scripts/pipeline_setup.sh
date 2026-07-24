@@ -10,20 +10,13 @@ CREDENTIALS="./Integration/Scripts/credentials.sh"
 mkdir -p ~/.ssh
 chmod 700 ~/.ssh
 
-touch ~/.ssh/id_rsa
-chmod 600 ~/.ssh/id_rsa
-# Add private key for access to gitlab
-echo "$CI_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-
 # Setup git identity
-git config --local user.email $GIT_CI_EMAIL
-git config --local user.name $GIT_CI_USERNAME
+git config --global user.email $GIT_CI_EMAIL
+git config --global user.name $GIT_CI_USERNAME
 
-# Save gitlab servers public key
-[ -n "$(ssh-keygen -F $CI_SERVER_HOST)" ] || ssh-keyscan -H $CI_SERVER_HOST >> ~/.ssh/known_hosts
-
-# Change origin to use ssh as the backend
-git remote rm origin && git remote add origin "git@${CI_SERVER_HOST}:${CI_PROJECT_PATH}.git"
+# Add aliases for using the job token when contacting GitLab
+git config --global --add "url.https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}.insteadOf" "https://${CI_SERVER_HOST}"
+git config --global --add "url.https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}.insteadOf" "ssh://git@${CI_SERVER_HOST}"
 
 # Don't fetch secrets unless we're cloning the whole repository, i.e., for a build, or if we're trying to upload
 # localizations
@@ -33,7 +26,7 @@ if ([ "$GIT_STRATEGY" != "none" ] && [ "$GIT_SUBMODULE_STRATEGY" != "none" ]) ||
     "$CREDENTIALS" cleanup
     GIT_LFS_SKIP_SMUDGE=1 "$CREDENTIALS" setup -s \
         -p .secrets-ci-${CI_JOB_ID} \
-        -r "https://bot:${CI_SECRETS_REPO_KEY}@${CI_SERVER_HOST}/${CI_SECRETS_REPO_PATH}"
+        -r "https://${CI_SERVER_HOST}/${CI_SECRETS_REPO_PATH}"
     "$CREDENTIALS" checkout -- .
 fi
 
