@@ -187,7 +187,13 @@ final class WindowServiceImplementation {
     // MARK: - Modal presentation
 
     func present(modal: UIViewController) {
-        guard let presentingViewController = topmostPresentedViewController else {
+        // A presenter that is detached from the window or on its way out drops the presentation
+        // without showing anything. This happens around root view controller swaps, like signing
+        // out to the login screen. Queue the modal in that case, the root view controller observer
+        // presents it once the new hierarchy is in place.
+        guard let presentingViewController = topmostPresentedViewController,
+              presentingViewController.viewIfLoaded?.window != nil,
+              !presentingViewController.isBeingDismissed else {
             scheduledViewControllers.append(modal)
             return
         }

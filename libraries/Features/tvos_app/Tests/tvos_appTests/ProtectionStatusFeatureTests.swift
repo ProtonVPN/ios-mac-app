@@ -65,7 +65,7 @@ final class ProtectionStatusFeatureTests: XCTestCase {
         }
         @Shared(.connectionState) var connectionState: ConnectionState
         $connectionState.withLock { $0 = .connected(
-            .init(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: []),
+            .init(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: [], killSwitch: false),
             .init(currentPeer: .ca, connectionDate: .now, protocolConnectionData: .ike)
         ) }
 

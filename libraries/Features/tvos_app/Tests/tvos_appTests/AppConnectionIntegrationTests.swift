@@ -113,6 +113,11 @@
                 $0.logFileManager.dump = { _, _ in }
                 $0.wireguardIOSLogProvider.clearLogsForAppGroup = { _ in }
                 $0.date = .constant(.distantFuture)
+                $0.connectionFeatureProvider = .init(
+                    connectionFeatures: { .mock },
+                    requestedFeatures: { .mock },
+                    connectionProtocol: { .vpnProtocol(.wireGuard(.tcp)) }
+                )
             }
             store.exhaustivity = .off
 

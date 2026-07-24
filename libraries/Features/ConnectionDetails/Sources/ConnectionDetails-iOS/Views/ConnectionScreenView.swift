@@ -125,7 +125,7 @@ public struct ConnectionScreenView: View {
                 coordinates: .mockPoland()
             )
             let connectedState = ConnectionState.connected(
-                .init(connectionSpec: spec, tunnelProtocol: .wireGuard, peerIDs: []),
+                .init(connectionSpec: spec, tunnelProtocol: .wireGuard, peerIDs: [], killSwitch: false),
                 .init(currentPeer: server, connectionDate: .now, protocolConnectionData: .proTUN(.init(
                     transport: .udp,
                     serverExitV4: nil,

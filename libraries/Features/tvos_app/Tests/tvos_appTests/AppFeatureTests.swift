@@ -19,6 +19,7 @@
 @testable import CommonNetworking
 import ComposableArchitecture
 @testable import Connection
+import ConnectionTestSupport
 @testable import CoreConnection
 import Ergonomics
 @testable import ExtensionManager
@@ -233,6 +234,11 @@ final class AppFeatureTests: XCTestCase {
             $0.logFileManager.dump = { _, _ in }
             $0.wireguardIOSLogProvider.clearLogsForAppGroup = { _ in }
             $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
+            $0.connectionFeatureProvider = .init(
+                connectionFeatures: { .mock },
+                requestedFeatures: { .mock },
+                connectionProtocol: { .vpnProtocol(.wireGuard(.tcp)) }
+            )
         }
         store.exhaustivity = .off
 

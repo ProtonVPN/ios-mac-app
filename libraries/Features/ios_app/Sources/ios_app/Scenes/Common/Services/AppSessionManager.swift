@@ -36,6 +36,15 @@ import UIKit
 import VPNAppCore
 import VPNShared
 
+/// Advanced kill switch is Active when the mode is Advanced and the reported tunnel actually carries
+/// the kill switch flag, meaning it is connected with it or already blocking. A mode that was enabled
+/// mid-session only applies to the next connection and does not count as Active.
+private func isAdvancedKillSwitchActive() -> Bool {
+    @SharedReader(.connectionState) var connectionState
+    @SharedReader(.killSwitchMode) var killSwitchMode
+    return killSwitchMode.isAdvanced && connectionState.tunnelKillSwitch
+}
+
 protocol AppSessionManagerFactory {
     func makeAppSessionManager() -> AppSessionManager
 }
@@ -387,6 +396,36 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
 
         let confirmationClosure: () -> Void = {
+            // Only keep blocking if Advanced Kill Switch was actually applied to the connection, not merely requested
+            // for the next one.
+            if isAdvancedKillSwitchActive() {
+                // Advanced KS persists across sign-out. Switch the current tunnel to zero-peer mode so it keeps
+                // blocking on the login screen, without tearing it down. The switch works using the `vpnTunnelControl`
+                // dependency rather than the connection feature, because signout tears down its TCA store.
+                @Dependency(\.vpnTunnelControl) var vpnTunnelControl
+                @SharedReader(.connectionState) var connectionState
+                Task { [weak self] in
+                    // Sign out first: session teardown fires network calls (server-side session
+                    // invalidation, unauthenticated session acquisition) that the blackhole would cut
+                    // off. Running it before the switch below only gives those calls a head start,
+                    // not a guarantee, since logOutRoutine dispatches them asynchronously. The tunnel
+                    // keeps protecting traffic the whole time.
+                    logOutRoutine()
+
+                    // Only convert a live tunnel; if already blocking there's nothing to switch.
+                    guard connectionState.is(\.connected) else { return }
+                    do {
+                        try await vpnTunnelControl.enterZeroPeerBlocking()
+                    } catch {
+                        // Advanced KS is meant to keep blocking after sign-out; a failure here means the
+                        // device may no longer be protected, so log it and warn the user.
+                        log.error("Failed to enter zero-peer kill switch blocking on sign-out: \(error)", category: .connection)
+                        self?.alertService.push(alert: KillSwitchLogoutBlockingFailedAlert())
+                    }
+                }
+                return
+            }
+
             if settingsClient.isActive() {
                 Task {
                     do {
@@ -405,13 +444,24 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         if force {
             confirmationClosure()
         } else {
-            alertService.push(alert: LogoutWarningAlert(confirmHandler: confirmationClosure))
+            if isAdvancedKillSwitchActive() {
+                // Signing out with active Advanced KS keeps the device offline; a mode that is merely
+                // requested for the next connection uses the normal warning.
+                alertService.push(alert: LogoutWithAdvancedKillSwitchAlert(username: authKeychain.username, confirmHandler: confirmationClosure))
+            } else {
+                alertService.push(alert: LogoutWarningAlert(confirmHandler: confirmationClosure))
+            }
         }
     }
 
     private func logOutCleanup() {
         refreshTimer.stopTimers()
         loggedIn = false
+
+        // Standard kill switch auto-disables on logout so the user isn't locked out of the
+        // internet. Advanced persists until explicitly disabled.
+        @Shared(.killSwitchMode) var killSwitchMode
+        $killSwitchMode.withLock { if $0 == .standard { $0 = .off } }
 
         if let userId = authKeychain.userId {
             FeatureFlagsRepository.shared.resetFlags(for: userId)

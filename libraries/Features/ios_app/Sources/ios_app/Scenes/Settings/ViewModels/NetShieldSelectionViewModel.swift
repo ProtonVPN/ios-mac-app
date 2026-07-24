@@ -30,7 +30,6 @@ import VPNAppCore
 import VPNShared
 
 final class NetShieldSelectionViewModel {
-    @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.upsellManager) private var upsellManager
     @Dependency(\.netShieldPropertyProvider) private var netShieldPropertyProvider
 

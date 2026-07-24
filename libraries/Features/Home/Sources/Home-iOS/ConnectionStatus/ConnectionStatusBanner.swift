@@ -51,13 +51,8 @@ struct ConnectionStatusBanner: View {
         switch store.protectionState {
         case .resolving:
             return nil
-        case .protected, .protectedSecureCore:
+        case .protected, .protectedSecureCore, .killSwitchActive:
             return nil
-        case .killSwitchActive:
-            // TODO: ProTUN: show proper KS UI
-            return Text("KillSwitch blocking")
-                .font(.themeFont(.body2()))
-                .foregroundColor(Color(.text))
         case .unprotected:
             let code = store.userCountry
             displayCountry = LocalizationUtility.default.countryName(forCode: code ?? "")

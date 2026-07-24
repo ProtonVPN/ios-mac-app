@@ -77,6 +77,14 @@
             try connection.startTunnel()
         }
 
+        #if !os(tvOS)
+            func startZeroPeerTunnel() async throws {
+                try await Task.sleep(for: tunnelStartDuration)
+                try Task.checkCancellation()
+                try connection.startTunnel()
+            }
+        #endif
+
         func stopTunnel() async throws {
             didStopTunnelCallback?()
             connection.stopTunnel()
@@ -89,7 +97,7 @@
         }
 
         private func state(from _: NEVPNStatus) -> TunnelState {
-            let tunnelConfig = TunnelConfiguration(connectionSpec: ConnectionSpec(), tunnelProtocol: .wireGuard, peerIDs: ["peer-id"])
+            let tunnelConfig = TunnelConfiguration(connectionSpec: ConnectionSpec(), tunnelProtocol: .wireGuard, peerIDs: ["peer-id"], killSwitch: false)
             switch connection.status {
             case .connected:
                 // Fake the connected peer from the value `VPNSessionMock` published, falling back to the "peer-id"

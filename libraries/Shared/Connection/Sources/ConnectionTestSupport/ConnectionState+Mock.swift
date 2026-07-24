@@ -32,7 +32,7 @@ public extension ConnectionFeature.State {
         return ConnectionFeature.State(
             shouldRegisterServerChangeOnConnection: false,
             tunnel: .connected(
-                TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+                TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"], killSwitch: false),
                 DynamicConnectionData(currentPeerId: "peer-id", connectionDate: now, protocolConnectionData: .ike)
             )
         )

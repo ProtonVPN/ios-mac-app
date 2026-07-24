@@ -417,7 +417,7 @@ private extension ConnectionState {
     static let fakeConnected: ConnectionState = {
         let actual = VPNConnectionActual.mock()
         return .connected(
-            .init(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+            .init(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"], killSwitch: false),
             .init(currentPeer: actual.server, connectionDate: .now, protocolConnectionData: .ike)
         )
     }()

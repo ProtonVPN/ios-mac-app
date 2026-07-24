@@ -313,6 +313,27 @@ public final class ReconnectOnActionAlert: SystemAlert {
     }
 }
 
+public final class LANConnectionsKillSwitchConflictAlert: SystemAlert {
+    public var title: String? = Localizable.allowLanTitle
+    public var message: String?
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    public init(connected: Bool, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+        let paragraphs = [
+            Localizable.allowLanDescription,
+            connected ? Localizable.allowLanNote : nil,
+        ]
+        self.message = paragraphs.compactMap { $0 }.joined(separator: "\n\n")
+        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
+            confirmHandler()
+        }))
+        actions.append(AlertAction(title: Localizable.notNow, style: .cancel, handler: cancelHandler))
+    }
+}
+
 public final class ReconnectOnSmartProtocolChangeAlert: SystemAlert {
     public struct UserCancelledReconnect: Error, CustomStringConvertible {
         public let description = "User selected smart protocol, but cancelled reconnecting."
@@ -352,6 +373,32 @@ public final class LogoutWarningLongAlert: LogoutWarningAlert {
     override public init(confirmHandler: @escaping () -> Void) {
         super.init(confirmHandler: confirmHandler)
         message = Localizable.logOutWarningLong
+    }
+}
+
+/// Sign-out confirmation shown while Advanced kill switch is active: signing out keeps the
+/// device offline because Advanced kill switch persists.
+public final class LogoutWithAdvancedKillSwitchAlert: LogoutWarningAlert {
+    public init(username: String?, confirmHandler: @escaping () -> Void) {
+        super.init(confirmHandler: confirmHandler)
+        if let username {
+            title = Localizable.killSwitchLogoutAdvancedTitle(username)
+        }
+        message = Localizable.killSwitchLogoutAdvancedBody
+    }
+}
+
+/// Shown after sign-out when the app failed to switch the tunnel into Advanced kill switch blocking,
+/// so the device may no longer be protected.
+public final class KillSwitchLogoutBlockingFailedAlert: SystemAlert {
+    public var title: String? = Localizable.killSwitchLogoutBlockingFailedTitle
+    public var message: String? = Localizable.killSwitchLogoutBlockingFailedBody
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    public init() {
+        actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: nil))
     }
 }
 

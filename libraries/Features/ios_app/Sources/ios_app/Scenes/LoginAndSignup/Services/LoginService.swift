@@ -8,6 +8,7 @@
 
 import BugReport
 import CommonNetworking
+import Connection
 import Dependencies
 import Domain
 import Ergonomics
@@ -209,7 +210,8 @@ final class CoreLoginService {
             performBeforeFlow: finishFlow(),
             customErrorPresenter: self,
             initialError: initialError,
-            helpDecorator: helpDecorator
+            helpDecorator: helpDecorator,
+            loginScreenBannerProvider: { [weak self] in self?.killSwitchBlockingBanner() }
         )
 
         let welcomeViewController = loginInterface.welcomeScreenForPresentingFlow(
@@ -225,6 +227,44 @@ final class CoreLoginService {
         if let overlay = withOverlayViewController {
             welcomeViewController.present(overlay, animated: false)
         }
+    }
+
+    /// When Advanced kill switch is active we need to show a banner with a "Disable kill switch" action.
+    /// Returns `nil` (no banner) otherwise
+    private func killSwitchBlockingBanner() -> LoginScreenBanner? {
+        @SharedReader(.killSwitchMode) var killSwitchMode
+        guard killSwitchMode.isAdvanced else { return nil }
+        return LoginScreenBanner(
+            style: .error,
+            message: Localizable.killSwitchLoginBlocking,
+            actionTitle: Localizable.killSwitchDisable,
+            action: { @MainActor [weak self] in await self?.disableKillSwitchFromLoginBanner() ?? nil },
+            // When the user tries to sign in / create an account / SSO as guest while blocked.
+            blockingAlert: LoginScreenBanner.BlockingAlert(
+                title: Localizable.killSwitchLoginBlocking,
+                message: Localizable.killSwitchTurnOffToGetOnline,
+                confirmTitle: Localizable.killSwitchTurnOff,
+                cancelTitle: Localizable.cancel
+            )
+        )
+    }
+
+    /// Tears down the zero-peer tunnel, then disables the kill switch setting, so the user can reach
+    /// the auth servers. The confirmation banner is only returned once the tunnel is actually gone.
+    /// On failure both the blackhole and the setting stay in place, and the returned blocking banner
+    /// offers the action again instead of claiming a success that didn't happen.
+    @MainActor
+    private func disableKillSwitchFromLoginBanner() async -> LoginScreenBanner? {
+        @Dependency(\.vpnTunnelControl) var vpnTunnelControl
+        do {
+            try await vpnTunnelControl.stop()
+        } catch {
+            log.error("Failed to stop the kill switch tunnel from the login banner: \(error)", category: .connection)
+            return killSwitchBlockingBanner()
+        }
+        @Shared(.killSwitchMode) var killSwitchMode
+        $killSwitchMode.withLock { $0 = .off }
+        return LoginScreenBanner(style: .success, message: Localizable.killSwitchDisabledConfirmation)
     }
 
     private func convertError(from error: Error) -> Error {
@@ -390,7 +430,8 @@ extension CoreLoginService: LoginService {
             performBeforeFlow: finishFlow(),
             customErrorPresenter: self,
             helpDecorator: helpDecorator,
-            closeSignupFlowAlertConfirmation: closeSignupFlowAlertConfirmation
+            closeSignupFlowAlertConfirmation: closeSignupFlowAlertConfirmation,
+            loginScreenBannerProvider: { [weak self] in self?.killSwitchBlockingBanner() }
         )
 
         loginInterface = makeLoginInterface(isCloseButtonAvailable: true)

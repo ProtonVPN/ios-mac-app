@@ -46,11 +46,19 @@ extension ConnectionFeatureProvider: DependencyKey {
                 )
             },
             requestedFeatures: {
-                @SharedReader(.killSwitch) var killSwitch
-                return LocalTunnelFeatures(
-                    killSwitch: killSwitch,
-                    excludeLocalNetworks: AuthorizedFeatureValue<ExcludeLocalNetworks>().value() == .on
-                )
+                #if os(iOS)
+                    @SharedReader(.killSwitchMode) var killSwitchMode
+                    return LocalTunnelFeatures(
+                        killSwitchMode: killSwitchMode,
+                        excludeLocalNetworks: AuthorizedFeatureValue<ExcludeLocalNetworks>().value() == .on
+                    )
+                #else
+                    @SharedReader(.killSwitch) var killSwitch
+                    return LocalTunnelFeatures(
+                        killSwitch: killSwitch,
+                        excludeLocalNetworks: AuthorizedFeatureValue<ExcludeLocalNetworks>().value() == .on
+                    )
+                #endif
             },
             connectionProtocol: {
                 @SharedReader(.connectionProtocol) var connectionProtocol

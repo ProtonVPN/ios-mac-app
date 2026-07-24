@@ -25,7 +25,7 @@
         /// from `spec.location` so the rendered UI reflects the intent.
         static func previewConnected(for spec: ConnectionSpec) -> ConnectionState {
             .connected(
-                .init(connectionSpec: spec, tunnelProtocol: .wireGuard, peerIDs: []),
+                .init(connectionSpec: spec, tunnelProtocol: .wireGuard, peerIDs: [], killSwitch: false),
                 .init(
                     currentPeer: .preview(for: spec.location),
                     connectionDate: Date(),
@@ -36,7 +36,7 @@
 
         static func previewConnected(for spec: ConnectionSpec, server: Server) -> ConnectionState {
             .connected(
-                .init(connectionSpec: spec, tunnelProtocol: .wireGuard, peerIDs: []),
+                .init(connectionSpec: spec, tunnelProtocol: .wireGuard, peerIDs: [], killSwitch: false),
                 .init(
                     currentPeer: server,
                     connectionDate: Date(),

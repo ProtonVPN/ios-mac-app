@@ -26,6 +26,7 @@ import Hermes
 import Localization
 import NetworkExtension
 import ProtonCoreFeatureFlags
+import Strings
 import VPNCoreCommon
 import VPNCoreTypes
 import VPNShared
@@ -98,6 +99,38 @@ extension ManagerConfigurator {
         return protocolConfiguration
     }
 
+    /// Builds a ProTUN provider configuration with **no peers** (and no server), used to enforce Advanced
+    /// kill switch blocking from a disconnected state. `includeAllNetworks` routes all traffic into a tunnel
+    /// that never establishes a peer connection, so everything is blocked until the config is replaced.
+    #if !os(tvOS)
+        private static func zeroPeerProviderConfiguration() throws -> NETunnelProviderProtocol {
+            @Dependency(\.bundleIDClient) var bundleIDClient
+            let protocolConfiguration = NETunnelProviderProtocol()
+            protocolConfiguration.providerBundleIdentifier = bundleIDClient.bundleIdentifier(.wireGuard)
+            protocolConfiguration.serverAddress = "" // If nil, start fails. Empty string is accepted.
+            protocolConfiguration.username = nil
+            protocolConfiguration.includeAllNetworks = true
+
+            @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
+            let wgConfig = connectionConfigurationProvider.configuration().wireguardConfig
+            let config = ProTUNConfiguration(preferredTransport: .udp, peers: [], dnsServers: wgConfig.dnsServers ?? [])
+            try ProTUNConfigurationCoder.encode(configuration: config, to: protocolConfiguration)
+
+            try protocolConfiguration.setConnectionSpec(ConnectionSpec())
+            // Required so `resolveProTUN` can quiesce (appliedRequestId == requestId) and report `.killSwitchActive`
+            // once the extension settles into zero-peer mode; without it the app would stay `.connecting` forever.
+            @Dependency(\.uuid) var uuid
+            protocolConfiguration.requestId = uuid()
+
+            @Dependency(\.authKeychain) var authKeychain
+            guard let userID = authKeychain.userId else {
+                throw ManagerConfigurationError.userIdMissing
+            }
+            protocolConfiguration.userID = userID
+            return protocolConfiguration
+        }
+    #endif
+
     static func encodeProTUNConfiguration(connectionIntent: ServerConnectionIntent, on protocolConfiguration: NETunnelProviderProtocol) throws {
         @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
         @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
@@ -166,18 +199,57 @@ extension ManagerConfigurator {
                     guard let protocolConfig = manager.vpnProtocolConfiguration else {
                         throw WireguardConfiguratorError.incorrectProtocolConfiguration
                     }
+                    #if !os(tvOS)
+                        let wasBlocking = isZeroPeerBlocking(protocolConfig)
+                    #endif
                     // The app applies the updated protocol configuration, but we still need to send the change request
                     // to ProTUN so it can confirm the change.
                     try protocolConfig.apply(update: update)
                     manager.vpnProtocolConfiguration = protocolConfig
+                    #if !os(tvOS)
+                        // Stripping the peers turns this manager into the kill switch configuration.
+                        // Name it accordingly and disable on-demand, so that the user can recognize it
+                        // and stop it from the system settings if they need their connectivity back.
+                        // An update that restores peers turns it back into a regular connection.
+                        if isZeroPeerBlocking(protocolConfig) {
+                            manager.localizedDescription = killSwitchConfigurationTitle
+                            manager.isOnDemandEnabled = false
+                        } else if wasBlocking {
+                            manager.localizedDescription = defaultConfigurationTitle
+                            manager.isOnDemandEnabled = true
+                        }
+                    #endif
 
                 case .disconnection:
                     manager.isOnDemandEnabled = false
                     manager.isEnabled = true
+
+                #if !os(tvOS)
+                    case .zeroPeerColdStart:
+                        manager.vpnProtocolConfiguration = try zeroPeerProviderConfiguration()
+                        manager.localizedDescription = killSwitchConfigurationTitle
+                        manager.isOnDemandEnabled = false
+                        manager.isEnabled = true
+                #endif
                 }
             }
         )
     }
+
+    /// The base manager name shown in the system's VPN settings.
+    private static let defaultConfigurationTitle = "Proton VPN"
+
+    /// The manager name shown in the system settings while the tunnel is the zero-peer blackhole.
+    private static var killSwitchConfigurationTitle: String {
+        "\(defaultConfigurationTitle) (\(Localizable.killSwitch))"
+    }
+
+    #if !os(tvOS)
+        /// A configuration with the kill switch flag and no peers describes the zero-peer blackhole.
+        private static func isZeroPeerBlocking(_ configuration: NETunnelProviderProtocol) -> Bool {
+            configuration.includeAllNetworks && ((try? configuration.peerIDs) ?? []).isEmpty
+        }
+    #endif
 
     private static func configurationTitle(for intent: ServerConnectionIntent) -> String {
         #if DEBUG
@@ -199,7 +271,7 @@ extension ManagerConfigurator {
             }
             return "\(serverName) - \(connectionProtocol)"
         #else
-            return "Proton VPN"
+            return defaultConfigurationTitle
         #endif
     }
 

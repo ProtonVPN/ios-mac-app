@@ -75,7 +75,7 @@ private let _testIntent = ServerConnectionIntent(
 private extension ConnectionState {
     static var fakeConnected: ConnectionState {
         .connected(
-            .init(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"]),
+            .init(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["peer-id"], killSwitch: false),
             .init(currentPeer: .ca, connectionDate: .now, protocolConnectionData: .ike)
         )
     }

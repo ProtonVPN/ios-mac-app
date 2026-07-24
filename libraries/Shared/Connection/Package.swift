@@ -83,8 +83,6 @@ let package = Package(
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
-                .product(name: "IPCErgonomics", package: "Ergonomics"),
-                .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),

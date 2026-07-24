@@ -64,7 +64,7 @@
                 try await PacketTunnelManager().status
             }
 
-            #expect(status == .reasserting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: [])))
+            #expect(status == .reasserting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: [], killSwitch: false)))
         }
 
         @Test
@@ -98,7 +98,45 @@
             #expect(status == .disconnecting(.init(
                 connectionSpec: .defaultFastest,
                 tunnelProtocol: .wireGuard,
-                peerIDs: []
+                peerIDs: [],
+                killSwitch: false
+            )))
+        }
+
+        /// Connecting out of the zero-peer blackhole updates the saved configuration with peers before the
+        /// extension applies them. Until the request quiesces, the extension still reports the peerless
+        /// state as disconnected, and resolve must hold the last state instead of reporting a disconnection.
+        @Test
+        func holdsLastStateWhileRestoringPeersFromZeroPeer() async throws {
+            let providerManager = MockTunnelProviderManager(withBundleIdentifier: "wireguard", state: .ready)
+            providerManager.session = VPNSessionMock(status: .connected)
+
+            let config = NETunnelProviderProtocol()
+            try config.setProviderConfiguration(
+                value: JSONEncoder().encode(ConnectionSpec.defaultFastest),
+                forKey: "connectionSpec"
+            )
+            config.setProviderConfiguration(value: UUID().uuidString, forKey: "requestID")
+            try ProTUNConfigurationCoder.encode(
+                configuration: .init(preferredTransport: .udp, peers: [.mock(id: "peer-id")], dnsServers: []),
+                to: config
+            )
+            providerManager.protocolConfiguration = config
+
+            let status = try await withDependencies {
+                $0.vpnManagerRepository.managers = { [.wireGuard: providerManager] }
+                $0.extensionIPC.currentExtensionState = {
+                    .init(state: .disconnected(reason: .unset), requestId: UUID())
+                }
+            } operation: {
+                try await PacketTunnelManager().status
+            }
+
+            #expect(status == .reasserting(TunnelConfiguration(
+                connectionSpec: .defaultFastest,
+                tunnelProtocol: .wireGuard,
+                peerIDs: [],
+                killSwitch: false
             )))
         }
 
@@ -106,7 +144,8 @@
             @Test
             func statusStreamDerivesZeroPeerKillSwitchFromAppliedConfiguration() async throws {
                 let providerManager = MockTunnelProviderManager(withBundleIdentifier: "wireguard", state: .ready)
-                providerManager.session = VPNSessionMock(status: .disconnected)
+                let session = VPNSessionMock(status: .disconnected)
+                providerManager.session = session
 
                 let requestId = UUID()
                 let config = NETunnelProviderProtocol()
@@ -140,6 +179,9 @@
                     var iterator = PacketTunnelManager().statusStream.makeAsyncIterator()
                     let initial = try await withTimeout(of: .seconds(1)) { await iterator.next() }
 
+                    // The zero-peer tunnel comes up (the provider start completes even without peers) and
+                    // the extension then publishes the applied request id.
+                    session.status = .connected
                     extensionStateContinuation.yield(.init(
                         state: .disconnected(reason: .unset),
                         requestId: requestId
@@ -151,7 +193,8 @@
                 let tunnelConfiguration = TunnelConfiguration(
                     connectionSpec: .defaultFastest,
                     tunnelProtocol: .wireGuard,
-                    peerIDs: []
+                    peerIDs: [],
+                    killSwitch: true
                 )
                 #expect(initial == .some(.success(.disconnected(nil))))
                 #expect(updated == .some(.success(.killSwitchActive(tunnelConfiguration))))
@@ -217,7 +260,8 @@
             #expect(next == .some(.success(.connecting(.init(
                 connectionSpec: .defaultFastest,
                 tunnelProtocol: .wireGuard,
-                peerIDs: ["new-peer"]
+                peerIDs: ["new-peer"],
+                killSwitch: false
             )))))
         }
 
@@ -257,7 +301,7 @@
 
             #expect(
                 status == .connected(
-                    TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"]),
+                    TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"], killSwitch: false),
                     DynamicConnectionData(currentPeerId: "peer-id", connectionDate: now, protocolConnectionData: .proTUN(.init(transport: .udp)))
                 )
             )
@@ -296,7 +340,7 @@
 
             #expect(
                 status == .connected(
-                    TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"]),
+                    TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"], killSwitch: false),
                     DynamicConnectionData(currentPeerId: "peer-id", connectionDate: now, protocolConnectionData: .proTUN(.init(transport: .udp)))
                 )
             )
@@ -341,7 +385,7 @@
 
             #expect(
                 status == .connected(
-                    TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"]),
+                    TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"], killSwitch: false),
                     DynamicConnectionData(currentPeerId: "peer-id", connectionDate: now, protocolConnectionData: .proTUN(.init(transport: .udp)))
                 )
             )
@@ -381,7 +425,7 @@
                 try await PacketTunnelManager().status
             }
 
-            #expect(status == .reasserting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"])))
+            #expect(status == .reasserting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"], killSwitch: false)))
         }
 
         /// The update must be recorded in NE preferences before the provider message goes out, so the saved requestId

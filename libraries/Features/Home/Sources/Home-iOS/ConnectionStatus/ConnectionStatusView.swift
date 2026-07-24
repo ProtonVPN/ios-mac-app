@@ -39,18 +39,19 @@ public struct ConnectionStatusView: View {
     private static let viewHeight: CGFloat = 200
     private static let headerPaddingHeight: CGFloat = 13
 
+    // `.killSwitchActive` never reaches these helpers in practice: `body` renders the
+    // KillSwitchBlockingBanner for it instead. It is grouped with `.unprotected` throughout
+    // as the accurate fallback.
     private func title(protectionState: ProtectionState) -> String? {
         switch protectionState {
         case .resolving:
             Localizable.connectionStatusLoading
         case .protected, .protectedSecureCore:
             nil
-        case .unprotected:
+        case .unprotected, .killSwitchActive:
             Localizable.connectionStatusUnprotected
         case .protecting:
             Localizable.connectionStatusProtecting
-        case .killSwitchActive:
-            Localizable.connectionStatusDisconnectedByKillswitch
         }
     }
 
@@ -86,12 +87,8 @@ public struct ConnectionStatusView: View {
             ProgressView()
                 .controlSize(.regular)
                 .tint(.white)
-        case .unprotected:
+        case .unprotected, .killSwitchActive:
             IconProvider.lockOpenFilled2
-                .styled(.danger)
-                .accessibilityHidden(true)
-        case .killSwitchActive:
-            IconProvider.lockFilled
                 .styled(.danger)
                 .accessibilityHidden(true)
         }
@@ -118,19 +115,26 @@ public struct ConnectionStatusView: View {
                 ProgressView()
                     .controlSize(.regular)
                     .tint(.white)
-            case .unprotected:
+            case .unprotected, .killSwitchActive:
                 IconProvider.lockOpenFilled2
-                    .styled(.danger)
-            case .killSwitchActive:
-                IconProvider.lockFilled
                     .styled(.danger)
             }
         }
     }
 
     public var body: some View {
-        let protectionState = store.protectionState
+        Group {
+            if store.protectionState == .killSwitchActive {
+                // Advanced kill switch is blocking: show the grey KS overlay in place of the connection status.
+                KillSwitchBlockingBanner()
+            } else {
+                connectionStatus(protectionState: store.protectionState)
+            }
+        }
+        .task { await store.send(.watchConnectionStatus).finish() }
+    }
 
+    private func connectionStatus(protectionState: ProtectionState) -> some View {
         ZStack(alignment: .top) {
             LinearGradient(
                 colors: [gradientColor(protectionState: protectionState).opacity(0.5), .clear],
@@ -176,7 +180,6 @@ public struct ConnectionStatusView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.hidden, for: .navigationBar)
-        .task { await store.send(.watchConnectionStatus).finish() }
     }
 }
 

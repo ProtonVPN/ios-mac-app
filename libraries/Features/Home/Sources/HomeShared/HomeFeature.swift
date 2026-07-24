@@ -54,7 +54,7 @@ public struct HomeFeature {
     #endif
 
     @SharedReader(.userTier) private var userTier: Int?
-    @Shared(.killSwitch) var killSwitch: Bool
+    @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
 
     @Reducer
     public enum Destination {
@@ -127,6 +127,7 @@ public struct HomeFeature {
         /// translates a `ConnectionCommand` into `ConnectionFeature.input(...)`.
         case connectionCommandReceived(ConnectionCommand)
 
+        case killSwitchModeChanged(KillSwitchMode)
         case planChanged(PlanChange)
         /// Refresh API announcements if polling is enabled (on start and each time the app becomes active)
         case refreshAnnouncementsIfNeeded
@@ -160,6 +161,9 @@ public struct HomeFeature {
             case enableKillSwitchAndConnect(PendingConnect)
             /// User chose "Continue" on the bad-LAN alert. We retry connect bypassing intercepts.
             case connectAnywayDespiteBadLAN(PendingConnect)
+            /// User confirmed disconnecting while Advanced kill switch is active. The original
+            /// trigger is re-posted before the disconnect is issued.
+            case confirmDisconnectWithAdvancedKillSwitch(UserInitiatedVPNChange.VPNTrigger)
         }
     }
 
@@ -172,6 +176,12 @@ public struct HomeFeature {
     }
 
     private static let whatsNewPresentationDelay: Duration = .seconds(3)
+
+    /// Disconnects that are part of a larger flow the user already confirmed (or never initiated directly),
+    /// which must not be interrupted by the Advanced kill switch confirmation.
+    private static let advancedKillSwitchConfirmationExemptTriggers: Set<UserInitiatedVPNChange.VPNTrigger> = [
+        .auto, .exit, .fidoAuthentication, .signout, .widget,
+    ]
 
     public init() {}
 
@@ -273,6 +283,11 @@ private extension HomeFeature {
                         try await clock.sleep(for: Self.whatsNewPresentationDelay)
                         await send(.whatsNewChecker(.check))
                     },
+                    .run { [killSwitchMode = $killSwitchMode] send in
+                        for await value in killSwitchMode.publisher.removeDuplicates().values.dropFirst() {
+                            await send(.killSwitchModeChanged(value))
+                        }
+                    },
                     .run { send in
                         let stream = await connectionCommandClient.stream()
                         for await command in stream {
@@ -304,9 +319,26 @@ private extension HomeFeature {
                     state.destination = nil
                 }
                 return .none
+            case let .killSwitchModeChanged(mode):
+                log.info(
+                    "Kill switch mode changed",
+                    category: .connectionConnect,
+                    metadata: ["mode": "\(mode)"]
+                )
+                // If we're actively blocking (zero-peer) and the new mode no longer wants persistent blocking (Off or
+                // Standard), tear the tunnel down so the user regains connectivity. Otherwise the user is stuck behind
+                // a blackholed tunnel.
+                if !mode.isAdvanced, state.connectionState.is(\.killSwitchActive) {
+                    return .send(.connection(.input(.disconnect)))
+                }
+                // Otherwise: leave the live tunnel untouched. The mode is already persisted (@Shared, written by the
+                // settings picker) and takes effect on the next connection. `.input(.connect)` enables
+                // `includeAllNetworks` from the mode, and the existing zero-peer switch on disconnect works because the
+                // tunnel was armed at connect.
+                return .none
             case let .planChanged(planChange):
-                // update the persisted feature settings so a downgrade clears paid features
-                // and an upgrade re-enables NetShield
+                // update the persisted feature settings so a downgrade clears paid features and an upgrade re-enables
+                // NetShield.
                 return .run { _ in applyPlanChangeFeatureResets(planChange) }
             case .refreshAnnouncementsIfNeeded:
                 return .run { _ in
@@ -368,21 +400,21 @@ private extension HomeFeature {
                 return performConnect(pending: pending)
 
             case let .connectionCommandReceived(.disconnect(trigger, completion)):
-                let alreadyDisconnected = state.connectionState.is(\.disconnected) || state.connectionState.is(\.killSwitchActive)
-                return .merge(
-                    .cancel(id: CancelID.connectionConnectCommandEffect),
-                    .run { send in
-                        if let completion {
-                            if alreadyDisconnected {
-                                await MainActor.run { completion() }
-                            } else {
-                                await pendingDisconnectCompletions.enqueue(completion)
-                            }
-                        }
-                        AppEvent.userInitiatedVPNChange.post(trigger)
-                        await send(.connection(.input(.disconnect)))
-                    }
-                )
+                // Warn before an intentional disconnect that would leave the device offline, which is the case only
+                // when the live tunnel actually carries the kill switch flag. Enabling Advanced while connected only
+                // affects the next connection, so no warning then. Disconnects that carry a completion are never held
+                // up by an alert, because the caller (the widget) needs the completion to resolve. Exempt triggers skip
+                // the warning too: sign-out shows its own, and programmatic or mid-flow disconnects were not directly
+                // asked for by the user.
+                if completion == nil,
+                   !Self.advancedKillSwitchConfirmationExemptTriggers.contains(trigger),
+                   killSwitchMode.isAdvanced,
+                   state.connectionState.is(\.connected),
+                   state.connectionState.tunnelKillSwitch {
+                    state.alert = confirmDisconnectWithAdvancedKillSwitchAlert(trigger: trigger)
+                    return .none
+                }
+                return performDisconnect(trigger: trigger, completion: completion, state: state)
 
             case .connectionCommandReceived(.retry):
                 let spec = ConnectionSpec.defaultFastest // TODO: ProTUN: Fix this!
@@ -429,11 +461,17 @@ private extension HomeFeature {
                 }
 
             case let .alert(.presented(.enableKillSwitchAndConnect(pending))):
-                $killSwitch.withLock { $0 = true }
+                // Bad-LAN intercept: enabling Standard is enough to suppress the warning on retry.
+                $killSwitchMode.withLock { $0 = .standard }
                 return performConnect(pending: pending)
 
             case let .alert(.presented(.connectAnywayDespiteBadLAN(pending))):
                 return performConnect(pending: pending)
+
+            case let .alert(.presented(.confirmDisconnectWithAdvancedKillSwitch(trigger))):
+                // The intercept only fires for completion-less commands, so there is no completion
+                // left to settle here.
+                return performDisconnect(trigger: trigger, completion: nil, state: state)
 
             case let .connectionStatus(.connectionStatusBanner(.delegate(.upsellTapped(mode)))):
                 let upsellModalType: UpsellModalType = switch mode {
@@ -654,6 +692,46 @@ private extension HomeFeature {
         }
     }
 
+    /// Confirmation shown before an intentional disconnect while Advanced killswitch is active
+    func confirmDisconnectWithAdvancedKillSwitchAlert(trigger: UserInitiatedVPNChange.VPNTrigger) -> AlertState<Action.HomeAlert> {
+        AlertState {
+            TextState(Localizable.killSwitchAdvancedDisconnectWarning)
+        } actions: {
+            ButtonState(role: .cancel) {
+                TextState(Localizable.cancel)
+            }
+            ButtonState(action: .confirmDisconnectWithAdvancedKillSwitch(trigger)) {
+                TextState(Localizable.settingsProtocolAlertButtonContinue)
+            }
+        }
+    }
+
+    /// Encapsulates the side effects of dispatching a `.disconnect` command once the Advanced kill
+    /// switch confirmation (if any) has been resolved: cancel any in-flight connect command, settle
+    /// the completion, post the trigger, and hand the disconnect to the connection. Both the direct
+    /// path and the alert confirmation go through here so they cannot drift apart.
+    func performDisconnect(
+        trigger: UserInitiatedVPNChange.VPNTrigger,
+        completion: (@MainActor @Sendable () -> Void)?,
+        state: State
+    ) -> Effect<Action> {
+        let alreadyDisconnected = state.connectionState.is(\.disconnected) || state.connectionState.is(\.killSwitchActive)
+        return .merge(
+            .cancel(id: CancelID.connectionConnectCommandEffect),
+            .run { @MainActor send in
+                if let completion {
+                    if alreadyDisconnected {
+                        completion()
+                    } else {
+                        await pendingDisconnectCompletions.enqueue(completion)
+                    }
+                }
+                AppEvent.userInitiatedVPNChange.post(trigger)
+                await send(.connection(.input(.disconnect)))
+            }
+        )
+    }
+
     /// Encapsulates the side effects of dispatching a `.connect` command after intercept checks
     /// have been resolved (either none fired or the user confirmed via alert).
     func performConnect(pending: PendingConnect) -> Effect<Action> {
@@ -674,7 +752,7 @@ private extension HomeFeature {
     func interceptAlert(for pending: PendingConnect) -> AlertState<Action.HomeAlert>? {
         @SharedReader(.featureFlags) var featureFlags
         if featureFlags.unsafeLanWarnings,
-           !killSwitch,
+           !killSwitchMode.isProtected,
            let bad = networkInterfacePropertiesProvider.firstBadInterface() {
             return bad.interceptAlert(
                 enableKillSwitch: .enableKillSwitchAndConnect(pending),

@@ -20,6 +20,7 @@ import Clocks
 import CommonNetworking
 import ConnectionInventory
 import Dependencies
+import Domain
 import Ergonomics
 import Foundation
 import Hermes
@@ -108,6 +109,7 @@ public final class TelemetrySettingsReporter {
                 firstHermesAddressFamily: firstHermesAddressFamily(),
                 isHermesEnabled: isHermesEnabled(),
                 isPortForwardingEnabled: isPortForwardingEnabled(),
+                killSwitchLevel: killSwitchLevel(),
                 isSplitTunnelingEnabled: isSplitTunnelingEnabled(),
                 splitTunnelingMode: splitTunnelingMode(),
                 splitTunnelingAppsCount: splitTunnelingAppsCount(),
@@ -124,7 +126,8 @@ public final class TelemetrySettingsReporter {
                 hermesCount: hermesCount(),
                 firstHermesAddressFamily: firstHermesAddressFamily(),
                 isHermesEnabled: isHermesEnabled(),
-                isPortForwardingEnabled: isPortForwardingEnabled()
+                isPortForwardingEnabled: isPortForwardingEnabled(),
+                killSwitchLevel: killSwitchLevel()
             )
         #endif
         let heartbeatEvent = SettingsEvent(event: .settingsHeartbeat, dimensions: dimensions)
@@ -171,6 +174,24 @@ public final class TelemetrySettingsReporter {
 
     private func isPortForwardingEnabled() -> SettingsDimensions.IsPortForwardingEnabled {
         portForwardingPropertyProvider.getPortForwarding() == true ? .true : .false
+    }
+
+    private func killSwitchLevel() -> SettingsDimensions.KillSwitchLevel {
+        #if os(iOS)
+            @SharedReader(.killSwitchMode) var mode: KillSwitchMode
+            switch mode {
+            case .off:
+                return .off
+            case .standard:
+                return .standard
+            case .advanced:
+                return .advanced
+            }
+        #else
+            // macOS still uses the bool toggle
+            @SharedReader(.killSwitch) var killSwitch: Bool
+            return killSwitch ? .standard : .off
+        #endif
     }
 
     private func widgetCount() async -> SettingsDimensions.WidgetCount? {

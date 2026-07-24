@@ -36,7 +36,6 @@ import VPNAppCore
 import VPNShared
 
 class CreateOrEditProfileViewModel: NSObject {
-    @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.upsellManager) private var upsellManager
     @SharedReader(.connectionState) private var connectionState: ConnectionState
     @SharedReader(.smartProtocolConfig) private var smartProtocolConfig: SmartProtocolConfig

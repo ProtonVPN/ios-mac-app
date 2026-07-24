@@ -99,7 +99,8 @@ final class MainFeatureSnapshotTests {
                 .init(
                     connectionSpec: .init(location: .country(code: "CA", order: .fastest), features: []),
                     tunnelProtocol: .ike,
-                    peerIDs: []
+                    peerIDs: [],
+                    killSwitch: false
                 ),
                 .init(currentPeer: .ca, connectionDate: .now, protocolConnectionData: .ike)
             )
