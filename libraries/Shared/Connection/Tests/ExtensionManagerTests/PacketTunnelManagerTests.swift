@@ -222,6 +222,7 @@
             let oldPeer = CurrentPeer(
                 peerID: "old-peer",
                 transport: .udp,
+                port: 51820,
                 serverExitV4: nil,
                 serverExitV6: nil,
                 userISP: nil,
@@ -291,7 +292,7 @@
                 }
                 $0.extensionIPC.currentExtensionState = {
                     .init(
-                        state: .connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)),
+                        state: .connected(CurrentPeer(peerID: "peer-id", transport: .udp, port: 51820, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)),
                         requestId: requestId
                     )
                 }
@@ -330,7 +331,7 @@
                 $0.vpnManagerRepository.managers = { [.wireGuard: connectedManager] }
                 $0.extensionIPC.currentExtensionState = {
                     .init(
-                        state: .connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)),
+                        state: .connected(CurrentPeer(peerID: "peer-id", transport: .udp, port: 51820, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)),
                         requestId: requestId
                     )
                 }
@@ -375,7 +376,7 @@
                 $0.vpnManagerRepository.managers = { [.wireGuard: connectedManager] }
                 $0.extensionIPC.currentExtensionState = {
                     .init(
-                        state: .connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)),
+                        state: .connected(CurrentPeer(peerID: "peer-id", transport: .udp, port: 51820, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)),
                         requestId: UUID()
                     )
                 }
@@ -417,7 +418,7 @@
                 $0.vpnManagerRepository.managers = { [.wireGuard: connectedManager] }
                 $0.extensionIPC.currentExtensionState = {
                     .init(
-                        state: .connected(CurrentPeer(peerID: "peer-id", transport: .udp, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)),
+                        state: .connected(CurrentPeer(peerID: "peer-id", transport: .udp, port: 51820, serverExitV4: nil, serverExitV6: nil, userISP: nil, userIP: nil)),
                         requestId: UUID()
                     )
                 }

@@ -83,6 +83,7 @@ typedef struct {
     uint8_t                  user_ipv4[IPV4_BYTE_LENGTH];
     uint8_t                  user_ipv6[IPV6_BYTE_LENGTH];
     char                     user_isp[USER_ISP_STRING_LENGTH]; // Watch for UTF-8 grapheme clusters (accents).
+    uint16_t                 port;
 } IPCConnectionDataPayload;
 
 IPC_DECLARE_SHARED_REGION(IPCConnectionDataRegion, IPCConnectionDataPayload);

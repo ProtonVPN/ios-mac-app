@@ -25,14 +25,14 @@ public struct ConnectionDimensions: Encodable {
     public typealias VPNStatus = CommonTelemetryDimensions.VPNStatus
 
     let outcome: Outcome
-    let userTier: UserTier
+    let userTier: CommonTelemetryDimensions.UserTier
     let vpnStatus: VPNStatus // This refers to whether a vpn connection is already ongoing when the connection action is triggered
     let vpnTrigger: UserInitiatedVPNChange.VPNTrigger
     let networkType: NetworkType
     let serverFeatures: ServerFeature // ordered comma-separated list
     let vpnCountry: String // ['CHE', 'FRA', 'NLD', ... ]
     let userCountry: String // ['CHE', 'FRA', 'NLD', ... ]
-    let `protocol`: VpnProtocol
+    let protocolString: ProtocolString
     let server: String // "#IT1"
     let port: String // 3360, max 25 char
     let isp: String // max 25 char
@@ -40,14 +40,14 @@ public struct ConnectionDimensions: Encodable {
 
     public init(
         outcome: Outcome,
-        userTier: UserTier,
+        userTier: CommonTelemetryDimensions.UserTier,
         vpnStatus: VPNStatus,
         vpnTrigger: UserInitiatedVPNChange.VPNTrigger,
         networkType: NetworkType,
         serverFeatures: ServerFeature,
         vpnCountry: String,
         userCountry: String,
-        protocol: VpnProtocol,
+        protocolString: ProtocolString,
         server: String,
         port: String,
         isp: String,
@@ -61,7 +61,7 @@ public struct ConnectionDimensions: Encodable {
         self.serverFeatures = serverFeatures
         self.vpnCountry = vpnCountry
         self.userCountry = userCountry
-        self.protocol = `protocol`
+        self.protocolString = protocolString
         self.server = server
         self.port = port
         self.isp = isp
@@ -79,26 +79,10 @@ public struct ConnectionDimensions: Encodable {
         try container.encode(serverFeatures, forKey: .serverFeatures)
         try container.encode(vpnCountry, forKey: .vpnCountry)
         try container.encode(userCountry, forKey: .userCountry)
-        try container.encode(protocolString(`protocol`), forKey: .protocol)
+        try container.encode(protocolString, forKey: .protocol)
         try container.encode(server, forKey: .server)
         try container.encode(port, forKey: .port)
         try container.encode(isp, forKey: .isp)
-    }
-
-    private func protocolString(_ protocol: VpnProtocol) -> String {
-        switch `protocol` {
-        case .ike:
-            "ikev2"
-        case let .wireGuard(wireGuardTransport):
-            switch wireGuardTransport {
-            case .tcp:
-                "wireguard_tcp"
-            case .udp:
-                "wireguard_udp"
-            case .tls:
-                "wireguard_tls"
-            }
-        }
     }
 
     enum CodingKeys: String, CodingKey {
@@ -117,21 +101,35 @@ public struct ConnectionDimensions: Encodable {
         case modalSource = "modal_source"
     }
 
+    public enum ProtocolString: String, Encodable {
+        case ikev2
+        case wireguard_udp = "wireguard_udp"
+        case wireguard_tcp = "wireguard_tcp"
+        case wireguard_tls = "wireguard_tls"
+
+        public init(_ protocol: VpnProtocol) {
+            switch `protocol` {
+            case .ike:
+                self = .ikev2
+            case .wireGuard(.tcp):
+                self = .wireguard_tcp
+            case .wireGuard(.udp):
+                self = .wireguard_udp
+            case .wireGuard(.tls):
+                self = .wireguard_tls
+            }
+        }
+    }
+
     public enum Outcome: String, Encodable {
         case success
         case failure
         case aborted
     }
 
-    public enum UserTier: String, Encodable {
-        case paid
-        case free
-        case `internal`
-        case nonPaid = "non-paid"
-    }
-
     public enum NetworkType: String, Encodable {
         case wifi
+        case wired
         case mobile
         case other
     }

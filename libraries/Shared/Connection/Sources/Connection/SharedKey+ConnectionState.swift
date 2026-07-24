@@ -16,18 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ComposableArchitecture
+import Sharing
 import Domain
 import Foundation
 
 public extension SharedKey where Self == JSONAppStorageKey<ConnectionState>.Default {
     static var connectionState: Self {
         Self[.json("connectionState", default: .resolving), default: .resolving]
-    }
-}
-
-public extension SharedKey where Self == InMemoryKey<ConnectionError?>.Default {
-    static var lastConnectionError: Self {
-        Self[.inMemory("lastConnectionError"), default: nil]
     }
 }

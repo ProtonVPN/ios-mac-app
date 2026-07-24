@@ -23,6 +23,7 @@ import Domain
 import Foundation
 import Sharing
 import VPNAppCore
+import ExtensionSync
 
 actor TelemetryConnectionStatusReporter {
     struct Error: Swift.Error {
@@ -35,8 +36,6 @@ actor TelemetryConnectionStatusReporter {
     @Dependency(\.vpnKeychain) private var vpnKeychain
 
     var networkType: ConnectionDimensions.NetworkType = .other
-    var previousConnectionStatus: ConnectionStatus?
-    var previousConnectionState: ConnectionState = .resolving
     var previousConnectionIntent: ServerConnectionIntent?
 
     var userInitiatedVPNChange: UserInitiatedVPNChange?
@@ -45,6 +44,8 @@ actor TelemetryConnectionStatusReporter {
 
     private var telemetryEventScheduler: TelemetryEventScheduler
     private var businessEventScheduler: TelemetryEventScheduler
+
+    var lastPort: UInt16?
 
     init(
         timer: TelemetryTimer = ConnectionTimer(),
@@ -61,59 +62,43 @@ actor TelemetryConnectionStatusReporter {
         networkType = type
     }
 
+    func setPort(_ portNumber: UInt16) {
+        lastPort = portNumber
+    }
+
     func setUserInitiatedVPNChange(_ change: UserInitiatedVPNChange) {
         userInitiatedVPNChange = change
     }
 
-    func connectionStateChanged(_ connectionState: ConnectionState) async throws {
-        defer {
-            switch connectionState {
-            case .connected, .disconnected, .connecting:
-                previousConnectionState = connectionState
-            default:
-                break
-            }
-        }
+    func connectionStateChanged(_ oldValue: ConnectionState, _ newValue: ConnectionState) async throws {
+        log.info("Detected ConnectionState change from: \(oldValue.basicDescription), to: \(newValue.basicDescription)", category: .telemetry)
         var eventType: ConnectionEvent.Event?
-        var connection: ServerConnectionIntent?
-        switch connectionState {
+        switch newValue {
         case let .connected(_, connectionData):
-            // connection = connectionIntent
             timer.updateConnectionStarted(connectionData.connectionDate)
             timer.markFinishedConnecting()
-            eventType = try connectionEventType(state: connectionState)
-        case let .connecting(intent):
-            switch intent {
-            case .resolved:
-                // connection = resolvedConnectionIntent
-                break
-            case .unresolved:
-                timer.markConnectionStopped()
-                timer.markStartedConnecting()
-            }
-            eventType = try connectionEventType(state: connectionState)
+            eventType = try connectionEventType(oldValue, newValue)
+        case .connecting(.resolved):
+            break
+        case .connecting(.unresolved):
+            timer.markConnectionStopped()
+            timer.markStartedConnecting()
+            eventType = try connectionEventType(oldValue, newValue)
         case .disconnected:
-            // connection = previousConnectionIntent
             timer.markConnectionStopped()
-            eventType = try connectionEventType(state: connectionState)
-        case .disconnecting:
-            // previousConnectionIntent = connectionIntent
-            // Ignoring the `disconnecting` status
+            eventType = try connectionEventType(oldValue, newValue)
+        case .disconnecting, .resolving, .killSwitchActive:
+            // Ignoring the `resolving` and `disconnecting` status.
+            // `killSwitchActive` was previously mapped to `disconnected`
             return
-        case .resolving:
-            // Ignoring the `resolving` status
-            return
-        case .killSwitchActive:
-            timer.markConnectionStopped()
-            eventType = try connectionEventType(state: connectionState)
         }
         guard let eventType else {
-            return
+            throw ConnectionEventError.missingEventType
         }
         let event = try collectDimensions(
-            connectionState: connectionState,
-            connectionIntent: connection,
-            eventType: eventType
+            eventType: eventType,
+            oldValue,
+            newValue
         )
         await scheduleEvent(event)
     }
@@ -148,89 +133,70 @@ actor TelemetryConnectionStatusReporter {
         }
     }
 
-    private func collectDimensions(connectionState: ConnectionState, connectionIntent: ServerConnectionIntent?, eventType: ConnectionEvent.Event?) throws -> ConnectionEvent {
-        guard let eventType else {
-            throw ConnectionEventError.missingEventType
-        }
-        guard let connection = connectionIntent else {
+    private func collectDimensions(eventType: ConnectionEvent.Event,
+                                   _ oldValue: ConnectionState,
+                                   _ newValue: ConnectionState) throws -> ConnectionEvent {
+        @SharedReader(.serverConnectionIntent) var serverConnectionIntent
+        guard let serverConnectionIntent else {
             throw ConnectionEventError.missingConnectionIntent
         }
         let connectionProtocol: VpnProtocol
-        let port: String
-        switch connection.protocolConfiguration {
+        let portString: String
+        switch serverConnectionIntent.protocolConfiguration {
         case .ike:
             connectionProtocol = .ike
             // VPNAPPL-3466: Confirm empty string for the port is acceptable for ike
-            port = ""
+            portString = ""
         case let .wireGuard(settings):
             connectionProtocol = .wireGuard(settings.transport ?? .udp)
-            // TODO: ProTUN: fetch active port from ProTUN ConnectionData
-            port = ""
+            if let lastPort {
+                portString = "\(lastPort)"
+            } else {
+                portString = ""
+            }
         }
+        let logical = serverConnectionIntent.server.logical
         let dimensions = ConnectionDimensions(
-            outcome: connectionOutcome(connectionState),
-            userTier: userTier(),
-            vpnStatus: connectionState.is(\.connected) ? .on : .off,
-            vpnTrigger: vpnTrigger(eventType: eventType),
+            outcome: connectionOutcome(oldValue, newValue),
+            userTier: .readFromKeychain(),
+            vpnStatus: newValue.is(\.connected) ? .on : .off,
+            vpnTrigger: vpnTrigger(eventType: eventType, oldValue),
             networkType: networkType,
-            serverFeatures: connection.server.logical.feature,
-            vpnCountry: connection.server.logical.exitCountryCode,
+            serverFeatures: logical.feature,
+            vpnCountry: logical.exitCountryCode,
             userCountry: userCountry ?? "",
-            protocol: connectionProtocol,
-            server: connection.server.logical.name,
-            port: port,
+            protocolString: .init(connectionProtocol),
+            server: logical.name,
+            port: portString,
             isp: userISP ?? "",
-            isServerFree: connection.server.logical.tier == .freeTier
+            isServerFree: logical.tier == .freeTier
         )
-        if shouldResetUserInitiatedVPNChange(for: eventType) {
+        if shouldResetUserInitiatedVPNChange(for: eventType, oldValue) {
             userInitiatedVPNChange = nil
         }
         return ConnectionEvent(event: eventType, dimensions: dimensions)
     }
 
-    private func userTier() -> ConnectionDimensions.UserTier {
-        let cached = try? vpnKeychain.fetchCached()
-        let tier = cached?.maxTier ?? .freeTier
-        if tier == .internalTier {
-            return .internal
-        }
-        return tier.isFreeTier ? .free : .paid
-    }
+    private func connectionEventType(_ oldValue: ConnectionState, _ newValue: ConnectionState) throws -> ConnectionEvent.Event? {
 
-    private func connectionEventType(state: ConnectionState) throws -> ConnectionEvent.Event? {
-        switch state {
-        case .connected:
-            let timeInterval = try timer.timeToConnect
-            return .vpnConnection(timeToConnection: timeInterval)
-        case .disconnected:
-            switch previousConnectionState {
-            case .connected:
-                return try .vpnDisconnection(sessionLength: timer.connectionDuration)
-            case .connecting:
-                return try .vpnConnection(timeToConnection: timer.timeConnecting)
-            case .disconnected:
-                log.debug("Ignoring disconnected event, was previously disconnected.")
-                return nil
-            case .resolving, .disconnecting, .killSwitchActive:
-                // Ignoring resolving and disconnecting states
-                return nil
-            }
-        case .connecting:
-            if case .connected = previousConnectionState {
-                return try .vpnDisconnection(sessionLength: timer.connectionDuration)
-            }
-            return nil
-        case .killSwitchActive:
-            return try .vpnDisconnection(sessionLength: timer.connectionDuration)
-        case .disconnecting, .resolving:
+        switch (oldValue, newValue) {
+        case (_, .connected), // success connecting
+            (.connecting, .disconnected): // failed connecting
+            return try .vpnConnection(timeToConnection: timer.timeConnecting)
+
+        case let (.connected(_, data), .disconnected), // disconnection event
+            let (.connected(_, data), .connecting): // reconnection event
+            return .vpnDisconnection(sessionLength: timer.connectionDuration(connectedDate: data.connectionDate))
+
+        default:
             return nil
         }
     }
 
-    private func connectionOutcome(_ state: ConnectionState) -> ConnectionDimensions.Outcome {
-        switch state {
+    private func connectionOutcome(_ oldValue: ConnectionState, _ newValue: ConnectionState) -> ConnectionDimensions.Outcome {
+        switch newValue {
         case .disconnected:
-            switch previousConnectionState {
+            switch oldValue {
             case .connected, .connecting, .disconnecting:
                 guard let userInitiatedVPNChange else {
                     return .failure
@@ -249,12 +215,12 @@ actor TelemetryConnectionStatusReporter {
         case .connected:
             return .success
         case .connecting(.unresolved):
-            if previousConnectionState == .disconnected {
+            if oldValue == .disconnected {
                 return .success
             }
             return .failure
         case .connecting(.resolved):
-            if case .connecting(.unresolved) = previousConnectionState {
+            if case .connecting(.unresolved) = oldValue {
                 return .success
             }
             return .failure
@@ -265,9 +231,9 @@ actor TelemetryConnectionStatusReporter {
         }
     }
 
-    private func vpnTrigger(eventType: ConnectionEvent.Event) -> UserInitiatedVPNChange.VPNTrigger {
+    private func vpnTrigger(eventType: ConnectionEvent.Event, _ oldValue: ConnectionState) -> UserInitiatedVPNChange.VPNTrigger {
         let newConnection: () -> UserInitiatedVPNChange.VPNTrigger = {
-            if case .connected = self.previousConnectionState,
+            if case .connected = oldValue,
                case .vpnDisconnection = eventType {
                 return .newConnection
             }
@@ -290,9 +256,9 @@ actor TelemetryConnectionStatusReporter {
         }
     }
 
-    private func shouldResetUserInitiatedVPNChange(for event: ConnectionEvent.Event?) -> Bool {
+    private func shouldResetUserInitiatedVPNChange(for event: ConnectionEvent.Event?, _ oldValue: ConnectionState) -> Bool {
         // We need to keep the trigger for connected when the state is connecting.
-        if previousConnectionState.is(\.connecting) {
+        if oldValue.is(\.connecting) {
             return false
         }
         // When userInitiatedVPNChange is .settingsChange and the event is .vpnDisconnection,

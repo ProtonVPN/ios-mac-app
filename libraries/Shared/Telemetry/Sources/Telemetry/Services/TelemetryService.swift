@@ -37,9 +37,10 @@ public struct TelemetryService {
         _ flowType: UpsellEvent.FlowType?
     ) async throws -> Void
     public var startSettingsHeartbeat: () -> Void
+    public var startListeningForPortChanges: () -> Void
 
     public var vpnGatewayConnectionChanged: (_ connectionStatus: ConnectionStatus) async throws -> Void
-    public var connectionStateChanged: (_ connectionState: ConnectionState) async throws -> Void
+    public var connectionStateChanged: (_ oldValue: ConnectionState, _ newValue: ConnectionState) async throws -> Void
     public var userInitiatedVPNChange: (_ change: UserInitiatedVPNChange) async -> Void
     public var reachabilityChanged: (_ networkType: ConnectionDimensions.NetworkType) async -> Void
 }

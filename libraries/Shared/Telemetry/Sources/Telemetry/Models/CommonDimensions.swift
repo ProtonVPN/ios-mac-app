@@ -33,8 +33,10 @@ public enum CommonTelemetryDimensions {
         case internalTier = "internal"
         case credentialLess = "credential-less"
     }
+}
 
-    static func userTier() -> CommonTelemetryDimensions.UserTier {
+extension CommonTelemetryDimensions.UserTier {
+    public static func readFromKeychain() -> Self {
         @Dependency(\.credentiallessHelper) var credentiallessHelper
         @Dependency(\.vpnKeychain) var vpnKeychain
         let userIsCredentialLess = credentiallessHelper.isCredentialLess()

@@ -18,6 +18,42 @@
 
 import Foundation
 
+extension ConnectionEvent: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        "| measurementGroup: \(measurementGroup) | event: \(event) | dimensions: \(dimensions) |"
+    }
+}
+
+extension ConnectionEvent.Event: CustomDebugStringConvertible {
+    private static let formatter = {
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 2
+        return formatter
+    }()
+
+    private static func timeInSeconds(_ timeInterval: TimeInterval) -> String {
+        guard let string = formatter.string(from: timeInterval as NSNumber) else {
+            return ""
+        }
+        return string
+    }
+
+    public var debugDescription: String {
+        switch self {
+        case let .vpnConnection(timeToConnection):
+            return "| vpnConnection(timeToConnection: \(Self.timeInSeconds(timeToConnection))) |"
+        case let .vpnDisconnection(sessionLength):
+            return "| vpnDisconnection(sessionLength: \(Self.timeInSeconds(sessionLength)) |"
+        }
+    }
+}
+
+extension ConnectionDimensions: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        "| outcome: \(outcome) | userTier: \(userTier) | vpnStatus: \(vpnStatus) | vpnTrigger: \(vpnTrigger) | networkType: \(networkType) | serverFeatures: \(serverFeatures) | vpnCountry: \(vpnCountry) | userCountry: \(userCountry) | protocol: \(protocolString) | server: \(server) | port: \(port) | isp: \(isp) | isServerFree: \(isServerFree) |"
+    }
+}
+
 public struct ConnectionEvent: TelemetryEvent, Encodable {
     public typealias CodingKeys = TelemetryKeys
 

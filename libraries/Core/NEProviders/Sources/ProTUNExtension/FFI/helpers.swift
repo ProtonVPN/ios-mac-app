@@ -123,6 +123,7 @@ public extension ConnectionState {
             .connected(.init(
                 peerID: peer.peerId,
                 transport: .from(protocol: peer.protocol),
+                port: peer.port,
                 serverExitV4: agent?.serverExitV4,
                 serverExitV6: agent?.serverExitV6,
                 userISP: agent?.userIspName,

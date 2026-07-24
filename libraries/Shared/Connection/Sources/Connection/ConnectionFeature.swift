@@ -44,6 +44,7 @@ public struct ConnectionFeature: Sendable {
         @SharedReader(.userTier) public var userTier: Int?
 
         @Shared(.connectionState) var connectionState
+        @Shared(.serverConnectionIntent) var serverConnectionIntent
         var shouldRegisterServerChangeOnConnection: Bool // TODO: ProTUN: post connection events that some other component can hook into to do this, similarly to Telemetry
         var tunnel: ExtensionFeature.State
 
@@ -217,6 +218,9 @@ public struct ConnectionFeature: Sendable {
                 }.cancellable(id: CancelID.preparation, cancelInFlight: true)
 
             case let .finishedPreparing(.success(resolvedIntent)):
+                state.$serverConnectionIntent.withLock {
+                    $0 = resolvedIntent
+                }
                 return .send(.tunnel(.connect(resolvedIntent)))
 
             case let .finishedPreparing(.failure(error)):
@@ -487,9 +491,25 @@ extension ConnectionState: CustomDebugStringConvertible {
         case let .connecting(intent):
             ".connecting(\(intent))"
         case let .connected(tunnelConfig, connectionData):
-            ".connected (\(tunnelConfig), \(connectionData))"
+            ".connected(\(tunnelConfig), \(connectionData))"
         case let .killSwitchActive(spec, tunnelConfig):
             ".killSwitchActive(\(spec), \(tunnelConfig))"
+        }
+    }
+    public var basicDescription: String {
+        switch self {
+        case .resolving:
+            ".resolving"
+        case .disconnected:
+            ".disconnected"
+        case .disconnecting:
+            ".disconnecting"
+        case .connecting:
+            ".connecting"
+        case .connected:
+            ".connected"
+        case .killSwitchActive:
+            ".killSwitchActive"
         }
     }
 }

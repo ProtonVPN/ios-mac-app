@@ -143,6 +143,7 @@ public extension IPCConnectionDataPayload {
         case let .connected(peer):
             self.reason = IPCConnectionTransport(peer.transport).rawValue
             self.peerID = peer.peerID
+            self.port = peer.port
             self.serverExitV4 = peer.serverExitV4 ?? ""
             self.serverExitV6 = peer.serverExitV6 ?? ""
             self.userISP = peer.userISP ?? ""
@@ -189,6 +190,7 @@ public extension IPCConnectionDataPayload {
         return CurrentPeer(
             peerID: peerID,
             transport: transport,
+            port: port,
             serverExitV4: serverExitV4.isEmpty ? nil : serverExitV4,
             serverExitV6: serverExitV6.isEmpty ? nil : serverExitV6,
             userISP: userISP.isEmpty ? nil : userISP,

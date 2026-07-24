@@ -21,22 +21,31 @@ import Dispatch
 import Ergonomics
 import Network
 
-struct NetworkPath: Equatable {
+public struct NetworkPath: Equatable, Sendable {
     static let tunnelInterfacePrefixes = ["utun", "tun", "ipsec", "tun", "tap", "wg"]
 
-    private(set) var status: NWPath.Status
+    public private(set) var status: NWPath.Status
     private(set) var interfaceName: String?
-    private(set) var interfaceType: NWInterface.InterfaceType?
+    public private(set) var interfaceType: NWInterface.InterfaceType?
     private(set) var gateways: [String]
     private(set) var supportsIPv4: Bool
     private(set) var supportsIPv6: Bool
 
-    var isUsable: Bool {
+    public var isUsable: Bool {
         status == .satisfied || status == .requiresConnection
+    }
+
+    public init(status: NWPath.Status, interfaceName: String? = nil, interfaceType: NWInterface.InterfaceType? = nil, gateways: [String], supportsIPv4: Bool, supportsIPv6: Bool) {
+        self.status = status
+        self.interfaceName = interfaceName
+        self.interfaceType = interfaceType
+        self.gateways = gateways
+        self.supportsIPv4 = supportsIPv4
+        self.supportsIPv6 = supportsIPv6
     }
 }
 
-extension NetworkPath {
+public extension NetworkPath {
     init(_ path: NWPath) {
         self.status = path.status
 
@@ -58,16 +67,14 @@ extension NetworkPath {
     }
 }
 
-struct NetworkPathMonitor {
-    var subscribe: @Sendable () -> AsyncStream<NetworkPath>
-    var start: @Sendable () -> Void
-    var stop: @Sendable () -> Void
+public struct NetworkPathMonitor: Sendable {
+    public var subscribe: @Sendable () -> AsyncStream<NetworkPath>
+    public var start: @Sendable () -> Void
+    public var stop: @Sendable () -> Void
 }
 
-extension NetworkPathMonitor: Sendable {}
-
 extension NetworkPathMonitor: DependencyKey {
-    static let liveValue: NetworkPathMonitor = {
+    public static let liveValue: NetworkPathMonitor = {
         let queue = DispatchQueue(label: "ch.proton.nwpath.monitor")
         let networkMonitor = NWPathMonitor(prohibitedInterfaceTypes: [.other])
 
@@ -109,7 +116,7 @@ extension NetworkPathMonitor: DependencyKey {
         }
     }()
 
-    static let testValue: NetworkPathMonitor = {
+    public static let testValue: NetworkPathMonitor = {
         let (stream, continuation) = AsyncStream<NetworkPath>.makeStream()
 
         return .init {
@@ -129,7 +136,7 @@ extension NetworkPathMonitor: DependencyKey {
     }()
 }
 
-extension DependencyValues {
+public extension DependencyValues {
     var pathMonitor: NetworkPathMonitor {
         get { self[NetworkPathMonitor.self] }
         set { self[NetworkPathMonitor.self] = newValue }
@@ -137,7 +144,7 @@ extension DependencyValues {
 }
 
 extension NetworkPath: CustomStringConvertible {
-    var description: String {
+    public var description: String {
         let status = switch status {
         case .satisfied: "satisfied"
         case .unsatisfied: "unsatisfied"

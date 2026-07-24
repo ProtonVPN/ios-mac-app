@@ -23,6 +23,7 @@ public enum LocalAgent {}
 public struct CurrentPeer: Codable, Sendable, Equatable {
     public let peerID: String
     public let transport: WireGuardTransport
+    public let port: UInt16
     public let serverExitV4: String?
     public let serverExitV6: String?
     public let userISP: String?
@@ -31,6 +32,7 @@ public struct CurrentPeer: Codable, Sendable, Equatable {
     public init(
         peerID: String,
         transport: WireGuardTransport,
+        port: UInt16,
         serverExitV4: String?,
         serverExitV6: String?,
         userISP: String?,
@@ -38,6 +40,7 @@ public struct CurrentPeer: Codable, Sendable, Equatable {
     ) {
         self.peerID = peerID
         self.transport = transport
+        self.port = port
         self.serverExitV4 = serverExitV4
         self.serverExitV6 = serverExitV6
         self.userISP = userISP

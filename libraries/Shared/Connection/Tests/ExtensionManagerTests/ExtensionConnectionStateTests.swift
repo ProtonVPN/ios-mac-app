@@ -39,7 +39,7 @@
                 .connectingToLocalAgent(peerID: nil, waitReason: .softJailed, jail: .unset),
                 .connectingToLocalAgent(peerID: "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0-Pw==", waitReason: .hardJailed, jail: .badUserBehavior),
                 .connectingToLocalAgent(peerID: nil, waitReason: .hardJailed, jail: .other),
-                .connected(.init(peerID: "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0-Pw==", transport: .tls, serverExitV4: "192.168.0.1", serverExitV6: "2001:db8::1", userISP: "Proton ISP", userIP: "127.0.0.1")),
+                .connected(.init(peerID: "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0-Pw==", transport: .tls, port: 443, serverExitV4: "192.168.0.1", serverExitV6: "2001:db8::1", userISP: "Proton ISP", userIP: "127.0.0.1")),
             ]
             for state in states {
                 XCTAssertEqual(roundTrip(state), state)
