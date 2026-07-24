@@ -136,7 +136,14 @@ extension ManagerConfigurator {
                 @Dependency(\.connectionConfiguration) var configurationProvider
                 let wireguardConfig = configurationProvider.configuration().wireguardConfig
                 let peers = try intent.server.peerInfo(using: wireguardConfig)
-                return ConnectionUpdate(location: .init(spec: intent.spec, peers: peers))
+                let connectionProtocol = intent.connectionProtocol
+                if case .vpnProtocol(.ike) = connectionProtocol {
+                    log.assertionFailure("Unexpected protocol passed to WireGuardConfigurator (IKE)")
+                }
+                return ConnectionUpdate(
+                    location: .init(spec: intent.spec, peers: peers),
+                    connectionProtocol: connectionProtocol
+                )
             },
             configure: { manager, operation in
                 manager.onDemandRules = [NEOnDemandRuleConnect()]
@@ -452,6 +459,15 @@ private extension ServerConnectionIntent {
             nil
         case let .wireGuard(settings):
             settings.transport.map { VPNCoreTypes.WireGuardTransport.from($0) }
+        }
+    }
+
+    var connectionProtocol: ConnectionProtocol {
+        switch protocolConfiguration {
+        case .ike:
+            .vpnProtocol(.ike)
+        case let .wireGuard(settings):
+            settings.transport.map { .vpnProtocol(.wireGuard($0)) } ?? .smartProtocol
         }
     }
 }
