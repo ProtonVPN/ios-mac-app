@@ -79,6 +79,11 @@ final class TunnelDataStore<Role, Backing: RegionBacking & ~Copyable>: Sendable 
             region.backing.ioSurface
         }
 
+        /// Identifies the surface this store reads or writes, so both sides can compare mappings.
+        var surfaceID: IOSurfaceID {
+            region.backing.id
+        }
+
         /// Build a store over the extension's IOSurface. Called from the connect flow when the surface arrives over
         /// XPC; a reconnection builds a fresh store and observers re-subscribe.
         static func attached(to surface: IOSurfaceRef) -> TunnelDataStore {

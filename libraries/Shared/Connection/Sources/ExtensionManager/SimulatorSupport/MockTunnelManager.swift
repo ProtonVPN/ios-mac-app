@@ -115,7 +115,7 @@
                 return .connected(tunnelConfig, connectionData)
             case .invalid: return .invalid
             case .disconnected: return .disconnected(nil)
-            case .connecting: return .connecting(tunnelConfig)
+            case .connecting: return .connecting(tunnelConfig, tunnelActive: false)
             case .reasserting: return .reasserting(tunnelConfig)
             case .disconnecting: return .disconnecting(tunnelConfig)
             @unknown default: return .disconnected(nil)

@@ -125,14 +125,19 @@ public class IkeDeprecatedAlert: SystemAlert {
     public var title: String? = Localizable.ikeDeprecationAlertTitle
     public var message: String? = {
         @SharedReader(.plutoniumFeature) var feature: PlutoniumFeatureToggle
-        let base = Localizable.ikeDeprecationAlertMessage
-            .replacingOccurrences(of: Localizable.ikeDeprecationAlertMessageLinkText, with: "")
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+        @SharedReader(.killSwitchMode) var killSwitchMode: KillSwitchMode
+        var paragraphs = [
+            Localizable.ikeDeprecationAlertMessage
+                .replacingOccurrences(of: Localizable.ikeDeprecationAlertMessageLinkText, with: "")
+                .trimmingCharacters(in: .whitespacesAndNewlines),
+        ]
         if case .enabled = feature {
-            return base + "\n\n" + Localizable.disablePlutoniumMessage
-        } else {
-            return base
+            paragraphs.append(Localizable.disablePlutoniumMessage)
         }
+        if killSwitchMode.isAdvanced {
+            paragraphs.append(Localizable.ikeDeprecationAlertKillSwitchDowngradeMessage)
+        }
+        return paragraphs.joined(separator: "\n\n")
     }()
 
     public let confirmTitle: String = Localizable.ikeDeprecationAlertEnableSmartButtonTitle

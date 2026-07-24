@@ -413,7 +413,9 @@ final class HeaderViewModel {
         if case .killSwitchActive = connectionState {
             return Localizable.killSwitchAdvancedBannerTitle.styled(.warning, font: .themeFont(.heading4, bold: true), alignment: .left)
         }
-        if !isConnected {
+        // A ProTUN peer handover keeps the previous connection's interface up, so a server change never shows the user
+        // as exposed. The label names the server the tunnel is moving to.
+        if !connectionState.tunnelActive {
             return Localizable.youAreNotProtected.styled(.danger, font: .themeFont(.heading4, bold: true), alignment: .left)
         }
 

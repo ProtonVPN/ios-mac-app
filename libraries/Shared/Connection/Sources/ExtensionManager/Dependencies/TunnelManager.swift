@@ -29,15 +29,16 @@ import IPCDefinitions
 import IPCErgonomics
 import NetworkExtension
 import os
+import SharedErgonomics
 import Sharing
 import VPNAppCore
 import VPNCoreCommon
 import VPNCoreTypes
 
-/// macOS-only XPC bridge that (re)attaches the extension's `IOSurface` to the raw channels.
+/// macOS-only XPC bridge that keeps the extension's `IOSurface` attached to the raw channels.
 struct TunnelDataXPC: Sendable {
-    var attach: @Sendable () -> Void = {}
-    var reattach: @Sendable () -> Void = {}
+    var resume: @Sendable () -> Void = {}
+    var cancel: @Sendable () -> Void = {}
 }
 
 extension TunnelDataXPC: DependencyKey {
@@ -46,7 +47,7 @@ extension TunnelDataXPC: DependencyKey {
             // Mirrors the `NEMachServiceName` entry in the System Extension's Info.plist.
             let serviceName = "\(DomainConstants.appIdentifierPrefix)group.ch.protonvpn.mac.WireGuard-Extension"
             let client = TunnelDataXPCClient(machServiceName: serviceName)
-            return TunnelDataXPC(attach: { client.attachRegion() }, reattach: { client.reattachRegion() })
+            return TunnelDataXPC(resume: { client.resume() }, cancel: { client.cancel() })
         #else
             return TunnelDataXPC()
         #endif
@@ -91,13 +92,11 @@ public enum TunnelState: Equatable, Sendable {
     case unknown // Initial state — not yet read from the system
     case invalid // VPN configuration not yet approved by the user
     case disconnected(TunnelConnectionError?)
-    case connecting(TunnelConfiguration)
-    case connectingToLocalAgent(TunnelConfiguration)
+    case connecting(TunnelConfiguration, tunnelActive: Bool) // `tunnelActive` indicates whether the interface is up
+    case connectingToLocalAgent(TunnelConfiguration, tunnelActive: Bool)
     case connected(TunnelConfiguration, DynamicConnectionData)
     case reasserting(TunnelConfiguration) // Briefly re-establishing an existing connection
     case disconnecting(TunnelConfiguration)
-    /// Zero-peer kill-switch: the tunnel interface is alive but every peer has been stripped, so traffic is
-    /// captured and blackholed rather than routed anywhere.
     case killSwitchActive(TunnelConfiguration)
 }
 
@@ -193,10 +192,6 @@ final class PacketTunnelManager: TunnelManager {
 
     @Dependency(\.vpnManagerRepository) private var managerRepository
 
-    #if os(macOS)
-        @Dependency(\.tunnelDataXPC) private var tunnelDataXPC
-    #endif
-
     /// The NEPacketTunnelProvider connection state, as reported by the ProTUN framework. Sent over a shared memory
     /// channel directly from the extension.
     /// - Note: If the selected protocol is IKEv2, this will read as `.disconnected`.
@@ -229,7 +224,11 @@ final class PacketTunnelManager: TunnelManager {
     }
 
     func startTunnel(with intent: ServerConnectionIntent) async throws {
-        log.debug("Starting tunnel with configuration: \(intent.protocolConfiguration)", category: .connection)
+        log.debug(
+            "Starting tunnel with configuration: \(intent.protocolConfiguration)",
+            category: .connection,
+            metadata: ["tunnelFeatures": "\(intent.tunnelFeatures)"]
+        )
 
         // Stash the connection spec on the tunnel manager. During connection, the extension can check in with us faster
         // than the Network Extension framework is able to persist the protocol configuration by the time that it pings.
@@ -241,10 +240,18 @@ final class PacketTunnelManager: TunnelManager {
         log.debug("Starting tunnel with bundle identifier: \(optional: manager.providerBundleIdentifier)", category: .connection)
         try Task.checkCancellation()
 
-        #if os(macOS)
-            // Eagerly (re)attach the tunnel-data IOSurface for this connection, replacing any previous mapping.
-            tunnelDataXPC.reattach()
-        #endif
+        // NetworkExtension silently drops a start issued while the previous connection is still tearing down (the
+        // daemon logs "Skip a start command ... session in state disconnecting"). Wait the teardown out so the start
+        // lands. Bounded with a timeout, after which the start is attempted anyway.
+        if manager.session.status == .disconnecting {
+            log.debug("Waiting out tunnel teardown before starting", category: .connection)
+            let statusChanges = NotificationCenter.default.notifications(named: .NEVPNStatusDidChange)
+            try? await withTimeout(of: .seconds(10)) {
+                for await _ in statusChanges where manager.session.status != .disconnecting {
+                    break
+                }
+            }
+        }
 
         try manager.session.startTunnel()
     }
@@ -448,7 +455,9 @@ final class PacketTunnelManager: TunnelManager {
             case .disconnected:
                 return .success(.disconnected(nil))
             case .connecting, .reasserting:
-                return .success(.connecting(config))
+                // IKE has no in-place peer change, so only NetworkExtension's own reassertion keeps an interface
+                // holding traffic while the connection is re-established.
+                return .success(.connecting(config, tunnelActive: session.status == .reasserting))
             case .disconnecting:
                 return .success(.disconnecting(config))
             case .connected:
@@ -519,6 +528,11 @@ final class PacketTunnelManager: TunnelManager {
         let intendedPeers = (try? configuration.peerIDs) ?? []
         let requestsZeroPeerKillSwitch = killSwitch && intendedPeers.isEmpty
 
+        // NetworkExtension reports a connected interface during peer handover, and only transitions from its own
+        // connecting status when the interface is genuinely new. So while the extension works through its connecting
+        // states, this says whether traffic is already held.
+        let tunnelActive = [.connected, .reasserting].contains(session.status)
+
         // Disabling on-demand is persisted before stopTunnel(), so it is a reliable teardown intent even when
         // NetworkExtension briefly echoes `.connecting` while saving preferences. The zero-peer kill switch
         // configuration is the exception: it always runs with on-demand disabled, so that the user can stop
@@ -528,14 +542,13 @@ final class PacketTunnelManager: TunnelManager {
         }
 
         // Defers mostly to the NE framework for the disconnected cases, and mostly to ProTUN for the connected cases.
-        // Notable special cases include the NEVPNStatus.connected case, where we attach the ExtensionState backing
-        // store on macOS, and the ExtensionState.connected case, where we check the tunnel sits on a peer the saved
+        // A notable special case is ExtensionState.connected, where we check the tunnel sits on a peer the saved
         // configuration intends before reporting a connected state.
         switch (session.status, extensionState) {
         case (_, nil):
             return .success(.unknown)
         case (.invalid, _):
-            return .success(.connecting(config))
+            return .success(.connecting(config, tunnelActive: false))
         case (_, .disconnected):
             // With no peer, Rust reports `.disconnected` even when the tunnel interface is alive and blackholing
             // traffic. The saved configuration describes the zero-peer intent, the matching request id confirms
@@ -551,11 +564,12 @@ final class PacketTunnelManager: TunnelManager {
                 }
                 return .success(.disconnected(nil))
             }
-            // The reverse transition: the saved configuration intends peers again (connecting out of the
-            // zero-peer blackhole), but the extension has not applied the update yet and still reports the
-            // peerless state. The tunnel interface is up, so hold the last state instead of reporting a
-            // disconnection that is not happening.
-            if sessionIsUp, !quiesced, !intendedPeers.isEmpty {
+            // The saved configuration wants peers (a fresh connection starting, or connecting out from zero-peer), but
+            // Rust still reports the peerless state. This covers the window before the extension applies the update and
+            // the window right after, where the request id already matches but the connection attempt has not begun.
+            // The tunnel interface is up, so hold the last state instead of reporting a disconnection that is not
+            // happening.
+            if sessionIsUp, !intendedPeers.isEmpty {
                 return .success(.reasserting(config))
             }
             return .success(.disconnected(nil))
@@ -598,23 +612,16 @@ final class PacketTunnelManager: TunnelManager {
                     ))
                 )
             ))
-        case (.connecting, _):
-            #if os(macOS)
-                // macOS: ask the extension for the IOSurface region as soon as we begin connecting, so we can get
-                // updates to the `ExtensionState`.
-                tunnelDataXPC.attach()
-            #endif
-            fallthrough
-        case (_, .connecting):
+        case (.connecting, _), (_, .connecting):
             guard quiesced, let peerID = extensionState?.peerID, intendedPeers.contains(peerID) else {
                 return .success(.reasserting(config))
             }
-            return .success(.connecting(config))
+            return .success(.connecting(config, tunnelActive: tunnelActive))
         case (_, .connectingToLocalAgent):
             guard quiesced, let peerID = extensionState?.peerID, intendedPeers.contains(peerID) else {
                 return .success(.reasserting(config))
             }
-            return .success(.connectingToLocalAgent(config))
+            return .success(.connectingToLocalAgent(config, tunnelActive: tunnelActive))
         }
     }
 

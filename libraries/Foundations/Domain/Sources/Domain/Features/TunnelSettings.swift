@@ -27,12 +27,10 @@ public typealias TunnelSettings = WireGuardSettings
 public struct WireGuardSettings: Equatable, Sendable, Codable {
     public let backend: WGBackend
     public let transport: WireGuardTransport?
-    public let features: LocalTunnelFeatures
 
-    public init(backend: WGBackend, transport: WireGuardTransport?, features: LocalTunnelFeatures) {
+    public init(backend: WGBackend, transport: WireGuardTransport?) {
         self.backend = backend
         self.transport = transport
-        self.features = features
     }
 }
 

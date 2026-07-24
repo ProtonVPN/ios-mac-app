@@ -321,6 +321,11 @@ final class ConnectionSettingsViewModel {
                 )
                 @Shared(.plutoniumFeature) var plutonium
                 $plutonium.withLock { $0.disable() }
+                // Advanced kill switch cannot apply over IKEv2. Fall back to Standard, as announced in the alert body.
+                @Shared(.killSwitchMode) var killSwitchMode
+                if killSwitchMode.isAdvanced {
+                    $killSwitchMode.withLock { $0 = .standard }
+                }
             }, learnMoreHandler: {
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User opened Learn more; keeping the current (Smart) protocol selection.")
                 // Don't select IKEv2: revert the picker to its previous selection

@@ -52,7 +52,9 @@ final class ProtectionStatusFeatureTests: XCTestCase {
             ProtectionStatusFeature()
         }
         @Shared(.connectionState) var connectionState: ConnectionState
-        $connectionState.withLock { $0 = .connecting(.unresolved(.init(spec: .defaultFastest, acceptableProtocols: .all))) }
+        $connectionState.withLock {
+            $0 = .connecting(.unresolved(.init(spec: .defaultFastest, acceptableProtocols: .all)), tunnelActive: false)
+        }
 
         await store.send(.userTappedButton)
         await store.receive(\.delegate.userClickedCancel)

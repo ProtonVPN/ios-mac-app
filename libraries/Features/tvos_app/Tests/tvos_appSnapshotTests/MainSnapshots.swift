@@ -84,7 +84,8 @@ final class MainFeatureSnapshotTests {
                         spec: .init(location: .country(code: "CA", order: .fastest), features: []),
                         acceptableProtocols: .all
                     )
-                )
+                ),
+                tunnelActive: false
             )
         )
         let connectingView = MainView(store: connectingStore)

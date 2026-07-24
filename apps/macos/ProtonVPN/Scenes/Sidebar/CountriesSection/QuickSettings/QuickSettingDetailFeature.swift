@@ -42,17 +42,22 @@ struct QuickSettingDetailFeature {
         var netShieldStats: NetShieldModel
         var connectionInfo: ConnectionInfo
         var visibleQuickSettingTypes: [QuickSettingType]
-        /// Per-account NetShield feature settings (from `VpnCredentials.netshield`). Drives
-        /// per-level visibility for B2B accounts — levels gated off here are hidden entirely, not
-        /// greyed out. Ignored for B2C accounts (where the server may report all-false even for
-        /// users who have paid access via the regular tier).
+        /// Per-account NetShield feature settings (from `VpnCredentials.netshield`). Drives per-level visibility for
+        /// B2B accounts — levels gated off here are hidden entirely, not greyed out. Ignored for B2C accounts (where
+        /// the server may report all-false even for users who have paid access via the regular tier).
         var netshieldSettings: NetShieldFeatureSettings?
-        /// Whether the user's account is a Business plan. Per-account `netshieldSettings` are
-        /// authoritative only when this is `true`; for B2C accounts (free or paid) we keep the full
-        /// level list visible and rely on tier-based upsell affordances for free users.
+        /// Whether the user's account is a Business plan. Per-account `netshieldSettings` are authoritative only when
+        /// this is `true`; for B2C accounts (free or paid) we keep the full level list visible and rely on tier-based
+        /// upsell affordances for free users.
         var isBusinessAccount: Bool
 
         @SharedReader(.userTier) var userTier: VpnTier?
+        @SharedReader(.connectionProtocol) var connectionProtocol: ConnectionProtocol
+
+        /// Advanced kill switch needs ProTUN's zero-peer blocking, which IKEv2 cannot provide.
+        var advancedKillSwitchUnavailable: Bool {
+            connectionProtocol == .vpnProtocol(.ike)
+        }
 
         var selectedTitle: String {
             type.title
@@ -119,6 +124,7 @@ struct QuickSettingDetailFeature {
                         title: Localizable.killSwitchOptionAdvanced,
                         icon: Theme.Asset.Icons.switchOnLock.swiftUIImage,
                         isActive: killSwitchMode == .advanced,
+                        isEnabled: !advancedKillSwitchUnavailable,
                         requiresUpdate: false
                     ),
                 ]
@@ -183,11 +189,11 @@ struct QuickSettingDetailFeature {
                 icon: Theme.Asset.Icons.infoCircleFilled.swiftUIImage,
                 iconColor: Color(.icon, .weak)
             )
-            switch killSwitchMode {
+            let messages: [KillSwitchStatusMessage] = switch killSwitchMode {
             case .off:
-                return [ipExposed]
+                [ipExposed]
             case .standard where isConnected:
-                return [
+                [
                     KillSwitchStatusMessage(
                         text: Localizable.killSwitchStatusStandard,
                         icon: Theme.Asset.Icons.checkmarkCircleFilled.swiftUIImage,
@@ -196,9 +202,9 @@ struct QuickSettingDetailFeature {
                     lanHint,
                 ]
             case .standard:
-                return [ipExposed, lanHint]
+                [ipExposed, lanHint]
             case .advanced where isConnected:
-                return [
+                [
                     KillSwitchStatusMessage(
                         text: Localizable.killSwitchStatusAdvancedBlocksAll,
                         icon: Theme.Asset.Icons.checkmarkCircleFilled.swiftUIImage,
@@ -212,7 +218,7 @@ struct QuickSettingDetailFeature {
                     lanHint,
                 ]
             case .advanced:
-                return [
+                [
                     KillSwitchStatusMessage(
                         text: Localizable.killSwitchStatusAdvancedDisablesInternet,
                         icon: Theme.Asset.Icons.circleSlash.swiftUIImage,
@@ -226,6 +232,14 @@ struct QuickSettingDetailFeature {
                     lanHint,
                 ]
             }
+            guard advancedKillSwitchUnavailable else { return messages }
+            return messages + [
+                KillSwitchStatusMessage(
+                    text: Localizable.killSwitchAdvancedUnavailableProtocolDescription,
+                    icon: Theme.Asset.Icons.infoCircleFilled.swiftUIImage,
+                    iconColor: Color(.icon, .weak)
+                ),
+            ]
         }
 
         var portForwardingState: PortForwardingVCState {
@@ -297,6 +311,8 @@ struct QuickSettingDetailFeature {
             case .learnMoreTapped:
                 linkOpener.open(state.type.learnMoreLink)
                 return .none
+            case .optionTapped(.killSwitchAdvanced) where state.advancedKillSwitchUnavailable:
+                return .none
             case let .optionTapped(option):
                 return .send(.delegate(.option(state.type, option)))
             case .upgradeTapped:
@@ -313,6 +329,7 @@ struct QuickSettingOptionRow: Identifiable {
     let title: String
     let icon: Image
     let isActive: Bool
+    var isEnabled = true
     let requiresUpdate: Bool
 }
 

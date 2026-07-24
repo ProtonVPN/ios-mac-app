@@ -90,6 +90,13 @@ public struct ExtensionFeature: Sendable {
             case .startObserving:
                 // Subscribe to state changes
                 let initial: Effect<ExtensionFeature.Action> = .run { send in
+                    #if os(macOS)
+                        // The extension provides one tunnel-data IOSurface per process and announces it. Follow those
+                        // announcements for as long as we observe the tunnel, so `ExtensionState` can flow whether the
+                        // extension is already running (the app launching into an existing tunnel) or starts later.
+                        @Dependency(\.tunnelDataXPC) var tunnelDataXPC
+                        tunnelDataXPC.resume()
+                    #endif
                     let status = try await tunnelManager.status
                     return await send(.tunnelStatusChanged(status))
                 }
@@ -122,7 +129,13 @@ public struct ExtensionFeature: Sendable {
             case .stopObserving:
                 return .merge(
                     .cancel(id: CancelID.observation),
-                    .cancel(id: CancelID.connectionTimeout)
+                    .cancel(id: CancelID.connectionTimeout),
+                    .run { _ in
+                        #if os(macOS)
+                            @Dependency(\.tunnelDataXPC) var tunnelDataXPC
+                            tunnelDataXPC.cancel()
+                        #endif
+                    }
                 )
 
             case let .requestConfigChange(update):
@@ -348,7 +361,7 @@ extension TunnelState {
         case .disconnected, .disconnecting:
             // We can't simply update the config, since the tunnel will have to be started
             false
-        case let .connecting(config), let .connectingToLocalAgent(config):
+        case let .connecting(config, _), let .connectingToLocalAgent(config, _):
             // An empty peer list is either zero-peer kill switch or a stale on-demand echo, neither of which can
             // accept a location update through this transitional state.
             config.tunnelProtocol == .wireGuard && !config.peerIDs.isEmpty

@@ -77,7 +77,7 @@ extension ManagerConfigurator {
 
         let server = connectionIntent.server
 
-        guard case let .wireGuard(wgSettings) = connectionIntent.protocolConfiguration else {
+        guard case .wireGuard = connectionIntent.protocolConfiguration else {
             throw WireguardConfiguratorError.incorrectProtocolConfiguration
         }
 
@@ -90,9 +90,9 @@ extension ManagerConfigurator {
 
         @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
 
-        #if os(iOS)
-            protocolConfiguration.includeAllNetworks = wgSettings.features.killSwitch
-            protocolConfiguration.excludeLocalNetworks = wgSettings.features.excludeLocalNetworks
+        #if !os(tvOS)
+            protocolConfiguration.includeAllNetworks = connectionIntent.tunnelFeatures.killSwitch
+            protocolConfiguration.excludeLocalNetworks = connectionIntent.tunnelFeatures.excludeLocalNetworks
         #endif
 
         try encodeProTUNConfiguration(connectionIntent: connectionIntent, on: protocolConfiguration)
@@ -207,10 +207,10 @@ extension ManagerConfigurator {
                     try protocolConfig.apply(update: update)
                     manager.vpnProtocolConfiguration = protocolConfig
                     #if !os(tvOS)
-                        // Stripping the peers turns this manager into the kill switch configuration.
-                        // Name it accordingly and disable on-demand, so that the user can recognize it
-                        // and stop it from the system settings if they need their connectivity back.
-                        // An update that restores peers turns it back into a regular connection.
+                        // Stripping the peers turns this manager into the kill switch configuration. Name it
+                        // accordingly and disable on-demand, so that the user can recognize it and stop it from the
+                        // system settings if they need their connectivity back. An update that restores peers turns it
+                        // back into a regular connection.
                         if isZeroPeerBlocking(protocolConfig) {
                             manager.localizedDescription = killSwitchConfigurationTitle
                             manager.isOnDemandEnabled = false
@@ -221,6 +221,17 @@ extension ManagerConfigurator {
                     #endif
 
                 case .disconnection:
+                    #if !os(tvOS)
+                        // Turn off Kill Switch as the user asks for it, rather than when the tunnel finishes going
+                        // down. NetworkExtension keeps its drop-all rule in place for as long as the saved
+                        // configuration asks for every network, and its teardown runs for seconds after the extension
+                        // has already stopped, which reads as the connection being broken after the user disconnected.
+                        // Standard blocks unexpected drops, and an unexpected drop never comes through here.
+                        if let configuration = manager.protocolConfiguration {
+                            configuration.includeAllNetworks = false
+                            manager.protocolConfiguration = configuration
+                        }
+                    #endif
                     manager.isOnDemandEnabled = false
                     manager.isEnabled = true
 
@@ -303,6 +314,11 @@ extension ManagerConfigurator {
         #if os(macOS)
             config.authenticationMethod = .certificate
             config.serverCertificateIssuerCommonName = "ProtonVPN Root CA"
+
+            // Advanced kill switch needs ProTUN's zero-peer blocking and the settings UI prevents combining it with
+            // IKEv2, so a protected mode here means Standard behavior.
+            config.includeAllNetworks = intent.tunnelFeatures.killSwitch
+            config.excludeLocalNetworks = intent.tunnelFeatures.excludeLocalNetworks
         #endif
 
         config.disableMOBIKE = false

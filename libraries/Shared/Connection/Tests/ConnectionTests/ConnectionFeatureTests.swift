@@ -187,10 +187,70 @@
                 #expect(store.state.connectionState.is(\.connected))
             }
 
-            /// A disconnect request while zero-peer blocking is active (e.g. sent by the widget) must
-            /// not tear down the blackhole as long as the mode stays Advanced. Only leaving Advanced
-            /// releases it, via this same action sent after the mode change. The store is exhaustive,
-            /// so the test fails if the disconnect starts mutating state or emitting effects.
+            /// Connecting to the exact place we are already connected must not touch the tunnel: an update whose peers
+            /// match the current ones makes the extension reset a healthy WG session and quietly lose its local agent
+            /// connection, publishing no state change to recover the UI. The store is exhaustive, so a
+            /// `.tunnel(.connect)` sneaking back in fails the test as an unreceived action.
+            @Test
+            @MainActor
+            func connectingToTheCurrentServerSettlesWithoutTouchingTheTunnel() async {
+                let date = Date()
+                let intent = ServerConnectionIntent.mock(
+                    protocolConfiguration: .wireGuard(.init(backend: .proTUN, transport: .udp))
+                )
+                let configuration = TunnelConfiguration(
+                    connectionSpec: intent.spec,
+                    tunnelProtocol: .wireGuard,
+                    peerIDs: [intent.server.endpoint.id],
+                    killSwitch: false
+                )
+                let connectionData = DynamicConnectionData(
+                    currentPeerId: intent.server.endpoint.id,
+                    connectionDate: date,
+                    protocolConnectionData: .proTUN(.init(transport: .udp))
+                )
+                @Shared(.connectionState) var connectionState
+                $connectionState.withLock {
+                    $0 = .connecting(
+                        .unresolved(.init(spec: intent.spec, acceptableProtocols: .all)),
+                        tunnelActive: true
+                    )
+                }
+
+                let store = TestStore(initialState: ConnectionFeature.State(
+                    shouldRegisterServerChangeOnConnection: false,
+                    tunnel: .connected(configuration, connectionData)
+                )) {
+                    ConnectionFeature()
+                } withDependencies: {
+                    $0.serverIdentifier = .init(fullServerInfo: { _ in intent.server })
+                }
+
+                await store.send(.finishedPreparing(.success(intent))) {
+                    $0.$serverConnectionIntent.withLock { $0 = intent }
+                    $0.$connectionState.withLock {
+                        $0 = .connected(
+                            configuration,
+                            .init(
+                                currentPeer: intent.server,
+                                connectionDate: date,
+                                protocolConnectionData: .proTUN(.init(transport: .udp))
+                            )
+                        )
+                    }
+                }
+                // The settle publishes through the shared state's usual fanout, and nothing else: a `.tunnel(.connect)`
+                // sneaking back in would fail the exhaustive store here.
+                await store.receive(\.connectionStateUpdated)
+                await store.receive(\.delegate.stateChanged)
+                await store.receive(\.reloadWidgetTimelines)
+                await store.finish()
+            }
+
+            /// A disconnect request while zero-peer blocking is active (e.g. sent by the widget) must not tear down the
+            /// blackhole as long as the mode stays Advanced. Only leaving Advanced releases it, via this same action
+            /// sent after the mode change. The store is exhaustive, so the test fails if the disconnect starts mutating
+            /// state or emitting effects.
             @Test
             @MainActor
             func disconnectWhileBlockingUnderAdvancedKeepsTheBlackhole() async {

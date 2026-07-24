@@ -56,6 +56,30 @@
             XCTAssertEqual(ikeConfig.username, expectedUsername)
         }
 
+        #if !os(tvOS)
+            @MainActor
+            func testDisconnectionClearsTheKillSwitchFlag() async throws {
+                let configurator = ManagerConfigurator.wireGuardConfigurator
+                let session = VPNSessionMock(status: .connected, connectedDate: nil)
+                var manager: TunnelProviderManager = MockTunnelProviderManager(
+                    session: session,
+                    isOnDemandEnabled: true,
+                    isEnabled: true
+                )
+
+                let connected = NETunnelProviderProtocol()
+                connected.includeAllNetworks = true
+                manager.protocolConfiguration = connected
+
+                try await configurator.configure(&manager, for: .disconnection)
+
+                let configuration = try XCTUnwrap(manager.protocolConfiguration)
+                XCTAssertFalse(configuration.includeAllNetworks)
+                XCTAssertFalse(manager.isOnDemandEnabled)
+                XCTAssertTrue(manager.isEnabled)
+            }
+        #endif
+
         @MainActor
         func testIkeConfigurationThrowsWhenCredentialsCannotBeRead() async {
             let configurator = ManagerConfigurator.wireGuardConfigurator

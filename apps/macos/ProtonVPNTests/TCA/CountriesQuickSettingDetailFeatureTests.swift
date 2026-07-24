@@ -21,10 +21,17 @@ import Domain
 import Foundation
 import NetShield
 @testable import ProtonVPN
+import Strings
 import Testing
 
 @MainActor
 struct CountriesQuickSettingDetailFeatureTests {
+    @Shared(.connectionProtocol) var connectionProtocol
+
+    init() {
+        $connectionProtocol.withLock { $0 = .smartProtocol }
+    }
+
     @Test("option tap delegates selected option and type")
     func optionTappedDelegatesSelection() async {
         let store = TestStore(initialState: makeState(type: .netShieldDisplay)) {
@@ -95,6 +102,43 @@ struct CountriesQuickSettingDetailFeatureTests {
 
         await store.send(.learnMoreTapped)
         #expect(openedURL == URL(string: VPNLink.portForwardingSupport.urlString))
+    }
+
+    @Test("Advanced kill switch option is disabled while IKEv2 is selected")
+    func advancedOptionDisabledOverIke() {
+        $connectionProtocol.withLock { $0 = .vpnProtocol(.ike) }
+        let state = makeState(type: .killSwitchDisplay)
+
+        #expect(state.advancedKillSwitchUnavailable)
+        let advanced = state.selectedOptions.first { $0.id == .killSwitchAdvanced }
+        #expect(advanced?.isEnabled == false)
+        #expect(state.killSwitchStatusMessages.contains {
+            $0.text == Localizable.killSwitchAdvancedUnavailableProtocolDescription
+        })
+    }
+
+    @Test("Advanced kill switch option stays enabled for other protocols")
+    func advancedOptionEnabledForOtherProtocols() {
+        $connectionProtocol.withLock { $0 = .smartProtocol }
+        let state = makeState(type: .killSwitchDisplay)
+
+        #expect(!state.advancedKillSwitchUnavailable)
+        let advanced = state.selectedOptions.first { $0.id == .killSwitchAdvanced }
+        #expect(advanced?.isEnabled == true)
+        #expect(!state.killSwitchStatusMessages.contains {
+            $0.text == Localizable.killSwitchAdvancedUnavailableProtocolDescription
+        })
+    }
+
+    @Test("Tapping the disabled Advanced option is ignored")
+    func advancedTapIgnoredOverIke() async {
+        $connectionProtocol.withLock { $0 = .vpnProtocol(.ike) }
+        let store = TestStore(initialState: makeState(type: .killSwitchDisplay)) {
+            QuickSettingDetailFeature()
+        }
+
+        // The exhaustive store fails this test if the tap produces a delegate action.
+        await store.send(.optionTapped(.killSwitchAdvanced))
     }
 
     private func makeState(type: QuickSettingType) -> QuickSettingDetailFeature.State {

@@ -76,9 +76,9 @@ actor TelemetryConnectionStatusReporter {
             timer.updateConnectionStarted(connectionData.connectionDate)
             timer.markFinishedConnecting()
             eventType = try connectionEventType(oldValue, newValue)
-        case .connecting(.resolved):
+        case .connecting(.resolved, _):
             break
-        case .connecting(.unresolved):
+        case .connecting(.unresolved, _):
             timer.markConnectionStopped()
             timer.markStartedConnecting()
             eventType = try connectionEventType(oldValue, newValue)
@@ -183,9 +183,13 @@ actor TelemetryConnectionStatusReporter {
              (.connecting, .disconnected): // failed connecting
             try .vpnConnection(timeToConnection: timer.timeConnecting)
 
-        case let (.connected(_, data), .disconnected), // disconnection event
-             let (.connected(_, data), .connecting): // reconnection event
+        case let (.connected(_, data), .disconnected): // disconnection event
             .vpnDisconnection(sessionLength: timer.connectionDuration(connectedDate: data.connectionDate))
+
+        case let (.connected(_, data), .connecting(_, tunnelActive)): // reconnection event
+            // A server change over a still-active tunnel is not a disconnection: ProTUN moves the
+            // peer in place and the interface never goes down.
+            tunnelActive ? nil : .vpnDisconnection(sessionLength: timer.connectionDuration(connectedDate: data.connectionDate))
 
         default:
             nil
@@ -213,13 +217,13 @@ actor TelemetryConnectionStatusReporter {
             }
         case .connected:
             return .success
-        case .connecting(.unresolved):
+        case .connecting(.unresolved, _):
             if oldValue == .disconnected {
                 return .success
             }
             return .failure
-        case .connecting(.resolved):
-            if case .connecting(.unresolved) = oldValue {
+        case .connecting(.resolved, _):
+            if case .connecting(.unresolved, _) = oldValue {
                 return .success
             }
             return .failure

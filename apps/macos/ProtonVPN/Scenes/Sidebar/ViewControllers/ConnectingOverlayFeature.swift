@@ -38,7 +38,6 @@ struct ConnectingOverlayFeature {
         var connectionState: ConnectionState = .disconnected
         var frozenState: ConnectionState?
         var timedOut = false
-        var intentionallyDisconnected = false
         var killSwitchEnabled = false
         var selectedProtocol: ConnectionProtocol = .smartProtocol
 
@@ -54,19 +53,6 @@ struct ConnectingOverlayFeature {
 
         var isIkeWithKsEnabled: Bool {
             selectedProtocol == .vpnProtocol(.ike) && killSwitchEnabled
-        }
-
-        var isReconnecting: Bool {
-            switch displayState {
-            case .resolving:
-                // TODO: ProTUN: find a way to fix the code below
-                // actual != nil
-                false
-            case .connecting:
-                !intentionallyDisconnected
-            default:
-                false
-            }
         }
 
         var hidePhase: Bool {
@@ -131,7 +117,6 @@ struct ConnectingOverlayFeature {
 extension ConnectingOverlayFeature.State {
     enum HeadlinePhase: Equatable {
         case connected
-        case unprotected
         case initializing
     }
 
@@ -139,7 +124,6 @@ extension ConnectingOverlayFeature.State {
         case timedOut(isIkeWithKsEnabled: Bool)
         case connected(serverName: ServerName)
         case connecting(serverName: ServerName)
-        case reconnecting
         case preparing
     }
 
@@ -148,9 +132,9 @@ extension ConnectingOverlayFeature.State {
         let name: String
     }
 
+    /// ProTUN moves to new peers over IPC, so the user is not left exposed while reconnecting.
     var headlinePhase: HeadlinePhase {
-        if displayState.is(\.connected) { return .connected }
-        return isReconnecting ? .unprotected : .initializing
+        displayState.is(\.connected) ? .connected : .initializing
     }
 
     var bodyPhase: BodyPhase {
@@ -164,38 +148,33 @@ extension ConnectingOverlayFeature.State {
         case .connected:
             return serverName.map { .connected(serverName: $0) } ?? .preparing
         case .disconnected:
-            return isReconnecting ? .reconnecting : .preparing
+            return .preparing
         case .killSwitchActive:
             return .preparing // TODO: ProTUN: is this correct?
         case .resolving, .connecting, .disconnecting:
-            if isReconnecting { return .reconnecting }
             return serverName.map { .connecting(serverName: $0) } ?? .preparing
         }
     }
 
     mutating func beginConnecting(
         selectedProtocol: ConnectionProtocol,
-        killSwitchEnabled: Bool,
-        intentionallyDisconnected: Bool
+        killSwitchEnabled: Bool
     ) {
         connectionState = .resolving
         frozenState = nil
         timedOut = false
         self.selectedProtocol = selectedProtocol
         self.killSwitchEnabled = killSwitchEnabled
-        self.intentionallyDisconnected = intentionallyDisconnected
     }
 
     mutating func sync(
         connectionState: ConnectionState,
         selectedProtocol: ConnectionProtocol,
-        killSwitchEnabled: Bool,
-        intentionallyDisconnected: Bool
+        killSwitchEnabled: Bool
     ) {
         self.connectionState = connectionState
         self.selectedProtocol = selectedProtocol
         self.killSwitchEnabled = killSwitchEnabled
-        self.intentionallyDisconnected = intentionallyDisconnected
         if connectionState.is(\.connected) {
             frozenState = connectionState
         } else {

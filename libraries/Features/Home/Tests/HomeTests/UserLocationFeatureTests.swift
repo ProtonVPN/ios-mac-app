@@ -160,7 +160,9 @@ struct UserLocationFeatureTests {
 
         await store.receive(\.delegate.userLocationChanged)
 
-        $connectionState.withLock { $0 = .connecting(.unresolved(.init(spec: .defaultFastest, acceptableProtocols: .all))) }
+        $connectionState.withLock {
+            $0 = .connecting(.unresolved(.init(spec: .defaultFastest, acceptableProtocols: .all)), tunnelActive: false)
+        }
         store.dependencies.date = .constant(nextRefreshDate)
         // Ensure the interval timer has registered its sleep with the clock before advancing (see
         // `awaitTimerSubscription`); otherwise the advance can race ahead of the timer's subscription.
@@ -214,7 +216,9 @@ struct UserLocationFeatureTests {
 
         await store.receive(\.delegate.userLocationChanged)
 
-        $connectionState.withLock { $0 = .connecting(.unresolved(.init(spec: .defaultFastest, acceptableProtocols: .all))) }
+        $connectionState.withLock {
+            $0 = .connecting(.unresolved(.init(spec: .defaultFastest, acceptableProtocols: .all)), tunnelActive: false)
+        }
         store.dependencies.date = .constant(halfwayThroughRefreshInterval)
         await clock.advance(by: .minutes(30))
 

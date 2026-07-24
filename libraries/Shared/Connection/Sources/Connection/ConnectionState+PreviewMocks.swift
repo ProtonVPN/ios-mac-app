@@ -47,7 +47,10 @@
 
         /// A `.connecting(.resolved(...))` state matching `spec`.
         static func previewConnecting(for spec: ConnectionSpec) -> ConnectionState {
-            .connecting(.resolved(.init(spec: spec, tunnelProtocol: .wireGuard, resolvedServer: .preview(for: spec.location))))
+            .connecting(
+                .resolved(.init(spec: spec, tunnelProtocol: .wireGuard, resolvedServer: .preview(for: spec.location))),
+                tunnelActive: false
+            )
         }
     }
 
@@ -62,15 +65,15 @@
                 server: server,
                 protocolConfiguration: .wireGuard(WireGuardSettings(
                     backend: .go,
-                    transport: .udp,
-                    features: LocalTunnelFeatures(killSwitch: false, excludeLocalNetworks: false)
+                    transport: .udp
                 )),
                 features: AgentTunnelFeatures(
                     netshield: .off,
                     vpnAccelerator: true,
                     natType: .default,
                     portForwarding: nil
-                )
+                ),
+                tunnelFeatures: LocalTunnelFeatures(killSwitch: false, excludeLocalNetworks: false)
             )
         }
     }

@@ -706,6 +706,8 @@ public enum Localizable {
   public static var ikeDeprecationAlertContinueButtonTitle: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_continue_button_title", fallback: "Continue with IKEv2") }
   /// Button title for 'Enable Smart protocol'
   public static var ikeDeprecationAlertEnableSmartButtonTitle: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_enable_smart_button_title", fallback: "Enable Smart protocol") }
+  /// Message added to the IKEv2 deprecation alert when Advanced kill switch is enabled: continuing with IKEv2 changes the setting to Standard
+  public static var ikeDeprecationAlertKillSwitchDowngradeMessage: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_kill_switch_downgrade_message", fallback: "Your Kill Switch setting will be changed to Standard.") }
   /// Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios
   public static var ikeDeprecationAlertMessage: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_message", fallback: "This protocol will be removed soon. Consider switching to Smart protocol. Learn more") }
   /// Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios
@@ -756,6 +758,8 @@ public enum Localizable {
   public static var killSwitchConfirmEnable: String { return Localizable.tr("Localizable", "_kill_switch_confirm_enable", fallback: "Enable") }
   /// iOS: Kill switch confirmation - primary button to switch to advanced
   public static var killSwitchConfirmSwitch: String { return Localizable.tr("Localizable", "_kill_switch_confirm_switch", fallback: "Switch") }
+  /// macOS: Kill switch popover - explanation shown with the disabled "Advanced" option while the selected protocol (IKEv2) cannot support it
+  public static var killSwitchAdvancedUnavailableProtocolDescription: String { return Localizable.tr("Localizable", "_kill_switch_advanced_unavailable_protocol_description", fallback: "This setting is not available for the protocol you have selected. Please choose another protocol to use Advanced Kill Switch.") }
   /// iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button
   public static var killSwitchDisable: String { return Localizable.tr("Localizable", "_kill_switch_disable", fallback: "Disable kill switch") }
   /// iOS: Confirmation banner shown after disabling kill switch from the login screen
@@ -1432,8 +1436,6 @@ public enum Localizable {
   public static var reconnectOnSettingsChangeBody: String { return Localizable.tr("Localizable", "_reconnect_on_settings_change_body", fallback: "Your connection needs to be restarted to apply this change.") }
   /// We are reconnecting to the fastest server available.
   public static var reconnectTitle: String { return Localizable.tr("Localizable", "_reconnect_title", fallback: "We are reconnecting to the fastest server available.") }
-  /// Setting up a new VPN connection to protect your IP
-  public static var reconnecting: String { return Localizable.tr("Localizable", "_reconnecting", fallback: "Setting up a new VPN connection to protect your IP") }
   /// Reconnecting to %@
   public static func reconnectingTo(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_reconnecting_to", String(describing: p1), fallback: "Reconnecting to %@")

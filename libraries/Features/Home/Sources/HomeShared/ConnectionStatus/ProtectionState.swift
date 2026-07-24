@@ -43,8 +43,8 @@ extension ConnectionState {
                 return .protectedSecureCore
             }
             return .protected
-        case .connecting:
-            return .protecting(country: country, ip: ip)
+        case let .connecting(_, tunnelActive):
+            return tunnelActive ? .protected : .protecting(country: country, ip: ip)
         case .resolving:
             return .resolving
         case .disconnecting:

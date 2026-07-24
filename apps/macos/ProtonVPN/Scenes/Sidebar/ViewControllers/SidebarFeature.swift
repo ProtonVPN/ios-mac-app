@@ -506,8 +506,6 @@ private extension SidebarFeature {
                 return resolveAndPerformConnect(&state, pending: pending)
             case let .connectionCommandReceived(.disconnect(trigger, completion)):
                 state.overlayState = .hidden
-                @Shared(.intentionallyDisconnected) var intentionallyDisconnected
-                $intentionallyDisconnected.withLock { $0 = true }
                 let alreadyDisconnected = state.connectionState.is(\.disconnected)
                 return .merge(
                     .cancel(id: CancelID.connectionConnectCommandEffect),
@@ -851,24 +849,20 @@ private extension SidebarFeature {
     }
 
     func beginConnectingOverlay(_ state: inout State) {
-        @SharedReader(.intentionallyDisconnected) var intentionallyDisconnected
         var overlay = state.connectingOverlay ?? ConnectingOverlayFeature.State()
         overlay.beginConnecting(
             selectedProtocol: sharedConnectionProtocol,
-            killSwitchEnabled: killSwitchMode.isProtected,
-            intentionallyDisconnected: intentionallyDisconnected
+            killSwitchEnabled: killSwitchMode.isProtected
         )
         state.overlayState = .connecting(overlay)
     }
 
     func transitionToAutoDismiss(_ state: inout State, connectionState: ConnectionState) {
-        @SharedReader(.intentionallyDisconnected) var intentionallyDisconnected
         var overlay = state.connectingOverlay ?? ConnectingOverlayFeature.State()
         overlay.sync(
             connectionState: connectionState,
             selectedProtocol: sharedConnectionProtocol,
-            killSwitchEnabled: killSwitchMode.isProtected,
-            intentionallyDisconnected: intentionallyDisconnected
+            killSwitchEnabled: killSwitchMode.isProtected
         )
         state.overlayState = .autoDismiss(overlay)
     }
@@ -877,12 +871,10 @@ private extension SidebarFeature {
         guard var overlay = state.connectingOverlay else {
             return
         }
-        @SharedReader(.intentionallyDisconnected) var intentionallyDisconnected
         overlay.sync(
             connectionState: connectionState,
             selectedProtocol: sharedConnectionProtocol,
-            killSwitchEnabled: killSwitchMode.isProtected,
-            intentionallyDisconnected: intentionallyDisconnected
+            killSwitchEnabled: killSwitchMode.isProtected
         )
         state.connectingOverlay = overlay
     }

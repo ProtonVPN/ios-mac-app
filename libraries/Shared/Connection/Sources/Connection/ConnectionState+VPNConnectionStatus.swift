@@ -30,13 +30,13 @@ public extension ConnectionState {
             tunnelConfig.connectionSpec
         case let .disconnecting(_, connectionSpec):
             connectionSpec
-        case let .connecting(.resolved(intent)):
+        case let .connecting(.resolved(intent), _):
             intent.spec
         case .resolving:
             nil
         case .disconnected:
             nil
-        case let .connecting(.unresolved(intent)):
+        case let .connecting(.unresolved(intent), _):
             intent.spec
         case let .killSwitchActive(spec, _):
             spec
@@ -50,11 +50,11 @@ public extension ConnectionState {
             connectionData.currentPeer
         case .disconnecting:
             nil // If spec specifies `exact` server, we could return that
-        case let .connecting(.resolved(intent)):
+        case let .connecting(.resolved(intent), _):
             intent.resolvedServer
         case .resolving:
             nil // TODO: ProTUN: check if this makes sense
-        case .disconnected, .connecting(.unresolved), .killSwitchActive:
+        case .disconnected, .connecting(.unresolved, _), .killSwitchActive:
             nil
         }
     }
@@ -76,6 +76,19 @@ public extension ConnectionState {
 
     var isConnected: Bool {
         self.is(\.connected)
+    }
+
+    /// Whether a tunnel interface currently holds the user's traffic. A ProTUN peer handover keeps the previous
+    /// connection's interface up, so this stays true while `connecting` replaces the peer.
+    var tunnelActive: Bool {
+        switch self {
+        case .connected, .killSwitchActive:
+            true
+        case let .connecting(_, tunnelActive):
+            tunnelActive
+        case .resolving, .disconnected, .disconnecting:
+            false
+        }
     }
 
     var isConnectedOrConnecting: Bool {

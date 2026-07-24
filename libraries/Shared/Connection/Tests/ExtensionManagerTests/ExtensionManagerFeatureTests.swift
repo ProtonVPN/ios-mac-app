@@ -37,7 +37,7 @@
             let server = Server.ca // Canadian server mock
             let features = AgentTunnelFeatures.mock
             let tunnelSettings = TunnelSettings.mock
-            let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, protocolConfiguration: .wireGuard(tunnelSettings), features: features)
+            let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, protocolConfiguration: .wireGuard(tunnelSettings), features: features, tunnelFeatures: .mock)
             let now = Date.now
 
             mockManager.connection = VPNSessionMock(
@@ -68,7 +68,15 @@
             // Now that the start request has completed, simulate the extension reporting the connecting state.
             mockManager.connection.status = .connecting
             await store.receive(\.tunnelStatusChanged.connecting) {
-                $0 = .connecting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["peer-id"], killSwitch: false))
+                $0 = .connecting(
+                    TunnelConfiguration(
+                        connectionSpec: .defaultFastest,
+                        tunnelProtocol: .wireGuard,
+                        peerIDs: ["peer-id"],
+                        killSwitch: false
+                    ),
+                    tunnelActive: false
+                )
             }
 
             await store.send(.stopObserving)
@@ -124,7 +132,8 @@
                 spec: .defaultFastest,
                 server: .ca,
                 protocolConfiguration: .wireGuard(TunnelSettings.mock),
-                features: .mock
+                features: .mock,
+                tunnelFeatures: .mock
             )
             let connectedOverIKE = TunnelState.connected(
                 TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .ike, peerIDs: ["server-id"], killSwitch: false),
@@ -168,7 +177,8 @@
                 spec: .defaultFastest,
                 server: .ca,
                 protocolConfiguration: .wireGuard(TunnelSettings.mock),
-                features: .mock
+                features: .mock,
+                tunnelFeatures: .mock
             )
             let connectedOverWireGuard = TunnelState.connected(
                 TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: ["server-id"], killSwitch: false),
@@ -212,7 +222,7 @@
             let server = Server.mock
             let features = AgentTunnelFeatures.mock
             let tunnelSettings = TunnelSettings.mock
-            let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, protocolConfiguration: .wireGuard(tunnelSettings), features: features)
+            let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, protocolConfiguration: .wireGuard(tunnelSettings), features: features, tunnelFeatures: .mock)
 
             await store.send(.startObserving)
             await store.receive(\.tunnelStatusChanged.invalid) {
@@ -230,5 +240,43 @@
 
             await store.send(.stopObserving)
         }
+
+        #if os(macOS)
+            /// The tunnel-data client follows the extension's announcements for exactly as long as the feature observes
+            /// the tunnel, so `ExtensionState` can flow whether the extension is already running (the app launching
+            /// into an existing tunnel) or starts later.
+            @Test
+            @MainActor
+            func observationFollowsTunnelDataAnnouncements() async {
+                let mockClock = TestClock()
+                let mockManager = MockTunnelManager()
+                mockManager.connection = VPNSessionMock(
+                    status: .disconnected,
+                    connectedDate: nil,
+                    lastDisconnectError: nil
+                )
+                let following = OSAllocatedUnfairLock(initialState: false)
+
+                let store = TestStore(initialState: TunnelState.disconnected(nil)) {
+                    ExtensionFeature()
+                } withDependencies: {
+                    $0.continuousClock = mockClock
+                    $0.tunnelManager = mockManager
+                    $0.tunnelDataXPC = TunnelDataXPC(
+                        resume: { following.withLock { $0 = true } },
+                        cancel: { following.withLock { $0 = false } }
+                    )
+                }
+
+                await store.send(.startObserving)
+                await store.receive(\.tunnelStatusChanged)
+                let followingWhileObserving = following.withLock { $0 }
+                #expect(followingWhileObserving)
+
+                await store.send(.stopObserving).finish()
+                let followingAfterStopping = following.withLock { $0 }
+                #expect(followingAfterStopping == false)
+            }
+        #endif
     }
 #endif

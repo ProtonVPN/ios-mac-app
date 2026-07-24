@@ -84,6 +84,9 @@ struct QuickSettingDetailView: View {
     }
 
     private func optionStyle(for option: QuickSettingOptionRow) -> QuickSettingsDropdownOption.Style {
+        if !option.isEnabled {
+            return .disabled
+        }
         if option.requiresUpdate {
             return .blocked
         }

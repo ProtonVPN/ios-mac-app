@@ -176,48 +176,6 @@ struct ConnectingOverlayFeatureTests {
         #expect(state.isIkeWithKsEnabled == expected)
     }
 
-    // MARK: - State.isReconnecting
-
-    @Test("isReconnecting: resolving with a prior server is a reconnect")
-    func isReconnectingResolvingWithServer() {
-        withKnownIssue("ProTUN: .resolving does not carry the previous server yet, see the isReconnecting TODO") {
-            let state = ConnectingOverlayFeature.State(connectionState: .resolving)
-            #expect(state.isReconnecting)
-        }
-    }
-
-    @Test("isReconnecting: resolving from cold start (no prior server) is not a reconnect")
-    func isReconnectingResolvingNoServer() {
-        let state = ConnectingOverlayFeature.State(connectionState: .resolving)
-        #expect(!state.isReconnecting)
-    }
-
-    @Test("isReconnecting: connecting after a user disconnect is not a reconnect")
-    func isReconnectingConnectingIntentional() {
-        let state = ConnectingOverlayFeature.State(
-            connectionState: .testConnecting(.defaultFastest),
-            intentionallyDisconnected: true
-        )
-        #expect(!state.isReconnecting)
-    }
-
-    @Test("isReconnecting: connecting without a prior intentional disconnect is a reconnect")
-    func isReconnectingConnectingPassive() {
-        let state = ConnectingOverlayFeature.State(
-            connectionState: .testConnecting(.defaultFastest),
-            intentionallyDisconnected: false
-        )
-        #expect(state.isReconnecting)
-    }
-
-    @Test("isReconnecting: terminal states never count as reconnecting")
-    func isReconnectingTerminalStates() {
-        let connected = ConnectingOverlayFeature.State(connectionState: .fakeConnected)
-        let disconnected = ConnectingOverlayFeature.State(connectionState: .disconnected)
-        #expect(!connected.isReconnecting)
-        #expect(!disconnected.isReconnecting)
-    }
-
     // MARK: - State.headlinePhase
 
     @Test("headlinePhase: connected → .connected")
@@ -226,21 +184,16 @@ struct ConnectingOverlayFeatureTests {
         #expect(state.headlinePhase == .connected)
     }
 
-    @Test("headlinePhase: resolving with prior server (reconnecting) → .unprotected")
-    func headlinePhaseUnprotected() {
-        withKnownIssue("ProTUN: .resolving does not carry the previous server yet, see the isReconnecting TODO") {
-            let state = ConnectingOverlayFeature.State(connectionState: .resolving)
-            #expect(state.headlinePhase == .unprotected)
-        }
-    }
-
-    @Test("headlinePhase: fresh user-initiated connect → .initializing")
-    func headlinePhaseInitializing() {
-        let state = ConnectingOverlayFeature.State(
-            connectionState: .testConnecting(.defaultFastest),
-            intentionallyDisconnected: true
+    @Test("headlinePhase: every connection attempt reads the same, tunnel active or not")
+    func headlinePhaseConnecting() {
+        let handover = ConnectingOverlayFeature.State(
+            connectionState: .testConnecting(to: .mock(), tunnelActive: true)
         )
-        #expect(state.headlinePhase == .initializing)
+        let fresh = ConnectingOverlayFeature.State(
+            connectionState: .testConnecting(.defaultFastest)
+        )
+        #expect(handover.headlinePhase == .initializing)
+        #expect(fresh.headlinePhase == .initializing)
     }
 
     // MARK: - State.bodyPhase
@@ -277,19 +230,21 @@ struct ConnectingOverlayFeatureTests {
         #expect(state.bodyPhase == .preparing)
     }
 
-    @Test("bodyPhase: resolving with prior server → .reconnecting")
-    func bodyPhaseReconnecting() {
-        withKnownIssue("ProTUN: .resolving does not carry the previous server yet, see the isReconnecting TODO") {
-            let state = ConnectingOverlayFeature.State(connectionState: .resolving)
-            #expect(state.bodyPhase == .reconnecting)
-        }
+    @Test("bodyPhase: a server change reads as connecting to the target, like any other connect")
+    func bodyPhaseServerChange() {
+        let server = Server.mock()
+        let state = ConnectingOverlayFeature.State(
+            connectionState: .testConnecting(to: server, tunnelActive: true)
+        )
+        #expect(state.bodyPhase == .connecting(
+            serverName: .init(country: server.logical.country, name: server.logical.name)
+        ))
     }
 
-    @Test("bodyPhase: connecting after a user disconnect (no server) → .preparing")
-    func bodyPhaseConnectingIntentional() {
+    @Test("bodyPhase: connecting with no server resolved yet → .preparing")
+    func bodyPhaseConnectingUnresolved() {
         let state = ConnectingOverlayFeature.State(
-            connectionState: .testConnecting(.defaultFastest),
-            intentionallyDisconnected: true
+            connectionState: .testConnecting(.defaultFastest)
         )
         #expect(state.bodyPhase == .preparing)
     }
@@ -339,21 +294,18 @@ struct ConnectingOverlayFeatureTests {
             connectionState: .fakeConnected,
             frozenState: .fakeConnected,
             timedOut: true,
-            intentionallyDisconnected: false,
             killSwitchEnabled: false,
             selectedProtocol: .smartProtocol
         )
 
         state.beginConnecting(
             selectedProtocol: .vpnProtocol(.ike),
-            killSwitchEnabled: true,
-            intentionallyDisconnected: true
+            killSwitchEnabled: true
         )
 
         #expect(state.connectionState == .resolving)
         #expect(state.frozenState == nil)
         #expect(state.timedOut == false)
-        #expect(state.intentionallyDisconnected == true)
         #expect(state.killSwitchEnabled == true)
         #expect(state.selectedProtocol == .vpnProtocol(.ike))
     }
@@ -367,8 +319,7 @@ struct ConnectingOverlayFeatureTests {
         state.sync(
             connectionState: .fakeConnected,
             selectedProtocol: .vpnProtocol(.wireGuard(.udp)),
-            killSwitchEnabled: false,
-            intentionallyDisconnected: false
+            killSwitchEnabled: false
         )
 
         #expect(state.connectionState == .fakeConnected)
@@ -382,8 +333,7 @@ struct ConnectingOverlayFeatureTests {
         state.sync(
             connectionState: .testConnecting(.defaultFastest),
             selectedProtocol: .smartProtocol,
-            killSwitchEnabled: false,
-            intentionallyDisconnected: false
+            killSwitchEnabled: false
         )
 
         #expect(state.frozenState == nil)
@@ -402,7 +352,8 @@ struct ConnectingOverlayFeatureTests {
                 vpnAccelerator: true,
                 natType: .moderateNAT,
                 portForwarding: nil
-            )
+            ),
+            tunnelFeatures: .init(killSwitchMode: .off, excludeLocalNetworks: false)
         )
     }
 
@@ -429,6 +380,18 @@ private extension ConnectionState {
     }()
 
     static func testConnecting(_ spec: ConnectionSpec) -> ConnectionState {
-        .connecting(.unresolved(ConnectionPreparationIntent(spec: spec, acceptableProtocols: .ikev2)))
+        .connecting(
+            .unresolved(ConnectionPreparationIntent(spec: spec, acceptableProtocols: .ikev2)),
+            tunnelActive: false
+        )
+    }
+
+    /// A resolved connection attempt. `tunnelActive` marks a server change, where the previous connection's interface
+    /// keeps holding traffic while the peer moves.
+    static func testConnecting(to server: Server, tunnelActive: Bool = false) -> ConnectionState {
+        .connecting(
+            .resolved(.init(spec: .defaultFastest, tunnelProtocol: .ike, resolvedServer: server)),
+            tunnelActive: tunnelActive
+        )
     }
 }

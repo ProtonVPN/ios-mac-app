@@ -28,7 +28,7 @@
     import Foundation
     import IPCDefinitions
     import IPCErgonomics
-    import class NetworkExtension.NETunnelProviderProtocol
+    import NetworkExtension
     import os
     import SharedErgonomics
     import Testing
@@ -127,6 +127,44 @@
                 $0.vpnManagerRepository.managers = { [.wireGuard: providerManager] }
                 $0.extensionIPC.currentExtensionState = {
                     .init(state: .disconnected(reason: .unset), requestId: UUID())
+                }
+            } operation: {
+                try await PacketTunnelManager().status
+            }
+
+            #expect(status == .reasserting(TunnelConfiguration(
+                connectionSpec: .defaultFastest,
+                tunnelProtocol: .wireGuard,
+                peerIDs: [],
+                killSwitch: false
+            )))
+        }
+
+        /// A fresh start stamps the channel with the new request id while Rust still reports disconnected, before the
+        /// connection attempt begins. Even though the request has quiesced, resolve must hold rather than report a
+        /// disconnection while the session is coming up with peers intended.
+        @Test
+        func holdsLastStateWhileConnectionAttemptHasNotBegun() async throws {
+            let providerManager = MockTunnelProviderManager(withBundleIdentifier: "wireguard", state: .ready)
+            providerManager.session = VPNSessionMock(status: .connecting)
+
+            let requestId = UUID()
+            let config = NETunnelProviderProtocol()
+            try config.setProviderConfiguration(
+                value: JSONEncoder().encode(ConnectionSpec.defaultFastest),
+                forKey: "connectionSpec"
+            )
+            config.setProviderConfiguration(value: requestId.uuidString, forKey: "requestID")
+            try ProTUNConfigurationCoder.encode(
+                configuration: .init(preferredTransport: .udp, peers: [.mock(id: "peer-id")], dnsServers: []),
+                to: config
+            )
+            providerManager.protocolConfiguration = config
+
+            let status = try await withDependencies {
+                $0.vpnManagerRepository.managers = { [.wireGuard: providerManager] }
+                $0.extensionIPC.currentExtensionState = {
+                    .init(state: .disconnected(reason: .unset), requestId: requestId)
                 }
             } operation: {
                 try await PacketTunnelManager().status
@@ -258,12 +296,17 @@
                 return try await withTimeout(of: .seconds(1)) { await iterator.next() }
             }
 
-            #expect(next == .some(.success(.connecting(.init(
-                connectionSpec: .defaultFastest,
-                tunnelProtocol: .wireGuard,
-                peerIDs: ["new-peer"],
-                killSwitch: false
-            )))))
+            // The manager's connection stays established through the in-place change, so the resolver reports the
+            // interface as still holding traffic.
+            #expect(next == .some(.success(.connecting(
+                .init(
+                    connectionSpec: .defaultFastest,
+                    tunnelProtocol: .wireGuard,
+                    peerIDs: ["new-peer"],
+                    killSwitch: false
+                ),
+                tunnelActive: true
+            ))))
         }
 
         @Test
@@ -523,7 +566,7 @@
         @Test
         func startingTunnelToServerConfiguresExistingManager() async throws {
             let tunnelSettings = TunnelSettings.mock
-            let intent = ServerConnectionIntent(spec: .defaultFastest, server: .mock, protocolConfiguration: .wireGuard(tunnelSettings), features: .mock)
+            let intent = ServerConnectionIntent(spec: .defaultFastest, server: .mock, protocolConfiguration: .wireGuard(tunnelSettings), features: .mock, tunnelFeatures: .mock)
             let clock = TestClock()
 
             let providerManager = MockTunnelProviderManager(withBundleIdentifier: "123", state: .ready)
@@ -593,6 +636,48 @@
 
             #expect(ikeManager.session.status == .disconnecting)
             #expect(wgManager.session.status == .disconnecting)
+        }
+
+        /// NetworkExtension drops a start issued while the previous connection is still tearing down ("Skip a start
+        /// command ... session in state disconnecting"), so `startTunnel` must wait the teardown out and only hand the
+        /// start to the system once the status settles.
+        @Test
+        func startIssuedDuringTeardownWaitsForThePreviousConnectionToFinish() async throws {
+            let session = VPNSessionMock(status: .disconnecting)
+            session.startupDuration = nil
+            session.disconnectionDuration = nil
+            let started = OSAllocatedUnfairLock(initialState: false)
+            session.onConnection = { started.withLock { $0 = true } }
+            let manager = MockTunnelProviderManager(session: session, isOnDemandEnabled: false, isEnabled: true)
+
+            try await withDependencies {
+                $0.continuousClock = ContinuousClock()
+                $0.vpnManagerRepository.prepareManager = { _, _ in manager }
+            } operation: {
+                let start = Task {
+                    try await PacketTunnelManager().startTunnel(with: .mock())
+                }
+
+                // Status posts while the teardown is still in progress must not release the start.
+                for _ in 0 ..< 5 {
+                    NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil)
+                    await Task.yield()
+                }
+                let startedDuringTeardown = started.withLock { $0 }
+                #expect(startedDuringTeardown == false)
+
+                session.status = .disconnected
+                // The first posts can race the wait's subscription, so keep posting until the start goes through.
+                var attempts = 0
+                while !started.withLock({ $0 }), attempts < 10000 {
+                    NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil)
+                    await Task.yield()
+                    attempts += 1
+                }
+                try await start.value
+                let startedAfterTeardown = started.withLock { $0 }
+                #expect(startedAfterTeardown)
+            }
         }
     }
 

@@ -49,7 +49,10 @@ struct HomeScreenTests {
         ),
         (
             ProtectionState.protecting(country: "Poland", ip: "1.2.3.4"),
-            ConnectionState.connecting(.resolved(.init(spec: .specificCountryServer, tunnelProtocol: .ike, resolvedServer: polandServer)))
+            ConnectionState.connecting(
+                .resolved(.init(spec: .specificCountryServer, tunnelProtocol: .ike, resolvedServer: polandServer)),
+                tunnelActive: false
+            )
         ),
         (
             ProtectionState.protected,

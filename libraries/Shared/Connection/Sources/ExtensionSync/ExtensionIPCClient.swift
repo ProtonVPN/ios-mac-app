@@ -79,6 +79,10 @@ public struct ExtensionIPCClient: Sendable {
     /// re-attaches and observers re-subscribe (nothing observes while disconnected). No-op on iOS/tvOS, which use a
     /// fixed file mapping built up front.
     public var attachRegion: @Sendable (IOSurfaceRef) -> Void
+
+    /// Identifies the tunnel-data region currently mapped, or `nil` when nothing is attached (macOS). Compared against
+    /// the id the extension announces, to notice a mapping left behind by a process that no longer exists.
+    public package(set) var currentRegionID: @Sendable () -> IOSurfaceID? = { nil }
 }
 
 #if os(macOS)
@@ -181,9 +185,20 @@ public struct ExtensionIPCClient: Sendable {
                     .compactMap(TunnelCommand.init(rawValue:))
                     .eraseToStream()
             } attachRegion: { surface in
-                let store = TunnelDataStore<ReaderRole, IOSurfaceBackedRegion>.attached(to: surface)
-                current.withLock { $0 = store }
+                // Each XPC fetch decodes a fresh IOSurface instance, so compare kernel surface ids rather than object
+                // identity. Re-attaching the surface we already have must not reset observer read positions.
+                let store = current.withLock { attached -> TunnelDataStore<ReaderRole, IOSurfaceBackedRegion>? in
+                    if let attached, attached.surfaceID == IOSurfaceGetID(surface) {
+                        return nil
+                    }
+                    let store = TunnelDataStore<ReaderRole, IOSurfaceBackedRegion>.attached(to: surface)
+                    attached = store
+                    return store
+                }
+                guard let store else { return }
                 attachContinuation.yield(store)
+            } currentRegionID: {
+                current.withLock { $0?.surfaceID }
             }
         }()
     }
@@ -214,6 +229,10 @@ public struct ExtensionIPCClient: Sendable {
                     .eraseToStream()
             } attachRegion: { _ in
                 assertionFailure("This should be used only on macOS")
+            } currentRegionID: {
+                // The mapping here is a file that lives as long as the app does, so there is no region identity to
+                // compare and nothing that can go stale underneath us.
+                nil
             }
         }()
     }
@@ -251,7 +270,8 @@ public struct ExtensionIPCClient: Sendable {
             observeFeatures: { .finished },
             observeError: { .finished },
             observeCommands: { .finished },
-            attachRegion: { _ in }
+            attachRegion: { _ in },
+            currentRegionID: { nil }
         )
     }
 #endif
