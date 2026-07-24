@@ -157,8 +157,12 @@ extension NETunnelProviderProtocol {
         networkSettingsUpdate: (dnsServers: [String], excludingRoute: String?)?
     )
 
+    typealias NetworkSettingsUpdate = (dnsServers: [String], excludingRoute: String?)
+
     func liveUpdates(for update: ConnectionUpdate) throws -> ConnectionUpdateResult {
-        guard update.hasConfigurationChanges else { return (nil, nil, nil) }
+        let requiresNetworkSettingsUpdate = update.requiresNetworkSettingsRefresh
+
+        guard update.hasConfigurationChanges || requiresNetworkSettingsUpdate else { return (nil, nil, nil) }
 
         let protunConfig = try ProTUNConfigurationCoder.decode(from: self)
 
@@ -170,11 +174,17 @@ extension NETunnelProviderProtocol {
                 .map(PeerInfo.init)
         }
 
-        let networkSettingsUpdate: (dnsServers: [String], excludingRoute: String?)? = update.customDNS.map {
-            (dnsServers: $0, excludingRoute: protunConfig.peers.first?.serverIP)
-        }
+        let networkSettingsUpdate: NetworkSettingsUpdate? = requiresNetworkSettingsUpdate
+            ? (dnsServers: update.customDNS ?? protunConfig.dnsServers, excludingRoute: protunConfig.excludedRoute)
+            : nil
 
         guard update.hasAgentChanges else { return (newPeers, nil, networkSettingsUpdate) }
         return (newPeers, LocalAgentSettings(protunConfig), networkSettingsUpdate)
+    }
+}
+
+extension ProTUNConfiguration {
+    var excludedRoute: String? {
+        peers.first?.serverIP
     }
 }
