@@ -16,6 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+typealias NetworkSettingsUpdate = (dnsServers: [String], excludingRoutes: [String])
+
 struct UncheckedCompletion: @unchecked Sendable {
     typealias Block = ((any Error)?) -> Void
 

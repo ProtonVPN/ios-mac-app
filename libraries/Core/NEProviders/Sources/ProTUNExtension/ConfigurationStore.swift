@@ -98,7 +98,7 @@ actor ConfigurationStore {
         let peersToApply: [PeerInfo]?
         let agentSettingsToApply: LocalAgentSettings?
 
-        let networkSettingsUpdate: (dnsServers: [String], excludingRoute: String?)?
+        let networkSettingsUpdate: NetworkSettingsUpdate?
         do {
             try configuration.apply(update: update)
             (peersToApply, agentSettingsToApply, networkSettingsUpdate) = try configuration.liveUpdates(for: update)
@@ -120,7 +120,7 @@ actor ConfigurationStore {
     private static func performReconfiguration(
         _ peers: [PeerInfo]?,
         _ settings: LocalAgentSettings?,
-        networkSettingsUpdate: (dnsServers: [String], excludingRoute: String?)?,
+        networkSettingsUpdate: NetworkSettingsUpdate?,
         adapter: ProTUNAdapter
     ) async throws(ConfigurationUpdateError) {
         do {
@@ -137,7 +137,7 @@ actor ConfigurationStore {
             if let networkSettingsUpdate {
                 Logger.adapter.info("Refreshing Network settings: \(networkSettingsUpdate.dnsServers)")
                 try await adapter.setNetworkSettings(
-                    excludingRoute: networkSettingsUpdate.excludingRoute,
+                    excludingRoutes: networkSettingsUpdate.excludingRoutes,
                     dnsServers: networkSettingsUpdate.dnsServers
                 )
             }
@@ -154,10 +154,8 @@ extension NETunnelProviderProtocol {
     typealias ConnectionUpdateResult = (
         newPeers: [PeerInfo]?,
         newSettings: LocalAgentSettings?,
-        networkSettingsUpdate: (dnsServers: [String], excludingRoute: String?)?
+        networkSettingsUpdate: NetworkSettingsUpdate?
     )
-
-    typealias NetworkSettingsUpdate = (dnsServers: [String], excludingRoute: String?)
 
     func liveUpdates(for update: ConnectionUpdate) throws -> ConnectionUpdateResult {
         let requiresNetworkSettingsUpdate = update.requiresNetworkSettingsRefresh
@@ -175,7 +173,7 @@ extension NETunnelProviderProtocol {
         }
 
         let networkSettingsUpdate: NetworkSettingsUpdate? = requiresNetworkSettingsUpdate
-            ? (dnsServers: update.customDNS ?? protunConfig.dnsServers, excludingRoute: protunConfig.excludedRoute)
+            ? (dnsServers: update.customDNS ?? protunConfig.dnsServers, excludingRoutes: protunConfig.uniquePeerAddresses)
             : nil
 
         guard update.hasAgentChanges else { return (newPeers, nil, networkSettingsUpdate) }
@@ -184,7 +182,9 @@ extension NETunnelProviderProtocol {
 }
 
 extension ProTUNConfiguration {
-    var excludedRoute: String? {
-        peers.first?.serverIP
+    var uniquePeerAddresses: [String] {
+        peers
+            .map(\.serverIP)
+            .uniqued
     }
 }
