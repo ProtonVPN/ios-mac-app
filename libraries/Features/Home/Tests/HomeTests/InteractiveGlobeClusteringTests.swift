@@ -32,8 +32,8 @@ struct InteractiveGlobeClusteringTests {
     /// cluster fit must respect so sideways-spread members don't fall off the sides.
     private let aspectRatio: Float = 0.46
 
-    private func pin(_ id: String, latitude: Double = 0, longitude: Double = 0) -> CityPin {
-        CityPin(
+    private func pin(_ id: String, latitude: Double = 0, longitude: Double = 0) -> LocationPin {
+        LocationPin(
             id: id,
             displayName: id,
             latitude: latitude,
@@ -51,7 +51,7 @@ struct InteractiveGlobeClusteringTests {
             ProjectedPin(pin: pin("c"), point: CGPoint(x: 300, y: 300)), // far away, stays separate
         ]
 
-        let clusters = clusterPins(projected, within: PinSelectionModel.collisionThreshold)
+        let clusters = clusterPins(projected, within: PinDisplay.collisionThreshold)
 
         // The whole value, not count-plus-predicates: the loose form also passes if the wrong pair
         // merged (a+c together and b alone), and a failure here diffs the exact membership.
@@ -68,7 +68,7 @@ struct InteractiveGlobeClusteringTests {
             ProjectedPin(pin: pin("b"), point: CGPoint(x: 120, y: 100)),
         ]
 
-        let clusters = clusterPins(projected, within: PinSelectionModel.collisionThreshold)
+        let clusters = clusterPins(projected, within: PinDisplay.collisionThreshold)
 
         expectNoDifference(clusters, [
             PinCluster(id: "a|b", center: CGPoint(x: 110, y: 100), members: [pin("a"), pin("b")]),

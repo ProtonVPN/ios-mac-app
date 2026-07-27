@@ -78,6 +78,19 @@ typedef struct {
     float fade;                 // overall alpha (the open/close dissolve times the zoom-out ramp)
 } StarUniforms;
 
+// The full-screen Milky Way sky-glow pass. Unlike the discrete star billboards, this is a single
+// continuous field: a fullscreen triangle whose fragment shader reconstructs each pixel's model-space view
+// ray through `inverseMVP` and paints an FBM-textured Gaussian band around the galactic plane. The
+// triangle's NDC corners live in the vertex shader alone and the far points derive from them through this
+// one matrix, so the two sides cannot drift.
+typedef struct {
+    matrix_float4x4 inverseMVP;   // clip-to-model, for per-pixel view-ray reconstruction
+    vector_float3 cameraPosition; // model-space camera position (facing direction times distance)
+    vector_float3 pole;           // model-space galactic north pole
+    vector_float3 centre;         // model-space direction to the galactic centre (the brightness peak)
+    float fade;                   // overall opacity (the zoom-out ramp times the open/close dissolve)
+} SkyGlowUniforms;
+
 // The single sun-glow billboard.
 typedef struct {
     matrix_float4x4 mvp;

@@ -276,6 +276,123 @@ fragment float4 fragment_pin(PinVaryings in [[stage_in]],
     return premultiply(rgb, alpha);
 }
 
+// MARK: - Sky glow (Milky Way)
+
+// A continuous diffuse band, not billboards: a fullscreen triangle whose fragment shader reconstructs each
+// pixel's model-space view ray and paints an FBM-textured Gaussian around the galactic plane. Because it is
+// evaluated per pixel there are no discrete elements to resolve as discs, which is what discrete sprites
+// can't avoid at these densities. Drawn first of all, so the stars, Moon, and opaque Earth cover it.
+
+// Band half-width as the standard deviation of sin(galactic latitude); ~0.075 is a band about 4.3 degrees
+// to a side, widened past that by the Gaussian's own tails into a defined river rather than a broad wash.
+constant float glowSigma = 0.075;
+// Spatial frequency of the cloud texture: higher is finer filaments.
+constant float glowCloudFrequency = 7.0;
+// Floor on the cloud term, so dark dust lanes dim the band without ever cutting it fully.
+constant float glowLaneFloor = 0.3;
+// Overall strength of the haze before the zoom-out fade. Deliberately low: the band is a backdrop and must
+// not pull attention off the globe, which is the subject.
+constant float glowIntensity = 0.3;
+// Slightly cool white, the tint of unresolved starlight.
+constant float3 glowTint = float3(0.82, 0.87, 1.0);
+// Low-frequency meander of the band's centreline, so it isn't a geometrically perfect great circle: the
+// real Milky Way bulges and dips along its length. Amplitude is in sin(galactic-latitude) units, so ~0.045
+// is about 2.6 degrees; the low frequency keeps the whole ribbon shifting coherently rather than making its
+// edges wavy.
+constant float glowWarpFrequency = 1.8;
+constant float glowWarpAmplitude = 0.045;
+// Lattice offset decorrelating the warp's noise sample from the cloud FBM below, which shares the noise
+// function; without it the centreline would bend wherever the clouds brighten.
+constant float3 glowWarpDecorrelation = float3(37.0);
+// Band tail below which the fragment is discarded outright, skipping the noise work over most of the sky.
+constant float glowTailCutoff = 0.003;
+// Contrast stretch applied to the raw FBM (gain, then bias, then clamp): hard enough that filaments and
+// dark rifts read as structure without the peaks blowing hot.
+constant float glowCloudGain = 1.8;
+constant float glowCloudBias = -0.42;
+// Brightness at the anticentre relative to the galactic-centre end, and the window (in dot-with-centre
+// units) the lift smoothsteps over.
+constant float glowAnticentreLevel = 0.55;
+constant float2 glowCentreWindow = float2(-0.4, 1.0);
+
+// Hash of an integer lattice point to [0, 1). Cheap and stable, enough for a soft cloud field.
+static float glowHash(float3 p) {
+    p = fract(p * 0.3183099 + 0.1);
+    p *= 17.0;
+    return fract(p.x * p.y * p.z * (p.x + p.y + p.z));
+}
+
+// Trilinearly interpolated value noise with a quintic fade, roughly [0, 1], features about one unit across.
+static float glowValueNoise(float3 x) {
+    float3 i = floor(x);
+    float3 f = fract(x);
+    f = f * f * f * (f * (f * 6.0 - 15.0) + 10.0);
+    float n000 = glowHash(i + float3(0, 0, 0));
+    float n100 = glowHash(i + float3(1, 0, 0));
+    float n010 = glowHash(i + float3(0, 1, 0));
+    float n110 = glowHash(i + float3(1, 1, 0));
+    float n001 = glowHash(i + float3(0, 0, 1));
+    float n101 = glowHash(i + float3(1, 0, 1));
+    float n011 = glowHash(i + float3(0, 1, 1));
+    float n111 = glowHash(i + float3(1, 1, 1));
+    float x00 = mix(n000, n100, f.x);
+    float x10 = mix(n010, n110, f.x);
+    float x01 = mix(n001, n101, f.x);
+    float x11 = mix(n011, n111, f.x);
+    return mix(mix(x00, x10, f.y), mix(x01, x11, f.y), f.z);
+}
+
+// Four octaves of value noise: the cloud/dust structure along the band.
+static float glowFBM(float3 x) {
+    float sum = 0.0;
+    float amplitude = 0.5;
+    for (int octave = 0; octave < 4; octave++) {
+        sum += amplitude * glowValueNoise(x);
+        x *= 2.0;
+        amplitude *= 0.5;
+    }
+    return sum;
+}
+
+struct SkyGlowVaryings {
+    float4 position [[position]];
+    float4 farPoint; // homogeneous model-space far point, divided per fragment to recover the view ray
+};
+
+vertex SkyGlowVaryings vertex_skyglow(constant SkyGlowUniforms &u [[buffer(0)]], uint vid [[vertex_id]]) {
+    // The one and only definition of the fullscreen triangle's corners: the far points derive from them
+    // through the inverse matrix right here, so position and view ray can never disagree.
+    float2 clip[3] = { float2(-1.0, -1.0), float2(3.0, -1.0), float2(-1.0, 3.0) }; // covers the screen
+    SkyGlowVaryings out;
+    out.position = float4(clip[vid], 0.5, 1.0); // z is arbitrary; there is no depth buffer
+    out.farPoint = u.inverseMVP * float4(clip[vid], 1.0, 1.0); // far-plane point, homogeneous
+    return out;
+}
+
+fragment float4 fragment_skyglow(SkyGlowVaryings in [[stage_in]], constant SkyGlowUniforms &u [[buffer(0)]]) {
+    float3 dir = normalize(in.farPoint.xyz / in.farPoint.w - u.cameraPosition);
+
+    // Meander the centreline: shift the effective latitude by a low-frequency noise sampled along the band,
+    // so the ribbon wanders instead of tracing a perfect great circle.
+    float warp = (glowValueNoise(dir * glowWarpFrequency + glowWarpDecorrelation) - 0.5) * 2.0 * glowWarpAmplitude;
+
+    // Gaussian in the warped galactic latitude: the band's cross-profile is smooth by construction.
+    float sinLatitude = dot(dir, u.pole) - warp;
+    float band = exp(-(sinLatitude * sinLatitude) / (2.0 * glowSigma * glowSigma));
+    if (band < glowTailCutoff) discard_fragment();
+
+    // FBM along the band supplies clouds and dark lanes.
+    float clouds = clamp(glowFBM(dir * glowCloudFrequency) * glowCloudGain + glowCloudBias, 0.0, 1.0);
+    float lane = glowLaneFloor + (1.0 - glowLaneFloor) * clouds;
+
+    // Brighter toward the galactic centre, dimmer toward the anticentre, as the real band is.
+    float toCentre = dot(dir, u.centre);
+    float centreLift = glowAnticentreLevel + (1.0 - glowAnticentreLevel) * smoothstep(glowCentreWindow.x, glowCentreWindow.y, toCentre);
+
+    float glow = band * lane * centreLift * glowIntensity * u.fade;
+    return premultiply(glowTint, glow);
+}
+
 // MARK: - Stars
 
 // The starfield is drawn in the globe's own pass rather than a SwiftUI overlay, so it can't lag behind the
@@ -284,6 +401,7 @@ fragment float4 fragment_pin(PinVaryings in [[stage_in]],
 // opaque Moon and globe cover the stars behind them. The camera's far plane is pushed past the celestial
 // radius so the GPU doesn't clip them. The `StarInstance` and `StarUniforms` layouts come from
 // MapShaderTypes.h.
+
 struct StarVaryings {
     float4 position [[position]];
     float2 local;    // pixel offset from the dot centre
@@ -316,7 +434,8 @@ vertex StarVaryings vertex_star(const device StarInstance *stars [[buffer(0)]],
     return out;
 }
 
-// A soft white dot, antialiased via `fwidth` and premultiplied for the (one, 1 - srcAlpha) blend.
+// A crisp white pinpoint, antialiased via `fwidth` and premultiplied for the (one, 1 - srcAlpha) blend.
+// The Milky Way's diffuse light is the sky-glow pass above, not a star variant, so no softness knob here.
 fragment float4 fragment_star(StarVaryings in [[stage_in]]) {
     float r = length(in.local);
     float aa = max(fwidth(r), 1e-6);

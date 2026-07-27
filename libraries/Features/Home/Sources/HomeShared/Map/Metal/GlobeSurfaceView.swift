@@ -44,7 +44,7 @@ enum GlobeSurface {
 
 /// SwiftUI wrapper around an `MTKView` driven by `GlobeRenderer`. No depth attachment, since back-face
 /// culling handles hemisphere occlusion. Redraws on demand whenever the inputs change.
-struct MapGlobeView: GlobeViewRepresentable {
+struct GlobeSurfaceView: GlobeViewRepresentable {
     let mvp: simd_float4x4
     let cameraTarget: SIMD3<Float>
     let highlight: MapHighlight
@@ -125,7 +125,7 @@ struct MapGlobeView: GlobeViewRepresentable {
         #endif
         context.coordinator.renderer = GlobeRenderer(
             device: device,
-            model: WorldGlobe.model,
+            model: GlobeResource.model,
             oceanColor: oceanColor,
             colorFormat: view.colorPixelFormat,
             sampleCount: view.sampleCount
@@ -181,7 +181,7 @@ struct MapGlobeView: GlobeViewRepresentable {
 }
 
 /// A read-only projection context handed to a globe overlay on each animation frame, so overlay content,
-/// the connection pin and the interactive globe's city pins, tracks the camera as it animates rather than
+/// the connection pin and the interactive globe's location pins, tracks the camera as it animates rather than
 /// snapping straight to the target.
 struct GlobeProjection {
     let camera: GlobeCamera
@@ -289,7 +289,7 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
 
     /// The globe itself, a live `MTKView` in the app. In DEBUG, snapshot tests can swap in a static
     /// off-screen render via `\.globeRenderMode`. The pin overlay above is plain SwiftUI either way. The
-    /// static path consumes the same fully populated `MapGlobeView` value the live path shows, so snapshots
+    /// static path consumes the same fully populated `GlobeSurfaceView` value the live path shows, so snapshots
     /// exercise the whole parameter plumbing (sun, Moon, points, stars) rather than a bare-globe subset.
     @ViewBuilder
     private func globeSurface(mvp: simd_float4x4) -> some View {
@@ -305,14 +305,14 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
         #endif
     }
 
-    /// The `MapGlobeView` value both render modes draw, built in one place so the live and snapshot paths
+    /// The `GlobeSurfaceView` value both render modes draw, built in one place so the live and snapshot paths
     /// can't drift and every globe parameter reaches both.
-    private func liveGlobe(mvp: simd_float4x4) -> MapGlobeView {
+    private func liveGlobe(mvp: simd_float4x4) -> GlobeSurfaceView {
         // Points show while moving and through the open/close dissolve. Once settled and fully open they
         // fade out so the cluster discs take over. Following `lightFade` dissolves them with the map.
         let pinFade: Float = PinDisplay.showsClusters(isMoving: isMoving, lightFade: lightFade) ? 0 : lightFade
         let starFade = lightFade * starOpacity // dissolve with the open/close as well as the zoom-out ramp
-        return MapGlobeView(
+        return GlobeSurfaceView(
             mvp: mvp,
             cameraTarget: camera.facing,
             highlight: highlight,

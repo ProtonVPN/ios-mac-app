@@ -1,5 +1,5 @@
 //
-//  Created on 23/06/2026.
+//  Created on 23.06.2026 by John Biggs.
 //
 //  Copyright (c) 2026 Proton AG
 //
@@ -34,7 +34,7 @@ enum GlobeFocus {
 
     /// Model-space direction to face for a country code: its mainland centroid, else the default view.
     static func direction(forCountry code: String?) -> SIMD3<Float> {
-        guard let code = code?.lowercased(), let country = WorldGlobe.mainland(code: code) else {
+        guard let code = code?.lowercased(), let country = GlobeResource.mainland(code: code) else {
             return defaultDirection
         }
         return simd_normalize(country.cap.center)
@@ -43,7 +43,7 @@ enum GlobeFocus {
     /// Camera distance for a country code, closer for smaller countries so they fill the view. Clamped so
     /// the camera never clips into the sphere or pulls back past the whole-globe framing.
     static func cameraDistance(forCountry code: String?) -> Float {
-        guard let code = code?.lowercased(), let country = WorldGlobe.mainland(code: code) else {
+        guard let code = code?.lowercased(), let country = GlobeResource.mainland(code: code) else {
             return wholeGlobeDistance
         }
         return distance(fitting: country.cap)

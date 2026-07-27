@@ -20,21 +20,21 @@ import Strings
 import SwiftUI
 import Theme
 
-/// The pill that expands over a selected city's pin, offering to connect. The overlay positions it at the pin's
+/// The pill that expands over a selected location's pin, offering to connect. The overlay positions it at the pin's
 /// projected point each frame, so it tracks the globe. `reveal` drives a capsule mask over the full-size pill, growing
 /// it center-out from the pin's disc (0) to full size (1); the same value reversed collapses it back into the disc.
 /// Tapping it connects.
 struct ConnectPill: View, Animatable {
     var reveal: CGFloat
-    let city: CityPin
-    /// Projected pin location, or `nil` when the pin is behind the globe.
+    let location: LocationPin
+    /// Projected pin position, or `nil` when the pin is behind the globe.
     let center: CGPoint?
     /// The app's layout direction for the flag-and-label content. The overlay pins its whole subtree to
     /// LTR so projected positions don't mirror, and hands the real direction back through here so the
     /// text still reads naturally in RTL locales.
     var contentLayoutDirection: LayoutDirection = .leftToRight
     /// Called when the pill is tapped. The overlay turns hit testing off for the outgoing pill, so only the selected
-    /// city's pill can fire this.
+    /// location's pill can fire this.
     var onTap: () -> Void = {}
 
     private enum Constants {
@@ -68,14 +68,15 @@ struct ConnectPill: View, Animatable {
         }
     }
 
-    /// The full-size pill: the country flag and the connect label over a capsule styled like the pin
-    /// discs, so the pill grows out of a disc that looks exactly like the one it replaces.
+    /// The full-size pill: the country flag (when the location has one — gateways don't) and the connect
+    /// label over a capsule styled like the pin discs, so the pill grows out of a disc that looks exactly
+    /// like the one it replaces.
     private var pill: some View {
         HStack(spacing: Dimensions.flagGap) {
-            if let code = city.countryCode {
+            if let code = location.countryCode {
                 SimpleFlagView(regionCode: code, flagSize: .desktopRecentsSize)
             }
-            Text("\(Localizable.actionConnect) – \(city.localizedName)")
+            Text("\(Localizable.actionConnect) – \(location.localizedName)")
                 .font(.caption.weight(.semibold))
                 .foregroundColor(Color(.text, .inverted))
                 .lineLimit(1)

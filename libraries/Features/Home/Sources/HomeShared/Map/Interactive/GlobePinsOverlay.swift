@@ -29,22 +29,22 @@ import Theme
 /// These settled discs are a plain Canvas that only shows once the map is still.
 struct GlobePinsOverlay: View {
     let projection: GlobeProjection
-    let cityPins: [CityPin]
-    let pinMode: UserMapPin.Mode
+    let locationPins: [LocationPin]
+    let pinMode: ConnectionPin.Mode
     /// The user/connection pin's sphere direction, or `nil` to hide it.
     let pinDirection: SIMD3<Float>?
     let interactive: Bool
     /// Whether the map is moving (a drag, a pinch, or a coast). Gates the swap from points to discs.
     let isMoving: Bool
-    /// The feature's current selection. The pill takes taps only while its city is still the selected one,
-    /// so a pill collapsing after a deselect can't swallow them.
-    let selectedCityID: CityPin.ID?
+    /// The feature's current selection. The pill takes taps only while its location is still the selected one.
+    let selectedLocationID: LocationPin.ID?
     /// The pill choreography (reveal progress, outgoing pill) the selection drives.
-    let selection: PinSelectionModel
+    let pill: ConnectPillModel
+
     /// Raw gestures from the catcher.
     let onGesture: (GlobeGesture) -> Void
-    /// Called when the selected city's connect pill is tapped.
-    let onConnect: (CityPin) -> Void
+    /// Called when the selected location's connect pill is tapped.
+    let onConnect: (LocationPin) -> Void
     /// Called when the user pin is tapped to recenter, in interactive mode only.
     let onRecenter: () -> Void
 
@@ -79,8 +79,8 @@ struct GlobePinsOverlay: View {
         // stays off the per-frame path.
         let clusters = showClusters
             ? clusterPins(
-                visiblePins(cityPins, projection: projection, offscreenMargin: PinSelectionModel.offscreenMargin),
-                within: PinSelectionModel.collisionThreshold
+                visiblePins(locationPins, projection: projection, offscreenMargin: PinDisplay.offscreenMargin),
+                within: PinDisplay.collisionThreshold
             )
             : frozenClusters.compactMap { $0.reprojected(with: projection) }
         ZStack {
@@ -100,28 +100,28 @@ struct GlobePinsOverlay: View {
                 .allowsHitTesting(false)
             }
 
-            // The selected city's connect pill. `center` refreshes every frame so it tracks the globe, while `reveal`
-            // is animated by the selection model. It takes its own tap, but only while its city is still selected,
-            // so a pill collapsing after a deselect can't swallow taps.
-            if interactive, let pillCity = selection.pillCity {
-                let projected = projection.project(pillCity.direction)
+            // The selected location's connect pill. `center` refreshes every frame so it tracks the globe, while
+            // `reveal` is animated by the pill model. It takes its own tap, but only while its location is still
+            // selected, so a pill collapsing after a deselect can't swallow taps.
+            if interactive, let location = pill.location {
+                let projected = projection.project(location.direction)
                 ConnectPill(
-                    reveal: selection.pillReveal,
-                    city: pillCity,
+                    reveal: pill.reveal,
+                    location: location,
                     center: projected.isFront ? projected.point : nil,
                     contentLayoutDirection: ambientLayoutDirection,
-                    onTap: { onConnect(pillCity) }
+                    onTap: { onConnect(location) }
                 )
-                .allowsHitTesting(selectedCityID == pillCity.id)
+                .allowsHitTesting(selectedLocationID == location.id)
             }
 
-            // The outgoing pill collapsing while the new one grows. It has its own city and reveal so the two animate
-            // independently. Never tappable.
-            if interactive, let outgoingCity = selection.outgoingCity {
-                let projected = projection.project(outgoingCity.direction)
+            // The outgoing pill collapsing while the new one grows. It has its own location and reveal so the two
+            // animate independently. Never tappable.
+            if interactive, let outgoingLocation = pill.outgoingLocation {
+                let projected = projection.project(outgoingLocation.direction)
                 ConnectPill(
-                    reveal: selection.outgoingReveal,
-                    city: outgoingCity,
+                    reveal: pill.outgoingReveal,
+                    location: outgoingLocation,
                     center: projected.isFront ? projected.point : nil,
                     contentLayoutDirection: ambientLayoutDirection
                 )
@@ -133,8 +133,8 @@ struct GlobePinsOverlay: View {
             if let pinDirection {
                 let projected = projection.project(pinDirection)
                 if projected.isFront {
-                    UserMapPin(mode: pinMode)
-                        .frame(width: PinSelectionModel.collisionThreshold, height: PinSelectionModel.collisionThreshold)
+                    ConnectionPin(mode: pinMode)
+                        .frame(width: PinDisplay.collisionThreshold, height: PinDisplay.collisionThreshold)
                         .contentShape(Rectangle())
                         .position(projected.point)
                         .allowsHitTesting(interactive)
@@ -156,8 +156,8 @@ struct GlobePinsOverlay: View {
                 withAnimation(animation) { discsShown = true }
             } else {
                 frozenClusters = clusterPins(
-                    visiblePins(cityPins, projection: projection, offscreenMargin: PinSelectionModel.offscreenMargin),
-                    within: PinSelectionModel.collisionThreshold
+                    visiblePins(locationPins, projection: projection, offscreenMargin: PinDisplay.offscreenMargin),
+                    within: PinDisplay.collisionThreshold
                 )
                 withAnimation(animation) {
                     discsShown = false

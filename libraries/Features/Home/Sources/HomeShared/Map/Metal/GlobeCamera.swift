@@ -41,7 +41,7 @@ struct GlobeCamera: Equatable {
         /// distant far plane costs no precision.
         static let farClipMargin: Float = GlobeProjection.celestialRadius + 15
         /// Floor for the near plane, keeping it positive even at the closest camera distance. Small so a
-        /// deep zoom right up against the surface, to pull apart close-together city pins, doesn't clip the
+        /// deep zoom right up against the surface, to pull apart close-together location pins, doesn't clip the
         /// near cap of the globe. There is no depth buffer, so a tiny near plane is harmless.
         static let minNearPlane: Float = 0.002
     }

@@ -108,7 +108,7 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
 
     private let drawOrder: [MapGlobeDrawUnit]
     private let borderColor: SIMD4<Float>
-    /// Color of the base ocean sphere. A `var` set through `MapGlobeView.apply(to:)`, so a changed value
+    /// Color of the base ocean sphere. A `var` set through `GlobeSurfaceView.apply(to:)`, so a changed value
     /// takes effect on the next frame instead of being silently ignored for the life of the view.
     var oceanColor: SIMD4<Float>
     private let commandQueue: MTLCommandQueue
@@ -117,6 +117,7 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     private let moonPipeline: MTLRenderPipelineState
     private let pinPipeline: MTLRenderPipelineState
     private let starPipeline: MTLRenderPipelineState
+    private let skyGlowPipeline: MTLRenderPipelineState
     private let sunPipeline: MTLRenderPipelineState
 
     /// City-point and starfield instance buffers, rebuilt on change, and their counts. `viewportSizePixels` and
@@ -218,6 +219,7 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
               let moonPipeline = pipeline(vertex: "vertex_globe_fill", fragment: "fragment_moon"),
               let pinPipeline = pipeline(vertex: "vertex_pin", fragment: "fragment_pin"),
               let starPipeline = pipeline(vertex: "vertex_star", fragment: "fragment_star"),
+              let skyGlowPipeline = pipeline(vertex: "vertex_skyglow", fragment: "fragment_skyglow"),
               let sunPipeline = pipeline(vertex: "vertex_sun", fragment: "fragment_sun")
         else {
             return nil
@@ -240,6 +242,7 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         self.moonPipeline = moonPipeline
         self.pinPipeline = pinPipeline
         self.starPipeline = starPipeline
+        self.skyGlowPipeline = skyGlowPipeline
         self.sunPipeline = sunPipeline
         self.fillVertexBuffer = geometry.fillVertexBuffer
         self.fillIndexBuffer = geometry.fillIndexBuffer
@@ -292,8 +295,12 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         // the renderer's own state instead.
         var uniforms = uniforms
 
-        // With no depth buffer, everything is drawn farthest first. Stars first of all, out at the
-        // celestial radius, so the Moon and the opaque Earth drawn after cover the ones behind them.
+        // With no depth buffer, everything is drawn farthest first. The Milky Way sky glow first of all, a
+        // continuous field behind even the stars.
+        drawSkyGlow(into: encoder)
+
+        // Stars next, out at the celestial radius, so the Moon and the opaque Earth drawn after cover the
+        // ones behind them, and the pinpoints sit over the glow.
         drawStars(into: encoder)
 
         // The sun glow next: in front of the stars, still behind the Moon and Earth, so the opaque sphere
@@ -453,9 +460,29 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         encoder.setCullMode(Constants.cullMode)
     }
 
+    /// Draws the Milky Way as a single triangle, whose fragment shader paints a continuous FBM-textured band around the
+    /// galactic plane, reconstructing each pixel's view ray through the inverse MVP (the triangle's corners live in the
+    /// vertex shader alone). Drawn first behind everything.
+    private func drawSkyGlow(into encoder: MTLRenderCommandEncoder) {
+        guard starFade > Constants.minVisibleFade else { return }
+        var glowUniforms = SkyGlowUniforms(
+            inverseMVP: uniforms.mvp.inverse,
+            cameraPosition: cameraTarget * cameraDistance,
+            pole: CelestialConstants.galacticNorthPole,
+            centre: CelestialConstants.galacticCentre,
+            fade: starFade
+        )
+        encoder.setCullMode(.none)
+        encoder.setRenderPipelineState(skyGlowPipeline)
+        encoder.setVertexBytes(&glowUniforms, length: MemoryLayout<SkyGlowUniforms>.stride, index: 0)
+        encoder.setFragmentBytes(&glowUniforms, length: MemoryLayout<SkyGlowUniforms>.stride, index: 0)
+        encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3)
+        encoder.setCullMode(Constants.cullMode)
+    }
+
     /// Draws the starfield as instanced screen-facing billboards far out at the celestial radius, projected by the same
-    /// MVP so the field turns with the camera. Called first, so the Moon and globe drawn later cover the stars behind
-    /// them. Skipped when faded out or empty.
+    /// MVP so the field turns with the camera. Called after the sky glow, so the Moon and globe drawn later cover the
+    /// stars behind them. Skipped when faded out or empty.
     private func drawStars(into encoder: MTLRenderCommandEncoder) {
         guard starFade > Constants.minVisibleFade, starCount > 0, let starBuffer, viewportSizePixels.x > 0 else { return }
         var starUniforms = StarUniforms(mvp: uniforms.mvp, viewportSize: viewportSizePixels, scale: contentScale, fade: starFade)
@@ -523,16 +550,16 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
 
     /// The zero-copy path: adopt the whole mapping as one shared no-copy buffer and bind each section by its baked
     /// offset, failing over to a copy if unsuccessful. If successful, however, the mapped file directly becomes the
-    /// GPU's working set in memory without performing any copying. The mapping is a static property of `WorldGlobe`,
+    /// GPU's working set in memory without performing any copying. The mapping is a static property of `GlobeResource`,
     /// so we pass `deallocator: nil` when making the buffers to avoid freeing it accidentally.
     private static func slicedGeometryBuffers(_ device: MTLDevice, _ model: MapGlobeModel<Mapped>) -> GeometryBuffers? {
         // No-copy adoption needs a page-aligned base (the mapping is one) and a page-multiple length. The pages are
         // PROT_READ and the GPU only reads them, but we have to mutably cast it to make Metal happy.
-        let adopted = WorldGlobe.withBlob { blob -> MTLBuffer? in
+        let adopted = GlobeResource.withBlob { blob -> MTLBuffer? in
             guard let base = blob.baseAddress else { return nil }
             return device.makeBuffer(
                 bytesNoCopy: UnsafeMutableRawPointer(mutating: base),
-                length: WorldGlobe.blobPageAlignedSize,
+                length: GlobeResource.blobPageAlignedSize,
                 options: .storageModeShared,
                 deallocator: nil
             )
@@ -542,7 +569,7 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
             // Adoption is expected to succeed; degrade to copying out of the mapping rather than losing the map if a
             // device refuses it.
             log.error("Globe renderer: no-copy adoption of the map resource failed, copying instead")
-            return WorldGlobe.withBlob { blob -> GeometryBuffers? in
+            return GlobeResource.withBlob { blob -> GeometryBuffers? in
                 guard let vertices = buffer(device, model.fillVertices.elements(in: blob)),
                       let indices = buffer(device, model.fillIndices.elements(in: blob))
                 else { return nil }

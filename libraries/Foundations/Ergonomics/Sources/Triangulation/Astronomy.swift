@@ -66,6 +66,24 @@ public enum CelestialConstants {
     /// the shader constant `sunAngularRadius` in `MapGlobeShaders.metal`, which can't read Swift constants,
     /// so a change here must be made there too.
     public static let sunAngularRadius = Angle.radians(0.00465)
+
+    /// The north galactic pole (J2000: RA 192.85948°, Dec +27.12825°) as a unit direction, mapped through
+    /// the same latitude/longitude convention as terrestrial directions with right ascension standing in
+    /// for longitude. The celestial sphere's rotation against the Earth (sidereal time) is deliberately
+    /// not applied: the rendered starfield is Earth-fixed by design, so only the Milky Way band's
+    /// orientation *relative to the stars* is physical — the shared frame is what keeps them consistent.
+    public static let galacticNorthPole = GlobeGeometry.unitSphere(
+        latitudeDegrees: 27.12825,
+        longitudeDegrees: 192.85948
+    )
+
+    /// Direction to the galactic centre (Sagittarius A*, J2000: RA 266.41683°, Dec −29.00781°), mapped
+    /// through the same convention as the pole. The Milky Way is brightest and broadest here, so the sky
+    /// glow lifts toward it.
+    public static let galacticCentre = GlobeGeometry.unitSphere(
+        latitudeDegrees: -29.00781,
+        longitudeDegrees: 266.41683
+    )
 }
 
 /// A mean element as a quadratic `a + b*t + c*t*t` in degrees, with `t` in Julian centuries, evaluated

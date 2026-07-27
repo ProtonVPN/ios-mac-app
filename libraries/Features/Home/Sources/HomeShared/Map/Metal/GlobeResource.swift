@@ -26,7 +26,7 @@ import simd
 
 /// Loads the baked `world-globe.bin` once and resolves country codes to baked sphere geometry. Codes are
 /// lowercased, an "x" suffix names a country's mainland, and "gb" aliases to the map's "uk".
-enum WorldGlobe {
+enum GlobeResource {
     /// Bundle URL of the baked binary. Also read directly by the codec byte-stability test, which asserts
     /// that decoding and re-encoding this exact resource reproduces it bit for bit.
     static let resourceURL = Bundle.module.url(forResource: "world-globe", withExtension: "bin")

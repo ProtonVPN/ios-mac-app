@@ -61,7 +61,7 @@ extension StarInstance: Equatable {
     }
 }
 
-// `Equatable` so `MapGlobeView.apply(to:)` can skip the redraw when a body re-evaluation changed nothing.
+// `Equatable` so `GlobeSurfaceView.apply(to:)` can skip the redraw when a body re-evaluation changed nothing.
 extension MapUniforms: Equatable {
     public static func == (lhs: MapUniforms, rhs: MapUniforms) -> Bool {
         lhs.mvp == rhs.mvp

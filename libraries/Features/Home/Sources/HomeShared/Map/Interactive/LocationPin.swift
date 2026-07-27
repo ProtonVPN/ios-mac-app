@@ -24,9 +24,10 @@ import SwiftUI
 import Theme
 import Triangulation
 
-/// A connectable location (a city, or a state for countries modelled that way) shown as a grey pin on the
-/// interactive globe. Tapping it connects to the fastest server there, or routes free users to the upsell.
-public struct CityPin: Equatable, Identifiable, Sendable {
+/// A connectable location — a city, a state for countries modelled that way, or a gateway — shown as a
+/// grey pin on the interactive globe. Tapping it connects to the fastest server there, or routes free
+/// users to the upsell.
+public struct LocationPin: Equatable, Identifiable, Sendable {
     public let id: String
 
     let displayName: String
@@ -85,7 +86,7 @@ public struct CityPin: Equatable, Identifiable, Sendable {
 
 /// A pin with its current projected screen position, the input to clustering.
 struct ProjectedPin: Equatable {
-    let pin: CityPin
+    let pin: LocationPin
     let point: CGPoint
 }
 
@@ -98,7 +99,7 @@ struct PinCluster: Identifiable, Equatable {
     let id: String
     /// Screen-space centroid of the members.
     let center: CGPoint
-    let members: [CityPin]
+    let members: [LocationPin]
 
     var isSingle: Bool {
         members.count == 1
@@ -142,7 +143,7 @@ struct PinCluster: Identifiable, Equatable {
 
 /// Projects `pins` and keeps those currently visible: in front of the horizon and within `offscreenMargin`
 /// of the view bounds. Culling off-screen pins up front means only what's drawn is processed.
-func visiblePins(_ pins: [CityPin], projection: GlobeProjection, offscreenMargin: CGFloat) -> [ProjectedPin] {
+func visiblePins(_ pins: [LocationPin], projection: GlobeProjection, offscreenMargin: CGFloat) -> [ProjectedPin] {
     let bounds = projection.viewSize
     return pins.compactMap { pin -> ProjectedPin? in
         let result = projection.project(pin.direction)
@@ -176,7 +177,7 @@ func clusterPins(_ projected: [ProjectedPin], within threshold: CGFloat) -> [Pin
 /// Mutable running aggregate used while clustering: tracks the mean screen position and the members so the
 /// proximity test compares against the centroid-so-far rather than an arbitrary first point.
 private struct ClusterAccumulator {
-    private var members: [CityPin]
+    private var members: [LocationPin]
     private var sum: CGPoint
     private var center: CGPoint
 
@@ -214,6 +215,12 @@ enum PinDisplay {
     static func showsClusters(isMoving: Bool, lightFade: Float) -> Bool {
         !isMoving && lightFade > 0.999
     }
+
+    /// Merge location pins closer than this many points (about a finger's width): below it two pins can't
+    /// both be tapped, which is exactly when they should coalesce. Also the tap hit-test radius.
+    static let collisionThreshold: CGFloat = 44
+    /// Keep pins this far off-screen still in the cluster set (so edge clusters are correct) but cull the rest.
+    static let offscreenMargin: CGFloat = 60
 
     /// Settled-disc diameters in points: a lone pin, and a counted multi-member disc. Defined once because
     /// several pieces hand off to each other at these sizes: the settled discs, the connect pill's collapse

@@ -112,7 +112,7 @@ struct EclipseSnapshots {
         let camera = GlobeCamera(orientation: GlobeCamera.orientation(facing: facing), distance: distance, fieldOfView: fieldOfView)
         let mvp = camera.matrix(framing: GlobeFraming(viewSize: size, focusHeight: size.height, focusTop: 0))
         let device = try #require(MTLCreateSystemDefaultDevice())
-        let renderer = try #require(GlobeRenderer(device: device, model: WorldGlobe.model, oceanColor: MapStyle.oceanColor, colorFormat: GlobeSurface.colorFormat, sampleCount: GlobeSurface.sampleCount))
+        let renderer = try #require(GlobeRenderer(device: device, model: GlobeResource.model, oceanColor: MapStyle.oceanColor, colorFormat: GlobeSurface.colorFormat, sampleCount: GlobeSurface.sampleCount))
         renderer.uniforms = MapUniforms(
             mvp: mvp,
             borderHalfWidth: 0,

@@ -29,7 +29,7 @@ import Testing
 @Suite("Home map feature")
 @MainActor
 struct HomeMapFeatureTests {
-    private static let geneva = CityPin(
+    private static let geneva = LocationPin(
         id: "CH#Geneva",
         displayName: "Geneva",
         latitude: 46.2,
@@ -41,11 +41,11 @@ struct HomeMapFeatureTests {
     // MARK: - Selection & connect
 
     @Test("Tapping a city pin selects it; the connect happens on the pill tap")
-    func cityPinTapSelects() async {
+    func locationPinTapSelects() async {
         let store = TestStore(initialState: HomeMapFeature.State()) { HomeMapFeature() }
 
-        await store.send(.cityPinTapped(Self.geneva)) {
-            $0.selectedCityID = Self.geneva.id
+        await store.send(.locationPinTapped(Self.geneva)) {
+            $0.selectedLocationID = Self.geneva.id
         }
     }
 
@@ -54,11 +54,11 @@ struct HomeMapFeatureTests {
         @Shared(.userTier) var userTier
         $userTier.withLock { $0 = .paidTier }
         var state = HomeMapFeature.State()
-        state.selectedCityID = Self.geneva.id
+        state.selectedLocationID = Self.geneva.id
         let store = TestStore(initialState: state) { HomeMapFeature() }
 
         await store.send(.connectPillTapped(Self.geneva)) {
-            $0.selectedCityID = nil
+            $0.selectedLocationID = nil
         }
         await store.receive(\.delegate.connect, Self.geneva.connectionSpec)
     }
@@ -68,11 +68,11 @@ struct HomeMapFeatureTests {
         @Shared(.userTier) var userTier
         $userTier.withLock { $0 = .freeTier }
         var state = HomeMapFeature.State()
-        state.selectedCityID = Self.geneva.id
+        state.selectedLocationID = Self.geneva.id
         let store = TestStore(initialState: state) { HomeMapFeature() }
 
         await store.send(.connectPillTapped(Self.geneva)) {
-            $0.selectedCityID = nil
+            $0.selectedLocationID = nil
         }
         await store.receive(\.delegate.showUpsell)
     }
@@ -84,8 +84,8 @@ struct HomeMapFeatureTests {
         let store = TestStore(initialState: state) { HomeMapFeature() }
 
         for gesture: HomeMapFeature.Action in [.mapMoved, .pinClusterTapped, .userPinTapped] {
-            await store.send(.cityPinTapped(Self.geneva)) { $0.selectedCityID = Self.geneva.id }
-            await store.send(gesture) { $0.selectedCityID = nil }
+            await store.send(.locationPinTapped(Self.geneva)) { $0.selectedLocationID = Self.geneva.id }
+            await store.send(gesture) { $0.selectedLocationID = nil }
         }
     }
 
@@ -104,11 +104,11 @@ struct HomeMapFeatureTests {
     func returnStripDropsPill() async {
         var state = HomeMapFeature.State()
         state.presentation = .full
-        state.selectedCityID = Self.geneva.id
+        state.selectedLocationID = Self.geneva.id
         let store = TestStore(initialState: state) { HomeMapFeature() }
 
         await store.send(.returnStripSwiped) {
-            $0.selectedCityID = nil
+            $0.selectedLocationID = nil
             $0.presentation = .sheet
         }
     }
@@ -117,10 +117,10 @@ struct HomeMapFeatureTests {
     func backgroundTapPeelsLayers() async {
         var state = HomeMapFeature.State()
         state.presentation = .full
-        state.selectedCityID = Self.geneva.id
+        state.selectedLocationID = Self.geneva.id
         let store = TestStore(initialState: state) { HomeMapFeature() }
 
-        await store.send(.mapBackgroundTapped) { $0.selectedCityID = nil }
+        await store.send(.mapBackgroundTapped) { $0.selectedLocationID = nil }
         await store.send(.mapBackgroundTapped) { $0.presentation = .sheet }
     }
 
@@ -132,18 +132,18 @@ struct HomeMapFeatureTests {
         let poland = Server.mock(country: "PL", coordinates: .init(latitude: 52.23, longitude: 21.01))
 
         await store.send(.connectionStateUpdated(.previewConnected(for: .specificCountryServer, server: poland))) {
-            $0.mapState = .connected(coordinates: .init(latitude: 52.23, longitude: 21.01), code: "PL")
+            $0.mapConnectionState = .connected(coordinates: .init(latitude: 52.23, longitude: 21.01), code: "PL")
         }
         #expect(store.state.pinMode == .exitConnected)
 
         await store.send(.connectionStateUpdated(.disconnected)) {
-            $0.mapState = .disconnected
+            $0.mapConnectionState = .disconnected
         }
         #expect(store.state.pinMode == .disconnected)
     }
 
     @Test("Loading the pins mid-connect re-derives the map state, parking the pin on the target city")
-    func cityPinsLoadedRederivesMapState() async {
+    func locationPinsLoadedRederivesMapConnectionState() async {
         // Regression: connecting via an unresolved spec whose city pin loads *after* the first
         // connection-state emission. Without the re-derive the pin stayed invisible until the next
         // connection transition.
@@ -156,9 +156,9 @@ struct HomeMapFeatureTests {
         }
         let store = TestStore(initialState: HomeMapFeature.State()) { HomeMapFeature() }
 
-        await store.send(.cityPinsLoaded([Self.geneva])) {
-            $0.cityPins = [Self.geneva]
-            $0.mapState = .connecting(coordinates: .init(latitude: 46.2, longitude: 6.14), code: "CH")
+        await store.send(.locationPinsLoaded([Self.geneva])) {
+            $0.locationPins = [Self.geneva]
+            $0.mapConnectionState = .connecting(coordinates: .init(latitude: 46.2, longitude: 6.14), code: "CH")
         }
         #expect(store.state.pinMode == .connecting)
     }
@@ -169,7 +169,7 @@ struct HomeMapFeatureTests {
         let intent = ConnectionPreparationIntent(spec: Self.geneva.connectionSpec, acceptableProtocols: .all)
 
         await store.send(.connectionStateUpdated(.connecting(.unresolved(intent)))) {
-            $0.mapState = .connecting(coordinates: nil, code: "CH")
+            $0.mapConnectionState = .connecting(coordinates: nil, code: "CH")
         }
         #expect(store.state.pinMode == .invisible)
     }
@@ -198,7 +198,7 @@ struct HomeMapFeatureTests {
             }
         }
 
-        let pins = HomeMapFeature.loadCityPins(from: repository)
+        let pins = HomeMapFeature.loadLocationPins(from: repository)
 
         #expect(pins.map(\.id) == ["CH#Geneva", "DE#Bavaria", "gateway#Acme@50.1,8.68"])
         #expect(pins.map(\.localizedName) == ["Genève", "Bavaria", "Acme"])
@@ -223,7 +223,7 @@ struct HomeMapFeatureTests {
             ]
         }
 
-        let pins = HomeMapFeature.loadCityPins(from: repository)
+        let pins = HomeMapFeature.loadLocationPins(from: repository)
 
         #expect(pins.count == 2)
         #expect(Set(pins.map(\.id)).count == 2, "coordinate-disambiguated IDs must not collide")

@@ -45,19 +45,19 @@ struct DisputedTerritoriesSnapshots {
     let precision = Self.gpuSnapshotPrecision
     let perceptualPrecision = Self.gpuPerceptualPrecision
 
-    /// The contract `WorldGlobe.highlight(for:)` must keep, independent of any pixel tolerance: a disputed
+    /// The contract `GlobeResource.highlight(for:)` must keep, independent of any pixel tolerance: a disputed
     /// country contributes hidden borders and no fill, while a normal country fills and hides nothing.
     @Test("Disputed country hides borders without filling; a normal country fills")
     func disputedHighlightSemantics() throws {
-        let india = WorldGlobe.highlight(for: "IN")
+        let india = GlobeResource.highlight(for: "IN")
         #expect(india.fillRanges.isEmpty, "A disputed country must not be filled")
         #expect(!india.hiddenBorderRanges.isEmpty, "A disputed country must hide its contested borders")
         // The hidden set spans more than India's own borders. It also covers the disputed neighbours, so a
         // shared line drawn from either side is dropped from both.
-        let indiaOwnBorders = try #require(WorldGlobe.country(code: "IN")).borderRanges
+        let indiaOwnBorders = try #require(GlobeResource.country(code: "IN")).borderRanges
         #expect(india.hiddenBorderRanges.count > indiaOwnBorders.count)
 
-        let germany = WorldGlobe.highlight(for: "DE")
+        let germany = GlobeResource.highlight(for: "DE")
         #expect(!germany.fillRanges.isEmpty, "A normal country fills")
         #expect(germany.hiddenBorderRanges.isEmpty, "A normal country hides no borders")
     }
@@ -71,7 +71,7 @@ struct DisputedTerritoriesSnapshots {
     func disputedBordersHiddenInRender() throws {
         let facing = GlobeFocus.direction(forCountry: "IN")
         let distance = GlobeFocus.cameraDistance(forCountry: "IN")
-        let hidden = try Self.render(facing: facing, distance: distance, highlight: WorldGlobe.highlight(for: "IN"))
+        let hidden = try Self.render(facing: facing, distance: distance, highlight: GlobeResource.highlight(for: "IN"))
         assertSnapshot(
             of: hidden,
             as: .image(precision: precision, perceptualPrecision: perceptualPrecision),
@@ -94,7 +94,7 @@ struct DisputedTerritoriesSnapshots {
         let scale: CGFloat = 2
         let camera = GlobeCamera(orientation: GlobeCamera.orientation(facing: facing), distance: distance)
         let device = try #require(MTLCreateSystemDefaultDevice())
-        let renderer = try #require(GlobeRenderer(device: device, model: WorldGlobe.model, oceanColor: MapStyle.oceanColor, colorFormat: GlobeSurface.colorFormat, sampleCount: GlobeSurface.sampleCount))
+        let renderer = try #require(GlobeRenderer(device: device, model: GlobeResource.model, oceanColor: MapStyle.oceanColor, colorFormat: GlobeSurface.colorFormat, sampleCount: GlobeSurface.sampleCount))
         renderer.uniforms = MapUniforms(
             mvp: camera.matrix(framing: GlobeFraming(viewSize: size, focusHeight: size.height, focusTop: 0)),
             borderHalfWidth: 0

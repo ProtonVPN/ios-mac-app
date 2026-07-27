@@ -47,7 +47,7 @@ struct FullMapSnapshots {
 
     /// A spread of city pins across Europe, close enough at the default zoom that Zurich and Milan
     /// exercise the clustering path alongside the singles.
-    private static let cityPins = [
+    private static let locationPins = [
         pin("Paris", code: "FR", latitude: 48.85, longitude: 2.35),
         pin("Zurich", code: "CH", latitude: 47.37, longitude: 8.54),
         pin("Milan", code: "IT", latitude: 45.46, longitude: 9.19),
@@ -55,8 +55,8 @@ struct FullMapSnapshots {
         pin("Lisbon", code: "PT", latitude: 38.72, longitude: -9.14),
     ]
 
-    private static func pin(_ name: String, code: String, latitude: Double, longitude: Double) -> CityPin {
-        CityPin(
+    private static func pin(_ name: String, code: String, latitude: Double, longitude: Double) -> LocationPin {
+        LocationPin(
             id: "\(code)#\(name)",
             displayName: name,
             latitude: latitude,
@@ -71,7 +71,7 @@ struct FullMapSnapshots {
     func fullMap() throws {
         var state = HomeMapFeature.State()
         state.presentation = .full
-        state.cityPins = Self.cityPins
+        state.locationPins = Self.locationPins
         let store = Store(initialState: state, reducer: HomeMapFeature.init)
 
         let size = try #require(ViewImageConfig.iPhoneSe.size)

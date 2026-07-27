@@ -59,7 +59,7 @@ public extension MapGlobeModel where Storage == InMemory {
 
 public extension MapGlobeModel where Storage == Mapped {
     /// Resolves the mesh against the blob this model was decoded from; the owner does the pairing
-    /// (`WorldGlobe.withMesh` in the app).
+    /// (`GlobeResource.withMesh` in the app).
     func withMesh<R>(in blob: UnsafeRawBufferPointer, _ body: (MapGlobeMesh) throws -> R) rethrows -> R {
         try fillVertices.withUnsafeBufferPointer(in: blob) { vertices in
             try fillIndices.withUnsafeBufferPointer(in: blob) { indices in

@@ -32,11 +32,11 @@ import TestingErgonomics
 /// cover a synthetic sample; this runs the same checks over every count, array, and dictionary path at
 /// production scale, so a codec change that only misbehaves on real data, or a stale bin after a format
 /// change, fails here instead of at app launch.
-@Suite("World globe resource")
-struct WorldGlobeCodecStabilityTests {
+@Suite("Globe resource")
+struct GlobeResourceCodecStabilityTests {
     @Test("The shipped world-globe.bin decodes and re-encodes byte-identically")
     func codecIsByteStableAgainstShippedResource() throws {
-        let url = try #require(WorldGlobe.resourceURL)
+        let url = try #require(GlobeResource.resourceURL)
         let data = try Data(contentsOf: url)
         let reencoded = try MapGlobeCodec.encode(MapGlobeCodec.decode(data))
         // `expectSameBytes` rather than `==`: on failure it names the first differing offset instead of
@@ -46,7 +46,7 @@ struct WorldGlobeCodecStabilityTests {
 
     @Test("The zero-copy decode reads the shipped bin identically to the copying decode")
     func mappedDecodeMatchesCopyingDecodeOnShippedResource() throws {
-        let url = try #require(WorldGlobe.resourceURL)
+        let url = try #require(GlobeResource.resourceURL)
         let copied = try MapGlobeCodec.decode(Data(contentsOf: url))
         let mapping = try MmapBuffer(readingPath: url.path)
         let mapped = try mapping.withRawSpan { try MapGlobeCodec.decode(slicing: $0) }

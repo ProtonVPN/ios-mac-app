@@ -63,10 +63,10 @@ public struct HomeMapView: View {
     )
     /// Connect-pill choreography (reveal progress, cross-fade) and the zoom floor derived from the pin set.
     /// The selection itself lives in the store.
-    @State private var selection = PinSelectionModel()
-    /// The celestial geometry: the Sun and Moon positions and the fixed starfield, in the form the globe
-    /// renderer consumes. Starts as a placeholder and then gets evaluated when the view initializes.
-    @State private var celestial = CelestialPresentation.placeholder
+    @State private var connectPill = ConnectPillModel()
+    /// The Sun and Moon positions, in the form the globe renderer consumes (the fixed starfield comes from
+    /// `Starfield`). Starts as a placeholder and then gets evaluated when the view initializes.
+    @State private var solarSystem = SolarSystem.placeholder
 
     @Dependency(\.continuousClock) private var clock
 
@@ -84,7 +84,7 @@ public struct HomeMapView: View {
         static let pillRevealSpring = Animation.spring(response: 0.32, dampingFraction: 1)
         /// How often the Sun and Moon positions are re-sampled. They drift about a quarter of a degree per
         /// minute, so at this cadence each step is invisible.
-        static let celestialRefreshInterval: Duration = .seconds(15)
+        static let solarSystemRefreshInterval: Duration = .seconds(15)
     }
 
     /// Fill color of the Metal city points, the same color as the cluster discs they crossfade into.
@@ -134,38 +134,38 @@ public struct HomeMapView: View {
                 viewSize: framing.viewSize,
                 focusHeight: framing.focusHeight,
                 focusTop: framing.focusTop,
-                highlight: WorldGlobe.highlight(for: highlightedCode),
-                sunDirection: celestial.sunDirection,
+                highlight: GlobeResource.highlight(for: highlightedCode),
+                sunDirection: solarSystem.sunDirection,
                 lightFade: interactive ? 1 : 0,
                 sunTint: tint,
-                moonCenter: celestial.moonCenter,
-                moonRadius: celestial.moonRadius,
+                moonCenter: solarSystem.moonCenter,
+                moonRadius: solarSystem.moonRadius,
                 // City points are drawn in the globe's own Metal pass so they can't lag behind the sphere
                 // under a fast drag. `isMoving` keeps them as points while the map moves. Once it settles
                 // they fade out and the cluster discs take over.
-                pinPositions: store.cityPins.map(\.direction),
+                pinPositions: store.locationPins.map(\.direction),
                 pinColor: pointFillColor,
                 isMoving: trackball.isMoving,
                 // The starfield is drawn in the Metal pass as well, far out and first so the globe occludes
                 // the stars behind it, and turns with the camera without lagging. `starOpacity` is the
                 // zoom-out ramp. The shader multiplies it by the interpolated `lightFade`.
-                starInstances: CelestialPresentation.starInstances,
+                starInstances: Starfield.instances,
                 // The sun is drawn in the Metal pass too, after the stars and occluded by the globe. Its
                 // glow color and fade come from `sunTint` and `lightFade`.
-                starOpacity: CelestialPresentation.starOpacity(
+                starOpacity: Starfield.opacity(
                     atDistance: trackball.distance,
                     ceiling: GlobeTrackballModel.maxZoomDistance
                 )
             ) { projection in
                 GlobePinsOverlay(
                     projection: projection,
-                    cityPins: store.cityPins,
+                    locationPins: store.locationPins,
                     pinMode: store.pinMode,
                     pinDirection: pinDirection,
                     interactive: interactive,
                     isMoving: trackball.isMoving,
-                    selectedCityID: store.selectedCityID,
-                    selection: selection,
+                    selectedLocationID: store.selectedLocationID,
+                    pill: connectPill,
                     onGesture: globeGestureRecognized,
                     onConnect: connectPillTapped,
                     onRecenter: userPinTapped
@@ -176,7 +176,7 @@ public struct HomeMapView: View {
         // switch within the same country) or the user country resolves — the two inputs the decorative
         // camera derives from. Pan/zoom in interactive mode bypass both (they change neither), and the
         // programmatic interactive transitions use their own `withAnimation`.
-        .animation(reduceMotion ? nil : .default, value: store.mapState)
+        .animation(reduceMotion ? nil : .default, value: store.mapConnectionState)
         .animation(reduceMotion ? nil : .default, value: store.userCountry)
         .onChange(of: highlightedCode) { presentedOrientation = displayedCamera.orientation }
         .onChange(of: store.presentation) { presentationChanged() }
@@ -186,40 +186,40 @@ public struct HomeMapView: View {
             withAnimation(reduceMotion ? nil : .easeInOut(duration: Constants.sunTintFadeDuration)) { displayedSunTint = sunTintRGB }
         }
         // Selecting grows the pill in and deselecting collapses it back into the point. The selection is
-        // feature state; `PinSelectionModel` runs its animated presentation. The view resolves the
+        // feature state; `ConnectPillModel` runs its animated presentation. The view resolves the
         // animation here because `reduceMotion` comes from the environment.
-        .onChange(of: store.selectedCityID) {
-            selection.selectionChanged(to: store.selectedCity, animation: reduceMotion ? nil : Constants.pillRevealSpring)
+        .onChange(of: store.selectedLocationID) {
+            connectPill.selectionChanged(to: store.selectedLocation, animation: reduceMotion ? nil : Constants.pillRevealSpring)
         }
         // Recompute the closest-pair angle, and with it the zoom floor, whenever the pin set changes.
-        .onChange(of: store.cityPins) { selection.recomputeClosestAngle(among: store.cityPins) }
+        .onChange(of: store.locationPins) { connectPill.recomputeClosestAngle(among: store.locationPins) }
         .onAppear { appeared() }
         // Re-sample the Sun and Moon on a slow clock so the terminator and the Moon track real time
         // (starting immediately, replacing the placeholder the state was seeded with). The task is
         // cancelled automatically when the view goes away.
-        .task { await trackCelestialDrift() }
+        .task { await trackSolarSystemDrift() }
         // The display link retains the coaster while running; stop it on disappear so it can't outlive the view.
         .onDisappear { trackball.stopCoast() }
     }
 
     private func appeared() {
-        selection.recomputeClosestAngle(among: store.cityPins)
+        connectPill.recomputeClosestAngle(among: store.locationPins)
         displayedSunTint = sunTintRGB // start on the current color, the map's lighting is off until it opens
-        // Moving the globe (drag / pinch / mode flip) dismisses a selected city's pill. Capture only the
+        // Moving the globe (drag / pinch / mode flip) dismisses a selected location's pill. Capture only the
         // store: capturing the view struct would retain the trackball's own `@State` box through the
         // closure the trackball holds, a cycle.
         trackball.onMoved = { [store] in store.send(.mapMoved) }
     }
 
-    private func trackCelestialDrift() async {
-        celestial = CelestialPresentation()
+    private func trackSolarSystemDrift() async {
+        solarSystem = SolarSystem()
         while !Task.isCancelled {
             do {
-                try await clock.sleep(for: Constants.celestialRefreshInterval)
+                try await clock.sleep(for: Constants.solarSystemRefreshInterval)
             } catch {
                 return // cancelled
             }
-            celestial = CelestialPresentation()
+            solarSystem = SolarSystem()
         }
     }
 
@@ -256,15 +256,15 @@ public struct HomeMapView: View {
 
     // MARK: - Pins
 
-    /// The selected city's connect pill was tapped. The reducer connects (or upsells) and dismisses the
+    /// The selected location's connect pill was tapped. The reducer connects (or upsells) and dismisses the
     /// pill; the pill takes its own tap, so this never sees taps meant for pins or the background.
-    private func connectPillTapped(_ city: CityPin) {
-        store.send(.connectPillTapped(city))
+    private func connectPillTapped(_ location: LocationPin) {
+        store.send(.connectPillTapped(location))
     }
 
     /// Tap hit-testing for the Canvas pins: the nearest pin within a finger's radius wins, and a miss reads
     /// as a background tap. Geometry is resolved here (the projection is view state); the outcome goes to
-    /// the store. Runs only on tap, so it adds no per-frame cost. A tap on a selected city's pill never
+    /// the store. Runs only on tap, so it adds no per-frame cost. A tap on a selected location's pill never
     /// reaches this since the pill swallows it.
     private func mapTapped(at location: CGPoint, clusters: [PinCluster]) {
         trackball.stopCoast()
@@ -272,7 +272,7 @@ public struct HomeMapView: View {
             hypot(cluster.center.x - location.x, cluster.center.y - location.y)
         }
         let hit = clusters
-            .filter { distance($0) <= PinSelectionModel.collisionThreshold / 2 }
+            .filter { distance($0) <= PinDisplay.collisionThreshold / 2 }
             .min { distance($0) < distance($1) }
         guard let hit else {
             // The reducer dismisses the pill if one is up, otherwise returns to the sheet.
@@ -280,7 +280,7 @@ public struct HomeMapView: View {
             return
         }
         if hit.isSingle, let pin = hit.members.first {
-            store.send(.cityPinTapped(pin)) // the first tap reveals the pill, a tap on the pill connects
+            store.send(.locationPinTapped(pin)) // the first tap reveals the pill, a tap on the pill connects
         } else {
             store.send(.pinClusterTapped)
             zoomIn(on: hit) // move the camera in to pull the members apart
@@ -305,8 +305,8 @@ public struct HomeMapView: View {
     /// Pin location on the sphere: the connected server's coordinates when known, else the faced country's center.
     private var pinDirection: SIMD3<Float>? {
         guard store.shouldShowPin else { return nil }
-        if let coordinates = store.mapState.coordinates {
-            if let code = store.mapState.code {
+        if let coordinates = store.mapConnectionState.coordinates {
+            if let code = store.mapConnectionState.code {
                 return CoastSnap.snappedDirection(
                     latitudeDegrees: coordinates.latitude,
                     longitudeDegrees: coordinates.longitude,
@@ -323,7 +323,7 @@ public struct HomeMapView: View {
 
     /// Which country to highlight
     private var highlightedCode: String? {
-        store.mapState.code ?? store.userCountry
+        store.mapConnectionState.code ?? store.userCountry
     }
 
     private var targetDirection: SIMD3<Float> {
@@ -357,7 +357,7 @@ public struct HomeMapView: View {
         // portrait) and a sideways-spread cluster doesn't zoom past where its members fall off the sides.
         let target = cluster.zoomTarget(
             currentDistance: trackball.distance,
-            minDistance: selection.minZoomDistance(framing: framing),
+            minDistance: connectPill.minZoomDistance(framing: framing),
             aspectRatio: framing.aspectRatio
         )
         // Face the direction the fit was computed around, so the whole-cluster framing guarantee holds.
@@ -390,8 +390,10 @@ public struct HomeMapView: View {
     private func globeGestureRecognized(_ gesture: GlobeGesture) {
         // Taps work in both modes, so handle them up front and gate the rest on `interactive`.
         guard interactive else {
-            guard case let .tap(location) = gesture else { return }
-            return mapTapped(at: location, clusters: [])
+            // A tap anywhere on the map opens the full view.
+            guard case .tap = gesture else { return }
+            store.send(.mapPeekTapped, animation: .mapPresentation)
+            return
         }
 
         // The trackball ignores a stray one-finger pan while a pinch is active, so the two can't fight over
@@ -406,7 +408,7 @@ public struct HomeMapView: View {
         case let .pinchBegan(a, b):
             trackball.pinchBegan(a, b, framing: framing)
         case let .pinchChanged(a, b):
-            trackball.pinchChanged(a, b, framing: framing, minZoomDistance: selection.minZoomDistance(framing: framing))
+            trackball.pinchChanged(a, b, framing: framing, minZoomDistance: connectPill.minZoomDistance(framing: framing))
         case .pinchEnded:
             trackball.pinchEnded()
         case let .tap(location):
@@ -419,11 +421,11 @@ public struct HomeMapView: View {
         let projection = GlobeProjection.make(camera: trackball.camera, framing: framing, lightFade: 1)
         return clusterPins(
             visiblePins(
-                store.cityPins,
+                store.locationPins,
                 projection: projection,
-                offscreenMargin: PinSelectionModel.offscreenMargin
+                offscreenMargin: PinDisplay.offscreenMargin
             ),
-            within: PinSelectionModel.collisionThreshold
+            within: PinDisplay.collisionThreshold
         )
     }
 }

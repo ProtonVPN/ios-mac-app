@@ -38,7 +38,7 @@
 
     extension EnvironmentValues {
         /// Defaults to `.live`. The app never sets it, so the static path is reachable only from tests
-        /// (which import this module `@testable` to set it). Internal: `MapGlobeView` is the sole reader,
+        /// (which import this module `@testable` to set it). Internal: `GlobeSurfaceView` is the sole reader,
         /// so the seam cannot leak into production layout code.
         var globeRenderMode: GlobeRenderMode {
             get { self[GlobeRenderModeKey.self] }
@@ -51,13 +51,13 @@
     }
 
     /// The globe drawn as a static image via off-screen Metal read-back. Takes the same fully populated
-    /// `MapGlobeView` value the live path would show and forwards it through the shared `apply(to:)`, so
+    /// `GlobeSurfaceView` value the live path would show and forwards it through the shared `apply(to:)`, so
     /// snapshots see every parameter (sun, Moon, points, stars) rather than a bare-globe subset that would
     /// hide plumbing regressions. Reuses one cached renderer, with its device, pipelines, and baked vertex
     /// buffers, across every render. `apply(to:)` assigns every property, so each render fully resets the
     /// shared state.
     struct StaticGlobeImage: View {
-        let globe: MapGlobeView
+        let globe: GlobeSurfaceView
         let size: CGSize
         let scale: CGFloat
 
@@ -68,7 +68,7 @@
             guard let device = MTLCreateSystemDefaultDevice() else { return nil }
             return GlobeRenderer(
                 device: device,
-                model: WorldGlobe.model,
+                model: GlobeResource.model,
                 oceanColor: MapStyle.oceanColor,
                 colorFormat: GlobeSurface.colorFormat,
                 sampleCount: GlobeSurface.sampleCount
@@ -85,7 +85,7 @@
             }
         }
 
-        private static func render(globe: MapGlobeView, size: CGSize, scale: CGFloat) -> CGImage? {
+        private static func render(globe: GlobeSurfaceView, size: CGSize, scale: CGFloat) -> CGImage? {
             guard let renderer, size.width > 0, size.height > 0 else { return nil }
             globe.apply(to: renderer)
             return renderer.makeImage(size: size, scale: scale)

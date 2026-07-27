@@ -19,7 +19,7 @@
 import SwiftUI
 import Theme
 
-public struct UserMapPin: View {
+public struct ConnectionPin: View {
     let mode: Mode
 
     @Environment(\.accessibilityReduceMotion) var reduceMotion
@@ -86,7 +86,7 @@ extension View {
     }
 }
 
-public extension UserMapPin {
+public extension ConnectionPin {
     enum Mode: CaseIterable {
         case exitConnected
         case connecting
@@ -148,11 +148,11 @@ private enum AnimationPhase: CaseIterable {
 
 #if compiler(>=6)
     #Preview {
-        @Previewable @State var mode: UserMapPin.Mode = .exitConnected
+        @Previewable @State var mode: ConnectionPin.Mode = .exitConnected
 
         VStack {
-            UserMapPin(mode: mode)
-            ForEach(UserMapPin.Mode.allCases, id: \.self) { newMode in
+            ConnectionPin(mode: mode)
+            ForEach(ConnectionPin.Mode.allCases, id: \.self) { newMode in
                 Button {
                     withAnimation {
                         mode = newMode

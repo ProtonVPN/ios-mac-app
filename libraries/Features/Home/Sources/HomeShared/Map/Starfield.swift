@@ -32,7 +32,11 @@ import Triangulation
 ///
 /// This type owns only the discrete stars; the Milky Way's diffuse body is a continuous analytic pass in
 /// the renderer (`fragment_skyglow`), because discrete billboards can't make smooth haze without resolving
-/// as discs. The two share the galactic frame, so the star river and the glow coincide.
+/// as discs. The two share the galactic frame — the renderer feeds the shader the same `CelestialConstants`
+/// pole this sampler uses — so the star river and the glow ribbon overlap. Their fine structure comes from
+/// deliberately independent noise fields (seeded gradient noise here, a seedless value-noise FBM in the
+/// shader): neither side reads the other's values, and mirroring one noise implementation across two
+/// languages would only add a pair that could drift.
 ///
 /// Time-independent by design, unlike `SolarSystem`: the whole field is Earth-fixed (no sidereal
 /// rotation), which is physically a fixed-epoch convention but visually indistinguishable, and is what

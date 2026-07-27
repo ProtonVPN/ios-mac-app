@@ -45,8 +45,8 @@ enum CoastSnap {
         countryCode code: String
     ) -> SIMD3<Float> {
         let direction = GlobeGeometry.unitSphere(latitudeDegrees: Float(latitude), longitudeDegrees: Float(longitude))
-        guard let country = WorldGlobe.country(code: code) else { return direction }
-        return WorldGlobe.withMesh { mesh in
+        guard let country = GlobeResource.country(code: code) else { return direction }
+        return GlobeResource.withMesh { mesh in
             snap(direction, to: country, in: mesh)
         }
     }

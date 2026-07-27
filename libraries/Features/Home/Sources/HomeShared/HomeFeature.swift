@@ -391,7 +391,7 @@ private extension HomeFeature {
                 // Tapping the lock/title over the full map exits back to the sheet. Handled here, in the
                 // same transaction as the tap's send, so the view's presentation animation carries through.
                 // The header is inert with the sheet up, so this can't fire there.
-                state.map.selectedCityID = nil
+                state.map.selectedLocationID = nil
                 state.map.presentation = .sheet
                 return .none
             default:
