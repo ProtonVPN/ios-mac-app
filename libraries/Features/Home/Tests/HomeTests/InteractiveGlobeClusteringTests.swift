@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CoreGraphics
+import CustomDump
 import Domain
 import Foundation
 @testable import HomeShared
@@ -50,11 +51,14 @@ struct InteractiveGlobeClusteringTests {
             ProjectedPin(pin: pin("c"), point: CGPoint(x: 300, y: 300)), // far away, stays separate
         ]
 
-        let clusters = clusterPins(projected, within: 44)
+        let clusters = clusterPins(projected, within: PinSelectionModel.collisionThreshold)
 
-        #expect(clusters.count == 2)
-        #expect(clusters.contains { $0.members.count == 2 })
-        #expect(clusters.contains { $0.isSingle })
+        // The whole value, not count-plus-predicates: the loose form also passes if the wrong pair
+        // merged (a+c together and b alone), and a failure here diffs the exact membership.
+        expectNoDifference(clusters, [
+            PinCluster(id: "a|b", center: CGPoint(x: 105, y: 100), members: [pin("a"), pin("b")]),
+            PinCluster(id: "c", center: CGPoint(x: 300, y: 300), members: [pin("c")]),
+        ])
     }
 
     @Test("A cluster's centre is the centroid of its members' screen points")
@@ -64,10 +68,48 @@ struct InteractiveGlobeClusteringTests {
             ProjectedPin(pin: pin("b"), point: CGPoint(x: 120, y: 100)),
         ]
 
-        let clusters = clusterPins(projected, within: 44)
+        let clusters = clusterPins(projected, within: PinSelectionModel.collisionThreshold)
 
-        #expect(clusters.count == 1)
-        #expect(clusters[0].center == CGPoint(x: 110, y: 100))
+        expectNoDifference(clusters, [
+            PinCluster(id: "a|b", center: CGPoint(x: 110, y: 100), members: [pin("a"), pin("b")]),
+        ])
+    }
+
+    @Test("A frozen cluster re-projects its centroid with a newer camera, keeping membership and id")
+    func frozenClusterReprojects() throws {
+        // The fade-out path: membership was frozen when motion began, and each frame re-projects it so
+        // the disc tracks the globe without re-clustering.
+        let members = [pin("a", latitude: 50, longitude: 10), pin("b", latitude: 50, longitude: 12)]
+        let cluster = PinCluster(id: "a|b", center: .zero, members: members) // stale centre from freeze time
+        let framing = GlobeFraming(viewSize: CGSize(width: 390, height: 844), focusHeight: 844, focusTop: 0)
+        let camera = GlobeCamera(
+            orientation: GlobeCamera.orientation(facing: GlobeGeometry.unitSphere(latitudeDegrees: 50, longitudeDegrees: 11)),
+            distance: GlobeFocus.wholeGlobeDistance
+        )
+        let projection = GlobeProjection.make(camera: camera, framing: framing, lightFade: 1)
+
+        let reprojected = try #require(cluster.reprojected(with: projection))
+
+        let a = projection.project(members[0].direction).point
+        let b = projection.project(members[1].direction).point
+        #expect(reprojected.id == "a|b")
+        #expect(reprojected.members == members)
+        #expect(abs(reprojected.center.x - (a.x + b.x) / 2) < 0.001)
+        #expect(abs(reprojected.center.y - (a.y + b.y) / 2) < 0.001)
+    }
+
+    @Test("A frozen cluster wholly behind the globe disappears instead of ghosting at a stale point")
+    func frozenClusterBehindTheLimbDisappears() {
+        let cluster = PinCluster(id: "x", center: .zero, members: [pin("a", latitude: 50, longitude: 10)])
+        let framing = GlobeFraming(viewSize: CGSize(width: 390, height: 844), focusHeight: 844, focusTop: 0)
+        // Camera on the far side of the globe from the member.
+        let camera = GlobeCamera(
+            orientation: GlobeCamera.orientation(facing: GlobeGeometry.unitSphere(latitudeDegrees: -50, longitudeDegrees: -170)),
+            distance: GlobeFocus.wholeGlobeDistance
+        )
+        let projection = GlobeProjection.make(camera: camera, framing: framing, lightFade: 1)
+
+        #expect(cluster.reprojected(with: projection) == nil)
     }
 
     @Test("Tapping a cluster zooms in, centred on its members, never through the sphere")

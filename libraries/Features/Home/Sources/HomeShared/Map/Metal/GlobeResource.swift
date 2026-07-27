@@ -20,6 +20,7 @@ import CoreGraphics
 import Domain
 import Ergonomics
 import Foundation
+import IssueReporting
 import MapModel
 import simd
 
@@ -33,28 +34,44 @@ enum WorldGlobe {
     /// The resource, mapped read-only for the life of the process. `model`'s array fields are zero-copy views into
     /// this mapping, and the renderer adopts it wholesale as a GPU buffer. This memory is mapped for the lifetime of
     /// the app process.
-    private static let mapping: MmapBuffer = {
+    ///
+    /// `nil` when the mapping fails at runtime (descriptor pressure, a truncated file after a bad install) —
+    /// an environmental failure, not a logic error, so it's reported via `reportIssue` and the globe
+    /// degrades to `MapGlobeModel.empty` (ocean only) rather than crashing on first map access. A missing
+    /// bundle resource stays a `fatalError`: that's a malformed build, caught by the first run of anything.
+    private static let mapping: MmapBuffer? = {
         guard let url = resourceURL else {
             fatalError("world-globe.bin missing from HomeShared resources, run `swift run MapBaker`")
         }
         do {
             return try MmapBuffer(readingPath: url.path)
         } catch {
-            fatalError("Failed to map world-globe.bin: \(error)")
+            reportIssue("Failed to map world-globe.bin (\(error)); the globe will render empty")
+            return nil
         }
     }()
 
     static let model: MapGlobeModel<Mapped> = {
-        do {
-            return try mapping.withRawSpan { try MapGlobeCodec.decode(slicing: $0) }
-        } catch {
-            fatalError("Failed to load world-globe.bin: \(error)")
+        switch mapping {
+        case nil:
+            return .empty // already reported by `mapping`
+        case let mapping?:
+            do {
+                return try mapping.withRawSpan { try MapGlobeCodec.decode(slicing: $0) }
+            } catch {
+                reportIssue("Failed to decode world-globe.bin (\(error)); the globe will render empty")
+                return .empty
+            }
         }
     }()
 
     /// Scoped access to the mapped blob backing `model`'s array slices, for adopting the whole region by the GPU.
+    /// With no mapping the body sees an empty region, matching the empty `model`.
     static func withBlob<R>(_ body: (UnsafeRawBufferPointer) -> R) -> R {
-        mapping.withUnsafeBytes(body)
+        switch mapping {
+        case nil: body(UnsafeRawBufferPointer(start: nil, count: 0))
+        case let mapping?: mapping.withUnsafeBytes(body)
+        }
     }
 
     /// Scoped access to the globe's fill mesh
@@ -65,8 +82,13 @@ enum WorldGlobe {
     }
 
     /// The mapping's page-rounded length, the size a whole-region GPU adoption must be created with.
+    /// Zero with no mapping, so an adoption attempt fails over to the renderer's copying path (which
+    /// with the empty `model` produces no buffers, and the renderer init degrades to `nil`).
     static var blobPageAlignedSize: Int {
-        mapping.pageAlignedSize
+        switch mapping {
+        case nil: 0
+        case let mapping?: mapping.pageAlignedSize
+        }
     }
 
     private enum Constants {

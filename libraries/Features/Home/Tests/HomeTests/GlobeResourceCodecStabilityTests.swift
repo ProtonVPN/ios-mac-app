@@ -16,11 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CustomDump
 import Ergonomics
 import Foundation
 @testable import HomeShared
 import MapModel
 import Testing
+import TestingErgonomics
 
 /// The format invariants on real data, which decompose into two halves that together pin the zero-copy
 /// path with no encoder support for slices: the copying decode must be the exact inverse of encode
@@ -37,7 +39,9 @@ struct WorldGlobeCodecStabilityTests {
         let url = try #require(WorldGlobe.resourceURL)
         let data = try Data(contentsOf: url)
         let reencoded = try MapGlobeCodec.encode(MapGlobeCodec.decode(data))
-        #expect(reencoded == data)
+        // `expectSameBytes` rather than `==`: on failure it names the first differing offset instead of
+        // printing two 4-something-megabyte blobs as identical-looking byte counts.
+        expectSameBytes(reencoded, data)
     }
 
     @Test("The zero-copy decode reads the shipped bin identically to the copying decode")
@@ -47,15 +51,15 @@ struct WorldGlobeCodecStabilityTests {
         let mapping = try MmapBuffer(readingPath: url.path)
         let mapped = try mapping.withRawSpan { try MapGlobeCodec.decode(slicing: $0) }
 
+        // `expectNoDifference` on the whole arrays: a single divergent element reports as a structural
+        // diff at its index, not two ~290k-element dumps.
         mapping.withUnsafeBytes { blob in
-            #expect(mapped.fillVertices.elements(in: blob) == copied.fillVertices.elements)
-            #expect(mapped.fillIndices.elements(in: blob) == copied.fillIndices.elements)
-            #expect(mapped.borderSegments.elements(in: blob).map(\.a) == copied.borderSegments.elements.map(\.a))
-            #expect(mapped.borderSegments.elements(in: blob).map(\.b) == copied.borderSegments.elements.map(\.b))
+            expectNoDifference(mapped.fillVertices.elements(in: blob), copied.fillVertices.elements)
+            expectNoDifference(mapped.fillIndices.elements(in: blob), copied.fillIndices.elements)
+            expectNoDifference(mapped.borderSegments.elements(in: blob), copied.borderSegments.elements)
         }
-        #expect(mapped.borderColor == copied.borderColor)
-        #expect(mapped.drawOrder.map(\.fillRange) == copied.drawOrder.map(\.fillRange))
-        #expect(mapped.drawOrder.map(\.borderRange) == copied.drawOrder.map(\.borderRange))
-        #expect(mapped.countries.keys.sorted() == copied.countries.keys.sorted())
+        expectNoDifference(mapped.borderColor, copied.borderColor)
+        expectNoDifference(mapped.drawOrder, copied.drawOrder)
+        expectNoDifference(mapped.countries, copied.countries)
     }
 }

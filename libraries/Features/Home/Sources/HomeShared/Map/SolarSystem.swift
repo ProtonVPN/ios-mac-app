@@ -43,6 +43,12 @@ struct CelestialPresentation {
         self.init(date: now)
     }
 
+    /// A fixed-instant presentation computed once per process, for cheap `@State` declaration defaults
+    /// (SwiftUI evaluates those on every view re-`init`, and the full ephemeris is too expensive for
+    /// that). The owning view replaces it with the real positions on its first task tick, before the
+    /// day/night lighting is ever faded in, so the placeholder instant is never visible.
+    static let placeholder = CelestialPresentation(date: Date(timeIntervalSince1970: 1_781_784_000))
+
     /// Model-space direction toward the sun (the sub-solar point). Drives the day/night terminator and the
     /// sun glow.
     var sunDirection: SIMD3<Float> {

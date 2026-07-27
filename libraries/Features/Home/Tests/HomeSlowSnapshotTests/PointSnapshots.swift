@@ -32,6 +32,9 @@ import UIKit
 /// billboards in the globe's own Metal pass rather than a SwiftUI overlay, so this regression-tests that
 /// they project onto the sphere correctly and cull at the horizon, which can't be eyeballed from the
 /// shader source.
+// Drives the renderer directly with explicit inputs, so no `.dependencies` trait is needed;
+// `.serialized` matches the repo's snapshot-suite convention (one GPU render at a time).
+@Suite("City points", .serialized, .snapshots(record: .missing))
 struct PointSnapshots {
     // GPU-render tolerances, shared across the GPU suites.
     let precision = Self.gpuSnapshotPrecision

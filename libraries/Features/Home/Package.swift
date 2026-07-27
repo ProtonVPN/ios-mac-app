@@ -45,6 +45,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-collections", .upToNextMajor(from: "1.1.4")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.9.0")),
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
         .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
         .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.3")),
@@ -97,6 +98,7 @@ let package = Package(
                 .product(name: "Lottie", package: "lottie-spm"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "Collections", package: "swift-collections"),
@@ -153,12 +155,16 @@ let package = Package(
                 .product(name: "Triangulation", package: "Ergonomics"),
             ]
         ),
+        // Test targets link only the target under test plus test-support products that are not
+        // transitively available from it (linking a transitive dependency again produces duplicate-class
+        // warnings at runtime); modules like Ergonomics, MapModel, and Triangulation import fine through
+        // the tested target.
         .testTarget(
             name: "HomeTests",
             dependencies: [
                 "HomeShared",
-                .product(name: "Ergonomics", package: "Ergonomics"),
                 .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "TestingErgonomics", package: "Ergonomics"),
             ]
         ),
         .testTarget(
@@ -167,6 +173,7 @@ let package = Package(
                 "Home",
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
                 .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
             ]
         ),
         .testTarget(
@@ -175,13 +182,14 @@ let package = Package(
                 "Home",
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
                 .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
             ]
         ),
         .testTarget(
             name: "MapModelTests",
             dependencies: [
                 "MapModel",
-                .product(name: "Ergonomics", package: "Ergonomics"),
+                .product(name: "TestingErgonomics", package: "Ergonomics"),
             ]
         ),
     ]

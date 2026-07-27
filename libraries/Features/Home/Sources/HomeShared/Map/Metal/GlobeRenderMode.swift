@@ -26,7 +26,7 @@
     import SwiftUI
 
     /// How `AnimatableGlobe` draws the globe surface.
-    public enum GlobeRenderMode {
+    enum GlobeRenderMode {
         /// Live `MTKView`, redrawn each frame. What the app uses. Animates the connect transition.
         case live
         /// One synchronous off-screen Metal render per `body`, shown as a static `Image`. Snapshot tests set
@@ -36,10 +36,10 @@
         case staticImage
     }
 
-    public extension EnvironmentValues {
-        /// Defaults to `.live`. The app never sets it, so the static path is reachable only from tests.
-        /// `public` so the host screen in the platform module can also frame its map synchronously during
-        /// off-screen capture.
+    extension EnvironmentValues {
+        /// Defaults to `.live`. The app never sets it, so the static path is reachable only from tests
+        /// (which import this module `@testable` to set it). Internal: `MapGlobeView` is the sole reader,
+        /// so the seam cannot leak into production layout code.
         var globeRenderMode: GlobeRenderMode {
             get { self[GlobeRenderModeKey.self] }
             set { self[GlobeRenderModeKey.self] = newValue }

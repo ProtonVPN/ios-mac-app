@@ -68,8 +68,8 @@ extension DoHVPN {
     convenience init(alternativeRouting: Bool, customHost: String?, atlasSecret: String?) {
         @SharedReader(.connectionState) var connectionState
         self.init(
-            apiHost: ObfuscatedConstants.apiHost,
-            verifyHost: ObfuscatedConstants.humanVerificationV3Host,
+            apiHost: "",
+            verifyHost: "",
             alternativeRouting: alternativeRouting,
             customHost: customHost,
             atlasSecret: atlasSecret,

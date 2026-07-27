@@ -251,6 +251,7 @@ public struct HomeFeature {
         CombineReducers {
             lifecycleAndObservationReducer
             recentsAndSharedPropertiesReducer
+            mapReducer
             connectionCommandsReducer
             connectionCardReducer
             destinationReducer
@@ -369,6 +370,15 @@ private extension HomeFeature {
             case let .recents(.delegate(.upsellTapped(type))):
                 state.destination = .payments(.init(upsellModalType: upsellModalType(from: type)))
                 return .none
+            default:
+                return .none
+            }
+        }
+    }
+
+    var mapReducer: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
             case let .map(.delegate(.connect(spec))):
                 // Tapping a location pin connects, through the same command pipeline as recents and the card.
                 connectionCommandClient.send(.connect(spec, nil, .map))
@@ -376,6 +386,13 @@ private extension HomeFeature {
             case .map(.delegate(.showUpsell)):
                 // Free users can't pick a location, so surface the upsell.
                 state.destination = .payments(.init(upsellModalType: allCountriesUpsellModalType()))
+                return .none
+            case .connectionStatus(.headerTapped):
+                // Tapping the lock/title over the full map exits back to the sheet. Handled here, in the
+                // same transaction as the tap's send, so the view's presentation animation carries through.
+                // The header is inert with the sheet up, so this can't fire there.
+                state.map.selectedCityID = nil
+                state.map.presentation = .sheet
                 return .none
             default:
                 return .none

@@ -104,6 +104,28 @@ struct PinCluster: Identifiable, Equatable {
         members.count == 1
     }
 
+    /// The same membership re-projected with a newer camera: the disc keeps tracking the globe (and keeps
+    /// its count label) while it fades out, without re-clustering, so the grouping can't flicker mid-fade.
+    /// Members that rotated behind the limb drop out of the centroid; a cluster wholly behind the globe
+    /// returns nil and disappears.
+    func reprojected(with projection: GlobeProjection) -> PinCluster? {
+        var sum = CGPoint.zero
+        var frontCount = 0
+        for member in members {
+            let projected = projection.project(member.direction)
+            guard projected.isFront else { continue }
+            sum.x += projected.point.x
+            sum.y += projected.point.y
+            frontCount += 1
+        }
+        guard frontCount > 0 else { return nil }
+        return PinCluster(
+            id: id,
+            center: CGPoint(x: sum.x / CGFloat(frontCount), y: sum.y / CGFloat(frontCount)),
+            members: members
+        )
+    }
+
     /// Where to fly the camera when this coalesced point is tapped: face the centre of the spherical cap
     /// enclosing every member, and zoom to the distance that fits that cap on screen. The returned
     /// `direction` is the same centre the fit was computed around. Facing anything else, like the members'

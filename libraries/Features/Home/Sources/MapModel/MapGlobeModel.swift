@@ -63,6 +63,22 @@ public struct MapGlobeModel<Storage: BinaryBacking>: Sendable {
     }
 }
 
+public extension MapGlobeModel {
+    /// The empty globe: no geometry, no countries. What a consumer degrades to when the baked resource
+    /// can't be loaded — the renderer then draws only the ocean sphere. `BinaryArray()` is the
+    /// storage-neutral empty, so this is valid under any `Storage`.
+    static var empty: Self {
+        Self(
+            fillVertices: BinaryArray(),
+            fillIndices: BinaryArray(),
+            borderSegments: BinaryArray(),
+            borderColor: .zero,
+            drawOrder: [],
+            countries: [:]
+        )
+    }
+}
+
 public extension MapGlobeModel where Storage == InMemory {
     /// InMemory-storage convenience for the baker and synthetic test models.
     init(
@@ -90,8 +106,16 @@ public extension MapGlobeModel where Storage == InMemory {
 /// Metal-free consumers, the baker and the codec, never touch the shader-types module directly.
 public typealias MapGlobeSegment = MapShaderTypes.MapGlobeSegment
 
+// The C struct can't synthesize Equatable; provided here (its Swift-facing owner) so tests can assert on
+// whole values (`expectNoDifference`) instead of decomposing field by field.
+extension MapGlobeSegment: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.a == rhs.a && lhs.b == rhs.b
+    }
+}
+
 /// One path's geometry, drawn fill-then-border in document order.
-public struct MapGlobeDrawUnit: Sendable {
+public struct MapGlobeDrawUnit: Equatable, Sendable {
     public let color: SIMD4<Float>
     public let fillRange: Range<Int> // into MapGlobeModel.fillIndices
     public let borderRange: Range<Int> // into MapGlobeModel.borderSegments
@@ -115,7 +139,7 @@ public struct MapGlobeDrawUnit: Sendable {
 }
 
 /// Per-country lookup for highlighting and for rotating the globe to face the country.
-public struct MapGlobeCountry: Sendable {
+public struct MapGlobeCountry: Equatable, Sendable {
     /// Bounding cap on the sphere: its centre is the direction to rotate toward so the country faces the
     /// camera, and its radius is the half-angle the camera zooms to fit. Baked alongside the geometry.
     public let cap: SphericalCap

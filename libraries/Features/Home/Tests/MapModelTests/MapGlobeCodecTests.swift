@@ -16,11 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CustomDump
 import Ergonomics
 import Foundation
 @testable import MapModel
 import simd
 import Testing
+import TestingErgonomics
 import Triangulation
 
 // Sample construction uses the owned-array init, so `.elements` resolves everywhere without a blob.
@@ -81,25 +83,14 @@ struct MapGlobeCodecTests {
         let decoded = try MapGlobeCodec.decode(MapGlobeCodec.encode(Self.sample))
         let original = Self.sample
 
-        #expect(decoded.fillVertices.elements == original.fillVertices.elements)
-        #expect(decoded.fillIndices.elements == original.fillIndices.elements)
-        #expect(decoded.borderColor == original.borderColor)
-        #expect(decoded.borderSegments.elements.map(\.a) == original.borderSegments.elements.map(\.a))
-        #expect(decoded.borderSegments.elements.map(\.b) == original.borderSegments.elements.map(\.b))
-
-        #expect(decoded.drawOrder.map(\.color) == original.drawOrder.map(\.color))
-        #expect(decoded.drawOrder.map(\.fillRange) == original.drawOrder.map(\.fillRange))
-        #expect(decoded.drawOrder.map(\.borderRange) == original.drawOrder.map(\.borderRange))
-        #expect(decoded.drawOrder.map(\.borderHalfWidth) == original.drawOrder.map(\.borderHalfWidth))
-        #expect(decoded.drawOrder.map(\.centroid) == original.drawOrder.map(\.centroid))
-
-        #expect(decoded.countries.keys.sorted() == original.countries.keys.sorted())
-        for (code, country) in original.countries {
-            let other = try #require(decoded.countries[code])
-            #expect(other.cap == country.cap)
-            #expect(other.fillRanges == country.fillRanges)
-            #expect(other.borderRanges == country.borderRanges)
-        }
+        // Whole-value assertions: a failure prints a structural diff naming the exact index and field
+        // that diverged, instead of one column of one array.
+        expectNoDifference(decoded.fillVertices.elements, original.fillVertices.elements)
+        expectNoDifference(decoded.fillIndices.elements, original.fillIndices.elements)
+        expectNoDifference(decoded.borderColor, original.borderColor)
+        expectNoDifference(decoded.borderSegments.elements, original.borderSegments.elements)
+        expectNoDifference(decoded.drawOrder, original.drawOrder)
+        expectNoDifference(decoded.countries, original.countries)
     }
 
     @Test("Decode is the exact inverse of encode (byte-stable)")
@@ -107,12 +98,12 @@ struct MapGlobeCodecTests {
         // If any field were dropped, reordered, or mistyped, re-encoding the decoded model would diverge.
         let data = try MapGlobeCodec.encode(Self.sample)
         let reencoded = try MapGlobeCodec.encode(MapGlobeCodec.decode(data))
-        #expect(data == reencoded)
+        expectSameBytes(reencoded, data)
     }
 
     @Test("Encoding is deterministic")
     func deterministic() throws {
-        #expect(try MapGlobeCodec.encode(Self.sample) == MapGlobeCodec.encode(Self.sample))
+        expectSameBytes(try MapGlobeCodec.encode(Self.sample), try MapGlobeCodec.encode(Self.sample))
     }
 
     @Test("Round-trips the empty model")

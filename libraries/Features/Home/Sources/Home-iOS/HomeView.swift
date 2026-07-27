@@ -41,8 +41,6 @@ public struct HomeView: View {
     }
 
     private enum Constants {
-        /// The animation between sheet and full map, slightly under-damped so the hand-off has some life.
-        static let mapFullSpring = Animation.spring(response: 0.42, dampingFraction: 0.9)
         static let scrollSpace = "homeScroll"
     }
 
@@ -69,27 +67,25 @@ public struct HomeView: View {
 
     @State private var lastScrollOffset: CGFloat = .zero
 
-    @State private var viewHeight: CGFloat = .zero
+    /// The connection card's measured height. The one piece of layout that genuinely needs measuring;
+    /// the map band and the z-index swap threshold derive from it.
     @State private var connectionViewHeight: CGFloat = .zero
-    @State private var swapThreshold: CGFloat = .zero
-    @State private var mapHeight: CGFloat = .zero
 
-    /// False shows the normal home, card and recents up with the map peeking above them. True hides them,
-    /// leaving the map full-screen and interactive with only the tint, lock, and title over it.
-    @State private var isMapFull = false
+    /// Sheet mode shows the normal home, card and recents up with the map peeking above them. The full map
+    /// hides them, leaving the map interactive with only the tint, lock, and title over it. Feature state
+    /// (every gesture that flips it goes through the store); this view just lays out accordingly.
+    private var isMapFull: Bool {
+        store.map.presentation == .full
+    }
+
     /// Gates the pull-to-collapse so one over-pull collapses once, re-arming when the pull relaxes back to
     /// the top. This prevents repeat triggers from a single sustained pull. Starts disarmed so a transient
     /// large pull during the first layout pass can't collapse to the full map on launch. It only arms once
-    /// a genuine at-rest reading is seen.
+    /// a genuine at-rest reading is seen. Stays view-local: it's gesture mechanics fed by per-frame scroll
+    /// preferences, not domain state — only the discrete trigger reaches the store.
     @State private var collapseArmed = false
 
     @SharedReader(.userTier) private var userTier: VpnTier?
-
-    #if DEBUG
-        /// `.staticImage` only while snapshot testing, the app never sets it. Lets `resolvedMapHeight` frame
-        /// the map synchronously during off-screen capture.
-        @Environment(\.globeRenderMode) private var globeRenderMode
-    #endif
 
     @Namespace private var topID
 
@@ -105,13 +101,9 @@ public struct HomeView: View {
         case enabledConnectionStatus
     }
 
-    private func calculateMapHeight() {
-        mapHeight = framedMapHeight(viewHeight: viewHeight)
-        swapThreshold = mapHeight - connectionViewHeight - Dimensions.bottomGradientHeight
-    }
-
-    /// The map peek height for a given container height. Factored out of `calculateMapHeight` so the DEBUG
-    /// snapshot path can compute it synchronously from live geometry.
+    /// The map peek height for a given container height: what remains above the connection card and the
+    /// recents peek. Derived synchronously from live geometry in `body` — the same single code path frames
+    /// the map in the app and in off-screen snapshot capture.
     private func framedMapHeight(viewHeight: CGFloat) -> CGFloat {
         let hasRecents = !store.recents.recentConnectionList.isEmpty
         let isFree = userTier.isFree
@@ -119,52 +111,8 @@ public struct HomeView: View {
         return max(0, viewHeight - (connectionViewHeight + recentPeek))
     }
 
-    /// The height handed to the map's framing. Normally the measured `mapHeight`, but during off-screen
-    /// snapshot capture `onAppear` hasn't run to seed `viewHeight`, so `mapHeight` is still 0 and the globe
-    /// would be unframed, leaving a black map. In that DEBUG-only path, derive the height synchronously from
-    /// the live geometry instead so the globe is framed exactly as in the live app.
-    private func resolvedMapHeight(_ proxy: GeometryProxy) -> CGFloat {
-        #if DEBUG
-            if globeRenderMode == .staticImage {
-                return framedMapHeight(viewHeight: proxy.size.height)
-            }
-        #endif
-        return mapHeight
-    }
-
-    /// Distance from the screen top to this view, the status-bar inset the map bleeds up under. During
-    /// off-screen snapshot capture the host window sits at a large global offset, so the `.global` minY
-    /// balloons into the tens of thousands and the map's render canvas blows past Metal's texture limit,
-    /// leaving the visible area black. The snapshot config has a zero safe area, so the inset is simply 0
-    /// in that DEBUG path.
-    private func resolvedTopInset(_ proxy: GeometryProxy) -> CGFloat {
-        #if DEBUG
-            if globeRenderMode == .staticImage { return 0 }
-        #endif
-        return proxy.frame(in: .global).minY
-    }
-
-    private func setMapFull(_ full: Bool) {
-        guard isMapFull != full else { return }
-        withAnimation(Constants.mapFullSpring) {
-            isMapFull = full
-        }
-    }
-
     public var body: some View {
         contentWithSheets
-            .onChange(of: store.recents.recentConnectionList) {
-                calculateMapHeight()
-            }
-            .onChange(of: userTier) {
-                calculateMapHeight()
-            }
-            .onChange(of: connectionViewHeight) {
-                calculateMapHeight()
-            }
-            .onChange(of: viewHeight) {
-                calculateMapHeight()
-            }
             .onAppear {
                 store.send(.onAppear)
             }
@@ -188,10 +136,9 @@ public struct HomeView: View {
 
     private var content: some View {
         GeometryReader { proxy in
-            // Distance from the screen top to this view (notch / status bar). The map bleeds up by this
-            // much (`.ignoresSafeArea(.top)`) and the globe's focus region is offset down by the same, so
-            // the map fills behind the status bar while the country stays put in the visible area.
-            let topInset = resolvedTopInset(proxy)
+            // The map band above the sheet, derived synchronously from live geometry. One code path frames
+            // the map in the app and in off-screen snapshot capture alike.
+            let mapHeight = framedMapHeight(viewHeight: proxy.size.height)
             // The full-screen map lives in the stack's `.background` (applied below) rather than as a child.
             // Its canvas draws taller than the safe area, spilling under the tab bar, and must stay
             // layout-neutral. As a child it would size the ZStack and drag the ScrollView's last Recents row
@@ -201,9 +148,7 @@ public struct HomeView: View {
                 // the grey Advanced-kill-switch blocking overlay (see its `.killSwitchActive` branch).
                 ConnectionStatusView(
                     store: store.scope(state: \.connectionStatus, action: \.connectionStatus),
-                    compact: isMapFull,
-                    // In the full map, tapping the lock/title exits back to the normal view.
-                    onTap: isMapFull ? { setMapFull(false) } : nil
+                    compact: isMapFull
                 )
                 .zIndex(connectionStatusZIndex.rawValue)
 
@@ -212,11 +157,13 @@ public struct HomeView: View {
                         ZStack(alignment: .bottom) {
                             Spacer().frame(height: mapHeight) // Leave transparent space for the map
                                 .id(topID)
-                                .background(trackScrollPosition())
+                                .background(trackScrollPosition(
+                                    swapThreshold: mapHeight - connectionViewHeight - Dimensions.bottomGradientHeight
+                                ))
                                 .overlay(pullToCollapseReader())
                                 // Tapping the map peek collapses the sheet to the full interactive map.
                                 .contentShape(Rectangle())
-                                .onTapGesture { setMapFull(true) }
+                                .onTapGesture { store.send(.map(.mapPeekTapped), animation: .mapPresentation) }
                             LinearGradient(
                                 gradient: Gradient(colors: [.clear, Color(.background)]),
                                 startPoint: .top,
@@ -251,10 +198,10 @@ public struct HomeView: View {
                     .onChange(of: store.connectionState, to: \.connecting) { _, _ in
                         scrollViewProxy.scrollTo(topID)
                     }
-                    .onChange(of: isMapFull) { _, full in
+                    .onChange(of: store.map.presentation) { _, presentation in
                         // Reset to the top when the sheet returns, so it never reappears stuck at the
                         // over-pulled offset that collapsed it.
-                        if !full { scrollViewProxy.scrollTo(topID, anchor: .top) }
+                        if presentation == .sheet { scrollViewProxy.scrollTo(topID, anchor: .top) }
                     }
                 }
                 .zIndex(ZIndex.connectionCardAndRecents.rawValue)
@@ -272,9 +219,7 @@ public struct HomeView: View {
                             .contentShape(Rectangle())
                             .gesture(
                                 DragGesture(minimumDistance: Dimensions.returnSwipeMinimumDistance)
-                                    .onEnded { value in
-                                        if value.translation.height < Dimensions.returnSwipeTrigger { setMapFull(false) }
-                                    }
+                                    .onEnded { returnStripSwiped($0) }
                             )
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -289,25 +234,25 @@ public struct HomeView: View {
             // when full the scroll stops hit-testing so gestures fall through to the map. The framed height
             // is the same either way, so the globe stays put and only the unclipped spill below it grows.
             .background(alignment: .top) {
-                HomeMapView(
-                    store: store.scope(state: \.map, action: \.map),
-                    availableHeight: isMapFull ? proxy.size.height + topInset : resolvedMapHeight(proxy),
-                    availableWidth: proxy.size.width,
-                    renderHeight: proxy.size.height + topInset + Dimensions.mapBottomBleed,
-                    topInset: topInset,
-                    interactive: isMapFull,
-                    onBackgroundTap: { setMapFull(false) }
-                )
-                .frame(width: proxy.size.width, height: proxy.size.height + topInset + Dimensions.mapBottomBleed, alignment: .top)
+                // A reader spanning the ignored safe areas reports the real device insets synchronously —
+                // `safeAreaInsets.top` is the notch/status-bar inset the map bleeds up under (and the
+                // globe's focus region is offset down by), zero in the zero-inset snapshot host. Unlike
+                // `.global` frame coordinates, it can't balloon in an off-screen render window, so the one
+                // expression serves both the app and snapshot capture.
+                GeometryReader { full in
+                    let topInset = full.safeAreaInsets.top
+                    HomeMapView(
+                        store: store.scope(state: \.map, action: \.map),
+                        availableHeight: isMapFull ? proxy.size.height + topInset : mapHeight,
+                        availableWidth: proxy.size.width,
+                        renderHeight: proxy.size.height + topInset + Dimensions.mapBottomBleed,
+                        topInset: topInset
+                    )
+                    .frame(width: proxy.size.width, height: proxy.size.height + topInset + Dimensions.mapBottomBleed, alignment: .top)
+                }
                 .ignoresSafeArea(.container, edges: [.top, .bottom])
             }
             .background(Color(.background).ignoresSafeArea())
-            .onAppear {
-                viewHeight = proxy.size.height
-            }
-            .onChange(of: proxy.size.height) { _, height in
-                viewHeight = height
-            }
             .task {
                 // Present a pending one-time announcement whenever the stored announcements change
                 @Dependency(\.announcementManager) var announcementManager
@@ -322,7 +267,7 @@ public struct HomeView: View {
 
     // MARK: - Private view helpers
 
-    private func trackScrollPosition() -> some View {
+    private func trackScrollPosition(swapThreshold: CGFloat) -> some View {
         GeometryReader { inner in
             Color.clear
                 .preference(
@@ -332,14 +277,22 @@ public struct HomeView: View {
         }
         .onPreferenceChange(ScrollOffsetPreferenceKey.self) { scrollOffset in
             if abs(lastScrollOffset - scrollOffset) > Dimensions.bottomGradientHeight {
-                updateConnectionStatusZIndex(scrollOffset)
+                updateConnectionStatusZIndex(scrollOffset, swapThreshold: swapThreshold)
             }
+        }
+    }
+
+    /// The full map's bottom return strip was swiped. An upward swipe past the trigger brings the sheet back.
+    private func returnStripSwiped(_ value: DragGesture.Value) {
+        if value.translation.height < Dimensions.returnSwipeTrigger {
+            store.send(.map(.returnStripSwiped), animation: .mapPresentation)
         }
     }
 
     /// Reads how far the content is pulled down past the top of the scroll view, and collapses to the full
     /// map once it exceeds the threshold, which is only possible by over-pulling at the very top. Normal
-    /// scrolling keeps the value at or below zero, so the two gestures don't fight.
+    /// scrolling keeps the value at or below zero, so the two gestures don't fight. The hysteresis
+    /// (`collapseArmed`) is view-local gesture mechanics; only the discrete trigger reaches the store.
     private func pullToCollapseReader() -> some View {
         GeometryReader { inner in
             Color.clear
@@ -352,13 +305,13 @@ public struct HomeView: View {
             if pull < Dimensions.pullRearmThreshold { collapseArmed = true }
             if !isMapFull, collapseArmed, pull > Dimensions.pullToCollapseThreshold {
                 collapseArmed = false
-                setMapFull(true)
+                store.send(.map(.sheetPulledDown), animation: .mapPresentation)
             }
         }
     }
 
     /// Update the Z-index of the connection status view. This allows us to enable the user interaction of upsell banners and netshields stats.
-    private func updateConnectionStatusZIndex(_ scrollOffset: Double) {
+    private func updateConnectionStatusZIndex(_ scrollOffset: Double, swapThreshold: CGFloat) {
         lastScrollOffset = scrollOffset
         if scrollOffset < -swapThreshold, connectionStatusZIndex == .enabledConnectionStatus {
             connectionStatusZIndex = ZIndex.disabledConnectionStatus

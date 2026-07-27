@@ -22,18 +22,16 @@ import simd
 import SwiftUI
 import Triangulation
 
-/// Pin selection and connect-pill state for the interactive map: which city is selected, the pill's
-/// grow/collapse/cross-fade progress, and the zoom floor derived from the pin set. A view-owned
-/// `@Observable` model.
+/// Connect-pill presentation state for the interactive map: the pill's grow/collapse/cross-fade progress,
+/// and the zoom floor derived from the pin set. A view-owned `@Observable` model.
 ///
-/// Unlike `GlobeTrackballModel`, this model touches SwiftUI: the pill reveal is animation state, so
-/// `applySelectionChange` runs the `withAnimation` itself. The view still resolves the `Animation?`, since
-/// `reduceMotion` only exists in the environment, and fires the change from `onChange(of: selectedCity)`.
+/// The *selection itself* is feature state (`HomeMapFeature.State.selectedCityID`); this model owns only
+/// its animated presentation. The view forwards each selection change via `selectionChanged(to:animation:)`
+/// from `onChange(of: store.selectedCityID)`, resolving the `Animation?` itself since `reduceMotion` only
+/// exists in the environment. Unlike `GlobeTrackballModel`, this model touches SwiftUI: the pill reveal is
+/// animation state, so it runs the `withAnimation` itself.
 @Observable
 final class PinSelectionModel {
-    /// The selected city. Tapping a pin selects it and shows its label. Tapping the label connects. The view
-    /// calls `applySelectionChange` whenever this changes, and any camera movement clears it.
-    var selectedCity: CityPin?
     /// The city the pill is displayed for. Kept through the collapse so the pill stays positioned over its
     /// pin until `pillReveal` reaches 0, at which point it stops rendering and the underlying dot takes over.
     private(set) var pillCity: CityPin?
@@ -43,6 +41,9 @@ final class PinSelectionModel {
     /// reveal so both can animate at once.
     private(set) var outgoingCity: CityPin?
     private(set) var outgoingReveal: CGFloat = 0
+    /// Monotonic token for the one-frame deferred grow: a selection change that lands during the deferral
+    /// bumps it, so the stale grow is dropped instead of overruling the newer transition.
+    private var revealGeneration = 0
     /// Smallest angular separation in radians between any two city pins. Drives how deep `minZoomDistance`
     /// allows zooming. `.pi` when there is nothing to separate.
     private var closestCityAngle: Float = .pi
@@ -68,9 +69,10 @@ final class PinSelectionModel {
     // MARK: - Pill choreography
 
     /// Grows the pill in on select, collapses it on deselect, and cross-fades when switching directly
-    /// between two pills. The view triggers this on every `selectedCity` change with an already-resolved
-    /// `animation`, since `reduceMotion` only exists in the environment.
-    func applySelectionChange(animation: Animation?) {
+    /// between two pills. The view forwards every `store.selectedCityID` change here, with the pin already
+    /// resolved and the `animation` already decided (since `reduceMotion` only exists in the environment).
+    func selectionChanged(to selectedCity: CityPin?, animation: Animation?) {
+        revealGeneration += 1
         if let selectedCity {
             // Switching directly from another visible pill: collapse it into its point while the new one
             // grows, rather than swapping hard.
@@ -84,12 +86,12 @@ final class PinSelectionModel {
             // (1 when switching), so growing in the same tick would skip the animation. Deferring one
             // runloop turn makes it a real 0 to 1.
             pillReveal = 0
-            let revealed = selectedCity
+            let generation = revealGeneration
             DispatchQueue.main.async { [self] in
-                // A change in the same tick (a deselect, or a switch to another city) queues its own
-                // transition. This deferred grow must not overrule it and leave a pill up with nothing
-                // selected.
-                guard self.selectedCity?.id == revealed.id else { return }
+                // A change during the deferral (a deselect, or a switch to another city) queued its own
+                // transition and bumped the generation. This stale grow must not overrule it and leave a
+                // pill up with nothing selected.
+                guard revealGeneration == generation else { return }
                 withAnimation(animation) { pillReveal = 1 }
             }
         } else {

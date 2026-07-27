@@ -88,6 +88,24 @@ final class ServerGroupAggregateTests: TestIsolatedDatabaseTestCase {
         XCTAssertEqual(groups[1].kind, .city(name: "Paris", code: "FR"))
     }
 
+    func testCityGroupResolvesTranslationWhenOnlySomeServersCarryOne() throws {
+        // Regression: `translatedCity` is nullable and must be aggregated (`max`, which skips NULLs)
+        // under the city GROUP BY. A bare column read an arbitrary row here, so a group where only some
+        // logicals carry a translation could nondeterministically fall back to the English name.
+        let servers = [
+            TestData.createMockServer(withID: "CH#1", city: "Geneva", translatedCity: nil),
+            TestData.createMockServer(withID: "CH#2", city: "Geneva", translatedCity: "Genève"),
+            TestData.createMockServer(withID: "CH#3", city: "Geneva", translatedCity: nil),
+        ]
+
+        repository.upsert(servers: servers)
+
+        let group = try XCTUnwrap(repository.getGroups(filteredBy: [], groupedBy: .cityName).first)
+
+        XCTAssertEqual(group.kind, .city(name: "Geneva", code: "CH"))
+        XCTAssertEqual(group.translatedCity, "Genève")
+    }
+
     func testServersWithDifferentCountryAreNotGrouped() throws {
         let differentCountryServers = [
             TestData.createMockServer(withID: "FR#1", countryCode: "FR", city: "Paris"),

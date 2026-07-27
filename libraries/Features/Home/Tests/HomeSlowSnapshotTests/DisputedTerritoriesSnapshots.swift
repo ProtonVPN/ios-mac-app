@@ -31,13 +31,15 @@ import UIKit
 /// Covers the disputed-territory border handling. When a country listed in
 /// `CountriesWithDisputedTerritories.json` is highlighted, the map must not fill it. Instead it drops the
 /// borders it shares with the contested neighbours, so the rendered map takes no stance on the disputed
-/// lines. India is the only such country today. Its borders with China, Pakistan, Bangladesh, and so on
-/// are the contested ones.
+/// lines.
 ///
 /// India already appears in the country and city snapshot sweeps, so the code path runs there, but nothing
 /// there asserts the behavior in isolation. The structural test below pins the logic tolerance-free, and
 /// the A/B snapshot proves the renderer actually omits the borders: the only difference between the two
 /// references is the contested lines.
+// Drives the renderer directly with explicit inputs, so no `.dependencies` trait is needed;
+// `.serialized` matches the repo's snapshot-suite convention (one GPU render at a time).
+@Suite("Disputed territories", .serialized, .snapshots(record: .missing))
 struct DisputedTerritoriesSnapshots {
     // GPU-render tolerances, shared across the GPU suites.
     let precision = Self.gpuSnapshotPrecision

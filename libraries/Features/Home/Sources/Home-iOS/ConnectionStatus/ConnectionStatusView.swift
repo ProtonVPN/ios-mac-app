@@ -36,12 +36,9 @@ public struct ConnectionStatusView: View {
     @Bindable var store: StoreOf<ConnectionStatusFeature>
 
     /// When the map is in full view, only the tint, lock, and title show over it. The NetShield banner,
-    /// which belongs with the connection card, is hidden.
+    /// which belongs with the connection card, is hidden — and the header becomes tappable to exit back
+    /// to the sheet.
     var compact: Bool = false
-
-    /// Invoked when the lock and title are tapped. The full map uses this to exit back to the normal view.
-    /// `nil` leaves the header inert.
-    var onTap: (() -> Void)?
 
     private static let headerHeight: CGFloat = 58
     private static let viewHeight: CGFloat = 200
@@ -156,8 +153,9 @@ public struct ConnectionStatusView: View {
             .allowsHitTesting(false)
 
             VStack(spacing: 0) {
-                // The lock and title. Tapping it runs `onTap`, which exits the full map. Scoped to just this
-                // header, not the banner below, so it never intercepts the banner's own controls.
+                // The lock and title. Over the full map (`compact`), tapping it exits back to the sheet.
+                // Scoped to just this header, not the banner below, so it never intercepts the banner's
+                // own controls.
                 VStack(spacing: 0) {
                     titleView(protectionState: protectionState)
                         .frame(height: Self.headerHeight)
@@ -169,10 +167,11 @@ public struct ConnectionStatusView: View {
                     }
                 }
                 .contentShape(Rectangle())
-                .onTapGesture { onTap?() }
-                // An inert header (no `onTap`) must not eat taps. With the sheet up, the map peek behind it
-                // owns the tap-to-expand, and a no-op gesture here would dead-zone the title area.
-                .allowsHitTesting(onTap != nil)
+                .onTapGesture { store.send(.headerTapped, animation: .mapPresentation) }
+                // Only tappable over the full map. With the sheet up, the header must not eat taps: the
+                // map peek behind it owns tap-to-expand, and when scrolled, the connection card's own
+                // controls can sit under this area.
+                .allowsHitTesting(compact)
                 if !compact {
                     ConnectionStatusBanner(store: store.scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner))
                         .background(
@@ -239,5 +238,16 @@ public struct ConnectionStatusView: View {
     return ConnectionStatusView(store: Store(initialState: .init()) {
         ConnectionStatusFeature()
     })
+    .background(Color.black)
+}
+
+#Preview("full map header (compact)", traits: .sizeThatFitsLayout) {
+    @SharedReader(.protectionState) var protectionState: ProtectionState = .protected
+    return ConnectionStatusView(
+        store: Store(initialState: .init()) {
+            ConnectionStatusFeature()
+        },
+        compact: true
+    )
     .background(Color.black)
 }

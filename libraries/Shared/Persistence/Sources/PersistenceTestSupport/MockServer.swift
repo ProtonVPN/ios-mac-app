@@ -25,6 +25,7 @@ public enum TestData {
         name: String? = nil,
         countryCode: String = "CH",
         city: String? = nil,
+        translatedCity: String? = nil,
         tier: Int = 0,
         load: Int = 0,
         score: Double = 1,
@@ -45,7 +46,7 @@ public enum TestData {
                 city: city,
                 state: nil,
                 hostCountry: nil,
-                translatedCity: nil,
+                translatedCity: translatedCity,
                 latitude: 47.22,
                 longitude: 8.32,
                 gatewayName: nil

@@ -122,7 +122,7 @@ public final class AppDelegateService: AppDelegateProtocol {
 
             if VPNFeatureFlagType.sentry.enabled {
                 SentryHelper.setupSentry(
-                    dsn: ObfuscatedConstants.sentryDsniOS,
+                    dsn: "",
                     isEnabled: {
                         @SharedReader(.telemetryCrashReports) var telemetryCrashReports
                         return telemetryCrashReports == String(true)

@@ -29,6 +29,10 @@ struct ConnectPill: View, Animatable {
     let city: CityPin
     /// Projected pin location, or `nil` when the pin is behind the globe.
     let center: CGPoint?
+    /// The app's layout direction for the flag-and-label content. The overlay pins its whole subtree to
+    /// LTR so projected positions don't mirror, and hands the real direction back through here so the
+    /// text still reads naturally in RTL locales.
+    var contentLayoutDirection: LayoutDirection = .leftToRight
     /// Called when the pill is tapped. The overlay turns hit testing off for the outgoing pill, so only the selected
     /// city's pill can fire this.
     var onTap: () -> Void = {}
@@ -77,6 +81,7 @@ struct ConnectPill: View, Animatable {
                 .lineLimit(1)
                 .fixedSize()
         }
+        .environment(\.layoutDirection, contentLayoutDirection)
         .opacity(ramp(reveal, from: Constants.contentFadeStart, to: Constants.contentFadeEnd))
         .padding(.horizontal, Dimensions.horizontalPadding)
         .frame(height: Dimensions.height)

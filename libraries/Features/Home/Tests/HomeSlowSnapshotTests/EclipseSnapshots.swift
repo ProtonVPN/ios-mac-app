@@ -39,6 +39,9 @@ private let eclipseOffsetsMinutes = [-60, -30, 0, 30, 60]
 /// event is sampled as a time series around greatest eclipse, verifying the shadow's motion rather than a
 /// single lucky frame. Drives the real `Meeus` positions into the eclipse shaders, with the camera aimed
 /// precisely at each event, which the app's own country-driven camera can't do.
+// Explicit dates are passed straight to `Meeus`, so no `.dependencies` trait is needed; `.serialized`
+// matches the repo's snapshot-suite convention (one GPU render at a time).
+@Suite("Eclipses", .serialized, .snapshots(record: .missing))
 struct EclipseSnapshots {
     // GPU-render tolerances, shared across the GPU suites.
     let precision = Self.gpuSnapshotPrecision

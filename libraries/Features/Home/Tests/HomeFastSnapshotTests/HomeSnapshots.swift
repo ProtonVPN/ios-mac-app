@@ -16,9 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Announcement
 import Combine
 import ComposableArchitecture
 import Connection
+import DependenciesTestSupport
 import Domain
 import DomainTestSupport
 import Ergonomics
@@ -34,7 +36,25 @@ import Testing
 import TestingErgonomics
 import VPNAppCore
 
-@Suite("Home", .snapshots(record: .missing))
+// `.serialized` + the `.dependencies` trait give every parameterized case its own dependency context
+// (store construction and view rendering see the same overrides — no per-test `withDependencies`
+// nesting) and keep cases that write `@Shared` globals from interleaving.
+@Suite(
+    "Home",
+    .serialized,
+    .snapshots(record: .missing),
+    .dependencies {
+        $0.serverChangeAuthorizer = .availableValue
+        $0.locale = Locale(identifier: "en")
+        $0.date = .constant(SnapshotEnvironment.date)
+        $0.continuousClock = TestClock()
+        // `HomeView.task` subscribes to the announcements publisher during render; give it an explicit
+        // never-emitting publisher (the `@DependencyClient` placeholder endpoints report when called).
+        var announcementManager = AnnouncementManager()
+        announcementManager.announcementsPublisher = { Empty(completeImmediately: false).eraseToAnyPublisher() }
+        $0.announcementManager = announcementManager
+    }
+)
 struct HomeScreenTests {
     private static let polandServer: Server = .mock(
         country: "PL",
@@ -67,17 +87,20 @@ struct HomeScreenTests {
     let snapshotPrecision = Self.gpuSnapshotPrecision
     let snapshotPerceptualPrecision = Self.gpuPerceptualPrecision
 
-    @Shared(.protectionState) var protectionState
-    @Shared(.connectionState) var connectionState
-    @Shared(.userTier) var userTier
-    @Shared(.userCountry) var userCountry
-    @Shared(.userIP) var userIP
-    @Shared(.netShieldLevel) var netShieldLevel
-    @Shared(.recentConnections) var recents
-
     @Test("Home screen", arguments: [VpnTier.free, VpnTier.paid], homeTestData)
     @MainActor
     func homeScreen(tier: VpnTier, state: (protection: ProtectionState, connection: ConnectionState)) throws {
+        // Declared in the test body, not as suite stored properties: the suite instance is created outside
+        // the `.dependencies` trait's scope, so projections bound there would write to a different shared
+        // storage than the store reads.
+        @Shared(.protectionState) var protectionState
+        @Shared(.connectionState) var connectionState
+        @Shared(.userTier) var userTier
+        @Shared(.userCountry) var userCountry
+        @Shared(.userIP) var userIP
+        @Shared(.recentConnections) var recents
+        @Shared(.netShieldLevel) var netShieldLevel
+
         // Show real NetShield stats in the connected snapshot. `.tunnelStats` is delivered via an async
         // `SharedReader`, which would race the snapshot; overriding it with a constant reader renders the
         // values synchronously and deterministically.
@@ -86,13 +109,18 @@ struct HomeScreenTests {
             value: NetShieldModel(trackersCount: 432, adsCount: 12300, dataSaved: 123_500_000, enabled: true)
         )
 
-        let store = Store(initialState: initialState, reducer: HomeFeature.init) {
-            $0.serverChangeAuthorizer = .availableValue
-            $0.locale = Locale(identifier: "en")
-            $0.date = .constant(Date())
-            $0.continuousClock = TestClock()
-            $0.announcementManager.announcementsPublisher = { Empty(completeImmediately: false).eraseToAnyPublisher() }
-        }
+        // Construct the store BEFORE seeding: `RecentsFeature.State.init` overwrites `.recentConnections` from the
+        // persisted `.recentConnections` key, so a pre-construction write would be clobbered back to empty.
+        // The `.dependencies` suite trait gives this case a fresh dependency context, so these writes
+        // cannot leak into the next case and need no reset.
+        let store = Store(initialState: initialState, reducer: HomeFeature.init)
+        $netShieldLevel.withLock { $0 = .level2 }
+        $recents.withLock { $0 = [.connectionRegion, .connectionSecureCoreFastest, .connectionSecureCore] }
+        $userCountry.withLock { $0 = "PL" }
+        $userIP.withLock { $0 = "1.2.3.4" }
+        $userTier.withLock { $0 = tier }
+        $protectionState.withLock { $0 = state.protection }
+        $connectionState.withLock { $0 = state.connection }
         let size = try #require(ViewImageConfig.iPhone13.size)
         let appView = HomeView(store: store)
             .frame(size)
@@ -102,45 +130,28 @@ struct HomeScreenTests {
             // by the snapshot strategy's `layer.render(in:)`.
             .environment(\.globeRenderMode, .staticImage)
 
-        withDependencies {
-            $0.locale = Locale(identifier: "en")
-            $0.date = .constant(Date())
-            $0.continuousClock = TestClock()
-        } operation: {
-            $netShieldLevel.withLock { $0 = .level2 }
-            $recents.withLock { $0 = [.connectionRegion, .connectionSecureCoreFastest, .connectionSecureCore] }
-            $userCountry.withLock { $0 = "PL" }
-            $userIP.withLock { $0 = "1.2.3.4" }
-            $userTier.withLock { $0 = tier }
-            $protectionState.withLock { $0 = state.protection }
-            $connectionState.withLock { $0 = state.connection }
+        // Derived from the test parameters, never from the shared globals, so a stray write from
+        // elsewhere can't steer this case to another case's reference file.
+        let testName = [
+            tier.isFree ? "Free" : "Paid",
+            state.protection.shortDescription(),
+            state.connection.shortDescription(),
+        ].joined(separator: "-")
 
-            let testName = [
-                tier.isFree ? "Free" : "Paid",
-                protectionState.shortDescription(),
-                connectionState.shortDescription(),
-            ].joined(separator: "-")
+        store.send(.map(.connectionStateUpdated(state.connection)))
 
-            store.send(.map(.connectionStateUpdated(state.connection)))
-
-            // `.fixed` rather than `.sizeThatFits`, so HomeView's GeometryReader sees the real device
-            // height. Otherwise the globe's render height balloons to the measuring proposal.
-            assertSnapshot(
-                of: appView,
-                as: .image(
-                    precision: snapshotPrecision,
-                    perceptualPrecision: snapshotPerceptualPrecision,
-                    layout: .fixed(width: size.width, height: size.height)
-                ),
-                named: "Home",
-                testName: testName
-            )
-
-            // Reset the shared map state so the next test parameter starts from a clean slate.
-            $userCountry.withLock { $0 = nil }
-            $connectionState.withLock { $0 = .disconnected }
-            store.send(.map(.connectionStateUpdated(state.connection)))
-        }
+        // `.fixed` rather than `.sizeThatFits`, so HomeView's GeometryReader sees the real device
+        // height. Otherwise the globe's render height balloons to the measuring proposal.
+        assertSnapshot(
+            of: appView,
+            as: .image(
+                precision: snapshotPrecision,
+                perceptualPrecision: snapshotPerceptualPrecision,
+                layout: .fixed(width: size.width, height: size.height)
+            ),
+            named: "Home",
+            testName: testName
+        )
     }
 }
 

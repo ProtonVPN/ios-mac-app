@@ -65,6 +65,7 @@ let package = Package(
             url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")
         ),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
+        .package(url: "https://github.com/pointfreeco/swift-custom-dump", .upToNextMajor(from: "1.3.0")),
         .package(url: "https://github.com/mxcl/Version", exact: "2.1.0"),
     ],
     targets: [
@@ -131,7 +132,9 @@ let package = Package(
         .target(
             name: "TestingErgonomics",
             dependencies: [
+                "Triangulation", // dump conformances for the geometry types tests assert on
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+                .product(name: "CustomDump", package: "swift-custom-dump"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ],
             path: "Sources/Testing"
@@ -143,7 +146,9 @@ let package = Package(
                 "Triangulation", // NaturalEarthTests exercises the shared projection directly
                 "Version",
                 .product(name: "Clocks", package: "swift-clocks"),
-                .product(name: "Dependencies", package: "swift-dependencies"),
+                // Test targets link DependenciesTestSupport (which re-exports Dependencies), never
+                // Dependencies directly, so the `.dependencies` suite trait is available everywhere.
+                .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
             ]
         ),
         .testTarget(

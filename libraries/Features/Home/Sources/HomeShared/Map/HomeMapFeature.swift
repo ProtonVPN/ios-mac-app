@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 import ComposableArchitecture
 import Connection
 import CoreLocation
@@ -25,6 +26,13 @@ import Persistence
 import SwiftUI
 import VPNAppCore
 
+public extension Animation {
+    /// The spring every `HomeMapFeature.Presentation` change animates with, slightly under-damped so the
+    /// sheet/full-map hand-off has some life. Attached at the `store.send(_:animation:)` call sites so the
+    /// whole layout change (map framing, sheet fade, header compaction) rides one transaction.
+    static let mapPresentation = Animation.spring(response: 0.42, dampingFraction: 0.9)
+}
+
 @Reducer
 public struct HomeMapFeature {
     private enum Constants {
@@ -32,14 +40,41 @@ public struct HomeMapFeature {
         static let mapStateDebounceIntervalInMilliseconds: Int = 50
     }
 
+    /// How the home screen presents the map. Feature state rather than view state so the full map is
+    /// reachable from tests and previews by constructing the state, and so every gesture that changes it
+    /// flows through the reducer.
+    public enum Presentation: Equatable {
+        /// The normal home: connection card and recents up, the map peeking above them, decorative.
+        case sheet
+        /// Full-screen interactive map: the card and recents are hidden, the camera is the user's.
+        case full
+    }
+
     @ObservableState
     public struct State: Equatable {
         public internal(set) var mapState: MapState = .disconnected
-        public internal(set) var pinMode: UserMapPin.Mode = .disconnected
 
-        /// Connectable locations shown as grey pins when the map is in interactive (full) view. Loaded once
-        /// when observation starts.
+        /// How the user/connection pin renders. Derived from `mapState` (the two can never disagree).
+        public var pinMode: UserMapPin.Mode {
+            mapState.pinMode
+        }
+
+        /// Whether the map is the peek behind the home sheet or the full interactive view.
+        public internal(set) var presentation: Presentation = .sheet
+
+        /// The city pin selected in the full map (its connect pill is showing), or nil. Stored as the ID;
+        /// `selectedCity` resolves it against the current pin set so a refresh can't leave a stale copy.
+        public internal(set) var selectedCityID: CityPin.ID?
+
+        /// Connectable locations shown as grey pins when the map is in interactive (full) view: one per
+        /// city or state group, plus one per gateway. Loaded once when observation starts.
         public internal(set) var cityPins: [CityPin] = []
+
+        /// The selected pin resolved against the current pin set, or nil when nothing is selected (or the
+        /// selected location disappeared in a refresh).
+        public var selectedCity: CityPin? {
+            selectedCityID.flatMap { id in cityPins.first { $0.id == id } }
+        }
 
         var shouldShowPin: Bool {
             if case .connected = connectionState { // we're connected to a known country
@@ -48,11 +83,7 @@ public struct HomeMapFeature {
             return userCountry != nil // or we know the user country
         }
 
-        /// The first map-state update is emitted immediately so the initial render isn't delayed. Later ones
-        /// are debounced to coalesce rapid connection transitions.
-        var hasEmittedInitialMapState = false
-
-        @SharedReader(.connectionState) var connectionState: ConnectionState
+        @SharedReader(.connectionState) public var connectionState: ConnectionState
         @SharedReader(.userCountry) public var userCountry: String?
         @SharedReader(.userTier) public var userTier: Int?
 
@@ -60,9 +91,11 @@ public struct HomeMapFeature {
     }
 
     public enum MapState: Equatable {
-        case connecting(String?)
-        case connectedCoordinates(CLLocationCoordinate2D, String?)
-        case connectingCoordinates(CLLocationCoordinate2D, String?)
+        /// Connected: the exit server's position and country.
+        case connected(coordinates: CLLocationCoordinate2D, code: String?)
+        /// Connecting: the target's position when known (a resolved server, or a spec matching a loaded
+        /// city pin), else nil while only the country is known and the pin waits for the server to resolve.
+        case connecting(coordinates: CLLocationCoordinate2D?, code: String?)
         case disconnected
 
         init(_ connectionState: ConnectionState, cityPins: [CityPin] = []) {
@@ -78,12 +111,15 @@ public struct HomeMapFeature {
                 self = .disconnected
 
             case let .connected(_, connectionData):
-                self = .connectedCoordinates(connectionData.currentPeer.logical.coordinates, connectionData.currentPeer.logical.exitCountryCode)
+                self = .connected(
+                    coordinates: connectionData.currentPeer.logical.coordinates,
+                    code: connectionData.currentPeer.logical.exitCountryCode
+                )
 
             case let .connecting(.resolved(intent), _):
-                self = .connectingCoordinates(
-                    intent.resolvedServer.logical.coordinates,
-                    intent.resolvedServer.logical.exitCountryCode
+                self = .connecting(
+                    coordinates: intent.resolvedServer.logical.coordinates,
+                    code: intent.resolvedServer.logical.exitCountryCode
                 )
 
             case let .connecting(.unresolved(intent), _):
@@ -91,14 +127,11 @@ public struct HomeMapFeature {
                 // If the spec matches a city pin we've already loaded, send the pin straight to its
                 // coordinates, since the resolved server will live in that city anyway. Otherwise keep just
                 // the country code, and the pin parks on the country centre until the server resolves.
-                if let pin = cityPins.first(where: { $0.location == intent.spec.location }) {
-                    self = .connectingCoordinates(
-                        CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude),
-                        intent.spec.countryCode
-                    )
-                } else {
-                    self = .connecting(intent.spec.countryCode)
-                }
+                let pin = cityPins.first { $0.location == intent.spec.location }
+                self = .connecting(
+                    coordinates: pin.map { CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) },
+                    code: intent.spec.countryCode
+                )
 
             case .resolving:
                 // During the resolve window, if we have a prior server, keep the pin on it
@@ -107,7 +140,7 @@ public struct HomeMapFeature {
                 // TODO: ProTUN: think about how to restore the code below so we may have server data available
                 self = .disconnected
 //                if let server {
-//                    self = .connectingCoordinates(server.logical.coordinates, server.logical.exitCountryCode)
+//                    self = .connecting(coordinates: server.logical.coordinates, code: server.logical.exitCountryCode)
 //                } else {
 //                    self = .disconnected
 //                }
@@ -116,11 +149,11 @@ public struct HomeMapFeature {
 
         var pinMode: UserMapPin.Mode {
             switch self {
-            case .connecting:
-                .invisible // Don't show the pin until we resolve the server
-            case .connectedCoordinates:
+            case .connected:
                 .exitConnected
-            case .connectingCoordinates:
+            case .connecting(nil, _):
+                .invisible // Don't show the pin until we resolve the server
+            case .connecting:
                 .connecting
             case .disconnected:
                 .disconnected
@@ -129,11 +162,7 @@ public struct HomeMapFeature {
 
         var code: String? {
             switch self {
-            case let .connecting(code):
-                code
-            case let .connectedCoordinates(_, code):
-                code
-            case let .connectingCoordinates(_, code):
+            case let .connected(_, code), let .connecting(_, code):
                 code
             case .disconnected:
                 nil
@@ -142,26 +171,46 @@ public struct HomeMapFeature {
 
         var coordinates: CLLocationCoordinate2D? {
             switch self {
-            case let .connectedCoordinates(coordinates, _):
+            case let .connected(coordinates, _):
                 coordinates
-            case let .connectingCoordinates(coordinates, _):
+            case let .connecting(coordinates, _):
                 coordinates
-            case .connecting, .disconnected:
+            case .disconnected:
                 nil
             }
         }
     }
 
-    public enum Action: Equatable {
+    public enum Action {
         case observeConnectionState
         case connectionStateUpdated(ConnectionState)
-        case newMapState(MapState)
         case cityPinsLoaded([CityPin])
-        /// A grey location pin was tapped in interactive view.
+
+        // User gestures, named for what was touched. The camera itself stays view-owned (it moves at
+        // frame rate); these carry only the domain effects: presentation and selection.
+        /// A grey location pin was tapped in the full map. Selects it, revealing its connect pill.
         case cityPinTapped(CityPin)
+        /// The selected city's connect pill was tapped. Connects (or upsells) and dismisses the pill.
+        case connectPillTapped(CityPin)
+        /// A coalesced multi-pin disc was tapped. The view zooms the camera; any pill is dismissed.
+        case pinClusterTapped
+        /// The user/connection pin was tapped. The view recenters the camera; any pill is dismissed.
+        case userPinTapped
+        /// A tap on the map that hit no pin: dismisses the pill if one is up, otherwise returns to the sheet.
+        case mapBackgroundTapped
+        /// A drag, pinch, or programmatic camera move started; any pill is dismissed.
+        case mapMoved
+        /// The map peek above the home sheet was tapped: expand to the full map.
+        case mapPeekTapped
+        /// The sheet was over-pulled past the top: expand to the full map.
+        case sheetPulledDown
+        /// The full map's bottom return strip was swiped up: back to the sheet.
+        case returnStripSwiped
+
         case delegate(Delegate)
 
-        public enum Delegate: Equatable {
+        @CasePathable
+        public enum Delegate {
             /// Paid user tapped a location. The parent issues the connect command.
             case connect(ConnectionSpec)
             /// Free user tapped a location. Choosing a location is paid, so route to the upsell.
@@ -169,12 +218,9 @@ public struct HomeMapFeature {
         }
     }
 
-    private enum CancelId {
+    private enum CancelID {
+        case cityPins
         case connectionState
-    }
-
-    private enum IDs {
-        case mapState
     }
 
     @Dependency(\.debounceScheduler) private var scheduler
@@ -184,51 +230,79 @@ public struct HomeMapFeature {
         Reduce { state, action in
             switch action {
             case .observeConnectionState:
-                // Kick off connection-state observation and load the connectable locations (grey pins) once.
+                // Kick off connection-state observation and load the connectable locations (grey pins).
+                // `cancelInFlight` keeps a repeated kick (scene reconstruction) from stacking a duplicate subscription
+                // or re-running the repository sweep concurrently.
                 let repository = serverRepository
+                let debounceInterval = Constants.mapStateDebounceIntervalInMilliseconds
+                let scheduler = scheduler
                 return .merge(
                     .publisher {
-                        state
-                            .$connectionState
-                            .publisher
-                            .receive(on: UIScheduler.shared)
-                            .map(Action.connectionStateUpdated)
+                        // The shared publisher replays the current value on subscription; let that first emission
+                        // through immediately so the initial render isn't delayed, and debounce the rest to coalesce
+                        // rapid connection transitions.
+                        let updates = state.$connectionState.publisher
+                        return Publishers.Merge(
+                            updates.first(),
+                            updates.dropFirst().debounce(for: .milliseconds(debounceInterval), scheduler: scheduler)
+                        )
+                        .receive(on: UIScheduler.shared)
+                        .map(Action.connectionStateUpdated)
                     }
-                    .cancellable(id: CancelId.connectionState),
+                    .cancellable(id: CancelID.connectionState, cancelInFlight: true),
                     .run { send in await send(.cityPinsLoaded(Self.loadCityPins(from: repository))) }
+                        .cancellable(id: CancelID.cityPins, cancelInFlight: true)
                 )
 
             case let .connectionStateUpdated(connectionState):
-                let mapState = MapState(connectionState, cityPins: state.cityPins)
-                let animation: Animation? = UIAccessibility.isReduceMotionEnabled ? nil : .default
-                let effect: Effect<Action> = .send(.newMapState(mapState), animation: animation)
-                // Emit the first update immediately so the initial render isn't delayed. Debounce subsequent
-                // ones to coalesce rapid connection transitions.
-                guard state.hasEmittedInitialMapState else {
-                    state.hasEmittedInitialMapState = true
-                    return effect
-                }
-                return effect.debounce(
-                    id: IDs.mapState,
-                    for: .milliseconds(Constants.mapStateDebounceIntervalInMilliseconds),
-                    scheduler: scheduler
-                )
-
-            case let .newMapState(mapState):
-                state.pinMode = mapState.pinMode
-                state.mapState = mapState
-                // The view derives the highlight from this state. No imperative map mutation is needed.
+                // The view derives the highlight, camera, and pin from this state, animating the change
+                // itself (`.animation(value:)`); no reducer-side animation or imperative map mutation.
+                state.mapState = MapState(connectionState, cityPins: state.cityPins)
                 return .none
 
             case let .cityPinsLoaded(pins):
                 state.cityPins = pins
+                // `MapState` derives from the pins as well: the unresolved-connect path parks the user pin
+                // on a loaded city. The load can lose the race against the first connection-state emission
+                // (the shared publisher replays synchronously on subscription), so re-derive here rather
+                // than leaving the pin invisible until the next connection change.
+                state.mapState = MapState(state.connectionState, cityPins: pins)
                 return .none
 
             case let .cityPinTapped(pin):
+                // First tap selects and reveals the pill; the connect happens on the pill tap.
+                state.selectedCityID = pin.id
+                return .none
+
+            case let .connectPillTapped(pin):
+                state.selectedCityID = nil // the pill has done its job
                 if (state.userTier ?? .freeTier).isFreeTier {
                     return .send(.delegate(.showUpsell))
                 }
                 return .send(.delegate(.connect(pin.connectionSpec)))
+
+            case .pinClusterTapped, .userPinTapped, .mapMoved:
+                // Camera moves are view-owned; the domain effect is just that any pill goes away.
+                state.selectedCityID = nil
+                return .none
+
+            case .mapBackgroundTapped:
+                // A miss dismisses the pill if one is up, otherwise reads as "leave the full map".
+                if state.selectedCityID != nil {
+                    state.selectedCityID = nil
+                } else {
+                    state.presentation = .sheet
+                }
+                return .none
+
+            case .mapPeekTapped, .sheetPulledDown:
+                state.presentation = .full
+                return .none
+
+            case .returnStripSwiped:
+                state.selectedCityID = nil // a pill must not survive the exit and greet the next entry
+                state.presentation = .sheet
+                return .none
 
             case .delegate:
                 return .none
@@ -236,43 +310,70 @@ public struct HomeMapFeature {
         }
     }
 
-    /// Reads the connectable standard locations, one entry per city or state group, skipping gateways,
-    /// secure core, and under-maintenance groups, and maps them to grey pins at their aggregated centre.
+    /// Reads the connectable locations — one entry per city or state group, plus one per gateway — skipping
+    /// secure core and under-maintenance groups, and maps them to grey pins at each group's representative
+    /// coordinate (one member server's position; a group's servers are colocated, so any member is close).
     static func loadCityPins(from repository: ServerRepository) -> [CityPin] {
-        repository
-            .getGroups(filteredBy: [.features(.standard), .isNotUnderMaintenance], groupedBy: .cityName)
-            .compactMap { group in
-                let displayName: String
-                let code: String
-                let location: ConnectionSpec.Location
-                switch group.kind {
-                case let .city(name, countryCode):
-                    displayName = name
-                    code = countryCode
-                    location = .city(name: name, code: countryCode, order: .fastest)
-                case let .state(name, countryCode):
-                    displayName = name
-                    code = countryCode
-                    location = .state(name: name, code: countryCode, order: .fastest)
-                case .country, .gateway:
-                    return nil
-                }
-                return CityPin(
-                    id: "\(code)#\(displayName)",
-                    displayName: displayName,
-                    translatedCity: group.translatedCity,
-                    latitude: group.latitude,
-                    longitude: group.longitude,
-                    minTier: group.minTier,
-                    location: location,
-                    // Render on the country's coast if the true coordinate falls just offshore of the
-                    // simplified coastline (Nuuk, Reykjavik). Snaps only within the pin's own country.
-                    direction: CoastSnap.snappedDirection(
-                        latitudeDegrees: group.latitude,
-                        longitudeDegrees: group.longitude,
-                        countryCode: code
-                    )
-                )
-            }
+        // Two sweeps: cities/states (grouped by city, gateways excluded SQL-side), then gateways (grouped
+        // by server type, which yields one group per gateway per country).
+        let cities = repository
+            .getGroups(
+                filteredBy: [.features(.standard), .isNotUnderMaintenance, .kind(.country(code: nil))],
+                groupedBy: .cityName
+            )
+            .compactMap(cityPin(for:))
+        let gateways = repository
+            .getGroups(filteredBy: [.features(.standard), .isNotUnderMaintenance], groupedBy: .serverType)
+            .compactMap(gatewayPin(for:))
+        return cities + gateways
+    }
+
+    private static func cityPin(for group: ServerGroupInfo) -> CityPin? {
+        let displayName: String
+        let code: String
+        let location: ConnectionSpec.Location
+        switch group.kind {
+        case let .city(name, countryCode):
+            displayName = name
+            code = countryCode
+            location = .city(name: name, code: countryCode, order: .fastest)
+        case let .state(name, countryCode):
+            displayName = name
+            code = countryCode
+            location = .state(name: name, code: countryCode, order: .fastest)
+        case .country, .gateway:
+            return nil
+        }
+        return CityPin(
+            id: "\(code)#\(displayName)",
+            displayName: displayName,
+            translatedCity: group.translatedCity,
+            latitude: group.latitude,
+            longitude: group.longitude,
+            minTier: group.minTier,
+            location: location,
+            // Render on the country's coast if the true coordinate falls just offshore of the
+            // simplified coastline (Nuuk, Reykjavik). Snaps only within the pin's own country.
+            direction: CoastSnap.snappedDirection(
+                latitudeDegrees: group.latitude,
+                longitudeDegrees: group.longitude,
+                countryCode: code
+            )
+        )
+    }
+
+    /// A gateway as a pin. The kind carries no country, so the ID is disambiguated by coordinate (a
+    /// same-named gateway with servers in two countries appears as two groups and gets two pins), the
+    /// pill shows no flag, and the position uses the raw coordinate with no coast snap.
+    private static func gatewayPin(for group: ServerGroupInfo) -> CityPin? {
+        guard case let .gateway(name) = group.kind else { return nil }
+        return CityPin(
+            id: "gateway#\(name)@\(group.latitude),\(group.longitude)",
+            displayName: name,
+            latitude: group.latitude,
+            longitude: group.longitude,
+            minTier: group.minTier,
+            location: .gateway(name: name)
+        )
     }
 }
