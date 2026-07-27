@@ -18,6 +18,7 @@
 
 import Dependencies
 import Domain
+import Ergonomics
 @testable import LegacyCommon
 import Persistence
 import PersistenceTestSupport
@@ -34,6 +35,7 @@ final class ServerManagerTests: XCTestCase {
 
     override class func setUp() {
         super.setUp()
+        CheckedFeatureFlagsRepository.shared.markFlagsFetchedForTesting()
         FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.timestampedLogicals, true)
     }
 

@@ -51,8 +51,6 @@ public extension SharedKey where Self == AppStorageKey<Bool>.Default {
 }
 
 public extension SharedKey where Self == AppStorageKey<KillSwitchMode>.Default {
-    /// Three-state kill switch level (Off / Standard / Advanced), the source of truth on iOS. macOS still reads the
-    /// legacy bool ``killSwitch`` key.
     static var killSwitchMode: Self {
         Self[.appStorage(KillSwitchMode.storageKey), default: .off]
     }
@@ -72,8 +70,8 @@ public extension SharedKey {
 
 public extension SharedKey where Self == AppStorageKey<NetShieldType?>.Default {
     static var netShieldLevel: Self {
-        // Key is defined in NetShieldPropertyProviderImplementation in LegacyCommon. Username is normally added via an
-        // extension of UserDefaults in VPNShared Here we only want to pass the domain user defaults
+        // Key is defined in NetShieldPropertyProvider in NEHelper. Username is normally added via an extension of
+        // UserDefaults in VPNShared Here we only want to pass the domain user defaults
         let key = keyForUser(for: "NetShield")
         return Self[.appStorage(key), default: nil]
     }

@@ -54,9 +54,6 @@ final class StatusMenuViewModel {
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
     @SharedReader(.killSwitchMode) private var killSwitchMode: KillSwitchMode
 
-    /// Advanced KS is *Active* vs merely *Armed*. Blocks the disconnect warning. Advanced kill switch is Active when
-    /// the mode is Advanced and the reported tunnel actually carries the kill switch flag, meaning it is connected with
-    /// it or already blocking.
     private var advancedKillSwitchActive: Bool {
         killSwitchMode.isAdvanced && connectionState.tunnelKillSwitch
     }

@@ -47,7 +47,7 @@ final class HeaderViewModel {
     @Dependency(\.credentialsProvider) var credentials
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.coreAlertService) private var coreAlertService
-    @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
+    @SharedReader(.killSwitchMode) private var killSwitchMode: KillSwitchMode
 
     private var advancedKillSwitchActive: Bool {
         killSwitchMode.isAdvanced && connectionState.tunnelKillSwitch

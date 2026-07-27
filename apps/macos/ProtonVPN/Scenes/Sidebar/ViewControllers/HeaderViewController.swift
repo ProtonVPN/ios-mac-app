@@ -240,8 +240,8 @@ final class HeaderViewController: NSViewController {
             flagView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor),
             flagView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor),
 
-            killSwitchIcon.widthAnchor.constraint(equalToConstant: 24),
-            killSwitchIcon.heightAnchor.constraint(equalToConstant: 24),
+            killSwitchIcon.widthAnchor.constraint(equalToConstant: Dimensions.killSwitchIconSize.width!),
+            killSwitchIcon.heightAnchor.constraint(equalToConstant: Dimensions.killSwitchIconSize.height!),
 
             // Content stack inset within the flag view.
             contentStack.topAnchor.constraint(equalTo: flagView.topAnchor, constant: Dimensions.contentInsetVertical),
@@ -514,5 +514,6 @@ private extension HeaderViewController {
         static let announcementsSize: CGFloat = 24
         static let badgeSize: CGFloat = 6
         static let badgeCornerRadius: CGFloat = 3
+        static let killSwitchIconSize: AppTheme.IconSize = .square(24)
     }
 }

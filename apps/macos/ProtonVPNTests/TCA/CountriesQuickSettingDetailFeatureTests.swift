@@ -26,12 +26,6 @@ import Testing
 
 @MainActor
 struct CountriesQuickSettingDetailFeatureTests {
-    @Shared(.connectionProtocol) var connectionProtocol
-
-    init() {
-        $connectionProtocol.withLock { $0 = .smartProtocol }
-    }
-
     @Test("option tap delegates selected option and type")
     func optionTappedDelegatesSelection() async {
         let store = TestStore(initialState: makeState(type: .netShieldDisplay)) {
@@ -106,6 +100,7 @@ struct CountriesQuickSettingDetailFeatureTests {
 
     @Test("Advanced kill switch option is disabled while IKEv2 is selected")
     func advancedOptionDisabledOverIke() {
+        @Shared(.connectionProtocol) var connectionProtocol
         $connectionProtocol.withLock { $0 = .vpnProtocol(.ike) }
         let state = makeState(type: .killSwitchDisplay)
 
@@ -119,6 +114,7 @@ struct CountriesQuickSettingDetailFeatureTests {
 
     @Test("Advanced kill switch option stays enabled for other protocols")
     func advancedOptionEnabledForOtherProtocols() {
+        @Shared(.connectionProtocol) var connectionProtocol
         $connectionProtocol.withLock { $0 = .smartProtocol }
         let state = makeState(type: .killSwitchDisplay)
 
@@ -132,6 +128,7 @@ struct CountriesQuickSettingDetailFeatureTests {
 
     @Test("Tapping the disabled Advanced option is ignored")
     func advancedTapIgnoredOverIke() async {
+        @Shared(.connectionProtocol) var connectionProtocol
         $connectionProtocol.withLock { $0 = .vpnProtocol(.ike) }
         let store = TestStore(initialState: makeState(type: .killSwitchDisplay)) {
             QuickSettingDetailFeature()

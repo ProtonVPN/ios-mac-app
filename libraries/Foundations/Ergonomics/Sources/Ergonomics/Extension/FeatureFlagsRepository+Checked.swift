@@ -46,11 +46,13 @@ public final class CheckedFeatureFlagsRepository {
         OSAtomicCompareAndSwap32(1, 1, &_hasFetchedFlags)
     }
 
+    #if DEBUG
     /// Test support: marks flags as fetched without a live fetch, so store construction can read them safely. Flags
     /// resolve to their defaults or to any overrides the test sets.
     public func markFlagsFetchedForTesting() {
         OSAtomicCompareAndSwap32(0, 1, &_hasFetchedFlags)
     }
+    #endif
 
     /// Safe wrapper around FeatureFlagsRepository.shared.isEnabled() that asserts if called before fetchFlags()
     public func isEnabled(_ flag: any FeatureFlagTypeProtocol, reloadValue: Bool = false) -> Bool {

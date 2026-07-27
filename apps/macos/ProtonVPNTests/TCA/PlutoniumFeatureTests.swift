@@ -27,6 +27,7 @@ import Testing
 import VPNShared
 import VPNSharedTesting
 
+@Suite(.serialized)
 @MainActor
 struct PlutoniumFeatureTests {
     @Shared(.killSwitchMode) var killSwitchMode

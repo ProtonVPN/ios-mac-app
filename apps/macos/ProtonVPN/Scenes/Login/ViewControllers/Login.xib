@@ -12,6 +12,7 @@
                 <outlet property="loginButton" destination="doA-fK-3JY" id="2p4-B6-fyK"/>
                 <outlet property="loginButtonToSSOButtonVerticalOffset" destination="uKJ-YK-Avt" id="XGz-ZW-Pfv"/>
                 <outlet property="logoImage" destination="lMo-f0-lr7" id="OWj-wd-TpX"/>
+                <outlet property="logoTopConstraint" destination="m33-4C-ROP" id="Lgo-tp-Cns"/>
                 <outlet property="needHelpButton" destination="Mvc-5H-vVI" id="BHA-oa-iTf"/>
                 <outlet property="onboardingView" destination="ehd-hP-OCf" id="ZRf-EI-FaR"/>
                 <outlet property="passwordHorizontalLine" destination="dhf-WW-VSQ" id="Gb8-EQ-wLX"/>

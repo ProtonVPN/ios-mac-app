@@ -655,7 +655,9 @@
                 $0.vpnManagerRepository.prepareManager = { _, _ in manager }
             } operation: {
                 let start = Task {
-                    try await PacketTunnelManager().startTunnel(with: .mock())
+                    try await PacketTunnelManager().startTunnel(
+                        with: .mock(protocolConfiguration: .wireGuard(TunnelSettings.mock))
+                    )
                 }
 
                 // Status posts while the teardown is still in progress must not release the start.

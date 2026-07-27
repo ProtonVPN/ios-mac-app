@@ -390,6 +390,39 @@ struct CountriesQuickSettingsFeatureTests {
         }
     }
 
+    /// Kill switch is mutually exclusive with Plutonium and LAN exclusion.
+    @Test("confirming a protected kill switch mode turns Plutonium off")
+    func killSwitchUpgradeConfirmationDisablesPlutonium() async {
+        @SharedReader(.userTier) var userTier: VpnTier? = .paid
+        @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
+        @Shared(.killSwitchMode) var killSwitchMode: KillSwitchMode
+        $plutonium.withLock { $0 = .enabled(.exclusion) }
+        $killSwitchMode.withLock { $0 = .off }
+
+        let store = makeStore()
+
+        await store.send(.buttonTapped(.killSwitchDisplay)) {
+            $0.destination = .quickSettingDetail(Self.expectedDetail(type: .killSwitchDisplay, from: $0))
+            $0.secureCore.isSelected = false
+            $0.netShield.isSelected = false
+            $0.killSwitch.isSelected = true
+            $0.portForwarding.isSelected = false
+        }
+        await store.send(.destination(.presented(.quickSettingDetail(.delegate(.option(.killSwitchDisplay, .killSwitchStandard)))))) {
+            $0.alert = QuickSettingsFeature.killSwitchUpgradeAlert(from: .off, to: .standard)
+        }
+        await store.send(.alert(.presented(.confirmKillSwitchMode(.standard)))) {
+            $0.alert = nil
+        }
+        await store.receive(\.dismissDetails) {
+            $0.destination = nil
+            $0.killSwitch.isSelected = false
+        }
+
+        #expect(killSwitchMode == .standard)
+        #expect(plutonium == .disabled(.exclusion))
+    }
+
     @Test("netshield option presents hermes conflict alert")
     func netShieldOptionPresentsHermesConflictAlert() async {
         @SharedReader(.userTier) var userTier: VpnTier? = .paid

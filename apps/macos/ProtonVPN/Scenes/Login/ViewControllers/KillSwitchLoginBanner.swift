@@ -61,10 +61,12 @@ final class KillSwitchLoginBanner: NSView {
 
     // MARK: - Public API
 
-    /// Advanced KS is blocking: warning border + "Disable" action.
-    func configureBlocking(onDisable: @escaping () -> Void) {
+    /// Advanced KS is blocking: warning border + "Disable" action. A nil action means the teardown it starts is already
+    /// running, leaving the same message with an inert button.
+    func configureBlocking(onDisable: (() -> Void)?) {
         isHidden = false
         actionHandler = onDisable
+        actionButton.isEnabled = actionHandler != nil // actionHandler is nil when logging out/quitting.
         applyStyle(.warning)
         iconView.image = Theme.Asset.Icons.exclamationTriangleFilled.image
         iconView.contentTintColor = .color(.icon, .warning)
@@ -77,6 +79,7 @@ final class KillSwitchLoginBanner: NSView {
     func configureDisabled(onDismiss: @escaping () -> Void) {
         isHidden = false
         actionHandler = onDismiss
+        actionButton.isEnabled = actionHandler != nil
         applyStyle(.success)
         iconView.image = Theme.Asset.Icons.checkmarkCircleFilled.image
         iconView.contentTintColor = .color(.icon, .success)
@@ -104,7 +107,7 @@ final class KillSwitchLoginBanner: NSView {
 
             messageLabel.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: .themeSpacing8),
             messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: .themeSpacing12),
-            messageLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -.themeSpacing12),
+            messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.themeSpacing12),
 
             actionButton.leadingAnchor.constraint(equalTo: messageLabel.trailingAnchor, constant: .themeSpacing8),
             actionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.themeSpacing12),
