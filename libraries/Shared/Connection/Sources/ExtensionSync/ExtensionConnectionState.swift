@@ -48,6 +48,11 @@ extension ExtensionState {
         }
     }
 
+    public var port: UInt16? {
+        guard case let .connected(peer) = self  else { return nil }
+        return peer.port
+    }
+
     /// Translates the current connection state to a raw int value.
     var connectionState: IPCConnectionState {
         switch self {

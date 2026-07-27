@@ -63,6 +63,7 @@
         static let testPeer = CurrentPeer(
             peerID: "peer-id",
             transport: .udp,
+            port: 51820,
             serverExitV4: "203.0.113.7",
             serverExitV6: "2001:db8::7",
             userISP: "Proton ISP",

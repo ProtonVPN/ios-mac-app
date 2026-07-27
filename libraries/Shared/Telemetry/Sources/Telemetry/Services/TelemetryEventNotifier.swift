@@ -20,45 +20,35 @@ import Combine
 import Connection
 import Dependencies
 import Domain
+import NetworkingErgonomics
 import Foundation
 import Network
 import ProtonCoreFeatureFlags
 import Sharing
 import VPNAppCore
 import VPNShared
+import CasePaths
 
 public class TelemetryEventNotifier {
     typealias ModalSource = UpsellModalSource
 
     @Dependency(\.telemetryService) var telemetryService
-    private let networkMonitor = NetworkPathMonitor.shared
 
     private var cancellables = Set<AnyCancellable>()
+    private var pathUpdatesTask: Task<Void, Never>?
 
     public init() {
         startObserving()
     }
 
     deinit {
-        networkMonitor.stop()
+        pathUpdatesTask?.cancel()
     }
 
     private func startObserving() {
-        @SharedReader(.connectionState) var connectionState: ConnectionState
+        listenToPathUpdates()
 
-        networkMonitor
-            .pathSubject
-            .removeDuplicates()
-            .sink { [weak self] nwPath in
-                self?.reachabilityChanged(nwPath)
-            }.store(in: &cancellables)
-        networkMonitor.start()
-
-        $connectionState.publisher
-            .removeDuplicates()
-            .sink { [weak self] state in
-                self?.connectionStateChanged(state)
-            }
+        connectionStatePublisher
             .store(in: &cancellables)
 
         AppEvent.userInitiatedVPNChange.publisher
@@ -102,18 +92,68 @@ public class TelemetryEventNotifier {
             .store(in: &cancellables)
     }
 
-    private func reachabilityChanged(_ path: NWPath) {
-        let networkType: ConnectionDimensions.NetworkType = if path.usesInterfaceType(.wifi) {
+    private func listenToPathUpdates() {
+        pathUpdatesTask?.cancel()
+
+        pathUpdatesTask = Task {
+            @Dependency(\.pathMonitor) var pathMonitor
+
+            await withTaskCancellationHandler {
+                let stream = pathMonitor.subscribe()
+                pathMonitor.start()
+                for await newPath in stream {
+                    reachabilityChanged(newPath)
+                }
+            } onCancel: {
+                pathMonitor.stop()
+            }
+        }
+    }
+
+    private var connectionStatePublisher: AnyCancellable {
+        @SharedReader(.connectionState) var connectionState
+
+        let publisher = $connectionState.publisher
+            .map { state in
+                if case .killSwitchActive = state {
+                    return ConnectionState.disconnected // For purpose of telemetry killSwitchActive is equivalent to disconnected
+                }
+                return state
+            }
+            .filter { // filter out states that are irrelevant to telemetry
+                switch $0 {
+                case .disconnected, .connected, .connecting: return true
+                default: return false
+                }
+            }
+        return publisher
+            .zip(publisher.dropFirst())
+            .filter { oldValue, newValue in // only consider transitions to a different state, ignore associated values
+                if (newValue.is(\.connected) && !oldValue.is(\.connected))
+                    || (newValue.is(\.disconnected) && !oldValue.is(\.disconnected))
+                    || (newValue.is(\.connecting) && !oldValue.is(\.connecting)) {
+                    true
+                } else {
+                    false
+                }
+            }
+            .sink { [weak self] oldValue, newValue in
+                self?.connectionStateChanged(oldValue: oldValue, newValue: newValue)
+            }
+    }
+
+    private func reachabilityChanged(_ path: NetworkPath) {
+        let networkType: ConnectionDimensions.NetworkType =
+        switch path.interfaceType ?? .other {
+        case .other, .loopback:
+            .other
+        case .wifi:
             .wifi
-        } else if path.usesInterfaceType(.cellular) {
+        case .cellular:
             .mobile
-        } else if path.usesInterfaceType(.wiredEthernet) {
-            .other
-        } else if path.usesInterfaceType(.other) {
-            .other
-        } else if path.usesInterfaceType(.loopback) {
-            .other
-        } else {
+        case .wiredEthernet:
+            .wired
+        @unknown default:
             .other
         }
 
@@ -143,12 +183,12 @@ public class TelemetryEventNotifier {
         }
     }
 
-    private func connectionStateChanged(_ connectionState: ConnectionState) {
+    private func connectionStateChanged(oldValue: ConnectionState, newValue: ConnectionState) {
         Task {
             do {
-                try await telemetryService.connectionStateChanged(connectionState)
+                try await telemetryService.connectionStateChanged(oldValue, newValue)
             } catch {
-                log.debug("No telemetry event triggered for connection change: \(connectionState), error: \(error)", category: .telemetry)
+                log.debug("No telemetry event triggered for connection change: \(newValue.basicDescription), error: \(error)", category: .telemetry)
             }
         }
     }
@@ -227,7 +267,7 @@ public class TelemetryEventNotifier {
 
     private func upsellCompleted(_ notification: Notification) {
         guard let upsellData = notification.object as? UpsellData else {
-            log.assertionFailure("Notification object conversion failed in \(#function)")
+            log.assertionFailure("Notification object conversion failed in \(#function)", category: .telemetry)
             return
         }
         Task {

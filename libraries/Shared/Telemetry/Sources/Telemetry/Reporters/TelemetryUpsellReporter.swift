@@ -87,7 +87,7 @@ public final class TelemetryUpsellReporter {
             dimensions: .init(
                 modalSource: modalSource,
                 userPlan: planName,
-                userTier: CommonTelemetryDimensions.userTier(),
+                userTier: .readFromKeychain(),
                 vpnStatus: vpnStatus,
                 userCountry: userCountry ?? "",
                 daysSinceAccountCreation: Int(daysSinceAccountCreation),

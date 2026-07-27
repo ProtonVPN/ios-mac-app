@@ -84,7 +84,7 @@ public class TelemetryEventScheduler {
         }
         do {
             let response = try await telemetryAPI.flushEvent(event: event.toJSONDictionary(), isBusiness: isBusiness)
-            log.info("Telemetry event sent with response code: \(response.code). Event: \(event)", category: .telemetry)
+            log.info("Event sent with code: \(response.code) \(event) ", category: .telemetry)
         } catch {
             log.warning("Failed to send telemetry event: \(event) with error: \(error), saving to storage.", category: .telemetry)
             try await scheduleEvent(event)
@@ -100,7 +100,7 @@ public class TelemetryEventScheduler {
         } catch {
             throw Error(localizedDescription: "Failed scheduling telemetry event: \(event), error: \(error)")
         }
-        log.debug("Telemetry event scheduled:\n\(String(data: bufferedEvent.data, encoding: .utf8)!)")
+        log.debug("Telemetry event scheduled:\n\(String(data: bufferedEvent.data, encoding: .utf8)!)", category: .telemetry)
     }
 
     /// Send all telemetry events safely, if the closure won't throw an error, the buffer will purge its storage
@@ -108,7 +108,7 @@ public class TelemetryEventScheduler {
         await buffer.scheduledEvents { [telemetryAPI] events in
             do {
                 let response = try await telemetryAPI.flushMultipleEvents(events: events, isBusiness: isBusiness)
-                log.info("Telemetry events sent with response code: \(response.code). Events: \(events)", category: .telemetry)
+                log.info("Events: \(events) sent with code: \(response.code).", category: .telemetry)
             } catch {
                 log.warning("Failed to send scheduled telemetry events, leaving in storage: \(events)", category: .telemetry)
             }

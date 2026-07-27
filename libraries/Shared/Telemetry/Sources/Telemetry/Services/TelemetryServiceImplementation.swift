@@ -22,6 +22,7 @@ import Dependencies
 import Domain
 import Ergonomics
 import Foundation
+import Sharing
 import Timer
 import VPNAppCore
 import VPNShared
@@ -87,6 +88,17 @@ public final class TelemetryServiceImplementation {
         try await telemetryOnboardingReporter?.onboardingEvent(event)
     }
 
+    public func startListeningForPortChanges() {
+        Task {
+            @Dependency(\.extensionIPC) var extensionIPC
+            for await snapshot in extensionIPC.observeExtensionState() {
+                if let port = snapshot.state.port {
+                    await telemetryConnectionStatusReporter?.setPort(port)
+                }
+            }
+        }
+    }
+
     public func startSettingsHeartbeat() {
         Task {
             await telemetrySettingsReporter?.start()
@@ -102,18 +114,20 @@ public final class TelemetryServiceImplementation {
         flowType: UpsellEvent.FlowType?
     ) async throws {
         telemetryConversionReporter?.upsellEvent(event, newPlanName: newPlanName, cycle: cycle)
+        @SharedReader(.connectionState) var connectionState
+
         try await telemetryUpsellReporter?.upsellEvent(
             event,
             modalSource: _modalSource,
             newPlanName: newPlanName,
             offerReference: offerReference,
             flowType: flowType,
-            vpnStatus: telemetryConnectionStatusReporter?.previousConnectionStatus == .connected ? .on : .off
+            vpnStatus: connectionState.is(\.connected) ? .on : .off
         )
     }
 
-    public func connectionStateChanged(_ connectionState: Connection.ConnectionState) async throws {
-        try await telemetryConnectionStatusReporter?.connectionStateChanged(connectionState)
+    public func connectionStateChanged(_ oldValue: Connection.ConnectionState, _ newValue: Connection.ConnectionState) async throws {
+        try await telemetryConnectionStatusReporter?.connectionStateChanged(oldValue, newValue)
     }
 }
 
@@ -131,6 +145,7 @@ extension TelemetryService: DependencyKey {
             onboardingEvent: implementation.onboardingEvent,
             upsellEvent: implementation.upsellEvent,
             startSettingsHeartbeat: implementation.startSettingsHeartbeat,
+            startListeningForPortChanges: implementation.startListeningForPortChanges,
             vpnGatewayConnectionChanged: unimplemented("This is a part of the old connection layer"),
             connectionStateChanged: implementation.connectionStateChanged,
             userInitiatedVPNChange: implementation.userInitiatedVPNChange,

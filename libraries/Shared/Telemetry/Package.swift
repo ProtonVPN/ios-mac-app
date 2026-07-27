@@ -40,6 +40,8 @@ let package = Package(
                 "Domain",
                 "Connection",
                 "ConnectionInventory",
+                .product(name: "ExtensionSync", package: "Connection"),
+                .product(name: "NetworkingErgonomics", package: "Ergonomics"),
                 .product(name: "DictionaryCoder", package: "DictionaryCoder"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "Sharing", package: "swift-sharing"),

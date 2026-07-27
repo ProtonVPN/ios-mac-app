@@ -48,7 +48,7 @@ public class TelemetryOnboardingReporter {
             dimensions: .init(
                 userCountry: userCountry ?? "",
                 userPlan: planName,
-                userTier: CommonTelemetryDimensions.userTier(),
+                userTier: .readFromKeychain(),
                 isCredentiallessEnabled: userIsCredentialLess ? "yes" : "no"
             )
         )

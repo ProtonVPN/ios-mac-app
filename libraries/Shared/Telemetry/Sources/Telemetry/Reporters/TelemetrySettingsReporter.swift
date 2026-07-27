@@ -89,9 +89,9 @@ public final class TelemetrySettingsReporter {
             do {
                 try await sendHeartbeat()
                 $lastSettingsHeartbeat.withLock { $0 = now }
-                log.debug("Settings Heartbeat sent.")
+                log.debug("Settings Heartbeat sent.", category: .telemetry)
             } catch {
-                log.error("Failed to send settings heartbeat: \(error)")
+                log.error("Failed to send settings heartbeat: \(error)", category: .telemetry)
             }
         }
     }
@@ -101,7 +101,7 @@ public final class TelemetrySettingsReporter {
             let dimensions = await SettingsDimensions(
                 defaultConnectionType: defaultConnectionType(),
                 appIcon: .default,
-                userTier: CommonTelemetryDimensions.userTier(),
+                userTier: .readFromKeychain(),
                 widgetCount: widgetCount(),
                 firstWidgetSize: firstWidgetSize(),
                 isIPv6Enabled: .false,
@@ -119,7 +119,7 @@ public final class TelemetrySettingsReporter {
             let dimensions = await SettingsDimensions(
                 defaultConnectionType: defaultConnectionType(),
                 appIcon: .default,
-                userTier: CommonTelemetryDimensions.userTier(),
+                userTier: .readFromKeychain(),
                 widgetCount: widgetCount(),
                 firstWidgetSize: firstWidgetSize(),
                 isIPv6Enabled: .false,
@@ -210,7 +210,7 @@ public final class TelemetrySettingsReporter {
                     return .greaterOrEqualFive
                 }
             } catch {
-                log.error("Error retrieving widget configurations: \(error)")
+                log.error("Error retrieving widget configurations: \(error)", category: .telemetry)
                 return nil
             }
         } else {
@@ -236,7 +236,7 @@ public final class TelemetrySettingsReporter {
                     return nil
                 }
             } catch {
-                log.error("Error retrieving widget configurations: \(error)")
+                log.error("Error retrieving widget configurations: \(error)", category: .telemetry)
                 return nil
             }
         } else {
