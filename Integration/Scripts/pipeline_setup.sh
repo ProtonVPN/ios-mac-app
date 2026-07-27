@@ -17,6 +17,7 @@ git config --global user.name $GIT_CI_USERNAME
 # Add aliases for using the job token when contacting GitLab
 git config --global --add "url.https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}.insteadOf" "https://${CI_SERVER_HOST}"
 git config --global --add "url.https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}.insteadOf" "ssh://git@${CI_SERVER_HOST}"
+git config --global --add "url.https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/.insteadOf" "git@${CI_SERVER_HOST}:"
 
 # Don't fetch secrets unless we're cloning the whole repository, i.e., for a build, or if we're trying to upload
 # localizations
