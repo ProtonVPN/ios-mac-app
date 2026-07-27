@@ -573,6 +573,16 @@ final class PacketTunnelManager: TunnelManager {
             guard intendedPeers.contains(peer.peerID) else {
                 return .success(.reasserting(config))
             }
+            if !quiesced {
+                log.debug(
+                    "Extension reports connected, but the in-flight config request hasn't been acknowledged yet",
+                    category: .connection,
+                    metadata: [
+                        "appliedRequestId": "\(optional: appliedRequestId)",
+                        "configRequestId": "\(optional: configuration.requestId)",
+                    ]
+                )
+            }
 
             @Dependency(\.date) var date
             return .success(.connected(
@@ -625,7 +635,10 @@ final class PacketTunnelManager: TunnelManager {
                         return nil
                     }
                     let squelched = resolved == state.lastEmitted
-                    guard !squelched else { return nil }
+                    guard !squelched else {
+                        log.debug("Ignoring tunnel state update \(state); resolved to the last emitted state", category: .connection)
+                        return nil
+                    }
                     state.lastEmitted = resolved
                     return resolved
                 }
@@ -666,6 +679,12 @@ final class PacketTunnelManager: TunnelManager {
                         log.info("Tunnel manager ignoring config update for \(configName).")
                         continue
                     }
+                    let configRequestId = (manager.protocolConfiguration as? NETunnelProviderProtocol)?.requestId
+                    log.debug(
+                        "NEVPNStatusDidChange: \(manager.connection.status)",
+                        category: .connection,
+                        metadata: ["configRequestId": "\(optional: configRequestId)"]
+                    )
 
                     guard let state = resolved(after: { track(manager, into: &$0) }) else { continue }
 

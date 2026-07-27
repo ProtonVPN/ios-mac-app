@@ -40,10 +40,12 @@ extension SettingsClient: @retroactive DependencyKey {
                 return .immediate
 
             case .tunnel:
-                return .withReconnect
+                // Tunnel features (kill switch, LAN, protocol) are applied in place by the extension while the
+                // tunnel is running, so there is no need to reconnect.
+                return .withConnectionUpdate
 
             case .agent:
-                // We only support WG on iOS, so we can always update features via local agent
+                // Agent features are always applied in place via the Local Agent.
                 return .withConnectionUpdate
             }
         },

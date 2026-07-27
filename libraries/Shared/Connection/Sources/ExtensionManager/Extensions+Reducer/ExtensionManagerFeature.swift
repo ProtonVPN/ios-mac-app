@@ -127,6 +127,7 @@ public struct ExtensionFeature: Sendable {
 
             case let .requestConfigChange(update):
                 return .run { _ in
+                    log.debug("Requesting connection update", category: .connection, metadata: ["requestId": "\(update.id)"])
                     _ = try await tunnelManager.sendProTUN(request: .init(payload: .updateConfiguration(update)))
                 } catch: { error, send in
                     log.error("Failed to apply connection update", category: .connection, metadata: ["error": "\(error)"])
