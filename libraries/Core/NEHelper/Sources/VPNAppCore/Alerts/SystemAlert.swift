@@ -313,27 +313,6 @@ public final class ReconnectOnActionAlert: SystemAlert {
     }
 }
 
-public final class LANConnectionsKillSwitchConflictAlert: SystemAlert {
-    public var title: String? = Localizable.allowLanTitle
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-
-    public init(connected: Bool, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        let paragraphs = [
-            Localizable.allowLanDescription,
-            connected ? Localizable.allowLanNote : nil,
-        ]
-        self.message = paragraphs.compactMap { $0 }.joined(separator: "\n\n")
-        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
-            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
-            confirmHandler()
-        }))
-        actions.append(AlertAction(title: Localizable.notNow, style: .cancel, handler: cancelHandler))
-    }
-}
-
 public final class ReconnectOnSmartProtocolChangeAlert: SystemAlert {
     public struct UserCancelledReconnect: Error, CustomStringConvertible {
         public let description = "User selected smart protocol, but cancelled reconnecting."

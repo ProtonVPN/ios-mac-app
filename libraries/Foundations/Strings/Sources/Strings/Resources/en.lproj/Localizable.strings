@@ -1154,18 +1154,14 @@
 
 "_allow_lan_title" = "Allow LAN connections";
 
-"_allow_lan_info" = "Allows traffic to devices on your local network, like your printer, to bypass the VPN while Kill Switch is active.";
-"_allow_lan_description" = "In order to allow LAN access, kill switch must be turned off.\n\nContinue?";
+/* Description of the Allow LAN connections feature */
+"_allow_lan_info" = "Connect to devices on your local network (such as your printer or NAS drive) when the kill switch is active.";
 "_allow_lan_note" = "Note that your connection needs to be restarted to apply this change";
 
 /* Title of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
 "_turn_ks_on_title" = "Enable kill switch?";
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
 "_turn_ks_on_description_macos_st_conflict" = "• This will disable split tunneling";
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
-"_turn_ks_on_description_macos_lan_conflict" = "• You won't be able to access devices on your local network";
-/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
-"_turn_ks_on_description_ios" = "You won't be able to access devices on your local network";
 
 /* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_title" = "Enable split tunneling?";
