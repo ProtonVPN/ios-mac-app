@@ -489,7 +489,7 @@ public struct CountriesFeature {
         let isConnected = state.isConnectedToVPN
 
         // Free-tier users can't enable Secure Core: show upsell
-        if turningOn, state.userTier?.isFreeTier == true {
+        if turningOn, state.userTier.isFreeTier {
             state.destination = .payments(.init(upsellModalType: .secureCore))
             return .none
         }

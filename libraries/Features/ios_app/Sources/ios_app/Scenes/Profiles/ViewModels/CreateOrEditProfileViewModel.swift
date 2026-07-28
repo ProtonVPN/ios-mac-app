@@ -113,10 +113,8 @@ class CreateOrEditProfileViewModel: NSObject {
             self.isDefaultProfile = profile.id == quickConnectProfile.id
         }
 
-        @Dependency(\.vpnKeychain) var vpnKeychain
-        if let vpnCredentials = try? vpnKeychain.fetchCached() {
-            self.userTier = vpnCredentials.maxTier
-        }
+        @Dependency(\.credentialsProvider) var credentialsProvider
+        self.userTier = credentialsProvider.tier
 
         super.init()
 
@@ -168,18 +166,10 @@ class CreateOrEditProfileViewModel: NSObject {
             return
         }
 
-        let grouping = serverGroups
-
-        let accessTier: Int = switch serverOffering {
-        case let .fastest(countryCode):
-            grouping.first(where: { $0.serverOfferingID == countryCode })?.minTier ?? 1
-
-        case let .random(countryCode):
-            grouping.first(where: { $0.serverOfferingID == countryCode })?.minTier ?? 1
-
-        case let .custom(serverWrapper):
-            serverWrapper.server.tier
-        }
+        let accessTier = serverRepository.serverAvailability(
+            for: serverOffering,
+            serverType: state
+        ).lowestServerTier
 
         let profileId: String = editedProfile?.id ?? .randomString(length: Profile.idLength)
         let profile = Profile(

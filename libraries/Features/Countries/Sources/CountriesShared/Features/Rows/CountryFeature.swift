@@ -93,7 +93,7 @@ public struct CountryFeature {
         var isUsersTierTooLow: Bool {
             switch serverGroup.kind {
             case .country, .city, .state:
-                userTier?.isFreeTier == true
+                userTier.isFreeTier
             case .gateway:
                 false
             }

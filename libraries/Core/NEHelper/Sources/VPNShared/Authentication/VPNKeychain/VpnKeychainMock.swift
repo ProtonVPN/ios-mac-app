@@ -79,6 +79,7 @@ public class VpnKeychainMock: VpnKeychainProtocol {
         }
 
         credentials = newCredentials
+        VpnCredentialsMetadataMirror.update(afterStoring: newCredentials, succeeded: true)
 
         if oldCredentials != newCredentials {
             NotificationCenter.default.post(name: Self.vpnCredentialsChanged, object: newCredentials)
@@ -95,10 +96,16 @@ public class VpnKeychainMock: VpnKeychainProtocol {
 
     public func clear() {
         credentials = nil
+        VpnCredentialsMetadataMirror.clear()
     }
 
     public func setVpnCredentials(with planName: String, maxTier: Int = 0) {
-        credentials = VpnKeychainMock.vpnCredentials(planName: planName, maxTier: maxTier)
+        let credentials = VpnKeychainMock.vpnCredentials(planName: planName, maxTier: maxTier)
+        self.credentials = credentials
+        VpnCredentialsMetadataMirror.update(
+            afterStoring: credentials,
+            succeeded: true
+        )
     }
 
     public static func vpnCredentials(planName: String, maxTier: Int) -> VpnCredentials {

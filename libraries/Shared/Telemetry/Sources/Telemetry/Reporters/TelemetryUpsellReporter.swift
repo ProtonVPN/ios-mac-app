@@ -28,7 +28,7 @@ public final class TelemetryUpsellReporter {
         let localizedDescription: String
     }
 
-    @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.credentialsProvider) private var credentialsProvider
     @SharedReader(.userCountry) var userCountry
     @SharedReader(.userAccountCreationDate) var userAccountCreationDate
 
@@ -74,8 +74,7 @@ public final class TelemetryUpsellReporter {
             throw Error(localizedDescription: "user account creation date is nil, ignoring event: \(modalSource)")
         }
 
-        let cached = try? vpnKeychain.fetchCached()
-        let planName = cached?.planName ?? "free"
+        let planName = credentialsProvider.planName
 
         let daysSinceAccountCreation = Date().timeIntervalSince(userAccountCreationDate) / .days(1)
 

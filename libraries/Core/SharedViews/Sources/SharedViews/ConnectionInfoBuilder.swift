@@ -95,7 +95,7 @@ public struct ConnectionInfoBuilder {
                 showP2P: shouldShow(feature: .p2p)
             )
             return .textual(model)
-        } else if case .any(.fastest) = location, userTier?.isFreeTier == true, server == nil {
+        } else if case .any(.fastest) = location, userTier.isFreeTier, server == nil {
             return .freeServerSelectionDisclaimer(additionalFreeCountryCount: Constants.additionalFreeCountryCount)
         } else {
             return .none

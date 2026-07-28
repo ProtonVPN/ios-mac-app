@@ -95,7 +95,7 @@ public struct ConnectVPNWithParametersSynchronizedIntent: AppIntent {
             return .result(value: false)
         }
         @SharedReader(.userTier) var userTier
-        guard userTier?.isFreeTier == false || spec.location == .any(.fastest) else {
+        guard userTier.isPaidTier || spec.location == .any(.fastest) else {
             return .result(value: false)
         }
         do {

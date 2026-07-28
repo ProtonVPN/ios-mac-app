@@ -125,42 +125,10 @@ final class ProfileItemViewModel {
         self.userTier = userTier
         self.connectionStatusService = connectionStatusService
 
-        switch profile.serverOffering {
-        case let .custom(serverWrapper):
-            self.lowestServerTier = serverWrapper.server.tier // add unit tests
-            self.underMaintenance = serverWrapper.server.underMaintenance
-
-        case let .fastest(countryCode): fallthrough
-
-        case let .random(countryCode):
-            guard let code = countryCode else {
-                self.lowestServerTier = 0
-                self.underMaintenance = false
-                break
-            }
-
-            // In case we won't find such a country in the current list,
-            // row be displayed as unavailable
-            var minTier = Int.max
-            var allServersUnderMaintenance = true
-
-            @Dependency(\.serverRepository) var serverRepository: ServerRepository
-            let groups = serverRepository.getGroups(filteredBy: [
-                .features(profile.serverType.serverTypeFilter),
-                // `.standard(country:)` doesn't work with gateways, but atm we
-                // do not support profiles with fastest or random gateway server.
-                .kind(.country(code: code)),
-            ], groupedBy: .serverType)
-            // There should be only one group matching profile and we want to
-            // check its properties instead of traversing all the servers
-            if let groupInfo = groups.first {
-                minTier = groupInfo.minTier
-                allServersUnderMaintenance = groupInfo.isUnderMaintenance
-            }
-
-            self.lowestServerTier = minTier
-            self.underMaintenance = allServersUnderMaintenance
-        }
+        @Dependency(\.serverRepository) var serverRepository
+        let serverAvailability = serverRepository.serverAvailability(for: profile)
+        self.lowestServerTier = serverAvailability.lowestServerTier
+        self.underMaintenance = serverAvailability.isUnderMaintenance
 
         startObserving()
     }

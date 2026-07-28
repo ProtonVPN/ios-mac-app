@@ -499,7 +499,7 @@ private extension QuickSettingsFeature {
         guard connectionState.isConnected else { return }
         log.debug("Reconnection requested by changing quick setting", category: .connectionConnect, event: .trigger)
         @SharedReader(.userTier) var userTier: Int?
-        let isFreeTier = userTier?.isFreeTier ?? true
+        let isFreeTier = userTier.isFreeTier
         let connectedCountryCode = connectionState.resolvedServer?.logical.exitCountryCode
         let canReuseCurrentExitCountry: Bool = if let connectedCountryCode {
             serverRepository.hasServer(
@@ -584,11 +584,11 @@ extension QuickSettingsFeature {
         @SharedReader(.userTier) var userTier: Int?
         switch (type, option) {
         case (.secureCoreDisplay, .secureCoreOn):
-            return userTier?.isFreeTier ?? true
+            return userTier.isFreeTier
         case let (.netShieldDisplay, .netShield(level)):
             return level.isUserTierTooLow(userTier ?? Int.freeTier)
         case (.portForwardingDisplay, .portForwardingOn):
-            return userTier?.isFreeTier ?? true
+            return userTier.isFreeTier
         default:
             return false
         }

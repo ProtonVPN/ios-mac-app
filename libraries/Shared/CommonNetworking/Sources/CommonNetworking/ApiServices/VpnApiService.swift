@@ -27,6 +27,7 @@ import Foundation
 import Persistence
 import ProtonCoreAuthentication
 import ProtonCoreDataModel
+import VPNAppCore
 import VPNShared
 
 @DependencyClient
@@ -49,7 +50,7 @@ public enum VpnApiClientKey: DependencyKey {
     public static var liveValue: VpnApiClient = {
         @Dependency(\.networking) var networking
         @Dependency(\.serverRepository) var serverRepository
-        @Dependency(\.vpnKeychain) var vpnKeychain
+        @Dependency(\.credentialsProvider) var credentialsProvider
         @Dependency(\.countryCodeProvider) var countryCodeProvider
         @Dependency(\.authKeychain) var authKeychain
 
@@ -69,7 +70,7 @@ public enum VpnApiClientKey: DependencyKey {
             completion: @escaping (Result<ClientConfig, Error>) -> Void
         ) {
             let request = VPNClientConfigRequest(
-                isAuth: vpnKeychain.userIsLoggedIn,
+                isAuth: credentialsProvider.hasCredentials,
                 ip: shortenedIp
             )
 

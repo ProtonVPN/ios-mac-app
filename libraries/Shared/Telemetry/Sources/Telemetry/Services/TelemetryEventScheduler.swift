@@ -20,6 +20,7 @@ import CommonNetworking
 import Dependencies
 import Foundation
 import Sharing
+import VPNAppCore
 import VPNShared
 
 public class TelemetryEventScheduler {
@@ -33,7 +34,7 @@ public class TelemetryEventScheduler {
 
     @SharedReader(.telemetryUsageData) var telemetryUsageDataShared
 
-    @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.credentialsProvider) private var credentialsProvider
 
     @Dependency(\.telemetryAPIClient) var telemetryAPI
 
@@ -53,7 +54,7 @@ public class TelemetryEventScheduler {
     }
 
     private var businessEvents: Bool {
-        (try? vpnKeychain.fetchCached())?.businessEvents == true
+        credentialsProvider.businessEvents
     }
 
     /// This should be the single point of reporting telemetry events. Before we do anything with the event,

@@ -25,10 +25,11 @@ import CommonNetworking
 import Dependencies
 import Domain
 import LegacyCommon
+import VPNAppCore
 
 final class OverviewViewModel {
     @Dependency(\.profileManager) private var profileManager
-    @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.credentialsProvider) private var credentialsProvider
 
     @Dependency(\.sessionService) private var sessionService: SessionService
 
@@ -50,11 +51,7 @@ final class OverviewViewModel {
     }
 
     private var userTier: Int {
-        do {
-            return try vpnKeychain.fetchCached().maxTier
-        } catch {
-            return .freeTier
-        }
+        credentialsProvider.tier
     }
 
     var cellCount: Int {

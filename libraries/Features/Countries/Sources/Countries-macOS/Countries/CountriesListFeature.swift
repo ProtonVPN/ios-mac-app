@@ -55,7 +55,7 @@ public struct CountriesListFeature: Sendable {
         public var searchText: String = ""
         var isFreeTier: Bool {
             @SharedReader(.userTier) var userTier: Int?
-            return userTier?.isFreeTier ?? true
+            return userTier.isFreeTier
         }
 
         // Stored so that we can collapse the previously expanded section

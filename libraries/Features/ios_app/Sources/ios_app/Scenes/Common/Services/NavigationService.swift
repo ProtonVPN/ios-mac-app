@@ -112,6 +112,7 @@ final class NavigationService {
 
     @Dependency(\.windowService) private var windowService
     @Dependency(\.vpnApiClient) private var vpnApiClient
+    @Dependency(\.credentialsProvider) private var credentialsProvider
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
     @SharedReader(.sessionLogoutReason) private var sessionLogoutReason: String?
@@ -227,7 +228,7 @@ final class NavigationService {
         $showWhatsNewModal.withLock { $0 = false }
 
         let variant: WhatsNewView.PlanVariant
-        switch CredentialsProvider.liveValue.tier {
+        switch credentialsProvider.tier {
         case .freeTier:
             variant = .free
         case .paidTier:

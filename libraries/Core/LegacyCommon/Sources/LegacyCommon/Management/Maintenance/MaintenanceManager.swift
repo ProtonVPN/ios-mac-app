@@ -100,7 +100,8 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
         let serverID = activeServer.endpoint.id
 
         // This doesn't need to be a strict check, it's just to reduce load on the API
-        let isFree = (try? vpnKeychain.fetchCached().maxTier.isFreeTier) ?? false
+        @SharedReader(.userTier) var userTier
+        let isFree = userTier.isFreeTier
 
         let vpnServerState = try await vpnApiClient.serverState(serverId: serverID)
         guard vpnServerState.status != 1 else {

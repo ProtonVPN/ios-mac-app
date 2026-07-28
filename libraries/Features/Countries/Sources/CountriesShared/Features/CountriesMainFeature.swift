@@ -133,7 +133,7 @@ public struct CountriesMainFeature {
             false
         }
         let resolvedExit = canReuseCurrentExitCountry ? connectedCountryCode : nil
-        let isFreeTier = userTier?.isFreeTier ?? true
+        let isFreeTier = userTier.isFreeTier
         let spec = SecureCoreConnectionSpecResolver.toggleReconnectSpec(
             secureCoreEnabled: secureCoreEnabled,
             exitCountryCode: resolvedExit,
@@ -224,7 +224,7 @@ public struct CountriesMainFeature {
         }
 
         // Build profile/country sections based on user tier
-        if userTier?.isFreeTier == true {
+        if userTier.isFreeTier {
             Self.buildFreeTierSections(
                 countryGroups: countryGroups,
                 serverType: serverType,

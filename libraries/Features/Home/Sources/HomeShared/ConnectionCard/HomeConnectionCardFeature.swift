@@ -38,8 +38,6 @@ public struct HomeConnectionCardFeature {
 
         public var showChangeServerButton: Bool {
             if case .connected = connectionState {
-                guard let userTier else { return true }
-
                 return userTier.isFreeTier
             }
             return false

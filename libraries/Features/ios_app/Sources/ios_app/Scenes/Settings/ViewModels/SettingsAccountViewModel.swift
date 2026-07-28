@@ -44,7 +44,7 @@ final class SettingsAccountViewModel {
 
     @Dependency(\.coreAlertService) private var alertService
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
-    @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.credentialsProvider) private var credentialsProvider
     @Dependency(\.authKeychain) private var authKeychain
     @Dependency(\.settingsClient) private var settingsClient
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
@@ -86,7 +86,7 @@ final class SettingsAccountViewModel {
         let allowUpgrade: Bool
         let allowPlanManagement: Bool
 
-        if let vpnCredentials = try? vpnKeychain.fetch() {
+        if let vpnCredentials = credentialsProvider.credentials {
             accountPlanName = vpnCredentials.planTitle
             allowPlanManagement = vpnCredentials.maxTier.isPaidTier
             allowUpgrade = planServiceV2.iapStatus.isEnabled && !allowPlanManagement

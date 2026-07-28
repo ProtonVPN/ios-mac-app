@@ -27,7 +27,7 @@ import LegacyCommon
 import VPNAppCore
 
 class StatusMenuProfilesListViewModel {
-    @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.credentialsProvider) private var credentialsProvider
     @Dependency(\.profileManager) private var profileManager
 
     var contentChanged: (() -> Void)?
@@ -41,11 +41,7 @@ class StatusMenuProfilesListViewModel {
     }
 
     private var userTier: Int {
-        do {
-            return try vpnKeychain.fetchCached().maxTier
-        } catch {
-            return .freeTier
-        }
+        credentialsProvider.tier
     }
 
     init() {

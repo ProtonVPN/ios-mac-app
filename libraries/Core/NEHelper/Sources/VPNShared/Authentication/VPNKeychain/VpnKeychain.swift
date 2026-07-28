@@ -24,6 +24,7 @@ import Domain
 import Foundation
 import KeychainAccess
 import Logging
+import Sharing
 import VPNCrypto
 
 public typealias VpnDowngradeInfo = (from: VpnCredentials, to: VpnCredentials)
@@ -177,10 +178,12 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
 
     private func storeWhileLocked(vpnCredentials: VpnCredentials) {
+        var didStoreCredentials = false
         do {
             let data = try encoder.encode(vpnCredentials)
             try appKeychain.set(data, key: StorageKey.vpnCredentials)
             cached = CachedVpnCredentials(credentials: vpnCredentials)
+            didStoreCredentials = true
         } catch {
             log.error("Keychain (vpn) write error", category: .keychain, metadata: ["error": "\(error)"])
         }
@@ -190,6 +193,11 @@ public class VpnKeychain: VpnKeychainProtocol {
         } catch {
             log.error("Error occurred during OpenVPN password storage", category: .keychain, metadata: ["error": "\(error)"])
         }
+
+        VpnCredentialsMetadataMirror.update(
+            afterStoring: vpnCredentials,
+            succeeded: didStoreCredentials
+        )
 
         // Posted under the lock — must stay `async` for the same reason as in `storeAndDetectDowngrade`.
         DispatchQueue.main.async {
@@ -203,6 +211,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         log.debug("Clearing vpn credentials from keychain", category: .keychain)
         cached = nil
         appKeychain[data: StorageKey.vpnCredentials] = nil
+        VpnCredentialsMetadataMirror.clear()
         appKeychain[data: StorageKey.widgetPublicKey] = nil
         deleteServerCertificate()
         do {
@@ -409,6 +418,25 @@ public class VpnKeychain: VpnKeychainProtocol {
             )
         }
     #endif
+}
+
+/// Mirrors the non-secret facets of the stored VPN credentials (tier and plan) into shared storage,
+/// keeping them in sync with the keychain so features can read them without touching the keychain.
+enum VpnCredentialsMetadataMirror {
+    static func update(afterStoring credentials: VpnCredentials, succeeded: Bool) {
+        guard succeeded else { return }
+        @Shared(.userTier) var userTier
+        @Shared(.userPlan) var userPlan
+        $userTier.withLock { $0 = credentials.maxTier }
+        $userPlan.withLock { $0 = credentials.planName }
+    }
+
+    static func clear() {
+        @Shared(.userTier) var userTier
+        @Shared(.userPlan) var userPlan
+        $userTier.withLock { $0 = nil }
+        $userPlan.withLock { $0 = nil }
+    }
 }
 
 public struct VpnKeychainDependencyKey: DependencyKey {

@@ -84,7 +84,7 @@ struct SystemExtensionsFeature {
 
     @Dependency(\.profileManager) private var profileManager
     @Dependency(\.systemExtensionsRequestSubmissionClient) private var requestSubmissionClient
-    @Dependency(\.vpnKeychain) private var vpnKeychain
+    @Dependency(\.credentialsProvider) private var credentialsProvider
 
     var body: some ReducerOf<Self> {
         Scope(state: \.service, action: \.service) {
@@ -287,10 +287,10 @@ struct SystemExtensionsFeature {
                             AppEvent.systemExtensionsAllInstalled.post(rawResult.didRequireUserApproval)
                             // Show the welcome screen on first successful sysex enable (logged-in users only).
                             @Dependency(\.windowService) var windowService
-                            @Dependency(\.vpnKeychain) var vpnKeychain
+                            @Dependency(\.credentialsProvider) var credentialsProvider
                             @Shared(.welcomed) var welcomed
                             if !welcomed,
-                               (try? vpnKeychain.fetchCached()) != nil {
+                               credentialsProvider.hasCredentials {
                                 windowService.presentKeyModal(
                                     viewController: WelcomeViewController(windowService: windowService),
                                     activatingApp: false
@@ -323,7 +323,7 @@ struct SystemExtensionsFeature {
 
     private func shouldPerformInstallCheck() -> Bool {
         @SharedReader(.connectionProtocol) var connectionProtocol
-        return vpnKeychain.userIsLoggedIn &&
+        return credentialsProvider.hasCredentials &&
             (
                 connectionProtocol.requiresSystemExtension ||
                     profileManager.customProfiles().contains(where: \.connectionProtocol.requiresSystemExtension) == true

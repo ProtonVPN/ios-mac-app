@@ -49,7 +49,7 @@ public struct SearchFeature {
                 return .secureCore
             }
 
-            let isFreeTier = userTier?.isFreeTier ?? true
+            let isFreeTier = userTier.isFreeTier
             return .standard(isFreeTier: isFreeTier)
         }
     }

@@ -67,7 +67,7 @@ public struct HomeView: View {
 
     private func calculateMapHeight() {
         let hasRecents = !store.recents.recentConnectionList.isEmpty
-        let isFree = (userTier ?? .freeTier).isFreeTier
+        let isFree = userTier.isFreeTier
         let recentPeek: CGFloat = (hasRecents || isFree) ? .themeSpacing64 : 0
         mapHeight = max(0, viewHeight - (connectionViewHeight + recentPeek))
         swapThreshold = mapHeight - connectionViewHeight - Self.bottomGradientHeight

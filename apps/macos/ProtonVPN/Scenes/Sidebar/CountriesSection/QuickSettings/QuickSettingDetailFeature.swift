@@ -91,7 +91,7 @@ struct QuickSettingDetailFeature {
                         title: Localizable.secureCoreStatusOn,
                         icon: Theme.Asset.Icons.locks.swiftUIImage,
                         isActive: secureCoreEnabled,
-                        requiresUpdate: userTier?.isFreeTier ?? true
+                        requiresUpdate: userTier.isFreeTier
                     ),
                 ]
             case .netShieldDisplay:
@@ -127,7 +127,7 @@ struct QuickSettingDetailFeature {
                         title: Localizable.portForwardingStatusOn,
                         icon: Theme.Asset.Icons.arrowsSwitch.swiftUIImage,
                         isActive: portForwardingEnabled,
-                        requiresUpdate: userTier?.isFreeTier == true
+                        requiresUpdate: userTier.isFreeTier
                     ),
                 ]
             }
@@ -156,7 +156,7 @@ struct QuickSettingDetailFeature {
                         title: row.title,
                         icon: row.icon,
                         isActive: netShieldType == row.level,
-                        requiresUpdate: row.level != .off && userTier?.isFreeTier == true
+                        requiresUpdate: row.level != .off && userTier.isFreeTier
                     )
                 }
         }

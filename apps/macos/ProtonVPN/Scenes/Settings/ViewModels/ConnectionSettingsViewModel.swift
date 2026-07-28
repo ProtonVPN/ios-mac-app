@@ -27,6 +27,7 @@ import Connection
 import Dependencies
 import Domain
 import LegacyCommon
+import Persistence
 import Settings
 import Sharing
 import Strings
@@ -54,8 +55,9 @@ final class ConnectionSettingsViewModel {
     @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
     @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.upsellManager) private var upsellManager
+    @Dependency(\.serverRepository) private var serverRepository
+    @Dependency(\.credentialsProvider) private var credentialsProvider
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
-    @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     private lazy var navService: NavigationService = factory.makeNavigationService()
     @SharedReader(.connectionState) private var connectionState: ConnectionState
@@ -540,7 +542,8 @@ final class ConnectionSettingsViewModel {
     }
 
     var shouldShowPFNotifications: Bool {
-        userTier != .freeTier
+        // Port-forwarding notifications are a paid feature
+        credentialsProvider.tier.isPaidTier
     }
 
     func quickConnectItem(for index: Int) -> NSAttributedString {
@@ -576,21 +579,18 @@ final class ConnectionSettingsViewModel {
         return attributedString
     }
 
-    private var userTier: Int {
-        do {
-            return try vpnKeychain.fetchCached().maxTier
-        } catch {
-            return .freeTier
-        }
-    }
-
     private func profileString(for index: Int) -> NSAttributedString {
         guard availableProfiles.indices.contains(index) else {
             log.error("Profile index (\(index)) out of bounds of available profiles array (\(availableProfiles.count).")
             return .init()
         }
         let profile = availableProfiles[index]
-        let enabled = profile.accessTier <= userTier
+        let lowestServerTier = serverRepository.serverAvailability(for: profile).lowestServerTier
+        // Free users only see the default 'fastest' profile here, because `availableProfiles` already
+        // hides the rest from them. So here we just check the user's tier is high enough for this
+        // server. We don't use `canUseProfile` because it also requires a paid plan, which would
+        // wrongly grey out the free user's only option.
+        let enabled = credentialsProvider.tier >= lowestServerTier
         return concatenated(imageString: profile.profileIcon.attributedAttachment(), with: profile.name, enabled: enabled)
     }
 

@@ -20,10 +20,10 @@ import CommonNetworking
 import Connection
 import Dependencies
 import Domain
+import ExtensionSync
 import Foundation
 import Sharing
 import VPNAppCore
-import ExtensionSync
 
 actor TelemetryConnectionStatusReporter {
     struct Error: Swift.Error {
@@ -32,8 +32,6 @@ actor TelemetryConnectionStatusReporter {
 
     @SharedReader(.userCountry) var userCountry
     @SharedReader(.userISP) var userISP
-
-    @Dependency(\.vpnKeychain) private var vpnKeychain
 
     var networkType: ConnectionDimensions.NetworkType = .other
     var previousConnectionIntent: ServerConnectionIntent?
@@ -133,9 +131,11 @@ actor TelemetryConnectionStatusReporter {
         }
     }
 
-    private func collectDimensions(eventType: ConnectionEvent.Event,
-                                   _ oldValue: ConnectionState,
-                                   _ newValue: ConnectionState) throws -> ConnectionEvent {
+    private func collectDimensions(
+        eventType: ConnectionEvent.Event,
+        _ oldValue: ConnectionState,
+        _ newValue: ConnectionState
+    ) throws -> ConnectionEvent {
         @SharedReader(.serverConnectionIntent) var serverConnectionIntent
         guard let serverConnectionIntent else {
             throw ConnectionEventError.missingConnectionIntent
@@ -178,18 +178,17 @@ actor TelemetryConnectionStatusReporter {
     }
 
     private func connectionEventType(_ oldValue: ConnectionState, _ newValue: ConnectionState) throws -> ConnectionEvent.Event? {
-
         switch (oldValue, newValue) {
         case (_, .connected), // success connecting
-            (.connecting, .disconnected): // failed connecting
-            return try .vpnConnection(timeToConnection: timer.timeConnecting)
+             (.connecting, .disconnected): // failed connecting
+            try .vpnConnection(timeToConnection: timer.timeConnecting)
 
         case let (.connected(_, data), .disconnected), // disconnection event
-            let (.connected(_, data), .connecting): // reconnection event
-            return .vpnDisconnection(sessionLength: timer.connectionDuration(connectedDate: data.connectionDate))
+             let (.connected(_, data), .connecting): // reconnection event
+            .vpnDisconnection(sessionLength: timer.connectionDuration(connectedDate: data.connectionDate))
 
         default:
-            return nil
+            nil
         }
     }
 
