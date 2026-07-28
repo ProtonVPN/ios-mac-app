@@ -19,8 +19,8 @@
 import Dependencies
 import DependenciesMacros
 import Domain
-import Foundation
 import Ergonomics
+import Foundation
 
 public enum ConnectionCommand: @unchecked Sendable {
     case connect(ConnectionSpec, ConnectionProtocol?, UserInitiatedVPNChange.VPNTrigger?)

@@ -36,7 +36,8 @@ class TelemetryTimerMock: TelemetryTimer {
     var connectionDuration: TimeInterval {
         reportedConnectionDuration
     }
-    func connectionDuration(connectedDate: Date) -> TimeInterval {
+
+    func connectionDuration(connectedDate _: Date) -> TimeInterval {
         0
     }
 

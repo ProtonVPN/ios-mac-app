@@ -57,7 +57,7 @@ public class ConnectionTimer: TelemetryTimer {
     }
 
     public func connectionDuration(connectedDate: Date) -> TimeInterval {
-        return Date().timeIntervalSince(connectedDate)
+        Date().timeIntervalSince(connectedDate)
     }
 
     public var timeConnecting: TimeInterval {

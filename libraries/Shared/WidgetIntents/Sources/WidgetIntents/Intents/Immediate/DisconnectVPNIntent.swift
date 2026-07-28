@@ -17,13 +17,12 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppIntents
-import Domain
-import NetworkExtension
-import Dependencies
 import Connection
-import ExtensionManager
-
+import Dependencies
+import Domain
 import Ergonomics
+import ExtensionManager
+import NetworkExtension
 import Sharing
 import UIKit
 import WidgetKit
@@ -43,5 +42,3 @@ public struct DisconnectVPNIntent: AppIntent {
         return .result(value: true)
     }
 }
-
-

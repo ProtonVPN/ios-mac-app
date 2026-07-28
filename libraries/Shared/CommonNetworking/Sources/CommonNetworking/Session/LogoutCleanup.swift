@@ -20,7 +20,7 @@ import Domain
 import Sharing
 import VPNAppCore
 #if canImport(WidgetKit)
-import WidgetKit
+    import WidgetKit
 #endif
 
 /// Resets user-scoped settings to their defaults on logout (and on login, to clear any prior
@@ -52,7 +52,7 @@ public func performLogoutCleanup() {
 
     @Shared(.userSettings) var userSettings
     $userSettings.withLock { $0 = nil }
-#if canImport(WidgetKit)
-    WidgetCenter.shared.reloadAllTimelines()
-#endif
+    #if canImport(WidgetKit)
+        WidgetCenter.shared.reloadAllTimelines()
+    #endif
 }

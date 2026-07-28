@@ -177,7 +177,7 @@ public struct UserLocationFeature {
 
             case .delegate:
                 return .none
-                
+
             case let .connectionStateUpdate(connectionState):
                 if connectionState.is(\.disconnected) {
                     return .send(.fetchUserLocation)

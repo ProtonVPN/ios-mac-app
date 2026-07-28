@@ -49,7 +49,7 @@ extension ExtensionState {
     }
 
     public var port: UInt16? {
-        guard case let .connected(peer) = self  else { return nil }
+        guard case let .connected(peer) = self else { return nil }
         return peer.port
     }
 

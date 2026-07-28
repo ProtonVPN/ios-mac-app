@@ -30,6 +30,7 @@ public struct ShowConnectionStatus: AppIntent {
     public static var parameterSummary: some ParameterSummary {
         Summary("Retrieve current VPN connection status")
     }
+
     public static let isDiscoverable = true
 
     public init() {}
