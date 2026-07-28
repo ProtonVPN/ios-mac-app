@@ -95,7 +95,7 @@ public struct ConnectVPNWithParametersSynchronizedIntent: AppIntent {
             return .result(value: false)
         }
         @SharedReader(.userTier) var userTier
-        guard userTier.isPaidTier || spec.location == .any(.fastest) else {
+        guard userTier.isPaid || spec.location == .any(.fastest) else {
             return .result(value: false)
         }
         do {
@@ -148,7 +148,8 @@ public struct ConnectVPNWithParametersSynchronizedIntent: AppIntent {
         return connectionInventory.recentConnectionList(
             storedDefaultConnectionPreference ?? .fastest,
             recentConnections ?? [],
-            connectionState.resolvedSpec).elements[safe: index]?.connection
+            connectionState.resolvedSpec
+        ).elements[safe: index]?.connection
     }
 
     private func getDefaultConnection() -> ConnectionSpec? {

@@ -24,12 +24,12 @@ import Testing
 struct ProfileServerAvailabilityTests {
     @Test
     func resolvesCurrentCustomServerAvailability() {
-        let fallback = serverModel(id: "server", tier: .freeTier, status: 1)
+        let fallback = serverModel(id: "server", tier: .free, status: 1)
         var repository = ServerRepository.empty()
         repository.server = { _, _ in
             TestData.createMockServer(
                 withID: "server",
-                tier: .paidTier,
+                tier: VpnTier.paid.rawValue,
                 status: 0
             )
         }
@@ -39,13 +39,13 @@ struct ProfileServerAvailabilityTests {
             serverType: .standard
         )
 
-        #expect(availability.lowestServerTier == .paidTier)
+        #expect(availability.lowestServerTier == .paid)
         #expect(availability.isUnderMaintenance)
     }
 
     @Test
     func fallsBackToWrappedCustomServer() {
-        let fallback = serverModel(id: "missing", tier: .internalTier, status: 0)
+        let fallback = serverModel(id: "missing", tier: .internal, status: 0)
         let repository = ServerRepository.empty()
 
         let availability = repository.serverAvailability(
@@ -53,7 +53,7 @@ struct ProfileServerAvailabilityTests {
             serverType: .standard
         )
 
-        #expect(availability.lowestServerTier == .internalTier)
+        #expect(availability.lowestServerTier == .internal)
         #expect(availability.isUnderMaintenance)
     }
 
@@ -66,8 +66,8 @@ struct ProfileServerAvailabilityTests {
                     kind: .country(code: "US"),
                     featureIntersection: .zero,
                     featureUnion: .zero,
-                    minTier: .paidTier,
-                    maxTier: .internalTier,
+                    minTier: .paid,
+                    maxTier: .internal,
                     serverCount: 2,
                     cityCount: 1,
                     latitude: 0,
@@ -84,7 +84,7 @@ struct ProfileServerAvailabilityTests {
             serverType: .standard
         )
 
-        #expect(availability.lowestServerTier == .paidTier)
+        #expect(availability.lowestServerTier == .paid)
         #expect(availability.isUnderMaintenance)
     }
 
@@ -97,7 +97,7 @@ struct ProfileServerAvailabilityTests {
             serverType: .standard
         )
 
-        #expect(availability.lowestServerTier == .freeTier)
+        #expect(availability.lowestServerTier == .free)
         #expect(!availability.isUnderMaintenance)
     }
 
@@ -110,11 +110,11 @@ struct ProfileServerAvailabilityTests {
             serverType: .standard
         )
 
-        #expect(availability.lowestServerTier == .max)
+        #expect(availability.lowestServerTier == VpnTier(rawValue: .max))
         #expect(availability.isUnderMaintenance)
     }
 
-    private func serverModel(id: String, tier: Int, status: Int) -> ServerModel {
+    private func serverModel(id: String, tier: VpnTier, status: Int) -> ServerModel {
         ServerModel(
             id: id,
             name: id,

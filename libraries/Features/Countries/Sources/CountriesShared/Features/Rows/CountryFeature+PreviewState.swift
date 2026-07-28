@@ -27,7 +27,7 @@
 
         static var previewUpgrade: Self {
             let state = basePreviewState(countryCode: "US", showConnect: true, showFeatures: true)
-            state.$userTier = SharedReader(value: .freeTier)
+            state.$userTier = SharedReader(value: .free)
             return state
         }
 
@@ -56,8 +56,8 @@
                     kind: .country(code: countryCode),
                     featureIntersection: featureIntersection,
                     featureUnion: features,
-                    minTier: .freeTier,
-                    maxTier: .paidTier,
+                    minTier: .free,
+                    maxTier: .paid,
                     serverCount: 1,
                     cityCount: 1,
                     latitude: 0,
@@ -71,7 +71,7 @@
                 showFeatureIcons: showFeatures,
                 serversFilter: .default
             )
-            state.$userTier = SharedReader(value: .paidTier)
+            state.$userTier = SharedReader(value: .paid)
             return state
         }
     }

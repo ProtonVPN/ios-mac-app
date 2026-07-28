@@ -328,7 +328,7 @@ struct AppSessionManagerImplementationTests {
         let alertService = AppSessionManagerAlertServiceMock()
 
         let networkingDelegate = FullNetworkingMockDelegate()
-        networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(planName: "free", maxTier: .freeTier)
+        networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(planName: "free", maxTier: .free)
         networking.delegate = networkingDelegate
         let networkingWrapper = CoreNetworkingWrapper(wrapped: networking)
 

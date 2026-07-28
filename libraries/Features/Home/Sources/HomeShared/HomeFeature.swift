@@ -53,7 +53,7 @@ public struct HomeFeature {
         @Dependency(\.openCredentiallessSignUp) private var openCredentiallessSignUp
     #endif
 
-    @SharedReader(.userTier) private var userTier: Int?
+    @SharedReader(.userTier) private var userTier: VpnTier?
     @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
 
     @Reducer
@@ -503,10 +503,10 @@ private extension HomeFeature {
                 case .tapAction:
                     if let detailsState = state.connectionState.connectionScreenFeatureState() {
                         state.destination = .connectionDetails(detailsState)
-                    } else if userTier.isFreeTier {
+                    } else if userTier.isFree {
                         let freeCountries = Array(Set(
                             serverRepository.getServers(
-                                filteredBy: [.tier(.exact(tier: .freeTier))],
+                                filteredBy: [.tier(.exact(tier: .free))],
                                 orderedBy: .nameAscending
                             ).map(\.logical.exitCountryCode)
                         ))

@@ -53,9 +53,9 @@ public struct CountriesListFeature: Sendable {
         var countries: IdentifiedArrayOf<DesktopCityStateListFeature.State> = []
 
         public var searchText: String = ""
-        var isFreeTier: Bool {
-            @SharedReader(.userTier) var userTier: Int?
-            return userTier.isFreeTier
+        var isFree: Bool {
+            @SharedReader(.userTier) var userTier: VpnTier?
+            return userTier.isFree
         }
 
         // Stored so that we can collapse the previously expanded section
@@ -317,7 +317,7 @@ public struct CountriesListFeature: Sendable {
     }
 
     private func freeCountries() -> IdentifiedArrayOf<FreeConnectionsFeature.State.Country> {
-        let serverGroups = repository.getGroups(filteredBy: [.tier(.exact(tier: 0))], groupedBy: .serverType)
+        let serverGroups = repository.getGroups(filteredBy: [.tier(.exact(tier: .free))], groupedBy: .serverType)
         var seenCountryCodes = Set<String>()
 
         let countries = serverGroups.compactMap { serverGroup -> FreeConnectionsFeature.State.Country? in
@@ -329,7 +329,7 @@ public struct CountriesListFeature: Sendable {
             }
 
             guard let countryCode,
-                  serverGroup.minTier.isFreeTier,
+                  serverGroup.minTier.isFree,
                   !seenCountryCodes.contains(countryCode) else {
                 return nil
             }

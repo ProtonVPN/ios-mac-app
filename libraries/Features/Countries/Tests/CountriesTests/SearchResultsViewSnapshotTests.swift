@@ -168,7 +168,7 @@
                     initialState: .init(
                         rows: rows,
                         searchText: "us",
-                        isFreeTier: false
+                        isFree: false
                     )
                 ) {
                     EmptyReducer()

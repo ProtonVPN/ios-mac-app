@@ -58,7 +58,7 @@ class DefaultProfileViewModel {
     private let serverOffering: ServerOffering
     private let connectionStatusService: ConnectionStatusService
 
-    private let defaultAccessTier: Int
+    private let defaultAccessTier: VpnTier
 
     private var profile: Profile {
         @SharedReader(.connectionProtocol) var connectionProtocol
@@ -160,7 +160,7 @@ class DefaultProfileViewModel {
     ) {
         self.serverOffering = serverOffering
         self.connectionStatusService = connectionStatusService
-        self.defaultAccessTier = .paidTier
+        self.defaultAccessTier = .paid
         self.extraMargin = extraMargin
         startObserving()
     }

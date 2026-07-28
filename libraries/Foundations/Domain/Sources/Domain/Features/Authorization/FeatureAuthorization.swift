@@ -71,12 +71,12 @@ public struct Authorizer<Feature: ModularAppFeature> {
 
 /// Represents a feature with no sub-features or 'levels' that may need authorization logic
 public protocol AppFeature {
-    static func canUse(userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult
+    static func canUse(userTier: VpnTier, featureFlags: FeatureFlags) -> FeatureAuthorizationResult
 }
 
 public protocol PaidAppFeature: AppFeature {
     static var featureFlag: KeyPath<FeatureFlags, Bool>? { get }
-    static func minTier(featureFlags: FeatureFlags) -> Int
+    static func minTier(featureFlags: FeatureFlags) -> VpnTier
 }
 
 public extension PaidAppFeature {
@@ -84,11 +84,11 @@ public extension PaidAppFeature {
         nil
     }
 
-    static func minTier(featureFlags _: FeatureFlags) -> Int {
-        .paidTier
+    static func minTier(featureFlags _: FeatureFlags) -> VpnTier {
+        .paid
     }
 
-    static func canUse(userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    static func canUse(userTier: VpnTier, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         if let featureFlag {
             guard featureFlags[keyPath: featureFlag] else {
                 return .failure(.featureDisabled)
@@ -105,7 +105,7 @@ public extension PaidAppFeature {
 
 /// Represents a feature that may contains a number of related features, or 'levels'.
 public protocol ModularAppFeature: CaseIterable {
-    func canUse(userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult
+    func canUse(userTier: VpnTier, featureFlags: FeatureFlags) -> FeatureAuthorizationResult
 }
 
 /// Allows us to define `Equatable` `Result` types for modelling domains where there is no value associated with success

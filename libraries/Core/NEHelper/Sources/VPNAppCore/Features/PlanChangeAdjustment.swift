@@ -24,10 +24,10 @@ import VPNShared
 
 /// A change in the logged-in user's VPN plan tier, derived from `AppEvent.planChanged`.
 public struct PlanChange: Equatable, Sendable {
-    public let oldTier: Int
-    public let newTier: Int
+    public let oldTier: VpnTier
+    public let newTier: VpnTier
 
-    public init(oldTier: Int, newTier: Int) {
+    public init(oldTier: VpnTier, newTier: VpnTier) {
         self.oldTier = oldTier
         self.newTier = newTier
     }
@@ -74,7 +74,7 @@ public func applyPlanChangeFeatureResets(_ planChange: PlanChange) {
     @Dependency(\.portForwardingPropertyProvider) var portForwardingPropertyProvider
 
     // Downgrade to free: turn the paid features off / back to default, and disable Secure Core
-    if planChange.newTier.isFreeTier {
+    if planChange.newTier.isFree {
         natTypePropertyProvider.setNATType(.default)
         netShieldPropertyProvider.setNetShieldType(.off)
         portForwardingPropertyProvider.setPortForwarding(false)
@@ -84,7 +84,7 @@ public func applyPlanChangeFeatureResets(_ planChange: PlanChange) {
     }
 
     // Upgrade from free: switch NetShield to the default value for the new tier.
-    if planChange.newTier > planChange.oldTier, planChange.oldTier.isFreeTier {
+    if planChange.newTier > planChange.oldTier, planChange.oldTier.isFree {
         netShieldPropertyProvider.setNetShieldType(.level2)
     }
 }

@@ -30,11 +30,11 @@ import VPNAppCore
 class AbstractProfileViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
     let profile: Profile
-    let lowestServerTier: Int
-    let userTier: Int
+    let lowestServerTier: VpnTier
+    let userTier: VpnTier
     let underMaintenance: Bool
 
-    init(profile: Profile, userTier: Int) {
+    init(profile: Profile, userTier: VpnTier) {
         self.profile = profile
         self.userTier = userTier
 

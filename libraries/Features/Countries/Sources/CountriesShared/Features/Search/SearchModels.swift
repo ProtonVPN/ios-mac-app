@@ -22,7 +22,7 @@ import SwiftUI
 import Theme
 
 public enum SearchMode: Equatable {
-    case standard(isFreeTier: Bool)
+    case standard(isFree: Bool)
     case secureCore
 }
 
@@ -48,8 +48,8 @@ public enum ServerTier: Int, Equatable, Sendable {
         }
     }
 
-    public static func sorted(isFreeTier: Bool) -> [ServerTier] {
-        isFreeTier ? [.free, .plus] : [.plus, .free]
+    public static func sorted(isFree: Bool) -> [ServerTier] {
+        isFree ? [.free, .plus] : [.plus, .free]
     }
 }
 

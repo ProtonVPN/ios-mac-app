@@ -30,7 +30,7 @@ public struct SearchResultsDisplayFeature {
     public struct State: Equatable {
         public var rows: IdentifiedArrayOf<SearchResultRow>
         public var searchText: String = ""
-        public var isFreeTier: Bool = false
+        public var isFree: Bool = false
 
         public var numberOfCountries: Int {
             @Dependency(\.serverRepository) var repository
@@ -64,27 +64,27 @@ public struct SearchResultsDisplayFeature {
         Reduce { state, action in
             switch action {
             case let .countrySelected(country):
-                if state.isFreeTier {
+                if state.isFree {
                     return .send(.delegate(.showCountryUpsell(country.countryCode)))
                 }
                 return .send(.delegate(.navigateToCountry(country.countryCode)))
 
             case let .countryConnectTapped(country):
-                if state.isFreeTier {
+                if state.isFree {
                     return .send(.delegate(.showCountryUpsell(country.countryCode)))
                 }
                 let spec = CityStateConnectionSpecFactory.makeSpec(location: .country(code: country.countryCode, order: .fastest))
                 return .send(.delegate(.connectRequested(spec, .country)))
 
             case let .citySelected(city):
-                if state.isFreeTier {
+                if state.isFree {
                     return .send(.delegate(.showCountryUpsell(city.countryCode)))
                 }
                 let spec = CityStateConnectionSpecFactory.makeSpec(location: .city(name: city.cityName, code: city.countryCode, order: .fastest))
                 return .send(.delegate(.connectRequested(spec, .countriesCity)))
 
             case let .stateSelected(stateItem):
-                if state.isFreeTier {
+                if state.isFree {
                     return .send(.delegate(.showCountryUpsell(stateItem.countryCode)))
                 }
                 let spec = CityStateConnectionSpecFactory.makeSpec(location: .state(

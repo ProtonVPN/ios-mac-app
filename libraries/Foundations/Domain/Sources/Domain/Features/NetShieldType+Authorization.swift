@@ -20,16 +20,16 @@ import Ergonomics
 import Foundation
 
 public extension NetShieldType {
-    var lowestTier: Int {
+    var lowestTier: VpnTier {
         switch self {
         case .off:
-            .freeTier
+            .free
         default:
-            .paidTier
+            .paid
         }
     }
 
-    func isUserTierTooLow(_ userTier: Int) -> Bool {
+    func isUserTierTooLow(_ userTier: VpnTier) -> Bool {
         userTier < lowestTier
     }
 
@@ -45,7 +45,7 @@ public extension NetShieldType {
 }
 
 extension NetShieldType: ModularAppFeature {
-    public func canUse(userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    public func canUse(userTier: VpnTier, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         if !featureFlags.netShield {
             return .failure(.featureDisabled)
         }
@@ -59,7 +59,7 @@ extension NetShieldType: ModularAppFeature {
 }
 
 extension NetShieldType: PaidAppFeature {
-    public static func canUse(userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    public static func canUse(userTier: VpnTier, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         if !featureFlags.netShield {
             return .failure(.featureDisabled)
         }

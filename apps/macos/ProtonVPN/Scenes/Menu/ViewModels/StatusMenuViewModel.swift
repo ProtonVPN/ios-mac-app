@@ -77,7 +77,7 @@ final class StatusMenuViewModel {
     }
 
     var shouldShowChangeServer: Bool {
-        isConnected && credentials.tier.isFreeTier
+        isConnected && credentials.tier.isFree
     }
 
     private var serverChangeTimer: Timer?
@@ -340,7 +340,7 @@ final class StatusMenuViewModel {
     }
 
     private func isSufficientTierLevel() -> Bool {
-        credentials.tier.isPaidTier
+        credentials.tier.isPaid
     }
 
     private func presentDiscourageSecureCoreAlert(reconnectNotice: String?, onActivate: (() -> Void)?) {
@@ -471,15 +471,15 @@ final class StatusMenuViewModel {
             false
         }
         let resolvedExit = canReuseCurrentExitCountry ? reconnectCountryCode : nil
-        let isFreeTier = credentials.tier.isFreeTier
+        let isFree = credentials.tier.isFree
         let spec = SecureCoreConnectionSpecResolver.toggleReconnectSpec(
             secureCoreEnabled: turningOn,
             exitCountryCode: resolvedExit,
-            isFreeTier: isFreeTier
+            isFree: isFree
         )
         let trigger = SecureCoreConnectionSpecResolver.reconnectTrigger(
             connectedExitCountryCode: resolvedExit,
-            isFreeTier: isFreeTier
+            isFree: isFree
         )
         AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
         connectionCommandClient.send(.connect(spec, connectionProtocol, trigger))
@@ -551,7 +551,7 @@ final class StatusMenuViewModel {
         let tier = credentials.tier
 
         // if Secure Core was enabled but the tier no longer allows its use
-        if secureCoreToggle, tier.isFreeTier {
+        if secureCoreToggle, tier.isFree {
             log.debug("Disabling Secure Core because the changed plan does not allow its use anymore", category: .app)
             $secureCoreToggle.withLock { $0 = false }
             serverType = .standard

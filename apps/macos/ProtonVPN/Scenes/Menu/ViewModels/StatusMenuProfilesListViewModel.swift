@@ -40,7 +40,7 @@ class StatusMenuProfilesListViewModel {
         profileManager.allProfiles().count
     }
 
-    private var userTier: Int {
+    private var userTier: VpnTier {
         credentialsProvider.tier
     }
 

@@ -128,7 +128,7 @@ public struct SearchRoot {
     ) throws -> (cities: [SearchCityIndex], states: [SearchCityIndex], freeServers: [SearchServerIndex], plusServers: [SearchServerIndex]) {
         @Dependency(\.serverRepository) var serverRepository
         @SharedReader(.secureCoreToggle) var isSecureCore: Bool
-        @SharedReader(.userTier) var userTier: Int?
+        @SharedReader(.userTier) var userTier: VpnTier?
 
         var citiesByID: [String: SearchCityAccumulator] = [:]
         var statesByID: [String: SearchCityAccumulator] = [:]
@@ -150,7 +150,7 @@ public struct SearchRoot {
                 let server = buildServerIndex(
                     serverInfo: serverInfo,
                     serverType: country.serverType,
-                    userTier: userTier ?? Int.freeTier,
+                    userTier: userTier ?? .free,
                     underMaintenance: serverInfo.logical.isUnderMaintenance
                         || serverInfo.protocolSupport.isDisjoint(with: currentProtocolSupport())
                 )
@@ -206,7 +206,7 @@ public struct SearchRoot {
     private static func buildServerIndex(
         serverInfo: ServerInfo,
         serverType: ServerType,
-        userTier: Int,
+        userTier: VpnTier,
         underMaintenance: Bool
     ) -> SearchServerIndex {
         let logical = serverInfo.logical
@@ -219,7 +219,7 @@ public struct SearchRoot {
             countryName: LocalizationUtility.default.countryName(forCode: logical.exitCountryCode) ?? "",
             exitCountryCode: logical.exitCountryCode,
             entryCountryCode: serverType == .secureCore ? logical.entryCountryCode : nil,
-            tier: logical.tier.isFreeTier ? .free : .plus,
+            tier: logical.tier.isFree ? .free : .plus,
             load: logical.load,
             isP2PAvailable: logical.feature.contains(.p2p),
             isTorAvailable: logical.feature.contains(.tor),

@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import Dependencies
+import Domain
 import ModalsServices
 import PMLogger
 import enum ProtonCorePaymentsV2.TransactionHandlerState
@@ -38,19 +39,19 @@ struct WelcomeFeature {
     @ObservableState
     struct State: Equatable {
         @Presents var destination: Destination.State?
-        @SharedReader(.userTier) var userTier: Int?
+        @SharedReader(.userTier) var userTier: VpnTier?
     }
 
     enum Action {
         case onAppear
         case paymentsEvent(TransactionHandlerState)
-        case userTierUpdated(Int?)
+        case userTierUpdated(VpnTier?)
 
         // Top level actions
         case signInFinished(with: AuthCredentials)
         case upsellExited
         case upsellProductsLoadingFailed
-        case upsold(tier: Int)
+        case upsold(tier: VpnTier)
 
         // Destination related actions
         case destination(PresentationAction<Destination.Action>)
@@ -94,9 +95,9 @@ struct WelcomeFeature {
                 return .send(.destination(.presented(.upsell(.event(event)))))
             case let .userTierUpdated(tier):
                 guard let tier else { return .none }
-                if tier == 0 {
+                if tier.isFree {
                     state.destination = .upsell(.loading)
-                } else if tier > 0 {
+                } else if tier.isPaid {
                     /// Right after logging in, we should reset the state of the welcome page, so that when the user logs out,
                     /// the welcome page will be shown, not the sign in page
                     state.destination = nil

@@ -22,6 +22,7 @@
 
 import CommonNetworking
 import Dependencies
+import Domain
 import Ergonomics
 import Foundation
 import LegacyCommon
@@ -32,7 +33,7 @@ import VPNShared
 final class AccountViewModel {
     private(set) var username: String
     private(set) var planTitle: String?
-    private(set) var maxTier: Int
+    private(set) var maxTier: VpnTier
 
     @Dependency(\.credentialsProvider) private var credentialsProvider
     @Dependency(\.authKeychain) private var authKeychain
@@ -42,7 +43,7 @@ final class AccountViewModel {
     init() {
         self.username = Localizable.unavailable
         self.planTitle = nil
-        self.maxTier = .freeTier
+        self.maxTier = .free
 
         reload()
     }
@@ -65,7 +66,7 @@ final class AccountViewModel {
         } else {
             username = Localizable.unavailable
             planTitle = nil
-            maxTier = .freeTier
+            maxTier = .free
         }
 
         reloadNeeded?()

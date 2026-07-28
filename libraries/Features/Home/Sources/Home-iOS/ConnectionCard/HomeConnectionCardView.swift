@@ -67,7 +67,7 @@ struct HomeConnectionCardView: View {
         if store.connectionState.connectionStatusAvailable {
             IconProvider.chevronRight
                 .foregroundColor(Color(.icon, .weak))
-        } else if store.connectionState == .disconnected, store.userTier.isFreeTier {
+        } else if store.connectionState == .disconnected, store.userTier.isFree {
             IconProvider.infoCircle
                 .foregroundColor(Color(.icon, .weak))
         }
@@ -130,7 +130,7 @@ struct HomeConnectionCardView: View {
                     underMaintenance: false,
                     isPinned: false,
                     server: store.presentedServer,
-                    withServerNumber: store.userTier.isFreeTier,
+                    withServerNumber: store.userTier.isFree,
                     isConnected: false,
                     images: .coreImages
                 )
@@ -202,7 +202,7 @@ private extension ConnectionState {
             #Preview("Change Server Available", traits: .sizeThatFitsLayout, .dependencies { $0.serverChangeAuthorizer = .availableValue }) {
                 @Shared(.userTier) var userTier
                 @Shared(.connectionState) var connectionState
-                $userTier.withLock { $0 = 0 }
+                $userTier.withLock { $0 = .free }
                 $connectionState.withLock { $0 = .previewConnected(for: .secureCoreCountryHop) }
                 return HomeConnectionCardView(store: .init(initialState: .init(), reducer: {
                     HomeConnectionCardFeature()
@@ -215,7 +215,7 @@ private extension ConnectionState {
             #Preview("Change Server Unavailable", traits: .sizeThatFitsLayout, .dependencies { $0.serverChangeAuthorizer = .previewValue }) {
                 @Shared(.userTier) var userTier
                 @Shared(.connectionState) var connectionState
-                $userTier.withLock { $0 = 0 }
+                $userTier.withLock { $0 = .free }
                 $connectionState.withLock { $0 = .previewConnected(for: .secureCoreCountryHop) }
                 return HomeConnectionCardView(store: .init(initialState: .init(), reducer: {
                     HomeConnectionCardFeature()
@@ -226,7 +226,7 @@ private extension ConnectionState {
         #endif
 
         #Preview("Free users", traits: .fixedLayout(width: 840, height: 300)) {
-            cardPair(spec: .defaultFastest, userTier: 0)
+            cardPair(spec: .defaultFastest, userTier: .free)
                 .padding()
                 .preferredColorScheme(.dark)
         }
@@ -264,7 +264,7 @@ private extension ConnectionState {
             .preferredColorScheme(.dark)
         }
 
-        fileprivate func cardPair(spec: ConnectionSpec, userTier: Int = 2) -> some View {
+        fileprivate func cardPair(spec: ConnectionSpec, userTier: VpnTier = .paid) -> some View {
             HStack(spacing: .themeSpacing24) {
                 HomeConnectionCardView(store: .disconnectedStore(defaultConnection: spec, userTier: userTier))
                 HomeConnectionCardView(store: .connectedStore(intentSpec: spec, userTier: userTier))
@@ -275,7 +275,7 @@ private extension ConnectionState {
             static func constant(
                 connectionState: ConnectionState,
                 defaultConnection _: ConnectionSpec,
-                userTier: Int
+                userTier: VpnTier
             ) -> Self {
                 var state = HomeConnectionCardFeature.State()
                 state.$userTier = .constant(userTier)
@@ -285,7 +285,7 @@ private extension ConnectionState {
         }
 
         extension StoreOf<HomeConnectionCardFeature> {
-            static func disconnectedStore(defaultConnection: ConnectionSpec, userTier: Int) -> Self {
+            static func disconnectedStore(defaultConnection: ConnectionSpec, userTier: VpnTier) -> Self {
                 .init(initialState: .constant(
                     connectionState: .disconnected,
                     defaultConnection: defaultConnection,
@@ -295,7 +295,7 @@ private extension ConnectionState {
                 }
             }
 
-            static func connectedStore(intentSpec: ConnectionSpec, userTier: Int) -> Self {
+            static func connectedStore(intentSpec: ConnectionSpec, userTier: VpnTier) -> Self {
                 .init(initialState: .constant(
                     connectionState: .previewConnected(for: intentSpec),
                     defaultConnection: intentSpec,

@@ -44,11 +44,11 @@ public enum IntentResolutionError: Error, Equatable {
 
 package struct ConnectionIntentResolver: DependencyKey {
     package internal(set) var resolve: @Sendable (ConnectionPreparationIntent) async throws(IntentResolutionError) -> ServerConnectionIntent
-    package internal(set) var authorize: @Sendable (ConnectionPreparationIntent, Int) throws(ConnectionIntentResolutionError) -> Void
+    package internal(set) var authorize: @Sendable (ConnectionPreparationIntent, VpnTier) throws(ConnectionIntentResolutionError) -> Void
 
     package init(
         resolve: @escaping @Sendable (ConnectionPreparationIntent) async throws(IntentResolutionError) -> ServerConnectionIntent,
-        authorize: @escaping @Sendable (ConnectionPreparationIntent, Int) throws(ConnectionIntentResolutionError) -> Void
+        authorize: @escaping @Sendable (ConnectionPreparationIntent, VpnTier) throws(ConnectionIntentResolutionError) -> Void
     ) {
         self.resolve = resolve
         self.authorize = authorize
@@ -57,12 +57,12 @@ package struct ConnectionIntentResolver: DependencyKey {
     package static let liveValue: ConnectionIntentResolver = .init { intent throws(IntentResolutionError) in
         @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
         @Dependency(\.serverSelector) var serverSelector
-        @SharedReader(.userTier) var userTier: Int?
+        @SharedReader(.userTier) var userTier: VpnTier?
 
         let server: Server
         do throws(ServerSelector.SelectionError) {
             // First, let's try to resolve the server we want to connect to.
-            server = try serverSelector.select(intent.spec, userTier ?? .freeTier, intent.acceptableProtocols)
+            server = try serverSelector.select(intent.spec, userTier ?? .free, intent.acceptableProtocols)
             log.info("Server selected: \(server.fullDescription)", category: .connection)
         } catch {
             throw .serverSelectionFailed(error)
@@ -90,7 +90,7 @@ package struct ConnectionIntentResolver: DependencyKey {
         )
     } authorize: { intent, userTier throws(ConnectionIntentResolutionError) in
         // Paid users can always change servers.
-        guard userTier.isFreeTier else { return }
+        guard userTier.isFree else { return }
 
         @Dependency(\.serverChangeAuthorizer) var changeAuthorizer
 

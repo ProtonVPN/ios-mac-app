@@ -69,7 +69,7 @@ class CreateOrEditProfileViewModel: NSObject {
     private var selectedProtocol: ConnectionProtocol
     private var isDefaultProfile = false
 
-    var userTier: Int = 0 // used by class extension
+    var userTier: VpnTier = .free // used by class extension
 
     var saveButtonEnabled = false {
         didSet {
@@ -312,7 +312,7 @@ class CreateOrEditProfileViewModel: NSObject {
 
     private func toggleState(completion: @escaping (Bool) -> Void) {
         if case .standard = state {
-            guard userTier.isPaidTier else {
+            guard userTier.isPaid else {
                 upsellManager.present(.secureCore)
                 return
             }
@@ -498,7 +498,7 @@ extension CreateOrEditProfileViewModel {
         )
     }
 
-    private func currentGroupServersOf(tier: Int) -> [ServerInfo]? {
+    private func currentGroupServersOf(tier: VpnTier) -> [ServerInfo]? {
         guard let countryGroup = selectedCountryGroup else {
             return nil
         }
@@ -518,8 +518,8 @@ extension CreateOrEditProfileViewModel {
         )
     }
 
-    private func orderedTiers() -> [Int] {
-        [Int.freeTier, Int.paidTier, Int.internalTier].sorted(by: { tier1, tier2 -> Bool in
+    private func orderedTiers() -> [VpnTier] {
+        [.free, .paid, .internal].sorted(by: { tier1, tier2 -> Bool in
             if userTier >= tier1 && userTier >= tier2 ||
                 userTier < tier1 && userTier < tier2 { // sort within available then non-available groups
                 return tier1 > tier2

@@ -99,7 +99,7 @@ public struct VPNConnectionActual: Equatable, Codable {
                     load: 50,
                     entryCountryCode: entryCountry ?? country,
                     exitCountryCode: country,
-                    tier: 2,
+                    tier: .paid,
                     score: 1,
                     status: 1,
                     feature: .zero,

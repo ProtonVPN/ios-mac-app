@@ -33,26 +33,26 @@ struct VpnCredentialsMetadataMirrorTests {
             $userPlan.withLock { $0 = originalPlan }
         }
 
-        $userTier.withLock { $0 = .internalTier }
+        $userTier.withLock { $0 = .internal }
         $userPlan.withLock { $0 = "internal" }
         VpnCredentialsMetadataMirror.update(
             afterStoring: VpnKeychainMock.vpnCredentials(
                 planName: "free",
-                maxTier: .freeTier
+                maxTier: .free
             ),
             succeeded: false
         )
-        #expect(userTier == .internalTier)
+        #expect(userTier == .internal)
         #expect(userPlan == "internal")
 
         VpnCredentialsMetadataMirror.update(
             afterStoring: VpnKeychainMock.vpnCredentials(
                 planName: "plus",
-                maxTier: .paidTier
+                maxTier: .paid
             ),
             succeeded: true
         )
-        #expect(userTier == .paidTier)
+        #expect(userTier == .paid)
         #expect(userPlan == "plus")
 
         VpnCredentialsMetadataMirror.clear()

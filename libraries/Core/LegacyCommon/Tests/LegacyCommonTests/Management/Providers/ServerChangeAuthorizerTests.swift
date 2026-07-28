@@ -45,7 +45,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
 
         withDependencies {
             $0.date = .constant(date)
-            $0.credentialsProvider = .constant(credentials: .tier(freeTier ? .freeTier : .paidTier))
+            $0.credentialsProvider = .constant(credentials: .tier(freeTier ? .free : .paid))
             $0.defaultAppStorage = defaults
             $0.authKeychain = keychain
         } operation: {

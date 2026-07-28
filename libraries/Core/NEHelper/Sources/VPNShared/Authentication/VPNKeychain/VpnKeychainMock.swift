@@ -39,7 +39,7 @@ public class VpnKeychainMock: VpnKeychainProtocol {
 
     public var credentials: VpnCredentials?
 
-    public init(planName: String = "free", maxTier: Int = .freeTier) {
+    public init(planName: String = "free", maxTier: VpnTier = .free) {
         self.credentials = VpnKeychainMock.vpnCredentials(planName: planName, maxTier: maxTier)
     }
 
@@ -99,7 +99,7 @@ public class VpnKeychainMock: VpnKeychainProtocol {
         VpnCredentialsMetadataMirror.clear()
     }
 
-    public func setVpnCredentials(with planName: String, maxTier: Int = 0) {
+    public func setVpnCredentials(with planName: String, maxTier: VpnTier = .free) {
         let credentials = VpnKeychainMock.vpnCredentials(planName: planName, maxTier: maxTier)
         self.credentials = credentials
         VpnCredentialsMetadataMirror.update(
@@ -108,7 +108,7 @@ public class VpnKeychainMock: VpnKeychainProtocol {
         )
     }
 
-    public static func vpnCredentials(planName: String, maxTier: Int) -> VpnCredentials {
+    public static func vpnCredentials(planName: String, maxTier: VpnTier) -> VpnCredentials {
         VpnCredentials(
             status: 0,
             planTitle: planName,

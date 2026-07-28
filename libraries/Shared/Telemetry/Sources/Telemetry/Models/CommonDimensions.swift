@@ -36,8 +36,8 @@ public enum CommonTelemetryDimensions {
     }
 }
 
-extension CommonTelemetryDimensions.UserTier {
-    public static func readFromKeychain() -> Self {
+public extension CommonTelemetryDimensions.UserTier {
+    static func readFromKeychain() -> Self {
         @Dependency(\.credentiallessHelper) var credentiallessHelper
         @Dependency(\.credentialsProvider) var credentialsProvider
         let userIsCredentialLess = credentiallessHelper.isCredentialLess()
@@ -46,9 +46,9 @@ extension CommonTelemetryDimensions.UserTier {
         }
 
         let tier = credentialsProvider.tier
-        if tier == .internalTier {
+        if tier == .internal {
             return .internalTier
         }
-        return tier.isFreeTier ? .free : .paid
+        return tier.isFree ? .free : .paid
     }
 }

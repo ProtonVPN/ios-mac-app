@@ -30,7 +30,7 @@ public struct HomeConnectionCardFeature {
 
     @ObservableState
     public struct State: Equatable {
-        @SharedReader(.userTier) public var userTier: Int?
+        @SharedReader(.userTier) public var userTier: VpnTier?
         @SharedReader(.connectionState) public var connectionState: ConnectionState
         @SharedReader(.recentConnections) public var recents
         @SharedReader(.storedDefaultConnectionPreference) var defaultConnectionPreference
@@ -38,13 +38,13 @@ public struct HomeConnectionCardFeature {
 
         public var showChangeServerButton: Bool {
             if case .connected = connectionState {
-                return userTier.isFreeTier
+                return userTier.isFree
             }
             return false
         }
 
         package var headerModel: ConnectionCardHeaderModel {
-            ConnectionCardHeaderModel(connectionState: connectionState, userTier: userTier ?? .freeTier)
+            ConnectionCardHeaderModel(connectionState: connectionState, userTier: userTier ?? .free)
         }
 
         public var serverChangeAvailability: ServerChangeAuthorizer.ServerChangeAvailability?
@@ -134,13 +134,13 @@ package enum ConnectionCardHeaderModel: Equatable {
     case connected
     case connecting
 
-    init(connectionState: ConnectionState, userTier: Int) {
+    init(connectionState: ConnectionState, userTier: VpnTier) {
         switch connectionState {
         case .resolving:
             self = .resolving
 
         case .disconnected, .disconnecting, .killSwitchActive:
-            self = .disconnected(isPaid: userTier.isPaidTier)
+            self = .disconnected(isPaid: userTier.isPaid)
 
         case .connected:
             self = .connected

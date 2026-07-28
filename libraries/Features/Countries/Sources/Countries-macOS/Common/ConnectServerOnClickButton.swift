@@ -87,11 +87,11 @@ struct ConnectServerOnClickButton: View {
     }
 
     var isDisabled: Bool {
-        serverInfo.logical.isUnderMaintenance || userTier.isFreeTier
+        serverInfo.logical.isUnderMaintenance || userTier.isFree
     }
 
     var help: String {
-        guard userTier.isPaidTier else {
+        guard userTier.isPaid else {
             return Localizable.upgradeToPlus
         }
 

@@ -17,15 +17,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppKit
+import Domain
 import LegacyCommon
 import Theme
 
 public extension AppTheme.Style {
-    init(_ tier: Int) {
-        if tier == .internalTier {
+    init(_ tier: VpnTier) {
+        if tier == .internal {
             self = .interactive
         }
-        if tier.isFreeTier {
+        if tier.isFree {
             self = .weak
         } else {
             self = .success

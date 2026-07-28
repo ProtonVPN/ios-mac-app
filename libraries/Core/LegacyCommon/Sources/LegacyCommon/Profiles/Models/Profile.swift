@@ -90,7 +90,7 @@ public extension Profile {
     }
 
     init(
-        accessTier: Int,
+        accessTier: VpnTier,
         profileIcon: ProfileIcon,
         profileType: ProfileType,
         serverType: ServerType,

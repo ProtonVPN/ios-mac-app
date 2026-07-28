@@ -26,7 +26,7 @@ extension ServerSelector: @retroactive DependencyKey {
     public static let liveValue = ServerSelector(select: { spec, userTier, acceptableProtocols throws(SelectionError) -> Server in
         @Dependency(\.serverRepository) var repository
 
-        let tierFilter: VPNServerFilter? = userTier == .freeTier ? .tier(.max(tier: .freeTier)) : nil
+        let tierFilter: VPNServerFilter? = userTier.isFree ? .tier(.max(tier: .free)) : nil
         let baseFilters = spec.location.filters + [tierFilter, spec.serverTierFilter].compactMap { $0 }
 
         var servers = repository.getServers(filteredBy: baseFilters, orderedBy: spec.location.order)
@@ -177,7 +177,7 @@ extension ConnectionSpec {
     var serverTierFilter: VPNServerFilter? {
         switch location {
         case .exact(.free, _, _, _, _):
-            .tier(.max(tier: 0))
+            .tier(.max(tier: .free))
 
         default:
             nil

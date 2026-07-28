@@ -1028,7 +1028,7 @@ final class SettingsViewModel {
         }
     }
 
-    private var userTier: Int {
+    private var userTier: VpnTier {
         credentialsProvider.tier
     }
 

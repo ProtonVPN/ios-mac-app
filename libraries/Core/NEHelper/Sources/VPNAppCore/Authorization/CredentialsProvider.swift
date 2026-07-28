@@ -51,8 +51,8 @@ public extension CredentialsProvider {
     }
 
     /// The maximum VPN tier, falling back to the free tier when credentials are unavailable.
-    var tier: Int {
-        credentials?.maxTier ?? .freeTier
+    var tier: VpnTier {
+        credentials?.maxTier ?? .free
     }
 
     /// Whether the current account is a business account.
@@ -82,7 +82,7 @@ extension CredentialsProvider: DependencyKey {
     }
 
     #if DEBUG
-        public static var testValue: CredentialsProvider = .constant(credentials: .tier(.paidTier))
+        public static var testValue: CredentialsProvider = .constant(credentials: .tier(.paid))
 
         /// Creates a provider that always returns `credentials`.
         public static func constant(credentials: CachedVpnCredentials?) -> CredentialsProvider {

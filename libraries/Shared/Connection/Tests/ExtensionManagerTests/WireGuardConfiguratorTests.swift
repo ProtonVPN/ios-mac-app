@@ -47,7 +47,7 @@
             let expectedUsername = "username+pm+f2+nst+nr+pmp+ep:\(server.endpoint.id)"
 
             try await withDependencies {
-                $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .freeTier)
+                $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .free)
             } operation: {
                 try await configurator.configure(&manager, for: .connection(intent))
             }
@@ -63,7 +63,7 @@
             var manager: TunnelProviderManager = MockTunnelProviderManager(session: session, isOnDemandEnabled: false, isEnabled: false)
             let intent = ServerConnectionIntent.mock(protocolConfiguration: .ike)
 
-            let failingKeychain = VpnKeychainMock(planName: "free", maxTier: .freeTier)
+            let failingKeychain = VpnKeychainMock(planName: "free", maxTier: .free)
             failingKeychain.throwsOnFetch = true
 
             await XCTAssertThrowsErrorAsync {

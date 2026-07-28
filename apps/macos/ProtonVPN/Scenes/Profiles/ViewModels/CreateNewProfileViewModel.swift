@@ -67,7 +67,7 @@ class CreateNewProfileViewModel {
     let colorPickerViewModel = ColorPickerViewModel()
     lazy var secureCoreWarningViewModel = SecureCoreWarningViewModel()
 
-    private var userTier: Int = .paidTier
+    private var userTier: VpnTier = .paid
     private var profileId: String?
     private var state: ModelState {
         didSet {
@@ -277,7 +277,7 @@ class CreateNewProfileViewModel {
     }
 
     var userTierSupportsSecureCore: Bool {
-        userTier.isPaidTier
+        userTier.isPaid
     }
 
     func userTierSupports(group: ServerGroupInfo) -> Bool {
@@ -288,7 +288,7 @@ class CreateNewProfileViewModel {
         userTierSupports(serverWithTier: server.tier)
     }
 
-    func userTierSupports(serverWithTier tier: Int) -> Bool {
+    func userTierSupports(serverWithTier tier: VpnTier) -> Bool {
         tier <= userTier
     }
 

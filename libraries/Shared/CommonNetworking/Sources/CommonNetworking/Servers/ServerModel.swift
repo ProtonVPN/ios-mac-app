@@ -56,7 +56,7 @@ public extension ServerModel {
     }
 
     var isFree: Bool {
-        tier == 0
+        tier.isFree
     }
 
     /// The server name, split into the name prefix and sequence number (if it exists).
@@ -138,7 +138,7 @@ public extension ServerModel {
             load: Int(dic.doubleOrThrow(key: "Load")), // "Load": 13
             entryCountryCode: dic.stringOrThrow(key: "EntryCountry"), // "EntryCountry": "ES"
             exitCountryCode: dic.stringOrThrow(key: "ExitCountry"), // "ExitCountry": "ES" //this replace old countryCode
-            tier: dic.intOrThrow(key: "Tier"), // "Tier": 2
+            tier: VpnTier(rawValue: dic.intOrThrow(key: "Tier")), // "Tier": 2
             feature: ServerFeature(rawValue: dic.intOrThrow(key: "Features")), // "Features": 12
             city: dic.string("City"), // "City": "Zurich"
             state: dic.string("State"), // "State": "Colorado"

@@ -101,7 +101,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
 
         // This doesn't need to be a strict check, it's just to reduce load on the API
         @SharedReader(.userTier) var userTier
-        let isFree = userTier.isFreeTier
+        let isFree = userTier.isFree
 
         let vpnServerState = try await vpnApiClient.serverState(serverId: serverID)
         guard vpnServerState.status != 1 else {
@@ -114,11 +114,11 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
             freeTier: isFree
         )
         switch result {
-        case let .modified(at: modifiedAt, servers: servers, freeServersOnly: isFreeTier):
+        case let .modified(at: modifiedAt, servers: servers, freeServersOnly: isFree):
             @Dependency(\.serverManager) var serverManager
             serverManager.update(
                 servers: servers.map { VPNServer(legacyModel: $0) },
-                freeServersOnly: isFreeTier,
+                freeServersOnly: isFree,
                 lastModifiedAt: modifiedAt
             )
             return true

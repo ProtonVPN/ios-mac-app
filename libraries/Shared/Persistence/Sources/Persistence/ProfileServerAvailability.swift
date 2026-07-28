@@ -27,16 +27,16 @@ public struct ProfileServerAvailability: Equatable, Sendable {
     /// The lowest tier among the servers this profile can reach right now.
     ///
     /// This is a server tier (for example, the cheapest server in a country), not the plan needed to
-    /// use profiles. A "fastest"/"random" profile with no country is `.freeTier`, because there is
+    /// use profiles. A "fastest"/"random" profile with no country is `.free`, because there is
     /// always a free server to connect to — it does NOT mean the profile itself is free to use. To
     /// decide access, combine this with `ProfileAuthorizer`.
-    public let lowestServerTier: Int
+    public let lowestServerTier: VpnTier
 
     /// True when every server this profile can reach is under maintenance.
     public let isUnderMaintenance: Bool
 
     /// Creates a profile's server availability.
-    public init(lowestServerTier: Int, isUnderMaintenance: Bool) {
+    public init(lowestServerTier: VpnTier, isUnderMaintenance: Bool) {
         self.lowestServerTier = lowestServerTier
         self.isUnderMaintenance = isUnderMaintenance
     }
@@ -77,7 +77,7 @@ public extension ServerRepository {
                 // profile) apart from "random" (a free one) — that split lives in `Profile.accessTier`
                 // and `ProfileAuthorizer`, not here.
                 return ProfileServerAvailability(
-                    lowestServerTier: .freeTier,
+                    lowestServerTier: .free,
                     isUnderMaintenance: false
                 )
             }
@@ -90,7 +90,7 @@ public extension ServerRepository {
             ).first else {
                 // No matching servers: no tier can reach it, and we show it as under maintenance.
                 return ProfileServerAvailability(
-                    lowestServerTier: .max,
+                    lowestServerTier: VpnTier(rawValue: .max),
                     isUnderMaintenance: true
                 )
             }

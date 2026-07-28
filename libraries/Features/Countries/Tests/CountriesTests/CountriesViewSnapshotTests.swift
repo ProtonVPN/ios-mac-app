@@ -38,7 +38,7 @@
         @Test("Countries view - Standard mode with mixed countries")
         func countriesViewStandardMode() {
             @SharedReader(.secureCoreToggle) var secureCoreToggle = false
-            @SharedReader(.userTier) var userTier: Int? = .paidTier
+            @SharedReader(.userTier) var userTier: VpnTier? = .paid
             @SharedReader(.connectionState) var connectionState: ConnectionState = .disconnected
 
             withDependencies {
@@ -59,7 +59,7 @@
         @Test("Countries view - Secure Core mode")
         func countriesViewSecureCoreMode() {
             @SharedReader(.secureCoreToggle) var secureCoreToggle = true
-            @SharedReader(.userTier) var userTier: Int? = .paidTier
+            @SharedReader(.userTier) var userTier: VpnTier? = .paid
             @SharedReader(.connectionState) var connectionState: ConnectionState = .disconnected
 
             withDependencies {
@@ -80,7 +80,7 @@
         @Test("Countries view - With banners")
         func countriesViewWithBanners() {
             @SharedReader(.secureCoreToggle) var secureCoreToggle = false
-            @SharedReader(.userTier) var userTier: Int? = .freeTier
+            @SharedReader(.userTier) var userTier: VpnTier? = .free
             @SharedReader(.connectionState) var connectionState: ConnectionState = .disconnected
 
             withDependencies {
@@ -104,7 +104,7 @@
         @Test("Countries view - Free user view")
         func countriesViewFreeUser() {
             @SharedReader(.secureCoreToggle) var secureCoreToggle = false
-            @SharedReader(.userTier) var userTier: Int? = .freeTier
+            @SharedReader(.userTier) var userTier: VpnTier? = .free
             @SharedReader(.connectionState) var connectionState: ConnectionState = .disconnected
 
             withDependencies {
@@ -229,8 +229,8 @@
                     kind: .country(code: code),
                     featureIntersection: secureCore ? [.secureCore] : [],
                     featureUnion: [.p2p, .tor],
-                    minTier: .paidTier,
-                    maxTier: .paidTier,
+                    minTier: .paid,
+                    maxTier: .paid,
                     serverCount: 1,
                     cityCount: 1,
                     latitude: 0,

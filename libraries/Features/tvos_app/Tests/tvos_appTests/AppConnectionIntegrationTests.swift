@@ -98,7 +98,7 @@
                 )),
                 networking: .authenticated(.auth(uid: "sessionID"))
             )
-            state.$userTier.withLock { $0 = 1 } // Keep root screen in main while observing.
+            state.$userTier.withLock { $0 = VpnTier(rawValue: 1) } // Keep root screen in main while observing.
             state.$connectionState.withLock { $0 = .disconnected }
             let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 

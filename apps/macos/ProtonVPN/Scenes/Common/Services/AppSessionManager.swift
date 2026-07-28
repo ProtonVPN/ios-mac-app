@@ -154,9 +154,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         let shouldRefreshServersAccordingToUserTier = !serverManager.shouldFetchFullServerList
         let credentials = properties.vpnCredentials
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-        if case let .modified(lastModified, servers, isFreeTier) = properties.serverInfo {
-            let isFreeTierRequest = shouldRefreshServersAccordingToUserTier && credentials.maxTier == .freeTier
-            assert(isFreeTierRequest == isFreeTier)
+        if case let .modified(lastModified, servers, isFree) = properties.serverInfo {
+            let isFreeTierRequest = shouldRefreshServersAccordingToUserTier && credentials.maxTier == .free
+            assert(isFreeTierRequest == isFree)
             serverManager.update(
                 servers: servers.map { VPNServer(legacyModel: $0) },
                 freeServersOnly: isFreeTierRequest,

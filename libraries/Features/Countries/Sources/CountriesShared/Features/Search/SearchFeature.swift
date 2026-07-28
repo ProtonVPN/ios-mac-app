@@ -40,7 +40,7 @@ public struct SearchFeature {
         public var searchResults: SearchResultsFeature.State
 
         // Computed from parent via shared state
-        @SharedReader(.userTier) var userTier: Int?
+        @SharedReader(.userTier) var userTier: VpnTier?
         @SharedReader(.secureCoreToggle) var isSecureCore: Bool
 
         // Computed mode based on shared state
@@ -49,8 +49,8 @@ public struct SearchFeature {
                 return .secureCore
             }
 
-            let isFreeTier = userTier.isFreeTier
-            return .standard(isFreeTier: isFreeTier)
+            let isFree = userTier.isFree
+            return .standard(isFree: isFree)
         }
     }
 
@@ -90,9 +90,9 @@ public struct SearchFeature {
 
             case let .performSearch(searchText):
                 let trimmedText = searchText.trimmingCharacters(in: .whitespaces)
-                let isFreeTier = switch state.mode {
-                case let .standard(isFreeTier):
-                    isFreeTier
+                let isFree = switch state.mode {
+                case let .standard(isFree):
+                    isFree
                 case .secureCore:
                     false
                 }
@@ -120,7 +120,7 @@ public struct SearchFeature {
                     : .resultsDisplay(.init(
                         rows: rows,
                         searchText: trimmedText,
-                        isFreeTier: isFreeTier
+                        isFree: isFree
                     ))
                 return .none
 
@@ -168,7 +168,7 @@ public struct SearchFeature {
         var rows: [SearchResultRow] = []
 
         switch state.mode {
-        case let .standard(isFreeTier):
+        case let .standard(isFree):
             var hasResults = false
 
             // Filter countries
@@ -206,7 +206,7 @@ public struct SearchFeature {
             }
 
             // Filter servers by tier from pre-computed lists
-            for serverTier in ServerTier.sorted(isFreeTier: isFreeTier) {
+            for serverTier in ServerTier.sorted(isFree: isFree) {
                 let tierServers: [SearchServerIndex] = switch serverTier {
                 case .free:
                     state.freeServers.filter { filter($0.serverName) }
@@ -223,7 +223,7 @@ public struct SearchFeature {
             }
 
             // Add upsell at the beginning if there are results
-            if isFreeTier, hasResults {
+            if isFree, hasResults {
                 rows.insert(.upsell, at: 0)
             }
 

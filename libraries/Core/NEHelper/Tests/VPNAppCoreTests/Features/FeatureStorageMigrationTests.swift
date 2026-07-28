@@ -103,7 +103,7 @@ struct FeatureStorageMigrationTests {
             let feature = AuthorizedFeatureValue<VPNAccelerator>()
             feature.setValue(.off)
             // Paid tier, flag on: `.off` is allowed, so the stored `.off` is returned.
-            #expect(feature.effectiveValue(userTier: .paidTier, featureFlags: .allEnabled) == .off)
+            #expect(feature.effectiveValue(userTier: .paid, featureFlags: .allEnabled) == .off)
         }
     }
 
@@ -113,7 +113,7 @@ struct FeatureStorageMigrationTests {
             let feature = AuthorizedFeatureValue<VPNAccelerator>()
             feature.setValue(.off)
             // Free tier: `.off` requires upgrade, so the default `.on` is returned instead.
-            #expect(feature.effectiveValue(userTier: .freeTier, featureFlags: .allEnabled) == .on)
+            #expect(feature.effectiveValue(userTier: .free, featureFlags: .allEnabled) == .on)
         }
     }
 
@@ -121,7 +121,7 @@ struct FeatureStorageMigrationTests {
     func effectiveValueDefaultWhenAbsent() {
         withFreshStorage { _ in
             let feature = AuthorizedFeatureValue<VPNAccelerator>()
-            #expect(feature.effectiveValue(userTier: .paidTier, featureFlags: .allEnabled) == .on)
+            #expect(feature.effectiveValue(userTier: .paid, featureFlags: .allEnabled) == .on)
         }
     }
 
@@ -185,7 +185,7 @@ struct FeatureStorageMigrationTests {
             spies.install(&$0)
             $0.defaultAppStorage = defaults
         } operation: {
-            applyPlanChangeFeatureResets(PlanChange(oldTier: .paidTier, newTier: .freeTier))
+            applyPlanChangeFeatureResets(PlanChange(oldTier: .paid, newTier: .free))
         }
 
         #expect(spies.nat.withValue { $0 } == [.default])
@@ -204,7 +204,7 @@ struct FeatureStorageMigrationTests {
             spies.install(&$0)
             $0.defaultAppStorage = defaults
         } operation: {
-            applyPlanChangeFeatureResets(PlanChange(oldTier: .freeTier, newTier: .paidTier))
+            applyPlanChangeFeatureResets(PlanChange(oldTier: .free, newTier: .paid))
         }
 
         #expect(spies.netShield.withValue { $0 } == [.level2])

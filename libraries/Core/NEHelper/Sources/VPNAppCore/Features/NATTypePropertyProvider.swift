@@ -51,9 +51,9 @@ extension NATTypePropertyProvider: DependencyKey {
         let storage: UserScopedAppStorageKey<NATType?> = .rawInt(key)
 
         let canUse: () -> Bool = {
-            @SharedReader(.userTier) var userTier: Int?
+            @SharedReader(.userTier) var userTier: VpnTier?
             @SharedReader(.featureFlags) var featureFlags: FeatureFlags
-            return NATFeature.canUse(userTier: userTier ?? .freeTier, featureFlags: featureFlags).isAllowed
+            return NATFeature.canUse(userTier: userTier ?? .free, featureFlags: featureFlags).isAllowed
         }
 
         let getNATType: () -> NATType = {

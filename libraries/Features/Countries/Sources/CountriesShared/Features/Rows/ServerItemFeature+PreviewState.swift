@@ -29,11 +29,11 @@
                 translatedCity: nil,
                 entryCountryCode: "US",
                 exitCountryCode: "US",
-                tier: .paidTier,
+                tier: .paid,
                 load: 56,
                 feature: [.p2p, .tor],
                 serverType: .standard,
-                userTier: .paidTier,
+                userTier: .paid,
                 status: 1
             )
         }
@@ -46,11 +46,11 @@
                 translatedCity: nil,
                 entryCountryCode: "",
                 exitCountryCode: "US",
-                tier: .paidTier,
+                tier: .paid,
                 load: 56,
                 feature: [.secureCore],
                 serverType: .secureCore,
-                userTier: .paidTier,
+                userTier: .paid,
                 status: 1
             )
         }
@@ -63,11 +63,11 @@
                 translatedCity: nil,
                 entryCountryCode: "CH",
                 exitCountryCode: "US",
-                tier: .paidTier,
+                tier: .paid,
                 load: 56,
                 feature: [.secureCore],
                 serverType: .secureCore,
-                userTier: .paidTier,
+                userTier: .paid,
                 status: 1
             )
         }
@@ -80,11 +80,11 @@
                 translatedCity: nil,
                 entryCountryCode: "GB",
                 exitCountryCode: "GB",
-                tier: .paidTier,
+                tier: .paid,
                 load: 56,
                 feature: [],
                 serverType: .standard,
-                userTier: .paidTier,
+                userTier: .paid,
                 status: 0
             )
         }
@@ -97,11 +97,11 @@
                 translatedCity: nil,
                 entryCountryCode: "NL",
                 exitCountryCode: "NL",
-                tier: .paidTier,
+                tier: .paid,
                 load: 56,
                 feature: [.p2p, .tor],
                 serverType: .standard,
-                userTier: .freeTier,
+                userTier: .free,
                 status: 1
             )
         }
@@ -114,11 +114,11 @@
                 translatedCity: nil,
                 entryCountryCode: "US",
                 exitCountryCode: "US",
-                tier: .paidTier,
+                tier: .paid,
                 load: 75,
                 feature: [.streaming],
                 serverType: .standard,
-                userTier: .paidTier,
+                userTier: .paid,
                 status: 1
             )
         }
@@ -131,11 +131,11 @@
                 translatedCity: nil,
                 entryCountryCode: "FR",
                 exitCountryCode: "FR",
-                tier: .paidTier,
+                tier: .paid,
                 load: 91,
                 feature: [],
                 serverType: .standard,
-                userTier: .paidTier,
+                userTier: .paid,
                 status: 1,
                 hostCountry: "DE"
             )
@@ -149,11 +149,11 @@
                 translatedCity: nil,
                 entryCountryCode: "JP",
                 exitCountryCode: "JP",
-                tier: .paidTier,
+                tier: .paid,
                 load: 12,
                 feature: [.tor],
                 serverType: .standard,
-                userTier: .paidTier,
+                userTier: .paid,
                 status: 1
             )
         }
@@ -166,11 +166,11 @@
                 translatedCity: "Барселона",
                 entryCountryCode: "ES",
                 exitCountryCode: "ES",
-                tier: .paidTier,
+                tier: .paid,
                 load: 56,
                 feature: [],
                 serverType: .standard,
-                userTier: .paidTier,
+                userTier: .paid,
                 status: 1,
                 hostCountry: "PT"
             )
@@ -183,11 +183,11 @@
             translatedCity: String?,
             entryCountryCode: String,
             exitCountryCode: String,
-            tier: Int,
+            tier: VpnTier,
             load: Int,
             feature: ServerFeature,
             serverType: ServerType,
-            userTier: Int,
+            userTier: VpnTier,
             status: Int,
             hostCountry: String? = nil
         ) -> Self {

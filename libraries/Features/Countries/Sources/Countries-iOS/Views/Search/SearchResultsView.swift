@@ -114,7 +114,7 @@ struct SearchResultsView: View {
     }
 
     private func searchCountryRow(_ country: SearchCountryIndex) -> some View {
-        let isFreeTier = store.isFreeTier
+        let isFree = store.isFree
 
         return HStack(spacing: .themeSpacing16) {
             if let flag = UIImage.flag(countryCode: country.countryCode) {
@@ -124,12 +124,12 @@ struct SearchResultsView: View {
                     .frame(width: Dimensions.flagWidth, height: Dimensions.flagHeight)
                     .cornerRadius(.themeRadius4)
                     .clipped()
-                    .opacity(isFreeTier ? disabledContentOpacity : 1)
+                    .opacity(isFree ? disabledContentOpacity : 1)
             }
 
             highlightedText(country.name, searchText: store.searchText)
                 .foregroundColor(Color(.text))
-                .opacity(isFreeTier ? disabledContentOpacity : 1)
+                .opacity(isFree ? disabledContentOpacity : 1)
 
             Spacer()
 
@@ -138,13 +138,13 @@ struct SearchResultsView: View {
             }) {
                 ConnectButtonView(
                     isUnderMaintenance: false,
-                    shouldConnect: !isFreeTier,
-                    isUsersTierTooLow: isFreeTier
+                    shouldConnect: !isFree,
+                    isUsersTierTooLow: isFree
                 )
             }
             .buttonStyle(.plain)
 
-            if !isFreeTier {
+            if !isFree {
                 Button(action: {
                     store.send(.countrySelected(country))
                 }) {
@@ -163,7 +163,7 @@ struct SearchResultsView: View {
     }
 
     private func searchCityRow(_ city: SearchCityIndex, onConnectTapped: @escaping () -> Void) -> some View {
-        let isFreeTier = store.isFreeTier
+        let isFree = store.isFree
 
         return HStack(spacing: .themeSpacing16) {
             if let flag = ImageAsset.Image.flag(countryCode: city.countryCode) {
@@ -173,19 +173,19 @@ struct SearchResultsView: View {
                     .frame(width: Dimensions.flagWidth, height: Dimensions.flagHeight)
                     .cornerRadius(.themeRadius4)
                     .clipped()
-                    .opacity(isFreeTier ? disabledContentOpacity : 1)
+                    .opacity(isFree ? disabledContentOpacity : 1)
             }
 
             VStack(alignment: .leading, spacing: .themeSpacing2) {
                 highlightedText(city.translatedCityName ?? city.cityName, searchText: store.searchText)
                     .themeFont(.body2())
                     .foregroundColor(Color(.text))
-                    .opacity(isFreeTier ? disabledContentOpacity : 1)
+                    .opacity(isFree ? disabledContentOpacity : 1)
 
                 highlightedWeakText(
                     city.countryName,
                     searchText: store.searchText,
-                    isFreeTier: isFreeTier
+                    isFree: isFree
                 )
                 .themeFont(.body2())
             }
@@ -197,8 +197,8 @@ struct SearchResultsView: View {
             }) {
                 ConnectButtonView(
                     isUnderMaintenance: false,
-                    shouldConnect: !isFreeTier,
-                    isUsersTierTooLow: isFreeTier
+                    shouldConnect: !isFree,
+                    isUsersTierTooLow: isFree
                 )
             }
             .buttonStyle(.plain)
@@ -308,8 +308,8 @@ struct SearchResultsView: View {
         .reduce(Text(""), +)
     }
 
-    private func highlightedWeakText(_ text: String, searchText: String, isFreeTier: Bool) -> Text {
-        let weakColor = isFreeTier
+    private func highlightedWeakText(_ text: String, searchText: String, isFree: Bool) -> Text {
+        let weakColor = isFree
             ? Color(.text, .weak).opacity(disabledContentOpacity)
             : Color(.text, .weak)
 

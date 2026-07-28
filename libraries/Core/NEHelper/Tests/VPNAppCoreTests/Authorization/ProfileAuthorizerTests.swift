@@ -17,25 +17,26 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import Domain
 import Testing
 @testable import VPNAppCore
 @testable import VPNShared
 
 struct ProfileAuthorizerTests {
     struct TestCase: Sendable {
-        let userTier: Int?
-        let requiredTier: Int
+        let userTier: VpnTier?
+        let requiredTier: VpnTier
         let canUseProfiles: Bool
         let canUseProfile: Bool
     }
 
     @Test(arguments: [
-        TestCase(userTier: nil, requiredTier: .paidTier, canUseProfiles: false, canUseProfile: false),
-        TestCase(userTier: .freeTier, requiredTier: .freeTier, canUseProfiles: false, canUseProfile: false),
-        TestCase(userTier: .paidTier, requiredTier: .freeTier, canUseProfiles: true, canUseProfile: true),
-        TestCase(userTier: .paidTier, requiredTier: .paidTier, canUseProfiles: true, canUseProfile: true),
-        TestCase(userTier: .paidTier, requiredTier: .internalTier, canUseProfiles: true, canUseProfile: false),
-        TestCase(userTier: .internalTier, requiredTier: .paidTier, canUseProfiles: true, canUseProfile: true),
+        TestCase(userTier: nil, requiredTier: .paid, canUseProfiles: false, canUseProfile: false),
+        TestCase(userTier: .free, requiredTier: .free, canUseProfiles: false, canUseProfile: false),
+        TestCase(userTier: .paid, requiredTier: .free, canUseProfiles: true, canUseProfile: true),
+        TestCase(userTier: .paid, requiredTier: .paid, canUseProfiles: true, canUseProfile: true),
+        TestCase(userTier: .paid, requiredTier: .internal, canUseProfiles: true, canUseProfile: false),
+        TestCase(userTier: .internal, requiredTier: .paid, canUseProfiles: true, canUseProfile: true),
     ])
     func authorizesProfiles(testCase: TestCase) {
         let result = withDependencies {

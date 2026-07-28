@@ -498,8 +498,8 @@ private extension QuickSettingsFeature {
     func quickSettingsDisplayReconnectionFeedback() {
         guard connectionState.isConnected else { return }
         log.debug("Reconnection requested by changing quick setting", category: .connectionConnect, event: .trigger)
-        @SharedReader(.userTier) var userTier: Int?
-        let isFreeTier = userTier.isFreeTier
+        @SharedReader(.userTier) var userTier: VpnTier?
+        let isFree = userTier.isFree
         let connectedCountryCode = connectionState.resolvedServer?.logical.exitCountryCode
         let canReuseCurrentExitCountry: Bool = if let connectedCountryCode {
             serverRepository.hasServer(
@@ -513,11 +513,11 @@ private extension QuickSettingsFeature {
         let spec = SecureCoreConnectionSpecResolver.toggleReconnectSpec(
             secureCoreEnabled: secureCoreToggle,
             exitCountryCode: resolvedExit,
-            isFreeTier: isFreeTier
+            isFree: isFree
         )
         let intent = SecureCoreConnectionSpecResolver.reconnectTrigger(
             connectedExitCountryCode: resolvedExit,
-            isFreeTier: isFreeTier
+            isFree: isFree
         )
         let connectionProtocol = connectionState.resolvedVpnProtocol.map(ConnectionProtocol.vpnProtocol)
         connectionCommandClient.send(.connect(spec, connectionProtocol, intent))
@@ -581,14 +581,14 @@ extension QuickSettingsFeature {
     /// Free users hit the paywall for Secure Core, Port Forwarding, and any NetShield level
     /// above their entitlement.
     static func optionRequiresUpsell(type: QuickSettingType, option: QuickSettingOptionID) -> Bool {
-        @SharedReader(.userTier) var userTier: Int?
+        @SharedReader(.userTier) var userTier: VpnTier?
         switch (type, option) {
         case (.secureCoreDisplay, .secureCoreOn):
-            return userTier.isFreeTier
+            return userTier.isFree
         case let (.netShieldDisplay, .netShield(level)):
-            return level.isUserTierTooLow(userTier ?? Int.freeTier)
+            return level.isUserTierTooLow(userTier ?? .free)
         case (.portForwardingDisplay, .portForwardingOn):
-            return userTier.isFreeTier
+            return userTier.isFree
         default:
             return false
         }

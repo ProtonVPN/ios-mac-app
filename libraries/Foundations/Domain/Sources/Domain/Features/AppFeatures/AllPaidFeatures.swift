@@ -21,8 +21,8 @@ import Foundation
 public struct NATFeature: PaidAppFeature {}
 
 public struct PortForwardingFeature: PaidAppFeature {
-    public static func canUse(userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
-        guard userTier.isPaidTier else { return .failure(.requiresUpgrade) }
+    public static func canUse(userTier: VpnTier, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
+        guard userTier.isPaid else { return .failure(.requiresUpgrade) }
         return .success
     }
 }

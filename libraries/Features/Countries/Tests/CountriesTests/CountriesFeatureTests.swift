@@ -37,7 +37,7 @@ private let _testLogical = Logical(
     load: 0,
     entryCountryCode: "EU",
     exitCountryCode: "EU",
-    tier: 0,
+    tier: .free,
     score: 0,
     status: 1,
     feature: [],
@@ -93,7 +93,7 @@ struct CountriesFeatureTests {
     @Test("Secure core toggle works for paid user when disconnected")
     func secureCoreToggleWhenDisconnectedAndPaidUser() async {
         @SharedReader(.secureCoreToggle) var isSecureCore = false
-        @SharedReader(.userTier) var userTier: Int? = 2
+        @SharedReader(.userTier) var userTier: VpnTier? = .paid
         @SharedReader(.connectionState) var connectionState: ConnectionState = .disconnected
         @SharedReader(.discourageSecureCore) var discourageSecureCore = false
 
@@ -108,7 +108,7 @@ struct CountriesFeatureTests {
     @Test("Secure core toggle shows upsell for free user")
     func secureCoreToggleShowsUpsellForFreeUser() async {
         @SharedReader(.secureCoreToggle) var isSecureCore = false
-        @SharedReader(.userTier) var userTier: Int? = 0
+        @SharedReader(.userTier) var userTier: VpnTier? = .free
         @SharedReader(.connectionState) var connectionState: ConnectionState = .disconnected
 
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
@@ -161,7 +161,7 @@ struct CountriesFeatureTests {
     @Test("Secure core toggle shows discourage view when enabled")
     func secureCoreToggleShowsDiscourageViewWhenEnabled() async {
         @SharedReader(.secureCoreToggle) var isSecureCore = false
-        @SharedReader(.userTier) var userTier: Int? = 2
+        @SharedReader(.userTier) var userTier: VpnTier? = .paid
         @SharedReader(.connectionState) var connectionState: ConnectionState = .disconnected
         @SharedReader(.discourageSecureCore) var discourageSecureCore = true
 
@@ -177,7 +177,7 @@ struct CountriesFeatureTests {
     @Test("Secure core ON + discourage=false + connected → short alert with same-country message")
     func secureCoreToggleOnConnectedNoDiscourageShowsAlert() async {
         @SharedReader(.secureCoreToggle) var isSecureCore = false
-        @SharedReader(.userTier) var userTier: Int? = 2
+        @SharedReader(.userTier) var userTier: VpnTier? = .paid
         @Shared(.connectionState) var connectionState
         $connectionState.withLock { $0 = .fakeConnected }
         @SharedReader(.discourageSecureCore) var discourageSecureCore = false
@@ -203,7 +203,7 @@ struct CountriesFeatureTests {
     @Test("Secure core ON + discourage=true + connected → discourage with same-country notice")
     func secureCoreToggleOnConnectedWithDiscourageShowsViewWithNotice() async {
         @SharedReader(.secureCoreToggle) var isSecureCore = false
-        @SharedReader(.userTier) var userTier: Int? = 2
+        @SharedReader(.userTier) var userTier: VpnTier? = .paid
         @Shared(.connectionState) var connectionState
         $connectionState.withLock { $0 = .fakeConnected }
         @SharedReader(.discourageSecureCore) var discourageSecureCore = true
@@ -224,7 +224,7 @@ struct CountriesFeatureTests {
     @Test("Secure core ON + discourage=true + not connected → discourage without notice")
     func secureCoreToggleOnDisconnectedWithDiscourageShowsViewWithoutNotice() async {
         @SharedReader(.secureCoreToggle) var isSecureCore = false
-        @SharedReader(.userTier) var userTier: Int? = 2
+        @SharedReader(.userTier) var userTier: VpnTier? = .paid
         @SharedReader(.connectionState) var connectionState: ConnectionState = .disconnected
         @SharedReader(.discourageSecureCore) var discourageSecureCore = true
 
@@ -240,7 +240,7 @@ struct CountriesFeatureTests {
     @Test("Secure core OFF + connected → short alert")
     func secureCoreToggleOffConnectedShowsAlert() async {
         @SharedReader(.secureCoreToggle) var isSecureCore = true
-        @SharedReader(.userTier) var userTier: Int? = 2
+        @SharedReader(.userTier) var userTier: VpnTier? = .paid
         @Shared(.connectionState) var connectionState
         $connectionState.withLock { $0 = .fakeConnected }
 
@@ -263,7 +263,7 @@ struct CountriesFeatureTests {
     @Test("Turning off secure core when disconnected applies toggle")
     func turningOffSecureCoreWhenDisconnected() async {
         @SharedReader(.secureCoreToggle) var isSecureCore = true
-        @SharedReader(.userTier) var userTier: Int? = 2
+        @SharedReader(.userTier) var userTier: VpnTier? = .paid
         @Shared(.connectionState) var connectionState
         $connectionState.withLock { $0 = .disconnected }
         let store = TestStore(initialState: CountriesFeature.State(sections: [])) {
@@ -343,13 +343,13 @@ struct CountriesFeatureTests {
 
     @Test("Country row tap shows city-state sheet when feature is enabled")
     func countryRowTapShowsCityStateSheet() async {
-        @SharedReader(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.userTier) var userTier: VpnTier? = .paid
         let group = ServerGroupInfo(
             kind: .country(code: "US"),
             featureIntersection: [],
             featureUnion: [],
-            minTier: .paidTier,
-            maxTier: .paidTier,
+            minTier: .paid,
+            maxTier: .paid,
             serverCount: 1,
             cityCount: 1,
             latitude: 0,
@@ -392,8 +392,8 @@ struct CountriesFeatureTests {
             kind: .gateway(name: "Gateway"),
             featureIntersection: [],
             featureUnion: [],
-            minTier: .paidTier,
-            maxTier: .paidTier,
+            minTier: .paid,
+            maxTier: .paid,
             serverCount: 1,
             cityCount: 1,
             latitude: 0,
@@ -459,8 +459,8 @@ struct CountriesFeatureTests {
             kind: .country(code: "US"),
             featureIntersection: [],
             featureUnion: [],
-            minTier: .freeTier,
-            maxTier: .freeTier,
+            minTier: .free,
+            maxTier: .free,
             serverCount: 1,
             cityCount: 1,
             latitude: 0,
@@ -545,8 +545,8 @@ struct CountriesFeatureTests {
             kind: .country(code: "US"),
             featureIntersection: [],
             featureUnion: [],
-            minTier: .freeTier,
-            maxTier: .freeTier,
+            minTier: .free,
+            maxTier: .free,
             serverCount: 1,
             cityCount: 1,
             latitude: 0,
@@ -559,8 +559,8 @@ struct CountriesFeatureTests {
             kind: .country(code: "CH"),
             featureIntersection: [],
             featureUnion: [],
-            minTier: .paidTier,
-            maxTier: .paidTier,
+            minTier: .paid,
+            maxTier: .paid,
             serverCount: 1,
             cityCount: 1,
             latitude: 0,

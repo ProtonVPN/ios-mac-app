@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Domain
 @testable import tvos_app
 import XCTest
 
@@ -117,14 +118,14 @@ final class WelcomeFeatureTests: XCTestCase {
             }
         }
 
-        @Shared(.userTier) var userTier: Int?
+        @Shared(.userTier) var userTier: VpnTier?
 
         await store.send(.onAppear)
 
         $userTier.withLock { $0 = nil }
         await store.receive(\.userTierUpdated)
 
-        $userTier.withLock { $0 = 1 } // to cancel the publisher
+        $userTier.withLock { $0 = VpnTier(rawValue: 1) } // to cancel the publisher
         await store.receive(\.userTierUpdated)
     }
 
@@ -140,13 +141,13 @@ final class WelcomeFeatureTests: XCTestCase {
             }
         }
 
-        @Shared(.userTier) var userTier: Int?
+        @Shared(.userTier) var userTier: VpnTier?
 
         await store.send(.onAppear)
 
         await store.receive(\.userTierUpdated)
 
-        $userTier.withLock { $0 = 1 }
+        $userTier.withLock { $0 = VpnTier(rawValue: 1) }
         await store.receive(\.userTierUpdated) {
             $0.destination = nil
         }

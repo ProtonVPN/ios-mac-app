@@ -18,6 +18,7 @@
 
 @testable import CommonNetworking
 import ComposableArchitecture
+import Domain
 import struct Ergonomics.GenericError
 import IssueReporting
 import ProtonCoreNetworking
@@ -33,7 +34,7 @@ final class SessionNetworkingFeatureTests: XCTestCase {
             SessionNetworkingFeature()
         }
         await store.send(.delegate(.displayName(nil)))
-        await store.send(.delegate(.tier(0)))
+        await store.send(.delegate(.tier(VpnTier(rawValue: 0))))
         await store.send(.forkedSessionAuthenticated(.failure("" as GenericError)))
     }
 
@@ -130,7 +131,7 @@ final class SessionNetworkingFeatureTests: XCTestCase {
         } withDependencies: {
             $0.networking = VPNNetworkingMock()
         }
-        await store.send(.userTierRetrieved(1, .auth(uid: ""))) {
+        await store.send(.userTierRetrieved(VpnTier(rawValue: 1), .auth(uid: ""))) {
             $0 = .authenticated(.auth(uid: ""))
         }
         await store.receive(\.delegate)

@@ -27,7 +27,7 @@ struct SecureCoreConnectionSpecResolverTests {
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: true,
             connectedExitCountryCode: nil,
-            isFreeTier: false
+            isFree: false
         )
 
         #expect(spec.location == .secureCore(.any(.fastest)))
@@ -38,7 +38,7 @@ struct SecureCoreConnectionSpecResolverTests {
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: true,
             connectedExitCountryCode: "CH",
-            isFreeTier: false
+            isFree: false
         )
 
         #expect(spec.location == .secureCore(.anyHop(to: "CH", .fastest)))
@@ -49,7 +49,7 @@ struct SecureCoreConnectionSpecResolverTests {
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: false,
             connectedExitCountryCode: "US",
-            isFreeTier: false
+            isFree: false
         )
 
         #expect(spec.location == .country(code: "US", order: .fastest))
@@ -60,7 +60,7 @@ struct SecureCoreConnectionSpecResolverTests {
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: false,
             connectedExitCountryCode: "US",
-            isFreeTier: true
+            isFree: true
         )
 
         #expect(spec.location == .any(.fastest))
@@ -72,7 +72,7 @@ struct SecureCoreConnectionSpecResolverTests {
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: true,
             connectedExitCountryCode: "US",
-            isFreeTier: true
+            isFree: true
         )
 
         #expect(spec.location == .any(.fastest))
@@ -83,7 +83,7 @@ struct SecureCoreConnectionSpecResolverTests {
         #expect(
             SecureCoreConnectionSpecResolver.reconnectTrigger(
                 connectedExitCountryCode: "US",
-                isFreeTier: false
+                isFree: false
             )
                 == UserInitiatedVPNChange.VPNTrigger.country
         )
@@ -94,7 +94,7 @@ struct SecureCoreConnectionSpecResolverTests {
         #expect(
             SecureCoreConnectionSpecResolver.reconnectTrigger(
                 connectedExitCountryCode: nil,
-                isFreeTier: false
+                isFree: false
             )
                 == UserInitiatedVPNChange.VPNTrigger.auto
         )
@@ -105,7 +105,7 @@ struct SecureCoreConnectionSpecResolverTests {
         #expect(
             SecureCoreConnectionSpecResolver.reconnectTrigger(
                 connectedExitCountryCode: "US",
-                isFreeTier: true
+                isFree: true
             )
                 == UserInitiatedVPNChange.VPNTrigger.auto
         )

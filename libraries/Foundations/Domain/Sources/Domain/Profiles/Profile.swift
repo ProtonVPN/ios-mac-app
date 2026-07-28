@@ -25,7 +25,7 @@ public struct Profile: Identifiable, Codable {
     public static let idLength = 20
 
     public let id: String
-    public let accessTier: Int
+    public let accessTier: VpnTier
     public let profileIcon: ProfileIcon
     public let profileType: ProfileType
     public let serverType: ServerType
@@ -36,7 +36,7 @@ public struct Profile: Identifiable, Codable {
 
     public var description: String {
         "ID: \(id)\n" +
-            "Access tier: \(accessTier)\n" +
+            "Access tier: \(accessTier.rawValue)\n" +
             "Profile icon: \(profileIcon)\n" +
             "Profile type: \(profileType)\n" +
             "Server type: \(serverType)\n" +
@@ -48,7 +48,7 @@ public struct Profile: Identifiable, Codable {
 
     public init(
         id: String,
-        accessTier: Int,
+        accessTier: VpnTier,
         profileIcon: ProfileIcon,
         profileType: ProfileType,
         serverType: ServerType,

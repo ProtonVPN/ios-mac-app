@@ -36,19 +36,19 @@ import XCTest
 
 class CreateOrEditProfileViewModelTests: XCTestCase {
     lazy var servers = [
-        serverModel("serv3", tier: .freeTier, feature: ServerFeature.zero, exitCountryCode: "US", entryCountryCode: "CH"),
-        serverModel("serv4", tier: .freeTier, feature: ServerFeature.zero, exitCountryCode: "UK", entryCountryCode: "CH"),
-        serverModel("serv5", tier: .freeTier, feature: ServerFeature.zero, exitCountryCode: "DE", entryCountryCode: "CH"),
-        serverModel("serv6", tier: .paidTier, feature: ServerFeature.secureCore, exitCountryCode: "US", entryCountryCode: "BE"),
-        serverModel("serv7", tier: .paidTier, feature: ServerFeature.secureCore, exitCountryCode: "UK", entryCountryCode: "CH"),
-        serverModel("serv8", tier: .paidTier, feature: ServerFeature.secureCore, exitCountryCode: "DE", entryCountryCode: "CH"),
-        serverModel("serv9", tier: .paidTier, feature: ServerFeature.secureCore, exitCountryCode: "FR", entryCountryCode: "CH"),
+        serverModel("serv3", tier: .free, feature: ServerFeature.zero, exitCountryCode: "US", entryCountryCode: "CH"),
+        serverModel("serv4", tier: .free, feature: ServerFeature.zero, exitCountryCode: "UK", entryCountryCode: "CH"),
+        serverModel("serv5", tier: .free, feature: ServerFeature.zero, exitCountryCode: "DE", entryCountryCode: "CH"),
+        serverModel("serv6", tier: .paid, feature: ServerFeature.secureCore, exitCountryCode: "US", entryCountryCode: "BE"),
+        serverModel("serv7", tier: .paid, feature: ServerFeature.secureCore, exitCountryCode: "UK", entryCountryCode: "CH"),
+        serverModel("serv8", tier: .paid, feature: ServerFeature.secureCore, exitCountryCode: "DE", entryCountryCode: "CH"),
+        serverModel("serv9", tier: .paid, feature: ServerFeature.secureCore, exitCountryCode: "FR", entryCountryCode: "CH"),
     ]
 
-    lazy var standardProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .standard, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))
-    lazy var secureCoreProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .secureCore, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))
+    lazy var standardProfile = Profile(accessTier: VpnTier(rawValue: 4), profileIcon: .circle(0), profileType: .user, serverType: .standard, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))
+    lazy var secureCoreProfile = Profile(accessTier: VpnTier(rawValue: 4), profileIcon: .circle(0), profileType: .user, serverType: .secureCore, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))
 
-    lazy var vpnKeychainMock: VpnKeychainProtocol = VpnKeychainMock(planName: "visionary", maxTier: 4)
+    lazy var vpnKeychainMock: VpnKeychainProtocol = VpnKeychainMock(planName: "visionary", maxTier: VpnTier(rawValue: 4))
 
     var profileService: ProfileServiceMock!
 
@@ -96,7 +96,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
 
     // MARK: - Private
 
-    private func serverModel(_ name: String, tier: Int, feature: ServerFeature, exitCountryCode: String, entryCountryCode: String) -> VPNServer {
+    private func serverModel(_ name: String, tier: VpnTier, feature: ServerFeature, exitCountryCode: String, entryCountryCode: String) -> VPNServer {
         VPNServer(
             logical: Logical(
                 id: name,

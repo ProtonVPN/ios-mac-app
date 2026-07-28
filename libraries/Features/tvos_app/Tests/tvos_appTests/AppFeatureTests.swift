@@ -21,6 +21,7 @@ import ComposableArchitecture
 @testable import Connection
 import ConnectionTestSupport
 @testable import CoreConnection
+import Domain
 import Ergonomics
 @testable import ExtensionManager
 import ModalsServices
@@ -211,8 +212,8 @@ final class AppFeatureTests: XCTestCase {
             AppFeature()
         }
 
-        await store.send(.screen(.welcome(.upsold(tier: 2)))) {
-            $0.$userTier.withLock { $0 = 2 }
+        await store.send(.screen(.welcome(.upsold(tier: VpnTier(rawValue: 2))))) {
+            $0.$userTier.withLock { $0 = VpnTier(rawValue: 2) }
             $0.screen = .main(.init())
         }
     }
@@ -224,7 +225,7 @@ final class AppFeatureTests: XCTestCase {
             screen: .welcome(.init(destination: .upsell(.loading))),
             networking: .authenticated(.auth(uid: "userid"))
         )
-        state.$userTier.withLock { $0 = 0 }
+        state.$userTier.withLock { $0 = VpnTier(rawValue: 0) }
         state.$userDisplayName.withLock { $0 = "username" }
 
         let store = TestStore(initialState: state) {

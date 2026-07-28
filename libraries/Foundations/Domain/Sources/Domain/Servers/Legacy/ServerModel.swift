@@ -25,7 +25,7 @@ public struct ServerModel: Codable, Equatable {
     public private(set) var load: Int
     public let entryCountryCode: String // use when feature.secureCore is true
     public let exitCountryCode: String
-    public let tier: Int
+    public let tier: VpnTier
     public private(set) var score: Double
     public private(set) var status: Int
     public let feature: ServerFeature
@@ -37,7 +37,25 @@ public struct ServerModel: Codable, Equatable {
     public let translatedCity: String?
     public let gatewayName: String?
 
-    public init(id: String, name: String, domain: String, load: Int, entryCountryCode: String, exitCountryCode: String, tier: Int, feature: ServerFeature, city: String?, state: String?, ips: [ServerIp], score: Double, status: Int, location: ServerLocation, hostCountry: String?, translatedCity: String?, gatewayName: String?) {
+    public init(
+        id: String,
+        name: String,
+        domain: String,
+        load: Int,
+        entryCountryCode: String,
+        exitCountryCode: String,
+        tier: VpnTier,
+        feature: ServerFeature,
+        city: String?,
+        state: String?,
+        ips: [ServerIp],
+        score: Double,
+        status: Int,
+        location: ServerLocation,
+        hostCountry: String?,
+        translatedCity: String?,
+        gatewayName: String?
+    ) {
         self.id = id
         self.name = name
         self.domain = domain
@@ -111,7 +129,7 @@ public struct ServerModel: Codable, Equatable {
             load: container.decode(Int.self, forKey: CodingKeys.load),
             entryCountryCode: container.decode(String.self, forKey: CodingKeys.entryCountryCode),
             exitCountryCode: container.decode(String.self, forKey: CodingKeys.exitCountryCode),
-            tier: container.decode(Int.self, forKey: CodingKeys.tier),
+            tier: container.decode(VpnTier.self, forKey: CodingKeys.tier),
             feature: feature,
             city: container.decodeIfPresent(String.self, forKey: CodingKeys.city),
             state: container.decodeIfPresent(String.self, forKey: CodingKeys.state),

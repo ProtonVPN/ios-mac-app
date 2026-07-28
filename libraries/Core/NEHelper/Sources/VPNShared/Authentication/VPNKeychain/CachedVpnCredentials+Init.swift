@@ -16,12 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Domain
 import Foundation
 
 #if DEBUG
     public extension CachedVpnCredentials {
         static func tier(
-            _ tier: Int,
+            _ tier: VpnTier,
             planName: String = "Awesome",
             isBusiness: Bool = false,
             netshield: NetShieldFeatureSettings = NetShieldFeatureSettings(malware: true, adsAndTrackers: true, adultContent: true)

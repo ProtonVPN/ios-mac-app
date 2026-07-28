@@ -26,7 +26,7 @@ struct LogicalDTO: Codable {
     let load: Int
     let entryCountry: String // use when feature.secureCore is true
     let exitCountry: String
-    let tier: Int
+    let tier: VpnTier
     private(set) var score: Double
     private(set) var status: Int
     let features: ServerFeature // features?

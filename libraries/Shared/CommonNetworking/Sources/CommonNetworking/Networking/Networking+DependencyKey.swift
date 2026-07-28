@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import Domain
 import Ergonomics
 import Foundation
 import IssueReporting
@@ -27,7 +28,7 @@ import ProtonCoreServices
 import VPNAppCore
 
 public protocol VPNNetworking {
-    var userTier: Int { get async throws }
+    var userTier: VpnTier { get async throws }
     var userDisplayName: String? { get async throws }
     var userEmail: String? { get async throws }
     var sessionCookie: HTTPCookie? { get }
@@ -95,14 +96,14 @@ public struct CoreNetworkingWrapper: VPNNetworking {
     }
 
     // TODO: Hopefully when we start supporting free users we can ignore the MaxTier so this code would go away
-    public var userTier: Int {
+    public var userTier: VpnTier {
         get async throws {
             let json = try await wrapped.perform(request: VPNClientCredentialsRequest())
             guard let vpn: [String: Any] = try json[throwing: "VPN"],
                   let maxTier: Int = try vpn[throwing: "MaxTier"] else {
-                return 0
+                return .free
             }
-            return maxTier
+            return VpnTier(rawValue: maxTier)
         }
     }
 
@@ -186,9 +187,9 @@ public extension DependencyValues {
             throw "" as GenericError
         }
 
-        var userTier: Int {
+        var userTier: VpnTier {
             get async throws {
-                try userTierResult.get()
+                try VpnTier(rawValue: userTierResult.get())
             }
         }
 

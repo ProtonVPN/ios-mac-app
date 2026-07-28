@@ -19,6 +19,7 @@
 @testable import CommonNetworking
 import ComposableArchitecture
 import Dependencies
+import Domain
 import Payments
 import SnapshotTesting
 import SwiftUI
@@ -48,16 +49,16 @@ final class AppFeatureSnapshotTests {
         let date1 = dateFormatter.date(from: "2020-04-20")!
         let date2 = dateFormatter.date(from: "2021-03-20")!
 
-        let loadingState = AppFeature.State(
+        let loadingState = tvos_app.AppFeature.State(
             screen: .welcome(.init(destination: .upsell(.loading))),
             networking: .authenticated(.auth(uid: ""))
         )
-        let loadingStore = makeStore(state: loadingState, userTier: .freeTier)
+        let loadingStore = makeStore(state: loadingState, userTier: .free)
         let loadingView = AppView(store: loadingStore)
             .frame(.rect(width: 1920, height: 1080))
         snap(loadingView, caseName: "7 Upsell Loading", trait: trait)
 
-        let loadedState = AppFeature.State(
+        let loadedState = tvos_app.AppFeature.State(
             screen: .welcome(.init(destination: .upsell(.loaded(
                 planOptions: [PlanOptionV2.oneYear, .oneMonth],
                 introRenewalDates: [
@@ -68,7 +69,7 @@ final class AppFeatureSnapshotTests {
             )))),
             networking: .authenticated(.auth(uid: ""))
         )
-        let loadedStore = makeStore(state: loadedState, userTier: .freeTier)
+        let loadedStore = makeStore(state: loadedState, userTier: .free)
         let loadedView = AppView(store: loadedStore)
             .frame(.rect(width: 1920, height: 1080))
 
@@ -76,12 +77,12 @@ final class AppFeatureSnapshotTests {
     }
 
     func app(trait: UIUserInterfaceStyle) {
-        let welcomeState = AppFeature.State(screen: .welcome(.init()), networking: .authenticated(.unauth(uid: "")))
+        let welcomeState = tvos_app.AppFeature.State(screen: .welcome(.init()), networking: .authenticated(.unauth(uid: "")))
         let welcomeView = AppView(store: makeStore(state: welcomeState))
             .frame(.rect(width: 1920, height: 1080))
         snap(welcomeView, caseName: "1 Welcome", trait: trait)
 
-        let createAccountState = AppFeature.State(
+        let createAccountState = tvos_app.AppFeature.State(
             screen: .welcome(.init(destination: .welcomeInfo(.createAccount))),
             networking: .authenticated(.unauth(uid: ""))
         )
@@ -89,7 +90,7 @@ final class AppFeatureSnapshotTests {
             .frame(.rect(width: 1920, height: 1080))
         snap(createAccountView, caseName: "2 CreateAccount", trait: trait)
 
-        let signInLoadingState = AppFeature.State(
+        let signInLoadingState = tvos_app.AppFeature.State(
             screen: .welcome(.init(destination: .signIn(.init(authentication: .loadingSignInCode)))),
             networking: .authenticated(.unauth(uid: ""))
         )
@@ -97,7 +98,7 @@ final class AppFeatureSnapshotTests {
             .frame(.rect(width: 1920, height: 1080))
         snap(signInLoadingView, caseName: "3 SignInRetrievingCode", trait: trait)
 
-        let signInWithCodeState = AppFeature.State(
+        let signInWithCodeState = tvos_app.AppFeature.State(
             screen: .welcome(.init(destination: .signIn(.init(
                 authentication: .waitingForAuthentication(
                     code: SignInCode(selector: "", userCode: "1234ABCD"),
@@ -110,7 +111,7 @@ final class AppFeatureSnapshotTests {
             .frame(.rect(width: 1920, height: 1080))
         snap(signInWithCodeView, caseName: "4 SignInWithCode", trait: trait)
 
-        let codeExpiredState = AppFeature.State(
+        let codeExpiredState = tvos_app.AppFeature.State(
             screen: .welcome(.init(destination: .codeExpired(.init()))),
             networking: .authenticated(.unauth(uid: ""))
         )
@@ -118,7 +119,7 @@ final class AppFeatureSnapshotTests {
             .frame(.rect(width: 1920, height: 1080))
         snap(codeExpiredView, caseName: "5 CodeExpired", trait: trait)
 
-        let acquiringSessionState = AppFeature.State(networking: .acquiringSession(.signingIn))
+        let acquiringSessionState = tvos_app.AppFeature.State(networking: .acquiringSession(.signingIn))
         let acquiringSessionView = AppView(store: makeStore(state: acquiringSessionState))
             .frame(.rect(width: 1920, height: 1080))
         snap(acquiringSessionView, caseName: "6 AcquiringSession", trait: trait)
@@ -127,11 +128,11 @@ final class AppFeatureSnapshotTests {
 
 private extension AppFeatureSnapshotTests {
     func makeStore(
-        state: AppFeature.State,
-        userTier: Int? = nil
-    ) -> StoreOf<AppFeature> {
+        state: tvos_app.AppFeature.State,
+        userTier: VpnTier? = nil
+    ) -> StoreOf<tvos_app.AppFeature> {
         if let userTier {
-            @Shared(.userTier) var sharedUserTier: Int?
+            @Shared(.userTier) var sharedUserTier: VpnTier?
             $sharedUserTier.withLock { $0 = userTier }
         }
         return Store(initialState: state) {

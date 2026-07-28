@@ -115,9 +115,9 @@ class CountryAnnotationViewModel: CustomStyleContext {
         }
     }
 
-    init(countryCode: String, minTier: Int, userTier: Int, coordinate: CLLocationCoordinate2D) {
+    init(countryCode: String, minTier: VpnTier, userTier: VpnTier, coordinate: CLLocationCoordinate2D) {
         self.countryCode = countryCode
-        if userTier.isFreeTier {
+        if userTier.isFree {
             self.available = false
         } else {
             self.available = minTier <= userTier
@@ -226,7 +226,7 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
             && connectedServer.logical.exitCountryCode == countryCode
     }
 
-    init(countryCode: String, minTier: Int, servers: [ServerInfo], userTier: Int, coordinate: CLLocationCoordinate2D) {
+    init(countryCode: String, minTier: VpnTier, servers: [ServerInfo], userTier: VpnTier, coordinate: CLLocationCoordinate2D) {
         self.servers = servers
         super.init(countryCode: countryCode, minTier: minTier, userTier: userTier, coordinate: coordinate)
     }

@@ -27,23 +27,23 @@ public enum VPNAccelerator: String, Codable, ToggleableFeature {
 extension VPNAccelerator: PaidAppFeature {
     public static let featureFlag: KeyPath<FeatureFlags, Bool>? = \.vpnAccelerator
 
-    public static func minTier(featureFlags _: FeatureFlags) -> Int {
-        .paidTier
+    public static func minTier(featureFlags _: FeatureFlags) -> VpnTier {
+        .paid
     }
 }
 
 extension VPNAccelerator: ModularAppFeature, DefaultableFeature, StorableFeature {
-    public static func defaultValue(userTier _: Int, featureFlags _: FeatureFlags) -> VPNAccelerator {
+    public static func defaultValue(userTier _: VpnTier, featureFlags _: FeatureFlags) -> VPNAccelerator {
         .on
     }
 
     public static let storageKey: String = "VpnAcceleratorEnabled"
 
-    public func canUse(userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
+    public func canUse(userTier: VpnTier, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         switch self {
         case .off:
             // This feature can only be turned off by paying users post-free rescope
-            if userTier.isFreeTier {
+            if userTier.isFree {
                 return .failure(.requiresUpgrade)
             }
             return .success

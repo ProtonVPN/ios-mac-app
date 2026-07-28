@@ -37,10 +37,10 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
             throw loginError
         }
 
-        let isFreeTier = try vpnKeychain.fetchCached().maxTier.isFreeTier
+        let isFree = try vpnKeychain.fetchCached().maxTier.isFree
 
         try await withEscapedDependencies { dependencies in
-            guard let properties = try await vpnApiClient.refreshServerInfo(ifIpHasChangedFrom: nil, freeTier: isFreeTier) else {
+            guard let properties = try await vpnApiClient.refreshServerInfo(ifIpHasChangedFrom: nil, freeTier: isFree) else {
                 return
             }
 
@@ -55,10 +55,10 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
                 }
 
                 @Dependency(\.serverManager) var serverManager
-                if case let .modified(modifiedAt, servers, isFreeTier) = properties.serverInfo {
+                if case let .modified(modifiedAt, servers, isFree) = properties.serverInfo {
                     serverManager.update(
                         servers: servers.map { VPNServer(legacyModel: $0) },
-                        freeServersOnly: isFreeTier,
+                        freeServersOnly: isFree,
                         lastModifiedAt: modifiedAt
                     )
                 }

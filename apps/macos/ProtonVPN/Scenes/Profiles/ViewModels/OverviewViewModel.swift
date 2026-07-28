@@ -50,7 +50,7 @@ final class OverviewViewModel {
         50.0
     }
 
-    private var userTier: Int {
+    private var userTier: VpnTier {
         credentialsProvider.tier
     }
 

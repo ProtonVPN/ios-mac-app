@@ -40,7 +40,7 @@ public struct ServerItemFeature {
         }
 
         @SharedReader(.connectionState) var connectionState: ConnectionState
-        @SharedReader(.userTier) var userTier: Int?
+        @SharedReader(.userTier) var userTier: VpnTier?
 
         // Computed properties
         var city: String {
@@ -48,7 +48,7 @@ public struct ServerItemFeature {
         }
 
         public var isUsersTierTooLow: Bool {
-            userTier ?? 0 < serverInfo.logical.tier
+            userTier.orFree < serverInfo.logical.tier
         }
 
         public var underMaintenance: Bool {

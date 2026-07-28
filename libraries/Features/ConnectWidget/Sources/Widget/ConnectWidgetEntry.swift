@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Collections
 import Domain
 import Foundation
 import SwiftUI
 import WidgetKit
-import Collections
 
 public struct ConnectWidgetEntry: TimelineEntry {
     public let date: Date
@@ -35,6 +35,7 @@ public struct ConnectWidgetEntry: TimelineEntry {
         case unprotected
         case protecting
     }
+
     static var loggedOutEntry: Self {
         ConnectWidgetEntry(
             date: .now,
@@ -53,7 +54,7 @@ extension ConnectWidgetEntry {
             // For `random` connections, when connecting/connected, we show the resolved server.
             if connectionSpec?.location.selectionSpec == .random, let currentServer {
                 return ConnectionSpec.Location.exact(
-                    currentServer.logical.tier.isPaidTier ? .paid : .free,
+                    currentServer.logical.tier.isPaid ? .paid : .free,
                     logicalID: currentServer.logical.id,
                     number: currentServer.logical.serverNameComponents.sequence,
                     subregion: currentServer.logical.city,

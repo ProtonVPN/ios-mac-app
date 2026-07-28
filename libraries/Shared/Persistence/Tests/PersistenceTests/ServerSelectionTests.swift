@@ -83,7 +83,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
         let result = repository.getFirstServer(
             filteredBy: [
                 .features(.standard),
-                .tier(.max(tier: 0)),
+                .tier(.max(tier: .free)),
             ],
             orderedBy: .fastest
         )
@@ -99,7 +99,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
             filteredBy: [
                 .features(.standard),
                 .supports(protocol: [.wireGuardUDP]),
-                .tier(.max(tier: 0)),
+                .tier(.max(tier: .free)),
             ],
             orderedBy: .fastest
         )
@@ -171,7 +171,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
         let results = repository.getServers(
             filteredBy: [
                 .features(.standard(with: .tor)),
-                .tier(.max(tier: 0)),
+                .tier(.max(tier: .free)),
             ],
             orderedBy: .nameAscending
         )
