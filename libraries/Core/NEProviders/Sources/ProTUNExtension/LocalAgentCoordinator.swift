@@ -30,15 +30,15 @@ final class LocalAgentCoordinator: @unchecked Sendable {
         case forkSelectorRequest
     }
 
-    @Dependency(\.extensionIPCServer) var extensionIPCServer
-
     let streamSource: StreamSource<Event>
 
     private static let statsFetchingInterval: Duration = .seconds(30)
     private static let statsFetchingTolerance: Duration = .seconds(1)
 
-    // we really need Swift 6.3 and weak let!
-    private weak var adapter: ProTUNAdapter!
+    private let adapter: ProTUNAdapter
+
+    @Dependency(\.extensionIPCServer) private var extensionIPCServer
+
     private let continuation: AsyncStream<Event>.Continuation
 
     init(adapter: ProTUNAdapter) {
@@ -129,7 +129,7 @@ private extension LocalAgentCoordinator {
         @Dependency(\.continuousClock) var clock
 
         for await _ in clock.timer(interval: Self.statsFetchingInterval, tolerance: Self.statsFetchingTolerance) {
-            adapter?.connection?.requestLocalAgentStats()
+            await adapter.requestLocalAgentStats()
         }
     }
 }

@@ -31,17 +31,33 @@ public struct NetworkPath: Equatable, Sendable {
     private(set) var supportsIPv4: Bool
     private(set) var supportsIPv6: Bool
 
-    public var isUsable: Bool {
-        status == .satisfied || status == .requiresConnection
-    }
-
-    public init(status: NWPath.Status, interfaceName: String? = nil, interfaceType: NWInterface.InterfaceType? = nil, gateways: [String], supportsIPv4: Bool, supportsIPv6: Bool) {
+    public init(
+        status: NWPath.Status,
+        interfaceName: String? = nil,
+        interfaceType: NWInterface.InterfaceType? = nil,
+        gateways: [String],
+        supportsIPv4: Bool,
+        supportsIPv6: Bool
+    ) {
         self.status = status
         self.interfaceName = interfaceName
         self.interfaceType = interfaceType
         self.gateways = gateways
         self.supportsIPv4 = supportsIPv4
         self.supportsIPv6 = supportsIPv6
+    }
+}
+
+public extension NetworkPath {
+    static let initial: Self = .init(
+        status: .unsatisfied,
+        gateways: [],
+        supportsIPv4: false,
+        supportsIPv6: false
+    )
+
+    var isUsable: Bool {
+        status == .satisfied || status == .requiresConnection
     }
 }
 
@@ -68,9 +84,9 @@ public extension NetworkPath {
 }
 
 public struct NetworkPathMonitor: Sendable {
-    public var subscribe: @Sendable () -> AsyncStream<NetworkPath>
-    public var start: @Sendable () -> Void
-    public var stop: @Sendable () -> Void
+    public internal(set) var subscribe: @Sendable () -> AsyncStream<NetworkPath>
+    public internal(set) var start: @Sendable () -> Void
+    public internal(set) var stop: @Sendable () -> Void
 }
 
 extension NetworkPathMonitor: DependencyKey {

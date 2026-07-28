@@ -1,4 +1,4 @@
-// swift-tools-version: 6.1
+// swift-tools-version: 6.3
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -84,6 +84,9 @@ let package = Package(
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "Queue", package: "Queue"),
+            ],
+            swiftSettings: [
+                .swiftLanguageMode(.v6),
             ],
             plugins: protunExtensionPlugins
         ),

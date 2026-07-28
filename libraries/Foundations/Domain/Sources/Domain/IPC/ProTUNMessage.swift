@@ -77,6 +77,8 @@ public extension ProTUNMessage {
 }
 
 extension ProTUNMessage: Sendable {}
+extension ProTUNMessage.Request: Sendable {}
+extension ProTUNMessage.Response: Sendable {}
 
 extension ProTUNMessage.Version: Comparable {
     public static func < (lhs: Self, rhs: Self) -> Bool {
