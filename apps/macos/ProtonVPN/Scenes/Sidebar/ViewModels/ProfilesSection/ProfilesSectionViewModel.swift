@@ -52,7 +52,7 @@ class ProfilesSectionViewModel {
         profileManager.allProfiles().count + 1
     }
 
-    private var userTier: Int {
+    private var userTier: VpnTier {
         credentialsProvider.tier
     }
 

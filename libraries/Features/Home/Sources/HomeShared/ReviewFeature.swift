@@ -221,6 +221,7 @@ public struct ReviewFeature {
                 state.$successfulTimestamp.withLock { $0 = nil }
                 state.$reviewTimestamp.withLock { $0 = nil }
                 return .none
+
             case let .connectionStateUpdate(oldValue, newValue):
                 if newValue.is(\.connected), !oldValue.is(\.connected) {
                     return .send(.connected)

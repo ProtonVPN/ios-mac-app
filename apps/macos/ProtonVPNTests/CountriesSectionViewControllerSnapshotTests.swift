@@ -39,7 +39,7 @@ struct CountriesSectionViewControllerSnapshotTests {
     @Test("Countries screen", arguments: ["light", "dark"])
     func countriesScreen(appearance: String) {
         @SharedReader(.secureCoreToggle) var secureCoreToggle = false
-        @SharedReader(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.userTier) var userTier: VpnTier? = .paid
         let appearanceName: NSAppearance.Name = appearance == "dark" ? .darkAqua : .aqua
         withMockedDeps {
             let (viewController, window) = makeViewController(appearance: appearanceName)
@@ -56,7 +56,7 @@ struct CountriesSectionViewControllerSnapshotTests {
     @Test("Countries screen free tier", arguments: ["light", "dark"])
     func countriesScreenFreeTier(appearance: String) {
         @SharedReader(.secureCoreToggle) var secureCoreToggle = false
-        @SharedReader(.userTier) var userTier: Int? = .freeTier
+        @SharedReader(.userTier) var userTier: VpnTier? = .free
         let appearanceName: NSAppearance.Name = appearance == "dark" ? .darkAqua : .aqua
         withMockedDeps {
             let (viewController, window) = makeViewController(appearance: appearanceName)
@@ -167,8 +167,8 @@ struct CountriesSectionViewControllerSnapshotTests {
                 kind: .country(code: code),
                 featureIntersection: .zero,
                 featureUnion: index.isMultiple(of: 2) ? [.p2p] : [.tor],
-                minTier: .paidTier,
-                maxTier: .paidTier,
+                minTier: .paid,
+                maxTier: .paid,
                 serverCount: 8 + index,
                 cityCount: 2,
                 latitude: 0,

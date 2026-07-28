@@ -61,7 +61,7 @@ struct SearchResultsDisplayFeatureReducerTests {
         let initialState = SearchResultsDisplayFeature.State(
             rows: [.country(country), .city(city), .state(stateItem), .server(server)],
             searchText: "uk",
-            isFreeTier: true
+            isFree: true
         )
         let store = TestStore(initialState: initialState) {
             SearchResultsDisplayFeature()
@@ -151,7 +151,7 @@ struct SearchResultsDisplayFeatureReducerTests {
             underMaintenance: false
         )
         let store = TestStore(
-            initialState: .init(rows: [.country(country), .city(city), .state(stateItem), .server(server)], searchText: "uk", isFreeTier: false)
+            initialState: .init(rows: [.country(country), .city(city), .state(stateItem), .server(server)], searchText: "uk", isFree: false)
         ) {
             SearchResultsDisplayFeature()
         }

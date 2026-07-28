@@ -63,7 +63,7 @@ public struct CountryFeature {
         }
 
         @SharedReader(.connectionState) var connectionState: ConnectionState
-        @SharedReader(.userTier) var userTier: Int?
+        @SharedReader(.userTier) var userTier: VpnTier?
 
         // Server sections (Free, Plus, etc.)
         public internal(set) var serverSections: IdentifiedArrayOf<ServerSection.State> = []
@@ -93,7 +93,7 @@ public struct CountryFeature {
         var isUsersTierTooLow: Bool {
             switch serverGroup.kind {
             case .country, .city, .state:
-                userTier.isFreeTier
+                userTier.isFree
             case .gateway:
                 false
             }
@@ -235,8 +235,8 @@ public struct CountryFeature {
 
         let servers = serverRepository.getServers(filteredBy: filters, orderedBy: .loadAscending)
 
-        let freeServers = servers.filter(\.logical.tier.isFreeTier)
-        let plusServers = servers.filter(\.logical.tier.isPaidTier)
+        let freeServers = servers.filter(\.logical.tier.isFree)
+        let plusServers = servers.filter(\.logical.tier.isPaid)
 
         var sections: [ServerSection.State] = []
 
@@ -273,7 +273,7 @@ public struct CountryFeature {
         }
 
         // Sort sections: available tiers first, then by tier descending
-        let userTier = state.userTier ?? Int.freeTier
+        let userTier = (state.userTier ?? .free).rawValue
         let sortedSections = sections.sorted { section1, section2 in
             if userTier >= section1.tier.rawValue && userTier >= section2.tier.rawValue ||
                 userTier < section1.tier.rawValue && userTier < section2.tier.rawValue {

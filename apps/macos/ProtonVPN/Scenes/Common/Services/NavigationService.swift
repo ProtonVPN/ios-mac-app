@@ -271,7 +271,7 @@ class NavigationService {
         let spec = SecureCoreConnectionSpecResolver.fastestSpec(
             secureCoreEnabled: secureCoreToggle,
             connectedExitCountryCode: nil,
-            isFreeTier: credentials.tier.isFreeTier
+            isFree: credentials.tier.isFree
         )
         connectionCommandClient.send(.connect(spec, nil, .auto))
     }

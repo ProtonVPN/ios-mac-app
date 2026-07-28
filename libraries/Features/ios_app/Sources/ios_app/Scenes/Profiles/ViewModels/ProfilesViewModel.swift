@@ -40,7 +40,7 @@ class ProfilesViewModel {
 
     private let sectionTitles = [Localizable.recommended, Localizable.myProfiles]
 
-    private var userTier: Int {
+    private var userTier: VpnTier {
         credentialsProvider.tier
     }
 

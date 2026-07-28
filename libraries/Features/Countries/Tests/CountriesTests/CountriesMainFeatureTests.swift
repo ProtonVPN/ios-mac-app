@@ -47,7 +47,7 @@ struct CountriesMainFeatureTests {
 
     @Test("Reload content with standard server type")
     func reloadContentWithStandardServerType() async {
-        @SharedReader(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.userTier) var userTier: VpnTier? = .paid
         let mockSections = IdentifiedArrayOf<CountrySectionFeature.State>()
 
         let store = TestStore(initialState: .loading) {
@@ -65,7 +65,7 @@ struct CountriesMainFeatureTests {
     @Test("Reload content with secure core server type")
     func reloadContentWithSecureCoreServerType() async {
         @SharedReader(.secureCoreToggle) var isSecureCore = true
-        @SharedReader(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.userTier) var userTier: VpnTier? = .paid
         let mockSections = IdentifiedArrayOf<CountrySectionFeature.State>()
 
         let store = TestStore(initialState: .loading) {
@@ -114,7 +114,7 @@ struct CountriesMainFeatureTests {
 
     @Test("Plan changed triggers reload content")
     func planChagedTriggersReloadContent() async {
-        @SharedReader(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.userTier) var userTier: VpnTier? = .paid
         let store = TestStore(initialState: .loading) {
             CountriesMainFeature()
         } withDependencies: {
@@ -133,7 +133,7 @@ struct CountriesMainFeatureTests {
     @Test("Apply secure core toggle from standard state")
     func applySecureCoreToggleFromStandard() async {
         @Shared(.secureCoreToggle) var isSecureCore = false
-        @SharedReader(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.userTier) var userTier: VpnTier? = .paid
         let initialState = CountriesMainFeature.State.standard(.init(sections: []))
 
         let store = TestStore(initialState: initialState) {
@@ -161,7 +161,7 @@ struct CountriesMainFeatureTests {
     @Test("Apply secure core toggle from secure core state")
     func applySecureCoreToggleFromSecureCore() async {
         @Shared(.secureCoreToggle) var isSecureCore = true
-        @SharedReader(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.userTier) var userTier: VpnTier? = .paid
         let initialState = CountriesMainFeature.State.secureCore(.init(sections: []))
 
         let store = TestStore(initialState: initialState) {

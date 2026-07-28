@@ -47,7 +47,7 @@ public struct RecentsFeature {
             )
         }
 
-        @SharedReader(.userTier) public var userTier: Int?
+        @SharedReader(.userTier) public var userTier: VpnTier?
         public init() {
             if recentConnections == nil {
                 $recentConnections.withLock {

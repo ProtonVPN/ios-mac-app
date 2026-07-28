@@ -27,7 +27,7 @@ public extension NetShieldType {
     /// the NetShieldFeatureSettings on the credentials fetched during login (supports different
     /// NetShield levels for different Business plans).
     func canUse(
-        userTier: Int,
+        userTier: VpnTier,
         featureFlags: FeatureFlags,
         netshieldSettings: NetShieldFeatureSettings?,
         isBusiness: Bool
@@ -97,11 +97,11 @@ extension NetShieldPropertyProvider: DependencyKey {
         let lastActiveStorage: UserScopedAppStorageKey<NetShieldType?> = .rawInt(StorageKey.lastActive.rawValue)
 
         let authorize: (NetShieldType) -> FeatureAuthorizationResult = { level in
-            @SharedReader(.userTier) var userTier: Int?
+            @SharedReader(.userTier) var userTier: VpnTier?
             @SharedReader(.featureFlags) var featureFlags: FeatureFlags
             @Dependency(\.credentialsProvider) var credentialsProvider
             return level.canUse(
-                userTier: userTier ?? .freeTier,
+                userTier: userTier ?? .free,
                 featureFlags: featureFlags,
                 netshieldSettings: credentialsProvider.netShield,
                 isBusiness: credentialsProvider.isBusiness

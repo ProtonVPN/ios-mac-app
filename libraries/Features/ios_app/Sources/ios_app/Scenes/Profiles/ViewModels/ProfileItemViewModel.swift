@@ -44,8 +44,8 @@ final class ProfileItemViewModel {
     @Dependency(\.upsellManager) private var upsellManager
     private let connectionStatusService: ConnectionStatusService
 
-    private let userTier: Int
-    private let lowestServerTier: Int
+    private let userTier: VpnTier
+    private let lowestServerTier: VpnTier
     private let underMaintenance: Bool
 
     @SharedReader(.connectionState) var connectionState: ConnectionState
@@ -118,7 +118,7 @@ final class ProfileItemViewModel {
 
     init(
         profile: Profile,
-        userTier: Int,
+        userTier: VpnTier,
         connectionStatusService: ConnectionStatusService
     ) {
         self.profile = profile

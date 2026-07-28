@@ -26,7 +26,7 @@ public struct Logical: Codable, Equatable, Sendable {
     public let domain: String
     public let load: Int
     public let exitCountryCode: String
-    public let tier: Int
+    public let tier: VpnTier
     public let score: Double
     public let status: Int
     public let feature: ServerFeature
@@ -50,7 +50,7 @@ public struct Logical: Codable, Equatable, Sendable {
         load: Int,
         entryCountryCode: String,
         exitCountryCode: String,
-        tier: Int,
+        tier: VpnTier,
         score: Double,
         status: Int,
         feature: ServerFeature,

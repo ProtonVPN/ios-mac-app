@@ -44,7 +44,7 @@ struct PlutoniumFeatureTests {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature()
         } withDependencies: {
-            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
+            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: VpnTier(rawValue: .max))
             $connectionProtocol.withLock { $0 = .smartProtocol }
         }
         #expect(store.state.requiresReconnection == false)
@@ -70,7 +70,7 @@ struct PlutoniumFeatureTests {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature()
         } withDependencies: {
-            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
+            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: VpnTier(rawValue: .max))
             $connectionProtocol.withLock { $0 = .smartProtocol }
         }
 
@@ -96,7 +96,7 @@ struct PlutoniumFeatureTests {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature()
         } withDependencies: {
-            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
+            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: VpnTier(rawValue: .max))
             $connectionProtocol.withLock { $0 = .vpnProtocol(.ike) }
         }
 
@@ -120,7 +120,7 @@ struct PlutoniumFeatureTests {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature()
         } withDependencies: {
-            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
+            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: VpnTier(rawValue: .max))
             $connectionProtocol.withLock { $0 = .smartProtocol }
         }
 
@@ -134,7 +134,7 @@ struct PlutoniumFeatureTests {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature()
         } withDependencies: {
-            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
+            $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: VpnTier(rawValue: .max))
             $connectionProtocol.withLock { $0 = .smartProtocol }
         }
         #expect(store.state.requiresReconnection == false)

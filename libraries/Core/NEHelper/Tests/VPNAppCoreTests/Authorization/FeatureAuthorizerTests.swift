@@ -25,7 +25,7 @@ import XCTest
 
 // Feature with no sub features
 enum TestB2BFeature: AppFeature {
-    static func canUse(userTier _: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
+    static func canUse(userTier _: VpnTier, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         .failure(.requiresUpgrade)
     }
 }
@@ -35,7 +35,7 @@ enum TestNetShieldType: ModularAppFeature {
     case level1
     case level2
 
-    func canUse(userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    func canUse(userTier: VpnTier, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         guard featureFlags.netShield else {
             return .failure(.featureDisabled)
         }
@@ -43,7 +43,7 @@ enum TestNetShieldType: ModularAppFeature {
         case .off:
             return .success
         case .level1, .level2:
-            if userTier.isPaidTier {
+            if userTier.isPaid {
                 return .success
             }
             return .failure(.requiresUpgrade)
@@ -54,7 +54,7 @@ enum TestNetShieldType: ModularAppFeature {
 class FeatureAuthorizerProviderTests: XCTestCase {
     func testAuthorizationOfFeatureWithNoSubFeatures() {
         let provider = withDependencies {
-            $0.credentialsProvider = .constant(credentials: .tier(.paidTier))
+            $0.credentialsProvider = .constant(credentials: .tier(.paid))
         } operation: {
             LiveFeatureAuthorizerProvider()
         }
@@ -64,7 +64,7 @@ class FeatureAuthorizerProviderTests: XCTestCase {
         XCTAssertEqual(canUseB2B(), .failure(.requiresUpgrade))
 
         withDependencies {
-            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
+            $0.credentialsProvider = .constant(credentials: .tier(.free))
         } operation: {
             XCTAssertEqual(canUseB2B(), .failure(.requiresUpgrade))
         }
@@ -73,7 +73,7 @@ class FeatureAuthorizerProviderTests: XCTestCase {
     func testAuthorizationBasedOnFeatureFlags() {
         withDependencies {
             $0.defaultAppStorage = UserDefaults(suiteName: "FeatureAuthorizerTests-\(UUID().uuidString)")!
-            $0.credentialsProvider = .constant(credentials: .tier(.paidTier))
+            $0.credentialsProvider = .constant(credentials: .tier(.paid))
         } operation: {
             @Shared(.featureFlags) var featureFlags
             $featureFlags.withLock { $0 = .allDisabled }
@@ -91,7 +91,7 @@ class FeatureAuthorizerProviderTests: XCTestCase {
     func testSubFeatureAuthorization() {
         withDependencies {
             $0.defaultAppStorage = UserDefaults(suiteName: "FeatureAuthorizerTests-\(UUID().uuidString)")!
-            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
+            $0.credentialsProvider = .constant(credentials: .tier(.free))
         } operation: {
             @Shared(.featureFlags) var featureFlags
             $featureFlags.withLock { $0 = .allEnabled }
@@ -105,7 +105,7 @@ class FeatureAuthorizerProviderTests: XCTestCase {
             XCTAssertEqual(authorizer.canUse(.level1), .failure(.requiresUpgrade))
 
             withDependencies {
-                $0.credentialsProvider = .constant(credentials: .tier(.paidTier))
+                $0.credentialsProvider = .constant(credentials: .tier(.paid))
             } operation: {
                 XCTAssertEqual(authorizer.canUseAllSubFeatures, .success)
                 XCTAssertEqual(authorizer.canUse(.level1), .success)

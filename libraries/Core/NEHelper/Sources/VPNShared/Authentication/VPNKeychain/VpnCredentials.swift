@@ -19,6 +19,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
+import Domain
 import Foundation
 import typealias ProtonCoreNetworking.JSONDictionary
 import Strings
@@ -40,7 +41,7 @@ public struct VpnCredentials: Codable, Equatable, CustomStringConvertible {
     public let planTitle: String
     public let planName: String
     public let maxConnect: Int
-    public let maxTier: Int
+    public let maxTier: VpnTier
     public let services: Int?
     public let groupId: String
     public let name: String
@@ -59,7 +60,7 @@ public struct VpnCredentials: Codable, Equatable, CustomStringConvertible {
             "Plan title: \(planTitle)\n" +
             "Plan name: \(planName)\n" +
             "Max connect: \(maxConnect)\n" +
-            "Max tier: \(maxTier)\n" +
+            "Max tier: \(maxTier.rawValue)\n" +
             "Services: \(services ?? -1)\n" +
             "Group ID: \(groupId)\n" +
             "Name: \(name)\n" +
@@ -77,7 +78,7 @@ public struct VpnCredentials: Codable, Equatable, CustomStringConvertible {
         self.planTitle = (try? container.decodeIfPresent(String.self, forKey: .planTitle)) ?? Localizable.freeTierPlanTitle
         self.planName = (try? container.decodeIfPresent(String.self, forKey: .planName)) ?? "free"
         self.maxConnect = try container.decode(Int.self, forKey: .maxConnect)
-        self.maxTier = try container.decode(Int.self, forKey: .maxTier)
+        self.maxTier = try container.decode(VpnTier.self, forKey: .maxTier)
         self.services = try container.decode(Int.self, forKey: .services)
         self.groupId = try container.decode(String.self, forKey: .groupId)
         self.name = try container.decode(String.self, forKey: .name)
@@ -100,7 +101,7 @@ public struct VpnCredentials: Codable, Equatable, CustomStringConvertible {
         status: Int,
         planTitle: String,
         maxConnect: Int,
-        maxTier: Int,
+        maxTier: VpnTier,
         services: Int?,
         groupId: String,
         name: String,
@@ -141,7 +142,7 @@ public struct VpnCredentials: Codable, Equatable, CustomStringConvertible {
         self.planName = vpnDic.string("PlanName") ?? "free"
         self.status = try vpnDic.intOrThrow(key: "Status")
         self.maxConnect = try vpnDic.intOrThrow(key: "MaxConnect")
-        self.maxTier = vpnDic.int(key: "MaxTier") ?? .freeTier
+        self.maxTier = vpnDic.int(key: "MaxTier").map(VpnTier.init(rawValue:)) ?? .free
         self.services = try dic.intOrThrow(key: "Services")
         self.groupId = try vpnDic.stringOrThrow(key: "GroupID")
         self.name = try vpnDic.stringOrThrow(key: "Name")
@@ -169,7 +170,7 @@ public struct VpnCredentials: Codable, Equatable, CustomStringConvertible {
                 "PlanTitle": planTitle,
                 "Status": status,
                 "MaxConnect": maxConnect,
-                "MaxTier": maxTier,
+                "MaxTier": maxTier.rawValue,
                 "GroupID": groupId,
                 "Name": name,
                 "Password": password,
@@ -201,7 +202,7 @@ public struct CachedVpnCredentials {
     public let planName: String
     public let planTitle: String
     public let maxConnect: Int
-    public let maxTier: Int
+    public let maxTier: VpnTier
     public let services: Int?
     public let delinquent: Int
     public let credit: Int

@@ -68,7 +68,7 @@ final class ServerManagerTests: XCTestCase {
 
         deleteCallback = { ids, maxTier in
             XCTAssertEqual(ids, Set(arrayLiteral: "a", "b"))
-            XCTAssertEqual(maxTier, .freeTier)
+            XCTAssertEqual(maxTier, VpnTier.free.rawValue)
             deleteInvoked.fulfill()
         }
 
@@ -86,7 +86,7 @@ final class ServerManagerTests: XCTestCase {
         let deleteInvoked = XCTestExpectation()
 
         deleteCallback = { _, maxTier in
-            XCTAssertGreaterThanOrEqual(maxTier, .internalTier)
+            XCTAssertGreaterThanOrEqual(maxTier, VpnTier.internal.rawValue)
             deleteInvoked.fulfill()
         }
 

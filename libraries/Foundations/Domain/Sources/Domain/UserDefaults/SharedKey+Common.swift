@@ -28,7 +28,7 @@ public extension SharedKey where Self == AppStorageKey<Bool>.Default {
     }
 }
 
-public extension SharedKey where Self == AppStorageKey<Int?>.Default {
+public extension SharedKey where Self == AppStorageKey<VpnTier?>.Default {
     static var userTier: Self {
         Self[.appStorage("userTier"), default: nil]
     }

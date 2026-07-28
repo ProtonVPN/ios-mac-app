@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 @testable import CountriesShared
+import Domain
 import Foundation
 import Strings
 import Testing
@@ -77,7 +78,7 @@ struct SearchFeatureReducerTests {
             $0.defaultAppStorage = defaults
         } operation: {
             @SharedReader(.secureCoreToggle) var secureCoreToggle = false
-            @SharedReader(.userTier) var userTier: Int? = 0
+            @SharedReader(.userTier) var userTier: VpnTier? = .free
             @SharedReader(.recentSearches) var recentSearches
 
             let initialState = SearchFeature.State(
@@ -122,7 +123,7 @@ struct SearchFeatureReducerTests {
                             .server(server),
                         ],
                         searchText: "uk",
-                        isFreeTier: true
+                        isFree: true
                     )
                 )
             }
@@ -140,7 +141,7 @@ struct SearchFeatureReducerTests {
             $0.defaultAppStorage = defaults
         } operation: {
             @SharedReader(.secureCoreToggle) var secureCoreToggle = true
-            @SharedReader(.userTier) var userTier: Int? = 2
+            @SharedReader(.userTier) var userTier: VpnTier? = .paid
 
             let initialState = SearchFeature.State(
                 allCountries: [
@@ -198,7 +199,7 @@ struct SearchFeatureReducerTests {
             $0.defaultAppStorage = defaults
         } operation: {
             @SharedReader(.secureCoreToggle) var secureCoreToggle = false
-            @SharedReader(.userTier) var userTier: Int? = 2
+            @SharedReader(.userTier) var userTier: VpnTier? = .paid
 
             let initialState = SearchFeature.State(
                 allCountries: [],
@@ -230,7 +231,7 @@ struct SearchFeatureReducerTests {
                             .state(stateItem),
                         ],
                         searchText: "cal",
-                        isFreeTier: false
+                        isFree: false
                     )
                 )
             }

@@ -26,19 +26,19 @@ public enum HermesFeature {
 extension HermesFeature: Codable {}
 
 extension HermesFeature: PaidAppFeature {
-    public static func minTier(featureFlags _: FeatureFlags) -> Int {
-        .paidTier
+    public static func minTier(featureFlags _: FeatureFlags) -> VpnTier {
+        .paid
     }
 }
 
 extension HermesFeature: ToggleableFeature {}
 
 extension HermesFeature: ModularAppFeature {
-    public func canUse(userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
+    public func canUse(userTier: VpnTier, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         switch self {
         case .off:
             // This feature can only be turned off by paying users post-free rescope
-            if userTier.isFreeTier {
+            if userTier.isFree {
                 return .failure(.requiresUpgrade)
             }
             return .success
@@ -49,7 +49,7 @@ extension HermesFeature: ModularAppFeature {
 }
 
 extension HermesFeature: DefaultableFeature {
-    public static func defaultValue(userTier _: Int, featureFlags _: FeatureFlags) -> HermesFeature {
+    public static func defaultValue(userTier _: VpnTier, featureFlags _: FeatureFlags) -> HermesFeature {
         .defaultValue
     }
 }

@@ -66,7 +66,7 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
         formConnectButtonTitle()
     }
 
-    init(profile: Profile, editProfile: ((Profile) -> Void)?, userTier: Int) {
+    init(profile: Profile, editProfile: ((Profile) -> Void)?, userTier: VpnTier) {
         self.editProfile = editProfile
         super.init(profile: profile, userTier: userTier)
     }

@@ -63,10 +63,9 @@ public struct ConnectVPNWithParametersIntent: AppIntent {
             return .result(value: false)
         }
         @SharedReader(.userTier) var userTier
-        guard userTier?.isFreeTier == false || spec.location == .any(.fastest) else {
+        guard userTier?.isFree == false || spec.location == .any(.fastest) else {
             return .result(value: false)
         }
-
 
         if skipReconnect {
             /// We can check if the desired connection spec falls under the current spec.
@@ -104,7 +103,8 @@ public struct ConnectVPNWithParametersIntent: AppIntent {
         return connectionInventory.recentConnectionList(
             storedDefaultConnectionPreference ?? .fastest,
             recentConnections ?? [],
-            connectionState.resolvedSpec).elements[safe: index]?.connection
+            connectionState.resolvedSpec
+        ).elements[safe: index]?.connection
     }
 
     private func getDefaultConnection() -> ConnectionSpec? {

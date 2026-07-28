@@ -189,7 +189,7 @@ private extension WelcomeScreenPlan {
         // Replace hardcoded string with a proper solution VPNAPPL-2142
         if info.to.planName == "bundle2022" {
             self = .unlimited
-        } else if info.to.maxTier.isPaidTier {
+        } else if info.to.maxTier.isPaid {
             @Dependency(\.serverRepository) var repository
             self = .plus(
                 numberOfServers: repository.roundedServerCount,

@@ -53,9 +53,9 @@ extension PortForwardingPropertyProvider: DependencyKey {
         let storage: UserScopedAppStorageKey<Bool?> = .bool(key)
 
         let canUse: () -> Bool = {
-            @SharedReader(.userTier) var userTier: Int?
+            @SharedReader(.userTier) var userTier: VpnTier?
             @SharedReader(.featureFlags) var featureFlags: FeatureFlags
-            return PortForwardingFeature.canUse(userTier: userTier ?? .freeTier, featureFlags: featureFlags).isAllowed
+            return PortForwardingFeature.canUse(userTier: userTier ?? .free, featureFlags: featureFlags).isAllowed
         }
 
         let getPortForwarding: () -> Bool? = {

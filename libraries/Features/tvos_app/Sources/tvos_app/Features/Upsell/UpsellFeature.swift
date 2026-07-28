@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import Dependencies
+import Domain
 import Ergonomics
 import Foundation
 import Payments
@@ -45,11 +46,11 @@ struct UpsellFeature {
         case pollTierUpdate(remainingAttempts: Int)
         case finishedPollingTierUpdate(PollResult)
         case onExit
-        case upsold(tier: Int) // success delegate action
+        case upsold(tier: VpnTier) // success delegate action
     }
 
     struct PollResult {
-        let tierResult: Result<Int, Error>
+        let tierResult: Result<VpnTier, Error>
         let remainingAttempts: Int
     }
 
@@ -178,7 +179,7 @@ struct UpsellFeature {
                 }
 
             case let .finishedPollingTierUpdate(result):
-                if case let .success(tier) = result.tierResult, tier > 0 {
+                if case let .success(tier) = result.tierResult, tier.isPaid {
                     log.info("UpsellFeature complete. Tier: \(tier)")
                     return .send(.upsold(tier: tier))
                 }

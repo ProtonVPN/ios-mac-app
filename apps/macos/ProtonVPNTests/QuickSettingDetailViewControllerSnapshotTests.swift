@@ -37,7 +37,7 @@ struct QuickSettingDetailViewControllerSnapshotTests {
         _ = NSApplication.shared
         NSApp.appearance = NSAppearance(named: .darkAqua)
 
-        @SharedReader(.userTier) var userTier: Int? = .paidTier
+        @SharedReader(.userTier) var userTier: VpnTier? = .paid
         let store = Store(initialState: makeState(type: type)) {
             QuickSettingDetailFeature()
         }

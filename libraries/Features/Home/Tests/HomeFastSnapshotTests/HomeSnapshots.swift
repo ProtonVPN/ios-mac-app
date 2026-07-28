@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 import ComposableArchitecture
 import Connection
 import Domain
@@ -72,14 +73,15 @@ struct HomeScreenTests {
     @Shared(.netShieldLevel) var netShieldLevel
     @Shared(.recentConnections) var recents
 
-    @Test("Home screen", arguments: [Int.freeTier, Int.paidTier], homeTestData)
+    @Test("Home screen", arguments: [VpnTier.free, VpnTier.paid], homeTestData)
     @MainActor
-    func homeScreen(tier: Int, state: (protection: ProtectionState, connection: ConnectionState)) throws {
+    func homeScreen(tier: VpnTier, state: (protection: ProtectionState, connection: ConnectionState)) throws {
         let store = Store(initialState: HomeFeature.State(), reducer: HomeFeature.init) {
             $0.serverChangeAuthorizer = .availableValue
             $0.locale = Locale(identifier: "en")
             $0.date = .constant(Date())
             $0.continuousClock = TestClock()
+            $0.announcementManager.announcementsPublisher = { Empty(completeImmediately: false).eraseToAnyPublisher() }
         }
         let appView = try HomeView(store: store)
             .frame(#require(ViewImageConfig.iPhone13.size))
@@ -99,7 +101,7 @@ struct HomeScreenTests {
             $connectionState.withLock { $0 = state.connection }
 
             let testName = [
-                tier.isFreeTier ? "Free" : "Paid",
+                tier.isFree ? "Free" : "Paid",
                 protectionState.shortDescription(),
                 connectionState.shortDescription(),
             ].joined(separator: "-")

@@ -59,7 +59,7 @@ public struct ServerManager: DependencyKey {
         updateServers: { servers, freeServersOnly, lastModified in
             @Dependency(\.serverRepository) var repository
             // If we're only fetching a subset of servers up to a certain tier, we must not purge stale servers above it
-            let maxTierToPurge: Int = freeServersOnly ? .freeTier : .internalTier
+            let maxTierToPurge: Int = freeServersOnly ? VpnTier.free.rawValue : VpnTier.internal.rawValue
             let newServerIDs = Set(servers.map(\.id))
 
             let refreshes = (Self.consecutiveSuccessfulRefreshes + 1) % 10
@@ -67,7 +67,7 @@ public struct ServerManager: DependencyKey {
 
             #if DEBUG
                 // Somewhat expensive O(n) sanity check
-                let containsFreeServersOnly = servers.allSatisfy { $0.logical.tier == 0 }
+                let containsFreeServersOnly = servers.allSatisfy(\.logical.tier.isFree)
                 if containsFreeServersOnly != freeServersOnly {
                     log.warning("\(containsFreeServersOnly) != \(freeServersOnly)")
                 }

@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Domain
 import SnapshotTesting
 import SwiftUI
 import System
@@ -38,7 +39,7 @@ final class SettingsFeatureSnapshotTests {
     }
 
     func settings(trait: UIUserInterfaceStyle) {
-        let listState = AppFeature.State(
+        let listState = tvos_app.AppFeature.State(
             screen: .main(.init(
                 currentTab: .settings,
                 mainBackground: .clear
@@ -158,11 +159,11 @@ final class SettingsFeatureSnapshotTests {
 private extension SettingsFeatureSnapshotTests {
     func makeSettingsState(
         path: SettingsFeature.Path.State
-    ) -> AppFeature.State {
+    ) -> tvos_app.AppFeature.State {
         var settingsState = SettingsFeature.State()
         settingsState.path.append(path)
 
-        return AppFeature.State(
+        return tvos_app.AppFeature.State(
             screen: .main(.init(
                 currentTab: .settings,
                 settings: settingsState,
@@ -173,13 +174,13 @@ private extension SettingsFeatureSnapshotTests {
     }
 
     func makeStore(
-        state: AppFeature.State,
+        state: tvos_app.AppFeature.State,
         mainBackground: MainBackground
-    ) -> StoreOf<AppFeature> {
+    ) -> StoreOf<tvos_app.AppFeature> {
         @Shared(.userDisplayName) var userDisplayName: String?
         $userDisplayName.withLock { $0 = "test user" }
-        @Shared(.userTier) var userTier: Int?
-        $userTier.withLock { $0 = .paidTier }
+        @Shared(.userTier) var userTier: VpnTier?
+        $userTier.withLock { $0 = .paid }
         @Shared(.mainBackground) var sharedBackground: MainBackground
         $sharedBackground.withLock { $0 = mainBackground }
 

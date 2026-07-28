@@ -46,7 +46,7 @@ final class ServerSelectorTests: TestIsolatedDatabaseTestCase {
         }
 
         do {
-            let selectedServer = try ServerSelector.liveValue.select(.defaultFastest, 2, .all)
+            let selectedServer = try ServerSelector.liveValue.select(.defaultFastest, .paid, .all)
             XCTAssertEqual(selectedServer.logical.id, slowActiveServer.id)
         } catch {
             XCTFail("Unexpected error: \(error)")

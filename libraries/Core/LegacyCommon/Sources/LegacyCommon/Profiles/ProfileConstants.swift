@@ -47,13 +47,13 @@ public enum ProfileConstants {
     // 'random' (see `CountriesMainFeature`). These `accessTier` values can be cleaned up in Profiles 2.0
     public static func defaultProfiles(connectionProtocol: ConnectionProtocol) -> [Profile] {
         [
-            fastestProfile(connectionProtocol: connectionProtocol, defaultProfileAccessTier: .paidTier),
-            randomProfile(connectionProtocol: connectionProtocol, defaultProfileAccessTier: .paidTier),
+            fastestProfile(connectionProtocol: connectionProtocol, defaultProfileAccessTier: .paid),
+            randomProfile(connectionProtocol: connectionProtocol, defaultProfileAccessTier: .paid),
         ]
     }
 
     /// Profile that connects to the fastest server based on the score field
-    public static func fastestProfile(connectionProtocol: ConnectionProtocol, defaultProfileAccessTier: Int) -> Profile {
+    public static func fastestProfile(connectionProtocol: ConnectionProtocol, defaultProfileAccessTier: VpnTier) -> Profile {
         Profile(
             id: fastestId,
             accessTier: defaultProfileAccessTier,
@@ -67,10 +67,10 @@ public enum ProfileConstants {
     }
 
     // Profile that selects country and server randomly
-    public static func randomProfile(connectionProtocol: ConnectionProtocol, defaultProfileAccessTier _: Int) -> Profile {
+    public static func randomProfile(connectionProtocol: ConnectionProtocol, defaultProfileAccessTier _: VpnTier) -> Profile {
         Profile(
             id: randomId,
-            accessTier: 0,
+            accessTier: .free,
             profileIcon: .arrowsSwapRight,
             profileType: .system,
             serverType: .unspecified,

@@ -129,7 +129,7 @@ extension CreateOrEditProfileViewModel {
         return NSAttributedString.concatenate(via, entryCountryFlag, entryCountry)
     }
 
-    private func serverDescriptorForStandard(serverName: String, countryCode: String, serverTier: Int) -> NSAttributedString {
+    private func serverDescriptorForStandard(serverName: String, countryCode: String, serverTier: VpnTier) -> NSAttributedString {
         let countryFlag = embeddedCountryFlag(countryCode: countryCode)
         let serverString = "  " + serverName
         let serverDescriptor: NSAttributedString = if serverTier <= userTier {

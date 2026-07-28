@@ -145,7 +145,7 @@ final class ConnectionSettingsViewModel {
             // On the free plan, post-rescope, we should only show the 'fastest' auto-connect option
             return [ProfileConstants.fastestProfile(
                 connectionProtocol: sharedConnectionProtocol,
-                defaultProfileAccessTier: .freeTier
+                defaultProfileAccessTier: .free
             )]
         }
         return profileManager.allProfiles()
@@ -543,7 +543,7 @@ final class ConnectionSettingsViewModel {
 
     var shouldShowPFNotifications: Bool {
         // Port-forwarding notifications are a paid feature
-        credentialsProvider.tier.isPaidTier
+        credentialsProvider.tier.isPaid
     }
 
     func quickConnectItem(for index: Int) -> NSAttributedString {

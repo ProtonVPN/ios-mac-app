@@ -225,7 +225,7 @@ public enum VpnApiClientKey: DependencyKey {
                     serverInfo: serverInfo(
                         ip: (asyncLocation?.ip).flatMap { TruncatedIp(ip: $0) },
                         countryCode: asyncLocation?.country,
-                        freeTier: asyncCredentials.maxTier.isFreeTier && serversAccordingToTier
+                        freeTier: asyncCredentials.maxTier.isFree && serversAccordingToTier
                     ),
                     streamingServices: try? virtualServices(),
                     vpnCredentials: asyncCredentials,

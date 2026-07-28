@@ -144,7 +144,7 @@ extension CreateNewProfileViewModel {
         return NSAttributedString.concatenate(via, entryCountryFlag, entryCountry)
     }
 
-    private func serverDescriptorForStandard(serverName: String, countryCode: String, serverTier: Int) -> NSAttributedString {
+    private func serverDescriptorForStandard(serverName: String, countryCode: String, serverTier: VpnTier) -> NSAttributedString {
         let countryFlag = flagString(countryCode)
         let serverString = "  " + serverName
         let serverDescriptor: NSAttributedString = if userTierSupports(serverWithTier: serverTier) {

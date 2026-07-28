@@ -65,7 +65,7 @@ public struct CountriesListView: View {
                 if !store.gateways.isEmpty {
                     gatewaysSection
                 }
-                if store.isFreeTier {
+                if store.isFree {
                     fastestConnectionSection
                 }
                 countriesSection
@@ -83,7 +83,7 @@ public struct CountriesListView: View {
                     .padding(.horizontal, .themeSpacing12)
                     .padding(.top, .themeSpacing16)
                     .padding(.bottom, .themeSpacing8)
-            } else if store.isFreeTier {
+            } else if store.isFree {
                 upsellBanner
                     .padding(.horizontal, .themeSpacing8)
             }
@@ -236,15 +236,15 @@ private extension View {
 #if DEBUG
     private enum MockServerGroup {
         static var warsaw: ServerGroupInfo {
-            .init(kind: .country(code: "PL"), featureIntersection: .restricted, featureUnion: .restricted, minTier: .paidTier, maxTier: .paidTier, serverCount: 2, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: false, isUnderMaintenance: false, protocolSupport: .wireGuardUDP)
+            .init(kind: .country(code: "PL"), featureIntersection: .restricted, featureUnion: .restricted, minTier: .paid, maxTier: .paid, serverCount: 2, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: false, isUnderMaintenance: false, protocolSupport: .wireGuardUDP)
         }
 
         static var malmo: ServerGroupInfo {
-            .init(kind: .country(code: "SE"), featureIntersection: .zero, featureUnion: .zero, minTier: .paidTier, maxTier: .paidTier, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: [.wireGuardTCP, .wireGuardUDP, .wireGuardTLS])
+            .init(kind: .country(code: "SE"), featureIntersection: .zero, featureUnion: .zero, minTier: .paid, maxTier: .paid, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: [.wireGuardTCP, .wireGuardUDP, .wireGuardTLS])
         }
 
         static var zurich: ServerGroupInfo {
-            .init(kind: .country(code: "CH"), featureIntersection: .zero, featureUnion: .zero, minTier: .paidTier, maxTier: .paidTier, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: .ikev2)
+            .init(kind: .country(code: "CH"), featureIntersection: .zero, featureUnion: .zero, minTier: .paid, maxTier: .paid, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: .ikev2)
         }
     }
 #endif

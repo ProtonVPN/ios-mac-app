@@ -41,9 +41,9 @@ extension ConnectionEvent.Event: CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
         case let .vpnConnection(timeToConnection):
-            return "| vpnConnection(timeToConnection: \(Self.timeInSeconds(timeToConnection))) |"
+            "| vpnConnection(timeToConnection: \(Self.timeInSeconds(timeToConnection))) |"
         case let .vpnDisconnection(sessionLength):
-            return "| vpnDisconnection(sessionLength: \(Self.timeInSeconds(sessionLength)) |"
+            "| vpnDisconnection(sessionLength: \(Self.timeInSeconds(sessionLength)) |"
         }
     }
 }

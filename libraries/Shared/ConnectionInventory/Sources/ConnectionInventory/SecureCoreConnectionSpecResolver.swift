@@ -23,12 +23,12 @@ public enum SecureCoreConnectionSpecResolver {
     public static func fastestLocation(
         secureCoreEnabled: Bool,
         connectedExitCountryCode: String?,
-        isFreeTier: Bool
+        isFree: Bool
     ) -> ConnectionSpec.Location {
         // Free users can only authorize `.any(.fastest)`. Pinning to a specific country
         // here would trip the intent resolver and pop the "specific country" upsell.
         // (Free tier also can't use Secure Core, so the SC branch below is unreachable for them.)
-        if isFreeTier {
+        if isFree {
             return .any(.fastest)
         }
 
@@ -50,13 +50,13 @@ public enum SecureCoreConnectionSpecResolver {
     public static func fastestSpec(
         secureCoreEnabled: Bool,
         connectedExitCountryCode: String?,
-        isFreeTier: Bool
+        isFree: Bool
     ) -> ConnectionSpec {
         .init(
             location: fastestLocation(
                 secureCoreEnabled: secureCoreEnabled,
                 connectedExitCountryCode: connectedExitCountryCode,
-                isFreeTier: isFreeTier
+                isFree: isFree
             ),
             features: []
         )
@@ -65,7 +65,7 @@ public enum SecureCoreConnectionSpecResolver {
     /// ConnectionSpec to use when toggling SC and connected.
     ///
     /// ```
-    /// switch (isFreeTier, secureCoreEnabled, exitCountryCode) {
+    /// switch (isFree, secureCoreEnabled, exitCountryCode) {
     /// case (true, _, _):
     ///     return .any(.fastest) // upsell
     /// case (false, true, .some(let country)):
@@ -81,9 +81,9 @@ public enum SecureCoreConnectionSpecResolver {
     public static func toggleReconnectLocation(
         secureCoreEnabled: Bool,
         exitCountryCode: String?,
-        isFreeTier: Bool
+        isFree: Bool
     ) -> ConnectionSpec.Location {
-        if isFreeTier { return .any(.fastest) }
+        if isFree { return .any(.fastest) }
 
         if let exitCountryCode {
             return secureCoreEnabled
@@ -96,13 +96,13 @@ public enum SecureCoreConnectionSpecResolver {
     public static func toggleReconnectSpec(
         secureCoreEnabled: Bool,
         exitCountryCode: String?,
-        isFreeTier: Bool
+        isFree: Bool
     ) -> ConnectionSpec {
         .init(
             location: toggleReconnectLocation(
                 secureCoreEnabled: secureCoreEnabled,
                 exitCountryCode: exitCountryCode,
-                isFreeTier: isFreeTier
+                isFree: isFree
             ),
             features: []
         )
@@ -145,11 +145,11 @@ public enum SecureCoreConnectionSpecResolver {
 
     public static func reconnectTrigger(
         connectedExitCountryCode: String?,
-        isFreeTier: Bool
+        isFree: Bool
     ) -> UserInitiatedVPNChange.VPNTrigger {
         // Free users always reconnect to `.any(.fastest)` (see `fastestLocation`), so the
         // trigger is `.auto` regardless of the previously-connected country.
-        if isFreeTier {
+        if isFree {
             return .auto
         }
         return connectedExitCountryCode == nil ? .auto : .country

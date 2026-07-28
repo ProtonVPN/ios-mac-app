@@ -46,13 +46,13 @@ struct Provider: TimelineProvider {
 
     func getSnapshot(in _: Context, completion: @escaping (ConnectWidgetEntry) -> Void) {
         Task {
-            completion(await createTimelineEntry())
+            await completion(createTimelineEntry())
         }
     }
 
     func getTimeline(in _: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         Task {
-            completion(Timeline(entries: [await createTimelineEntry()], policy: .never))
+            await completion(Timeline(entries: [createTimelineEntry()], policy: .never))
         }
     }
 
@@ -75,9 +75,11 @@ struct Provider: TimelineProvider {
 
         // We have to load the values here before accessing because swift sharing doesn't sync data
         // between the widget and the app
-        _ = try? await ($recentConnections.load(),
-                        $storedDefaultConnectionPreference.load(),
-                        $connectionState.load())
+        _ = try? await (
+            $recentConnections.load(),
+            $storedDefaultConnectionPreference.load(),
+            $connectionState.load()
+        )
         let preference = storedDefaultConnectionPreference ?? .fastest
         let resolvedSpec = connectionState.resolvedSpec
 

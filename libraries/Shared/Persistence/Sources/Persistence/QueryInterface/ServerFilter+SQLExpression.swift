@@ -42,9 +42,9 @@ extension VPNServerFilter {
         case let .tier(tierFilter):
             switch tierFilter {
             case let .max(tier):
-                return logical[Logical.Columns.tier] <= tier
+                return logical[Logical.Columns.tier] <= tier.rawValue
             case let .exact(tier):
-                return logical[Logical.Columns.tier] == tier
+                return logical[Logical.Columns.tier] == tier.rawValue
             }
 
         case let .features(features):

@@ -103,9 +103,9 @@ public struct ConnectionDimensions: Encodable {
 
     public enum ProtocolString: String, Encodable {
         case ikev2
-        case wireguard_udp = "wireguard_udp"
-        case wireguard_tcp = "wireguard_tcp"
-        case wireguard_tls = "wireguard_tls"
+        case wireguard_udp
+        case wireguard_tcp
+        case wireguard_tls
 
         public init(_ protocol: VpnProtocol) {
             switch `protocol` {

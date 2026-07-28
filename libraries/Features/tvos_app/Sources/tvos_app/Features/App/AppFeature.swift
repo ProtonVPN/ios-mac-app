@@ -58,7 +58,7 @@ struct AppFeature {
     struct State: Equatable {
         @Shared(.userDisplayName) var userDisplayName: String?
         @Shared(.userEmail) var userEmail: String?
-        @Shared(.userTier) var userTier: Int?
+        @Shared(.userTier) var userTier: VpnTier?
         @Shared(.connectionState) var connectionState: ConnectionState = .resolving
 
         var screen: Screen.State = .loading(.init())
@@ -204,7 +204,7 @@ struct AppFeature {
 
             case let .networking(.delegate(.tier(tier))):
                 state.$userTier.withLock { $0 = tier }
-                if tier > 0 {
+                if tier.isPaid {
                     if !state.screen.is(\.main) {
                         state.screen = .main(.init())
                     }
@@ -382,7 +382,7 @@ struct AppFeature {
                 state.screen = .loading(.init())
                 return
             }
-            if tier > 0 {
+            if tier.isPaid {
                 if !state.screen.is(\.main) {
                     state.screen = .main(.init())
                 }

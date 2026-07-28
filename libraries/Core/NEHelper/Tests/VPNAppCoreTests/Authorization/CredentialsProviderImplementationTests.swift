@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Domain
 import Testing
 @testable import VPNAppCore
 @testable import VPNShared
@@ -27,9 +28,9 @@ import Testing
 struct CredentialsProviderTests {
     @Test
     func returnsValuesSavedInKeychain() {
-        let testPairs: [(String, Int)] = [
-            ("free", .freeTier),
-            ("plus", .paidTier),
+        let testPairs: [(String, VpnTier)] = [
+            ("free", .free),
+            ("plus", .paid),
         ]
 
         for (plan, tier) in testPairs {
@@ -46,7 +47,7 @@ struct CredentialsProviderTests {
 
     @Test
     func returnsSafeDefaultsWhenCredentialsAreUnavailable() {
-        let keychain = VpnKeychainMock(planName: "plus", maxTier: .internalTier)
+        let keychain = VpnKeychainMock(planName: "plus", maxTier: .internal)
         keychain.throwsOnFetch = true
         let fetchCached: () throws -> CachedVpnCredentials = keychain.fetchCached
 
@@ -54,7 +55,7 @@ struct CredentialsProviderTests {
 
         #expect(provider.planName == "free")
         #expect(provider.planTitle == nil)
-        #expect(provider.tier == .freeTier)
+        #expect(provider.tier == .free)
         #expect(!provider.hasCredentials)
         #expect(!provider.isBusiness)
         #expect(!provider.businessEvents)

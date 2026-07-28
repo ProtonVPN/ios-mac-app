@@ -20,11 +20,11 @@ import Domain
 import Strings
 
 public extension DomainConstants {
-    static func serverTierName(forTier tier: Int) -> String {
+    static func serverTierName(forTier tier: VpnTier) -> String {
         switch tier {
-        case 0:
+        case .free:
             Localizable.freeServers
-        case 2:
+        case .paid:
             Localizable.plusServers
         default:
             Localizable.testServers

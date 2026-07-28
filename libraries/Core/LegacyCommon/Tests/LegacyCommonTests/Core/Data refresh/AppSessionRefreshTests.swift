@@ -254,7 +254,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
 
             networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(
                 planName: "plus",
-                maxTier: .paidTier
+                maxTier: .paid
             )
 
             appSessionRefresher.loggedIn = true
@@ -267,7 +267,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             ]
             networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(
                 planName: "visionary",
-                maxTier: .paidTier
+                maxTier: .paid
             )
 
             await clock.advance(by: .seconds(30))

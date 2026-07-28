@@ -58,13 +58,13 @@ struct SessionNetworkingFeature {
         case sessionFetched(Result<SessionAcquiringResult, Error>)
         case forkedSessionAuthenticated(Result<AuthCredentials, Error>)
         case sessionExpired
-        case userTierRetrieved(Int, CommonNetworking.Session)
+        case userTierRetrieved(VpnTier, CommonNetworking.Session)
 
         case delegate(Delegate)
 
         @CasePathable
         enum Delegate: Equatable {
-            case tier(Int)
+            case tier(VpnTier)
             case displayName(String?)
             case email(String?)
             case sessionExpired

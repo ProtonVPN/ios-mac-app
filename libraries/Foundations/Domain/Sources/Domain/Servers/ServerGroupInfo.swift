@@ -24,8 +24,8 @@ public struct ServerGroupInfo: Sendable {
     public let kind: Kind
     public let featureIntersection: ServerFeature // Features provided by all servers
     public let featureUnion: ServerFeature // All features provided by at least one server
-    public let minTier: Int
-    public let maxTier: Int
+    public let minTier: VpnTier
+    public let maxTier: VpnTier
     public let cityCount: Int
     public let serverCount: Int
     public let latitude: Double
@@ -47,8 +47,8 @@ public struct ServerGroupInfo: Sendable {
         kind: Kind,
         featureIntersection: ServerFeature,
         featureUnion: ServerFeature,
-        minTier: Int,
-        maxTier: Int,
+        minTier: VpnTier,
+        maxTier: VpnTier,
         serverCount: Int,
         cityCount: Int,
         latitude: Double,

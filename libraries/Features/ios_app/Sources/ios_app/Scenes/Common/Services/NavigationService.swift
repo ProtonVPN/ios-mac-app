@@ -229,9 +229,9 @@ final class NavigationService {
 
         let variant: WhatsNewView.PlanVariant
         switch credentialsProvider.tier {
-        case .freeTier:
+        case .free:
             variant = .free
-        case .paidTier:
+        case .paid:
             variant = .plus
         default:
             log.info("User has not explicitly a paid account, but defaulting to paid PlanVariant", category: .app)

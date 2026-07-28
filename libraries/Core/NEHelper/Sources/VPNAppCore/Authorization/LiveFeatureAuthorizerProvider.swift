@@ -28,8 +28,8 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
 
     public init() {}
 
-    private var maxTier: Int {
-        credentialsProvider.credentials?.maxTier ?? .freeTier
+    private var maxTier: VpnTier {
+        credentialsProvider.credentials?.maxTier ?? .free
     }
 
     private var netshieldSettings: NetShieldFeatureSettings? {

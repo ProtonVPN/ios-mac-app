@@ -132,7 +132,7 @@ private extension ConnectionProtocol {
 private extension Profile {
     struct V1: Decodable {
         let id: String
-        let accessTier: Int
+        let accessTier: VpnTier
         let profileIcon: ProfileIcon
         let profileType: ProfileType
         let serverType: ServerType

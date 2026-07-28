@@ -17,13 +17,13 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppIntents
+import Connection
 import Dependencies
-import Strings
 import NetworkExtension
 import Sharing
-import WidgetKit
-import Connection
+import Strings
 import VPNAppCore
+import WidgetKit
 
 public struct ConnectVPNIntent: AppIntent {
     public static let title: LocalizedStringResource = "Connect to VPN"

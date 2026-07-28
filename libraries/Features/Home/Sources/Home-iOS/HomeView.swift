@@ -49,7 +49,7 @@ public struct HomeView: View {
     @State private var swapThreshold: CGFloat = .zero
     @State private var mapHeight: CGFloat = .zero
 
-    @SharedReader(.userTier) private var userTier: Int?
+    @SharedReader(.userTier) private var userTier: VpnTier?
 
     @Namespace private var topID
 
@@ -67,7 +67,7 @@ public struct HomeView: View {
 
     private func calculateMapHeight() {
         let hasRecents = !store.recents.recentConnectionList.isEmpty
-        let isFree = userTier.isFreeTier
+        let isFree = userTier.isFree
         let recentPeek: CGFloat = (hasRecents || isFree) ? .themeSpacing64 : 0
         mapHeight = max(0, viewHeight - (connectionViewHeight + recentPeek))
         swapThreshold = mapHeight - connectionViewHeight - Self.bottomGradientHeight

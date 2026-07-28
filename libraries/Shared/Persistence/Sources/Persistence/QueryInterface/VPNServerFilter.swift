@@ -113,10 +113,10 @@ public enum VPNServerFilter {
 
     public enum ServerTierFilter {
         /// Only servers with this exact tier value
-        case exact(tier: Int)
+        case exact(tier: VpnTier)
 
         /// Servers with tier equal to or lower than given value
-        case max(tier: Int)
+        case max(tier: VpnTier)
     }
 }
 
@@ -207,9 +207,9 @@ extension VPNServerFilter.ServerTierFilter: CustomStringConvertible {
     public var description: String {
         switch self {
         case let .max(tier):
-            "|maxTier=\(tier)"
+            "|maxTier=\(tier.rawValue)"
         case let .exact(tier):
-            "|tier=\(tier)"
+            "|tier=\(tier.rawValue)"
         }
     }
 }

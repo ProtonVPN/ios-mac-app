@@ -60,7 +60,7 @@ public struct CountriesFeature {
         @Presents public var alert: AlertState<Action.Alert>?
 
         @SharedReader(.secureCoreToggle) public var isSecureCore: Bool
-        @SharedReader(.userTier) var userTier: Int?
+        @SharedReader(.userTier) var userTier: VpnTier?
         @SharedReader(.connectionState) var connectionState: ConnectionState
 
         public init(sections: IdentifiedArrayOf<CountrySectionFeature.State>) {
@@ -489,7 +489,7 @@ public struct CountriesFeature {
         let isConnected = state.isConnectedToVPN
 
         // Free-tier users can't enable Secure Core: show upsell
-        if turningOn, state.userTier.isFreeTier {
+        if turningOn, state.userTier.isFree {
             state.destination = .payments(.init(upsellModalType: .secureCore))
             return .none
         }
@@ -630,7 +630,7 @@ public struct CountriesFeature {
 
         return ConnectionSpec(
             location: .exact(
-                server.logical.tier.isFreeTier ? .free : .paid,
+                server.logical.tier.isFree ? .free : .paid,
                 logicalID: server.logical.id,
                 number: server.logical.serverNameComponents.sequence,
                 subregion: server.logical.city,
@@ -679,7 +679,7 @@ public struct CountriesFeature {
             for row in section.rows {
                 guard case let .country(countryState) = row,
                       case let .country(code) = countryState.serverGroup.kind,
-                      countryState.serverGroup.minTier.isFreeTier,
+                      countryState.serverGroup.minTier.isFree,
                       !seenCodes.contains(code) else {
                     continue
                 }

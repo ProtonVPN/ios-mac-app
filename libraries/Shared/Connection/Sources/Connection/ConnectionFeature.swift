@@ -41,7 +41,7 @@ public struct ConnectionFeature: Sendable {
     public init() {}
 
     public struct State: Equatable, Sendable {
-        @SharedReader(.userTier) public var userTier: Int?
+        @SharedReader(.userTier) public var userTier: VpnTier?
 
         @Shared(.connectionState) var connectionState
         @Shared(.serverConnectionIntent) var serverConnectionIntent
@@ -121,7 +121,7 @@ public struct ConnectionFeature: Sendable {
 
             case let .input(.connect(intent)):
                 do throws(ConnectionIntentResolutionError) {
-                    try intentResolver.authorize(intent, state.userTier ?? .freeTier)
+                    try intentResolver.authorize(intent, state.userTier ?? .free)
                 } catch {
                     return .send(.delegate(.intentResolutionFailed(intent, with: error)))
                 }
@@ -496,6 +496,7 @@ extension ConnectionState: CustomDebugStringConvertible {
             ".killSwitchActive(\(spec), \(tunnelConfig))"
         }
     }
+
     public var basicDescription: String {
         switch self {
         case .resolving:

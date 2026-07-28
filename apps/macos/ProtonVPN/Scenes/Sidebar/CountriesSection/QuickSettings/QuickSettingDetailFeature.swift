@@ -50,7 +50,7 @@ struct QuickSettingDetailFeature {
         /// level list visible and rely on tier-based upsell affordances for free users.
         var isBusinessAccount: Bool
 
-        @SharedReader(.userTier) var userTier: Int?
+        @SharedReader(.userTier) var userTier: VpnTier?
 
         var selectedTitle: String {
             type.title
@@ -91,7 +91,7 @@ struct QuickSettingDetailFeature {
                         title: Localizable.secureCoreStatusOn,
                         icon: Theme.Asset.Icons.locks.swiftUIImage,
                         isActive: secureCoreEnabled,
-                        requiresUpdate: userTier.isFreeTier
+                        requiresUpdate: userTier.isFree
                     ),
                 ]
             case .netShieldDisplay:
@@ -127,7 +127,7 @@ struct QuickSettingDetailFeature {
                         title: Localizable.portForwardingStatusOn,
                         icon: Theme.Asset.Icons.arrowsSwitch.swiftUIImage,
                         isActive: portForwardingEnabled,
-                        requiresUpdate: userTier.isFreeTier
+                        requiresUpdate: userTier.isFree
                     ),
                 ]
             }
@@ -156,7 +156,7 @@ struct QuickSettingDetailFeature {
                         title: row.title,
                         icon: row.icon,
                         isActive: netShieldType == row.level,
-                        requiresUpdate: row.level != .off && userTier.isFreeTier
+                        requiresUpdate: row.level != .off && userTier.isFree
                     )
                 }
         }

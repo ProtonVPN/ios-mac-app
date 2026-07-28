@@ -34,14 +34,14 @@ public struct DefaultProfileFeature {
         let serverOffering: ServerOffering
         public let extraMargin: Bool
         let isFastestConnection: Bool
-        let defaultAccessTier: Int
+        let defaultAccessTier: VpnTier
 
         public var id: String {
             serverOffering.description
         }
 
         @SharedReader(.connectionState) var connectionState: ConnectionState
-        @SharedReader(.userTier) var userTier: Int?
+        @SharedReader(.userTier) var userTier: VpnTier?
 
         // Computed properties
         var profile: Profile {
@@ -92,7 +92,7 @@ public struct DefaultProfileFeature {
             if isFastestConnection {
                 return false // Fastest connection is available for free users
             }
-            return userTier ?? 0 < defaultAccessTier
+            return userTier.orFree < defaultAccessTier
         }
 
         public var title: String {
@@ -119,7 +119,7 @@ public struct DefaultProfileFeature {
             } else {
                 self.isFastestConnection = false
             }
-            self.defaultAccessTier = .paidTier
+            self.defaultAccessTier = .paid
         }
 
         public init(
@@ -130,7 +130,7 @@ public struct DefaultProfileFeature {
             self.serverOffering = serverOffering
             self.extraMargin = extraMargin
             self.isFastestConnection = isFastestConnection
-            self.defaultAccessTier = .paidTier
+            self.defaultAccessTier = .paid
         }
     }
 

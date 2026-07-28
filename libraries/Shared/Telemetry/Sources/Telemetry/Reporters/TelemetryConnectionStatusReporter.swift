@@ -169,7 +169,7 @@ actor TelemetryConnectionStatusReporter {
             server: logical.name,
             port: portString,
             isp: userISP ?? "",
-            isServerFree: logical.tier == .freeTier
+            isServerFree: logical.tier == .free
         )
         if shouldResetUserInitiatedVPNChange(for: eventType, oldValue) {
             userInitiatedVPNChange = nil

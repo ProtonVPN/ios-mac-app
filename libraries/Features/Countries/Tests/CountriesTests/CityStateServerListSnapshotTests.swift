@@ -86,8 +86,8 @@
         static func withKind(
             _ kind: ServerGroupInfo.Kind,
             features: ServerFeature,
-            minTier: Int = .paidTier,
-            maxTier: Int = .paidTier,
+            minTier: VpnTier = .paid,
+            maxTier: VpnTier = .paid,
             supportsSmartRouting: Bool = true
         ) -> ServerGroupInfo {
             .init(
@@ -108,16 +108,16 @@
 
         static var manyCities: [ServerGroupInfo] {
             [
-                ("Freeville", [.streaming], Int.freeTier),
-                ("Warsaw", ServerFeature.p2p, Int.paidTier),
-                ("Suwałki", [.p2p, .tor], Int.paidTier),
-                ("Pcim", [], Int.paidTier),
-                ("Stara wieś", [.streaming], Int.paidTier),
-                ("Koniec Świata", [.tor, .streaming], Int.paidTier),
-                ("Potworów", .p2p, Int.paidTier),
-                ("Lenie Wielkie", [], Int.paidTier),
-                ("Bardzo długa, zmyślona nazwa miejscowości", [.p2p, .tor, .streaming], Int.paidTier),
-                ("Chrząszczyszewoszyce", .p2p, Int.paidTier),
+                ("Freeville", [.streaming], VpnTier.free),
+                ("Warsaw", ServerFeature.p2p, VpnTier.paid),
+                ("Suwałki", [.p2p, .tor], VpnTier.paid),
+                ("Pcim", [], VpnTier.paid),
+                ("Stara wieś", [.streaming], VpnTier.paid),
+                ("Koniec Świata", [.tor, .streaming], VpnTier.paid),
+                ("Potworów", .p2p, VpnTier.paid),
+                ("Lenie Wielkie", [], VpnTier.paid),
+                ("Bardzo długa, zmyślona nazwa miejscowości", [.p2p, .tor, .streaming], VpnTier.paid),
+                ("Chrząszczyszewoszyce", .p2p, VpnTier.paid),
             ].map {
                 MockServerGroup.withKind(
                     .city(name: $0.0, code: "PL"),
@@ -132,18 +132,18 @@
 
     private enum MockServerInfo {
         static var manyServers: [ServerInfo] {
-            let servers: [(name: String, load: Int, status: Int, features: ServerFeature, tier: Int)] =
+            let servers: [(name: String, load: Int, status: Int, features: ServerFeature, tier: VpnTier)] =
                 [
-                    ("PL-FREE#01", 0, 1, [.streaming], .freeTier),
-                    ("PL#02", 0, 1, [.p2p], .paidTier),
-                    ("PL#03", 1, 1, [.tor], .paidTier),
-                    ("PL#10", 10, 1, [.streaming], .paidTier),
-                    ("PL#20", 20, 1, [.p2p, .tor], .paidTier),
-                    ("PL#40", 40, 1, [.p2p, .streaming], .paidTier),
-                    ("PL#60", 60, 1, [.tor, .streaming], .paidTier),
-                    ("PL#80", 80, 1, [.p2p, .tor, .streaming], .paidTier),
-                    ("PL#99", 99, 1, [], .paidTier),
-                    ("PL#MAINT#100", 100, 0, [.p2p], .paidTier),
+                    ("PL-FREE#01", 0, 1, [.streaming], .free),
+                    ("PL#02", 0, 1, [.p2p], .paid),
+                    ("PL#03", 1, 1, [.tor], .paid),
+                    ("PL#10", 10, 1, [.streaming], .paid),
+                    ("PL#20", 20, 1, [.p2p, .tor], .paid),
+                    ("PL#40", 40, 1, [.p2p, .streaming], .paid),
+                    ("PL#60", 60, 1, [.tor, .streaming], .paid),
+                    ("PL#80", 80, 1, [.p2p, .tor, .streaming], .paid),
+                    ("PL#99", 99, 1, [], .paid),
+                    ("PL#MAINT#100", 100, 0, [.p2p], .paid),
                 ]
             return servers
                 .map(Domain.Logical.mock)
@@ -152,7 +152,7 @@
     }
 
     extension Domain.Logical {
-        static func mock(name: String, load: Int, status: Int, features: ServerFeature, tier: Int) -> Self {
+        static func mock(name: String, load: Int, status: Int, features: ServerFeature, tier: VpnTier) -> Self {
             .init(
                 id: UUID().uuidString,
                 name: name,

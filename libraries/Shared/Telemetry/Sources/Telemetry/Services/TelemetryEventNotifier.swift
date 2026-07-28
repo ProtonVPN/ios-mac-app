@@ -16,18 +16,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CasePaths
 import Combine
 import Connection
 import Dependencies
 import Domain
-import NetworkingErgonomics
 import Foundation
 import Network
+import NetworkingErgonomics
 import ProtonCoreFeatureFlags
 import Sharing
 import VPNAppCore
 import VPNShared
-import CasePaths
 
 public class TelemetryEventNotifier {
     typealias ModalSource = UpsellModalSource
@@ -122,8 +122,8 @@ public class TelemetryEventNotifier {
             }
             .filter { // filter out states that are irrelevant to telemetry
                 switch $0 {
-                case .disconnected, .connected, .connecting: return true
-                default: return false
+                case .disconnected, .connected, .connecting: true
+                default: false
                 }
             }
         return publisher
@@ -144,18 +144,18 @@ public class TelemetryEventNotifier {
 
     private func reachabilityChanged(_ path: NetworkPath) {
         let networkType: ConnectionDimensions.NetworkType =
-        switch path.interfaceType ?? .other {
-        case .other, .loopback:
-            .other
-        case .wifi:
-            .wifi
-        case .cellular:
-            .mobile
-        case .wiredEthernet:
-            .wired
-        @unknown default:
-            .other
-        }
+            switch path.interfaceType ?? .other {
+            case .other, .loopback:
+                .other
+            case .wifi:
+                .wifi
+            case .cellular:
+                .mobile
+            case .wiredEthernet:
+                .wired
+            @unknown default:
+                .other
+            }
 
         Task {
             await telemetryService.reachabilityChanged(networkType)

@@ -26,7 +26,7 @@ public struct ServerChangeAuthorizerImplementation {
     func serverChangeAvailability() -> ServerChangeAuthorizer.ServerChangeAvailability {
         @Dependency(\.credentialsProvider) var credentials
 
-        guard credentials.tier.isFreeTier else {
+        guard credentials.tier.isFree else {
             return .available
         }
 

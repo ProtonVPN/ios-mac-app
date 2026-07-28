@@ -64,7 +64,7 @@ public struct AuthorizedFeatureValue<Feature: ProvidableFeature & Sendable>: Sen
     /// 2. If no raw value is stored, attempt a one-time legacy migration; otherwise return the default.
     /// 3. If the stored value itself is not authorized (instance `canUse`), return the default.
     /// 4. Otherwise return the stored value.
-    public func effectiveValue(userTier: Int, featureFlags: FeatureFlags) -> Feature {
+    public func effectiveValue(userTier: VpnTier, featureFlags: FeatureFlags) -> Feature {
         let defaultValue = Feature.defaultValue(userTier: userTier, featureFlags: featureFlags)
 
         guard Feature.canUse(userTier: userTier, featureFlags: featureFlags).isAllowed else {
@@ -85,9 +85,9 @@ public struct AuthorizedFeatureValue<Feature: ProvidableFeature & Sendable>: Sen
     /// Convenience: reads the current `userTier` and `featureFlags` from shared storage and returns
     /// the effective value.
     public func value() -> Feature {
-        @SharedReader(.userTier) var userTier: Int?
+        @SharedReader(.userTier) var userTier: VpnTier?
         @SharedReader(.featureFlags) var featureFlags: FeatureFlags
-        return effectiveValue(userTier: userTier ?? .freeTier, featureFlags: featureFlags)
+        return effectiveValue(userTier: userTier ?? .free, featureFlags: featureFlags)
     }
 
     /// A stream of effective values: the current value immediately, then re-derived on every

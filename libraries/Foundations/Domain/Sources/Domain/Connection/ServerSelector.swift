@@ -22,11 +22,11 @@ import Foundation
 public struct ServerSelector: Sendable {
     public internal(set) var select: @Sendable (
         _ spec: ConnectionSpec,
-        _ userTier: Int,
+        _ userTier: VpnTier,
         _ acceptableProtocols: ProtocolSupport
     ) throws(SelectionError) -> Server
 
-    public init(select: @escaping @Sendable (ConnectionSpec, Int, ProtocolSupport) throws(SelectionError) -> Server) {
+    public init(select: @escaping @Sendable (ConnectionSpec, VpnTier, ProtocolSupport) throws(SelectionError) -> Server) {
         self.select = select
     }
 }

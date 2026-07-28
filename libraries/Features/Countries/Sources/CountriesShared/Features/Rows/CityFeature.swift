@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Domain
 import Foundation
 import Localization
 import VPNAppCore
@@ -34,7 +35,7 @@ public struct CityFeature {
             "\(cityName)-\(countryCode)"
         }
 
-        @SharedReader(.userTier) var userTier: Int?
+        @SharedReader(.userTier) var userTier: VpnTier?
 
         // Computed properties
         var translatedCityName: String? {

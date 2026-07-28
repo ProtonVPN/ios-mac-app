@@ -28,7 +28,7 @@ public struct ProfileAuthorizer {
     public var shouldAllowProfiles: () -> Bool = { false }
 
     /// Determines whether the current account can use a profile requiring a tier.
-    public var shouldAllowProfile: (_ profileTier: Int) -> Bool = { _ in false }
+    public var shouldAllowProfile: (_ profileTier: VpnTier) -> Bool = { _ in false }
 }
 
 public extension ProfileAuthorizer {
@@ -38,7 +38,7 @@ public extension ProfileAuthorizer {
     }
 
     /// Returns whether the current account can use a profile requiring `tier`.
-    func canUseProfile(ofTier tier: Int) -> Bool {
+    func canUseProfile(ofTier tier: VpnTier) -> Bool {
         shouldAllowProfile(tier)
     }
 }
@@ -48,12 +48,12 @@ extension ProfileAuthorizer: DependencyKey {
         ProfileAuthorizer(
             shouldAllowProfiles: {
                 @Dependency(\.credentialsProvider) var credentials
-                return credentials.tier.isPaidTier
+                return credentials.tier.isPaid
             },
             shouldAllowProfile: { profileTier in
                 @Dependency(\.credentialsProvider) var credentials
                 let userTier = credentials.tier
-                return userTier.isPaidTier && userTier >= profileTier
+                return userTier.isPaid && userTier >= profileTier
             }
         )
     }

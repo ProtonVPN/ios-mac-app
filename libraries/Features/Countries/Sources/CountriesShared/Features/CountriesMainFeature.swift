@@ -55,7 +55,7 @@ public struct CountriesMainFeature {
 
     @Shared(.secureCoreToggle) private var secureCoreToggle
     @SharedReader(.connectionState) private var connectionState: ConnectionState
-    @SharedReader(.userTier) private var userTier: Int?
+    @SharedReader(.userTier) private var userTier: VpnTier?
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.planChangeClient) private var planChangeClient
     @Dependency(\.serverRepository) private var serverRepository
@@ -133,15 +133,15 @@ public struct CountriesMainFeature {
             false
         }
         let resolvedExit = canReuseCurrentExitCountry ? connectedCountryCode : nil
-        let isFreeTier = userTier.isFreeTier
+        let isFree = userTier.isFree
         let spec = SecureCoreConnectionSpecResolver.toggleReconnectSpec(
             secureCoreEnabled: secureCoreEnabled,
             exitCountryCode: resolvedExit,
-            isFreeTier: isFreeTier
+            isFree: isFree
         )
         let trigger = SecureCoreConnectionSpecResolver.reconnectTrigger(
             connectedExitCountryCode: resolvedExit,
-            isFreeTier: isFreeTier
+            isFree: isFree
         )
         let connectionProtocol = connectionState.resolvedVpnProtocol.map(ConnectionProtocol.vpnProtocol)
         AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
@@ -173,7 +173,7 @@ public struct CountriesMainFeature {
     private static func buildSections(secureCoreToggle: Bool) -> IdentifiedArrayOf<CountrySectionFeature.State> {
         @Dependency(\.serverRepository) var serverRepository
         let serverType = secureCoreToggle ? ServerType.secureCore : .standard
-        @SharedReader(.userTier) var userTier: Int?
+        @SharedReader(.userTier) var userTier: VpnTier?
 
         var sections: [CountrySectionFeature.State] = []
 
@@ -224,7 +224,7 @@ public struct CountriesMainFeature {
         }
 
         // Build profile/country sections based on user tier
-        if userTier.isFreeTier {
+        if userTier.isFree {
             Self.buildFreeTierSections(
                 countryGroups: countryGroups,
                 serverType: serverType,

@@ -191,7 +191,7 @@ class MapSectionViewModel {
         }
     }
 
-    private func standardAnnotations(_ userTier: Int) -> [CountryAnnotationViewModel] {
+    private func standardAnnotations(_ userTier: VpnTier) -> [CountryAnnotationViewModel] {
         @Dependency(\.serverRepository) var repository
         let isCountry = VPNServerFilter.kind(.country)
         let isNotSecureCore = VPNServerFilter.features(.standard)
@@ -242,7 +242,7 @@ class MapSectionViewModel {
     }
 
     /// Let's refactor this during the redesign, or when we trigger the secure core server count assertion.
-    private func secureCoreAnnotations(_ userTier: Int) -> [CountryAnnotationViewModel] {
+    private func secureCoreAnnotations(_ userTier: VpnTier) -> [CountryAnnotationViewModel] {
         let secureCoreServers = fetchSecureCoreServers()
         assert(secureCoreServers.count < maximumSecureCoreServerCount, "Refactor O(n^2) grouping algorithm")
 
@@ -254,7 +254,7 @@ class MapSectionViewModel {
 
             let annotation = SCExitCountryAnnotationViewModel(
                 countryCode: exitCountryCode,
-                minTier: servers.map(\.logical.tier).min() ?? .freeTier,
+                minTier: servers.map(\.logical.tier).min() ?? .free,
                 servers: servers,
                 userTier: userTier,
                 coordinate: LocationUtility.coordinate(forCountry: exitCountryCode)

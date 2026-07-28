@@ -119,7 +119,7 @@
                 load: 42,
                 entryCountryCode: isSecureCore ? "IS" : exitCountry,
                 exitCountryCode: exitCountry,
-                tier: 0,
+                tier: .free,
                 score: 1,
                 status: 1,
                 feature: isSecureCore ? .secureCore : .zero,
