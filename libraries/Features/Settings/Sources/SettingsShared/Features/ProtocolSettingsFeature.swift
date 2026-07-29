@@ -86,9 +86,7 @@ public struct ProtocolSettingsFeature: Sendable {
             return .none
 
         case let .showReconnectionAlert(`protocol`):
-            if #available(macOS 12, *) {
-                state.reconnectionAlert = SettingsAlert.reconnectionAlertState(for: `protocol`)
-            }
+            state.reconnectionAlert = SettingsAlert.reconnectionAlertState(for: `protocol`)
             return .none
 
         case let .reconnectionAlert(.presented(.reconnectWith(`protocol`))):

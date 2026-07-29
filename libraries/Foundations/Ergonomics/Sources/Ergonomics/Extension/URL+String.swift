@@ -30,28 +30,8 @@ extension URL? {
     }
 }
 
-extension URL {
-    public func appendingQueryItems(_ queryItems: [URLQueryItem]) -> URL {
-        guard #available(macOS 13.0, iOS 16.0, tvOS 16.0, *) else {
-            return appendingQueryItemsLegacy(queryItems)
-        }
-
-        return appending(queryItems: queryItems)
-    }
-
-    private func appendingQueryItemsLegacy(_ queryItems: [URLQueryItem]) -> URL {
-        let queryString: [String] = queryItems.compactMap { queryItem in
-            var result = ""
-
-            guard let escapedName = queryItem.name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return nil }
-            result += escapedName
-
-            guard let escapedValue = queryItem.value?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return nil }
-            result += "=" + escapedValue
-
-            return result
-        }
-
-        return URL(string: absoluteString + "?" + queryString.joined(separator: "&"))!
+public extension URL {
+    func appendingQueryItems(_ queryItems: [URLQueryItem]) -> URL {
+        appending(queryItems: queryItems)
     }
 }

@@ -42,9 +42,6 @@ extension ExcludeLocalNetworks: ProvidableFeature {
     public static let legacyConversion: ((Bool) -> Self)? = { $0 ? .on : .off }
 
     public static func canUse(userTier: VpnTier, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
-        guard #available(iOS 14.2, *) else {
-            return .failure(.featureDisabled)
-        }
         if userTier.isFree {
             return .failure(.requiresUpgrade)
         }
