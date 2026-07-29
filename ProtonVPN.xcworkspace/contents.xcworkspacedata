@@ -168,7 +168,7 @@
       location = "container:"
       name = "Scripts">
       <FileRef
-         location = "group:Claude.md">
+         location = "group:CLAUDE.md">
       </FileRef>
       <FileRef
          location = "group:fastlane">
