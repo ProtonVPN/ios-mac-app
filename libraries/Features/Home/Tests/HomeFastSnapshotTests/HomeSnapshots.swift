@@ -25,7 +25,9 @@ import Ergonomics
 @testable import Home
 @testable import HomeShared
 import IssueReporting
+import NetShield
 import OrderedCollections
+import Sharing
 import SnapshotTesting
 import SwiftUI
 import System
@@ -76,7 +78,15 @@ struct HomeScreenTests {
     @Test("Home screen", arguments: [VpnTier.free, VpnTier.paid], homeTestData)
     @MainActor
     func homeScreen(tier: VpnTier, state: (protection: ProtectionState, connection: ConnectionState)) throws {
-        let store = Store(initialState: HomeFeature.State(), reducer: HomeFeature.init) {
+        // Show real NetShield stats in the connected snapshot. `.tunnelStats` is delivered via an async
+        // `SharedReader`, which would race the snapshot; overriding it with a constant reader renders the
+        // values synchronously and deterministically.
+        var initialState = HomeFeature.State()
+        initialState.connectionStatus.connectionStatusBanner.$netShieldStats = SharedReader(
+            value: NetShieldModel(trackersCount: 432, adsCount: 12300, dataSaved: 123_500_000, enabled: true)
+        )
+
+        let store = Store(initialState: initialState, reducer: HomeFeature.init) {
             $0.serverChangeAuthorizer = .availableValue
             $0.locale = Locale(identifier: "en")
             $0.date = .constant(Date())
