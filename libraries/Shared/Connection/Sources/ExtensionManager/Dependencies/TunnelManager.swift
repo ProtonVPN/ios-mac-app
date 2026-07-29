@@ -209,6 +209,7 @@ final class PacketTunnelManager: TunnelManager {
     @SharedReader(.extensionError) private var extensionError: ExtensionError? = nil
 
     /// Fork requests posted by the extension, a new stream for each observer
+    /// we should use shared() streams in the future for this
     var forkRequestsStream: AsyncStream<Void> {
         @Dependency(\.extensionIPC) var extensionIPC
         let commands = extensionIPC.observeCommands()

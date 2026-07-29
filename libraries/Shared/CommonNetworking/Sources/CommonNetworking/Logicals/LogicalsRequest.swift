@@ -62,7 +62,7 @@ public struct LogicalsRequest: ConditionalRequest {
         )
         .appending(Array(("Tier", "0")), if: freeTier)
 
-        return path.appendingQueryItems(queryItems).absoluteString
+        return path.appending(queryItems: queryItems).absoluteString
     }
 
     public var isAuth: Bool {

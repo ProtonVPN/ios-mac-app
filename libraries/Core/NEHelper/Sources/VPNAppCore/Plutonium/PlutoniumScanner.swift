@@ -26,6 +26,7 @@
     import Sharing
     import SwiftNavigation
 
+    // TODO: refactor this VPNAPPL-3586
     public final actor PlutoniumScanner {
         public static let shared = PlutoniumScanner()
 
