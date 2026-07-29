@@ -83,12 +83,8 @@ public enum Localizable {
   public static var allServersUnderMaintenance: String { return Localizable.tr("Localizable", "_all_servers_under_maintenance", fallback: "All servers are under maintenance. This usually means either there are technical difficulties on Proton VPN's side, or your network is limited.") }
   /// Allow
   public static var allow: String { return Localizable.tr("Localizable", "_allow", fallback: "Allow") }
-  /// In order to allow LAN access, kill switch must be turned off.
-  /// 
-  /// Continue?
-  public static var allowLanDescription: String { return Localizable.tr("Localizable", "_allow_lan_description", fallback: "In order to allow LAN access, kill switch must be turned off.\n\nContinue?") }
-  /// Allows to bypass the VPN and connect to devices on your local network, like your printer.
-  public static var allowLanInfo: String { return Localizable.tr("Localizable", "_allow_lan_info", fallback: "Allows to bypass the VPN and connect to devices on your local network, like your printer.") }
+  /// Description of the Allow LAN connections feature
+  public static var allowLanInfo: String { return Localizable.tr("Localizable", "_allow_lan_info", fallback: "Connect to devices on your local network (such as your printer or NAS drive) when the kill switch is active.") }
   /// Note that your connection needs to be restarted to apply this change
   public static var allowLanNote: String { return Localizable.tr("Localizable", "_allow_lan_note", fallback: "Note that your connection needs to be restarted to apply this change") }
   /// Allow LAN connections
@@ -1968,10 +1964,6 @@ public enum Localizable {
   public static var tryAgain: String { return Localizable.tr("Localizable", "_try_again", fallback: "Try again") }
   /// Disable kill switch and retry
   public static var tryAgainWithoutKillswitch: String { return Localizable.tr("Localizable", "_try_again_without_killswitch", fallback: "Disable kill switch and retry") }
-  /// [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on
-  public static var turnKsOnDescriptionIos: String { return Localizable.tr("Localizable", "_turn_ks_on_description_ios", fallback: "You won't be able to access devices on your local network") }
-  /// [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on
-  public static var turnKsOnDescriptionMacosLanConflict: String { return Localizable.tr("Localizable", "_turn_ks_on_description_macos_lan_conflict", fallback: "• You won't be able to access devices on your local network") }
   /// [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on
   public static var turnKsOnDescriptionMacosStConflict: String { return Localizable.tr("Localizable", "_turn_ks_on_description_macos_st_conflict", fallback: "• This will disable split tunneling") }
   /// Title of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on

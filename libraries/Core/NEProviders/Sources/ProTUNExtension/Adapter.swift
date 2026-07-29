@@ -112,17 +112,12 @@ final class ProTUNAdapter: @unchecked Sendable {
 
     func prepare(with config: ProTUNConfiguration) async throws -> FileDescriptor {
         Logger.adapter.info("Preparing...")
-
-        // VPNAPPL-3344 For multi-peer support, it's likely that we will need to set the
-        // server IP address to something other than the address of the first peer in the list
-        if let peer = config.peers.first {
-            try await setNetworkSettings(excludingRoute: peer.serverIP, dnsServers: config.dnsServers)
-        } else {
+        if config.peers.isEmpty {
             // Preparing the Adapter without any peer is allowed
-            // Just generate the network settings intercepting all possible routes
+            // We will just generate the network settings intercepting all possible routes
             Logger.adapter.info("Preparing in zero-peer killswitch mode (no peers)")
-            try await setNetworkSettings(excludingRoute: nil, dnsServers: config.dnsServers)
         }
+        try await setNetworkSettings(excludingRoutes: config.uniquePeerAddresses, dnsServers: config.dnsServers)
 
         return try setupTunnelDescriptor()
     }
@@ -329,8 +324,10 @@ extension ProTUNAdapter {
 // MARK: - Network setup
 
 extension ProTUNAdapter {
-    func setNetworkSettings(excludingRoute: String?, dnsServers: [String]) async throws {
-        let networkSettings = SettingsGenerator.settings(excludingRoute: excludingRoute, dnsServers: dnsServers)
+    func setNetworkSettings(excludingRoutes excludedRoutes: [String], dnsServers: [String]) async throws {
+        Logger.adapter.debug("Generating settings {excludedRoutes: \(excludedRoutes, privacy: .public), dnsServers: \(dnsServers)}")
+        let networkSettings = SettingsGenerator.settings(excludingRoutes: excludedRoutes, dnsServers: dnsServers)
+        Logger.adapter.info("Settings tunnel network settings...")
         try await packetTunnelProvider?.setTunnelNetworkSettings(networkSettings)
     }
 

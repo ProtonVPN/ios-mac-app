@@ -98,4 +98,20 @@ public extension ConnectionUpdate {
     var requiresReassertion: Bool {
         location != nil || connectionProtocol != nil
     }
+
+    /// Whether this update requires network settings to be reapplied
+    var requiresNetworkSettingsRefresh: Bool {
+        if customDNS != nil {
+            // To no ones's surprise, custom DNS servers are explicitly provided via `NETunnelNetworkSettings`,
+            // so it follows that these settings must be applied by the adapter.
+            true
+        } else if killSwitch != nil || allowLAN != nil {
+            // Give a little nudge to the extension/system to apply the correct routing table rules.
+            // Without refreshing the network settings, these features do not function as expected when applied live
+            // while the tunnel is already active.
+            true
+        } else {
+            false
+        }
+    }
 }

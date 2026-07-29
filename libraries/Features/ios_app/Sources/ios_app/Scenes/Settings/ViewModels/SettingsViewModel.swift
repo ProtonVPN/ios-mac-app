@@ -363,6 +363,9 @@ final class SettingsViewModel {
         ))
         cells.append(.tooltip(text: Localizable.killSwitchTooltip))
 
+        // Grouped with KS in the security section, since it's only effective while KS is active.
+        cells.append(contentsOf: allowLanSection)
+
         return TableViewSection(title: Localizable.securityOptions, cells: cells)
     }
 
@@ -620,8 +623,6 @@ final class SettingsViewModel {
             cells.append(contentsOf: vpnAcceleratorSection)
         }
 
-        cells.append(contentsOf: allowLanSection)
-
         cells.append(contentsOf: hermesSection)
 
         return cells.isEmpty ? nil : TableViewSection(title: Localizable.connection, cells: cells)
@@ -629,25 +630,6 @@ final class SettingsViewModel {
 
     private func switchLANCallback() -> ((Bool, @escaping (Bool) -> Void) -> Void) {
         { toggleOn, callback in
-            // Turning LAN access on conflicts with an armed kill switch: ask the user to confirm
-            // dropping kill switch protection before applying the change.
-            if toggleOn, self.killSwitchMode.isProtected {
-                let alert = LANConnectionsKillSwitchConflictAlert(connected: self.isActive()) {
-                    setFeatureValue(ExcludeLocalNetworks.on)
-                    self.$killSwitchMode.withLock { $0 = .off }
-                    if self.isActive() {
-                        log.info("Applying LAN access feature change in place", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks", "feature_additional": "killSwitch"])
-                        self.apply(tunnelFeatureChange: .allowLAN(true))
-                    }
-                    self.reloadNeeded?()
-                    callback(true)
-                } cancelHandler: {
-                    callback(false)
-                }
-                self.alertService.push(alert: alert)
-                return
-            }
-
             setFeatureValue(toggleOn ? ExcludeLocalNetworks.on : .off)
             if self.isActive() {
                 log.info("Applying LAN access feature change in place", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])

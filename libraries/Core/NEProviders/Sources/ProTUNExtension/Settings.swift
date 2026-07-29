@@ -21,7 +21,7 @@ import NetworkExtension
 import os
 
 enum SettingsGenerator {
-    static func settings(excludingRoute: String?, dnsServers: [String]) -> NETunnelNetworkSettings {
+    static func settings(excludingRoutes excludedRoutes: [String], dnsServers: [String]) -> NETunnelNetworkSettings {
         let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: .ipv4Loopback)
 
         settings.dnsSettings = dnsSettings(from: dnsServers)
@@ -33,9 +33,7 @@ enum SettingsGenerator {
             NEIPv4Route(destinationAddress: .tunnelAddress, subnetMask: .hostMask),
             NEIPv4Route(destinationAddress: .defaultRouteAddress, subnetMask: .anyMask),
         ]
-        if let excludingRoute {
-            ipv4Settings.excludedRoutes = [NEIPv4Route(destinationAddress: excludingRoute, subnetMask: .hostMask)]
-        }
+        ipv4Settings.excludedRoutes = excludedRoutes.map { NEIPv4Route(destinationAddress: $0, subnetMask: .hostMask) }
 
         settings.ipv4Settings = ipv4Settings
 

@@ -37,7 +37,7 @@ public extension NETunnelProviderProtocol {
             }
 
             if let allowLAN = update.allowLAN {
-                excludeLocalNetworks = !allowLAN
+                excludeLocalNetworks = allowLAN
             }
         #endif
 

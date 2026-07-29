@@ -480,7 +480,7 @@ private extension QuickSettingsFeature {
             if enabled {
                 $plutonium.withLock { $0 = .disabled(plutonium.mode) }
             }
-            if connectionState.isConnected {
+            if connectionState.isConnected || connectionState.is(\.killSwitchActive) {
                 log.info("Applying killSwitch feature change in place", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
                 connectionCommandClient.send(.applySettings([.tunnel(.killSwitch(enabled))]))
             }
