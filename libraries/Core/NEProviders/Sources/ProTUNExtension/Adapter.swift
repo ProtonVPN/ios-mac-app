@@ -437,7 +437,8 @@ extension ProTUNAdapter {
                 appVersion: appInfo.appVersion,
                 settings: localAgentSettings,
                 muonEnv: .prod
-            )
+            ),
+            sniStrategy: .random
         )
     }
 }
