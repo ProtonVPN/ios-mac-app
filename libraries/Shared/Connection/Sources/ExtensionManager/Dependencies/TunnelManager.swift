@@ -351,6 +351,7 @@ final class PacketTunnelManager: TunnelManager {
         var appliedRequestId: UUID?
         var error: ExtensionError?
         var lastEmitted: Result<TunnelState, ExtensionError>?
+        var lastEmittedRequestId: UUID?
 
         #if os(macOS)
             var vpnManager: (any TunnelProviderManager)?
@@ -650,12 +651,13 @@ final class PacketTunnelManager: TunnelManager {
                     if case .success(.reasserting(_)) = resolved, state.lastEmitted != nil {
                         return nil
                     }
-                    let squelched = resolved == state.lastEmitted
+                    let squelched = resolved == state.lastEmitted && state.appliedRequestId == state.lastEmittedRequestId
                     guard !squelched else {
                         log.debug("Ignoring tunnel state update \(state); resolved to the last emitted state", category: .connection)
                         return nil
                     }
                     state.lastEmitted = resolved
+                    state.lastEmittedRequestId = state.appliedRequestId
                     return resolved
                 }
             }

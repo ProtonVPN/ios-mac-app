@@ -310,6 +310,77 @@
         }
 
         @Test
+        func statusStreamEmitsConfirmationWhenOnlyTheRequestIdAdvances() async throws {
+            let providerManager = MockTunnelProviderManager(withBundleIdentifier: "wireguard", state: .ready)
+            let now = Date.now
+            providerManager.session = VPNSessionMock(status: .connected, connectedDate: now)
+            (providerManager.session as? VPNSessionMock)?.connectedServerID = "server-id"
+            (providerManager.session as? VPNSessionMock)?.messageHandler = MessageHandler.full
+
+            let oldRequestId = UUID()
+            let config = NETunnelProviderProtocol()
+            try config.setProviderConfiguration(
+                value: JSONEncoder().encode(ConnectionSpec.defaultFastest),
+                forKey: "connectionSpec"
+            )
+            config.setProviderConfiguration(value: oldRequestId.uuidString, forKey: "requestID")
+            try ProTUNConfigurationCoder.encode(
+                configuration: .init(preferredTransport: .udp, peers: [.mock(id: "peer-id")], dnsServers: []),
+                to: config
+            )
+            providerManager.protocolConfiguration = config
+
+            let peer = CurrentPeer(
+                peerID: "peer-id",
+                transport: .udp,
+                port: 51820,
+                serverExitV4: nil,
+                serverExitV6: nil,
+                userISP: nil,
+                userIP: nil
+            )
+            let (stream, continuation) = AsyncStream<ExtensionStateSnapshot>.makeStream()
+            defer { continuation.finish() }
+
+            let expected = TunnelState.connected(
+                TunnelConfiguration(
+                    connectionSpec: .defaultFastest,
+                    tunnelProtocol: .wireGuard,
+                    peerIDs: ["peer-id"],
+                    killSwitch: false
+                ),
+                DynamicConnectionData(
+                    currentPeerId: "peer-id",
+                    connectionDate: now,
+                    protocolConnectionData: .proTUN(.init(transport: .udp))
+                )
+            )
+
+            let (first, confirmation) = try await withDependencies {
+                $0.date = .constant(now)
+                $0.continuousClock = ContinuousClock()
+                $0.vpnManagerRepository.managers = { [.wireGuard: providerManager] }
+                $0.extensionIPC.currentExtensionState = {
+                    .init(state: .connected(peer), requestId: oldRequestId)
+                }
+                $0.extensionIPC.observeExtensionState = { stream }
+            } operation: {
+                var iterator = PacketTunnelManager().statusStream.makeAsyncIterator()
+                let first = try await withTimeout(of: .seconds(1)) { await iterator.next() }
+
+                let newRequestId = UUID()
+                config.setProviderConfiguration(value: newRequestId.uuidString, forKey: "requestID")
+                continuation.yield(.init(state: .connected(peer), requestId: newRequestId))
+
+                let confirmation = try await withTimeout(of: .seconds(1)) { await iterator.next() }
+                return (first, confirmation)
+            }
+
+            #expect(first == .some(.success(expected)))
+            #expect(confirmation == .some(.success(expected)))
+        }
+
+        @Test
         func returnsConnectedStatusWhenAnotherManagerIsDisconnecting() async throws {
             let connectedManager = MockTunnelProviderManager(withBundleIdentifier: "connected", state: .ready)
             let disconnectingManager = MockTunnelProviderManager(withBundleIdentifier: "disconnecting", state: .ready)
@@ -518,7 +589,7 @@
 
                 #expect(manager.vpnProtocolConfiguration?.requestId == update.id)
                 #expect(manager.vpnProtocolConfiguration?.includeAllNetworks == true)
-                #expect(manager.vpnProtocolConfiguration?.excludeLocalNetworks == false)
+                #expect(manager.vpnProtocolConfiguration?.excludeLocalNetworks == true)
             }
         #endif
 

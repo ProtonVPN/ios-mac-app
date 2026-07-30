@@ -218,23 +218,8 @@ public struct ConnectionFeature: Sendable {
                 }.cancellable(id: CancelID.preparation, cancelInFlight: true)
 
             case let .finishedPreparing(.success(resolvedIntent)):
-                // Recorded on every successful resolution: telemetry reads the intent for its
-                // protocol and server dimensions, including for the settle below, where the
-                // resolved place is the one we are already connected to.
                 state.$serverConnectionIntent.withLock {
                     $0 = resolvedIntent
-                }
-                // Connecting to the exact place we are already connected changes nothing. Sending the update anyway
-                // makes the extension reset a healthy WG session to the same peer, which quietly breaks its local agent
-                // connection and publishes no state change, so the UI sits on "Connecting" until something notices,
-                // which can be a long time. Settle the optimistic connecting state back to the tunnel's truth.
-                if case let .connected(tunnelConfig, connectionData) = state.tunnel,
-                   connectionData.currentPeerId == resolvedIntent.server.endpoint.id,
-                   tunnelConfig.connectionSpec == resolvedIntent.spec {
-                    state.$connectionState.withLock {
-                        $0 = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
-                    }
-                    return .none
                 }
                 return .send(.tunnel(.connect(resolvedIntent)))
 
@@ -283,6 +268,7 @@ public struct ConnectionFeature: Sendable {
                 )
                 if state.shouldRegisterServerChangeOnConnection {
                     serverChangeAuthorizer.registerServerChange(connectedAt: connectionData.connectionDate)
+                    state.shouldRegisterServerChangeOnConnection = false
                 }
                 state.$connectionState.withLock {
                     $0 = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
