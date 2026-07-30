@@ -70,3 +70,10 @@ public extension SharedKey where Self == InMemoryKey<Bool>.Default {
         Self[.inMemory("intentionallyDisconnected"), default: false]
     }
 }
+
+public extension SharedKey where Self == JSONAppStorageKey<ServerChangeConfig>.Default {
+    /// The change-server rate-limit configuration
+    static var serverChangeConfig: Self {
+        Self[.json("ServerChangeConfig", default: ServerChangeConfig()), default: ServerChangeConfig()]
+    }
+}

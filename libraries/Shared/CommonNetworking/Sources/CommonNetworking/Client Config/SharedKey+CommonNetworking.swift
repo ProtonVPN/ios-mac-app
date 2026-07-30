@@ -19,16 +19,6 @@
 import Domain
 import Sharing
 
-// Keys migrated off the legacy `PropertiesManager`, hosted alongside their value types. Each reuses
-// the exact UserDefaults key and JSON on-disk representation the legacy property used.
-
-public extension SharedKey where Self == JSONAppStorageKey<ServerChangeConfig>.Default {
-    /// The change-server rate-limit configuration
-    static var serverChangeConfig: Self {
-        Self[.json("ServerChangeConfig", default: ServerChangeConfig()), default: ServerChangeConfig()]
-    }
-}
-
 public extension SharedKey where Self == JSONAppStorageKey<StreamingDictServices>.Default {
     /// The per-country streaming services catalogue
     static var streamingServices: Self {

@@ -26,11 +26,11 @@ import Combine
 import Dependencies
 import Domain
 import Ergonomics
-import LegacyCommon
 import NATPMPUI
 import SDWebImage
 import SharedViews
 import Theme
+import VPNAppCore
 
 final class HeaderViewController: NSViewController {
     private enum AccessibilityIdentifiers {

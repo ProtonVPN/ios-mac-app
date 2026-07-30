@@ -30,7 +30,6 @@ import ConnectionInventory
 import Dependencies
 import Domain
 import Ergonomics
-import LegacyCommon
 import Localization
 import Sharing
 import Strings

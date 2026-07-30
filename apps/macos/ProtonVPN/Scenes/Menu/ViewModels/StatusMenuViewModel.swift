@@ -28,7 +28,6 @@ import ConnectionInventory
 import Dependencies
 import Domain
 import Ergonomics
-import LegacyCommon
 import Localization
 import Modals
 import Persistence

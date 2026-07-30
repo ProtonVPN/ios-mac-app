@@ -45,7 +45,37 @@ public extension DependencyValues {
     }
 }
 
-extension ServerChangeAuthorizer: TestDependencyKey {
+extension ServerChangeAuthorizer: DependencyKey {
+    /// Builds an authorizer that answers from ``ServerChangeAuthorizerImplementation``, memoizing
+    /// active cooldowns in a fresh ``ServerChangeAvailabilityCache``.
+    ///
+    /// ``liveValue`` holds a single instance so all consumers share one cache. Tests build their
+    /// own instance per case, because a cached cooldown would otherwise outlive the case that
+    /// produced it and be served to the next one.
+    static func makeLive() -> ServerChangeAuthorizer {
+        let authorizer = ServerChangeAuthorizerImplementation()
+        let cache = ServerChangeAvailabilityCache()
+        return ServerChangeAuthorizer(
+            serverChangeAvailability: {
+                @Dependency(\.date) var date
+                if let cached = cache.value(asOf: date.now) {
+                    return cached
+                }
+                let fresh = authorizer.serverChangeAvailability()
+                cache.store(fresh)
+                return fresh
+            },
+            registerServerChangeAtDate: { connectionDate in
+                authorizer.registerServerChange(connectedAt: connectionDate)
+                // A successful server change shifts the cooldown window — drop the cache so
+                // the next read recomputes from `serverChangeStorage`.
+                cache.invalidate()
+            }
+        )
+    }
+
+    public static var liveValue: ServerChangeAuthorizer = makeLive()
+
     public static let testValue = ServerChangeAuthorizer {
         .unavailable(until: .distantFuture, duration: .infinity, exhaustedSkips: true)
     } registerServerChangeAtDate: { _ in
