@@ -64,4 +64,11 @@ public final class SentryHelper {
         event.extra = extra
         SentrySDK.capture(event: event)
     }
+
+    /// Reports an error to Sentry, for injecting into modules that must not link the Sentry SDK themselves.
+    ///
+    /// The message is context for the log; Sentry groups on the error itself.
+    public static let reportError: @Sendable (_ message: String, _ error: Error) -> Void = { _, error in
+        shared?.log(error: error)
+    }
 }

@@ -23,18 +23,12 @@ import Dependencies
 import Domain
 import Ergonomics
 import Foundation
-import LegacyCommon
-import Persistence
 import PMLogger
 import ProtonCoreChallenge
 import ProtonCoreFoundations
 import Sharing
 
 // MARK: Live implementations of app dependencies
-
-extension DatabaseConfigurationKey: @retroactive DependencyKey {
-    public static let liveValue: DatabaseConfiguration = .live
-}
 
 extension AppInfoKey: @retroactive DependencyKey {
     public static let liveValue: AppInfo = .live(context: .mainApp, beta: Bundle.isTestflight)

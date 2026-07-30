@@ -31,10 +31,6 @@ import VPNAppCore
 
 // MARK: Live implementations of app dependencies
 
-extension DatabaseConfigurationKey: @retroactive DependencyKey {
-    public static let liveValue: DatabaseConfiguration = .live
-}
-
 extension ChallengeParametersProviderKey: @retroactive DependencyKey {
     public static let liveValue: ChallengeParametersProvider = .empty
 }
