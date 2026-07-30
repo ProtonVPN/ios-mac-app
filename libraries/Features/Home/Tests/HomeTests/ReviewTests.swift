@@ -30,6 +30,12 @@ struct ReviewTests {
     @Shared(.ratingSettings) var ratingSettings
     @Shared(.didPromptReview) var didPrompt
     @Shared(.userPlan) var userPlan
+    @Shared(.connectionState) var connectionState
+    @Shared(.successfulConnectionsInARow) var successfulConnectionsInARow
+    @Shared(.whenFirstSuccessfulConnectionStarted) var successfulTimestamp
+    @Shared(.whenActiveConnectionStarted) var activeConnectionStartTimestamp
+
+    @Dependency(\.ratingBooster) var ratingBooster
 
     init() {
         $ratingSettings.withLock {
@@ -55,23 +61,14 @@ struct ReviewTests {
         }
         store.exhaustivity = .off
 
-        // 1
-        #expect(!didPrompt)
-        await store.send(.connected)
-        await store.send(.disconnected)
+        $successfulConnectionsInARow.withLock { $0 = 3 }
+        $userPlan.withLock { $0 = "plus" }
 
-        // 2
-        #expect(!didPrompt)
-        await store.send(.connected)
-        await store.send(.disconnected)
-
-        // 3
-        #expect(!didPrompt)
-        await store.send(.connected)
+        await store.send(.activate)
 
         #expect(!didPrompt)
 
-        await store.send(.clear)
+        ratingBooster.clear()
     }
 
     @Test("Prompts after 3 successful connections and 15 days")
@@ -83,26 +80,18 @@ struct ReviewTests {
             $0.date = .init { now.value }
         }
         store.exhaustivity = .off
-
-        @Shared(.userPlan) var userPlan
         $userPlan.withLock { $0 = "plus" }
+        $successfulTimestamp.withLock { $0 = now.value }
 
-        // 1
         #expect(!didPrompt)
-        await store.send(.connected)
-        await store.send(.disconnected)
 
-        // 2
-        #expect(!didPrompt)
-        await store.send(.connected)
-        await store.send(.disconnected)
+        $successfulConnectionsInARow.withLock { $0 = 3 }
 
-        // 3
         now.withValue { $0 = $0.addingTimeInterval(.days(15)) }
-        await store.send(.connected)
+        await store.send(.activate)
         #expect(didPrompt)
 
-        await store.send(.clear)
+        ratingBooster.clear()
     }
 
     @Test("Does not prompt after 3 successful connections with ineligible plan")
@@ -121,20 +110,18 @@ struct ReviewTests {
 
         // 1
         #expect(!didPrompt)
-        await store.send(.connected)
-        await store.send(.disconnected)
+        await store.send(.activate)
 
         // 2
         #expect(!didPrompt)
-        await store.send(.connected)
-        await store.send(.disconnected)
+        await store.send(.activate)
 
         // 3
         now.withValue { $0 = $0.addingTimeInterval(.days(15)) }
-        await store.send(.connected)
+        await store.send(.activate)
         #expect(!didPrompt)
 
-        await store.send(.clear)
+        ratingBooster.clear()
     }
 
     @Test("Does not prompt after being connected for only 5 days")
@@ -150,14 +137,14 @@ struct ReviewTests {
         @Shared(.userPlan) var userPlan
         $userPlan.withLock { $0 = "plus" }
 
-        await store.send(.connected)
+        await store.send(.activate)
 
         now.withValue { $0 = $0.addingTimeInterval(.days(5)) }
 
         await store.send(.activate)
         #expect(!didPrompt)
 
-        await store.send(.clear)
+        ratingBooster.clear()
     }
 
     @Test("Prompts after being connected for 5 days following a first connection 15 days ago")
@@ -173,19 +160,20 @@ struct ReviewTests {
         @Shared(.userPlan) var userPlan
         $userPlan.withLock { $0 = "plus" }
 
-        await store.send(.connected)
+        await store.send(.activate)
+        $successfulTimestamp.withLock { $0 = now.value }
 
         now.withValue { $0 = $0.addingTimeInterval(.days(15)) }
 
-        await store.send(.disconnected)
-        await store.send(.connected)
+        await store.send(.activate)
+        $activeConnectionStartTimestamp.withLock { $0 = now.value }
 
         now.withValue { $0 = $0.addingTimeInterval(.days(5)) }
 
         await store.send(.activate)
         #expect(didPrompt)
 
-        await store.send(.clear)
+        ratingBooster.clear()
     }
 
     @Test("Does not prompt after being connected for 5 days with ineligible plan")
@@ -201,14 +189,14 @@ struct ReviewTests {
         @Shared(.userPlan) var userPlan
         $userPlan.withLock { $0 = "basic" }
 
-        await store.send(.connected)
+        await store.send(.activate)
 
         now.withValue { $0 = $0.addingTimeInterval(.days(5)) }
 
         await store.send(.activate)
         #expect(!didPrompt)
 
-        await store.send(.clear)
+        ratingBooster.clear()
     }
 
     @Test("Does not prompt twice after being connected for 15 days")
@@ -220,14 +208,11 @@ struct ReviewTests {
             $0.date = .init { now.value }
         }
         store.exhaustivity = .off
-
-        @Shared(.userPlan) var userPlan
         $userPlan.withLock { $0 = "plus" }
-
-        await store.send(.connected)
+        $successfulTimestamp.withLock { $0 = now.value }
+        $successfulConnectionsInARow.withLock { $0 = 3 }
 
         now.withValue { $0 = $0.addingTimeInterval(.days(15)) }
-
         await store.send(.activate)
         #expect(didPrompt)
 
@@ -235,7 +220,7 @@ struct ReviewTests {
         await store.send(.activate)
         #expect(!didPrompt)
 
-        await store.send(.clear)
+        ratingBooster.clear()
     }
 
     @Test("Failed connections reset the success count")
@@ -251,33 +236,24 @@ struct ReviewTests {
         @Shared(.userPlan) var userPlan
         $userPlan.withLock { $0 = "plus" }
 
-        // 1
         #expect(!didPrompt)
-        await store.send(.connected)
-        await store.send(.disconnected)
+        $successfulConnectionsInARow.withLock { $0 = 1 }
+        $successfulTimestamp.withLock { $0 = now.value }
 
         now.withValue { $0 = $0.addingTimeInterval(.days(15)) }
 
-        // 2
-        await store.send(.connected)
-        await store.send(.disconnected)
+        $successfulConnectionsInARow.withLock { $0 = 2 }
 
         // Fail, reset to 0
         await store.send(.connectionFailed)
         #expect(!didPrompt)
 
-        // 1
-        await store.send(.connected)
-        await store.send(.disconnected)
+        $successfulConnectionsInARow.withLock { $0 = 3 }
+        $activeConnectionStartTimestamp.withLock { $0 = now.value }
 
-        // 2
-        await store.send(.connected)
-        await store.send(.disconnected)
-
-        // 3
-        await store.send(.connected)
+        await store.send(.activate)
         #expect(didPrompt)
 
-        await store.send(.clear)
+        ratingBooster.clear()
     }
 }

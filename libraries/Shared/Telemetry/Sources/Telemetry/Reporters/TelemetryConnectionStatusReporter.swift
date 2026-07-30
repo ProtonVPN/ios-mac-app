@@ -43,7 +43,7 @@ actor TelemetryConnectionStatusReporter {
     private var telemetryEventScheduler: TelemetryEventScheduler
     private var businessEventScheduler: TelemetryEventScheduler
 
-    var lastPort: UInt16?
+    private(set) var lastPort: UInt16?
 
     init(
         timer: TelemetryTimer = ConnectionTimer(),

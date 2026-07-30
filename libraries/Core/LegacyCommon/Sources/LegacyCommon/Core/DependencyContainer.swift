@@ -39,25 +39,20 @@ open class Container {
     /// It does preparation work needed at the start of the app, but which can't be done in `init` because it's too early.
     public func applicationDidFinishLaunching() {
         Task {
-            // We need to initialise the TelemetryService somewhere because no other part of the code uses it directly.
-            // TelemetryService listens to notifications and sends telemetry events based on that.
-            @Dependency(\.telemetryService) var telemetryService
             @Dependency(\.vpnKeychain) var vpnKeychain
             @Shared(.firstLaunchReported) var firstLaunchReported
-            @Shared(.isSubsequentLaunch) var isSubsequentLaunch
 
             if !firstLaunchReported {
                 // The app launched for the first time since the last install.
                 // Since the telemetry is on by default, there is no way of disabling this event.
                 // If we remove the app, we'll still be logged in, but the telemetry settings will be reset to it's default, "On" state.
+                @Dependency(\.telemetryService) var telemetryService
                 try? await telemetryService.onboardingEvent(.firstLaunch)
                 $firstLaunchReported.withLock { $0 = true }
             } else if vpnKeychain.userIsLoggedIn { // we flip this bool only on the second launch and only when the user is logged in
+                @Shared(.isSubsequentLaunch) var isSubsequentLaunch
                 $isSubsequentLaunch.withLock { $0 = true }
             }
-
-            // Start settingsHeartbeat scheduled telemetry report
-            telemetryService.startSettingsHeartbeat()
         }
     }
 }

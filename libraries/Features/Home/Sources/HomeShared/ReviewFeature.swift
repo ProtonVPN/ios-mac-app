@@ -46,10 +46,10 @@ public struct ReviewFeature {
 
         @SharedReader(.userPlan) var userPlan
         @SharedReader(.ratingSettings) var ratingSettings
-        @Shared(.whenLastReviewShown) var reviewTimestamp
-        @Shared(.whenFirstSuccessfulConnectionStarted) var successfulTimestamp
-        @Shared(.whenActiveConnectionStarted) var activeConnectionStartTimestamp
-        @Shared(.successfulConnectionsInARow) var successfulConnectionsInARow
+        @SharedReader(.whenLastReviewShown) var reviewTimestamp
+        @SharedReader(.whenFirstSuccessfulConnectionStarted) var successfulTimestamp
+        @SharedReader(.whenActiveConnectionStarted) var activeConnectionStartTimestamp
+        @SharedReader(.successfulConnectionsInARow) var successfulConnectionsInARow
 
         var shouldPrompt: Bool {
             @Dependency(\.date) var date
@@ -129,39 +129,24 @@ public struct ReviewFeature {
 
         /// The app has successfully connected.
         case connected
-        /// The app has disconnected.
-        case disconnected
+
         /// The app has disconnected due to an error.
         case connectionFailed
-
-        /// Clear the review settings from defaults.
-        case clear
-
-        case connectionStateUpdate(old: ConnectionState, new: ConnectionState)
     }
 
     private enum CancelIDs {
-        case watchUserPlan
         case watchDidBecomeActive
-        case watchConnectionState
+        case watchSuccessfulConnectionsInARow
     }
 
-    private let longLivingUserPlanEffect: Effect<Action> = .publisher {
-        @SharedReader(.userPlan) var userPlan
-        return $userPlan.publisher
-            .filter { $0 == nil }
-            .map { _ in Action.clear }
-    }.cancellable(id: CancelIDs.watchUserPlan)
-
-    private let longLivingConnectionStateEffect: Effect<Action> = .publisher {
-        @SharedReader(.connectionState) var connectionState
-        let publisher = $connectionState.publisher
+    private let longLivingSuccessfulConnectionsCounter: Effect<Action> = .publisher {
+        @SharedReader(.successfulConnectionsInARow) var successfulConnectionsInARow
+        let publisher = $successfulConnectionsInARow.publisher
         return publisher
             .zip(publisher.dropFirst())
-            .map { oldValue, newValue in
-                Action.connectionStateUpdate(old: oldValue, new: newValue)
-            }
-    }.cancellable(id: CancelIDs.watchConnectionState)
+            .filter { old, new in new > old }
+            .map { _ in Action.connected }
+    }.cancellable(id: CancelIDs.watchSuccessfulConnectionsInARow)
 
     private let longLivingDidBecomeActiveEffect: Effect<Action> = .publisher {
         NotificationCenter.default
@@ -176,58 +161,20 @@ public struct ReviewFeature {
             switch action {
             case .listen:
                 return .merge(
-                    longLivingUserPlanEffect,
                     longLivingDidBecomeActiveEffect,
-                    longLivingConnectionStateEffect
+                    longLivingSuccessfulConnectionsCounter
                 )
-
             case .activate:
                 if state.shouldPrompt {
                     @Dependency(\.reviewPrompter) var reviewPrompter
-
-                    state.$reviewTimestamp.withLock {
-                        $0 = date.now
-                    }
-
                     reviewPrompter.prompt()
                 }
                 return .none
-
             case .connected:
-                if state.successfulTimestamp == nil {
-                    log.info("Saving first successful connection timestamp.")
-                    state.$successfulTimestamp.withLock { $0 = date.now }
-                }
-
-                if state.activeConnectionStartTimestamp == nil {
-                    state.$activeConnectionStartTimestamp.withLock { $0 = date.now }
-                    state.$successfulConnectionsInARow.withLock { $0 += 1 }
-                }
-
                 return .send(.activate)
-
-            case .disconnected:
-                state.$activeConnectionStartTimestamp.withLock { $0 = nil }
-                return .none
-
             case .connectionFailed:
-                state.$activeConnectionStartTimestamp.withLock { $0 = nil }
-                state.$successfulConnectionsInARow.withLock { $0 = 0 }
-                return .none
-
-            case .clear:
-                state.$successfulConnectionsInARow.withLock { $0 = 0 }
-                state.$activeConnectionStartTimestamp.withLock { $0 = nil }
-                state.$successfulTimestamp.withLock { $0 = nil }
-                state.$reviewTimestamp.withLock { $0 = nil }
-                return .none
-
-            case let .connectionStateUpdate(oldValue, newValue):
-                if newValue.is(\.connected), !oldValue.is(\.connected) {
-                    return .send(.connected)
-                } else if newValue.is(\.disconnected), !oldValue.is(\.disconnected) {
-                    return .send(.disconnected)
-                }
+                @Dependency(\.ratingBooster) var ratingBooster
+                ratingBooster.connectionFailed()
                 return .none
             }
         }
@@ -240,13 +187,13 @@ public extension SharedKey where Self == AppStorageKey<RatingSettings>.Default {
     }
 }
 
-private extension SharedKey where Self == AppStorageKey<Int>.Default {
+public extension SharedKey where Self == AppStorageKey<Int>.Default {
     static var successfulConnectionsInARow: Self {
         Self[.appStorage("successfulConnectionsInARow"), default: 0]
     }
 }
 
-private extension SharedKey where Self == AppStorageKey<Date?>.Default {
+public extension SharedKey where Self == AppStorageKey<Date?>.Default {
     static var whenLastReviewShown: Self {
         Self[.appStorage("whenLastReviewShown"), default: nil]
     }
@@ -264,6 +211,8 @@ struct ReviewPrompter: DependencyKey {
     let prompt: () -> Void
 
     static var liveValue = ReviewPrompter {
+        @Shared(.whenLastReviewShown) var reviewTimestamp
+        @Dependency(\.date) var date
         #if canImport(UIKit) && canImport(StoreKit)
             let activeScene = UIApplication.shared
                 .connectedScenes
@@ -275,6 +224,9 @@ struct ReviewPrompter: DependencyKey {
         #elseif canImport(StoreKit)
             SKStoreReviewController.requestReview()
         #endif
+        $reviewTimestamp.withLock {
+            $0 = date.now
+        }
     }
 
     #if DEBUG
@@ -283,6 +235,11 @@ struct ReviewPrompter: DependencyKey {
             @Shared(.didPromptReview) var didPrompt
             $didPrompt.withLock {
                 $0 = true
+            }
+            @Dependency(\.date) var date
+            @Shared(.whenLastReviewShown) var reviewTimestamp
+            $reviewTimestamp.withLock {
+                $0 = date.now
             }
         }
     #endif
@@ -302,3 +259,82 @@ extension DependencyValues {
         }
     }
 #endif
+
+import Combine
+
+public struct RatingBooster: TestDependencyKey {
+    public static let testValue = RatingBooster()
+
+    private var cancellables: Set<AnyCancellable> = .init()
+
+    @SharedReader(.userPlan) var userPlan
+    @Shared(.whenLastReviewShown) var reviewTimestamp
+    @Shared(.whenFirstSuccessfulConnectionStarted) var successfulTimestamp
+    @Shared(.whenActiveConnectionStarted) var activeConnectionStartTimestamp
+    @Shared(.successfulConnectionsInARow) var successfulConnectionsInARow
+
+    @Dependency(\.date) var date
+
+    init() {
+        @SharedReader(.userPlan) var userPlan
+        let publisher = $userPlan.publisher
+        publisher
+            .zip(publisher.dropFirst())
+            .filter { $0 != $1 }
+            .sink { [self] _ in clear() }
+            .store(in: &cancellables)
+
+        @SharedReader(.connectionState) var connectionState
+        let connectionPublisher = $connectionState.publisher
+        connectionPublisher
+            .zip(connectionPublisher.dropFirst())
+            .filter { oldValue, newValue in
+                if newValue.is(\.connected), !oldValue.is(\.connected) {
+                    return true
+                } else if newValue.is(\.disconnected), !oldValue.is(\.disconnected) {
+                    return true
+                }
+                return false
+            }
+            .sink(receiveValue: connectionStateUpdate)
+            .store(in: &cancellables)
+    }
+
+    /// Clear the review settings from defaults.
+    func clear() {
+        $successfulConnectionsInARow.withLock { $0 = 0 }
+        $activeConnectionStartTimestamp.withLock { $0 = nil }
+        $successfulTimestamp.withLock { $0 = nil }
+        $reviewTimestamp.withLock { $0 = nil }
+    }
+
+    func connectionFailed() {
+        $activeConnectionStartTimestamp.withLock { $0 = nil }
+        $successfulConnectionsInARow.withLock { $0 = 0 }
+    }
+
+    func connectionStateUpdate(oldValue: ConnectionState, newValue: ConnectionState) {
+        if newValue.is(\.connected), !oldValue.is(\.connected) {
+            if successfulTimestamp == nil {
+                log.info("Saving first successful connection timestamp.")
+                $successfulTimestamp.withLock { $0 = date.now }
+            }
+
+            if activeConnectionStartTimestamp == nil {
+                $activeConnectionStartTimestamp.withLock { $0 = date.now }
+                $successfulConnectionsInARow.withLock { $0 += 1 }
+            }
+        } else if newValue.is(\.disconnected), !oldValue.is(\.disconnected) {
+            $activeConnectionStartTimestamp.withLock { $0 = nil }
+        }
+    }
+
+    public static var liveValue: RatingBooster = .init()
+}
+
+public extension DependencyValues {
+    var ratingBooster: RatingBooster {
+        get { self[RatingBooster.self] }
+        set { self[RatingBooster.self] = newValue }
+    }
+}

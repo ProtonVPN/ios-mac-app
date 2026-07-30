@@ -51,3 +51,51 @@ public struct OnboardingEvent: TelemetryEvent, Encodable {
 
     public struct Values: Encodable {}
 }
+
+import Dependencies
+
+public struct ProductPromptsEvent: TelemetryEvent, Encodable {
+    public let measurementGroup: String = "vpn.any.product_prompts"
+    public let event: Event
+    public let dimensions: Dimensions
+
+//    @SharedReader(.successfulConnectionsInARow) var successfulConnectionsInARow
+
+    public enum Event: String, Encodable {
+        case ratingBoosterPromptRequested = "rating_booster_prompt_requested"
+    }
+
+    public struct Dimensions: Encodable {
+        public enum CodingKeys: String, CodingKey {
+            case userCountry = "user_country"
+            case osFamily
+            case userTier = "user_tier"
+            case appVersion
+        }
+
+        public let userCountry: String
+        public let osFamily: String
+        public let userTier: CommonTelemetryDimensions.UserTier
+        public var appVersion: String = {
+            @Dependency(\.appInfo) var appInfo
+            return appInfo.appVersion
+        }()
+    }
+
+    public var values: Values {
+        Values(
+            connectionsSinceLastPrompt: 1,
+            daysSinceLastPrompt: 1
+        )
+    }
+
+    public struct Values: Encodable {
+        public enum CodingKeys: String, CodingKey {
+            case connectionsSinceLastPrompt = "connections_since_last_prompt"
+            case daysSinceLastPrompt = "days_since_last_prompt"
+        }
+
+        public let connectionsSinceLastPrompt: Int
+        public let daysSinceLastPrompt: Int
+    }
+}
