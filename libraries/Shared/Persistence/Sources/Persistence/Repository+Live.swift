@@ -29,6 +29,28 @@ public enum ServerRepositoryKey: DependencyKey {
         let dbWriter = DatabaseQueue.from(databaseConfiguration: config)
         let executor = config.executor
 
+        @Sendable
+        func upsert(_ vpnServers: [VPNServer], into db: Database) throws {
+            try vpnServers.forEach { vpnServer in
+                try vpnServer.logicalRecord.insert(db, onConflict: .replace)
+                try vpnServer.logicalStatus.insert(db, onConflict: .replace)
+                try vpnServer.endpointRecords.forEach { endpoint in
+                    try endpoint.insert(db, onConflict: .replace)
+                }
+                try vpnServer.overrideRecords.forEach { overridesInfo in
+                    try overridesInfo.insert(db, onConflict: .replace)
+                }
+            }
+        }
+
+        @Sendable
+        func deleteServers(withIDsNotIn ids: Set<String>, maxTier: Int, from db: Database) throws -> Int {
+            try Logical
+                .filter(!ids.contains(Logical.Columns.id))
+                .filter(Logical.Columns.tier <= maxTier)
+                .deleteAll(db)
+        }
+
         return ServerRepository(
             serverCount: {
                 executor.read(dbWriter: dbWriter) { db in
@@ -44,24 +66,23 @@ public enum ServerRepositoryKey: DependencyKey {
             },
             upsertServers: { vpnServers in
                 executor.write(dbWriter: dbWriter) { db in
-                    try vpnServers.forEach { vpnServer in
-                        try vpnServer.logicalRecord.insert(db, onConflict: .replace)
-                        try vpnServer.logicalStatus.insert(db, onConflict: .replace)
-                        try vpnServer.endpointRecords.forEach { endpoint in
-                            try endpoint.insert(db, onConflict: .replace)
-                        }
-                        try vpnServer.overrideRecords.forEach { overridesInfo in
-                            try overridesInfo.insert(db, onConflict: .replace)
-                        }
-                    }
+                    try upsert(vpnServers, into: db)
                 }
             },
             deleteServers: { ids, maxTier in
                 executor.write(dbWriter: dbWriter) { db in
-                    try Logical
-                        .filter(!ids.contains(Logical.Columns.id))
-                        .filter(Logical.Columns.tier <= maxTier)
-                        .deleteAll(db)
+                    try deleteServers(withIDsNotIn: ids, maxTier: maxTier, from: db)
+                }
+            },
+            replaceServers: { vpnServers, maxTier in
+                executor.write(dbWriter: dbWriter) { db in
+                    let deletedServerCount = try deleteServers(
+                        withIDsNotIn: Set(vpnServers.map(\.id)),
+                        maxTier: maxTier,
+                        from: db
+                    )
+                    try upsert(vpnServers, into: db)
+                    return deletedServerCount
                 }
             },
             upsertLoads: { loads in

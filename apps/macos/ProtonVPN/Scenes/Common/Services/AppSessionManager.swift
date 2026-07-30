@@ -154,18 +154,19 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     private func retrieveProperties() async throws {
         @Dependency(\.serverRepository) var serverRepository
+        @Dependency(\.serverListUpdater) var serverListUpdater
         guard let properties = try await getVPNProperties() else {
-            serverRepository.setMetadata("0", for: .consecutiveSuccessfulRefreshes)
+            serverRepository.resetSuccessfulRefreshes()
             return
         }
 
-        let shouldRefreshServersAccordingToUserTier = !serverManager.shouldFetchFullServerList
+        let shouldRefreshServersAccordingToUserTier = !serverRepository.shouldFetchFullServerList
         let credentials = properties.vpnCredentials
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
         if case let .modified(lastModified, servers, isFree) = properties.serverInfo {
             let isFreeTierRequest = shouldRefreshServersAccordingToUserTier && credentials.maxTier == .free
             assert(isFreeTierRequest == isFree)
-            serverManager.update(
+            serverListUpdater.update(
                 servers: servers.map { VPNServer(legacyModel: $0) },
                 freeServersOnly: isFreeTierRequest,
                 lastModifiedAt: lastModified
@@ -220,7 +221,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         @SharedReader(.userLocation) var userLocation
         let location = userLocation
 
-        let shouldRefreshServersAccordingToUserTier = !serverManager.shouldFetchFullServerList
+        @Dependency(\.serverRepository) var serverRepository
+        let shouldRefreshServersAccordingToUserTier = !serverRepository.shouldFetchFullServerList
         do {
             return try await vpnApiClient.vpnProperties(
                 isDisconnected: isDisconnected,
@@ -237,7 +239,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             throw CommonVpnError.noConnectionsAvailable
         } catch {
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
-            @Dependency(\.serverRepository) var serverRepository
             if serverRepository.isEmpty || userLocation?.ip == nil {
                 // only throw if there is a major reason
                 throw error
@@ -368,8 +369,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         vpnKeychain.clear()
         announcementRefresher.clear()
 
-        @Dependency(\.serverManager) var serverManager
-        serverManager.purgeAllServers()
+        @Dependency(\.serverRepository) var serverRepository
+        serverRepository.deleteAllServers()
 
         performLogoutCleanup()
 

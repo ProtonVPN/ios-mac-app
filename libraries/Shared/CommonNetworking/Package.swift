@@ -75,7 +75,10 @@ let package = Package(
         ),
         .testTarget(
             name: "CommonNetworkingTests",
-            dependencies: ["CommonNetworking"],
+            dependencies: [
+                "CommonNetworking",
+                .product(name: "PersistenceTestSupport", package: "Persistence"),
+            ],
             resources: [
                 .copy("Resources/test_log_1.log"),
                 .copy("Resources/test_log_2.log"),

@@ -35,6 +35,8 @@ public struct ServerRepository: Sendable {
 
     public var upsertServers: @Sendable ([VPNServer]) -> Void
     public var deleteServers: @Sendable (Set<String>, Int) -> Int = { _, _ in 0 }
+    /// Purge + upsert in a single transaction. See ``ServerRepository/replace(servers:maxTier:)``.
+    public var replaceServers: @Sendable ([VPNServer], Int) -> Int = { _, _ in 0 }
 
     public var upsertLoads: @Sendable ([ContinuousServerProperties]) -> Void
 
@@ -65,6 +67,28 @@ public extension ServerRepository {
 
     func delete(serversWithIDsNotIn ids: Set<String>, maxTier: Int) -> Int {
         deleteServers(ids, maxTier)
+    }
+
+    /// Makes `servers` the complete set of servers at tiers up to and including `maxTier`.
+    ///
+    /// Stale servers at those tiers - the ones absent from `servers` - are purged, and `servers` are upserted, in a
+    /// single transaction. Servers above `maxTier` are left untouched, so a partial fetch capped at the user's tier
+    /// doesn't wipe the higher tier servers it never asked for.
+    ///
+    /// - Returns: The number of stale servers purged.
+    @discardableResult
+    func replace(servers: [VPNServer], maxTier: Int) -> Int {
+        replaceServers(servers, maxTier)
+    }
+
+    /// Removes every server, along with the metadata tracking how recently the server list was refreshed.
+    ///
+    /// Used on logout: the next session starts from an empty database and fetches the full server list.
+    func deleteAllServers() {
+        _ = delete(serversWithIDsNotIn: [], maxTier: .max)
+        deleteMetadata(for: .lastModifiedFree)
+        deleteMetadata(for: .lastModifiedAll)
+        deleteMetadata(for: .consecutiveSuccessfulRefreshes)
     }
 
     func upsert(loads: [ContinuousServerProperties]) {

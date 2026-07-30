@@ -26,6 +26,7 @@ public extension ServerRepository {
             countryCount: { 0 },
             upsertServers: { _ in },
             deleteServers: { _, _ in 0 },
+            replaceServers: { _, _ in 0 },
             upsertLoads: { _ in },
             groups: { _, _, _ in [] },
             servers: { _, _ in [] },
@@ -42,6 +43,7 @@ public extension ServerRepository {
             countryCount: { 1 },
             upsertServers: { _ in },
             deleteServers: { _, _ in 0 },
+            replaceServers: { _, _ in 0 },
             upsertLoads: { _ in },
             groups: { _, _, _ in [] },
             servers: { _, _ in [] },
@@ -58,6 +60,7 @@ public extension ServerRepository {
             countryCount: { 10 },
             upsertServers: { _ in },
             deleteServers: { _, _ in 0 },
+            replaceServers: { _, _ in 0 },
             upsertLoads: { _ in },
             groups: { _, _, _ in .recommendedCountries + .someCountries },
             servers: { _, _ in [] },
@@ -74,6 +77,7 @@ public extension ServerRepository {
             countryCount: { 0 },
             upsertServers: { _ in },
             deleteServers: { _, _ in 0 },
+            replaceServers: { _, _ in 0 },
             upsertLoads: { _ in },
             groups: { _, _, _ in [] },
             servers: { _, _ in [] },
@@ -206,6 +210,7 @@ public extension ServerRepository {
             countryCount: { 0 },
             upsertServers: { _ in },
             deleteServers: { _, _ in 0 },
+            replaceServers: { _, _ in 0 },
             upsertLoads: { _ in },
             groups: { _, _, _ in [
                 .init(
@@ -266,6 +271,7 @@ public extension ServerRepository {
             countryCount: { 1 },
             upsertServers: { _ in },
             deleteServers: { _, _ in 0 },
+            replaceServers: { _, _ in 0 },
             upsertLoads: { _ in },
             groups: { _, _, _ in [
                 .init(
@@ -333,6 +339,7 @@ public extension ServerRepository {
             countryCount: { 0 },
             upsertServers: { _ in },
             deleteServers: { _, _ in 0 },
+            replaceServers: { _, _ in 0 },
             upsertLoads: { _ in },
             groups: { _, _, _ in [
                 .init(
@@ -370,6 +377,7 @@ public extension ServerRepository {
             countryCount: { 0 },
             upsertServers: { _ in },
             deleteServers: { _, _ in 0 },
+            replaceServers: { _, _ in 0 },
             upsertLoads: { _ in },
             groups: { _, _, _ in [
                 .init(
@@ -406,6 +414,7 @@ public extension ServerRepository {
             countryCount: { 0 },
             upsertServers: { _ in },
             deleteServers: { _, _ in 0 },
+            replaceServers: { _, _ in 0 },
             upsertLoads: { _ in },
             groups: { _, _, _ in [
                 .init(
@@ -444,6 +453,7 @@ public extension ServerRepository {
             countryCount: { 0 },
             upsertServers: { _ in },
             deleteServers: { _, _ in 0 },
+            replaceServers: { _, _ in 0 },
             upsertLoads: { _ in },
             groups: { _, _, _ in [
                 .init(

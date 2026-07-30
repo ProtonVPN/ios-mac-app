@@ -148,6 +148,7 @@ struct CountriesSectionViewControllerSnapshotTests {
                 countryCount: { 0 },
                 upsertServers: { _ in },
                 deleteServers: { _, _ in 0 },
+                replaceServers: { _, _ in 0 },
                 upsertLoads: { _ in },
                 groups: { _, _, _ in serverGroups },
                 servers: { _, _ in [] },

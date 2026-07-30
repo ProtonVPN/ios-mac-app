@@ -179,13 +179,13 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     func loadDataWithoutLogin() async throws {
-        @Dependency(\.serverManager) var serverManager
+        @Dependency(\.serverListUpdater) var serverListUpdater
         @Dependency(\.serverRepository) var serverRepository
 
         log.info("Attempting to load data without login")
 
         @Shared(.userLocation) var userLocation
-        let shouldRefreshServers = !serverManager.shouldFetchFullServerList
+        let shouldRefreshServers = !serverRepository.shouldFetchFullServerList
         let properties: VpnProperties
         do {
             properties = try await vpnApiClient.vpnProperties(
@@ -201,7 +201,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 throw error
             }
 
-            serverRepository.setMetadata("0", for: .consecutiveSuccessfulRefreshes)
+            serverRepository.resetSuccessfulRefreshes()
             return
         }
 
@@ -211,7 +211,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         if case let .modified(lastModified, servers, isFree) = properties.serverInfo {
             let isFreeTierRequest = shouldRefreshServers && properties.vpnCredentials.maxTier.isFree
             assert(isFreeTierRequest == isFree)
-            serverManager.update(
+            serverListUpdater.update(
                 servers: servers.map { VPNServer(legacyModel: $0) },
                 freeServersOnly: isFreeTierRequest,
                 lastModifiedAt: lastModified
@@ -229,8 +229,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     // swiftlint:disable function_body_length
     private func retrievePropertiesAndLogIn() async throws {
-        @Dependency(\.serverManager) var serverManager
-        let shouldRefreshServersAccordingToTier = !serverManager.shouldFetchFullServerList
+        @Dependency(\.serverListUpdater) var serverListUpdater
+        @Dependency(\.serverRepository) var serverRepository
+        let shouldRefreshServersAccordingToTier = !serverRepository.shouldFetchFullServerList
 
         @Shared(.userLocation) var userLocation
 
@@ -250,7 +251,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             if case let .modified(lastModified, servers, isFree) = properties.serverInfo {
                 let isFreeTierRequest = shouldRefreshServersAccordingToTier && credentials.maxTier.isFree
                 assert(isFreeTierRequest == isFree)
-                serverManager.update(
+                serverListUpdater.update(
                     servers: servers.map { VPNServer(legacyModel: $0) },
                     freeServersOnly: isFreeTierRequest,
                     lastModifiedAt: lastModified
@@ -467,8 +468,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         $storedSearches.withLock { $0 = nil }
         planServiceV2.clear()
 
-        @Dependency(\.serverManager) var serverManager
-        serverManager.purgeAllServers()
+        @Dependency(\.serverRepository) var serverRepository
+        serverRepository.deleteAllServers()
 
         performLogoutCleanup()
 
