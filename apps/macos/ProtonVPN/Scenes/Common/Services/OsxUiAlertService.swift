@@ -21,29 +21,19 @@
 //
 
 import AppKit
-import Combine
-import Connection
 import Domain
 import Foundation
-import LegacyCommon
 import Observation
-import Sharing
 import Strings
 import SwiftUI
 import VPNAppCore
 
 final class OsxUiAlertService {
-    @SharedReader(.connectionState) private var connectionState: ConnectionState
+    /// Alerts currently shown as sheets on a regular window.
+    private var sheetAlerts: [SystemAlert] = []
 
-    private var currentAlerts: [SystemAlert] = []
-    /// Alerts pushed while no window was available to host them; flushed once one appears.
-    private var pendingAlerts: [SystemAlert] = []
-    private var isObservingWindowAvailability = false
-    private var cancellables = Set<AnyCancellable>()
-
-    init() {
-        startObservingConnectionState()
-    }
+    /// Alerts currently shown as standalone alert windows, keyed by alert class.
+    private var alertWindows: [String: SystemAlertWindowController] = [:]
 
     func displayAlert(_ alert: SystemAlert) {
         present(alert)
@@ -55,28 +45,32 @@ final class OsxUiAlertService {
             return
         }
 
-        guard let window = hostWindow() else {
-            // No window yet — e.g. a critical alert (force-upgrade, update-required) pushed at
-            // launch or while the app runs menu-bar-only. Queue and retry when a window appears
-            // rather than silently dropping it.
-            enqueuePending(alert)
-            return
+        if let window = hostWindow() {
+            if NSApp.keyWindow is StatusWindow {
+                // The app may be inactive, so bring it forward and take the keyboard's focus.
+                NSRunningApplication.current.activate(options: [.activateAllWindows])
+                window.makeKeyAndOrderFront(nil)
+            }
+            showAsSheet(alert, in: window)
+        } else {
+            // No window can host a sheet, so show a standalone window styled like the native alert instead.
+            showAsWindow(alert)
         }
-
-        show(alert, in: window)
     }
 
-    /// Hosts a native SwiftUI `.alert` translated from the legacy `SystemAlert`.
-    /// The host view is a zero-size ``NSHostingView`` mounted on the given window.
-    private func show(_ alert: SystemAlert, in window: NSWindow) {
-        currentAlerts.append(alert)
+    // MARK: - Sheet path (a regular window exists)
+
+    /// Presents the alert as a native SwiftUI `.alert` hosted by a zero-size `NSHostingView` on the given window.
+    private func showAsSheet(_ alert: SystemAlert, in window: NSWindow) {
+        log.info("Presenting \(alert.className) as a sheet on \(window.className)", category: .ui)
+        sheetAlerts.append(alert)
 
         let presentation = LegacyAlertPresentation()
         weak var weakHostingView: NSView?
         let hostingView = NSHostingView(
             rootView: LegacyAlertView(alert: alert, presentation: presentation) { [weak self] in
                 weakHostingView?.removeFromSuperview()
-                self?.dismissCompletion(alert)
+                self?.sheetAlerts.removeAll { $0.className == alert.className }
             }
         )
         weakHostingView = hostingView
@@ -92,77 +86,91 @@ final class OsxUiAlertService {
     }
 
     private func hostWindow() -> NSWindow? {
-        NSApp.keyWindow ?? NSApp.mainWindow ?? NSApp.windows.first(where: \.isVisible)
+        let candidates = [NSApp.keyWindow, NSApp.mainWindow] + NSApp.windows.filter(\.isVisible)
+        return candidates.compactMap { $0 }.first(where: canHostAlertSheet)
     }
 
-    // MARK: - Deferred presentation
-
-    /// Defers an alert that arrived with no window to host it, and starts listening for a window to
-    /// become available so it can be shown instead of lost.
-    private func enqueuePending(_ alert: SystemAlert) {
-        log.warning("No window available to present \(alert.className); deferring until one appears", category: .ui)
-        pendingAlerts.append(alert)
-        startObservingWindowAvailability()
+    /// Whether a window can host a SwiftUI `.alert` sheet: it must be titled and able to become key. This excludes the
+    /// popover panel, the menu-bar status item window (always visible in `NSApp.windows` even though alerts can't
+    /// attach), standalone alert windows, etc.
+    private func canHostAlertSheet(_ window: NSWindow) -> Bool {
+        window.styleMask.contains(.titled)
+            && window.canBecomeKey
+            && !(window is StatusWindow)
     }
 
-    private func startObservingWindowAvailability() {
-        guard !isObservingWindowAvailability else { return }
-        isObservingWindowAvailability = true
+    // MARK: - Window path (no window can host a sheet)
 
-        Publishers.Merge(
-            NotificationCenter.default.publisher(for: NSWindow.didBecomeKeyNotification),
-            NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)
+    private func showAsWindow(_ alert: SystemAlert) {
+        log.info("Presenting \(alert.className) as a standalone alert window", category: .ui)
+
+        let key = alert.className
+        let controller = SystemAlertWindowController(alert: alert) { [weak self] in
+            self?.alertWindows.removeValue(forKey: key)
+        }
+        alertWindows[key] = controller
+
+        alert.dismiss = { [weak controller] in controller?.dismiss() }
+
+        let screen = targetScreen()
+        controller.present(
+            on: screen,
+            anchorMidX: statusItemWindow(on: screen)?.frame.midX,
+            cascadeIndex: alertWindows.count - 1
         )
-        .receive(on: DispatchQueue.main)
-        .sink { [weak self] _ in self?.flushPendingAlerts() }
-        .store(in: &cancellables)
     }
 
-    private func flushPendingAlerts() {
-        guard !pendingAlerts.isEmpty, let window = hostWindow() else { return }
-        let deferredAlerts = pendingAlerts
-        pendingAlerts.removeAll()
-        for alert in deferredAlerts where alertIsNew(alert) {
-            show(alert, in: window)
+    /// The screen the user is interacting with: under the pointer first (they just clicked the status item there), then
+    /// the one with keyboard focus, then any.
+    private func targetScreen() -> NSScreen? {
+        let mouseLocation = NSEvent.mouseLocation
+        return NSScreen.screens.first { NSMouseInRect(mouseLocation, $0.frame, false) }
+            ?? NSScreen.main
+            ?? NSScreen.screens.first
+    }
+
+    /// The menu-bar window hosting this app's status item on the given screen, located by class name — the same
+    /// heuristic `NSEvent.isStatusItemClicked` uses.
+    ///
+    /// The match requires the status item to actually sit in this screen's menu-bar. After a display change,
+    /// `NSApp.windows` can still hold a stale status-bar window with a frame from the old arrangement, and using its
+    /// coordinates puts the alert in the wrong place. If there's no verified match, the alert then centres on the
+    /// screen.
+    private func statusItemWindow(on screen: NSScreen?) -> NSWindow? {
+        guard let screen else { return nil }
+
+        let menuBarStrip = NSRect(
+            x: screen.frame.minX,
+            y: screen.visibleFrame.maxY,
+            width: screen.frame.width,
+            height: max(0, screen.frame.maxY - screen.visibleFrame.maxY)
+        )
+        guard !menuBarStrip.isEmpty else { return nil } // e.g. menu bar set to auto-hide
+
+        return NSApp.windows.first {
+            $0.className.hasPrefix("NSStatusBar") && $0.className.hasSuffix("Window")
+                && $0.isVisible
+                && $0.frame.intersects(menuBarStrip)
         }
     }
 
-    private func dismissAutoConnectionAlertsIfNeeded() {
-        guard connectionState.isConnected else { return }
-        currentAlerts.removeAll { alert in
-            if alert.canDismissAutomaticallyOnConnection {
-                alert.dismiss?()
-                return true
-            }
-            return false
-        }
-    }
-
-    private func startObservingConnectionState() {
-        $connectionState
-            .publisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.dismissAutoConnectionAlertsIfNeeded()
-            }
-            .store(in: &cancellables)
-    }
+    // MARK: - Alert bookkeeping
 
     private func alertIsNew(_ alert: SystemAlert) -> Bool {
-        !(currentAlerts + pendingAlerts).contains { $0.className == alert.className }
+        alertWindows[alert.className] == nil
+            && !sheetAlerts.contains { $0.className == alert.className }
     }
 
     private func updateOldAlert(with newAlert: SystemAlert) {
-        // Match against shown and deferred alerts so a re-push updates whichever is tracked.
-        let oldAlert = (currentAlerts + pendingAlerts).first { $0.className == newAlert.className }
-
-        // In particular this means the alert's completion handlers will be updated
-        oldAlert?.actions = newAlert.actions
-    }
-
-    private func dismissCompletion(_ alert: SystemAlert) {
-        currentAlerts.removeAll { currentAlert in
-            currentAlert.className == alert.className
+        // Both presentation paths resolve the tapped action from the alert object at click time, so replacing the
+        // actions swaps in the new completion handlers.
+        if let oldAlert = sheetAlerts.first(where: { $0.className == newAlert.className }) {
+            oldAlert.actions = newAlert.actions
+        } else if let controller = alertWindows[newAlert.className] {
+            controller.update(actions: newAlert.actions)
+            // A re-push means something tried to show this alert again; it may be buried
+            // behind other apps' windows — bring it back.
+            controller.bringToFront()
         }
     }
 }
@@ -176,8 +184,7 @@ private final class LegacyAlertPresentation {
 
 /// Converts a legacy `SystemAlert` into a native SwiftUI `.alert`
 ///
-/// zero-size host view on the key window so SwiftUI can present the alert
-/// window-modally; the underlying view is never visible
+/// Zero-size hosting view on the key window so SwiftUI can present the alert.
 private struct LegacyAlertView: View {
     let alert: SystemAlert
     @Bindable var presentation: LegacyAlertPresentation

@@ -21,8 +21,8 @@ import ProtonCoreFeatureFlags
 import ProtonCoreServices
 import SharedErgonomics
 
-/// A wrapper around FeatureFlagsRepository that tracks whether fetchFlags() has been called
-/// and asserts if isEnabled() is used before initialization.
+/// A wrapper around FeatureFlagsRepository that tracks whether fetchFlags() has been called and asserts if isEnabled()
+/// is used before initialization.
 public final class CheckedFeatureFlagsRepository {
     public static let shared = CheckedFeatureFlagsRepository()
 
@@ -35,8 +35,8 @@ public final class CheckedFeatureFlagsRepository {
         repository.setApiService(apiService)
     }
 
-    // We should move to Atomic<Bool> once our minimum deployment target is iOS 18 or later.
-    // OSAtomic* functions were deprecated in iOS 10.
+    // We should move to Atomic<Bool> once our minimum deployment target is iOS 18 or later. OSAtomic* functions were
+    // deprecated in iOS 10.
     public func fetchFlags() async {
         try? await withTimeout(of: Self.flagsFetchingTimeoutDuration) { try? await self.repository.fetchFlags() }
         OSAtomicCompareAndSwap32(0, 1, &_hasFetchedFlags)
@@ -45,6 +45,14 @@ public final class CheckedFeatureFlagsRepository {
     public var hasFetchedFlags: Bool {
         OSAtomicCompareAndSwap32(1, 1, &_hasFetchedFlags)
     }
+
+    #if DEBUG
+    /// Test support: marks flags as fetched without a live fetch, so store construction can read them safely. Flags
+    /// resolve to their defaults or to any overrides the test sets.
+    public func markFlagsFetchedForTesting() {
+        OSAtomicCompareAndSwap32(0, 1, &_hasFetchedFlags)
+    }
+    #endif
 
     /// Safe wrapper around FeatureFlagsRepository.shared.isEnabled() that asserts if called before fetchFlags()
     public func isEnabled(_ flag: any FeatureFlagTypeProtocol, reloadValue: Bool = false) -> Bool {

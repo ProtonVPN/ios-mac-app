@@ -122,6 +122,7 @@ struct SidebarFeature {
         case windowDidEndLiveResize(width: CGFloat, isFullscreen: Bool)
         case windowWillEnterFullScreen
         case windowWillExitFullScreen
+        case killSwitchModeChanged(KillSwitchMode)
         case planChanged(PlanChange)
         /// Refresh API announcements if polling is enabled (on start and each time the app becomes active)
         case refreshAnnouncementsIfNeeded
@@ -139,8 +140,8 @@ struct SidebarFeature {
 
         @CasePathable
         enum Alert: Equatable {
-            /// User chose "Enable Kill Switch" on the bad-LAN alert. We flip the kill switch
-            /// (which suppresses the bad-LAN intercept on the re-issued connect) and retry.
+            /// User chose "Enable Kill Switch" on the bad-LAN alert. We flip the kill switch (which suppresses the
+            /// bad-LAN intercept on the re-issued connect) and retry.
             case enableKillSwitchAndConnect(PendingConnect)
             /// User chose "Continue" on the bad-LAN alert. We retry connect bypassing intercepts.
             case connectAnywayDespiteBadLAN(PendingConnect)
@@ -191,7 +192,7 @@ struct SidebarFeature {
     @Dependency(\.profileManager) private var profileManager
     @Dependency(\.announcementRefresher) private var announcementRefresher
 
-    @Shared(.killSwitch) private var killSwitch: Bool
+    @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
     @SharedReader(.connectionProtocol) private var sharedConnectionProtocol: ConnectionProtocol
     @Shared(.plutoniumFeature) private var plutoniumFeature: PlutoniumFeatureToggle
 
@@ -234,12 +235,13 @@ struct SidebarFeature {
         case plutoniumSync
         case planChange
         case announcementRefresh
+        case killSwitchSetting
     }
 }
 
 extension SidebarFeature.PendingConnect {
-    /// Returns a copy with `kind` added to `resolvedIntercepts`, so the next intercept
-    /// re-check (via `resolveAndPerformConnect`) skips it.
+    /// Returns a copy with `kind` added to `resolvedIntercepts`, so the next intercept re-check (via
+    /// `resolveAndPerformConnect`) skips it.
     func resolving(_ kind: SidebarFeature.InterceptKind) -> Self {
         var copy = self
         copy.resolvedIntercepts.insert(kind)
@@ -307,14 +309,20 @@ private extension SidebarFeature {
                         }
                     }
                     .cancellable(id: CancelID.plutoniumSetting),
+                    .run { [killSwitchMode = $killSwitchMode] send in
+                        for await value in killSwitchMode.publisher.removeDuplicates().values.dropFirst() {
+                            await send(.killSwitchModeChanged(value))
+                        }
+                    }
+                    .cancellable(id: CancelID.killSwitchSetting),
                     .run { send in
                         for await planChange in planChangeClient.events() {
                             await send(.planChanged(planChange))
                         }
                     }
                     .cancellable(id: CancelID.planChange),
-                    // Refresh announcements now and whenever the app returns to the foreground.
-                    // Scoped to the logged-in sidebar (announcements are per-user).
+                    // Refresh announcements now and whenever the app returns to the foreground. Scoped to the logged-in
+                    // sidebar (announcements are per-user).
                     .send(.refreshAnnouncementsIfNeeded),
                     .publisher {
                         NotificationCenter.default
@@ -396,14 +404,22 @@ private extension SidebarFeature {
     var overlayReducer: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
+            case let .killSwitchModeChanged(mode):
+                // If we're in zero-peer mode and the new mode no longer wants persistent blocking (Off or Standard),
+                // tear the tunnel down so the user regains connectivity. Otherwise the user is stuck with no internet.
+                if !mode.isAdvanced, state.connectionState.is(\.killSwitchActive) {
+                    return .send(.connection(.input(.disconnect)))
+                }
+                // Otherwise: leave the live tunnel untouched. The mode is already persisted (@Shared, written by the
+                // settings picker) and takes effect on the next connection.
+                return .none
             case let .connectionStateChanged(connectionState):
                 switch connectionState {
                 case .resolving:
-                    // `.resolving` is a transient app-startup state. It is NOT a user-initiated
-                    // connect, so we don't show the connecting overlay — otherwise the user
-                    // sees a brief connecting flash at every launch before the resolved
-                    // (typically `.disconnected`) state arrives. `.connecting` (a real
-                    // user-initiated attempt) still shows the overlay.
+                    // `.resolving` is a transient app-startup state. It is not user-initiated, so we don't show the
+                    // connecting overlay. Otherwise the user sees a brief connecting flash at every launch before the
+                    // resolved (typically `.disconnected`) state arrives. `.connecting` (a real user-initiated attempt)
+                    // still shows the overlay.
                     return .none
                 case .connecting:
                     if state.overlayState != .suppressed {
@@ -412,17 +428,16 @@ private extension SidebarFeature {
                     }
                     return .cancel(id: CancelID.overlayDelay)
                 case .connected:
-                    // .connected signals the in-place settings update has finished;
-                    // clear the suppression so subsequent passive reconnects are visible.
+                    // .connected signals the in-place settings update has finished; clear the suppression so subsequent
+                    // passive reconnects are visible.
                     if state.overlayState == .suppressed {
                         state.overlayState = .hidden
                         return .cancel(id: CancelID.overlayDelay)
                     }
-                    // Only run the auto-dismiss transition when the connect was app-initiated
-                    // (i.e. we were previously showing the connecting overlay). For
-                    // OS-initiated tunnels — started from System Settings, on-demand, etc. —
-                    // there is no overlay to gracefully tear down, so skip the brief
-                    // "connected" flash.
+                    // Only run the auto-dismiss transition when the connect was app-initiated (i.e. we were previously
+                    // showing the connecting overlay). For OS-initiated tunnels (started from System Settings,
+                    // on-demand, etc.) there is no overlay to gracefully tear down, so skip the brief "connected"
+                    // flash.
                     guard state.overlayState.is(\.connecting) else {
                         state.overlayState = .hidden
                         return .cancel(id: CancelID.overlayDelay)
@@ -491,8 +506,6 @@ private extension SidebarFeature {
                 return resolveAndPerformConnect(&state, pending: pending)
             case let .connectionCommandReceived(.disconnect(trigger, completion)):
                 state.overlayState = .hidden
-                @Shared(.intentionallyDisconnected) var intentionallyDisconnected
-                $intentionallyDisconnected.withLock { $0 = true }
                 let alreadyDisconnected = state.connectionState.is(\.disconnected)
                 return .merge(
                     .cancel(id: CancelID.connectionConnectCommandEffect),
@@ -561,7 +574,9 @@ private extension SidebarFeature {
                     await completion?()
                 }
             case let .alert(.presented(.enableKillSwitchAndConnect(pending))):
-                $killSwitch.withLock { $0 = true }
+                // The bad-LAN intercept offers to enable Kill Switch to block leaks; Standard is the minimal protection
+                // that satisfies this
+                $killSwitchMode.withLock { $0 = .standard }
                 return resolveAndPerformConnect(&state, pending: pending.resolving(.badLAN))
             case let .alert(.presented(.connectAnywayDespiteBadLAN(pending))):
                 return resolveAndPerformConnect(&state, pending: pending.resolving(.badLAN))
@@ -605,10 +620,9 @@ private extension SidebarFeature {
             switch action {
             case let .connection(.delegate(.connectionFailed(error))):
                 SentryHelper.shared?.log(error: error)
-                // Pre-connection failures (network unreachable, etc.) emit only the delegate
-                // and never transition `connectionState` to `.disconnected`, so the overlay
-                // reducer's normal dismissal path doesn't fire. Hide it explicitly when the
-                // connection layer is back at rest.
+                // Pre-connection failures (network unreachable, etc.) emit only the delegate and never transition
+                // `connectionState` to `.disconnected`, so the overlay reducer's normal dismissal path doesn't fire.
+                // Hide it explicitly when the connection layer is back at rest.
                 if state.connectionState.is(\.disconnected) {
                     state.overlayState = .hidden
                 }
@@ -644,11 +658,10 @@ private extension SidebarFeature {
                     ]
                 )
                 SentryHelper.shared?.log(error: resolutionError)
-                // Intent-resolution failures (e.g. unavailable country, secure core) reject the
-                // connect attempt *before* the connection state transitions to `.connecting`,
-                // so the overlay reducer never sees a `.disconnected` change to dismiss on.
-                // Hide the overlay here so the user only sees the upsell, not a stuck
-                // "Connecting…" overlay behind it.
+                // Intent-resolution failures (e.g. unavailable country, secure core) reject the connect attempt
+                // *before* the connection state transitions to `.connecting`, so the overlay reducer never sees a
+                // `.disconnected` change to dismiss on. Hide the overlay here so the user only sees the upsell, not a
+                // stuck "Connecting..." overlay behind it.
                 state.overlayState = .hidden
                 let cancelOverlayDelay: Effect<Action> = .cancel(id: CancelID.overlayDelay)
                 switch resolutionError {
@@ -755,10 +768,9 @@ private extension SidebarFeature {
         }
     }
 
-    /// Single entry point for "user wants to connect with these parameters". Re-evaluates
-    /// `interceptAlert` against the current state every time it's called so that resolving
-    /// one intercept (e.g. disabling Plutonium) doesn't silently skip a later one (e.g. bad
-    /// LAN). Already-resolved intercepts are skipped via `pending.resolvedIntercepts`.
+    /// Single entry point for "user wants to connect with these parameters". Re-evaluates `interceptAlert` against the
+    /// current state every time it's called so that resolving one intercept (e.g. disabling Plutonium) doesn't silently
+    /// skip a later one (e.g. bad LAN). Already-resolved intercepts are skipped via `pending.resolvedIntercepts`.
     func resolveAndPerformConnect(_ state: inout State, pending: PendingConnect) -> Effect<Action> {
         if let alert = interceptAlert(for: pending) {
             state.alert = alert
@@ -767,8 +779,8 @@ private extension SidebarFeature {
         return performConnect(&state, pending: pending)
     }
 
-    /// Encapsulates the side effects of dispatching a `.connect` command after intercept checks
-    /// have been resolved (either none fired or the user confirmed via alert).
+    /// Encapsulates the side effects of dispatching a `.connect` command after intercept checks have been resolved
+    /// (either none fired or the user confirmed via alert).
     func performConnect(_ state: inout State, pending: PendingConnect) -> Effect<Action> {
         let intent = connectionPreparationIntent(
             spec: pending.spec,
@@ -785,18 +797,17 @@ private extension SidebarFeature {
         )
     }
 
-    /// Returns an alert if any pre-connect intercept (e.g. misconfigured LAN, Plutonium+IKE)
-    /// applies to the pending connect; otherwise `nil`. Intercepts are evaluated in priority
-    /// order — once one fires, later policies do not run for this call. Intercepts the user
-    /// has already resolved (tracked in `pending.resolvedIntercepts`) are skipped so a
-    /// follow-up "Continue anyway" / "Connect" doesn't loop on its own alert and so later
-    /// intercepts further down the chain still get a chance to fire.
+    /// Returns an alert if any pre-connect intercept (e.g. misconfigured LAN, Plutonium+IKE) applies to the pending
+    /// connect; otherwise `nil`. Intercepts are evaluated in priority order. Once one fires, later policies do not run
+    /// for this call. Intercepts the user has already resolved (tracked in `pending.resolvedIntercepts`) are skipped so
+    /// a follow-up "Continue anyway" / "Connect" doesn't loop on its own alert and so later intercepts further down the
+    /// chain still get a chance to fire.
     func interceptAlert(for pending: PendingConnect) -> AlertState<Action.Alert>? {
         let effectiveProtocol = pending.connectionProtocol ?? sharedConnectionProtocol
 
-        // Plutonium + IKE conflict (macOS only). Fires when the user has Split Tunneling
-        // enabled and tries to connect with IKEv2, which the Plutonium extension does not
-        // support. Confirming the alert disables Plutonium for this connection.
+        // Plutonium + IKE conflict (macOS only). Fires when the user has Split Tunneling enabled and tries to connect
+        // with IKEv2, which the Plutonium extension does not support. Confirming the alert disables Plutonium for this
+        // connection.
         if !pending.resolvedIntercepts.contains(.plutoniumIKE),
            case .enabled = plutoniumFeature,
            effectiveProtocol == .vpnProtocol(.ike) {
@@ -821,12 +832,12 @@ private extension SidebarFeature {
             }
         }
 
-        // Misconfigured LAN. Fires when an interface uses a non-RFC1918 subnet that the OS
-        // would otherwise route around the tunnel. Kill Switch fully mitigates the issue.
+        // Misconfigured LAN. Fires when an interface uses a non-RFC1918 subnet that the OS would otherwise route around
+        // the tunnel. Kill Switch fully mitigates the issue.
         @SharedReader(.featureFlags) var featureFlags
         if !pending.resolvedIntercepts.contains(.badLAN),
            featureFlags.unsafeLanWarnings,
-           !killSwitch,
+           !killSwitchMode.isProtected,
            let bad = networkInterfacePropertiesProvider.firstBadInterface() {
             return bad.interceptAlert(
                 enableKillSwitch: .enableKillSwitchAndConnect(pending),
@@ -838,24 +849,20 @@ private extension SidebarFeature {
     }
 
     func beginConnectingOverlay(_ state: inout State) {
-        @SharedReader(.intentionallyDisconnected) var intentionallyDisconnected
         var overlay = state.connectingOverlay ?? ConnectingOverlayFeature.State()
         overlay.beginConnecting(
             selectedProtocol: sharedConnectionProtocol,
-            killSwitchEnabled: killSwitch,
-            intentionallyDisconnected: intentionallyDisconnected
+            killSwitchEnabled: killSwitchMode.isProtected
         )
         state.overlayState = .connecting(overlay)
     }
 
     func transitionToAutoDismiss(_ state: inout State, connectionState: ConnectionState) {
-        @SharedReader(.intentionallyDisconnected) var intentionallyDisconnected
         var overlay = state.connectingOverlay ?? ConnectingOverlayFeature.State()
         overlay.sync(
             connectionState: connectionState,
             selectedProtocol: sharedConnectionProtocol,
-            killSwitchEnabled: killSwitch,
-            intentionallyDisconnected: intentionallyDisconnected
+            killSwitchEnabled: killSwitchMode.isProtected
         )
         state.overlayState = .autoDismiss(overlay)
     }
@@ -864,12 +871,10 @@ private extension SidebarFeature {
         guard var overlay = state.connectingOverlay else {
             return
         }
-        @SharedReader(.intentionallyDisconnected) var intentionallyDisconnected
         overlay.sync(
             connectionState: connectionState,
             selectedProtocol: sharedConnectionProtocol,
-            killSwitchEnabled: killSwitch,
-            intentionallyDisconnected: intentionallyDisconnected
+            killSwitchEnabled: killSwitchMode.isProtected
         )
         state.connectingOverlay = overlay
     }

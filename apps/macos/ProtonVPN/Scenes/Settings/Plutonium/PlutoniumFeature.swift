@@ -103,7 +103,7 @@ public struct PlutoniumFeature {
         }
     }
 
-    @Shared(.killSwitch) var killSwitch: Bool
+    @Shared(.killSwitchMode) var killSwitchMode: KillSwitchMode
     @SharedReader(.connectionState) var connectionState: ConnectionState
 
     public init() {
@@ -137,7 +137,7 @@ public struct PlutoniumFeature {
                 }
 
                 // Is kill switch is on? Ask to switch it off
-                if killSwitch {
+                if killSwitchMode.isProtected {
                     state.alert = Self.confirmAlert
                     return .none
                 }
@@ -159,8 +159,8 @@ public struct PlutoniumFeature {
                     // Extensions installed successfully, proceed with enabling plutonium
                     switch state.feature {
                     case .disabled:
-                        $killSwitch.withLock {
-                            $0 = false
+                        $killSwitchMode.withLock {
+                            $0 = .off
                         }
                         state.$feature.withLock {
                             $0.enable()
@@ -180,8 +180,8 @@ public struct PlutoniumFeature {
             case .toggleModeConfirmed:
                 switch state.feature {
                 case .disabled:
-                    $killSwitch.withLock {
-                        $0 = false
+                    $killSwitchMode.withLock {
+                        $0 = .off
                     }
                     state.$feature.withLock {
                         $0.enable()

@@ -77,16 +77,17 @@ package struct ConnectionIntentResolver: DependencyKey {
         case .vpnProtocol(.ike):
             .ike
         case let .vpnProtocol(.wireGuard(transport)):
-            try proTUNProtocolConfiguration(transport: transport)
+            .wireGuard(TunnelSettings(backend: .proTUN, transport: transport))
         case .smartProtocol:
-            try proTUNProtocolConfiguration(transport: nil)
+            .wireGuard(TunnelSettings(backend: .proTUN, transport: nil))
         }
 
         return ServerConnectionIntent(
             spec: intent.spec,
             server: server,
             protocolConfiguration: protocolConfiguration,
-            features: connectionFeatureProvider.connectionFeatures()
+            features: connectionFeatureProvider.connectionFeatures(),
+            tunnelFeatures: connectionFeatureProvider.requestedFeatures()
         )
     } authorize: { intent, userTier throws(ConnectionIntentResolutionError) in
         // Paid users can always change servers.
@@ -130,15 +131,4 @@ extension DependencyValues {
         get { self[ConnectionIntentResolver.self] }
         set { self[ConnectionIntentResolver.self] = newValue }
     }
-}
-
-/// ProTUN does not require port selection — server port overrides are returned immediately, falling back
-/// to default ports from the wireguard config when the server provides no overrides.
-private func proTUNProtocolConfiguration(
-    transport: WireGuardTransport?
-) throws(IntentResolutionError) -> ProtocolConfiguration {
-    @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
-    @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
-
-    return .wireGuard(TunnelSettings(backend: .proTUN, transport: transport, features: connectionFeatureProvider.requestedFeatures()))
 }

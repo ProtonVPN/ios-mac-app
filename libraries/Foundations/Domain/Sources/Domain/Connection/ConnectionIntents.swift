@@ -51,11 +51,20 @@ public struct ServerConnectionIntent: Equatable, Sendable, Codable {
     public let server: Server
     public let protocolConfiguration: ProtocolConfiguration
     public let features: AgentTunnelFeatures
+    /// Protocol-independent tunnel behavior (kill switch, LAN access), applied by the configurator for every protocol.
+    public let tunnelFeatures: LocalTunnelFeatures
 
-    public init(spec: ConnectionSpec, server: Server, protocolConfiguration: ProtocolConfiguration, features: AgentTunnelFeatures) {
+    public init(
+        spec: ConnectionSpec,
+        server: Server,
+        protocolConfiguration: ProtocolConfiguration,
+        features: AgentTunnelFeatures,
+        tunnelFeatures: LocalTunnelFeatures
+    ) {
         self.spec = spec
         self.server = server
         self.protocolConfiguration = protocolConfiguration
         self.features = features
+        self.tunnelFeatures = tunnelFeatures
     }
 }

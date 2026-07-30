@@ -24,13 +24,15 @@ public extension ServerConnectionIntent {
         withSpecLocation location: ConnectionSpec.Location = .any(.fastest),
         server: Server = .mock,
         protocolConfiguration: ProtocolConfiguration = .ike,
-        features: AgentTunnelFeatures = .mock
+        features: AgentTunnelFeatures = .mock,
+        tunnelFeatures: LocalTunnelFeatures = .mock
     ) -> ServerConnectionIntent {
         ServerConnectionIntent(
             spec: .init(location: location, features: []),
             server: server,
             protocolConfiguration: protocolConfiguration,
-            features: features
+            features: features,
+            tunnelFeatures: tunnelFeatures
         )
     }
 }

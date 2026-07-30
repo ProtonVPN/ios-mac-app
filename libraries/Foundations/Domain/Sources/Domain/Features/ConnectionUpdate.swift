@@ -95,10 +95,6 @@ public extension ConnectionUpdate {
         netShield != nil || vpnAccelerator != nil || moderateNAT != nil || portForwarding != nil
     }
 
-    var requiresReassertion: Bool {
-        location != nil || connectionProtocol != nil
-    }
-
     /// Whether this update requires network settings to be reapplied
     var requiresNetworkSettingsRefresh: Bool {
         if customDNS != nil {

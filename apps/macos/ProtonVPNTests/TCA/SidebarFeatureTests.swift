@@ -55,16 +55,16 @@ struct SidebarFeatureTests {
                     spec: spec,
                     connectionProtocol: .vpnProtocol(.ike),
                     acceptableProtocols: .ikev2
-                )))
+                )), tunnelActive: false)
             }
         }
-        await store.receive(\.connection.delegate.stateChanged.connecting.unresolved)
+        await store.receive(\.connection.delegate.stateChanged.connecting)
         await store.receive(\.connectionStateChanged.connecting) {
             $0.overlayState = .connecting(synced: .connecting(.unresolved(ConnectionPreparationIntent(
                 spec: spec,
                 connectionProtocol: .vpnProtocol(.ike),
                 acceptableProtocols: .ikev2
-            ))))
+            )), tunnelActive: false))
         }
         await store.receive(\.syncNATPortMappingState)
         await store.receive(\.syncPlutoniumState)
@@ -115,7 +115,7 @@ struct SidebarFeatureTests {
 //            $0.connection.core.shouldDisconnectWhenAllowed = false
 //        }
         await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .quick))) {
-            $0.overlayState = .connecting(spec: spec, intentionallyDisconnected: true)
+            $0.overlayState = .connecting(spec: spec)
         }
 
         await store.receive(\.connection.input.connect) {
@@ -130,7 +130,7 @@ struct SidebarFeatureTests {
                     spec: spec,
                     connectionProtocol: .vpnProtocol(.ike),
                     acceptableProtocols: .ikev2
-                )))
+                )), tunnelActive: false)
             }
         }
     }
@@ -166,16 +166,16 @@ struct SidebarFeatureTests {
                     spec: spec,
                     connectionProtocol: .vpnProtocol(.ike),
                     acceptableProtocols: .ikev2
-                )))
+                )), tunnelActive: false)
             }
         }
-        await store.receive(\.connection.delegate.stateChanged.connecting.unresolved)
+        await store.receive(\.connection.delegate.stateChanged.connecting)
         await store.receive(\.connectionStateChanged.connecting) {
             $0.overlayState = .connecting(synced: .connecting(.unresolved(ConnectionPreparationIntent(
                 spec: spec,
                 connectionProtocol: .vpnProtocol(.ike),
                 acceptableProtocols: .ikev2
-            ))))
+            )), tunnelActive: false))
         }
         await store.receive(\.syncNATPortMappingState)
         await store.receive(\.syncPlutoniumState)
@@ -202,16 +202,16 @@ struct SidebarFeatureTests {
                     spec: p2pSpec,
                     connectionProtocol: .vpnProtocol(.ike),
                     acceptableProtocols: .ikev2
-                )))
+                )), tunnelActive: false)
             }
         }
-        await store.receive(\.connection.delegate.stateChanged.connecting.unresolved)
+        await store.receive(\.connection.delegate.stateChanged.connecting)
         await store.receive(\.connectionStateChanged.connecting) {
             $0.overlayState = .connecting(synced: .connecting(.unresolved(ConnectionPreparationIntent(
                 spec: p2pSpec,
                 connectionProtocol: .vpnProtocol(.ike),
                 acceptableProtocols: .ikev2
-            ))))
+            )), tunnelActive: false))
         }
         await store.receive(\.syncNATPortMappingState)
         await store.receive(\.syncPlutoniumState)
@@ -531,7 +531,7 @@ struct SidebarFeatureTests {
                     spec: spec,
                     connectionProtocol: .vpnProtocol(.ike),
                     acceptableProtocols: .ikev2
-                )))
+                )), tunnelActive: false)
             }
         }
         await store.receive(\.connection.input.connect) {
@@ -546,16 +546,16 @@ struct SidebarFeatureTests {
                     spec: spec,
                     connectionProtocol: .vpnProtocol(.ike),
                     acceptableProtocols: .ikev2
-                )))
+                )), tunnelActive: false)
             }
         }
-        await store.receive(\.connection.delegate.stateChanged.connecting.unresolved)
+        await store.receive(\.connection.delegate.stateChanged.connecting)
         await store.receive(\.connectionStateChanged.connecting) {
             $0.overlayState = .connecting(synced: .connecting(.unresolved(ConnectionPreparationIntent(
                 spec: spec,
                 connectionProtocol: .vpnProtocol(.ike),
                 acceptableProtocols: .ikev2
-            ))))
+            )), tunnelActive: false))
         }
         await store.receive(\.syncNATPortMappingState)
         await store.receive(\.syncPlutoniumState)
@@ -659,12 +659,13 @@ struct SidebarFeatureTests {
         serverChangeAuthorizer: ServerChangeAuthorizer = .availableValue
     ) -> TestStoreOf<SidebarFeature> {
         @Shared(.connectionState) var connectionState
-        @Shared(.intentionallyDisconnected) var intentionallyDisconnected
         @Shared(.connectionProtocol) var connectionProtocol
 
         $connectionState.withLock { $0 = .resolving }
-        $intentionallyDisconnected.withLock { $0 = false }
         $connectionProtocol.withLock { $0 = .vpnProtocol(.ike) }
+
+        let session = VPNSessionMock(status: .disconnected)
+        session.messageHandler = MessageHandler.full
 
         return TestStore(initialState: SidebarFeature.State()) {
             SidebarFeature(
@@ -674,7 +675,14 @@ struct SidebarFeatureTests {
             if let clock {
                 $0.continuousClock = clock
             }
-            $0.tunnelManager = MockTunnelManager(connection: .init(status: .disconnected))
+            $0.connectionFeatureProvider = .init(
+                connectionFeatures: {
+                    .init(netshield: .off, vpnAccelerator: false, natType: .strictNAT, portForwarding: false)
+                },
+                requestedFeatures: { .init(killSwitchMode: .off, excludeLocalNetworks: false) },
+                connectionProtocol: { .smartProtocol }
+            )
+            $0.tunnelManager = MockTunnelManager(connection: session)
             $0.defaultAppStorage = defaults
             $0.connectionCommandClient = connectionCommandClient
             $0.pendingDisconnectCompletions = pendingDisconnectCompletions
@@ -691,14 +699,12 @@ private extension SidebarFeature.State.OverlayState {
         spec _: ConnectionSpec,
         selectedProtocol: ConnectionProtocol = .vpnProtocol(.ike),
         killSwitchEnabled: Bool = false,
-        intentionallyDisconnected: Bool = false,
         frozenState: ConnectionState? = nil
     ) -> Self {
         var overlay = ConnectingOverlayFeature.State()
         overlay.connectionState = .resolving
         overlay.selectedProtocol = selectedProtocol
         overlay.killSwitchEnabled = killSwitchEnabled
-        overlay.intentionallyDisconnected = intentionallyDisconnected
         overlay.frozenState = frozenState
         return .connecting(overlay)
     }
@@ -707,30 +713,26 @@ private extension SidebarFeature.State.OverlayState {
     static func connecting(
         synced state: ConnectionState,
         selectedProtocol: ConnectionProtocol = .vpnProtocol(.ike),
-        killSwitchEnabled: Bool = false,
-        intentionallyDisconnected: Bool = false
+        killSwitchEnabled: Bool = false
     ) -> Self {
         var overlay = ConnectingOverlayFeature.State()
         overlay.connectionState = state
         overlay.frozenState = state.is(\.connected) ? state : nil
         overlay.selectedProtocol = selectedProtocol
         overlay.killSwitchEnabled = killSwitchEnabled
-        overlay.intentionallyDisconnected = intentionallyDisconnected
         return .connecting(overlay)
     }
 
     static func autoDismiss(
         for state: ConnectionState,
         selectedProtocol: ConnectionProtocol = .vpnProtocol(.ike),
-        killSwitchEnabled: Bool = false,
-        intentionallyDisconnected: Bool = false
+        killSwitchEnabled: Bool = false
     ) -> Self {
         var overlay = ConnectingOverlayFeature.State()
         overlay.connectionState = state
         overlay.frozenState = state.is(\.connected) ? state : nil
         overlay.selectedProtocol = selectedProtocol
         overlay.killSwitchEnabled = killSwitchEnabled
-        overlay.intentionallyDisconnected = intentionallyDisconnected
         return .autoDismiss(overlay)
     }
 }
@@ -738,7 +740,10 @@ private extension SidebarFeature.State.OverlayState {
 private extension ConnectionState {
     /// Build a `.connecting(.unresolved)` state from a spec
     static func testConnecting(_ spec: ConnectionSpec) -> ConnectionState {
-        .connecting(.unresolved(ConnectionPreparationIntent(spec: spec, acceptableProtocols: .ikev2)))
+        .connecting(
+            .unresolved(ConnectionPreparationIntent(spec: spec, acceptableProtocols: .ikev2)),
+            tunnelActive: false
+        )
     }
 
     /// Build a `.connected` state from a spec and a `VPNConnectionActual`

@@ -110,7 +110,12 @@ extension ExtensionIPCServer: DependencyKey {
             },
             attachIOSurfaceBackedRegion: { surface in
                 #if os(macOS)
-                    current.withLock { $0 = .attached(to: surface) }
+                    let store = TunnelDataStore<WriterRole, IOSurfaceBackedRegion>.attached(to: surface)
+                    current.withLock { $0 = store }
+                    // Announce the surface this process writes into. The notify state persists until it is set again,
+                    // so every later channel update carries it without extra work, and a reader that mapped a previous
+                    // process's surface can tell it is stale.
+                    IPCNotifications.postRawState(.tunnelData, state: UInt64(store.surfaceID))
                 #else
                     _ = surface
                     assertionFailure("This should be used only on macOS.")

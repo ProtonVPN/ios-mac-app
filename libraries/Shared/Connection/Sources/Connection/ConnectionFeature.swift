@@ -131,10 +131,10 @@ public struct ConnectionFeature: Sendable {
                 // reports it back as `ConnectionState.tunnelKillSwitch`.
                 state.isBlockingIntended = false
 
-                // Transition to connecting to give the user immediate feedback while
-                // we perform the somewhat expensive database operations to resolve the server
+                // Transition to connecting to give the user immediate feedback while we perform the somewhat expensive
+                // database operations to resolve the server.
                 state.$connectionState.withLock {
-                    $0 = .connecting(.unresolved(intent))
+                    $0 = .connecting(.unresolved(intent), tunnelActive: $0.tunnelActive)
                 }
                 return .send(.prepare(intent))
 
@@ -268,6 +268,7 @@ public struct ConnectionFeature: Sendable {
                 )
                 if state.shouldRegisterServerChangeOnConnection {
                     serverChangeAuthorizer.registerServerChange(connectedAt: connectionData.connectionDate)
+                    state.shouldRegisterServerChangeOnConnection = false
                 }
                 state.$connectionState.withLock {
                     $0 = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
@@ -382,7 +383,9 @@ public enum ConnectionState: Equatable, Sendable, Codable {
     case resolving
     case disconnected
     case disconnecting(TunnelProtocol, ConnectionSpec)
-    case connecting(Intent)
+    /// A connection attempt is underway. `tunnelActive` reports whether an interface already holds the user's traffic,
+    /// which stays during peer handover.
+    case connecting(Intent, tunnelActive: Bool)
     /// The connected state is split across ``TunnelConfiguration`` (which is unlikely to change without user interaction),
     /// and `ResolvedDynamicConnectionData` which is the more transient/dynamic data.
     case connected(TunnelConfiguration, ResolvedDynamicConnectionData)
@@ -562,13 +565,13 @@ extension ConnectionState {
         case .unknown:
             self = .resolving
 
-        case let .connectingToLocalAgent(tunnelConfig):
+        case let .connectingToLocalAgent(tunnelConfig, tunnelActive):
             #if os(macOS)
                 assert(tunnelConfig.tunnelProtocol != .ike, "IKE should have no local agent")
             #endif
             fallthrough
 
-        case let .connecting(tunnelConfig):
+        case let .connecting(tunnelConfig, tunnelActive):
             @Dependency(\.serverIdentifier) var identifier
             guard let peerID = tunnelConfig.peerIDs.first, let server = identifier.fullServerInfo(peerID) else {
                 self = .resolving
@@ -579,7 +582,7 @@ extension ConnectionState {
                 tunnelProtocol: tunnelConfig.tunnelProtocol,
                 resolvedServer: server
             )
-            self = .connecting(.resolved(intent))
+            self = .connecting(.resolved(intent), tunnelActive: tunnelActive)
 
         case .reasserting:
             // TODO: ProTUN: Expand connecting state with information from provider config/mmap

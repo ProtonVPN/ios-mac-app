@@ -48,7 +48,7 @@ enum QuickSettingType: CaseIterable, Hashable {
         case .netShieldDisplay:
             Localizable.quickSettingsNetShieldDescription
         case .killSwitchDisplay:
-            Localizable.quickSettingsKillSwitchDescription
+            Localizable.killSwitchHeaderDescription
         case .portForwardingDisplay:
             Localizable.quickSettingsPortForwardingDescription
         }
@@ -61,7 +61,8 @@ enum QuickSettingType: CaseIterable, Hashable {
         case .netShieldDisplay:
             Localizable.quickSettingsNetShieldNote
         case .killSwitchDisplay:
-            Localizable.quickSettingsKillSwitchNote
+            // Kill Switch renders status message(s) + LAN hint via its own status view
+            nil
         case .portForwardingDisplay:
             nil
         }

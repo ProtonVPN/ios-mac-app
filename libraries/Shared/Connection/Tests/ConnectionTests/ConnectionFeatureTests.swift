@@ -187,10 +187,59 @@
                 #expect(store.state.connectionState.is(\.connected))
             }
 
-            /// A disconnect request while zero-peer blocking is active (e.g. sent by the widget) must
-            /// not tear down the blackhole as long as the mode stays Advanced. Only leaving Advanced
-            /// releases it, via this same action sent after the mode change. The store is exhaustive,
-            /// so the test fails if the disconnect starts mutating state or emitting effects.
+            @Test
+            @MainActor
+            func connectingToTheCurrentServerRoundTripsThroughTheTunnel() async {
+                let date = Date()
+                let intent = ServerConnectionIntent.mock(
+                    protocolConfiguration: .wireGuard(.init(backend: .proTUN, transport: .udp))
+                )
+                let configuration = TunnelConfiguration(
+                    connectionSpec: intent.spec,
+                    tunnelProtocol: .wireGuard,
+                    peerIDs: [intent.server.endpoint.id],
+                    killSwitch: false
+                )
+                let connectionData = DynamicConnectionData(
+                    currentPeerId: intent.server.endpoint.id,
+                    connectionDate: date,
+                    protocolConnectionData: .proTUN(.init(transport: .udp))
+                )
+                let session = VPNSessionMock(status: .connected)
+                session.messageHandler = MessageHandler.full
+                @Shared(.connectionState) var connectionState
+                $connectionState.withLock {
+                    $0 = .connecting(
+                        .unresolved(.init(spec: intent.spec, acceptableProtocols: .all)),
+                        tunnelActive: true
+                    )
+                }
+
+                let store = TestStore(initialState: ConnectionFeature.State(
+                    shouldRegisterServerChangeOnConnection: false,
+                    tunnel: .connected(configuration, connectionData)
+                )) {
+                    ConnectionFeature()
+                } withDependencies: {
+                    $0.serverIdentifier = .init(fullServerInfo: { _ in intent.server })
+                    $0.tunnelProviderConfigurator = .init(changes: { _ in .init() }, configure: { _, _ in })
+                    $0.tunnelManager = MockTunnelManager(connection: session)
+                }
+
+                await store.send(.finishedPreparing(.success(intent))) {
+                    $0.$serverConnectionIntent.withLock { $0 = intent }
+                }
+                await store.receive(\.tunnel.connect)
+                await store.receive(\.tunnel.requestConfigChange)
+                await store.finish()
+
+                #expect(store.state.connectionState.is(\.connecting))
+            }
+
+            /// A disconnect request while zero-peer blocking is active (e.g. sent by the widget) must not tear down the
+            /// blackhole as long as the mode stays Advanced. Only leaving Advanced releases it, via this same action
+            /// sent after the mode change. The store is exhaustive, so the test fails if the disconnect starts mutating
+            /// state or emitting effects.
             @Test
             @MainActor
             func disconnectWhileBlockingUnderAdvancedKeepsTheBlackhole() async {

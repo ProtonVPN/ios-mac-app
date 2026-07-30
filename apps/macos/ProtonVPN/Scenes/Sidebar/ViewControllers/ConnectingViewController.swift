@@ -282,7 +282,6 @@ private enum ConnectingOverlayPhaseFormatter {
     static func headline(for phase: ConnectingOverlayFeature.State.HeadlinePhase) -> NSAttributedString {
         let string: String = switch phase {
         case .connected: Localizable.successfullyConnected
-        case .unprotected: Localizable.youAreNotProtected
         case .initializing: Localizable.initializingConnection
         }
         return string.styled(font: .themeFont(.small))
@@ -298,8 +297,6 @@ private enum ConnectingOverlayPhaseFormatter {
         case let .connecting(serverName):
             let bold = styled(serverName: serverName)
             return body(string: Localizable.connectingTo(bold), bold: bold)
-        case .reconnecting:
-            return body(string: Localizable.reconnecting, bold: "")
         case .preparing:
             return body(string: Localizable.preparingConnection, bold: "")
         }

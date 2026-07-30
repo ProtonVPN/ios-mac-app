@@ -60,6 +60,12 @@ extension FileBackedRegion: RegionBacking {
     public struct IOSurfaceBackedRegion: ~Copyable, Sendable {
         @_spi(Internals) public let ioSurface: IOSurface
 
+        /// The kernel's identifier for this surface, and with it the identity of the process that allocated it. The
+        /// writer announces this value so readers can tell whether the region they mapped is the one being written to.
+        public var id: IOSurfaceID {
+            IOSurfaceGetID(ioSurface)
+        }
+
         public init(_ surface: IOSurfaceRef) {
             self.ioSurface = surface
         }

@@ -41,7 +41,6 @@ public protocol SystemAlert: AnyObject {
     var dismiss: (() -> Void)? { get set }
     var activatingApp: Bool { get }
     var displayOnActiveScreen: Bool { get }
-    var canDismissAutomaticallyOnConnection: Bool { get }
 }
 
 public extension SystemAlert {
@@ -54,10 +53,6 @@ public extension SystemAlert {
     }
 
     var displayOnActiveScreen: Bool {
-        false
-    }
-
-    var canDismissAutomaticallyOnConnection: Bool {
         false
     }
 }

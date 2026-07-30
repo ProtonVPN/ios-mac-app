@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
+import Ergonomics
 import Foundation
 
 /// This app delegate is being used by main.c in the app if it's added to the target
@@ -24,5 +25,10 @@ import Foundation
 class TestAppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_: Notification) {
         debugPrint("Running Test App Delegate instead of the main one")
+
+        // Mark feature flags as fetched before any test constructs a store: several feature states
+        // read flags during construction, and the checked repository traps on reads before a fetch.
+        // Flags resolve to their defaults or to any overrides a test sets.
+        CheckedFeatureFlagsRepository.shared.markFlagsFetchedForTesting()
     }
 }

@@ -82,6 +82,12 @@ extension MacAlertService {
         case is QuitWarningAlert:
             showDefaultSystemAlert(alert)
 
+        case is DisconnectWithAdvancedKillSwitchAlert:
+            showDefaultSystemAlert(alert)
+
+        case is WarningAlert:
+            showDefaultSystemAlert(alert)
+
         case is UnreachableNetworkAlert:
             showDefaultSystemAlert(alert)
 

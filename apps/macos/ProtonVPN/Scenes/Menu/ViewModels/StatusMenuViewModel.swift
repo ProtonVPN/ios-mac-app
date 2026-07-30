@@ -49,8 +49,15 @@ final class StatusMenuViewModel {
     @Dependency(\.credentialsProvider) private var credentials
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
+    @Dependency(\.coreAlertService) private var coreAlertService
     @Dependency(\.linkOpener) var linkOpener
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
+    @SharedReader(.killSwitchMode) private var killSwitchMode: KillSwitchMode
+
+    private var advancedKillSwitchActive: Bool {
+        killSwitchMode.isAdvanced && connectionState.tunnelKillSwitch
+    }
+
     @SharedReader(.connectionState) private var connectionState: ConnectionState
     @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
 
@@ -64,8 +71,6 @@ final class StatusMenuViewModel {
 
     var contentChanged: (() -> Void)?
     var changeServerStateChanged: ((ServerChangeViewState) -> Void)?
-    var disconnectWarning: ((WarningPopupViewModel) -> Void)?
-    var unsecureWiFiWarning: ((WarningPopupViewModel) -> Void)?
 
     var serverType: ServerType = .standard
     var standardCountries: [ServerGroupInfo]?
@@ -142,11 +147,6 @@ final class StatusMenuViewModel {
         }
     }
 
-    private var isReconnecting: Bool {
-        @SharedReader(.intentionallyDisconnected) var intentionallyDisconnected
-        return isConnecting && !intentionallyDisconnected
-    }
-
     var connectingText: NSAttributedString {
         NSAttributedString()
     }
@@ -163,7 +163,19 @@ final class StatusMenuViewModel {
             connectionCommandClient.send(.disconnect(.tray))
             return
         }
-        connectionCommandClient.send(.disconnect(.tray))
+        disconnectFromTray()
+    }
+
+    /// Advanced kill switch keeps blocking after an intentional disconnect, so confirm first when connected. Other
+    /// states disconnect immediately
+    private func disconnectFromTray() {
+        guard advancedKillSwitchActive, connectionState.isConnected else {
+            connectionCommandClient.send(.disconnect(.tray))
+            return
+        }
+        coreAlertService.push(alert: DisconnectWithAdvancedKillSwitchAlert(confirmHandler: { [weak self] in
+            self?.connectionCommandClient.send(.disconnect(.tray))
+        }))
     }
 
     // MARK: - Login section
@@ -211,7 +223,7 @@ final class StatusMenuViewModel {
     func quickConnectAction() {
         if isQuickConnectInDisconnectMode {
             log.debug("Disconnect requested by pressing Quick connect", category: .connectionDisconnect, event: .trigger)
-            connectionCommandClient.send(.disconnect(.tray))
+            disconnectFromTray()
         } else {
             log.debug("Connect requested by pressing Quick connect", category: .connectionConnect, event: .trigger)
             connectionCommandClient.quickConnect(trigger: .tray)
@@ -430,21 +442,23 @@ final class StatusMenuViewModel {
             turningOn: turningOn,
             fallbackCountryName: fallbackCountryName(turningOn: turningOn)
         )
-        let viewModel = WarningPopupViewModel(
+        // Revert the optimistic switch flip until the user confirms; applying re-syncs it from `secureCoreToggle` on
+        // confirmation.
+        viewController?.secureCoreSwitch.setState(turningOn ? .off : .on)
+        coreAlertService.push(alert: WarningAlert(
             title: Localizable.vpnConnectionActive,
-            description: description,
+            message: description,
             onConfirm: { [weak self] in
                 self?.applySecureCoreToggle(turningOn: turningOn)
             }
-        )
-        disconnectWarning?(viewModel)
+        ))
     }
 
-    /// Toggles the Secure Core setting. If we are connected, also dispatches a reconnect
-    /// using ``SecureCoreConnectionSpecResolver.toggleReconnectSpec`` to create the connection
-    /// spec, which will pick a Secure Core server with an exit in the same region if possible
-    /// when the new setting is `On`, or a random standard server in the same region if possible when
-    /// the new setting is `Off`. If no server can be found, the fallback behavior is to pick fastest server.
+    /// Toggles the Secure Core setting. If we are connected, also dispatches a reconnect using
+    /// ``SecureCoreConnectionSpecResolver.toggleReconnectSpec`` to create the connection spec, which will pick a Secure
+    /// Core server with an exit in the same region if possible when the new setting is `On`, or a random standard
+    /// server in the same region if possible when the new setting is `Off`. If no server can be found, the fallback
+    /// behavior is to pick fastest server.
     private func applySecureCoreToggle(turningOn: Bool) {
         let targetServerType: ServerType = turningOn ? .secureCore : .standard
         let wasConnected = isConnected
@@ -487,19 +501,15 @@ final class StatusMenuViewModel {
     // MARK: - Present unsecure connection
 
     private func presentUnsecureWiFiWarning() {
-        let confirmationClosure: () -> Void = {
-            log.info("User accepted unsecure WiFi option", category: .net)
-        }
         guard let wifiName = wifiSecurityMonitor.wifiName else { return }
-        let viewModel = WarningPopupViewModel(
+        coreAlertService.push(alert: WarningAlert(
             title: Localizable.unsecureWifiTitle,
-            description: "\(Localizable.unsecureWifi): \(wifiName). \(Localizable.unsecureWifiLearnMore)",
-            linkDescription: Localizable.unsecureWifiLearnMore,
-            url: VPNLink.unsecureWiFi.urlString,
-            onConfirm: confirmationClosure
-        )
-
-        unsecureWiFiWarning?(viewModel)
+            message: "\(Localizable.unsecureWifi): \(wifiName). \(Localizable.unsecureWifiLearnMore)",
+            confirmTitle: Localizable.ok,
+            onConfirm: { log.info("User accepted unsecure WiFi option", category: .net) },
+            showCancel: false,
+            learnMore: (Localizable.unsecureWifiLearnMore, VPNLink.unsecureWiFi.urlString)
+        ))
     }
 
     private func updateCountryList() {
@@ -631,8 +641,7 @@ final class StatusMenuViewModel {
             return nil
         }
 
-        @SharedReader(.hasConnected) var hasConnected
-        let description = hasConnected ? Localizable.enabled.lowercased() : Localizable.disabled.lowercased()
+        let description = killSwitchMode.isProtected ? Localizable.enabled.lowercased() : Localizable.disabled.lowercased()
         return Localizable.killSwitch + " " + description
     }
 

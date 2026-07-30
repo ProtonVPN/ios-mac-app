@@ -69,7 +69,8 @@ private let _testIntent = ServerConnectionIntent(
         vpnAccelerator: true,
         natType: .moderateNAT,
         portForwarding: nil
-    )
+    ),
+    tunnelFeatures: .mock
 )
 
 private extension ConnectionState {
@@ -81,7 +82,10 @@ private extension ConnectionState {
     }
 
     static var fakeConnecting: ConnectionState {
-        .connecting(.unresolved(ConnectionPreparationIntent(spec: .defaultFastest, acceptableProtocols: .ikev2)))
+        .connecting(
+            .unresolved(ConnectionPreparationIntent(spec: .defaultFastest, acceptableProtocols: .ikev2)),
+            tunnelActive: false
+        )
     }
 }
 

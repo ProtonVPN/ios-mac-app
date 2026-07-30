@@ -95,6 +95,9 @@ struct CountriesSectionRootView: View {
                             if type == .netShieldDisplay, quickSettingsStore.netShieldBadgeVisible {
                                 netShieldBadge
                                     .allowsHitTesting(false)
+                            } else if type == .killSwitchDisplay, quickSettingsStore.killSwitch.isBlocking {
+                                killSwitchWarningBadge
+                                    .allowsHitTesting(false)
                             }
                         }
                         .popover(
@@ -112,6 +115,17 @@ struct CountriesSectionRootView: View {
         .padding(.top, .themeSpacing8)
         .accessibilityLabel(Localizable.quickSettingsTitle)
         .alert($quickSettingsStore.scope(state: \.alert, action: \.alert))
+    }
+
+    /// Yellow warning-triangle overlay shown on the Kill Switch toolbar icon while Advanced KS is active, so the user
+    /// can identify the cause of "no internet"
+    private var killSwitchWarningBadge: some View {
+        Theme.Asset.Icons.exclamationTriangleFilled.swiftUIImage
+            .resizable()
+            .renderingMode(.template)
+            .frame(.square(Dimensions.killswitchWarningIcon))
+            .foregroundStyle(Color(.icon, .warning))
+            .padding([.top, .trailing], .themeSpacing6)
     }
 
     private var netShieldBadge: some View {
@@ -228,6 +242,7 @@ private extension View {
 private extension CountriesSectionRootView {
     enum Dimensions {
         static let iconSize: CGFloat = 16
+        static let killswitchWarningIcon: CGFloat = 10
 
         static let quickSettingsRowHeight: CGFloat = 54
         static let quickSettingsBadgeMinWidth: CGFloat = 20

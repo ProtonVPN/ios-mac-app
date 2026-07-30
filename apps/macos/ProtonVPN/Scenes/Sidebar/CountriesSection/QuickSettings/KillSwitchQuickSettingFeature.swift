@@ -17,18 +17,34 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
+import Domain
 import SwiftUI
 import Theme
+import VPNAppCore
 
 @Reducer
 struct KillSwitchQuickSettingFeature {
     @ObservableState
     struct State: Equatable {
         var isSelected: Bool
-        @SharedReader(.killSwitch) var isEnabled: Bool
+        @SharedReader(.killSwitchMode) var killSwitchMode: KillSwitchMode
+        @SharedReader(.connectionState) var connectionState: ConnectionState
 
         var icon: Image {
-            isEnabled ? Theme.Asset.Icons.switchOn.swiftUIImage : Theme.Asset.Icons.switchOff.swiftUIImage
+            switch killSwitchMode {
+            case .off:
+                Theme.Asset.Icons.switchOff.swiftUIImage
+            case .standard:
+                Theme.Asset.Icons.switchOn.swiftUIImage
+            case .advanced:
+                Theme.Asset.Icons.switchOnLock.swiftUIImage
+            }
+        }
+
+        /// Advanced KS is actively blocking (zero-peer)
+        var isBlocking: Bool {
+            killSwitchMode.isAdvanced && connectionState.is(\.killSwitchActive)
         }
 
         let accessibilityIdentifier = "KillSwitchButton"

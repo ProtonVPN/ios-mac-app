@@ -65,7 +65,7 @@ public struct ServerItemFeature {
         }
 
         var isConnecting: Bool {
-            guard case let .connecting(.resolved(intent)) = connectionState,
+            guard case let .connecting(.resolved(intent), _) = connectionState,
                   intent.resolvedServer.logical.id == serverInfo.logical.id else {
                 return false
             }

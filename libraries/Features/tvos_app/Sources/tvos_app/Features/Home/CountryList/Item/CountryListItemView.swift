@@ -90,9 +90,9 @@ struct CountryListItemView: View {
         switch connectionState {
         case let .connected(tunnelConfig, _):
             tunnelConfig.connectionSpec.countryCode
-        case let .connecting(.unresolved(intent)):
+        case let .connecting(.unresolved(intent), _):
             intent.spec.countryCode
-        case let .connecting(.resolved(intent)):
+        case let .connecting(.resolved(intent), _):
             intent.resolvedServer.logical.exitCountryCode
         default:
             nil

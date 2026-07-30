@@ -62,10 +62,10 @@ extension SettingsClient: @retroactive DependencyKey {
                 log.warning("Protocol change availability requested before connection layer state was resolved")
                 return .immediate
 
-            case .connecting(.unresolved):
+            case .connecting(.unresolved, _):
                 return .immediate
 
-            case let .connecting(.resolved(intent)):
+            case let .connecting(.resolved(intent), _):
                 @SharedReader(.smartProtocolConfig) var smartProtocolConfig
                 let supportedProtocols = smartProtocolConfig.supportedProtocols
 

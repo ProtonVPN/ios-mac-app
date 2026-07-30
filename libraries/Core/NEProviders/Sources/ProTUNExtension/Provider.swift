@@ -104,7 +104,13 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
         }
 
         #if os(macOS)
-            exit(EXIT_SUCCESS)
+            // The system does not reliably reap provider processes, so exit once the stop is acknowledged. Returning
+            // from this method is what sends the acknowledgment, so the exit must come after it. Exiting directly kills
+            // the reply, and nesessionmanager then waits out a timer before declaring the extension failed. That timer
+            // can otherwise make every disconnect linger.
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+                exit(EXIT_SUCCESS)
+            }
         #endif
     }
 

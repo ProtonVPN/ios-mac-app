@@ -100,14 +100,21 @@ actor ConfigurationStore {
 
         let networkSettingsUpdate: NetworkSettingsUpdate?
         do {
+            let livePeers = try ProTUNConfigurationCoder.decode(from: configuration).constrainedPeers
+
             try configuration.apply(update: update)
-            (peersToApply, agentSettingsToApply, networkSettingsUpdate) = try configuration.liveUpdates(for: update)
+            (
+                peersToApply,
+                agentSettingsToApply,
+                networkSettingsUpdate
+            ) = try configuration.liveUpdates(for: update, livePeers: livePeers)
         } catch {
             Logger.adapter.error("Encountered encoding error when applying config update: \(error, privacy: .public)")
             throw ConfigurationUpdateError.badEncoding
         }
 
-        try await adapter.reassertingIfRequired(for: update) { () async throws(ConfigurationUpdateError) in
+        // Only an actual peer change re-establishes the WG session, so only that reasserts.
+        try await adapter.reasserting(if: peersToApply != nil) { () async throws(ConfigurationUpdateError) in
             try await performReconfiguration(
                 peersToApply,
                 agentSettingsToApply,
@@ -157,7 +164,7 @@ extension NETunnelProviderProtocol {
         networkSettingsUpdate: NetworkSettingsUpdate?
     )
 
-    func liveUpdates(for update: ConnectionUpdate) throws -> ConnectionUpdateResult {
+    func liveUpdates(for update: ConnectionUpdate, livePeers: [ProTUNConfiguration.Peer]?) throws -> ConnectionUpdateResult {
         let requiresNetworkSettingsUpdate = update.requiresNetworkSettingsRefresh
 
         guard update.hasConfigurationChanges || requiresNetworkSettingsUpdate else { return (nil, nil, nil) }
@@ -166,10 +173,10 @@ extension NETunnelProviderProtocol {
 
         var newPeers: [PeerInfo]?
         if update.hasPeerChanges {
-            // Restrict transports ProTUN will attempt to connect with by constraining peers
-            newPeers = try protunConfig.peers
-                .compactMap { $0.constrained(to: protunConfig.preferredTransport) }
-                .map(PeerInfo.init)
+            let constrained = protunConfig.constrainedPeers
+            if constrained != livePeers {
+                newPeers = try constrained.map(PeerInfo.init)
+            }
         }
 
         let networkSettingsUpdate: NetworkSettingsUpdate? = requiresNetworkSettingsUpdate
@@ -186,5 +193,9 @@ extension ProTUNConfiguration {
         peers
             .map(\.serverIP)
             .uniqued
+    }
+
+    var constrainedPeers: [Peer] {
+        peers.compactMap { $0.constrained(to: preferredTransport) }
     }
 }

@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import HomeShared
 import Strings
 import SwiftUI
 import Theme
@@ -33,7 +32,7 @@ struct KillSwitchBlockingBanner: View {
             .ignoresSafeArea()
 
             VStack(spacing: .themeSpacing8) {
-                HomeAsset.advancedKs.swiftUIImage
+                Theme.Asset.advancedKs.swiftUIImage
                     .resizable()
                     .scaledToFit()
                     .frame(height: Dimensions.iconHeight)

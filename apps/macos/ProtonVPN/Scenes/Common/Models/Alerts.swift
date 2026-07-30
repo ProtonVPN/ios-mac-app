@@ -24,6 +24,7 @@ import Dependencies
 import Domain
 import Foundation
 import LegacyCommon
+import os
 import Sharing
 import Strings
 import VPNAppCore
@@ -48,22 +49,95 @@ public class ActiveSessionWarningAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
 
+    private let deliverCancelUnlessHandled: () -> Void
+
+    /// Exactly one of the two handlers runs, on every exit path. The buttons deliver directly, and an alert that goes
+    /// away without either running (host window closed, programmatic dismissal, or the alert service discarding this
+    /// instance after moving its actions onto an already-presented one) delivers the cancel outcome from `deinit`.
     public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
+        let delivered = OSAllocatedUnfairLock(initialState: false)
+        let once: @Sendable (@escaping () -> Void) -> Void = { handler in
+            let first = delivered.withLock { delivered in
+                defer { delivered = true }
+                return !delivered
+            }
+            guard first else { return }
+            handler()
+        }
+        self.deliverCancelUnlessHandled = { once(cancelHandler) }
+        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: { once(confirmHandler) }))
+        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: { once(cancelHandler) }))
+    }
+
+    deinit {
+        deliverCancelUnlessHandled()
     }
 }
 
 public class QuitWarningAlert: SystemAlert {
-    public var title: String? = Localizable.vpnConnectionActive
-    public var message: String? = Localizable.quitWarning
+    public var title: String?
+    public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
 
-    public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: confirmHandler))
+    /// Quit confirmation while a VPN session is active. Standard KS allows disconnecting on quit, whereas advanced KS
+    /// will warn the user that Kill Switch will engage if they quit, and they will lose access to the Internet.
+    public init(advancedKillSwitchActive: Bool, confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
+        self.title = Localizable.killSwitchQuitTitle
+        // Only warn "you'll stay blocked after quit" when Advanced KS is ready.
+        self.message = advancedKillSwitchActive
+            ? Localizable.killSwitchLogoutAdvancedBody
+            : Localizable.killSwitchDisconnectedFromVpn
+        actions.append(AlertAction(title: Localizable.quit, style: .confirmative, handler: confirmHandler))
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
+    }
+}
+
+/// Confirmation shown when the user clicks the in-app Disconnect button while Advanced kill switch is
+/// active. Disconnecting is a clean disconnect, but Advanced keeps blocking traffic afterward.
+public class DisconnectWithAdvancedKillSwitchAlert: SystemAlert {
+    public var title: String? = Localizable.killSwitchDisconnectAdvancedTitle
+    public var message: String? = Localizable.killSwitchAdvancedDisconnectWarning
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+
+    public init(confirmHandler: @escaping () -> Void) {
+        actions.append(AlertAction(title: Localizable.disconnect, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: nil))
+    }
+}
+
+/// Generic confirm/cancel warning
+public class WarningAlert: SystemAlert {
+    public var title: String?
+    public var message: String?
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+
+    public init(
+        title: String,
+        message: String,
+        confirmTitle: String = Localizable.continue,
+        onConfirm: @escaping () -> Void,
+        showCancel: Bool = true,
+        onCancel: (() -> Void)? = nil,
+        learnMore: (title: String, urlString: String)? = nil
+    ) {
+        self.title = title
+        self.message = message
+        actions.append(AlertAction(title: confirmTitle, style: .confirmative, handler: onConfirm))
+        if showCancel {
+            actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: onCancel))
+        }
+        if let learnMore {
+            actions.append(AlertAction(title: learnMore.title, style: .secondary, handler: {
+                @Dependency(\.linkOpener) var linkOpener
+                linkOpener.open(learnMore.urlString)
+            }))
+        }
     }
 }
 
@@ -71,14 +145,19 @@ public class IkeDeprecatedAlert: SystemAlert {
     public var title: String? = Localizable.ikeDeprecationAlertTitle
     public var message: String? = {
         @SharedReader(.plutoniumFeature) var feature: PlutoniumFeatureToggle
-        let base = Localizable.ikeDeprecationAlertMessage
-            .replacingOccurrences(of: Localizable.ikeDeprecationAlertMessageLinkText, with: "")
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+        @SharedReader(.killSwitchMode) var killSwitchMode: KillSwitchMode
+        var paragraphs = [
+            Localizable.ikeDeprecationAlertMessage
+                .replacingOccurrences(of: Localizable.ikeDeprecationAlertMessageLinkText, with: "")
+                .trimmingCharacters(in: .whitespacesAndNewlines),
+        ]
         if case .enabled = feature {
-            return base + "\n\n" + Localizable.disablePlutoniumMessage
-        } else {
-            return base
+            paragraphs.append(Localizable.disablePlutoniumMessage)
         }
+        if killSwitchMode.isAdvanced {
+            paragraphs.append(Localizable.ikeDeprecationAlertKillSwitchDowngradeMessage)
+        }
+        return paragraphs.joined(separator: "\n\n")
     }()
 
     public let confirmTitle: String = Localizable.ikeDeprecationAlertEnableSmartButtonTitle

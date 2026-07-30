@@ -197,9 +197,9 @@ struct MainFeature {
         switch connectionState {
         case let .connected(tunnelConfig, _):
             tunnelConfig.connectionSpec.location
-        case let .connecting(.unresolved(intent)):
+        case let .connecting(.unresolved(intent), _):
             intent.spec.location
-        case let .connecting(.resolved(intent)):
+        case let .connecting(.resolved(intent), _):
             intent.spec.location
         case .disconnected, .disconnecting, .resolving, .killSwitchActive:
             nil

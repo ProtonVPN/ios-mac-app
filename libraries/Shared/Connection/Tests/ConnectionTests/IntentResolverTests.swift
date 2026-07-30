@@ -37,11 +37,13 @@ struct IntentResolverTests {
         let resolved = try await withDependencies {
             $0.serverSelector = .init(select: { _, _, _ in expectedServer })
             $0.connectionFeatureProvider.connectionFeatures = { .mock }
+            $0.connectionFeatureProvider.requestedFeatures = { .mock }
         } operation: {
             try await ConnectionIntentResolver.liveValue.resolve(resolveIntent)
         }
 
         #expect(resolved.server.endpoint.id == expectedServer.endpoint.id)
+        #expect(resolved.tunnelFeatures == .mock)
         switch resolved.protocolConfiguration {
         case .ike:
             break

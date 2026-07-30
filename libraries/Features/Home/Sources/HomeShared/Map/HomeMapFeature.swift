@@ -72,10 +72,10 @@ public struct HomeMapFeature {
             case let .connected(_, connectionData):
                 self = .connectedCoordinates(connectionData.currentPeer.logical.coordinates, connectionData.currentPeer.logical.exitCountryCode)
 
-            case let .connecting(.resolved(intent)):
+            case let .connecting(.resolved(intent), _):
                 self = .connectingCoordinates(intent.resolvedServer.logical.coordinates, intent.resolvedServer.logical.exitCountryCode)
 
-            case let .connecting(.unresolved(intent)):
+            case let .connecting(.unresolved(intent), _):
                 // We've started connecting according to a `ConnectionSpec`, but we've not yet chosen a specific server
                 // We *could* retrieve the coordinates for the country, but we want to avoid the pin moving once to the
                 // country, and then again to the specific location of the server

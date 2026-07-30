@@ -28,6 +28,7 @@ struct QuickSettingsDropdownOption: View {
         case selected
         case unselected
         case blocked
+        case disabled
     }
 
     let title: String
@@ -66,8 +67,10 @@ struct QuickSettingsDropdownOption: View {
             .clipShape(RoundedRectangle(cornerRadius: AppTheme.ButtonConstants.cornerRadius))
         }
         .buttonStyle(.plain)
+        .disabled(style == .disabled)
         .onHover { hover in
             isHovered = hover
+            guard style != .disabled else { return }
             if hover, !didPushPointingCursor {
                 NSCursor.pointingHand.push()
                 didPushPointingCursor = true
@@ -89,6 +92,8 @@ struct QuickSettingsDropdownOption: View {
         switch style {
         case .blocked:
             Color(.text, [.interactive, .weak])
+        case .disabled:
+            Color(.text, .weak)
         case .selected:
             Color(.text, isHovered ? [.interactive, .hint, .hovered] : [.interactive, .hint])
         case .unselected:
@@ -100,6 +105,8 @@ struct QuickSettingsDropdownOption: View {
         switch style {
         case .blocked:
             Color(.icon, [.interactive, .weak])
+        case .disabled:
+            Color(.icon, .weak)
         case .selected:
             Color(.icon, isHovered ? [.interactive, .hint, .hovered] : [.interactive, .hint])
         case .unselected:
@@ -109,7 +116,7 @@ struct QuickSettingsDropdownOption: View {
 
     private var borderColor: Color {
         switch style {
-        case .blocked:
+        case .blocked, .disabled:
             Color(.border, .normal)
         case .selected:
             Color(.border, isHovered ? [.interactive, .hint, .hovered] : [.interactive, .hint])
@@ -119,7 +126,7 @@ struct QuickSettingsDropdownOption: View {
     }
 
     private var backgroundColor: Color {
-        if style == .blocked {
+        if style == .blocked || style == .disabled {
             return Color(.background, .transparent)
         }
         return Color(.background, isHovered ? [.transparent, .hovered] : .transparent)

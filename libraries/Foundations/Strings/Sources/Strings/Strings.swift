@@ -706,6 +706,8 @@ public enum Localizable {
   public static var ikeDeprecationAlertContinueButtonTitle: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_continue_button_title", fallback: "Continue with IKEv2") }
   /// Button title for 'Enable Smart protocol'
   public static var ikeDeprecationAlertEnableSmartButtonTitle: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_enable_smart_button_title", fallback: "Enable Smart protocol") }
+  /// Message added to the IKEv2 deprecation alert when Advanced kill switch is enabled: continuing with IKEv2 changes the setting to Standard
+  public static var ikeDeprecationAlertKillSwitchDowngradeMessage: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_kill_switch_downgrade_message", fallback: "Your Kill Switch setting will be changed to Standard.") }
   /// Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios
   public static var ikeDeprecationAlertMessage: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_message", fallback: "This protocol will be removed soon. Consider switching to Smart protocol. Learn more") }
   /// Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios
@@ -740,16 +742,19 @@ public enum Localizable {
   public static var killSwitchAdvancedBannerTitle: String { return Localizable.tr("Localizable", "_kill_switch_advanced_banner_title", fallback: "Advanced kill switch activated") }
   /// iOS: Warning shown before disconnecting / signing out while Advanced kill switch is active
   public static var killSwitchAdvancedDisconnectWarning: String { return Localizable.tr("Localizable", "_kill_switch_advanced_disconnect_warning", fallback: "Advanced kill switch is enabled. If you continue, you will be disconnected from the internet.") }
+  /// macOS: Kill switch popover - explanation shown with the disabled "Advanced" option while the selected protocol
+  /// (IKEv2) cannot support it
+  public static var killSwitchAdvancedUnavailableProtocolDescription: String { return Localizable.tr("Localizable", "_kill_switch_advanced_unavailable_protocol_description", fallback: "This setting is not available for the protocol you have selected. Please choose another protocol to use Advanced Kill Switch.") }
   /// Disconnect notification
   public static var killSwitchBlockingConnection: String { return Localizable.tr("Localizable", "_kill_switch_blocking_connection", fallback: "Kill switch blocking all connections") }
   /// iOS: Kill switch confirmation - bullet: Advanced blocking persists
   public static var killSwitchBulletAdvancedPersists: String { return Localizable.tr("Localizable", "_kill_switch_bullet_advanced_persists", fallback: "Internet stays blocked across reboots and intentional disconnects until you turn it off") }
-  /// iOS: Kill switch confirmation - bullet: KS activates on the next connection (deferred activation, both modes)
-  public static var killSwitchBulletDeferred: String { return Localizable.tr("Localizable", "_kill_switch_bullet_deferred", fallback: "Takes effect the next time you connect to VPN") }
   /// iOS: Kill switch confirmation - bullet: how to get back online with Advanced
   public static var killSwitchBulletAdvancedRecover: String { return Localizable.tr("Localizable", "_kill_switch_bullet_advanced_recover", fallback: "To get back online, connect to VPN or disable advanced kill switch") }
-  /// iOS: Kill switch confirmation - bullet: local network access is lost
-  public static var killSwitchBulletNoLan: String { return Localizable.tr("Localizable", "_kill_switch_bullet_no_lan", fallback: "You won't be able to access devices on your local network") }
+  /// iOS: Kill switch confirmation - bullet: KS activates on the next connection (deferred activation, both modes)
+  public static var killSwitchBulletDeferred: String { return Localizable.tr("Localizable", "_kill_switch_bullet_deferred", fallback: "Takes effect the next time you connect to VPN") }
+  /// macOS: Kill switch confirmation - bullet: enabling KS disables split tunneling (macOS only)
+  public static var killSwitchBulletSplitTunneling: String { return Localizable.tr("Localizable", "_kill_switch_bullet_split_tunneling", fallback: "This will disable split tunneling") }
   /// iOS: Kill switch confirmation - primary button to enable
   public static var killSwitchConfirmEnable: String { return Localizable.tr("Localizable", "_kill_switch_confirm_enable", fallback: "Enable") }
   /// iOS: Kill switch confirmation - primary button to switch to advanced
@@ -758,6 +763,10 @@ public enum Localizable {
   public static var killSwitchDisable: String { return Localizable.tr("Localizable", "_kill_switch_disable", fallback: "Disable kill switch") }
   /// iOS: Confirmation banner shown after disabling kill switch from the login screen
   public static var killSwitchDisabledConfirmation: String { return Localizable.tr("Localizable", "_kill_switch_disabled_confirmation", fallback: "Kill switch is disabled.") }
+  /// macOS: title of the confirmation shown when disconnecting with Advanced kill switch active
+  public static var killSwitchDisconnectAdvancedTitle: String { return Localizable.tr("Localizable", "_kill_switch_disconnect_advanced_title", fallback: "Disconnect from VPN?") }
+  /// macOS: quit confirmation body (Standard / non-advanced kill switch)
+  public static var killSwitchDisconnectedFromVpn: String { return Localizable.tr("Localizable", "_kill_switch_disconnected_from_vpn", fallback: "You'll be disconnected from VPN.") }
   /// iOS and macOS: Enable kill switch on badly-routed networks
   public static var killSwitchEnable: String { return Localizable.tr("Localizable", "_kill_switch_enable", fallback: "Enable Kill Switch") }
   /// iOS: Kill switch confirmation - title when enabling Advanced from Off
@@ -784,6 +793,12 @@ public enum Localizable {
   public static var killSwitchModeOff: String { return Localizable.tr("Localizable", "_kill_switch_mode_off", fallback: "Off") }
   /// iOS: Kill switch settings - "Standard" option title
   public static var killSwitchModeStandard: String { return Localizable.tr("Localizable", "_kill_switch_mode_standard", fallback: "Standard") }
+  /// macOS: Kill switch popover - "Advanced" option row label
+  public static var killSwitchOptionAdvanced: String { return Localizable.tr("Localizable", "_kill_switch_option_advanced", fallback: "Kill switch Advanced") }
+  /// macOS: Kill switch popover - "Standard" option row label
+  public static var killSwitchOptionStandard: String { return Localizable.tr("Localizable", "_kill_switch_option_standard", fallback: "Kill switch Standard") }
+  /// macOS: title of the quit confirmation shown while a VPN session is active
+  public static var killSwitchQuitTitle: String { return Localizable.tr("Localizable", "_kill_switch_quit_title", fallback: "Quit Proton VPN?") }
   /// MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect
   public static var killSwitchReconnection: String { return Localizable.tr("Localizable", "_kill_switch_reconnection", fallback: "Your internet connection will resume as soon as Proton VPN reconnects to a server.\nTo use the internet without VPN and kill switch protection, cancel the reconnection to the server.") }
   /// MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded
@@ -981,7 +996,7 @@ public enum Localizable {
   /// Enable anyway
   public static var neksT2Connect: String { return Localizable.tr("Localizable", "_neks_t2_connect", fallback: "Enable anyway") }
   /// The use of kill switch is unstable on this device.
-  /// 
+  ///
   /// Your device has a T2 Security Chip, which can result in system stability issues if the kill switch functionality of macOS is used by Proton VPN.
   public static var neksT2Description: String { return Localizable.tr("Localizable", "_neks_t2_description", fallback: "The use of kill switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the kill switch functionality of macOS is used by Proton VPN.") }
   /// Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string.
@@ -1366,8 +1381,8 @@ public enum Localizable {
   public static var quickSettingsGetPlus: String { return Localizable.tr("Localizable", "_quick_settings_get_plus", fallback: "Get Plus") }
   /// Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.
   public static var quickSettingsKillSwitchDescription: String { return Localizable.tr("Localizable", "_quick_settings_killSwitch_description", fallback: "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.") }
-  /// If you can't connect to devices on your local network, try disabling kill switch.
-  public static var quickSettingsKillSwitchNote: String { return Localizable.tr("Localizable", "_quick_settings_killSwitch_note", fallback: "If you can't connect to devices on your local network, try disabling kill switch.") }
+  /// If you can't connect to devices on your local network, try allowing LAN connections in Settings.
+  public static var quickSettingsKillSwitchNote: String { return Localizable.tr("Localizable", "_quick_settings_killSwitch_note", fallback: "If you can't connect to devices on your local network, try allowing LAN connections in Settings.") }
   /// Browse the internet without ads and malware.
   public static var quickSettingsNetShieldDescription: String { return Localizable.tr("Localizable", "_quick_settings_netShield_description", fallback: "Browse the internet without ads and malware.") }
   /// If websites don’t load, try disabling NetShield
@@ -1412,8 +1427,6 @@ public enum Localizable {
   public static var reconnectOnSettingsChangeBody: String { return Localizable.tr("Localizable", "_reconnect_on_settings_change_body", fallback: "Your connection needs to be restarted to apply this change.") }
   /// We are reconnecting to the fastest server available.
   public static var reconnectTitle: String { return Localizable.tr("Localizable", "_reconnect_title", fallback: "We are reconnecting to the fastest server available.") }
-  /// Setting up a new VPN connection to protect your IP
-  public static var reconnecting: String { return Localizable.tr("Localizable", "_reconnecting", fallback: "Setting up a new VPN connection to protect your IP") }
   /// Reconnecting to %@
   public static func reconnectingTo(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_reconnecting_to", String(describing: p1), fallback: "Reconnecting to %@")
@@ -1748,7 +1761,7 @@ public enum Localizable {
   public static var streamingTitle: String { return Localizable.tr("Localizable", "_streaming_title", fallback: "Streaming") }
   /// iOS: button in human verification code form
   public static var submitVerificationCode: String { return Localizable.tr("Localizable", "_submit_verification_code", fallback: "Submit") }
-  /// Extend plan for 1 year 
+  /// Extend plan for 1 year
   /// %@.
   public static func subscriptionButton(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_subscription_button", String(describing: p1), fallback: "Extend plan for 1 year \n%@.")
@@ -1907,7 +1920,7 @@ public enum Localizable {
   public static var transactionLogNotAvailable: String { return Localizable.tr("Localizable", "_transaction_log_not_available_", fallback: "Transaction log is not available") }
   /// Purchase was successfully restored in account settings
   public static var transactionRecovered: String { return Localizable.tr("Localizable", "_transaction_recovered", fallback: "Transaction(s) recovered.") }
-  /// In case Proton sites are blocked, this setting allows the app to try alternative network routing to reach Proton, which can be useful for bypassing firewalls or network issues. We recommend keeping this setting on for greater reliability. 
+  /// In case Proton sites are blocked, this setting allows the app to try alternative network routing to reach Proton, which can be useful for bypassing firewalls or network issues. We recommend keeping this setting on for greater reliability.
   /// Learn more
   public static var troubleshootItemAltDescription: String { return Localizable.tr("Localizable", "_troubleshoot_item_alt_description", fallback: "In case Proton sites are blocked, this setting allows the app to try alternative network routing to reach Proton, which can be useful for bypassing firewalls or network issues. We recommend keeping this setting on for greater reliability. \nLearn more") }
   /// Learn more

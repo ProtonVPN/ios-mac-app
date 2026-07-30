@@ -40,6 +40,7 @@ final class SparkleUpdateManager: NSObject {
 
     /// Beta-channel opt-in. Toggled from Settings
     @SharedReader(.earlyAccess) private var earlyAccess
+
     #if DEBUG
         /// When set, suppresses update prompts (used in UI tests)
         @SharedReader(.blockUpdatePrompt) private var blockUpdatePrompt
@@ -181,6 +182,7 @@ final class SparkleUpdateManager: NSObject {
 }
 
 extension SparkleUpdateManager: SPUUpdaterDelegate {
+    // Allows us to leave the VPN connected while relaunching for an update.
     func updaterWillRelaunchApplication(_: SPUUpdater) {
         isRelaunchingForUpdate = true
     }

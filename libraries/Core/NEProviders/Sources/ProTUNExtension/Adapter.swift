@@ -307,11 +307,11 @@ extension ProTUNAdapter {
         await configurationStore.apply(update, adapter: self)
     }
 
-    func reassertingIfRequired<T, E: Swift.Error>(
-        for update: ConnectionUpdate,
+    func reasserting<T, E: Swift.Error>(
+        if required: Bool,
         _ closure: () async throws(E) -> sending T
     ) async throws(E) -> sending T {
-        if update.requiresReassertion {
+        if required {
             packetTunnelProvider?.reasserting = true
             defer { packetTunnelProvider?.reasserting = false }
             return try await closure()

@@ -61,7 +61,8 @@ struct QuickSettingDetailViewControllerSnapshotTests {
             type: type,
             secureCoreEnabled: false,
             netShieldType: .level2,
-            killSwitchEnabled: true,
+            killSwitchMode: .advanced,
+            isConnected: false,
             portForwardingEnabled: false,
             netShieldStatsEnabled: true,
             netShieldStats: .init(

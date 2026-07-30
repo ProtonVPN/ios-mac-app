@@ -24,8 +24,9 @@ import Foundation
 package extension ConnectionIntentResolver {
     static func mock(
         server: Server,
-        tunnelSettings: TunnelSettings = TunnelSettings(backend: .go, transport: .udp, features: .mock),
-        features: AgentTunnelFeatures = .mock
+        tunnelSettings: TunnelSettings = TunnelSettings(backend: .go, transport: .udp),
+        features: AgentTunnelFeatures = .mock,
+        tunnelFeatures: LocalTunnelFeatures = .mock
     ) -> ConnectionIntentResolver {
         ConnectionIntentResolver(
             resolve: { intent throws(IntentResolutionError) in
@@ -33,7 +34,8 @@ package extension ConnectionIntentResolver {
                     spec: intent.spec,
                     server: server,
                     protocolConfiguration: .wireGuard(tunnelSettings),
-                    features: features
+                    features: features,
+                    tunnelFeatures: tunnelFeatures
                 )
             },
             authorize: { _, _ in

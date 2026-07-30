@@ -60,17 +60,15 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
         networking.delegate = networkingDelegate
         appSessionRefresher = withDependencies {
             $0.serverRepository = .wrapped(wrappedWith: repositoryWrapper)
-            $0.vpnApiClient.clientCredentials = { [weak self] in
-                guard let self else {
-                    throw NSError.testError()
-                }
-                guard let credentials = networkingDelegate.apiCredentials else {
+            // Capture the mock rather than the test case, since refresh work can land after the test returns.
+            $0.vpnApiClient.clientCredentials = { [networkingDelegate] in
+                guard let credentials = networkingDelegate?.apiCredentials else {
                     throw NSError.testError()
                 }
                 return credentials
             }
-            $0.vpnApiClient.loads = { [weak self] _ in
-                guard let self else { return [:] }
+            $0.vpnApiClient.loads = { [networkingDelegate] _ in
+                guard let networkingDelegate else { return [:] }
                 var result: [String: ContinuousServerProperties] = [:]
                 for load in networkingDelegate.apiServerLoads {
                     result[load.serverId] = ContinuousServerProperties(
@@ -190,17 +188,15 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             $0.authKeychain = mockAuthKeychain
             $0.vpnKeychain = vpnKeychainMock
             $0.networking = VPNNetworkingMock()
-            $0.vpnApiClient.clientCredentials = { [weak self] in
-                guard let self else {
-                    throw NSError.testError()
-                }
-                guard let credentials = networkingDelegate.apiCredentials else {
+            // Capture the mock rather than the test case, since refresh work can land after the test returns.
+            $0.vpnApiClient.clientCredentials = { [networkingDelegate] in
+                guard let credentials = networkingDelegate?.apiCredentials else {
                     throw NSError.testError()
                 }
                 return credentials
             }
-            $0.vpnApiClient.loads = { [weak self] _ in
-                guard let self else { return [:] }
+            $0.vpnApiClient.loads = { [networkingDelegate] _ in
+                guard let networkingDelegate else { return [:] }
                 var result: [String: ContinuousServerProperties] = [:]
                 for load in networkingDelegate.apiServerLoads {
                     result[load.serverId] = ContinuousServerProperties(

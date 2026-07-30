@@ -320,6 +320,11 @@ final class ConnectionSettingsViewModel {
                 )
                 @Shared(.plutoniumFeature) var plutonium
                 $plutonium.withLock { $0.disable() }
+                // Advanced kill switch cannot apply over IKEv2. Fall back to Standard, as announced in the alert body.
+                @Shared(.killSwitchMode) var killSwitchMode
+                if killSwitchMode.isAdvanced {
+                    $killSwitchMode.withLock { $0 = .standard }
+                }
             }, learnMoreHandler: {
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User opened Learn more; keeping the current (Smart) protocol selection.")
                 // Don't select IKEv2: revert the picker to its previous selection
@@ -483,6 +488,8 @@ final class ConnectionSettingsViewModel {
 
     func setAllowLANAccess(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
         let newValue: ExcludeLocalNetworks = enabled ? .on : .off
+
+        // Also allow live updates for LAN access when the zero-peer kill switch is active.
         let changeState: VpnFeatureChangeState = connectionState.is(\.killSwitchActive)
             ? .withConnectionUpdate
             : .init(connectionState: connectionState)
@@ -493,6 +500,8 @@ final class ConnectionSettingsViewModel {
             connectionCommandClient.send(.applySettings([.tunnel(.allowLAN(enabled))]))
             completion(true)
         case .withReconnect:
+            // IKEv2 reads `excludeLocalNetworks` when the connection is established and has no channel for in-place
+            // updates, so a live change needs the user to agree to a reconnect.
             alertService.push(alert: ReconnectOnSettingsChangeAlert(confirmHandler: {
                 setFeatureValue(newValue)
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])

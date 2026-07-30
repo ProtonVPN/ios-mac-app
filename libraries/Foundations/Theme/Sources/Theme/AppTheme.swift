@@ -141,7 +141,7 @@ public enum AppTheme {
         public static let flagIconSize: Self = .rect(width: 32, height: 21.33)
         public static let secureCoreFlagIconSize: Self = .rect(width: 18, height: 12)
 
-        var width: CGFloat? {
+        public var width: CGFloat? {
             switch self {
             case .default:
                 nil
@@ -152,7 +152,7 @@ public enum AppTheme {
             }
         }
 
-        var height: CGFloat? {
+        public var height: CGFloat? {
             switch self {
             case .default:
                 nil

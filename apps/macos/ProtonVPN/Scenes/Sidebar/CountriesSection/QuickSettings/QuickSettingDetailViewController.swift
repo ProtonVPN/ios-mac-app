@@ -67,6 +67,11 @@ struct QuickSettingDetailView: View {
 
             if store.type == .portForwardingDisplay {
                 portForwardingStateView(store.portForwardingState)
+            } else if store.type == .killSwitchDisplay {
+                ForEach(store.killSwitchStatusMessages) { message in
+                    noteView(note: message.text, icon: message.icon, iconColor: message.iconColor)
+                }
+                .accessibilityIdentifier("QSNote")
             } else if let selectedNote = store.selectedNote {
                 noteTextView(note: selectedNote)
                     .accessibilityIdentifier("QSNote")
@@ -79,6 +84,9 @@ struct QuickSettingDetailView: View {
     }
 
     private func optionStyle(for option: QuickSettingOptionRow) -> QuickSettingsDropdownOption.Style {
+        if !option.isEnabled {
+            return .disabled
+        }
         if option.requiresUpdate {
             return .blocked
         }

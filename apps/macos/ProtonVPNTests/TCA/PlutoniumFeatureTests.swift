@@ -27,14 +27,15 @@ import Testing
 import VPNShared
 import VPNSharedTesting
 
+@Suite(.serialized)
 @MainActor
 struct PlutoniumFeatureTests {
-    @Shared(.killSwitch) var killSwitch
+    @Shared(.killSwitchMode) var killSwitchMode
     @Shared(.connectionState) var connectionState
     @Shared(.connectionProtocol) var connectionProtocol
 
     init() {
-        $killSwitch.withLock { $0 = false }
+        $killSwitchMode.withLock { $0 = .off }
         $connectionState.withLock { $0 = .disconnected }
         $connectionProtocol.withLock { $0 = .smartProtocol }
     }
@@ -64,8 +65,8 @@ struct PlutoniumFeatureTests {
 
     @Test
     func toggleModeKillSwitchConflict() async {
-        $killSwitch.withLock {
-            $0 = true
+        $killSwitchMode.withLock {
+            $0 = .standard
         }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature()
@@ -90,8 +91,8 @@ struct PlutoniumFeatureTests {
 
     @Test
     func toggleModeIKEConflict() async {
-        $killSwitch.withLock {
-            $0 = false
+        $killSwitchMode.withLock {
+            $0 = .off
         }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature()
@@ -114,8 +115,8 @@ struct PlutoniumFeatureTests {
                 .init(currentPeer: actual.server, connectionDate: .now, protocolConnectionData: .ike)
             )
         }
-        $killSwitch.withLock {
-            $0 = true
+        $killSwitchMode.withLock {
+            $0 = .standard
         }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature()

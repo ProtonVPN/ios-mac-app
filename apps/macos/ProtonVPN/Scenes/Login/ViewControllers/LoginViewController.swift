@@ -22,6 +22,9 @@
 
 import AuthenticationServices
 import Cocoa
+import Connection
+import Dependencies
+import Domain
 import Ergonomics
 import Foundation
 import LegacyCommon
@@ -31,6 +34,7 @@ import ProtonCoreObservability
 import ProtonCoreServices
 import Settings_macOS
 import SharedViews
+import Sharing
 import Strings
 import SwiftUI
 import Theme
@@ -104,6 +108,9 @@ final class LoginViewController: NSViewController {
     #endif
 
     @IBOutlet private var logoImage: NSImageView!
+
+    /// `logo.top = view.top + 64`, used to swap with ``logoBelowBannerConstraint`` for Advanced Kill Switch.
+    @IBOutlet private var logoTopConstraint: NSLayoutConstraint!
     private lazy var warningView: WarningView = {
         var nibObjects: NSArray?
         guard Bundle.main.loadNibNamed("WarningView", owner: nil, topLevelObjects: &nibObjects),
@@ -121,6 +128,93 @@ final class LoginViewController: NSViewController {
         view.bottomAnchor.constraint(lessThanOrEqualTo: loginButton.topAnchor).isActive = true
         return view
     }()
+
+    // MARK: - Kill Switch login banner
+
+    @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
+
+    @Dependency(\.vpnTunnelControl) private var vpnTunnelControl
+
+    private lazy var killSwitchBanner: KillSwitchLoginBanner = {
+        let banner = KillSwitchLoginBanner()
+        banner.translatesAutoresizingMaskIntoConstraints = false
+        banner.isHidden = true
+        view.addSubview(banner)
+        NSLayoutConstraint.activate([
+            banner.leadingAnchor.constraint(equalTo: startOnBootLabel.leadingAnchor),
+            banner.trailingAnchor.constraint(equalTo: startOnBootButton.trailingAnchor),
+            banner.topAnchor.constraint(equalTo: view.topAnchor, constant: .themeSpacing16),
+        ])
+        return banner
+    }()
+
+    private lazy var logoBelowBannerConstraint: NSLayoutConstraint =
+        logoImage.topAnchor.constraint(equalTo: killSwitchBanner.bottomAnchor, constant: .themeSpacing24)
+
+    /// The function is necessary in order to reserve space for the banner above the logo while logging in.
+    private func setKillSwitchBannerVisible(_ visible: Bool) {
+        killSwitchBanner.isHidden = !visible
+        if visible {
+            logoTopConstraint.isActive = false
+            logoBelowBannerConstraint.isActive = true
+        } else {
+            logoBelowBannerConstraint.isActive = false
+            logoTopConstraint.isActive = true
+        }
+    }
+
+    /// Shows the Advanced kill-switch blocking banner while the user is logged out but KS is still blocking. "Disable"
+    /// tears down the zero-peer tunnel and switches KS off.
+    private func updateKillSwitchBanner() {
+        guard killSwitchMode.isAdvanced else {
+            setKillSwitchBannerVisible(false)
+            return
+        }
+        killSwitchBanner.configureBlocking { [weak self] in
+            self?.disableKillSwitchFromBanner()
+        }
+        setKillSwitchBannerVisible(true)
+    }
+
+    /// Waits properly to confirm that the kill switch has been deactivated before continuing with login.
+    private func disableKillSwitchFromBanner() {
+        // Same message, no action, so a second click cannot start a second teardown. Whichever settle path runs below
+        // restores a banner that has one.
+        killSwitchBanner.configureBlocking(onDisable: nil)
+        let control = vpnTunnelControl
+        Task { @MainActor [weak self] in
+            do {
+                try await control.stop()
+            } catch {
+                log.error("Failed to stop the kill switch tunnel from the login banner: \(error)", category: .connection)
+                self?.updateKillSwitchBanner()
+                return
+            }
+            guard let self else { return }
+            $killSwitchMode.withLock { $0 = .off }
+            killSwitchBanner.configureDisabled { [weak self] in
+                self?.setKillSwitchBannerVisible(false)
+            }
+        }
+    }
+
+    /// Login is impossible while Advanced Kill Switch is enabled. Offer to turn it off to avoid failing to log in.
+    private func presentKillSwitchBlockingAlertIfNeeded() -> Bool {
+        guard killSwitchMode.isAdvanced else { return false }
+        let alert = NSAlert()
+        alert.messageText = Localizable.killSwitchLoginBlocking
+        alert.informativeText = Localizable.killSwitchTurnOffToGetOnline
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: Localizable.killSwitchTurnOff)
+        alert.addButton(withTitle: Localizable.cancel)
+        guard let window = view.window else { return true }
+        alert.beginSheetModal(for: window) { [weak self] response in
+            if response == .alertFirstButtonReturn {
+                self?.disableKillSwitchFromBanner()
+            }
+        }
+        return true
+    }
 
     @IBOutlet private var usernameTextField: TextFieldWithFocus!
     @IBOutlet private var usernameHorizontalLine: NSBox!
@@ -202,6 +296,7 @@ final class LoginViewController: NSViewController {
         setupOnboardingView()
         setupTwoFactorView()
         setupCallbacks()
+        updateKillSwitchBanner()
 
         viewModel.updateAvailableDomains()
     }
@@ -342,6 +437,7 @@ final class LoginViewController: NSViewController {
     }
 
     private func attemptLogin() {
+        guard !presentKillSwitchBlockingAlertIfNeeded() else { return }
         switch signInVariant {
         case .protonSignin:
             viewModel.logIn(username: usernameTextField.stringValue, password: passwordEntry)
@@ -356,6 +452,7 @@ final class LoginViewController: NSViewController {
             logoImage.isHidden = true
             twoFactorView.isHidden = true
             environmentSelectionView.isHidden = false
+            setKillSwitchBannerVisible(false)
             loadingView.animate(false)
 
             view.addSubview(environmentSelectionView)
@@ -369,6 +466,8 @@ final class LoginViewController: NSViewController {
     #endif
 
     private func presentTwoFactorScreen(twoFactorViewModel _: AnyTwoFactorViewModel, withErrorDescription description: String?) {
+        setKillSwitchBannerVisible(false)
+
         switch viewModel.twoFactorViewKind {
         case .none:
             assertionFailure("This method shouldn't be called with this TwoFactorViewKind value")
@@ -406,6 +505,7 @@ final class LoginViewController: NSViewController {
         logoImage.isHidden = true
         twoFactorView.isHidden = true
         anyTwoFactorContainerView.isHidden = true
+        setKillSwitchBannerVisible(false)
 
         loadingView.isHidden = false
         loadingView.animate(true)
@@ -441,6 +541,7 @@ final class LoginViewController: NSViewController {
         twoFactorView.isHidden = true
         anyTwoFactorContainerView.isHidden = true
         loadingView.isHidden = true
+        updateKillSwitchBanner()
 
         #if DEBUG
             // This occludes the username text field, which upsets UI tests. Since we don't need it anymore, remove it from
@@ -505,6 +606,7 @@ final class LoginViewController: NSViewController {
 
     @objc
     private func createAccountButtonAction() {
+        guard !presentKillSwitchBlockingAlertIfNeeded() else { return }
         viewModel.createAccountAction()
     }
 

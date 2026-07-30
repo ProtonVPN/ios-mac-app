@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import Dependencies
 import Domain
 import NetShield
@@ -24,6 +25,7 @@ import NetShield
 import Sharing
 import Testing
 import VPNAppCore
+import VPNShared
 
 @MainActor
 struct CountriesQuickSettingsFeatureTests {
@@ -371,14 +373,9 @@ struct CountriesQuickSettingsFeatureTests {
         }
     }
 
-    @Test("kill switch on presents Plutonium conflict alert")
-    func killSwitchOnPresentsPlutoniumConflictAlert() async {
+    @Test("increasing kill switch protection presents confirmation")
+    func killSwitchUpgradePresentsConfirmation() async {
         @SharedReader(.userTier) var userTier: VpnTier? = .paid
-        @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
-        $plutonium.withLock { $0 = .disabled(.exclusion) }
-        #expect(!QuickSettingsFeature.requiresKillSwitchConflictConfirmation())
-        $plutonium.withLock { $0 = .enabled(.exclusion) }
-        defer { $plutonium.withLock { $0 = .disabled(.exclusion) } }
 
         let store = makeStore()
 
@@ -389,8 +386,49 @@ struct CountriesQuickSettingsFeatureTests {
             $0.killSwitch.isSelected = true
             $0.portForwarding.isSelected = false
         }
-        await store.send(.destination(.presented(.quickSettingDetail(.delegate(.option(.killSwitchDisplay, .killSwitchOn)))))) {
-            $0.alert = QuickSettingsFeature.killSwitchConflictAlert
+        await store.send(.destination(.presented(.quickSettingDetail(.delegate(.option(.killSwitchDisplay, .killSwitchStandard)))))) {
+            $0.alert = QuickSettingsFeature.killSwitchUpgradeAlert(from: .off, to: .standard)
+        }
+    }
+
+    @Test("confirming a protected kill switch mode turns Plutonium off and leaves LAN access alone")
+    func killSwitchUpgradeConfirmationDisablesPlutonium() async {
+        @SharedReader(.userTier) var userTier: VpnTier? = .paid
+        @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
+        @Shared(.killSwitchMode) var killSwitchMode: KillSwitchMode
+        $plutonium.withLock { $0 = .enabled(.exclusion) }
+        $killSwitchMode.withLock { $0 = .off }
+
+        let keychain = MockAuthKeychain()
+        keychain.username = "test-user"
+        await withDependencies {
+            $0.authKeychain = keychain
+        } operation: {
+            setFeatureValue(ExcludeLocalNetworks.on)
+
+            let store = makeStore()
+
+            await store.send(.buttonTapped(.killSwitchDisplay)) {
+                $0.destination = .quickSettingDetail(Self.expectedDetail(type: .killSwitchDisplay, from: $0))
+                $0.secureCore.isSelected = false
+                $0.netShield.isSelected = false
+                $0.killSwitch.isSelected = true
+                $0.portForwarding.isSelected = false
+            }
+            await store.send(.destination(.presented(.quickSettingDetail(.delegate(.option(.killSwitchDisplay, .killSwitchStandard)))))) {
+                $0.alert = QuickSettingsFeature.killSwitchUpgradeAlert(from: .off, to: .standard)
+            }
+            await store.send(.alert(.presented(.confirmKillSwitchMode(.standard)))) {
+                $0.alert = nil
+            }
+            await store.receive(\.dismissDetails) {
+                $0.destination = nil
+                $0.killSwitch.isSelected = false
+            }
+
+            #expect(killSwitchMode == .standard)
+            #expect(plutonium == .disabled(.exclusion))
+            #expect(AuthorizedFeatureValue<ExcludeLocalNetworks>().rawValue() == .on)
         }
     }
 
@@ -430,7 +468,8 @@ struct CountriesQuickSettingsFeatureTests {
             type: type,
             secureCoreEnabled: state.secureCore.isEnabled,
             netShieldType: state.netShield.type,
-            killSwitchEnabled: state.killSwitch.isEnabled,
+            killSwitchMode: state.killSwitch.killSwitchMode,
+            isConnected: state.killSwitch.connectionState.isConnected,
             portForwardingEnabled: state.portForwarding.isEnabled,
             netShieldStatsEnabled: state.netShield.isStatsEnabled,
             netShieldStats: state.netShield.stats,

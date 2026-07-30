@@ -42,7 +42,7 @@ extension MigrationManager {
         }
     }
 
-    private func migrateOldServerConnectionIntent(from data: Data) throws -> Data {
+    func migrateOldServerConnectionIntent(from data: Data) throws -> Data {
         let encoder = JSONEncoder()
         let decoder = JSONDecoder()
         do {
@@ -62,7 +62,7 @@ extension MigrationManager {
     }
 }
 
-private extension ConnectionSpec.SecureCoreSpec {
+extension ConnectionSpec.SecureCoreSpec {
     enum V1: Codable {
         case random
         case fastest
@@ -84,7 +84,7 @@ private extension ConnectionSpec.SecureCoreSpec {
     }
 }
 
-private extension ConnectionSpec.Location {
+extension ConnectionSpec.Location {
     enum V1: Codable {
         case fastest
         case random
@@ -115,7 +115,7 @@ private extension ConnectionSpec.Location {
     }
 }
 
-private extension ConnectionSpec {
+extension ConnectionSpec {
     struct V1: Codable {
         let location: Location.V1
         let features: Set<Feature>
@@ -127,7 +127,7 @@ private extension ConnectionSpec {
     }
 }
 
-private extension WireGuardSettings {
+extension WireGuardSettings {
     /// The original `TunnelSettings` struct before `backend` was introduced. All connections at
     /// this point were WireGuard using the Go backend.
     struct V1: Codable {
@@ -137,11 +137,11 @@ private extension WireGuardSettings {
     }
 
     init(migrating v1: V1) {
-        self = .init(backend: .go, transport: v1.transport, features: v1.features)
+        self = .init(backend: .go, transport: v1.transport)
     }
 }
 
-private extension ServerConnectionIntent {
+extension ServerConnectionIntent {
     /// Pre-random server selection improvements, using old connection spec location definitions.
     struct V1: Codable {
         let spec: ConnectionSpec.V1
@@ -155,7 +155,8 @@ private extension ServerConnectionIntent {
             spec: .init(migrating: v1.spec),
             server: v1.server,
             protocolConfiguration: .wireGuard(.init(migrating: v1.tunnelSettings)),
-            features: v1.features
+            features: v1.features,
+            tunnelFeatures: v1.tunnelSettings.features
         )
     }
 
@@ -172,7 +173,8 @@ private extension ServerConnectionIntent {
             spec: v2.spec,
             server: v2.server,
             protocolConfiguration: .wireGuard(.init(migrating: v2.tunnelSettings)),
-            features: v2.features
+            features: v2.features,
+            tunnelFeatures: v2.tunnelSettings.features
         )
     }
 }

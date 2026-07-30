@@ -18,6 +18,7 @@
 
 #if os(macOS)
     import Dependencies
+    import Domain
     import ExtensionIPC
     import Foundation
     import IOSurface
@@ -27,56 +28,128 @@
 
     fileprivate let log: Logging.Logger = .init(label: "ProtonVPN.XPCClient.logger")
 
-    /// macOS XPC client for the extension's `TunnelDataXPCService`, which fetches the shared `IOSurface` and sets it
-    /// as the backing memory for the ``TunnelDataStore``.
+    /// Why a tunnel-data region could not be attached. The XPC error itself only exists inside the connection's error
+    /// handler, which logs it there.
+    public enum TunnelDataXPCError: Error, Sendable {
+        /// The remote proxy could not be built, so no message reached the extension.
+        case proxyUnavailable
+        /// The connection reported an error instead of delivering the reply.
+        case connectionFailed
+        /// The extension answered, but had no surface to hand over.
+        case noSurfaceAvailable
+    }
+
+    /// macOS XPC client for the extension's `TunnelDataXPCService`, which fetches the shared `IOSurface` and sets it as
+    /// the backing memory for the ``TunnelDataStore``.
+    ///
+    /// The extension allocates one surface per process and announces its id as the tunnel-data notification's state.
+    /// While running, this client follows those announcements and fetches whichever surface the app does not already
+    /// hold. Constructing it does nothing on its own until ``resume()``.
     public final class TunnelDataXPCClient: @unchecked Sendable {
+        /// The reply to one `fetchTunnelDataSurface` call, resumed by either the reply block or the connection's error
+        /// handler.
+        private typealias Fetch = CheckedContinuation<IOSurfaceID, any Error>
+
         @Dependency(\.extensionIPC) private var extensionIPC
 
         private let machServiceName: String
 
-        /// The current XPC connection, guarded so only one is created or torn down at a time.
-        private let connectionLock = OSAllocatedUnfairLock<NSXPCConnection?>(uncheckedState: nil)
+        /// The task following announcements, when running. Every fetch happens inside it, so a burst of announcements
+        /// can never produce overlapping fetches.
+        private let watch = OSAllocatedUnfairLock<Task<Void, Never>?>(uncheckedState: nil)
 
         public init(machServiceName: String) {
             self.machServiceName = machServiceName
         }
 
-        public func attachRegion() {
-            guard let proxy = remoteProxy() else {
-                log.error("Could not obtain ProTUN XPC proxy for \(machServiceName)")
-                return
-            }
-            proxy.fetchTunnelDataSurface { [weak self] surface in
-                guard let self else { return }
-                guard let surface else {
-                    log.error("Extension returned no tunnel-data surface")
-                    return
-                }
+        deinit {
+            cancel()
+        }
 
-                extensionIPC.attachRegion(surface as IOSurfaceRef)
-                log.info("Attached tunnel-data IOSurface region from extension")
+        /// Starts following the extension's announcements, attaching the region each one names when it differs from the
+        /// one the app has mapped. Checks once up front, so an extension already running when this is called is picked
+        /// up without waiting for its next write. Calling this while already following does nothing.
+        public func resume() {
+            watch.withLockUnchecked { task in
+                guard task == nil else { return }
+                task = Task { [weak self] in await self?.followAnnouncements() }
             }
         }
 
-        public func reattachRegion() {
-            invalidate()
-            attachRegion()
+        /// Stops following announcements. Whatever is mapped stays mapped, and ``resume()`` picks up from whatever the
+        /// extension has announced in the meantime.
+        public func cancel() {
+            watch.withLockUnchecked { task in
+                task?.cancel()
+                task = nil
+            }
         }
 
         // MARK: - Private
 
-        private func remoteProxy() -> TunnelDataXPCProtocol? {
-            let connection = connectionLock.withLockUnchecked { connection -> NSXPCConnection in
-                if let connection { return connection }
-                let new = self.makeConnection()
-                connection = new
-                return new
+        /// Every channel write the extension makes posts the tunnel-data notification, so a connection coming up
+        /// produces a burst of them while a fetch is still in the air. Let the posts buffer in the stream, and discard
+        /// any updates naming the region we're already dealing with.
+        private func followAnnouncements() async {
+            // Built before the first check so an announcement landing between the two is not lost. The stream registers
+            // its observer as it is created, not when it is first iterated.
+            let posts = IPCNotifications.streamRawState(.tunnelData)
+            await attachAnnouncedRegion()
+            for await _ in posts {
+                await attachAnnouncedRegion()
             }
+        }
 
-            return connection.remoteObjectProxyWithErrorHandler { [weak self] error in
-                log.error("ProTUN XPC proxy error for \(self?.machServiceName ?? "?"): \(String(describing: error))")
-                self?.invalidate()
-            } as? TunnelDataXPCProtocol
+        /// Reads the announced id rather than the value a post carried, so a buffered announcement is only a wakeup and
+        /// cannot act on an id that has since moved on.
+        private func attachAnnouncedRegion() async {
+            let announced = IPCNotifications.getRawState(.tunnelData)
+            let mapped = extensionIPC.currentRegionID().map(UInt64.init)
+
+            // With nothing mapped, whatever surface the extension has is an improvement, including one from an
+            // extension too old to announce itself, which reads as zero here. With a region already mapped, only a
+            // different announcement means the process that wrote it is gone. Compared as the wider type so a state
+            // word we did not write cannot trap on the way down to an `IOSurfaceID`.
+            let needsRegion = mapped == nil || (announced != 0 && announced != mapped)
+            guard needsRegion else { return }
+
+            do {
+                let attached = try await attachRegion()
+                log.info("Attached tunnel-data IOSurface region \(attached) from extension")
+            } catch {
+                // Recovery is the next announcement, which only a running extension produces.
+                log.error("Could not attach tunnel-data region: \(error)")
+            }
+        }
+
+        /// Each fetch gets its own connection, discarded as soon as the reply lands. The app maps one region per
+        /// extension process, so this runs about as often as the extension is replaced, and no connection outlives its
+        /// call for a late reply to tear down by mistake.
+        private func attachRegion() async throws -> IOSurfaceID {
+            // Bound locally so the escaping XPC callbacks below do not capture `self`.
+            let extensionIPC = extensionIPC
+            let serviceName = machServiceName
+            let connection = makeConnection()
+            defer { connection.invalidate() }
+
+            // One message per proxy, so XPC calls exactly one of the reply block and the error handler.
+            return try await withCheckedThrowingContinuation { (continuation: Fetch) in
+                guard let proxy = connection.remoteObjectProxyWithErrorHandler({ error in
+                    log.error("ProTUN XPC proxy error for \(serviceName): \(String(describing: error))")
+                    continuation.resume(throwing: TunnelDataXPCError.connectionFailed)
+                }) as? TunnelDataXPCProtocol else {
+                    return continuation.resume(throwing: TunnelDataXPCError.proxyUnavailable)
+                }
+
+                proxy.fetchTunnelDataSurface { surface in
+                    guard let surface else {
+                        return continuation.resume(throwing: TunnelDataXPCError.noSurfaceAvailable)
+                    }
+                    let region = surface as IOSurfaceRef
+                    extensionIPC.attachRegion(region)
+                    continuation.resume(returning: IOSurfaceGetID(region))
+                }
+            }
         }
 
         private func makeConnection() -> NSXPCConnection {
@@ -91,17 +164,8 @@
                 ofReply: true
             )
             connection.remoteObjectInterface = interface
-            connection.invalidationHandler = { [weak self] in self?.invalidate() }
-            connection.interruptionHandler = { [weak self] in self?.invalidate() }
             connection.resume()
             return connection
-        }
-
-        private func invalidate() {
-            connectionLock.withLockUnchecked { connection in
-                connection?.invalidate()
-                connection = nil
-            }
         }
     }
 #endif

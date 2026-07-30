@@ -29,7 +29,6 @@ import Domain
 import Ergonomics
 import ExtensionManager
 import LegacyCommon
-import os
 import ProtonCoreFeatureFlags
 import ProtonCoreUtilities
 import Sharing
@@ -68,13 +67,22 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.activeTunnelInspector) private var activeTunnelInspector
     @Dependency(\.updateManager) private var updateManager
     @SharedReader(.connectionState) private var connectionState: ConnectionState
+    @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
+
+    /// Advanced kill switch is Active when the mode is Advanced and the reported tunnel actually carries the kill
+    /// switch flag, meaning it is connected with it or already blocking. Enabling Kill Switch mid-session only applies
+    /// to the next connection.
+    private var advancedKillSwitchActive: Bool {
+        killSwitchMode.isAdvanced && connectionState.tunnelKillSwitch
+    }
+
     /// session status, single source of truth
     @Shared(.sessionStatus) private var sharedSessionStatus: SessionStatus
     /// Reason for a forced logout to login/welcome screens
     @Shared(.sessionLogoutReason) private var sessionLogoutReason: String?
 
-    /// While clearing, the keychains are wiped and the server database is closed and deleted.
-    /// However, we must not call logOut multiple times in parallel because we might get race in it, and assertionFailure in the GRDB
+    /// While clearing, the keychains are wiped and the server database is closed and deleted. However, we must not call
+    /// logOut multiple times in parallel because we might race, which results in an assertionFailure in GRDB.
     private var isClearingApplicationData = false
 
     var sessionStatus: SessionStatus {
@@ -249,9 +257,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
 
         // IKEv2 is the only protocol that embeds a user identity in its tunnel configuration
-        // (`NEVPNProtocolIKEv2.username`). WireGuard tunnels carry no user identity, so the
-        // cross-user check is best-effort and only catches the IKE case.
-        // TODO: Have wireguard check with ProTUN VPNAPPL-3544
+        // (`NEVPNProtocolIKEv2.username`). WireGuard tunnels carry no user identity, so the cross-user check is
+        // best-effort and only catches the IKE case. TODO: Have wireguard check with ProTUN VPNAPPL-3544
         guard
             let activeBaseUsername = await activeTunnelInspector.activeIKEBaseUsername(),
             activeBaseUsername != vpnCredentials.name
@@ -261,45 +268,24 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         try await confirmAndDisconnectActiveSession()
     }
 
-    private static let activeSessionAlertTimeoutSeconds: TimeInterval = 60
     private func confirmAndDisconnectActiveSession() async throws {
+        // The alert delivers exactly one of the two handlers, on every exit path (including out-of-band dismissal,
+        // which it reports as cancel from its deinit), so the continuation resumes once.
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            // `CheckedContinuation` requires a single resume. The alert has three exit
-            // paths (Continue, Cancel, and out-of-band dismissal via Cmd+W / window close
-            // / programmatic dismiss) — the last of which fires neither action handler and
-            // would otherwise leave this continuation unresumed, hanging the caller forever.
-            // Guard against that with a one-shot resume + produce an error if it hangs more than 60s
-            let didResume = OSAllocatedUnfairLock<Bool>(initialState: false)
-            let resumeOnce: @Sendable (Result<Void, Error>) -> Void = { result in
-                let shouldResume = didResume.withLock { resumed in
-                    guard !resumed else { return false }
-                    resumed = true
-                    return true
-                }
-                guard shouldResume else { return }
-                continuation.resume(with: result)
-            }
-
-            let alert = ActiveSessionWarningAlert(
+            alertService.push(alert: ActiveSessionWarningAlert(
                 confirmHandler: { [weak self] in
                     guard let self, isConnected else {
-                        resumeOnce(.success(()))
+                        continuation.resume()
                         return
                     }
                     connectionCommandClient.send(.disconnect(.signout, completion: {
-                        resumeOnce(.success(()))
+                        continuation.resume()
                     }))
                 },
                 cancelHandler: {
-                    resumeOnce(.failure(CommonVpnError.vpnSessionInProgress))
+                    continuation.resume(throwing: CommonVpnError.vpnSessionInProgress)
                 }
-            )
-            alertService.push(alert: alert)
-
-            Task {
-                try? await Task.sleep(for: .seconds(Self.activeSessionAlertTimeoutSeconds))
-                resumeOnce(.failure(CommonVpnError.vpnSessionInProgress))
-            }
+            ))
         }
     }
 
@@ -314,12 +300,26 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         guard sessionStatus == .established else { return } // not logged in, nothing to do
         switch connectionState {
         case .connected, .killSwitchActive:
-            confirmLogout(showAlert: !force) { [weak self] in
-                self?.connectionCommandClient.send(.disconnect(.signout, completion: { [weak self] in
-                    self?.logoutRoutine(reason: reason)
-                }))
+            if advancedKillSwitchActive {
+                // Advanced KS is Active, so persist it across logout and keep blocking on the login screen by switching
+                // the live tunnel to zero-peer.
+                confirmLogout(showAlert: !force) { [weak self] in
+                    self?.connectionCommandClient.send(.clearConnectionData(completion: { [weak self] in
+                        self?.logoutRoutine(reason: reason)
+                    }))
+                }
+            } else {
+                // Standard auto-disables on logout so the user isn't locked out. Only change the kill switch setting to
+                // "off" in this specific case, since we want the Advanced setting to stay active after logout.
+                $killSwitchMode.withLock { if $0 == .standard { $0 = .off } }
+                confirmLogout(showAlert: !force) { [weak self] in
+                    self?.connectionCommandClient.send(.disconnect(.signout, completion: { [weak self] in
+                        self?.logoutRoutine(reason: reason)
+                    }))
+                }
             }
         case .connecting, .disconnecting, .resolving:
+            $killSwitchMode.withLock { if $0 == .standard { $0 = .off } }
             connectionCommandClient.send(.disconnect(.signout, completion: { [weak self] in
                 self?.logoutRoutine(reason: reason)
             }))
@@ -331,6 +331,14 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func confirmLogout(showAlert: Bool, completion: @escaping () -> Void) {
         guard showAlert else {
             completion()
+            return
+        }
+
+        // Active Advanced KS keeps the device offline after sign-out. If advanced KS was set but not used for the
+        // connection, proceed with the normal logout warning below.
+        if advancedKillSwitchActive {
+            let alert = LogoutWithAdvancedKillSwitchAlert(username: authKeychain.username, confirmHandler: { completion() })
+            alertService.push(alert: alert)
             return
         }
 
@@ -404,7 +412,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
             let cancellationClosure: () -> Void = { NSApp.reply(toApplicationShouldTerminate: false) }
 
-            let alert = QuitWarningAlert(confirmHandler: confirmationClosure, cancelHandler: cancellationClosure)
+            let alert = QuitWarningAlert(advancedKillSwitchActive: advancedKillSwitchActive, confirmHandler: confirmationClosure, cancelHandler: cancellationClosure)
             alertService.push(alert: alert)
         }
     }
@@ -414,8 +422,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     override func userPlanChanged(_ notification: Notification) {
         if let downgradeInfo = notification.object as? VpnDowngradeInfo,
            downgradeInfo.from.maxTier < downgradeInfo.to.maxTier {
-            // At some point it may be possible to plumb the modal source through from the redirect deep link.
-            // For now we will leave it nil and let the telemetry service take its best guess.
+            // At some point it may be possible to plumb the modal source through from the redirect deep link. For now
+            // we will leave it nil and let the telemetry service take its best guess.
             let modalSource: UpsellModalSource? = nil
             let upsellSuccessData = UpsellData(
                 modalSource: modalSource,

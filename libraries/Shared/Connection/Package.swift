@@ -98,6 +98,7 @@ let package = Package(
                 "Localization",
                 "Hermes",
                 "CommonNetworking",
+                .product(name: "SharedErgonomics", package: "Ergonomics"),
                 .product(name: "VPNCore", package: "vpn-core-apple"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "VPNShared", package: "NEHelper"),

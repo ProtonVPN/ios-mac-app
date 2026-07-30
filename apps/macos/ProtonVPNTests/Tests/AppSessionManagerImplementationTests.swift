@@ -459,8 +459,7 @@ struct AppSessionManagerImplementationTests {
         let server = Server.mock()
         let wireGuardSettings = WireGuardSettings(
             backend: .proTUN,
-            transport: .udp,
-            features: LocalTunnelFeatures(killSwitch: false, excludeLocalNetworks: false)
+            transport: .udp
         )
         let connectionFeatures = AgentTunnelFeatures(
             netshield: .off,
