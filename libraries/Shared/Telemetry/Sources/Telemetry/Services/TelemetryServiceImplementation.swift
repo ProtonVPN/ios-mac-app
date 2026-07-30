@@ -23,7 +23,6 @@ import Domain
 import Ergonomics
 import Foundation
 import Sharing
-import Timer
 import VPNAppCore
 import VPNShared
 

@@ -29,8 +29,6 @@ import PersistenceTestSupport
 import ProtonCoreFeatureFlags
 import ProtonCoreNetworking
 import ProtonCoreTestingToolkitUnitTestsCore
-import Timer
-import TimerMock
 import VPNAppCore
 import VPNShared
 import VPNSharedTesting

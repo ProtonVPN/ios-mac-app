@@ -163,20 +163,6 @@
     },
     {
       "target": {
-        "containerPath": "container:../../libraries/Foundations/Timer",
-        "identifier": "TimerMockTests",
-        "name": "TimerMockTests"
-      }
-    },
-    {
-      "target": {
-        "containerPath": "container:../../libraries/Foundations/Timer",
-        "identifier": "TimerTests",
-        "name": "TimerTests"
-      }
-    },
-    {
-      "target": {
         "containerPath": "container:../../libraries/Core/NEHelper",
         "identifier": "VPNSharedTests",
         "name": "VPNSharedTests"

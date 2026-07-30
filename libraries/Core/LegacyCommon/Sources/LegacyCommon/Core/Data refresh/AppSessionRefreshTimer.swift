@@ -23,7 +23,6 @@
 import Clocks
 import Dependencies
 import Foundation
-import Timer
 
 public protocol AppSessionRefreshTimerFactory {
     func makeAppSessionRefreshTimer() -> AppSessionRefreshTimer

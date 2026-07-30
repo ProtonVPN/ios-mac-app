@@ -24,8 +24,6 @@
     import Foundation
     import Localization
     import NetworkExtension
-    import Timer
-    import TimerMock
     import VPNShared
     import VPNSharedTesting
 

@@ -43,7 +43,6 @@ let package = Package(
         .package(path: "../../Foundations/PMLogger"),
         .package(path: "../../Foundations/Strings"),
         .package(path: "../../Foundations/Theme"),
-        .package(path: "../../Foundations/Timer"),
 
         .package(path: "../../Shared/CommonNetworking"),
         .package(path: "../../Shared/Connection"),
@@ -73,7 +72,6 @@ let package = Package(
                 "PMLogger",
                 "Strings",
                 "Theme",
-                "Timer",
                 "Telemetry",
                 .product(name: "Persistence", package: "Persistence"),
                 "Localization",
@@ -88,7 +86,6 @@ let package = Package(
                 // TODO: move these to LegacyCommonTestSupport, if we ever can
                 .product(name: "CommonNetworkingTestSupport", package: "CommonNetworking"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
-                .product(name: "TimerMock", package: "Timer"),
 
                 // Core code
                 .product(name: "ProtonCoreDataModel", package: "protoncore"),
@@ -115,7 +112,6 @@ let package = Package(
                     "Strings",
                     "Home",
                     .product(name: "CommonNetworkingTestSupport", package: "CommonNetworking"),
-                    .product(name: "TimerMock", package: "Timer"),
                     .product(name: "VPNAppCore", package: "NEHelper"),
                     .product(name: "VPNShared", package: "NEHelper"),
                     .product(name: "VPNSharedTesting", package: "NEHelper"),
