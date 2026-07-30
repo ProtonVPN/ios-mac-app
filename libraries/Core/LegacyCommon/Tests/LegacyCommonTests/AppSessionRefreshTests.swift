@@ -23,7 +23,6 @@ import Domain
 import Ergonomics
 import Foundation
 @testable import LegacyCommon
-import Localization
 import Persistence
 import PersistenceTestSupport
 import ProtonCoreFeatureFlags

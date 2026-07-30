@@ -22,8 +22,8 @@
 
 import Cocoa
 import Ergonomics
-import LegacyCommon
 import SharedViews
+import VPNAppCore
 
 protocol StatusMenuViewControllerProtocol: AnyObject {
     var secureCoreSwitch: SwitchButton! { get }

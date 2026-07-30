@@ -18,14 +18,11 @@
 
 #if DEBUG
     import CommonNetworking
-    import CommonNetworkingTestSupport
     import Dependencies
     import Domain
     import Foundation
-    import Localization
     import NetworkExtension
     import VPNShared
-    import VPNSharedTesting
 
     open class MockDependencyContainer {
         @Dependency(\.serverRepository) var serverRepository

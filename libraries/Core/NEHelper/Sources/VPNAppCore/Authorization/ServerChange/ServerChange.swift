@@ -19,36 +19,26 @@
 import Domain
 import Foundation
 import Sharing
-import VPNAppCore
 
-/// A single recorded server-change event, used to rate-limit free-tier "change server".
-/// Migrated off `ServerChangeStorage.ConnectionStackItem`.
-public struct ConnectionStackItem: Codable, Equatable, @unchecked Sendable {
-    public let intent: ConnectionRequestType
-    public let date: Date
-    public let upsellNext: Bool
-
-    public init(intent: ConnectionRequestType, date: Date, upsellNext: Bool) {
-        self.intent = intent
-        self.date = date
-        self.upsellNext = upsellNext
-    }
+/// A single recorded server-change event, used to rate-limit free-tier "change server"
+struct ConnectionStackItem: Codable, Equatable, @unchecked Sendable {
+    let intent: ConnectionRequestType
+    let date: Date
+    let upsellNext: Bool
 }
 
-public extension SharedKey where Self == UserScopedAppStorageKey<[ConnectionStackItem]?> {
+extension SharedKey where Self == UserScopedAppStorageKey<[ConnectionStackItem]?> {
     /// The recent server-change events for the current user
     static var serverChangeConnectionStack: Self {
         .json("ServerChangeConnectionStack")
     }
 }
 
-/// The maximum number of server-change events retained. Matches the legacy
-/// `ServerChangeStorage.maximumStackCount`.
-public let serverChangeMaximumStackCount = 64
+/// The maximum number of server-change events retained
+let serverChangeMaximumStackCount = 64
 
-/// Prepends a server-change event to the current user's stack, capping it at
-/// ``serverChangeMaximumStackCount``. Replaces `ServerChangeStorage.push(item:)`.
-public func pushServerChangeConnection(_ item: ConnectionStackItem) {
+/// Prepends a server-change event to the current user's stack, capping it at ``serverChangeMaximumStackCount``
+func pushServerChangeConnection(_ item: ConnectionStackItem) {
     @Shared(.serverChangeConnectionStack) var stack
     $stack.withLock { current in
         var copy = current ?? []

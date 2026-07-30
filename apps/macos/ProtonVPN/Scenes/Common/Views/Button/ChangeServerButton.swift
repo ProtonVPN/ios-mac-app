@@ -19,11 +19,11 @@
 import Cocoa
 import Ergonomics
 import Foundation
-import LegacyCommon
 import ProtonCoreUIFoundations
 import SharedViews
 import Strings
 import Theme
+import VPNAppCore
 
 /// Uses text fields and an image view to display the `unavailable` state, because I went mad trying to implement an
 /// NSButton subclass with multiple strings aligned to different edges, with padding and an image

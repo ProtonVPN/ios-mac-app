@@ -16,13 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CommonNetworking
 import Dependencies
+import Domain
 import Foundation
 import Sharing
-import VPNAppCore
 
-public struct ServerChangeAuthorizerImplementation {
+struct ServerChangeAuthorizerImplementation {
     func serverChangeAvailability() -> ServerChangeAuthorizer.ServerChangeAvailability {
         @Dependency(\.credentialsProvider) var credentials
 

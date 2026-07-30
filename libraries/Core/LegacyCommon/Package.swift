@@ -15,21 +15,6 @@ let package = Package(
             name: "LegacyCommon",
             targets: ["LegacyCommon"]
         ),
-        /*
-             Future: When SPM decides to be a mature software product, move the Mocks here.
-             macOS unit tests refused to link this target, even though every other target
-             was fine with it:
-            .library(
-                name: "LegacyCommonTestSupport",
-                targets: ["LegacyCommonTestSupport"]
-            ),
-             Notes:
-              - You may encounter additional problems linking TrustKit (Undefined symbols
-                ___llvm_profile_runtime)
-              - Moving @Dependency based mocks to a separate module means each of these dependencies
-                will have to be overridden in every test where its used (you cannot provide testValue
-                in a separate module)
-            */
     ],
     dependencies: [
         // External packages regularly upstreamed by our project (imported as submodules)
@@ -40,22 +25,16 @@ let package = Package(
 
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),
-        .package(path: "../../Foundations/PMLogger"),
         .package(path: "../../Foundations/Strings"),
-        .package(path: "../../Foundations/Theme"),
 
         .package(path: "../../Shared/CommonNetworking"),
         .package(path: "../../Shared/Connection"),
         .package(path: "../../Shared/ConnectionInventory"),
-        .package(path: "../../Shared/ExtensionIPC"),
-        .package(path: "../../Shared/Localization"),
         .package(path: "../../Shared/Persistence"),
         .package(path: "../../Shared/Telemetry"),
 
         // External dependencies
 
-        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.9.0")),
-        .package(url: "https://github.com/apple/swift-async-algorithms", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
@@ -66,31 +45,19 @@ let package = Package(
             dependencies: [
                 // Local
                 "Domain",
+                "Ergonomics",
+                "Strings",
+                "CommonNetworking",
                 "Connection",
                 "ConnectionInventory",
-                "Ergonomics",
-                "PMLogger",
-                "Strings",
-                "Theme",
                 "Telemetry",
-                .product(name: "Persistence", package: "Persistence"),
-                "Localization",
-
-                .product(name: "Hermes", package: "Connection"),
-
-                "ExtensionIPC",
-                "CommonNetworking",
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
-
-                // TODO: move these to LegacyCommonTestSupport, if we ever can
+                .product(name: "Persistence", package: "Persistence"),
                 .product(name: "CommonNetworkingTestSupport", package: "CommonNetworking"),
-                .product(name: "VPNSharedTesting", package: "NEHelper"),
 
                 // Core code
-                .product(name: "ProtonCoreDataModel", package: "protoncore"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
-                .product(name: "ProtonCoreLogin", package: "protoncore"),
                 .product(name: "ProtonCoreNetworking", package: "protoncore"),
                 .product(name: "ProtonCorePushNotifications", package: "protoncore"),
                 .product(name: "ProtonCoreServices", package: "protoncore"),
@@ -100,38 +67,14 @@ let package = Package(
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
-                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         ),
-        /*
-            .target(
-                name: "LegacyCommonTestSupport",
-                dependencies: [
-                    "LegacyCommon",
-                    "Strings",
-                    "Home",
-                    .product(name: "CommonNetworkingTestSupport", package: "CommonNetworking"),
-                    .product(name: "VPNAppCore", package: "NEHelper"),
-                    .product(name: "VPNShared", package: "NEHelper"),
-                    .product(name: "VPNSharedTesting", package: "NEHelper"),
-
-                    .product(name: "ProtonCoreAuthentication", package: "protoncore"),
-                    .product(name: "ProtonCoreDataModel", package: "protoncore"),
-                    .product(name: "ProtonCoreFoundations", package: "protoncore"),
-                    .product(name: "ProtonCoreNetworking", package: "protoncore"),
-                    .product(name: "ProtonCoreServices", package: "protoncore"),
-                ]
-            ),
-            */
         .testTarget(
             name: "LegacyCommonTests",
             dependencies: [
                 "LegacyCommon",
-                .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
                 .product(name: "ProtonCoreTestingToolkitUnitTestsCore", package: "protoncore"),
-                .product(name: "ProtonCoreTestingToolkitUnitTestsFeatureFlag", package: "protoncore"),
             ]
         ),
     ]

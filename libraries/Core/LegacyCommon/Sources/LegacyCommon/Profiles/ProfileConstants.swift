@@ -29,7 +29,6 @@ import Dependencies
 import Domain
 import ProtonCoreUIFoundations
 import Strings
-import Theme
 import VPNAppCore
 
 public enum ProfileConstants {
