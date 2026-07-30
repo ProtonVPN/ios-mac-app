@@ -189,7 +189,6 @@ enum TunnelManagerKey: DependencyKey {
 }
 
 final class PacketTunnelManager: TunnelManager {
-    let forkRequestsStream: AsyncStream<Void>
     let lastConnectionSpec: OSAllocatedUnfairLock<ConnectionSpec?> = .init(initialState: nil)
 
     @Dependency(\.vpnManagerRepository) private var managerRepository
@@ -209,22 +208,23 @@ final class PacketTunnelManager: TunnelManager {
     /// The extension's most-recent reported error (carrying the request id it pertains to), sent over the error channel.
     @SharedReader(.extensionError) private var extensionError: ExtensionError? = nil
 
-    private let forkRequestsContinuation: AsyncStream<Void>.Continuation
-
-    init() {
-        let (stream, continuation) = AsyncStream<Void>.makeStream()
-        self.forkRequestsStream = stream
-        self.forkRequestsContinuation = continuation
-
+    /// Fork requests posted by the extension, a new stream for each observer
+    /// we should use shared() streams in the future for this
+    var forkRequestsStream: AsyncStream<Void> {
         @Dependency(\.extensionIPC) var extensionIPC
         let commands = extensionIPC.observeCommands()
-        Task { [continuation] in
-            for await command in commands {
-                switch command {
-                case .forkSelectorRequest:
-                    continuation.yield()
+
+        return AsyncStream { continuation in
+            let task = Task {
+                for await command in commands {
+                    switch command {
+                    case .forkSelectorRequest:
+                        continuation.yield()
+                    }
                 }
+                continuation.finish()
             }
+            continuation.onTermination = { _ in task.cancel() }
         }
     }
 

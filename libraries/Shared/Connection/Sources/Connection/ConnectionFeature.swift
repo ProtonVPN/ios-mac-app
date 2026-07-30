@@ -318,7 +318,11 @@ public struct ConnectionFeature: Sendable {
                     log.error("Local agent error", category: .connection, metadata: ["error": "\(error)"])
                     return .send(.delegate(.localAgentNotice(localAgentError)))
                 } else if let apiError = error.decoded(as: APIError.self) {
-                    // We'll get a connection failure notice soon, but log the error at least.
+                    // We'll get a connection failure notice soon, but log the error at least. Read the *body* code, not
+                    // the HTTP one: `APIHTTPErrorCode.unprocessableEntity` describes every 422 as an expired session,
+                    // which is often wrong. A 422/2001 during connection is "Invalid selector" — ProTUN replaying a
+                    // fork selector it already consumed after its certificate refresh failed. That is terminal: it
+                    // never asks for a fresh selector, so pushing one does not help and the attempt cannot recover.
                     log.error("Extension encountered an API error: \(optional: apiError.httpErrorCode) (\(apiError.apiErrorCode))", category: .connection)
                 } else {
                     // All other unhandled errors get logged wholesale.
