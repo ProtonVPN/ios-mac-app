@@ -24,6 +24,8 @@ enum SettingsGenerator {
     static func settings(excludingRoutes excludedRoutes: [String], dnsServers: [String]) -> NETunnelNetworkSettings {
         let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: .ipv4Loopback)
 
+        settings.tunnelOverheadBytes = 80
+
         settings.dnsSettings = dnsSettings(from: dnsServers)
         settings.dnsSettings?.matchDomains = [""]
 
