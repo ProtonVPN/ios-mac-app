@@ -250,7 +250,7 @@ extension ErrorEvent: @retroactive CustomDebugStringConvertible {
         case .forkSelectorNeeded:
             "forkSelectorNeeded"
         case let .localAgentSettingPolicyRefused(setting):
-            "localAgentSettingPolicyRefused\(setting)"
+            "localAgentSettingPolicyRefused\(setting.description.capitalized)"
         case .certificateRefreshFatalError:
             "certificateRefreshFatalError"
         case let .apiError(endpoint, httpCode, protonCode, message, refreshTokenInvalid):

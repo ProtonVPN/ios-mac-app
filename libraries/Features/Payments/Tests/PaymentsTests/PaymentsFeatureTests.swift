@@ -20,6 +20,7 @@ import ComposableArchitecture
 import Foundation
 @testable import PaymentsShared
 import Testing
+@testable import VPNAppCore
 
 @Suite("Payments Feature Tests")
 @MainActor

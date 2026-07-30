@@ -558,7 +558,9 @@ final class PacketTunnelManager: TunnelManager {
         case (_, nil):
             return .success(.unknown)
         case (.invalid, _):
-            return .success(.connecting(config, tunnelActive: false))
+            // System has no usable configuration for this manager (never approved, or just removed (due to a session
+            // change or user deleting the profile). Returning `.invalid` resolves to a disconnected connection state.
+            return .success(.invalid)
         case (_, .disconnected):
             // With no peer, Rust reports `.disconnected` even when the tunnel interface is alive and blackholing
             // traffic. The saved configuration describes the zero-peer intent, the matching request id confirms
