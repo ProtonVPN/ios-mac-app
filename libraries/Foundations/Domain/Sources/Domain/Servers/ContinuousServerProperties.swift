@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct ContinuousServerProperties: CustomStringConvertible {
+public struct ContinuousServerProperties: CustomStringConvertible, Sendable {
     public let serverId: String
     public let load: Int
     public let score: Double

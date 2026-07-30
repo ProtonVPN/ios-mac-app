@@ -101,6 +101,7 @@ extension AppDelegate: NSApplicationDelegate {
     func applicationWillFinishLaunching(_: Notification) {
         prepareDependencies {
             $0.databaseConfiguration = .live(reportError: SentryHelper.reportError)
+            $0.connectionCommandClient.quickConnect = QuickConnectIntent.connect
         }
     }
 
@@ -158,7 +159,6 @@ extension AppDelegate: NSApplicationDelegate {
                     self.menuManager.updateMenuControllers()
                 #endif
                 _ = Dependency(\.notificationManager).wrappedValue // Start the notification manager so it observes connection state and registers notification actions
-                container.makeMaintenanceManagerHelper().startMaintenanceManager()
                 _ = Dependency(\.updateManager).wrappedValue // Load update manager so it has a chance to update the appcast feed URL
                 _ = container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.
 

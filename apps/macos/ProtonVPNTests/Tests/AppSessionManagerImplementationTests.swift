@@ -351,7 +351,8 @@ struct AppSessionManagerImplementationTests {
                     $connectionState.withLock { $0 = .disconnected }
                     Task { @MainActor in completion?() }
                 },
-                stream: { .finished }
+                stream: { .finished },
+                quickConnect: { _ in }
             )
             $0.vpnApiClient.clientCredentials = {
                 guard let credentials = networkingDelegate.apiCredentials else {

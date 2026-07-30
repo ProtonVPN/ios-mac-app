@@ -36,7 +36,8 @@ struct ConnectingOverlayFeatureTests {
     func doneOrCancelWhileConnectedOnlyDismisses(button: ConnectingOverlayFeature.ButtonKind) async {
         let client = ConnectionCommandClient(
             send: { _ in Issue.record("No command should be sent when already connected") },
-            stream: { .finished }
+            stream: { .finished },
+            quickConnect: { _ in Issue.record("No command should be sent when already connected") }
         )
         let store = TestStore(
             initialState: ConnectingOverlayFeature.State(connectionState: .fakeConnected)
@@ -60,7 +61,8 @@ struct ConnectingOverlayFeatureTests {
                 send: { command in
                     if case .disconnect = command { confirm() }
                 },
-                stream: { .finished }
+                stream: { .finished },
+                quickConnect: { _ in }
             )
             let store = TestStore(
                 initialState: ConnectingOverlayFeature.State(
@@ -84,7 +86,8 @@ struct ConnectingOverlayFeatureTests {
                 send: { command in
                     if case .retry = command { confirm() }
                 },
-                stream: { .finished }
+                stream: { .finished },
+                quickConnect: { _ in }
             )
             let store = TestStore(
                 initialState: ConnectingOverlayFeature.State(timedOut: true)
@@ -110,7 +113,8 @@ struct ConnectingOverlayFeatureTests {
                 send: { command in
                     if case .retry = command { confirm() }
                 },
-                stream: { .finished }
+                stream: { .finished },
+                quickConnect: { _ in }
             )
             let store = TestStore(
                 initialState: ConnectingOverlayFeature.State(timedOut: true)

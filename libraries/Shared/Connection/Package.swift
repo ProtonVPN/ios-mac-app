@@ -116,11 +116,13 @@ let package = Package(
                 "Domain",
                 "Localization",
                 "ExtensionSync",
+                "CommonNetworking",
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "IPCErgonomics", package: "Ergonomics"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .target(

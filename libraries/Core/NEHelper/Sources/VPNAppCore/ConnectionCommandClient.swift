@@ -35,6 +35,20 @@ public enum ConnectionCommand: @unchecked Sendable {
 public struct ConnectionCommandClient {
     public var send: @Sendable (_ command: ConnectionCommand) -> Void
     public var stream: @Sendable () async -> AsyncStream<ConnectionCommand> = { .finished }
+
+    /// Connects to the user's saved Quick Connect profile, or to the fastest server when they have none.
+    ///
+    /// Resolving the profile needs the profile store, which still lives in LegacyCommon, so apps with profiles install
+    /// this at their entry point:
+    ///
+    /// ```swift
+    /// prepareDependencies {
+    ///     $0.connectionCommandClient.quickConnect = QuickConnectIntent.connect
+    /// }
+    /// ```
+    ///
+    /// Fold the implementation into ``liveValue`` once profiles move out of LegacyCommon, and drop the install.
+    public var quickConnect: @Sendable (_ trigger: UserInitiatedVPNChange.VPNTrigger) -> Void
 }
 
 extension ConnectionCommandClient: DependencyKey {
@@ -54,13 +68,17 @@ extension ConnectionCommandClient: DependencyKey {
             },
             stream: {
                 streamSource.newStream
+            },
+            quickConnect: { _ in
+                log.assertionFailure("Quick Connect used before the app installed its implementation")
             }
         )
     }()
 
     public static let testValue = ConnectionCommandClient(
         send: { _ in },
-        stream: { .finished }
+        stream: { .finished },
+        quickConnect: { _ in }
     )
 }
 

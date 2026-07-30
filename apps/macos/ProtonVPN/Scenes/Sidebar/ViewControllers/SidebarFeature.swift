@@ -67,6 +67,7 @@ struct SidebarFeature {
 
         @SharedReader(.connectionState) var connectionState: ConnectionState
         var connection: ConnectionFeature.State = .initialState
+        var maintenance = MaintenanceFeature.State()
 
         enum ExpandState: Equatable {
             case compact
@@ -109,6 +110,7 @@ struct SidebarFeature {
 
     enum Action {
         case connection(ConnectionFeature.Action)
+        case maintenance(MaintenanceFeature.Action)
 
         case viewDidLoad
         case viewDidAppear
@@ -205,6 +207,9 @@ struct SidebarFeature {
         Scope(state: \.countriesSection, action: \.countriesSection) {
             CountriesSectionFeature()
         }
+        Scope(state: \.maintenance, action: \.maintenance) {
+            MaintenanceFeature()
+        }
         CombineReducers {
             lifecycleAndObservationReducer
             natPlutoniumReducer
@@ -266,6 +271,7 @@ private extension SidebarFeature {
                 )
             case .startObservingEvents:
                 return .merge(
+                    .send(.maintenance(.onStart)),
                     .run { send in
                         for await resize in sidebarEventsClient.windowDidResize() {
                             await send(.windowDidResize(width: resize.width, height: resize.height))
@@ -341,6 +347,7 @@ private extension SidebarFeature {
                 )
             case .stopObservingEvents:
                 return .merge(
+                    .send(.maintenance(.onStop)),
                     .cancel(id: CancelID.windowResize),
                     .cancel(id: CancelID.windowEndResize),
                     .cancel(id: CancelID.windowEnterFullScreen),

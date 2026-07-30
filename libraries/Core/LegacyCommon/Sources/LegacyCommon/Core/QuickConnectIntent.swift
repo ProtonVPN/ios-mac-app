@@ -22,17 +22,9 @@ import Domain
 import Sharing
 import VPNAppCore
 
-/// Migrated logic from `VpnGateway.quickConnect`into the new connection layer.
-///
 /// Use this any time the app wants to issue a "Quick Connect" — i.e. a connection that should
 /// honour the user's saved Quick Connect profile when available, and otherwise fall back to
-/// fastest (respecting Secure Core toggle and free-tier rules). Replaces
-/// `vpnGateway.quickConnect(trigger:)` whose call sites previously did this resolution inside
-/// `VpnGateway`.
-///
-/// Callers (e.g. `MaintenanceManagerHelper`, `AppDelegateService` deep-link handlers) used to
-/// pass `propertiesManager.lastConnectionIntent` directly, which is **not** equivalent — that
-/// reproduces the user's last *destination*, not their Quick Connect preference.
+/// fastest (respecting Secure Core toggle and free-tier rules).
 public enum QuickConnectIntent {
     /// Resolves the `(spec, protocol)` that the new layer should connect with.
     public static func resolve() -> (spec: ConnectionSpec, connectionProtocol: ConnectionProtocol?) {
@@ -56,13 +48,15 @@ public enum QuickConnectIntent {
         )
         return (spec, connectionProtocol)
     }
-}
 
-public extension ConnectionCommandClient {
-    /// Sends a `.connect` command resolved through `QuickConnectIntent`. Use this in place of
-    /// the legacy `vpnGateway.quickConnect(trigger:)` call.
-    func quickConnect(trigger: UserInitiatedVPNChange.VPNTrigger) {
+    /// Implementation of ``ConnectionCommandClient/quickConnect``, installed by the apps in `prepareDependencies`.
+    ///
+    /// It lives here rather than in `ConnectionCommandClient.liveValue` only because ``resolve()`` needs the profile
+    /// store, which is still in this module. Once profiles move out, inline this into `liveValue` and delete the
+    /// install at the app entry points.
+    public static let connect: @Sendable (UserInitiatedVPNChange.VPNTrigger) -> Void = { trigger in
+        @Dependency(\.connectionCommandClient) var connectionCommandClient
         let (spec, connectionProtocol) = QuickConnectIntent.resolve()
-        send(.connect(spec, connectionProtocol, trigger))
+        connectionCommandClient.send(.connect(spec, connectionProtocol, trigger))
     }
 }
