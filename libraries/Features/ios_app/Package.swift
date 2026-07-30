@@ -36,7 +36,6 @@ let package = Package(
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/Strings"),
-        .package(path: "../../Foundations/Timer"),
 
         .package(path: "../../Shared/CommonNetworking"),
         .package(path: "../../Shared/Persistence"),
@@ -86,7 +85,6 @@ let package = Package(
                 .product(name: "SharedErgonomics", package: "Ergonomics"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
-                .product(name: "Timer", package: "Timer"),
                 .product(name: "Hermes", package: "Connection"),
                 .product(name: "ExtensionManager", package: "Connection"),
 
@@ -132,7 +130,6 @@ let package = Package(
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
-                .product(name: "TimerMock", package: "Timer"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "PersistenceTestSupport", package: "Persistence"),

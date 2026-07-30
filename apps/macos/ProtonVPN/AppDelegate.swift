@@ -54,7 +54,6 @@ import PMLogger
 import Settings
 import Strings
 import Telemetry
-import Timer
 import VPNAppCore
 import VPNShared
 

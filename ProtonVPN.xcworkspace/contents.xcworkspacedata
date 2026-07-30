@@ -38,9 +38,6 @@
          <FileRef
             location = "group:libraries/Foundations/Theme">
          </FileRef>
-         <FileRef
-            location = "group:libraries/Foundations/Timer">
-         </FileRef>
       </Group>
       <Group
          location = "container:"

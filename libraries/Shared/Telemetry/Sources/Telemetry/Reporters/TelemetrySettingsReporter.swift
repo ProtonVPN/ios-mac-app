@@ -25,7 +25,6 @@ import Ergonomics
 import Foundation
 import Hermes
 import Sharing
-import Timer
 import VPNAppCore
 import VPNShared
 import WidgetKit

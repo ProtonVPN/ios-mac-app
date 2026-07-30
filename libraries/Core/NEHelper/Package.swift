@@ -23,7 +23,6 @@ let package = Package(
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/PMLogger"),
         .package(path: "../../Foundations/Strings"),
-        .package(path: "../../Foundations/Timer"),
 
         .package(path: "../../Shared/Localization"),
         .package(path: "../../Shared/ExtensionIPC"),
@@ -51,7 +50,6 @@ let package = Package(
                 "VPNCrypto",
                 "Strings",
                 .product(name: "Ergonomics", package: "Ergonomics"),
-                .product(name: "Timer", package: "Timer"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "PMLogger", package: "PMLogger"),
                 .product(name: "KeychainAccess", package: "KeychainAccess"),
