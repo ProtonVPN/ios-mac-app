@@ -246,11 +246,20 @@ final class PacketTunnelManager: TunnelManager {
         if manager.session.status == .disconnecting {
             log.debug("Waiting out tunnel teardown before starting", category: .connection)
             let statusChanges = NotificationCenter.default.notifications(named: .NEVPNStatusDidChange)
-            try? await withTimeout(of: .seconds(10)) {
-                for await _ in statusChanges where manager.session.status != .disconnecting {
-                    break
+            do {
+                try await withTimeout(of: .seconds(10)) {
+                    guard manager.session.status == .disconnecting else { return }
+                    for await _ in statusChanges where manager.session.status != .disconnecting {
+                        break
+                    }
                 }
+            } catch {
+                SentryHelper.shared?
+                    .log(message: "Could not wait for disconnect: \(error), connection is \(manager.session.status)")
+                log.error("Could not wait for disconnect: \(error), connection is \(manager.session.status)")
             }
+
+            try Task.checkCancellation()
         }
 
         try manager.session.startTunnel()

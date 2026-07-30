@@ -207,16 +207,10 @@ extension ManagerConfigurator {
                     try protocolConfig.apply(update: update)
                     manager.vpnProtocolConfiguration = protocolConfig
                     #if !os(tvOS)
-                        // Stripping the peers turns this manager into the kill switch configuration. Name it
-                        // accordingly and disable on-demand, so that the user can recognize it and stop it from the
-                        // system settings if they need their connectivity back. An update that restores peers turns it
-                        // back into a regular connection.
                         if isZeroPeerBlocking(protocolConfig) {
                             manager.localizedDescription = killSwitchConfigurationTitle
-                            manager.isOnDemandEnabled = false
                         } else if wasBlocking {
                             manager.localizedDescription = defaultConfigurationTitle
-                            manager.isOnDemandEnabled = true
                         }
                     #endif
 

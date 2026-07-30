@@ -887,7 +887,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]\nthen\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint --config ../../.swiftlint.yml\nelse\n    echo \"Swiftlint not found, skipping...\"\nfi\n\n\n";
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]\nthen\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint --config \"${PROJECT_DIR}/../../.swiftlint.yml\"\nelse\n    echo \"Swiftlint not found, skipping...\"\nfi\n\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

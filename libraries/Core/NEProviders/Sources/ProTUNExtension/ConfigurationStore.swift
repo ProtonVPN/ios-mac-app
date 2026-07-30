@@ -101,7 +101,11 @@ actor ConfigurationStore {
         let networkSettingsUpdate: NetworkSettingsUpdate?
         do {
             try configuration.apply(update: update)
-            (peersToApply, agentSettingsToApply, networkSettingsUpdate) = try configuration.liveUpdates(for: update)
+            (
+                peersToApply,
+                agentSettingsToApply,
+                networkSettingsUpdate
+            ) = try configuration.liveUpdates(for: update, livePeers: livePeers)
         } catch {
             Logger.adapter.error("Encountered encoding error when applying config update: \(error, privacy: .public)")
             throw ConfigurationUpdateError.badEncoding

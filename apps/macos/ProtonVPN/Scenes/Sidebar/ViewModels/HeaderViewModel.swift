@@ -113,10 +113,8 @@ final class HeaderViewModel {
         connectionState.isConnected
     }
 
-    /// Advanced kill switch is actively blocking (zero-peer)
     var isKillSwitchBlocking: Bool {
-        if case .killSwitchActive = connectionState { return true }
-        return false
+        connectionState.is(\.killSwitchActive)
     }
 
     var connectedCountryCode: String? {
@@ -238,10 +236,6 @@ final class HeaderViewModel {
     // MARK: - Private functions
 
     private func startObserving() {
-        // Use the published `newValue` for decisions inside the sink — see Reference.swift in swift-sharing:
-        // `value.willSet { subject.send(newValue) }` fires the publisher BEFORE the property assignment, so
-        // `self.connectionState` reads stale inside the sink. Outside-of-sink callers read via the synchronous
-        // `connectionState.X` accessors as usual; by then the assignment has completed.
         $connectionState.publisher
             .sink { [weak self] newValue in
                 self?.vpnConnectionChanged(newValue)

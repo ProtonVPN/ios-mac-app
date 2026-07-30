@@ -483,15 +483,11 @@ private extension QuickSettingsFeature {
             quickSettingsDisplayReconnectionFeedback()
 
         case let .killSwitch(mode):
-            // KS is mutually exclusive with both ExcludeLocalNetworks (LAN) and Plutonium (Split Tunneling). When
-            // enabling any protected mode, force them off; the setting confirmation already informed the user before we
-            // got here.
+            // KS is mutually exclusive with Split Tunneling.
             $killSwitchMode.withLock { $0 = mode }
             if mode.isProtected {
-                setFeatureValue(ExcludeLocalNetworks.off)
                 $plutonium.withLock { $0 = .disabled(plutonium.mode) }
             }
-            // The connection effect is handled by SidebarFeature by observing `killSwitchMode`
 
         case let .netShield(level):
             quickSettingsChangeNetShieldLevel(level)
@@ -613,7 +609,6 @@ extension QuickSettingsFeature {
             title = Localizable.killSwitchEnableStandardTitle
             bullets = [
                 Localizable.killSwitchBulletSplitTunneling,
-                Localizable.killSwitchBulletNoLan,
                 Localizable.killSwitchBulletDeferred,
             ]
             confirmTitle = Localizable.killSwitchConfirmEnable
@@ -631,7 +626,6 @@ extension QuickSettingsFeature {
             title = Localizable.killSwitchEnableAdvancedTitle
             bullets = [
                 Localizable.killSwitchBulletSplitTunneling,
-                Localizable.killSwitchBulletNoLan,
                 Localizable.killSwitchBulletAdvancedPersists,
                 Localizable.killSwitchBulletDeferred,
             ]

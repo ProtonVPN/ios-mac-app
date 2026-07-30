@@ -226,8 +226,8 @@ public struct ConnectionFeature: Sendable {
                 }
                 // Connecting to the exact place we are already connected changes nothing. Sending the update anyway
                 // makes the extension reset a healthy WG session to the same peer, which quietly breaks its local agent
-                // connection and publishes no state change, so the UI sits on "Connecting" until something notices (23
-                // seconds in the wild). Settle the optimistic connecting state back to the tunnel's truth.
+                // connection and publishes no state change, so the UI sits on "Connecting" until something notices,
+                // which can be a long time. Settle the optimistic connecting state back to the tunnel's truth.
                 if case let .connected(tunnelConfig, connectionData) = state.tunnel,
                    connectionData.currentPeerId == resolvedIntent.server.endpoint.id,
                    tunnelConfig.connectionSpec == resolvedIntent.spec {

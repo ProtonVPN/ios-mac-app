@@ -1002,9 +1002,6 @@
 /* macOS: Kill switch confirmation - bullet: enabling KS disables split tunneling (macOS only) */
 "_kill_switch_bullet_split_tunneling" = "This will disable split tunneling";
 
-/* iOS: Kill switch confirmation - bullet: local network access is lost */
-"_kill_switch_bullet_no_lan" = "You won't be able to access devices on your local network";
-
 /* iOS: Kill switch confirmation - bullet: Advanced blocking persists */
 "_kill_switch_bullet_advanced_persists" = "Internet stays blocked across reboots and intentional disconnects until you turn it off";
 
@@ -1061,18 +1058,6 @@
 
 /* macOS: quit confirmation body (Standard / non-advanced kill switch) */
 "_kill_switch_disconnected_from_vpn" = "You'll be disconnected from VPN.";
-
-/* macOS: title of the confirmation shown before installing an app update while VPN / kill switch is active */
-"_kill_switch_update_title" = "Install update?";
-
-/* macOS: update confirmation body when kill switch is off */
-"_kill_switch_update_body" = "This will disconnect you from VPN. Any active internet connections will be temporarily unprotected.";
-
-/* macOS: update confirmation body when kill switch is on (also temporarily disables the kill switch) */
-"_kill_switch_update_body_kill_switch_on" = "This will disconnect you from VPN and temporarily disable kill switch. Any active internet connections will be temporarily unprotected.";
-
-/* macOS: primary button of the update confirmation; proceeds with installing the update */
-"_kill_switch_update_confirm" = "Install";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "Port forwarding";
@@ -1579,7 +1564,7 @@
 "_quick_settings_portForwarding_description" = "Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.";
 "_quick_settings_secureCore_note" = "Secure Core may reduce VPN speed";
 "_quick_settings_netShield_note" = "If websites don’t load, try disabling NetShield";
-"_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try disabling kill switch.";
+"_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try allowing LAN connections in Settings.";
 "_quick_settings_portForwarding_note" = "Enter the active port number into your BitTorrent app to improve your P2P speeds";
 "_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
 "_quick_settings_portForwarding_errorNote" = "Cannot retrieve active port number. Restart your connection and try again.";

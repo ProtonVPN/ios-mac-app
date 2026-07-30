@@ -29,7 +29,6 @@ import Domain
 import Ergonomics
 import ExtensionManager
 import LegacyCommon
-import os
 import ProtonCoreFeatureFlags
 import ProtonCoreUtilities
 import Sharing
@@ -269,44 +268,24 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         try await confirmAndDisconnectActiveSession()
     }
 
-    private static let activeSessionAlertTimeoutSeconds: TimeInterval = 60
     private func confirmAndDisconnectActiveSession() async throws {
+        // The alert delivers exactly one of the two handlers, on every exit path (including out-of-band dismissal,
+        // which it reports as cancel from its deinit), so the continuation resumes once.
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            // `CheckedContinuation` requires a single resume. The alert has three exit paths (Continue, Cancel, and
-            // out-of-band dismissal via Cmd+W / window close / programmatic dismiss) — the last of which fires neither
-            // action handler and would otherwise leave this continuation unresumed, hanging the caller forever. Guard
-            // against that with a one-shot resume + produce an error if it hangs more than 60s
-            let didResume = OSAllocatedUnfairLock<Bool>(initialState: false)
-            let resumeOnce: @Sendable (Result<Void, Error>) -> Void = { result in
-                let shouldResume = didResume.withLock { resumed in
-                    guard !resumed else { return false }
-                    resumed = true
-                    return true
-                }
-                guard shouldResume else { return }
-                continuation.resume(with: result)
-            }
-
-            let alert = ActiveSessionWarningAlert(
+            alertService.push(alert: ActiveSessionWarningAlert(
                 confirmHandler: { [weak self] in
                     guard let self, isConnected else {
-                        resumeOnce(.success(()))
+                        continuation.resume()
                         return
                     }
                     connectionCommandClient.send(.disconnect(.signout, completion: {
-                        resumeOnce(.success(()))
+                        continuation.resume()
                     }))
                 },
                 cancelHandler: {
-                    resumeOnce(.failure(CommonVpnError.vpnSessionInProgress))
+                    continuation.resume(throwing: CommonVpnError.vpnSessionInProgress)
                 }
-            )
-            alertService.push(alert: alert)
-
-            Task {
-                try? await Task.sleep(for: .seconds(Self.activeSessionAlertTimeoutSeconds))
-                resumeOnce(.failure(CommonVpnError.vpnSessionInProgress))
-            }
+            ))
         }
     }
 

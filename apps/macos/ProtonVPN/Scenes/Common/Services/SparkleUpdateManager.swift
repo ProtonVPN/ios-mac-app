@@ -22,15 +22,12 @@
 
 import Cocoa
 import Combine
-import Connection
 import Dependencies
-import Domain
 import Ergonomics
 import Foundation
 import PMLogger
 import Sharing
 import Sparkle
-import Strings
 import VPNAppCore
 
 final class SparkleUpdateManager: NSObject {
@@ -40,23 +37,9 @@ final class SparkleUpdateManager: NSObject {
     private let stateUpdateSubject = PassthroughSubject<Void, Never>()
 
     @Dependency(\.appInfo) private var appInfo
-    @Dependency(\.coreAlertService) private var coreAlertService
-    @Dependency(\.vpnTunnelControl) private var vpnTunnelControl
 
     /// Beta-channel opt-in. Toggled from Settings
     @SharedReader(.earlyAccess) private var earlyAccess
-
-    @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
-    /// Set while Advanced kill switch is temporarily disabled for an update; restored on the next launch
-    @Shared(.restoreAdvancedKillSwitchAfterUpdate) private var restoreAdvancedKillSwitchAfterUpdate: Bool
-    @SharedReader(.connectionState) private var connectionState: ConnectionState
-
-    /// Advanced kill switch is Active when the mode is Advanced and the reported tunnel actually carries
-    /// the kill switch flag, so it would keep blocking across the update relaunch. A mode enabled
-    /// mid-session only applies to the next connection and needs no temporary disable.
-    private var advancedKillSwitchActive: Bool {
-        killSwitchMode.isAdvanced && connectionState.tunnelKillSwitch
-    }
 
     #if DEBUG
         /// When set, suppresses update prompts (used in UI tests)
@@ -124,8 +107,6 @@ final class SparkleUpdateManager: NSObject {
     override init() {
         super.init()
 
-        restoreKillSwitchAfterUpdateIfNeeded()
-
         self.earlyAccessObservation = $earlyAccess.publisher
             .dropFirst()
             .sink { [weak self] earlyAccess in
@@ -135,18 +116,6 @@ final class SparkleUpdateManager: NSObject {
         suDateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss ZZ"
 
         self.updater = SPUStandardUpdaterController(updaterDelegate: self, userDriverDelegate: nil)
-    }
-
-    /// Restores Advanced kill switch after an update relaunch
-    ///
-    /// When the user confirms an update while Advanced kill switch is on, we temporarily disable it so the
-    /// disconnect + relaunch doesn't leave the machine blocked, flagging it for restoration. Re-applying the
-    /// mode here (early at launch, before the connection layer cold-starts) makes the disable genuinely temporary
-    private func restoreKillSwitchAfterUpdateIfNeeded() {
-        guard restoreAdvancedKillSwitchAfterUpdate else { return }
-        $restoreAdvancedKillSwitchAfterUpdate.withLock { $0 = false }
-        $killSwitchMode.withLock { $0 = .advanced }
-        log.info("Restored Advanced kill switch after applying an update")
     }
 
     private func turnOnEarlyAccess(_ earlyAccess: Bool) {
@@ -213,60 +182,9 @@ final class SparkleUpdateManager: NSObject {
 }
 
 extension SparkleUpdateManager: SPUUpdaterDelegate {
+    // Allows us to leave the VPN connected while relaunching for an update.
     func updaterWillRelaunchApplication(_: SPUUpdater) {
         isRelaunchingForUpdate = true
-    }
-
-    /// Before Sparkle relaunches to install, warn that the update disconnects the VPN (and, when kill switch is on,
-    /// temporarily disables it) so active connections are therefore briefly unprotected.
-    func updater(_: SPUUpdater, shouldPostponeRelaunchForUpdate _: SUAppcastItem, untilInvokingBlock installHandler: @escaping () -> Void) -> Bool {
-        guard connectionState.isConnected || advancedKillSwitchActive else {
-            return false
-        }
-
-        // "we'll temporarily disable kill switch" copy only when Advanced KS is Active (armed at connect →
-        // stays blocking across the relaunch). Standard just releases on the disconnect; Armed isn't blocking.
-        let body = advancedKillSwitchActive
-            ? Localizable.killSwitchUpdateBodyKillSwitchOn
-            : Localizable.killSwitchUpdateBody
-
-        coreAlertService.push(alert: WarningAlert(
-            title: Localizable.killSwitchUpdateTitle,
-            message: body,
-            confirmTitle: Localizable.killSwitchUpdateConfirm,
-            onConfirm: { [weak self] in
-                guard let self else {
-                    installHandler()
-                    return
-                }
-                log.info("User confirmed the update from the kill switch update confirmation")
-                prepareForUpdateInstall(then: installHandler)
-            },
-            showCancel: true,
-            onCancel: {
-                // Declined: leave VPN and kill switch untouched. The staged update installs on next quit.
-                log.info("User postponed the update from the kill switch update confirmation")
-            }
-        ))
-
-        return true
-    }
-
-    /// Tears down the VPN (and Advanced kill switch) before invoking Sparkle's relaunch handler
-    private func prepareForUpdateInstall(then installHandler: @escaping () -> Void) {
-        // Active Advanced kill switch keeps blocking across a clean disconnect (and the stop below would otherwise trip
-        // the switch to zero-peer), so temporarily disable it and flag it for restoration on the next launch. Standard
-        // releases automatically on the disconnect. An Advanced KS setting that hasn't taken effect also doesn't count.
-        if advancedKillSwitchActive {
-            $restoreAdvancedKillSwitchAfterUpdate.withLock { $0 = true }
-            $killSwitchMode.withLock { $0 = .off }
-        }
-
-        let vpnTunnelControl = vpnTunnelControl
-        Task {
-            try? await vpnTunnelControl.stop()
-            await MainActor.run { installHandler() }
-        }
     }
 
     func updater(_: SPUUpdater, didFinishLoading appcast: SUAppcast) {

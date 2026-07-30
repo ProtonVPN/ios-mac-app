@@ -150,7 +150,7 @@ extension ConnectingOverlayFeature.State {
         case .disconnected:
             return .preparing
         case .killSwitchActive:
-            return .preparing // TODO: ProTUN: is this correct?
+            return .preparing
         case .resolving, .connecting, .disconnecting:
             return serverName.map { .connecting(serverName: $0) } ?? .preparing
         }

@@ -21,12 +21,13 @@ import Ergonomics
 import Strings
 import Theme
 
-/// Banner shown at the top of the login form while Advanced kill switch is blocking internet access Reboot / session
+/// Banner shown at the top of the login form while Advanced kill switch is blocking internet access. Reboot / session
 /// expiry can leave the user logged out while Advanced KS still blocks, so the login screen can't reach the auth
 /// servers. This allows the user to tap "Disable" so that they can log in.
 ///
-/// Two states: - `.blocking`: warning style + a "Disable" action button. - `.disabled`: success style + a dismiss (X)
-/// button, shown after the user disables KS.
+/// Two states:
+/// - `.blocking`: warning style + a "Disable" action button.
+/// - `.disabled`: success style + a dismiss (X) button, shown after the user disables KS.
 final class KillSwitchLoginBanner: NSView {
     private let iconView = NSImageView().with {
         $0.translatesAutoresizingMaskIntoConstraints = false

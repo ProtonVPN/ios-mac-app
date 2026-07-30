@@ -684,10 +684,6 @@ final class SettingsViewModel {
     }
 
     private func applyKillSwitchMode(_ mode: KillSwitchMode) {
-        // Kill switch and "Allow LAN" are mutually exclusive: enabling protection turns Allow LAN off.
-        if mode.isProtected, featureValue(for: ExcludeLocalNetworks.self) == .on {
-            setFeatureValue(ExcludeLocalNetworks.off)
-        }
         $killSwitchMode.withLock { $0 = mode }
         // A live tunnel is deliberately left untouched: the new mode arms `includeAllNetworks` at the
         // next connect. HomeFeature observes `killSwitchMode` only to release an active zero-peer
@@ -707,10 +703,7 @@ final class SettingsViewModel {
         switch mode {
         case .standard:
             title = Localizable.killSwitchEnableStandardTitle
-            // Standard also arms `includeAllNetworks` at connect, so it likewise takes effect only from the
-            // next connection — tell the user so enabling it mid-session isn't mistaken for instant protection.
             bullets = [
-                Localizable.killSwitchBulletNoLan,
                 Localizable.killSwitchBulletDeferred,
             ]
             confirmTitle = Localizable.killSwitchConfirmEnable
@@ -727,7 +720,6 @@ final class SettingsViewModel {
         case .advanced:
             title = Localizable.killSwitchEnableAdvancedTitle
             bullets = [
-                Localizable.killSwitchBulletNoLan,
                 Localizable.killSwitchBulletAdvancedPersists,
                 Localizable.killSwitchBulletDeferred,
             ]

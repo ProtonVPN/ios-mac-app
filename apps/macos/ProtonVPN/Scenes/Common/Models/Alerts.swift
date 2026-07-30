@@ -24,6 +24,7 @@ import Dependencies
 import Domain
 import Foundation
 import LegacyCommon
+import os
 import Sharing
 import Strings
 import VPNAppCore
@@ -48,9 +49,28 @@ public class ActiveSessionWarningAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
 
+    private let deliverCancelUnlessHandled: () -> Void
+
+    /// Exactly one of the two handlers runs, on every exit path. The buttons deliver directly, and an alert that goes
+    /// away without either running (host window closed, programmatic dismissal, or the alert service discarding this
+    /// instance after moving its actions onto an already-presented one) delivers the cancel outcome from `deinit`.
     public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
+        let delivered = OSAllocatedUnfairLock(initialState: false)
+        let once: @Sendable (@escaping () -> Void) -> Void = { handler in
+            let first = delivered.withLock { delivered in
+                defer { delivered = true }
+                return !delivered
+            }
+            guard first else { return }
+            handler()
+        }
+        self.deliverCancelUnlessHandled = { once(cancelHandler) }
+        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: { once(confirmHandler) }))
+        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: { once(cancelHandler) }))
+    }
+
+    deinit {
+        deliverCancelUnlessHandled()
     }
 }
 
