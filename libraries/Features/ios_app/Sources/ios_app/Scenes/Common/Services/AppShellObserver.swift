@@ -43,6 +43,11 @@ final class AppShellObserver: NSObject {
     /// sheet's live height rather than the settled detent, so the pages fade with the drag instead of
     /// through an animation of ours running against the sheet's own movement.
     private var floorPresence: CGFloat = 1
+    /// Whether the sheet's ladder was last restricted to the full detent for a deep page. Only a real change may touch
+    /// the sheet.
+    private var detentsRestrictedToFull = false
+    /// The presented sheet, so a navigation push can raise it in the same turn it reports its depth.
+    private weak var sheet: UISheetPresentationController?
     /// The presented tabs, for the floor treatment the sheet's own movement drives.
     private weak var tabs: UITabBarController?
 
@@ -51,14 +56,20 @@ final class AppShellObserver: NSObject {
         self.overlap = overlap
     }
 
-    /// Applies reducer decisions to the sheet. The ladder itself is fixed and applied once at
-    /// presentation; only the selection moves. The equality checks are what prevent the delegates and
-    /// this observation from chasing each other around a change either side made.
+    /// Applies reducer decisions to the sheet. The full ladder is applied once at presentation; here
+    /// the selection moves, and a deep page swaps the ladder for the full detent alone. The equality
+    /// checks are what prevent the delegates and this observation from chasing each other around a
+    /// change either side made.
     func observeShellState(sheet: UISheetPresentationController, tabs: UITabBarController) {
+        self.sheet = sheet
         self.tabs = tabs
         observe { [weak self, weak sheet, weak tabs] in
             guard let self else { return }
             let detent = store.detent
+
+            // Depth changes normally arrive through the navigation delegate, which has already applied them by hand;
+            // this catches any sender that only writes the state.
+            applyPageDepth(store.isPageDeep)
 
             if let sheet, sheet.selectedDetentIdentifier != detent.identifier {
                 isApplyingStoreDetent = true
@@ -109,6 +120,48 @@ final class AppShellObserver: NSObject {
                 item.selectedImage = kept
             }
         }
+    }
+
+    /// Holds the sheet at full while the visible tab is pushed beyond its root: the legacy detail pages
+    /// were designed for the whole screen, and the floor's tab bar may be hidden by a pushed page. The
+    /// ladder and the grabber return with the root.
+    ///
+    /// Applied by hand rather than left to the observation, which runs a turn later than the caller needs. Raising
+    /// animates and reports when it has landed, so a push can wait for its room; the release on the way back only
+    /// restores the ladder, since the sheet stays where it is.
+    private func applyPageDepth(_ isDeep: Bool, completion: (() -> Void)? = nil) {
+        guard let sheet, isDeep != detentsRestrictedToFull else {
+            completion?()
+            return
+        }
+        detentsRestrictedToFull = isDeep
+        let apply = {
+            sheet.detents = isDeep
+                ? [TabularFeature.Detent.full.sheetDetent]
+                : TabularFeature.Detent.allCases.map(\.sheetDetent)
+            sheet.prefersGrabberVisible = !isDeep
+            if isDeep {
+                sheet.selectedDetentIdentifier = TabularFeature.Detent.full.identifier
+            }
+        }
+        guard isDeep, sheet.selectedDetentIdentifier != TabularFeature.Detent.full.identifier else {
+            apply()
+            completion?()
+            return
+        }
+        // The sheet's own animation carries the raise, and the transaction it runs in tells us when it has finished,
+        // which is when the page waiting on the room may be pushed into it.
+        CATransaction.begin()
+        CATransaction.setCompletionBlock { completion?() }
+        sheet.animateChanges(apply)
+        CATransaction.commit()
+    }
+
+    /// Raises the sheet for a page about to be pushed and calls back once the room is there. A stack already at full
+    /// needs none, so the push goes straight through.
+    func makeRoom(forPushThen push: @escaping () -> Void) {
+        store.send(.pageDepthChanged(true))
+        applyPageDepth(true, completion: push)
     }
 
     /// Mirrors the sheet's movement onto the backdrop: directly while the sheet's geometry is current
@@ -264,9 +317,31 @@ extension AppShellObserver: UISheetPresentationControllerDelegate {
 }
 
 extension AppShellObserver: UITabBarControllerDelegate {
-    func tabBarController(_ tabBarController: UITabBarController, didSelect _: UIViewController) {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         guard let tab = TabularFeature.Tab.allCases[safe: tabBarController.selectedIndex] else { return }
         store.send(.tabSelected(tab))
+        // Depth belongs to the visible tab: switching to one still deep in its stack keeps the full
+        // sheet, and switching to one at its root releases it.
+        let depth = (viewController as? UINavigationController)?.viewControllers.count ?? 1
+        applyPageDepth(depth > 1)
+        store.send(.pageDepthChanged(depth > 1))
+    }
+}
+
+extension AppShellObserver: UINavigationControllerDelegate {
+    /// Every UIKit tab's navigation controller reports here, so the shell knows when the visible page
+    /// is pushed beyond its root.
+    /// Pushes have already made their own room through `makeRoom(forPushThen:)`, so this is where a pop
+    /// hands the ladder back. Nothing resizes on the way out: the sheet stays at full until the user
+    /// moves it.
+    func navigationController(
+        _ navigationController: UINavigationController,
+        willShow _: UIViewController,
+        animated _: Bool
+    ) {
+        let isDeep = navigationController.viewControllers.count > 1
+        applyPageDepth(isDeep)
+        store.send(.pageDepthChanged(isDeep))
     }
 }
 

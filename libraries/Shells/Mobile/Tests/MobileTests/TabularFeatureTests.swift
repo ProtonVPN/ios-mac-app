@@ -69,6 +69,24 @@ struct TabularFeatureTests {
         await store.send(.map(.userPinTapped))
     }
 
+    @Test("A page pushed beyond its root holds the sheet at full until it pops")
+    @MainActor
+    func deepPagesHoldTheSheetAtFull() async {
+        let store = TestStore(initialState: TabularFeature.State()) { TabularFeature() }
+        store.exhaustivity = .off(showSkippedAssertions: false)
+
+        await store.send(.pageDepthChanged(true)) {
+            $0.isPageDeep = true
+            $0.detent = .full
+        }
+        // Nothing lowers it while deep: not a drag report, not a connect.
+        await store.send(.detentChanged(.half))
+        await store.send(.commands(.commandReceived(.connect(.defaultFastest, nil, .connectionCard))))
+
+        await store.send(.pageDepthChanged(false)) { $0.isPageDeep = false }
+        await store.send(.detentChanged(.half)) { $0.detent = .half }
+    }
+
     @Test("The sheet follows the user's drag")
     @MainActor
     func detentChangesFollowTheSheet() async {

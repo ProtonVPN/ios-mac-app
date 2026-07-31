@@ -55,6 +55,9 @@ public struct TabularFeature {
     public struct State: Equatable {
         public internal(set) var detent: Detent = .half
         public internal(set) var tab: Tab = .home
+        /// Whether the visible tab has moved into a menu. The legacy detail pages are still designed for the whole
+        /// screen, so while one is up the sheet's only stop is full.
+        public internal(set) var isPageDeep = false
 
         public var commands: ConnectionCommandsFeature.State
         public var connectionStatus: ConnectionStatusFeature.State
@@ -77,6 +80,8 @@ public struct TabularFeature {
         case detentChanged(Detent)
         case home(HomeFeature.Action)
         case map(HomeMapFeature.Action)
+        /// The visible tab's navigation depth changed: pushed beyond its root, or back at it.
+        case pageDepthChanged(Bool)
         case tabSelected(Tab)
     }
 
@@ -100,7 +105,16 @@ public struct TabularFeature {
         Reduce { state, action in
             switch action {
             case let .detentChanged(detent):
-                state.detent = detent
+                // If a page is designed for the whole screen, don't let the user collapse the sheet.
+                state.detent = state.isPageDeep ? .full : detent
+                return .none
+
+            case let .pageDepthChanged(isDeep):
+                state.isPageDeep = isDeep
+                // If a page is designed for the whole screen, don't let the user collapse the sheet.
+                if isDeep {
+                    state.detent = .full
+                }
                 return .none
 
             case let .tabSelected(tab):
@@ -139,7 +153,7 @@ public struct TabularFeature {
             case .commands(.commandReceived(.connect)):
                 // A connect that starts under the fully raised sheet lowers it to half, so the status view and the
                 // camera flight come into view without the user having to clear the sheet themselves.
-                if state.detent == .full {
+                if state.detent == .full, !state.isPageDeep {
                     state.detent = .half
                 }
                 return .none

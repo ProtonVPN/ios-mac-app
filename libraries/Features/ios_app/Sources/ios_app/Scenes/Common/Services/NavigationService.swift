@@ -304,8 +304,8 @@ final class NavigationService {
             switch tab {
             case .home: makeHomeViewController(store: store.scope(state: \.home, action: \.home))
             case .countries: makeCountriesViewController()
-            case .profiles: UINavigationController(rootViewController: makeProfilesViewController())
-            case .settings: UINavigationController(rootViewController: makeSettingsViewController())
+            case .profiles: SheetNavigationController(rootViewController: makeProfilesViewController())
+            case .settings: SheetNavigationController(rootViewController: makeSettingsViewController())
             }
         }, animated: false)
         tabBarController.setupView()
@@ -324,6 +324,20 @@ final class NavigationService {
         let observer = AppShellObserver(store: store, overlap: sheetOverlap)
         shellObserver = observer
         tabBarController.delegate = observer
+        // The UIKit tabs' navigation stacks report their depth through the observer, so a pushed legacy page can hold
+        // the sheet at full, and ask it for the room before pushing into it.
+        tabBarController.viewControllers?
+            .compactMap { $0 as? UINavigationController }
+            .forEach { navigation in
+                navigation.delegate = observer
+                (navigation as? SheetNavigationController)?.makeRoomForPush = { [weak observer] push in
+                    guard let observer else {
+                        push()
+                        return
+                    }
+                    observer.makeRoom(forPushThen: push)
+                }
+            }
         tabBarController.isModalInPresentation = true // the tabs are the app, so the sheet never dismisses
         // Opaque to match the pages, so navigation transitions inside a tab slide over solid ground.
         // The observer clears it at the floor alone, where the pages are faded and the globe runs under
