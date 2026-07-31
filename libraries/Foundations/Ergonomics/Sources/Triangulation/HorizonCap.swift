@@ -37,15 +37,10 @@ public struct HorizonCap: Sendable {
 
     /// The cosine threshold a direction's dot with `facing` must exceed to be on the near side: `1/distance`. This is
     /// the single scalar handed to the GPU pin and star culls, so the shader never re-derives the reciprocal per
-    /// vertex. Clamped for a degenerate `distance` of 1 or less (camera on or inside the sphere): nothing is visible
-    /// and `angularRadius` stays 0 instead of going NaN through the `acos` of a value above 1.
+    /// vertex. Clamped for a degenerate `distance` of 1 or less (camera on or inside the sphere), where the threshold
+    /// holds at 1 and nothing is visible, rather than rising above 1 where no direction could ever pass.
     public var cosThreshold: Float {
         1 / max(distance, 1)
-    }
-
-    /// Half-angle of the visible cap.
-    public var angularRadius: Angle {
-        .acos(Double(cosThreshold))
     }
 
     /// Whether `direction` (assumed unit) is on the visible near side of the globe.

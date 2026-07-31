@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CoreGraphics
 import simd
 import Triangulation
 
@@ -67,4 +68,46 @@ enum GlobeFocus {
         let distance = cos(rho) + sin(rho) / tan(halfFov * fitMargin)
         return min(max(distance, minDistance), wholeGlobeDistance)
     }
+
+    /// Finds the ideal zoom distance for a set of coordinates (`directions`) which are usually server pins, according
+    /// to where the camera is facing and the distance we're currently zoomed to now.
+    static func distance(
+        showing directions: [SIMD3<Float>],
+        facing: SIMD3<Float>,
+        from distance: Float,
+        framing: GlobeFraming,
+        margin: CGFloat,
+        noFartherThan ceiling: Float = GlobeFocus.wholeGlobeDistance
+    ) -> Float {
+        guard !directions.isEmpty else { return distance }
+        let orientation = GlobeCamera.orientation(facing: facing)
+        let region = framing.visibleRegion.insetBy(dx: margin, dy: margin)
+        func fits(_ candidate: Float) -> Bool {
+            let projection = GlobeProjection.make(
+                camera: GlobeCamera(orientation: orientation, distance: candidate),
+                framing: framing
+            )
+            return directions.allSatisfy { direction in
+                let projected = projection.project(direction)
+                return projected.isFront && region.contains(projected.point)
+            }
+        }
+        if fits(distance) { return distance }
+        guard fits(ceiling) else { return ceiling }
+        return boundary(where: fits, holds: ceiling, fails: distance)
+    }
+
+    /// Performs binary search with the pin clusters to see which zoom level results in all of the pins fitting.
+    static func boundary(where condition: (Float) -> Bool, holds: Float, fails: Float) -> Float {
+        var holds = holds
+        var fails = fails
+        for _ in 0 ..< boundarySearchSteps {
+            let middle = (holds + fails) / 2
+            if condition(middle) { holds = middle } else { fails = middle }
+        }
+        return holds
+    }
+
+    /// How many steps of the binary search we're happy to do before we're satisfied with the result.
+    private static let boundarySearchSteps = 10
 }

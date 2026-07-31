@@ -34,12 +34,18 @@ struct GlobeFraming {
     var aspectRatio: Float {
         Float(viewSize.width / max(viewSize.height, 1))
     }
+
+    /// The part of the canvas the user can actually see: full width, `visibleHeight` tall, starting at
+    /// `focusTop`. What "on screen" means for anything that must stay clear of the sheet and the chrome.
+    var visibleRegion: CGRect {
+        CGRect(x: 0, y: focusTop, width: viewSize.width, height: visibleHeight)
+    }
 }
 
 extension GlobeProjection {
     /// Builds the projection for `camera` at this `framing`, the one construction shared by the per-frame
     /// render and the tap hit-test, so the tap-time projection matches what's on screen.
-    static func make(camera: GlobeCamera, framing: GlobeFraming, lightFade: Float = 0) -> GlobeProjection {
-        GlobeProjection(camera: camera, mvp: camera.matrix(framing: framing), viewSize: framing.viewSize, lightFade: lightFade)
+    static func make(camera: GlobeCamera, framing: GlobeFraming) -> GlobeProjection {
+        GlobeProjection(camera: camera, mvp: camera.matrix(framing: framing), viewSize: framing.viewSize)
     }
 }

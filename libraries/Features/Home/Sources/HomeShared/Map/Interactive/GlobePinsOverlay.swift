@@ -33,7 +33,6 @@ struct GlobePinsOverlay: View {
     let pinMode: ConnectionPin.Mode
     /// The user/connection pin's sphere direction, or `nil` to hide it.
     let pinDirection: SIMD3<Float>?
-    let interactive: Bool
     /// Whether the map is moving (a drag, a pinch, or a coast). Gates the swap from points to discs.
     let isMoving: Bool
     /// The feature's current selection. The pill takes taps only while its location is still the selected one.
@@ -45,7 +44,7 @@ struct GlobePinsOverlay: View {
     let onGesture: (GlobeGesture) -> Void
     /// Called when the selected location's connect pill is tapped.
     let onConnect: (LocationPin) -> Void
-    /// Called when the user pin is tapped to recenter, in interactive mode only.
+    /// Called when the user pin is tapped to recenter.
     let onRecenter: () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -59,20 +58,13 @@ struct GlobePinsOverlay: View {
     /// reprojection for the rest of the gesture.
     @State private var frozenClusters: [PinCluster] = []
     /// Mirrors `showClusters` through an explicit animation, so the fade-out has a completion to clear
-    /// `frozenClusters` with. Starts true: with the map still, the discs are already up (their opacity is
-    /// still multiplied by `fade`, so nothing shows while decorative).
+    /// `frozenClusters` with. Starts true, matching a still map, where the discs are already up.
     @State private var discsShown = true
 
     var body: some View {
-        // Pins render whenever the globe is at all lit: interactive steady state, and the open/close
-        // transition, where `lightFade` interpolates on the same animation that zooms the globe. Skipped
-        // entirely when fully decorative.
-        let fade = Double(projection.lightFade)
-        let active = fade > 0.001
-        // Counted cluster discs only once settled and fully open. Otherwise the per-pin Metal points show:
-        // while moving, so cluster membership can't flicker, and through the open/close transition, so the
-        // pins shrink cleanly with the globe.
-        let showClusters = PinDisplay.showsClusters(isMoving: isMoving, lightFade: projection.lightFade)
+        // Counted cluster discs only once the map has settled. While it moves the per-pin Metal points show
+        // instead, so cluster membership can't flicker.
+        let showClusters = PinDisplay.showsClusters(isMoving: isMoving)
         // Fresh clustering only while the discs fully show (settled, and tracking programmatic camera flies frame by
         // frame). While the map moves, the fading discs render the frozen membership, re-projected each frame so they
         // track the globe; the O(pins × clusters) grouping pass is what stays off the per-frame path.
@@ -89,20 +81,30 @@ struct GlobePinsOverlay: View {
 
             // The settled cluster discs, shown only when the map is still since it's in SwiftUI and desync'd from the
             // Metal globe.
-            if active {
-                Canvas { context, _ in
-                    for cluster in clusters {
-                        Self.draw(cluster, in: context)
-                    }
+            Canvas { context, _ in
+                for cluster in clusters {
+                    Self.draw(cluster, in: context)
                 }
-                .opacity(discsShown ? fade : 0)
-                .allowsHitTesting(false)
+            }
+            .opacity(discsShown ? 1 : 0)
+            .allowsHitTesting(false)
+
+            // The user/connection pin. Tapping it recenters the map around it.
+            if let pinDirection {
+                let projected = projection.project(pinDirection)
+                if projected.isFront {
+                    ConnectionPin(mode: pinMode)
+                        .frame(width: PinDisplay.collisionThreshold, height: PinDisplay.collisionThreshold)
+                        .contentShape(Rectangle())
+                        .position(projected.point)
+                        .onTapGesture { onRecenter() }
+                }
             }
 
             // The selected location's connect pill. `center` refreshes every frame so it tracks the globe, while
             // `reveal` is animated by the pill model. It takes its own tap, but only while its location is still
             // selected, so a pill collapsing after a deselect can't swallow taps.
-            if interactive, let location = pill.location {
+            if let location = pill.location {
                 let projected = projection.project(location.direction)
                 ConnectPill(
                     reveal: pill.reveal,
@@ -116,7 +118,7 @@ struct GlobePinsOverlay: View {
 
             // The outgoing pill collapsing while the new one grows. It has its own location and reveal so the two
             // animate independently. Never tappable.
-            if interactive, let outgoingLocation = pill.outgoingLocation {
+            if let outgoingLocation = pill.outgoingLocation {
                 let projected = projection.project(outgoingLocation.direction)
                 ConnectPill(
                     reveal: pill.outgoingReveal,
@@ -125,20 +127,6 @@ struct GlobePinsOverlay: View {
                     contentLayoutDirection: ambientLayoutDirection
                 )
                 .allowsHitTesting(false)
-            }
-
-            // The user/connection pin stays a real, animated SwiftUI view, since there is only one. Tapping
-            // it recenters in interactive mode. Otherwise the tap falls through to the gesture surface.
-            if let pinDirection {
-                let projected = projection.project(pinDirection)
-                if projected.isFront {
-                    ConnectionPin(mode: pinMode)
-                        .frame(width: PinDisplay.collisionThreshold, height: PinDisplay.collisionThreshold)
-                        .contentShape(Rectangle())
-                        .position(projected.point)
-                        .allowsHitTesting(interactive)
-                        .onTapGesture { onRecenter() }
-                }
             }
         }
         // Everything here is positioned in projected screen coordinates (`.position`, Canvas draws), which must not

@@ -118,26 +118,17 @@ final class GlobeTrackballModel {
         lastDragLocation != nil || pinchStartDistance != nil || isCoasting
     }
 
-    // MARK: - Mode hand-off & programmatic transitions
+    // MARK: - Programmatic transitions
 
-    // The view calls `focus` and `enterInteractive` inside a `withAnimation` so the camera change animates.
-    // The model just sets the targets.
-
-    /// Adopts the camera currently on screen, stopping any coast and clearing any selected pill. The view
-    /// calls this with the decorative camera whenever the mode changes: entering interactive mode picks up
-    /// seamlessly from whatever the globe already shows, and leaving primes the next entry so a stale
-    /// orientation from the last pan can't flash.
-    func enterInteractive(orientation: simd_quatf, distance: Float) {
+    /// Puts the camera somewhere outright, stopping any coast. Unlike `focus` this does not animate, so it is for
+    /// taking up a position the user has never seen.
+    func park(orientation: simd_quatf, distance: Float) {
         momentum.stop()
-        // Land in a settled state even when the hand-off interrupts a gesture mid-touch. The end events for
-        // that gesture will never arrive once the mode changes, and leftover tracking state would keep
-        // `isMoving` stuck at true.
         lastDragLocation = nil
         pinchStartDistance = nil
         pinchStartSeparation = nil
         lastPinchCentroid = nil
         velocitySamples.removeAll()
-        onMoved?()
         self.orientation = orientation
         self.distance = distance
     }

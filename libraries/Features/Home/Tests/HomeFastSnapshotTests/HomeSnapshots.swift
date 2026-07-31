@@ -123,9 +123,6 @@ struct HomeScreenTests {
             .frame(size)
             .environment(\._accessibilityReduceMotion, true)
             .environment(\.colorScheme, .dark)
-            // Render the globe via off-screen Metal read-back, since a live MTKView can't be captured
-            // by the snapshot strategy's `layer.render(in:)`.
-            .environment(\.globeRenderMode, .staticImage)
 
         // Derived from the test parameters, never from the shared globals, so a stray write from elsewhere can't steer
         // this case to another case's reference file.
@@ -135,10 +132,6 @@ struct HomeScreenTests {
             state.connection.shortDescription(),
         ].joined(separator: "-")
 
-        store.send(.map(.connectionStateUpdated(state.connection)))
-
-        // `.fixed` rather than `.sizeThatFits`, so HomeView's GeometryReader sees the real device
-        // height. Otherwise the globe's render height balloons to the measuring proposal.
         assertSnapshot(
             of: appView,
             as: .image(

@@ -187,8 +187,6 @@ struct GlobeProjection {
     let camera: GlobeCamera
     let mvp: simd_float4x4
     let viewSize: CGSize
-    /// Current interpolated day/night lighting strength, so overlay elements can fade in sync.
-    var lightFade: Float = 0
 
     /// Projects a unit-sphere direction to a screen point, with whether it's on the near hemisphere.
     func project(_ direction: SIMD3<Float>) -> (point: CGPoint, isFront: Bool) {
@@ -277,8 +275,7 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
     var body: some View {
         let projection = GlobeProjection.make(
             camera: camera,
-            framing: GlobeFraming(viewSize: viewSize, focusHeight: focusHeight, focusTop: focusTop),
-            lightFade: lightFade
+            framing: GlobeFraming(viewSize: viewSize, focusHeight: focusHeight, focusTop: focusTop)
         )
         return ZStack {
             globeSurface(mvp: projection.mvp)
@@ -308,9 +305,9 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
     /// The `GlobeSurfaceView` value both render modes draw, built in one place so the live and snapshot paths
     /// can't drift and every globe parameter reaches both.
     private func liveGlobe(mvp: simd_float4x4) -> GlobeSurfaceView {
-        // Points show while moving and through the open/close dissolve. Once settled and fully open they
-        // fade out so the cluster discs take over. Following `lightFade` dissolves them with the map.
-        let pinFade: Float = PinDisplay.showsClusters(isMoving: isMoving, lightFade: lightFade) ? 0 : lightFade
+        // Points show while moving. Once settled they fade out so the cluster discs take over. Following
+        // `lightFade` dissolves them with the map.
+        let pinFade: Float = PinDisplay.showsClusters(isMoving: isMoving) ? 0 : lightFade
         let starFade = lightFade * starOpacity // dissolve with the open/close as well as the zoom-out ramp
         return GlobeSurfaceView(
             mvp: mvp,

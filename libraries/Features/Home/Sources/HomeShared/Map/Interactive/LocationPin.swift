@@ -125,17 +125,61 @@ struct PinCluster: Identifiable, Equatable {
         )
     }
 
-    /// Where to fly the camera when this coalesced point is tapped: face the centre of the spherical cap
-    /// enclosing every member, and zoom to the distance that fits that cap on screen. The returned
-    /// `direction` is the same centre the fit was computed around. Facing anything else, like the members'
-    /// screen centroid, would skew a lopsided cluster and could push its outer members off-screen. The
-    /// distance is clamped so a tap never zooms out and never passes the fit. Re-clustering after the move
-    /// reflects the new separation, so a second tap drills in further.
-    func zoomTarget(currentDistance: Float, minDistance: Float, aspectRatio: Float) -> (direction: SIMD3<Float>, distance: Float) {
+    /// Where to fly the camera when this coalesced point is tapped: the shallowest zoom at which the membership stops
+    /// projecting as one cluster, centered on the largest group that emerges. Splitting is decided by the same
+    /// `clusterPins` the overlay renders with and the same framing the tap was hit-tested in, so the flight lands
+    /// exactly where the discs will separate, in whatever region of the screen the framing calls visible.
+    ///
+    /// A membership that never splits (locations too close to ever separate on screen) lands at `minDistance` facing
+    /// everyone, the correct degenerate answer. One that is already split when faced head-on needs centering, not zoom.
+    func splitZoomTarget(
+        framing: GlobeFraming,
+        threshold: CGFloat,
+        currentDistance: Float,
+        minDistance: Float
+    ) -> (direction: SIMD3<Float>, distance: Float) {
         let cap = SphericalCap.enclosing(members.map(\.direction))
-        let fit = GlobeFocus.distance(fitting: cap, aspectRatio: aspectRatio, minDistance: minDistance)
-        let target = max(minDistance, min(fit, currentDistance))
-        return (cap.center, target)
+        let facing = GlobeCamera.orientation(facing: cap.center)
+
+        func groups(at distance: Float) -> [PinCluster] {
+            let camera = GlobeCamera(orientation: facing, distance: distance)
+            let projection = GlobeProjection.make(camera: camera, framing: framing)
+            return clusterPins(
+                visiblePins(members, projection: projection, offscreenMargin: .infinity),
+                within:
+                threshold
+            )
+        }
+
+        func largestGroup(at distance: Float) -> PinCluster? {
+            groups(at: distance).max { ($0.members.count, $1.id) < ($1.members.count, $0.id) }
+        }
+
+        // If all of the members already aren't coalesced, don't split them further.
+        guard groups(at: minDistance).count > 1 else { return (cap.center, minDistance) }
+
+        // If the grouping is already properly split, then just re-center.
+        if groups(at: currentDistance).count > 1 {
+            let group = largestGroup(at: currentDistance) ?? self
+            return (SphericalCap.enclosing(group.members.map(\.direction)).center, currentDistance)
+        }
+
+        // Find a zoom level that brings out at least one pin from the cluster group, then track slightly past it so
+        // that the split remains stable.
+        let split = GlobeFocus.boundary(
+            where: { groups(at: $0).count > 1 },
+            holds: minDistance,
+            fails: currentDistance
+        )
+        let landing = max(minDistance, split * (1 - Constants.splitMargin))
+        let group = largestGroup(at: landing) ?? self
+        return (SphericalCap.enclosing(group.members.map(\.direction)).center, landing)
+    }
+
+    private enum Constants {
+        /// How far past the boundary the landing overshoots, as a fraction of the distance. Enough that pixel rounding
+        /// cannot re-merge the group that just separated.
+        static let splitMargin: Float = 0.03
     }
 }
 
@@ -222,8 +266,8 @@ private struct ClusterAccumulator {
 /// point fade and the SwiftUI disc crossfade apply it and the two must agree: the counted discs take over
 /// only once the map has settled and is fully open. Until then the per-pin points show.
 enum PinDisplay {
-    static func showsClusters(isMoving: Bool, lightFade: Float) -> Bool {
-        !isMoving && lightFade > 0.999
+    static func showsClusters(isMoving: Bool) -> Bool {
+        !isMoving
     }
 
     /// Merge location pins closer than this many points (about a finger's width): below it two pins can't

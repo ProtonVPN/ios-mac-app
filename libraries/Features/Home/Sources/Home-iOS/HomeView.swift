@@ -42,6 +42,10 @@ public struct HomeView: View {
 
     private enum Constants {
         static let scrollSpace = "homeScroll"
+        /// A finger parked on the map peek this long stops reading as a tap. `TapGesture` alone recognizes
+        /// on release however long the press was, so a stationary hold-and-lift would expand the map; 0.5s
+        /// matches UIKit's long-press boundary between the two.
+        static let stationaryPressDuration: TimeInterval = 0.5
     }
 
     private enum Dimensions {
@@ -168,10 +172,19 @@ public struct HomeView: View {
 
                             // Tapping the map peek collapses the sheet to the full interactive map. The tap surface
                             // must be a sibling of the spacer, not composed onto it, since `onGeometryChange` stops the
-                            // whole chain it is attached to from hit-testing.
+                            // whole chain it is attached to from hit-testing. The long press takes precedence over the
+                            // tap and carries no action: it exists to soak up stationary holds, which a bare tap
+                            // gesture would otherwise recognize on release.
                             Color.clear
                                 .contentShape(Rectangle())
-                                .onTapGesture { store.send(.map(.mapPeekTapped), animation: .mapPresentation) }
+                                .gesture(
+                                    LongPressGesture(minimumDuration: Constants.stationaryPressDuration)
+                                        .exclusively(
+                                            before: TapGesture().onEnded {
+                                                store.send(.map(.mapPeekTapped), animation: .mapPresentation)
+                                            }
+                                        )
+                                )
                             LinearGradient(
                                 gradient: Gradient(colors: [.clear, Color(.background)]),
                                 startPoint: .top,

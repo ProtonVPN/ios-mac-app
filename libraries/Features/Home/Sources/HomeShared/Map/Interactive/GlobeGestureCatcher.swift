@@ -41,8 +41,7 @@ enum GlobeGesture {
     /// (`UIGestureRecognizerRepresentable` is iOS 18 and up). One view owning all three recognizers also avoids any
     /// hit-test arbitration between SwiftUI and UIKit.
     struct GlobeGestureCatcher: UIViewRepresentable {
-        /// Always live: the map view gates pan and pinch to interactive mode, but a tap must also work in decorative
-        /// mode to open the full map.
+        /// Every pan, pinch and tap the globe takes. The map view routes them straight to the camera.
         var onGesture: (GlobeGesture) -> Void
 
         func makeUIView(context: Context) -> UIView {
