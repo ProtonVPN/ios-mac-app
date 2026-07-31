@@ -18,19 +18,14 @@
 
 import ComposableArchitecture
 import CountriesShared
-import Strings
 import SwiftUI
 
 struct SearchView: View {
     @Bindable var store: StoreOf<SearchFeature>
 
     var body: some View {
+        // The actual search _content_ is routed from ``SearchRootView``.
         contentView
-            .searchable(
-                text: $store.searchQuery.sending(\.searchQueryChanged),
-                placement: .navigationBarDrawer(displayMode: .always),
-                prompt: Localizable.searchBarPlaceholder
-            )
             .task(id: store.searchQuery) {
                 do {
                     try await Task.sleep(for: .milliseconds(300))

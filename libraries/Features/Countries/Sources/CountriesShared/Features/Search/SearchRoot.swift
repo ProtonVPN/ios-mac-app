@@ -36,6 +36,7 @@ public struct SearchRoot {
         case performComputation
         case dataLoaded(SearchFeature.State)
         case loaded(SearchFeature.Action)
+        case searchQueryChanged(String)
         case delegate(Delegate)
 
         public enum Delegate: Equatable {
@@ -96,6 +97,9 @@ public struct SearchRoot {
             case let .dataLoaded(searchState):
                 state = .loaded(searchState)
                 return .none
+
+            case let .searchQueryChanged(query):
+                return .send(.loaded(.searchQueryChanged(query)))
 
             case .loaded(.delegate(.showUpsell)):
                 return .send(.delegate(.showUpsell))
@@ -261,6 +265,17 @@ extension SearchRoot.State {
             searchData
         case .loaded:
             nil
+        }
+    }
+
+    /// The text in the search field. It is kept with the index it filters rather than stored again here, so while that
+    /// index is still being built the field reads empty.
+    public var searchQuery: String {
+        switch self {
+        case .loading:
+            ""
+        case let .loaded(searchState):
+            searchState.searchQuery
         }
     }
 }
