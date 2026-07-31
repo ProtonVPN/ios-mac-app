@@ -26,10 +26,25 @@ import Strings
 import UIKit
 
 final class TabBarController: UITabBarController {
+    /// The bar's bottom scroll-edge treatment follows whatever scroll view this controller reports for
+    /// the bottom edge. The shell shows the globe through and under the bar, and the system's default
+    /// pocket would dim a full-width band of it, which reads as the map being cut off above the bar.
+    /// Reporting a dedicated scroll view whose bottom edge effect is hidden opts the bar out of the
+    /// pocket for every tab and every detent at once, through the documented override.
+    private let edgeEffectSilencer = UIScrollView()
+
+    override func contentScrollView(for edge: NSDirectionalRectEdge) -> UIScrollView? {
+        guard edge == .bottom else { return super.contentScrollView(for: edge) }
+        return edgeEffectSilencer
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         traitOverrides.horizontalSizeClass = .compact
+        if #available(iOS 26.0, *) {
+            edgeEffectSilencer.bottomEdgeEffect.isHidden = true
+        }
         setupView()
     }
 

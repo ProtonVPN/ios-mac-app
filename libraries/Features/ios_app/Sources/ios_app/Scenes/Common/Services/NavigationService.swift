@@ -289,6 +289,14 @@ final class NavigationService {
 
         let backdrop = UIHostingController(rootView: TabularBackdropView(store: store, overlap: sheetOverlap))
         windowService.show(viewController: backdrop)
+        // The app is compact-width everywhere: the tab pages have always forced it (see TabBarController),
+        // and the sheet chrome must agree, or iPad presents the tabs as a floating regular-width card in
+        // the middle of the screen and the reported overlap stops meaning "how much of the bottom the
+        // sheet covers". The override sits on the window because presentations mount beside the root in
+        // the window's own containers, out of reach of any controller-level override. The tablet is due
+        // its own shell; until then the iPad is a big handheld, as it was when the tab bar controller
+        // itself was the window's root.
+        backdrop.view.window?.traitOverrides.horizontalSizeClass = .compact
 
         // One page per shell tab, in `Tab.allCases` order: the observer translates the tab bar's
         // selection index through that same list, so the enum is the only place the order is written.
@@ -317,6 +325,10 @@ final class NavigationService {
         shellObserver = observer
         tabBarController.delegate = observer
         tabBarController.isModalInPresentation = true // the tabs are the app, so the sheet never dismisses
+        // Opaque to match the pages, so navigation transitions inside a tab slide over solid ground.
+        // The observer clears it at the floor alone, where the pages are faded and the globe runs under
+        // the floating tab bar to the screen's bottom edge.
+        tabBarController.view.backgroundColor = .backgroundColor()
 
         if let sheet = tabBarController.sheetPresentationController {
             sheet.delegate = observer

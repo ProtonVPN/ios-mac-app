@@ -36,6 +36,15 @@ final class AppShellObserver: NSObject {
     private var isApplyingStoreDetent = false
     /// Reports how much of the backdrop the sheet covers as it moves.
     private let overlap: SheetOverlap
+    /// The filled selected-state images the tab items declared, kept aside while the sheet rests on its
+    /// floor and every item shows its outline glyph, keyed per item so each goes back where it came from.
+    private var filledSelectionImages: [ObjectIdentifier: UIImage?] = [:]
+    /// How much of the sheet is showing above its floor: 1 clear of it, 0 resting on it. Derived from the
+    /// sheet's live height rather than the settled detent, so the pages fade with the drag instead of
+    /// through an animation of ours running against the sheet's own movement.
+    private var floorPresence: CGFloat = 1
+    /// The presented tabs, for the floor treatment the sheet's own movement drives.
+    private weak var tabs: UITabBarController?
 
     init(store: StoreOf<TabularFeature>, overlap: SheetOverlap) {
         self.store = store
@@ -46,6 +55,7 @@ final class AppShellObserver: NSObject {
     /// presentation; only the selection moves. The equality checks are what prevent the delegates and
     /// this observation from chasing each other around a change either side made.
     func observeShellState(sheet: UISheetPresentationController, tabs: UITabBarController) {
+        self.tabs = tabs
         observe { [weak self, weak sheet, weak tabs] in
             guard let self else { return }
             let detent = store.detent
@@ -61,11 +71,43 @@ final class AppShellObserver: NSObject {
             if let tabs, let index = TabularFeature.Tab.allCases.firstIndex(of: store.tab), tabs.selectedIndex != index {
                 tabs.selectedIndex = index
             }
-            // At the floor the sheet is only tall enough for the grabber and the tab bar, so the pages
-            // step aside rather than bleeding out from under it. `viewIfLoaded` keeps unvisited tabs
-            // unbuilt: a page first loads when its tab is selected, and selecting raises the sheet off
-            // the floor, so a freshly loaded page never misses a hide it needed.
-            tabs?.viewControllers?.forEach { $0.viewIfLoaded?.isHidden = detent == .bar }
+        }
+    }
+
+    /// Fades the pages and the container as the sheet approaches its floor, where the bar becomes the
+    /// sheet's only chrome and the globe runs underneath it. Driven by the sheet's own height, so a drag
+    /// carries the fade frame by frame and nothing of ours animates against the sheet's movement; alpha
+    /// zero still takes a page out of hit-testing, and `viewIfLoaded` keeps unvisited tabs unbuilt.
+    private func applyFloorPresence(sheetHeight: CGFloat) {
+        guard let tabs else { return }
+        let span = max(Dimensions.floorFadeSpan, 1)
+        let presence = min(max((sheetHeight - Dimensions.barHeight) / span, 0), 1)
+        guard abs(presence - floorPresence) > 0.01 else { return }
+        let wasResting = floorPresence == 0
+        floorPresence = presence
+        tabs.viewControllers?.forEach { $0.viewIfLoaded?.alpha = presence }
+        // Opaque like the pages until the floor, where it clears so the globe reaches the screen's
+        // bottom edge. Anywhere above, a navigation push slides over solid ground.
+        tabs.view.backgroundColor = UIColor.backgroundColor().withAlphaComponent(presence)
+        if (presence == 0) != wasResting {
+            applySelectionGlyphs(to: tabs, resting: presence == 0)
+        }
+    }
+
+    /// On the floor the selected item renders its outline glyph like its neighbors, so the bar reads as
+    /// one quiet strip over the map. Each item's filled image is kept aside and put back as the sheet
+    /// rises. Applied only when the sheet arrives at or leaves the floor: writing to the items on every
+    /// pass makes the bar lay itself out again, which is not free while the sheet is moving.
+    private func applySelectionGlyphs(to tabs: UITabBarController, resting: Bool) {
+        tabs.tabBar.items?.forEach { item in
+            if resting {
+                if filledSelectionImages[ObjectIdentifier(item)] == nil {
+                    filledSelectionImages[ObjectIdentifier(item)] = item.selectedImage
+                }
+                item.selectedImage = item.image
+            } else if let kept = filledSelectionImages.removeValue(forKey: ObjectIdentifier(item)) {
+                item.selectedImage = kept
+            }
         }
     }
 
@@ -79,11 +121,21 @@ final class AppShellObserver: NSObject {
         reporter.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         reporter.frame = presented.view.bounds
         reporter.onMove = { [weak self] overlap in
-            self?.overlap.report(max(0, overlap))
+            guard let self else { return }
+            self.overlap.report(max(0, overlap))
+            // Live geometry, so the floor treatment tracks the finger with no animation of its own.
+            applyFloorPresence(sheetHeight: max(0, overlap))
         }
         reporter.onSettle = { [weak self] target in
             guard let self else { return }
             withAnimation(Self.settleSpring) { self.overlap.settle(toward: max(0, target)) }
+        }
+        // A settle moves the sheet without laying this side out, so the floor treatment follows the
+        // animation frame by frame instead. Sampled rather than animated: an animation block of ours
+        // around these views also catches the tab bar's pending layout, and the bar flies to wherever
+        // the sheet is going while the sheet is still on its way there.
+        reporter.onSettleProgress = { [weak self] height in
+            self?.applyFloorPresence(sheetHeight: max(0, height))
         }
         presented.view.insertSubview(reporter, at: 0)
     }
@@ -100,6 +152,9 @@ private enum Dimensions {
     static let barHeight: CGFloat = 100
     /// The half rung's share of the available room, matching what the system's medium detent used to give.
     static let halfFraction: CGFloat = 0.5
+    /// How far above the bar the pages have fully faded in. A little past the bar's own height, so the
+    /// sheet reads as solid well before it is tall enough to show anything.
+    static let floorFadeSpan: CGFloat = 120
 }
 
 /// A zero-cost passenger in the sheet: it draws nothing and takes no touches, and exists only so that the sheet's
@@ -116,6 +171,16 @@ private final class SheetHeightReporter: UIView {
     var onMove: ((_ overlap: CGFloat) -> Void)?
     /// The sheet just left for `target` on a render-server animation.
     var onSettle: ((_ target: CGFloat) -> Void)?
+    /// Where the sheet actually is, frame by frame, for as long as a settle animation runs. Sampled
+    /// from the presentation layer, which is the only place an animation the render server owns can be
+    /// read from this side.
+    var onSettleProgress: ((_ overlap: CGFloat) -> Void)?
+
+    private var displayLink: CADisplayLink?
+
+    deinit {
+        displayLink?.invalidate()
+    }
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -124,9 +189,37 @@ private final class SheetHeightReporter: UIView {
         let overlap = window.bounds.height - sheet.convert(sheet.bounds, to: window).minY
         if hasGeometryAnimation(between: sheet, and: window) {
             onSettle?(overlap) // the model already holds the destination
+            followSettle()
         } else {
             onMove?(overlap)
         }
+        clearPresentation(between: sheet, and: window)
+    }
+
+    /// Samples the sheet through a settle and stops as soon as it is no longer animating.
+    private func followSettle() {
+        guard displayLink == nil else { return }
+        let link = CADisplayLink(target: self, selector: #selector(sampleSettle))
+        link.add(to: .main, forMode: .common)
+        displayLink = link
+    }
+
+    @objc
+    private func sampleSettle() {
+        guard let sheet = superview, let window else {
+            stopFollowingSettle()
+            return
+        }
+        let presented = sheet.layer.presentation() ?? sheet.layer
+        onSettleProgress?(window.bounds.height - presented.frame.minY)
+        if !hasGeometryAnimation(between: sheet, and: window) {
+            stopFollowingSettle()
+        }
+    }
+
+    private func stopFollowingSettle() {
+        displayLink?.invalidate()
+        displayLink = nil
     }
 
     /// Whether any layer from the sheet up to the window is animating, which is what tells a settle's
@@ -135,6 +228,31 @@ private final class SheetHeightReporter: UIView {
     private func hasGeometryAnimation(between sheet: UIView, and window: UIWindow) -> Bool {
         sequence(first: sheet) { $0 === window ? nil : $0.superview }
             .contains { !($0.layer.animationKeys()?.isEmpty ?? true) }
+    }
+
+    /// The system paints the sheet's chrome twice over: a solid backdrop on the drop-shadow container, and a Liquid
+    /// Glass platter mounted as a sublayer branch beside the presented view's own. Either would end the backdrop's
+    /// globe in an opaque strip however clear the presented view is. Both are recognized structurally, never by class
+    /// name: everything between the sheet's layer and the window's is presentation chrome, so backgrounds found there
+    /// are cleared, and where a chrome layer is a specialized compositor class, the sibling branches beside the sheet's
+    /// own path are hidden (the platter mounts there; the grabber rides the sheet's branch and survives). The walk
+    /// climbs layers rather than views because the platter's parent never appears as any view's `layer`. Re-applied
+    /// every layout, since the system reasserts its paint across appearance changes.
+    private func clearPresentation(between sheet: UIView, and window: UIWindow) {
+        var pathChild: CALayer = sheet.layer
+        while let parent = pathChild.superlayer, parent !== window.layer {
+            if let view = parent.delegate as? UIView, view.backgroundColor != nil {
+                view.backgroundColor = nil
+            } else if parent.backgroundColor != nil {
+                parent.backgroundColor = nil
+            }
+            if type(of: parent) != CALayer.self {
+                for sibling in parent.sublayers ?? [] where sibling !== pathChild && !sibling.isHidden {
+                    sibling.isHidden = true
+                }
+            }
+            pathChild = parent
+        }
     }
 }
 
