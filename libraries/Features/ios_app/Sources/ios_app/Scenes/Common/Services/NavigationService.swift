@@ -144,6 +144,9 @@ final class NavigationService {
     private var appStore: StoreOf<TabularFeature>?
     /// Bridges the sheet and the tab bar to the store. Held here because UIKit keeps delegates weakly.
     private var shellObserver: AppShellObserver?
+    /// How much of the backdrop the sheet covers right now, read by the backdrop view and written by the
+    /// observer. Rebuilt with the rest of the shell, so a new login starts uncovered.
+    private var sheetOverlap = SheetOverlap()
 
     // MARK: Initializers
 
@@ -269,6 +272,10 @@ final class NavigationService {
             return
         }
 
+        // The coverage channel is per-shell like the store and observer below, so the last login's final sheet position
+        // cannot show through the first frames of this one.
+        sheetOverlap = SheetOverlap()
+
         let store = StoreOf<TabularFeature>(initialState: .init()) {
             log.info("Creating TabularFeature", category: .app)
             return TabularFeature()
@@ -280,10 +287,7 @@ final class NavigationService {
         }
         appStore = store
 
-        let backdrop = UIHostingController(rootView: GlobeBackdropView(
-            map: store.scope(state: \.map, action: \.map),
-            status: store.scope(state: \.connectionStatus, action: \.connectionStatus)
-        ))
+        let backdrop = UIHostingController(rootView: TabularBackdropView(store: store, overlap: sheetOverlap))
         windowService.show(viewController: backdrop)
 
         // One page per shell tab, in `Tab.allCases` order: the observer translates the tab bar's
@@ -309,7 +313,7 @@ final class NavigationService {
 
     @MainActor
     private func presentTabSheet(over backdrop: UIViewController, store: StoreOf<TabularFeature>) {
-        let observer = AppShellObserver(store: store)
+        let observer = AppShellObserver(store: store, overlap: sheetOverlap)
         shellObserver = observer
         tabBarController.delegate = observer
         tabBarController.isModalInPresentation = true // the tabs are the app, so the sheet never dismisses
@@ -324,6 +328,7 @@ final class NavigationService {
             observer.observeShellState(sheet: sheet, tabs: tabBarController)
         }
 
+        observer.trackSheetHeight(of: tabBarController)
         backdrop.present(tabBarController, animated: false)
     }
 

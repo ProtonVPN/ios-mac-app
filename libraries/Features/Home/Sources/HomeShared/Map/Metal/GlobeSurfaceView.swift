@@ -68,11 +68,9 @@ struct GlobeSurfaceView: GlobeViewRepresentable {
     var pinColor: SIMD4<Float> = .init(0.5, 0.5, 0.5, 1)
     /// Camera distance, for the points' horizon cull and the whole-path back-hemisphere cull.
     var cameraDistance: Float = 2
-    /// Starfield drawn in the globe's pass: instances (direction, radius, brightness) and overall opacity,
-    /// the open/close dissolve times the zoom-out ramp. Drawn far out and first, so the globe occludes the
-    /// stars behind it.
+    /// Starfield drawn in the globe's pass: instances (direction, radius, brightness). Drawn far out and first, so the
+    /// globe occludes the stars behind it; their fade follows the uniforms' light fade.
     var starInstances: [StarInstance] = []
-    var starFade: Float = 0
 
     final class Coordinator {
         var renderer: GlobeRenderer?
@@ -175,7 +173,6 @@ struct GlobeSurfaceView: GlobeViewRepresentable {
         set(\.pinColor, pinColor)
         set(\.cameraDistance, cameraDistance)
         set(\.starInstances, starInstances)
-        set(\.starFade, starFade)
         return changed
     }
 }
@@ -212,6 +209,9 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
     var focusHeight: CGFloat
     /// Offset of the framed region from the canvas top, such as the top safe-area inset.
     let focusTop: CGFloat
+    /// Height of the region the user can see. Animated alongside the camera, so a sheet settling at a new height slides
+    /// the globe into what remains visible instead of jumping.
+    var visibleHeight: CGFloat?
     let highlight: MapHighlight
     /// Color of the base ocean sphere behind the land.
     var oceanColor: SIMD4<Float> = MapStyle.oceanColor
@@ -233,11 +233,10 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
     var pinPositions: [SIMD3<Float>] = []
     var pinColor: SIMD4<Float> = .init(0.5, 0.5, 0.5, 1)
     var isMoving: Bool = false
-    /// Starfield instances and the zoom-out visibility ramp, 0 zoomed in to 1 pulled out. The shader alpha
-    /// is this times the interpolated `lightFade`, so the stars fade with the open/close as well as the
-    /// zoom.
+    var showsInteractivePins: Bool = true
+    /// Starfield instances. The shader alpha follows the interpolated `lightFade`, so the stars dissolve with the
+    /// open/close; the sphere occludes them while zoomed in.
     var starInstances: [StarInstance] = []
-    var starOpacity: Float = 0
     /// Overlay (pins) built from the current interpolated projection, so it tracks the animating camera. The celestial
     /// bodies are all drawn in the Metal pass, so there is no SwiftUI background layer.
     @ViewBuilder var overlay: (GlobeProjection) -> Overlay
@@ -259,12 +258,14 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
                 lightFade: lightFade,
                 focusHeight: Float(focusHeight),
                 distance: camera.distance,
-                orientation: camera.orientation.vector
+                orientation: camera.orientation.vector,
+                visibleHeight: Float(visibleHeight ?? focusHeight)
             )
         }
         set {
             lightFade = newValue.lightFade
             focusHeight = CGFloat(newValue.focusHeight)
+            visibleHeight = CGFloat(newValue.visibleHeight)
             camera.distance = newValue.distance
             let q = newValue.orientation
             let length = simd_length(q)
@@ -275,7 +276,12 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
     var body: some View {
         let projection = GlobeProjection.make(
             camera: camera,
-            framing: GlobeFraming(viewSize: viewSize, focusHeight: focusHeight, focusTop: focusTop)
+            framing: GlobeFraming(
+                viewSize: viewSize,
+                focusHeight: focusHeight,
+                focusTop: focusTop,
+                visibleHeight: visibleHeight
+            )
         )
         return ZStack {
             globeSurface(mvp: projection.mvp)
@@ -305,10 +311,10 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
     /// The `GlobeSurfaceView` value both render modes draw, built in one place so the live and snapshot paths
     /// can't drift and every globe parameter reaches both.
     private func liveGlobe(mvp: simd_float4x4) -> GlobeSurfaceView {
-        // Points show while moving. Once settled they fade out so the cluster discs take over. Following
-        // `lightFade` dissolves them with the map.
-        let pinFade: Float = PinDisplay.showsClusters(isMoving: isMoving) ? 0 : lightFade
-        let starFade = lightFade * starOpacity // dissolve with the open/close as well as the zoom-out ramp
+        let pinFade: Float = PinDisplay.showsClusters(
+            isMoving: isMoving,
+            showsInteractivePins: showsInteractivePins
+        ) ? 0 : lightFade
         return GlobeSurfaceView(
             mvp: mvp,
             cameraTarget: camera.facing,
@@ -323,8 +329,7 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
             pinFade: pinFade,
             pinColor: pinColor,
             cameraDistance: camera.distance,
-            starInstances: starInstances,
-            starFade: starFade
+            starInstances: starInstances
         )
     }
 }
@@ -337,8 +342,12 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
 struct GlobeAnimationVector: VectorArithmetic {
     private var lanes: SIMD8<Float>
 
-    init(lightFade: Float, focusHeight: Float, distance: Float, orientation: SIMD4<Float>) {
-        self.lanes = SIMD8(lightFade, focusHeight, distance, orientation.x, orientation.y, orientation.z, orientation.w, 0)
+    init(lightFade: Float, focusHeight: Float, distance: Float, orientation: SIMD4<Float>, visibleHeight: Float) {
+        self.lanes = SIMD8(
+            lightFade, focusHeight, distance,
+            orientation.x, orientation.y, orientation.z, orientation.w,
+            visibleHeight
+        )
     }
 
     private init(lanes: SIMD8<Float>) {
@@ -359,6 +368,10 @@ struct GlobeAnimationVector: VectorArithmetic {
 
     var orientation: SIMD4<Float> {
         SIMD4(lanes[3], lanes[4], lanes[5], lanes[6])
+    }
+
+    var visibleHeight: Float {
+        lanes[7]
     }
 
     static let zero = GlobeAnimationVector(lanes: .zero)

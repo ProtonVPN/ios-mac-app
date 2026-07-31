@@ -26,12 +26,6 @@ import Triangulation
 
 @Suite("Interactive globe pin clustering")
 struct InteractiveGlobeClusteringTests {
-    /// A low manual-zoom floor like the interactive globe uses, well below the decorative auto-fit clamp.
-    private let zoomFloor: Float = 1.02
-    /// A representative portrait canvas aspect ratio. Its narrower horizontal field of view is what the
-    /// cluster fit must respect so sideways-spread members don't fall off the sides.
-    private let aspectRatio: Float = 0.46
-
     private func pin(_ id: String, latitude: Double = 0, longitude: Double = 0) -> LocationPin {
         LocationPin(
             id: id,

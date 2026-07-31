@@ -49,22 +49,16 @@ enum GlobeFocus {
     }
 
     /// Camera distance that frames a `SphericalCap`: its half-angle fitted into `fitMargin` of the half field of view.
-    static func distance(fitting cap: SphericalCap, aspectRatio: Float = 1, minDistance: Float = GlobeFocus.minDistance) -> Float {
-        distance(fittingAngularRadius: Float(cap.radius.radians), aspectRatio: aspectRatio, minDistance: minDistance)
+    static func distance(fitting cap: SphericalCap, minDistance: Float = GlobeFocus.minDistance) -> Float {
+        distance(fittingAngularRadius: Float(cap.radius.radians), minDistance: minDistance)
     }
 
     /// Camera distance that fits a cap of angular radius `rho` radians into `fitMargin` of the half field of view.
     /// Clamped to `[minDistance, wholeGlobeDistance]`. The geometry: with the camera at distance `d` from a unit
     /// sphere, a surface cap of angular radius `rho` subtends a half-angle whose tangent is `sin(rho) / (d -
     /// cos(rho))`. Solving for the `d` that makes that equal `tan(halfFov * fitMargin)` gives the closed form below.
-    ///
-    /// `aspectRatio` (width over height) picks the binding half field of view. The default field of view is
-    /// vertical, so on a portrait screen the horizontal one is narrower, and a cap spread sideways would
-    /// otherwise frame to the vertical and fall off the sides. Using the smaller of the two keeps the whole
-    /// cap on screen in either direction.
-    static func distance(fittingAngularRadius rho: Float, aspectRatio: Float = 1, minDistance: Float = GlobeFocus.minDistance) -> Float {
-        let halfFovY = Float(GlobeCamera.defaultFieldOfView.radians) * 0.5
-        let halfFov = min(halfFovY, atan(max(aspectRatio, 0.01) * tan(halfFovY)))
+    static func distance(fittingAngularRadius rho: Float, minDistance: Float = GlobeFocus.minDistance) -> Float {
+        let halfFov = Float(GlobeCamera.defaultFieldOfView.radians) * 0.5
         let distance = cos(rho) + sin(rho) / tan(halfFov * fitMargin)
         return min(max(distance, minDistance), wholeGlobeDistance)
     }

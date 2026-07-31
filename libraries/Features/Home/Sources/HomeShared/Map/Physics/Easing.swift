@@ -19,9 +19,9 @@
 import CoreGraphics
 
 /// Clamped 0-to-1 progress across an interval: `ramp(x, from: a, to: b)` is `(x - a) / (b - a)` clamped to `[0, 1]`.
-/// This "fade in across this interval" shape recurs throughout the map's motion, in the pole-zoom proximity, the
-/// starfield zoom-out, and the pill's label fade. Generic so it serves `Float` (camera) and `CGFloat` (UI) alike.
-/// Returns 0 for a zero-width interval.
+/// This "fade in across this interval" shape recurs throughout the map's motion, in the pole-zoom proximity and the
+/// pill's label fade. Generic so it serves `Float` (camera) and `CGFloat` (UI) alike. Returns 0 for a zero-width
+/// interval.
 func ramp<Value: BinaryFloatingPoint>(_ x: Value, from: Value, to: Value) -> Value {
     guard to != from else { return 0 }
     return max(0.0, min(1.0, (x - from) / (to - from)))

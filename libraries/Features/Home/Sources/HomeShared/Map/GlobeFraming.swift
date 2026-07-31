@@ -24,15 +24,19 @@ import CoreGraphics
 struct GlobeFraming {
     /// Full render canvas. May be taller than the framed region, letting the globe spill above and below unclipped.
     let viewSize: CGSize
-    /// Visible height the globe is framed within.
+    /// Height the globe is scaled to fit. Stable while the sheet moves, so raising or lowering the sheet re-centers the
+    /// globe rather than resizing it.
     let focusHeight: CGFloat
     /// Offset of the framed region from the canvas top.
     let focusTop: CGFloat
+    /// Height of the region the user can actually see, starting at `focusTop`.
+    let visibleHeight: CGFloat
 
-    /// Width over render height. Picks the binding, narrower field of view in zoom-to-fit so a
-    /// sideways-spread cluster doesn't zoom past where its members fall off the sides.
-    var aspectRatio: Float {
-        Float(viewSize.width / max(viewSize.height, 1))
+    init(viewSize: CGSize, focusHeight: CGFloat, focusTop: CGFloat, visibleHeight: CGFloat? = nil) {
+        self.viewSize = viewSize
+        self.focusHeight = focusHeight
+        self.focusTop = focusTop
+        self.visibleHeight = visibleHeight ?? focusHeight
     }
 
     /// The part of the canvas the user can actually see: full width, `visibleHeight` tall, starting at

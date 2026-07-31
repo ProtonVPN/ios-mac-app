@@ -58,6 +58,17 @@ struct TabularFeatureTests {
         await atHalf.send(.commands(.commandReceived(.connect(.defaultFastest, nil, .connectionCard))))
     }
 
+    @Test("Touching the map through the half sheet collapses it to the bar")
+    @MainActor
+    func mapInteractionCollapsesTheHalfSheet() async {
+        let store = TestStore(initialState: TabularFeature.State()) { TabularFeature() }
+        store.exhaustivity = .off(showSkippedAssertions: false)
+
+        await store.send(.map(.mapMoved)) { $0.detent = .bar }
+        // Already on the bar: gestures are plain map interactions and move nothing.
+        await store.send(.map(.userPinTapped))
+    }
+
     @Test("The sheet follows the user's drag")
     @MainActor
     func detentChangesFollowTheSheet() async {

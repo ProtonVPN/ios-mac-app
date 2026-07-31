@@ -62,10 +62,6 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         }
     }
 
-    /// Overall star opacity: the open/close dissolve times the zoom-out ramp. At 0 the starfield pass is
-    /// skipped.
-    var starFade: Float = 0
-
     private enum Constants {
         /// The largest angular radius any single baked path can have. Russia's mainland is the biggest at about 30
         /// degrees, and 45 adds slack. The whole-path cull hides a path only when its centroid is more than the
@@ -462,13 +458,13 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     /// galactic plane, reconstructing each pixel's view ray through the inverse MVP (the triangle's corners live in the
     /// vertex shader alone). Drawn first behind everything.
     private func drawSkyGlow(into encoder: MTLRenderCommandEncoder) {
-        guard starFade > Constants.minVisibleFade else { return }
+        guard uniforms.lightFade > Constants.minVisibleFade else { return }
         var glowUniforms = SkyGlowUniforms(
             inverseMVP: uniforms.mvp.inverse,
             cameraPosition: cameraTarget * cameraDistance,
             pole: CelestialConstants.galacticNorthPole,
             centre: CelestialConstants.galacticCentre,
-            fade: starFade
+            fade: uniforms.lightFade
         )
         encoder.setCullMode(.none)
         encoder.setRenderPipelineState(skyGlowPipeline)
@@ -482,8 +478,8 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     /// MVP so the field turns with the camera. Called after the sky glow, so the Moon and globe drawn later cover the
     /// stars behind them. Skipped when faded out or empty.
     private func drawStars(into encoder: MTLRenderCommandEncoder) {
-        guard starFade > Constants.minVisibleFade, starCount > 0, let starBuffer, viewportSizePixels.x > 0 else { return }
-        var starUniforms = StarUniforms(mvp: uniforms.mvp, viewportSize: viewportSizePixels, scale: contentScale, fade: starFade)
+        guard uniforms.lightFade > Constants.minVisibleFade, starCount > 0, let starBuffer, viewportSizePixels.x > 0 else { return }
+        var starUniforms = StarUniforms(mvp: uniforms.mvp, viewportSize: viewportSizePixels, scale: contentScale, fade: uniforms.lightFade)
         encoder.setCullMode(.none) // screen-facing billboards
         encoder.setRenderPipelineState(starPipeline)
         encoder.setVertexBuffer(starBuffer, offset: 0, index: 0)

@@ -75,8 +75,9 @@ struct StarfieldSnapshots {
         assertSnapshot(of: image, as: .image(precision: precision, perceptualPrecision: perceptualPrecision), named: "AppFramingAtNode")
     }
 
-    /// Renders an unlit globe with the starfield at full opacity, composited over the app background.
-    /// The default camera sits past the whole-globe distance looking at the galactic centre.
+    /// Renders the globe with the starfield at full opacity, composited over the app background. The stars follow the
+    /// map's light fade, so the globe is lit as it is in the app whenever stars show. The default camera sits past the
+    /// whole-globe distance looking at the galactic centre.
     @MainActor
     private static func render(
         stars: [StarInstance],
@@ -89,11 +90,10 @@ struct StarfieldSnapshots {
         let mvp = camera.matrix(framing: GlobeFraming(viewSize: size, focusHeight: size.height, focusTop: 0))
         let device = try #require(MTLCreateSystemDefaultDevice())
         let renderer = try #require(GlobeRenderer(device: device, model: GlobeResource.model, oceanColor: MapStyle.oceanColor, colorFormat: GlobeSurface.colorFormat, sampleCount: GlobeSurface.sampleCount))
-        renderer.uniforms = MapUniforms(mvp: mvp, borderHalfWidth: 0)
+        renderer.uniforms = MapUniforms(mvp: mvp, borderHalfWidth: 0, lightFade: 1)
         renderer.cameraTarget = camera.facing
         renderer.cameraDistance = distance
         renderer.starInstances = stars
-        renderer.starFade = 1
         let rendered = try #require(renderer.makeImage(size: size, scale: scale))
 
         // Composite over the app's dark background: the globe pass clears to transparent, and white stars vanish

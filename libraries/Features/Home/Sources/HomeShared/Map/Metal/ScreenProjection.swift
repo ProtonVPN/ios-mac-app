@@ -41,11 +41,14 @@ struct ScreenProjection {
         let renderHeight = Float(max(framing.viewSize.height, 1))
         let fh = Float(min(max(framing.focusHeight, 1), CGFloat(renderHeight)))
         let ft = Float(min(max(framing.focusTop, 0), CGFloat(renderHeight)))
+        // Scale comes from the framed height and the centre from the visible one, so covering part of the frame slides
+        // the globe up without shrinking it.
+        let vh = Float(min(max(framing.visibleHeight, 1), CGFloat(renderHeight)))
         let focal = GlobeCamera.focalLength(fieldOfView: fieldOfView) // 1 / tan(fov / 2)
         self.viewSize = framing.viewSize
         self.xScale = focal * fh / width
         self.yScale = focal * fh / renderHeight
-        self.yOffset = (fh + 2 * ft) / renderHeight - 1
+        self.yOffset = (vh + 2 * ft) / renderHeight - 1
     }
 
     /// Perspective matrix. The caller multiplies in the view translation and globe rotation. The y output is compressed

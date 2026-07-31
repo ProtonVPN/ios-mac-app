@@ -118,6 +118,14 @@ public struct TabularFeature {
                 connectionCommandClient.send(.connect(spec, nil, .map))
                 return .none
 
+            case .map(.mapMoved), .map(.mapBackgroundTapped), .map(.userPinTapped):
+                // Touching the map through the half sheet should make it interactive. Collapse the bar, which is
+                // monitored elsewhere to make the pins become interactive.
+                if state.detent == .half {
+                    state.detent = .bar
+                }
+                return .none
+
             case .map(.delegate(.showUpsell)):
                 return .send(.home(.showUpsell(.allCountries)))
 

@@ -150,6 +150,46 @@ struct FullMapSnapshots {
             named: "BackdropKillSwitch"
         )
     }
+
+    @Test("The backdrop with the sheet at its bar over a wide country")
+    @MainActor
+    func backdropAtBarOverWideCountry() throws {
+        @Shared(.protectionState) var protectionState
+        @Shared(.connectionState) var connectionState
+        @Shared(.userCountry) var userCountry
+        @Shared(.userIP) var userIP
+        @Shared(.userTier) var userTier
+
+        var mapState = HomeMapFeature.State()
+        mapState.locationPins = Self.locationPins
+        let store = Store(initialState: mapState, reducer: HomeMapFeature.init)
+        let statusStore = Store(initialState: ConnectionStatusFeature.State(), reducer: ConnectionStatusFeature.init)
+        $userCountry.withLock { $0 = "US" }
+        $userIP.withLock { $0 = "1.2.3.4" }
+        $userTier.withLock { $0 = .paid }
+        $protectionState.withLock { $0 = .protected }
+        let newYork = Server.mock(country: "US", coordinates: .init(latitude: 40.7, longitude: -74.0))
+        let connected = ConnectionState.previewConnected(for: .specificCountryServer, server: newYork)
+        $connectionState.withLock { $0 = connected }
+        store.send(.connectionStateUpdated(connected))
+
+        let size = try #require(ViewImageConfig.iPhoneSe.size)
+        let appView = GlobeBackdropView(map: store, status: statusStore, bottomOverlap: 100) // the bar detent's height
+            .frame(size)
+            .environment(\._accessibilityReduceMotion, true)
+            .environment(\.colorScheme, .dark)
+            .environment(\.globeRenderMode, .staticImage)
+
+        assertSnapshot(
+            of: appView,
+            as: .image(
+                precision: precision,
+                perceptualPrecision: perceptualPrecision,
+                layout: .fixed(width: size.width, height: size.height)
+            ),
+            named: "BackdropAtBar"
+        )
+    }
 }
 
 extension FullMapSnapshots: AssertSnapshot {

@@ -266,8 +266,8 @@ private struct ClusterAccumulator {
 /// point fade and the SwiftUI disc crossfade apply it and the two must agree: the counted discs take over
 /// only once the map has settled and is fully open. Until then the per-pin points show.
 enum PinDisplay {
-    static func showsClusters(isMoving: Bool) -> Bool {
-        !isMoving
+    static func showsClusters(isMoving: Bool, showsInteractivePins: Bool) -> Bool {
+        showsInteractivePins && !isMoving
     }
 
     /// Merge location pins closer than this many points (about a finger's width): below it two pins can't

@@ -34,10 +34,8 @@ public struct ConnectionStatusView: View {
     private static let maxContentWidth: CGFloat = 480
 
     @Bindable var store: StoreOf<ConnectionStatusFeature>
-
-    /// When the map is in full view, only the tint, lock, and title show over it. The NetShield banner,
-    /// which belongs with the connection card, is hidden — and the header becomes tappable to exit back
-    /// to the sheet.
+    /// Reports the height of the connection status view so that the backdrop can be properly framed.
+    var onContentHeightChange: ((CGFloat) -> Void)?
 
     private static let headerHeight: CGFloat = 58
     private static let viewHeight: CGFloat = 200
@@ -172,6 +170,7 @@ public struct ConnectionStatusView: View {
                     .frame(maxWidth: Self.maxContentWidth)
                     .padding(.horizontal, .themeSpacing16)
             }
+            .onGeometryChange(for: CGFloat.self, of: { $0.size.height }) { onContentHeightChange?($0) }
         }
         // Fixed height in both modes so the tint gradient stays localized to the top band and fades out.
         // With no height the greedy gradient would fill the whole map.

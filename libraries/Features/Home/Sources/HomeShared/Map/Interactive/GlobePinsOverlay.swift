@@ -30,6 +30,7 @@ import Theme
 struct GlobePinsOverlay: View {
     let projection: GlobeProjection
     let locationPins: [LocationPin]
+    let showsInteractivePins: Bool
     let pinMode: ConnectionPin.Mode
     /// The user/connection pin's sphere direction, or `nil` to hide it.
     let pinDirection: SIMD3<Float>?
@@ -64,7 +65,10 @@ struct GlobePinsOverlay: View {
     var body: some View {
         // Counted cluster discs only once the map has settled. While it moves the per-pin Metal points show
         // instead, so cluster membership can't flicker.
-        let showClusters = PinDisplay.showsClusters(isMoving: isMoving)
+        let showClusters = PinDisplay.showsClusters(
+            isMoving: isMoving,
+            showsInteractivePins: showsInteractivePins
+        )
         // Fresh clustering only while the discs fully show (settled, and tracking programmatic camera flies frame by
         // frame). While the map moves, the fading discs render the frozen membership, re-projected each frame so they
         // track the globe; the O(pins × clusters) grouping pass is what stays off the per-frame path.
@@ -104,7 +108,7 @@ struct GlobePinsOverlay: View {
             // The selected location's connect pill. `center` refreshes every frame so it tracks the globe, while
             // `reveal` is animated by the pill model. It takes its own tap, but only while its location is still
             // selected, so a pill collapsing after a deselect can't swallow taps.
-            if let location = pill.location {
+            if showsInteractivePins, let location = pill.location {
                 let projected = projection.project(location.direction)
                 ConnectPill(
                     reveal: pill.reveal,
@@ -118,7 +122,7 @@ struct GlobePinsOverlay: View {
 
             // The outgoing pill collapsing while the new one grows. It has its own location and reveal so the two
             // animate independently. Never tappable.
-            if let outgoingLocation = pill.outgoingLocation {
+            if showsInteractivePins, let outgoingLocation = pill.outgoingLocation {
                 let projected = projection.project(outgoingLocation.direction)
                 ConnectPill(
                     reveal: pill.outgoingReveal,
