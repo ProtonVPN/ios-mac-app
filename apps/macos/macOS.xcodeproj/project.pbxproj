@@ -40,6 +40,7 @@
 		6640FF402ED5B24C004A4A9A /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE182C551F617C0000F3BA4C /* NetworkExtension.framework */; };
 		6640FF522ED5B34D004A4A9A /* ProTUNExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 6640FF512ED5B34D004A4A9A /* ProTUNExtension */; };
 		6640FFAA2ED5B24C004A4A9A /* ch.protonvpn.mac.WireGuard-Extension.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 6640FF3F2ED5B24B004A4A9A /* ch.protonvpn.mac.WireGuard-Extension.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		66411F45301CF85D00D59612 /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 66411F44301CF85D00D59612 /* AsyncAlgorithms */; };
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
 		7714FF9F2C9062AE00D29EF4 /* ProtonCoreTestingToolkitUITestsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7714FF9E2C9062AE00D29EF4 /* ProtonCoreTestingToolkitUITestsCore */; };
 		7714FFA12C9062B300D29EF4 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = 7714FFA02C9062B300D29EF4 /* Strings */; };
@@ -412,6 +413,7 @@
 				E5E48D032A4C3D7100B09111 /* Logging in Frameworks */,
 				E5E48CF72A4C363700B09111 /* ComposableArchitecture in Frameworks */,
 				E5D1A5A22F43292100A26EA8 /* Countries in Frameworks */,
+				66411F45301CF85D00D59612 /* AsyncAlgorithms in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,6 +652,7 @@
 				A405F25F2F61A26D00953E7B /* Payments */,
 				A4C29CDE2FACCD6300980288 /* Connection */,
 				A468180D2FD883E500901B14 /* ProtonCoreCryptoVPNPatchedGoImplementation */,
+				66411F44301CF85D00D59612 /* AsyncAlgorithms */,
 			);
 			productName = ProtonVPN;
 			productReference = EED534811EEC112000013607 /* ProtonVPN.app */;
@@ -771,6 +774,7 @@
 				4CEBB4072CDA68DE00AB5556 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				A4B9A7342E38FC2600A21B35 /* XCRemoteSwiftPackageReference "atlantis" */,
 				A447787B2F7440E400A3957F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+				66411F43301CF85D00D59612 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EED534821EEC112000013607 /* Products */;
@@ -2226,6 +2230,8 @@
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.24.1;
 			};
+			traits = (
+			);
 		};
 		4C2599922A7AA25800A31895 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -2275,6 +2281,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.9.3;
+			};
+		};
+		66411F43301CF85D00D59612 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-async-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.5;
 			};
 		};
 		A447787B2F7440E400A3957F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
@@ -2377,6 +2391,11 @@
 		6640FF512ED5B34D004A4A9A /* ProTUNExtension */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProTUNExtension;
+		};
+		66411F44301CF85D00D59612 /* AsyncAlgorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66411F43301CF85D00D59612 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */;
+			productName = AsyncAlgorithms;
 		};
 		7714FF9E2C9062AE00D29EF4 /* ProtonCoreTestingToolkitUITestsCore */ = {
 			isa = XCSwiftPackageProductDependency;
