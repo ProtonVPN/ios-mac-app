@@ -31,6 +31,7 @@ import Ergonomics
 import GSMessages
 import Home
 import LegacyCommon
+import Mobile
 import Modals
 import PMLogger
 import ProtonCoreAccountRecovery
@@ -139,6 +140,11 @@ final class NavigationService {
 
     var tabBarController = TabBarController()
 
+    /// The app's main TCA store.
+    private var appStore: StoreOf<TabularFeature>?
+    /// Bridges the sheet and the tab bar to the store. Held here because UIKit keeps delegates weakly.
+    private var shellObserver: AppShellObserver?
+
     // MARK: Initializers
 
     init(_ factory: Factory) {
@@ -172,6 +178,11 @@ final class NavigationService {
 
     func presentWelcome(initialError: String?) {
         loginService.showWelcome(initialError: initialError, withOverlayViewController: nil)
+        // Release the shell with the login it belonged to. The store keeps the feature tree and its
+        // long-running observations (connection state, recents, shared properties) alive for as long as
+        // it exists, and none of that should keep running for a user who signed out.
+        appStore = nil
+        shellObserver = nil
         // Release the old tab bar and start fresh. Merely nilling `viewControllers` on the reused,
         // already-presented instance is unreliable — UIKit reads it back as a non-nil/empty array, so
         // `setupTabs`' `== nil` guard would skip the rebuild and re-show this stale instance (still holding
@@ -196,6 +207,7 @@ final class NavigationService {
         }
     }
 
+    @MainActor
     private func presentMainInterface() {
         setupTabs()
         showInitialModals()
@@ -248,24 +260,78 @@ final class NavigationService {
         presentWelcome(initialError: sessionLogoutReason)
     }
 
+    /// Builds the main view. The globe backdrop becomes the window's root, with tabs presented over it in a sheet the
+    /// user can raise and lower.
+    @MainActor
     private func setupTabs() {
-        defer {
-            windowService.show(viewController: tabBarController)
-        }
         guard tabBarController.viewControllers?.isEmpty ?? true else {
             // Tabs already built (e.g. guest mode) — just select the first tab.
             tabBarController.selectedIndex = 0
             return
         }
-        let tabViewControllers: [UIViewController] = [
-            HomeFeatureCreator.homeViewController(),
-            makeCountriesViewController(),
-            UINavigationController(rootViewController: makeProfilesViewController()),
-            UINavigationController(rootViewController: makeSettingsViewController()),
-        ]
 
-        tabBarController.setViewControllers(tabViewControllers, animated: false)
+        let store = StoreOf<TabularFeature>(initialState: .init()) {
+            log.info("Creating TabularFeature", category: .app)
+            return TabularFeature()
+        } withDependencies: {
+            $0.openCredentiallessSignUp = { [weak self] in
+                guard let self else { return }
+                presentSignUp(over: tabBarController, flow: .credentiallessUpsell)
+            }
+        }
+        appStore = store
+
+        let backdrop = UIHostingController(rootView: GlobeBackdropView(
+            map: store.scope(state: \.map, action: \.map),
+            status: store.scope(state: \.connectionStatus, action: \.connectionStatus)
+        ))
+        windowService.show(viewController: backdrop)
+
+        // One page per shell tab, in `Tab.allCases` order: the observer translates the tab bar's
+        // selection index through that same list, so the enum is the only place the order is written.
+        tabBarController.setViewControllers(TabularFeature.Tab.allCases.map { tab -> UIViewController in
+            switch tab {
+            case .home: makeHomeViewController(store: store.scope(state: \.home, action: \.home))
+            case .countries: makeCountriesViewController()
+            case .profiles: UINavigationController(rootViewController: makeProfilesViewController())
+            case .settings: UINavigationController(rootViewController: makeSettingsViewController())
+            }
+        }, animated: false)
         tabBarController.setupView()
+
+        // Those should be called once
+        store.send(.home(.onStart))
+        store.send(.home(.sharedProperties(.listen)))
+        store.send(.map(.observeConnectionState))
+
+        presentTabSheet(over: backdrop, store: store)
+    }
+
+    @MainActor
+    private func presentTabSheet(over backdrop: UIViewController, store: StoreOf<TabularFeature>) {
+        let observer = AppShellObserver(store: store)
+        shellObserver = observer
+        tabBarController.delegate = observer
+        tabBarController.isModalInPresentation = true // the tabs are the app, so the sheet never dismisses
+
+        if let sheet = tabBarController.sheetPresentationController {
+            sheet.delegate = observer
+            // One fixed ladder for every tab; only the selection moves, applied by the observer.
+            sheet.detents = TabularFeature.Detent.allCases.map(\.sheetDetent)
+            sheet.largestUndimmedDetentIdentifier = TabularFeature.Detent.allCases.last?.identifier
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = true
+            sheet.prefersGrabberVisible = true
+            observer.observeShellState(sheet: sheet, tabs: tabBarController)
+        }
+
+        backdrop.present(tabBarController, animated: false)
+    }
+
+    private func makeHomeViewController(store: StoreOf<HomeFeature>) -> UIViewController {
+        let hostingController = UIHostingController(rootView: HomeView(store: store))
+        hostingController.tabBarItem = UITabBarItem(title: Localizable.homeTab, image: IconProvider.houseFilled, tag: 0)
+        hostingController.tabBarItem.accessibilityIdentifier = "Home"
+        return hostingController
     }
 
     func makeLaunchViewController() -> LaunchViewController {
@@ -466,6 +532,7 @@ extension NavigationService {
 // MARK: Login delegate
 
 extension NavigationService: LoginServiceDelegate {
+    @MainActor
     func userDidLogIn() {
         presentMainInterface()
     }
@@ -497,6 +564,7 @@ extension NavigationService: LoginServiceDelegate {
 // MARK: Onboarding delegate
 
 extension NavigationService: OnboardingServiceDelegate {
+    @MainActor
     func onboardingServiceDidFinish() {
         TelemetryOnboardingReporter.isOnboardingInProgress = false
         presentMainInterface()

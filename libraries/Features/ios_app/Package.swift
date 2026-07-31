@@ -25,6 +25,7 @@ let package = Package(
         .package(path: "../Modals"),
         .package(path: "../Home"),
         .package(path: "../Countries"),
+        .package(path: "../../Shells/Mobile"),
         .package(path: "../Payments"),
         .package(path: "../Settings"),
 
@@ -80,6 +81,7 @@ let package = Package(
                 "Localization",
                 "Connection",
                 "Countries",
+                "Mobile",
                 "WidgetIntents",
                 "Telemetry",
                 "Payments",

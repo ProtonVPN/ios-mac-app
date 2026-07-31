@@ -35,30 +35,39 @@ import VPNAppCore
 /// the shell.
 @Reducer
 public struct TabularFeature {
-    /// How far the sheet is raised, and with it how much of the globe shows. Ordered by height rather than
-    /// alphabetically: the cases describe one ordinal axis, so reading them in size order is what makes the
-    /// transitions legible.
-    public enum Detent: Equatable {
-        /// Minimized to its bar. The globe is effectively the screen.
+    /// How far the sheet is raised, and with it how much of the globe shows. One ladder for every tab, declared in
+    /// height order.
+    public enum Detent: Equatable, CaseIterable {
+        /// Minimized to its bar. The globe is effectively the screen, and the location pins are in hand.
         case bar
+        /// Half the room: the page above, the globe centered on the connection below.
         case half
         /// Raised over the map.
         case full
     }
 
+    /// Ordered as the tab bar presents them.
+    public enum Tab: Equatable, CaseIterable {
+        case home
+        case countries
+        case profiles
+        case settings
+    }
+
     @ObservableState
     public struct State: Equatable {
         public internal(set) var detent: Detent = .half
+        public internal(set) var tab: Tab = .home
 
         public var connectionStatus: ConnectionStatusFeature.State
         public var home: HomeFeature.State
         public var map: HomeMapFeature.State
 
         public init(detent: Detent = .half) {
-            self.detent = detent
             self.connectionStatus = .init()
             self.home = .init()
             self.map = .init()
+            self.detent = detent
         }
     }
 
@@ -68,9 +77,7 @@ public struct TabularFeature {
         case detentChanged(Detent)
         case home(HomeFeature.Action)
         case map(HomeMapFeature.Action)
-        /// A tab was chosen. Which tab is showing stays with the tab controller, so this carries no payload:
-        /// the shell only needs to know the event happened.
-        case tabSelected
+        case tabSelected(Tab)
     }
 
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
@@ -94,8 +101,9 @@ public struct TabularFeature {
                 state.detent = detent
                 return .none
 
-            case .tabSelected:
-                // Reading a page means raising the sheet off its bar first.
+            case let .tabSelected(tab):
+                state.tab = tab
+                // Reading a page means raising the sheet off its bar.
                 if state.detent == .bar {
                     state.detent = .half
                 }

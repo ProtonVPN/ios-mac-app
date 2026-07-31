@@ -72,7 +72,7 @@ public struct HomeFeature {
     public struct State: Equatable {
         /// For simplicity's sake, let's implement Connection as a child feature of Home. The map and the
         /// connection status chrome used to live here too; they draw behind every tab, so they moved up to
-        /// `AppFeature`. Connection could follow the same way.
+        /// the shell. Connection could follow the same way.
         public var connection: ConnectionFeature.State
         public var recents: RecentsFeature.State
         public var connectionCard: HomeConnectionCardFeature.State

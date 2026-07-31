@@ -30,12 +30,15 @@ struct TabularFeatureTests {
         // storage of its own, which is their behavior to verify, not this suite's.
         store.exhaustivity = .off(showSkippedAssertions: false)
 
-        await store.send(.tabSelected) { $0.detent = .half }
-        await store.send(.tabSelected)
+        await store.send(.tabSelected(.home)) { $0.detent = .half }
+        await store.send(.tabSelected(.home))
 
-        let raised = TestStore(initialState: TabularFeature.State(detent: .full)) { TabularFeature() }
+        var raisedState = TabularFeature.State()
+        raisedState.tab = .countries
+        raisedState.detent = .full
+        let raised = TestStore(initialState: raisedState) { TabularFeature() }
         raised.exhaustivity = .off(showSkippedAssertions: false)
-        await raised.send(.tabSelected)
+        await raised.send(.tabSelected(.profiles)) { $0.tab = .profiles }
     }
 
     @Test("The sheet follows the user's drag")
