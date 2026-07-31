@@ -127,7 +127,7 @@ enum StatusIcon {
     case unknown
 }
 
-enum AppIcon {
+enum AppIcon: Equatable {
     case active
     case disconnected
 }
