@@ -91,6 +91,13 @@
     },
     {
       "target": {
+        "containerPath": "container:../../libraries/Shells/Mobile",
+        "identifier": "MobileTests",
+        "name": "MobileTests"
+      }
+    },
+    {
+      "target": {
         "containerPath": "container:../../libraries/Features/Modals",
         "identifier": "ModalsTests",
         "name": "ModalsTests"

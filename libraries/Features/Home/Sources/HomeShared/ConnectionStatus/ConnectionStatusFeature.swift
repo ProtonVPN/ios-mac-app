@@ -40,14 +40,10 @@ public struct ConnectionStatusFeature {
 
         fileprivate(set) var startingProtectionState: ProtectionState = .resolving
 
-        package init() {}
+        public init() {}
     }
 
     public enum Action: Equatable {
-        /// The lock-and-title header was tapped. No local effect; `HomeFeature` observes it to exit the
-        /// full map (the header is only tappable there).
-        case headerTapped
-
         case startLocationMasking
         case maskLocationTick
 
@@ -143,9 +139,6 @@ public struct ConnectionStatusFeature {
                     state.startingProtectionState = .unprotected // reset startingProtectionState
                     return .cancel(id: IDs.maskLocationTimer)
                 }
-
-            case .headerTapped:
-                return .none // observed by HomeFeature
 
             case .connectionStatusBanner:
                 return .none

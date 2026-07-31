@@ -70,15 +70,13 @@ public struct HomeFeature {
 
     @ObservableState
     public struct State: Equatable {
-        /// For simplicity's sake, let's implement Connection as a child feature of Home.
-        /// In the future, when we add a sibling feature (like countries, settings or profiles),
-        /// we will have to have a parent App feature.  Connection can be moved
+        /// For simplicity's sake, let's implement Connection as a child feature of Home. The map and the
+        /// connection status chrome used to live here too; they draw behind every tab, so they moved up to
+        /// `AppFeature`. Connection could follow the same way.
         public var connection: ConnectionFeature.State
-        public var map: HomeMapFeature.State
         public var recents: RecentsFeature.State
         public var connectionCard: HomeConnectionCardFeature.State
         package var sharedProperties: SharedPropertiesFeature.State
-        package var connectionStatus: ConnectionStatusFeature.State
         package var announcementBanner: AnnouncementBannerFeature.State
         package var whatsNewChecker: WhatsNewCheckerFeature.State
         package var localAgentNotice: LocalAgentNoticeFeature.State?
@@ -93,11 +91,9 @@ public struct HomeFeature {
         @Presents public var alert: AlertState<Action.HomeAlert>?
 
         public init() {
-            self.connectionStatus = .init()
             self.connectionCard = .init()
             self.sharedProperties = .init()
             self.recents = .init()
-            self.map = .init()
             self.connection = .initialState
             self.announcementBanner = .noBanner
             self.whatsNewChecker = .init()
@@ -136,10 +132,11 @@ public struct HomeFeature {
 
         case newCaptureSession(CaptureSession)
         case connection(ConnectionFeature.Action)
-        case map(HomeMapFeature.Action)
         case recents(RecentsFeature.Action)
-        case connectionStatus(ConnectionStatusFeature.Action)
         case connectionCard(HomeConnectionCardFeature.Action)
+        /// Present the payments upsell. Sent by the shell when a backdrop child asks for one, since the
+        /// payments destination lives in this feature's tree.
+        case showUpsell(UpsellModalType)
         case sharedProperties(SharedPropertiesFeature.Action)
         case connectionDetails(ConnectionScreenFeature.Action)
         case freeConnectionsInfo(FreeConnectionInfoFeature.Action)
@@ -227,14 +224,8 @@ public struct HomeFeature {
         Scope(state: \.sharedProperties, action: \.sharedProperties) {
             SharedPropertiesFeature()
         }
-        Scope(state: \.map, action: \.map) {
-            HomeMapFeature()
-        }
         Scope(state: \.connectionCard, action: \.connectionCard) {
             HomeConnectionCardFeature()
-        }
-        Scope(state: \.connectionStatus, action: \.connectionStatus) {
-            ConnectionStatusFeature()
         }
         Scope(state: \.recents, action: \.recents) {
             RecentsFeature()
@@ -251,7 +242,6 @@ public struct HomeFeature {
         CombineReducers {
             lifecycleAndObservationReducer
             recentsAndSharedPropertiesReducer
-            mapReducer
             connectionCommandsReducer
             connectionCardReducer
             destinationReducer
@@ -376,30 +366,6 @@ private extension HomeFeature {
         }
     }
 
-    var mapReducer: some ReducerOf<Self> {
-        Reduce { state, action in
-            switch action {
-            case let .map(.delegate(.connect(spec))):
-                // Tapping a location pin connects, through the same command pipeline as recents and the card.
-                connectionCommandClient.send(.connect(spec, nil, .map))
-                return .none
-            case .map(.delegate(.showUpsell)):
-                // Free users can't pick a location, so surface the upsell.
-                state.destination = .payments(.init(upsellModalType: allCountriesUpsellModalType()))
-                return .none
-            case .connectionStatus(.headerTapped):
-                // Tapping the lock/title over the full map exits back to the sheet. Handled here, in the
-                // same transaction as the tap's send, so the view's presentation animation carries through.
-                // The header is inert with the sheet up, so this can't fire there.
-                state.map.selectedLocationID = nil
-                state.map.presentation = .sheet
-                return .none
-            default:
-                return .none
-            }
-        }
-    }
-
     var connectionCommandsReducer: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -502,13 +468,7 @@ private extension HomeFeature {
                 // left to settle here.
                 return performDisconnect(trigger: trigger, completion: nil, state: state)
 
-            case let .connectionStatus(.connectionStatusBanner(.delegate(.upsellTapped(mode)))):
-                let upsellModalType: UpsellModalType = switch mode {
-                case .netshield:
-                    .netShield
-                case .serverChange:
-                    allCountriesUpsellModalType()
-                }
+            case let .showUpsell(upsellModalType):
                 state.destination = .payments(.init(upsellModalType: upsellModalType))
                 return .none
 

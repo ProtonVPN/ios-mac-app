@@ -27,7 +27,6 @@ import Ergonomics
 @testable import Home
 @testable import HomeShared
 import IssueReporting
-import NetShield
 import OrderedCollections
 import Sharing
 import SnapshotTesting
@@ -101,16 +100,11 @@ struct HomeScreenTests {
         @Shared(.recentConnections) var recents
         @Shared(.netShieldLevel) var netShieldLevel
 
-        var initialState = HomeFeature.State()
-        initialState.connectionStatus.connectionStatusBanner.$netShieldStats = SharedReader(
-            value: NetShieldModel(trackersCount: 432, adsCount: 12300, dataSaved: 123_500_000, enabled: true)
-        )
-
         // Construct the store BEFORE seeding: `RecentsFeature.State.init` overwrites `.recentConnections` from the
         // persisted `.recentConnections` key, so a pre-construction write would be clobbered back to empty. The
         // `.dependencies` suite trait gives this case a fresh dependency context, so these writes cannot leak into the
         // next case and need no reset.
-        let store = Store(initialState: initialState, reducer: HomeFeature.init)
+        let store = Store(initialState: HomeFeature.State(), reducer: HomeFeature.init)
         $netShieldLevel.withLock { $0 = .level2 }
         $recents.withLock { $0 = [.connectionRegion, .connectionSecureCoreFastest, .connectionSecureCore] }
         $userCountry.withLock { $0 = "PL" }

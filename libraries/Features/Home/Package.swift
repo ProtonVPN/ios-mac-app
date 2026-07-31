@@ -15,6 +15,11 @@ let package = Package(
             name: "Home",
             targets: ["Home"]
         ),
+        // Platform-agnostic features
+        .library(
+            name: "HomeShared",
+            targets: ["HomeShared"]
+        ),
     ],
     dependencies: [
         .package(path: "../../../external/protoncore"),

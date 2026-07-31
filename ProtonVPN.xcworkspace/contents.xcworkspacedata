@@ -132,6 +132,13 @@
             location = "group:libraries/Features/PCAP">
          </FileRef>
       </Group>
+      <Group
+         location = "container:"
+         name = "Shells">
+         <FileRef
+            location = "group:libraries/Shells/Mobile">
+         </FileRef>
+      </Group>
    </Group>
    <Group
       location = "container:"
