@@ -40,8 +40,11 @@ protocol OnboardingServiceDelegate: AnyObject {
 protocol OnboardingService: AnyObject {
     var delegate: OnboardingServiceDelegate? { get set }
 
+    /// - Parameter overMainInterface: whether the app's shell is already up, which is the guest to registered path.
+    ///
+    /// Onboarding is presented over it rather than becoming the root.
     @MainActor
-    func showOnboarding(overTabBarController tabBarController: UITabBarController?)
+    func showOnboarding(overMainInterface: Bool)
 
     @MainActor
     func showPaywall()
@@ -67,12 +70,12 @@ final class OnboardingModuleService {
 
 @MainActor
 extension OnboardingModuleService: OnboardingService {
-    func showOnboarding(overTabBarController tabBarController: UITabBarController? = nil) {
+    func showOnboarding(overMainInterface: Bool = false) {
         log.debug("Starting onboarding", category: .app)
         let navigationController = UINavigationController(rootViewController: welcomeToProtonViewController())
         navigationController.setNavigationBarHidden(true, animated: false)
-        if tabBarController != nil {
-            // we're showing onboarding over tabbar, guest -> create account
+        if overMainInterface {
+            // guest -> create account: the shell is already showing, so onboarding covers it
             navigationController.modalPresentationStyle = .fullScreen
             windowService.present(modal: navigationController)
         } else {

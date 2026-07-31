@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import Ergonomics
-import Home
 import Mobile
 import SwiftUI
 import UIKit
@@ -36,34 +35,33 @@ final class AppShellObserver: NSObject {
     private var isApplyingStoreDetent = false
     /// Reports how much of the backdrop the sheet covers as it moves.
     private let overlap: SheetOverlap
-    /// The filled selected-state images the tab items declared, kept aside while the sheet rests on its
-    /// floor and every item shows its outline glyph, keyed per item so each goes back where it came from.
-    private var filledSelectionImages: [ObjectIdentifier: UIImage?] = [:]
-    /// How much of the sheet is showing above its floor: 1 clear of it, 0 resting on it. Derived from the
-    /// sheet's live height rather than the settled detent, so the pages fade with the drag instead of
-    /// through an animation of ours running against the sheet's own movement.
+    /// How much of the sheet is showing above its floor: 1 clear of it, 0 resting on it. Derived from the sheet's live
+    /// height rather than the settled detent, so the pages fade with the drag rather than jumping between detents.
     private var floorPresence: CGFloat = 1
     /// Whether the sheet's ladder was last restricted to the full detent for a deep page. Only a real change may touch
     /// the sheet.
     private var detentsRestrictedToFull = false
     /// The presented sheet, so a navigation push can raise it in the same turn it reports its depth.
     private weak var sheet: UISheetPresentationController?
-    /// The presented tabs, for the floor treatment the sheet's own movement drives.
-    private weak var tabs: UITabBarController?
+    /// The pages the sheet carries, for the floor treatment the sheet's own movement drives.
+    private weak var pages: ShellPagesController?
+    /// The bar the pages are chosen from, which the sheet's travel leaves alone.
+    private weak var bar: ShellTabBar?
 
     init(store: StoreOf<TabularFeature>, overlap: SheetOverlap) {
         self.store = store
         self.overlap = overlap
     }
 
-    /// Applies reducer decisions to the sheet. The full ladder is applied once at presentation; here
-    /// the selection moves, and a deep page swaps the ladder for the full detent alone. The equality
-    /// checks are what prevent the delegates and this observation from chasing each other around a
-    /// change either side made.
-    func observeShellState(sheet: UISheetPresentationController, tabs: UITabBarController) {
+    /// Applies reducer decisions to the sheet, the pages and the bar. The full ladder is applied once at presentation;
+    /// here the selection moves, and a deep page swaps the ladder for the full detent alone. The equality checks each
+    /// side makes are what prevent the delegates and this observation from chasing each other around a change either of
+    /// them made.
+    func observeShellState(sheet: UISheetPresentationController, pages: ShellPagesController, bar: ShellTabBar) {
         self.sheet = sheet
-        self.tabs = tabs
-        observe { [weak self, weak sheet, weak tabs] in
+        self.pages = pages
+        self.bar = bar
+        observe { [weak self, weak sheet] in
             guard let self else { return }
             let detent = store.detent
 
@@ -79,52 +77,41 @@ final class AppShellObserver: NSObject {
                 isApplyingStoreDetent = false
             }
 
-            if let tabs, let index = TabularFeature.Tab.allCases.firstIndex(of: store.tab), tabs.selectedIndex != index {
-                tabs.selectedIndex = index
+            if let index = TabularFeature.Tab.allCases.firstIndex(of: store.tab) {
+                showPage(at: index)
             }
         }
     }
 
-    /// Fades the pages and the container as the sheet approaches its floor, where the bar becomes the
-    /// sheet's only chrome and the globe runs underneath it. Driven by the sheet's own height, so a drag
-    /// carries the fade frame by frame and nothing of ours animates against the sheet's movement; alpha
-    /// zero still takes a page out of hit-testing, and `viewIfLoaded` keeps unvisited tabs unbuilt.
-    private func applyFloorPresence(sheetHeight: CGFloat) {
-        guard let tabs else { return }
+    /// Brings a tab's page forward and moves the bar's selection with it. This both serves the bar's own taps, which
+    /// need the page immediately, and the observation above, which is the backstop for any other sender.
+    private func showPage(at index: Int) {
+        pages?.show(pageAt: index)
+        bar?.selectItem(at: index)
+    }
+
+    /// Fades the pages as the sheet approaches its floor, where the bar becomes the only view and the globe runs
+    /// underneath it to the screen's bottom edge. Driven by the sheet's own height, so a drag carries the fade frame by
+    /// frame; a release hands the rest to an animation of ours.
+    private func applyFloorPresence(sheetHeight: CGFloat, animated: Bool) {
+        guard let pages else { return }
         let span = max(Dimensions.floorFadeSpan, 1)
         let presence = min(max((sheetHeight - Dimensions.barHeight) / span, 0), 1)
         guard abs(presence - floorPresence) > 0.01 else { return }
-        let wasResting = floorPresence == 0
         floorPresence = presence
-        tabs.viewControllers?.forEach { $0.viewIfLoaded?.alpha = presence }
-        // Opaque like the pages until the floor, where it clears so the globe reaches the screen's
-        // bottom edge. Anywhere above, a navigation push slides over solid ground.
-        tabs.view.backgroundColor = UIColor.backgroundColor().withAlphaComponent(presence)
-        if (presence == 0) != wasResting {
-            applySelectionGlyphs(to: tabs, resting: presence == 0)
+        // An animation block here is safe now that the bar is mounted in the window: it used to reach the bar through
+        // the ancestors it shared with these views and carry its pending layout along, which is what sent the bar
+        // flying while the sheet was still on its way.
+        UIView.animate(withDuration: animated ? Self.settleDuration : 0) {
+            pages.view.alpha = presence
         }
+        // Not animatable, and it lays the bar out, so it stays out of the block above.
+        bar?.showsOutlinedSelection = presence == 0
     }
 
-    /// On the floor the selected item renders its outline glyph like its neighbors, so the bar reads as
-    /// one quiet strip over the map. Each item's filled image is kept aside and put back as the sheet
-    /// rises. Applied only when the sheet arrives at or leaves the floor: writing to the items on every
-    /// pass makes the bar lay itself out again, which is not free while the sheet is moving.
-    private func applySelectionGlyphs(to tabs: UITabBarController, resting: Bool) {
-        tabs.tabBar.items?.forEach { item in
-            if resting {
-                if filledSelectionImages[ObjectIdentifier(item)] == nil {
-                    filledSelectionImages[ObjectIdentifier(item)] = item.selectedImage
-                }
-                item.selectedImage = item.image
-            } else if let kept = filledSelectionImages.removeValue(forKey: ObjectIdentifier(item)) {
-                item.selectedImage = kept
-            }
-        }
-    }
-
-    /// Holds the sheet at full while the visible tab is pushed beyond its root: the legacy detail pages
-    /// were designed for the whole screen, and the floor's tab bar may be hidden by a pushed page. The
-    /// ladder and the grabber return with the root.
+    /// Holds the sheet at full while the visible tab is pushed beyond its root: the legacy detail pages were designed
+    /// for the whole screen, and there is nothing to read at half or on the floor. The ladder and the grabber return
+    /// with the root.
     ///
     /// Applied by hand rather than left to the observation, which runs a turn later than the caller needs. Raising
     /// animates and reports when it has landed, so a push can wait for its room; the release on the way back only
@@ -164,10 +151,8 @@ final class AppShellObserver: NSObject {
         applyPageDepth(true, completion: push)
     }
 
-    /// Mirrors the sheet's movement onto the backdrop: directly while the sheet's geometry is current
-    /// (the user holds it), and by this side's own spring once a release hands the rest of the travel to
-    /// a render-server animation, whose frames exist out of process where no in-process sample can
-    /// reliably land on the right one.
+    /// Mirrors the sheet's movement onto the backdrop and the pages: directly while the sheet's geometry is current
+    /// (the user holds it), and hands off the rest of the travel to a spring animation if the user does a flick.
     func trackSheetHeight(of presented: UIViewController) {
         let reporter = SheetHeightReporter()
         reporter.isUserInteractionEnabled = false
@@ -176,27 +161,22 @@ final class AppShellObserver: NSObject {
         reporter.onMove = { [weak self] overlap in
             guard let self else { return }
             self.overlap.report(max(0, overlap))
-            // Live geometry, so the floor treatment tracks the finger with no animation of its own.
-            applyFloorPresence(sheetHeight: max(0, overlap))
+            // Live geometry, so the fade tracks the finger with no animation of its own.
+            applyFloorPresence(sheetHeight: max(0, overlap), animated: false)
         }
         reporter.onSettle = { [weak self] target in
             guard let self else { return }
             withAnimation(Self.settleSpring) { self.overlap.settle(toward: max(0, target)) }
-        }
-        // A settle moves the sheet without laying this side out, so the floor treatment follows the
-        // animation frame by frame instead. Sampled rather than animated: an animation block of ours
-        // around these views also catches the tab bar's pending layout, and the bar flies to wherever
-        // the sheet is going while the sheet is still on its way there.
-        reporter.onSettleProgress = { [weak self] height in
-            self?.applyFloorPresence(sheetHeight: max(0, height))
+            applyFloorPresence(sheetHeight: max(0, target), animated: true)
         }
         presented.view.insertSubview(reporter, at: 0)
     }
 
-    /// Approximates the sheet's own settle curve. The globe's centering is a soft alignment, so a near
-    /// match reads as one motion; what matters is that this animation runs in-process, where it cannot
-    /// land out of step with itself the way sampled render-server frames can.
+    /// Approximates the sheet's own settle curve. The globe's centering and the pages' fade are both soft alignments,
+    /// so a near match reads as one motion.
     private static let settleSpring = Animation.spring(response: 0.45, dampingFraction: 1)
+    /// The same curve for UIKit, which takes a plain duration.
+    private static let settleDuration: TimeInterval = 0.35
 }
 
 /// The sheet's fixed geometry: what the custom detents resolve with.
@@ -224,16 +204,6 @@ private final class SheetHeightReporter: UIView {
     var onMove: ((_ overlap: CGFloat) -> Void)?
     /// The sheet just left for `target` on a render-server animation.
     var onSettle: ((_ target: CGFloat) -> Void)?
-    /// Where the sheet actually is, frame by frame, for as long as a settle animation runs. Sampled
-    /// from the presentation layer, which is the only place an animation the render server owns can be
-    /// read from this side.
-    var onSettleProgress: ((_ overlap: CGFloat) -> Void)?
-
-    private var displayLink: CADisplayLink?
-
-    deinit {
-        displayLink?.invalidate()
-    }
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -242,37 +212,10 @@ private final class SheetHeightReporter: UIView {
         let overlap = window.bounds.height - sheet.convert(sheet.bounds, to: window).minY
         if hasGeometryAnimation(between: sheet, and: window) {
             onSettle?(overlap) // the model already holds the destination
-            followSettle()
         } else {
             onMove?(overlap)
         }
         clearPresentation(between: sheet, and: window)
-    }
-
-    /// Samples the sheet through a settle and stops as soon as it is no longer animating.
-    private func followSettle() {
-        guard displayLink == nil else { return }
-        let link = CADisplayLink(target: self, selector: #selector(sampleSettle))
-        link.add(to: .main, forMode: .common)
-        displayLink = link
-    }
-
-    @objc
-    private func sampleSettle() {
-        guard let sheet = superview, let window else {
-            stopFollowingSettle()
-            return
-        }
-        let presented = sheet.layer.presentation() ?? sheet.layer
-        onSettleProgress?(window.bounds.height - presented.frame.minY)
-        if !hasGeometryAnimation(between: sheet, and: window) {
-            stopFollowingSettle()
-        }
-    }
-
-    private func stopFollowingSettle() {
-        displayLink?.invalidate()
-        displayLink = nil
     }
 
     /// Whether any layer from the sheet up to the window is animating, which is what tells a settle's
@@ -316,13 +259,18 @@ extension AppShellObserver: UISheetPresentationControllerDelegate {
     }
 }
 
-extension AppShellObserver: UITabBarControllerDelegate {
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        guard let tab = TabularFeature.Tab.allCases[safe: tabBarController.selectedIndex] else { return }
+extension AppShellObserver: UITabBarDelegate {
+    func tabBar(_ bar: UITabBar, didSelect item: UITabBarItem) {
+        guard let index = bar.items?.firstIndex(of: item),
+              let tab = TabularFeature.Tab.allCases[safe: index]
+        else { return }
+        // Brought forward by hand as well as sent, because the observation runs a turn later than a tap may be answered
+        // in: a bar without a controller behind it shows nothing until someone acts.
+        showPage(at: index)
         store.send(.tabSelected(tab))
         // Depth belongs to the visible tab: switching to one still deep in its stack keeps the full
         // sheet, and switching to one at its root releases it.
-        let depth = (viewController as? UINavigationController)?.viewControllers.count ?? 1
+        let depth = (pages?.pages[safe: index] as? UINavigationController)?.viewControllers.count ?? 1
         applyPageDepth(depth > 1)
         store.send(.pageDepthChanged(depth > 1))
     }
@@ -348,7 +296,7 @@ extension AppShellObserver: UINavigationControllerDelegate {
 // MARK: - The one place the two vocabularies meet
 
 private extension UISheetPresentationController.Detent.Identifier {
-    /// The minimized height: enough for the grabber, the tab bar, and the bottom safe area together.
+    /// The minimized height: enough to leave the grabber just clear of the bar floating below it.
     static let bar = Self("bar")
     /// Half the available room. Our own rather than the system's medium, so its height is knowable.
     static let half = Self("half")

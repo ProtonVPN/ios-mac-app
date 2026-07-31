@@ -242,8 +242,6 @@ final class WindowServiceImplementation {
         guard let rootViewController = window.rootViewController else { return nil }
         var navigationController: UINavigationController? = if let topViewController = rootViewController.presentedViewController as? UINavigationController {
             topViewController
-        } else if let tabBarController = rootViewController as? TabBarController, let topViewController = tabBarController.selectedViewController as? UINavigationController {
-            topViewController
         } else {
             rootViewController as? UINavigationController
         }

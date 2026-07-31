@@ -80,29 +80,21 @@ final class SettingsViewController: UIViewController {
 
         observe { [weak self] in
             guard let self else { return }
-            switch captureSession {
-            case .sessionStarted:
-                guard recordingTabBarItem != tabBarItem else { return }
-                tabBarItem = recordingTabBarItem
-            default:
-                guard idleTabBarItem != tabBarItem else { return }
-                tabBarItem = idleTabBarItem
-            }
+            // The dot marks a capture in progress. The images are swapped on the item this controller already has
+            // rather than the item being replaced: the shell's tab bar is handed these items once and holds them, so a
+            // fresh one would never reach it.
+            let isRecording = if case .sessionStarted = captureSession { true } else { false }
+            tabBarItem.image = Self.tabBarGlyph(isRecording ? .settingsTabbarDot : .settingsTabbar)
+            tabBarItem.selectedImage = Self.tabBarGlyph(isRecording ? .settingsTabbarDotActive : .settingsTabbarActive)
         }
+        tabBarItem.title = Localizable.settings
         tabBarItem.accessibilityIdentifier = "Settings back btn"
     }
 
-    private let recordingTabBarItem = UITabBarItem(
-        title: Localizable.settings,
-        image: UIImage(resource: .settingsTabbarDot).withRenderingMode(.alwaysOriginal),
-        selectedImage: UIImage(resource: .settingsTabbarDotActive).withRenderingMode(.alwaysOriginal)
-    )
-
-    private let idleTabBarItem = UITabBarItem(
-        title: Localizable.settings,
-        image: UIImage(resource: .settingsTabbar).withRenderingMode(.alwaysOriginal),
-        selectedImage: UIImage(resource: .settingsTabbarActive).withRenderingMode(.alwaysOriginal)
-    )
+    /// Settings brings its own colored glyphs, so they are passed through untinted.
+    private static func tabBarGlyph(_ resource: ImageResource) -> UIImage {
+        UIImage(resource: resource).withRenderingMode(.alwaysOriginal)
+    }
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {

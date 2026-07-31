@@ -138,7 +138,11 @@ final class NavigationService {
 
     @Dependency(\.bugReport) private var bugReportCreator
 
-    var tabBarController = TabBarController()
+    /// The shell's pages, which the sheet carries, and the bar they are chosen from, which is mounted in the window so
+    /// the sheet's travel never moves it. See `ShellPagesController` for why they are two pieces rather than a tab bar
+    /// controller.
+    private var pages = ShellPagesController()
+    private var tabBar = ShellTabBar()
 
     /// The app's main TCA store.
     private var appStore: StoreOf<TabularFeature>?
@@ -186,22 +190,25 @@ final class NavigationService {
         // it exists, and none of that should keep running for a user who signed out.
         appStore = nil
         shellObserver = nil
-        // Release the old tab bar and start fresh. Merely nilling `viewControllers` on the reused,
-        // already-presented instance is unreliable — UIKit reads it back as a non-nil/empty array, so
-        // `setupTabs`' `== nil` guard would skip the rebuild and re-show this stale instance (still holding
-        // the previous session's Settings nav with the tab bar hidden). A brand-new instance reports
-        // `viewControllers == nil` reliably, so the next login rebuilds the tabs with post-login data.
-        tabBarController = TabBarController()
+        // The bar is a child of the window rather than of the root, so swapping the root for the login screen leaves it
+        // behind unless it is taken down here. Create fresh pages and a fresh tab bar for the next login.
+        tabBar.removeFromSuperview()
+        pages = ShellPagesController()
+        tabBar = ShellTabBar()
     }
 
     func presentLogin(flow: LoginFlowType = .normal) {
-        executeOnUIThread { [tabBarController] in
-            self.loginService.presentLoginFlow(over: tabBarController, flow: flow)
+        executeOnUIThread {
+            guard let anchor = self.windowService.topmostPresentedViewController() else { return }
+            self.loginService.presentLoginFlow(over: anchor, flow: flow)
         }
     }
 
     func presentSignUp() {
-        presentSignUp(over: tabBarController)
+        executeOnUIThread {
+            guard let anchor = self.windowService.topmostPresentedViewController() else { return }
+            self.presentSignUp(over: anchor)
+        }
     }
 
     func presentSignUp(over uiViewController: UIViewController, flow: LoginFlowType = .normal) {
@@ -253,7 +260,7 @@ final class NavigationService {
             variant = .plus
         }
 
-        tabBarController.present(ModalsFactory().whatsNewViewController(variant: variant), animated: true)
+        windowService.present(modal: ModalsFactory().whatsNewViewController(variant: variant))
     }
 
     private func sessionChanged(_ status: SessionStatus) {
@@ -267,7 +274,7 @@ final class NavigationService {
     /// user can raise and lower.
     @MainActor
     private func setupTabs() {
-        guard tabBarController.viewControllers?.isEmpty ?? true else {
+        guard pages.pages.isEmpty else {
             appStore?.send(.tabSelected(.home))
             return
         }
@@ -281,34 +288,27 @@ final class NavigationService {
             return TabularFeature()
         } withDependencies: {
             $0.openCredentiallessSignUp = { [weak self] in
-                guard let self else { return }
-                presentSignUp(over: tabBarController, flow: .credentiallessUpsell)
+                guard let self, let anchor = windowService.topmostPresentedViewController() else { return }
+                presentSignUp(over: anchor, flow: .credentiallessUpsell)
             }
         }
         appStore = store
 
         let backdrop = UIHostingController(rootView: TabularBackdropView(store: store, overlap: sheetOverlap))
         windowService.show(viewController: backdrop)
-        // The app is compact-width everywhere: the tab pages have always forced it (see TabBarController),
-        // and the sheet chrome must agree, or iPad presents the tabs as a floating regular-width card in
-        // the middle of the screen and the reported overlap stops meaning "how much of the bottom the
-        // sheet covers". The override sits on the window because presentations mount beside the root in
-        // the window's own containers, out of reach of any controller-level override. The tablet is due
-        // its own shell; until then the iPad is a big handheld, as it was when the tab bar controller
-        // itself was the window's root.
+        // Keep app compact-width everywhere for now, this keeps the bottom sheet working on iPad.
         backdrop.view.window?.traitOverrides.horizontalSizeClass = .compact
 
-        // One page per shell tab, in `Tab.allCases` order: the observer translates the tab bar's
-        // selection index through that same list, so the enum is the only place the order is written.
-        tabBarController.setViewControllers(TabularFeature.Tab.allCases.map { tab -> UIViewController in
+        pages.setPages(TabularFeature.Tab.allCases.map { tab -> UIViewController in
             switch tab {
             case .home: makeHomeViewController(store: store.scope(state: \.home, action: \.home))
             case .countries: makeCountriesViewController()
             case .profiles: SheetNavigationController(rootViewController: makeProfilesViewController())
             case .settings: SheetNavigationController(rootViewController: makeSettingsViewController())
             }
-        }, animated: false)
-        tabBarController.setupView()
+        })
+        // The pages declare their own items, as they did when a tab bar controller collected them.
+        tabBar.items = pages.barItems
 
         // Those should be called once
         store.send(.commands(.onStart))
@@ -323,10 +323,12 @@ final class NavigationService {
     private func presentTabSheet(over backdrop: UIViewController, store: StoreOf<TabularFeature>) {
         let observer = AppShellObserver(store: store, overlap: sheetOverlap)
         shellObserver = observer
-        tabBarController.delegate = observer
+        tabBar.delegate = observer
+        // The pages keep their content clear of the bar they no longer contain.
+        tabBar.onRoomChange = { [weak pages] room in pages?.barRoom = room }
         // The UIKit tabs' navigation stacks report their depth through the observer, so a pushed legacy page can hold
         // the sheet at full, and ask it for the room before pushing into it.
-        tabBarController.viewControllers?
+        pages.pages
             .compactMap { $0 as? UINavigationController }
             .forEach { navigation in
                 navigation.delegate = observer
@@ -338,29 +340,33 @@ final class NavigationService {
                     observer.makeRoom(forPushThen: push)
                 }
             }
-        tabBarController.isModalInPresentation = true // the tabs are the app, so the sheet never dismisses
-        // Opaque to match the pages, so navigation transitions inside a tab slide over solid ground.
-        // The observer clears it at the floor alone, where the pages are faded and the globe runs under
-        // the floating tab bar to the screen's bottom edge.
-        tabBarController.view.backgroundColor = .backgroundColor()
+        pages.isModalInPresentation = true // the pages are the app, so the sheet never dismisses
+        pages.view.backgroundColor = .backgroundColor()
 
-        if let sheet = tabBarController.sheetPresentationController {
+        if let sheet = pages.sheetPresentationController {
             sheet.delegate = observer
             // One fixed ladder for every tab; only the selection moves, applied by the observer.
             sheet.detents = TabularFeature.Detent.allCases.map(\.sheetDetent)
             sheet.largestUndimmedDetentIdentifier = TabularFeature.Detent.allCases.last?.identifier
             sheet.prefersScrollingExpandsWhenScrolledToEdge = true
             sheet.prefersGrabberVisible = true
-            observer.observeShellState(sheet: sheet, tabs: tabBarController)
+            observer.observeShellState(sheet: sheet, pages: pages, bar: tabBar)
         }
 
-        observer.trackSheetHeight(of: tabBarController)
-        backdrop.present(tabBarController, animated: false)
+        observer.trackSheetHeight(of: pages)
+        backdrop.present(pages, animated: false) { [tabBar] in
+            // Mounted once the sheet is up, so the bar goes in over the container it was presented into.
+            backdrop.view.window.map(tabBar.mount(in:))
+        }
     }
 
     private func makeHomeViewController(store: StoreOf<HomeFeature>) -> UIViewController {
         let hostingController = UIHostingController(rootView: HomeView(store: store))
-        hostingController.tabBarItem = UITabBarItem(title: Localizable.homeTab, image: IconProvider.houseFilled, tag: 0)
+        hostingController.tabBarItem = UITabBarItem(
+            title: Localizable.homeTab,
+            image: IconProvider.house,
+            selectedImage: IconProvider.houseFilled
+        )
         hostingController.tabBarItem.accessibilityIdentifier = "Home"
         return hostingController
     }
@@ -576,10 +582,10 @@ extension NavigationService: LoginServiceDelegate {
 
     @MainActor
     func userDidSignUp() {
-        onboardingService.showOnboarding(overTabBarController: tabBarController)
+        onboardingService.showOnboarding(overMainInterface: !pages.pages.isEmpty)
         TelemetryOnboardingReporter.isOnboardingInProgress = true
-        // in case we're transitioning from guest -> registered improve UX by selecting first tab
-        // in normal flow (start -> sign up) tabbarcontroller is nil
+        // in case we're transitioning from guest -> registered improve UX by selecting first tab in normal flow (start
+        // -> sign up) there is no main interface yet
         presentHome()
         @Dependency(\.telemetryService) var service
         Task {
