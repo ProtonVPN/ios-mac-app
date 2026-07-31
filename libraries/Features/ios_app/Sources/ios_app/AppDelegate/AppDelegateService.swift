@@ -26,6 +26,7 @@ import ExtensionIPC
 import Foundation
 import LegacyCommon
 import Logging
+import Persistence
 import PMLogger
 import ProtonCoreAccountRecovery
 import ProtonCoreEnvironment
@@ -71,6 +72,7 @@ public final class AppDelegateService: AppDelegateProtocol {
     public init() {
         prepareDependencies {
             $0.defaultAppStorage = .domainUserDefaults
+            $0.databaseConfiguration = .live(reportError: SentryHelper.reportError)
         }
         self.container = DependencyContainer.shared
     }

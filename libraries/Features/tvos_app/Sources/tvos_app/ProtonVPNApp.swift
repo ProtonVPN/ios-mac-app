@@ -21,6 +21,7 @@ import Dependencies
 import Domain
 import Ergonomics
 import Logging
+import Persistence
 import PMLogger
 import ProtonCoreFeatureFlags
 import ProtonCoreLog
@@ -40,6 +41,7 @@ struct ProtonVPNApp: App {
             // Align swift-sharing's default store with the app-group suite so migrated
             // `@Shared` keys read the same UserDefaults values.
             $0.defaultAppStorage = .domainUserDefaults
+            $0.databaseConfiguration = .live(reportError: SentryHelper.reportError)
         }
         setupLogsForApp()
         setupCoreLogging()

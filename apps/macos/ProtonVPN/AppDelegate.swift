@@ -50,6 +50,7 @@ import Sharing
 // Local dependencies (Core first, then Shared, then Features, then Foundations)
 import LegacyCommon
 import Logging
+import Persistence
 import PMLogger
 import Settings
 import Strings
@@ -96,6 +97,13 @@ import VPNShared
 #endif
 
 extension AppDelegate: NSApplicationDelegate {
+    /// Runs before `applicationDidFinishLaunching`, and before anything has touched the database.
+    func applicationWillFinishLaunching(_: Notification) {
+        prepareDependencies {
+            $0.databaseConfiguration = .live(reportError: SentryHelper.reportError)
+        }
+    }
+
     func applicationDidFinishLaunching(_: Notification) {
         setupLogsForApp()
         log.debug("applicationDidFinishLaunching", category: .app)
