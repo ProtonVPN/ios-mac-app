@@ -54,6 +54,11 @@ public struct ConnectionStatusFeature {
         case tearDown
 
         case connectionStatusBanner(ConnectionStatusBannerFeature.Action)
+        case delegate(Delegate)
+    }
+
+    public enum Delegate: Equatable {
+        case upsellTapped(ConnectionStatusBannerFeature.UpsellMode)
     }
 
     public init() {}
@@ -140,7 +145,10 @@ public struct ConnectionStatusFeature {
                     return .cancel(id: IDs.maskLocationTimer)
                 }
 
-            case .connectionStatusBanner:
+            case let .connectionStatusBanner(.delegate(.upsellTapped(upsellMode))):
+                return .send(.delegate(.upsellTapped(upsellMode)))
+
+            case .connectionStatusBanner, .delegate:
                 return .none
 
             case .tearDown:

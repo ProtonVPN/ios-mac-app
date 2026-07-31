@@ -265,8 +265,7 @@ final class NavigationService {
     @MainActor
     private func setupTabs() {
         guard tabBarController.viewControllers?.isEmpty ?? true else {
-            // Tabs already built (e.g. guest mode) — just select the first tab.
-            tabBarController.selectedIndex = 0
+            appStore?.send(.tabSelected(.home))
             return
         }
 
@@ -300,6 +299,7 @@ final class NavigationService {
         tabBarController.setupView()
 
         // Those should be called once
+        store.send(.commands(.onStart))
         store.send(.home(.onStart))
         store.send(.home(.sharedProperties(.listen)))
         store.send(.map(.observeConnectionState))
@@ -349,8 +349,9 @@ extension NavigationService {
                 guard let vc = self?.windowService.topmostPresentedViewController() else { return }
                 self?.presentSignUp(over: vc, flow: .credentiallessUpsell)
             }
-            $0.switchToPrimaryTab = { [weak self] in
-                self?.presentHome()
+            $0.switchToPrimaryTab = {
+                // Connecting no longer changes tabs: the backdrop's status chrome and camera flight are
+                // visible behind every page, so there is nothing on Home the user has to be taken to.
             }
         }
         let countriesView = CountriesMainView(store: countriesStore)
@@ -514,7 +515,12 @@ extension NavigationService: ProtocolService {
 
 extension NavigationService: ConnectionStatusService {
     func presentHome() {
-        tabBarController.selectedIndex = 0 // Switch to Home tab which included new connection status view.
+        // Through the store, never the tab bar directly: the shell is the authority on the selected
+        // tab, and a raw selectedIndex write would be snapped back by the observation on the next
+        // state change.
+        Task { @MainActor [weak self] in
+            self?.appStore?.send(.tabSelected(.home))
+        }
     }
 }
 

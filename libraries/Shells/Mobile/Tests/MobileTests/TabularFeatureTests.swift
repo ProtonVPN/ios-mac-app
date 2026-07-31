@@ -41,6 +41,23 @@ struct TabularFeatureTests {
         await raised.send(.tabSelected(.profiles)) { $0.tab = .profiles }
     }
 
+    @Test("A connect under the full sheet lowers it to half, and leaves lower stops alone")
+    @MainActor
+    func connectLowersTheFullSheet() async {
+        var full = TabularFeature.State()
+        full.detent = .full
+        let store = TestStore(initialState: full) { TabularFeature() }
+        store.exhaustivity = .off(showSkippedAssertions: false)
+        await store.send(.commands(.commandReceived(.connect(.defaultFastest, nil, .connectionCard)))) {
+            $0.detent = .half
+        }
+
+        // Already at half: the connection is in view, so the sheet stays put.
+        let atHalf = TestStore(initialState: TabularFeature.State()) { TabularFeature() }
+        atHalf.exhaustivity = .off(showSkippedAssertions: false)
+        await atHalf.send(.commands(.commandReceived(.connect(.defaultFastest, nil, .connectionCard))))
+    }
+
     @Test("The sheet follows the user's drag")
     @MainActor
     func detentChangesFollowTheSheet() async {

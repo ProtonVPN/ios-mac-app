@@ -20,9 +20,6 @@ import ComposableArchitecture
 import Domain
 import Home
 import HomeShared
-import PaymentsShared
-import Persistence
-import SwiftUI
 import VPNAppCore
 
 /// The tabular app's shell, above the tabs. The globe and the connection chrome are the backdrop, and the tabs ride
@@ -59,11 +56,13 @@ public struct TabularFeature {
         public internal(set) var detent: Detent = .half
         public internal(set) var tab: Tab = .home
 
+        public var commands: ConnectionCommandsFeature.State
         public var connectionStatus: ConnectionStatusFeature.State
         public var home: HomeFeature.State
         public var map: HomeMapFeature.State
 
         public init(detent: Detent = .half) {
+            self.commands = .init()
             self.connectionStatus = .init()
             self.home = .init()
             self.map = .init()
@@ -72,6 +71,7 @@ public struct TabularFeature {
     }
 
     public enum Action {
+        case commands(ConnectionCommandsFeature.Action)
         case connectionStatus(ConnectionStatusFeature.Action)
         /// The sheet came to rest at a new detent, or a policy below moved it.
         case detentChanged(Detent)
@@ -81,11 +81,13 @@ public struct TabularFeature {
     }
 
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
-    @Dependency(\.serverRepository) private var serverRepository
 
     public init() {}
 
     public var body: some Reducer<State, Action> {
+        Scope(state: \.commands, action: \.commands) {
+            ConnectionCommandsFeature()
+        }
         Scope(state: \.connectionStatus, action: \.connectionStatus) {
             ConnectionStatusFeature()
         }
@@ -117,27 +119,38 @@ public struct TabularFeature {
                 return .none
 
             case .map(.delegate(.showUpsell)):
-                // Choosing a location is paid. The payments destination lives in Home's tree, so the
-                // request is forwarded rather than answered here.
-                return .send(.home(.showUpsell(allCountriesUpsellModalType())))
+                return .send(.home(.showUpsell(.allCountries)))
 
-            case let .connectionStatus(.connectionStatusBanner(.delegate(.upsellTapped(mode)))):
-                let type: UpsellModalType = switch mode {
+            case let .connectionStatus(.delegate(.upsellTapped(upsellMode))):
+                let request: HomeFeature.UpsellRequest = switch upsellMode {
                 case .netshield: .netShield
-                case .serverChange: allCountriesUpsellModalType()
+                case .serverChange: .allCountries
                 }
-                return .send(.home(.showUpsell(type)))
+                return .send(.home(.showUpsell(request)))
 
-            case .connectionStatus, .home, .map:
+            case .commands(.commandReceived(.connect)):
+                // A connect that starts under the fully raised sheet lowers it to half, so the status view and the
+                // camera flight come into view without the user having to clear the sheet themselves.
+                if state.detent == .full {
+                    state.detent = .half
+                }
+                return .none
+
+            case let .commands(.delegate(delegated)):
+                // The machinery's Home-bound requests: their destinations live in Home's tree, so the
+                // shell only routes.
+                switch delegated {
+                case let .connectionFailed(error):
+                    return .send(.home(.connectionFailed(error)))
+                case let .intentResolutionFailed(resolutionError):
+                    return .send(.home(.intentResolutionFailed(resolutionError)))
+                case let .twoFactorRequired(error):
+                    return .send(.home(.twoFactorRequired(error)))
+                }
+
+            case .commands, .connectionStatus, .home, .map:
                 return .none
             }
         }
-    }
-
-    private func allCountriesUpsellModalType() -> UpsellModalType {
-        .allCountries(
-            numberOfServers: serverRepository.roundedServerCount,
-            numberOfCountries: serverRepository.countryCount()
-        )
     }
 }

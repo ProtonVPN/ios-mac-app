@@ -52,7 +52,6 @@ public struct HomeView: View {
 
     private var contentWithSheets: some View {
         content
-            .alert($store.scope(state: \.alert, action: \.alert))
             .sessionCapturedSheet(store: $store)
             .connectionDetailsSheet(store: $store)
             .changeServerSheet(store: $store)
