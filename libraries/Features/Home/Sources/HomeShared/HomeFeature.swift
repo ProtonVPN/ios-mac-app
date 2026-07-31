@@ -82,6 +82,7 @@ public struct HomeFeature {
         package var announcementBanner: AnnouncementBannerFeature.State
         package var whatsNewChecker: WhatsNewCheckerFeature.State
         package var localAgentNotice: LocalAgentNoticeFeature.State?
+        package var maintenance: MaintenanceFeature.State
 
         fileprivate var shouldPushAlert: Bool = false
 
@@ -101,6 +102,7 @@ public struct HomeFeature {
             self.announcementBanner = .noBanner
             self.whatsNewChecker = .init()
             self.localAgentNotice = nil
+            self.maintenance = .init()
         }
     }
 
@@ -147,6 +149,7 @@ public struct HomeFeature {
         case whatsNewPresenter(WhatsNewPresenterFeature.Action)
 
         case localAgentNotice(LocalAgentNoticeFeature.Action)
+        case maintenance(MaintenanceFeature.Action)
 
         /// Start bug report flow
         case helpButtonPressed
@@ -242,6 +245,9 @@ public struct HomeFeature {
         Scope(state: \.whatsNewChecker, action: \.whatsNewChecker) {
             WhatsNewCheckerFeature()
         }
+        Scope(state: \.maintenance, action: \.maintenance) {
+            MaintenanceFeature()
+        }
         CombineReducers {
             lifecycleAndObservationReducer
             recentsAndSharedPropertiesReducer
@@ -278,6 +284,7 @@ private extension HomeFeature {
                     .send(.announcementBanner(.onStart)),
                     .send(.connection(.input(.onLaunch))),
                     .send(.recents(.watchConnectionStatus)),
+                    .send(.maintenance(.onStart)),
                     .run { send in
                         await send(.whatsNewChecker(.register))
                         try await clock.sleep(for: Self.whatsNewPresentationDelay)

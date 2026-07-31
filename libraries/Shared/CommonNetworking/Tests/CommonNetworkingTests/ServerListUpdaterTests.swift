@@ -19,6 +19,7 @@
 @testable import CommonNetworking
 import Dependencies
 import Domain
+import Ergonomics // CheckedFeatureFlagsRepository
 import Foundation
 import Persistence
 import PersistenceTestSupport

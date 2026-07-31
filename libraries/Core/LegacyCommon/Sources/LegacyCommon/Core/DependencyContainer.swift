@@ -30,8 +30,6 @@ open class Container {
     @Dependency(\.networking) var networking
     private lazy var pushNotificationService: PushNotificationServiceProtocol = PushNotificationService(apiService: networking.apiService)
 
-    private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = .init()
-
     // Should be set in apps to the Container object
     public static var sharedContainer: Container!
 
@@ -69,13 +67,5 @@ open class Container {
 extension Container: PushNotificationServiceFactory {
     public func makePushNotificationService() -> ProtonCorePushNotifications.PushNotificationServiceProtocol {
         pushNotificationService
-    }
-}
-
-// MARK: MaintenanceManagerHelperFactory
-
-extension Container: MaintenanceManagerHelperFactory {
-    public func makeMaintenanceManagerHelper() -> MaintenanceManagerHelper {
-        maintenanceManagerHelper
     }
 }

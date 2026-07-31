@@ -73,6 +73,7 @@ public final class AppDelegateService: AppDelegateProtocol {
         prepareDependencies {
             $0.defaultAppStorage = .domainUserDefaults
             $0.databaseConfiguration = .live(reportError: SentryHelper.reportError)
+            $0.connectionCommandClient.quickConnect = QuickConnectIntent.connect
         }
         self.container = DependencyContainer.shared
     }
@@ -134,8 +135,6 @@ public final class AppDelegateService: AppDelegateProtocol {
 
             await self.navigationService.launched()
         }
-
-        container.makeMaintenanceManagerHelper().startMaintenanceManager()
 
         _ = container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.
 

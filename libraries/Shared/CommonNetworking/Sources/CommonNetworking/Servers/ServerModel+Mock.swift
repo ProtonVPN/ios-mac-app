@@ -22,7 +22,7 @@
 
     public extension ServerModel {
         /// free server with relatively high latency score and not under maintenance.
-        static var testServer1 = ServerModel(
+        static let testServer1 = ServerModel(
             id: "abcd",
             name: "free server",
             domain: "swiss.protonvpn.ch",
@@ -50,7 +50,7 @@
         )
 
         /// free server with relatively low latency score and not under maintenance.
-        static var testServer2 = ServerModel(
+        static let testServer2 = ServerModel(
             id: "efgh",
             name: "other free server",
             domain: "swiss2.protonvpn.ch",
@@ -106,7 +106,7 @@
         )
 
         /// plus server with low latency score and p2p feature. not under maintenance.
-        static var testServer3 = ServerModel(
+        static let testServer3 = ServerModel(
             id: "ijkl",
             name: "plus server",
             domain: "swissplus.protonvpn.ch",
