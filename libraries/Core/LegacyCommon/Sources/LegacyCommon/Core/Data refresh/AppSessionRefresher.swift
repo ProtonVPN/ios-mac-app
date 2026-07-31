@@ -44,7 +44,6 @@ public protocol AppSessionRefresherFactory {
 }
 
 open class AppSessionRefresherImplementation: AppSessionRefresher {
-    @Dependency(\.serverManager) public var serverManager
     public var loggedIn = false
 
     @Dependency(\.vpnApiClient) private var vpnApiClient

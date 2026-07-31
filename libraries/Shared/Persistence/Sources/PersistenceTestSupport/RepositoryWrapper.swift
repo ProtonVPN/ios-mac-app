@@ -65,6 +65,12 @@ public final class ServerRepositoryWrapper: Sendable {
         repository.delete(serversWithIDsNotIn: ids, maxTier: maxTier)
     }
 
+    public func replace(servers: [VPNServer], maxTier: Int) -> Int {
+        let deletedServerCount = repository.replace(servers: servers, maxTier: maxTier)
+        didStoreServers?(servers)
+        return deletedServerCount
+    }
+
     public func upsert(loads: [ContinuousServerProperties]) {
         repository.upsert(loads: loads)
         let updatedServers = loads.compactMap {
@@ -96,6 +102,7 @@ public extension ServerRepository {
             countryCount: { wrapper.countryCount },
             upsertServers: wrapper.upsert,
             deleteServers: wrapper.deleteServers,
+            replaceServers: wrapper.replace,
             upsertLoads: wrapper.upsert,
             groups: wrapper.getGroups,
             servers: wrapper.getServers,

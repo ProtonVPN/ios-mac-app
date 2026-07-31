@@ -54,9 +54,9 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
                     $streamingServices.withLock { $0 = services.streamingServices }
                 }
 
-                @Dependency(\.serverManager) var serverManager
+                @Dependency(\.serverListUpdater) var serverListUpdater
                 if case let .modified(modifiedAt, servers, isFree) = properties.serverInfo {
-                    serverManager.update(
+                    serverListUpdater.update(
                         servers: servers.map { VPNServer(legacyModel: $0) },
                         freeServersOnly: isFree,
                         lastModifiedAt: modifiedAt

@@ -163,6 +163,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
                 countryCount: baseRepository.countryCount,
                 upsertServers: baseRepository.upsertServers,
                 deleteServers: baseRepository.deleteServers,
+                replaceServers: baseRepository.replaceServers,
                 upsertLoads: { loads in
                     // First, perform the actual database update
                     baseRepository.upsertLoads(loads)
@@ -184,7 +185,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             )
 
             // Set up other dependencies
-            $0.serverManager = .noOp
+            $0.serverListUpdater = .noOp
             $0.authKeychain = mockAuthKeychain
             $0.vpnKeychain = vpnKeychainMock
             $0.networking = VPNNetworkingMock()

@@ -38,7 +38,6 @@ public protocol MaintenanceManagerProtocol {
 
 public class MaintenanceManager: MaintenanceManagerProtocol {
     @Dependency(\.vpnApiClient) private var vpnApiClient
-    @Dependency(\.vpnKeychain) private var vpnKeychain
     @SharedReader(.connectionState) private var connectionState: ConnectionState
 
     private var observerTask: Task<Void, Error>?
@@ -115,8 +114,8 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
         )
         switch result {
         case let .modified(at: modifiedAt, servers: servers, freeServersOnly: isFree):
-            @Dependency(\.serverManager) var serverManager
-            serverManager.update(
+            @Dependency(\.serverListUpdater) var serverListUpdater
+            serverListUpdater.update(
                 servers: servers.map { VPNServer(legacyModel: $0) },
                 freeServersOnly: isFree,
                 lastModifiedAt: modifiedAt
