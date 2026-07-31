@@ -100,6 +100,9 @@ extension AppDelegate: NSApplicationDelegate {
     /// Runs before `applicationDidFinishLaunching`, and before anything has touched the database.
     func applicationWillFinishLaunching(_: Notification) {
         prepareDependencies {
+            $0.telemetryService = .liveValue
+            $0.notificationManager = .liveValue // Start the notification manager so it observes connection state and registers notification actions
+            $0.updateManager = .liveValue // Load update manager so it has a chance to update the appcast feed URL
             $0.databaseConfiguration = .live(reportError: SentryHelper.reportError)
             $0.connectionCommandClient.quickConnect = QuickConnectIntent.connect
         }
@@ -158,11 +161,6 @@ extension AppDelegate: NSApplicationDelegate {
                 #if !REDESIGN
                     self.menuManager.updateMenuControllers()
                 #endif
-                prepareDependencies {
-                    $0.telemetryService = .liveValue
-                    $0.notificationManager = .liveValue // Start the notification manager so it observes connection state and registers notification actions
-                    $0.updateManager = .liveValue // Load update manager so it has a chance to update the appcast feed URL
-                }
                 _ = container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.
 
                 // Check sysex approval and protocol deprecation and revert to Smart or IKE if necessary, but only if we're logged in

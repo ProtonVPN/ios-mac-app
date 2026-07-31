@@ -40,4 +40,5 @@ public struct TelemetryService {
     public var connectionStateChanged: (_ oldValue: ConnectionState, _ newValue: ConnectionState) async throws -> Void
     public var userInitiatedVPNChange: (_ change: UserInitiatedVPNChange) async -> Void
     public var reachabilityChanged: (_ networkType: ConnectionDimensions.NetworkType) async -> Void
+    public var ratingBoosterPromptRequested: () async -> Void
 }

@@ -40,14 +40,12 @@ public extension SharedKey where Self == AppStorageKey<SmartProtocolConfig>.Defa
     }
 }
 
-public extension SharedKey where Self == AppStorageKey<String?> {
+public extension SharedKey where Self == InMemoryKey<String?>.Default {
     /// This should get populated after login
     static var userPlan: Self {
-        .appStorage("userPlan")
+        Self[.inMemory("userPlan"), default: nil]
     }
-}
 
-public extension SharedKey where Self == InMemoryKey<String?>.Default {
     /// The reason the session was last lost (e.g. a forced logout message), or `nil`.
     ///
     /// Written by `AppSessionManager` immediately before it sets `sessionStatus` to

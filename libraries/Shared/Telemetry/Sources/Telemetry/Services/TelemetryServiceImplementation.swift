@@ -71,6 +71,14 @@ public final class TelemetryServiceImplementation {
         #endif
     }
 
+    public func ratingBoosterPromptRequested() async {
+        do {
+            try await telemetryEventScheduler?.report(event: ProductPromptsEvent())
+        } catch {
+            log.debug("\(error)", category: .telemetry)
+        }
+    }
+
     public func reachabilityChanged(_ networkType: ConnectionDimensions.NetworkType) async {
         _ = await initializeTask.value
         await telemetryConnectionStatusReporter?.setNetworkType(networkType)
@@ -146,7 +154,7 @@ extension TelemetryService: TestDependencyKey {
         } connectionStateChanged: { _, _ in
         } userInitiatedVPNChange: { _ in
         } reachabilityChanged: { _ in
-        }
+        } ratingBoosterPromptRequested: {}
     }
 
     public static var liveValue: TelemetryService = {
@@ -158,7 +166,8 @@ extension TelemetryService: TestDependencyKey {
             upsellEvent: implementation.upsellEvent,
             connectionStateChanged: implementation.connectionStateChanged,
             userInitiatedVPNChange: implementation.userInitiatedVPNChange,
-            reachabilityChanged: implementation.reachabilityChanged
+            reachabilityChanged: implementation.reachabilityChanged,
+            ratingBoosterPromptRequested: implementation.ratingBoosterPromptRequested
         )
     }()
 }

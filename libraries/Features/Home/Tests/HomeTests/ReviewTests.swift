@@ -51,13 +51,21 @@ struct ReviewTests {
         $userPlan.withLock { $0 = nil }
     }
 
+    func clear() {
+        $successfulConnectionsInARow.withLock { $0 = 0 }
+        $activeConnectionStartTimestamp.withLock { $0 = nil }
+        $successfulTimestamp.withLock { $0 = nil }
+    }
+
     @Test("Does not prompt if days from first connection not high enough")
     func doesNotPromptIfDaysNotHighEnough() async {
         let now = LockIsolated(Date.now)
+        let testClock = TestClock()
         let store = TestStore(initialState: .init()) {
             ReviewFeature()
         } withDependencies: {
             $0.date = .init { now.value }
+            $0.continuousClock = testClock
         }
         store.exhaustivity = .off
 
@@ -65,19 +73,22 @@ struct ReviewTests {
         $userPlan.withLock { $0 = "plus" }
 
         await store.send(.activate)
+        await testClock.advance(by: .seconds(2))
 
         #expect(!didPrompt)
 
-        ratingBooster.clear()
+        clear()
     }
 
     @Test("Prompts after 3 successful connections and 15 days")
     func promptsAfter3ConnectionsAnd15Days() async {
         let now = LockIsolated(Date.now)
+        let testClock = TestClock()
         let store = TestStore(initialState: .init()) {
             ReviewFeature()
         } withDependencies: {
             $0.date = .init { now.value }
+            $0.continuousClock = testClock
         }
         store.exhaustivity = .off
         $userPlan.withLock { $0 = "plus" }
@@ -89,19 +100,22 @@ struct ReviewTests {
 
         now.withValue { $0 = $0.addingTimeInterval(.days(15)) }
         await store.send(.activate)
+        await testClock.advance(by: .seconds(2))
         #expect(didPrompt)
 
-        ratingBooster.clear()
+        clear()
     }
 
     @Test("Does not prompt after 3 successful connections with ineligible plan")
     func doesNotPromptWithIneligiblePlanAfter3Connections() async {
         let now = LockIsolated(Date.now)
+        let testClock = TestClock()
 
         let store = TestStore(initialState: .init()) {
             ReviewFeature()
         } withDependencies: {
             $0.date = .init { now.value }
+            $0.continuousClock = testClock
         }
         store.exhaustivity = .off
 
@@ -111,22 +125,26 @@ struct ReviewTests {
         // 1
         #expect(!didPrompt)
         await store.send(.activate)
+        await testClock.advance(by: .seconds(2))
 
         // 2
         #expect(!didPrompt)
         await store.send(.activate)
+        await testClock.advance(by: .seconds(2))
 
         // 3
         now.withValue { $0 = $0.addingTimeInterval(.days(15)) }
         await store.send(.activate)
+        await testClock.advance(by: .seconds(2))
         #expect(!didPrompt)
 
-        ratingBooster.clear()
+        clear()
     }
 
     @Test("Does not prompt after being connected for only 5 days")
     func doesNotPromptAfter5DaysConnected() async {
         let now = LockIsolated(Date.now)
+        let testClock = TestClock()
         let store = TestStore(initialState: .init()) {
             ReviewFeature()
         } withDependencies: {
@@ -138,22 +156,26 @@ struct ReviewTests {
         $userPlan.withLock { $0 = "plus" }
 
         await store.send(.activate)
+        await testClock.advance(by: .seconds(2))
 
         now.withValue { $0 = $0.addingTimeInterval(.days(5)) }
 
         await store.send(.activate)
+        await testClock.advance(by: .seconds(2))
         #expect(!didPrompt)
 
-        ratingBooster.clear()
+        clear()
     }
 
     @Test("Prompts after being connected for 5 days following a first connection 15 days ago")
     func promptsAfter5DaysConnectedFollowing15DaysAgoFirstConnection() async {
         let now = LockIsolated(Date.now)
+        let testClock = TestClock()
         let store = TestStore(initialState: .init()) {
             ReviewFeature()
         } withDependencies: {
             $0.date = .init { now.value }
+            $0.continuousClock = testClock
         }
         store.exhaustivity = .off
 
@@ -161,28 +183,33 @@ struct ReviewTests {
         $userPlan.withLock { $0 = "plus" }
 
         await store.send(.activate)
+        await testClock.advance(by: .seconds(2))
         $successfulTimestamp.withLock { $0 = now.value }
 
         now.withValue { $0 = $0.addingTimeInterval(.days(15)) }
 
         await store.send(.activate)
+        await testClock.advance(by: .seconds(2))
         $activeConnectionStartTimestamp.withLock { $0 = now.value }
 
         now.withValue { $0 = $0.addingTimeInterval(.days(5)) }
 
         await store.send(.activate)
+        await testClock.advance(by: .seconds(2))
         #expect(didPrompt)
 
-        ratingBooster.clear()
+        clear()
     }
 
     @Test("Does not prompt after being connected for 5 days with ineligible plan")
     func doesNotPromptAfter5DaysWithIneligiblePlan() async {
         let now = LockIsolated(Date.now)
+        let testClock = TestClock()
         let store = TestStore(initialState: .init()) {
             ReviewFeature()
         } withDependencies: {
             $0.date = .init { now.value }
+            $0.continuousClock = testClock
         }
         store.exhaustivity = .off
 
@@ -190,22 +217,26 @@ struct ReviewTests {
         $userPlan.withLock { $0 = "basic" }
 
         await store.send(.activate)
+        await testClock.advance(by: .seconds(2))
 
         now.withValue { $0 = $0.addingTimeInterval(.days(5)) }
 
         await store.send(.activate)
+        await testClock.advance(by: .seconds(2))
         #expect(!didPrompt)
 
-        ratingBooster.clear()
+        clear()
     }
 
     @Test("Does not prompt twice after being connected for 15 days")
     func doesNotPromptTwiceAfter15DaysConnected() async {
         let now = LockIsolated(Date.now)
+        let testClock = TestClock()
         let store = TestStore(initialState: .init()) {
             ReviewFeature()
         } withDependencies: {
             $0.date = .init { now.value }
+            $0.continuousClock = testClock
         }
         store.exhaustivity = .off
         $userPlan.withLock { $0 = "plus" }
@@ -214,22 +245,26 @@ struct ReviewTests {
 
         now.withValue { $0 = $0.addingTimeInterval(.days(15)) }
         await store.send(.activate)
+        await testClock.advance(by: .seconds(2))
         #expect(didPrompt)
 
         $didPrompt.withLock { $0 = false }
         await store.send(.activate)
+        await testClock.advance(by: .seconds(2))
         #expect(!didPrompt)
 
-        ratingBooster.clear()
+        clear()
     }
 
     @Test("Failed connections reset the success count")
     func failedConnectionsResetTheSuccessCount() async {
         let now = LockIsolated(Date.now)
+        let testClock = TestClock()
         let store = TestStore(initialState: .init()) {
             ReviewFeature()
         } withDependencies: {
             $0.date = .init { now.value }
+            $0.continuousClock = testClock
         }
         store.exhaustivity = .off
 
@@ -252,8 +287,12 @@ struct ReviewTests {
         $activeConnectionStartTimestamp.withLock { $0 = now.value }
 
         await store.send(.activate)
+        await testClock.advance(by: .seconds(1))
+        #expect(!didPrompt)
+        await store.send(.activate)
+        await testClock.advance(by: .seconds(2))
         #expect(didPrompt)
 
-        ratingBooster.clear()
+        clear()
     }
 }

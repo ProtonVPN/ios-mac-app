@@ -221,7 +221,7 @@ public struct HomeFeature {
     public var body: some Reducer<State, Action> {
         Scope(state: \.connection, action: \.connection) {
             ConnectionFeature()
-                ._printChanges()
+//                ._printChanges()
                 .logActions(.connectionLogger) // Logs actions to our usual logger, even outside of DEBUG.
         }
         Scope(state: \.sharedProperties, action: \.sharedProperties) {
