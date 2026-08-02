@@ -77,16 +77,45 @@ struct TabularFeatureTests {
         let store = TestStore(initialState: TabularFeature.State()) { TabularFeature() }
         store.exhaustivity = .off(showSkippedAssertions: false)
 
-        await store.send(.pageDepthChanged(true)) {
-            $0.isPageDeep = true
+        await store.send(.pageDepthChanged(tab: .home, isDeep: true)) {
+            $0.deepTabs = [.home]
             $0.detent = .full
         }
         // Nothing lowers it while deep: not a drag report, not a connect.
         await store.send(.detentChanged(.half))
         await store.send(.commands(.commandReceived(.connect(.defaultFastest, nil, .connectionCard))))
 
-        await store.send(.pageDepthChanged(false)) { $0.isPageDeep = false }
+        await store.send(.pageDepthChanged(tab: .home, isDeep: false)) { $0.deepTabs = [] }
         await store.send(.detentChanged(.half)) { $0.detent = .half }
+    }
+
+    @Test("Depth belongs to the visible tab")
+    @MainActor
+    func depthFollowsTheVisibleTab() async {
+        let store = TestStore(initialState: TabularFeature.State()) { TabularFeature() }
+        store.exhaustivity = .off(showSkippedAssertions: false)
+
+        // Settings goes deep while visible, holding the sheet at full.
+        await store.send(.tabSelected(.settings)) { $0.tab = .settings }
+        await store.send(.pageDepthChanged(tab: .settings, isDeep: true)) {
+            $0.deepTabs = [.settings]
+            $0.detent = .full
+        }
+
+        // Another tab at its root releases the hold without disturbing the remembered depth.
+        await store.send(.tabSelected(.home)) { $0.tab = .home }
+        await store.send(.detentChanged(.half)) { $0.detent = .half }
+
+        // Coming back to the deep tab needs the whole sheet again.
+        await store.send(.tabSelected(.settings)) {
+            $0.tab = .settings
+            $0.detent = .full
+        }
+
+        // Leaving the deep tab keeps the sheet where it stands; only the ladder frees up.
+        await store.send(.tabSelected(.home)) { $0.tab = .home }
+        // A report from a hidden tab's stack, like a programmatic pop, updates the set and nothing else.
+        await store.send(.pageDepthChanged(tab: .settings, isDeep: false)) { $0.deepTabs = [] }
     }
 
     @Test("The sheet follows the user's drag")

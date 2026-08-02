@@ -159,11 +159,17 @@ final class AppShellObserver: NSObject {
         CATransaction.commit()
     }
 
-    /// Raises the sheet for a page about to be pushed and calls back once the room is there. A stack already at full
-    /// needs none, so the push goes straight through.
-    func makeRoom(forPushThen push: @escaping () -> Void) {
-        store.send(.pageDepthChanged(true))
+    /// Raises the sheet for a page about to be pushed onto `tab`'s stack and calls back once the room is there. A
+    /// stack already at full needs none, so the push goes straight through.
+    func makeRoom(for tab: TabularFeature.Tab, thenPush push: @escaping () -> Void) {
+        store.send(.pageDepthChanged(tab: tab, isDeep: true))
         applyPageDepth(true, completion: push)
+    }
+
+    /// The tab a page stands for, by its position in the shell's tab order.
+    private func tab(of page: UIViewController) -> TabularFeature.Tab? {
+        guard let index = pages?.pages.firstIndex(of: page) else { return nil }
+        return TabularFeature.Tab.allCases[safe: index]
     }
 
     /// Mirrors the sheet's movement onto the backdrop and the pages: directly while the sheet's geometry is current
@@ -283,11 +289,9 @@ extension AppShellObserver: UITabBarDelegate {
         // in: a bar without a controller behind it shows nothing until someone acts.
         showPage(at: index)
         store.send(.tabSelected(tab))
-        // Depth belongs to the visible tab: switching to one still deep in its stack keeps the full
-        // sheet, and switching to one at its root releases it.
-        let depth = (pages?.pages[safe: index] as? UINavigationController)?.viewControllers.count ?? 1
-        applyPageDepth(depth > 1)
-        store.send(.pageDepthChanged(depth > 1))
+        // Depth is the store's to answer, now that it keeps every tab's: switching to a tab left in a
+        // detail page keeps the full sheet, and switching to one at its root releases it.
+        applyPageDepth(store.isPageDeep)
     }
 }
 
@@ -302,9 +306,11 @@ extension AppShellObserver: UINavigationControllerDelegate {
         willShow _: UIViewController,
         animated _: Bool
     ) {
-        let isDeep = navigationController.viewControllers.count > 1
-        applyPageDepth(isDeep)
-        store.send(.pageDepthChanged(isDeep))
+        guard let tab = tab(of: navigationController) else { return }
+        store.send(.pageDepthChanged(tab: tab, isDeep: navigationController.viewControllers.count > 1))
+        // The store folds the report into the visible tab's answer, which is the one the sheet obeys: a
+        // stack popped programmatically behind another tab moves nothing here.
+        applyPageDepth(store.isPageDeep)
     }
 }
 

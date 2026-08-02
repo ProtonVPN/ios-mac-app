@@ -46,20 +46,47 @@ public struct TabularFeature {
     }
 
     /// Ordered as the tab bar presents them.
-    public enum Tab: Equatable, CaseIterable {
+    public enum Tab: String, CaseIterable, Identifiable, Sendable {
         case home
         case countries
         case profiles
         case settings
+
+        public var id: String {
+            rawValue
+        }
+    }
+
+    /// What the bar draws over a tab's glyph.
+    public enum Badge: Equatable, Sendable {
+        /// A packet capture is running.
+        case recording
     }
 
     @ObservableState
     public struct State: Equatable {
         public internal(set) var detent: Detent = .half
         public internal(set) var tab: Tab = .home
+        /// The tabs whose navigation stacks are pushed beyond their root right now. Whether the sheet is held at full
+        /// is a question about the visible tab, so it is asked of this set rather than kept as a stored answer that
+        /// switching tabs would leave stale.
+        public internal(set) var deepTabs: Set<Tab> = []
+
         /// Whether the visible tab has moved into a menu. The legacy detail pages are still designed for the whole
         /// screen, so while one is up the sheet's only stop is full.
-        public internal(set) var isPageDeep = false
+        public var isPageDeep: Bool {
+            deepTabs.contains(tab)
+        }
+
+        /// The capture session, read from the capture's own storage so the settings tab can wear its recording badge.
+        @SharedReader(.captureSession) public var captureSession
+
+        /// The mark the bar shows over a tab's glyph, or nil for none. A packet capture in progress is the only badge
+        /// today; it rides the settings tab because that is where a capture is stopped.
+        public func badge(for tab: Tab) -> Badge? {
+            guard tab == .settings, case .sessionStarted = captureSession else { return nil }
+            return .recording
+        }
 
         public var commands: ConnectionCommandsFeature.State
         public var connectionStatus: ConnectionStatusFeature.State
@@ -87,8 +114,8 @@ public struct TabularFeature {
         case detentChanged(Detent)
         case home(HomeFeature.Action)
         case map(HomeMapFeature.Action)
-        /// The visible tab's navigation depth changed: pushed beyond its root, or back at it.
-        case pageDepthChanged(Bool)
+        /// A tab's navigation depth changed: pushed beyond its root, or back at it.
+        case pageDepthChanged(tab: Tab, isDeep: Bool)
         case payments(PresentationAction<PaymentsMainFeature.Action>)
         case tabSelected(Tab)
     }
@@ -118,18 +145,25 @@ public struct TabularFeature {
                 state.detent = state.isPageDeep ? .full : detent
                 return .none
 
-            case let .pageDepthChanged(isDeep):
-                state.isPageDeep = isDeep
-                // If a page is designed for the whole screen, don't let the user collapse the sheet.
+            case let .pageDepthChanged(tab, isDeep):
                 if isDeep {
+                    state.deepTabs.insert(tab)
+                } else {
+                    state.deepTabs.remove(tab)
+                }
+                // If the visible page is designed for the whole screen, don't let the user collapse the sheet.
+                if state.isPageDeep {
                     state.detent = .full
                 }
                 return .none
 
             case let .tabSelected(tab):
                 state.tab = tab
-                // Reading a page means raising the sheet off its bar.
-                if state.detent == .bar {
+                if state.isPageDeep {
+                    // The chosen tab was left in a detail page, which needs the whole sheet.
+                    state.detent = .full
+                } else if state.detent == .bar {
+                    // Reading a page means raising the sheet off its bar.
                     state.detent = .half
                 }
                 return .none

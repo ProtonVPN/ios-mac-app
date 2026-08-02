@@ -337,18 +337,17 @@ final class NavigationService {
         tabBar.onRoomChange = { [weak pages] room in pages?.barRoom = room }
         // The UIKit tabs' navigation stacks report their depth through the observer, so a pushed legacy page can hold
         // the sheet at full, and ask it for the room before pushing into it.
-        pages.pages
-            .compactMap { $0 as? UINavigationController }
-            .forEach { navigation in
-                navigation.delegate = observer
-                (navigation as? SheetNavigationController)?.makeRoomForPush = { [weak observer] push in
-                    guard let observer else {
-                        push()
-                        return
-                    }
-                    observer.makeRoom(forPushThen: push)
+        for (tab, page) in zip(TabularFeature.Tab.allCases, pages.pages) {
+            guard let navigation = page as? UINavigationController else { continue }
+            navigation.delegate = observer
+            (navigation as? SheetNavigationController)?.makeRoomForPush = { [weak observer] push in
+                guard let observer else {
+                    push()
+                    return
                 }
+                observer.makeRoom(for: tab, thenPush: push)
             }
+        }
         pages.isModalInPresentation = true // the pages are the app, so the sheet never dismisses
         pages.view.backgroundColor = .backgroundColor()
 
