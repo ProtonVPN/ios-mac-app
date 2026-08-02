@@ -43,10 +43,6 @@ extension ConnectionState {
                 return .protectedSecureCore
             }
             return .protected
-        // A connection in progress reads as connecting whether or not an interface is still carrying traffic. What
-        // must not claim the user is exposed during a peer handover is macOS's header label, and that reads
-        // `tunnelActive` off the connection state itself (`HeaderViewModel.formHeaderLabel`), so nothing here has to
-        // hide the fact that a connection is underway.
         case .connecting:
             return .protecting(country: country, ip: ip)
         case .resolving:

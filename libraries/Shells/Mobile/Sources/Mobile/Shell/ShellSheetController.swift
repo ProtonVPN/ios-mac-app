@@ -20,9 +20,9 @@ import ComposableArchitecture
 import SwiftUI
 import UIKit
 
-/// Keeps the presented tab sheet and `TabularFeature` agreeing about the detent, in both directions: the user
-/// dragging the sheet reaches the store through the delegate, and a reducer decision (raising the sheet when a tab is
-/// chosen, dropping it on connect) reaches the sheet through the observation below.
+/// Keeps the presented tab sheet and `TabularFeature` agreeing about the detent, in both directions: the user dragging
+/// the sheet reaches the store through the delegate, and a reducer decision (raising the sheet when a tab is chosen,
+/// dropping it on connect) reaches the sheet through the observation below.
 ///
 /// This is the only place that knows `UISheetPresentationController` exists. The identifiers stay private to the file,
 /// so the feature above deals in its own `Detent` and nothing else.
@@ -47,9 +47,9 @@ final class ShellSheetController: NSObject {
         self.overlap = overlap
     }
 
-    /// Applies reducer decisions to the sheet, the pages and the bar, starting with the state the store already
-    /// holds. The full ladder is applied by the caller at each presentation; here the selection moves, and a deep page
-    /// swaps the ladder for the full detent alone.
+    /// Applies reducer decisions to the sheet, the pages and the bar, starting with the state the store already holds.
+    /// The full ladder is applied by the caller at each presentation; here the selection moves, and a deep page swaps
+    /// the ladder for the full detent alone.
     func observeShellState(sheet: UISheetPresentationController, pages: ShellPagesController, bar: ShellTabBar) {
         self.sheet = sheet
         self.pages = pages
@@ -80,8 +80,8 @@ final class ShellSheetController: NSObject {
             }
         }
 
-        // This is what answers the bar's taps: the bar only sends, and the page swap and the bar's own selection
-        // both land when the store's change re-runs the observation.
+        // This is what answers the bar's taps: the bar only sends, and the page swap and the bar's own selection both
+        // land when the store's change re-runs the observation.
         pages?.show(store.tab)
         applyBar()
     }
@@ -206,8 +206,8 @@ private enum Dimensions {
 /// directly with the touch, so layout runs every frame with current geometry. When the user lets go, UIKit hands the
 /// rest of the travel to a render-server animation: the model jumps straight to the destination, layout runs once, and
 /// the frames in between exist only out of process. So the reporter reports what layout shows, and says which of the
-/// two it is: geometry the sheet is at right now, or a destination it has just left for (`settling`), for the owner
-/// to animate to on its own clock rather than chase.
+/// two it is: geometry the sheet is at right now, or a destination it has just left for (`settling`), for the owner to
+/// animate to on its own clock rather than chase.
 private final class SheetHeightReporter: UIView {
     /// The sheet's coverage as layout sees it: current geometry from a drag frame, a rotation or a first layout, or
     /// the destination of a settle animation the sheet just left on.

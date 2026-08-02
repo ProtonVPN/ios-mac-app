@@ -38,11 +38,5 @@ struct TabularBackdropView: View {
             // and re-centers on the connection.
             showsInteractivePins: store.detent == .bar
         )
-        // No animation attached here: drag reports arrive with the sheet's own cadence, and a settle report carries its
-        // spring from the shell's observer.
-        //
-        // Nothing modal presents from here: this controller always has the pages sheet presented over it, which
-        // makes it exactly the wrong anchor. The shell's alerts and covers launch from `ShellDestinationsView`,
-        // inside the sheet.
     }
 }

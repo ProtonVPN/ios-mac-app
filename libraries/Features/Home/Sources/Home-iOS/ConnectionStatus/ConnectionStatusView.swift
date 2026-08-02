@@ -146,8 +146,7 @@ public struct ConnectionStatusView: View {
             .allowsHitTesting(false)
 
             VStack(spacing: 0) {
-                // The lock and title. Decorative, so nothing up here may swallow a touch. The banner below keeps its
-                // own controls. The content height is reported so that the globe can be framed properly.
+                // The lock and title, with content height reported so that the globe can be framed properly
                 VStack(spacing: 0) {
                     titleView(protectionState: protectionState)
                         .frame(height: Self.headerHeight)

@@ -18,14 +18,9 @@
 
 import UIKit
 
-/// The shell's tab pages, one showing at a time. This is what the sheet carries.
-///
-/// It is deliberately not a `UITabBarController`: the bar that chooses between these pages lives in the window instead
-/// (see `ShellTabBar`). A bar inside the sheet is laid out against a frame the sheet animates, and while a drag
-/// keeps the two in step, a release does not. The sheet's frame and the bar's offset within it settle on separate
-/// curves, so the bar leaps most of the way up the screen in the first frame and eases back down over the rest of the
-/// animation. Nothing in the window resizes the bar, so there is no second animation for it to disagree with, and what
-/// stays in the sheet is the pages alone.
+/// The shell's tab pages, one showing at a time. Can't be a UITabBar because that would require the elements to live in
+/// the same sheet, which we can't do while also properly supporting detents (the tab living in a floating sheet has
+/// some really weird UX characteristics when the detent gets flicked up + down).
 public final class ShellPagesController: UIViewController {
     /// The pages by the tab each stands for. Which one shows is the store's selection, applied through `show`.
     private(set) var pages: [TabularFeature.Tab: UIViewController] = [:]

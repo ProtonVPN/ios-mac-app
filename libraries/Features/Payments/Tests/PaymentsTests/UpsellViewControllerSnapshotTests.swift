@@ -76,8 +76,6 @@
 
         // MARK: - Private
 
-        /// The all-countries and country modals read their displayed counts from the server repository at render, so
-        /// the render runs against one with stable numbers.
         private func withCountingRepository(operation: () -> Void) {
             withDependencies {
                 var repository = ServerRepository.empty()

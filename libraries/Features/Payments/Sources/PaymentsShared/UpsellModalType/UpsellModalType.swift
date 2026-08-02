@@ -57,9 +57,11 @@ public extension UpsellModalType {
     }
 
     var showUpgradeButton: Bool {
-        switch self {
+        @Dependency(\.date) var date
+
+        return switch self {
         case let .cantSkip(before, _, _):
-            now.timeIntervalSince(before) < 0
+            date.now.timeIntervalSince(before) < 0
         default:
             true
         }
@@ -84,43 +86,46 @@ public extension UpsellModalType {
     }
 
     var title: String {
-        switch self {
+        @Dependency(\.date) var date
+
+        return switch self {
         case .subscription, .streaming:
-            return Localizable.upsellPlansListTitle
+            Localizable.upsellPlansListTitle
         case .netShield:
-            return Localizable.modalsNewUpsellNetshieldTitle
+            Localizable.modalsNewUpsellNetshieldTitle
         // Localizable.modalsUpsellNetShieldTitle
         case .secureCore:
-            return Localizable.modalsNewUpsellSecureCoreTitle
+            Localizable.modalsNewUpsellSecureCoreTitle
         case .moderateNAT:
-            return Localizable.modalsUpsellModerateNatTitle
+            Localizable.modalsUpsellModerateNatTitle
         case .allCountries:
-            return Localizable.modalsNewUpsellAllCountriesTitle
+            Localizable.modalsNewUpsellAllCountriesTitle
         case .profiles:
-            return Localizable.upsellProfilesTitle
+            Localizable.upsellProfilesTitle
         case .vpnAccelerator:
-            return Localizable.modalsNewUpsellVpnAcceleratorTitle
+            Localizable.modalsNewUpsellVpnAcceleratorTitle
         case .customization:
-            return Localizable.upsellCustomizationTitle
+            Localizable.upsellCustomizationTitle
         case .p2pSupport:
-            return Localizable.upsellP2pSupportTitle
+            Localizable.upsellP2pSupportTitle
         case .devices:
-            return Localizable.upsellDevicesTitle
+            Localizable.upsellDevicesTitle
         case .torOverVPN:
-            return Localizable.upsellTorOverVPNTitle
+            Localizable.upsellTorOverVPNTitle
         case .country:
-            return Localizable.modalsNewUpsellCountryTitle
+            Localizable.modalsNewUpsellCountryTitle
         case let .cantSkip(before, _, longSkip):
-            if before.timeIntervalSince(now) > 0, longSkip {
-                return Localizable.upsellCustomizationTitle
+            if before.timeIntervalSince(date.now) > 0, longSkip {
+                Localizable.upsellCustomizationTitle
+            } else {
+                ""
             }
-            return ""
         case .hermes:
-            return Localizable.hermesUpsellTitle
+            Localizable.hermesUpsellTitle
         case .portForwarding:
-            return Localizable.upsellPfSupportTitle
+            Localizable.upsellPfSupportTitle
         case .plutonium:
-            return Localizable.plutoniumUpsellTitle
+            Localizable.plutoniumUpsellTitle
         }
     }
 
@@ -129,21 +134,24 @@ public extension UpsellModalType {
     }
 
     var subtitleModel: Subtitle? {
-        switch self {
+        @Dependency(\.serverRepository) var serverRepository
+        @Dependency(\.date) var date
+
+        return switch self {
         case .subscription:
-            return .init(text: Localizable.upsellPlansListSubtitle)
+            .init(text: Localizable.upsellPlansListSubtitle)
         case .netShield:
-            return .init(
+            .init(
                 text: Localizable.modalsNewUpsellNetshieldSubtitle,
                 boldText: [Localizable.modalsNewUpsellNetshieldSubtitleBold]
             )
         case .secureCore:
-            return .init(
+            .init(
                 text: Localizable.modalsNewUpsellSecureCoreSubtitle,
                 boldText: [Localizable.modalsNewUpsellSecureCoreSubtitleBold]
             )
         case .allCountries:
-            return .init(
+            .init(
                 text: Localizable.modalsNewUpsellAllCountriesSubtitle(
                     serverRepository.roundedServerCount,
                     serverRepository.countryCount()
@@ -151,46 +159,47 @@ public extension UpsellModalType {
                 boldText: [Localizable.modalsNewUpsellAllCountriesSubtitleBold]
             )
         case .profiles:
-            return .init(
+            .init(
                 text: Localizable.modalsNewUpsellProfilesSubtitle,
                 boldText: [Localizable.upsellProfilesSubtitleBold1, Localizable.upsellProfilesSubtitleBold2]
             )
         case .vpnAccelerator:
-            return .init(text: Localizable.modalsNewUpsellVpnAcceleratorSubtitle)
+            .init(text: Localizable.modalsNewUpsellVpnAcceleratorSubtitle)
         case .customization:
-            return .init(
+            .init(
                 text: Localizable.modalsNewUpsellCustomizationSubtitle,
                 boldText: [Localizable.upsellCustomizationAccessLANBold]
             )
         case .streaming:
-            return .init(text: Localizable.upsellStreamingSubtitle)
+            .init(text: Localizable.upsellStreamingSubtitle)
         case .p2pSupport:
-            return .init(text: Localizable.upsellP2pSupportSubtitle)
+            .init(text: Localizable.upsellP2pSupportSubtitle)
         case .devices:
-            return .init(text: Localizable.upsellDevicesSubtitle)
+            .init(text: Localizable.upsellDevicesSubtitle)
         case .torOverVPN:
-            return .init(text: Localizable.upsellTorOverVPNSubtitle)
+            .init(text: Localizable.upsellTorOverVPNSubtitle)
         case .country:
-            return .init(
+            .init(
                 text: Localizable.modalsNewUpsellCountrySubtitle,
                 boldText: [Localizable.upsellCountryFeatureSubtitleBold]
             )
         case let .cantSkip(before, _, _):
-            if before.timeIntervalSince(now) > 0 {
-                return .init(text: Localizable.upsellSpecificLocationSubtitle)
+            if before.timeIntervalSince(date.now) > 0 {
+                .init(text: Localizable.upsellSpecificLocationSubtitle)
+            } else {
+                nil
             }
-            return nil
         case .moderateNAT:
-            return .init(
+            .init(
                 text: Localizable.modalsNewUpsellModerateNatSubtitle,
                 boldText: [Localizable.modalsUpsellModerateNatSubtitleBold]
             )
         case .hermes:
-            return .init(text: Localizable.hermesUpsellDescription)
+            .init(text: Localizable.hermesUpsellDescription)
         case .portForwarding:
-            return .init(text: Localizable.upsellPfSupportSubtitle)
+            .init(text: Localizable.upsellPfSupportSubtitle)
         case .plutonium:
-            return .init(text: Localizable.plutoniumUpsellSubtitle)
+            .init(text: Localizable.plutoniumUpsellSubtitle)
         }
     }
 
@@ -275,7 +284,9 @@ public extension UpsellModalType {
     }
 
     func features() -> [UpsellFeature] {
-        switch self {
+        @Dependency(\.serverRepository) var serverRepository
+
+        return switch self {
         case .netShield:
             [.blockAds, .protectFromMalware, .highSpeedNetshield]
         case .secureCore:
@@ -305,20 +316,5 @@ public extension UpsellModalType {
         case .cantSkip:
             []
         }
-    }
-}
-
-private extension UpsellModalType {
-    var now: Date {
-        @Dependency(\.date.now) var now
-        return now
-    }
-
-    /// The counts the all-countries and country modals display are read here rather than carried as associated
-    /// values: they are display copy derived from the server list, not part of what the caller is asking for, and
-    /// reading them in this module is what lets a caller build an upsell without a server repository of its own.
-    var serverRepository: ServerRepository {
-        @Dependency(\.serverRepository) var serverRepository
-        return serverRepository
     }
 }

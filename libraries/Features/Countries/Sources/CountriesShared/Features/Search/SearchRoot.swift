@@ -268,8 +268,7 @@ extension SearchRoot.State {
         }
     }
 
-    /// The text in the search field. It is kept with the index it filters rather than stored again here, so while that
-    /// index is still being built the field reads empty.
+    /// The text in the search field. While the index is still being built the field reads empty.
     public var searchQuery: String {
         switch self {
         case .loading:

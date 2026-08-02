@@ -39,8 +39,7 @@ struct GlobeFraming {
         self.visibleHeight = visibleHeight ?? focusHeight
     }
 
-    /// The part of the canvas the user can actually see: full width, `visibleHeight` tall, starting at
-    /// `focusTop`. What "on screen" means for anything that must stay clear of the sheet and the chrome.
+    /// The part of the canvas the user can actually see: full width, `visibleHeight` tall, starting at `focusTop`.
     var visibleRegion: CGRect {
         CGRect(x: 0, y: focusTop, width: viewSize.width, height: visibleHeight)
     }

@@ -24,9 +24,9 @@ import UIKit
 /// The tabular shell, assembled: the globe backdrop at the window's root, the tab pages presented over it in their
 /// sheet, the bar mounted in the window, and the sheet controller keeping all of them agreeing with the store.
 ///
-/// The app builds the store and the four page controllers, which is where its services and storyboards live; the
-/// shell owns everything from there down. Presenting is safe to repeat, which is what lets flows that replace the
-/// window root (onboarding, the paywall) borrow it and give it back.
+/// The app builds the store and the four page controllers, which is where its services and storyboards live; the shell
+/// owns everything from there down. Presenting is safe to repeat, which is what lets flows that replace the window root
+/// (onboarding, the paywall) borrow it and give it back.
 @MainActor
 public final class TabularShell {
     /// The app's main store, built by the app and adopted here.
@@ -48,12 +48,11 @@ public final class TabularShell {
         pages.setPages(pageControllers)
         pages.isModalInPresentation = true // the pages are the app, so the sheet never dismisses
         pages.view.backgroundColor = .backgroundColor()
-        // The shell's alerts and covers launch from a permanent passenger beside the pages, the one seat that is
-        // always in the hierarchy and always free to present.
+        // The shell's alerts and covers launch from a permanent passenger beside the pages, the one seat that is always
+        // in the hierarchy and always free to present.
         pages.install(passenger: UIHostingController(rootView: ShellDestinationsView(store: store)))
 
-        // The system draws the bar; the sheet controller writes its contents from the store. Mounted once the
-        // sheet is up.
+        // The system draws the bar; the sheet controller writes its contents from the store.
         let bar = ShellTabBar()
         bar.delegate = sheetController
         // The pages keep their content clear of the bar they do not contain. This is a measurement rather than a
@@ -84,9 +83,8 @@ public final class TabularShell {
     }
 
     /// Puts the shell in front: the backdrop rooted through `makeRoot`, the pages in their sheet over it, and the bar
-    /// mounted in the window the rooting placed it in. Everything survives a root swap except those three
-    /// attachments, so each is re-done only where a swap tore it down, and calling this with the shell already up
-    /// finds nothing to do.
+    /// mounted in the window the rooting placed it in. Everything survives a root swap except those three attachments,
+    /// so each is redone only where a swap tore it down. Calling this with the shell already up is a no-op.
     public func present(rootedBy makeRoot: (UIViewController) -> Void) {
         if backdrop.view.window == nil {
             makeRoot(backdrop)

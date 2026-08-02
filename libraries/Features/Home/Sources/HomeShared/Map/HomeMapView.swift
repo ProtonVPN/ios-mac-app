@@ -55,8 +55,8 @@ public struct HomeMapView: View {
     /// Theme exports a `ColorScheme` of its own and this file imports both.
     @Environment(\.colorScheme) private var colorScheme: SwiftUI.ColorScheme
 
-    /// The one camera: trackball orientation, dolly distance, in-progress gestures, and the momentum coast.
-    /// It starts facing whatever the connection state implies and is flown to each new country from there.
+    /// The one camera: trackball orientation, dolly distance, in-progress gestures, and the momentum coast. It starts
+    /// facing whatever the connection state implies and is flown to each new country from there.
     @State private var trackball = GlobeTrackballModel(
         orientation: GlobeCamera.orientation(facing: GlobeFocus.direction(forCountry: nil)),
         distance: GlobeFocus.cameraDistance(forCountry: nil)
@@ -78,9 +78,8 @@ public struct HomeMapView: View {
     /// tint cross-fades instead of snapping. Set without animation once on appear.
     @State private var displayedSunTint: SIMD3<Float> = .init(1, 1, 1)
     private enum Constants {
-        /// How far inside the visible region the follow fit keeps every landmark: a full touch diameter,
-        /// so the outermost city sits with its whole disc and some air inside the edge rather than
-        /// grazing it.
+        /// How far inside the visible region the follow fit keeps every landmark: a full touch diameter, so the
+        /// outermost city sits with its whole disc and some air inside the edge rather than grazing it.
         static let followFitMargin: CGFloat = PinDisplay.collisionThreshold
         /// How long the sunlight color takes to ease to a new connection tint. Short enough to keep up with a
         /// reconnect, long enough that the change reads as a fade rather than a flash.
@@ -208,8 +207,8 @@ public struct HomeMapView: View {
     }
 
     private func appeared() {
-        // Park the camera on the current country without animating: the declaration default is a cheap
-        // placeholder that has never been on screen.
+        // Park the camera on the current country without animating: the declaration default is a cheap placeholder that
+        // has never been on screen.
         trackball.park(orientation: GlobeCamera.orientation(facing: targetDirection), distance: cameraDistance)
         connectPill.recomputeClosestAngle(among: store.locationPins)
         displayedSunTint = sunTintRGB // start on the current color, the map's lighting is off until it opens
@@ -388,8 +387,8 @@ public struct HomeMapView: View {
 
     // MARK: - Gestures
 
-    /// Routes a `GlobeGesture` from the catcher to the camera logic. The trackball ignores a stray
-    /// one-finger pan while a pinch is active, so the two can't fight over the orientation.
+    /// Routes a `GlobeGesture` from the catcher to the camera logic. The trackball ignores a stray one-finger pan while
+    /// a pinch is active, so the two can't fight over the orientation.
     private func globeGestureRecognized(_ gesture: GlobeGesture) {
         switch gesture {
         case let .dragBegan(location):

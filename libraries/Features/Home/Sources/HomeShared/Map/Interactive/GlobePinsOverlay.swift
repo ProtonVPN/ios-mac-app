@@ -58,13 +58,13 @@ struct GlobePinsOverlay: View {
     /// groupings and their count labels can't flicker mid-fade. Cleared once the fade completes, ending the per-frame
     /// reprojection for the rest of the gesture.
     @State private var frozenClusters: [PinCluster] = []
-    /// Mirrors `showClusters` through an explicit animation, so the fade-out has a completion to clear
-    /// `frozenClusters` with. Starts true, matching a still map, where the discs are already up.
+    /// Mirrors `showClusters` through an explicit animation, so the fade-out has a completion to clear `frozenClusters`
+    /// with. Starts true, matching a still map, where the discs are already up.
     @State private var discsShown = true
 
     var body: some View {
-        // Counted cluster discs only once the map has settled. While it moves the per-pin Metal points show
-        // instead, so cluster membership can't flicker.
+        // Counted cluster discs only once the map has settled. While it moves the per-pin Metal points show instead, so
+        // cluster membership can't flicker.
         let showClusters = PinDisplay.showsClusters(
             isMoving: isMoving,
             showsInteractivePins: showsInteractivePins

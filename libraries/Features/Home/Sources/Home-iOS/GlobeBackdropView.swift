@@ -50,24 +50,15 @@ public struct GlobeBackdropView: View {
     }
 
     public var body: some View {
-        // One reader, and it stays inside the safe area, because only a reader that still participates in the safe
-        // area is told what the insets are. Measured on an iPhone 17 Pro, whose screen is 402 x 874: this reader
-        // reports size 402 x 778 with insets of 62 top and 34 bottom, while a reader that ignores the safe area
-        // reports the full 402 x 874 but insets of zero. Neither one answers both questions, so the size is put back
-        // together here (778 + 62 + 34 = 874) and the content is pushed back out to it with `ignoresSafeArea`.
-        //
-        // That screen-sized canvas is the single space everything below is measured in: the globe renders into it,
-        // the sheet reports its coverage counted from the window's bottom edge, and taps unproject through the same
-        // numbers. Sharing one space is what keeps any of it from needing a correcting offset.
         GeometryReader { proxy in
             let insets = proxy.safeAreaInsets
             let width = proxy.size.width + insets.leading + insets.trailing
             let canvas = proxy.size.height + insets.top + insets.bottom
             // What is actually free to look at: below the lock and title, above the sheet.
             let framedTop = insets.top + headerHeight
-            // The globe is always scaled to the whole canvas and only centered within what is free, so moving the
-            // sheet slides it at a constant size. The floor keeps a sheet raised over the whole map from centering
-            // the user pin and the country that contains it to the very top edge.
+            // The globe is always scaled to the whole canvas and only centered within what is free, so moving the sheet
+            // slides it at a constant size. The floor keeps a sheet raised over the whole map from centering the user
+            // pin and the country that contains it to the very top edge.
             let visible = max(canvas - framedTop - bottomOverlap, canvas * Constants.minimumVisibleFraction)
             let restingVisible = max(
                 canvas - framedTop - (restingOverlap > 0 ? restingOverlap : bottomOverlap),
@@ -99,8 +90,8 @@ public struct GlobeBackdropView: View {
 
     private enum Constants {
         /// The visible region never counts as less than this share of the canvas, however much the sheet covers.
-        /// Without this, the map centering logic tries to keep the user pin visible above the full-screen sheet,
-        /// which looks a little weird.
+        /// Without this, the map centering logic tries to keep the user pin visible above the full-screen sheet, which
+        /// looks a little weird.
         static let minimumVisibleFraction: CGFloat = 0.25
     }
 }

@@ -26,8 +26,8 @@ import UIKit
 /// animation, so a sheet raised underneath leaves the page sized for the height it has left. Asking first means one
 /// settled layout, then one plain push.
 public final class SheetNavigationController: UINavigationController {
-    /// Makes room for a push and calls back once there is. Nil pushes straight away. The shell wires this when it
-    /// takes the pages; the app only builds the stacks.
+    /// Makes room for a push and calls back once there is. Nil pushes straight away. The shell wires this when it takes
+    /// the pages; the app only builds the stacks.
     var makeRoomForPush: ((@escaping () -> Void) -> Void)?
 
     override public func pushViewController(_ viewController: UIViewController, animated: Bool) {

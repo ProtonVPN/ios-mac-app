@@ -234,9 +234,6 @@ public struct ConnectionCommandsFeature {
 
             case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
-                // ProTUN's `ConnectionFeature` no longer emits `.delegate(.disconnected)`; drain any queued disconnect
-                // completions when the layer reports a disconnected state. (or zero-peer KS, which fulfills the user's
-                // disconnect intent).
                 return .run { _ in
                     if connectionState.is(\.disconnected) || connectionState.is(\.killSwitchActive) {
                         await pendingDisconnectCompletions.drainAndInvoke()
@@ -370,8 +367,7 @@ private extension ConnectionCommandsFeature {
         .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
     }
 
-    /// Returns an alert if any pre-connect intercept (e.g. misconfigured LAN) applies to the pending connect; otherwise
-    /// `nil`.
+    /// Returns an alert if any intercept (e.g. misconfigured LAN) applies to the pending connect, otherwise `nil`.
     func interceptAlert(for pending: PendingConnect) -> AlertState<Action.Alert>? {
         @SharedReader(.featureFlags) var featureFlags
         if featureFlags.unsafeLanWarnings,

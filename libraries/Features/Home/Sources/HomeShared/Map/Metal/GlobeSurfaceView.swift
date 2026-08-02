@@ -67,8 +67,8 @@ struct GlobeSurfaceView: GlobeViewRepresentable {
     var pinColor: SIMD4<Float> = .init(0.5, 0.5, 0.5, 1)
     /// Camera distance, for the points' horizon cull and the whole-path back-hemisphere cull.
     var cameraDistance: Float = 2
-    /// Starfield drawn in the globe's pass: instances (direction, radius, brightness). Drawn far out and first, so the
-    /// globe occludes the stars behind it.
+    /// Starfield instances (direction, radius, brightness), drawn far out and first, so the globe occludes the stars
+    /// behind it.
     var starInstances: [StarInstance] = []
 
     final class Coordinator {
@@ -160,8 +160,6 @@ struct GlobeSurfaceView: GlobeViewRepresentable {
             borderHalfWidth: 0,
             sunDirection: sunDirection,
             sunTint: sunTint,
-            // The app's globe is always lit. The fade stays a uniform because the geometry snapshot suites drive
-            // the renderer directly at zero for a flat render.
             lightFade: 1,
             moonRadius: moonRadius,
             moonCenter: moonCenter
@@ -225,9 +223,9 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
     /// Radius 0 means no Moon.
     var moonCenter: SIMD3<Float> = .init(0, 0, 0)
     var moonRadius: Float = 0
-    /// City points drawn in the globe's own pass (unit-sphere positions plus fill color), and whether the
-    /// user is moving the globe. While moving, the points show and track the sphere exactly; once settled
-    /// they hand over to the cluster discs, whose crossfade the SwiftUI overlay animates.
+    /// City points drawn in the globe's own pass (unit-sphere positions plus fill color), and whether the user is
+    /// moving the globe. While moving, the points show and track the sphere exactly; once settled they hand over to the
+    /// cluster discs, whose crossfade the SwiftUI overlay animates.
     var pinPositions: [SIMD3<Float>] = []
     var pinColor: SIMD4<Float> = .init(0.5, 0.5, 0.5, 1)
     var isMoving: Bool = false
@@ -244,11 +242,10 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
         @Environment(\.displayScale) private var displayScale
     #endif
 
-    /// Interpolates the framed heights and the camera as one flat vector. The orientation
-    /// is animated as a quaternion: a component-wise interpolation renormalized each step, which traces a
-    /// rotation that never collapses to a singularity, unlike interpolating the faced direction, which
-    /// passes through the globe centre for near-antipodal jumps. Country-to-country reorientations stay
-    /// within 180 degrees, so this also takes the short way round.
+    /// Interpolates the framed heights and the camera as one vector. The orientation is animated as a quaternion: a
+    /// component-wise interpolation renormalized each step, which traces a rotation that never collapses to a
+    /// singularity, unlike interpolating the faced direction, which passes through the globe centre for near-antipodal
+    /// jumps. Country-to-country reorientations stay within 180 degrees, so this also takes the short way round.
     var animatableData: GlobeAnimationVector {
         get {
             GlobeAnimationVector(
@@ -328,11 +325,8 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
     }
 }
 
-/// The seven scalars `AnimatableGlobe` interpolates, packed as one flat vector: the framed and visible
-/// heights, the camera distance, and the four quaternion components. SwiftUI's `Animatable` wants a single
-/// `VectorArithmetic` value, and the stock `AnimatablePair` nests unreadably at this width, so this packs
-/// the scalars into a SIMD8 and forwards the arithmetic to it lane by lane. The spare eighth lane stays
-/// zero through every operation, so it never contributes.
+/// The seven scalars `AnimatableGlobe` interpolates, packed as one flat vector: the framed and visible heights, the
+/// camera distance, and the four quaternion components. The reserved eighth lane stays zero through every operation.
 struct GlobeAnimationVector: VectorArithmetic {
     private var lanes: SIMD8<Float>
 

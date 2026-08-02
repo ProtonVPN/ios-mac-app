@@ -138,8 +138,7 @@ final class NavigationService {
 
     @Dependency(\.bugReport) private var bugReportCreator
 
-    /// The assembled shell: the backdrop, the tab sheet and the bar, kept for as long as the login it belongs to.
-    /// This service builds the store and the page controllers; the shell owns everything from there down.
+    /// The TCA feature root.
     private var shell: TabularShell?
 
     // MARK: Initializers
@@ -261,8 +260,8 @@ final class NavigationService {
     private func setupTabs() {
         guard shell == nil else {
             // Built on an earlier pass. Another flow (a paywall, onboarding) may have taken the window root since,
-            // which tears the sheet's presentation down with it, so the shell is put back in front rather than
-            // assumed to have stayed there.
+            // which tears the sheet's presentation down with it, so the shell is put back in front rather than assumed
+            // to have stayed there.
             presentShell()
             shell?.store.send(.tabSelected(.home))
             return
@@ -322,8 +321,8 @@ extension NavigationService {
                 self?.presentSignUp(over: vc, flow: .credentiallessUpsell)
             }
             $0.switchToPrimaryTab = {
-                // Connecting no longer changes tabs: the backdrop's status chrome and camera flight are
-                // visible behind every page, so there is nothing on Home the user has to be taken to.
+                // Connecting no longer changes tabs: the backdrop's status chrome and camera flight are visible behind
+                // every page, so there is nothing on Home the user has to be taken to.
             }
         }
         let countriesView = CountriesMainView(store: countriesStore)

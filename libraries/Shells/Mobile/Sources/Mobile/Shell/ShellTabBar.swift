@@ -21,18 +21,8 @@ import Strings
 import Theme
 import UIKit
 
-/// The shell's tab bar, mounted in the window rather than in the sheet the pages ride in.
-///
-/// The bar is the one piece of the shell that never moves, so it is kept where nothing can move it. Inside the sheet it
-/// was laid out against a frame the sheet animates: fine under a drag, where UIKit sets that frame directly every
-/// frame, but not on release, where the sheet's frame and the bar's offset within it settle on separate curves and the
-/// composite throws the bar most of the way up the screen before easing it back. In the window there is only the one
-/// constraint to the bottom edge, and it holds.
-///
-/// It stays a `UITabBar` so the system draws it: on iOS 26 the default background is the floating glass bar, with the
-/// system's own geometry, selection treatment and tab-bar accessibility semantics. What the shell owns is the content,
-/// and `apply(_:showsFilledSelection:)` writes all of it on every pass, so the bar keeps no state of its own that
-/// would need putting back.
+/// The shell's tab bar, mounted in the window rather than in the sheet the pages ride in, since the tab bar behaves
+/// strangely when flicking the detent sheet up + down otherwise.
 final class ShellTabBar: UITabBar {
     /// Reports the room the bar wants above the safe area, so the pages behind it can keep their content clear of it.
     /// Called from layout, since the system decides this bar's height and only layout knows what it settled on.
@@ -124,8 +114,8 @@ private extension TabularFeature.Tab {
     }
 
     /// The tab's outline and filled glyphs. Only home and settings distinguish a filled state; countries and profiles
-    /// read their selection from the tint alone, as they always have. A capture in progress swaps the settings gear
-    /// for the pair wearing the dot, which is why the badge is an input here rather than something drawn on top.
+    /// read their selection from the tint alone, as they always have. A capture in progress swaps the settings gear for
+    /// the pair wearing the dot, which is why the badge is an input here rather than something drawn on top.
     func glyphs(badge: TabularFeature.Badge?) -> (outline: UIImage, filled: UIImage) {
         switch self {
         case .home:
