@@ -150,17 +150,10 @@ public struct HomeFeature {
 
     public init() {}
 
-    private func allCountriesUpsellModalType() -> UpsellModalType {
-        .allCountries(
-            numberOfServers: serverRepository.roundedServerCount,
-            numberOfCountries: serverRepository.countryCount()
-        )
-    }
-
     private func upsellModalType(from bannerType: BannerType) -> UpsellModalType {
         switch bannerType {
         case .worldwideCover:
-            allCountriesUpsellModalType()
+            .allCountries
         case .fasterBrowsing:
             .vpnAccelerator
         case .streaming:
@@ -323,15 +316,7 @@ private extension HomeFeature {
                     state.destination = .payments(.init(upsellModalType: .secureCore))
                     return .none
                 case let .specificCountryUnavailable(countryCode):
-                    state.destination = .payments(
-                        .init(
-                            upsellModalType: .country(
-                                countryCode: countryCode,
-                                numberOfDevices: DomainConstants.maxDeviceCount,
-                                numberOfCountries: serverRepository.countryCount()
-                            )
-                        )
-                    )
+                    state.destination = .payments(.init(upsellModalType: .country(countryCode: countryCode)))
                     return .none
                 case let .serverChangeUnavailable(until, duration, exhaustedSkips):
                     state.destination = .payments(
@@ -350,7 +335,7 @@ private extension HomeFeature {
 
             case let .showUpsell(request):
                 let upsellModalType: UpsellModalType = switch request {
-                case .allCountries: allCountriesUpsellModalType()
+                case .allCountries: .allCountries
                 case .netShield: .netShield
                 }
                 state.destination = .payments(.init(upsellModalType: upsellModalType))
@@ -422,7 +407,7 @@ private extension HomeFeature {
                 state.destination = nil
                 return .none
             case .destination(.presented(.freeConnectionsInfo(.upgradeButtonTapped))):
-                state.destination = .payments(.init(upsellModalType: allCountriesUpsellModalType()))
+                state.destination = .payments(.init(upsellModalType: .allCountries))
                 return .none
             case .destination(.presented(.localAgentNotice(.disconnect))):
                 state.destination = nil
@@ -456,7 +441,7 @@ private extension HomeFeature {
             case .didDismissChangeServer:
                 if state.shouldPushAlert {
                     state.shouldPushAlert = false
-                    state.destination = .payments(.init(upsellModalType: allCountriesUpsellModalType()))
+                    state.destination = .payments(.init(upsellModalType: .allCountries))
                 }
                 return .none
             default:

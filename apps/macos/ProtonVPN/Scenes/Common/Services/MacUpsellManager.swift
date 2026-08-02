@@ -30,7 +30,6 @@ import VPNAppCore
 /// Presents upsell and welcome modals on macOS
 final class MacUpsellManager {
     @Dependency(\.windowService) private var windowService
-    @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.sessionService) private var sessionService
     @Dependency(\.linkOpener) private var linkOpener
 
@@ -94,10 +93,7 @@ final class MacUpsellManager {
     private func upsellModalType(for source: UpsellModalSource) -> UpsellModalType? {
         switch source {
         case .countries:
-            .allCountries(
-                numberOfServers: serverRepository.roundedServerCount,
-                numberOfCountries: serverRepository.countryCount()
-            )
+            .allCountries
         case .moderateNat:
             .moderateNAT
         case .secureCore:

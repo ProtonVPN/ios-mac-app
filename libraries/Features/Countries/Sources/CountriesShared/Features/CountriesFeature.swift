@@ -191,26 +191,11 @@ public struct CountriesFeature {
                 return .none
 
             case .presentAllCountriesUpsell:
-                state.destination = .payments(
-                    .init(
-                        upsellModalType: .allCountries(
-                            numberOfServers: serverRepository.roundedServerCount,
-                            numberOfCountries: serverRepository.countryCount()
-                        )
-                    )
-                )
+                state.destination = .payments(.init(upsellModalType: .allCountries))
                 return .none
 
             case let .presentCountryUpsell(countryCode):
-                state.destination = .payments(
-                    .init(
-                        upsellModalType: .country(
-                            countryCode: countryCode,
-                            numberOfDevices: DomainConstants.maxDeviceCount,
-                            numberOfCountries: serverRepository.countryCount()
-                        )
-                    )
-                )
+                state.destination = .payments(.init(upsellModalType: .country(countryCode: countryCode)))
                 return .none
 
             case .presentFreeConnectionsInfo:

@@ -90,6 +90,7 @@ let package = Package(
                 "PaymentsShared",
                 .target(name: "Payments-iOS", condition: .when(platforms: [.iOS])),
                 .target(name: "Payments-macOS", condition: .when(platforms: [.macOS])),
+                .product(name: "PersistenceTestSupport", package: "Persistence"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
             ]

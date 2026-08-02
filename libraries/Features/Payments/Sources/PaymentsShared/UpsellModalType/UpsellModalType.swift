@@ -17,6 +17,8 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import Domain
+import Persistence
 import SharedViews
 import Strings
 import SwiftUI
@@ -38,8 +40,8 @@ public enum UpsellModalType: Sendable, Equatable {
     case portForwarding
     case plutonium
 
-    case allCountries(numberOfServers: Int, numberOfCountries: Int)
-    case country(countryCode: String, numberOfDevices: Int, numberOfCountries: Int)
+    case allCountries
+    case country(countryCode: String)
     case cantSkip(before: Date, totalDuration: TimeInterval, longSkip: Bool)
 }
 
@@ -140,9 +142,12 @@ public extension UpsellModalType {
                 text: Localizable.modalsNewUpsellSecureCoreSubtitle,
                 boldText: [Localizable.modalsNewUpsellSecureCoreSubtitleBold]
             )
-        case let .allCountries(numberOfServers, numberOfCountries):
+        case .allCountries:
             return .init(
-                text: Localizable.modalsNewUpsellAllCountriesSubtitle(numberOfServers, numberOfCountries),
+                text: Localizable.modalsNewUpsellAllCountriesSubtitle(
+                    serverRepository.roundedServerCount,
+                    serverRepository.countryCount()
+                ),
                 boldText: [Localizable.modalsNewUpsellAllCountriesSubtitleBold]
             )
         case .profiles:
@@ -240,7 +245,7 @@ public extension UpsellModalType {
             Image(.tor)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-        case let .country(countryCode, _, _):
+        case let .country(countryCode):
             ZStack {
                 Image(.flatIllustration)
                 if let flag = ImageAsset.Image.flag(countryCode: countryCode) {
@@ -277,12 +282,12 @@ public extension UpsellModalType {
             [.routeSecureServers, .addLayer, .protectFromAttacks]
         case .allCountries:
             [.anyLocation, .higherSpeed, .geoblockedContent, .streaming]
-        case let .country(_, numberOfDevices, numberOfCountries):
+        case .country:
             [
-                .multipleCountries(numberOfCountries),
+                .multipleCountries(serverRepository.countryCount()),
                 .higherSpeed,
                 .streaming,
-                .multipleDevices(numberOfDevices),
+                .multipleDevices(DomainConstants.maxDeviceCount),
                 .moneyGuarantee,
             ]
         case .moderateNAT:
@@ -307,5 +312,13 @@ private extension UpsellModalType {
     var now: Date {
         @Dependency(\.date.now) var now
         return now
+    }
+
+    /// The counts the all-countries and country modals display are read here rather than carried as associated
+    /// values: they are display copy derived from the server list, not part of what the caller is asking for, and
+    /// reading them in this module is what lets a caller build an upsell without a server repository of its own.
+    var serverRepository: ServerRepository {
+        @Dependency(\.serverRepository) var serverRepository
+        return serverRepository
     }
 }

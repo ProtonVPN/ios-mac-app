@@ -136,7 +136,7 @@ struct CountriesFeatureTests {
 
         await store.send(.presentAllCountriesUpsell) {
             $0.destination = .payments(
-                .init(upsellModalType: .allCountries(numberOfServers: 1, numberOfCountries: 1))
+                .init(upsellModalType: .allCountries)
             )
         }
     }
@@ -151,13 +151,7 @@ struct CountriesFeatureTests {
 
         await store.send(.presentCountryUpsell("NL")) {
             $0.destination = .payments(
-                .init(
-                    upsellModalType: .country(
-                        countryCode: "NL",
-                        numberOfDevices: DomainConstants.maxDeviceCount,
-                        numberOfCountries: 1
-                    )
-                )
+                .init(upsellModalType: .country(countryCode: "NL"))
             )
         }
     }
@@ -503,13 +497,7 @@ struct CountriesFeatureTests {
         await store.send(.sections(.element(id: .paidCountries, action: .rows(.element(id: countryRowID, action: .country(.showCountryUpsell("US")))))))
         await store.receive(\.presentCountryUpsell) {
             $0.destination = .payments(
-                .init(
-                    upsellModalType: .country(
-                        countryCode: "US",
-                        numberOfDevices: DomainConstants.maxDeviceCount,
-                        numberOfCountries: 1
-                    )
-                )
+                .init(upsellModalType: .country(countryCode: "US"))
             )
         }
     }
@@ -538,7 +526,7 @@ struct CountriesFeatureTests {
         await store.send(.sections(.element(id: .allCountries, action: .rows(.element(id: bannerRowID, action: .banner(.tapped))))))
         await store.receive(\.presentAllCountriesUpsell) {
             $0.destination = .payments(
-                .init(upsellModalType: .allCountries(numberOfServers: 1, numberOfCountries: 1))
+                .init(upsellModalType: .allCountries)
             )
         }
     }
