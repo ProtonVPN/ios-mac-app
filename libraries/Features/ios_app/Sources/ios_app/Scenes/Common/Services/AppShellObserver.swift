@@ -31,16 +31,8 @@ import UIKit
 @MainActor
 final class AppShellObserver: NSObject {
     private let store: StoreOf<TabularFeature>
-    /// Guards the store-to-UIKit half against re-entering while UIKit is telling us about the same change.
-    private var isApplyingStoreDetent = false
     /// Reports how much of the backdrop the sheet covers as it moves.
     private let overlap: SheetOverlap
-    /// How much of the sheet is showing above its floor: 1 clear of it, 0 resting on it. Derived from the sheet's live
-    /// height rather than the settled detent, so the pages fade with the drag rather than jumping between detents.
-    private var floorPresence: CGFloat = 1
-    /// Whether the sheet's ladder was last restricted to the full detent for a deep page. Only a real change may touch
-    /// the sheet.
-    private var detentsRestrictedToFull = false
     /// The presented sheet, so a navigation push can raise it in the same turn it reports its depth.
     private weak var sheet: UISheetPresentationController?
     /// The pages the sheet carries, for the floor treatment the sheet's own movement drives.
@@ -64,10 +56,8 @@ final class AppShellObserver: NSObject {
         self.pages = pages
         self.bar = bar
         guard observation == nil else {
-            // A fresh presentation of the same pages. The caller has just given the new sheet the full ladder, and
-            // the observation only fires on store changes, so the restriction flag is trued up to the new sheet and
-            // the store's current state is applied by hand.
-            detentsRestrictedToFull = false
+            // A fresh presentation of the same pages: the observation only fires on store changes, so the store's
+            // current state is applied to the new sheet by hand.
             applyShellState()
             return
         }
@@ -86,16 +76,20 @@ final class AppShellObserver: NSObject {
         applyPageDepth(store.isPageDeep)
 
         if let sheet, sheet.selectedDetentIdentifier != detent.identifier {
-            isApplyingStoreDetent = true
             sheet.animateChanges {
                 sheet.selectedDetentIdentifier = detent.identifier
             }
-            isApplyingStoreDetent = false
         }
 
         if let index = TabularFeature.Tab.allCases.firstIndex(of: store.tab) {
             showPage(at: index)
         }
+    }
+
+    /// Whether the ladder is currently held to the full detent for a deep page. Read from the sheet, which keeps the
+    /// one answer: a fresh presentation starts with the full ladder and needs no separate bookkeeping here.
+    private var isRestrictedToFull: Bool {
+        sheet?.detents.map(\.identifier) == [TabularFeature.Detent.full.identifier]
     }
 
     /// Brings a tab's page forward and moves the bar's selection with it. This both serves the bar's own taps, which
@@ -107,13 +101,14 @@ final class AppShellObserver: NSObject {
 
     /// Fades the pages as the sheet approaches its floor, where the bar becomes the only view and the globe runs
     /// underneath it to the screen's bottom edge. Driven by the sheet's own height, so a drag carries the fade frame by
-    /// frame; a release hands the rest to an animation of ours.
+    /// frame; a release hands the rest to an animation of ours. The pages' own alpha is the presence applied last
+    /// (an animation writes its destination to the model up front), so it doubles as the check against re-animating
+    /// a value already on its way.
     private func applyFloorPresence(sheetHeight: CGFloat, animated: Bool) {
         guard let pages else { return }
         let span = max(Dimensions.floorFadeSpan, 1)
         let presence = min(max((sheetHeight - Dimensions.barHeight) / span, 0), 1)
-        guard abs(presence - floorPresence) > 0.01 else { return }
-        floorPresence = presence
+        guard abs(presence - pages.view.alpha) > 0.01 else { return }
         // An animation block here is safe now that the bar is mounted in the window: it used to reach the bar through
         // the ancestors it shared with these views and carry its pending layout along, which is what sent the bar
         // flying while the sheet was still on its way.
@@ -132,11 +127,10 @@ final class AppShellObserver: NSObject {
     /// animates and reports when it has landed, so a push can wait for its room; the release on the way back only
     /// restores the ladder, since the sheet stays where it is.
     private func applyPageDepth(_ isDeep: Bool, completion: (() -> Void)? = nil) {
-        guard let sheet, isDeep != detentsRestrictedToFull else {
+        guard let sheet, isDeep != isRestrictedToFull else {
             completion?()
             return
         }
-        detentsRestrictedToFull = isDeep
         let apply = {
             sheet.detents = isDeep
                 ? [TabularFeature.Detent.full.sheetDetent]
@@ -179,16 +173,17 @@ final class AppShellObserver: NSObject {
         reporter.isUserInteractionEnabled = false
         reporter.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         reporter.frame = presented.view.bounds
-        reporter.onMove = { [weak self] overlap in
+        reporter.onReport = { [weak self] points, settling in
             guard let self else { return }
-            self.overlap.report(max(0, overlap))
-            // Live geometry, so the fade tracks the finger with no animation of its own.
-            applyFloorPresence(sheetHeight: max(0, overlap), animated: false)
-        }
-        reporter.onSettle = { [weak self] target in
-            guard let self else { return }
-            withAnimation(Self.settleSpring) { self.overlap.settle(toward: max(0, target)) }
-            applyFloorPresence(sheetHeight: max(0, target), animated: true)
+            let points = max(0, points)
+            if settling {
+                // The sheet has left for a destination on the render server's clock; ours animates to match.
+                withAnimation(Self.settleSpring) { self.overlap.settle(toward: points) }
+            } else {
+                // Live geometry, so the backdrop and the fade track the finger with no animation of their own.
+                overlap.report(points)
+            }
+            applyFloorPresence(sheetHeight: points, animated: settling)
         }
         presented.view.insertSubview(reporter, at: 0)
     }
@@ -218,24 +213,19 @@ private enum Dimensions {
 /// directly with the touch, so layout runs every frame with current geometry. When the user lets go, UIKit hands the
 /// rest of the travel to a render-server animation: the model jumps straight to the destination, layout runs once, and
 /// the frames in between exist only out of process. So the reporter reports what layout shows, and says which of the
-/// two it is: geometry the sheet is at right now (`onMove`), or a destination it has just left for (`onSettle`), for
-/// the owner to animate to on its own clock rather than chase.
+/// two it is: geometry the sheet is at right now, or a destination it has just left for (`settling`), for the owner
+/// to animate to on its own clock rather than chase.
 private final class SheetHeightReporter: UIView {
-    /// The sheet is at `overlap` right now: a drag frame, a rotation, or its first layout.
-    var onMove: ((_ overlap: CGFloat) -> Void)?
-    /// The sheet just left for `target` on a render-server animation.
-    var onSettle: ((_ target: CGFloat) -> Void)?
+    /// The sheet's coverage as layout sees it: current geometry from a drag frame, a rotation or a first layout, or
+    /// the destination of a settle animation the sheet just left on.
+    var onReport: ((_ points: CGFloat, _ settling: Bool) -> Void)?
 
     override func layoutSubviews() {
         super.layoutSubviews()
         guard let sheet = superview, let window else { return }
         // The sheet covers everything from its top edge down to the window's bottom edge.
         let overlap = window.bounds.height - sheet.convert(sheet.bounds, to: window).minY
-        if hasGeometryAnimation(between: sheet, and: window) {
-            onSettle?(overlap) // the model already holds the destination
-        } else {
-            onMove?(overlap)
-        }
+        onReport?(overlap, hasGeometryAnimation(between: sheet, and: window))
         clearPresentation(between: sheet, and: window)
     }
 
@@ -275,8 +265,10 @@ private final class SheetHeightReporter: UIView {
 
 extension AppShellObserver: UISheetPresentationControllerDelegate {
     func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheet: UISheetPresentationController) {
-        guard !isApplyingStoreDetent else { return }
-        store.send(.detentChanged(.init(sheet.selectedDetentIdentifier)))
+        let detent = TabularFeature.Detent(sheet.selectedDetentIdentifier)
+        // A detent the store already holds is one we just applied, arriving back around.
+        guard detent != store.detent else { return }
+        store.send(.detentChanged(detent))
     }
 }
 

@@ -29,19 +29,18 @@ final class SheetNavigationController: UINavigationController {
     /// Makes room for a push and calls back once there is. Nil pushes straight away.
     var makeRoomForPush: ((@escaping () -> Void) -> Void)?
 
-    /// Set while a waited-for push comes back through, so the second pass goes straight to UIKit.
-    private var isResumingPush = false
-
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
-        guard let makeRoomForPush, !isResumingPush else {
-            isResumingPush = false
+        guard let makeRoomForPush else {
             super.pushViewController(viewController, animated: animated)
             return
         }
         makeRoomForPush { [weak self] in
-            guard let self else { return }
-            isResumingPush = true
-            pushViewController(viewController, animated: animated)
+            self?.pushWithRoom(viewController, animated: animated)
         }
+    }
+
+    /// The second half of a waited-for push, going straight to UIKit now that the room exists.
+    private func pushWithRoom(_ viewController: UIViewController, animated: Bool) {
+        super.pushViewController(viewController, animated: animated)
     }
 }
