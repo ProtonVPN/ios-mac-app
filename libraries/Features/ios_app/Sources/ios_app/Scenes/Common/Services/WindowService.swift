@@ -242,6 +242,12 @@ final class WindowServiceImplementation {
         guard let rootViewController = window.rootViewController else { return nil }
         var navigationController: UINavigationController? = if let topViewController = rootViewController.presentedViewController as? UINavigationController {
             topViewController
+        } else if let pages = rootViewController.presentedViewController as? ShellPagesController,
+                  let shownNavigation = pages.shownPage as? UINavigationController {
+            // The shell: the tab pages ride in a sheet presented over the backdrop root, and the visible page keeps
+            // the navigation stack when its tab has one. Account recovery pushes here, and a password change pops
+            // back to this stack's root.
+            shownNavigation
         } else {
             rootViewController as? UINavigationController
         }

@@ -31,6 +31,12 @@ final class ShellPagesController: UIViewController {
     /// The pages, in the shell's tab order.
     private(set) var pages: [UIViewController] = []
 
+    /// The page currently showing, for services that address the visible tab's content: the window's navigation stack
+    /// lookup asks this the question a tab bar controller used to answer with `selectedViewController`.
+    var shownPage: UIViewController? {
+        children.first
+    }
+
     /// How much room the bar wants at the bottom edge beyond the safe area, so a page's content stops above it while
     /// its background still runs underneath. This is the inset a tab bar controller would have given these pages for a
     /// bar of its own.
