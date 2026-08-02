@@ -143,6 +143,9 @@ final class NavigationService {
     /// controller.
     private var pages = ShellPagesController()
     private var tabBar = ShellTabBar()
+    /// The globe backdrop rooted under the shell, kept so a later trip through the main interface can put it back in
+    /// front after another flow (a paywall, onboarding) replaced the window root.
+    private var backdrop: UIViewController?
 
     /// The app's main TCA store.
     private var appStore: StoreOf<TabularFeature>?
@@ -190,6 +193,7 @@ final class NavigationService {
         // it exists, and none of that should keep running for a user who signed out.
         appStore = nil
         shellObserver = nil
+        backdrop = nil
         // The bar is a child of the window rather than of the root, so swapping the root for the login screen leaves it
         // behind unless it is taken down here. Create fresh pages and a fresh tab bar for the next login.
         tabBar.removeFromSuperview()
@@ -275,6 +279,10 @@ final class NavigationService {
     @MainActor
     private func setupTabs() {
         guard pages.pages.isEmpty else {
+            // Built on an earlier pass. Another flow (a paywall, onboarding) may have taken the window root since,
+            // which tears the sheet's presentation down with it, so the shell is put back in front rather than
+            // assumed to have stayed there.
+            remountShell()
             appStore?.send(.tabSelected(.home))
             return
         }
@@ -295,6 +303,7 @@ final class NavigationService {
         appStore = store
 
         let backdrop = UIHostingController(rootView: TabularBackdropView(store: store, overlap: sheetOverlap))
+        self.backdrop = backdrop
         windowService.show(viewController: backdrop)
         // Keep app compact-width everywhere for now, this keeps the bottom sheet working on iPad.
         backdrop.view.window?.traitOverrides.horizontalSizeClass = .compact
@@ -343,6 +352,16 @@ final class NavigationService {
         pages.isModalInPresentation = true // the pages are the app, so the sheet never dismisses
         pages.view.backgroundColor = .backgroundColor()
 
+        observer.trackSheetHeight(of: pages)
+        presentSheet(over: backdrop)
+    }
+
+    /// Presents the pages in their sheet over the backdrop and mounts the bar once it is up. Run for the first
+    /// presentation and again whenever another flow's root swap has torn the presentation down: UIKit builds a fresh
+    /// sheet controller for each present, so the ladder is configured here rather than once at setup.
+    @MainActor
+    private func presentSheet(over backdrop: UIViewController) {
+        guard let observer = shellObserver else { return }
         if let sheet = pages.sheetPresentationController {
             sheet.delegate = observer
             // One fixed ladder for every tab; only the selection moves, applied by the observer.
@@ -353,10 +372,24 @@ final class NavigationService {
             observer.observeShellState(sheet: sheet, pages: pages, bar: tabBar)
         }
 
-        observer.trackSheetHeight(of: pages)
         backdrop.present(pages, animated: false) { [tabBar] in
             // Mounted once the sheet is up, so the bar goes in over the container it was presented into.
             backdrop.view.window.map(tabBar.mount(in:))
+        }
+    }
+
+    /// Puts the shell back in front after another flow replaced the window root. The store, the pages, the bar and the
+    /// observer all survive the swap; what dies with the old root is the root itself, the sheet's presentation and the
+    /// bar's mount, so exactly those are re-done. With the shell already in front there is nothing to do.
+    @MainActor
+    private func remountShell() {
+        guard let backdrop else { return }
+        if backdrop.view.window == nil {
+            windowService.show(viewController: backdrop)
+            backdrop.view.window?.traitOverrides.horizontalSizeClass = .compact
+        }
+        if pages.presentingViewController == nil {
+            presentSheet(over: backdrop)
         }
     }
 

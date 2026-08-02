@@ -58,8 +58,10 @@ final class ShellTabBar: UITabBar {
         fatalError("init(coder:) has not been implemented")
     }
 
-    /// Mounts the bar along the window's bottom edge, over everything else the window shows.
+    /// Mounts the bar along the window's bottom edge, over everything else the window shows. Mounting again in the
+    /// same window is a no-op, so a re-presented sheet can call this without stacking constraints.
     func mount(in window: UIWindow) {
+        guard superview !== window else { return }
         translatesAutoresizingMaskIntoConstraints = false
         window.addSubview(self)
         // A presented sheet mounts in a container that is this view's sibling, so being added last is not enough to

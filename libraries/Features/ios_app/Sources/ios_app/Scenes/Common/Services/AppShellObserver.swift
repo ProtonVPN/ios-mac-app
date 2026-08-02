@@ -47,39 +47,54 @@ final class AppShellObserver: NSObject {
     private weak var pages: ShellPagesController?
     /// The bar the pages are chosen from, which the sheet's travel leaves alone.
     private weak var bar: ShellTabBar?
+    /// The active observation. Started once: presenting the pages again after another flow's root swap re-points the
+    /// references above at the fresh presentation instead of observing twice over.
+    private var observation: ObserveToken?
 
     init(store: StoreOf<TabularFeature>, overlap: SheetOverlap) {
         self.store = store
         self.overlap = overlap
     }
 
-    /// Applies reducer decisions to the sheet, the pages and the bar. The full ladder is applied once at presentation;
-    /// here the selection moves, and a deep page swaps the ladder for the full detent alone. The equality checks each
-    /// side makes are what prevent the delegates and this observation from chasing each other around a change either of
-    /// them made.
+    /// Applies reducer decisions to the sheet, the pages and the bar, starting with the state the store already holds.
+    /// The full ladder is applied by the caller at each presentation; here the selection moves, and a deep page swaps
+    /// the ladder for the full detent alone.
     func observeShellState(sheet: UISheetPresentationController, pages: ShellPagesController, bar: ShellTabBar) {
         self.sheet = sheet
         self.pages = pages
         self.bar = bar
-        observe { [weak self, weak sheet] in
-            guard let self else { return }
-            let detent = store.detent
+        guard observation == nil else {
+            // A fresh presentation of the same pages. The caller has just given the new sheet the full ladder, and
+            // the observation only fires on store changes, so the restriction flag is trued up to the new sheet and
+            // the store's current state is applied by hand.
+            detentsRestrictedToFull = false
+            applyShellState()
+            return
+        }
+        observation = observe { [weak self] in
+            self?.applyShellState()
+        }
+    }
 
-            // Depth changes normally arrive through the navigation delegate, which has already applied them by hand;
-            // this catches any sender that only writes the state.
-            applyPageDepth(store.isPageDeep)
+    /// Brings the sheet, the pages and the bar to the store's current state. The equality checks each side makes are
+    /// what prevent the delegates and the observation from chasing each other around a change either of them made.
+    private func applyShellState() {
+        let detent = store.detent
 
-            if let sheet, sheet.selectedDetentIdentifier != detent.identifier {
-                isApplyingStoreDetent = true
-                sheet.animateChanges {
-                    sheet.selectedDetentIdentifier = detent.identifier
-                }
-                isApplyingStoreDetent = false
+        // Depth changes normally arrive through the navigation delegate, which has already applied them by hand;
+        // this catches any sender that only writes the state.
+        applyPageDepth(store.isPageDeep)
+
+        if let sheet, sheet.selectedDetentIdentifier != detent.identifier {
+            isApplyingStoreDetent = true
+            sheet.animateChanges {
+                sheet.selectedDetentIdentifier = detent.identifier
             }
+            isApplyingStoreDetent = false
+        }
 
-            if let index = TabularFeature.Tab.allCases.firstIndex(of: store.tab) {
-                showPage(at: index)
-            }
+        if let index = TabularFeature.Tab.allCases.firstIndex(of: store.tab) {
+            showPage(at: index)
         }
     }
 
