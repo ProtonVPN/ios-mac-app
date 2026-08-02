@@ -21,7 +21,7 @@ import UIKit
 /// The shell's tab pages, one showing at a time. This is what the sheet carries.
 ///
 /// It is deliberately not a `UITabBarController`: the bar that chooses between these pages lives in the window instead
-/// (see `ShellTabBarView`). A bar inside the sheet is laid out against a frame the sheet animates, and while a drag
+/// (see `ShellTabBar`). A bar inside the sheet is laid out against a frame the sheet animates, and while a drag
 /// keeps the two in step, a release does not. The sheet's frame and the bar's offset within it settle on separate
 /// curves, so the bar leaps most of the way up the screen in the first frame and eases back down over the rest of the
 /// animation. Nothing in the window resizes the bar, so there is no second animation for it to disagree with, and what
@@ -40,6 +40,12 @@ public final class ShellPagesController: UIViewController {
     /// The tab a page stands for, so a navigation stack's depth report can land on the tab it belongs to.
     func tab(of page: UIViewController) -> TabularFeature.Tab? {
         pages.first { $0.value === page }?.key
+    }
+
+    /// A tab's navigation stack, whether or not its page is the one showing. Pushing onto a stack whose view is out of
+    /// the hierarchy is fine: selecting the tab brings the pushed page forward with it.
+    func navigation(of tab: TabularFeature.Tab) -> UINavigationController? {
+        pages[tab] as? UINavigationController
     }
 
     /// How much room the bar wants at the bottom edge beyond the safe area, so a page's content stops above it while

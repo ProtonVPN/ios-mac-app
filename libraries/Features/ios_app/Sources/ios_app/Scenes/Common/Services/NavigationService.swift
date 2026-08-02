@@ -500,8 +500,14 @@ extension NavigationService {
     func presentAccountRecoveryViewController() {
         guard AccountRecoveryModule.feature.enabled else { return }
 
-        let viewController = makeAccountRecoveryViewController()
-        windowService.addToStack(viewController, checkForDuplicates: true)
+        // Recovery is account business, so it lands on the Settings tab. Asking the window service for the topmost
+        // stack, as this used to, only answers while a tab that has one is showing: Home and Countries are plain
+        // hosting controllers, so from either of them the push went nowhere. Arriving from a push notification, there
+        // is no telling which tab that is.
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            shell?.push(makeAccountRecoveryViewController(), onto: .settings)
+        }
     }
 }
 

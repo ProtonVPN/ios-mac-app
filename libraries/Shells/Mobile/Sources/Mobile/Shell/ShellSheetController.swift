@@ -35,6 +35,9 @@ final class ShellSheetController: NSObject {
     private weak var sheet: UISheetPresentationController?
     /// The pages the sheet carries, for the floor treatment the sheet's own movement drives.
     private weak var pages: ShellPagesController?
+    /// The bar the pages are chosen from, which the sheet's travel leaves alone but does redraw: its selected glyph
+    /// loses its fill as the sheet comes to rest on its floor.
+    private weak var bar: ShellTabBar?
     /// The active observation. Started once: presenting the pages again after another flow's root swap re-points the
     /// references above at the fresh presentation instead of observing twice over.
     private var observation: ObserveToken?
@@ -44,13 +47,13 @@ final class ShellSheetController: NSObject {
         self.overlap = overlap
     }
 
-    /// Applies reducer decisions to the sheet and the pages, starting with the state the store already holds. The
-    /// full ladder is applied by the caller at each presentation; here the selection moves, and a deep page swaps the
-    /// ladder for the full detent alone. The bar needs nothing from here: it is a SwiftUI projection of the same
-    /// store and re-renders itself.
-    func observeShellState(sheet: UISheetPresentationController, pages: ShellPagesController) {
+    /// Applies reducer decisions to the sheet, the pages and the bar, starting with the state the store already
+    /// holds. The full ladder is applied by the caller at each presentation; here the selection moves, and a deep page
+    /// swaps the ladder for the full detent alone.
+    func observeShellState(sheet: UISheetPresentationController, pages: ShellPagesController, bar: ShellTabBar) {
         self.sheet = sheet
         self.pages = pages
+        self.bar = bar
         guard observation == nil else {
             // A fresh presentation of the same pages: the observation only fires on store changes, so the store's
             // current state is applied to the new sheet by hand.
@@ -77,9 +80,17 @@ final class ShellSheetController: NSObject {
             }
         }
 
-        // This is what answers the bar's taps: the bar only sends, and the page swap lands when the store's
-        // change re-runs the observation.
+        // This is what answers the bar's taps: the bar only sends, and the page swap and the bar's own selection
+        // both land when the store's change re-runs the observation.
         pages?.show(store.tab)
+        applyBar()
+    }
+
+    /// The bar redrawn from its two inputs: the store, and how much of the sheet is showing above its floor. Called
+    /// wherever either changes, and it writes every glyph each time rather than putting anything back.
+    private func applyBar(floorPresence: CGFloat? = nil) {
+        let presence = floorPresence ?? pages?.view.alpha ?? 1
+        bar?.apply(store.state, showsFilledSelection: presence > 0)
     }
 
     /// Whether the ladder is currently held to the full detent for a deep page. Read from the sheet, which keeps the
@@ -104,6 +115,8 @@ final class ShellSheetController: NSObject {
         UIView.animate(withDuration: animated ? Self.settleDuration : 0) {
             pages.view.alpha = presence
         }
+        // Not animatable, and it lays the bar out, so it stays out of the block above.
+        applyBar(floorPresence: presence)
     }
 
     /// Holds the sheet at full while the visible tab is pushed beyond its root: the legacy detail pages were designed
@@ -249,6 +262,15 @@ extension ShellSheetController: UISheetPresentationControllerDelegate {
         // A detent the store already holds is one we just applied, arriving back around.
         guard detent != store.detent else { return }
         store.send(.detentChanged(detent))
+    }
+}
+
+extension ShellSheetController: UITabBarDelegate {
+    func tabBar(_ bar: UITabBar, didSelect item: UITabBarItem) {
+        guard let tab = (bar as? ShellTabBar)?.tab(for: item) else { return }
+        // Only the choice is reported. Which page comes forward, which glyph fills and whether the sheet has to rise
+        // are all answered by the store's change coming back through the observation.
+        store.send(.tabSelected(tab))
     }
 }
 
