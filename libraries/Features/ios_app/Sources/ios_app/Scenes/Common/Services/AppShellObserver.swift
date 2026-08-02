@@ -37,8 +37,6 @@ final class AppShellObserver: NSObject {
     private weak var sheet: UISheetPresentationController?
     /// The pages the sheet carries, for the floor treatment the sheet's own movement drives.
     private weak var pages: ShellPagesController?
-    /// The bar the pages are chosen from, which the sheet's travel leaves alone.
-    private weak var bar: ShellTabBar?
     /// The active observation. Started once: presenting the pages again after another flow's root swap re-points the
     /// references above at the fresh presentation instead of observing twice over.
     private var observation: ObserveToken?
@@ -48,13 +46,13 @@ final class AppShellObserver: NSObject {
         self.overlap = overlap
     }
 
-    /// Applies reducer decisions to the sheet, the pages and the bar, starting with the state the store already holds.
-    /// The full ladder is applied by the caller at each presentation; here the selection moves, and a deep page swaps
-    /// the ladder for the full detent alone.
-    func observeShellState(sheet: UISheetPresentationController, pages: ShellPagesController, bar: ShellTabBar) {
+    /// Applies reducer decisions to the sheet and the pages, starting with the state the store already holds. The
+    /// full ladder is applied by the caller at each presentation; here the selection moves, and a deep page swaps the
+    /// ladder for the full detent alone. The bar needs nothing from here: it is a SwiftUI projection of the same
+    /// store and re-renders itself.
+    func observeShellState(sheet: UISheetPresentationController, pages: ShellPagesController) {
         self.sheet = sheet
         self.pages = pages
-        self.bar = bar
         guard observation == nil else {
             // A fresh presentation of the same pages: the observation only fires on store changes, so the store's
             // current state is applied to the new sheet by hand.
@@ -66,8 +64,8 @@ final class AppShellObserver: NSObject {
         }
     }
 
-    /// Brings the sheet, the pages and the bar to the store's current state. The equality checks each side makes are
-    /// what prevent the delegates and the observation from chasing each other around a change either of them made.
+    /// Brings the sheet and the pages to the store's current state. The equality checks each side makes are what
+    /// prevent the delegates and the observation from chasing each other around a change either of them made.
     private func applyShellState() {
         let detent = store.detent
 
@@ -81,22 +79,15 @@ final class AppShellObserver: NSObject {
             }
         }
 
-        if let index = TabularFeature.Tab.allCases.firstIndex(of: store.tab) {
-            showPage(at: index)
-        }
+        // This is what answers the bar's taps: the bar only sends, and the page swap lands when the store's
+        // change re-runs the observation.
+        pages?.show(store.tab)
     }
 
     /// Whether the ladder is currently held to the full detent for a deep page. Read from the sheet, which keeps the
     /// one answer: a fresh presentation starts with the full ladder and needs no separate bookkeeping here.
     private var isRestrictedToFull: Bool {
         sheet?.detents.map(\.identifier) == [TabularFeature.Detent.full.identifier]
-    }
-
-    /// Brings a tab's page forward and moves the bar's selection with it. This both serves the bar's own taps, which
-    /// need the page immediately, and the observation above, which is the backstop for any other sender.
-    private func showPage(at index: Int) {
-        pages?.show(pageAt: index)
-        bar?.selectItem(at: index)
     }
 
     /// Fades the pages as the sheet approaches its floor, where the bar becomes the only view and the globe runs
@@ -107,7 +98,7 @@ final class AppShellObserver: NSObject {
     private func applyFloorPresence(sheetHeight: CGFloat, animated: Bool) {
         guard let pages else { return }
         let span = max(Dimensions.floorFadeSpan, 1)
-        let presence = min(max((sheetHeight - Dimensions.barHeight) / span, 0), 1)
+        let presence = min(max((sheetHeight - TabularFeature.Detent.barHeight) / span, 0), 1)
         guard abs(presence - pages.view.alpha) > 0.01 else { return }
         // An animation block here is safe now that the bar is mounted in the window: it used to reach the bar through
         // the ancestors it shared with these views and carry its pending layout along, which is what sent the bar
@@ -115,8 +106,6 @@ final class AppShellObserver: NSObject {
         UIView.animate(withDuration: animated ? Self.settleDuration : 0) {
             pages.view.alpha = presence
         }
-        // Not animatable, and it lays the bar out, so it stays out of the block above.
-        bar?.showsOutlinedSelection = presence == 0
     }
 
     /// Holds the sheet at full while the visible tab is pushed beyond its root: the legacy detail pages were designed
@@ -160,12 +149,6 @@ final class AppShellObserver: NSObject {
         applyPageDepth(true, completion: push)
     }
 
-    /// The tab a page stands for, by its position in the shell's tab order.
-    private func tab(of page: UIViewController) -> TabularFeature.Tab? {
-        guard let index = pages?.pages.firstIndex(of: page) else { return nil }
-        return TabularFeature.Tab.allCases[safe: index]
-    }
-
     /// Mirrors the sheet's movement onto the backdrop and the pages: directly while the sheet's geometry is current
     /// (the user holds it), and hands off the rest of the travel to a spring animation if the user does a flick.
     func trackSheetHeight(of presented: UIViewController) {
@@ -195,10 +178,9 @@ final class AppShellObserver: NSObject {
     private static let settleDuration: TimeInterval = 0.35
 }
 
-/// The sheet's fixed geometry: what the custom detents resolve with.
+/// The sheet's fixed geometry: what the custom detents resolve with. The bar detent's height lives with the
+/// `Detent` itself, where the bar's own rendering can read it too.
 private enum Dimensions {
-    /// The bar detent's height.
-    static let barHeight: CGFloat = 100
     /// The half rung's share of the available room, matching what the system's medium detent used to give.
     static let halfFraction: CGFloat = 0.5
     /// How far above the bar the pages have fully faded in. A little past the bar's own height, so the
@@ -272,21 +254,6 @@ extension AppShellObserver: UISheetPresentationControllerDelegate {
     }
 }
 
-extension AppShellObserver: UITabBarDelegate {
-    func tabBar(_ bar: UITabBar, didSelect item: UITabBarItem) {
-        guard let index = bar.items?.firstIndex(of: item),
-              let tab = TabularFeature.Tab.allCases[safe: index]
-        else { return }
-        // Brought forward by hand as well as sent, because the observation runs a turn later than a tap may be answered
-        // in: a bar without a controller behind it shows nothing until someone acts.
-        showPage(at: index)
-        store.send(.tabSelected(tab))
-        // Depth is the store's to answer, now that it keeps every tab's: switching to a tab left in a
-        // detail page keeps the full sheet, and switching to one at its root releases it.
-        applyPageDepth(store.isPageDeep)
-    }
-}
-
 extension AppShellObserver: UINavigationControllerDelegate {
     /// Every UIKit tab's navigation controller reports here, so the shell knows when the visible page
     /// is pushed beyond its root.
@@ -298,7 +265,7 @@ extension AppShellObserver: UINavigationControllerDelegate {
         willShow _: UIViewController,
         animated _: Bool
     ) {
-        guard let tab = tab(of: navigationController) else { return }
+        guard let tab = pages?.tab(of: navigationController) else { return }
         store.send(.pageDepthChanged(tab: tab, isDeep: navigationController.viewControllers.count > 1))
         // The store folds the report into the visible tab's answer, which is the one the sheet obeys: a
         // stack popped programmatically behind another tab moves nothing here.
@@ -318,7 +285,7 @@ private extension UISheetPresentationController.Detent.Identifier {
 extension TabularFeature.Detent {
     var sheetDetent: UISheetPresentationController.Detent {
         switch self {
-        case .bar: .custom(identifier: .bar) { _ in Dimensions.barHeight }
+        case .bar: .custom(identifier: .bar) { _ in TabularFeature.Detent.barHeight }
         case .half: .custom(identifier: .half) { $0.maximumDetentValue * Dimensions.halfFraction }
         case .full: .large()
         }

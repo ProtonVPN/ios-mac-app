@@ -128,18 +128,7 @@ final class WindowServiceImplementation {
             navigationBar.scrollEdgeAppearance = navigationBarAppearance
             navigationBar.compactAppearance = navigationBarAppearance
 
-            if #unavailable(iOS 26.0) {
-                UITabBar.appearance().backgroundColor = .secondaryBackgroundColor()
-                UITabBar.appearance().barTintColor = .secondaryBackgroundColor()
-                UITabBar.appearance().tintColor = .iconAccent()
-                UITabBar.appearance().unselectedItemTintColor = .iconWeak()
-                UITabBar.appearance().isTranslucent = false
-            }
-
             UISwitch.appearance().onTintColor = .brandColor()
-
-            UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.textAccent()], for: .selected)
-            UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.weakTextColor()], for: .normal)
 
             UIPageControl.appearance().pageIndicatorTintColor = UIColor.secondaryBackgroundColor()
             UIPageControl.appearance().currentPageIndicatorTintColor = .brandColor()

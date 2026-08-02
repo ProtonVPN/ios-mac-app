@@ -20,10 +20,14 @@ let package = Package(
 
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),
+        .package(path: "../../Foundations/Strings"),
+        .package(path: "../../Foundations/Theme"),
 
         .package(path: "../../Core/NEHelper"),
 
         .package(path: "../../Shared/Persistence"),
+
+        .package(path: "../../../external/protoncore"),
 
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
     ],
@@ -36,8 +40,14 @@ let package = Package(
                 "Domain",
                 .product(name: "Payments", package: "Payments"),
                 .product(name: "PaymentsShared", package: "Payments"),
+                "Strings",
+                "Theme",
+                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ],
+            resources: [
+                .process("Resources"),
             ]
         ),
         .testTarget(

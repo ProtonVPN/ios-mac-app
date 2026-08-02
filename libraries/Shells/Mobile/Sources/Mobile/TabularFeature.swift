@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import CoreGraphics
 import Domain
 import Home
 import HomeShared
@@ -43,6 +44,10 @@ public struct TabularFeature {
         case half
         /// Raised over the map.
         case full
+
+        /// The bar detent's height: the coverage the sheet keeps at rest on its floor, and the line under which the
+        /// tab bar is the only thing over the map.
+        public static let barHeight: CGFloat = 100
     }
 
     /// Ordered as the tab bar presents them.

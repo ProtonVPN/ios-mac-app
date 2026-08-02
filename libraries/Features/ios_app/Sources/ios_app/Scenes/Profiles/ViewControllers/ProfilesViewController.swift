@@ -40,12 +40,6 @@ final class ProfilesViewController: UIViewController {
 
     var viewModel: ProfilesViewModel?
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        tabBarItem = UITabBarItem(title: Localizable.profiles, image: IconProvider.windowTerminal, tag: 2)
-        tabBarItem.accessibilityIdentifier = "Profiles"
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 

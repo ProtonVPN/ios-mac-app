@@ -16,26 +16,31 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Ergonomics
+import Mobile
 import UIKit
 
 /// The shell's tab pages, one showing at a time. This is what the sheet carries.
 ///
 /// It is deliberately not a `UITabBarController`: the bar that chooses between these pages lives in the window instead
-/// (see `ShellTabBar`). A bar inside the sheet is laid out against a frame the sheet animates, and while a drag keeps
-/// the two in step, a release does not. The sheet's frame and the bar's offset within it settle on separate curves, so
-/// the bar leaps most of the way up the screen in the first frame and eases back down over the rest of the animation.
-/// Nothing in the window resizes the bar, so there is no second animation for it to disagree with, and what stays in
-/// the sheet is the pages alone.
+/// (see `ShellTabBarView`). A bar inside the sheet is laid out against a frame the sheet animates, and while a drag
+/// keeps the two in step, a release does not. The sheet's frame and the bar's offset within it settle on separate
+/// curves, so the bar leaps most of the way up the screen in the first frame and eases back down over the rest of the
+/// animation. Nothing in the window resizes the bar, so there is no second animation for it to disagree with, and what
+/// stays in the sheet is the pages alone.
 final class ShellPagesController: UIViewController {
-    /// The pages, in the shell's tab order.
-    private(set) var pages: [UIViewController] = []
+    /// The pages by the tab each stands for. Which one shows is the store's selection, applied through `show`.
+    private(set) var pages: [TabularFeature.Tab: UIViewController] = [:]
 
     /// The page currently showing, for services that address the visible tab's content: the window's navigation stack
     /// lookup asks this the question a tab bar controller used to answer with `selectedViewController`. Only pages
     /// count; the installed passenger is a permanent child and never the answer.
     var shownPage: UIViewController? {
-        children.first(where: pages.contains)
+        children.first { child in pages.values.contains { $0 === child } }
+    }
+
+    /// The tab a page stands for, so a navigation stack's depth report can land on the tab it belongs to.
+    func tab(of page: UIViewController) -> TabularFeature.Tab? {
+        pages.first { $0.value === page }?.key
     }
 
     /// How much room the bar wants at the bottom edge beyond the safe area, so a page's content stops above it while
@@ -48,24 +53,16 @@ final class ShellPagesController: UIViewController {
         }
     }
 
-    /// The bar items the pages declare, in the same order, for the bar to show. A page that is a navigation stack
-    /// answers with its root's, which is where the legacy pages set theirs.
-    var barItems: [UITabBarItem] {
-        pages.map { page in
-            ((page as? UINavigationController)?.viewControllers.first ?? page).tabBarItem
-        }
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         // The app is compact-width everywhere, as it was when a tab bar controller carried these pages.
         traitOverrides.horizontalSizeClass = .compact
     }
 
-    /// Takes the pages and shows the first of them.
-    func setPages(_ pages: [UIViewController]) {
+    /// Takes the pages and shows the home tab.
+    func setPages(_ pages: [TabularFeature.Tab: UIViewController]) {
         self.pages = pages
-        show(pageAt: 0)
+        show(.home)
     }
 
     /// Seats a permanent passenger beside the pages: it stays in the hierarchy while they swap, and takes no space
@@ -80,11 +77,10 @@ final class ShellPagesController: UIViewController {
         passenger.didMove(toParent: self)
     }
 
-    /// Shows the page at `index`, if there is one there and it is not already showing. Out-of-range indices are
-    /// ignored, so a bar selection may be passed straight through.
-    func show(pageAt index: Int) {
-        guard let page = pages[safe: index], page !== shownPage else { return }
-        for shown in children where pages.contains(shown) {
+    /// Shows `tab`'s page, if it has one and it is not already showing.
+    func show(_ tab: TabularFeature.Tab) {
+        guard let page = pages[tab], page !== shownPage else { return }
+        for shown in children where pages.values.contains(where: { $0 === shown }) {
             shown.willMove(toParent: nil)
             shown.view.removeFromSuperview()
             shown.removeFromParent()

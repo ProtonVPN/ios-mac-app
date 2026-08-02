@@ -76,24 +76,6 @@ final class SettingsViewController: UIViewController {
             setupTableView()
             tableView.reloadData()
         }
-        @SharedReader(.captureSession) var captureSession
-
-        observe { [weak self] in
-            guard let self else { return }
-            // The dot marks a capture in progress. The images are swapped on the item this controller already has
-            // rather than the item being replaced: the shell's tab bar is handed these items once and holds them, so a
-            // fresh one would never reach it.
-            let isRecording = if case .sessionStarted = captureSession { true } else { false }
-            tabBarItem.image = Self.tabBarGlyph(isRecording ? .settingsTabbarDot : .settingsTabbar)
-            tabBarItem.selectedImage = Self.tabBarGlyph(isRecording ? .settingsTabbarDotActive : .settingsTabbarActive)
-        }
-        tabBarItem.title = Localizable.settings
-        tabBarItem.accessibilityIdentifier = "Settings back btn"
-    }
-
-    /// Settings brings its own colored glyphs, so they are passed through untinted.
-    private static func tabBarGlyph(_ resource: ImageResource) -> UIImage {
-        UIImage(resource: resource).withRenderingMode(.alwaysOriginal)
     }
 
     @available(*, unavailable)

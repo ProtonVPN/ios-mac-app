@@ -142,7 +142,7 @@ final class NavigationService {
     /// the sheet's travel never moves it. See `ShellPagesController` for why they are two pieces rather than a tab bar
     /// controller.
     private var pages = ShellPagesController()
-    private var tabBar = ShellTabBar()
+    private var barHost: UIViewController?
     /// The globe backdrop rooted under the shell, kept so a later trip through the main interface can put it back in
     /// front after another flow (a paywall, onboarding) replaced the window root.
     private var backdrop: UIViewController?
@@ -194,11 +194,11 @@ final class NavigationService {
         appStore = nil
         shellObserver = nil
         backdrop = nil
-        // The bar is a child of the window rather than of the root, so swapping the root for the login screen leaves it
-        // behind unless it is taken down here. Create fresh pages and a fresh tab bar for the next login.
-        tabBar.removeFromSuperview()
+        // The bar's view is a child of the window rather than of the root, so swapping the root for the login screen
+        // leaves it behind unless it is taken down here. Create fresh pages for the next login.
+        barHost?.view.removeFromSuperview()
+        barHost = nil
         pages = ShellPagesController()
-        tabBar = ShellTabBar()
     }
 
     func presentLogin(flow: LoginFlowType = .normal) {
@@ -308,16 +308,14 @@ final class NavigationService {
         // Keep app compact-width everywhere for now, this keeps the bottom sheet working on iPad.
         backdrop.view.window?.traitOverrides.horizontalSizeClass = .compact
 
-        pages.setPages(TabularFeature.Tab.allCases.map { tab -> UIViewController in
+        pages.setPages(.init(uniqueKeysWithValues: TabularFeature.Tab.allCases.map { tab in
             switch tab {
-            case .home: makeHomeViewController(store: store.scope(state: \.home, action: \.home))
-            case .countries: makeCountriesViewController()
-            case .profiles: SheetNavigationController(rootViewController: makeProfilesViewController())
-            case .settings: SheetNavigationController(rootViewController: makeSettingsViewController())
+            case .home: (tab, makeHomeViewController(store: store.scope(state: \.home, action: \.home)))
+            case .countries: (tab, makeCountriesViewController())
+            case .profiles: (tab, SheetNavigationController(rootViewController: makeProfilesViewController()))
+            case .settings: (tab, SheetNavigationController(rootViewController: makeSettingsViewController()))
             }
-        })
-        // The pages declare their own items, as they did when a tab bar controller collected them.
-        tabBar.items = pages.barItems
+        }))
 
         // Those should be called once
         store.send(.commands(.onStart))
@@ -332,12 +330,18 @@ final class NavigationService {
     private func presentTabSheet(over backdrop: UIViewController, store: StoreOf<TabularFeature>) {
         let observer = AppShellObserver(store: store, overlap: sheetOverlap)
         shellObserver = observer
-        tabBar.delegate = observer
+        // The bar renders itself from the store and the coverage channel; its view is mounted once the sheet is up.
+        barHost = {
+            let host = UIHostingController(rootView: ShellTabBarView(store: store, overlap: sheetOverlap))
+            host.sizingOptions = .intrinsicContentSize
+            host.view.backgroundColor = .clear
+            return host
+        }()
         // The pages keep their content clear of the bar they no longer contain.
-        tabBar.onRoomChange = { [weak pages] room in pages?.barRoom = room }
+        pages.barRoom = ShellTabBarView.contentHeight
         // The UIKit tabs' navigation stacks report their depth through the observer, so a pushed legacy page can hold
         // the sheet at full, and ask it for the room before pushing into it.
-        for (tab, page) in zip(TabularFeature.Tab.allCases, pages.pages) {
+        for (tab, page) in pages.pages {
             guard let navigation = page as? UINavigationController else { continue }
             navigation.delegate = observer
             (navigation as? SheetNavigationController)?.makeRoomForPush = { [weak observer] push in
@@ -372,13 +376,30 @@ final class NavigationService {
             sheet.largestUndimmedDetentIdentifier = TabularFeature.Detent.allCases.last?.identifier
             sheet.prefersScrollingExpandsWhenScrolledToEdge = true
             sheet.prefersGrabberVisible = true
-            observer.observeShellState(sheet: sheet, pages: pages, bar: tabBar)
+            observer.observeShellState(sheet: sheet, pages: pages)
         }
 
-        backdrop.present(pages, animated: false) { [tabBar] in
+        backdrop.present(pages, animated: false) { [weak self] in
             // Mounted once the sheet is up, so the bar goes in over the container it was presented into.
-            backdrop.view.window.map(tabBar.mount(in:))
+            backdrop.view.window.map { self?.mountBar(in: $0) }
         }
+    }
+
+    /// Mounts the bar's view along the window's bottom edge, over everything else the window shows. Mounting again in
+    /// the same window is a no-op, so a re-presented sheet can pass through here.
+    @MainActor
+    private func mountBar(in window: UIWindow) {
+        guard let barView = barHost?.view, barView.superview !== window else { return }
+        barView.translatesAutoresizingMaskIntoConstraints = false
+        window.addSubview(barView)
+        // A presented sheet mounts in a container that is this view's sibling, so being added last is not enough to
+        // stay in front of it.
+        barView.layer.zPosition = Dimensions.barOverlayDepth
+        NSLayoutConstraint.activate([
+            barView.leadingAnchor.constraint(equalTo: window.leadingAnchor),
+            barView.trailingAnchor.constraint(equalTo: window.trailingAnchor),
+            barView.bottomAnchor.constraint(equalTo: window.bottomAnchor),
+        ])
     }
 
     /// Puts the shell back in front after another flow replaced the window root. The store, the pages, the bar and the
@@ -397,19 +418,19 @@ final class NavigationService {
     }
 
     private func makeHomeViewController(store: StoreOf<HomeFeature>) -> UIViewController {
-        let hostingController = UIHostingController(rootView: HomeView(store: store))
-        hostingController.tabBarItem = UITabBarItem(
-            title: Localizable.homeTab,
-            image: IconProvider.house,
-            selectedImage: IconProvider.houseFilled
-        )
-        hostingController.tabBarItem.accessibilityIdentifier = "Home"
-        return hostingController
+        UIHostingController(rootView: HomeView(store: store))
     }
 
     func makeLaunchViewController() -> LaunchViewController {
         LaunchViewController()
     }
+}
+
+/// The bar mount's fixed geometry.
+private enum Dimensions {
+    /// Far enough in front of the window's other children that the sheet's presentation container, which carries no
+    /// depth of its own, cannot come between the bar and the user.
+    static let barOverlayDepth: CGFloat = 1000
 }
 
 extension NavigationService {
@@ -429,8 +450,6 @@ extension NavigationService {
         }
         let countriesView = CountriesMainView(store: countriesStore)
         let hostingController = UIHostingController(rootView: countriesView)
-        hostingController.tabBarItem = UITabBarItem(title: Localizable.countries, image: IconProvider.earth, tag: 1)
-        hostingController.tabBarItem.accessibilityIdentifier = "Countries"
 
         // Ensure content extends under tab bar
         hostingController.edgesForExtendedLayout = [.bottom]
