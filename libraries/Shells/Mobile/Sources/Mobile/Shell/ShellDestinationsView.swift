@@ -28,14 +28,10 @@ import SwiftUI
 /// never shows. A page only works while its tab is selected: the pages controller takes the others out of the
 /// hierarchy entirely, where a destination set on one presents nothing. Inside the sheet but beside the pages is the
 /// one seat that is always in the hierarchy and always free to present.
-public struct ShellDestinationsView: View {
+struct ShellDestinationsView: View {
     @Bindable var store: StoreOf<TabularFeature>
 
-    public init(store: StoreOf<TabularFeature>) {
-        self.store = store
-    }
-
-    public var body: some View {
+    var body: some View {
         Color.clear
             // The connection machinery's intercept and failure alerts, answerable from every tab.
             .alert($store.scope(state: \.commands.alert, action: \.commands.alert))

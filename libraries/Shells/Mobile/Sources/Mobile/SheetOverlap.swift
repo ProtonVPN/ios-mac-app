@@ -24,27 +24,27 @@ import Observation
 ///
 /// Deliberately not feature state to avoid thrashing the TCA store.
 @Observable
-public final class SheetOverlap {
-    public internal(set) var points: CGFloat = 0
+final class SheetOverlap {
+    private(set) var points: CGFloat = 0
 
     /// The coverage at the sheet's next rest: the same as `points` once settled, but during a settle animation it is
     /// already the destination. Camera fits read this one, so a flight begun mid-travel frames the region the sheet is
     /// heading for rather than wherever it happens to be. Zero until the first settle; a finger holding the sheet
     /// leaves it at the last known rest.
-    public internal(set) var restingPoints: CGFloat = 0
+    private(set) var restingPoints: CGFloat = 0
 
-    public init() {}
+    init() {}
 
     /// Called by the shell as the sheet lays out. Sub-point movements are ignored so layout noise never costs a
     /// re-render.
-    public func report(_ points: CGFloat) {
+    func report(_ points: CGFloat) {
         guard abs(points - self.points) > 0.5 else { return }
         self.points = points
     }
 
     /// Called by the shell when a settle animation begins: the destination is known outright, so the resting coverage
     /// updates immediately while `points` animates in the caller's transaction.
-    public func settle(toward target: CGFloat) {
+    func settle(toward target: CGFloat) {
         restingPoints = target
         report(target)
     }

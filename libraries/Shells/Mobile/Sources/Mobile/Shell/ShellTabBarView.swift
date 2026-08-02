@@ -34,21 +34,16 @@ import Theme
 /// Everything drawn here is read from the store or the coverage channel: the selected tab, the sheet's coverage
 /// (which decides whether the selection wears its filled glyph), and the settings tab's recording badge. Taps send
 /// `tabSelected` and nothing else; the pages follow the store.
-public struct ShellTabBarView: View {
+struct ShellTabBarView: View {
     /// The room the bar's content wants above the safe area: the inset a tab bar controller would have given the
     /// pages behind it.
-    public static let contentHeight: CGFloat = 49
+    static let contentHeight: CGFloat = 49
 
     @Bindable var store: StoreOf<TabularFeature>
     /// How much of the backdrop the sheet covers, read live so the selection treatment follows the drag.
     let overlap: SheetOverlap
 
-    public init(store: StoreOf<TabularFeature>, overlap: SheetOverlap) {
-        self.store = store
-        self.overlap = overlap
-    }
-
-    public var body: some View {
+    var body: some View {
         HStack(spacing: 0) {
             ForEach(TabularFeature.Tab.allCases) { tab in
                 ShellTabButton(

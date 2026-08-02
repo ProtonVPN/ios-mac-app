@@ -23,17 +23,12 @@ import SwiftUI
 /// The shell's own view of the backdrop: the globe and connection chrome with the sheet's current overlap applied, so
 /// the map's focus region tracks where the sheet rests. The layout itself stays in `GlobeBackdropView`, which knows
 /// nothing about sheets and renders overlap zero in previews and snapshots.
-public struct TabularBackdropView: View {
+struct TabularBackdropView: View {
     @Bindable var store: StoreOf<TabularFeature>
     /// Tracks the sheet as it moves, so the globe follows the drag rather than easing after it lands.
     let overlap: SheetOverlap
 
-    public init(store: StoreOf<TabularFeature>, overlap: SheetOverlap) {
-        self.store = store
-        self.overlap = overlap
-    }
-
-    public var body: some View {
+    var body: some View {
         GlobeBackdropView(
             map: store.scope(state: \.map, action: \.map),
             status: store.scope(state: \.connectionStatus, action: \.connectionStatus),

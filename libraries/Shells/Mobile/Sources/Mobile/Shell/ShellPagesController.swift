@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Mobile
 import UIKit
 
 /// The shell's tab pages, one showing at a time. This is what the sheet carries.
@@ -27,14 +26,14 @@ import UIKit
 /// curves, so the bar leaps most of the way up the screen in the first frame and eases back down over the rest of the
 /// animation. Nothing in the window resizes the bar, so there is no second animation for it to disagree with, and what
 /// stays in the sheet is the pages alone.
-final class ShellPagesController: UIViewController {
+public final class ShellPagesController: UIViewController {
     /// The pages by the tab each stands for. Which one shows is the store's selection, applied through `show`.
     private(set) var pages: [TabularFeature.Tab: UIViewController] = [:]
 
     /// The page currently showing, for services that address the visible tab's content: the window's navigation stack
     /// lookup asks this the question a tab bar controller used to answer with `selectedViewController`. Only pages
     /// count; the installed passenger is a permanent child and never the answer.
-    var shownPage: UIViewController? {
+    public var shownPage: UIViewController? {
         children.first { child in pages.values.contains { $0 === child } }
     }
 
@@ -53,7 +52,7 @@ final class ShellPagesController: UIViewController {
         }
     }
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         // The app is compact-width everywhere, as it was when a tab bar controller carried these pages.
         traitOverrides.horizontalSizeClass = .compact

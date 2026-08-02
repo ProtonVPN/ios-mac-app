@@ -138,22 +138,9 @@ final class NavigationService {
 
     @Dependency(\.bugReport) private var bugReportCreator
 
-    /// The shell's pages, which the sheet carries, and the bar they are chosen from, which is mounted in the window so
-    /// the sheet's travel never moves it. See `ShellPagesController` for why they are two pieces rather than a tab bar
-    /// controller.
-    private var pages = ShellPagesController()
-    private var barHost: UIViewController?
-    /// The globe backdrop rooted under the shell, kept so a later trip through the main interface can put it back in
-    /// front after another flow (a paywall, onboarding) replaced the window root.
-    private var backdrop: UIViewController?
-
-    /// The app's main TCA store.
-    private var appStore: StoreOf<TabularFeature>?
-    /// Bridges the sheet and the tab bar to the store. Held here because UIKit keeps delegates weakly.
-    private var shellObserver: AppShellObserver?
-    /// How much of the backdrop the sheet covers right now, read by the backdrop view and written by the
-    /// observer. Rebuilt with the rest of the shell, so a new login starts uncovered.
-    private var sheetOverlap = SheetOverlap()
+    /// The assembled shell: the backdrop, the tab sheet and the bar, kept for as long as the login it belongs to.
+    /// This service builds the store and the page controllers; the shell owns everything from there down.
+    private var shell: TabularShell?
 
     // MARK: Initializers
 
@@ -191,14 +178,8 @@ final class NavigationService {
         // Release the shell with the login it belonged to. The store keeps the feature tree and its
         // long-running observations (connection state, recents, shared properties) alive for as long as
         // it exists, and none of that should keep running for a user who signed out.
-        appStore = nil
-        shellObserver = nil
-        backdrop = nil
-        // The bar's view is a child of the window rather than of the root, so swapping the root for the login screen
-        // leaves it behind unless it is taken down here. Create fresh pages for the next login.
-        barHost?.view.removeFromSuperview()
-        barHost = nil
-        pages = ShellPagesController()
+        MainActor.assumeIsolated { shell?.dismantle() }
+        shell = nil
     }
 
     func presentLogin(flow: LoginFlowType = .normal) {
@@ -278,18 +259,14 @@ final class NavigationService {
     /// user can raise and lower.
     @MainActor
     private func setupTabs() {
-        guard pages.pages.isEmpty else {
+        guard shell == nil else {
             // Built on an earlier pass. Another flow (a paywall, onboarding) may have taken the window root since,
             // which tears the sheet's presentation down with it, so the shell is put back in front rather than
             // assumed to have stayed there.
-            remountShell()
-            appStore?.send(.tabSelected(.home))
+            presentShell()
+            shell?.store.send(.tabSelected(.home))
             return
         }
-
-        // The coverage channel is per-shell like the store and observer below, so the last login's final sheet position
-        // cannot show through the first frames of this one.
-        sheetOverlap = SheetOverlap()
 
         let store = StoreOf<TabularFeature>(initialState: .init()) {
             log.info("Creating TabularFeature", category: .app)
@@ -300,15 +277,8 @@ final class NavigationService {
                 presentSignUp(over: anchor, flow: .credentiallessUpsell)
             }
         }
-        appStore = store
 
-        let backdrop = UIHostingController(rootView: TabularBackdropView(store: store, overlap: sheetOverlap))
-        self.backdrop = backdrop
-        windowService.show(viewController: backdrop)
-        // Keep app compact-width everywhere for now, this keeps the bottom sheet working on iPad.
-        backdrop.view.window?.traitOverrides.horizontalSizeClass = .compact
-
-        pages.setPages(.init(uniqueKeysWithValues: TabularFeature.Tab.allCases.map { tab in
+        shell = TabularShell(store: store, pages: .init(uniqueKeysWithValues: TabularFeature.Tab.allCases.map { tab in
             switch tab {
             case .home: (tab, makeHomeViewController(store: store.scope(state: \.home, action: \.home)))
             case .countries: (tab, makeCountriesViewController())
@@ -323,98 +293,13 @@ final class NavigationService {
         store.send(.home(.sharedProperties(.listen)))
         store.send(.map(.observeConnectionState))
 
-        presentTabSheet(over: backdrop, store: store)
+        presentShell()
     }
 
+    /// Puts the shell in front, rooting its backdrop through the window service.
     @MainActor
-    private func presentTabSheet(over backdrop: UIViewController, store: StoreOf<TabularFeature>) {
-        let observer = AppShellObserver(store: store, overlap: sheetOverlap)
-        shellObserver = observer
-        // The bar renders itself from the store and the coverage channel; its view is mounted once the sheet is up.
-        barHost = {
-            let host = UIHostingController(rootView: ShellTabBarView(store: store, overlap: sheetOverlap))
-            host.sizingOptions = .intrinsicContentSize
-            host.view.backgroundColor = .clear
-            return host
-        }()
-        // The pages keep their content clear of the bar they no longer contain.
-        pages.barRoom = ShellTabBarView.contentHeight
-        // The UIKit tabs' navigation stacks report their depth through the observer, so a pushed legacy page can hold
-        // the sheet at full, and ask it for the room before pushing into it.
-        for (tab, page) in pages.pages {
-            guard let navigation = page as? UINavigationController else { continue }
-            navigation.delegate = observer
-            (navigation as? SheetNavigationController)?.makeRoomForPush = { [weak observer] push in
-                guard let observer else {
-                    push()
-                    return
-                }
-                observer.makeRoom(for: tab, thenPush: push)
-            }
-        }
-        pages.isModalInPresentation = true // the pages are the app, so the sheet never dismisses
-        pages.view.backgroundColor = .backgroundColor()
-
-        // The shell's alerts and covers launch from a permanent passenger beside the pages, the one seat that is
-        // always in the hierarchy and always free to present.
-        pages.install(passenger: UIHostingController(rootView: ShellDestinationsView(store: store)))
-
-        observer.trackSheetHeight(of: pages)
-        presentSheet(over: backdrop)
-    }
-
-    /// Presents the pages in their sheet over the backdrop and mounts the bar once it is up. Run for the first
-    /// presentation and again whenever another flow's root swap has torn the presentation down: UIKit builds a fresh
-    /// sheet controller for each present, so the ladder is configured here rather than once at setup.
-    @MainActor
-    private func presentSheet(over backdrop: UIViewController) {
-        guard let observer = shellObserver else { return }
-        if let sheet = pages.sheetPresentationController {
-            sheet.delegate = observer
-            // One fixed ladder for every tab; only the selection moves, applied by the observer.
-            sheet.detents = TabularFeature.Detent.allCases.map(\.sheetDetent)
-            sheet.largestUndimmedDetentIdentifier = TabularFeature.Detent.allCases.last?.identifier
-            sheet.prefersScrollingExpandsWhenScrolledToEdge = true
-            sheet.prefersGrabberVisible = true
-            observer.observeShellState(sheet: sheet, pages: pages)
-        }
-
-        backdrop.present(pages, animated: false) { [weak self] in
-            // Mounted once the sheet is up, so the bar goes in over the container it was presented into.
-            backdrop.view.window.map { self?.mountBar(in: $0) }
-        }
-    }
-
-    /// Mounts the bar's view along the window's bottom edge, over everything else the window shows. Mounting again in
-    /// the same window is a no-op, so a re-presented sheet can pass through here.
-    @MainActor
-    private func mountBar(in window: UIWindow) {
-        guard let barView = barHost?.view, barView.superview !== window else { return }
-        barView.translatesAutoresizingMaskIntoConstraints = false
-        window.addSubview(barView)
-        // A presented sheet mounts in a container that is this view's sibling, so being added last is not enough to
-        // stay in front of it.
-        barView.layer.zPosition = Dimensions.barOverlayDepth
-        NSLayoutConstraint.activate([
-            barView.leadingAnchor.constraint(equalTo: window.leadingAnchor),
-            barView.trailingAnchor.constraint(equalTo: window.trailingAnchor),
-            barView.bottomAnchor.constraint(equalTo: window.bottomAnchor),
-        ])
-    }
-
-    /// Puts the shell back in front after another flow replaced the window root. The store, the pages, the bar and the
-    /// observer all survive the swap; what dies with the old root is the root itself, the sheet's presentation and the
-    /// bar's mount, so exactly those are re-done. With the shell already in front there is nothing to do.
-    @MainActor
-    private func remountShell() {
-        guard let backdrop else { return }
-        if backdrop.view.window == nil {
-            windowService.show(viewController: backdrop)
-            backdrop.view.window?.traitOverrides.horizontalSizeClass = .compact
-        }
-        if pages.presentingViewController == nil {
-            presentSheet(over: backdrop)
-        }
+    private func presentShell() {
+        shell?.present(rootedBy: { windowService.show(viewController: $0) })
     }
 
     private func makeHomeViewController(store: StoreOf<HomeFeature>) -> UIViewController {
@@ -424,13 +309,6 @@ final class NavigationService {
     func makeLaunchViewController() -> LaunchViewController {
         LaunchViewController()
     }
-}
-
-/// The bar mount's fixed geometry.
-private enum Dimensions {
-    /// Far enough in front of the window's other children that the sheet's presentation container, which carries no
-    /// depth of its own, cannot come between the bar and the user.
-    static let barOverlayDepth: CGFloat = 1000
 }
 
 extension NavigationService {
@@ -611,7 +489,7 @@ extension NavigationService: ConnectionStatusService {
         // tab, and a raw selectedIndex write would be snapped back by the observation on the next
         // state change.
         Task { @MainActor [weak self] in
-            self?.appStore?.send(.tabSelected(.home))
+            self?.shell?.store.send(.tabSelected(.home))
         }
     }
 }
@@ -637,7 +515,7 @@ extension NavigationService: LoginServiceDelegate {
 
     @MainActor
     func userDidSignUp() {
-        onboardingService.showOnboarding(overMainInterface: !pages.pages.isEmpty)
+        onboardingService.showOnboarding(overMainInterface: shell != nil)
         TelemetryOnboardingReporter.isOnboardingInProgress = true
         // in case we're transitioning from guest -> registered improve UX by selecting first tab in normal flow (start
         // -> sign up) there is no main interface yet

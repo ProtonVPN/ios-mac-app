@@ -17,19 +17,17 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import Ergonomics
-import Mobile
 import SwiftUI
 import UIKit
 
-/// Keeps the presented tab sheet and `AppFeature` agreeing about the detent, in both directions: the user dragging the
-/// sheet reaches the store through the delegate, and a reducer decision (raising the sheet when a tab is chosen,
-/// dropping it on connect) reaches the sheet through the observation below.
+/// Keeps the presented tab sheet and `TabularFeature` agreeing about the detent, in both directions: the user
+/// dragging the sheet reaches the store through the delegate, and a reducer decision (raising the sheet when a tab is
+/// chosen, dropping it on connect) reaches the sheet through the observation below.
 ///
 /// This is the only place that knows `UISheetPresentationController` exists. The identifiers stay private to the file,
 /// so the feature above deals in its own `Detent` and nothing else.
 @MainActor
-final class AppShellObserver: NSObject {
+final class ShellSheetController: NSObject {
     private let store: StoreOf<TabularFeature>
     /// Reports how much of the backdrop the sheet covers as it moves.
     private let overlap: SheetOverlap
@@ -208,7 +206,7 @@ private final class SheetHeightReporter: UIView {
         // The sheet covers everything from its top edge down to the window's bottom edge.
         let overlap = window.bounds.height - sheet.convert(sheet.bounds, to: window).minY
         onReport?(overlap, hasGeometryAnimation(between: sheet, and: window))
-        clearPresentation(between: sheet, and: window)
+        clearSheetBackground(between: sheet, and: window)
     }
 
     /// Whether any layer from the sheet up to the window is animating, which is what tells a settle's
@@ -227,7 +225,7 @@ private final class SheetHeightReporter: UIView {
     /// own path are hidden (the platter mounts there; the grabber rides the sheet's branch and survives). The walk
     /// climbs layers rather than views because the platter's parent never appears as any view's `layer`. Re-applied
     /// every layout, since the system reasserts its paint across appearance changes.
-    private func clearPresentation(between sheet: UIView, and window: UIWindow) {
+    private func clearSheetBackground(between sheet: UIView, and window: UIWindow) {
         var pathChild: CALayer = sheet.layer
         while let parent = pathChild.superlayer, parent !== window.layer {
             if let view = parent.delegate as? UIView, view.backgroundColor != nil {
@@ -245,7 +243,7 @@ private final class SheetHeightReporter: UIView {
     }
 }
 
-extension AppShellObserver: UISheetPresentationControllerDelegate {
+extension ShellSheetController: UISheetPresentationControllerDelegate {
     func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheet: UISheetPresentationController) {
         let detent = TabularFeature.Detent(sheet.selectedDetentIdentifier)
         // A detent the store already holds is one we just applied, arriving back around.
@@ -254,7 +252,7 @@ extension AppShellObserver: UISheetPresentationControllerDelegate {
     }
 }
 
-extension AppShellObserver: UINavigationControllerDelegate {
+extension ShellSheetController: UINavigationControllerDelegate {
     /// Every UIKit tab's navigation controller reports here, so the shell knows when the visible page
     /// is pushed beyond its root.
     /// Pushes have already made their own room through `makeRoom(forPushThen:)`, so this is where a pop
