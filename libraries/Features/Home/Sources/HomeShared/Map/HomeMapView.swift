@@ -147,7 +147,6 @@ public struct HomeMapView: View {
                 visibleHeight: framing.visibleHeight,
                 highlight: renderInputs.highlight(for: highlightedCode),
                 sunDirection: solarSystem.sunDirection,
-                lightFade: 1,
                 sunTint: tint,
                 moonCenter: solarSystem.moonCenter,
                 moonRadius: solarSystem.moonRadius,

@@ -50,9 +50,8 @@ struct GlobeSurfaceView: GlobeViewRepresentable {
     let highlight: MapHighlight
     /// Color of the base ocean sphere behind the land.
     let oceanColor: SIMD4<Float>
-    /// Model-space direction toward the sun, and how strongly to apply day/night lighting (0 is flat).
+    /// Model-space direction toward the sun for the day/night lighting.
     var sunDirection: SIMD3<Float> = .init(0, 0, 1)
-    var lightFade: Float = 0
     /// Color of the sunlight falling on the globe, the connection green or red. White is neutral.
     var sunTint: SIMD3<Float> = .init(1, 1, 1)
     /// Model-space Moon centre (the sub-lunar direction scaled by distance in Earth radii) and the Moon's
@@ -69,7 +68,7 @@ struct GlobeSurfaceView: GlobeViewRepresentable {
     /// Camera distance, for the points' horizon cull and the whole-path back-hemisphere cull.
     var cameraDistance: Float = 2
     /// Starfield drawn in the globe's pass: instances (direction, radius, brightness). Drawn far out and first, so the
-    /// globe occludes the stars behind it; their fade follows the uniforms' light fade.
+    /// globe occludes the stars behind it.
     var starInstances: [StarInstance] = []
 
     final class Coordinator {
@@ -161,7 +160,9 @@ struct GlobeSurfaceView: GlobeViewRepresentable {
             borderHalfWidth: 0,
             sunDirection: sunDirection,
             sunTint: sunTint,
-            lightFade: lightFade,
+            // The app's globe is always lit. The fade stays a uniform because the geometry snapshot suites drive
+            // the renderer directly at zero for a flat render.
+            lightFade: 1,
             moonRadius: moonRadius,
             moonCenter: moonCenter
         ))
@@ -217,8 +218,6 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
     var oceanColor: SIMD4<Float> = MapStyle.oceanColor
     /// Model-space direction toward the sun (the sub-solar point) for day/night lighting.
     var sunDirection: SIMD3<Float> = .init(0, 0, 1)
-    /// 0 is flat, 1 is full day/night lighting. Animated, so the sun fades in as the map opens.
-    var lightFade: Float = 0
     /// Color of the sunlight falling on the globe, the connection green or red. White is neutral.
     var sunTint: SIMD3<Float> = .init(1, 1, 1)
     /// Model-space Moon centre (the sub-lunar direction scaled by distance in Earth radii) and radius. Not
@@ -227,15 +226,13 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
     var moonCenter: SIMD3<Float> = .init(0, 0, 0)
     var moonRadius: Float = 0
     /// City points drawn in the globe's own pass (unit-sphere positions plus fill color), and whether the
-    /// user is moving the globe. While moving, or mid open/close, the points show and track the sphere
-    /// exactly. Once settled and fully open they fade out so the cluster discs take over. `pinFade` follows
-    /// `lightFade`, which is interpolated, so the dissolve animates frame by frame.
+    /// user is moving the globe. While moving, the points show and track the sphere exactly; once settled
+    /// they hand over to the cluster discs, whose crossfade the SwiftUI overlay animates.
     var pinPositions: [SIMD3<Float>] = []
     var pinColor: SIMD4<Float> = .init(0.5, 0.5, 0.5, 1)
     var isMoving: Bool = false
     var showsInteractivePins: Bool = true
-    /// Starfield instances. The shader alpha follows the interpolated `lightFade`, so the stars dissolve with the
-    /// open/close; the sphere occludes them while zoomed in.
+    /// Starfield instances. The sphere occludes them while zoomed in.
     var starInstances: [StarInstance] = []
     /// Overlay (pins) built from the current interpolated projection, so it tracks the animating camera. The celestial
     /// bodies are all drawn in the Metal pass, so there is no SwiftUI background layer.
@@ -247,7 +244,7 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
         @Environment(\.displayScale) private var displayScale
     #endif
 
-    /// Interpolates the light fade, the framed height, and the camera as one flat vector. The orientation
+    /// Interpolates the framed heights and the camera as one flat vector. The orientation
     /// is animated as a quaternion: a component-wise interpolation renormalized each step, which traces a
     /// rotation that never collapses to a singularity, unlike interpolating the faced direction, which
     /// passes through the globe centre for near-antipodal jumps. Country-to-country reorientations stay
@@ -255,7 +252,6 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
     var animatableData: GlobeAnimationVector {
         get {
             GlobeAnimationVector(
-                lightFade: lightFade,
                 focusHeight: Float(focusHeight),
                 distance: camera.distance,
                 orientation: camera.orientation.vector,
@@ -263,7 +259,6 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
             )
         }
         set {
-            lightFade = newValue.lightFade
             focusHeight = CGFloat(newValue.focusHeight)
             visibleHeight = CGFloat(newValue.visibleHeight)
             camera.distance = newValue.distance
@@ -314,14 +309,13 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
         let pinFade: Float = PinDisplay.showsClusters(
             isMoving: isMoving,
             showsInteractivePins: showsInteractivePins
-        ) ? 0 : lightFade
+        ) ? 0 : 1
         return GlobeSurfaceView(
             mvp: mvp,
             cameraTarget: camera.facing,
             highlight: highlight,
             oceanColor: oceanColor,
             sunDirection: sunDirection,
-            lightFade: lightFade,
             sunTint: sunTint,
             moonCenter: moonCenter,
             moonRadius: moonRadius,
@@ -334,19 +328,19 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
     }
 }
 
-/// The seven scalars `AnimatableGlobe` interpolates, packed as one flat vector: the light fade, the framed
-/// height, the camera distance, and the four quaternion components. SwiftUI's `Animatable` wants a single
+/// The seven scalars `AnimatableGlobe` interpolates, packed as one flat vector: the framed and visible
+/// heights, the camera distance, and the four quaternion components. SwiftUI's `Animatable` wants a single
 /// `VectorArithmetic` value, and the stock `AnimatablePair` nests unreadably at this width, so this packs
 /// the scalars into a SIMD8 and forwards the arithmetic to it lane by lane. The spare eighth lane stays
 /// zero through every operation, so it never contributes.
 struct GlobeAnimationVector: VectorArithmetic {
     private var lanes: SIMD8<Float>
 
-    init(lightFade: Float, focusHeight: Float, distance: Float, orientation: SIMD4<Float>, visibleHeight: Float) {
+    init(focusHeight: Float, distance: Float, orientation: SIMD4<Float>, visibleHeight: Float) {
         self.lanes = SIMD8(
-            lightFade, focusHeight, distance,
+            focusHeight, distance,
             orientation.x, orientation.y, orientation.z, orientation.w,
-            visibleHeight
+            visibleHeight, 0
         )
     }
 
@@ -354,24 +348,20 @@ struct GlobeAnimationVector: VectorArithmetic {
         self.lanes = lanes
     }
 
-    var lightFade: Float {
+    var focusHeight: Float {
         lanes[0]
     }
 
-    var focusHeight: Float {
+    var distance: Float {
         lanes[1]
     }
 
-    var distance: Float {
-        lanes[2]
-    }
-
     var orientation: SIMD4<Float> {
-        SIMD4(lanes[3], lanes[4], lanes[5], lanes[6])
+        SIMD4(lanes[2], lanes[3], lanes[4], lanes[5])
     }
 
     var visibleHeight: Float {
-        lanes[7]
+        lanes[6]
     }
 
     static let zero = GlobeAnimationVector(lanes: .zero)

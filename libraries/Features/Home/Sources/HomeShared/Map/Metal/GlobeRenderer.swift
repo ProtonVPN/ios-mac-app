@@ -363,7 +363,8 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     /// Draws the Moon: the base sphere translated to `moonCenter` and scaled to `moonRadius` in Earth radii, lit into
     /// phases by the Sun and faded by `lightFade`. The model offset is folded into the MVP, while the fragment keeps
     /// `moonCenter` and `moonRadius` to reconstruct each pixel's world position for the lunar eclipse. Skipped when
-    /// there is no Moon (radius 0) or the map is closed.
+    /// there is no Moon (radius 0), or when the lighting is off, which the app never asks for but the unlit geometry
+    /// snapshots do.
     private func drawMoon(into encoder: MTLRenderCommandEncoder) {
         guard uniforms.moonRadius > 0, uniforms.lightFade > Constants.minVisibleFade else { return }
         var moonUniforms = uniforms
