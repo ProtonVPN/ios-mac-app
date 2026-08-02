@@ -16,11 +16,14 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Features/Home"),
+        .package(path: "../../Features/Payments"),
 
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),
 
         .package(path: "../../Core/NEHelper"),
+
+        .package(path: "../../Shared/Persistence"),
 
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
     ],
@@ -31,6 +34,8 @@ let package = Package(
                 "Home",
                 .product(name: "HomeShared", package: "Home"),
                 "Domain",
+                .product(name: "Payments", package: "Payments"),
+                .product(name: "PaymentsShared", package: "Payments"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
@@ -39,6 +44,7 @@ let package = Package(
             name: "MobileTests",
             dependencies: [
                 "Mobile",
+                .product(name: "PersistenceTestSupport", package: "Persistence"),
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
             ]
         ),

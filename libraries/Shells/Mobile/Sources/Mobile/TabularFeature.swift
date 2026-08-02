@@ -20,6 +20,8 @@ import ComposableArchitecture
 import Domain
 import Home
 import HomeShared
+import Payments
+import PaymentsShared
 import VPNAppCore
 
 /// The tabular app's shell, above the tabs. The globe and the connection chrome are the backdrop, and the tabs ride
@@ -64,6 +66,11 @@ public struct TabularFeature {
         public var home: HomeFeature.State
         public var map: HomeMapFeature.State
 
+        /// The shell's own upsell, shown over whichever tab is up. The map, the status banner and the connection
+        /// machinery draw behind or above every page, so their upsells cannot be a page's destination: a non-selected
+        /// page is out of the hierarchy and a destination set on it would present nothing.
+        @Presents public var payments: PaymentsMainFeature.State?
+
         public init(detent: Detent = .half) {
             self.commands = .init()
             self.connectionStatus = .init()
@@ -82,10 +89,12 @@ public struct TabularFeature {
         case map(HomeMapFeature.Action)
         /// The visible tab's navigation depth changed: pushed beyond its root, or back at it.
         case pageDepthChanged(Bool)
+        case payments(PresentationAction<PaymentsMainFeature.Action>)
         case tabSelected(Tab)
     }
 
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
+    @Dependency(\.openCredentiallessSignUp) private var openCredentiallessSignUp
 
     public init() {}
 
@@ -141,14 +150,16 @@ public struct TabularFeature {
                 return .none
 
             case .map(.delegate(.showUpsell)):
-                return .send(.home(.showUpsell(.allCountries)))
+                state.payments = .init(upsellModalType: .allCountries)
+                return .none
 
             case let .connectionStatus(.delegate(.upsellTapped(upsellMode))):
-                let request: HomeFeature.UpsellRequest = switch upsellMode {
+                let upsell: UpsellModalType = switch upsellMode {
                 case .netshield: .netShield
                 case .serverChange: .allCountries
                 }
-                return .send(.home(.showUpsell(request)))
+                state.payments = .init(upsellModalType: upsell)
+                return .none
 
             case .commands(.commandReceived(.connect)):
                 // A connect that starts under the fully raised sheet lowers it to half, so the status view and the
@@ -159,20 +170,43 @@ public struct TabularFeature {
                 return .none
 
             case let .commands(.delegate(delegated)):
-                // The machinery's Home-bound requests: their destinations live in Home's tree, so the
-                // shell only routes.
                 switch delegated {
                 case let .connectionFailed(error):
+                    // Failure banners live in Home's tree, so the shell only routes.
                     return .send(.home(.connectionFailed(error)))
                 case let .intentResolutionFailed(resolutionError):
-                    return .send(.home(.intentResolutionFailed(resolutionError)))
+                    // Each way an intent can fail to resolve is a plan limitation, so each maps onto the
+                    // upsell that lifts it.
+                    state.payments = switch resolutionError {
+                    case .secureCoreUnavailable:
+                        .init(upsellModalType: .secureCore)
+                    case let .specificCountryUnavailable(countryCode):
+                        .init(upsellModalType: .country(countryCode: countryCode))
+                    case let .serverChangeUnavailable(until, duration, exhaustedSkips):
+                        .init(upsellModalType: .cantSkip(before: until, totalDuration: duration, longSkip: exhaustedSkips))
+                    }
+                    return .none
                 case let .twoFactorRequired(error):
                     return .send(.home(.twoFactorRequired(error)))
                 }
 
-            case .commands, .connectionStatus, .home, .map:
+            case .payments(.presented(.delegate(.completed))),
+                 .payments(.presented(.delegate(.dismissed))):
+                state.payments = nil
+                return .none
+
+            case .payments(.presented(.delegate(.createAccountFirstRequested))):
+                state.payments = nil
+                return .run { @MainActor [openCredentiallessSignUp] _ in
+                    openCredentiallessSignUp()
+                }
+
+            case .commands, .connectionStatus, .home, .map, .payments:
                 return .none
             }
+        }
+        .ifLet(\.$payments, action: \.payments) {
+            PaymentsMainFeature()
         }
     }
 }

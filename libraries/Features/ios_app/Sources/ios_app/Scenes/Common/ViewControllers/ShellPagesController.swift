@@ -32,9 +32,10 @@ final class ShellPagesController: UIViewController {
     private(set) var pages: [UIViewController] = []
 
     /// The page currently showing, for services that address the visible tab's content: the window's navigation stack
-    /// lookup asks this the question a tab bar controller used to answer with `selectedViewController`.
+    /// lookup asks this the question a tab bar controller used to answer with `selectedViewController`. Only pages
+    /// count; the installed passenger is a permanent child and never the answer.
     var shownPage: UIViewController? {
-        children.first
+        children.first(where: pages.contains)
     }
 
     /// How much room the bar wants at the bottom edge beyond the safe area, so a page's content stops above it while
@@ -67,11 +68,23 @@ final class ShellPagesController: UIViewController {
         show(pageAt: 0)
     }
 
+    /// Seats a permanent passenger beside the pages: it stays in the hierarchy while they swap, and takes no space
+    /// and no touches. The shell's modal launcher rides here, since a page leaves the hierarchy with its tab and the
+    /// backdrop below the sheet is never free to present (see `ShellDestinationsView`).
+    func install(passenger: UIViewController) {
+        addChild(passenger)
+        passenger.view.frame = .zero
+        passenger.view.backgroundColor = nil
+        passenger.view.isUserInteractionEnabled = false
+        view.insertSubview(passenger.view, at: 0)
+        passenger.didMove(toParent: self)
+    }
+
     /// Shows the page at `index`, if there is one there and it is not already showing. Out-of-range indices are
     /// ignored, so a bar selection may be passed straight through.
     func show(pageAt index: Int) {
-        guard let page = pages[safe: index], page !== children.first else { return }
-        for shown in children {
+        guard let page = pages[safe: index], page !== shownPage else { return }
+        for shown in children where pages.contains(shown) {
             shown.willMove(toParent: nil)
             shown.view.removeFromSuperview()
             shown.removeFromParent()

@@ -18,6 +18,8 @@
 
 import ComposableArchitecture
 @testable import Mobile
+import Persistence
+import PersistenceTestSupport
 import Testing
 
 @Suite("Tabular shell")
@@ -95,5 +97,44 @@ struct TabularFeatureTests {
 
         await store.send(.detentChanged(.full)) { $0.detent = .full }
         await store.send(.detentChanged(.bar)) { $0.detent = .bar }
+    }
+
+    @Test("Upsells reachable from every tab present from the shell rather than a page")
+    @MainActor
+    func shellUpsellsPresentFromTheShell() async {
+        // Building the payments state resolves the modal's display copy, which reads the server repository.
+        let store = TestStore(initialState: TabularFeature.State()) { TabularFeature() } withDependencies: {
+            $0.serverRepository = .empty()
+        }
+        store.exhaustivity = .off(showSkippedAssertions: false)
+
+        // A free user tapping a location pin.
+        await store.send(.map(.delegate(.showUpsell))) {
+            $0.payments = .init(upsellModalType: .allCountries)
+        }
+        await store.send(.payments(.presented(.delegate(.dismissed)))) {
+            $0.payments = nil
+        }
+
+        // The status banner's two upsell surfaces.
+        await store.send(.connectionStatus(.delegate(.upsellTapped(.netshield)))) {
+            $0.payments = .init(upsellModalType: .netShield)
+        }
+    }
+
+    @Test("A failed intent resolution maps onto the upsell that lifts it")
+    @MainActor
+    func resolutionFailuresBecomeUpsells() async {
+        let store = TestStore(initialState: TabularFeature.State()) { TabularFeature() } withDependencies: {
+            $0.serverRepository = .empty()
+        }
+        store.exhaustivity = .off(showSkippedAssertions: false)
+
+        await store.send(.commands(.delegate(.intentResolutionFailed(.secureCoreUnavailable)))) {
+            $0.payments = .init(upsellModalType: .secureCore)
+        }
+        await store.send(.commands(.delegate(.intentResolutionFailed(.specificCountryUnavailable(countryCode: "CH"))))) {
+            $0.payments = .init(upsellModalType: .country(countryCode: "CH"))
+        }
     }
 }

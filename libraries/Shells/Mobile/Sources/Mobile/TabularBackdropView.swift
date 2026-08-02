@@ -46,8 +46,8 @@ public struct TabularBackdropView: View {
         // No animation attached here: drag reports arrive with the sheet's own cadence, and a settle report carries its
         // spring from the shell's observer.
         //
-        // The connection machinery's intercept alerts present from here, the one view on screen from every tab, rather
-        // than from a page the sheet may be hiding.
-        .alert($store.scope(state: \.commands.alert, action: \.commands.alert))
+        // Nothing modal presents from here: this controller always has the pages sheet presented over it, which
+        // makes it exactly the wrong anchor. The shell's alerts and covers launch from `ShellDestinationsView`,
+        // inside the sheet.
     }
 }

@@ -352,6 +352,10 @@ final class NavigationService {
         pages.isModalInPresentation = true // the pages are the app, so the sheet never dismisses
         pages.view.backgroundColor = .backgroundColor()
 
+        // The shell's alerts and covers launch from a permanent passenger beside the pages, the one seat that is
+        // always in the hierarchy and always free to present.
+        pages.install(passenger: UIHostingController(rootView: ShellDestinationsView(store: store)))
+
         observer.trackSheetHeight(of: pages)
         presentSheet(over: backdrop)
     }

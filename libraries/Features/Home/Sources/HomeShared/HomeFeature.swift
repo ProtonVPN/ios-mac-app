@@ -117,9 +117,7 @@ public struct HomeFeature {
         case newCaptureSession(CaptureSession)
         case recents(RecentsFeature.Action)
         case connectionCard(HomeConnectionCardFeature.Action)
-        case showUpsell(UpsellRequest)
         case connectionFailed(ConnectionError)
-        case intentResolutionFailed(ConnectionIntentResolutionError)
         case twoFactorRequired(LocalAgent.Error)
         case sharedProperties(SharedPropertiesFeature.Action)
         case connectionDetails(ConnectionScreenFeature.Action)
@@ -136,14 +134,6 @@ public struct HomeFeature {
         case helpButtonPressed
 
         case destination(PresentationAction<Destination.Action>)
-    }
-
-    /// What a caller outside the feature wants upsold. Intent rather than a built `UpsellModalType`: the counts the
-    /// all-countries modal displays are this feature's business, so the shell above needs no server repository of its
-    /// own to ask for one.
-    public enum UpsellRequest: Equatable {
-        case allCountries
-        case netShield
     }
 
     private static let whatsNewPresentationDelay: Duration = .seconds(3)
@@ -310,35 +300,8 @@ private extension HomeFeature {
             case let .connectionFailed(error):
                 return .send(.sharedProperties(.connectionFailed(error)))
 
-            case let .intentResolutionFailed(resolutionError):
-                switch resolutionError {
-                case .secureCoreUnavailable:
-                    state.destination = .payments(.init(upsellModalType: .secureCore))
-                    return .none
-                case let .specificCountryUnavailable(countryCode):
-                    state.destination = .payments(.init(upsellModalType: .country(countryCode: countryCode)))
-                    return .none
-                case let .serverChangeUnavailable(until, duration, exhaustedSkips):
-                    state.destination = .payments(
-                        .init(upsellModalType: .cantSkip(
-                            before: until,
-                            totalDuration: duration,
-                            longSkip: exhaustedSkips
-                        ))
-                    )
-                    return .none
-                }
-
             case let .twoFactorRequired(error):
                 state.destination = .localAgentNotice(.init(twoFactorError: error))
-                return .none
-
-            case let .showUpsell(request):
-                let upsellModalType: UpsellModalType = switch request {
-                case .allCountries: .allCountries
-                case .netShield: .netShield
-                }
-                state.destination = .payments(.init(upsellModalType: upsellModalType))
                 return .none
 
             default:
