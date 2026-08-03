@@ -19,17 +19,13 @@
 import SwiftUI
 import Theme
 
-public struct MapPin: View {
-    @Binding var mode: Mode
+public struct ConnectionPin: View {
+    let mode: Mode
 
     @Environment(\.accessibilityReduceMotion) var reduceMotion
 
     var isMinimized: Bool {
         [.hop, .connecting].contains(mode)
-    }
-
-    public init(mode: Binding<Mode>) {
-        self._mode = mode
     }
 
     public var body: some View {
@@ -90,7 +86,7 @@ extension View {
     }
 }
 
-public extension MapPin {
+public extension ConnectionPin {
     enum Mode: CaseIterable {
         case exitConnected
         case connecting
@@ -152,11 +148,11 @@ private enum AnimationPhase: CaseIterable {
 
 #if compiler(>=6)
     #Preview {
-        @Previewable @State var mode: MapPin.Mode = .exitConnected
+        @Previewable @State var mode: ConnectionPin.Mode = .exitConnected
 
         VStack {
-            MapPin(mode: $mode)
-            ForEach(MapPin.Mode.allCases, id: \.self) { newMode in
+            ConnectionPin(mode: mode)
+            ForEach(ConnectionPin.Mode.allCases, id: \.self) { newMode in
                 Button {
                     withAnimation {
                         mode = newMode

@@ -19,71 +19,66 @@
 import ComposableArchitecture
 import Connection
 import CoreLocation
+import DependenciesTestSupport
 import Domain
 import Home
 @testable import HomeShared
 import SnapshotTesting
 import SwiftUI
-import System
 import Testing
 import TestingErgonomics
 import Theme
 import VPNAppCore
 
+// `.serialized` + the `.dependencies` trait give every city its own dependency context (store construction and view
+// rendering see the same overrides) and keep the `@Shared` writes from interleaving across parameterized cases. The
+// `TestClock` never ticks, so the map view's Sun/Moon re-sampling loop stays parked and the render is a single
+// deterministic frame.
+@Suite(
+    "Map cities",
+    .serialized,
+    .snapshots(record: .missing),
+    .dependencies {
+        $0.locale = Locale(identifier: "en")
+        $0.date = .constant(SnapshotEnvironment.date)
+        $0.continuousClock = TestClock()
+    }
+)
 struct MapCitiesScreenTests {
-    @Shared(.userCountry) var userCountry
-
-    let mapRenderingPrecision: Float = 0.99
+    // GPU-render tolerances, shared across the GPU suites.
+    let mapRenderingPrecision = Self.gpuSnapshotPrecision
+    let mapPerceptualPrecision = Self.gpuPerceptualPrecision
 
     @Test("Map Screen Cities", arguments: Cities.all)
     @MainActor
     func cities(city: (code: String, cityName: String, lat: Double, long: Double)) throws {
-        let countryCode = city.0
+        // Declared in the test body, not as a suite stored property: the suite instance is created outside the
+        // `.dependencies` trait's scope, so a projection bound there would write to a different shared storage than the
+        // store reads.
+        @Shared(.userCountry) var userCountry
+        let countryCode = city.code
+        $userCountry.withLock { $0 = countryCode }
+
         let store = Store(initialState: HomeMapFeature.State(), reducer: HomeMapFeature.init)
         let size = try #require(ViewImageConfig.iPhoneSe.size)
-        let mapView = ZStack {
-            HomeMapView(store: store, availableHeight: size.height, availableWidth: size.width)
-                .frame(size)
-                .background(Color(.background))
-                .environment(\.colorScheme, .dark)
-            VStack {
-                Text("\(countryCode), \(city.cityName)")
-                    .foregroundStyle(.white)
-                    .font(.hero)
-                    .padding(.top, .themeSpacing64)
-                Spacer()
-            }
-        }
+        let mapView = MapSnapshotScreen(store: store, title: "\(countryCode), \(city.cityName)", size: size)
 
-        withDependencies {
-            $0.locale = Locale(identifier: "en")
-            $0.date = .constant(Date())
-        } operation: {
-            $userCountry.withLock { $0 = countryCode }
-            let server: Server = .mock(country: countryCode, coordinates: .init(latitude: city.lat, longitude: city.long))
-            store.send(.newMapState(.connectedCoordinates(.init(latitude: city.lat, longitude: city.long), countryCode)))
-            store.send(.connectionStateUpdated(.previewConnected(for: .defaultFastest, server: server)))
+        // One send through the reducer's own derivation path; the first emission is applied immediately (the debounce
+        // only coalesces subsequent ones).
+        let server: Server = .mock(country: countryCode, coordinates: .init(latitude: city.lat, longitude: city.long))
+        store.send(.connectionStateUpdated(.previewConnected(for: .defaultFastest, server: server)))
 
-            assertSnapshot(
-                of: mapView,
-                as: .image(precision: mapRenderingPrecision, layout: .sizeThatFits),
-                named: "Connected",
-                testName: "\(countryCode), \(city.cityName)"
-            )
-            $userCountry.withLock { $0 = nil }
-            store.send(.newMapState(.disconnected))
-        }
+        assertSnapshot(
+            of: mapView,
+            as: .image(precision: mapRenderingPrecision, perceptualPrecision: mapPerceptualPrecision, layout: .sizeThatFits),
+            named: "Connected",
+            testName: "\(countryCode), \(city.cityName)"
+        )
     }
 }
 
 extension MapCitiesScreenTests: AssertSnapshot {
     func snapshotDirectory() -> String? {
-        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
-            let path = FilePath(String(describing: #filePath))
-            let suite = path.lastComponent?.stem ?? ""
-            return "\(projectDir)/libraries/Features/Home/Tests/HomeSlowSnapshotTests/__Snapshots__/\(suite)"
-        } else {
-            return nil
-        }
+        Self.ciSnapshotDirectory(testsDirectory: "libraries/Features/Home/Tests/HomeSlowSnapshotTests")
     }
 }

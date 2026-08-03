@@ -35,13 +35,17 @@ public struct ConnectionStatusView: View {
 
     @Bindable var store: StoreOf<ConnectionStatusFeature>
 
+    /// When the map is in full view, only the tint, lock, and title show over it. The NetShield banner,
+    /// which belongs with the connection card, is hidden — and the header becomes tappable to exit back
+    /// to the sheet.
+    var compact: Bool = false
+
     private static let headerHeight: CGFloat = 58
     private static let viewHeight: CGFloat = 200
     private static let headerPaddingHeight: CGFloat = 13
 
-    // `.killSwitchActive` never reaches these helpers in practice: `body` renders the
-    // KillSwitchBlockingBanner for it instead. It is grouped with `.unprotected` throughout
-    // as the accurate fallback.
+    // `.killSwitchActive` never reaches these helpers, since `body` renders the KillSwitchBlockingBanner. Group its
+    // case with `.unprotected`.
     private func title(protectionState: ProtectionState) -> String? {
         switch protectionState {
         case .resolving:
@@ -59,9 +63,9 @@ public struct ConnectionStatusView: View {
         switch protectionState {
         case .protected, .protectedSecureCore:
             Color(.background, .success)
-        case .unprotected, .killSwitchActive:
+        case .unprotected:
             Color(.background, .danger)
-        case .protecting, .resolving:
+        case .protecting, .resolving, .killSwitchActive:
             .white
         }
     }
@@ -83,11 +87,11 @@ public struct ConnectionStatusView: View {
             protectedTitleView(secureCore: false)
         case .protectedSecureCore:
             protectedTitleView(secureCore: true)
-        case .protecting, .resolving:
+        case .protecting, .resolving, .killSwitchActive:
             ProgressView()
                 .controlSize(.regular)
                 .tint(.white)
-        case .unprotected, .killSwitchActive:
+        case .unprotected:
             IconProvider.lockOpenFilled2
                 .styled(.danger)
                 .accessibilityHidden(true)
@@ -111,11 +115,11 @@ public struct ConnectionStatusView: View {
                 IconProvider.locksFilled
                     .foregroundColor(Asset.vpnGreen.swiftUIColor)
                 protectedText
-            case .protecting, .resolving:
+            case .protecting, .resolving, .killSwitchActive:
                 ProgressView()
                     .controlSize(.regular)
                     .tint(.white)
-            case .unprotected, .killSwitchActive:
+            case .unprotected:
                 IconProvider.lockOpenFilled2
                     .styled(.danger)
             }
@@ -140,29 +144,46 @@ public struct ConnectionStatusView: View {
                 colors: [gradientColor(protectionState: protectionState).opacity(0.5), .clear],
                 startPoint: .top,
                 endPoint: .bottom
-            ).ignoresSafeArea()
+            )
+            .ignoresSafeArea()
+            .allowsHitTesting(false)
 
             VStack(spacing: 0) {
-                titleView(protectionState: protectionState)
-                    .frame(height: Self.headerHeight)
-                if let title = title(protectionState: protectionState) {
-                    Text(title)
-                        .font(.themeFont(.body1(.bold)))
-                    Spacer()
-                        .frame(height: .themeSpacing8)
+                // The lock and title. Over the full map (`compact`), tapping it exits back to the sheet.
+                // Scoped to just this header, not the banner below, so it never intercepts the banner's
+                // own controls.
+                VStack(spacing: 0) {
+                    titleView(protectionState: protectionState)
+                        .frame(height: Self.headerHeight)
+                    if let title = title(protectionState: protectionState) {
+                        Text(title)
+                            .font(.themeFont(.body1(.bold)))
+                        Spacer()
+                            .frame(height: .themeSpacing8)
+                    }
                 }
-                ConnectionStatusBanner(store: store.scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner))
-                    .background(
-                        .translucentLight,
-                        in: RoundedRectangle(
-                            cornerRadius: .themeRadius8,
-                            style: .continuous
+                .contentShape(Rectangle())
+                .onTapGesture { store.send(.headerTapped, animation: .mapPresentation) }
+                // Only tappable over the full map. With the sheet up, the header must not eat taps: the
+                // map peek behind it owns tap-to-expand, and when scrolled, the connection card's own
+                // controls can sit under this area.
+                .allowsHitTesting(compact)
+                if !compact {
+                    ConnectionStatusBanner(store: store.scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner))
+                        .background(
+                            .translucentLight,
+                            in: RoundedRectangle(
+                                cornerRadius: .themeRadius8,
+                                style: .continuous
+                            )
                         )
-                    )
-                    .frame(maxWidth: Self.maxContentWidth)
-                    .padding(.horizontal, .themeSpacing16)
+                        .frame(maxWidth: Self.maxContentWidth)
+                        .padding(.horizontal, .themeSpacing16)
+                }
             }
         }
+        // Fixed height in both modes so the tint gradient stays localized to the top band and fades out.
+        // With no height the greedy gradient would fill the whole map.
         .frame(height: Self.viewHeight)
         .toolbar {
             ToolbarItem(placement: .principal) {
@@ -213,5 +234,16 @@ public struct ConnectionStatusView: View {
     return ConnectionStatusView(store: Store(initialState: .init()) {
         ConnectionStatusFeature()
     })
+    .background(Color.black)
+}
+
+#Preview("full map header (compact)", traits: .sizeThatFitsLayout) {
+    @SharedReader(.protectionState) var protectionState: ProtectionState = .protected
+    return ConnectionStatusView(
+        store: Store(initialState: .init()) {
+            ConnectionStatusFeature()
+        },
+        compact: true
+    )
     .background(Color.black)
 }

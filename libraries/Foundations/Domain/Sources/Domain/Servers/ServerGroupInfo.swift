@@ -30,6 +30,7 @@ public struct ServerGroupInfo: Sendable {
     public let serverCount: Int
     public let latitude: Double
     public let longitude: Double
+    public let translatedCity: String?
 
     public let supportsSmartRouting: Bool
     public let isUnderMaintenance: Bool
@@ -53,6 +54,7 @@ public struct ServerGroupInfo: Sendable {
         cityCount: Int,
         latitude: Double,
         longitude: Double,
+        translatedCity: String? = nil,
         supportsSmartRouting: Bool,
         isUnderMaintenance: Bool,
         protocolSupport: ProtocolSupport
@@ -66,6 +68,7 @@ public struct ServerGroupInfo: Sendable {
         self.cityCount = cityCount
         self.latitude = latitude
         self.longitude = longitude
+        self.translatedCity = translatedCity
         self.isUnderMaintenance = isUnderMaintenance
         self.supportsSmartRouting = supportsSmartRouting
         self.protocolSupport = protocolSupport

@@ -43,14 +43,17 @@ let package = Package(
 
         .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),
         .package(url: "https://github.com/apple/swift-collections", .upToNextMajor(from: "1.1.4")),
-        .package(url: "https://github.com/exyte/SVGView", .upToNextMajor(from: "1.0.6")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.9.0")),
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
         .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
         .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.3")),
         .package(url: "https://github.com/SDWebImage/SDWebImageSwiftUI.git", from: "3.0.0"),
         .package(url: "https://github.com/airbnb/lottie-spm", .upToNextMajor(from: "4.6.0")),
+        // GEOS and SVGView not used at runtime, only used by the MapBaker command line tool to generate the 3D model.
+        .package(url: "https://github.com/GEOSwift/geos", .upToNextMajor(from: "9.0.0")),
+        .package(url: "https://github.com/exyte/SVGView", .upToNextMajor(from: "1.0.6")),
     ],
     targets: [
         .target(
@@ -79,12 +82,15 @@ let package = Package(
                 "PMLogger",
                 "Strings",
                 "PCAP",
+                "MapModel",
+                "MapShaderTypes",
                 .product(name: "Modals", package: "Modals"),
                 .product(name: "ModalsServices", package: "Modals"),
                 .product(name: "Payments", package: "Payments", condition: .when(platforms: [.iOS])),
                 .product(name: "PaymentsShared", package: "Payments", condition: .when(platforms: [.iOS])),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "Triangulation", package: "Ergonomics"), // for the map view
                 .product(name: "CoreConnection", package: "Connection"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
@@ -92,18 +98,21 @@ let package = Package(
                 .product(name: "Lottie", package: "lottie-spm"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "Clocks", package: "swift-clocks"),
-                .product(name: "SVGView", package: "SVGView"),
                 .product(name: "Collections", package: "swift-collections"),
                 .product(name: "Algorithms", package: "swift-algorithms"),
                 .product(name: "CombineSchedulers", package: "combine-schedulers"),
                 .product(name: "SDWebImageSwiftUI", package: "SDWebImageSwiftUI"),
                 .product(name: "OrderedCollections", package: "swift-collections"),
             ],
-            exclude: ["swiftgen.yml"],
+            exclude: [
+                "swiftgen.yml",
+                "Resources/BlankMap-World.svg", // MapBaker's input; not bundled, the app loads world-globe.bin
+            ],
             resources: [
-                .process("Resources/BlankMap-World.svg"),
+                .copy("Resources/world-globe.bin"), // 3-D globe geometry, loaded straight into Metal buffers
                 .process("Resources/widget-ios-v4.json"),
                 .process("Resources/Assets.xcassets"),
             ]
@@ -122,11 +131,40 @@ let package = Package(
             ],
             resources: []
         ),
+        // Struct layouts shared between the CPU and the GPU using a simple header file so Metal can consume it.
+        .target(
+            name: "MapShaderTypes",
+            publicHeadersPath: "include"
+        ),
+        // Model objects shared between the actual view model and the MapBaker command-line tool.
+        .target(
+            name: "MapModel",
+            dependencies: [
+                "Ergonomics",
+                "MapShaderTypes", // the border-segment layout is defined in the shared C header
+                .product(name: "Triangulation", package: "Ergonomics"),
+            ]
+        ),
+        .executableTarget(
+            name: "MapBaker",
+            dependencies: [
+                "MapModel",
+                .product(name: "Ergonomics", package: "Ergonomics"),
+                .product(name: "SVGView", package: "SVGView"),
+                .product(name: "geos", package: "geos"),
+                .product(name: "Triangulation", package: "Ergonomics"),
+            ]
+        ),
+        // Test targets link only the target under test plus test-support products that are not
+        // transitively available from it (linking a transitive dependency again produces duplicate-class
+        // warnings at runtime); modules like Ergonomics, MapModel, and Triangulation import fine through
+        // the tested target.
         .testTarget(
             name: "HomeTests",
             dependencies: [
                 "HomeShared",
                 .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "TestingErgonomics", package: "Ergonomics"),
             ]
         ),
         .testTarget(
@@ -135,6 +173,7 @@ let package = Package(
                 "Home",
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
                 .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
             ]
         ),
         .testTarget(
@@ -143,6 +182,14 @@ let package = Package(
                 "Home",
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
                 .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
+            ]
+        ),
+        .testTarget(
+            name: "MapModelTests",
+            dependencies: [
+                "MapModel",
+                .product(name: "TestingErgonomics", package: "Ergonomics"),
             ]
         ),
     ]

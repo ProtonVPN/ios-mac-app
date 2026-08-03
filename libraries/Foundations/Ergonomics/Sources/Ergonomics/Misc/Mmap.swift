@@ -62,8 +62,54 @@ public struct MmapBuffer: ~Copyable, Sendable {
         self.fd = fd
     }
 
+    /// Maps an existing file read-only (`PROT_READ`, `MAP_PRIVATE`), spanning the whole file, for consuming baked
+    /// resources in place. Unlike `init(path:size:)` this never creates, grows, or writes: app-bundle resources live on
+    /// a read-only volume, where an `O_RDWR` open fails outright, and the read-only pages mean even a stray write
+    /// through the region traps instead of corrupting the file.
+    public init(readingPath path: String) throws(MmapBufferError) {
+        let rawFd = Darwin.open(path, O_RDONLY)
+        guard rawFd >= 0 else {
+            throw .openFailed(POSIXError.shared)
+        }
+        let fd = FileDescriptor(fd: rawFd)
+
+        var info = stat()
+        guard fstat(fd.fd, &info) == 0 else {
+            throw .fstatFailed(.shared)
+        }
+        let size = Int(info.st_size)
+        guard size > 0 else {
+            throw .zeroSizePayload
+        }
+
+        let mmapRv = mmap(nil, size, PROT_READ, MAP_PRIVATE, fd.fd, 0)
+        guard mmapRv != MAP_FAILED, let mmapRv else {
+            throw .mmapFailed(.shared)
+        }
+
+        self.pointer = mmapRv
+        self.totalSize = size
+        self.fd = fd
+    }
+
     deinit {
         munmap(pointer, totalSize)
+    }
+}
+
+public extension MmapBuffer {
+    /// Scoped access to the whole mapped region as raw bytes. The pointer must not escape `body`; anything that has to
+    /// outlive the scope should be expressed as offsets into the region and re-resolved against a later borrow.
+    borrowing func withUnsafeBytes<R, E: Swift.Error>(_ body: (UnsafeRawBufferPointer) throws(E) -> R) throws(E) -> R {
+        try body(UnsafeRawBufferPointer(start: pointer, count: totalSize))
+    }
+
+    /// `totalSize` rounded up to the page size. The kernel maps whole pages, so the rounded tail is real, zero-filled
+    /// memory; a consumer adopting the region wholesale (like a Metal no-copy buffer, which requires a page-multiple
+    /// length) should use this as the region's length.
+    var pageAlignedSize: Int {
+        let page = Int(getpagesize())
+        return (totalSize + page - 1) & ~(page - 1)
     }
 }
 

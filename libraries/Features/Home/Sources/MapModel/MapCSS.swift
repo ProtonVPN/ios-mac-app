@@ -16,8 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-enum MapCSS {
-    static let css: String =
+/// Styling applied to the source SVG before extraction.
+///
+/// Lives in `MapModel` so the offline `MapBaker` resolves country fills and strokes to exactly the colors the app
+/// expects. The resolved colors are then baked into `world-globe.bin`, so this CSS is only consulted at bake time,
+/// never at runtime.
+public enum MapCSS {
+    public static let css: String =
         /*
             * Below are Cascading Style Sheet (CSS) definitions in use in this file,
             * which allow easily changing how countries are displayed.
@@ -148,34 +153,4 @@ enum MapCSS {
             stroke-width: 0.5;
         }
         """
-
-    /*
-     * Reserved class names:
-     *
-     * .eu - for members of European Union
-     * .eaeu - for members of Eurasian Economic Union
-     */
-
-    /*
-     * Additional style rules
-     *
-     * The following are examples of colouring countries.
-     * These can be substituted with custom styles to colour the countries on the map.
-     *
-     * Colour a few countries:
-     *
-     * .gb, .au, .nc
-     * {
-     *     fill: #ff0000;
-     * }
-     *
-     * Colour a few small-country circles (along with the countries):
-     *
-     * .ms, .ky
-     * {
-     *     opacity: 1;
-     *     fill: #ff0000;
-     * }
-     *
-     */
 }

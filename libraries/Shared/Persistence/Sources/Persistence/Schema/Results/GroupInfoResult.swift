@@ -25,6 +25,7 @@ struct GroupInfoResult: Decodable, FetchableRecord {
     let exitCountryCode: String
     let gatewayName: String?
     let city: String? // Only present when grouping by country/city pair
+    let translatedCity: String? // Only selected when grouping by city, nil when no logical has a translation
     let state: String? // Only present when grouping by country/state pair
 
     let featureIntersection: ServerFeature // Features provided by all servers

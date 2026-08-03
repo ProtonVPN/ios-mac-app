@@ -32,6 +32,10 @@ let package = Package(
             targets: ["TestingErgonomics"]
         ),
         .library(
+            name: "Triangulation",
+            targets: ["Triangulation"]
+        ),
+        .library(
             name: "IPCSeqlockHelpers",
             targets: ["IPCSeqlockHelpers"]
         ),
@@ -61,6 +65,7 @@ let package = Package(
             url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")
         ),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
+        .package(url: "https://github.com/pointfreeco/swift-custom-dump", .upToNextMajor(from: "1.3.0")),
         .package(url: "https://github.com/mxcl/Version", exact: "2.1.0"),
     ],
     targets: [
@@ -87,6 +92,12 @@ let package = Package(
                 .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "ProtonCoreServices", package: "protoncore"),
+            ],
+            swiftSettings: [
+                // BinaryDecoder stores its RawSpan cursor and mutates through ~Escapable self, which is SE-0446's
+                // still-experimental lifetime-dependence slice (@_lifetime). Consuming modules conform and call through
+                // stable syntax.
+                .enableExperimentalFeature("Lifetimes"),
             ]
         ),
         .target(
@@ -115,9 +126,15 @@ let package = Package(
             publicHeadersPath: "include"
         ),
         .target(
+            name: "Triangulation",
+            path: "Sources/Triangulation"
+        ),
+        .target(
             name: "TestingErgonomics",
             dependencies: [
+                "Triangulation", // dump conformances for the geometry types tests assert on
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+                .product(name: "CustomDump", package: "swift-custom-dump"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ],
             path: "Sources/Testing"
@@ -126,9 +143,10 @@ let package = Package(
             name: "ErgonomicsTests",
             dependencies: [
                 "Ergonomics",
+                "Triangulation", // NaturalEarthTests exercises the shared projection directly
                 "Version",
                 .product(name: "Clocks", package: "swift-clocks"),
-                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
             ]
         ),
         .testTarget(

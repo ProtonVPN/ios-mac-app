@@ -68,6 +68,7 @@ enum Cities {
         ("FR", "Marseille", 43.29, 5.37),
         ("FR", "Paris", 48.86, 2.34),
         ("GE", "Tbilisi", 41.71, 44.78),
+        ("GL", "Nuuk", 64.17, -51.74),
         ("GH", "Accra", 5.61, -0.2),
         ("GR", "Athens", 37.97, 23.72),
         ("GT", "Guatemala City", 14.64, -90.51),

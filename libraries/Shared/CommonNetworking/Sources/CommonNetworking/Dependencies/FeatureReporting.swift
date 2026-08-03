@@ -38,7 +38,7 @@ public extension FeatureFlagTypeProtocol {
 
     /// This appears in all HTTP requests under the
     var requestName: String? {
-        guard shouldReportInHttpRequests, enabled else {
+        guard shouldReportInHttpRequests, CheckedFeatureFlagsRepository.shared.isEnabled(self) else {
             return nil
         }
 
