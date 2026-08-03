@@ -26,11 +26,4 @@ final class CountriesCoordinatesTests: XCTestCase {
             XCTAssertEqual(country.value.count, 2)
         }
     }
-
-    func testCountryBoxes() {
-        XCTAssertEqual(CountriesCoordinates.boxes.count, 173)
-        for box in CountriesCoordinates.boxes {
-            XCTAssertEqual(box.value.count, 4)
-        }
-    }
 }

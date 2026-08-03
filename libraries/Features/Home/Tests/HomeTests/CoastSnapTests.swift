@@ -38,6 +38,7 @@ struct CoastSnapTests {
 
     private static let country = MapGlobeCountry(
         cap: SphericalCap(center: simd_normalize(a + b + c), radius: .degrees(3)),
+        pin: simd_normalize(a + b + c),
         fillRanges: [0 ..< 3],
         borderRanges: []
     )
@@ -96,6 +97,7 @@ struct CoastSnapTests {
 
     private static let degenerateCountry = MapGlobeCountry(
         cap: SphericalCap(center: simd_normalize(a + b + c), radius: .degrees(3)),
+        pin: simd_normalize(a + b + c),
         fillRanges: [0 ..< 6],
         borderRanges: []
     )

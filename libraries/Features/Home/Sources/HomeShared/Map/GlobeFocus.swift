@@ -31,12 +31,12 @@ enum GlobeFocus {
     /// Fraction of the view's half field of view a cap is fitted into. The rest is margin.
     static let fitMargin: Float = 0.85
 
-    /// Model-space direction to face for a country code: its mainland centroid, else the default view.
+    /// Model-space direction to face for a country code, using the country's center if one has been passed.
     static func direction(forCountry code: String?) -> SIMD3<Float> {
         guard let code = code?.lowercased(), let country = GlobeResource.mainland(code: code) else {
             return defaultDirection
         }
-        return simd_normalize(country.cap.center)
+        return country.pin
     }
 
     /// Camera distance for a country code, closer for smaller countries so they fill the view. Clamped so the camera

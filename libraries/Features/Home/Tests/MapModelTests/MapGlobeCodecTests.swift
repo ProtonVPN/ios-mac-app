@@ -62,16 +62,19 @@ struct MapGlobeCodecTests {
         countries: [
             "fr": MapGlobeCountry(
                 cap: SphericalCap(center: SIMD3<Float>(0, 0, 1), radius: .radians(0.3)),
+                pin: SIMD3<Float>(0.6, 0.8, 0),
                 fillRanges: [0 ..< 3],
                 borderRanges: [0 ..< 1]
             ),
             "de": MapGlobeCountry(
                 cap: SphericalCap(center: SIMD3<Float>(1, 0, 0), radius: .radians(0.2)),
+                pin: SIMD3<Float>(0, 0.6, 0.8),
                 fillRanges: [0 ..< 3, 3 ..< 6],
                 borderRanges: []
             ),
             "frx": MapGlobeCountry(
                 cap: SphericalCap(center: SIMD3<Float>(0, 1, 0), radius: .radians(0.1)),
+                pin: SIMD3<Float>(0.8, 0, 0.6),
                 fillRanges: [],
                 borderRanges: [1 ..< 2]
             ),
@@ -103,7 +106,7 @@ struct MapGlobeCodecTests {
 
     @Test("Encoding is deterministic")
     func deterministic() throws {
-        expectSameBytes(try MapGlobeCodec.encode(Self.sample), try MapGlobeCodec.encode(Self.sample))
+        try expectSameBytes(MapGlobeCodec.encode(Self.sample), MapGlobeCodec.encode(Self.sample))
     }
 
     @Test("Round-trips the empty model")

@@ -155,6 +155,7 @@ let package = Package(
         .executableTarget(
             name: "MapBaker",
             dependencies: [
+                "Domain",
                 "MapModel",
                 .product(name: "Ergonomics", package: "Ergonomics"),
                 .product(name: "SVGView", package: "SVGView"),

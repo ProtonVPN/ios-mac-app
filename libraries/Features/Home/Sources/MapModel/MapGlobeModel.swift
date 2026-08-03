@@ -143,15 +143,19 @@ public struct MapGlobeCountry: Equatable, Sendable {
     /// Bounding cap on the sphere: its centre is the direction to rotate toward so the country faces the
     /// camera, and its radius is the half-angle the camera zooms to fit. Baked alongside the geometry.
     public let cap: SphericalCap
+    /// Unit direction the disconnected "you are here" pin renders at.
+    public let pin: SIMD3<Float>
     public let fillRanges: [Range<Int>]
     public let borderRanges: [Range<Int>]
 
     public init(
         cap: SphericalCap,
+        pin: SIMD3<Float>,
         fillRanges: [Range<Int>],
         borderRanges: [Range<Int>]
     ) {
         self.cap = cap
+        self.pin = pin
         self.fillRanges = fillRanges
         self.borderRanges = borderRanges
     }

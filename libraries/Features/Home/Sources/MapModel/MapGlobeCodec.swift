@@ -24,7 +24,7 @@ import Foundation
 public enum MapGlobeCodec {
     static let magic: UInt32 = 0x1F30_DF00 // "🌍" + 0xF00
     /// Bump on any layout change, together with regenerating the checked-in bin.
-    static let version: UInt32 = 1
+    static let version: UInt32 = 2
 
     /// Alignment of the binary-array sections within the blob, and therefore within a page-aligned mapping of it: the
     /// strictest buffer-offset alignment any Metal device class requires, so a mapped section can be bound to the GPU

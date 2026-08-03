@@ -21,7 +21,6 @@ import Foundation
 
 public enum CountriesCoordinates {
     static let countryCenterCoordinatesFile = "CountryCenterCoordinates"
-    static let countryBoundingBoxesFile = "CountryBoundingBoxes"
     static let countriesWithDisputedTerritoriesFile = "CountriesWithDisputedTerritories"
 
     public static let disputedCountries: [String: [String]] = {
@@ -42,22 +41,5 @@ public enum CountriesCoordinates {
             return nil
         }
         return CLLocationCoordinate2D(latitude: doubles[0], longitude: doubles[1])
-    }
-
-    static let boxes: [String: [Double]] = {
-        let boundingBoxesURL = Bundle.module.url(forResource: countryBoundingBoxesFile, withExtension: "json")!
-        let data = try! Data(contentsOf: boundingBoxesURL)
-        return try! JSONDecoder().decode([String: [Double]].self, from: data)
-    }()
-
-    public static func countryBoundingBoxCoordinates(_ country: String) -> [CLLocationCoordinate2D]? {
-        guard let doubles = boxes[country],
-              doubles.count == 4 else {
-            return nil
-        }
-        return [
-            CLLocationCoordinate2D(latitude: doubles[1], longitude: doubles[0]),
-            CLLocationCoordinate2D(latitude: doubles[3], longitude: doubles[2]),
-        ]
     }
 }

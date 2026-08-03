@@ -92,23 +92,26 @@ extension MapGlobeDrawUnit: BinaryCodable {
 
 extension MapGlobeCountry: BinaryCodable {
     public init() {
-        self.init(cap: SphericalCap(center: .zero, radius: .radians(0)), fillRanges: [], borderRanges: [])
+        self.init(cap: SphericalCap(center: .zero, radius: .radians(0)), pin: .zero, fillRanges: [], borderRanges: [])
     }
 
     public mutating func code(with coder: inout some BinaryCoder & ~Escapable) throws {
         var center = cap.center
         // The radius crosses the wire as its bare `Double`, not the raw `Angle` struct.
         var radians = cap.radius.radians
+        var pin = pin
         var fillRanges = fillRanges
         var borderRanges = borderRanges
 
         try coder.value(&center)
         try coder.value(&radians)
+        try coder.value(&pin)
         try coder.rangeArray(&fillRanges)
         try coder.rangeArray(&borderRanges)
 
         self = MapGlobeCountry(
             cap: SphericalCap(center: center, radius: .radians(radians)),
+            pin: pin,
             fillRanges: fillRanges,
             borderRanges: borderRanges
         )
