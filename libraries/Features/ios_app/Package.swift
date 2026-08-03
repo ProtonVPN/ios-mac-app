@@ -25,7 +25,6 @@ let package = Package(
         .package(path: "../Modals"),
         .package(path: "../Home"),
         .package(path: "../Countries"),
-        .package(path: "../../Shells/Tabular"),
         .package(path: "../Payments"),
         .package(path: "../Settings"),
 
@@ -45,6 +44,8 @@ let package = Package(
         .package(path: "../../Shared/Connection"),
         .package(path: "../../Shared/WidgetIntents"),
         .package(path: "../../Shared/Telemetry"),
+
+        .package(path: "../../Shells/Tabular"),
 
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),

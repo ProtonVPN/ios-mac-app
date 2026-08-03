@@ -29,6 +29,7 @@ public typealias ConnectionStatusFeature = HomeShared.ConnectionStatusFeature
 
     public typealias GlobeBackdropView = Home_iOS.GlobeBackdropView
     public typealias HomeView = Home_iOS.HomeView
+    public typealias LocalAgentNoticeView = Home_iOS.LocalAgentNoticeView
     public typealias WidgetSettingsView = Home_iOS.WidgetSettingsView
 
 #endif

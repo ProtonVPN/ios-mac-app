@@ -34,7 +34,7 @@ import Triangulation
 final class GlobeTrackballModel {
     /// Free orientation the user spins directly (kept north-up frame-by-frame).
     private(set) var orientation: simd_quatf
-    /// Dolly distance from the globe centre (greater than 1), before pole compensation. `camera` applies the pole zoom
+    /// Dolly distance from the globe center (greater than 1), before pole compensation. `camera` applies the pole zoom
     /// on top.
     private(set) var distance: Float
     /// Mirrors the momentum coaster's coasting flag into observed state. The tick that ends a coast fires no `onStep`,
@@ -78,7 +78,7 @@ final class GlobeTrackballModel {
         /// bunch up.
         static let poleZoomStart: Float = 0.5
         /// How near the poles the user can steer the look point, as the absolute sine of the look latitude (0.985 is
-        /// about 80 degrees). At the pole itself north projects onto the screen centre, so the roll that keeps north up
+        /// about 80 degrees). At the pole itself north projects onto the screen center, so the roll that keeps north up
         /// is undefined and the globe would spin wildly. Stopping a few degrees short keeps it stable.
         static let maxFacingY: Float = 0.985
     }
@@ -286,7 +286,7 @@ final class GlobeTrackballModel {
         return uprightedClamped(simd_normalize(simd_quatf(angle: reduced, axis: axis) * orientation))
     }
 
-    /// Re-levels the globe so north (+y) points straight up on screen, keeping the screen-centre point fixed (a
+    /// Re-levels the globe so north (+y) points straight up on screen, keeping the screen-center point fixed (a
     /// rotation about the view-forward axis). Applied every drag frame so roll never accumulates.
     private static func uprighted(_ orientation: simd_quatf) -> simd_quatf {
         let northView = orientation.act(SIMD3<Float>(0, 1, 0)) // model north in view space

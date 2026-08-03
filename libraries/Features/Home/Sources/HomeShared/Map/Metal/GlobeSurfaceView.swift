@@ -54,7 +54,7 @@ struct GlobeSurfaceView: GlobeViewRepresentable {
     var sunDirection: SIMD3<Float> = .init(0, 0, 1)
     /// Color of the sunlight falling on the globe, the connection green or red. White is neutral.
     var sunTint: SIMD3<Float> = .init(1, 1, 1)
-    /// Model-space Moon centre (the sub-lunar direction scaled by distance in Earth radii) and the Moon's
+    /// Model-space Moon center (the sub-lunar direction scaled by distance in Earth radii) and the Moon's
     /// radius. The renderer draws the Moon here and the shaders use it for the eclipse shadows. Radius 0
     /// means no Moon.
     var moonCenter: SIMD3<Float> = .init(0, 0, 0)
@@ -218,7 +218,7 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
     var sunDirection: SIMD3<Float> = .init(0, 0, 1)
     /// Color of the sunlight falling on the globe, the connection green or red. White is neutral.
     var sunTint: SIMD3<Float> = .init(1, 1, 1)
-    /// Model-space Moon centre (the sub-lunar direction scaled by distance in Earth radii) and radius. Not
+    /// Model-space Moon center (the sub-lunar direction scaled by distance in Earth radii) and radius. Not
     /// animated, since it's a slowly drifting astronomical position. The animated camera MVP carries it.
     /// Radius 0 means no Moon.
     var moonCenter: SIMD3<Float> = .init(0, 0, 0)
@@ -244,7 +244,7 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
 
     /// Interpolates the framed heights and the camera as one vector. The orientation is animated as a quaternion: a
     /// component-wise interpolation renormalized each step, which traces a rotation that never collapses to a
-    /// singularity, unlike interpolating the faced direction, which passes through the globe centre for near-antipodal
+    /// singularity, unlike interpolating the faced direction, which passes through the globe center for near-antipodal
     /// jumps. Country-to-country reorientations stay within 180 degrees, so this also takes the short way round.
     var animatableData: GlobeAnimationVector {
         get {

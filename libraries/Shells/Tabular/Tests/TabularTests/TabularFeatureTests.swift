@@ -112,7 +112,7 @@ struct TabularFeatureTests {
             $0.detent = .full
         }
 
-        // Leaving the deep tab keeps the sheet where it stands; only the ladder frees up.
+        // Leaving the deep tab keeps the sheet where it is; only the full-detent restriction is removed.
         await store.send(.tabSelected(.home)) { $0.tab = .home }
         // A report from a hidden tab's stack, like a programmatic pop, updates the set and nothing else.
         await store.send(.pageDepthChanged(tab: .settings, isDeep: false)) { $0.deepTabs = [] }

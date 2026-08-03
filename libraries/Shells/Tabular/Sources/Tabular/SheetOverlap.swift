@@ -27,10 +27,10 @@ import Observation
 final class SheetOverlap {
     private(set) var points: CGFloat = 0
 
-    /// The coverage at the sheet's next rest: the same as `points` once settled, but during a settle animation it is
-    /// already the destination. Camera fits read this one, so a flight begun mid-travel frames the region the sheet is
-    /// heading for rather than wherever it happens to be. Zero until the first settle; a finger holding the sheet
-    /// leaves it at the last known rest.
+    /// The coverage the sheet will have at its next rest: equal to `points` once settled, and already the
+    /// destination while a settle animation is still running. Camera fits read this value, so a flight that starts
+    /// mid-settle frames the region the sheet is moving toward. Zero until the first settle. While a finger holds
+    /// the sheet, this keeps the last settled value.
     private(set) var restingPoints: CGFloat = 0
 
     init() {}

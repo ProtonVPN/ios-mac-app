@@ -25,9 +25,9 @@ public final class ShellPagesController: UIViewController {
     /// The pages by the tab each stands for. Which one shows is the store's selection, applied through `show`.
     private(set) var pages: [TabularFeature.Tab: UIViewController] = [:]
 
-    /// The page currently showing, for services that address the visible tab's content: the window's navigation stack
-    /// lookup asks this the question a tab bar controller used to answer with `selectedViewController`. Only pages
-    /// count; the installed passenger is a permanent child and never the answer.
+    /// The page currently showing. Services that need the visible tab's content, like the window's navigation
+    /// stack lookup, read this where they would have read a tab bar controller's `selectedViewController`. The
+    /// installed passenger is a permanent child, not a page, and is never returned here.
     public var shownPage: UIViewController? {
         children.first { child in pages.values.contains { $0 === child } }
     }
@@ -65,9 +65,9 @@ public final class ShellPagesController: UIViewController {
         show(.home)
     }
 
-    /// Seats a permanent passenger beside the pages: it stays in the hierarchy while they swap, and takes no space
-    /// and no touches. The shell's modal launcher rides here, since a page leaves the hierarchy with its tab and the
-    /// backdrop below the sheet is never free to present (see `ShellDestinationsView`).
+    /// Installs a permanent child beside the pages. It stays in the hierarchy while the pages swap, takes no
+    /// space, and receives no touches. The shell's modal presentations anchor here, because a page leaves the
+    /// hierarchy with its tab and the backdrop under the sheet can never present (see `ShellDestinationsView`).
     func install(passenger: UIViewController) {
         addChild(passenger)
         passenger.view.frame = .zero

@@ -47,9 +47,9 @@ final class ShellSheetController: NSObject {
         self.overlap = overlap
     }
 
-    /// Applies reducer decisions to the sheet, the pages and the bar, starting with the state the store already holds.
-    /// The full ladder is applied by the caller at each presentation; here the selection moves, and a deep page swaps
-    /// the ladder for the full detent alone.
+    /// Applies the store's current state to the sheet, the pages, and the bar: detent selection, shown page, and bar
+    /// contents. The caller installs the full detent list at each presentation; a deep page swaps that list for the
+    /// full detent alone through `applyPageDepth`.
     func observeShellState(sheet: UISheetPresentationController, pages: ShellPagesController, bar: ShellTabBar) {
         self.sheet = sheet
         self.pages = pages
@@ -93,29 +93,27 @@ final class ShellSheetController: NSObject {
         bar?.apply(store.state, showsFilledSelection: presence > 0)
     }
 
-    /// Whether the ladder is currently held to the full detent for a deep page. Read from the sheet, which keeps the
-    /// one answer: a fresh presentation starts with the full ladder and needs no separate bookkeeping here.
+    /// Whether the sheet is currently restricted to the full detent for a deep page. Read from the sheet itself
+    /// rather than stored here: a fresh presentation starts unrestricted, and stored state would miss that.
     private var isRestrictedToFull: Bool {
         sheet?.detents.map(\.identifier) == [TabularFeature.Detent.full.identifier]
     }
 
-    /// Fades the pages as the sheet approaches its floor, where the bar becomes the only view and the globe runs
-    /// underneath it to the screen's bottom edge. Driven by the sheet's own height, so a drag carries the fade frame by
-    /// frame; a release hands the rest to an animation of ours. The pages' own alpha is the presence applied last
-    /// (an animation writes its destination to the model up front), so it doubles as the check against re-animating
-    /// a value already on its way.
+    /// Fades the pages out as the sheet nears the bar detent, where only the bar remains and the globe shows through
+    /// to the bottom edge. During a drag the alpha is written directly every frame; on a settle it is animated. The
+    /// view's current alpha is compared first, so a value already animating toward the target is not animated again
+    /// (UIKit writes an animation's end value to the model up front).
     private func applyFloorPresence(sheetHeight: CGFloat, animated: Bool) {
         guard let pages else { return }
-        // Detent heights resolve above the bottom safe area, while the reporter measures window coverage, so the
-        // coverage the sheet keeps at rest on its floor includes the home indicator's inset. Without it the fade never
-        // quite finishes, and the home page ghosts through the bar detent.
+        // Detent heights are measured above the bottom safe area, but the reporter measures coverage of the whole
+        // window, so the coverage the sheet holds at rest on the bar detent includes the home indicator inset. Without
+        // adding it, the fade stops just short of finished and the home page stays faintly visible at the bar detent.
         let floor = TabularFeature.Detent.barHeight + (pages.view.window?.safeAreaInsets.bottom ?? 0)
         let span = max(Dimensions.floorFadeSpan, 1)
         let presence = min(max((sheetHeight - floor) / span, 0), 1)
         guard abs(presence - pages.view.alpha) > 0.01 else { return }
-        // An animation block here is safe now that the bar is mounted in the window: it used to reach the bar through
-        // the ancestors it shared with these views and carry its pending layout along, which is what sent the bar
-        // flying while the sheet was still on its way.
+        // The bar is mounted in the window, not in an ancestor shared with these views, so this animation block
+        // cannot pick up the bar's pending layout and animate the bar along with the fade.
         UIView.animate(withDuration: animated ? Self.settleDuration : 0) {
             pages.view.alpha = presence
         }
@@ -123,13 +121,13 @@ final class ShellSheetController: NSObject {
         applyBar(floorPresence: presence)
     }
 
-    /// Holds the sheet at full while the visible tab is pushed beyond its root: the legacy detail pages were designed
-    /// for the whole screen, and there is nothing to read at half or on the floor. The ladder and the grabber return
-    /// with the root.
+    /// Restricts the sheet to the full detent while the visible tab is pushed beyond its root: the legacy detail
+    /// pages are designed for the whole screen, so the lower detents have nothing to show. Popping back to the root
+    /// restores the full detent list and the grabber.
     ///
-    /// Applied by hand rather than left to the observation, which runs a turn later than the caller needs. Raising
-    /// animates and reports when it has landed, so a push can wait for its room; the release on the way back only
-    /// restores the ladder, since the sheet stays where it is.
+    /// Called directly instead of waiting for the observation, which runs one turn later than a push can wait. When
+    /// this raises the sheet, the completion fires after the animation lands, so a push can wait for the room to
+    /// exist. Removing the restriction does not move the sheet; it only restores the detent list.
     private func applyPageDepth(_ isDeep: Bool, completion: (() -> Void)? = nil) {
         guard let sheet, isDeep != isRestrictedToFull else {
             completion?()
@@ -203,15 +201,7 @@ private enum Dimensions {
     static let floorFadeSpan: CGFloat = 120
 }
 
-/// A zero-cost passenger in the sheet: it draws nothing and takes no touches, and exists only so that the sheet's
-/// movement can be observed from inside it, through layout.
-///
-/// Layout is where the sheet's geometry is trustworthy. While the user holds the grabber, UIKit sets the sheet's frame
-/// directly with the touch, so layout runs every frame with current geometry. When the user lets go, UIKit hands the
-/// rest of the travel to a render-server animation: the model jumps straight to the destination, layout runs once, and
-/// the frames in between exist only out of process. So the reporter reports what layout shows, and says which of the
-/// two it is: geometry the sheet is at right now, or a destination it has just left for (`settling`), for the owner to
-/// animate to on its own clock rather than chase.
+/// Draws nothing and takes no touches, exists so that the sheet's movement can be observed for the backdrop.
 private final class SheetHeightReporter: UIView {
     /// The sheet's coverage as layout sees it: current geometry from a drag frame, a rotation or a first layout, or
     /// the destination of a settle animation the sheet just left on.
@@ -226,22 +216,23 @@ private final class SheetHeightReporter: UIView {
         clearSheetBackground(between: sheet, and: window)
     }
 
-    /// Whether any layer from the sheet up to the window is animating, which is what tells a settle's
-    /// single destination layout apart from a drag's stream of direct ones. Checked over the whole
-    /// ancestor chain because which container UIKit animates is its own business.
+    /// Whether any layer between the sheet and the window is animating. A drag produces a stream of layouts with
+    /// current geometry and no animation; a settle produces one layout whose geometry is the destination, moved by
+    /// an animation. UIKit decides which container it animates, so every ancestor is checked.
     private func hasGeometryAnimation(between sheet: UIView, and window: UIWindow) -> Bool {
         sequence(first: sheet) { $0 === window ? nil : $0.superview }
             .contains { !($0.layer.animationKeys()?.isEmpty ?? true) }
     }
 
-    /// The system paints the sheet's chrome twice over: a solid backdrop on the drop-shadow container, and a Liquid
-    /// Glass platter mounted as a sublayer branch beside the presented view's own. Either would end the backdrop's
-    /// globe in an opaque strip however clear the presented view is. Both are recognized structurally, never by class
-    /// name: everything between the sheet's layer and the window's is presentation chrome, so backgrounds found there
-    /// are cleared, and where a chrome layer is a specialized compositor class, the sibling branches beside the sheet's
-    /// own path are hidden (the platter mounts there; the grabber rides the sheet's branch and survives). The walk
-    /// climbs layers rather than views because the platter's parent never appears as any view's `layer`. Re-applied
-    /// every layout, since the system reasserts its paint across appearance changes.
+    /// Clears the sheet's system-drawn backgrounds so the globe stays visible under a clear sheet.
+    ///
+    /// The system paints two of them: a background color on the drop-shadow container view, and, on iOS 26, a
+    /// Liquid Glass platter layer mounted next to the presented view's layer subtree. Walking from the sheet's layer
+    /// up to the window's layer, every background color found is cleared. Under any layer whose class is not plain
+    /// `CALayer`, the sibling subtrees next to the sheet's own are hidden as well: that removes the platter but
+    /// keeps the grabber, which sits inside the sheet's own subtree. The walk uses layers instead of views because
+    /// the platter's parent is not any view's `layer`. It runs on every layout because the system paints these
+    /// backgrounds again after appearance changes.
     private func clearSheetBackground(between sheet: UIView, and window: UIWindow) {
         var pathChild: CALayer = sheet.layer
         while let parent = pathChild.superlayer, parent !== window.layer {
@@ -277,7 +268,7 @@ extension ShellSheetController: UITabBarDelegate {
         // are all answered by the store's change coming back through the observation.
         store.send(.tabSelected(tab))
         // Choosing the tab already showing pops its stack to root, the escape a tab bar controller gives its navigation
-        // tabs. The pop reports through the navigation delegate above, which hands the ladder back.
+        // tabs. The pop reports through the navigation delegate above, which restores the full detent list.
         if isReselect {
             pages?.navigation(of: tab)?.popToRootViewController(animated: true)
         }
@@ -285,11 +276,10 @@ extension ShellSheetController: UITabBarDelegate {
 }
 
 extension ShellSheetController: UINavigationControllerDelegate {
-    /// Every UIKit tab's navigation controller reports here, so the shell knows when the visible page
-    /// is pushed beyond its root.
-    /// Pushes have already made their own room through `makeRoom(forPushThen:)`, so this is where a pop
-    /// hands the ladder back. Nothing resizes on the way out: the sheet stays at full until the user
-    /// moves it.
+    /// Every tab's navigation controller reports here, which is how the shell learns whether the visible page is
+    /// pushed beyond its root. A push has already raised the sheet through `makeRoom(for:thenPush:)`, so this
+    /// matters mostly for pops: popping back to the root restores the full detent list. The sheet itself stays
+    /// where it is until the user moves it.
     func navigationController(
         _ navigationController: UINavigationController,
         willShow _: UIViewController,

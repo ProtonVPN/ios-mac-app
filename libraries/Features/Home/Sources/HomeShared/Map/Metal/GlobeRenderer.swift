@@ -49,7 +49,7 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     var pinFade: Float = 0
     /// Fill color of the city points.
     var pinColor = SIMD4<Float>(0.5, 0.5, 0.5, 1)
-    /// Camera distance from the globe centre. Drives the points' horizon cull and the whole-path back-hemisphere cull,
+    /// Camera distance from the globe center. Drives the points' horizon cull and the whole-path back-hemisphere cull,
     /// whose visible rim widens as the camera pulls out.
     var cameraDistance: Float = 2
 

@@ -27,8 +27,6 @@ let package = Package(
 
         .package(path: "../../Shared/Persistence"),
 
-        .package(path: "../../../external/protoncore"),
-
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
     ],
@@ -43,7 +41,6 @@ let package = Package(
                 .product(name: "PaymentsShared", package: "Payments"),
                 "Strings",
                 "Theme",
-                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],

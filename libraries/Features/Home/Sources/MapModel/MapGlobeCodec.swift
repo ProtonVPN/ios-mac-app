@@ -19,7 +19,7 @@
 import Ergonomics
 import Foundation
 
-/// Reads and writes `world-globe.bin`, the serialised `MapGlobeModel`. The whole-model layout lives on
+/// Reads and writes `world-globe.bin`, the serialized `MapGlobeModel`. The whole-model layout lives on
 /// `MapGlobeModel`'s `BinaryCodable` conformance. This only owns the header, the version, and the section alignment.
 public enum MapGlobeCodec {
     static let magic: UInt32 = 0x1F30_DF00 // "🌍" + 0xF00

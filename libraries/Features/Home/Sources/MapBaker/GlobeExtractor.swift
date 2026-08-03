@@ -97,7 +97,7 @@ private struct GlobeBuilder {
         let borderRange = appendBorders(of: path, rings: denseRings)
         guard !fillRange.isEmpty || !borderRange.isEmpty else { return }
 
-        // The centre is the path's 2-D bounding-box center un-projected, which avoids the poleward bias of averaging
+        // The center is the path's 2-D bounding-box center un-projected, which avoids the poleward bias of averaging
         // unit vectors over a country that spans a wide longitude. The radius is the largest sphere angle to the path's
         // vertices.
         let sphereVertices: [SIMD3<Float>] = vertexStart < fillVertices.count
@@ -226,10 +226,10 @@ private struct GlobeBuilder {
         var curatedPins = 0
         var snappedCuratedPins = 0
         for (id, members) in memberIndicesByID {
-            // The country centre is the union of the member bounding boxes, un-projected, and the radius encloses every
+            // The country center is the union of the member bounding boxes, un-projected, and the radius encloses every
             // member cap. For a country with members that wrap the antimeridian, like the Aleutians, the union box
-            // spans most of the map and this centre is wrong. The camera rotates to the mainland variant though, which
-            // doesn't wrap, so the affected aggregate centre is never used for framing.
+            // spans most of the map and this center is wrong. The camera rotates to the mainland variant though, which
+            // doesn't wrap, so the affected aggregate center is never used for framing.
             var unionBounds = bakedPaths[members[0]].bounds
             for member in members.dropFirst() {
                 unionBounds = unionBounds.union(bakedPaths[member].bounds)

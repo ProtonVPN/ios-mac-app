@@ -121,7 +121,7 @@ public struct HomeMapFeature {
                 // We've started connecting via a `ConnectionSpec` but haven't picked a specific server yet. If the spec
                 // matches a location pin we've already loaded, send the pin straight to its coordinates, since the
                 // resolved server will live in that city anyway. Otherwise keep just the country code, and the pin
-                // parks on the country centre until the server resolves.
+                // parks on the country center until the server resolves.
                 let pin = locationPins.first { $0.location == intent.spec.location }
                 self = .connecting(
                     coordinates: pin.map { CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) },

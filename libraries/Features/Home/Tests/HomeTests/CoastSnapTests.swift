@@ -61,7 +61,7 @@ struct CoastSnapTests {
     @Test("A point just offshore snaps past the nearest vertex, landing on the country's fill")
     func justOffshoreSnapsOntoLand() {
         // About 1.41 degrees from the origin vertex: inside the 1.5-degree snap cap and nearer to it than to the
-        // others. The snap must not stop at the vertex, since a pin centred on the coastline still reads as offshore.
+        // others. The snap must not stop at the vertex, since a pin centered on the coastline still reads as offshore.
         // It carries the point inland, verifiably inside the triangle.
         let direction = GlobeGeometry.unitSphere(latitudeDegrees: -1, longitudeDegrees: -1)
         let snapped = Self.model.withMesh { CoastSnap.snap(direction, to: Self.country, in: $0) }

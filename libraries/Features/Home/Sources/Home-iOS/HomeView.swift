@@ -58,7 +58,6 @@ public struct HomeView: View {
             .defaultConnectionSheet(store: $store)
             .whatsNewSheet(store: $store)
             .freeConnectionsInfoSheet(store: $store)
-            .localAgentNoticeSheet(store: $store)
             .paymentsSheet(store: $store)
     }
 
@@ -142,12 +141,6 @@ private extension View {
     func freeConnectionsInfoSheet(store: Bindable<StoreOf<HomeFeature>>) -> some View {
         sheet(item: store.scope(state: \.destination?.freeConnectionsInfo, action: \.destination.freeConnectionsInfo)) { store in
             FreeConnectionInfoModal(store: store)
-        }
-    }
-
-    func localAgentNoticeSheet(store: Bindable<StoreOf<HomeFeature>>) -> some View {
-        sheet(item: store.scope(state: \.destination?.localAgentNotice, action: \.destination.localAgentNotice)) { store in
-            LocalAgentNoticeView(store: store)
         }
     }
 

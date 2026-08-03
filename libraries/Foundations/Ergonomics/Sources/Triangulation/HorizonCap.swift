@@ -25,9 +25,9 @@ import simd
 /// Naming this puts the `1/distance` threshold, used to hide far-side pins on the CPU and shipped to the GPU point and
 /// star culls, in one place instead of being re-derived at each site.
 public struct HorizonCap: Sendable {
-    /// Model-space direction the camera faces (the cap's centre).
+    /// Model-space direction the camera faces (the cap's center).
     public let facing: SIMD3<Float>
-    /// Camera distance from the globe centre (greater than 1).
+    /// Camera distance from the globe center (greater than 1).
     public let distance: Float
 
     public init(facing: SIMD3<Float>, distance: Float) {
@@ -35,10 +35,10 @@ public struct HorizonCap: Sendable {
         self.distance = distance
     }
 
-    /// The cosine threshold a direction's dot with `facing` must exceed to be on the near side: `1/distance`. This is
-    /// the single scalar handed to the GPU pin and star culls, so the shader never re-derives the reciprocal per
-    /// vertex. Clamped for a degenerate `distance` of 1 or less (camera on or inside the sphere), where the threshold
-    /// holds at 1 and nothing is visible, rather than rising above 1 where no direction could ever pass.
+    /// The cosine threshold a direction's dot with `facing` must exceed to be on the near side: `1/distance`.
+    /// This single scalar goes to the GPU pin and star culls, so the shader never re-derives the reciprocal per
+    /// vertex. A degenerate `distance` of 1 or less (camera on or inside the sphere) holds the threshold at 1, where
+    /// nothing is visible, rather than letting it rise above 1, which no direction could ever pass.
     public var cosThreshold: Float {
         1 / max(distance, 1)
     }

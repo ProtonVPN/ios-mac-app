@@ -203,7 +203,7 @@ struct CountriesMainFeatureTests {
                 Issue.record("Expected standard state")
                 return
             }
-            state.path.append(.search(.loading([])))
+            state.path.append(.search(.loading([], query: "")))
             $0 = .standard(state)
         }
     }
@@ -223,7 +223,7 @@ struct CountriesMainFeatureTests {
                 Issue.record("Expected secure core state")
                 return
             }
-            state.path.append(.search(.loading([])))
+            state.path.append(.search(.loading([], query: "")))
             $0 = .secureCore(state)
         }
     }

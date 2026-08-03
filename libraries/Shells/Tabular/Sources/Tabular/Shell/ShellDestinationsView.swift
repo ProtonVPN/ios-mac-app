@@ -17,17 +17,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Home
 import Payments
 import SwiftUI
 
-/// The shell's modal launcher: everything the shell shows over the tabs takes off from this view, which rides inside
-/// the pages sheet as an invisible passenger that never swaps out with a tab.
+/// Presents everything the shell shows over the tabs. The view draws nothing; it exists so the shell's modal
+/// presentations have an anchor that is always in the view hierarchy.
 ///
-/// It cannot live on the backdrop, and it cannot live in a page. The backdrop always has the pages sheet presented
-/// over it, and UIKit refuses a presentation from a controller that is already presenting, so a modal anchored there
-/// never shows. A page only works while its tab is selected: the pages controller takes the others out of the
-/// hierarchy entirely, where a destination set on one presents nothing. Inside the sheet but beside the pages is the
-/// one seat that is always in the hierarchy and always free to present.
+/// Neither the backdrop nor a page can be that anchor. The backdrop always has the pages sheet presented over
+/// it, and UIKit cannot present from a controller that is already presenting. A page works only while its tab is
+/// selected: the pages controller removes the other pages from the hierarchy, and a presentation anchored
+/// outside the hierarchy never shows. So this view is installed beside the pages, inside the sheet, where it is
+/// always present and always free to present.
 struct ShellDestinationsView: View {
     @Bindable var store: StoreOf<TabularFeature>
 
@@ -39,6 +40,11 @@ struct ShellDestinationsView: View {
             // none of which belong to a page.
             .fullScreenCover(item: $store.scope(state: \.payments, action: \.payments)) { store in
                 PaymentsMainView(store: store)
+            }
+            // The two-factor notice: the connection machinery raises it above the tabs, so it presents here,
+            // where it shows whichever tab is up.
+            .sheet(item: $store.scope(state: \.localAgentNotice, action: \.localAgentNotice)) { store in
+                LocalAgentNoticeView(store: store)
             }
     }
 }

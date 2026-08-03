@@ -18,13 +18,12 @@
 
 import UIKit
 
-/// A tab's navigation stack that waits for room before it pushes.
+/// A tab's navigation stack that raises the sheet to full height before it pushes.
 ///
-/// These pages live inside the sheet the tabs ride in, and a pushed page needs the whole sheet: the legacy detail
-/// screens were drawn for a full screen. The room has to exist before the push begins, because a transition measures
-/// its incoming page against the container as it stands at setup and holds it at that size for the length of the
-/// animation, so a sheet raised underneath leaves the page sized for the height it has left. Asking first means one
-/// settled layout, then one plain push.
+/// These pages sit inside the sheet, and pushed detail pages are designed for the whole screen. The sheet has to
+/// finish rising before the push starts: UIKit measures the incoming page against the container once, at the
+/// start of the transition, and keeps that size for the whole animation. Pushing first and raising the sheet
+/// underneath would leave the page sized for the height the sheet used to have.
 public final class SheetNavigationController: UINavigationController {
     /// Makes room for a push and calls back once there is. Nil pushes straight away. The shell wires this when it takes
     /// the pages; the app only builds the stacks.

@@ -27,9 +27,9 @@ import Sharing
 import Strings
 import VPNAppCore
 
-/// Requests that belong to Home's tree, the payment upsells for resolution failures and the FIDO notice sheet, leave
-/// through `Delegate` for the composing shell to route. Everything else is connection machinery that gets handled here
-/// and passed onto the ConnectionFeature.
+/// Requests the shell must route, the payment upsells for resolution failures and the FIDO notice sheet,
+/// leave through `Delegate`. Everything else is connection machinery that is handled here and passed on to the
+/// ConnectionFeature.
 @Reducer
 public struct ConnectionCommandsFeature {
     @Dependency(\.serverChangeAuthorizer) private var authorizer

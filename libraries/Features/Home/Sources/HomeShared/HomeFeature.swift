@@ -57,7 +57,6 @@ public struct HomeFeature {
     public enum Destination {
         case changeServer(ChangeServerFeature)
         case connectionDetails(ConnectionScreenFeature)
-        case localAgentNotice(LocalAgentNoticeFeature)
         case freeConnectionsInfo(FreeConnectionInfoFeature)
         case defaultConnection(DefaultConnectionFeature)
         case whatsNew(WhatsNewPresenterFeature)
@@ -72,7 +71,6 @@ public struct HomeFeature {
         package var sharedProperties: SharedPropertiesFeature.State
         package var announcementBanner: AnnouncementBannerFeature.State
         package var whatsNewChecker: WhatsNewCheckerFeature.State
-        package var localAgentNotice: LocalAgentNoticeFeature.State?
         package var maintenance: MaintenanceFeature.State
 
         fileprivate var shouldPushAlert: Bool = false
@@ -88,7 +86,6 @@ public struct HomeFeature {
             self.recents = .init()
             self.announcementBanner = .noBanner
             self.whatsNewChecker = .init()
-            self.localAgentNotice = nil
             self.maintenance = .init()
         }
     }
@@ -118,7 +115,6 @@ public struct HomeFeature {
         case recents(RecentsFeature.Action)
         case connectionCard(HomeConnectionCardFeature.Action)
         case connectionFailed(ConnectionError)
-        case twoFactorRequired(LocalAgent.Error)
         case sharedProperties(SharedPropertiesFeature.Action)
         case connectionDetails(ConnectionScreenFeature.Action)
         case freeConnectionsInfo(FreeConnectionInfoFeature.Action)
@@ -127,7 +123,6 @@ public struct HomeFeature {
         case whatsNewChecker(WhatsNewCheckerFeature.Action)
         case whatsNewPresenter(WhatsNewPresenterFeature.Action)
 
-        case localAgentNotice(LocalAgentNoticeFeature.Action)
         case maintenance(MaintenanceFeature.Action)
 
         /// Start bug report flow
@@ -164,11 +159,6 @@ public struct HomeFeature {
     }
 
     public var body: some Reducer<State, Action> {
-        Scope(state: \.connection, action: \.connection) {
-            ConnectionFeature()
-                ._printChanges()
-                .logActions(.connectionLogger) // Logs actions to our usual logger, even outside of DEBUG.
-        }
         Scope(state: \.sharedProperties, action: \.sharedProperties) {
             SharedPropertiesFeature()
         }
@@ -196,9 +186,6 @@ public struct HomeFeature {
             miscReducer
         }
         .ifLet(\.$destination, action: \.destination)
-        .ifLet(\.localAgentNotice, action: \.localAgentNotice) {
-            LocalAgentNoticeFeature()
-        }
     }
 }
 
@@ -285,7 +272,7 @@ private extension HomeFeature {
 
     /// Business logic for connection requests.
     var requestsReducer: some ReducerOf<Self> {
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             case .changeServer:
                 guard case .available = authorizer.serverChangeAvailability() else {
@@ -299,10 +286,6 @@ private extension HomeFeature {
 
             case let .connectionFailed(error):
                 return .send(.sharedProperties(.connectionFailed(error)))
-
-            case let .twoFactorRequired(error):
-                state.destination = .localAgentNotice(.init(twoFactorError: error))
-                return .none
 
             default:
                 return .none
@@ -371,12 +354,6 @@ private extension HomeFeature {
                 return .none
             case .destination(.presented(.freeConnectionsInfo(.upgradeButtonTapped))):
                 state.destination = .payments(.init(upsellModalType: .allCountries))
-                return .none
-            case .destination(.presented(.localAgentNotice(.disconnect))):
-                state.destination = nil
-                connectionCommandClient.send(.disconnect(.fidoAuthentication))
-                return .none
-            case .destination(.presented(.localAgentNotice(.openFidoAuthentication))):
                 return .none
             case .destination(.presented(.payments(.delegate(.completed)))),
                  .destination(.presented(.payments(.delegate(.dismissed)))):

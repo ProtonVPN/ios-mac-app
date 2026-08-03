@@ -21,12 +21,13 @@ import SwiftUI
 import Theme
 import UIKit
 
-/// The tabular shell, assembled: the globe backdrop at the window's root, the tab pages presented over it in their
-/// sheet, the bar mounted in the window, and the sheet controller keeping all of them agreeing with the store.
+/// The tabular shell, assembled: the globe backdrop as the window root, the tab pages presented over it in a
+/// sheet, the bar mounted in the window, and the sheet controller keeping sheet, pages, and bar in agreement
+/// with the store.
 ///
-/// The app builds the store and the four page controllers, which is where its services and storyboards live; the shell
-/// owns everything from there down. Presenting is safe to repeat, which is what lets flows that replace the window root
-/// (onboarding, the paywall) borrow it and give it back.
+/// The app builds the store and the four page controllers, because the services and storyboards they need are in
+/// the app. The shell manages everything below that. Presenting again is harmless, which is how flows that
+/// replace the window root (onboarding, the paywall) return the shell afterwards.
 @MainActor
 public final class TabularShell {
     /// The app's main store, built by the app and adopted here.
@@ -82,9 +83,9 @@ public final class TabularShell {
         self.sheetController = sheetController
     }
 
-    /// Puts the shell in front: the backdrop rooted through `makeRoot`, the pages in their sheet over it, and the bar
-    /// mounted in the window the rooting placed it in. Everything survives a root swap except those three attachments,
-    /// so each is redone only where a swap tore it down. Calling this with the shell already up is a no-op.
+    /// Puts the shell in front: roots the backdrop through `makeRoot`, presents the pages sheet over it, and
+    /// mounts the bar in the window. A root swap tears some of these attachments down and leaves others, so each one
+    /// is redone only if it is missing. Calling this while the shell is already up does nothing.
     public func present(rootedBy makeRoot: (UIViewController) -> Void) {
         if backdrop.view.window == nil {
             makeRoot(backdrop)
@@ -96,7 +97,7 @@ public final class TabularShell {
         // UIKit builds a fresh sheet controller for each presentation, so the ladder is configured per present.
         if let sheet = pages.sheetPresentationController {
             sheet.delegate = sheetController
-            // One fixed ladder for every tab; only the selection moves, applied by the sheet controller.
+            // One fixed detent list for every tab; only the selection moves, applied by the sheet controller.
             sheet.detents = TabularFeature.Detent.allCases.map(\.sheetDetent)
             sheet.largestUndimmedDetentIdentifier = TabularFeature.Detent.allCases.last?.identifier
             sheet.prefersScrollingExpandsWhenScrolledToEdge = true
@@ -116,12 +117,11 @@ public final class TabularShell {
         bar.removeFromSuperview()
     }
 
-    /// Lands an app-level flow on a tab: selects it, then pushes onto that tab's navigation stack.
+    /// Sends an app-level flow to a tab: selects the tab, then pushes onto that tab's navigation stack.
     ///
-    /// The push addresses the stack itself rather than whichever page is showing, so it neither needs the tab to be up
-    /// already nor races the page swap the selection sets off a turn later. A controller of the same kind already on
-    /// the stack is popped back to instead of pushed a second time, which is what these flows got from the window
-    /// service's own stack push.
+    /// The push goes to the stack directly rather than to whichever page is visible, so it does not need the tab to
+    /// be showing yet and cannot race the page swap that the selection causes one turn later. A controller of the
+    /// same type already on the stack is popped back to instead of pushed a second time.
     public func push(_ viewController: UIViewController, onto tab: TabularFeature.Tab) {
         guard let navigation = pages.navigation(of: tab) else { return }
         store.send(.tabSelected(tab))
@@ -132,13 +132,13 @@ public final class TabularShell {
         }
     }
 
-    /// Mounts the bar's view along the window's bottom edge, in front of the pages sheet.
+    /// Mounts the bar along the window's bottom edge, in front of the pages sheet.
     ///
-    /// Plain subview order is what puts it there: the caller mounts from the sheet's presentation completion, when the
-    /// sheet's container is already in the window, so being added last is being added in front. A depth of its own
-    /// would hold the bar over every later presentation too, and the paywall, onboarding and a page's own sheets all
-    /// mount as containers beside it, where a bar floating on top is neither wanted nor usable. Re-mounting brings it
-    /// forward again over a freshly presented sheet, which is the case order alone does not cover.
+    /// Plain subview order is what keeps it in front: mounting runs in the sheet's presentation completion, when the
+    /// sheet's container is already in the window, so the bar added last sits above it. The bar gets no window or
+    /// layer depth of its own on purpose: the paywall, onboarding, and page sheets present in containers beside it
+    /// and must cover it. Re-mounting after such a presentation brings the bar back to the front, which subview
+    /// order alone would not do.
     private static func mountBar(_ barView: ShellTabBar, in window: UIWindow) {
         let isFirstMount = barView.superview !== window
         barView.translatesAutoresizingMaskIntoConstraints = false
@@ -150,9 +150,9 @@ public final class TabularShell {
             barView.bottomAnchor.constraint(equalTo: window.bottomAnchor),
         ]
         if #unavailable(iOS 26.0) {
-            // Older systems resolve the available space differently, since it's drawn differently as well. Rebuild the
-            // classic geometry by hand with a safe area constraint, with the background staying under it all the way to
-            // the screen's bottom edge.
+            // Before iOS 26 the bar draws edge to edge and resolves its height differently. Rebuild the classic
+            // geometry by hand: pin the item band above the bottom safe area and let the background run under it to the
+            // screen's bottom edge.
             let itemBand = barView.sizeThatFits(window.bounds.size).height
             constraints.append(barView.topAnchor.constraint(
                 equalTo: window.safeAreaLayoutGuide.bottomAnchor,

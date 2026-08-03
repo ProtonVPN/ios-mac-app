@@ -20,9 +20,10 @@ import ComposableArchitecture
 import Home
 import SwiftUI
 
-/// The shell's own view of the backdrop: the globe and connection chrome with the sheet's current overlap applied, so
-/// the map's focus region tracks where the sheet rests. The layout itself stays in `GlobeBackdropView`, which knows
-/// nothing about sheets and renders overlap zero in previews and snapshots.
+/// The shell's own view of the backdrop: the globe and the connection status UI with the sheet's current
+/// overlap applied, so the map's focus region tracks where the sheet rests. The layout itself stays in
+/// `GlobeBackdropView`, which knows nothing about sheets and renders with overlap zero in previews and
+/// snapshots.
 struct TabularBackdropView: View {
     let store: StoreOf<TabularFeature>
     /// Tracks the sheet as it moves, so the globe follows the drag rather than easing after it lands.

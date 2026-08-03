@@ -320,10 +320,6 @@ extension NavigationService {
                 guard let vc = self?.windowService.topmostPresentedViewController() else { return }
                 self?.presentSignUp(over: vc, flow: .credentiallessUpsell)
             }
-            $0.switchToPrimaryTab = {
-                // Connecting no longer changes tabs: the backdrop's status chrome and camera flight are visible behind
-                // every page, so there is nothing on Home the user has to be taken to.
-            }
         }
         let countriesView = CountriesMainView(store: countriesStore)
         let hostingController = UIHostingController(rootView: countriesView)
@@ -499,10 +495,9 @@ extension NavigationService {
     func presentAccountRecoveryViewController() {
         guard AccountRecoveryModule.feature.enabled else { return }
 
-        // Recovery is account business, so it lands on the Settings tab. Asking the window service for the topmost
-        // stack, as this used to, only answers while a tab that has one is showing: Home and Countries are plain
-        // hosting controllers, so from either of them the push went nowhere. Arriving from a push notification, there
-        // is no telling which tab that is.
+        // Recovery is account business, so it lands on the Settings tab. Pushing onto "the topmost navigation
+        // stack" only works while a tab that has a stack is visible, and Home and Countries are plain hosting
+        // controllers without one. A push notification can arrive with any tab up, so the tab is named explicitly.
         Task { @MainActor [weak self] in
             guard let self else { return }
             shell?.push(makeAccountRecoveryViewController(), onto: .settings)

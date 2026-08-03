@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ProtonCoreUIFoundations
 import Strings
 import Theme
 import UIKit
@@ -49,12 +48,12 @@ final class ShellTabBar: UITabBar {
         fatalError("init(coder:) has not been implemented")
     }
 
-    /// The bar brought to the store's state. Every drawn property is written from `state` here, so there is never a
-    /// previous value to restore: the glyphs are chosen rather than swapped and put back.
+    /// Redraws the bar from the store's state. Every drawn property is written on every call, so there is no
+    /// previous value to put back.
     ///
-    /// `showsFilledSelection` is the sheet's business rather than the store's. It follows the sheet's current height,
-    /// so the selected glyph loses its fill as the sheet comes to rest on its floor, where the bar is the only view
-    /// over the map and a filled glyph reads as loud.
+    /// `showsFilledSelection` follows the sheet's height rather than the store: as the sheet settles on the bar
+    /// detent, the selected glyph loses its filled variant, because the bar is then the only UI over the map and the
+    /// filled glyph stands out too much there.
     func apply(_ state: TabularFeature.State, showsFilledSelection: Bool) {
         for (tab, item) in itemsByTab {
             let glyphs = tab.glyphs(badge: state.badge(for: tab))
@@ -116,17 +115,17 @@ private extension TabularFeature.Tab {
         }
     }
 
-    /// The tab's outline and filled glyphs. Only home and settings distinguish a filled state; countries and profiles
-    /// read their selection from the tint alone, as they always have. A capture in progress swaps the settings gear for
-    /// the pair wearing the dot, which is why the badge is an input here rather than something drawn on top.
+    /// The tab's outline and filled glyphs. Only home and settings have distinct filled variants; countries and
+    /// profiles show selection through tint alone. A capture in progress swaps the settings glyphs for the dotted
+    /// variants, which is why the badge is an input here rather than something drawn on top of the glyph.
     func glyphs(badge: TabularFeature.Badge?) -> (outline: UIImage, filled: UIImage) {
         switch self {
         case .home:
-            (IconProvider.house, IconProvider.houseFilled)
+            (Asset.Icons.house.image, Asset.Icons.houseFilled.image)
         case .countries:
-            (IconProvider.earth, IconProvider.earth)
+            (Asset.Icons.earth.image, Asset.Icons.earth.image)
         case .profiles:
-            (IconProvider.windowTerminal, IconProvider.windowTerminal)
+            (Asset.Icons.windowTerminal.image, Asset.Icons.windowTerminal.image)
         case .settings:
             badge == .recording
                 ? (Self.settingsGlyph(.settingsTabbarDot), Self.settingsGlyph(.settingsTabbarDotActive))

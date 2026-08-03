@@ -125,13 +125,13 @@ struct PinCluster: Identifiable, Equatable {
         )
     }
 
-    /// Where to fly the camera when this coalesced point is tapped: the shallowest zoom at which the membership stops
-    /// projecting as one cluster, centered on the largest group that emerges. Splitting is decided by the same
-    /// `clusterPins` the overlay renders with and the same framing the tap was hit-tested in, so the flight lands
-    /// exactly where the discs will separate, in whatever region of the screen the framing calls visible.
+    /// Where to fly the camera when this coalesced point is tapped: the shallowest zoom at which the members stop
+    /// rendering as one cluster, centered on the largest group that separates. The split is computed with the same
+    /// `clusterPins` and framing the overlay renders with, so the flight lands exactly where the discs come apart
+    /// on screen.
     ///
-    /// A membership that never splits (locations too close to ever separate on screen) lands at `minDistance` facing
-    /// everyone, the correct degenerate answer. One that is already split when faced head-on needs centering, not zoom.
+    /// Members too close to ever separate on screen get `minDistance`, centered on all of them. A membership that is
+    /// already split when faced head-on needs centering only, not zoom.
     func splitZoomTarget(
         framing: GlobeFraming,
         threshold: CGFloat,
@@ -199,7 +199,7 @@ func visiblePins(_ pins: [LocationPin], projection: GlobeProjection, offscreenMa
 }
 
 /// Greedily groups projected pins whose screen positions fall within `threshold` points of a running
-/// cluster centre, so overlapping pins coalesce into a single tappable point.
+/// cluster center, so overlapping pins coalesce into a single tappable point.
 ///
 /// The scan runs over the clusters formed so far rather than over the pins, and the merge radius bounds how many
 /// clusters a canvas can hold: at a finger's width apart, a phone screen fills up under a couple of hundred however

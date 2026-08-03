@@ -182,9 +182,10 @@ public struct HomeMapView: View {
                 flyToHighlightedCountry(always: true)
             }
         }
-        // A flight asked for while the globe was still moving is turned away below, and a coast outlives the flick that
-        // started it. Take the flight when the motion ends instead, so a connect landing mid-coast still comes home. A
-        // gesture has already stopped the camera following the connection, so this cannot fight the user.
+        // flyToHighlightedCountry does nothing while the globe is moving, and a coast keeps the globe moving after
+        // the flick that started it ends. Retrying when the motion stops lets a connect that arrived mid-coast still
+        // recenter the camera. A deliberate gesture has already turned following off, so this cannot override the
+        // user.
         .onChange(of: trackball.isMoving) { _, isMoving in
             if !isMoving { flyToHighlightedCountry() }
         }
