@@ -95,8 +95,8 @@ let package = Package(
             ],
             swiftSettings: [
                 // BinaryDecoder stores its RawSpan cursor and mutates through ~Escapable self, which is SE-0446's
-                // still-experimental lifetime-dependence slice (@_lifetime). Consuming modules conform and call
-                // through stable syntax.
+                // still-experimental lifetime-dependence slice (@_lifetime). Consuming modules conform and call through
+                // stable syntax.
                 .enableExperimentalFeature("Lifetimes"),
             ]
         ),
@@ -146,8 +146,6 @@ let package = Package(
                 "Triangulation", // NaturalEarthTests exercises the shared projection directly
                 "Version",
                 .product(name: "Clocks", package: "swift-clocks"),
-                // Test targets link DependenciesTestSupport (which re-exports Dependencies), never
-                // Dependencies directly, so the `.dependencies` suite trait is available everywhere.
                 .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
             ]
         ),

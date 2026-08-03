@@ -30,10 +30,10 @@ import TestingErgonomics
 import Theme
 import VPNAppCore
 
-// `.serialized` + the `.dependencies` trait give every city its own dependency context (store
-// construction and view rendering see the same overrides) and keep the `@Shared` writes from
-// interleaving across parameterized cases. The `TestClock` never ticks, so the map view's Sun/Moon
-// re-sampling loop stays parked and the render is a single deterministic frame.
+// `.serialized` + the `.dependencies` trait give every city its own dependency context (store construction and view
+// rendering see the same overrides) and keep the `@Shared` writes from interleaving across parameterized cases. The
+// `TestClock` never ticks, so the map view's Sun/Moon re-sampling loop stays parked and the render is a single
+// deterministic frame.
 @Suite(
     "Map cities",
     .serialized,
@@ -52,9 +52,9 @@ struct MapCitiesScreenTests {
     @Test("Map Screen Cities", arguments: Cities.all)
     @MainActor
     func cities(city: (code: String, cityName: String, lat: Double, long: Double)) throws {
-        // Declared in the test body, not as a suite stored property: the suite instance is created outside
-        // the `.dependencies` trait's scope, so a projection bound there would write to a different shared
-        // storage than the store reads.
+        // Declared in the test body, not as a suite stored property: the suite instance is created outside the
+        // `.dependencies` trait's scope, so a projection bound there would write to a different shared storage than the
+        // store reads.
         @Shared(.userCountry) var userCountry
         let countryCode = city.code
         $userCountry.withLock { $0 = countryCode }
@@ -63,8 +63,8 @@ struct MapCitiesScreenTests {
         let size = try #require(ViewImageConfig.iPhoneSe.size)
         let mapView = MapSnapshotScreen(store: store, title: "\(countryCode), \(city.cityName)", size: size)
 
-        // One send through the reducer's own derivation path; the first emission is applied
-        // immediately (the debounce only coalesces subsequent ones).
+        // One send through the reducer's own derivation path; the first emission is applied immediately (the debounce
+        // only coalesces subsequent ones).
         let server: Server = .mock(country: countryCode, coordinates: .init(latitude: city.lat, longitude: city.long))
         store.send(.connectionStateUpdated(.previewConnected(for: .defaultFastest, server: server)))
 

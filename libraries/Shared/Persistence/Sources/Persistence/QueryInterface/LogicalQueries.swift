@@ -141,11 +141,10 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
 
         if grouping == .cityName {
             // Only include the city name (and its localized form) in the result when grouping by cities.
-            // `translatedCity` is nullable and must be aggregated: a bare column under this GROUP BY reads
-            // an arbitrary row (SQLite only pins bare columns when the query has exactly one min/max
-            // aggregate, and this one has several), so a group where only some logicals carry a translation
-            // could nondeterministically fall back to the English name. `max` skips NULLs, returning the
-            // translation whenever any row has one.
+            // `translatedCity` is nullable and must be aggregated: a bare column under this GROUP BY reads an arbitrary
+            // row (SQLite only pins bare columns when the query has exactly one min/max aggregate, and this one has
+            // several), so a group where only some logicals carry a translation could nondeterministically fall back to
+            // the English name. `max` skips NULLs, returning the translation whenever any row has one.
             return result
                 .annotated(with: logicalAlias[Logical.Columns.city])
                 .annotated(with: max(logicalAlias[Logical.Columns.translatedCity]).forKey("translatedCity"))

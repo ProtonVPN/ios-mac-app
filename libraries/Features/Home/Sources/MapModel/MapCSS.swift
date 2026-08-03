@@ -18,9 +18,9 @@
 
 /// Styling applied to the source SVG before extraction.
 ///
-/// Lives in `MapModel` so the offline `MapBaker` resolves country fills and strokes to exactly the
-/// colors the app expects. The resolved colors are then baked into `world-globe.bin`, so this CSS is
-/// only consulted at bake time, never at runtime.
+/// Lives in `MapModel` so the offline `MapBaker` resolves country fills and strokes to exactly the colors the app
+/// expects. The resolved colors are then baked into `world-globe.bin`, so this CSS is only consulted at bake time,
+/// never at runtime.
 public enum MapCSS {
     public static let css: String =
         /*

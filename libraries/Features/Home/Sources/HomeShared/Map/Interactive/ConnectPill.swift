@@ -29,9 +29,9 @@ struct ConnectPill: View, Animatable {
     let location: LocationPin
     /// Projected pin position, or `nil` when the pin is behind the globe.
     let center: CGPoint?
-    /// The app's layout direction for the flag-and-label content. The overlay pins its whole subtree to
-    /// LTR so projected positions don't mirror, and hands the real direction back through here so the
-    /// text still reads naturally in RTL locales.
+    /// The app's layout direction for the flag-and-label content. The overlay pins its whole subtree to LTR so
+    /// projected positions don't mirror, and hands the real direction back through here so the text still reads
+    /// naturally in RTL locales.
     var contentLayoutDirection: LayoutDirection = .leftToRight
     /// Called when the pill is tapped. The overlay turns hit testing off for the outgoing pill, so only the selected
     /// location's pill can fire this.
@@ -68,9 +68,8 @@ struct ConnectPill: View, Animatable {
         }
     }
 
-    /// The full-size pill: the country flag (when the location has one — gateways don't) and the connect
-    /// label over a capsule styled like the pin discs, so the pill grows out of a disc that looks exactly
-    /// like the one it replaces.
+    /// The full-size pill: the country flag (when the location has one — gateways don't) and the connect label over a
+    /// capsule styled like the pin discs, so the pill grows out of a disc that looks exactly like the one it replaces.
     private var pill: some View {
         HStack(spacing: Dimensions.flagGap) {
             if let code = location.countryCode {
@@ -90,8 +89,8 @@ struct ConnectPill: View, Animatable {
         .overlay(Capsule().stroke(PinDisplay.strokeColor, lineWidth: PinDisplay.strokeWidth))
     }
 
-    /// A centered capsule interpolating from the disc-sized dot to the pill's own size, so the mask reveals
-    /// the full-size pill center-out instead of scaling it.
+    /// A centered capsule interpolating from the disc-sized dot to the pill's own size, so the mask reveals the
+    /// full-size pill center-out instead of scaling it.
     private var revealMask: some View {
         GeometryReader { proxy in
             Capsule()

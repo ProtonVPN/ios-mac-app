@@ -144,9 +144,8 @@ struct HomeMapFeatureTests {
 
     @Test("Loading the pins mid-connect re-derives the map state, parking the pin on the target city")
     func locationPinsLoadedRederivesMapConnectionState() async {
-        // Regression: connecting via an unresolved spec whose city pin loads *after* the first
-        // connection-state emission. Without the re-derive the pin stayed invisible until the next
-        // connection transition.
+        // Regression: connecting via an unresolved spec whose city pin loads *after* the first connection-state
+        // emission. Without the re-derive the pin stayed invisible until the next connection transition.
         @Shared(.connectionState) var connectionState
         $connectionState.withLock {
             $0 = .connecting(.unresolved(ConnectionPreparationIntent(

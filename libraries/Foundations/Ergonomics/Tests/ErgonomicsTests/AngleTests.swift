@@ -39,8 +39,8 @@ struct AngleTests {
         )
     }
 
-    /// The documented interval is (-180, 180] degrees: the antimeridian has one normal form, +180,
-    /// whichever side it's approached from, so equal meridians can't compare unequal after wrapping.
+    /// The documented interval is (-180, 180] degrees: the antimeridian has one normal form, +180, whichever side it's
+    /// approached from, so equal meridians can't compare unequal after wrapping.
     @Test("normalizedSigned wraps into the half-open interval (-180, 180]")
     func normalizedSignedWrapsIntoHalfOpenInterval() {
         expectClose(normalized(0), 0)

@@ -53,8 +53,8 @@ struct InteractiveGlobeClusteringTests {
 
         let clusters = clusterPins(projected, within: PinDisplay.collisionThreshold)
 
-        // The whole value, not count-plus-predicates: the loose form also passes if the wrong pair
-        // merged (a+c together and b alone), and a failure here diffs the exact membership.
+        // The whole value, not count-plus-predicates: the loose form also passes if the wrong pair merged (a+c together
+        // and b alone), and a failure here diffs the exact membership.
         expectNoDifference(clusters, [
             PinCluster(id: "a|b", center: CGPoint(x: 105, y: 100), members: [pin("a"), pin("b")]),
             PinCluster(id: "c", center: CGPoint(x: 300, y: 300), members: [pin("c")]),
@@ -77,8 +77,8 @@ struct InteractiveGlobeClusteringTests {
 
     @Test("A frozen cluster re-projects its centroid with a newer camera, keeping membership and id")
     func frozenClusterReprojects() throws {
-        // The fade-out path: membership was frozen when motion began, and each frame re-projects it so
-        // the disc tracks the globe without re-clustering.
+        // The fade-out path: membership was frozen when motion began, and each frame re-projects it so the disc tracks
+        // the globe without re-clustering.
         let members = [pin("a", latitude: 50, longitude: 10), pin("b", latitude: 50, longitude: 12)]
         let cluster = PinCluster(id: "a|b", center: .zero, members: members) // stale centre from freeze time
         let framing = GlobeFraming(viewSize: CGSize(width: 390, height: 844), focusHeight: 844, focusTop: 0)

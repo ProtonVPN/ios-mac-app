@@ -16,14 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-// MapBaker converts the source world-map SVG into the compact `world-globe.bin` consumed at runtime.
+// MapBaker converts the source world-map SVG into the compact `world-globe.bin` consumed at runtime. She was also the
+// meanest cat in old Chicago town.
 //
 // Usage (run from the Home package directory):
 //
 //     swift run MapBaker [input.svg] [output.bin]
 //
-// Defaults point at the in-repo asset and resource, so a plain `swift run MapBaker` re-bakes after the
-// SVG is updated. Commit the regenerated `world-globe.bin` alongside the SVG change.
+// Defaults point at the in-repo asset and resource, so a plain `swift run MapBaker` re-bakes after the SVG is updated.
+// Commit the regenerated `world-globe.bin` alongside the SVG change.
 
 import Foundation
 import MapModel
@@ -41,12 +42,11 @@ func fail(_ message: String) -> Never {
     exit(1)
 }
 
-/// Swap the SVG's embedded `<style>` for `MapCSS` so country fills and strokes resolve to the app's
-/// colors.
+/// Swap the SVG's embedded `<style>` for `MapCSS` so country fills and strokes resolve to the app's colors.
 ///
-/// Done as a string substitution rather than by mutating the parsed XML, because Foundation also exports
-/// an `XMLElement` type that collides with SVGView's, and the `SVGView` module name collides with its own
-/// `SVGView` type, which makes the parsed-node types awkward to reference by name here.
+/// Done as a string substitution rather than by mutating the parsed XML, because Foundation also exports an
+/// `XMLElement` type that collides with SVGView's, and the `SVGView` module name collides with its own `SVGView` type,
+/// which makes the parsed-node types awkward to reference by name here.
 func applyMapCSS(to svg: String) -> String {
     let pattern = "<style[^>]*>.*?</style>"
     guard let regex = try? NSRegularExpression(pattern: pattern, options: [.dotMatchesLineSeparators, .caseInsensitive]) else {
@@ -84,10 +84,9 @@ do {
     fail("failed to encode globe binary: \(error)")
 }
 
-// Decode the encoded bytes and re-encode them: the result must be byte-identical. Decoding alone would
-// miss a swapped pair of same-width fields or an under-reading decoder. The byte compare enforces the
-// real invariant, that the codec is byte-stable against this bin. Checked before the write, so a broken
-// format never lands on disk.
+// Decode the encoded bytes and re-encode them: the result must be byte-identical. Decoding alone would miss a swapped
+// pair of same-width fields or an under-reading decoder. The byte compare enforces the real invariant, that the codec
+// is byte-stable against this bin. Checked before the write, so a broken format never lands on disk.
 do {
     let reencoded = try MapGlobeCodec.encode(MapGlobeCodec.decode(globeData))
     guard reencoded == globeData else {

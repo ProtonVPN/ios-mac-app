@@ -63,9 +63,8 @@ public final class CheckedFeatureFlagsRepository {
 }
 
 public extension FeatureFlagTypeProtocol {
-    /// Reads through `\.featureFlags`, so the live app consults `CheckedFeatureFlagsRepository`
-    /// (keeping its fetched-before-read assertion) while tests control flags by overriding the
-    /// dependency.
+    /// Reads through `\.featureFlags`, so the live app consults `CheckedFeatureFlagsRepository` (keeping its
+    /// fetched-before-read assertion) while tests control flags by overriding the dependency.
     var enabled: Bool {
         @Dependency(\.featureFlags) var featureFlags
         return featureFlags.isEnabled(self)

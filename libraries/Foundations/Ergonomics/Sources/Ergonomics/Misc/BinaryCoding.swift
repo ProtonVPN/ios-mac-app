@@ -25,8 +25,8 @@ public enum BinaryDecodeError: Error, Equatable {
 
 // MARK: - Binary storage backing
 
-/// The half of a storage marker the decoder dispatches on: how to materialise a span of elements that the traversal
-/// has just walked past. Static and specialized so the decoder always agrees with its type-safe `Storage`.
+/// The half of a storage marker the decoder dispatches on: how to materialise a span of elements that the traversal has
+/// just walked past. Static and specialized so the decoder always agrees with its type-safe `Storage`.
 public protocol BinaryBacking {
     /// Creates the array whose payload occupies `byteOffset ..< byteOffset + count * stride` within `bytes`: `InMemory`
     /// copies the elements out, `Mapped` records the offsets.
@@ -102,8 +102,8 @@ public extension BinaryArray where Storage == InMemory {
         self.init(backing: .owned(elements))
     }
 
-    /// The owned elements, as-is. The storage-neutral empty resolves to the empty array, so encoding a
-    /// freshly seeded model never trips over it.
+    /// The owned elements, as-is. The storage-neutral empty resolves to the empty array, so encoding a freshly seeded
+    /// model never trips over it.
     var elements: [Element] {
         switch backing {
         case let .owned(elements): elements
@@ -117,17 +117,17 @@ public extension BinaryArray where Storage == InMemory {
         try elements.withUnsafeBufferPointer(body)
     }
 
-    /// Scoped, compiler-checked access to the elements as a `Span`: a span cannot escape `body`, so the
-    /// no-escape rule is enforced rather than documented.
+    /// Scoped, compiler-checked access to the elements as a `Span`: a span cannot escape `body`, so the no-escape rule
+    /// is enforced rather than documented.
     func withSpan<R>(_ body: (Span<Element>) throws -> R) rethrows -> R {
         try elements.withUnsafeBufferPointer { try body($0.span) }
     }
 }
 
 public extension BinaryArray where Storage == Mapped {
-    /// The slice's byte region within the source blob. Plain offsets: what lets a consumer that has
-    /// adopted the whole blob (like a GPU no-copy buffer over the mapping) address this array without any
-    /// copy or pointer hand-off. The empty array reports a zero-length region at offset 0.
+    /// The slice's byte region within the source blob. Plain offsets: what lets a consumer that has adopted the whole
+    /// blob (like a GPU no-copy buffer over the mapping) address this array without any copy or pointer hand-off. The
+    /// empty array reports a zero-length region at offset 0.
     var blobSliceRegion: (byteOffset: Int, byteCount: Int) {
         switch backing {
         case let .blobSlice(byteOffset, count): (byteOffset, count * MemoryLayout<Element>.stride)
@@ -136,8 +136,8 @@ public extension BinaryArray where Storage == Mapped {
         }
     }
 
-    /// Contiguous element access without copying, resolved against the blob this slice was decoded from.
-    /// A slice reaching outside `blob` (the wrong blob, or a truncated one) traps instead of misreading.
+    /// Contiguous element access without copying, resolved against the blob this slice was decoded from. A slice
+    /// reaching outside `blob` (the wrong blob, or a truncated one) traps instead of misreading.
     func withUnsafeBufferPointer<R>(
         in blob: UnsafeRawBufferPointer,
         _ body: (UnsafeBufferPointer<Element>) throws -> R
@@ -223,8 +223,8 @@ public protocol BinaryCoder<Storage>: ~Escapable {
 }
 
 public extension BinaryCoder where Self: ~Escapable {
-    /// A half-open `Range<Int>` as its lower bound and count, two `UInt32`s. Symmetric with no branch: the
-    /// arithmetic rebuilds `range` identically whether we just read the parts or are about to write them.
+    /// A half-open `Range<Int>` as its lower bound and count, two `UInt32`s. Symmetric with no branch: the arithmetic
+    /// rebuilds `range` identically whether we just read the parts or are about to write them.
     mutating func range(_ range: inout Range<Int>) throws {
         var lower = UInt32(range.lowerBound)
         var count = UInt32(range.count)
@@ -283,9 +283,9 @@ public extension BinaryCoder where Self: ~Escapable {
         }
     }
 
-    /// Rejects a corrupt length prefix before anything is allocated from it: `count` elements need at least
-    /// `count * minimumBytesPerElement` more input, so the remaining bytes can't possibly satisfy is truncation, thrown
-    /// here rather than creating a multi-gigabyte allocation.
+    /// Rejects a corrupt length prefix before anything is allocated from it: `count` elements need at least `count *
+    /// minimumBytesPerElement` more input, so the remaining bytes can't possibly satisfy is truncation, thrown here
+    /// rather than creating a multi-gigabyte allocation.
     private func validate(count: UInt32, minimumBytesPerElement: Int) throws {
         guard Int(count) <= remainingByteCount / minimumBytesPerElement else { throw BinaryDecodeError.truncated }
     }
@@ -337,8 +337,8 @@ public struct BinaryEncoder: BinaryCoder {
         precondition(alignment >= MemoryLayout<Element>.alignment, "alignment must satisfy the element type")
 
         append(UInt32(array.count))
-        // Alignment is measured from the start of the encoded blob, which is also where a decoder's blob begins, so
-        // the two sides compute identical padding.
+        // Alignment is measured from the start of the encoded blob, which is also where a decoder's blob begins, so the
+        // two sides compute identical padding.
         let misalignment = data.count % alignment
         if misalignment > 0 { data.append(contentsOf: repeatElement(0, count: alignment - misalignment)) }
         array.withUnsafeBufferPointer { data.append(contentsOf: UnsafeRawBufferPointer($0)) }
@@ -368,8 +368,8 @@ public struct BinaryEncoder: BinaryCoder {
 /// versus offset slices into a memory-mapped blob (`Mapped`).
 public struct BinaryDecoder<Storage: BinaryBacking>: BinaryCoder, ~Escapable {
     private let bytes: RawSpan
-    /// Byte offset into `bytes`, which always begins at the blob's first byte, so offsets recorded into blob slices
-    /// are also offsets into the caller's blob.
+    /// Byte offset into `bytes`, which always begins at the blob's first byte, so offsets recorded into blob slices are
+    /// also offsets into the caller's blob.
     private var offset = 0
 
     @_lifetime(copy blob)

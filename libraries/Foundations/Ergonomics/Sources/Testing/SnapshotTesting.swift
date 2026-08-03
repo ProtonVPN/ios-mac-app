@@ -7,9 +7,9 @@ public protocol AssertSnapshot {
     func snapshotDirectory() -> String?
 }
 
-/// Asserts two byte buffers are identical. On failure it reports the first differing offset with a hex
-/// window around it — dumping multi-megabyte `Data` values in a failure message prints only their byte
-/// counts, which for equal-length buffers reads as "identical".
+/// Asserts two byte buffers are identical. On failure it reports the first differing offset with a hex window around it
+/// — dumping multi-megabyte `Data` values in a failure message prints only their byte counts, which for equal-length
+/// buffers reads as "identical".
 public func expectSameBytes(
     _ actual: Data,
     _ expected: Data,
@@ -42,10 +42,9 @@ public func expectSameBytes(
 
 /// Values every snapshot suite pins its environment to, defined once so no suite drifts.
 public enum SnapshotEnvironment {
-    /// The fixed instant to pin `\.date` to (2026-06-18T12:00:00Z, noon UTC). The globe renders real
-    /// astronomy — the day/night terminator, the Moon — from the controlled date, so pinning to
-    /// `Date()` (the wall clock) would bake each run's calendar date into the reference images and
-    /// they would silently rot as time passes.
+    /// The fixed instant to pin `\.date` to (2026-06-18T12:00:00Z, noon UTC). The globe renders real astronomy — the
+    /// day/night terminator, the Moon — from the controlled date, so pinning to `Date()` (the wall clock) would bake
+    /// each run's calendar date into the reference images and they would silently rot as time passes.
     public static let date = Date(timeIntervalSince1970: 1_781_784_000)
 }
 

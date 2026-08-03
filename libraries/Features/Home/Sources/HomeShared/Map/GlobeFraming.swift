@@ -18,13 +18,11 @@
 
 import CoreGraphics
 
-/// The globe's framing: the full render canvas, the framed sub-region the globe is fitted into, and that
-/// region's offset from the canvas top. Computed once per render and handed to everything that needs it,
-/// the projection matrix, the drag unprojection, and the tap hit-test, so the render framing and the
-/// unproject framing can't drift apart. A mismatch would desync finger tracking.
+/// The globe's framing: the full render canvas, the framed sub-region the globe is fitted into, and that region's
+/// offset from the canvas top. Computed once per render and handed to everything that needs it, the projection matrix,
+/// the drag unprojection, and the tap hit-test, so the render framing and the unproject framing can't drift apart.
 struct GlobeFraming {
-    /// Full render canvas. May be taller than the framed region, letting the globe spill above and below
-    /// unclipped.
+    /// Full render canvas. May be taller than the framed region, letting the globe spill above and below unclipped.
     let viewSize: CGSize
     /// Visible height the globe is framed within.
     let focusHeight: CGFloat

@@ -20,13 +20,13 @@ import simd
 import SwiftUI
 import Theme
 
-/// The interactive globe's pin overlay: the multitouch catcher, the settled cluster discs, the selected
-/// city's connect pill (plus the outgoing pill it cross-fades with), and the user/connection pin.
+/// The interactive globe's pin overlay: the multitouch catcher, the settled cluster discs, the selected city's connect
+/// pill (plus the outgoing pill it cross-fades with), and the user/connection pin.
 ///
-/// Built inside the globe's overlay closure, so it receives a fresh `GlobeProjection` on every animation
-/// frame. That is what keeps the discs and the pill tracking the globe as it rotates and zooms. The
-/// in-motion location dots are drawn in the Metal pass instead, where they can't lag under a fast drag.
-/// These settled discs are a plain Canvas that only shows once the map is still.
+/// Built inside the globe's overlay closure, so it receives a fresh `GlobeProjection` on every animation frame. That is
+/// what keeps the discs and the pill tracking the globe as it rotates and zooms. The in-motion location dots are drawn
+/// in the Metal pass instead, where they can't lag under a fast drag. These settled discs are a plain Canvas that only
+/// shows once the map is still.
 struct GlobePinsOverlay: View {
     let projection: GlobeProjection
     let locationPins: [LocationPin]
@@ -49,14 +49,14 @@ struct GlobePinsOverlay: View {
     let onRecenter: () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    /// The app's layout direction, captured before the overlay pins itself to LTR below, so the connect
-    /// pill's text content can render in the user's real direction.
+    /// The app's layout direction, captured before the overlay pins itself to LTR below, so the connect pill's text
+    /// content can render in the user's real direction.
     @Environment(\.layoutDirection) private var ambientLayoutDirection
 
-    /// The cluster membership as it stood when motion began. During the fade-out each frozen cluster is
-    /// re-projected with the live camera, so the discs keep tracking the globe while they dissolve — but
-    /// nothing re-clusters, so the groupings and their count labels can't flicker mid-fade. Cleared once
-    /// the fade completes, ending the per-frame reprojection for the rest of the gesture.
+    /// The cluster membership as it stood when motion began. During the fade-out each frozen cluster is re-projected
+    /// with the live camera, so the discs keep tracking the globe while they dissolve — but nothing re-clusters, so the
+    /// groupings and their count labels can't flicker mid-fade. Cleared once the fade completes, ending the per-frame
+    /// reprojection for the rest of the gesture.
     @State private var frozenClusters: [PinCluster] = []
     /// Mirrors `showClusters` through an explicit animation, so the fade-out has a completion to clear
     /// `frozenClusters` with. Starts true: with the map still, the discs are already up (their opacity is
@@ -73,10 +73,9 @@ struct GlobePinsOverlay: View {
         // while moving, so cluster membership can't flicker, and through the open/close transition, so the
         // pins shrink cleanly with the globe.
         let showClusters = PinDisplay.showsClusters(isMoving: isMoving, lightFade: projection.lightFade)
-        // Fresh clustering only while the discs fully show (settled, and tracking programmatic camera
-        // flies frame by frame). While the map moves, the fading discs render the frozen membership,
-        // re-projected each frame so they track the globe; the O(pins × clusters) grouping pass is what
-        // stays off the per-frame path.
+        // Fresh clustering only while the discs fully show (settled, and tracking programmatic camera flies frame by
+        // frame). While the map moves, the fading discs render the frozen membership, re-projected each frame so they
+        // track the globe; the O(pins × clusters) grouping pass is what stays off the per-frame path.
         let clusters = showClusters
             ? clusterPins(
                 visiblePins(locationPins, projection: projection, offscreenMargin: PinDisplay.offscreenMargin),
@@ -142,13 +141,13 @@ struct GlobePinsOverlay: View {
                 }
             }
         }
-        // Everything here is positioned in projected screen coordinates (`.position`, Canvas draws), which
-        // must not mirror under a right-to-left locale: the globe render they overlay doesn't. Pinned here,
-        // on the positional subtree only, so the pill's text content can restore the ambient direction.
+        // Everything here is positioned in projected screen coordinates (`.position`, Canvas draws), which must not
+        // mirror under a right-to-left locale: the globe render they overlay doesn't. Pinned here, on the positional
+        // subtree only, so the pill's text content can restore the ambient direction.
         .environment(\.layoutDirection, .leftToRight)
-        // Crossfade the swap between points and discs, explicitly so the fade-out has a completion. The
-        // moment motion starts, the current grouping is frozen (the fading discs re-project it each frame
-        // to keep tracking the globe) and dropped once the fade lands, ending the per-frame work.
+        // Crossfade the swap between points and discs, explicitly so the fade-out has a completion. The moment motion
+        // starts, the current grouping is frozen (the fading discs re-project it each frame to keep tracking the globe)
+        // and dropped once the fade lands, ending the per-frame work.
         .onChange(of: showClusters) { _, shows in
             let animation = reduceMotion ? nil : Animation.easeInOut(duration: 0.25)
             if shows {

@@ -21,9 +21,9 @@ import Ergonomics
 import Foundation
 import Testing
 
-/// `MmapBuffer(readingPath:)`, the read-only sibling of the IPC initializer: it must map exactly the
-/// file's bytes, never create or grow anything, and report the page-rounded size a whole-region adopter
-/// (like a Metal no-copy buffer) must use.
+/// `MmapBuffer(readingPath:)`, the read-only sibling of the IPC initializer: it must map exactly the file's bytes,
+/// never create or grow anything, and report the page-rounded size a whole-region adopter (like a Metal no-copy buffer)
+/// must use.
 @Suite("Mmap reading")
 struct MmapReadingTests {
     private func temporaryFile(bytes: [UInt8]) throws -> URL {

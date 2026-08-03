@@ -38,10 +38,6 @@ public extension FeatureFlagTypeProtocol {
 
     /// This appears in all HTTP requests under the
     var requestName: String? {
-        // Reads the repository directly rather than the `\.featureFlags` dependency: the reported
-        // header reflects the real fetched flags, and the result is cached statically below, so it
-        // must not capture a test-scoped value. `enabledFeaturesRequestString` gates the only call
-        // path on `hasFetchedFlags`.
         guard shouldReportInHttpRequests, CheckedFeatureFlagsRepository.shared.isEnabled(self) else {
             return nil
         }

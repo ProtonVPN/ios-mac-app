@@ -21,14 +21,14 @@ import MapModel
 import simd
 import Triangulation
 
-/// Snaps a coastal location onto its country's rendered land. The globe is baked from a simplified coastline, so a
-/// city at its true coordinate can fall just offshore and read as "in the ocean" (Nuuk being the best example). This
-/// nudges such a pin to the nearest point on its own country's land, never another country's.
+/// Snaps a coastal location onto its country's rendered land. The globe is baked from a simplified coastline, so a city
+/// at its true coordinate can fall just offshore and read as "in the ocean" (Nuuk being the best example). This nudges
+/// such a pin to the nearest point on its own country's land, never another country's.
 enum CoastSnap {
     /// Largest correction allowed, 1.5 degrees or about 165 km: comfortably more than any gap the coastline
     /// simplification opens up, and far less than the distance to a wrong country. A pin whose resolved country
-    /// geometry doesn't actually contain its region, like a territory keyed under a distant mainland, is simply
-    /// left put. The inland nudge below can extend the total correction to `maxSnapAngle + inlandNudge`.
+    /// geometry doesn't actually contain its region, like a territory keyed under a distant mainland, is simply left
+    /// put. The inland nudge below can extend the total correction to `maxSnapAngle + inlandNudge`.
     static let maxSnapAngle = Angle.degrees(1.5)
 
     /// How far past the nearest coast vertex the snapped pin is pushed inland, when the pushed point is verifiably on
@@ -63,15 +63,15 @@ enum CoastSnap {
             let db = simd_dot(direction, triangle.b); if db > nearestDot { nearestDot = db; nearest = triangle.b }
             let dc = simd_dot(direction, triangle.c); if dc > nearestDot { nearestDot = dc; nearest = triangle.c }
         }
-        // Outside the land: snap onto the nearest land vertex, but only within the cap. A vertex farther
-        // out means the resolved geometry probably doesn't contain this pin's region, so leave it put.
+        // Outside the land: snap onto the nearest land vertex, but only within the cap. A vertex farther out means the
+        // resolved geometry probably doesn't contain this pin's region, so leave it put.
         guard angle(between: direction, nearest) <= maxSnapAngle else { return direction }
         return nudgedInland(from: direction, past: nearest, on: country, in: mesh)
     }
 
     /// Continues past the vertex along the direction the pin approached it from, which locally points straight inland
-    /// by `Self.inlandNudge`. Halves the step once before settling for the vertex itself, and accepts only a point
-    /// that verifiably lands on the country's fill, since a thin sliver or a tiny island can be overshot.
+    /// by `Self.inlandNudge`. Halves the step once before settling for the vertex itself, and accepts only a point that
+    /// verifiably lands on the country's fill, since a thin sliver or a tiny island can be overshot.
     private static func nudgedInland(
         from direction: SIMD3<Float>,
         past nearest: SIMD3<Float>,

@@ -45,8 +45,8 @@ struct FullMapSnapshots {
     let precision = Self.gpuSnapshotPrecision
     let perceptualPrecision = Self.gpuPerceptualPrecision
 
-    /// A spread of city pins across Europe, close enough at the default zoom that Zurich and Milan
-    /// exercise the clustering path alongside the singles.
+    /// A spread of city pins across Europe, close enough at the default zoom that Zurich and Milan exercise the
+    /// clustering path alongside the singles.
     private static let locationPins = [
         pin("Paris", code: "FR", latitude: 48.85, longitude: 2.35),
         pin("Zurich", code: "CH", latitude: 47.37, longitude: 8.54),
@@ -84,8 +84,8 @@ struct FullMapSnapshots {
         .frame(size)
         .background(Color(.background))
         .environment(\.colorScheme, .dark)
-        // Render the globe via off-screen Metal read-back, since a live MTKView can't be captured
-        // by the snapshot strategy's `layer.render(in:)`.
+        // Render the globe via off-screen Metal read-back, since a live MTKView can't be captured by the snapshot
+        // strategy's `layer.render(in:)`.
         .environment(\.globeRenderMode, .staticImage)
 
         assertSnapshot(

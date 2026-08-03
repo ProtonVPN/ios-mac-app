@@ -39,8 +39,8 @@ struct GlobeResourceCodecStabilityTests {
         let url = try #require(GlobeResource.resourceURL)
         let data = try Data(contentsOf: url)
         let reencoded = try MapGlobeCodec.encode(MapGlobeCodec.decode(data))
-        // `expectSameBytes` rather than `==`: on failure it names the first differing offset instead of
-        // printing two 4-something-megabyte blobs as identical-looking byte counts.
+        // `expectSameBytes` rather than `==`: on failure it names the first differing offset instead of printing two
+        // 4-something-megabyte blobs as identical-looking byte counts.
         expectSameBytes(reencoded, data)
     }
 
@@ -51,8 +51,8 @@ struct GlobeResourceCodecStabilityTests {
         let mapping = try MmapBuffer(readingPath: url.path)
         let mapped = try mapping.withRawSpan { try MapGlobeCodec.decode(slicing: $0) }
 
-        // `expectNoDifference` on the whole arrays: a single divergent element reports as a structural
-        // diff at its index, not two ~290k-element dumps.
+        // `expectNoDifference` on the whole arrays: a single divergent element reports as a structural diff at its
+        // index, not two ~290k-element dumps.
         mapping.withUnsafeBytes { blob in
             expectNoDifference(mapped.fillVertices.elements(in: blob), copied.fillVertices.elements)
             expectNoDifference(mapped.fillIndices.elements(in: blob), copied.fillIndices.elements)

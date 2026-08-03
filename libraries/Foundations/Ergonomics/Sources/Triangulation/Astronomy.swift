@@ -21,9 +21,9 @@ import simd
 
 // MARK: - Time
 
-/// An absolute instant expressed as a Julian Date, owning the epoch offsets the Meeus series are built on.
-/// Foundation has no Julian Day facility, so `Date.timeIntervalSince1970` is the exact, time-zone-free
-/// bridge. `Calendar` is deliberately avoided, since this code never touches calendar components.
+/// An absolute instant expressed as a Julian Date, owning the epoch offsets the Meeus series are built on. Foundation
+/// has no Julian Day facility, so `Date.timeIntervalSince1970` is the exact, time-zone-free bridge. `Calendar` is
+/// deliberately avoided, since this code never touches calendar components.
 struct JulianDay {
     var value: Double
 
@@ -59,36 +59,35 @@ public enum CelestialConstants {
     static let earthRadiusKm: Double = 6378.14
     /// The mean distance from the Earth to the Moon.
     static let moonMeanDistanceKm = 385_000.56
-    /// Mean lunar radius in Earth radii (1737.4 / 6378.14). The Moon is rendered true to scale, and this is
-    /// the single source for the value the renderer feeds the eclipse shaders.
+    /// Mean lunar radius in Earth radii (1737.4 / 6378.14). The Moon is rendered true to scale, and this is the single
+    /// source for the value the renderer feeds the eclipse shaders.
     public static let moonRadiusEarthRadii: Float = 0.2724
-    /// The Sun's angular radius as seen from Earth. Drives how wide the eclipse penumbra ramps. Mirrored by
-    /// the shader constant `sunAngularRadius` in `MapGlobeShaders.metal`, which can't read Swift constants,
-    /// so a change here must be made there too.
+    /// The Sun's angular radius as seen from Earth. Drives how wide the eclipse penumbra ramps. Mirrored by the shader
+    /// constant `sunAngularRadius` in `MapGlobeShaders.metal`, which can't read Swift constants, so a change here must
+    /// be made there too.
     public static let sunAngularRadius = Angle.radians(0.00465)
 
-    /// The north galactic pole (J2000: RA 192.85948°, Dec +27.12825°) as a unit direction, mapped through
-    /// the same latitude/longitude convention as terrestrial directions with right ascension standing in
-    /// for longitude. The celestial sphere's rotation against the Earth (sidereal time) is deliberately
-    /// not applied: the rendered starfield is Earth-fixed by design, so only the Milky Way band's
-    /// orientation *relative to the stars* is physical — the shared frame is what keeps them consistent.
+    /// The north galactic pole (J2000: RA 192.85948°, Dec +27.12825°) as a unit direction, mapped through the same
+    /// latitude/longitude convention as terrestrial directions with right ascension standing in for longitude. The
+    /// celestial sphere's rotation against the Earth (sidereal time) is deliberately not applied: the rendered
+    /// starfield is Earth-fixed by design, so only the Milky Way band's orientation *relative to the stars* is physical
+    /// — the shared frame is what keeps them consistent.
     public static let galacticNorthPole = GlobeGeometry.unitSphere(
         latitudeDegrees: 27.12825,
         longitudeDegrees: 192.85948
     )
 
-    /// Direction to the galactic centre (Sagittarius A*, J2000: RA 266.41683°, Dec −29.00781°), mapped
-    /// through the same convention as the pole. The Milky Way is brightest and broadest here, so the sky
-    /// glow lifts toward it.
+    /// Direction to the galactic centre (Sagittarius A*, J2000: RA 266.41683°, Dec −29.00781°), mapped through the same
+    /// convention as the pole. The Milky Way is brightest and broadest here, so the sky glow lifts toward it.
     public static let galacticCentre = GlobeGeometry.unitSphere(
         latitudeDegrees: -29.00781,
         longitudeDegrees: 266.41683
     )
 }
 
-/// A mean element as a quadratic `a + b*t + c*t*t` in degrees, with `t` in Julian centuries, evaluated
-/// with `callAsFunction` and handed back as an `Angle`. Named coefficients rather than a bare `[Double]`,
-/// so the coefficient order can't be misread. Every mean element here is a quadratic.
+/// A mean element as a quadratic `a + b*t + c*t*t` in degrees, with `t` in Julian centuries, evaluated with
+/// `callAsFunction` and handed back as an `Angle`. Named coefficients rather than a bare `[Double]`, so the coefficient
+/// order can't be misread. Every mean element here is a quadratic.
 struct Quadratic {
     let a, b, c: Double
 
@@ -103,19 +102,18 @@ struct Quadratic {
 
 // MARK: - Ephemeris
 
-/// Geocentric Sun and Moon positions as model-space directions on the globe, the sub-solar and sub-lunar
-/// points where the body is directly overhead, plus the Moon's centre-to-centre distance in Earth radii.
-/// Drives the day/night terminator, the Moon's phase and sky position, and the eclipse geometry.
+/// Geocentric Sun and Moon positions as model-space directions on the globe, the sub-solar and sub-lunar points where
+/// the body is directly overhead, plus the Moon's centre-to-centre distance in Earth radii. Drives the day/night
+/// terminator, the Moon's phase and sky position, and the eclipse geometry.
 ///
-/// An abridged Meeus lunar series, keeping the dominant periodic terms, plus the standard solar series.
-/// Good to roughly an arcminute, which is enough that solar and lunar eclipses fall on their real dates:
-/// the Moon moves about half a degree per hour, so an arcminute is a couple of minutes of time. UTC is
-/// taken as terrestrial time, since the difference of about 70 seconds is well below this precision.
+/// An abridged Meeus lunar series, keeping the dominant periodic terms, plus the standard solar series. Good to roughly
+/// an arcminute, which is enough that solar and lunar eclipses fall on their real dates: the Moon moves about half a
+/// degree per hour, so an arcminute is a couple of minutes of time. UTC is taken as terrestrial time, since the
+/// difference of about 70 seconds is well below this precision.
 public enum Meeus {
-    /// The four fundamental arguments of the lunar theory, evaluated for an instant (Meeus, chapter 47):
-    /// the mean elongation of the Moon from the Sun D, the Sun's mean anomaly M, the Moon's mean anomaly
-    /// M', and the argument of latitude F. Each periodic term is a sine or cosine of an integer
-    /// combination of these.
+    /// The four fundamental arguments of the lunar theory, evaluated for an instant (Meeus, chapter 47): the mean
+    /// elongation of the Moon from the Sun D, the Sun's mean anomaly M, the Moon's mean anomaly M', and the argument of
+    /// latitude F. Each periodic term is a sine or cosine of an integer combination of these.
     struct FundamentalArguments {
         let d, m, mp, f: Angle
     }
@@ -129,11 +127,10 @@ public enum Meeus {
         public let moonDistance: Float
     }
 
-    /// One row of a Meeus periodic-term table (chapter 47, tables 47.A and 47.B): an amplitude (longitude
-    /// and latitude in millionths of a degree, distance in metres) and the integer multipliers
-    /// `d, m, mp, f` of the four fundamental arguments. The term's argument is the linear combination
-    /// `d*D + m*M + mp*M' + f*F`. Amplitudes are summed with `sin` for longitude and latitude, and `cos`
-    /// for distance.
+    /// One row of a Meeus periodic-term table (chapter 47, tables 47.A and 47.B): an amplitude (longitude and latitude
+    /// in millionths of a degree, distance in metres) and the integer multipliers `d, m, mp, f` of the four fundamental
+    /// arguments. The term's argument is the linear combination `d*D + m*M + mp*M' + f*F`. Amplitudes are summed with
+    /// `sin` for longitude and latitude, and `cos` for distance.
     struct PeriodicTerm {
         let amplitude: Double
         let d, m, mp, f: Int
@@ -144,9 +141,9 @@ public enum Meeus {
         }
     }
 
-    /// Mean elements as quadratics in `t` (Julian centuries since J2000), in degrees. The lunar elements
-    /// are Meeus chapter 47, and the solar mean longitude L0 is Meeus 25.2. Coefficient tables only. The
-    /// fundamental arguments the periodic summation depends on are formed in `positions`.
+    /// Mean elements as quadratics in `t` (Julian centuries since J2000), in degrees. The lunar elements are Meeus
+    /// chapter 47, and the solar mean longitude L0 is Meeus 25.2. Coefficient tables only. The fundamental arguments
+    /// the periodic summation depends on are formed in `positions`.
     enum MeanElement {
         static let moonLongitude = Quadratic(a: 218.3164477, b: 481_267.88123421, c: -0.0015786) // L'
         static let elongation = Quadratic(a: 297.8501921, b: 445_267.1114034, c: -0.0018819) // D
@@ -174,13 +171,13 @@ public enum Meeus {
         let sun = sunPosition(on: day, anomaly: fundamentals.m)
 
         let obliquity = Angle.degrees(23.439291 - 0.0130042 * t) // Meeus 22.2: obliquity of the ecliptic
-        // Greenwich mean sidereal time (Meeus 12.4), the geographic longitude of the vernal equinox right
-        // now. Its linear term is deliberately in days since J2000, since the rotation is fast, unlike
-        // everything else here which is in centuries.
+        // Greenwich mean sidereal time (Meeus 12.4), the geographic longitude of the vernal equinox right now. Its
+        // linear term is deliberately in days since J2000, since the rotation is fast, unlike everything else here
+        // which is in centuries.
         let gmst = Angle.degrees(280.46061837 + 360.98564736629 * day.daysSinceJ2000 + 0.000387933 * t * t)
 
-        // Ecliptic to equatorial to geographic sub-point, as a typed pipeline that can only be chained in
-        // the physically meaningful order.
+        // Ecliptic to equatorial to geographic sub-point, as a typed pipeline that can only be chained in the
+        // physically meaningful order.
         let sunSubPoint = sun
             .equatorial(obliquity: obliquity)
             .subPoint(gmst: gmst)
@@ -195,8 +192,7 @@ public enum Meeus {
         )
     }
 
-    /// The Sun's geocentric ecliptic position (Meeus 25.3 and 25.4). Latitude is effectively zero by
-    /// definition.
+    /// The Sun's geocentric ecliptic position (Meeus 25.3 and 25.4). Latitude is effectively zero by definition.
     static func sunPosition(on day: JulianDay, anomaly m: Angle) -> EclipticCoordinate {
         let t = day.centuriesSinceJ2000 // Julian centuries from J2000
 
@@ -211,8 +207,8 @@ public enum Meeus {
         return EclipticCoordinate(longitude: l0 + c, latitude: .degrees(0))
     }
 
-    /// The Moon's geocentric ecliptic position and Earth-centre distance, from the abridged ELP-2000
-    /// periodic series (Meeus, Ch. 47).
+    /// The Moon's geocentric ecliptic position and Earth-centre distance, from the abridged ELP-2000 periodic series
+    /// (Meeus, Ch. 47).
     static func moonPosition(on day: JulianDay, using args: FundamentalArguments)
         -> (coordinate: EclipticCoordinate, distance: Double) {
         let t = day.centuriesSinceJ2000 // Julian centuries from J2000
@@ -233,8 +229,7 @@ public enum Meeus {
 }
 
 extension [Meeus.PeriodicTerm] {
-    /// The sum of amplitude times trig(term argument) over the table: the periodic correction it
-    /// contributes.
+    /// The sum of amplitude times trig(term argument) over the table: the periodic correction it contributes.
     func sum(against args: Meeus.FundamentalArguments, _ trig: (Angle) -> Double) -> Double {
         reduce(0) { $0 + $1.amplitude * trig($1.argument(args)) }
     }

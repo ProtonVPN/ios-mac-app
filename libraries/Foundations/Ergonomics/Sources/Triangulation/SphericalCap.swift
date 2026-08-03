@@ -18,9 +18,9 @@
 
 import simd
 
-/// A spherical cap: every unit-sphere direction within `radius` of `center`. Names the centroid plus
-/// enclosing angular radius pair the globe leans on for framing. Zooming to fit a country or a cluster of
-/// pins means finding the cap that bounds the points, then backing the camera up until it fills the view.
+/// A spherical cap: every unit-sphere direction within `radius` of `center`. Names the centroid plus enclosing angular
+/// radius pair the globe leans on for framing. Zooming to fit a country or a cluster of pins means finding the cap that
+/// bounds the points, then backing the camera up until it fills the view.
 public struct SphericalCap: Sendable, Equatable {
     /// Unit direction to the cap's centre.
     public let center: SIMD3<Float>
@@ -34,11 +34,10 @@ public struct SphericalCap: Sendable, Equatable {
 }
 
 public extension SphericalCap {
-    /// The cap covering `directions`: the centre is their normalised mean direction, and the radius reaches
-    /// the farthest member from it. Frames a cluster of pins around its own centroid. Empty input gives a
-    /// zero cap facing +z. A balanced or antipodal set, whose mean is zero and has no meaningful centre,
-    /// falls back to the first member as the centre rather than letting `normalize(0)` poison the cap
-    /// with NaNs.
+    /// The cap covering `directions`: the centre is their normalised mean direction, and the radius reaches the
+    /// farthest member from it. Frames a cluster of pins around its own centroid. Empty input gives a zero cap facing
+    /// +z. A balanced or antipodal set, whose mean is zero and has no meaningful centre, falls back to the first member
+    /// as the centre rather than letting `normalize(0)` poison the cap with NaNs.
     static func enclosing(_ directions: [SIMD3<Float>]) -> SphericalCap {
         guard !directions.isEmpty else {
             return SphericalCap(center: SIMD3<Float>(0, 0, 1), radius: .radians(0))
@@ -50,9 +49,9 @@ public extension SphericalCap {
         return SphericalCap(center: center, radius: radius)
     }
 
-    /// A cap on a caller-chosen `center`, grown to enclose every cap in `caps`. The centre is the caller's
-    /// because a good one isn't always the vertex mean: a country's bounding-box centre avoids the poleward
-    /// bias the mean picks up over a wide longitude span.
+    /// A cap on a caller-chosen `center`, grown to enclose every cap in `caps`. The centre is the caller's because a
+    /// good one isn't always the vertex mean: a country's bounding-box centre avoids the poleward bias the mean picks
+    /// up over a wide longitude span.
     static func enclosing(_ caps: [SphericalCap], around center: SIMD3<Float>) -> SphericalCap {
         var radius = Angle.radians(0)
         for cap in caps {

@@ -24,9 +24,8 @@ import SwiftUI
 import Theme
 import Triangulation
 
-/// A connectable location — a city, a state for countries modelled that way, or a gateway — shown as a
-/// grey pin on the interactive globe. Tapping it connects to the fastest server there, or routes free
-/// users to the upsell.
+/// A connectable location — a city, a state for countries modelled that way, or a gateway — shown as a grey pin on the
+/// interactive globe. Tapping it connects to the fastest server there, or routes free users to the upsell.
 public struct LocationPin: Equatable, Identifiable, Sendable {
     public let id: String
 
@@ -105,10 +104,9 @@ struct PinCluster: Identifiable, Equatable {
         members.count == 1
     }
 
-    /// The same membership re-projected with a newer camera: the disc keeps tracking the globe (and keeps
-    /// its count label) while it fades out, without re-clustering, so the grouping can't flicker mid-fade.
-    /// Members that rotated behind the limb drop out of the centroid; a cluster wholly behind the globe
-    /// returns nil and disappears.
+    /// The same membership re-projected with a newer camera: the disc keeps tracking the globe (and keeps its count
+    /// label) while it fades out, without re-clustering, so the grouping can't flicker mid-fade. Members that rotated
+    /// behind the limb drop out of the centroid; a cluster wholly behind the globe returns nil and disappears.
     func reprojected(with projection: GlobeProjection) -> PinCluster? {
         var sum = CGPoint.zero
         var frontCount = 0
@@ -174,8 +172,8 @@ func clusterPins(_ projected: [ProjectedPin], within threshold: CGFloat) -> [Pin
     return accumulators.map { $0.cluster() }
 }
 
-/// Mutable running aggregate used while clustering: tracks the mean screen position and the members so the
-/// proximity test compares against the centroid-so-far rather than an arbitrary first point.
+/// Mutable running aggregate used while clustering: tracks the mean screen position and the members so the proximity
+/// test compares against the centroid-so-far rather than an arbitrary first point.
 private struct ClusterAccumulator {
     private var members: [LocationPin]
     private var sum: CGPoint

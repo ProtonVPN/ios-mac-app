@@ -18,9 +18,9 @@
 
 import simd
 
-/// A triangle whose vertices are unit-sphere directions, with the membership test the coast snap needs. A
-/// value type over three directions, so a hot per-country scan can keep walking a flat index buffer and
-/// only wrap the three vertices it's currently testing, with no allocation on the inner loop.
+/// A triangle whose vertices are unit-sphere directions, with the membership test the coast snap needs. A value type
+/// over three directions, so a hot per-country scan can keep walking a flat index buffer and only wrap the three
+/// vertices it's currently testing, with no allocation on the inner loop.
 public struct SphericalTriangle: Sendable {
     public let a, b, c: SIMD3<Float>
 
@@ -28,21 +28,21 @@ public struct SphericalTriangle: Sendable {
         (self.a, self.b, self.c) = (a, b, c)
     }
 
-    /// Whether `p` lies inside the triangle: on the interior side, the same side as the opposite vertex,
-    /// of each great-circle edge. Winding-independent, and correct for a point in the triangle's own
-    /// hemisphere, which is the only case the globe tests since a pin is always near its country.
+    /// Whether `p` lies inside the triangle: on the interior side, the same side as the opposite vertex, of each
+    /// great-circle edge. Winding-independent, and correct for a point in the triangle's own hemisphere, which is the
+    /// only case the globe tests since a pin is always near its country.
     ///
-    /// A degenerate triangle (duplicate or near-collinear vertices, which the baker's vertex weld can emit)
-    /// contains nothing. Without the guard, a duplicate vertex zeroes an edge normal and the sign test
-    /// becomes `0 >= 0`, true for every point on the sphere, so one bad sliver anywhere in a country's mesh
-    /// would make the whole ocean read as part of its land.
+    /// A degenerate triangle (duplicate or near-collinear vertices, which the baker's vertex weld can emit) contains
+    /// nothing. Without the guard, a duplicate vertex zeroes an edge normal and the sign test becomes `0 >= 0`, true
+    /// for every point on the sphere, so one bad sliver anywhere in a country's mesh would make the whole ocean read as
+    /// part of its land.
     public func contains(_ p: SIMD3<Float>) -> Bool {
         func interior(_ e0: SIMD3<Float>, _ e1: SIMD3<Float>, _ opposite: SIMD3<Float>) -> Bool {
             let normal = simd_cross(e0, e1)
             let side = simd_dot(opposite, normal)
-            // `side` over the normal's length is the sine of the opposite vertex's angular height above
-            // the edge's great circle. A triangle flatter than 1e-5 radians, about 60 metres on Earth,
-            // can't attest an interior side.
+            // `side` over the normal's length is the sine of the opposite vertex's angular height above the edge's
+            // great circle. A triangle flatter than 1e-5 radians, about 60 metres on Earth, can't attest an interior
+            // side.
             guard abs(side) > Constants.minAttestingSide * simd_length(normal) else { return false }
             return simd_dot(p, normal) * side >= 0
         }
@@ -54,9 +54,9 @@ public struct SphericalTriangle: Sendable {
     }
 }
 
-/// Whether the triangle `(v0, v1, v2)` faces outward from the sphere's centre, meaning its geometric
-/// normal points the same way as the surface. The baker and the base-sphere builder both wind triangles
-/// outward so a single back-face cull hides the far hemisphere of land and ocean alike.
+/// Whether the triangle `(v0, v1, v2)` faces outward from the sphere's centre, meaning its geometric normal points the
+/// same way as the surface. The baker and the base-sphere builder both wind triangles outward so a single back-face
+/// cull hides the far hemisphere of land and ocean alike.
 public func isOutwardFacing(_ v0: SIMD3<Float>, _ v1: SIMD3<Float>, _ v2: SIMD3<Float>) -> Bool {
     simd_dot(simd_cross(v1 - v0, v2 - v0), v0) >= 0
 }

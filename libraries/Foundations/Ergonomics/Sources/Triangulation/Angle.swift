@@ -18,8 +18,8 @@
 
 import Foundation
 
-/// A geometric angle that owns its degree/radian conversion, so the rest of the module never juggles
-/// `* .pi / 180` by hand. Backed by radians. Degrees are derived.
+/// A geometric angle that owns its degree/radian conversion, so the rest of the module never juggles `* .pi / 180` by
+/// hand. Backed by radians. Degrees are derived.
 @frozen
 public struct Angle: Equatable, Comparable, Sendable, BitwiseCopyable {
     public let radians: Double
@@ -36,8 +36,8 @@ public struct Angle: Equatable, Comparable, Sendable, BitwiseCopyable {
         Angle(radians: r)
     }
 
-    /// `asin`, `acos`, and `atan2` that hand back an `Angle` rather than a bare radian `Double`, so a
-    /// coordinate rotation can read `.atan2(y, x)` instead of `.radians(atan2(y, x))`.
+    /// `asin`, `acos`, and `atan2` that hand back an `Angle` rather than a bare radian `Double`, so a coordinate
+    /// rotation can read `.atan2(y, x)` instead of `.radians(atan2(y, x))`.
     public static func asin(_ x: Double) -> Angle {
         .radians(Foundation.asin(x))
     }
@@ -58,8 +58,8 @@ public struct Angle: Equatable, Comparable, Sendable, BitwiseCopyable {
         Angle(radians: a.radians - b.radians)
     }
 
-    /// Scalar multiples. Lets a periodic term combine angles with integer multipliers, and lets a series
-    /// read `sin(2 * M)` the way the textbook writes it.
+    /// Scalar multiples. Lets a periodic term combine angles with integer multipliers, and lets a series read `sin(2 *
+    /// M)` the way the textbook writes it.
     public static func * (k: Double, a: Angle) -> Angle {
         Angle(radians: k * a.radians)
     }
@@ -68,14 +68,14 @@ public struct Angle: Equatable, Comparable, Sendable, BitwiseCopyable {
         Double(k) * a
     }
 
-    /// Signed ordering on radians (minus 90 degrees is less than 45), so an angle can be `max`/`min`
-    /// reduced or compared against a threshold without unwrapping to `radians`.
+    /// Signed ordering on radians (minus 90 degrees is less than 45), so an angle can be `max`/`min` reduced or
+    /// compared against a threshold without unwrapping to `radians`.
     public static func < (a: Angle, b: Angle) -> Bool {
         a.radians < b.radians
     }
 
-    /// Wrapped into (-180, 180] degrees, east-positive geographic longitude. -180 normalises to +180, so
-    /// the antimeridian has a single normal form whichever side it's approached from.
+    /// Wrapped into (-180, 180] degrees, east-positive geographic longitude. -180 normalises to +180, so the
+    /// antimeridian has a single normal form whichever side it's approached from.
     public var normalizedSigned: Angle {
         var d = degrees.truncatingRemainder(dividingBy: 360)
         if d > 180 { d -= 360 } else if d <= -180 { d += 360 }
@@ -83,9 +83,9 @@ public struct Angle: Equatable, Comparable, Sendable, BitwiseCopyable {
     }
 }
 
-// Trig overloads taking an `Angle`, so the rotations and series throughout the module read like the
-// textbook: `sin(longitude)` rather than `sin(longitude.radians)`. The `Angle` owns the radian conversion
-// and these only unwrap it, so the call sites never see `* .pi / 180`.
+// Trig overloads taking an `Angle`, so the rotations and series throughout the module read like the textbook:
+// `sin(longitude)` rather than `sin(longitude.radians)`. The `Angle` owns the radian conversion and these only unwrap
+// it, so the call sites never see `* .pi / 180`.
 func sin(_ a: Angle) -> Double {
     Foundation.sin(a.radians)
 }

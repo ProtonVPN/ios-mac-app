@@ -29,17 +29,16 @@
     enum GlobeRenderMode {
         /// Live `MTKView`, redrawn each frame. What the app uses. Animates the connect transition.
         case live
-        /// One synchronous off-screen Metal render per `body`, shown as a static `Image`. Snapshot tests set
-        /// this on the view tree because a live `CAMetalLayer` can't be captured by `layer.render(in:)`,
-        /// whereas a plain `Image` composites through the normal capture path alongside the surrounding
-        /// chrome.
+        /// One synchronous off-screen Metal render per `body`, shown as a static `Image`. Snapshot tests set this on
+        /// the view tree because a live `CAMetalLayer` can't be captured by `layer.render(in:)`, whereas a plain
+        /// `Image` composites through the normal capture path alongside the surrounding chrome.
         case staticImage
     }
 
     extension EnvironmentValues {
-        /// Defaults to `.live`. The app never sets it, so the static path is reachable only from tests
-        /// (which import this module `@testable` to set it). Internal: `GlobeSurfaceView` is the sole reader,
-        /// so the seam cannot leak into production layout code.
+        /// Defaults to `.live`. The app never sets it, so the static path is reachable only from tests (which import
+        /// this module `@testable` to set it). Internal: `GlobeSurfaceView` is the sole reader, so the seam cannot leak
+        /// into production layout code.
         var globeRenderMode: GlobeRenderMode {
             get { self[GlobeRenderModeKey.self] }
             set { self[GlobeRenderModeKey.self] = newValue }
@@ -51,19 +50,18 @@
     }
 
     /// The globe drawn as a static image via off-screen Metal read-back. Takes the same fully populated
-    /// `GlobeSurfaceView` value the live path would show and forwards it through the shared `apply(to:)`, so
-    /// snapshots see every parameter (sun, Moon, points, stars) rather than a bare-globe subset that would
-    /// hide plumbing regressions. Reuses one cached renderer, with its device, pipelines, and baked vertex
-    /// buffers, across every render. `apply(to:)` assigns every property, so each render fully resets the
-    /// shared state.
+    /// `GlobeSurfaceView` value the live path would show and forwards it through the shared `apply(to:)`, so snapshots
+    /// see every parameter (sun, Moon, points, stars) rather than a bare-globe subset that would hide plumbing
+    /// regressions. Reuses one cached renderer, with its device, pipelines, and baked vertex buffers, across every
+    /// render. `apply(to:)` assigns every property, so each render fully resets the shared state.
     struct StaticGlobeImage: View {
         let globe: GlobeSurfaceView
         let size: CGSize
         let scale: CGFloat
 
-        /// One renderer for the whole test run, since building the pipelines and buffers is the expensive
-        /// part. Uses the same `GlobeSurface` pipeline config as the live `MTKView`, so snapshots can't
-        /// silently render through a different format or sample count than the app.
+        /// One renderer for the whole test run, since building the pipelines and buffers is the expensive part. Uses
+        /// the same `GlobeSurface` pipeline config as the live `MTKView`, so snapshots can't silently render through a
+        /// different format or sample count than the app.
         private static let renderer: GlobeRenderer? = {
             guard let device = MTLCreateSystemDefaultDevice() else { return nil }
             return GlobeRenderer(

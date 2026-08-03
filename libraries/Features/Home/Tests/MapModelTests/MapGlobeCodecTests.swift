@@ -28,8 +28,8 @@ import Triangulation
 // Sample construction uses the owned-array init, so `.elements` resolves everywhere without a blob.
 @Suite("MapGlobeCodec")
 struct MapGlobeCodecTests {
-    /// A model exercising every branch of the codec: bulk data arrays, a draw list with ranges, and a
-    /// country dictionary whose keys are deliberately out of order, to prove the sort on encode.
+    /// A model exercising every branch of the codec: bulk data arrays, a draw list with ranges, and a country
+    /// dictionary whose keys are deliberately out of order, to prove the sort on encode.
     static let sample = MapGlobeModel<InMemory>(
         fillVertices: [
             SIMD3<Float>(0, 0, 1),
@@ -83,8 +83,8 @@ struct MapGlobeCodecTests {
         let decoded = try MapGlobeCodec.decode(MapGlobeCodec.encode(Self.sample))
         let original = Self.sample
 
-        // Whole-value assertions: a failure prints a structural diff naming the exact index and field
-        // that diverged, instead of one column of one array.
+        // Whole-value assertions: a failure prints a structural diff naming the exact index and field that diverged,
+        // instead of one column of one array.
         expectNoDifference(decoded.fillVertices.elements, original.fillVertices.elements)
         expectNoDifference(decoded.fillIndices.elements, original.fillIndices.elements)
         expectNoDifference(decoded.borderColor, original.borderColor)
@@ -145,9 +145,8 @@ struct MapGlobeCodecTests {
 
     @Test("Rejects data truncated at every possible offset")
     func truncatedEverywhere() throws {
-        // Cutting inside every field class (header, bulk arrays, draw units, dictionary keys) must throw
-        // and never crash. A cut landing exactly on the model boundary is impossible, since a prefix is
-        // strictly shorter.
+        // Cutting inside every field class (header, bulk arrays, draw units, dictionary keys) must throw and never
+        // crash. A cut landing exactly on the model boundary is impossible, since a prefix is strictly shorter.
         let data = try MapGlobeCodec.encode(Self.sample)
         for length in 0 ..< data.count {
             #expect(throws: (any Error).self, "prefix of \(length) bytes should throw") {
@@ -158,9 +157,8 @@ struct MapGlobeCodecTests {
 
     @Test("A corrupt byte never crashes the decoder")
     func corruptByteNeverCrashes() throws {
-        // Forcing each byte to 0xFF sweeps every failure class, including a count prefix inflated to
-        // around 4 billion, which must throw up front rather than size a collection from it and die
-        // allocating.
+        // Forcing each byte to 0xFF sweeps every failure class, including a count prefix inflated to around 4 billion,
+        // which must throw up front rather than size a collection from it and die allocating.
         let data = try MapGlobeCodec.encode(Self.sample)
         for index in 0 ..< data.count {
             var mutated = data
@@ -189,8 +187,8 @@ struct MapGlobeCodecTests {
         let mapped = try mapping.withRawSpan { try MapGlobeCodec.decode(slicing: $0) }
         let copied = try MapGlobeCodec.decode(data)
 
-        // The bulk sections come back as blob slices, on the GPU-bindable alignment, resolving to the same elements
-        // the copying decode produced.
+        // The bulk sections come back as blob slices, on the GPU-bindable alignment, resolving to the same elements the
+        // copying decode produced.
         for region in [mapped.fillVertices.blobSliceRegion, mapped.fillIndices.blobSliceRegion, mapped.borderSegments.blobSliceRegion] {
             #expect(region.byteOffset % MapGlobeCodec.gpuSectionAlignment == 0)
         }

@@ -30,8 +30,6 @@ public struct ServerGroupInfo: Sendable {
     public let serverCount: Int
     public let latitude: Double
     public let longitude: Double
-    /// The backend's localized city name for a `.city` group (the logicals' `translatedCity`); nil for other
-    /// kinds, or when the backend supplied no translation. Prefer this over `kind.name` for display.
     public let translatedCity: String?
 
     public let supportsSmartRouting: Bool

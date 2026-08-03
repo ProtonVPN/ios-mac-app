@@ -27,10 +27,10 @@ import TestingErgonomics
 import Theme
 import VPNAppCore
 
-// `.serialized` + the `.dependencies` trait give every country its own dependency context (store
-// construction and view rendering see the same overrides) and keep the `@Shared` writes from
-// interleaving across parameterized cases. The `TestClock` never ticks, so the map view's Sun/Moon
-// re-sampling loop stays parked and the render is a single deterministic frame.
+// `.serialized` + the `.dependencies` trait give every country its own dependency context (store construction and view
+// rendering see the same overrides) and keep the `@Shared` writes from interleaving across parameterized cases. The
+// `TestClock` never ticks, so the map view's Sun/Moon re-sampling loop stays parked and the render is a single
+// deterministic frame.
 @Suite(
     "Map countries",
     .serialized,
@@ -49,9 +49,9 @@ struct DisconnectedCountriesSnapshotsTests {
     @Test("Map Screen Countries", arguments: Countries.all)
     @MainActor
     func countries(countryCode: String) throws {
-        // Declared in the test body, not as a suite stored property: the suite instance is created outside
-        // the `.dependencies` trait's scope, so a projection bound there would write to a different shared
-        // storage than the store reads.
+        // Declared in the test body, not as a suite stored property: the suite instance is created outside the
+        // `.dependencies` trait's scope, so a projection bound there would write to a different shared storage than the
+        // store reads.
         @Shared(.userCountry) var userCountry
         let countryCode = countryCode.uppercased()
         $userCountry.withLock { $0 = countryCode }

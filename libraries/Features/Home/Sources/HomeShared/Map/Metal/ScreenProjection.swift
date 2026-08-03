@@ -20,14 +20,13 @@ import CoreGraphics
 import simd
 import Triangulation
 
-/// The globe's off-centre perspective framing. It owns the projection scales in one place, the focal
-/// length, the horizontal and vertical clip-space scales, and the framed region's offset, and derives both
-/// the forward matrix and its inverse (a screen point back to a view-space ray) from them, so the two can
-/// never drift apart.
+/// The globe's off-centre perspective framing. It owns the projection scales in one place, the focal length, the
+/// horizontal and vertical clip-space scales, and the framed region's offset, and derives both the forward matrix and
+/// its inverse (a screen point back to a view-space ray) from them, so the two can never drift apart.
 ///
-/// The globe is framed within `[focusTop, focusTop + focusHeight]` of the taller render canvas and spills
-/// above and below it unclipped. Stays here in the Map folder rather than in `Triangulation` because it is
-/// tied to `CGSize`, to the app's framing, and to Metal's clip conventions.
+/// The globe is framed within `[focusTop, focusTop + focusHeight]` of the taller render canvas and spills above and
+/// below it unclipped. Stays here in the Map folder rather than in `Triangulation` because it is tied to `CGSize`, to
+/// the app's framing, and to Metal's clip conventions.
 struct ScreenProjection {
     let viewSize: CGSize
     /// Vertical clip-space scale: the focal length compressed into the framed region.
@@ -49,8 +48,8 @@ struct ScreenProjection {
         self.yOffset = (fh + 2 * ft) / renderHeight - 1
     }
 
-    /// Perspective matrix. The caller multiplies in the view translation and globe rotation. The y output
-    /// is compressed into the framed region and the image continues above and below it unclipped.
+    /// Perspective matrix. The caller multiplies in the view translation and globe rotation. The y output is compressed
+    /// into the framed region and the image continues above and below it unclipped.
     func matrix(near: Float, far: Float) -> simd_float4x4 {
         let zs = far / (near - far) // Metal clip z in [0, 1], right-handed, looking down -z
         return simd_float4x4(columns: (
@@ -61,8 +60,8 @@ struct ScreenProjection {
         ))
     }
 
-    /// View-space ray through a screen point, from the camera at the origin looking down -z. The exact
-    /// inverse of `matrix`'s framing, built from the same scales. The caller intersects it with the globe.
+    /// View-space ray through a screen point, from the camera at the origin looking down -z. The exact inverse of
+    /// `matrix`'s framing, built from the same scales. The caller intersects it with the globe.
     func viewRay(at point: CGPoint) -> SIMD3<Float> {
         let ndcX = Float(point.x / viewSize.width) * 2 - 1
         let ndcY = 1 - Float(point.y / viewSize.height) * 2
@@ -71,9 +70,9 @@ struct ScreenProjection {
 }
 
 /// First hit of a view-space `ray`, cast from the camera at the origin, on the unit globe whose centre sits
-/// `cameraDistance` ahead down -z. A ray that misses the globe clamps to the nearest point on the limb, so
-/// a drag that slips off the edge still rotates rather than jumping. Returns the hit as a unit-sphere
-/// direction relative to the globe centre.
+/// `cameraDistance` ahead down -z. A ray that misses the globe clamps to the nearest point on the limb, so a drag that
+/// slips off the edge still rotates rather than jumping. Returns the hit as a unit-sphere direction relative to the
+/// globe centre.
 func unitSphereHit(ray direction: SIMD3<Float>, cameraDistance distance: Float) -> SIMD3<Float> {
     let toCentre = SIMD3<Float>(0, 0, distance) // origin minus centre
     let dDotL = simd_dot(direction, toCentre)

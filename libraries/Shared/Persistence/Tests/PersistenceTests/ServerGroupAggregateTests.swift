@@ -89,9 +89,6 @@ final class ServerGroupAggregateTests: TestIsolatedDatabaseTestCase {
     }
 
     func testCityGroupResolvesTranslationWhenOnlySomeServersCarryOne() throws {
-        // Regression: `translatedCity` is nullable and must be aggregated (`max`, which skips NULLs)
-        // under the city GROUP BY. A bare column read an arbitrary row here, so a group where only some
-        // logicals carry a translation could nondeterministically fall back to the English name.
         let servers = [
             TestData.createMockServer(withID: "CH#1", city: "Geneva", translatedCity: nil),
             TestData.createMockServer(withID: "CH#2", city: "Geneva", translatedCity: "Genève"),

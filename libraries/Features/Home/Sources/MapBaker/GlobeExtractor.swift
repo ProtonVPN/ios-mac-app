@@ -53,14 +53,14 @@ private struct BakedPath {
 /// Accumulates the shared vertex, index, and segment buffers as paths are appended, then assembles the final model.
 private struct GlobeBuilder {
     private enum Constants {
-        /// Sphere-arc tolerance in radians (about a degree) for densifying long segments. Most source segments are
-        /// far shorter and pass through untouched.
+        /// Sphere-arc tolerance in radians (about a degree) for densifying long segments. Most source segments are far
+        /// shorter and pass through untouched.
         static let densifyTolerance: Float = 1.0 * .pi / 180
     }
 
     private enum Dimensions {
-        /// Squared-distance cull for zero-length border segments, in sphere units: about 1e-6 radians, or 6 metres
-        /// of Earth. Only true duplicates, densification landing on an existing vertex, fall under it.
+        /// Squared-distance cull for zero-length border segments, in sphere units: about 1e-6 radians, or 6 metres of
+        /// Earth. Only true duplicates, densification landing on an existing vertex, fall under it.
         static let degenerateSegmentLengthSquared: Float = 1e-12
     }
 
@@ -81,8 +81,8 @@ private struct GlobeBuilder {
         self.halfWidthScale = Float(2 * Double.pi / Double(bounds.width))
     }
 
-    /// Bakes one path: fill triangles, border segments, and the bounding cap the camera frames it with.
-    /// Paths that produce no geometry are dropped.
+    /// Bakes one path: fill triangles, border segments, and the bounding cap the camera frames it with. Paths that
+    /// produce no geometry are dropped.
     mutating func append(_ path: MapExtractor.ExtractedPath) {
         let denseRings = path.rings.map(densified)
         let vertexStart = fillVertices.count
@@ -90,9 +90,9 @@ private struct GlobeBuilder {
         let borderRange = appendBorders(of: path, rings: denseRings)
         guard !fillRange.isEmpty || !borderRange.isEmpty else { return }
 
-        // The centre is the path's 2-D bounding-box center un-projected, which avoids the poleward bias
-        // of averaging unit vectors over a country that spans a wide longitude. The radius is the largest
-        // sphere angle to the path's vertices.
+        // The centre is the path's 2-D bounding-box center un-projected, which avoids the poleward bias of averaging
+        // unit vectors over a country that spans a wide longitude. The radius is the largest sphere angle to the path's
+        // vertices.
         let sphereVertices: [SIMD3<Float>] = vertexStart < fillVertices.count
             ? Array(fillVertices[vertexStart...])
             : borderSegments[borderRange].map(\.a)
@@ -129,11 +129,10 @@ private struct GlobeBuilder {
 
     // MARK: - Fills
 
-    /// Triangulates the path's fill under the even-odd rule the source SVG uses, so interior lakes carve
-    /// as holes and islands stay filled, then appends the sphere vertices and triangles to the shared
-    /// buffers. GEOS repairs the source's near-duplicate self-intersections and triangulates the interior
-    /// exactly, so concave coastline inlets carve cleanly with no bridging triangles across them. Returns
-    /// the path's slice of `fillIndices`.
+    /// Triangulates the path's fill under the even-odd rule the source SVG uses, so interior lakes carve as holes and
+    /// islands stay filled, then appends the sphere vertices and triangles to the shared buffers. GEOS repairs the
+    /// source's near-duplicate self-intersections and triangulates the interior exactly, so concave coastline inlets
+    /// carve cleanly with no bridging triangles across them. Returns the path's slice of `fillIndices`.
     private mutating func appendFill(of path: MapExtractor.ExtractedPath, rings: [MapExtractor.Ring]) -> Range<Int> {
         let start = fillIndices.count
         guard path.fillColor != nil else { return start ..< start }
@@ -145,8 +144,8 @@ private struct GlobeBuilder {
         let base = UInt32(fillVertices.count)
         let sphereVertices = vertices2D.map(unprojector.sphere)
         fillVertices.append(contentsOf: sphereVertices)
-        // Emit each triangle wound counter-clockwise seen from outside, so back-face culling hides the far
-        // hemisphere regardless of the sphere's coordinate handedness.
+        // Emit each triangle wound counter-clockwise seen from outside, so back-face culling hides the far hemisphere
+        // regardless of the sphere's coordinate handedness.
         for triangle in triangles {
             let (i0, i1, i2) = (base + UInt32(triangle.0), base + UInt32(triangle.1), base + UInt32(triangle.2))
             if isOutwardFacing(sphereVertices[triangle.0], sphereVertices[triangle.1], sphereVertices[triangle.2]) {
@@ -160,8 +159,8 @@ private struct GlobeBuilder {
 
     // MARK: - Borders
 
-    /// Appends one segment per densified ring edge, skipping zero-length duplicates. Returns the path's
-    /// slice of `borderSegments`.
+    /// Appends one segment per densified ring edge, skipping zero-length duplicates. Returns the path's slice of
+    /// `borderSegments`.
     private mutating func appendBorders(of path: MapExtractor.ExtractedPath, rings: [MapExtractor.Ring]) -> Range<Int> {
         let start = borderSegments.count
         guard let stroke = path.strokeColor, path.strokeHalfWidth > 0 else { return start ..< start }
@@ -182,8 +181,8 @@ private struct GlobeBuilder {
 
     // MARK: - Densification
 
-    /// Splits segments longer than `densifyTolerance` of sphere arc, so a long straight border follows the
-    /// sphere's curvature once un-projected.
+    /// Splits segments longer than `densifyTolerance` of sphere arc, so a long straight border follows the sphere's
+    /// curvature once un-projected.
     private func densified(_ ring: MapExtractor.Ring) -> MapExtractor.Ring {
         let points = ring.points
         guard points.count >= 2 else { return ring }
@@ -207,8 +206,8 @@ private struct GlobeBuilder {
 
     // MARK: - Countries
 
-    /// Groups the baked paths by their SVG ancestor ids and aggregates each group into one
-    /// `MapGlobeCountry`: merged draw ranges plus a cap enclosing every member.
+    /// Groups the baked paths by their SVG ancestor ids and aggregates each group into one `MapGlobeCountry`: merged
+    /// draw ranges plus a cap enclosing every member.
     private func countries() -> [String: MapGlobeCountry] {
         var memberIndicesByID: [String: [Int]] = [:]
         for (index, path) in bakedPaths.enumerated() {
@@ -218,11 +217,10 @@ private struct GlobeBuilder {
         }
         var result: [String: MapGlobeCountry] = [:]
         for (id, members) in memberIndicesByID {
-            // The country centre is the union of the member bounding boxes, un-projected, and the radius
-            // encloses every member cap. For a country with members that wrap the antimeridian, like the
-            // Aleutians, the union box spans most of the map and this centre is wrong. The camera rotates
-            // to the mainland variant though, which doesn't wrap, so the affected aggregate centre is
-            // never used for framing.
+            // The country centre is the union of the member bounding boxes, un-projected, and the radius encloses every
+            // member cap. For a country with members that wrap the antimeridian, like the Aleutians, the union box
+            // spans most of the map and this centre is wrong. The camera rotates to the mainland variant though, which
+            // doesn't wrap, so the affected aggregate centre is never used for framing.
             var unionBounds = bakedPaths[members[0]].bounds
             for member in members.dropFirst() {
                 unionBounds = unionBounds.union(bakedPaths[member].bounds)
@@ -238,12 +236,12 @@ private struct GlobeBuilder {
     }
 }
 
-/// Tracks how faithfully each path triangulated and prints one summary at the end of the bake. Keeping the
-/// numbers here keeps the geometry code free of bookkeeping.
+/// Tracks how faithfully each path triangulated and prints one summary at the end of the bake. Keeping the numbers here
+/// keeps the geometry code free of bookkeeping.
 private struct TriangulationReport {
     private enum Constants {
-        /// Triangulated-versus-polygon area ratio above which a ring is counted as imperfect (logged as a
-        /// negligible sliver), and the higher ratio above which it's flagged as a gross failure.
+        /// Triangulated-versus-polygon area ratio above which a ring is counted as imperfect (logged as a negligible
+        /// sliver), and the higher ratio above which it's flagged as a gross failure.
         static let imperfectAreaRatio: Float = 0.02
         static let grossAreaRatio: Float = 0.15
     }
@@ -258,11 +256,11 @@ private struct TriangulationReport {
     private var failures: [Failure] = []
     private var totalArea: Float = 0
 
-    /// Compares the area GEOS reported for the polygon (outer ring minus holes) against the summed area of
-    /// the triangles it produced, and logs the path when they disagree by more than a small fraction. A
-    /// large mismatch means the triangulation dropped or overlapped triangles. The check runs in 2-D map
-    /// space, before un-projection. A path with real area but no triangles at all is logged as a
-    /// 100 percent mismatch, so a whole country disappearing can never look smaller than a sliver.
+    /// Compares the area GEOS reported for the polygon (outer ring minus holes) against the summed area of the
+    /// triangles it produced, and logs the path when they disagree by more than a small fraction. A large mismatch
+    /// means the triangulation dropped or overlapped triangles. The check runs in 2-D map space, before un-projection.
+    /// A path with real area but no triangles at all is logged as a 100 percent mismatch, so a whole country
+    /// disappearing can never look smaller than a sliver.
     mutating func record(polygonArea: Double, vertices: [SIMD2<Float>], triangles: [(Int, Int, Int)], ids: [String]) {
         let area = Float(polygonArea)
         guard area > 0 else { return }
@@ -295,9 +293,9 @@ private struct TriangulationReport {
     }
 }
 
-/// Largest angle in radians between `center` and any vertex, measured across the sphere's surface: how far
-/// the path spreads out from its center. Stays on plain `Float` maths, with no `Angle` wrapping, because it
-/// scans every vertex of every path.
+/// Largest angle in radians between `center` and any vertex, measured across the sphere's surface: how far the path
+/// spreads out from its center. Stays on plain `Float` maths, with no `Angle` wrapping, because it scans every vertex
+/// of every path.
 private func maxSphereAngle(from center: SIMD3<Float>, to vertices: [SIMD3<Float>]) -> Float {
     var radius: Float = 0
     for vertex in vertices {
@@ -322,10 +320,10 @@ private func mergeRanges(_ ranges: [Range<Int>]) -> [Range<Int>] {
 
 // MARK: - Natural Earth inversion + sphere mapping
 
-/// Inverts the Natural Earth projection, recovering latitude and longitude from map coordinates, and maps
-/// to the unit sphere. The projection's polynomials live once in `Triangulation.NaturalEarth`, shared with
-/// the app's forward pin placement so the two can't drift. This only layers on the map's pixel scale and
-/// undoes its 10-degree prime-meridian shift.
+/// Inverts the Natural Earth projection, recovering latitude and longitude from map coordinates, and maps to the unit
+/// sphere. The projection's polynomials live once in `Triangulation.NaturalEarth`, shared with the app's forward pin
+/// placement so the two can't drift. This only layers on the map's pixel scale and undoes its 10-degree prime-meridian
+/// shift.
 struct Unprojector {
     private let ratioX: Double
     private let ratioY: Double

@@ -36,9 +36,9 @@ import Testing
 import TestingErgonomics
 import VPNAppCore
 
-// `.serialized` + the `.dependencies` trait give every parameterized case its own dependency context
-// (store construction and view rendering see the same overrides — no per-test `withDependencies`
-// nesting) and keep cases that write `@Shared` globals from interleaving.
+// `.serialized` + the `.dependencies` trait give every parameterized case its own dependency context (store
+// construction and view rendering see the same overrides — no per-test `withDependencies` nesting) and keep cases that
+// write `@Shared` globals from interleaving.
 @Suite(
     "Home",
     .serialized,
@@ -48,8 +48,8 @@ import VPNAppCore
         $0.locale = Locale(identifier: "en")
         $0.date = .constant(SnapshotEnvironment.date)
         $0.continuousClock = TestClock()
-        // `HomeView.task` subscribes to the announcements publisher during render; give it an explicit
-        // never-emitting publisher (the `@DependencyClient` placeholder endpoints report when called).
+        // `HomeView.task` subscribes to the announcements publisher during render; give it an explicit never-emitting
+        // publisher (the `@DependencyClient` placeholder endpoints report when called).
         var announcementManager = AnnouncementManager()
         announcementManager.announcementsPublisher = { Empty(completeImmediately: false).eraseToAnyPublisher() }
         $0.announcementManager = announcementManager
@@ -90,9 +90,9 @@ struct HomeScreenTests {
     @Test("Home screen", arguments: [VpnTier.free, VpnTier.paid], homeTestData)
     @MainActor
     func homeScreen(tier: VpnTier, state: (protection: ProtectionState, connection: ConnectionState)) throws {
-        // Declared in the test body, not as suite stored properties: the suite instance is created outside
-        // the `.dependencies` trait's scope, so projections bound there would write to a different shared
-        // storage than the store reads.
+        // Declared in the test body, not as suite stored properties: the suite instance is created outside the
+        // `.dependencies` trait's scope, so projections bound there would write to a different shared storage than the
+        // store reads.
         @Shared(.protectionState) var protectionState
         @Shared(.connectionState) var connectionState
         @Shared(.userTier) var userTier
@@ -101,18 +101,15 @@ struct HomeScreenTests {
         @Shared(.recentConnections) var recents
         @Shared(.netShieldLevel) var netShieldLevel
 
-        // Show real NetShield stats in the connected snapshot. `.tunnelStats` is delivered via an async
-        // `SharedReader`, which would race the snapshot; overriding it with a constant reader renders the
-        // values synchronously and deterministically.
         var initialState = HomeFeature.State()
         initialState.connectionStatus.connectionStatusBanner.$netShieldStats = SharedReader(
             value: NetShieldModel(trackersCount: 432, adsCount: 12300, dataSaved: 123_500_000, enabled: true)
         )
 
         // Construct the store BEFORE seeding: `RecentsFeature.State.init` overwrites `.recentConnections` from the
-        // persisted `.recentConnections` key, so a pre-construction write would be clobbered back to empty.
-        // The `.dependencies` suite trait gives this case a fresh dependency context, so these writes
-        // cannot leak into the next case and need no reset.
+        // persisted `.recentConnections` key, so a pre-construction write would be clobbered back to empty. The
+        // `.dependencies` suite trait gives this case a fresh dependency context, so these writes cannot leak into the
+        // next case and need no reset.
         let store = Store(initialState: initialState, reducer: HomeFeature.init)
         $netShieldLevel.withLock { $0 = .level2 }
         $recents.withLock { $0 = [.connectionRegion, .connectionSecureCoreFastest, .connectionSecureCore] }
@@ -130,8 +127,8 @@ struct HomeScreenTests {
             // by the snapshot strategy's `layer.render(in:)`.
             .environment(\.globeRenderMode, .staticImage)
 
-        // Derived from the test parameters, never from the shared globals, so a stray write from
-        // elsewhere can't steer this case to another case's reference file.
+        // Derived from the test parameters, never from the shared globals, so a stray write from elsewhere can't steer
+        // this case to another case's reference file.
         let testName = [
             tier.isFree ? "Free" : "Paid",
             state.protection.shortDescription(),

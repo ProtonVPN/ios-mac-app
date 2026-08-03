@@ -19,9 +19,7 @@
 import simd
 import Triangulation
 
-/// Where the camera looks and how far back it sits. Both map modes, decorative and interactive, frame
-/// countries and regions the same way, so the constants and the zoom-to-fit formula live here once rather
-/// than drifting between the two.
+/// Where the camera looks and how far back it sits.
 enum GlobeFocus {
     /// Default view when no country is known, looking at Europe and Africa.
     static let defaultDirection = GlobeGeometry.unitSphere(latitudeDegrees: 25, longitudeDegrees: 10)
@@ -40,8 +38,8 @@ enum GlobeFocus {
         return simd_normalize(country.cap.center)
     }
 
-    /// Camera distance for a country code, closer for smaller countries so they fill the view. Clamped so
-    /// the camera never clips into the sphere or pulls back past the whole-globe framing.
+    /// Camera distance for a country code, closer for smaller countries so they fill the view. Clamped so the camera
+    /// never clips into the sphere or pulls back past the whole-globe framing.
     static func cameraDistance(forCountry code: String?) -> Float {
         guard let code = code?.lowercased(), let country = GlobeResource.mainland(code: code) else {
             return wholeGlobeDistance
@@ -49,17 +47,15 @@ enum GlobeFocus {
         return distance(fitting: country.cap)
     }
 
-    /// Camera distance that frames a `SphericalCap`: its half-angle fitted into `fitMargin` of the half
-    /// field of view.
+    /// Camera distance that frames a `SphericalCap`: its half-angle fitted into `fitMargin` of the half field of view.
     static func distance(fitting cap: SphericalCap, aspectRatio: Float = 1, minDistance: Float = GlobeFocus.minDistance) -> Float {
         distance(fittingAngularRadius: Float(cap.radius.radians), aspectRatio: aspectRatio, minDistance: minDistance)
     }
 
-    /// Camera distance that fits a cap of angular radius `rho` radians into `fitMargin` of the half field
-    /// of view. Clamped to `[minDistance, wholeGlobeDistance]`. The geometry: with the camera at distance
-    /// `d` from a unit sphere, a surface cap of angular radius `rho` subtends a half-angle whose tangent is
-    /// `sin(rho) / (d - cos(rho))`. Solving for the `d` that makes that equal `tan(halfFov * fitMargin)`
-    /// gives the closed form below.
+    /// Camera distance that fits a cap of angular radius `rho` radians into `fitMargin` of the half field of view.
+    /// Clamped to `[minDistance, wholeGlobeDistance]`. The geometry: with the camera at distance `d` from a unit
+    /// sphere, a surface cap of angular radius `rho` subtends a half-angle whose tangent is `sin(rho) / (d -
+    /// cos(rho))`. Solving for the `d` that makes that equal `tan(halfFov * fitMargin)` gives the closed form below.
     ///
     /// `aspectRatio` (width over height) picks the binding half field of view. The default field of view is
     /// vertical, so on a portrait screen the horizontal one is narrower, and a cap spread sideways would

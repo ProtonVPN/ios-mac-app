@@ -39,9 +39,9 @@ struct SphericalTriangleTests {
         #expect(!SphericalTriangle(a, b, c).contains(outside))
     }
 
-    /// A duplicate vertex zeroes an edge normal, and a raw sign test would then hold (`0 >= 0`) for every
-    /// point on the sphere, making one weld-collapsed sliver in a country's mesh claim the whole ocean as
-    /// land. A degenerate triangle must contain nothing.
+    /// A duplicate vertex zeroes an edge normal, and a raw sign test would then hold (`0 >= 0`) for every point on the
+    /// sphere, making one weld-collapsed sliver in a country's mesh claim the whole ocean as land. A degenerate
+    /// triangle must contain nothing.
     @Test("A degenerate triangle contains nothing")
     func degenerateTriangleContainsNothing() {
         let degenerate = SphericalTriangle(a, a, c)

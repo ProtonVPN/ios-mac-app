@@ -41,8 +41,8 @@ public struct HomeMapView: View {
 
     private let availableHeight: CGFloat
     private let availableWidth: CGFloat
-    /// Full height to render into. The globe is framed within `availableHeight` but drawn down to here so
-    /// it spills below the fold unclipped. Nil renders only the framed region.
+    /// Full height to render into. The globe is framed within `availableHeight` but drawn down to here so it spills
+    /// below the fold unclipped. Nil renders only the framed region.
     private let renderHeight: CGFloat?
     /// Top safe-area inset: the framed region starts this far down the canvas.
     private let topInset: CGFloat
@@ -61,8 +61,8 @@ public struct HomeMapView: View {
         orientation: GlobeCamera.orientation(facing: GlobeFocus.direction(forCountry: nil)),
         distance: GlobeFocus.cameraDistance(forCountry: nil)
     )
-    /// Connect-pill choreography (reveal progress, cross-fade) and the zoom floor derived from the pin set.
-    /// The selection itself lives in the store.
+    /// Connect-pill choreography (reveal progress, cross-fade) and the zoom floor derived from the pin set. The
+    /// selection itself lives in the store.
     @State private var connectPill = ConnectPillModel()
     /// The Sun and Moon positions, in the form the globe renderer consumes (the fixed starfield comes from
     /// `Starfield`). Starts as a placeholder and then gets evaluated when the view initializes.
@@ -72,23 +72,22 @@ public struct HomeMapView: View {
 
     /// Drives the color of the sunlight cast on the globe, the same green or red as the connection tint.
     @SharedReader(.protectionState) private var protectionState: ProtectionState
-    /// The sunlight color currently displayed. Eased toward `sunTintRGB` whenever the protection state
-    /// changes, so the tint cross-fades instead of snapping. Set without animation once on appear.
+    /// The sunlight color currently displayed. Eased toward `sunTintRGB` whenever the protection state changes, so the
+    /// tint cross-fades instead of snapping. Set without animation once on appear.
     @State private var displayedSunTint: SIMD3<Float> = .init(1, 1, 1)
     private enum Constants {
         /// How long the sunlight color takes to ease to a new connection tint. Short enough to keep up with a
         /// reconnect, long enough that the change reads as a fade rather than a flash.
         static let sunTintFadeDuration: Double = 0.5
-        /// Pill grow/collapse spring. Critically damped so the collapse eases into 0 without overshooting
-        /// past it.
+        /// Pill grow/collapse spring. Critically damped so the collapse eases into 0 without overshooting past it.
         static let pillRevealSpring = Animation.spring(response: 0.32, dampingFraction: 1)
-        /// How often the Sun and Moon positions are re-sampled. They drift about a quarter of a degree per
-        /// minute, so at this cadence each step is invisible.
+        /// How often the Sun and Moon positions are re-sampled. They drift about a quarter of a degree per minute, so
+        /// at this cadence each step is invisible.
         static let solarSystemRefreshInterval: Duration = .seconds(15)
     }
 
-    /// Fill color of the Metal city points, the same color as the cluster discs they crossfade into.
-    /// Left uncached so an appearance change can't leave the points showing a stale color.
+    /// Fill color of the Metal city points, the same color as the cluster discs they crossfade into. Left uncached so
+    /// an appearance change can't leave the points showing a stale color.
     private var pointFillColor: SIMD4<Float> {
         let c = Self.rgb(of: PinDisplay.fillColor)
         return SIMD4<Float>(c.x, c.y, c.z, 1)
@@ -113,8 +112,8 @@ public struct HomeMapView: View {
         store.presentation == .full
     }
 
-    /// The framing geometry (render canvas, framed region, top offset), computed once and shared by the
-    /// render path, the drag unprojection, and the tap hit-test so they can't disagree.
+    /// The framing geometry (render canvas, framed region, top offset), computed once and shared by the render path,
+    /// the drag unprojection, and the tap hit-test so they can't disagree.
     private var framing: GlobeFraming {
         GlobeFraming(
             viewSize: CGSize(width: availableWidth, height: renderHeight ?? availableHeight),
@@ -124,10 +123,9 @@ public struct HomeMapView: View {
     }
 
     public var body: some View {
-        // `AnimatableTint` interpolates `displayedSunTint` frame by frame (driven by the `sunTintRGB`
-        // onChange below), so even a sub-second reconnect eases through the connection colors rather than
-        // snapping. The interpolated `tint` feeds both the sunlight wash and the sun disc, keeping them
-        // in step.
+        // `AnimatableTint` interpolates `displayedSunTint` frame by frame (driven by the `sunTintRGB` onChange below),
+        // so even a sub-second reconnect eases through the connection colors rather than snapping. The interpolated
+        // `tint` feeds both the sunlight wash and the sun disc, keeping them in step.
         AnimatableTint(tint: displayedSunTint) { tint in
             AnimatableGlobe(
                 camera: displayedCamera,
@@ -180,23 +178,23 @@ public struct HomeMapView: View {
         .animation(reduceMotion ? nil : .default, value: store.userCountry)
         .onChange(of: highlightedCode) { presentedOrientation = displayedCamera.orientation }
         .onChange(of: store.presentation) { presentationChanged() }
-        // Ease the sunlight color to its new connection tint instead of snapping, so a fast reconnect that
-        // runs through green, white, and red in under a second reads as a smooth cross-fade.
+        // Ease the sunlight color to its new connection tint instead of snapping, so a fast reconnect that runs through
+        // green, white, and red in under a second reads as a smooth cross-fade.
         .onChange(of: sunTintRGB) {
             withAnimation(reduceMotion ? nil : .easeInOut(duration: Constants.sunTintFadeDuration)) { displayedSunTint = sunTintRGB }
         }
-        // Selecting grows the pill in and deselecting collapses it back into the point. The selection is
-        // feature state; `ConnectPillModel` runs its animated presentation. The view resolves the
-        // animation here because `reduceMotion` comes from the environment.
+        // Selecting grows the pill in and deselecting collapses it back into the point. The selection is feature state;
+        // `ConnectPillModel` runs its animated presentation. The view resolves the animation here because
+        // `reduceMotion` comes from the environment.
         .onChange(of: store.selectedLocationID) {
             connectPill.selectionChanged(to: store.selectedLocation, animation: reduceMotion ? nil : Constants.pillRevealSpring)
         }
         // Recompute the closest-pair angle, and with it the zoom floor, whenever the pin set changes.
         .onChange(of: store.locationPins) { connectPill.recomputeClosestAngle(among: store.locationPins) }
         .onAppear { appeared() }
-        // Re-sample the Sun and Moon on a slow clock so the terminator and the Moon track real time
-        // (starting immediately, replacing the placeholder the state was seeded with). The task is
-        // cancelled automatically when the view goes away.
+        // Re-sample the Sun and Moon on a slow clock so the terminator and the Moon track real time (starting
+        // immediately, replacing the placeholder the state was seeded with). The task is cancelled automatically when
+        // the view goes away.
         .task { await trackSolarSystemDrift() }
         // The display link retains the coaster while running; stop it on disappear so it can't outlive the view.
         .onDisappear { trackball.stopCoast() }
@@ -205,9 +203,9 @@ public struct HomeMapView: View {
     private func appeared() {
         connectPill.recomputeClosestAngle(among: store.locationPins)
         displayedSunTint = sunTintRGB // start on the current color, the map's lighting is off until it opens
-        // Moving the globe (drag / pinch / mode flip) dismisses a selected location's pill. Capture only the
-        // store: capturing the view struct would retain the trackball's own `@State` box through the
-        // closure the trackball holds, a cycle.
+        // Moving the globe (drag / pinch / mode flip) dismisses a selected location's pill. Capture only the store:
+        // capturing the view struct would retain the trackball's own `@State` box through the closure the trackball
+        // holds, a cycle.
         trackball.onMoved = { [store] in store.send(.mapMoved) }
     }
 
@@ -225,9 +223,9 @@ public struct HomeMapView: View {
 
     // MARK: - Sun tint
 
-    /// The connection color, used for both the sunlight tint and the sun disc: green when protected, red
-    /// when unprotected (or kill-switch blocked, which the status chrome also colors as unprotected),
-    /// white (neutral) while resolving/connecting.
+    /// The connection color, used for both the sunlight tint and the sun disc: green when protected, red when
+    /// unprotected (or kill-switch blocked, which the status chrome also colors as unprotected), white (neutral) while
+    /// resolving/connecting.
     private var sunColor: Color {
         switch protectionState {
         case .protected, .protectedSecureCore: Color(.background, .success)
@@ -256,16 +254,15 @@ public struct HomeMapView: View {
 
     // MARK: - Pins
 
-    /// The selected location's connect pill was tapped. The reducer connects (or upsells) and dismisses the
-    /// pill; the pill takes its own tap, so this never sees taps meant for pins or the background.
+    /// The selected location's connect pill was tapped. The reducer connects (or upsells) and dismisses the pill; the
+    /// pill takes its own tap, so this never sees taps meant for pins or the background.
     private func connectPillTapped(_ location: LocationPin) {
         store.send(.connectPillTapped(location))
     }
 
-    /// Tap hit-testing for the Canvas pins: the nearest pin within a finger's radius wins, and a miss reads
-    /// as a background tap. Geometry is resolved here (the projection is view state); the outcome goes to
-    /// the store. Runs only on tap, so it adds no per-frame cost. A tap on a selected location's pill never
-    /// reaches this since the pill swallows it.
+    /// Tap hit-testing for the Canvas pins: the nearest pin within a finger's radius wins, and a miss reads as a
+    /// background tap. Geometry is resolved here and the outcome goes to the store. Runs only on tap, so it adds no
+    /// per-frame cost. A tap on a selected location's pill never reaches this.
     private func mapTapped(at location: CGPoint, clusters: [PinCluster]) {
         trackball.stopCoast()
         func distance(_ cluster: PinCluster) -> CGFloat {
@@ -367,8 +364,8 @@ public struct HomeMapView: View {
         }
     }
 
-    /// Tapping the user pin returns to the default (connection-derived) view: the reducer dismisses any
-    /// pill, and the camera (view-owned) flies home.
+    /// Tapping the user pin returns to the default (connection-derived) view: the reducer dismisses any pill, and the
+    /// camera (view-owned) flies home.
     private func userPinTapped() {
         trackball.stopCoast()
         store.send(.userPinTapped)

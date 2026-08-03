@@ -34,10 +34,10 @@ struct AstronomyTests {
 
     @Test("The galactic pole is perpendicular to the galactic centre direction")
     func galacticPoleIsPerpendicularToGalacticCentre() {
-        // Sagittarius A* (J2000: RA 266.41683°, Dec −29.00781°) lies in the galactic plane, so its
-        // direction — mapped through the same convention — must be orthogonal to the pole. This
-        // cross-checks the pair against independently published coordinates: an RA/longitude sign or
-        // axis mix-up would break the orthogonality immediately.
+        // Sagittarius A* (J2000: RA 266.41683°, Dec −29.00781°) lies in the galactic plane, so its direction — mapped
+        // through the same convention — must be orthogonal to the pole. This cross-checks the pair against
+        // independently published coordinates: an RA/longitude sign or axis mix-up would break the orthogonality
+        // immediately.
         let pole = CelestialConstants.galacticNorthPole
         let centre = GlobeGeometry.unitSphere(latitudeDegrees: -29.00781, longitudeDegrees: 266.41683)
 

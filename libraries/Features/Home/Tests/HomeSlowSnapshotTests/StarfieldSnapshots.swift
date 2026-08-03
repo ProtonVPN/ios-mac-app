@@ -30,27 +30,26 @@ import Theme
 import Triangulation
 import UIKit
 
-/// Renders the starfield and the analytic Milky Way sky glow through `GlobeRenderer`'s off-screen path,
-/// composited over the app's dark background (the stars are white; against the capture's
-/// transparent-flattened-to-white default they'd be invisible).
+/// Renders the starfield and the analytic Milky Way sky glow through `GlobeRenderer`'s off-screen path, composited over
+/// the app's dark background (the stars are white; against the capture's transparent-flattened-to-white default they'd
+/// be invisible).
 ///
-/// Two views: a wide square frame aimed at the galactic centre where the whole band composition is reviewable, and
-/// the app's own portrait framing at the maximum zoom-out, aimed at a galactic node, which is the most band a user can
-/// ever actually see: the globe overflows portrait horizontally even fully zoomed out, leaving only the sky windows
-/// above and below it. That the star field itself carries the band, and goes uniform without it, is asserted
-/// numerically and without a GPU in `StarfieldTests`.
-// Drives the renderer directly with explicit inputs, so no `.dependencies` trait is needed;
-// `.serialized` matches the repo's snapshot-suite convention (one GPU render at a time).
+/// Two views: a wide square frame aimed at the galactic centre where the whole band composition is reviewable, and the
+/// app's own portrait framing at the maximum zoom-out, aimed at a galactic node, which is the most band a user can ever
+/// actually see: the globe overflows portrait horizontally even fully zoomed out, leaving only the sky windows above
+/// and below it. That the star field itself carries the band, and goes uniform without it, is asserted numerically and
+/// without a GPU in `StarfieldTests`. Drives the renderer directly with explicit inputs, so no `.dependencies` trait is
+/// needed; `.serialized` matches the repo's snapshot-suite convention (one GPU render at a time).
 @Suite("Starfield", .serialized, .snapshots(record: .missing))
 struct StarfieldSnapshots {
     // GPU-render tolerances, shared across the GPU suites.
     let precision = Self.gpuSnapshotPrecision
     let perceptualPrecision = Self.gpuPerceptualPrecision
 
-    /// Camera distance for the square composition frames: far enough out that the sky dominates.
-    /// Deliberately a stable local value rather than `GlobeTrackballModel.maxZoomDistance` — these frames
-    /// review the field's composition, not the app's reach, and shouldn't re-record if the zoom limit
-    /// moves. `appFramingAtGalacticNode` is the one that tracks the real limit.
+    /// Camera distance for the square composition frames: far enough out that the sky dominates. Deliberately a stable
+    /// local value rather than `GlobeTrackballModel.maxZoomDistance` — these frames review the field's composition, not
+    /// the app's reach, and shouldn't re-record if the zoom limit moves. `appFramingAtGalacticNode` is the one that
+    /// tracks the real limit.
     private static let reviewDistance: Float = 3.5
 
     @Test("The shipped sky: the Milky Way band crossing the galactic centre")
@@ -63,10 +62,9 @@ struct StarfieldSnapshots {
     @Test("The app's view of the band: portrait framing at maximum zoom-out, aimed at a galactic node")
     @MainActor
     func appFramingAtGalacticNode() throws {
-        // At a node (where the galactic plane crosses the equator, reachable within the pole clamp) the
-        // band runs about 63 degrees from horizontal, steep enough to cross the top and bottom sky
-        // windows instead of hiding behind the globe's horizontal overflow. This reference is the honest
-        // "what can a user actually see" artifact.
+        // At a node (where the galactic plane crosses the equator, reachable within the pole clamp) the band runs about
+        // 63 degrees from horizontal, steep enough to cross the top and bottom sky windows instead of hiding behind the
+        // globe's horizontal overflow. This reference is the honest "what can a user actually see" artifact.
         let node = GlobeGeometry.unitSphere(latitudeDegrees: 0, longitudeDegrees: 102.86)
         let image = try Self.render(
             stars: Starfield.instances,
@@ -98,9 +96,9 @@ struct StarfieldSnapshots {
         renderer.starFade = 1
         let rendered = try #require(renderer.makeImage(size: size, scale: scale))
 
-        // Composite over the app's dark background: the globe pass clears to transparent, and white stars
-        // vanish against the snapshot pipeline's white flattening. `Color(.background)` is dynamic and
-        // resolves light outside a trait context, so pin it to dark, the mode the map ships in.
+        // Composite over the app's dark background: the globe pass clears to transparent, and white stars vanish
+        // against the snapshot pipeline's white flattening. `Color(.background)` is dynamic and resolves light outside
+        // a trait context, so pin it to dark, the mode the map ships in.
         let background = UIColor(Color(.background))
             .resolvedColor(with: UITraitCollection(userInterfaceStyle: .dark))
         let format = UIGraphicsImageRendererFormat()

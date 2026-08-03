@@ -18,14 +18,14 @@
 
 import simd
 
-/// A latitude/longitude sphere tessellation on the unit sphere: the base ocean globe under the baked land.
-/// Placing each vertex through `GlobeGeometry.unitSphere` keeps it on exactly the same coordinate
-/// convention as the land, notably the negated z on the longitude term, so the two can't drift to
-/// different handedness. A one-time cold build, so it stays on the readable typed path.
+/// A latitude/longitude sphere tessellation on the unit sphere: the base ocean globe under the baked land. Placing each
+/// vertex through `GlobeGeometry.unitSphere` keeps it on exactly the same coordinate convention as the land, notably
+/// the negated z on the longitude term, so the two can't drift to different handedness. A one-time cold build, so it
+/// stays on the readable typed path.
 public enum UVSphere {
-    /// Outward-wound (counter-clockwise seen from outside) unit-sphere mesh of `stacks` latitude bands by
-    /// `slices` longitude segments. Outward winding matches the land, so one back-face cull pass hides the
-    /// far hemisphere of both.
+    /// Outward-wound (counter-clockwise seen from outside) unit-sphere mesh of `stacks` latitude bands by `slices`
+    /// longitude segments. Outward winding matches the land, so one back-face cull pass hides the far hemisphere of
+    /// both.
     public static func mesh(stacks: Int, slices: Int) -> (vertices: [SIMD3<Float>], indices: [UInt32]) {
         var vertices: [SIMD3<Float>] = []
         for stack in 0 ... stacks {
@@ -50,9 +50,9 @@ public enum UVSphere {
         return (vertices, indices)
     }
 
-    /// Appends a triangle, swapping the last two indices if it faces inward, so winding is consistently
-    /// outward. The pole rows collapse one edge of each quad to a point, and those sliver triangles are
-    /// skipped rather than emitted with (near) zero area.
+    /// Appends a triangle, swapping the last two indices if it faces inward, so winding is consistently outward. The
+    /// pole rows collapse one edge of each quad to a point, and those sliver triangles are skipped rather than emitted
+    /// with (near) zero area.
     private static func appendOutward(
         _ indices: inout [UInt32],
         _ a: UInt32,
@@ -70,9 +70,9 @@ public enum UVSphere {
     }
 
     private enum Constants {
-        /// Squared cross-product length below which a triangle is a degenerate sliver. Pole slivers come
-        /// out around 1e-17 and the smallest real quad triangle around 1e-5, so this separates them with
-        /// orders of magnitude to spare on either side.
+        /// Squared cross-product length below which a triangle is a degenerate sliver. Pole slivers come out around
+        /// 1e-17 and the smallest real quad triangle around 1e-5, so this separates them with orders of magnitude to
+        /// spare on either side.
         static let minTriangleCrossSquared: Float = 1e-12
     }
 }

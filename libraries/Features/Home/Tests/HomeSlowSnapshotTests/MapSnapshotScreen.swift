@@ -21,18 +21,18 @@ import ComposableArchitecture
 import SwiftUI
 import Theme
 
-/// Hosts `HomeMapView` for the map snapshot sweeps, framed the way the home screen frames it: the globe is
-/// fitted into the map band that shows above the connection card, and the render canvas continues
-/// underneath to the bottom of the screen. Handing the full screen height to the map instead would zoom
-/// and crop countries quite differently from what the app shows.
+/// Hosts `HomeMapView` for the map snapshot sweeps, framed the way the home screen frames it: the globe is fitted into
+/// the map band that shows above the connection card, and the render canvas continues underneath to the bottom of the
+/// screen. Handing the full screen height to the map instead would zoom and crop countries quite differently from what
+/// the app shows.
 struct MapSnapshotScreen: View {
     let store: StoreOf<HomeMapFeature>
     let title: String
     let size: CGSize
 
     private enum Dimensions {
-        /// Height of the home screen's bottom chrome, the connection card and the recents peek, measured
-        /// from the Home screen snapshots. The map band is what remains above it.
+        /// Height of the home screen's bottom chrome, the connection card and the recents peek, measured from the Home
+        /// screen snapshots. The map band is what remains above it.
         static let bottomChromeHeight: CGFloat = 240
     }
 
@@ -47,8 +47,8 @@ struct MapSnapshotScreen: View {
             .frame(size)
             .background(Color(.background))
             .environment(\.colorScheme, .dark)
-            // Render the globe via off-screen Metal read-back, since a live MTKView can't be captured
-            // by the snapshot strategy's `layer.render(in:)`.
+            // Render the globe via off-screen Metal read-back, since a live MTKView can't be captured by the snapshot
+            // strategy's `layer.render(in:)`.
             .environment(\.globeRenderMode, .staticImage)
             VStack {
                 Text(title)

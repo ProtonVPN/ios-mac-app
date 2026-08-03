@@ -66,12 +66,12 @@ public struct HomeMapFeature {
         /// `selectedLocation` resolves it against the current pin set so a refresh can't leave a stale copy.
         public internal(set) var selectedLocationID: LocationPin.ID?
 
-        /// Connectable locations shown as grey pins when the map is in interactive (full) view: one per
-        /// city or state group, plus one per gateway. Loaded once when observation starts.
+        /// Connectable locations shown as grey pins when the map is in interactive (full) view: one per city or state
+        /// group, plus one per gateway. Loaded once when observation starts.
         public internal(set) var locationPins: [LocationPin] = []
 
-        /// The selected pin resolved against the current pin set, or nil when nothing is selected (or the
-        /// selected location disappeared in a refresh).
+        /// The selected pin resolved against the current pin set, or nil when nothing is selected (or the selected
+        /// location disappeared in a refresh).
         public var selectedLocation: LocationPin? {
             selectedLocationID.flatMap { id in locationPins.first { $0.id == id } }
         }
@@ -93,8 +93,8 @@ public struct HomeMapFeature {
     public enum MapConnectionState: Equatable {
         /// Connected: the exit server's position and country.
         case connected(coordinates: CLLocationCoordinate2D, code: String?)
-        /// Connecting: the target's position when known (a resolved server, or a spec matching a loaded
-        /// location pin), else nil while only the country is known and the pin waits for the server to resolve.
+        /// Connecting: the target's position when known (a resolved server, or a spec matching a loaded location pin),
+        /// else nil while only the country is known and the pin waits for the server to resolve.
         case connecting(coordinates: CLLocationCoordinate2D?, code: String?)
         case disconnected
 
@@ -123,10 +123,10 @@ public struct HomeMapFeature {
                 )
 
             case let .connecting(.unresolved(intent), _):
-                // We've started connecting via a `ConnectionSpec` but haven't picked a specific server yet.
-                // If the spec matches a location pin we've already loaded, send the pin straight to its
-                // coordinates, since the resolved server will live in that city anyway. Otherwise keep just
-                // the country code, and the pin parks on the country centre until the server resolves.
+                // We've started connecting via a `ConnectionSpec` but haven't picked a specific server yet. If the spec
+                // matches a location pin we've already loaded, send the pin straight to its coordinates, since the
+                // resolved server will live in that city anyway. Otherwise keep just the country code, and the pin
+                // parks on the country centre until the server resolves.
                 let pin = locationPins.first { $0.location == intent.spec.location }
                 self = .connecting(
                     coordinates: pin.map { CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) },
@@ -134,8 +134,8 @@ public struct HomeMapFeature {
                 )
 
             case .resolving:
-                // During the resolve window, if we have a prior server, keep the pin on it
-                // for UI continuity; otherwise fall back to disconnected.
+                // During the resolve window, if we have a prior server, keep the pin on it for UI continuity; otherwise
+                // fall back to disconnected.
 
                 // TODO: ProTUN: think about how to restore the code below so we may have server data available
                 self = .disconnected
@@ -263,10 +263,10 @@ public struct HomeMapFeature {
 
             case let .locationPinsLoaded(pins):
                 state.locationPins = pins
-                // `MapConnectionState` derives from the pins as well: the unresolved-connect path parks the user pin
-                // on a loaded city. The load can lose the race against the first connection-state emission
-                // (the shared publisher replays synchronously on subscription), so re-derive here rather
-                // than leaving the pin invisible until the next connection change.
+                // `MapConnectionState` derives from the pins as well: the unresolved-connect path parks the user pin on
+                // a loaded city. The load can lose the race against the first connection-state emission (the shared
+                // publisher replays synchronously on subscription), so re-derive here rather than leaving the pin
+                // invisible until the next connection change.
                 state.mapConnectionState = MapConnectionState(state.connectionState, locationPins: pins)
                 return .none
 
@@ -311,12 +311,12 @@ public struct HomeMapFeature {
         }
     }
 
-    /// Reads the connectable locations — one entry per city or state group, plus one per gateway — skipping
-    /// secure core and under-maintenance groups, and maps them to grey pins at each group's representative
-    /// coordinate (one member server's position; a group's servers are colocated, so any member is close).
+    /// Reads the connectable locations — one entry per city or state group, plus one per gateway — skipping secure core
+    /// and under-maintenance groups, and maps them to grey pins at each group's representative coordinate (one member
+    /// server's position; a group's servers are colocated, so any member is close).
     static func loadLocationPins(from repository: ServerRepository) -> [LocationPin] {
-        // Two sweeps: cities/states (grouped by city, gateways excluded SQL-side), then gateways (grouped
-        // by server type, which yields one group per gateway per country).
+        // Two sweeps: cities/states (grouped by city, gateways excluded SQL-side), then gateways (grouped by server
+        // type, which yields one group per gateway per country).
         let cities = repository
             .getGroups(
                 filteredBy: [.features(.standard), .isNotUnderMaintenance, .kind(.country(code: nil))],
@@ -353,8 +353,8 @@ public struct HomeMapFeature {
             longitude: group.longitude,
             minTier: group.minTier,
             location: location,
-            // Render on the country's coast if the true coordinate falls just offshore of the
-            // simplified coastline (Nuuk, Reykjavik). Snaps only within the pin's own country.
+            // Render on the country's coast if the true coordinate falls just offshore of the simplified coastline
+            // (Nuuk, Reykjavik). Snaps only within the pin's own country.
             direction: CoastSnap.snappedDirection(
                 latitudeDegrees: group.latitude,
                 longitudeDegrees: group.longitude,
@@ -363,9 +363,9 @@ public struct HomeMapFeature {
         )
     }
 
-    /// A gateway as a pin. The kind carries no country, so the ID is disambiguated by coordinate (a
-    /// same-named gateway with servers in two countries appears as two groups and gets two pins), the
-    /// pill shows no flag, and the position uses the raw coordinate with no coast snap.
+    /// A gateway as a pin. The kind carries no country, so the ID is disambiguated by coordinate (a same-named gateway
+    /// with servers in two countries appears as two groups and gets two pins), the pill shows no flag, and the position
+    /// uses the raw coordinate with no coast snap.
     private static func gatewayPin(for group: ServerGroupInfo) -> LocationPin? {
         guard case let .gateway(name) = group.kind else { return nil }
         return LocationPin(

@@ -18,15 +18,14 @@
 
 import SwiftUI
 
-/// A globe gesture in view coordinates. The catcher below translates native multitouch into these, and the
-/// map view turns them into camera moves. Kept platform-neutral so a macOS catcher can feed the same camera
-/// logic later.
+/// A globe gesture in view coordinates. The catcher below translates native multitouch into these, and the map view
+/// turns them into camera moves. Kept platform-neutral so a macOS catcher can feed the same camera logic later.
 enum GlobeGesture {
     case dragBegan(CGPoint)
     case dragChanged(CGPoint)
     case dragEnded
-    /// A pinch carries both finger positions rather than a scale ratio, so the grabbed points can be locked
-    /// under the fingers: the separation drives the zoom and the midpoint drives the pan.
+    /// A pinch carries both finger positions rather than a scale ratio, so the grabbed points can be locked under the
+    /// fingers: the separation drives the zoom and the midpoint drives the pan.
     case pinchBegan(CGPoint, CGPoint)
     case pinchChanged(CGPoint, CGPoint)
     case pinchEnded
@@ -36,14 +35,14 @@ enum GlobeGesture {
 #if canImport(UIKit)
     import UIKit
 
-    /// Hosts the pan, pinch, and tap recognizers on a plain `UIView` and forwards them as `GlobeGesture`s.
-    /// UIKit rather than SwiftUI gestures because a pinch needs the two individual finger positions and
-    /// `MagnifyGesture` only exposes a scale ratio, and on iOS 17 there is no way to bridge a UIKit
-    /// recognizer onto a SwiftUI view (`UIGestureRecognizerRepresentable` is iOS 18 and up). One view owning
-    /// all three recognizers also avoids any hit-test arbitration between SwiftUI and UIKit.
+    /// Hosts the pan, pinch, and tap recognizers on a plain `UIView` and forwards them as `GlobeGesture`s. UIKit rather
+    /// than SwiftUI gestures because a pinch needs the two individual finger positions and `MagnifyGesture` only
+    /// exposes a scale ratio, and on iOS 17 there is no way to bridge a UIKit recognizer onto a SwiftUI view
+    /// (`UIGestureRecognizerRepresentable` is iOS 18 and up). One view owning all three recognizers also avoids any
+    /// hit-test arbitration between SwiftUI and UIKit.
     struct GlobeGestureCatcher: UIViewRepresentable {
-        /// Always live: the map view gates pan and pinch to interactive mode, but a tap must also work in
-        /// decorative mode to open the full map.
+        /// Always live: the map view gates pan and pinch to interactive mode, but a tap must also work in decorative
+        /// mode to open the full map.
         var onGesture: (GlobeGesture) -> Void
 
         func makeUIView(context: Context) -> UIView {
@@ -107,9 +106,9 @@ enum GlobeGesture {
                 onGesture?(.tap(recognizer.location(in: view)))
             }
 
-            // Pan (one touch) and pinch (two touches) already exclude each other by touch count. Letting
-            // everything recognize simultaneously keeps the tap from blocking a drag and vice versa. The
-            // map view ignores a stray drag while a pinch is active.
+            // Pan (one touch) and pinch (two touches) already exclude each other by touch count. Letting everything
+            // recognize simultaneously keeps the tap from blocking a drag and vice versa. The map view ignores a stray
+            // drag while a pinch is active.
             func gestureRecognizer(
                 _: UIGestureRecognizer,
                 shouldRecognizeSimultaneouslyWith _: UIGestureRecognizer
@@ -122,8 +121,8 @@ enum GlobeGesture {
 #elseif canImport(AppKit)
     import AppKit
 
-    /// macOS placeholder so the shared globe code compiles. The interactive map is iOS-only today. A macOS
-    /// version would host AppKit recognizers here and forward the same `GlobeGesture`s.
+    /// macOS placeholder so the shared globe code compiles. The interactive map is iOS-only today. A macOS version
+    /// would host AppKit recognizers here and forward the same `GlobeGesture`s.
     struct GlobeGestureCatcher: NSViewRepresentable {
         var onGesture: (GlobeGesture) -> Void
 

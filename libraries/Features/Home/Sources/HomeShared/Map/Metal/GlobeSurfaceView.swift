@@ -240,8 +240,8 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
     /// zoom.
     var starInstances: [StarInstance] = []
     var starOpacity: Float = 0
-    /// Overlay (pins) built from the current interpolated projection, so it tracks the animating camera.
-    /// The celestial bodies are all drawn in the Metal pass, so there is no SwiftUI background layer.
+    /// Overlay (pins) built from the current interpolated projection, so it tracks the animating camera. The celestial
+    /// bodies are all drawn in the Metal pass, so there is no SwiftUI background layer.
     @ViewBuilder var overlay: (GlobeProjection) -> Overlay
 
     #if DEBUG
@@ -287,10 +287,10 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
         .frame(width: viewSize.width, height: viewSize.height)
     }
 
-    /// The globe itself, a live `MTKView` in the app. In DEBUG, snapshot tests can swap in a static
-    /// off-screen render via `\.globeRenderMode`. The pin overlay above is plain SwiftUI either way. The
-    /// static path consumes the same fully populated `GlobeSurfaceView` value the live path shows, so snapshots
-    /// exercise the whole parameter plumbing (sun, Moon, points, stars) rather than a bare-globe subset.
+    /// The globe itself, a live `MTKView` in the app. In DEBUG, snapshot tests can swap in a static off-screen render
+    /// via `\.globeRenderMode`. The pin overlay above is plain SwiftUI either way. The static path consumes the same
+    /// fully populated `GlobeSurfaceView` value the live path shows, so snapshots exercise the whole parameter plumbing
+    /// (sun, Moon, points, stars) rather than a bare-globe subset.
     @ViewBuilder
     private func globeSurface(mvp: simd_float4x4) -> some View {
         #if DEBUG

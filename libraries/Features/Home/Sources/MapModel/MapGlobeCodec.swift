@@ -70,8 +70,8 @@ public enum MapGlobeCodec {
 
         var model = MapGlobeModel<Storage>()
         try model.code(with: &coder)
-        // A decoder that reads less than the encoder wrote is the one drift the shared traversal can't
-        // catch on its own. Requiring full consumption closes it, and rejects trailing garbage too.
+        // A decoder that reads less than the encoder wrote is the one drift the shared traversal can't catch on its
+        // own. Requiring full consumption closes it, and rejects trailing garbage too.
         guard coder.isAtEnd else { throw DecodeError.trailingData }
         return model
     }

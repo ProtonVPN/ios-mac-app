@@ -19,9 +19,9 @@
 import Testing
 import Triangulation
 
-/// Reference values and a round-trip for the Natural Earth projection. This is the single source of the
-/// projection's polynomials, and the globe baker inverts it to place every coastline vertex, so these
-/// assertions guard the maths the whole map depends on.
+/// Reference values and a round-trip for the Natural Earth projection. This is the single source of the projection's
+/// polynomials, and the globe baker inverts it to place every coastline vertex, so these assertions guard the maths the
+/// whole map depends on.
 @Suite("Natural Earth projection")
 struct NaturalEarthTests {
     private let accuracy = 1e-5

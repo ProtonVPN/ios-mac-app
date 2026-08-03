@@ -20,10 +20,10 @@ import Ergonomics
 import Foundation
 import Testing
 
-/// The decode-hardening contracts of `BinaryCoding`: a corrupt length prefix must throw rather than
-/// allocate, the scalar wire format must stay in step between `append`, which writes by size, and `read`,
-/// which advances by stride, and aligned binary arrays must round-trip identically through the copying and
-/// the zero-copy (blob slice) decode paths.
+/// The decode-hardening contracts of `BinaryCoding`: a corrupt length prefix must throw rather than allocate, the
+/// scalar wire format must stay in step between `append`, which writes by size, and `read`, which advances by stride,
+/// and aligned binary arrays must round-trip identically through the copying and the zero-copy (blob slice) decode
+/// paths.
 @Suite("Binary coding")
 struct BinaryCodingTests {
     private struct Entry: BinaryCodable, Equatable {
@@ -42,8 +42,8 @@ struct BinaryCodingTests {
         var flag: UInt8 = 0
     }
 
-    /// `#expect` decomposes a member access into `__checkPropertyAccess`, which requires the base be
-    /// `Escapable`; the decoder is `~Escapable`, so route its `isAtEnd` through a plain `Bool` here.
+    /// `#expect` decomposes a member access into `__checkPropertyAccess`, which requires the base be `Escapable`; the
+    /// decoder is `~Escapable`, so route its `isAtEnd` through a plain `Bool` here.
     private func expectAtEnd(
         _ isAtEnd: Bool,
         is expected: Bool,
@@ -52,9 +52,9 @@ struct BinaryCodingTests {
         #expect(isAtEnd == expected, sourceLocation: sourceLocation)
     }
 
-    /// A count the remaining input can't possibly satisfy must throw `.truncated` up front. Sizing the
-    /// destination collection from the raw count would turn one corrupt byte into a huge allocation and an
-    /// out-of-memory crash instead of an error.
+    /// A count the remaining input can't possibly satisfy must throw `.truncated` up front. Sizing the destination
+    /// collection from the raw count would turn one corrupt byte into a huge allocation and an out-of-memory crash
+    /// instead of an error.
     @Test("A hostile element count throws instead of allocating")
     func hostileElementCountThrowsInsteadOfAllocating() throws {
         var encoder = BinaryEncoder()
@@ -111,8 +111,8 @@ struct BinaryCodingTests {
         }
     }
 
-    /// A plausible but oversized count, small enough to pass a naive sanity check yet larger than the
-    /// input can hold, must also throw rather than allocate and partially fill.
+    /// A plausible but oversized count, small enough to pass a naive sanity check yet larger than the input can hold,
+    /// must also throw rather than allocate and partially fill.
     @Test("An oversized element count throws")
     func oversizedElementCountThrows() throws {
         var encoder = BinaryEncoder()
@@ -130,8 +130,8 @@ struct BinaryCodingTests {
         }
     }
 
-    /// `append` writes a value's size but `read` advances its stride. The writer pads the difference so a
-    /// tail-padded type can't silently desync every field written after it.
+    /// `append` writes a value's size but `read` advances its stride. The writer pads the difference so a tail-padded
+    /// type can't silently desync every field written after it.
     @Test("A tail-padded value stays in step")
     func tailPaddedValueStaysInStep() throws {
         var padded = Padded(id: 0xDECA_FBAD, flag: 7)
@@ -172,8 +172,8 @@ struct BinaryCodingTests {
 
     // MARK: - Aligned binary arrays
 
-    /// The payload must start on the alignment boundary with deterministic zero padding before it, and the
-    /// copying decode must walk the identical layout back out.
+    /// The payload must start on the alignment boundary with deterministic zero padding before it, and the copying
+    /// decode must walk the identical layout back out.
     @Test("A binary array aligns its payload and round-trips copied")
     func binaryArrayAlignsPayloadAndRoundTripsCopied() throws {
         var payload = BinaryArray<UInt32, InMemory>([1, 2, 3])
@@ -201,10 +201,10 @@ struct BinaryCodingTests {
         }
     }
 
-    /// The zero-copy path must consume the identical layout the copying path does and hand back aligned
-    /// slices that resolve to the encoded elements. Together with the copying round-trip above, which
-    /// proves encode and decode are exact inverses, this pins the sliced decoder's offset bookkeeping
-    /// without ever needing to write a slice back out.
+    /// The zero-copy path must consume the identical layout the copying path does and hand back aligned slices that
+    /// resolve to the encoded elements. Together with the copying round-trip above, which proves encode and decode are
+    /// exact inverses, this pins the sliced decoder's offset bookkeeping without ever needing to write a slice back
+    /// out.
     @Test("A sliced decode resolves aligned slices in place")
     func binaryArraySlicedDecodeResolvesAlignedSlicesInPlace() throws {
         var payload = BinaryArray<UInt32, InMemory>([7, 8, 9, 10])
@@ -245,8 +245,8 @@ struct BinaryCodingTests {
         }
     }
 
-    /// An empty binary array decodes to owned storage even on the zero-copy path, so it resolves anywhere
-    /// with no blob at all.
+    /// An empty binary array decodes to owned storage even on the zero-copy path, so it resolves anywhere with no blob
+    /// at all.
     @Test("An empty binary array stays owned in sliced mode")
     func emptyBinaryArrayStaysOwnedInSlicedMode() throws {
         var empty = BinaryArray<UInt32, InMemory>()

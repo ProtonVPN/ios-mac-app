@@ -19,12 +19,12 @@
 import CustomDump
 import Triangulation
 
-// Failure-message representations for the geometry types tests assert on. Test-support-only: the
-// production modules stay free of dump dependencies (Triangulation deliberately depends on nothing).
+// Failure-message representations for the geometry types tests assert on. Test-support-only: the production modules
+// stay free of dump dependencies (Triangulation deliberately depends on nothing).
 
 extension Angle: CustomDumpStringConvertible {
-    /// `Angle` is radian-backed, but every threshold in the map domain is authored in degrees
-    /// (`.degrees(1.5)` and friends), so a diff in degrees is the one a human can check by eye.
+    /// `Angle` is radian-backed, but every threshold in the map domain is authored in degrees (`.degrees(1.5)` and
+    /// friends), so a diff in degrees is the one a human can check by eye.
     public var customDumpDescription: String {
         "\(degrees)°"
     }

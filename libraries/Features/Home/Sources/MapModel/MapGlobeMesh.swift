@@ -31,9 +31,9 @@ public struct MapGlobeMesh {
     /// Triangle indices into `vertices`.
     public let indices: UnsafeBufferPointer<UInt32>
 
-    /// `country`'s fill triangles, walked lazily off the mesh with no allocation per step. Every scan iterates this
-    /// one sequence, so no two scans can walk the buffers differently. The sequence borrows the mesh's buffers and
-    /// must not outlive the `withMesh` scope that produced them.
+    /// `country`'s fill triangles, walked lazily off the mesh with no allocation per step. Every scan iterates this one
+    /// sequence, so no two scans can walk the buffers differently. The sequence borrows the mesh's buffers and must not
+    /// outlive the `withMesh` scope that produced them.
     public func triangles(of country: MapGlobeCountry) -> some Sequence<SphericalTriangle> {
         country.fillRanges.lazy.flatMap { range in
             stride(from: range.lowerBound, through: range.upperBound - 3, by: 3).lazy.map { i in

@@ -18,12 +18,12 @@
 
 import simd
 
-// The two affine placements the globe renderer and camera build by hand, with the column-major, w = 1
-// convention named once instead of re-spelled as raw column literals at each call site. Plain
-// `simd_float4x4` out, so they drop straight into an MVP multiply with no wrapper.
+// The two affine placements the globe renderer and camera build by hand, with the column-major, w = 1 convention named
+// once instead of re-spelled as raw column literals at each call site. Plain `simd_float4x4` out, so they drop straight
+// into an MVP multiply with no wrapper.
 public extension simd_float4x4 {
-    /// Pure translation along z. The camera's view transform: pushing the globe out in front of a camera
-    /// sitting at the origin looking down -z.
+    /// Pure translation along z. The camera's view transform: pushing the globe out in front of a camera sitting at the
+    /// origin looking down -z.
     static func translation(z: Float) -> simd_float4x4 {
         simd_float4x4(columns: (
             SIMD4<Float>(1, 0, 0, 0),
@@ -33,8 +33,8 @@ public extension simd_float4x4 {
         ))
     }
 
-    /// Uniform scale by `radius` then translation to `center`: places a unit-radius mesh as a sphere of
-    /// the given radius centred at `center`. The Moon's model matrix.
+    /// Uniform scale by `radius` then translation to `center`: places a unit-radius mesh as a sphere of the given
+    /// radius centred at `center`. The Moon's model matrix.
     static func placing(at center: SIMD3<Float>, radius: Float) -> simd_float4x4 {
         simd_float4x4(columns: (
             SIMD4<Float>(radius, 0, 0, 0),

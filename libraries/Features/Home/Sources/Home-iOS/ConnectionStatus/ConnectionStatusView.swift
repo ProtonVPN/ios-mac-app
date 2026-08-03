@@ -44,9 +44,8 @@ public struct ConnectionStatusView: View {
     private static let viewHeight: CGFloat = 200
     private static let headerPaddingHeight: CGFloat = 13
 
-    // `.killSwitchActive` never reaches these helpers in practice: `body` renders the
-    // KillSwitchBlockingBanner for it instead. It is grouped with `.unprotected` throughout
-    // as the accurate fallback.
+    // `.killSwitchActive` never reaches these helpers, since `body` renders the KillSwitchBlockingBanner. Group its
+    // case with `.unprotected`.
     private func title(protectionState: ProtectionState) -> String? {
         switch protectionState {
         case .resolving:
@@ -64,9 +63,9 @@ public struct ConnectionStatusView: View {
         switch protectionState {
         case .protected, .protectedSecureCore:
             Color(.background, .success)
-        case .unprotected, .killSwitchActive:
+        case .unprotected:
             Color(.background, .danger)
-        case .protecting, .resolving:
+        case .protecting, .resolving, .killSwitchActive:
             .white
         }
     }
@@ -88,11 +87,11 @@ public struct ConnectionStatusView: View {
             protectedTitleView(secureCore: false)
         case .protectedSecureCore:
             protectedTitleView(secureCore: true)
-        case .protecting, .resolving:
+        case .protecting, .resolving, .killSwitchActive:
             ProgressView()
                 .controlSize(.regular)
                 .tint(.white)
-        case .unprotected, .killSwitchActive:
+        case .unprotected:
             IconProvider.lockOpenFilled2
                 .styled(.danger)
                 .accessibilityHidden(true)
@@ -116,11 +115,11 @@ public struct ConnectionStatusView: View {
                 IconProvider.locksFilled
                     .foregroundColor(Asset.vpnGreen.swiftUIColor)
                 protectedText
-            case .protecting, .resolving:
+            case .protecting, .resolving, .killSwitchActive:
                 ProgressView()
                     .controlSize(.regular)
                     .tint(.white)
-            case .unprotected, .killSwitchActive:
+            case .unprotected:
                 IconProvider.lockOpenFilled2
                     .styled(.danger)
             }
@@ -147,9 +146,6 @@ public struct ConnectionStatusView: View {
                 endPoint: .bottom
             )
             .ignoresSafeArea()
-            // Kept visible in the full map too. The colored top band gives the lock and title a backdrop so
-            // the status reads clearly instead of clashing with the pins and stars on the map below. Purely
-            // decorative: it never hit-tests, so it can't swallow taps meant for the map or the title.
             .allowsHitTesting(false)
 
             VStack(spacing: 0) {

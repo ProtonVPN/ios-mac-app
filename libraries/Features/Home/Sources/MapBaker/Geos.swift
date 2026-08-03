@@ -19,8 +19,8 @@
 import geos
 import simd
 
-/// Swift face of the GEOS C API, covering just what the baker's triangulation needs. Bound by hand
-/// because the GEOSwift wrapper exposes neither `MakeValid` nor constrained Delaunay triangulation.
+/// Swift face of the GEOS C API, covering just what the baker's triangulation needs. Bound by hand because the GEOSwift
+/// wrapper exposes neither `MakeValid` nor constrained Delaunay triangulation.
 ///
 /// Single-threaded, like the baker: the error callback writes straight to the instance.
 final class Geos {
@@ -31,9 +31,9 @@ final class Geos {
     init?() {
         guard let handle = GEOS_init_r() else { return nil }
         self.handle = handle
-        // The callback is a plain C function pointer and can't capture, so the instance rides along
-        // through the user-data pointer. Passing it unretained is safe since the callback only fires during a
-        // GEOS call, and every GEOS call goes through an object that keeps this instance alive.
+        // The callback is a plain C function pointer and can't capture, so the instance rides along through the
+        // user-data pointer. Passing it unretained is safe since the callback only fires during a GEOS call, and every
+        // GEOS call goes through an object that keeps this instance alive.
         _ = GEOSContext_setErrorMessageHandler_r(handle, { message, userData in
             guard let message, let userData else { return }
             Unmanaged<Geos>.fromOpaque(userData).takeUnretainedValue().lastError = String(cString: message)
@@ -44,16 +44,15 @@ final class Geos {
         GEOS_finish_r(handle)
     }
 
-    /// The message from the most recent GEOS error, cleared on read so a stale message can't be
-    /// attributed to a later failure. Nil when GEOS hasn't reported anything.
+    /// The message from the most recent GEOS error, cleared on read so a stale message can't be attributed to a later
+    /// failure. Nil when GEOS hasn't reported anything.
     func takeLastError() -> String? {
         defer { lastError = nil }
         return lastError
     }
 
-    /// A repaired, valid polygon built from one ring, closing it if the input isn't closed, or nil when
-    /// GEOS can't make one. Repairing resolves self-intersections up front so overlay operations on the
-    /// result don't choke.
+    /// A repaired, valid polygon built from one ring, closing it if the input isn't closed, or nil when GEOS can't make
+    /// one. Repairing resolves self-intersections up front so overlay operations on the result don't choke.
     func validPolygon(ring: [SIMD2<Float>]) -> Geometry? {
         var points = ring
         if let first = points.first, let last = points.last, first != last { points.append(first) }
@@ -63,8 +62,8 @@ final class Geos {
         for (index, point) in points.enumerated() {
             GEOSCoordSeq_setXY_r(handle, sequence, UInt32(index), Double(point.x), Double(point.y))
         }
-        // Creating a ring consumes the sequence, and creating a polygon consumes the ring, but only on
-        // success. A nil result leaves the input ours to destroy.
+        // Creating a ring consumes the sequence, and creating a polygon consumes the ring, but only on success. A nil
+        // result leaves the input ours to destroy.
         guard let linearRing = GEOSGeom_createLinearRing_r(handle, sequence) else {
             GEOSCoordSeq_destroy_r(handle, sequence)
             return nil

@@ -52,8 +52,8 @@ public extension EclipticCoordinate {
 }
 
 public extension EquatorialCoordinate {
-    /// The sub-point: the geographic coordinate with this body directly overhead. The body is overhead
-    /// where the local hour angle is zero, that is, where east longitude equals right ascension minus GMST.
+    /// The sub-point: the geographic coordinate with this body directly overhead. The body is overhead where the local
+    /// hour angle is zero, that is, where east longitude equals right ascension minus GMST.
     func subPoint(gmst: Angle) -> GeographicCoordinate {
         GeographicCoordinate(latitude: declination, longitude: (rightAscension - gmst).normalizedSigned)
     }

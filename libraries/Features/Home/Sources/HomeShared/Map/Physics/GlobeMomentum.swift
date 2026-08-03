@@ -19,25 +19,24 @@
 import QuartzCore
 import simd
 
-/// Frame-synced decaying spin for the interactive globe. A flick hands off its angular velocity here and
-/// the globe coasts, losing a fixed fraction of speed per second, which decelerates smoothly the way
-/// friction does. Because a `CADisplayLink` updates the live orientation each frame, rather than a
-/// `withAnimation` that jumps the stored value to its target, the coast is frame-rate independent and can
-/// be stopped instantly mid-glide with the globe staying exactly where it is.
+/// Frame-synced decaying spin for the interactive globe. A flick hands off its angular velocity here and the globe
+/// coasts, losing a fixed fraction of speed per second, which decelerates smoothly the way friction does. Because a
+/// `CADisplayLink` updates the live orientation each frame, rather than a `withAnimation` that jumps the stored value
+/// to its target, the coast is frame-rate independent and can be stopped instantly mid-glide with the globe staying
+/// exactly where it is.
 final class GlobeMomentum {
-    /// Invoked each frame with the incremental rotation to apply, in radians about a unit axis. The owner
-    /// supplies this to spin its orientation. A callback keeps the orientation the owner's state.
+    /// Invoked each frame with the incremental rotation to apply, in radians about a unit axis. The owner supplies this
+    /// to spin its orientation. A callback keeps the orientation the owner's state.
     var onStep: ((_ angle: Float, _ axis: SIMD3<Float>) -> Void)?
-    /// Invoked whenever the coast starts or stops, so the owner can mirror `isCoasting` into its own
-    /// observable state. A plain stored property here is invisible to `@Observable`, so without this the
-    /// owner's "map is moving" signal would never flip back when a coast settles.
+    /// Invoked whenever the coast starts or stops, so the owner can mirror `isCoasting` into its own observable state.
+    /// A plain stored property here is invisible to `@Observable`, so without this the owner's "map is moving" signal
+    /// would never flip back when a coast settles.
     var onCoastingChange: ((Bool) -> Void)?
 
-    /// Fraction of angular speed retained per second, 0 to 1. Smaller means more friction and a shorter
-    /// glide.
+    /// Fraction of angular speed retained per second, 0 to 1. Smaller means more friction and a shorter glide.
     private let retentionPerSecond: Float
-    /// Below this speed in radians per second the coast ends. Also the threshold under which a release
-    /// doesn't coast at all, so taps and slow lifts simply stop.
+    /// Below this speed in radians per second the coast ends. Also the threshold under which a release doesn't coast at
+    /// all, so taps and slow lifts simply stop.
     private let minSpeed: Float
 
     private var velocity: SIMD3<Float> = .zero // unit axis scaled by radians per second
@@ -49,9 +48,9 @@ final class GlobeMomentum {
         self.minSpeed = minSpeed
     }
 
-    /// Whether a coast is currently running. Changes are reported via `onCoastingChange` so the owner can
-    /// flip its "map is moving" signal back to false when the coast settles. The settling tick fires no
-    /// `onStep`, so nothing else would.
+    /// Whether a coast is currently running. Changes are reported via `onCoastingChange` so the owner can flip its "map
+    /// is moving" signal back to false when the coast settles. The settling tick fires no `onStep`, so nothing else
+    /// would.
     private(set) var isCoasting = false {
         didSet {
             if isCoasting != oldValue { onCoastingChange?(isCoasting) }

@@ -25,8 +25,8 @@ import Triangulation
 
 @Suite("Starfield")
 struct StarfieldTests {
-    /// Half-width of the measurement band as sin(galactic latitude). The sphere's area fraction within
-    /// |sin latitude| < s is exactly s, which is what normalizes the density ratio below.
+    /// Half-width of the measurement band as sin(galactic latitude). The sphere's area fraction within |sin latitude| <
+    /// s is exactly s, which is what normalizes the density ratio below.
     private let bandSin: Float = 0.25
 
     /// In-band over out-of-band star density, each normalized by the solid angle it covers.
@@ -51,8 +51,8 @@ struct StarfieldTests {
 
     @Test("Every star sits on the unit sphere with attributes in range")
     func starsAreWellFormed() {
-        // The field is now pinpoint stars only; the Milky Way's diffuse body is the renderer's analytic
-        // sky-glow pass (`fragment_skyglow`), validated by the A/B snapshot rather than here.
+        // The field is now pinpoint stars only; the Milky Way's diffuse body is the renderer's analytic sky-glow pass
+        // (`fragment_skyglow`), validated by the A/B snapshot rather than here.
         for star in Starfield.instances {
             #expect(abs(simd_length(star.direction) - 1) < 1e-4)
             #expect(Starfield.Constants.radiusRange.contains(star.radius))

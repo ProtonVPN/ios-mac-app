@@ -25,9 +25,9 @@ import MetalKit
 import simd
 import Triangulation
 
-/// Draws the globe: a base ocean sphere, then each country's fill and border in document order, back to
-/// front. Hemisphere occlusion is back-face culling, so no depth buffer is needed, and the draw order keeps
-/// neighbouring borders from doubling up where they overlap. MSAA for antialiasing.
+/// Draws the globe: a base ocean sphere, then each country's fill and border in document order, back to front.
+/// Hemisphere occlusion is back-face culling, so no depth buffer is needed, and the draw order keeps neighbouring
+/// borders from doubling up where they overlap. MSAA for antialiasing.
 final class GlobeRenderer: NSObject, MTKViewDelegate {
     /// Camera matrix and border width, set by the view each frame.
     var uniforms = MapUniforms(mvp: matrix_identity_float4x4, borderHalfWidth: 0)
@@ -44,17 +44,16 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         }
     }
 
-    /// Overall opacity of the city points, following the open/close dissolve and dropping to 0 once the
-    /// settled clusters take over. At 0 the pass is skipped.
+    /// Overall opacity of the city points, following the open/close dissolve and dropping to 0 once the settled
+    /// clusters take over. At 0 the pass is skipped.
     var pinFade: Float = 0
     /// Fill color of the city points.
     var pinColor = SIMD4<Float>(0.5, 0.5, 0.5, 1)
-    /// Camera distance from the globe centre. Drives the points' horizon cull and the whole-path
-    /// back-hemisphere cull, whose visible rim widens as the camera pulls out.
+    /// Camera distance from the globe centre. Drives the points' horizon cull and the whole-path back-hemisphere cull,
+    /// whose visible rim widens as the camera pulls out.
     var cameraDistance: Float = 2
 
-    /// Starfield instances: direction plus per-star radius and brightness. The buffer is rebuilt only when
-    /// they change.
+    /// Starfield instances: direction plus per-star radius and brightness. The buffer is rebuilt only when they change.
     var starInstances: [StarInstance] = [] {
         didSet {
             guard starInstances != oldValue else { return }
@@ -68,13 +67,13 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     var starFade: Float = 0
 
     private enum Constants {
-        /// The largest angular radius any single baked path can have. Russia's mainland is the biggest at
-        /// about 30 degrees, and 45 adds slack. The whole-path cull hides a path only when its centroid is
-        /// more than the visible-rim angle plus this margin from the camera direction, so it can never cull
-        /// a path whose nearest edge could still peek past the limb, at any camera distance.
+        /// The largest angular radius any single baked path can have. Russia's mainland is the biggest at about 30
+        /// degrees, and 45 adds slack. The whole-path cull hides a path only when its centroid is more than the
+        /// visible-rim angle plus this margin from the camera direction, so it can never cull a path whose nearest edge
+        /// could still peek past the limb, at any camera distance.
         static let maxPathCapAngle: Float = .pi / 4
-        /// Land triangles and the base sphere are both wound counter-clockwise seen from outside, so a
-        /// single back-cull setting hides the far hemisphere of both.
+        /// Land triangles and the base sphere are both wound counter-clockwise seen from outside, so a single back-cull
+        /// setting hides the far hemisphere of both.
         static let frontFacing: MTLWinding = .counterClockwise
         static let cullMode: MTLCullMode = .back
         /// Base ocean sphere tessellation: latitude bands and longitude segments.
@@ -82,9 +81,9 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         static let baseSphereSlices = 96
         /// Fades at or below this skip their pass entirely.
         static let minVisibleFade: Float = 0.001
-        /// How strongly the sunlight color tints the land and the sea. The continents carry the connection
-        /// color while the ocean stays close to neutral. Concentrating the tint on the landmasses keeps the
-        /// large sea areas from washing the whole view in color.
+        /// How strongly the sunlight color tints the land and the sea. The continents carry the connection color while
+        /// the ocean stays close to neutral. Concentrating the tint on the landmasses keeps the large sea areas from
+        /// washing the whole view in color.
         static let landTintStrength: Float = 0.16
         static let seaTintStrength: Float = 0.04
         /// The Moon's albedo, a light cool grey. The fragment shader lights it into phases.
@@ -92,24 +91,23 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     }
 
     private enum Dimensions {
-        /// Fill diameter of the in-motion city dots, in points, scaled to pixels per draw. Smaller than the
-        /// settled discs they crossfade into, so the moving field reads lighter. The size step happens
-        /// inside the settle dissolve.
+        /// Fill diameter of the in-motion city dots, in points, scaled to pixels per draw. Smaller than the settled
+        /// discs they crossfade into, so the moving field reads lighter. The size step happens inside the settle
+        /// dissolve.
         static let pinDiameterPoints: Float = 7
         /// Sun-glow radius in points, scaled to pixels per draw.
         static let sunRadiusPoints: Float = 46
         #if DEBUG
-            /// Metal's guaranteed maximum 2D texture dimension. The offscreen render is clamped to it so an
-            /// over-large layout proposal degrades to a low-res image rather than trapping in texture
-            /// validation.
+            /// Metal's guaranteed maximum 2D texture dimension. The offscreen render is clamped to it so an over-large
+            /// layout proposal degrades to a low-res image rather than trapping in texture validation.
             static let maxTextureDimension = 8192
         #endif
     }
 
     private let drawOrder: [MapGlobeDrawUnit]
     private let borderColor: SIMD4<Float>
-    /// Color of the base ocean sphere. A `var` set through `GlobeSurfaceView.apply(to:)`, so a changed value
-    /// takes effect on the next frame instead of being silently ignored for the life of the view.
+    /// Color of the base ocean sphere. A `var` set through `GlobeSurfaceView.apply(to:)`, so a changed value takes
+    /// effect on the next frame instead of being silently ignored for the life of the view.
     var oceanColor: SIMD4<Float>
     private let commandQueue: MTLCommandQueue
     private let fillPipeline: MTLRenderPipelineState
@@ -143,13 +141,14 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     private let baseIndexBuffer: MTLBuffer
     private let baseIndexCount: Int
     #if DEBUG
-        /// Color format and MSAA count the pipelines were built with, so the DEBUG-only offscreen render
-        /// path can build matching textures.
+        /// Color format and MSAA count the pipelines were built with, so the DEBUG-only offscreen render path can build
+        /// matching textures.
         private let colorFormat: MTLPixelFormat
         private let sampleCount: Int
     #endif
 
-    /// The app renderer performs a zero-copy mmap of the model, whose sections bind straight out of the resource mapping.
+    /// The app renderer performs a zero-copy mmap of the model, whose sections bind straight out of the resource
+    /// mapping.
     convenience init?(device: MTLDevice, model: MapGlobeModel<Mapped>, oceanColor: SIMD4<Float>, colorFormat: MTLPixelFormat, sampleCount: Int) {
         self.init(
             device: device,
@@ -282,37 +281,37 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
 
     // MARK: - Main render loop
 
-    /// Encodes the whole globe, base ocean sphere then each country's fill and border in draw order, into
-    /// one render pass. Shared by the live `MTKView` path and the offscreen `makeImage` path. The caller
-    /// owns the pass descriptor's attachments and the command buffer's present and commit.
+    /// Encodes the whole globe, base ocean sphere then each country's fill and border in draw order, into one render
+    /// pass. Shared by the live `MTKView` path and the offscreen `makeImage` path. The caller owns the pass
+    /// descriptor's attachments and the command buffer's present and commit.
     private func encode(into descriptor: MTLRenderPassDescriptor, commandBuffer: MTLCommandBuffer) {
         guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else { return }
         encoder.setFrontFacing(Constants.frontFacing)
         encoder.setCullMode(Constants.cullMode)
 
-        // The uniform block the fill and border passes bind. Patched per draw below (tint strength,
-        // border width) and passed inout so each draw reuses it without copying. The billboard passes read
-        // the renderer's own state instead.
+        // The uniform block the fill and border passes bind. Patched per draw below (tint strength, border width) and
+        // passed inout so each draw reuses it without copying. The billboard passes read the renderer's own state
+        // instead.
         var uniforms = uniforms
 
-        // With no depth buffer, everything is drawn farthest first. The Milky Way sky glow first of all, a
-        // continuous field behind even the stars.
+        // With no depth buffer, everything is drawn farthest first. The Milky Way sky glow first of all, a continuous
+        // field behind even the stars.
         drawSkyGlow(into: encoder)
 
-        // Stars next, out at the celestial radius, so the Moon and the opaque Earth drawn after cover the
-        // ones behind them, and the pinpoints sit over the glow.
+        // Stars next, out at the celestial radius, so the Moon and the opaque Earth drawn after cover the ones behind
+        // them, and the pinpoints sit over the glow.
         drawStars(into: encoder)
 
-        // The sun glow next: in front of the stars, still behind the Moon and Earth, so the opaque sphere
-        // occludes it and it shows only once it has swung past the limb to the night side.
+        // The sun glow next: in front of the stars, still behind the Moon and Earth, so the opaque sphere occludes it
+        // and it shows only once it has swung past the limb to the night side.
         drawSun(into: encoder)
 
-        // The Moon next, so the opaque Earth drawn after occludes it wherever they overlap. The Moon is
-        // always farther than the Earth's near surface, so draw order alone gives correct occlusion.
+        // The Moon next, so the opaque Earth drawn after occludes it wherever they overlap. The Moon is always farther
+        // than the Earth's near surface, so draw order alone gives correct occlusion.
         drawMoon(into: encoder)
 
-        // Base ocean sphere, so the globe reads as solid. The back hemisphere is culled away. The sea
-        // barely takes the sunlight tint, staying near neutral.
+        // Base ocean sphere, so the globe reads as solid. The back hemisphere is culled away. The sea barely takes the
+        // sunlight tint, staying near neutral.
         uniforms.tintStrength = Constants.seaTintStrength
         drawFill(
             vertices: baseVertexBuffer,
@@ -323,9 +322,8 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
             into: encoder
         )
 
-        // Countries in document order: fill then border. Whole back-hemisphere paths are skipped up front,
-        // saving the GPU from back-face culling their triangles one by one. The land carries the connection
-        // color.
+        // Countries in document order: fill then border. Whole back-hemisphere paths are skipped up front, saving the
+        // GPU from back-face culling their triangles one by one. The land carries the connection color.
         uniforms.tintStrength = Constants.landTintStrength
         let cullDot = pathCullDot
         for unit in drawOrder {
@@ -366,10 +364,10 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
 
     // MARK: - Passes
 
-    /// Draws the Moon: the base sphere translated to `moonCenter` and scaled to `moonRadius` in Earth
-    /// radii, lit into phases by the Sun and faded by `lightFade`. The model offset is folded into the MVP,
-    /// while the fragment keeps `moonCenter` and `moonRadius` to reconstruct each pixel's world position
-    /// for the lunar eclipse. Skipped when there is no Moon (radius 0) or the map is closed.
+    /// Draws the Moon: the base sphere translated to `moonCenter` and scaled to `moonRadius` in Earth radii, lit into
+    /// phases by the Sun and faded by `lightFade`. The model offset is folded into the MVP, while the fragment keeps
+    /// `moonCenter` and `moonRadius` to reconstruct each pixel's world position for the lunar eclipse. Skipped when
+    /// there is no Moon (radius 0) or the map is closed.
     private func drawMoon(into encoder: MTLRenderCommandEncoder) {
         guard uniforms.moonRadius > 0, uniforms.lightFade > Constants.minVisibleFade else { return }
         var moonUniforms = uniforms
@@ -434,9 +432,9 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         encoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4, instanceCount: range.count)
     }
 
-    /// Draws the city points as instanced screen-facing billboards in the globe's own pass, so they track
-    /// the sphere exactly. Constant pixel size, horizon-culled in the vertex shader. Skipped when faded
-    /// out, empty, or before the drawable size is known.
+    /// Draws the city points as instanced screen-facing billboards in the globe's own pass, so they track the sphere
+    /// exactly. Constant pixel size, horizon-culled in the vertex shader. Skipped when faded out, empty, or before the
+    /// drawable size is known.
     private func drawPoints(into encoder: MTLRenderCommandEncoder) {
         guard pinFade > Constants.minVisibleFade, pinCount > 0, let pinBuffer, viewportSizePixels.x > 0 else { return }
         var pinUniforms = PinUniforms(
@@ -515,12 +513,11 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         encoder.setCullMode(Constants.cullMode) // restore back-culling for the Moon and globe passes that follow
     }
 
-    /// Skip threshold for whole paths, compared against `dot(centroid, cameraTarget)`. A sphere point is visible
-    /// only within `acos(1/distance)` of the camera direction (the visible rim, which widens as the camera pulls
-    /// out), and every baked path fits inside a cap of at most `maxPathCapAngle` around its own centroid. A centroid
-    /// farther than the sum of those two angles therefore cannot have a single visible vertex, so the threshold is
-    /// the cosine of that sum: it follows the camera distance, and saturates at pi (cosine -1), where nothing is
-    /// skipped.
+    /// Skip threshold for whole paths, compared against `dot(centroid, cameraTarget)`. A sphere point is visible only
+    /// within `acos(1/distance)` of the camera direction (the visible rim, which widens as the camera pulls out), and
+    /// every baked path fits inside a cap of at most `maxPathCapAngle` around its own centroid. A centroid farther than
+    /// the sum of those two angles therefore cannot have a single visible vertex, so the threshold is the cosine of
+    /// that sum: it follows the camera distance, and saturates at pi (cosine -1), where nothing is skipped.
     private var pathCullDot: Float {
         let rim = acos(1 / max(cameraDistance, 1.001))
         return cos(min(rim + Constants.maxPathCapAngle, .pi))
@@ -530,8 +527,8 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         ranges.contains { $0.lowerBound <= range.lowerBound && range.upperBound <= $0.upperBound }
     }
 
-    // `BitwiseCopyable` so a non-trivial element type (anything holding a reference) is a compile error
-    // rather than a blitted dangling pointer.
+    // `BitwiseCopyable` so a non-trivial element type (anything holding a reference) is a compile error rather than a
+    // blitted dangling pointer.
     private static func buffer(_ device: MTLDevice, _ array: [some BitwiseCopyable]) -> MTLBuffer? {
         array.withUnsafeBytes { raw in
             guard let base = raw.baseAddress, !raw.isEmpty else { return nil }
@@ -550,8 +547,7 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
 
     /// The zero-copy path: adopt the whole mapping as one shared no-copy buffer and bind each section by its baked
     /// offset, failing over to a copy if unsuccessful. If successful, however, the mapped file directly becomes the
-    /// GPU's working set in memory without performing any copying. The mapping is a static property of `GlobeResource`,
-    /// so we pass `deallocator: nil` when making the buffers to avoid freeing it accidentally.
+    /// GPU's working set in memory without performing any copying.
     private static func slicedGeometryBuffers(_ device: MTLDevice, _ model: MapGlobeModel<Mapped>) -> GeometryBuffers? {
         // No-copy adoption needs a page-aligned base (the mapping is one) and a page-multiple length. The pages are
         // PROT_READ and the GPU only reads them, but we have to mutably cast it to make Metal happy.

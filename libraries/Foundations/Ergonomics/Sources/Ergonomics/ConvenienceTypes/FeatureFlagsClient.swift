@@ -22,16 +22,11 @@ import ProtonCoreFeatureFlags
 
 /// Controlled access to feature flags, backing `FeatureFlagTypeProtocol.enabled`.
 ///
-/// The live value consults `CheckedFeatureFlagsRepository`, so app code keeps the
-/// flags-fetched-before-read assertion. Tests get an unimplemented client that records an issue for
-/// any flag they consult without declaring it, and override the flags they rely on:
+/// The live value consults `CheckedFeatureFlagsRepository`, so app code keeps the flags-fetched-before-read assertion.
+/// Tests get an unimplemented client that records an issue for any flag they consult without declaring it, and override
+/// the flags they rely on:
 ///
-/// ```swift
-/// withDependencies {
-///     $0.featureFlags = .enabling(VPNFeatureFlagType.timestampedLogicals)
-/// } operation: {
-///     ...
-/// }
+/// ```swift withDependencies { $0.featureFlags = .enabling(VPNFeatureFlagType.timestampedLogicals) } operation: { ... }
 /// ```
 public struct FeatureFlagsClient: Sendable {
     public var isEnabled: @Sendable (any FeatureFlagTypeProtocol) -> Bool
@@ -58,9 +53,6 @@ extension FeatureFlagsClient: DependencyKey {
 public extension FeatureFlagsClient {
     /// A client answering `true` for exactly the given flags and `false` for every other.
     static func enabling(_ flags: (any FeatureFlagTypeProtocol)...) -> FeatureFlagsClient {
-        // Collected with a loop on purpose. Folding this into `map(\.rawValue)` crashes the
-        // Swift 6.3.1 frontend: SILGen cannot lower a key-path literal over the existential
-        // flag type. Keep the loop until a fixed toolchain ships.
         var enabledFlagNames = Set<String>()
         for flag in flags {
             enabledFlagNames.insert(flag.rawValue)

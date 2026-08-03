@@ -42,8 +42,8 @@ public struct MapGlobeModel<Storage: BinaryBacking>: Sendable {
 
     /// Per-path draw list in document order, which is the order the renderer draws in.
     public let drawOrder: [MapGlobeDrawUnit]
-    /// Per-country geometry keyed by SVG node id (a country code, or an "x"-suffixed mainland variant),
-    /// for highlighting and for rotating the globe to face a country.
+    /// Per-country geometry keyed by SVG node id (a country code, or an "x"-suffixed mainland variant), for
+    /// highlighting and for rotating the globe to face a country.
     public let countries: [String: MapGlobeCountry]
 
     public init(
@@ -64,9 +64,9 @@ public struct MapGlobeModel<Storage: BinaryBacking>: Sendable {
 }
 
 public extension MapGlobeModel {
-    /// The empty globe: no geometry, no countries. What a consumer degrades to when the baked resource
-    /// can't be loaded — the renderer then draws only the ocean sphere. `BinaryArray()` is the
-    /// storage-neutral empty, so this is valid under any `Storage`.
+    /// The empty globe: no geometry, no countries. What a consumer degrades to when the baked resource can't be loaded
+    /// — the renderer then draws only the ocean sphere. `BinaryArray()` is the storage-neutral empty, so this is valid
+    /// under any `Storage`.
     static var empty: Self {
         Self(
             fillVertices: BinaryArray(),
@@ -100,14 +100,14 @@ public extension MapGlobeModel where Storage == InMemory {
     }
 }
 
-/// One border segment: two unit-sphere endpoints. The shader expands it into a ribbon in the local
-/// tangent plane. The layout lives once in `MapShaderTypes.h`, shared verbatim with the GPU side, so the
-/// buffer the codec bulk-loads is the buffer the border pass consumes. Re-exported here so MapModel's
-/// Metal-free consumers, the baker and the codec, never touch the shader-types module directly.
+/// One border segment: two unit-sphere endpoints. The shader expands it into a ribbon in the local tangent plane. The
+/// layout lives once in `MapShaderTypes.h`, shared verbatim with the GPU side, so the buffer the codec bulk-loads is
+/// the buffer the border pass consumes. Re-exported here so MapModel's Metal-free consumers, the baker and the codec,
+/// never touch the shader-types module directly.
 public typealias MapGlobeSegment = MapShaderTypes.MapGlobeSegment
 
-// The C struct can't synthesize Equatable; provided here (its Swift-facing owner) so tests can assert on
-// whole values (`expectNoDifference`) instead of decomposing field by field.
+// The C struct can't synthesize Equatable; provided here (its Swift-facing owner) so tests can assert on whole values
+// (`expectNoDifference`) instead of decomposing field by field.
 extension MapGlobeSegment: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.a == rhs.a && lhs.b == rhs.b

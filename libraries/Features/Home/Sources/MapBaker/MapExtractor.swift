@@ -21,27 +21,27 @@ import Foundation
 import simd
 import SVGView
 
-/// Walks the source SVG tree and flattens it into render-ready paths, so the expensive XML walk and
-/// Bezier flattening happen once, offline, rather than in the app. Feeds `GlobeExtractor`.
+/// Walks the source SVG tree and flattens it into render-ready paths, so the expensive XML walk and Bezier flattening
+/// happen once, offline, rather than in the app. Feeds `GlobeExtractor`.
 enum MapExtractor {
     private enum Constants {
         /// Opacity at or below this is treated as hidden. The ocean, small-territory circles, and the
         /// limited-recognition overlays are authored with zero opacity.
         ///
-        /// Note that SVGView resolves a CSS `opacity: 0` onto the fill and stroke colors' alpha rather
-        /// than `node.opacity`, so this node-level check rarely fires. `hiddenAlphaThreshold` below is
-        /// what actually culls the ocean and the duplicate overlay layers.
+        /// Note that SVGView resolves a CSS `opacity: 0` onto the fill and stroke colors' alpha rather than
+        /// `node.opacity`, so this node-level check rarely fires. `hiddenAlphaThreshold` below is what actually culls
+        /// the ocean and the duplicate overlay layers.
         static let hiddenOpacityThreshold: Double = 0.01
         /// A resolved fill or stroke color at or below this alpha contributes nothing and is dropped.
         static let hiddenAlphaThreshold: Float = 0.01
-        /// Recursion cap on curve subdivision, bounding a pathological curve at 2^18 segments. Real map
-        /// curves flatten within a handful of levels.
+        /// Recursion cap on curve subdivision, bounding a pathological curve at 2^18 segments. Real map curves flatten
+        /// within a handful of levels.
         static let maxSubdivisionDepth = 18
     }
 
     private enum Dimensions {
-        /// Map-space tolerance for subdividing Bezier curves. The source is already dense polylines, so
-        /// this is rarely hit. Kept small so extreme zoom never reveals facets.
+        /// Map-space tolerance for subdividing Bezier curves. The source is already dense polylines, so this is rarely
+        /// hit. Kept small so extreme zoom never reveals facets.
         static let flatness: CGFloat = 0.15
     }
 
@@ -108,8 +108,8 @@ enum MapExtractor {
                 paths.append(extracted)
             }
         default:
-            // The visible world map is entirely <path>; other shape types around tiny territories are
-            // authored opacity:0 and skipped above.
+            // The visible world map is entirely <path>; other shape types around tiny territories are authored
+            // opacity:0 and skipped above.
             break
         }
     }

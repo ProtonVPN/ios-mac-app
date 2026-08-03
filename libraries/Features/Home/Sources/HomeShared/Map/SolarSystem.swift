@@ -20,13 +20,13 @@ import Dependencies
 import Foundation
 import Triangulation
 
-/// The bodies that move on the clock — the Sun and Moon — sampled at an instant and shaped into what the
-/// globe renderer consumes. The owning view re-creates the value on a slow clock, since both bodies drift
-/// only about a quarter of a degree per minute.
+/// The bodies that move on the clock — the Sun and Moon — sampled at an instant and shaped into what the globe renderer
+/// consumes. The owning view re-creates the value on a slow clock, since both bodies drift only about a quarter of a
+/// degree per minute.
 ///
 /// The fixed backdrop is `Starfield`'s, not this type's: the split follows lifecycle — time-driven and
-/// dependency-sampled here versus seed-driven and built once there. The connection-colored sun tint and
-/// its cross-fade are a SwiftUI animation concern and stay with the view. This type imports no UI.
+/// dependency-sampled here versus seed-driven and built once there. The connection-colored sun tint and its cross-fade
+/// are a SwiftUI animation concern and stay with the view. This type imports no UI.
 struct SolarSystem {
     /// Geocentric Sun and Moon positions: sub-solar and sub-lunar directions plus the Moon distance.
     let positions: Meeus.Positions
@@ -42,14 +42,13 @@ struct SolarSystem {
         self.init(date: now)
     }
 
-    /// A fixed-instant sample computed once per process, for cheap `@State` declaration defaults (SwiftUI
-    /// evaluates those on every view re-`init`, and the full ephemeris is too expensive for that). The
-    /// owning view replaces it with the real positions on its first task tick, before the day/night
-    /// lighting is ever faded in, so the placeholder instant is never visible.
+    /// A fixed-instant sample computed once per process, for cheap `@State` declaration defaults (SwiftUI evaluates
+    /// those on every view re-`init`, and the full ephemeris is too expensive for that). The owning view replaces it
+    /// with the real positions on its first task tick, before the day/night lighting is ever faded in, so the
+    /// placeholder instant is never visible.
     static let placeholder = SolarSystem(date: Date(timeIntervalSince1970: 1_781_784_000))
 
-    /// Model-space direction toward the sun (the sub-solar point). Drives the day/night terminator and the
-    /// sun glow.
+    /// Model-space direction toward the sun (the sub-solar point). Drives the day/night terminator and the sun glow.
     var sunDirection: SIMD3<Float> {
         positions.sunDirection
     }

@@ -28,32 +28,30 @@ import TestingErgonomics
 import Triangulation
 import UIKit
 
-/// Covers the disputed-territory border handling. When a country listed in
-/// `CountriesWithDisputedTerritories.json` is highlighted, the map must not fill it. Instead it drops the
-/// borders it shares with the contested neighbours, so the rendered map takes no stance on the disputed
-/// lines.
+/// Covers the disputed-territory border handling. When a country listed in `CountriesWithDisputedTerritories.json` is
+/// highlighted, the map must not fill it. Instead it drops the borders it shares with the contested neighbours, so the
+/// rendered map takes no stance on the disputed lines.
 ///
-/// India already appears in the country and city snapshot sweeps, so the code path runs there, but nothing
-/// there asserts the behavior in isolation. The structural test below pins the logic tolerance-free, and
-/// the A/B snapshot proves the renderer actually omits the borders: the only difference between the two
-/// references is the contested lines.
-// Drives the renderer directly with explicit inputs, so no `.dependencies` trait is needed;
-// `.serialized` matches the repo's snapshot-suite convention (one GPU render at a time).
+/// India already appears in the country and city snapshot sweeps, so the code path runs there, but nothing there
+/// asserts the behavior in isolation. The structural test below pins the logic tolerance-free, and the A/B snapshot
+/// proves the renderer actually omits the borders: the only difference between the two references is the contested
+/// lines. Drives the renderer directly with explicit inputs, so no `.dependencies` trait is needed; `.serialized`
+/// matches the repo's snapshot-suite convention (one GPU render at a time).
 @Suite("Disputed territories", .serialized, .snapshots(record: .missing))
 struct DisputedTerritoriesSnapshots {
     // GPU-render tolerances, shared across the GPU suites.
     let precision = Self.gpuSnapshotPrecision
     let perceptualPrecision = Self.gpuPerceptualPrecision
 
-    /// The contract `GlobeResource.highlight(for:)` must keep, independent of any pixel tolerance: a disputed
-    /// country contributes hidden borders and no fill, while a normal country fills and hides nothing.
+    /// The contract `GlobeResource.highlight(for:)` must keep, independent of any pixel tolerance: a disputed country
+    /// contributes hidden borders and no fill, while a normal country fills and hides nothing.
     @Test("Disputed country hides borders without filling; a normal country fills")
     func disputedHighlightSemantics() throws {
         let india = GlobeResource.highlight(for: "IN")
         #expect(india.fillRanges.isEmpty, "A disputed country must not be filled")
         #expect(!india.hiddenBorderRanges.isEmpty, "A disputed country must hide its contested borders")
-        // The hidden set spans more than India's own borders. It also covers the disputed neighbours, so a
-        // shared line drawn from either side is dropped from both.
+        // The hidden set spans more than India's own borders. It also covers the disputed neighbours, so a shared line
+        // drawn from either side is dropped from both.
         let indiaOwnBorders = try #require(GlobeResource.country(code: "IN")).borderRanges
         #expect(india.hiddenBorderRanges.count > indiaOwnBorders.count)
 
@@ -62,10 +60,10 @@ struct DisputedTerritoriesSnapshots {
         #expect(germany.hiddenBorderRanges.isEmpty, "A normal country hides no borders")
     }
 
-    /// A/B at one camera over India: with the disputed highlight the contested borders are gone and India
-    /// is left unfilled, and with no highlight every border is drawn. The only difference between the two
-    /// references is exactly the borders the feature suppresses, so a regression that stops honouring
-    /// `hiddenBorderRanges`, or that fills the disputed country, makes the two images converge.
+    /// A/B at one camera over India: with the disputed highlight the contested borders are gone and India is left
+    /// unfilled, and with no highlight every border is drawn. The only difference between the two references is exactly
+    /// the borders the feature suppresses, so a regression that stops honouring `hiddenBorderRanges`, or that fills the
+    /// disputed country, makes the two images converge.
     @Test("Disputed-territory borders are dropped when the country is highlighted")
     @MainActor
     func disputedBordersHiddenInRender() throws {
@@ -85,9 +83,9 @@ struct DisputedTerritoriesSnapshots {
         )
     }
 
-    /// Renders the flat, unlit globe from a camera looking at `facing` at the given `distance`, applying
-    /// `highlight`. Borders come from the baked per-path width, so `borderHalfWidth: 0` in the uniforms
-    /// still draws them. `highlight.hiddenBorderRanges` is what omits them.
+    /// Renders the flat, unlit globe from a camera looking at `facing` at the given `distance`, applying `highlight`.
+    /// Borders come from the baked per-path width, so `borderHalfWidth: 0` in the uniforms still draws them.
+    /// `highlight.hiddenBorderRanges` is what omits them.
     @MainActor
     private static func render(facing: SIMD3<Float>, distance: Float, highlight: MapHighlight) throws -> UIImage {
         let size = CGSize(width: 500, height: 500)
