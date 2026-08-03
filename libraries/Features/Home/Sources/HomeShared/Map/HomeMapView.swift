@@ -174,9 +174,13 @@ public struct HomeMapView: View {
         // country resolving).
         .onChange(of: highlightedCode) { flyToHighlightedCountry() }
         .onChange(of: store.isFollowingConnection) { flyToHighlightedCountry() }
-        // Always re-center on the connection when the pins go away.
+        // Always re-center on the connection when the pins go away, ending any coast first so the flight is not refused
+        // for a camera that is still moving.
         .onChange(of: showsInteractivePins) { _, shows in
-            if !shows { flyToHighlightedCountry(always: true) }
+            if !shows {
+                trackball.stopCoast()
+                flyToHighlightedCountry(always: true)
+            }
         }
         // A flight asked for while the globe was still moving is turned away below, and a coast outlives the flick that
         // started it. Take the flight when the motion ends instead, so a connect landing mid-coast still comes home. A

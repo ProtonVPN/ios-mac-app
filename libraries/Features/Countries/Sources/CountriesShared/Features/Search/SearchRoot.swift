@@ -99,6 +99,7 @@ public struct SearchRoot {
                 return .none
 
             case let .searchQueryChanged(query):
+                guard case .loaded = state else { return .none }
                 return .send(.loaded(.searchQueryChanged(query)))
 
             case .loaded(.delegate(.showUpsell)):

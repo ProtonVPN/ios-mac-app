@@ -144,10 +144,21 @@ public final class TabularShell {
         barView.translatesAutoresizingMaskIntoConstraints = false
         window.addSubview(barView)
         guard isFirstMount else { return }
-        NSLayoutConstraint.activate([
+        var constraints = [
             barView.leadingAnchor.constraint(equalTo: window.leadingAnchor),
             barView.trailingAnchor.constraint(equalTo: window.trailingAnchor),
             barView.bottomAnchor.constraint(equalTo: window.bottomAnchor),
-        ])
+        ]
+        if #unavailable(iOS 26.0) {
+            // Older systems resolve the available space differently, since it's drawn differently as well. Rebuild the
+            // classic geometry by hand with a safe area constraint, with the background staying under it all the way to
+            // the screen's bottom edge.
+            let itemBand = barView.sizeThatFits(window.bounds.size).height
+            constraints.append(barView.topAnchor.constraint(
+                equalTo: window.safeAreaLayoutGuide.bottomAnchor,
+                constant: -itemBand
+            ))
+        }
+        NSLayoutConstraint.activate(constraints)
     }
 }

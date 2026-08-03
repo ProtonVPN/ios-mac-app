@@ -87,6 +87,9 @@ final class ShellTabBar: UITabBar {
             // shell's floor rather than as another piece of the globe.
             appearance.configureWithOpaqueBackground()
             appearance.backgroundColor = .backgroundColor()
+            // The view's own layer carries the same color as a backstop, in case the appearance's background does not
+            // paint for a bar mounted directly in the window.
+            backgroundColor = .backgroundColor()
         }
         standardAppearance = appearance
         scrollEdgeAppearance = appearance

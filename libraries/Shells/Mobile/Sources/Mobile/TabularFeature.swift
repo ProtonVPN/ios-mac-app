@@ -45,8 +45,7 @@ public struct TabularFeature {
         /// Raised over the map.
         case full
 
-        /// The bar detent's height: the coverage the sheet keeps at rest on its floor, and the line under which the tab
-        /// bar is the only thing over the map.
+        /// The bar detent's height, resolved above the bottom safe area
         static let barHeight: CGFloat = 100
     }
 

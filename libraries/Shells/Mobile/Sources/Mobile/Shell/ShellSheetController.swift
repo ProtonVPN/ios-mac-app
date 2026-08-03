@@ -106,8 +106,12 @@ final class ShellSheetController: NSObject {
     /// a value already on its way.
     private func applyFloorPresence(sheetHeight: CGFloat, animated: Bool) {
         guard let pages else { return }
+        // Detent heights resolve above the bottom safe area, while the reporter measures window coverage, so the
+        // coverage the sheet keeps at rest on its floor includes the home indicator's inset. Without it the fade never
+        // quite finishes, and the home page ghosts through the bar detent.
+        let floor = TabularFeature.Detent.barHeight + (pages.view.window?.safeAreaInsets.bottom ?? 0)
         let span = max(Dimensions.floorFadeSpan, 1)
-        let presence = min(max((sheetHeight - TabularFeature.Detent.barHeight) / span, 0), 1)
+        let presence = min(max((sheetHeight - floor) / span, 0), 1)
         guard abs(presence - pages.view.alpha) > 0.01 else { return }
         // An animation block here is safe now that the bar is mounted in the window: it used to reach the bar through
         // the ancestors it shared with these views and carry its pending layout along, which is what sent the bar
@@ -268,9 +272,15 @@ extension ShellSheetController: UISheetPresentationControllerDelegate {
 extension ShellSheetController: UITabBarDelegate {
     func tabBar(_ bar: UITabBar, didSelect item: UITabBarItem) {
         guard let tab = (bar as? ShellTabBar)?.tab(for: item) else { return }
+        let isReselect = tab == store.tab
         // Only the choice is reported. Which page comes forward, which glyph fills and whether the sheet has to rise
         // are all answered by the store's change coming back through the observation.
         store.send(.tabSelected(tab))
+        // Choosing the tab already showing pops its stack to root, the escape a tab bar controller gives its navigation
+        // tabs. The pop reports through the navigation delegate above, which hands the ladder back.
+        if isReselect {
+            pages?.navigation(of: tab)?.popToRootViewController(animated: true)
+        }
     }
 }
 

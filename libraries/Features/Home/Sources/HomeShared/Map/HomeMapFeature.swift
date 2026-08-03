@@ -190,7 +190,7 @@ public struct HomeMapFeature {
         case userPinTapped
         /// A tap on the map that hit no pin: dismisses the selected location's pill, if one is up.
         case mapBackgroundTapped
-        /// A drag, pinch, or programmatic camera move started; any pill is dismissed.
+        /// The user started moving the map with a drag or a pinch; any pill is dismissed.
         case mapMoved
         case delegate(Delegate)
 
