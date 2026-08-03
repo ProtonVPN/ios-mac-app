@@ -16,9 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import AsyncAlgorithms
 import Combine
 import CommonNetworking
 import ComposableArchitecture
+import ConcurrencyExtras
 import Connection
 import Dependencies
 import Domain
@@ -44,6 +46,7 @@ final class AdvancedSettingsViewModel {
     @Shared(.telemetryCrashReports) var telemetryCrashReports
     @SharedReader(.connectionState) private var connectionState: ConnectionState
     @SharedReader(.appliedFeatures) private var appliedFeatures: AgentTunnelFeatures?
+    @SharedReader(.alternativeRouting) private var _alternativeRouting
 
     @SharedReader(.featureFlags) private var featureFlags: FeatureFlags
 
@@ -51,37 +54,34 @@ final class AdvancedSettingsViewModel {
 
     lazy var hermesViewModel = HermesViewModel()
 
-    private var natTypeObserverTask: Task<Void, Never>?
-    private var featureFlagsObservation: AnyCancellable?
+    private var observationTask: Task<Void, Never>?
 
     init() {
-        // Observe feature flags changes via the @Shared(.featureFlags) publisher
-        self.featureFlagsObservation = $featureFlags.publisher
-            .dropFirst()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in self?.settingsChanged() }
+        let sources: [AsyncStream<Void>] = [
+            Self.ticks(of: $featureFlags.publisher.dropFirst().map { _ in () }.eraseToAnyPublisher()),
+            Self.ticks(of: $appliedFeatures.publisher.map { _ in () }.eraseToAnyPublisher()),
+            Self.ticks(of: $connectionState.publisher.map { _ in () }.eraseToAnyPublisher()),
+            UncheckedSendable(natTypePropertyProvider.natTypeStream().map { _ in () }).eraseToStream(),
+        ]
+        let changes = sources.dropFirst().reduce(sources[0]) { merge($0, $1).eraseToStream() }
 
-        // Observe NAT type changes via AsyncStream
-        self.natTypeObserverTask = Task { [weak self] in
-            guard let self else { return }
-            let stream = natTypePropertyProvider.natTypeStream()
-            for await _ in stream {
-                try? Task.checkCancellation()
-                await MainActor.run {
-                    self.settingsChanged()
-                }
+        self.observationTask = Task { [weak self] in
+            for await _ in changes {
+                await self?.settingsChanged()
             }
         }
     }
 
+    private static func ticks(of publisher: AnyPublisher<Void, Never>) -> AsyncStream<Void> {
+        UncheckedSendable(publisher.values).eraseToStream()
+    }
+
     deinit {
-        NotificationCenter.default.removeObserver(self)
-        natTypeObserverTask?.cancel()
+        observationTask?.cancel()
     }
 
     var alternativeRouting: Bool {
-        @SharedReader(.alternativeRouting) var alternativeRouting
-        return alternativeRouting
+        _alternativeRouting
     }
 
     var isNATTypeFeatureEnabled: Bool {
@@ -168,7 +168,7 @@ final class AdvancedSettingsViewModel {
         $alternativeRouting.withLock { $0 = enabled }
     }
 
-    @objc
+    @MainActor
     private func settingsChanged() {
         reloadNeeded?()
     }

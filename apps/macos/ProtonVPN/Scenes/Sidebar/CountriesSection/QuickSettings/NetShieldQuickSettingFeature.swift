@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import Domain
+import ExtensionSync
 import Foundation
 import NetShield
 import Sharing
@@ -90,6 +91,7 @@ struct NetShieldQuickSettingFeature {
         }
     }
 
+    @Dependency(\.extensionIPC) var extensionIPC
     @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
     @SharedReader(.featureFlags) var featureFlags
 
@@ -104,9 +106,11 @@ struct NetShieldQuickSettingFeature {
                 state.isStatsEnabled = featureFlags.netShieldStats
                 return .merge(
                     .run { send in
-                        let stream: AsyncStream<NetShieldModel> = NotificationCenter.default.notifications(NetShieldStatsNotification.self)
-                        for await stats in stream {
-                            await send(.netShieldStatsUpdated(stats))
+                        if let stats = extensionIPC.currentStats() {
+                            await send(.netShieldStatsUpdated(stats.netShieldModel))
+                        }
+                        for await stats in extensionIPC.observeStats().compactMap({ $0 }) {
+                            await send(.netShieldStatsUpdated(stats.netShieldModel))
                         }
                     },
                     .run { send in
@@ -128,5 +132,16 @@ struct NetShieldQuickSettingFeature {
                 return .none
             }
         }
+    }
+}
+
+private extension LocalAgent.Stats {
+    var netShieldModel: NetShieldModel {
+        NetShieldModel(
+            trackersCount: Int(trackersBlocked ?? 0),
+            adsCount: Int(adsBlocked ?? 0),
+            dataSaved: dataSaved ?? 0,
+            enabled: true
+        )
     }
 }
