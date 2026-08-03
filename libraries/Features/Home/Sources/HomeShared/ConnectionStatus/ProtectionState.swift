@@ -24,7 +24,7 @@ import Foundation
 import Strings
 import VPNAppCore
 
-public enum ProtectionState: Equatable {
+public enum ProtectionState: Equatable, Sendable {
     case resolving // Transitionary state. Shown at app start while we figure out what state the tunnel is in.
     case protected
     case protectedSecureCore

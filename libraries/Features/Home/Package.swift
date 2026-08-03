@@ -176,15 +176,6 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "HomeFastSnapshotTests",
-            dependencies: [
-                "Home",
-                .product(name: "TestingErgonomics", package: "Ergonomics"),
-                .product(name: "DomainTestSupport", package: "Domain"),
-                .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
-            ]
-        ),
-        .testTarget(
             name: "HomeSlowSnapshotTests",
             dependencies: [
                 "Home",

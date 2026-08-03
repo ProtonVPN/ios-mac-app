@@ -30,6 +30,7 @@ let package = Package(
         .package(path: "../../../external/protoncore"),
 
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
     ],
     targets: [
         .target(
@@ -56,6 +57,15 @@ let package = Package(
                 "Mobile",
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
+            ]
+        ),
+        .testTarget(
+            name: "MobileFastSnapshotTests",
+            dependencies: [
+                "Mobile",
+                .product(name: "TestingErgonomics", package: "Ergonomics"),
+                .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
             ]
         ),
     ]

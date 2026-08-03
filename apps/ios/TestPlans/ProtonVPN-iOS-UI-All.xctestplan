@@ -47,6 +47,13 @@
       }
     },
     {
+      "target": {
+        "containerPath": "container:../../libraries/Shells/Mobile",
+        "identifier": "MobileFastSnapshotTests",
+        "name": "MobileFastSnapshotTests"
+      }
+    },
+    {
       "skippedTests": [
         "ConnectionTests",
         "CountriesConnectionTests",
