@@ -33,6 +33,15 @@ final class GlobeMomentum {
     /// would never flip back when a coast settles.
     var onCoastingChange: ((Bool) -> Void)?
 
+    private enum Constants {
+        /// Refresh rate asked of the display link. A coast is a continuous animation, so it wants every frame the
+        /// display can give it, and the floor stops CoreAnimation stepping the rate down part-way through a glide. A
+        /// display that can't reach these rates runs at its own maximum instead, so this is safe to ask for
+        /// unconditionally. On iOS this only takes effect with `CADisableMinimumFrameDuration` set in the app's
+        /// Info.plist, which otherwise holds every display link to 60.
+        static let frameRate = CAFrameRateRange(minimum: 60, maximum: 120, preferred: 120)
+    }
+
     /// Fraction of angular speed retained per second, 0 to 1. Smaller means more friction and a shorter glide.
     private let retentionPerSecond: Float
     /// Below this speed in radians per second the coast ends. Also the threshold under which a release doesn't coast at
@@ -65,6 +74,7 @@ final class GlobeMomentum {
         lastTimestamp = CACurrentMediaTime()
         guard displayLink == nil else { return }
         let link = CADisplayLink(target: self, selector: #selector(step(_:)))
+        link.preferredFrameRateRange = Constants.frameRate
         link.add(to: .main, forMode: .common)
         displayLink = link
         isCoasting = true

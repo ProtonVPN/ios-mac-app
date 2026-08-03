@@ -34,7 +34,7 @@ struct HomeMapFeatureTests {
         displayName: "Geneva",
         latitude: 46.2,
         longitude: 6.14,
-        minTier: 0,
+        minTier: .free,
         location: .city(name: "Geneva", code: "CH", order: .fastest)
     )
 
@@ -52,7 +52,7 @@ struct HomeMapFeatureTests {
     @Test("The connect pill connects a paid user and dismisses itself")
     func connectPillConnectsPaidUser() async {
         @Shared(.userTier) var userTier
-        $userTier.withLock { $0 = .paidTier }
+        $userTier.withLock { $0 = .paid }
         var state = HomeMapFeature.State()
         state.selectedLocationID = Self.geneva.id
         let store = TestStore(initialState: state) { HomeMapFeature() }
@@ -66,7 +66,7 @@ struct HomeMapFeatureTests {
     @Test("The connect pill routes a free user to the upsell instead")
     func connectPillUpsellsFreeUser() async {
         @Shared(.userTier) var userTier
-        $userTier.withLock { $0 = .freeTier }
+        $userTier.withLock { $0 = .free }
         var state = HomeMapFeature.State()
         state.selectedLocationID = Self.geneva.id
         let store = TestStore(initialState: state) { HomeMapFeature() }
@@ -151,7 +151,7 @@ struct HomeMapFeatureTests {
             $0 = .connecting(.unresolved(ConnectionPreparationIntent(
                 spec: Self.geneva.connectionSpec,
                 acceptableProtocols: .all
-            )))
+            )), tunnelActive: false)
         }
         let store = TestStore(initialState: HomeMapFeature.State()) { HomeMapFeature() }
 
@@ -167,7 +167,7 @@ struct HomeMapFeatureTests {
         let store = TestStore(initialState: HomeMapFeature.State()) { HomeMapFeature() }
         let intent = ConnectionPreparationIntent(spec: Self.geneva.connectionSpec, acceptableProtocols: .all)
 
-        await store.send(.connectionStateUpdated(.connecting(.unresolved(intent)))) {
+        await store.send(.connectionStateUpdated(.connecting(.unresolved(intent), tunnelActive: false))) {
             $0.mapConnectionState = .connecting(coordinates: nil, code: "CH")
         }
         #expect(store.state.pinMode == .invisible)
@@ -188,7 +188,7 @@ struct HomeMapFeatureTests {
                 ]
             case .serverType:
                 return [
-                    .mock(kind: .gateway(name: "Acme"), latitude: 50.1, longitude: 8.68, minTier: 2),
+                    .mock(kind: .gateway(name: "Acme"), latitude: 50.1, longitude: 8.68, minTier: .paid),
                     .mock(kind: .country(code: "DE"), latitude: 52.5, longitude: 13.4), // dropped: gateways only
                 ]
             case .stateName:
@@ -208,7 +208,7 @@ struct HomeMapFeatureTests {
         ])
         // The gateway pin has no country, so the connect pill renders without a flag.
         #expect(pins.last?.countryCode == nil)
-        #expect(pins.last?.minTier == 2)
+        #expect(pins.last?.minTier == .paid)
     }
 
     @Test("Same-named gateways in two countries stay two distinct pins")
@@ -234,7 +234,7 @@ private extension ServerGroupInfo {
         kind: Kind,
         latitude: Double,
         longitude: Double,
-        minTier: Int = 0,
+        minTier: VpnTier = .free,
         translatedCity: String? = nil
     ) -> ServerGroupInfo {
         ServerGroupInfo(

@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import DependenciesTestSupport
+import Domain
 import Home
 @testable import HomeShared
 import SnapshotTesting
@@ -61,7 +62,7 @@ struct FullMapSnapshots {
             displayName: name,
             latitude: latitude,
             longitude: longitude,
-            minTier: 0,
+            minTier: .free,
             location: .city(name: name, code: code, order: .fastest)
         )
     }

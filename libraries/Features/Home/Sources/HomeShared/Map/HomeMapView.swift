@@ -48,6 +48,9 @@ public struct HomeMapView: View {
     private let topInset: CGFloat
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    /// Keys the point fill color `renderInputs` resolves, so a light/dark change re-resolves it. Qualified because
+    /// Theme exports a `ColorScheme` of its own and this file imports both.
+    @Environment(\.colorScheme) private var colorScheme: SwiftUI.ColorScheme
     /// The orientation last presented in decorative mode. The next derived orientation is aligned to it so
     /// the rotation animates the short way round. Nil (before the first change lands) falls back to the
     /// derived target itself. Optional rather than seeded in `init`: a `@State` initial value is recomputed
@@ -67,6 +70,8 @@ public struct HomeMapView: View {
     /// The Sun and Moon positions, in the form the globe renderer consumes (the fixed starfield comes from
     /// `Starfield`). Starts as a placeholder and then gets evaluated when the view initializes.
     @State private var solarSystem = SolarSystem.placeholder
+    /// Cached globe rendering inputs (country highlight, pin directions, fill colors).
+    @State private var renderInputs = GlobeRenderInputs()
 
     @Dependency(\.continuousClock) private var clock
 
@@ -84,13 +89,6 @@ public struct HomeMapView: View {
         /// How often the Sun and Moon positions are re-sampled. They drift about a quarter of a degree per minute, so
         /// at this cadence each step is invisible.
         static let solarSystemRefreshInterval: Duration = .seconds(15)
-    }
-
-    /// Fill color of the Metal city points, the same color as the cluster discs they crossfade into. Left uncached so
-    /// an appearance change can't leave the points showing a stale color.
-    private var pointFillColor: SIMD4<Float> {
-        let c = Self.rgb(of: PinDisplay.fillColor)
-        return SIMD4<Float>(c.x, c.y, c.z, 1)
     }
 
     public init(
@@ -132,7 +130,7 @@ public struct HomeMapView: View {
                 viewSize: framing.viewSize,
                 focusHeight: framing.focusHeight,
                 focusTop: framing.focusTop,
-                highlight: GlobeResource.highlight(for: highlightedCode),
+                highlight: renderInputs.highlight(for: highlightedCode),
                 sunDirection: solarSystem.sunDirection,
                 lightFade: interactive ? 1 : 0,
                 sunTint: tint,
@@ -141,8 +139,8 @@ public struct HomeMapView: View {
                 // City points are drawn in the globe's own Metal pass so they can't lag behind the sphere
                 // under a fast drag. `isMoving` keeps them as points while the map moves. Once it settles
                 // they fade out and the cluster discs take over.
-                pinPositions: store.locationPins.map(\.direction),
-                pinColor: pointFillColor,
+                pinPositions: renderInputs.directions(of: store.locationPins),
+                pinColor: renderInputs.pointFill(for: colorScheme),
                 isMoving: trackball.isMoving,
                 // The starfield is drawn in the Metal pass as well, far out and first so the globe occludes
                 // the stars behind it, and turns with the camera without lagging. `starOpacity` is the
@@ -236,20 +234,7 @@ public struct HomeMapView: View {
 
     /// The sunlight color as RGB for the shader.
     private var sunTintRGB: SIMD3<Float> {
-        Self.rgb(of: sunColor)
-    }
-
-    private static func rgb(of color: Color) -> SIMD3<Float> {
-        #if canImport(UIKit)
-            var r: CGFloat = 1, g: CGFloat = 1, b: CGFloat = 1, a: CGFloat = 1
-            UIColor(color).getRed(&r, green: &g, blue: &b, alpha: &a)
-            return SIMD3<Float>(Float(r), Float(g), Float(b))
-        #elseif canImport(AppKit)
-            guard let rgb = NSColor(color).usingColorSpace(.sRGB) else { return SIMD3<Float>(1, 1, 1) }
-            return SIMD3<Float>(Float(rgb.redComponent), Float(rgb.greenComponent), Float(rgb.blueComponent))
-        #else
-            return SIMD3<Float>(1, 1, 1)
-        #endif
+        sunColor.shaderRGB
     }
 
     // MARK: - Pins
@@ -424,5 +409,29 @@ public struct HomeMapView: View {
             ),
             within: PinDisplay.collisionThreshold
         )
+    }
+}
+
+extension Color {
+    /// The color's sRGB components for the Metal shaders, resolved against the appearance in force at the moment of
+    /// the call: a Theme color is a dynamic platform color, so the same `Color` gives different components in light
+    /// and dark. White where the platform can't resolve it, which reads as an untinted globe rather than a black one.
+    var shaderRGB: SIMD3<Float> {
+        #if canImport(UIKit)
+            var r: CGFloat = 1, g: CGFloat = 1, b: CGFloat = 1, a: CGFloat = 1
+            UIColor(self).getRed(&r, green: &g, blue: &b, alpha: &a)
+            return SIMD3<Float>(Float(r), Float(g), Float(b))
+        #elseif canImport(AppKit)
+            guard let rgb = NSColor(self).usingColorSpace(.sRGB) else { return SIMD3<Float>(1, 1, 1) }
+            return SIMD3<Float>(Float(rgb.redComponent), Float(rgb.greenComponent), Float(rgb.blueComponent))
+        #else
+            return SIMD3<Float>(1, 1, 1)
+        #endif
+    }
+
+    /// The same components, made opaque, for the shader parameters that take a color with an alpha.
+    var shaderRGBA: SIMD4<Float> {
+        let rgb = shaderRGB
+        return SIMD4<Float>(rgb.x, rgb.y, rgb.z, 1)
     }
 }

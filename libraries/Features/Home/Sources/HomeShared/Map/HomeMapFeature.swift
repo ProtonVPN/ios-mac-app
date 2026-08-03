@@ -85,7 +85,7 @@ public struct HomeMapFeature {
 
         @SharedReader(.connectionState) public var connectionState: ConnectionState
         @SharedReader(.userCountry) public var userCountry: String?
-        @SharedReader(.userTier) public var userTier: Int?
+        @SharedReader(.userTier) public var userTier: VpnTier?
 
         public init() {}
     }
@@ -186,11 +186,6 @@ public struct HomeMapFeature {
         case connectionStateUpdated(ConnectionState)
         case locationPinsLoaded([LocationPin])
         case locationPinTapped(LocationPin)
-
-        // User gestures, named for what was touched. The camera itself stays view-owned (it moves at
-        // frame rate); these carry only the domain effects: presentation and selection.
-        /// A grey location pin was tapped in the full map. Selects it, revealing its connect pill.
-        case locationPinTapped(LocationPin)
         /// The selected city's connect pill was tapped. Connects (or upsells) and dismisses the pill.
         case connectPillTapped(LocationPin)
         /// A coalesced multi-pin disc was tapped. The view zooms the camera; any pill is dismissed.
@@ -277,7 +272,7 @@ public struct HomeMapFeature {
 
             case let .connectPillTapped(pin):
                 state.selectedLocationID = nil // the pill has done its job
-                if (state.userTier ?? .freeTier).isFreeTier {
+                if state.userTier.isFree {
                     return .send(.delegate(.showUpsell))
                 }
                 return .send(.delegate(.connect(pin.connectionSpec)))

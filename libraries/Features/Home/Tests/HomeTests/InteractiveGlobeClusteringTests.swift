@@ -38,7 +38,7 @@ struct InteractiveGlobeClusteringTests {
             displayName: id,
             latitude: latitude,
             longitude: longitude,
-            minTier: 0,
+            minTier: .free,
             location: .city(name: id, code: "XX", order: .fastest)
         )
     }
@@ -73,6 +73,73 @@ struct InteractiveGlobeClusteringTests {
         expectNoDifference(clusters, [
             PinCluster(id: "a|b", center: CGPoint(x: 110, y: 100), members: [pin("a"), pin("b")]),
         ])
+    }
+
+    @Test("The squared merge test groups exactly as the distance it stands in for")
+    func squaredMergeTestMatchesDistance() {
+        // The grouping compares squared distances rather than calling `hypot`. The two agree mathematically, but the
+        // merge decision sits on a strict `<`, so this checks they also agree in floating point over a dense field
+        // where merges and near-misses are both common. Positions come from a fixed integer sequence rather than a
+        // random generator, so a failure is reproducible.
+        let projected: [ProjectedPin] = (0 ..< 400).map { i in
+            let x = CGFloat((i &* 97) % 390)
+            let y = CGFloat((i &* 173) % 844)
+            return ProjectedPin(pin: pin("pin\(i)"), point: CGPoint(x: x, y: y))
+        }
+
+        let clusters = clusterPins(projected, within: PinDisplay.collisionThreshold)
+
+        expectNoDifference(clusters, distanceClusterPins(projected, within: PinDisplay.collisionThreshold))
+    }
+
+    @Test("A pair either side of the merge radius groups the same as it would by distance")
+    func squaredMergeTestAgreesEitherSideOfTheRadius() {
+        // On a diagonal, so both terms carry rounding error rather than one axis alone. A pair sitting at exactly the
+        // radius is deliberately not covered: squaring rounds a hair differently from `hypot` right at equality, so
+        // the two can disagree there. That case is unreachable in practice and the radius is an approximation of a
+        // finger's width to begin with, but it is not something to pin as identical.
+        let threshold = PinDisplay.collisionThreshold
+        for (offset, merges) in [(threshold - 0.1, true), (threshold + 0.1, false)] {
+            let leg = offset / 2.squareRoot()
+            let projected = [
+                ProjectedPin(pin: pin("a"), point: .zero),
+                ProjectedPin(pin: pin("b"), point: CGPoint(x: leg, y: leg)),
+            ]
+
+            let clusters = clusterPins(projected, within: threshold)
+
+            #expect(clusters.count == (merges ? 1 : 2), "\(offset)pt apart should \(merges ? "" : "not ")merge")
+            expectNoDifference(clusters, distanceClusterPins(projected, within: threshold))
+        }
+    }
+
+    /// The grouping written the obvious way, against the real distance. The shipping version squares the radius
+    /// instead of taking a square root per candidate, and has to agree with this exactly.
+    private func distanceClusterPins(_ projected: [ProjectedPin], within threshold: CGFloat) -> [PinCluster] {
+        var members: [[LocationPin]] = []
+        var centers: [CGPoint] = []
+        var sums: [CGPoint] = []
+        for projectedPin in projected {
+            let point = projectedPin.point
+            let index = centers.firstIndex { hypot($0.x - point.x, $0.y - point.y) < threshold }
+            guard let index else {
+                members.append([projectedPin.pin])
+                centers.append(point)
+                sums.append(point)
+                continue
+            }
+            members[index].append(projectedPin.pin)
+            sums[index] = CGPoint(x: sums[index].x + point.x, y: sums[index].y + point.y)
+            let count = CGFloat(members[index].count)
+            centers[index] = CGPoint(x: sums[index].x / count, y: sums[index].y / count)
+        }
+        return members.indices.map { index in
+            PinCluster(
+                id: members[index].map(\.id).sorted().joined(separator: "|"),
+                center: centers[index],
+                members: members[index]
+            )
+        }
     }
 
     @Test("A frozen cluster re-projects its centroid with a newer camera, keeping membership and id")
