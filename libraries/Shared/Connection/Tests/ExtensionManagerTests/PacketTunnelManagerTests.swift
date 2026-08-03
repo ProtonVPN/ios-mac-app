@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-
     import CoreConnection
     import Dependencies
     import Domain
@@ -176,6 +175,40 @@
                 peerIDs: [],
                 killSwitch: false
             )))
+        }
+
+        @Test
+        func reportsInvalidWhenConfigurationIsNotInstalled() async throws {
+            let providerManager = MockTunnelProviderManager(withBundleIdentifier: "wireguard", state: .ready)
+            providerManager.session = VPNSessionMock(status: .invalid)
+
+            let config = NETunnelProviderProtocol()
+            try config.setProviderConfiguration(
+                value: JSONEncoder().encode(ConnectionSpec.defaultFastest),
+                forKey: "connectionSpec"
+            )
+            try ProTUNConfigurationCoder.encode(
+                configuration: .init(preferredTransport: .udp, peers: [.mock(id: "peer-id")], dnsServers: []),
+                to: config
+            )
+            providerManager.protocolConfiguration = config
+
+            let (stream, continuation) = AsyncStream<ExtensionStateSnapshot>.makeStream()
+            defer { continuation.finish() }
+
+            let initial = try await withDependencies {
+                $0.continuousClock = ContinuousClock()
+                $0.vpnManagerRepository.managers = { [.wireGuard: providerManager] }
+                $0.extensionIPC.currentExtensionState = {
+                    .init(state: .disconnected(reason: .unset), requestId: nil)
+                }
+                $0.extensionIPC.observeExtensionState = { stream }
+            } operation: {
+                var iterator = PacketTunnelManager().statusStream.makeAsyncIterator()
+                return try await withTimeout(of: .seconds(1)) { await iterator.next() }
+            }
+
+            #expect(initial == .some(.success(.invalid)))
         }
 
         #if !os(tvOS)

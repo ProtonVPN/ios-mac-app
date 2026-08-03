@@ -134,9 +134,10 @@ extension ManagerConfigurator {
     static func encodeProTUNConfiguration(connectionIntent: ServerConnectionIntent, on protocolConfiguration: NETunnelProviderProtocol) throws {
         @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
         @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
+        @Dependency(\.credentiallessHelper) var credentiallessHelper
+
         let wgConfig = connectionConfigurationProvider.configuration().wireguardConfig
-        // Initial connection features created from user defaults.
-        let features = connectionFeatureProvider.connectionFeatures()
+        let features = credentiallessHelper.isCredentialLess() ? nil : connectionFeatureProvider.connectionFeatures()
 
         // Encode every peer with the full set of transports/ports, so that we can reconfigure the connection with a
         // specific transport later without supplying a new set of peers.
@@ -146,10 +147,10 @@ extension ManagerConfigurator {
             preferredTransport: preferredTransport,
             peers: peers,
             dnsServers: wgConfig.dnsServers ?? [],
-            netShieldLevel: features.netshield.rawValue,
-            vpnAccelerator: features.vpnAccelerator,
-            portForwarding: features.portForwarding,
-            randomNat: features.natType.flag
+            netShieldLevel: features?.netshield.rawValue,
+            vpnAccelerator: features?.vpnAccelerator,
+            portForwarding: features.flatMap(\.portForwarding),
+            randomNat: features?.natType.flag
         )
         try ProTUNConfigurationCoder.encode(configuration: config, to: protocolConfiguration)
         try protocolConfiguration.setConnectionSpec(connectionIntent.spec)

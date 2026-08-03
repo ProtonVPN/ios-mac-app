@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
+    @testable import CoreConnection
     import CoreConnectionTestSupport
     import Dependencies
     import Domain
@@ -25,6 +26,8 @@
     @testable import ExtensionManager
     import Foundation
     import NetworkExtension
+    @testable import VPNAppCore
+    import VPNCoreCommon
     import VPNShared
     import VPNSharedTesting
     import XCTest
@@ -79,6 +82,32 @@
                 XCTAssertTrue(manager.isEnabled)
             }
         #endif
+
+        @MainActor
+        func testProTUNConfigurationOmitsAgentSettingsForCredentiallessAccounts() throws {
+            let protocolConfiguration = NETunnelProviderProtocol()
+            let keychain = MockAuthKeychain()
+            keychain.userId = "user-id"
+
+            try withDependencies {
+                $0.authKeychain = keychain
+                $0.credentiallessHelper = .init(isCredentialLess: { true })
+                var featureProvider = ConnectionFeatureProvider.testValue
+                featureProvider.connectionFeatures = { AgentTunnelFeatures(netshield: .level2, vpnAccelerator: true, natType: .strictNAT, portForwarding: true) }
+                $0.connectionFeatureProvider = .testValue
+            } operation: {
+                try ManagerConfigurator.encodeProTUNConfiguration(
+                    connectionIntent: .mock(server: .mock),
+                    on: protocolConfiguration
+                )
+            }
+
+            let config = try ProTUNConfigurationCoder.decode(from: protocolConfiguration)
+            XCTAssertNil(config.netShieldLevel)
+            XCTAssertNil(config.vpnAccelerator)
+            XCTAssertNil(config.portForwarding)
+            XCTAssertNil(config.randomNat)
+        }
 
         @MainActor
         func testIkeConfigurationThrowsWhenCredentialsCannotBeRead() async {

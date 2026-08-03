@@ -20,7 +20,7 @@ import Dependencies
 import VPNShared
 
 public struct CredentiallessHelper: Sendable {
-    public var isCredentialLess: () -> Bool
+    public internal(set) var isCredentialLess: @Sendable () -> Bool
 }
 
 public struct CredentiallessHelperDependencyKey: DependencyKey {
