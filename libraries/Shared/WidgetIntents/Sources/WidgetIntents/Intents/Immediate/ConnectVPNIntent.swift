@@ -17,12 +17,6 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppIntents
-import Connection
-import Dependencies
-import NetworkExtension
-import Sharing
-import Strings
-import VPNAppCore
 import WidgetKit
 
 public struct ConnectVPNIntent: AppIntent {
@@ -39,8 +33,7 @@ public struct ConnectVPNIntent: AppIntent {
     public init() {}
 
     public func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
-        @Dependencies.Dependency(\.connectionCommandClient) var connectionCommandClient
-        connectionCommandClient.send(.connect(.defaultFastest, .smartProtocol, .widget))
-        return .result(value: true)
+        let result = try await ConnectVPNWithParametersIntent().perform().value ?? false
+        return .result(value: result)
     }
 }
