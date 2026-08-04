@@ -25,11 +25,11 @@ import Domain
 import DomainTestSupport
 import Home
 @testable import HomeShared
-@testable import Mobile
 import OrderedCollections
 import Sharing
 import SnapshotTesting
 import SwiftUI
+@testable import Tabular
 import Testing
 import TestingErgonomics
 import VPNAppCore
@@ -137,7 +137,7 @@ struct ShellScreenTests {
 
 extension ShellScreenTests: AssertSnapshot {
     func snapshotDirectory() -> String? {
-        Self.ciSnapshotDirectory(testsDirectory: "libraries/Shells/Mobile/Tests/MobileFastSnapshotTests")
+        Self.ciSnapshotDirectory(testsDirectory: "libraries/Shells/Tabular/Tests/TabularFastSnapshotTests")
     }
 }
 

@@ -91,9 +91,9 @@
     },
     {
       "target": {
-        "containerPath": "container:../../libraries/Shells/Mobile",
-        "identifier": "MobileTests",
-        "name": "MobileTests"
+        "containerPath": "container:../../libraries/Shells/Tabular",
+        "identifier": "TabularTests",
+        "name": "TabularTests"
       }
     },
     {

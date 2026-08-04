@@ -136,7 +136,7 @@
          location = "container:"
          name = "Shells">
          <FileRef
-            location = "group:libraries/Shells/Mobile">
+            location = "group:libraries/Shells/Tabular">
          </FileRef>
       </Group>
    </Group>

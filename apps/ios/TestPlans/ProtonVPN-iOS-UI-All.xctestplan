@@ -48,9 +48,9 @@
     },
     {
       "target": {
-        "containerPath": "container:../../libraries/Shells/Mobile",
-        "identifier": "MobileFastSnapshotTests",
-        "name": "MobileFastSnapshotTests"
+        "containerPath": "container:../../libraries/Shells/Tabular",
+        "identifier": "TabularFastSnapshotTests",
+        "name": "TabularFastSnapshotTests"
       }
     },
     {

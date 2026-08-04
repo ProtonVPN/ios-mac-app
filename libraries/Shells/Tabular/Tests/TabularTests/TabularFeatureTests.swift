@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-@testable import Mobile
 import Persistence
 import PersistenceTestSupport
+@testable import Tabular
 import Testing
 
 @Suite("Tabular shell")

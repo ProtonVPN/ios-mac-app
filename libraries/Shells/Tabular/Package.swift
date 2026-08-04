@@ -4,14 +4,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "Mobile",
+    name: "Tabular",
     platforms: [
         .iOS(.v17),
     ],
     products: [
         .library(
-            name: "Mobile",
-            targets: ["Mobile"]
+            name: "Tabular",
+            targets: ["Tabular"]
         ),
     ],
     dependencies: [
@@ -34,7 +34,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Mobile",
+            name: "Tabular",
             dependencies: [
                 "Home",
                 .product(name: "HomeShared", package: "Home"),
@@ -52,17 +52,17 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "MobileTests",
+            name: "TabularTests",
             dependencies: [
-                "Mobile",
+                "Tabular",
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
             ]
         ),
         .testTarget(
-            name: "MobileFastSnapshotTests",
+            name: "TabularFastSnapshotTests",
             dependencies: [
-                "Mobile",
+                "Tabular",
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "DependenciesTestSupport", package: "swift-dependencies"),

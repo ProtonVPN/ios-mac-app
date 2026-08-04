@@ -25,7 +25,7 @@ import DependenciesMacros
 import Ergonomics
 import Foundation
 import GSMessages
-import Mobile
+import Tabular
 import UIKit
 
 // MARK: - WindowService Dependency

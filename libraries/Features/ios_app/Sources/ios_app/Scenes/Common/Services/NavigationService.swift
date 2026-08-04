@@ -31,7 +31,6 @@ import Ergonomics
 import GSMessages
 import Home
 import LegacyCommon
-import Mobile
 import Modals
 import PMLogger
 import ProtonCoreAccountRecovery
@@ -45,6 +44,7 @@ import ProtonCoreServices
 import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
+import Tabular
 import Telemetry
 import UIKit
 import VPNAppCore
