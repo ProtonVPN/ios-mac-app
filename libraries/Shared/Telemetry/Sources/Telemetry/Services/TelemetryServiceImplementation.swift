@@ -71,6 +71,14 @@ public final class TelemetryServiceImplementation {
         #endif
     }
 
+    public func ratingBoosterPromptRequested() async {
+        do {
+            try await telemetryEventScheduler?.report(event: ProductPromptsEvent())
+        } catch {
+            log.debug("\(error)", category: .telemetry)
+        }
+    }
+
     public func reachabilityChanged(_ networkType: ConnectionDimensions.NetworkType) async {
         _ = await initializeTask.value
         await telemetryConnectionStatusReporter?.setNetworkType(networkType)
@@ -87,7 +95,7 @@ public final class TelemetryServiceImplementation {
         try await telemetryOnboardingReporter?.onboardingEvent(event)
     }
 
-    public func startListeningForPortChanges() {
+    fileprivate func startListeningForPortChanges() {
         Task {
             @Dependency(\.extensionIPC) var extensionIPC
             for await snapshot in extensionIPC.observeExtensionState() {
@@ -98,7 +106,7 @@ public final class TelemetryServiceImplementation {
         }
     }
 
-    public func startSettingsHeartbeat() {
+    fileprivate func startSettingsHeartbeat() {
         Task {
             await telemetrySettingsReporter?.start()
         }
@@ -137,18 +145,29 @@ public extension DependencyValues {
     }
 }
 
-extension TelemetryService: DependencyKey {
+/// Important note about the `TestDependencyKey` conformance, do not change this to `DependencyKey`, because
+/// Dependencies lib gets upset about accessing the `liveValue` in our `prepareDependencies` call.
+extension TelemetryService: TestDependencyKey {
+    public static var testValue: TelemetryService {
+        .init { _ in
+        } upsellEvent: { _, _, _, _, _, _ in
+        } connectionStateChanged: { _, _ in
+        } userInitiatedVPNChange: { _ in
+        } reachabilityChanged: { _ in
+        } ratingBoosterPromptRequested: {}
+    }
+
     public static var liveValue: TelemetryService = {
         let implementation = TelemetryServiceImplementation()
+        implementation.startSettingsHeartbeat()
+        implementation.startListeningForPortChanges()
         return .init(
             onboardingEvent: implementation.onboardingEvent,
             upsellEvent: implementation.upsellEvent,
-            startSettingsHeartbeat: implementation.startSettingsHeartbeat,
-            startListeningForPortChanges: implementation.startListeningForPortChanges,
-            vpnGatewayConnectionChanged: unimplemented("This is a part of the old connection layer"),
             connectionStateChanged: implementation.connectionStateChanged,
             userInitiatedVPNChange: implementation.userInitiatedVPNChange,
-            reachabilityChanged: implementation.reachabilityChanged
+            reachabilityChanged: implementation.reachabilityChanged,
+            ratingBoosterPromptRequested: implementation.ratingBoosterPromptRequested
         )
     }()
 }

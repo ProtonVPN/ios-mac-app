@@ -24,6 +24,7 @@ import Domain
 import Ergonomics
 import ExtensionIPC
 import Foundation
+import HomeShared
 import LegacyCommon
 import Logging
 import Persistence
@@ -72,6 +73,8 @@ public final class AppDelegateService: AppDelegateProtocol {
     public init() {
         prepareDependencies {
             $0.defaultAppStorage = .domainUserDefaults
+            $0.telemetryService = .liveValue
+            $0.ratingBooster = .liveValue
             $0.databaseConfiguration = .live(reportError: SentryHelper.reportError)
             $0.connectionCommandClient.quickConnect = QuickConnectIntent.connect
         }
