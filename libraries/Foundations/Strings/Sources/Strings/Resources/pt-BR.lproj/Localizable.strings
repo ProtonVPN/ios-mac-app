@@ -233,8 +233,6 @@
 
 "_reconnecting_to" = "Reconectando-se a %@";
 
-"_reconnecting" = "Configurando uma nova conexão VPN para proteger seu IP";
-
 /* iOS status view */
 "_connected_to" = "Conectado em";
 
@@ -919,7 +917,7 @@
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_body" = "Todos os dados do Proton VPN serão excluídos e o aplicativo será encerrado. Você tem certeza que deseja continuar?";
 
-/* MacOS: killswitch blocking alert button */
+/* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Desativar kill switch";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
@@ -962,6 +960,111 @@
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Bloqueia todo o tráfego de rede quando o túnel VPN é perdido.";
+
+/* iOS: Kill switch settings - header description above the Off/Standard/Advanced options */
+"_kill_switch_header_description" = "Protege seu endereço IP desconectando você da Internet caso você perca sua conexão VPN.";
+
+/* iOS: Kill switch settings - "Off" option title */
+"_kill_switch_mode_off" = "Desativada";
+
+/* iOS: Kill switch settings - "Standard" option title */
+"_kill_switch_mode_standard" = "Padrão";
+
+/* iOS: Kill switch settings - "Advanced" option title */
+"_kill_switch_mode_advanced" = "Avançado";
+
+/* iOS: Kill switch status message when KS isn't protecting a dropped connection (Off, or Standard while disconnected) */
+"_kill_switch_status_exposed" = "Seu endereço IP pode ser exposto se a sua conexão de VPN cair.";
+
+/* iOS: Kill switch settings - status message under the options when Standard is selected and VPN is connected */
+"_kill_switch_status_standard" = "Se a conexão da VPN cair, a conexão com a Internet será interrompida até que a VPN seja restaurada";
+
+/* iOS: Kill switch settings - Advanced status message (VPN connected): blocks all non-VPN traffic */
+"_kill_switch_status_advanced_blocks_all" = "Bloqueia todo o acesso à Internet quando você não está conectado ao Proton VPN";
+
+/* iOS: Kill switch settings - Advanced status message (VPN connected): applies even on intentional disconnect */
+"_kill_switch_status_advanced_applies" = "O kill switch avançado se aplica mesmo se você se desconectar intencionalmente da VPN";
+
+/* iOS: Kill switch settings - Advanced status message (VPN disconnected): internet disabled to protect IP */
+"_kill_switch_status_advanced_disables_internet" = "O kill switch avançado desativa sua internet para proteger seu endereço IP enquanto você não está conectado ao Proton VPN";
+
+/* iOS: Kill switch confirmation - title when enabling Standard from Off */
+"_kill_switch_enable_standard_title" = "Ativar kill switch?";
+
+/* iOS: Kill switch confirmation - title when enabling Advanced from Off */
+"_kill_switch_enable_advanced_title" = "Ativar o Kill switch avançado?";
+
+/* iOS: Kill switch confirmation - title when switching from Standard to Advanced */
+"_kill_switch_switch_advanced_title" = "Alternar para o Kill switch avançado?";
+
+/* macOS: Kill switch popover - "Standard" option row label */
+"_kill_switch_option_standard" = "Kill switch padrão";
+
+/* macOS: Kill switch popover - "Advanced" option row label */
+"_kill_switch_option_advanced" = "Kill switch avançado";
+
+/* macOS: Kill switch popover - explanation shown with the disabled "Advanced" option while the selected protocol (IKEv2) cannot support it */
+"_kill_switch_advanced_unavailable_protocol_description" = "This setting is not available for the protocol you have selected. Please choose another protocol to use Advanced Kill Switch.";
+
+/* macOS: Kill switch confirmation - bullet: enabling KS disables split tunneling (macOS only) */
+"_kill_switch_bullet_split_tunneling" = "This will disable split tunneling";
+
+/* iOS: Kill switch confirmation - bullet: Advanced blocking persists */
+"_kill_switch_bullet_advanced_persists" = "Internet stays blocked across reboots and intentional disconnects until you turn it off";
+
+/* iOS: Kill switch confirmation - bullet: how to get back online with Advanced */
+"_kill_switch_bullet_advanced_recover" = "Para voltar a ficar on-line, conecte-se à VPN ou desative o kill switch avançado";
+
+/* iOS: Kill switch confirmation - bullet: KS activates on the next connection (deferred activation, both modes) */
+"_kill_switch_bullet_deferred" = "Takes effect the next time you connect to VPN";
+
+/* iOS: Kill switch confirmation - primary button to enable */
+"_kill_switch_confirm_enable" = "Ativar";
+
+/* iOS: Kill switch confirmation - primary button to switch to advanced */
+"_kill_switch_confirm_switch" = "Alternar";
+
+/* iOS: Warning shown before disconnecting / signing out while Advanced kill switch is active */
+"_kill_switch_advanced_disconnect_warning" = "O kill switch avançado está ativado. Ao continuar, você perderá a conexão de Internet.";
+
+/* iOS: Home map overlay title while Advanced kill switch is blocking */
+"_kill_switch_advanced_banner_title" = "O Kill switch avançado foi ativado.";
+
+/* iOS: Persistent home banner message while Advanced kill switch is blocking */
+"_kill_switch_advanced_banner_message" = "Conecte-se à VPN para restaurar sua conexão com a internet.";
+
+/* iOS: Login screen banner shown while Advanced kill switch is blocking internet */
+"_kill_switch_login_blocking" = "O kill switch avançado está bloqueando sua conexão com a internet.";
+
+/* iOS: Confirmation banner shown after disabling kill switch from the login screen */
+"_kill_switch_disabled_confirmation" = "Kill switch está desativado.";
+
+/* iOS: Body of the alert shown when a user tries to sign in / sign up / continue as guest while Advanced kill switch is blocking */
+"_kill_switch_turn_off_to_get_online" = "To get back online you need to turn off kill switch.";
+
+/* iOS: Primary button of the kill-switch-blocking alert; turns the kill switch off */
+"_kill_switch_turn_off" = "Desativar kill switch";
+
+/* iOS: Sign-out confirmation title while Advanced kill switch is active (%@ is the username) */
+"_kill_switch_logout_advanced_title" = "Encerrar sessão de %@?";
+
+/* iOS: Sign-out confirmation body while Advanced kill switch is active */
+"_kill_switch_logout_advanced_body" = "You'll be disconnected from VPN.\nAdvanced kill switch is enabled. If you continue, you will be disconnected from the internet.";
+
+/* iOS: Title of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
+"_kill_switch_logout_blocking_failed_title" = "Kill switch could not stay active";
+
+/* iOS: Body of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
+"_kill_switch_logout_blocking_failed_body" = "You've been signed out, but the kill switch couldn't be kept active, so your device may be exposed. Open Proton VPN and connect again to stay protected.";
+
+/* macOS: title of the confirmation shown when disconnecting with Advanced kill switch active */
+"_kill_switch_disconnect_advanced_title" = "Desconectar da VPN?";
+
+/* macOS: title of the quit confirmation shown while a VPN session is active */
+"_kill_switch_quit_title" = "Sair do Proton VPN?";
+
+/* macOS: quit confirmation body (Standard / non-advanced kill switch) */
+"_kill_switch_disconnected_from_vpn" = "Você será desconectado da VPN.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "Redirecionamento de porta";
@@ -1070,16 +1173,15 @@
 "_protun_logs" = "Registros do ProTUN";
 
 /* iOS Settings: Troubleshooting logs row */
-"_create_troubleshooting_file" = "Create a troubleshooting file";
+"_create_troubleshooting_file" = "Criar um arquivo de solução de problemas";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Reportar um problema";
 
 "_allow_lan_title" = "Permitir conexões LAN";
 
-"_allow_lan_info" = "Permite contornar a VPN e conectar-se a dispositivos na sua rede local, como sua impressora.";
-
-"_allow_lan_description" = "Para permitir o acesso à LAN, o kill switch deve estar desligado.\n\nContinuar?";
+/* Description of the Allow LAN connections feature */
+"_allow_lan_info" = "Connect to devices on your local network (such as your printer or NAS drive) when the kill switch is active.";
 
 "_allow_lan_note" = "Observe que sua conexão precisa ser reiniciada para aplicar esta mudança";
 
@@ -1088,12 +1190,6 @@
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
 "_turn_ks_on_description_macos_st_conflict" = "• Isso desativará o tunelamento dividido";
-
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
-"_turn_ks_on_description_macos_lan_conflict" = "• Você não conseguirá acessar dispositivos na sua rede local";
-
-/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
-"_turn_ks_on_description_ios" = "Você não conseguirá acessar dispositivos na sua rede local";
 
 /* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_title" = "Ativar tunelamento dividido?";
@@ -1486,7 +1582,7 @@
 
 "_quick_settings_netShield_description" = "Navegue pela internet sem anúncios e malware.";
 
-"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak. Your IP may be briefly visible when switching servers.";
+"_quick_settings_killSwitch_description" = "Desativa a internet caso a conexão VPN seja interrompida, para evitar o vazamento acidental do IP. Seu IP pode ficar visível por um instante ao trocar de servidor.";
 
 /* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Melhora as velocidades de torrent e jogos, permitindo conexões P2P diretas através de uma porta designada.";
@@ -1495,7 +1591,7 @@
 
 "_quick_settings_netShield_note" = "Se os sites não carregarem, tente desativar o NetShield";
 
-"_quick_settings_killSwitch_note" = "Se você não pode se conectar a dispositivos na sua rede local, tente desabilitar o kill switch.";
+"_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try allowing LAN connections in Settings.";
 
 "_quick_settings_portForwarding_note" = "Insira o número da porta ativa em seu aplicativo BitTorrent para melhorar suas velocidades de P2P";
 
@@ -2104,7 +2200,7 @@
 "connection_status_unprotected" = "Você está sem proteção";
 
 /* Connection status when zero peer killswitch is enabled */
-"connection_status_disconnectedByKillswitch" = "Disconnected due to Kill Switch";
+"connection_status_disconnectedByKillswitch" = "Desconectado devido ao Kill Switch";
 
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
 "connection_status_protecting" = "Protegendo sua identidade digital";
@@ -2960,6 +3056,9 @@
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message" = "Esse protocolo será removido em breve. Considere trocar para o protocolo Smart. Saiba mais";
 
+/* Message added to the IKEv2 deprecation alert when Advanced kill switch is enabled: continuing with IKEv2 changes the setting to Standard */
+"_ike_deprecation_alert_kill_switch_downgrade_message" = "Your Kill Switch setting will be changed to Standard.";
+
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
 "_disable_plutonium_message" = "Isso desativará o tunelamento dividido.";
 
@@ -3282,13 +3381,13 @@
 "_transaction_log_" = "Registro da transação";
 
 /* Footer note that is visible across the whole flow of the PCAP session */
-"_pcap_capture_file_storage" = "The troubleshooting file is stored on your device and is not sent to Proton unless you share it. It captures your VPN traffic, which may include the websites you visit. [Learn more](%@)";
+"_pcap_capture_file_storage" = "O arquivo de diagnóstico fica armazenado no seu dispositivo e não é enviado para a Proton, a menos que você o compartilhe. Ele captura o tráfego da sua VPN, o que pode incluir os sites que você visita. [Saiba mais](%@)";
 
 /* Description of the PCAP feature presented to the user before they start the PCAP session */
-"_pcap_capture_feature_description" = "Reproduce a specific issue you’re facing when using Proton VPN to get help from our customer support team.\n\nThe app will create a file containing technical details about your VPN connection.";
+"_pcap_capture_feature_description" = "Reproduza um problema específico que você esteja enfrentando ao usar o Proton VPN para obter ajuda de nossa equipe de suporte ao cliente.\n\nO aplicativo criará um arquivo contendo detalhes técnicos sobre sua conexão VPN.";
 
 /* Directions to the user shown on the active PCAP session view */
-"_pcap_capture_session_directions" = "Reproduce the issue then stop the capture.";
+"_pcap_capture_session_directions" = "Reproduza o problema e, em seguida, interrompa a captura.";
 
 /* Format: mm:ss / mm:ss. Left hand side is the counter, right hand side is the maximum allowed time */
 "_pcap_capture_session_duration" = "%@ / %@";
@@ -3330,19 +3429,19 @@
 "_got_it" = "Entendi";
 
 /* Title of an alert that presents the reason for PCAP failure */
-"_pcap_capture_low_storage" = "Not enough storage";
+"_pcap_capture_low_storage" = "Espaço de armazenamento insuficiente";
 
 /* Description of an alert that presents the reason for PCAP failure */
-"_pcap_capture_low_storage_action_description" = "You need at least 200MB of available space to start a capture";
+"_pcap_capture_low_storage_action_description" = "Você precisa de pelo menos 200 MB de espaço disponível para iniciar uma captura";
 
 /* Title of an alert that presents the reason for PCAP failure */
 "_pcap_capture_failed" = "Falha na captura";
 
 /* Title of the alert shown when the VPN server refuses one of the user's requested settings */
-"_local_agent_setting_refused_title" = "Setting not applied";
+"_local_agent_setting_refused_title" = "Configuração não aplicada";
 
 /* Alert body shown when the server refuses a named setting. %@ is the setting name, e.g. NetShield */
-"_local_agent_setting_refused_message" = "%@ is not an available setting for this connection.";
+"_local_agent_setting_refused_message" = "%@ não é uma configuração disponível para esta conexão.";
 
 /* Alert body shown when the server refuses a setting the app doesn't surface as a named control */
-"_local_agent_setting_refused_message_generic" = "One of your settings is not available for this connection, it has been turned off.";
+"_local_agent_setting_refused_message_generic" = "Uma das suas configurações não está disponível para esta conexão e foi desativada.";

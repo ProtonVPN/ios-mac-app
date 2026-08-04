@@ -233,8 +233,6 @@
 
 "_reconnecting_to" = "Kobler til %@ på nytt";
 
-"_reconnecting" = "Konfigurerer en ny VPN-tilkobling for å beskytte IP-en din";
-
 /* iOS status view */
 "_connected_to" = "Koblet til";
 
@@ -919,7 +917,7 @@
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_body" = "Alle Proton VPN-data vil bli slettet og applikasjonen vil avslutte. Ønsker du å fortsette?";
 
-/* MacOS: killswitch blocking alert button */
+/* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Deaktiver nødstopp";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
@@ -962,6 +960,111 @@
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blokkerer all nettverkstrafikk når VPN-tunnelen går tapt.";
+
+/* iOS: Kill switch settings - header description above the Off/Standard/Advanced options */
+"_kill_switch_header_description" = "Beskytter IP-adressen din ved å koble deg fra internett hvis du mister VPN-tilkoblingen.";
+
+/* iOS: Kill switch settings - "Off" option title */
+"_kill_switch_mode_off" = "Av";
+
+/* iOS: Kill switch settings - "Standard" option title */
+"_kill_switch_mode_standard" = "Standard";
+
+/* iOS: Kill switch settings - "Advanced" option title */
+"_kill_switch_mode_advanced" = "Avansert";
+
+/* iOS: Kill switch status message when KS isn't protecting a dropped connection (Off, or Standard while disconnected) */
+"_kill_switch_status_exposed" = "IP-adressen din kan bli eksponert hvis VPN-tilkoblingen faller ut";
+
+/* iOS: Kill switch settings - status message under the options when Standard is selected and VPN is connected */
+"_kill_switch_status_standard" = "Hvis VPN-tilkoblingen faller ut, blir du koblet fra internett til VPN-et er gjenopprettet";
+
+/* iOS: Kill switch settings - Advanced status message (VPN connected): blocks all non-VPN traffic */
+"_kill_switch_status_advanced_blocks_all" = "Blokkerer all internettilgang når du ikke er koblet til Proton VPN";
+
+/* iOS: Kill switch settings - Advanced status message (VPN connected): applies even on intentional disconnect */
+"_kill_switch_status_advanced_applies" = "Avansert nødstopp gjelder selv om du med vilje kobler fra VPN";
+
+/* iOS: Kill switch settings - Advanced status message (VPN disconnected): internet disabled to protect IP */
+"_kill_switch_status_advanced_disables_internet" = "Avansert nødstopp deaktiverer internettforbindelsen for å beskytte IP-adressen din mens du ikke er koblet til Proton VPN";
+
+/* iOS: Kill switch confirmation - title when enabling Standard from Off */
+"_kill_switch_enable_standard_title" = "Aktivere nødstopp?";
+
+/* iOS: Kill switch confirmation - title when enabling Advanced from Off */
+"_kill_switch_enable_advanced_title" = "Aktivere avansert nødstopp?";
+
+/* iOS: Kill switch confirmation - title when switching from Standard to Advanced */
+"_kill_switch_switch_advanced_title" = "Bytte til avansert nødstopp?";
+
+/* macOS: Kill switch popover - "Standard" option row label */
+"_kill_switch_option_standard" = "Kill switch Standard";
+
+/* macOS: Kill switch popover - "Advanced" option row label */
+"_kill_switch_option_advanced" = "Kill switch Advanced";
+
+/* macOS: Kill switch popover - explanation shown with the disabled "Advanced" option while the selected protocol (IKEv2) cannot support it */
+"_kill_switch_advanced_unavailable_protocol_description" = "This setting is not available for the protocol you have selected. Please choose another protocol to use Advanced Kill Switch.";
+
+/* macOS: Kill switch confirmation - bullet: enabling KS disables split tunneling (macOS only) */
+"_kill_switch_bullet_split_tunneling" = "This will disable split tunneling";
+
+/* iOS: Kill switch confirmation - bullet: Advanced blocking persists */
+"_kill_switch_bullet_advanced_persists" = "Internett forblir blokkert ved omstart og bevisste frakoblinger helt til du slår det av";
+
+/* iOS: Kill switch confirmation - bullet: how to get back online with Advanced */
+"_kill_switch_bullet_advanced_recover" = "For å komme tilbake på nettet, koble til VPN eller deaktiver avansert nødstopp";
+
+/* iOS: Kill switch confirmation - bullet: KS activates on the next connection (deferred activation, both modes) */
+"_kill_switch_bullet_deferred" = "Trer i kraft neste gang du kobler til VPN";
+
+/* iOS: Kill switch confirmation - primary button to enable */
+"_kill_switch_confirm_enable" = "Aktiver";
+
+/* iOS: Kill switch confirmation - primary button to switch to advanced */
+"_kill_switch_confirm_switch" = "Bytt";
+
+/* iOS: Warning shown before disconnecting / signing out while Advanced kill switch is active */
+"_kill_switch_advanced_disconnect_warning" = "Avansert nødstopp er aktivert. Hvis du fortsetter, vil du bli koblet fra internett.";
+
+/* iOS: Home map overlay title while Advanced kill switch is blocking */
+"_kill_switch_advanced_banner_title" = "Avansert nødstopp aktivert";
+
+/* iOS: Persistent home banner message while Advanced kill switch is blocking */
+"_kill_switch_advanced_banner_message" = "Koble til VPN for å gjenopprette internettforbindelsen.";
+
+/* iOS: Login screen banner shown while Advanced kill switch is blocking internet */
+"_kill_switch_login_blocking" = "Avansert nødstopp blokkerer Internettforbindelsen din.";
+
+/* iOS: Confirmation banner shown after disabling kill switch from the login screen */
+"_kill_switch_disabled_confirmation" = "Nødstopp er deaktivert.";
+
+/* iOS: Body of the alert shown when a user tries to sign in / sign up / continue as guest while Advanced kill switch is blocking */
+"_kill_switch_turn_off_to_get_online" = "For å komme deg på nett igjen må du slå av nødstopp.";
+
+/* iOS: Primary button of the kill-switch-blocking alert; turns the kill switch off */
+"_kill_switch_turn_off" = "Slå av nødstopp";
+
+/* iOS: Sign-out confirmation title while Advanced kill switch is active (%@ is the username) */
+"_kill_switch_logout_advanced_title" = "Logge av fra %@?";
+
+/* iOS: Sign-out confirmation body while Advanced kill switch is active */
+"_kill_switch_logout_advanced_body" = "Du vil bli koblet fra VPN.\nAvansert nødstopp er aktivert. Hvis du fortsetter, vil du bli koblet fra internett.";
+
+/* iOS: Title of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
+"_kill_switch_logout_blocking_failed_title" = "Nødstopp kunne ikke forbli aktiv";
+
+/* iOS: Body of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
+"_kill_switch_logout_blocking_failed_body" = "Du er logget av, men nødstopp kunne ikke holdes aktiv, så enheten din kan være eksponert. Åpne Proton VPN og koble til igjen for å forbli beskyttet.";
+
+/* macOS: title of the confirmation shown when disconnecting with Advanced kill switch active */
+"_kill_switch_disconnect_advanced_title" = "Disconnect from VPN?";
+
+/* macOS: title of the quit confirmation shown while a VPN session is active */
+"_kill_switch_quit_title" = "Quit Proton VPN?";
+
+/* macOS: quit confirmation body (Standard / non-advanced kill switch) */
+"_kill_switch_disconnected_from_vpn" = "You'll be disconnected from VPN.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "Portviderekobling";
@@ -1077,9 +1180,8 @@
 
 "_allow_lan_title" = "Tillat LAN-forbindelser";
 
-"_allow_lan_info" = "Lar deg omgå VPN og koble til enheter på ditt lokale nettverk, som skriveren.";
-
-"_allow_lan_description" = "For å tillate LAN-tilgang, må nødstopp være slått av.\n\nFortsett?";
+/* Description of the Allow LAN connections feature */
+"_allow_lan_info" = "Connect to devices on your local network (such as your printer or NAS drive) when the kill switch is active.";
 
 "_allow_lan_note" = "Vær oppmerksom på at tilkoblingen må startes på nytt for å bruke denne endringen.";
 
@@ -1088,12 +1190,6 @@
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
 "_turn_ks_on_description_macos_st_conflict" = "• Dette vil deaktivere delt tunnelering";
-
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
-"_turn_ks_on_description_macos_lan_conflict" = "• Du vil ikke kunne få tilgang til enheter på ditt lokale nettverk";
-
-/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
-"_turn_ks_on_description_ios" = "Du vil ikke kunne få tilgang til enheter på ditt lokale nettverk";
 
 /* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_title" = "Aktivere delt tunnelering?";
@@ -1495,7 +1591,7 @@
 
 "_quick_settings_netShield_note" = "Hvis nettsteder ikke lastes inn, kan du prøve å deaktivere NetShield.";
 
-"_quick_settings_killSwitch_note" = "Hvis du ikke kan koble til enheter på det lokale nettverket, kan du prøve å deaktivere nødstopp.";
+"_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try allowing LAN connections in Settings.";
 
 "_quick_settings_portForwarding_note" = "Skriv inn det aktive portnummeret i BitTorrent-appen for å forbedre P2P-hastighetene dine.";
 
@@ -2104,7 +2200,7 @@
 "connection_status_unprotected" = "Du er ikke beskyttet";
 
 /* Connection status when zero peer killswitch is enabled */
-"connection_status_disconnectedByKillswitch" = "Disconnected due to Kill Switch";
+"connection_status_disconnectedByKillswitch" = "Frakoblet på grunn av nødstopp";
 
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
 "connection_status_protecting" = "Beskytter den digitale identiteten din";
@@ -2960,6 +3056,9 @@
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message" = "Denne protokollen vil bli fjernet snart. Vurder å bytte til Smart protokoll. Lær mer.";
 
+/* Message added to the IKEv2 deprecation alert when Advanced kill switch is enabled: continuing with IKEv2 changes the setting to Standard */
+"_ike_deprecation_alert_kill_switch_downgrade_message" = "Your Kill Switch setting will be changed to Standard.";
+
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
 "_disable_plutonium_message" = "Dette vil deaktivere delt tunnelering.";
 
@@ -3285,7 +3384,7 @@
 "_pcap_capture_file_storage" = "Feilsøkingsfilen lagres på enheten din og sendes ikke til Proton med mindre du deler den. Den fanger opp VPN-trafikken din, som kan inkludere nettstedene du besøker. [Les mer](%@)";
 
 /* Description of the PCAP feature presented to the user before they start the PCAP session */
-"_pcap_capture_feature_description" = "Gjenskap et spesifikt problem du opplever når du bruker Proton VPN for å få hjelp fra kundesupportteamet vårt.\n\nAppen vil opprette en fil som inneholder tekniske detaljer om VPN-tilkoblingen din.";
+"_pcap_capture_feature_description" = "Gjenskap et spesifikt problem du opplever når du bruker Proton VPN for å få hjelp fra kundestøtteteamet vårt.\n\nAppen vil opprette en fil som inneholder tekniske detaljer om VPN-tilkoblingen din.";
 
 /* Directions to the user shown on the active PCAP session view */
 "_pcap_capture_session_directions" = "Gjenskap problemet, og stopp deretter opptaket.";

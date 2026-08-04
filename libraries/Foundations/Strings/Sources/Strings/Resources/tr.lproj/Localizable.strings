@@ -233,8 +233,6 @@
 
 "_reconnecting_to" = "%@ ile yeniden bağlantı kuruluyor";
 
-"_reconnecting" = "IP adresinizi korumak için yeni bir VPN bağlantısı ayarlanıyor";
-
 /* iOS status view */
 "_connected_to" = "Şuraya bağlandı";
 
@@ -919,8 +917,8 @@
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_body" = "Tüm Proton VPN verileri silinecek ve uygulama kapanacak. İlerlemek istiyor musunuz?";
 
-/* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Bağlantı kesici özelliğini kapat";
+/* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Bağlantı kesiciyi kapat";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "Bağlantı kesici özelliğini aç";
@@ -962,6 +960,111 @@
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "VPN tüneli kaybolduğunda tüm ağ trafiğini engeller.";
+
+/* iOS: Kill switch settings - header description above the Off/Standard/Advanced options */
+"_kill_switch_header_description" = "VPN bağlantınız kesilirse internet bağlantınızı keserek IP adresinizin açığa çıkmasını engeller.";
+
+/* iOS: Kill switch settings - "Off" option title */
+"_kill_switch_mode_off" = "Kapalı";
+
+/* iOS: Kill switch settings - "Standard" option title */
+"_kill_switch_mode_standard" = "Standart";
+
+/* iOS: Kill switch settings - "Advanced" option title */
+"_kill_switch_mode_advanced" = "Gelişmiş";
+
+/* iOS: Kill switch status message when KS isn't protecting a dropped connection (Off, or Standard while disconnected) */
+"_kill_switch_status_exposed" = "VPN bağlantınız kesilirse IP adresiniz açığa çıkabilir";
+
+/* iOS: Kill switch settings - status message under the options when Standard is selected and VPN is connected */
+"_kill_switch_status_standard" = "VPN bağlantınız kesilirse, VPN bağlantısı yeniden kurulana kadar internet bağlantınız kesilir";
+
+/* iOS: Kill switch settings - Advanced status message (VPN connected): blocks all non-VPN traffic */
+"_kill_switch_status_advanced_blocks_all" = "Proton VPN ile bağlantınız yokken tüm internet erişimini engeller";
+
+/* iOS: Kill switch settings - Advanced status message (VPN connected): applies even on intentional disconnect */
+"_kill_switch_status_advanced_applies" = "VPN bağlantısını kasıtlı olarak kesseniz bile gelişmiş bağlantı kesici uygulanır";
+
+/* iOS: Kill switch settings - Advanced status message (VPN disconnected): internet disabled to protect IP */
+"_kill_switch_status_advanced_disables_internet" = "Gelişmiş bağlantı kesici, Proton VPN bağlantısı olmadığında IP adresinizi korumak için internetinizi kapatır";
+
+/* iOS: Kill switch confirmation - title when enabling Standard from Off */
+"_kill_switch_enable_standard_title" = "Bağlantı kesici açılsın mı?";
+
+/* iOS: Kill switch confirmation - title when enabling Advanced from Off */
+"_kill_switch_enable_advanced_title" = "Gelişmiş bağlantı kesici açılsın mı?";
+
+/* iOS: Kill switch confirmation - title when switching from Standard to Advanced */
+"_kill_switch_switch_advanced_title" = "Gelişmiş bağlantı kesiciye geçilsin mi?";
+
+/* macOS: Kill switch popover - "Standard" option row label */
+"_kill_switch_option_standard" = "Standart bağlantı kesici";
+
+/* macOS: Kill switch popover - "Advanced" option row label */
+"_kill_switch_option_advanced" = "Gelişmiş bağlantı kesici";
+
+/* macOS: Kill switch popover - explanation shown with the disabled "Advanced" option while the selected protocol (IKEv2) cannot support it */
+"_kill_switch_advanced_unavailable_protocol_description" = "Bu ayar seçtiğiniz iletişim kuralında bulunmuyor. Gelişmiş bağlantı kesiciyi kullanmak için lütfen başka bir iletişim kuralı seçin.";
+
+/* macOS: Kill switch confirmation - bullet: enabling KS disables split tunneling (macOS only) */
+"_kill_switch_bullet_split_tunneling" = "Bu işlem ayrılmış tünellemeyi kapatır";
+
+/* iOS: Kill switch confirmation - bullet: Advanced blocking persists */
+"_kill_switch_bullet_advanced_persists" = "Siz kapatana kadar yeniden başlatma işlemleri ve kasıtlı bağlantı kesintileri sonrasında da internet erişimi engellenir";
+
+/* iOS: Kill switch confirmation - bullet: how to get back online with Advanced */
+"_kill_switch_bullet_advanced_recover" = "Yeniden çevrim içi olmak için VPN bağlantısı kurun ya da gelişmiş bağlantı kesiciyi kapatın";
+
+/* iOS: Kill switch confirmation - bullet: KS activates on the next connection (deferred activation, both modes) */
+"_kill_switch_bullet_deferred" = "VPN bağlantısını yeniden kurduğunuzda etkili olur";
+
+/* iOS: Kill switch confirmation - primary button to enable */
+"_kill_switch_confirm_enable" = "Aç";
+
+/* iOS: Kill switch confirmation - primary button to switch to advanced */
+"_kill_switch_confirm_switch" = "Değiştir";
+
+/* iOS: Warning shown before disconnecting / signing out while Advanced kill switch is active */
+"_kill_switch_advanced_disconnect_warning" = "Gelişmiş bağlantı kesici açık. İlerlerseniz internet bağlantınız kesilecek.";
+
+/* iOS: Home map overlay title while Advanced kill switch is blocking */
+"_kill_switch_advanced_banner_title" = "Gelişmiş bağlantı kesici açıldı";
+
+/* iOS: Persistent home banner message while Advanced kill switch is blocking */
+"_kill_switch_advanced_banner_message" = "İnternet bağlantınızı yeniden açmak için VPN bağlantısı kurun.";
+
+/* iOS: Login screen banner shown while Advanced kill switch is blocking internet */
+"_kill_switch_login_blocking" = "Gelişmiş bağlantı kesici internet bağlantınızı engelliyor.";
+
+/* iOS: Confirmation banner shown after disabling kill switch from the login screen */
+"_kill_switch_disabled_confirmation" = "Bağlantı kesici kapalı.";
+
+/* iOS: Body of the alert shown when a user tries to sign in / sign up / continue as guest while Advanced kill switch is blocking */
+"_kill_switch_turn_off_to_get_online" = "İnternete yeniden erişmek için bağlantı kesiciyi kapatmanız gerekir.";
+
+/* iOS: Primary button of the kill-switch-blocking alert; turns the kill switch off */
+"_kill_switch_turn_off" = "Bağlantı kesiciyi kapat";
+
+/* iOS: Sign-out confirmation title while Advanced kill switch is active (%@ is the username) */
+"_kill_switch_logout_advanced_title" = "%@ oturumu kapatılsın mı?";
+
+/* iOS: Sign-out confirmation body while Advanced kill switch is active */
+"_kill_switch_logout_advanced_body" = "VPN bağlantınız kesilecek.\nGelişmiş bağlantı kesici açık. İlerlerseniz internet bağlantınız kesilecek.";
+
+/* iOS: Title of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
+"_kill_switch_logout_blocking_failed_title" = "Bağlantı kesici etkin kalamadı";
+
+/* iOS: Body of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
+"_kill_switch_logout_blocking_failed_body" = "Oturumunuz kapatıldı ancak bağlantı kesici etkin tutulamadığı için aygıtınız risk altında olabilir. Korunmaya sürdürmek için Proton VPN uygulamasını açın ve yeniden bağlanın.";
+
+/* macOS: title of the confirmation shown when disconnecting with Advanced kill switch active */
+"_kill_switch_disconnect_advanced_title" = "VPN bağlantısı kesilsin mi?";
+
+/* macOS: title of the quit confirmation shown while a VPN session is active */
+"_kill_switch_quit_title" = "Proton VPN kapatılsın mı?";
+
+/* macOS: quit confirmation body (Standard / non-advanced kill switch) */
+"_kill_switch_disconnected_from_vpn" = "VPN bağlantınız kesilecek.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "Bağlantı noktası yönlendirme";
@@ -1077,9 +1180,8 @@
 
 "_allow_lan_title" = "Yerel ağ bağlantılarına izin verilsin";
 
-"_allow_lan_info" = "Yerel ağınızdaki yazıcı gibi aygıtlara VPN üzerinden geçmeden bağlanmanızı sağlar.";
-
-"_allow_lan_description" = "Yerel ağ erişimine izin vermek için bağlantı kesici özelliği kapatılmalıdır.\n\nİlerlemek istiyor musunuz?";
+/* Description of the Allow LAN connections feature */
+"_allow_lan_info" = "Bağlantı kesici açıkken yerel ağınızdaki (yazıcınız veya NAS sürücünüz gibi) aygıtlara bağlanın.";
 
 "_allow_lan_note" = "Bu değişikliği uygulamak için bağlantınızın yeniden başlatılması gerektiğini unutmayın";
 
@@ -1088,12 +1190,6 @@
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
 "_turn_ks_on_description_macos_st_conflict" = "• Bu işlem ayrılmış tünellemeyi kapatacak";
-
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
-"_turn_ks_on_description_macos_lan_conflict" = "• Yerel ağınızdaki aygıtlara erişemeyeceksiniz";
-
-/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
-"_turn_ks_on_description_ios" = "Yerel ağınızdaki aygıtlara erişemeyeceksiniz.";
 
 /* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_title" = "Ayrılmış tünelleme açılsın mı?";
@@ -1495,7 +1591,7 @@
 
 "_quick_settings_netShield_note" = "Siteler yüklenmiyorsa, NetShield özelliğini kapatmayı deneyin";
 
-"_quick_settings_killSwitch_note" = "Yerel ağınızdaki aygıtlara bağlanamıyorsanız, bağlantı kesici özelliğini kapatmayı deneyin.";
+"_quick_settings_killSwitch_note" = "Yerel ağınızdaki aygıtlara bağlanamıyorsanız, Ayarlar bölümünden LAN bağlantılarına izin vermeyi deneyin.";
 
 "_quick_settings_portForwarding_note" = "P2P hızınızı artırmak için BitTorrent uygulamanıza etkin bağlantı noktası numaranızı yazın";
 
@@ -2104,7 +2200,7 @@
 "connection_status_unprotected" = "Korunmuyorsunuz";
 
 /* Connection status when zero peer killswitch is enabled */
-"connection_status_disconnectedByKillswitch" = "Disconnected due to Kill Switch";
+"connection_status_disconnectedByKillswitch" = "Bağlantı kesici bağlantıyı kesti";
 
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
 "connection_status_protecting" = "Dijital kimliğiniz korunuyor";
@@ -2959,6 +3055,9 @@
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message" = "Bu iletişim kuralı yakında kullanımdan kaldırılacak. Smart Protocol kullanmaya geçmeyi değerlendirin. Ayrıntılı bilgi alın";
+
+/* Message added to the IKEv2 deprecation alert when Advanced kill switch is enabled: continuing with IKEv2 changes the setting to Standard */
+"_ike_deprecation_alert_kill_switch_downgrade_message" = "Bağlantı kesici ayarınız Standart olarak değiştirilecek.";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
 "_disable_plutonium_message" = "Bu işlem ayrılmış tünellemeyi kapatır.";
