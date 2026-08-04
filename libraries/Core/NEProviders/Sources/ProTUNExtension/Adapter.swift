@@ -146,6 +146,8 @@ actor ProTUNAdapter {
 
         Logger.adapter.info("Starting Adapter")
 
+        let cache = SecurePersistentCache(userID: config.userID)
+
         extensionIPCServer.zeroAll()
 
         listenToPathUpdates()
@@ -169,13 +171,21 @@ actor ProTUNAdapter {
             localAgentSettings: localAgentSettings
         )
 
+        #if os(iOS)
+            if config.isLegacyFallback {
+                // Recover the session state that the WireGuard extension left in the keychain, so a tunnel adopted
+                // from it can reuse the old session in case the app is not ready to respond to fork selector requests.
+                try LegacyKeychainMigration.migrateIfNeeded(into: cache, config: config)
+            }
+        #endif
+
         connection = .unixConnect(
             config: proTunInitialConfig,
             tunFd: rawTunFd,
             stateChangeCallback: stateDelegate,
             eventCallback: eventDelegate,
             socketFdAvailableCallback: nil,
-            cache: SecurePersistentCache(userID: config.userID)
+            cache: cache
         )
         signposter.emitEvent("Connection established", id: signpostID)
 
@@ -461,6 +471,19 @@ extension ProTUNAdapter {
     struct Configuration {
         let userID: String
         let proTUN: ProTUNConfiguration
+
+        static func legacy(proTUN: ProTUNConfiguration) -> Self {
+            self.init(userID: legacyUserID, proTUN: proTUN)
+        }
+
+        /// Whether `proTUN` was recovered from the pre-ProTUN WireGuard Go keychain entry rather than from the
+        /// provider configuration. In this case the session state alongside it needs migrating too.
+        /// See ``LegacyKeychainMigration``.
+        var isLegacyFallback: Bool {
+            userID == Self.legacyUserID
+        }
+
+        private static let legacyUserID = "legacyWireGuardFallback"
     }
 }
 

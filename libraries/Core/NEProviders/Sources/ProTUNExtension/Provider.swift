@@ -163,13 +163,12 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
             throw error
         }
 
-        let userID: String
         if legacy {
             Logger.provider.info("Note: falling back to legacy WireGuard keychain entry, no ProTUN config found")
-            userID = "legacyWireGuardFallback"
-        } else if let config = protocolConfiguration as? NETunnelProviderProtocol, let configUserID = config.userID {
-            userID = configUserID
-        } else {
+            return .legacy(proTUN: proTUN)
+        }
+
+        guard let config = protocolConfiguration as? NETunnelProviderProtocol, let userID = config.userID else {
             throw ProTUNAdapter.Error.missingUserID
         }
 
