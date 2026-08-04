@@ -20,7 +20,7 @@ import CoreGraphics
 import simd
 import Triangulation
 
-/// The globe's off-centre perspective framing. It owns the projection scales in one place, the focal length, the
+/// The globe's off-center perspective framing. It owns the projection scales in one place, the focal length, the
 /// horizontal and vertical clip-space scales, and the framed region's offset, and derives both the forward matrix and
 /// its inverse (a screen point back to a view-space ray) from them, so the two can never drift apart.
 ///
@@ -41,11 +41,14 @@ struct ScreenProjection {
         let renderHeight = Float(max(framing.viewSize.height, 1))
         let fh = Float(min(max(framing.focusHeight, 1), CGFloat(renderHeight)))
         let ft = Float(min(max(framing.focusTop, 0), CGFloat(renderHeight)))
+        // Scale comes from the framed height and the center from the visible one, so covering part of the frame slides
+        // the globe up without shrinking it.
+        let vh = Float(min(max(framing.visibleHeight, 1), CGFloat(renderHeight)))
         let focal = GlobeCamera.focalLength(fieldOfView: fieldOfView) // 1 / tan(fov / 2)
         self.viewSize = framing.viewSize
         self.xScale = focal * fh / width
         self.yScale = focal * fh / renderHeight
-        self.yOffset = (fh + 2 * ft) / renderHeight - 1
+        self.yOffset = (vh + 2 * ft) / renderHeight - 1
     }
 
     /// Perspective matrix. The caller multiplies in the view translation and globe rotation. The y output is compressed
@@ -69,10 +72,10 @@ struct ScreenProjection {
     }
 }
 
-/// First hit of a view-space `ray`, cast from the camera at the origin, on the unit globe whose centre sits
+/// First hit of a view-space `ray`, cast from the camera at the origin, on the unit globe whose center sits
 /// `cameraDistance` ahead down -z. A ray that misses the globe clamps to the nearest point on the limb, so a drag that
 /// slips off the edge still rotates rather than jumping. Returns the hit as a unit-sphere direction relative to the
-/// globe centre.
+/// globe center.
 func unitSphereHit(ray direction: SIMD3<Float>, cameraDistance distance: Float) -> SIMD3<Float> {
     let toCentre = SIMD3<Float>(0, 0, distance) // origin minus centre
     let dDotL = simd_dot(direction, toCentre)

@@ -30,7 +30,7 @@ struct GlobeCamera: Equatable {
     /// Default vertical field of view. Also the basis of the zoom-to-fit math.
     static let defaultFieldOfView = Angle.degrees(45)
     private enum Dimensions {
-        /// Half-depth of the clip slab centerd on the globe: the unit-sphere radius plus slack, so the near plane
+        /// Half-depth of the clip slab centered on the globe: the unit-sphere radius plus slack, so the near plane
         /// always sits just in front of the visible hemisphere at any camera distance.
         static let clipMargin: Float = 1.5
         /// How far past the globe center the far plane reaches: the celestial radius where the star and sun billboards

@@ -40,6 +40,8 @@ public struct LocalAgentNoticeFeature {
         case disconnect
     }
 
+    public init() {}
+
     public var body: some Reducer<State, Action> {
         Reduce { _, action in
             switch action {

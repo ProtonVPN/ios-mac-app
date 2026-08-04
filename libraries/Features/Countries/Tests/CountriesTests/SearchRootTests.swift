@@ -35,7 +35,7 @@ struct SearchRootTests {
             @Shared(.recentSearches) var recentSearches
             $recentSearches.withLock { $0 = [] }
 
-            let store = TestStore(initialState: SearchRoot.State.loading([])) {
+            let store = TestStore(initialState: SearchRoot.State.loading([], query: "")) {
                 SearchRoot()
             }
 
@@ -58,7 +58,7 @@ struct SearchRootTests {
             @Shared(.recentSearches) var recentSearches
             $recentSearches.withLock { $0 = ["uk"] }
 
-            let store = TestStore(initialState: SearchRoot.State.loading([])) {
+            let store = TestStore(initialState: SearchRoot.State.loading([], query: "")) {
                 SearchRoot()
             }
 

@@ -15,6 +15,11 @@ let package = Package(
             name: "Home",
             targets: ["Home"]
         ),
+        // Platform-agnostic features
+        .library(
+            name: "HomeShared",
+            targets: ["HomeShared"]
+        ),
     ],
     dependencies: [
         .package(path: "../../../external/protoncore"),
@@ -150,6 +155,7 @@ let package = Package(
         .executableTarget(
             name: "MapBaker",
             dependencies: [
+                "Domain",
                 "MapModel",
                 .product(name: "Ergonomics", package: "Ergonomics"),
                 .product(name: "SVGView", package: "SVGView"),
@@ -167,15 +173,6 @@ let package = Package(
                 "HomeShared",
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
-            ]
-        ),
-        .testTarget(
-            name: "HomeFastSnapshotTests",
-            dependencies: [
-                "Home",
-                .product(name: "TestingErgonomics", package: "Ergonomics"),
-                .product(name: "DomainTestSupport", package: "Domain"),
-                .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
             ]
         ),
         .testTarget(

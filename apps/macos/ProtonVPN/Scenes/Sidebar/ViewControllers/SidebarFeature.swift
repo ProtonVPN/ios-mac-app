@@ -188,7 +188,6 @@ struct SidebarFeature {
     @Dependency(\.planChangeClient) private var planChangeClient
     @Dependency(\.natPortMappingService) private var natPortMappingService
     @Dependency(\.plutoniumManager) private var plutoniumManager
-    @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
     @Dependency(\.networkInterfacePropertiesProvider) private var networkInterfacePropertiesProvider
     @Dependency(\.profileManager) private var profileManager
@@ -683,11 +682,7 @@ private extension SidebarFeature {
                     return .merge(
                         cancelOverlayDelay,
                         .send(.countriesSection(.quickSettings(.presentUpsell(
-                            .country(
-                                countryCode: countryCode,
-                                numberOfDevices: DomainConstants.maxDeviceCount,
-                                numberOfCountries: serverRepository.countryCount()
-                            )
+                            .country(countryCode: countryCode)
                         ))))
                     )
                 case .serverChangeUnavailable:

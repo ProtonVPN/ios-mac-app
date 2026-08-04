@@ -47,6 +47,13 @@
       }
     },
     {
+      "target": {
+        "containerPath": "container:../../libraries/Shells/Tabular",
+        "identifier": "TabularFastSnapshotTests",
+        "name": "TabularFastSnapshotTests"
+      }
+    },
+    {
       "skippedTests": [
         "ConnectionTests",
         "CountriesConnectionTests",

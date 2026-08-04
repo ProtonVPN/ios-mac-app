@@ -282,7 +282,6 @@ public final class AppDelegateService: AppDelegateProtocol {
 
             connectionCommandClient.quickConnect(trigger: .widget)
             startListeningForDeepLinkConnectState()
-            navigationService.presentHome()
 
         case URLConstants.deepLinkDisconnectAction:
             // Action may only come from a trusted source

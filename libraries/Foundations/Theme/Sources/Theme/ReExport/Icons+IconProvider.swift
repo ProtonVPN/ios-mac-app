@@ -51,11 +51,14 @@ public extension Asset {
         public static let cogWheel = ThemeIcon(iconProviderKeyPath: \.cogWheel)
         public static let crossBig = ThemeIcon(iconProviderKeyPath: \.crossBig)
         public static let crossCircleFilled = ThemeIcon(iconProviderKeyPath: \.crossCircleFilled)
+        public static let earth = ThemeIcon(iconProviderKeyPath: \.earth)
         public static let exclamationCircleFilled = ThemeIcon(iconProviderKeyPath: \.exclamationCircleFilled)
         public static let exclamationTriangleFilled = ThemeIcon(iconProviderKeyPath: \.exclamationTriangleFilled)
         public static let gift = ThemeIcon(iconProviderKeyPath: \.gift)
         public static let globe = ThemeIcon(iconProviderKeyPath: \.globe)
         public static let grid2 = ThemeIcon(iconProviderKeyPath: \.grid2)
+        public static let house = ThemeIcon(iconProviderKeyPath: \.house)
+        public static let houseFilled = ThemeIcon(iconProviderKeyPath: \.houseFilled)
         public static let infoCircle = ThemeIcon(iconProviderKeyPath: \.infoCircle)
         public static let infoCircleFilled = ThemeIcon(iconProviderKeyPath: \.infoCircleFilled)
         public static let keySkeleton = ThemeIcon(iconProviderKeyPath: \.keySkeleton)
@@ -84,6 +87,7 @@ public extension Asset {
         public static let threeDotsVertical = ThemeIcon(iconProviderKeyPath: \.threeDotsVertical)
         public static let user = ThemeIcon(iconProviderKeyPath: \.user)
         public static let users = ThemeIcon(iconProviderKeyPath: \.users)
+        public static let windowTerminal = ThemeIcon(iconProviderKeyPath: \.windowTerminal)
         public static let wrench = ThemeIcon(iconProviderKeyPath: \.wrench)
     }
 }

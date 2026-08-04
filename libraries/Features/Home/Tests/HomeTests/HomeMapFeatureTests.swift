@@ -38,6 +38,33 @@ struct HomeMapFeatureTests {
         location: .city(name: "Geneva", code: "CH", order: .fastest)
     )
 
+    private static let zurich = LocationPin(
+        id: "CH#Zurich",
+        displayName: "Zurich",
+        latitude: 47.37,
+        longitude: 8.54,
+        minTier: .free,
+        location: .city(name: "Zurich", code: "CH", order: .fastest)
+    )
+
+    // MARK: - Displayed pins
+
+    @Test("The connected city's pin leaves the displayed set, and returns on disconnect")
+    func connectedCityLeavesTheDisplayedPins() {
+        var state = HomeMapFeature.State()
+        state.locationPins = [Self.geneva, Self.zurich]
+        #expect(state.displayedLocationPins == [Self.geneva, Self.zurich])
+
+        state.mapConnectionState = .connected(
+            coordinates: CLLocationCoordinate2D(latitude: Self.geneva.latitude, longitude: Self.geneva.longitude),
+            code: "CH"
+        )
+        #expect(state.displayedLocationPins == [Self.zurich])
+
+        state.mapConnectionState = .disconnected
+        #expect(state.displayedLocationPins == [Self.geneva, Self.zurich])
+    }
+
     // MARK: - Selection & connect
 
     @Test("Tapping a city pin selects it; the connect happens on the pill tap")
@@ -79,49 +106,47 @@ struct HomeMapFeatureTests {
 
     @Test("Camera gestures dismiss the pill")
     func cameraGesturesDeselect() async {
-        var state = HomeMapFeature.State()
-        state.presentation = .full
-        let store = TestStore(initialState: state) { HomeMapFeature() }
-
-        for gesture: HomeMapFeature.Action in [.mapMoved, .pinClusterTapped, .userPinTapped] {
-            await store.send(.locationPinTapped(Self.geneva)) { $0.selectedLocationID = Self.geneva.id }
-            await store.send(gesture) { $0.selectedLocationID = nil }
-        }
-    }
-
-    // MARK: - Presentation
-
-    @Test("Peek tap and over-pull expand to the full map; the return strip collapses back")
-    func presentationGestures() async {
         let store = TestStore(initialState: HomeMapFeature.State()) { HomeMapFeature() }
 
-        await store.send(.mapPeekTapped) { $0.presentation = .full }
-        await store.send(.returnStripSwiped) { $0.presentation = .sheet }
-        await store.send(.sheetPulledDown) { $0.presentation = .full }
-    }
-
-    @Test("Leaving via the return strip drops any revealed pill with it")
-    func returnStripDropsPill() async {
-        var state = HomeMapFeature.State()
-        state.presentation = .full
-        state.selectedLocationID = Self.geneva.id
-        let store = TestStore(initialState: state) { HomeMapFeature() }
-
-        await store.send(.returnStripSwiped) {
+        await store.send(.locationPinTapped(Self.geneva)) { $0.selectedLocationID = Self.geneva.id }
+        await store.send(.mapMoved) {
             $0.selectedLocationID = nil
-            $0.presentation = .sheet
+            $0.isFollowingConnection = false
+        }
+        await store.send(.locationPinTapped(Self.geneva)) { $0.selectedLocationID = Self.geneva.id }
+        await store.send(.pinClusterTapped) { $0.selectedLocationID = nil }
+        await store.send(.locationPinTapped(Self.geneva)) { $0.selectedLocationID = Self.geneva.id }
+        await store.send(.userPinTapped) {
+            $0.selectedLocationID = nil
+            $0.isFollowingConnection = true
         }
     }
 
-    @Test("A background tap dismisses the pill first, and only then exits the full map")
-    func backgroundTapPeelsLayers() async {
+    @Test("Gestures stop the camera following the connection; connection changes and the user pin resume it")
+    func followingTracksWhoDrives() async {
+        let store = TestStore(initialState: HomeMapFeature.State()) { HomeMapFeature() }
+
+        await store.send(.mapMoved) { $0.isFollowingConnection = false }
+        await store.send(.userPinTapped) { $0.isFollowingConnection = true }
+        await store.send(.pinClusterTapped) { $0.isFollowingConnection = false }
+
+        // Any change to the derived map state wins the camera back; a repeat of the same state does not.
+        let poland = Server.mock(country: "PL", coordinates: .init(latitude: 52.23, longitude: 21.01))
+        await store.send(.connectionStateUpdated(.disconnected))
+        await store.send(.connectionStateUpdated(.previewConnected(for: .specificCountryServer, server: poland))) {
+            $0.isFollowingConnection = true
+            $0.mapConnectionState = .connected(coordinates: .init(latitude: 52.23, longitude: 21.01), code: "PL")
+        }
+    }
+
+    @Test("A background tap dismisses the pill, and is inert once nothing is selected")
+    func backgroundTapDismissesPill() async {
         var state = HomeMapFeature.State()
-        state.presentation = .full
         state.selectedLocationID = Self.geneva.id
         let store = TestStore(initialState: state) { HomeMapFeature() }
 
         await store.send(.mapBackgroundTapped) { $0.selectedLocationID = nil }
-        await store.send(.mapBackgroundTapped) { $0.presentation = .sheet }
+        await store.send(.mapBackgroundTapped)
     }
 
     // MARK: - Map state derivation

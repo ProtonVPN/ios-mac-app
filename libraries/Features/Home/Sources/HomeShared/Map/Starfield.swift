@@ -48,13 +48,6 @@ enum Starfield {
         bandStrength: Constants.bandStrength
     )
 
-    /// Star visibility: 0 until the camera pulls out past the whole-globe distance, ramping to full at the
-    /// zoom-out `ceiling`. Purely zoom-driven. The lighting's own `lightFade` already keeps the stars off
-    /// in decorative mode, so gating on the presentation here would only make them pop.
-    static func opacity(atDistance distance: Float, ceiling: Float) -> Float {
-        ramp(distance, from: GlobeFocus.wholeGlobeDistance, to: ceiling)
-    }
-
     /// Deterministic generation of the pinpoint stars, parameterized so tests can pin the density contract and tuning
     /// can A/B against `bandStrength: 0` (a plain uniform sky). Dense along the galactic band, sparse elsewhere — the
     /// visible river of stars, which sits over the renderer's analytic glow.
@@ -177,14 +170,35 @@ private struct GradientNoise {
         let ba = table[b] + cell.z
         let bb = table[b + 1] + cell.z
 
-        return Self.lerp(w, Self.lerp(v, Self.lerp(u, Self.grad(table[aa], f.x, f.y, f.z),
-                                                   Self.grad(table[ba], f.x - 1, f.y, f.z)),
-                                      Self.lerp(u, Self.grad(table[ab], f.x, f.y - 1, f.z),
-                                                Self.grad(table[bb], f.x - 1, f.y - 1, f.z))),
-                         Self.lerp(v, Self.lerp(u, Self.grad(table[aa + 1], f.x, f.y, f.z - 1),
-                                                Self.grad(table[ba + 1], f.x - 1, f.y, f.z - 1)),
-                                   Self.lerp(u, Self.grad(table[ab + 1], f.x, f.y - 1, f.z - 1),
-                                             Self.grad(table[bb + 1], f.x - 1, f.y - 1, f.z - 1))))
+        return Self.lerp(
+            w,
+            Self.lerp(
+                v,
+                Self.lerp(
+                    u,
+                    Self.grad(table[aa], f.x, f.y, f.z),
+                    Self.grad(table[ba], f.x - 1, f.y, f.z)
+                ),
+                Self.lerp(
+                    u,
+                    Self.grad(table[ab], f.x, f.y - 1, f.z),
+                    Self.grad(table[bb], f.x - 1, f.y - 1, f.z)
+                )
+            ),
+            Self.lerp(
+                v,
+                Self.lerp(
+                    u,
+                    Self.grad(table[aa + 1], f.x, f.y, f.z - 1),
+                    Self.grad(table[ba + 1], f.x - 1, f.y, f.z - 1)
+                ),
+                Self.lerp(
+                    u,
+                    Self.grad(table[ab + 1], f.x, f.y - 1, f.z - 1),
+                    Self.grad(table[bb + 1], f.x - 1, f.y - 1, f.z - 1)
+                )
+            )
+        )
     }
 
     /// The quintic 6t⁵−15t⁴+10t³, zero first and second derivative at the lattice points.

@@ -37,7 +37,7 @@ typedef struct {
     vector_float3 sunDirection; // model-space unit direction toward the sun (the sub-solar point)
     vector_float3 sunTint;      // color of the sunlight (connection green or red); white is neutral
     float borderHalfWidth;      // sphere-space half-width of the path currently being drawn
-    float lightFade;            // 0 is flat (decorative), 1 is full day/night terminator lighting
+    float lightFade;            // 0 is flat (decorative), 1 is day/night lighting; the app renders 1, the geometry snapshots 0
     float tintStrength;         // how strongly the sunlight colors this draw; land takes more than the sea
     float moonRadius;           // Moon radius in Earth radii; 0 disables the eclipse shadows
     vector_float3 moonCenter;   // model-space Moon centre (sub-lunar direction scaled by distance, Earth radii)

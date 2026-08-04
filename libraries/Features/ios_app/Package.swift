@@ -45,6 +45,8 @@ let package = Package(
         .package(path: "../../Shared/WidgetIntents"),
         .package(path: "../../Shared/Telemetry"),
 
+        .package(path: "../../Shells/Tabular"),
+
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
         .package(url: "https://github.com/wxxsw/GSMessages", exact: "1.7.5"),
@@ -80,6 +82,7 @@ let package = Package(
                 "Localization",
                 "Connection",
                 "Countries",
+                "Tabular",
                 "WidgetIntents",
                 "Telemetry",
                 "Payments",

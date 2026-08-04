@@ -34,11 +34,8 @@ public struct ConnectionStatusView: View {
     private static let maxContentWidth: CGFloat = 480
 
     @Bindable var store: StoreOf<ConnectionStatusFeature>
-
-    /// When the map is in full view, only the tint, lock, and title show over it. The NetShield banner,
-    /// which belongs with the connection card, is hidden — and the header becomes tappable to exit back
-    /// to the sheet.
-    var compact: Bool = false
+    /// Reports the height of the connection status view so that the backdrop can be properly framed.
+    var onContentHeightChange: ((CGFloat) -> Void)?
 
     private static let headerHeight: CGFloat = 58
     private static let viewHeight: CGFloat = 200
@@ -149,9 +146,7 @@ public struct ConnectionStatusView: View {
             .allowsHitTesting(false)
 
             VStack(spacing: 0) {
-                // The lock and title. Over the full map (`compact`), tapping it exits back to the sheet.
-                // Scoped to just this header, not the banner below, so it never intercepts the banner's
-                // own controls.
+                // The lock and title, with content height reported so that the globe can be framed properly
                 VStack(spacing: 0) {
                     titleView(protectionState: protectionState)
                         .frame(height: Self.headerHeight)
@@ -162,25 +157,19 @@ public struct ConnectionStatusView: View {
                             .frame(height: .themeSpacing8)
                     }
                 }
-                .contentShape(Rectangle())
-                .onTapGesture { store.send(.headerTapped, animation: .mapPresentation) }
-                // Only tappable over the full map. With the sheet up, the header must not eat taps: the
-                // map peek behind it owns tap-to-expand, and when scrolled, the connection card's own
-                // controls can sit under this area.
-                .allowsHitTesting(compact)
-                if !compact {
-                    ConnectionStatusBanner(store: store.scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner))
-                        .background(
-                            .translucentLight,
-                            in: RoundedRectangle(
-                                cornerRadius: .themeRadius8,
-                                style: .continuous
-                            )
+                .allowsHitTesting(false)
+                ConnectionStatusBanner(store: store.scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner))
+                    .background(
+                        .translucentLight,
+                        in: RoundedRectangle(
+                            cornerRadius: .themeRadius8,
+                            style: .continuous
                         )
-                        .frame(maxWidth: Self.maxContentWidth)
-                        .padding(.horizontal, .themeSpacing16)
-                }
+                    )
+                    .frame(maxWidth: Self.maxContentWidth)
+                    .padding(.horizontal, .themeSpacing16)
             }
+            .onGeometryChange(for: CGFloat.self, of: { $0.size.height }) { onContentHeightChange?($0) }
         }
         // Fixed height in both modes so the tint gradient stays localized to the top band and fades out.
         // With no height the greedy gradient would fill the whole map.
@@ -237,13 +226,10 @@ public struct ConnectionStatusView: View {
     .background(Color.black)
 }
 
-#Preview("full map header (compact)", traits: .sizeThatFitsLayout) {
+#Preview("protected", traits: .sizeThatFitsLayout) {
     @SharedReader(.protectionState) var protectionState: ProtectionState = .protected
-    return ConnectionStatusView(
-        store: Store(initialState: .init()) {
-            ConnectionStatusFeature()
-        },
-        compact: true
-    )
+    return ConnectionStatusView(store: Store(initialState: .init()) {
+        ConnectionStatusFeature()
+    })
     .background(Color.black)
 }

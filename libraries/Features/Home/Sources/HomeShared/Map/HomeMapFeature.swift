@@ -26,28 +26,13 @@ import Persistence
 import SwiftUI
 import VPNAppCore
 
-public extension Animation {
-    /// The spring every `HomeMapFeature.Presentation` change animates with, slightly under-damped so the
-    /// sheet/full-map hand-off has some life. Attached at the `store.send(_:animation:)` call sites so the
-    /// whole layout change (map framing, sheet fade, header compaction) rides one transaction.
-    static let mapPresentation = Animation.spring(response: 0.42, dampingFraction: 0.9)
-}
-
 @Reducer
 public struct HomeMapFeature {
     private enum Constants {
         /// Debounce window collapsing rapid connection-state churn into a single store update.
         static let connectionStateDebounceIntervalInMilliseconds: Int = 50
-    }
-
-    /// How the home screen presents the map. Feature state rather than view state so the full map is
-    /// reachable from tests and previews by constructing the state, and so every gesture that changes it
-    /// flows through the reducer.
-    public enum Presentation: Equatable {
-        /// The normal home: connection card and recents up, the map peeking above them, decorative.
-        case sheet
-        /// Full-screen interactive map: the card and recents are hidden, the camera is the user's.
-        case full
+        /// How close a pin's coordinates must come to the connection's, in degrees, to count as the same city.
+        static let sameCityTolerance = 0.05
     }
 
     @ObservableState
@@ -59,11 +44,12 @@ public struct HomeMapFeature {
             mapConnectionState.pinMode
         }
 
-        /// Whether the map is the peek behind the home sheet or the full interactive view.
-        public internal(set) var presentation: Presentation = .sheet
+        /// Whether the camera still tracks the connection: it re-centers on the connected or user country whenever that
+        /// target or the visible region changes. A drag, pinch, or cluster zoom means the user took the camera
+        /// somewhere deliberate, so tracking stops until the connection changes again or the user pin is tapped, both
+        /// of which result in a re-centering of the connection pin.
+        public internal(set) var isFollowingConnection = true
 
-        /// The location pin selected in the full map (its connect pill is showing), or nil. Stored as the ID;
-        /// `selectedLocation` resolves it against the current pin set so a refresh can't leave a stale copy.
         public internal(set) var selectedLocationID: LocationPin.ID?
 
         /// Connectable locations shown as grey pins when the map is in interactive (full) view: one per city or state
@@ -74,6 +60,15 @@ public struct HomeMapFeature {
         /// location disappeared in a refresh).
         public var selectedLocation: LocationPin? {
             selectedLocationID.flatMap { id in locationPins.first { $0.id == id } }
+        }
+
+        /// The city pins and clusters, with every location except the one drawn by the connection pin.
+        public var displayedLocationPins: [LocationPin] {
+            guard let coordinates = mapConnectionState.coordinates else { return locationPins }
+            return locationPins.filter {
+                abs($0.latitude - coordinates.latitude) > Constants.sameCityTolerance
+                    || abs($0.longitude - coordinates.longitude) > Constants.sameCityTolerance
+            }
         }
 
         var shouldShowPin: Bool {
@@ -126,7 +121,7 @@ public struct HomeMapFeature {
                 // We've started connecting via a `ConnectionSpec` but haven't picked a specific server yet. If the spec
                 // matches a location pin we've already loaded, send the pin straight to its coordinates, since the
                 // resolved server will live in that city anyway. Otherwise keep just the country code, and the pin
-                // parks on the country centre until the server resolves.
+                // parks on the country center until the server resolves.
                 let pin = locationPins.first { $0.location == intent.spec.location }
                 self = .connecting(
                     coordinates: pin.map { CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) },
@@ -186,23 +181,17 @@ public struct HomeMapFeature {
         case connectionStateUpdated(ConnectionState)
         case locationPinsLoaded([LocationPin])
         case locationPinTapped(LocationPin)
+
         /// The selected city's connect pill was tapped. Connects (or upsells) and dismisses the pill.
         case connectPillTapped(LocationPin)
         /// A coalesced multi-pin disc was tapped. The view zooms the camera; any pill is dismissed.
         case pinClusterTapped
         /// The user/connection pin was tapped. The view recenters the camera; any pill is dismissed.
         case userPinTapped
-        /// A tap on the map that hit no pin: dismisses the pill if one is up, otherwise returns to the sheet.
+        /// A tap on the map that hit no pin: dismisses the selected location's pill, if one is up.
         case mapBackgroundTapped
-        /// A drag, pinch, or programmatic camera move started; any pill is dismissed.
+        /// The user started moving the map with a drag or a pinch; any pill is dismissed.
         case mapMoved
-        /// The map peek above the home sheet was tapped: expand to the full map.
-        case mapPeekTapped
-        /// The sheet was over-pulled past the top: expand to the full map.
-        case sheetPulledDown
-        /// The full map's bottom return strip was swiped up: back to the sheet.
-        case returnStripSwiped
-
         case delegate(Delegate)
 
         @CasePathable
@@ -221,6 +210,8 @@ public struct HomeMapFeature {
 
     @Dependency(\.debounceScheduler) private var scheduler
     @Dependency(\.serverRepository) private var serverRepository
+
+    public init() {}
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -251,9 +242,12 @@ public struct HomeMapFeature {
                 )
 
             case let .connectionStateUpdated(connectionState):
-                // The view derives the highlight, camera, and pin from this state, animating the change
-                // itself (`.animation(value:)`); no reducer-side animation or imperative map mutation.
-                state.mapConnectionState = MapConnectionState(connectionState, locationPins: state.locationPins)
+                // The view derives the highlight, camera, and pin from this state, and animates the change itself.
+                let derived = MapConnectionState(connectionState, locationPins: state.locationPins)
+                if derived != state.mapConnectionState {
+                    state.isFollowingConnection = true
+                }
+                state.mapConnectionState = derived
                 return .none
 
             case let .locationPinsLoaded(pins):
@@ -277,27 +271,19 @@ public struct HomeMapFeature {
                 }
                 return .send(.delegate(.connect(pin.connectionSpec)))
 
-            case .pinClusterTapped, .userPinTapped, .mapMoved:
-                // Camera moves are view-owned; the domain effect is just that any pill goes away.
+            case .pinClusterTapped, .mapMoved:
+                // If the user moves the map, stop following the location and de-select any pin they may have tapped on.
                 state.selectedLocationID = nil
+                state.isFollowingConnection = false
+                return .none
+
+            case .userPinTapped:
+                state.selectedLocationID = nil
+                state.isFollowingConnection = true
                 return .none
 
             case .mapBackgroundTapped:
-                // A miss dismisses the pill if one is up, otherwise reads as "leave the full map".
-                if state.selectedLocationID != nil {
-                    state.selectedLocationID = nil
-                } else {
-                    state.presentation = .sheet
-                }
-                return .none
-
-            case .mapPeekTapped, .sheetPulledDown:
-                state.presentation = .full
-                return .none
-
-            case .returnStripSwiped:
-                state.selectedLocationID = nil // a pill must not survive the exit and greet the next entry
-                state.presentation = .sheet
+                state.selectedLocationID = nil
                 return .none
 
             case .delegate:

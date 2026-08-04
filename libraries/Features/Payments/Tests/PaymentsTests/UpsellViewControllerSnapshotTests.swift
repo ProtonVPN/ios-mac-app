@@ -21,6 +21,8 @@
     import Dependencies
     @testable import Payments_macOS
     import PaymentsShared
+    import Persistence
+    import PersistenceTestSupport
     import SnapshotTesting
     import SwiftUI
     import System
@@ -44,12 +46,16 @@
 
         @Test("all countries")
         func allCountries() {
-            assertUpsellSnapshot(modalType: .allCountries(numberOfServers: 2138, numberOfCountries: 117))
+            withCountingRepository {
+                assertUpsellSnapshot(modalType: .allCountries)
+            }
         }
 
         @Test("country")
         func country() {
-            assertUpsellSnapshot(modalType: .country(countryCode: "CH", numberOfDevices: 10, numberOfCountries: 117))
+            withCountingRepository {
+                assertUpsellSnapshot(modalType: .country(countryCode: "CH"))
+            }
         }
 
         @Test("cantSkip countdown active")
@@ -69,6 +75,17 @@
         }
 
         // MARK: - Private
+
+        private func withCountingRepository(operation: () -> Void) {
+            withDependencies {
+                var repository = ServerRepository.empty()
+                repository.serverCount = { 2138 }
+                repository.countryCount = { 117 }
+                $0.serverRepository = repository
+            } operation: {
+                operation()
+            }
+        }
 
         private func assertUpsellSnapshot(modalType: UpsellModalType) {
             let view = UpsellViewController(

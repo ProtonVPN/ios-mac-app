@@ -161,7 +161,6 @@ final class ProfileItemViewModel {
             connectionCommandClient.send(.disconnect(.profile))
         } else {
             log.debug("Will connect to profile: \(profile.logDescription)", category: .connectionConnect, event: .trigger)
-            connectionStatusService.presentHome()
             connectionCommandClient.send(.connect(profileConnectionSpec, profile.connectionProtocol, .profile))
         }
     }

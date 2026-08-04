@@ -32,7 +32,7 @@
     /// actually carries the kill switch flag. Each pass-through test drops exactly one requirement
     /// and expects the disconnect to go straight to the connection.
     @MainActor
-    struct HomeFeatureKillSwitchInterceptTests {
+    struct ConnectionCommandsKillSwitchInterceptTests {
         @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
         @Shared(.connectionState) private var connectionState: ConnectionState
 
@@ -48,9 +48,9 @@
             )
         }
 
-        private func makeStore() -> TestStoreOf<HomeFeature> {
-            let store = TestStore(initialState: HomeFeature.State()) {
-                HomeFeature()
+        private func makeStore() -> TestStoreOf<ConnectionCommandsFeature> {
+            let store = TestStore(initialState: ConnectionCommandsFeature.State()) {
+                ConnectionCommandsFeature()
             } withDependencies: {
                 // A pass-through disconnect cascades into ConnectionFeature and the tunnel mock.
                 $0.connectionFeatureProvider = .init(
@@ -72,7 +72,7 @@
             $connectionState.withLock { $0 = Self.connected(tunnelKillSwitch: true) }
             let store = makeStore()
 
-            await store.send(.connectionCommandReceived(.disconnect(.quick)))
+            await store.send(.commandReceived(.disconnect(.quick)))
             #expect(store.state.alert != nil)
 
             // Confirming performs the disconnect it held back.
@@ -88,7 +88,7 @@
             $connectionState.withLock { $0 = Self.connected(tunnelKillSwitch: false) }
             let store = makeStore()
 
-            await store.send(.connectionCommandReceived(.disconnect(.quick)))
+            await store.send(.commandReceived(.disconnect(.quick)))
             #expect(store.state.alert == nil)
             await store.receive(\.connection.input.disconnect)
         }
@@ -100,7 +100,7 @@
             $connectionState.withLock { $0 = Self.connected(tunnelKillSwitch: true) }
             let store = makeStore()
 
-            await store.send(.connectionCommandReceived(.disconnect(.quick)))
+            await store.send(.commandReceived(.disconnect(.quick)))
             #expect(store.state.alert == nil)
             await store.receive(\.connection.input.disconnect)
         }
@@ -112,7 +112,7 @@
             $connectionState.withLock { $0 = Self.connected(tunnelKillSwitch: true) }
             let store = makeStore()
 
-            await store.send(.connectionCommandReceived(.disconnect(.signout)))
+            await store.send(.commandReceived(.disconnect(.signout)))
             #expect(store.state.alert == nil)
             await store.receive(\.connection.input.disconnect)
         }
@@ -124,7 +124,7 @@
             $connectionState.withLock { $0 = Self.connected(tunnelKillSwitch: true) }
             let store = makeStore()
 
-            await store.send(.connectionCommandReceived(.disconnect(.quick, completion: {})))
+            await store.send(.commandReceived(.disconnect(.quick, completion: {})))
             #expect(store.state.alert == nil)
             await store.receive(\.connection.input.disconnect)
         }

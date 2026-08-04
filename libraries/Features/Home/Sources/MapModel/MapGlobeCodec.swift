@@ -19,12 +19,12 @@
 import Ergonomics
 import Foundation
 
-/// Reads and writes `world-globe.bin`, the serialised `MapGlobeModel`. The whole-model layout lives on
+/// Reads and writes `world-globe.bin`, the serialized `MapGlobeModel`. The whole-model layout lives on
 /// `MapGlobeModel`'s `BinaryCodable` conformance. This only owns the header, the version, and the section alignment.
 public enum MapGlobeCodec {
     static let magic: UInt32 = 0x1F30_DF00 // "🌍" + 0xF00
     /// Bump on any layout change, together with regenerating the checked-in bin.
-    static let version: UInt32 = 1
+    static let version: UInt32 = 2
 
     /// Alignment of the binary-array sections within the blob, and therefore within a page-aligned mapping of it: the
     /// strictest buffer-offset alignment any Metal device class requires, so a mapped section can be bound to the GPU

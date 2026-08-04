@@ -44,23 +44,19 @@ public struct HomeFeature {
     @Dependency(\.serverChangeAuthorizer) private var authorizer
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.planChangeClient) private var planChangeClient
-    @Dependency(\.pendingDisconnectCompletions) private var pendingDisconnectCompletions
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.continuousClock) private var clock
-    @Dependency(\.networkInterfacePropertiesProvider) private var networkInterfacePropertiesProvider
     @Dependency(\.announcementRefresher) private var announcementRefresher
     #if os(iOS)
         @Dependency(\.openCredentiallessSignUp) private var openCredentiallessSignUp
     #endif
 
     @SharedReader(.userTier) private var userTier: VpnTier?
-    @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
 
     @Reducer
     public enum Destination {
         case changeServer(ChangeServerFeature)
         case connectionDetails(ConnectionScreenFeature)
-        case localAgentNotice(LocalAgentNoticeFeature)
         case freeConnectionsInfo(FreeConnectionInfoFeature)
         case defaultConnection(DefaultConnectionFeature)
         case whatsNew(WhatsNewPresenterFeature)
@@ -70,18 +66,11 @@ public struct HomeFeature {
 
     @ObservableState
     public struct State: Equatable {
-        /// For simplicity's sake, let's implement Connection as a child feature of Home.
-        /// In the future, when we add a sibling feature (like countries, settings or profiles),
-        /// we will have to have a parent App feature.  Connection can be moved
-        public var connection: ConnectionFeature.State
-        public var map: HomeMapFeature.State
         public var recents: RecentsFeature.State
         public var connectionCard: HomeConnectionCardFeature.State
         package var sharedProperties: SharedPropertiesFeature.State
-        package var connectionStatus: ConnectionStatusFeature.State
         package var announcementBanner: AnnouncementBannerFeature.State
         package var whatsNewChecker: WhatsNewCheckerFeature.State
-        package var localAgentNotice: LocalAgentNoticeFeature.State?
         package var maintenance: MaintenanceFeature.State
 
         fileprivate var shouldPushAlert: Bool = false
@@ -90,26 +79,19 @@ public struct HomeFeature {
         @SharedReader(.connectionState) public var connectionState: ConnectionState
 
         @Presents public var destination: Destination.State?
-        @Presents public var alert: AlertState<Action.HomeAlert>?
 
         public init() {
-            self.connectionStatus = .init()
             self.connectionCard = .init()
             self.sharedProperties = .init()
             self.recents = .init()
-            self.map = .init()
-            self.connection = .initialState
             self.announcementBanner = .noBanner
             self.whatsNewChecker = .init()
-            self.localAgentNotice = nil
             self.maintenance = .init()
         }
     }
 
     private enum CancelID {
         case connectionState
-        case connectionCommands
-        case connectionConnectCommandEffect
         case planChange
         case captureSession
         case announcementRefresh
@@ -125,21 +107,14 @@ public struct HomeFeature {
         case changeServer
         case didDismissChangeServer
 
-        /// Forwarded from the `ConnectionCommandClient` stream. Single chokepoint that
-        /// translates a `ConnectionCommand` into `ConnectionFeature.input(...)`.
-        case connectionCommandReceived(ConnectionCommand)
-
-        case killSwitchModeChanged(KillSwitchMode)
         case planChanged(PlanChange)
         /// Refresh API announcements if polling is enabled (on start and each time the app becomes active)
         case refreshAnnouncementsIfNeeded
 
         case newCaptureSession(CaptureSession)
-        case connection(ConnectionFeature.Action)
-        case map(HomeMapFeature.Action)
         case recents(RecentsFeature.Action)
-        case connectionStatus(ConnectionStatusFeature.Action)
         case connectionCard(HomeConnectionCardFeature.Action)
+        case connectionFailed(ConnectionError)
         case sharedProperties(SharedPropertiesFeature.Action)
         case connectionDetails(ConnectionScreenFeature.Action)
         case freeConnectionsInfo(FreeConnectionInfoFeature.Action)
@@ -148,57 +123,22 @@ public struct HomeFeature {
         case whatsNewChecker(WhatsNewCheckerFeature.Action)
         case whatsNewPresenter(WhatsNewPresenterFeature.Action)
 
-        case localAgentNotice(LocalAgentNoticeFeature.Action)
         case maintenance(MaintenanceFeature.Action)
 
         /// Start bug report flow
         case helpButtonPressed
 
         case destination(PresentationAction<Destination.Action>)
-        case alert(PresentationAction<HomeAlert>)
-
-        @CasePathable
-        public enum HomeAlert: Equatable {
-            /// User chose "Enable Kill Switch" on the bad-LAN alert. We flip the kill switch
-            /// (which suppresses the bad-LAN intercept on the re-issued connect) and retry.
-            case enableKillSwitchAndConnect(PendingConnect)
-            /// User chose "Continue" on the bad-LAN alert. We retry connect bypassing intercepts.
-            case connectAnywayDespiteBadLAN(PendingConnect)
-            /// User confirmed disconnecting while Advanced kill switch is active. The original
-            /// trigger is re-posted before the disconnect is issued.
-            case confirmDisconnectWithAdvancedKillSwitch(UserInitiatedVPNChange.VPNTrigger)
-        }
-    }
-
-    /// Captures the parameters of a `.connect` command paused while we await user input on an
-    /// intercept alert.
-    public struct PendingConnect: Equatable, Sendable {
-        public let spec: ConnectionSpec
-        public let connectionProtocol: ConnectionProtocol?
-        public let trigger: UserInitiatedVPNChange.VPNTrigger?
     }
 
     private static let whatsNewPresentationDelay: Duration = .seconds(3)
 
-    /// Disconnects that are part of a larger flow the user already confirmed (or never initiated directly),
-    /// which must not be interrupted by the Advanced kill switch confirmation.
-    private static let advancedKillSwitchConfirmationExemptTriggers: Set<UserInitiatedVPNChange.VPNTrigger> = [
-        .auto, .exit, .fidoAuthentication, .signout, .widget,
-    ]
-
     public init() {}
-
-    private func allCountriesUpsellModalType() -> UpsellModalType {
-        .allCountries(
-            numberOfServers: serverRepository.roundedServerCount,
-            numberOfCountries: serverRepository.countryCount()
-        )
-    }
 
     private func upsellModalType(from bannerType: BannerType) -> UpsellModalType {
         switch bannerType {
         case .worldwideCover:
-            allCountriesUpsellModalType()
+            .allCountries
         case .fasterBrowsing:
             .vpnAccelerator
         case .streaming:
@@ -219,22 +159,11 @@ public struct HomeFeature {
     }
 
     public var body: some Reducer<State, Action> {
-        Scope(state: \.connection, action: \.connection) {
-            ConnectionFeature()
-//                ._printChanges()
-                .logActions(.connectionLogger) // Logs actions to our usual logger, even outside of DEBUG.
-        }
         Scope(state: \.sharedProperties, action: \.sharedProperties) {
             SharedPropertiesFeature()
         }
-        Scope(state: \.map, action: \.map) {
-            HomeMapFeature()
-        }
         Scope(state: \.connectionCard, action: \.connectionCard) {
             HomeConnectionCardFeature()
-        }
-        Scope(state: \.connectionStatus, action: \.connectionStatus) {
-            ConnectionStatusFeature()
         }
         Scope(state: \.recents, action: \.recents) {
             RecentsFeature()
@@ -251,17 +180,12 @@ public struct HomeFeature {
         CombineReducers {
             lifecycleAndObservationReducer
             recentsAndSharedPropertiesReducer
-            mapReducer
-            connectionCommandsReducer
+            requestsReducer
             connectionCardReducer
             destinationReducer
             miscReducer
         }
         .ifLet(\.$destination, action: \.destination)
-        .ifLet(\.$alert, action: \.alert)
-        .ifLet(\.localAgentNotice, action: \.localAgentNotice) {
-            LocalAgentNoticeFeature()
-        }
     }
 }
 
@@ -283,7 +207,6 @@ private extension HomeFeature {
             case .onStart:
                 return .merge(
                     .send(.announcementBanner(.onStart)),
-                    .send(.connection(.input(.onLaunch))),
                     .send(.recents(.watchConnectionStatus)),
                     .send(.maintenance(.onStart)),
                     .run { send in
@@ -291,18 +214,6 @@ private extension HomeFeature {
                         try await clock.sleep(for: Self.whatsNewPresentationDelay)
                         await send(.whatsNewChecker(.check))
                     },
-                    .run { [killSwitchMode = $killSwitchMode] send in
-                        for await value in killSwitchMode.publisher.removeDuplicates().values.dropFirst() {
-                            await send(.killSwitchModeChanged(value))
-                        }
-                    },
-                    .run { send in
-                        let stream = await connectionCommandClient.stream()
-                        for await command in stream {
-                            await send(.connectionCommandReceived(command))
-                        }
-                    }
-                    .cancellable(id: CancelID.connectionCommands),
                     .run { send in
                         for await planChange in planChangeClient.events() {
                             await send(.planChanged(planChange))
@@ -326,23 +237,6 @@ private extension HomeFeature {
                 } else if case .sessionCaptured = state.destination {
                     state.destination = nil
                 }
-                return .none
-            case let .killSwitchModeChanged(mode):
-                log.info(
-                    "Kill switch mode changed",
-                    category: .connectionConnect,
-                    metadata: ["mode": "\(mode)"]
-                )
-                // If we're actively blocking (zero-peer) and the new mode no longer wants persistent blocking (Off or
-                // Standard), tear the tunnel down so the user regains connectivity. Otherwise the user is stuck behind
-                // a blackholed tunnel.
-                if !mode.isAdvanced, state.connectionState.is(\.killSwitchActive) {
-                    return .send(.connection(.input(.disconnect)))
-                }
-                // Otherwise: leave the live tunnel untouched. The mode is already persisted (@Shared, written by the
-                // settings picker) and takes effect on the next connection. `.input(.connect)` enables
-                // `includeAllNetworks` from the mode, and the existing zero-peer switch on disconnect works because the
-                // tunnel was armed at connect.
                 return .none
             case let .planChanged(planChange):
                 // update the persisted feature settings so a downgrade clears paid features and an upgrade re-enables
@@ -376,32 +270,9 @@ private extension HomeFeature {
         }
     }
 
-    var mapReducer: some ReducerOf<Self> {
-        Reduce { state, action in
-            switch action {
-            case let .map(.delegate(.connect(spec))):
-                // Tapping a location pin connects, through the same command pipeline as recents and the card.
-                connectionCommandClient.send(.connect(spec, nil, .map))
-                return .none
-            case .map(.delegate(.showUpsell)):
-                // Free users can't pick a location, so surface the upsell.
-                state.destination = .payments(.init(upsellModalType: allCountriesUpsellModalType()))
-                return .none
-            case .connectionStatus(.headerTapped):
-                // Tapping the lock/title over the full map exits back to the sheet. Handled here, in the
-                // same transaction as the tap's send, so the view's presentation animation carries through.
-                // The header is inert with the sheet up, so this can't fire there.
-                state.map.selectedLocationID = nil
-                state.map.presentation = .sheet
-                return .none
-            default:
-                return .none
-            }
-        }
-    }
-
-    var connectionCommandsReducer: some ReducerOf<Self> {
-        Reduce { state, action in
+    /// Business logic for connection requests.
+    var requestsReducer: some ReducerOf<Self> {
+        Reduce { _, action in
             switch action {
             case .changeServer:
                 guard case .available = authorizer.serverChangeAvailability() else {
@@ -413,104 +284,8 @@ private extension HomeFeature {
                 connectionCommandClient.send(.connect(spec, nil, .changeServer))
                 return .none
 
-            case let .connectionCommandReceived(.connect(spec, connectionProtocol, trigger)):
-                if trigger == .changeServer {
-                    let availability = authorizer.serverChangeAvailability()
-                    if case .unavailable = availability {
-                        log.error("Connect via .changeServer trigger reached HomeFeature handler while unauthorized")
-                        return .none
-                    }
-                }
-                let pending = PendingConnect(spec: spec, connectionProtocol: connectionProtocol, trigger: trigger)
-                if let alert = interceptAlert(for: pending) {
-                    state.alert = alert
-                    return .none
-                }
-                return performConnect(pending: pending)
-
-            case let .connectionCommandReceived(.disconnect(trigger, completion)):
-                // Warn before an intentional disconnect that would leave the device offline, which is the case only
-                // when the live tunnel actually carries the kill switch flag. Enabling Advanced while connected only
-                // affects the next connection, so no warning then. Disconnects that carry a completion are never held
-                // up by an alert, because the caller (the widget) needs the completion to resolve. Exempt triggers skip
-                // the warning too: sign-out shows its own, and programmatic or mid-flow disconnects were not directly
-                // asked for by the user.
-                if completion == nil,
-                   !Self.advancedKillSwitchConfirmationExemptTriggers.contains(trigger),
-                   killSwitchMode.isAdvanced,
-                   state.connectionState.is(\.connected),
-                   state.connectionState.tunnelKillSwitch {
-                    state.alert = confirmDisconnectWithAdvancedKillSwitchAlert(trigger: trigger)
-                    return .none
-                }
-                return performDisconnect(trigger: trigger, completion: completion, state: state)
-
-            case .connectionCommandReceived(.retry):
-                let spec = ConnectionSpec.defaultFastest // TODO: ProTUN: Fix this!
-                let intent = ConnectionPreparationIntent(
-                    spec: spec,
-                    acceptableProtocols: .all
-                )
-                log.info(
-                    "Reconnecting via retry command",
-                    category: .connectionConnect,
-                    metadata: ["spec.location": "\(spec.location)"]
-                )
-                return .run { send in
-                    AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(.auto))
-                    await send(.connection(.input(.connect(intent))))
-                }
-                .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
-
-            case let .connectionCommandReceived(.reconnect(connectionProtocol)):
-                let spec = ConnectionSpec.defaultFastest // TODO: ProTUN: Fix this!
-                let intent = ConnectionPreparationIntent(
-                    spec: spec,
-                    connectionProtocol: connectionProtocol,
-                    acceptableProtocols: .all
-                )
-                log.info(
-                    "Reconnecting via reconnect command",
-                    category: .connectionConnect,
-                    metadata: ["spec.location": "\(spec.location)"]
-                )
-                return .run { send in
-                    AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(.auto))
-                    await send(.connection(.input(.connect(intent))))
-                }
-                .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
-
-            case let .connectionCommandReceived(.applySettings(settings)):
-                return .send(.connection(.input(.applySettings(settings))))
-
-            case let .connectionCommandReceived(.clearConnectionData(completion)):
-                return .run { send in
-                    await send(.connection(.input(.onLogout)))
-                    await completion?()
-                }
-
-            case let .alert(.presented(.enableKillSwitchAndConnect(pending))):
-                // Bad-LAN intercept: enabling Standard is enough to suppress the warning on retry.
-                $killSwitchMode.withLock { $0 = .standard }
-                return performConnect(pending: pending)
-
-            case let .alert(.presented(.connectAnywayDespiteBadLAN(pending))):
-                return performConnect(pending: pending)
-
-            case let .alert(.presented(.confirmDisconnectWithAdvancedKillSwitch(trigger))):
-                // The intercept only fires for completion-less commands, so there is no completion
-                // left to settle here.
-                return performDisconnect(trigger: trigger, completion: nil, state: state)
-
-            case let .connectionStatus(.connectionStatusBanner(.delegate(.upsellTapped(mode)))):
-                let upsellModalType: UpsellModalType = switch mode {
-                case .netshield:
-                    .netShield
-                case .serverChange:
-                    allCountriesUpsellModalType()
-                }
-                state.destination = .payments(.init(upsellModalType: upsellModalType))
-                return .none
+            case let .connectionFailed(error):
+                return .send(.sharedProperties(.connectionFailed(error)))
 
             default:
                 return .none
@@ -578,13 +353,7 @@ private extension HomeFeature {
                 state.destination = nil
                 return .none
             case .destination(.presented(.freeConnectionsInfo(.upgradeButtonTapped))):
-                state.destination = .payments(.init(upsellModalType: allCountriesUpsellModalType()))
-                return .none
-            case .destination(.presented(.localAgentNotice(.disconnect))):
-                state.destination = nil
-                connectionCommandClient.send(.disconnect(.fidoAuthentication))
-                return .none
-            case .destination(.presented(.localAgentNotice(.openFidoAuthentication))):
+                state.destination = .payments(.init(upsellModalType: .allCountries))
                 return .none
             case .destination(.presented(.payments(.delegate(.completed)))),
                  .destination(.presented(.payments(.delegate(.dismissed)))):
@@ -597,56 +366,6 @@ private extension HomeFeature {
                         openCredentiallessSignUp()
                     }
             #endif
-            case let .connection(.delegate(.connectionFailed(error))):
-                SentryHelper.shared?.log(error: error)
-                state.alert = domainAlertState(from: error.alert)
-                return .send(.sharedProperties(.connectionFailed(error)))
-            case let .connection(.delegate(.stateChanged(connectionState))):
-                log.debug("Connection layer state update \(connectionState)")
-                // ProTUN's `ConnectionFeature` no longer emits `.delegate(.disconnected)`; drain
-                // any queued disconnect completions when the layer reports a disconnected state.
-                // (or zero-peer KS, which fulfills the user's disconnect intent).
-                return .run { _ in
-                    if connectionState.is(\.disconnected) || connectionState.is(\.killSwitchActive) {
-                        await pendingDisconnectCompletions.drainAndInvoke()
-                    }
-                }
-            case let .connection(.delegate(.intentResolutionFailed(intent, resolutionError))):
-                SentryHelper.shared?.log(error: resolutionError)
-                switch resolutionError {
-                case .secureCoreUnavailable:
-                    state.destination = .payments(.init(upsellModalType: .secureCore))
-                    return .none
-                case let .specificCountryUnavailable(countryCode):
-                    state.destination = .payments(
-                        .init(
-                            upsellModalType: .country(
-                                countryCode: countryCode,
-                                numberOfDevices: DomainConstants.maxDeviceCount,
-                                numberOfCountries: serverRepository.countryCount()
-                            )
-                        )
-                    )
-                    return .none
-                case let .serverChangeUnavailable(until, duration, exhaustedSkips):
-                    state.destination = .payments(
-                        .init(upsellModalType: .cantSkip(
-                            before: until,
-                            totalDuration: duration,
-                            longSkip: exhaustedSkips
-                        ))
-                    )
-                    return .none
-                }
-            case let .connection(.delegate(.localAgentNotice(error))):
-                if error.twoFactorRequired {
-                    // The FIDO/2FA notice needs its own actions, so present the sheet.
-                    state.destination = .localAgentNotice(.init(twoFactorError: error))
-                } else if error.settingWasRefused {
-                    // The connection layer took care of the error handling for us, we just need to alert here.
-                    state.alert = settingRefusedAlert(for: error)
-                }
-                return .none
             default:
                 return .none
             }
@@ -662,133 +381,13 @@ private extension HomeFeature {
             case .didDismissChangeServer:
                 if state.shouldPushAlert {
                     state.shouldPushAlert = false
-                    state.destination = .payments(.init(upsellModalType: allCountriesUpsellModalType()))
+                    state.destination = .payments(.init(upsellModalType: .allCountries))
                 }
                 return .none
             default:
                 return .none
             }
         }
-    }
-}
-
-private extension HomeFeature {
-    func domainAlertState(from alert: Domain.Alert) -> AlertState<Action.HomeAlert> {
-        AlertState {
-            TextState(String(localized: alert.title))
-        } message: {
-            TextState(String(localized: alert.message))
-        }
-    }
-
-    /// Informational alert telling the user the server refused one of their requested settings. The extension has
-    /// already reverted the setting (via the error-ack path in `ExtensionFeature`), so there is nothing to act on.
-    func settingRefusedAlert(for error: LocalAgent.Error) -> AlertState<Action.HomeAlert> {
-        let message = if let name = Self.refusedSettingName(for: error) {
-            Localizable.localAgentSettingRefusedMessage(name)
-        } else {
-            Localizable.localAgentSettingRefusedMessageGeneric
-        }
-        return AlertState {
-            TextState(Localizable.localAgentSettingRefusedTitle)
-        } message: {
-            TextState(message)
-        }
-    }
-
-    /// The user-facing name of the app feature backing a refused LocalAgent setting, or `nil` for settings the app
-    /// doesn't surface as a first-class control (in which case the alert uses generic copy).
-    static func refusedSettingName(for error: LocalAgent.Error) -> String? {
-        assert(error.settingWasRefused, "Unexpected error: \(error) was not a refused setting error")
-
-        return switch error {
-        case .netShieldSettingRefused:
-            Localizable.netshieldTitle
-        case .portForwardingSettingRefused:
-            Localizable.portForwarding
-        case .randomNatSettingRefused:
-            Localizable.moderateNatTitle
-        case .splitTcpSettingRefused:
-            Localizable.vpnAcceleratorTitle
-        case .bouncingSettingRefused,
-             .safeModeSettingRefused,
-             .unknownSettingRefused:
-            nil
-        case .authenticationExpired,
-             .authenticationRequired,
-             .authenticationLocationChanged:
-            nil
-        }
-    }
-
-    /// Confirmation shown before an intentional disconnect while Advanced killswitch is active
-    func confirmDisconnectWithAdvancedKillSwitchAlert(trigger: UserInitiatedVPNChange.VPNTrigger) -> AlertState<Action.HomeAlert> {
-        AlertState {
-            TextState(Localizable.killSwitchAdvancedDisconnectWarning)
-        } actions: {
-            ButtonState(role: .cancel) {
-                TextState(Localizable.cancel)
-            }
-            ButtonState(action: .confirmDisconnectWithAdvancedKillSwitch(trigger)) {
-                TextState(Localizable.settingsProtocolAlertButtonContinue)
-            }
-        }
-    }
-
-    /// Encapsulates the side effects of dispatching a `.disconnect` command once the Advanced kill
-    /// switch confirmation (if any) has been resolved: cancel any in-flight connect command, settle
-    /// the completion, post the trigger, and hand the disconnect to the connection. Both the direct
-    /// path and the alert confirmation go through here so they cannot drift apart.
-    func performDisconnect(
-        trigger: UserInitiatedVPNChange.VPNTrigger,
-        completion: (@MainActor @Sendable () -> Void)?,
-        state: State
-    ) -> Effect<Action> {
-        let alreadyDisconnected = state.connectionState.is(\.disconnected) || state.connectionState.is(\.killSwitchActive)
-        return .merge(
-            .cancel(id: CancelID.connectionConnectCommandEffect),
-            .run { @MainActor send in
-                if let completion {
-                    if alreadyDisconnected {
-                        completion()
-                    } else {
-                        await pendingDisconnectCompletions.enqueue(completion)
-                    }
-                }
-                AppEvent.userInitiatedVPNChange.post(trigger)
-                await send(.connection(.input(.disconnect)))
-            }
-        )
-    }
-
-    /// Encapsulates the side effects of dispatching a `.connect` command after intercept checks
-    /// have been resolved (either none fired or the user confirmed via alert).
-    func performConnect(pending: PendingConnect) -> Effect<Action> {
-        let intent = ConnectionPreparationIntent(
-            spec: pending.spec,
-            connectionProtocol: pending.connectionProtocol,
-            acceptableProtocols: .all
-        )
-        return .run { [trigger = pending.trigger] send in
-            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
-            await send(.connection(.input(.connect(intent))))
-        }
-        .cancellable(id: CancelID.connectionConnectCommandEffect, cancelInFlight: true)
-    }
-
-    /// Returns an alert if any pre-connect intercept (e.g. misconfigured LAN) applies to the
-    /// pending connect; otherwise `nil`.
-    func interceptAlert(for pending: PendingConnect) -> AlertState<Action.HomeAlert>? {
-        @SharedReader(.featureFlags) var featureFlags
-        if featureFlags.unsafeLanWarnings,
-           !killSwitchMode.isProtected,
-           let bad = networkInterfacePropertiesProvider.firstBadInterface() {
-            return bad.interceptAlert(
-                enableKillSwitch: .enableKillSwitchAndConnect(pending),
-                connectAnyway: .connectAnywayDespiteBadLAN(pending)
-            )
-        }
-        return nil
     }
 }
 

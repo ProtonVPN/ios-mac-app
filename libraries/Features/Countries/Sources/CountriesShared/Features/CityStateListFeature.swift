@@ -80,7 +80,6 @@ public struct CityStateListFeature: Sendable {
     }
 
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
-    @Dependency(\.switchToPrimaryTab) private var switchToPrimaryTab
 
     public init() {}
 
@@ -160,10 +159,7 @@ public struct CityStateListFeature: Sendable {
                     UserInitiatedVPNChange.VPNTrigger.countriesCity
                 }
                 connectionCommandClient.send(.connect(spec, connectionProtocol, trigger ?? listTrigger))
-                return .run { [switchToPrimaryTab] send in
-                    await switchToPrimaryTab()
-                    await send(.delegate(.dismissRequested))
-                }
+                return .send(.delegate(.dismissRequested))
             case let .path(.element(_, action: .serversList(.connect(location)))):
                 return .send(.connect(location: location, trigger: .countriesServer))
             case .path(.element(_, action: .serversList(.disconnect))):

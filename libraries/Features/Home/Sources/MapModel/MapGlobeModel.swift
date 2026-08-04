@@ -23,7 +23,7 @@ import Triangulation
 
 /// Render-ready representation of the world map on a unit sphere: the globe.
 ///
-/// Produced offline by `MapBaker` and serialised to `world-globe.bin`. Every position is a point on the unit sphere
+/// Produced offline by `MapBaker` and serialized to `world-globe.bin`. Every position is a point on the unit sphere
 /// centered at the origin, so the position also serves as the surface normal. Country fills are real triangle meshes,
 /// and back-face culling alone hides the far hemisphere, so there is no depth buffer. Borders are short segments
 /// expanded into ribbons in the vertex shader.
@@ -140,18 +140,22 @@ public struct MapGlobeDrawUnit: Equatable, Sendable {
 
 /// Per-country lookup for highlighting and for rotating the globe to face the country.
 public struct MapGlobeCountry: Equatable, Sendable {
-    /// Bounding cap on the sphere: its centre is the direction to rotate toward so the country faces the
+    /// Bounding cap on the sphere: its center is the direction to rotate toward so the country faces the
     /// camera, and its radius is the half-angle the camera zooms to fit. Baked alongside the geometry.
     public let cap: SphericalCap
+    /// Unit direction the disconnected "you are here" pin renders at.
+    public let pin: SIMD3<Float>
     public let fillRanges: [Range<Int>]
     public let borderRanges: [Range<Int>]
 
     public init(
         cap: SphericalCap,
+        pin: SIMD3<Float>,
         fillRanges: [Range<Int>],
         borderRanges: [Range<Int>]
     ) {
         self.cap = cap
+        self.pin = pin
         self.fillRanges = fillRanges
         self.borderRanges = borderRanges
     }

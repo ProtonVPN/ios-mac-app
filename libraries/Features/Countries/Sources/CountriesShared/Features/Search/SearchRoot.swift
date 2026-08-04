@@ -27,7 +27,9 @@ import Persistence
 public struct SearchRoot {
     @ObservableState
     public enum State: Equatable {
-        case loading(IdentifiedArrayOf<CountrySectionFeature.State>)
+        /// Building the search index. `query` buffers what the user has typed so far, replayed into the
+        /// loaded state the moment the index lands.
+        case loading(IdentifiedArrayOf<CountrySectionFeature.State>, query: String)
         case loaded(SearchFeature.State)
     }
 
@@ -36,6 +38,7 @@ public struct SearchRoot {
         case performComputation
         case dataLoaded(SearchFeature.State)
         case loaded(SearchFeature.Action)
+        case searchQueryChanged(String)
         case delegate(Delegate)
 
         public enum Delegate: Equatable {
@@ -94,8 +97,19 @@ public struct SearchRoot {
                 }
 
             case let .dataLoaded(searchState):
+                let buffered = state.searchQuery
                 state = .loaded(searchState)
-                return .none
+                guard !buffered.isEmpty else { return .none }
+                return .send(.loaded(.searchQueryChanged(buffered)))
+
+            case let .searchQueryChanged(query):
+                switch state {
+                case let .loading(sections, _):
+                    state = .loading(sections, query: query)
+                    return .none
+                case .loaded:
+                    return .send(.loaded(.searchQueryChanged(query)))
+                }
 
             case .loaded(.delegate(.showUpsell)):
                 return .send(.delegate(.showUpsell))
@@ -257,10 +271,21 @@ private struct SearchCityAccumulator {
 extension SearchRoot.State {
     var sections: IdentifiedArrayOf<CountrySectionFeature.State>? {
         switch self {
-        case let .loading(searchData):
+        case let .loading(searchData, _):
             searchData
         case .loaded:
             nil
+        }
+    }
+
+    /// The text in the search field: the buffered keystrokes while the index is still being built, the
+    /// live query once it has loaded.
+    public var searchQuery: String {
+        switch self {
+        case let .loading(_, query):
+            query
+        case let .loaded(searchState):
+            searchState.searchQuery
         }
     }
 }

@@ -23,12 +23,16 @@ import Strings
 import SwiftUI
 
 @MainActor
-struct LocalAgentNoticeView: View {
+public struct LocalAgentNoticeView: View {
     let store: StoreOf<LocalAgentNoticeFeature>
+
+    public init(store: StoreOf<LocalAgentNoticeFeature>) {
+        self.store = store
+    }
 
     private let minSheetHeight: CGFloat = 300.0
 
-    var body: some View {
+    public var body: some View {
         VStack(spacing: .themeSpacing16) {
             Text(
                 verbatim: """

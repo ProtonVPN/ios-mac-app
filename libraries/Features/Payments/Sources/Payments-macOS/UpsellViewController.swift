@@ -198,7 +198,7 @@ extension UpsellViewController {
 
 #Preview {
     UpsellViewController(
-        modalType: .allCountries(numberOfServers: 111, numberOfCountries: 4444),
+        modalType: .allCountries,
         upgradeAction: {}
     )
     .preferredColorScheme(.dark)

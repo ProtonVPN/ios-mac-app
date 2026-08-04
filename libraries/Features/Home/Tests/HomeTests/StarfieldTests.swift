@@ -73,15 +73,4 @@ struct StarfieldTests {
         // Finite-sample wobble only; the band term is off.
         #expect(ratio > 0.7 && ratio < 1.4)
     }
-
-    @Test("Star opacity ramps from nothing at the whole-globe distance to full at the ceiling")
-    func opacityRamp() {
-        // The real ceiling the view passes, not a copied literal, so a zoom-limit change moves this test.
-        let ceiling = GlobeTrackballModel.maxZoomDistance
-        #expect(Starfield.opacity(atDistance: GlobeFocus.wholeGlobeDistance, ceiling: ceiling) == 0)
-        #expect(Starfield.opacity(atDistance: ceiling, ceiling: ceiling) == 1)
-        let midway = (GlobeFocus.wholeGlobeDistance + ceiling) / 2
-        let mid = Starfield.opacity(atDistance: midway, ceiling: ceiling)
-        #expect(mid > 0 && mid < 1)
-    }
 }

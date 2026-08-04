@@ -37,7 +37,7 @@
 
             await store.send(.upsellBannerTapped) {
                 $0.destination = .allCountriesUpsell(
-                    .init(modalType: .allCountries(numberOfServers: 1, numberOfCountries: 1))
+                    .init(modalType: .allCountries)
                 )
             }
         }
@@ -55,7 +55,7 @@
 
             await store.send(.destination(.presented(.freeConnectionsInfo(.upgradeTapped)))) {
                 $0.destination = .allCountriesUpsell(
-                    .init(modalType: .allCountries(numberOfServers: 1, numberOfCountries: 1))
+                    .init(modalType: .allCountries)
                 )
             }
         }
@@ -64,7 +64,7 @@
         func dismissClearsAllCountriesUpsellDestination() async {
             var state = CountriesListFeature.State()
             state.destination = .allCountriesUpsell(
-                .init(modalType: .allCountries(numberOfServers: 1, numberOfCountries: 1))
+                .init(modalType: .allCountries)
             )
 
             let store = TestStore(initialState: state) {

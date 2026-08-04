@@ -31,7 +31,6 @@ import VPNAppCore
 /// Presents upsell and welcome modals on iOS
 final class IosUpsellManager {
     @Dependency(\.windowService) private var windowService
-    @Dependency(\.serverRepository) private var serverRepository
 
     private lazy var navigationService: NavigationService? =
         (Container.sharedContainer as? NavigationServiceFactory)?.makeNavigationService()
@@ -108,10 +107,7 @@ final class IosUpsellManager {
     private func upsellModalType(for source: UpsellModalSource) -> Payments.UpsellModalType? {
         switch source {
         case .countries:
-            .allCountries(
-                numberOfServers: serverRepository.roundedServerCount,
-                numberOfCountries: serverRepository.countryCount()
-            )
+            .allCountries
         case .netShield:
             .netShield
         case .secureCore:

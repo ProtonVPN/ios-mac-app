@@ -41,6 +41,7 @@ struct ConnectPill: View, Animatable {
         /// The flag and label fade out early in the collapse, so they never peek out of the shrinking central reveal.
         static let contentFadeStart: CGFloat = 0.7
         static let contentFadeEnd: CGFloat = 0.95
+        static let revealEpsilon: CGFloat = 0.001
     }
 
     private enum Dimensions {
@@ -59,7 +60,7 @@ struct ConnectPill: View, Animatable {
     }
 
     var body: some View {
-        if let center, reveal > 0.001 {
+        if let center, reveal > Constants.revealEpsilon {
             pill
                 .mask(revealMask)
                 .contentShape(Capsule())

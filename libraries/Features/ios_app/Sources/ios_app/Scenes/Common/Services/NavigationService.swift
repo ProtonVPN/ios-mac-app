@@ -44,6 +44,7 @@ import ProtonCoreServices
 import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
+import Tabular
 import Telemetry
 import UIKit
 import VPNAppCore
@@ -137,7 +138,8 @@ final class NavigationService {
 
     @Dependency(\.bugReport) private var bugReportCreator
 
-    var tabBarController = TabBarController()
+    /// The TCA feature root.
+    private var shell: TabularShell?
 
     // MARK: Initializers
 
@@ -172,22 +174,25 @@ final class NavigationService {
 
     func presentWelcome(initialError: String?) {
         loginService.showWelcome(initialError: initialError, withOverlayViewController: nil)
-        // Release the old tab bar and start fresh. Merely nilling `viewControllers` on the reused,
-        // already-presented instance is unreliable — UIKit reads it back as a non-nil/empty array, so
-        // `setupTabs`' `== nil` guard would skip the rebuild and re-show this stale instance (still holding
-        // the previous session's Settings nav with the tab bar hidden). A brand-new instance reports
-        // `viewControllers == nil` reliably, so the next login rebuilds the tabs with post-login data.
-        tabBarController = TabBarController()
+        // Release the shell with the login it belonged to. The store keeps the feature tree and its
+        // long-running observations (connection state, recents, shared properties) alive for as long as
+        // it exists, and none of that should keep running for a user who signed out.
+        MainActor.assumeIsolated { shell?.dismantle() }
+        shell = nil
     }
 
     func presentLogin(flow: LoginFlowType = .normal) {
-        executeOnUIThread { [tabBarController] in
-            self.loginService.presentLoginFlow(over: tabBarController, flow: flow)
+        executeOnUIThread {
+            guard let anchor = self.windowService.topmostPresentedViewController() else { return }
+            self.loginService.presentLoginFlow(over: anchor, flow: flow)
         }
     }
 
     func presentSignUp() {
-        presentSignUp(over: tabBarController)
+        executeOnUIThread {
+            guard let anchor = self.windowService.topmostPresentedViewController() else { return }
+            self.presentSignUp(over: anchor)
+        }
     }
 
     func presentSignUp(over uiViewController: UIViewController, flow: LoginFlowType = .normal) {
@@ -196,6 +201,7 @@ final class NavigationService {
         }
     }
 
+    @MainActor
     private func presentMainInterface() {
         setupTabs()
         showInitialModals()
@@ -238,7 +244,7 @@ final class NavigationService {
             variant = .plus
         }
 
-        tabBarController.present(ModalsFactory().whatsNewViewController(variant: variant), animated: true)
+        windowService.present(modal: ModalsFactory().whatsNewViewController(variant: variant))
     }
 
     private func sessionChanged(_ status: SessionStatus) {
@@ -248,24 +254,55 @@ final class NavigationService {
         presentWelcome(initialError: sessionLogoutReason)
     }
 
+    /// Builds the main view. The globe backdrop becomes the window's root, with tabs presented over it in a sheet the
+    /// user can raise and lower.
+    @MainActor
     private func setupTabs() {
-        defer {
-            windowService.show(viewController: tabBarController)
-        }
-        guard tabBarController.viewControllers?.isEmpty ?? true else {
-            // Tabs already built (e.g. guest mode) — just select the first tab.
-            tabBarController.selectedIndex = 0
+        guard shell == nil else {
+            // Built on an earlier pass. Another flow (a paywall, onboarding) may have taken the window root since,
+            // which tears the sheet's presentation down with it, so the shell is put back in front rather than assumed
+            // to have stayed there.
+            presentShell()
+            shell?.store.send(.tabSelected(.home))
             return
         }
-        let tabViewControllers: [UIViewController] = [
-            HomeFeatureCreator.homeViewController(),
-            makeCountriesViewController(),
-            UINavigationController(rootViewController: makeProfilesViewController()),
-            UINavigationController(rootViewController: makeSettingsViewController()),
-        ]
 
-        tabBarController.setViewControllers(tabViewControllers, animated: false)
-        tabBarController.setupView()
+        let store = StoreOf<TabularFeature>(initialState: .init()) {
+            log.info("Creating TabularFeature", category: .app)
+            return TabularFeature()
+        } withDependencies: {
+            $0.openCredentiallessSignUp = { [weak self] in
+                guard let self, let anchor = windowService.topmostPresentedViewController() else { return }
+                presentSignUp(over: anchor, flow: .credentiallessUpsell)
+            }
+        }
+
+        shell = TabularShell(store: store, pages: .init(uniqueKeysWithValues: TabularFeature.Tab.allCases.map { tab in
+            switch tab {
+            case .home: (tab, makeHomeViewController(store: store.scope(state: \.home, action: \.home)))
+            case .countries: (tab, makeCountriesViewController())
+            case .profiles: (tab, SheetNavigationController(rootViewController: makeProfilesViewController()))
+            case .settings: (tab, SheetNavigationController(rootViewController: makeSettingsViewController()))
+            }
+        }))
+
+        // Those should be called once
+        store.send(.commands(.onStart))
+        store.send(.home(.onStart))
+        store.send(.home(.sharedProperties(.listen)))
+        store.send(.map(.observeConnectionState))
+
+        presentShell()
+    }
+
+    /// Puts the shell in front, rooting its backdrop through the window service.
+    @MainActor
+    private func presentShell() {
+        shell?.present(rootedBy: { windowService.show(viewController: $0) })
+    }
+
+    private func makeHomeViewController(store: StoreOf<HomeFeature>) -> UIViewController {
+        UIHostingController(rootView: HomeView(store: store))
     }
 
     func makeLaunchViewController() -> LaunchViewController {
@@ -283,14 +320,9 @@ extension NavigationService {
                 guard let vc = self?.windowService.topmostPresentedViewController() else { return }
                 self?.presentSignUp(over: vc, flow: .credentiallessUpsell)
             }
-            $0.switchToPrimaryTab = { [weak self] in
-                self?.presentHome()
-            }
         }
         let countriesView = CountriesMainView(store: countriesStore)
         let hostingController = UIHostingController(rootView: countriesView)
-        hostingController.tabBarItem = UITabBarItem(title: Localizable.countries, image: IconProvider.earth, tag: 1)
-        hostingController.tabBarItem.accessibilityIdentifier = "Countries"
 
         // Ensure content extends under tab bar
         hostingController.edgesForExtendedLayout = [.bottom]
@@ -448,7 +480,12 @@ extension NavigationService: ProtocolService {
 
 extension NavigationService: ConnectionStatusService {
     func presentHome() {
-        tabBarController.selectedIndex = 0 // Switch to Home tab which included new connection status view.
+        // Through the store, never the tab bar directly: the shell is the authority on the selected
+        // tab, and a raw selectedIndex write would be snapped back by the observation on the next
+        // state change.
+        Task { @MainActor [weak self] in
+            self?.shell?.store.send(.tabSelected(.home))
+        }
     }
 }
 
@@ -458,24 +495,30 @@ extension NavigationService {
     func presentAccountRecoveryViewController() {
         guard AccountRecoveryModule.feature.enabled else { return }
 
-        let viewController = makeAccountRecoveryViewController()
-        windowService.addToStack(viewController, checkForDuplicates: true)
+        // Recovery is account business, so it lands on the Settings tab. Pushing onto "the topmost navigation
+        // stack" only works while a tab that has a stack is visible, and Home and Countries are plain hosting
+        // controllers without one. A push notification can arrive with any tab up, so the tab is named explicitly.
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            shell?.push(makeAccountRecoveryViewController(), onto: .settings)
+        }
     }
 }
 
 // MARK: Login delegate
 
 extension NavigationService: LoginServiceDelegate {
+    @MainActor
     func userDidLogIn() {
         presentMainInterface()
     }
 
     @MainActor
     func userDidSignUp() {
-        onboardingService.showOnboarding(overTabBarController: tabBarController)
+        onboardingService.showOnboarding(overMainInterface: shell != nil)
         TelemetryOnboardingReporter.isOnboardingInProgress = true
-        // in case we're transitioning from guest -> registered improve UX by selecting first tab
-        // in normal flow (start -> sign up) tabbarcontroller is nil
+        // in case we're transitioning from guest -> registered improve UX by selecting first tab in normal flow (start
+        // -> sign up) there is no main interface yet
         presentHome()
         @Dependency(\.telemetryService) var service
         Task {
@@ -497,6 +540,7 @@ extension NavigationService: LoginServiceDelegate {
 // MARK: Onboarding delegate
 
 extension NavigationService: OnboardingServiceDelegate {
+    @MainActor
     func onboardingServiceDidFinish() {
         TelemetryOnboardingReporter.isOnboardingInProgress = false
         presentMainInterface()

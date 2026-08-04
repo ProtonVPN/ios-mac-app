@@ -38,6 +38,13 @@ struct SearchRootView: View {
         }
         .navigationTitle(Localizable.searchTitle)
         .navigationBarTitleDisplayMode(.inline)
+        // We need to add `searchable` here due to a view hierarchy issue, otherwise the search and tab bar will fight
+        // with each other.
+        .searchable(
+            text: $store.searchQuery.sending(\.searchQueryChanged),
+            placement: .navigationBarDrawer(displayMode: .always),
+            prompt: Localizable.searchBarPlaceholder
+        )
         .toolbarBackground(Color(.background), for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
         .toolbarColorScheme(.dark, for: .navigationBar)

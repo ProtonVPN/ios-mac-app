@@ -59,7 +59,6 @@ public struct CountriesMainFeature {
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.planChangeClient) private var planChangeClient
     @Dependency(\.serverRepository) private var serverRepository
-    @Dependency(\.switchToPrimaryTab) private var switchToPrimaryTab
 
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -98,12 +97,7 @@ public struct CountriesMainFeature {
                 let newSecureCoreToggle = !secureCoreToggle
                 $secureCoreToggle.withLock { $0 = newSecureCoreToggle }
                 dispatchSecureCoreToggleReconnect(secureCoreEnabled: newSecureCoreToggle)
-                return .merge(
-                    .send(.reloadContent),
-                    .run { [switchToPrimaryTab] _ in
-                        await switchToPrimaryTab()
-                    }
-                )
+                return .send(.reloadContent)
 
             case .standard, .secureCore:
                 return .none

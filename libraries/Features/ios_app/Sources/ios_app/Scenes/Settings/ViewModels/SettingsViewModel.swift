@@ -1068,15 +1068,12 @@ final class SettingsViewModel {
         }
     }
 
-    private func reconnect(with tunnelFeatureChange: ConnectionFeatureChange.TunnelFeature, showStatusViewController: Bool = false) {
+    private func reconnect(with tunnelFeatureChange: ConnectionFeatureChange.TunnelFeature) {
         // KS and LAN features are applied by the viewmodel.
         // We only need to worry about updating the protocol here.
         if case let .connectionProtocol(connectionProtocol) = tunnelFeatureChange {
             @Shared(.connectionProtocol) var sharedConnectionProtocol
             $sharedConnectionProtocol.withLock { $0 = connectionProtocol }
-        }
-        if showStatusViewController {
-            connectionStatusService.presentHome()
         }
         Task {
             do {

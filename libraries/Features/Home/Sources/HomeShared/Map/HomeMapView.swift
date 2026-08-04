@@ -24,18 +24,11 @@ import SwiftUI
 import Theme
 import Triangulation
 
-/// The home globe. It has two modes driven by `store.presentation`:
-///   - `.sheet` (decorative, the bottom sheet is up): the camera is derived from connection state and faces
-///     the connected or known country, animating on connect. Only the user/connection pin is shown.
-///   - `.full` (interactive): the camera is driven by pan and pinch gestures, grey location pins appear
-///     (coalescing where they overlap), tapping a location reveals its connect pill, tapping the user pin
-///     recenters, and a tap on empty map returns to the sheet.
+/// The app's globe. The camera is driven by pan and pinch, location pins coalesce where they overlap, tapping a
+/// location reveals its connect pill, and tapping the user pin recenters.
 ///
-/// Presentation and selection are feature state; the camera, gestures, and pill choreography stay
-/// view-owned because they update at frame rate, far too often for the store.
-///
-/// One persistent view (and one `MTKView`) spans both modes so expanding and collapsing is a continuous
-/// camera and framing animation rather than a swap between two maps.
+/// Selection is feature state; the camera, gestures, and pill choreography stay view-owned because they update at frame
+/// rate, far too often for the TCA store.
 public struct HomeMapView: View {
     let store: StoreOf<HomeMapFeature>
 
@@ -46,20 +39,24 @@ public struct HomeMapView: View {
     private let renderHeight: CGFloat?
     /// Top safe-area inset: the framed region starts this far down the canvas.
     private let topInset: CGFloat
+    /// Height of the region the user can see, when something covers part of the framed region. The globe is centered
+    /// within this while still being scaled to `availableHeight`, so covering the map slides the globe up rather than
+    /// shrinking it. Nil means the whole framed region is visible.
+    private let visibleHeight: CGFloat?
+    /// Height of the visible region at the sheet's next rest. Camera fits frame against this rather than the live
+    /// `visibleHeight`, so a flight begun mid-travel lands where the sheet is heading. Nil falls back to the live
+    /// region.
+    private let restingVisibleHeight: CGFloat?
+    /// Whether the interactive pin layer (the tappable clusters + pins) is visible and usable.
+    private let showsInteractivePins: Bool
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     /// Keys the point fill color `renderInputs` resolves, so a light/dark change re-resolves it. Qualified because
     /// Theme exports a `ColorScheme` of its own and this file imports both.
     @Environment(\.colorScheme) private var colorScheme: SwiftUI.ColorScheme
-    /// The orientation last presented in decorative mode. The next derived orientation is aligned to it so
-    /// the rotation animates the short way round. Nil (before the first change lands) falls back to the
-    /// derived target itself. Optional rather than seeded in `init`: a `@State` initial value is recomputed
-    /// and discarded on every re-`init`, so it must stay cheap.
-    @State private var presentedOrientation: simd_quatf?
 
-    /// Camera and gesture state for the interactive mode: the trackball orientation, the dolly distance,
-    /// in-progress gestures, and the momentum coast. The declaration default is a cheap placeholder;
-    /// `presentationChanged` parks it on the real derived camera before it is ever read.
+    /// The one camera: trackball orientation, dolly distance, in-progress gestures, and the momentum coast. It starts
+    /// facing whatever the connection state implies and is flown to each new country from there.
     @State private var trackball = GlobeTrackballModel(
         orientation: GlobeCamera.orientation(facing: GlobeFocus.direction(forCountry: nil)),
         distance: GlobeFocus.cameraDistance(forCountry: nil)
@@ -81,6 +78,9 @@ public struct HomeMapView: View {
     /// tint cross-fades instead of snapping. Set without animation once on appear.
     @State private var displayedSunTint: SIMD3<Float> = .init(1, 1, 1)
     private enum Constants {
+        /// How far inside the visible region the follow fit keeps every landmark: a full touch diameter, so the
+        /// outermost city sits with its whole disc and some air inside the edge rather than grazing it.
+        static let followFitMargin: CGFloat = PinDisplay.collisionThreshold
         /// How long the sunlight color takes to ease to a new connection tint. Short enough to keep up with a
         /// reconnect, long enough that the change reads as a fade rather than a flash.
         static let sunTintFadeDuration: Double = 0.5
@@ -96,18 +96,19 @@ public struct HomeMapView: View {
         availableHeight: CGFloat,
         availableWidth: CGFloat,
         renderHeight: CGFloat? = nil,
-        topInset: CGFloat = 0
+        topInset: CGFloat = 0,
+        visibleHeight: CGFloat? = nil,
+        restingVisibleHeight: CGFloat? = nil,
+        showsInteractivePins: Bool = true
     ) {
         self.store = store
         self.availableHeight = availableHeight
         self.availableWidth = availableWidth
         self.renderHeight = renderHeight
         self.topInset = topInset
-    }
-
-    /// User-controllable (pan/pinch and location pins) in the full map, decorative behind the sheet.
-    private var interactive: Bool {
-        store.presentation == .full
+        self.visibleHeight = visibleHeight
+        self.restingVisibleHeight = restingVisibleHeight
+        self.showsInteractivePins = showsInteractivePins
     }
 
     /// The framing geometry (render canvas, framed region, top offset), computed once and shared by the render path,
@@ -116,7 +117,19 @@ public struct HomeMapView: View {
         GlobeFraming(
             viewSize: CGSize(width: availableWidth, height: renderHeight ?? availableHeight),
             focusHeight: availableHeight,
-            focusTop: topInset
+            focusTop: topInset,
+            visibleHeight: visibleHeight
+        )
+    }
+
+    /// The framing camera fits fly against: the same geometry with the visible region the sheet is heading for, so a
+    /// flight begun mid-travel frames the destination rather than a passing moment.
+    private var fitFraming: GlobeFraming {
+        GlobeFraming(
+            viewSize: CGSize(width: availableWidth, height: renderHeight ?? availableHeight),
+            focusHeight: availableHeight,
+            focusTop: topInset,
+            visibleHeight: restingVisibleHeight ?? visibleHeight
         )
     }
 
@@ -130,35 +143,24 @@ public struct HomeMapView: View {
                 viewSize: framing.viewSize,
                 focusHeight: framing.focusHeight,
                 focusTop: framing.focusTop,
+                visibleHeight: framing.visibleHeight,
                 highlight: renderInputs.highlight(for: highlightedCode),
                 sunDirection: solarSystem.sunDirection,
-                lightFade: interactive ? 1 : 0,
                 sunTint: tint,
                 moonCenter: solarSystem.moonCenter,
                 moonRadius: solarSystem.moonRadius,
-                // City points are drawn in the globe's own Metal pass so they can't lag behind the sphere
-                // under a fast drag. `isMoving` keeps them as points while the map moves. Once it settles
-                // they fade out and the cluster discs take over.
-                pinPositions: renderInputs.directions(of: store.locationPins),
+                pinPositions: renderInputs.directions(of: store.displayedLocationPins),
                 pinColor: renderInputs.pointFill(for: colorScheme),
                 isMoving: trackball.isMoving,
-                // The starfield is drawn in the Metal pass as well, far out and first so the globe occludes
-                // the stars behind it, and turns with the camera without lagging. `starOpacity` is the
-                // zoom-out ramp. The shader multiplies it by the interpolated `lightFade`.
-                starInstances: Starfield.instances,
-                // The sun is drawn in the Metal pass too, after the stars and occluded by the globe. Its
-                // glow color and fade come from `sunTint` and `lightFade`.
-                starOpacity: Starfield.opacity(
-                    atDistance: trackball.distance,
-                    ceiling: GlobeTrackballModel.maxZoomDistance
-                )
+                showsInteractivePins: showsInteractivePins,
+                starInstances: Starfield.instances
             ) { projection in
                 GlobePinsOverlay(
                     projection: projection,
-                    locationPins: store.locationPins,
+                    locationPins: store.displayedLocationPins,
+                    showsInteractivePins: showsInteractivePins,
                     pinMode: store.pinMode,
                     pinDirection: pinDirection,
-                    interactive: interactive,
                     isMoving: trackball.isMoving,
                     selectedLocationID: store.selectedLocationID,
                     pill: connectPill,
@@ -168,14 +170,25 @@ public struct HomeMapView: View {
                 )
             }
         }
-        // Animate the rotation/dolly/pin when the derived map state changes (connect/disconnect, a server
-        // switch within the same country) or the user country resolves — the two inputs the decorative
-        // camera derives from. Pan/zoom in interactive mode bypass both (they change neither), and the
-        // programmatic interactive transitions use their own `withAnimation`.
-        .animation(reduceMotion ? nil : .default, value: store.mapConnectionState)
-        .animation(reduceMotion ? nil : .default, value: store.userCountry)
-        .onChange(of: highlightedCode) { presentedOrientation = displayedCamera.orientation }
-        .onChange(of: store.presentation) { presentationChanged() }
+        // Fly the camera to the country the connection implies when that country changes (connect, disconnect, the user
+        // country resolving).
+        .onChange(of: highlightedCode) { flyToHighlightedCountry() }
+        .onChange(of: store.isFollowingConnection) { flyToHighlightedCountry() }
+        // Always re-center on the connection when the pins go away, ending any coast first so the flight is not refused
+        // for a camera that is still moving.
+        .onChange(of: showsInteractivePins) { _, shows in
+            if !shows {
+                trackball.stopCoast()
+                flyToHighlightedCountry(always: true)
+            }
+        }
+        // flyToHighlightedCountry does nothing while the globe is moving, and a coast keeps the globe moving after
+        // the flick that started it ends. Retrying when the motion stops lets a connect that arrived mid-coast still
+        // recenter the camera. A deliberate gesture has already turned following off, so this cannot override the
+        // user.
+        .onChange(of: trackball.isMoving) { _, isMoving in
+            if !isMoving { flyToHighlightedCountry() }
+        }
         // Ease the sunlight color to its new connection tint instead of snapping, so a fast reconnect that runs through
         // green, white, and red in under a second reads as a smooth cross-fade.
         .onChange(of: sunTintRGB) {
@@ -199,6 +212,9 @@ public struct HomeMapView: View {
     }
 
     private func appeared() {
+        // Park the camera on the current country without animating: the declaration default is a cheap placeholder that
+        // has never been on screen.
+        trackball.park(orientation: GlobeCamera.orientation(facing: targetDirection), distance: cameraDistance)
         connectPill.recomputeClosestAngle(among: store.locationPins)
         displayedSunTint = sunTintRGB // start on the current color, the map's lighting is off until it opens
         // Moving the globe (drag / pinch / mode flip) dismisses a selected location's pill. Capture only the store:
@@ -257,8 +273,7 @@ public struct HomeMapView: View {
             .filter { distance($0) <= PinDisplay.collisionThreshold / 2 }
             .min { distance($0) < distance($1) }
         guard let hit else {
-            // The reducer dismisses the pill if one is up, otherwise returns to the sheet.
-            store.send(.mapBackgroundTapped, animation: .mapPresentation)
+            store.send(.mapBackgroundTapped) // a miss dismisses the pill, if one is up
             return
         }
         if hit.isSingle, let pin = hit.members.first {
@@ -272,16 +287,7 @@ public struct HomeMapView: View {
     // MARK: - Camera
 
     private var displayedCamera: GlobeCamera {
-        interactive ? trackball.camera : derivedCamera
-    }
-
-    /// Decorative camera: faces the connected or known country and zooms to fit it. Aligned to the last
-    /// presented orientation so the connect transition rotates the short way round; before one exists the
-    /// target stands alone.
-    private var derivedCamera: GlobeCamera {
-        let target = GlobeCamera.orientation(facing: targetDirection)
-        let oriented = presentedOrientation.map { target.aligned(to: $0) } ?? target
-        return GlobeCamera(orientation: oriented, distance: cameraDistance)
+        trackball.camera
     }
 
     /// Pin location on the sphere: the connected server's coordinates when known, else the faced country's center.
@@ -316,36 +322,56 @@ public struct HomeMapView: View {
         GlobeFocus.cameraDistance(forCountry: highlightedCode)
     }
 
+    /// Where the follow flight lands: the connected country's cities and the connection pin, centered on their own
+    /// enclosing cap and zoomed until all of them fit the currently visible region. Centering comes first, then the
+    /// fit, so that we can behave properly for large countries with weird centroids like the US.
+    private var followTarget: (direction: SIMD3<Float>, distance: Float) {
+        var landmarks: [SIMD3<Float>] = []
+        if highlightedCode != nil {
+            landmarks = store.locationPins
+                .filter { $0.countryCode == highlightedCode }
+                .map(\.direction)
+        }
+        if let pinDirection {
+            landmarks.append(pinDirection)
+        }
+        guard !landmarks.isEmpty else { return (targetDirection, cameraDistance) }
+        let center = SphericalCap.enclosing(landmarks).center
+        let distance = GlobeFocus.distance(
+            showing: landmarks,
+            facing: center,
+            from: cameraDistance,
+            framing: fitFraming,
+            margin: Constants.followFitMargin,
+            noFartherThan: GlobeTrackballModel.maxZoomDistance
+        )
+        return (center, distance)
+    }
+
     // MARK: - Interactions
 
-    /// Hands the camera off when the presentation changes. Leaving the full map, remember where the user
-    /// left off so the derived camera animates back the short way round. Then park the trackball on the
-    /// orientation currently on screen, the derived camera's. That keeps entering the full map seamless:
-    /// a freshly derived orientation can come out as the negated quaternion (q and -q are the same
-    /// orientation), which would animate the long way round, whereas adopting the on-screen orientation
-    /// means no spin at all. It also primes the next entry so a stale orientation from the last pan can't
-    /// flash.
-    private func presentationChanged() {
-        if !interactive {
-            presentedOrientation = trackball.orientation
+    /// Flies the camera to the country the connection implies, while the camera still follows it. The `always`
+    /// parameter says to fly to the country regardless of whether the view is highlighting the connection, which is
+    /// used for changes in the sheet height.
+    private func flyToHighlightedCountry(always: Bool = false) {
+        guard always || store.isFollowingConnection, !trackball.isMoving else { return }
+        let target = followTarget
+        withAnimation(transitionAnimation) {
+            trackball.focus(orientation: GlobeCamera.orientation(facing: target.direction), distance: target.distance)
         }
-        trackball.enterInteractive(orientation: derivedCamera.orientation, distance: cameraDistance)
     }
 
     /// Flies the camera to frame a tapped cluster, dollying in until its members start to separate.
     private func zoomIn(on cluster: PinCluster) {
         trackball.stopCoast()
-        // Pass the canvas aspect ratio so the fit respects the narrower field of view (horizontal, in
-        // portrait) and a sideways-spread cluster doesn't zoom past where its members fall off the sides.
-        let target = cluster.zoomTarget(
+        let target = cluster.splitZoomTarget(
+            framing: fitFraming,
+            threshold: PinDisplay.collisionThreshold,
             currentDistance: trackball.distance,
-            minDistance: connectPill.minZoomDistance(framing: framing),
-            aspectRatio: framing.aspectRatio
+            minDistance: connectPill.minZoomDistance(framing: fitFraming)
         )
-        // Face the direction the fit was computed around, so the whole-cluster framing guarantee holds.
-        let orientation = GlobeCamera.orientation(facing: target.direction)
         withAnimation(transitionAnimation) {
-            trackball.focus(orientation: orientation, distance: target.distance)
+            trackball.focus(orientation: GlobeCamera.orientation(facing: target.direction), distance: target.distance)
         }
     }
 
@@ -354,9 +380,9 @@ public struct HomeMapView: View {
     private func userPinTapped() {
         trackball.stopCoast()
         store.send(.userPinTapped)
-        let orientation = GlobeCamera.orientation(facing: targetDirection)
+        let target = followTarget
         withAnimation(transitionAnimation) {
-            trackball.focus(orientation: orientation, distance: cameraDistance)
+            trackball.focus(orientation: GlobeCamera.orientation(facing: target.direction), distance: target.distance)
         }
     }
 
@@ -366,20 +392,9 @@ public struct HomeMapView: View {
 
     // MARK: - Gestures
 
-    /// Routes a `GlobeGesture` from the catcher to the camera logic. Pan and pinch act only in the
-    /// full map. A tap works in both modes: it hit-tests pins when interactive and otherwise reads as a
-    /// background tap.
+    /// Routes a `GlobeGesture` from the catcher to the camera logic. The trackball ignores a stray one-finger pan while
+    /// a pinch is active, so the two can't fight over the orientation.
     private func globeGestureRecognized(_ gesture: GlobeGesture) {
-        // Taps work in both modes, so handle them up front and gate the rest on `interactive`.
-        guard interactive else {
-            // A tap anywhere on the map opens the full view.
-            guard case .tap = gesture else { return }
-            store.send(.mapPeekTapped, animation: .mapPresentation)
-            return
-        }
-
-        // The trackball ignores a stray one-finger pan while a pinch is active, so the two can't fight over
-        // the orientation.
         switch gesture {
         case let .dragBegan(location):
             trackball.dragBegan(at: location)
@@ -398,12 +413,12 @@ public struct HomeMapView: View {
         }
     }
 
-    /// The current pin clusters for tap hit-testing, recomputed on tap rather than per frame.
     private func currentClusters() -> [PinCluster] {
-        let projection = GlobeProjection.make(camera: trackball.camera, framing: framing, lightFade: 1)
+        guard showsInteractivePins else { return [] }
+        let projection = GlobeProjection.make(camera: trackball.camera, framing: framing)
         return clusterPins(
             visiblePins(
-                store.locationPins,
+                store.displayedLocationPins,
                 projection: projection,
                 offscreenMargin: PinDisplay.offscreenMargin
             ),

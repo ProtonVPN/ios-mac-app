@@ -49,7 +49,7 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     var pinFade: Float = 0
     /// Fill color of the city points.
     var pinColor = SIMD4<Float>(0.5, 0.5, 0.5, 1)
-    /// Camera distance from the globe centre. Drives the points' horizon cull and the whole-path back-hemisphere cull,
+    /// Camera distance from the globe center. Drives the points' horizon cull and the whole-path back-hemisphere cull,
     /// whose visible rim widens as the camera pulls out.
     var cameraDistance: Float = 2
 
@@ -61,10 +61,6 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
             starCount = starInstances.count
         }
     }
-
-    /// Overall star opacity: the open/close dissolve times the zoom-out ramp. At 0 the starfield pass is
-    /// skipped.
-    var starFade: Float = 0
 
     private enum Constants {
         /// The largest angular radius any single baked path can have. Russia's mainland is the biggest at about 30
@@ -367,7 +363,8 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     /// Draws the Moon: the base sphere translated to `moonCenter` and scaled to `moonRadius` in Earth radii, lit into
     /// phases by the Sun and faded by `lightFade`. The model offset is folded into the MVP, while the fragment keeps
     /// `moonCenter` and `moonRadius` to reconstruct each pixel's world position for the lunar eclipse. Skipped when
-    /// there is no Moon (radius 0) or the map is closed.
+    /// there is no Moon (radius 0), or when the lighting is off, which the app never asks for but the unlit geometry
+    /// snapshots do.
     private func drawMoon(into encoder: MTLRenderCommandEncoder) {
         guard uniforms.moonRadius > 0, uniforms.lightFade > Constants.minVisibleFade else { return }
         var moonUniforms = uniforms
@@ -462,13 +459,13 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     /// galactic plane, reconstructing each pixel's view ray through the inverse MVP (the triangle's corners live in the
     /// vertex shader alone). Drawn first behind everything.
     private func drawSkyGlow(into encoder: MTLRenderCommandEncoder) {
-        guard starFade > Constants.minVisibleFade else { return }
+        guard uniforms.lightFade > Constants.minVisibleFade else { return }
         var glowUniforms = SkyGlowUniforms(
             inverseMVP: uniforms.mvp.inverse,
             cameraPosition: cameraTarget * cameraDistance,
             pole: CelestialConstants.galacticNorthPole,
             centre: CelestialConstants.galacticCentre,
-            fade: starFade
+            fade: uniforms.lightFade
         )
         encoder.setCullMode(.none)
         encoder.setRenderPipelineState(skyGlowPipeline)
@@ -482,8 +479,8 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
     /// MVP so the field turns with the camera. Called after the sky glow, so the Moon and globe drawn later cover the
     /// stars behind them. Skipped when faded out or empty.
     private func drawStars(into encoder: MTLRenderCommandEncoder) {
-        guard starFade > Constants.minVisibleFade, starCount > 0, let starBuffer, viewportSizePixels.x > 0 else { return }
-        var starUniforms = StarUniforms(mvp: uniforms.mvp, viewportSize: viewportSizePixels, scale: contentScale, fade: starFade)
+        guard uniforms.lightFade > Constants.minVisibleFade, starCount > 0, let starBuffer, viewportSizePixels.x > 0 else { return }
+        var starUniforms = StarUniforms(mvp: uniforms.mvp, viewportSize: viewportSizePixels, scale: contentScale, fade: uniforms.lightFade)
         encoder.setCullMode(.none) // screen-facing billboards
         encoder.setRenderPipelineState(starPipeline)
         encoder.setVertexBuffer(starBuffer, offset: 0, index: 0)

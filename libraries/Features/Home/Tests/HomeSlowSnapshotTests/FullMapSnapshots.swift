@@ -16,9 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Announcement
+import Combine
 import ComposableArchitecture
+import Connection
 import DependenciesTestSupport
 import Domain
+import DomainTestSupport
 import Home
 @testable import HomeShared
 import SnapshotTesting
@@ -26,19 +30,25 @@ import SwiftUI
 import Testing
 import TestingErgonomics
 import Theme
+import VPNAppCore
 
-// The full interactive map, reached by constructing the state (`presentation: .full`) rather than by
-// delivering gestures — which is what makes this snapshot possible at all. It is the only screen-level
-// coverage of the interactive render path: day/night lighting (`lightFade` 1), the terminator at the
-// pinned date, and the city pins drawn in the globe's own Metal pass.
+// The globe at full size, with its state constructed directly (pins loaded, no gestures delivered). Covers the
+// interactive map render path.
 @Suite(
     "Full map",
     .serialized,
     .snapshots(record: .missing),
     .dependencies {
+        $0.serverChangeAuthorizer = .availableValue
         $0.locale = Locale(identifier: "en")
         $0.date = .constant(SnapshotEnvironment.date)
         $0.continuousClock = TestClock()
+
+        // `HomeView.task` subscribes to the announcements publisher during render; give it an explicit never-emitting
+        // publisher (the `@DependencyClient` placeholder endpoints report when called).
+        var announcementManager = AnnouncementManager()
+        announcementManager.announcementsPublisher = { Empty(completeImmediately: false).eraseToAnyPublisher() }
+        $0.announcementManager = announcementManager
     }
 )
 struct FullMapSnapshots {
@@ -71,7 +81,6 @@ struct FullMapSnapshots {
     @MainActor
     func fullMap() throws {
         var state = HomeMapFeature.State()
-        state.presentation = .full
         state.locationPins = Self.locationPins
         let store = Store(initialState: state, reducer: HomeMapFeature.init)
 
@@ -93,6 +102,92 @@ struct FullMapSnapshots {
             of: mapView,
             as: .image(precision: precision, perceptualPrecision: perceptualPrecision, layout: .sizeThatFits),
             named: "FullMap"
+        )
+    }
+
+    @Test("The backdrop under an active advanced kill switch")
+    @MainActor
+    func fullMapKillSwitch() throws {
+        @Shared(.protectionState) var protectionState
+        @Shared(.connectionState) var connectionState
+        @Shared(.userCountry) var userCountry
+        @Shared(.userIP) var userIP
+        @Shared(.userTier) var userTier
+
+        var mapState = HomeMapFeature.State()
+        mapState.locationPins = Self.locationPins
+        let store = Store(initialState: mapState, reducer: HomeMapFeature.init)
+        let statusStore = Store(initialState: ConnectionStatusFeature.State(), reducer: ConnectionStatusFeature.init)
+        $userCountry.withLock { $0 = "PL" }
+        $userIP.withLock { $0 = "1.2.3.4" }
+        $userTier.withLock { $0 = .paid }
+        $protectionState.withLock { $0 = .killSwitchActive }
+        let blocked = ConnectionState.killSwitchActive(
+            .specificCountryServer,
+            .init(connectionSpec: .specificCountryServer, tunnelProtocol: .ike, peerIDs: [], killSwitch: true)
+        )
+        $connectionState.withLock { $0 = blocked }
+        store.send(.connectionStateUpdated(blocked))
+
+        let size = try #require(ViewImageConfig.iPhoneSe.size)
+        let appView = GlobeBackdropView(map: store, status: statusStore)
+            .frame(size)
+            .environment(\._accessibilityReduceMotion, true)
+            .environment(\.colorScheme, .dark)
+            // Render the globe via off-screen Metal read-back, since a live MTKView can't be captured by the snapshot
+            // strategy's `layer.render(in:)`.
+            .environment(\.globeRenderMode, .staticImage)
+
+        assertSnapshot(
+            of: appView,
+            // `.fixed` rather than `.sizeThatFits`, so the backdrop's GeometryReader sees the real device height.
+            // Otherwise the globe's render height is too big.
+            as: .image(
+                precision: precision,
+                perceptualPrecision: perceptualPrecision,
+                layout: .fixed(width: size.width, height: size.height)
+            ),
+            named: "BackdropKillSwitch"
+        )
+    }
+
+    @Test("The backdrop with the sheet at its bar over a wide country")
+    @MainActor
+    func backdropAtBarOverWideCountry() throws {
+        @Shared(.protectionState) var protectionState
+        @Shared(.connectionState) var connectionState
+        @Shared(.userCountry) var userCountry
+        @Shared(.userIP) var userIP
+        @Shared(.userTier) var userTier
+
+        var mapState = HomeMapFeature.State()
+        mapState.locationPins = Self.locationPins
+        let store = Store(initialState: mapState, reducer: HomeMapFeature.init)
+        let statusStore = Store(initialState: ConnectionStatusFeature.State(), reducer: ConnectionStatusFeature.init)
+        $userCountry.withLock { $0 = "US" }
+        $userIP.withLock { $0 = "1.2.3.4" }
+        $userTier.withLock { $0 = .paid }
+        $protectionState.withLock { $0 = .protected }
+        let newYork = Server.mock(country: "US", coordinates: .init(latitude: 40.7, longitude: -74.0))
+        let connected = ConnectionState.previewConnected(for: .specificCountryServer, server: newYork)
+        $connectionState.withLock { $0 = connected }
+        store.send(.connectionStateUpdated(connected))
+
+        let size = try #require(ViewImageConfig.iPhoneSe.size)
+        let appView = GlobeBackdropView(map: store, status: statusStore, bottomOverlap: 100) // the bar detent's height
+            .frame(size)
+            .environment(\._accessibilityReduceMotion, true)
+            .environment(\.colorScheme, .dark)
+            .environment(\.globeRenderMode, .staticImage)
+
+        assertSnapshot(
+            of: appView,
+            as: .image(
+                precision: precision,
+                perceptualPrecision: perceptualPrecision,
+                layout: .fixed(width: size.width, height: size.height)
+            ),
+            named: "BackdropAtBar"
         )
     }
 }

@@ -120,7 +120,6 @@ public struct CountriesFeature {
     @Dependency(\.serverRepository) private var serverRepository
     @Dependency(\.openCredentiallessSignUp) private var openCredentiallessSignUp
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
-    @Dependency(\.switchToPrimaryTab) private var switchToPrimaryTab
 
     public var body: some ReducerOf<Self> {
         CombineReducers {
@@ -187,30 +186,15 @@ public struct CountriesFeature {
                 return .none
 
             case .showSearch:
-                state.path.append(.search(SearchRoot.State.loading(state.sections)))
+                state.path.append(.search(SearchRoot.State.loading(state.sections, query: "")))
                 return .none
 
             case .presentAllCountriesUpsell:
-                state.destination = .payments(
-                    .init(
-                        upsellModalType: .allCountries(
-                            numberOfServers: serverRepository.roundedServerCount,
-                            numberOfCountries: serverRepository.countryCount()
-                        )
-                    )
-                )
+                state.destination = .payments(.init(upsellModalType: .allCountries))
                 return .none
 
             case let .presentCountryUpsell(countryCode):
-                state.destination = .payments(
-                    .init(
-                        upsellModalType: .country(
-                            countryCode: countryCode,
-                            numberOfDevices: DomainConstants.maxDeviceCount,
-                            numberOfCountries: serverRepository.countryCount()
-                        )
-                    )
-                )
+                state.destination = .payments(.init(upsellModalType: .country(countryCode: countryCode)))
                 return .none
 
             case .presentFreeConnectionsInfo:
@@ -325,9 +309,7 @@ public struct CountriesFeature {
             switch action {
             case let .connectRequested(connectionSpec, connectionProtocol, trigger):
                 connectionCommandClient.send(.connect(connectionSpec, connectionProtocol, trigger))
-                return .run { [switchToPrimaryTab] _ in
-                    await switchToPrimaryTab()
-                }
+                return .none
 
             case let .disconnectRequested(vpnTrigger):
                 connectionCommandClient.send(.disconnect(vpnTrigger))

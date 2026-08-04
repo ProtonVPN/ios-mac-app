@@ -45,6 +45,13 @@
       }
     },
     {
+      "target": {
+        "containerPath": "container:../../libraries/Shells/Tabular",
+        "identifier": "TabularFastSnapshotTests",
+        "name": "TabularFastSnapshotTests"
+      }
+    },
+    {
       "selectedTests": [
         "LoginTests/testLoginAsSubuserWithNoConnectionsAssigned()",
         "LoginTests/testLoginWithIncorrectCredentials()",

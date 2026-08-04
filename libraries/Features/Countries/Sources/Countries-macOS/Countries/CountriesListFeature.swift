@@ -148,12 +148,7 @@ public struct CountriesListFeature: Sendable {
                 connectionCommandClient.send(.connect(spec, nil, .quick))
                 return .none
             case .upsellBannerTapped:
-                state.destination = .allCountriesUpsell(.init(
-                    modalType: .allCountries(
-                        numberOfServers: repository.roundedServerCount,
-                        numberOfCountries: repository.countryCount()
-                    )
-                ))
+                state.destination = .allCountriesUpsell(.init(modalType: .allCountries))
                 return .none
             case .infoButtonTappedCountries:
                 var infoState = ServersFeaturesInformationFeature.State.servicesInfo
@@ -169,12 +164,7 @@ public struct CountriesListFeature: Sendable {
                 state.destination = .freeConnectionsInfo(.init(countries: freeCountries()))
                 return .none
             case .destination(.presented(.freeConnectionsInfo(.upgradeTapped))):
-                state.destination = .allCountriesUpsell(.init(
-                    modalType: .allCountries(
-                        numberOfServers: repository.roundedServerCount,
-                        numberOfCountries: repository.countryCount()
-                    )
-                ))
+                state.destination = .allCountriesUpsell(.init(modalType: .allCountries))
                 return .none
             case .destination(.presented(.allCountriesUpsell(.upgradeTapped))):
                 state.destination = nil

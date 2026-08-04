@@ -26,12 +26,6 @@ import Triangulation
 
 @Suite("Interactive globe pin clustering")
 struct InteractiveGlobeClusteringTests {
-    /// A low manual-zoom floor like the interactive globe uses, well below the decorative auto-fit clamp.
-    private let zoomFloor: Float = 1.02
-    /// A representative portrait canvas aspect ratio. Its narrower horizontal field of view is what the
-    /// cluster fit must respect so sideways-spread members don't fall off the sides.
-    private let aspectRatio: Float = 0.46
-
     private func pin(_ id: String, latitude: Double = 0, longitude: Double = 0) -> LocationPin {
         LocationPin(
             id: id,
@@ -153,7 +147,7 @@ struct InteractiveGlobeClusteringTests {
             orientation: GlobeCamera.orientation(facing: GlobeGeometry.unitSphere(latitudeDegrees: 50, longitudeDegrees: 11)),
             distance: GlobeFocus.wholeGlobeDistance
         )
-        let projection = GlobeProjection.make(camera: camera, framing: framing, lightFade: 1)
+        let projection = GlobeProjection.make(camera: camera, framing: framing)
 
         let reprojected = try #require(cluster.reprojected(with: projection))
 
@@ -174,57 +168,210 @@ struct InteractiveGlobeClusteringTests {
             orientation: GlobeCamera.orientation(facing: GlobeGeometry.unitSphere(latitudeDegrees: -50, longitudeDegrees: -170)),
             distance: GlobeFocus.wholeGlobeDistance
         )
-        let projection = GlobeProjection.make(camera: camera, framing: framing, lightFade: 1)
+        let projection = GlobeProjection.make(camera: camera, framing: framing)
 
         #expect(cluster.reprojected(with: projection) == nil)
     }
+}
 
-    @Test("Tapping a cluster zooms in, centred on its members, never through the sphere")
-    func zoomTargetZoomsInOnCentre() {
-        let cluster = PinCluster(
-            id: "x",
-            center: .zero,
-            members: [pin("a", latitude: 50, longitude: 10), pin("b", latitude: 50, longitude: 12)]
+@Suite("Cluster split zoom")
+struct ClusterSplitZoomTests {
+    private let framing = GlobeFraming(viewSize: CGSize(width: 390, height: 844), focusHeight: 844, focusTop: 0)
+    private let zoomFloor: Float = 1.15
+
+    private func pin(_ id: String, latitude: Double, longitude: Double) -> LocationPin {
+        LocationPin(
+            id: id,
+            displayName: id,
+            latitude: latitude,
+            longitude: longitude,
+            minTier: .free,
+            location: .city(name: id, code: "XX", order: .fastest)
         )
-
-        let target = cluster.zoomTarget(currentDistance: GlobeFocus.wholeGlobeDistance, minDistance: zoomFloor, aspectRatio: aspectRatio)
-
-        #expect(target.distance < GlobeFocus.wholeGlobeDistance) // zoomed in
-        #expect(target.distance >= zoomFloor) // not past the supplied floor
-        let coordinate = GlobeGeometry.coordinate(of: target.direction)
-        #expect(abs(coordinate.latitude.degrees - 50) < 1) // centred on the members
-        #expect(abs(coordinate.longitude.degrees - 11) < 1)
     }
 
-    @Test("A near-coincident pair zooms all the way to the supplied floor")
-    func tightPairZoomsToFloor() {
-        let cluster = PinCluster(
-            id: "x",
-            center: .zero,
-            members: [pin("a", latitude: 50, longitude: 10), pin("b", latitude: 50.01, longitude: 10)]
+    private func cluster(of pins: [LocationPin]) -> PinCluster {
+        PinCluster(id: pins.map(\.id).joined(separator: "|"), center: .zero, members: pins)
+    }
+
+    @Test("Lands at the shallowest zoom that splits the membership, and no deeper")
+    func landsJustPastTheSplit() {
+        // Zurich and Milan, far enough apart to split from clusters well before the zoom floor.
+        let zurich = pin("zurich", latitude: 47.37, longitude: 8.54)
+        let milan = pin("milan", latitude: 45.46, longitude: 9.19)
+        let tapped = cluster(of: [zurich, milan])
+
+        let target = tapped.splitZoomTarget(
+            framing: framing,
+            threshold: PinDisplay.collisionThreshold,
+            currentDistance: GlobeTrackballModel.maxZoomDistance,
+            minDistance: zoomFloor
         )
 
-        let target = cluster.zoomTarget(currentDistance: GlobeFocus.wholeGlobeDistance, minDistance: zoomFloor, aspectRatio: aspectRatio)
+        #expect(target.distance < GlobeTrackballModel.maxZoomDistance, "a merged pair must zoom in")
+        #expect(target.distance > zoomFloor, "this pair separates well before the floor")
+
+        // The landing must actually split them, through the same functions the overlay renders with.
+        let camera = GlobeCamera(orientation: GlobeCamera.orientation(facing: target.direction), distance: target.distance)
+        let projection = GlobeProjection.make(camera: camera, framing: framing)
+        let landed = clusterPins(
+            visiblePins([zurich, milan], projection: projection, offscreenMargin: .infinity),
+            within: PinDisplay.collisionThreshold
+        )
+        #expect(landed.count == 2, "the landing distance must separate the pair")
+    }
+
+    @Test("Colocated members never split, so the tap lands on the floor facing all of them")
+    func colocatedMembersLandOnTheFloor() {
+        let first = pin("first", latitude: 50.0, longitude: 8.0)
+        let second = pin("second", latitude: 50.0, longitude: 8.0)
+        let tapped = cluster(of: [first, second])
+
+        let target = tapped.splitZoomTarget(
+            framing: framing,
+            threshold: PinDisplay.collisionThreshold,
+            currentDistance: GlobeTrackballModel.maxZoomDistance,
+            minDistance: zoomFloor
+        )
 
         #expect(target.distance == zoomFloor)
     }
 
-    @Test("Tapping a cluster while already zoomed in frames all members, not over-shooting past the fit")
-    func zoomTargetFitsAllWhenAlreadyZoomedIn() {
-        // Two pins 5 degrees apart, so their fit distance sits well above the floor.
-        let cluster = PinCluster(
-            id: "x",
-            center: .zero,
-            members: [pin("a", latitude: 0, longitude: 0), pin("b", latitude: 0, longitude: 5)]
+    @Test("A membership already split when faced head-on centers without zooming")
+    func alreadySplitCentersOnly() {
+        // Lisbon and Stockholm merge only at an oblique angle near the limb; faced directly they are
+        // far apart on screen, so the tap should re-center at the current distance.
+        let lisbon = pin("lisbon", latitude: 38.72, longitude: -9.14)
+        let stockholm = pin("stockholm", latitude: 59.33, longitude: 18.07)
+        let tapped = cluster(of: [lisbon, stockholm])
+
+        let target = tapped.splitZoomTarget(
+            framing: framing,
+            threshold: PinDisplay.collisionThreshold,
+            currentDistance: 2.0,
+            minDistance: zoomFloor
         )
 
-        // Already zoomed in close: stepping by a fraction of the current distance would shoot past the fit
-        // and clip the outer members. The target should instead land on the fit that frames the whole cap.
-        let target = cluster.zoomTarget(currentDistance: 1.5, minDistance: zoomFloor, aspectRatio: aspectRatio)
-        let fit = GlobeFocus.distance(fittingAngularRadius: Float(2.5 * Double.pi / 180), aspectRatio: aspectRatio, minDistance: zoomFloor)
+        #expect(target.distance == 2.0)
+    }
+}
 
-        #expect(target.distance > zoomFloor + 0.05) // not over-zoomed down to the floor
-        #expect(target.distance < 1.5) // did zoom in
-        #expect(abs(target.distance - fit) < 0.01) // frames all members at the (aspect-aware) fit
+@Suite("Country fit distance")
+struct CountryFitDistanceTests {
+    /// An iPhone-ish canvas with nothing covered.
+    private let openFraming = GlobeFraming(viewSize: CGSize(width: 390, height: 844), focusHeight: 844, focusTop: 0)
+    private let margin: CGFloat = PinDisplay.collisionThreshold / 2
+
+    private func direction(latitude: Float, longitude: Float) -> SIMD3<Float> {
+        GlobeGeometry.unitSphere(latitudeDegrees: latitude, longitudeDegrees: longitude)
+    }
+
+    @Test("A spread that already fits keeps the country's own distance")
+    func fittingSpreadKeepsTheDistance() {
+        // Two cities a couple of degrees apart, seen from a mid dolly with the whole screen visible.
+        let directions = [direction(latitude: 47, longitude: 8), direction(latitude: 46, longitude: 9)]
+        let facing = SphericalCap.enclosing(directions).center
+
+        let fitted = GlobeFocus.distance(
+            showing: directions,
+            facing: facing,
+            from: 2.0,
+            framing: openFraming,
+            margin: margin
+        )
+
+        #expect(fitted == 2.0)
+    }
+
+    @Test("A shortened visible region pulls the camera back exactly far enough to fit")
+    func shortenedRegionPullsBack() {
+        // A wide spread of cities against a visible region, shortened to simulate the half-height sheet.
+        let directions = [
+            direction(latitude: 44, longitude: 46),
+            direction(latitude: 55, longitude: 60),
+            direction(latitude: 48, longitude: 70),
+        ]
+        let facing = SphericalCap.enclosing(directions).center
+        let framing = GlobeFraming(
+            viewSize: CGSize(width: 390, height: 844),
+            focusHeight: 844,
+            focusTop: 59,
+            visibleHeight: 420
+        )
+        let from = GlobeFocus.minDistance
+
+        let fitted = GlobeFocus.distance(showing: directions, facing: facing, from: from, framing: framing, margin: margin)
+
+        #expect(fitted > from, "this spread cannot fit the shortened region from up close")
+        #expect(fitted < GlobeFocus.wholeGlobeDistance, "it fits well before the whole-globe fallback")
+        let projection = GlobeProjection.make(
+            camera: GlobeCamera(orientation: GlobeCamera.orientation(facing: facing), distance: fitted),
+            framing: framing
+        )
+        let region = framing.visibleRegion.insetBy(dx: margin, dy: margin)
+        #expect(directions.allSatisfy { region.contains(projection.project($0).point) })
+    }
+
+    @Test("Centering on the cities' own cap fits a lopsided spread nearer than the outline centroid")
+    func capCenteringFitsALopsidedSpread() {
+        // A US-like set: both coasts, dense in the east, in a portrait region shortened by the sheet.
+        let cities = [
+            direction(latitude: 47.6, longitude: -122.3), // Seattle
+            direction(latitude: 37.3, longitude: -121.9), // San Jose
+            direction(latitude: 34.0, longitude: -118.2), // Los Angeles
+            direction(latitude: 39.7, longitude: -105.0), // Denver
+            direction(latitude: 41.9, longitude: -87.6), // Chicago
+            direction(latitude: 25.8, longitude: -80.2), // Miami
+            direction(latitude: 40.7, longitude: -74.0), // New York
+            direction(latitude: 42.4, longitude: -71.1), // Boston
+        ]
+        let framing = GlobeFraming(
+            viewSize: CGSize(width: 390, height: 844),
+            focusHeight: 844,
+            focusTop: 59,
+            visibleHeight: 500
+        )
+        let outlineCentroid = direction(latitude: 39.8, longitude: -98.6) // the contiguous-US cap center
+        let capCenter = SphericalCap.enclosing(cities).center
+
+        func fitted(facing: SIMD3<Float>) -> Float {
+            GlobeFocus.distance(
+                showing: cities,
+                facing: facing,
+                from: 1.8,
+                framing: framing,
+                margin: margin,
+                noFartherThan: GlobeTrackballModel.maxZoomDistance
+            )
+        }
+
+        // Centered on the cap, every city lands inside the region...
+        let centered = fitted(facing: capCenter)
+        let projection = GlobeProjection.make(
+            camera: GlobeCamera(orientation: GlobeCamera.orientation(facing: capCenter), distance: centered),
+            framing: framing
+        )
+        let region = framing.visibleRegion.insetBy(dx: margin, dy: margin)
+        #expect(cities.allSatisfy { region.contains(projection.project($0).point) })
+        // ...and nearer than any fit that faces the lopsided outline centroid instead, where the far coast pays for the
+        // offset.
+        #expect(centered < fitted(facing: outlineCentroid))
+    }
+
+    @Test("A spread the widest view cannot hold falls back to the whole globe")
+    func impossibleSpreadFallsBackToWholeGlobe() {
+        // A point 150 degrees around the sphere sits behind the horizon from any dolly distance, so no pull-back can
+        // show both; the widest available view is the honest answer.
+        let directions = [direction(latitude: 0, longitude: 0), direction(latitude: 0, longitude: 150)]
+
+        let fitted = GlobeFocus.distance(
+            showing: directions,
+            facing: direction(latitude: 0, longitude: 0),
+            from: GlobeFocus.minDistance,
+            framing: openFraming,
+            margin: margin
+        )
+
+        #expect(fitted == GlobeFocus.wholeGlobeDistance)
     }
 }

@@ -76,33 +76,7 @@ final class SettingsViewController: UIViewController {
             setupTableView()
             tableView.reloadData()
         }
-        @SharedReader(.captureSession) var captureSession
-
-        observe { [weak self] in
-            guard let self else { return }
-            switch captureSession {
-            case .sessionStarted:
-                guard recordingTabBarItem != tabBarItem else { return }
-                tabBarItem = recordingTabBarItem
-            default:
-                guard idleTabBarItem != tabBarItem else { return }
-                tabBarItem = idleTabBarItem
-            }
-        }
-        tabBarItem.accessibilityIdentifier = "Settings back btn"
     }
-
-    private let recordingTabBarItem = UITabBarItem(
-        title: Localizable.settings,
-        image: UIImage(resource: .settingsTabbarDot).withRenderingMode(.alwaysOriginal),
-        selectedImage: UIImage(resource: .settingsTabbarDotActive).withRenderingMode(.alwaysOriginal)
-    )
-
-    private let idleTabBarItem = UITabBarItem(
-        title: Localizable.settings,
-        image: UIImage(resource: .settingsTabbar).withRenderingMode(.alwaysOriginal),
-        selectedImage: UIImage(resource: .settingsTabbarActive).withRenderingMode(.alwaysOriginal)
-    )
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {

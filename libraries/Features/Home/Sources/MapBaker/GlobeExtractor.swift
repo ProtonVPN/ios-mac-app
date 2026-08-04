@@ -17,6 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CoreGraphics
+import CoreLocation
+import Domain
 import Ergonomics
 import Foundation
 import MapModel
@@ -56,6 +58,11 @@ private struct GlobeBuilder {
         /// Sphere-arc tolerance in radians (about a degree) for densifying long segments. Most source segments are far
         /// shorter and pass through untouched.
         static let densifyTolerance: Float = 1.0 * .pi / 180
+        /// How far past the nearest fill vertex a snapped pin is carried inland, in radians. (About 20 km.)
+        static let pinInlandNudge: Float = 0.2 * .pi / 180
+        /// Map ids whose curated-table key differs from their uppercased form: the map says "uk" where ISO says "GB",
+        /// and groups Svalbard under the non-ISO "xv" while the table lists it as "SJ".
+        static let isoOverrides = ["uk": "GB", "xv": "SJ"]
     }
 
     private enum Dimensions {
@@ -90,7 +97,7 @@ private struct GlobeBuilder {
         let borderRange = appendBorders(of: path, rings: denseRings)
         guard !fillRange.isEmpty || !borderRange.isEmpty else { return }
 
-        // The centre is the path's 2-D bounding-box center un-projected, which avoids the poleward bias of averaging
+        // The center is the path's 2-D bounding-box center un-projected, which avoids the poleward bias of averaging
         // unit vectors over a country that spans a wide longitude. The radius is the largest sphere angle to the path's
         // vertices.
         let sphereVertices: [SIMD3<Float>] = vertexStart < fillVertices.count
@@ -216,23 +223,103 @@ private struct GlobeBuilder {
             }
         }
         var result: [String: MapGlobeCountry] = [:]
+        var curatedPins = 0
+        var snappedCuratedPins = 0
         for (id, members) in memberIndicesByID {
-            // The country centre is the union of the member bounding boxes, un-projected, and the radius encloses every
+            // The country center is the union of the member bounding boxes, un-projected, and the radius encloses every
             // member cap. For a country with members that wrap the antimeridian, like the Aleutians, the union box
-            // spans most of the map and this centre is wrong. The camera rotates to the mainland variant though, which
-            // doesn't wrap, so the affected aggregate centre is never used for framing.
+            // spans most of the map and this center is wrong. The camera rotates to the mainland variant though, which
+            // doesn't wrap, so the affected aggregate center is never used for framing.
             var unionBounds = bakedPaths[members[0]].bounds
             for member in members.dropFirst() {
                 unionBounds = unionBounds.union(bakedPaths[member].bounds)
             }
             let centroid = unprojector.sphere(SIMD2<Float>(Float(unionBounds.midX), Float(unionBounds.midY)))
+            let fillRanges = mergeRanges(members.map { bakedPaths[$0].fillRange }.filter { !$0.isEmpty })
+            let curated = curatedCenter(for: id)
+            let pin = pinDirection(from: curated ?? centroid, fillRanges: fillRanges)
+            if let curated {
+                curatedPins += 1
+                if pin != curated { snappedCuratedPins += 1 }
+            }
             result[id] = MapGlobeCountry(
                 cap: .enclosing(members.map { bakedPaths[$0].cap }, around: centroid),
-                fillRanges: mergeRanges(members.map { bakedPaths[$0].fillRange }.filter { !$0.isEmpty }),
+                pin: pin,
+                fillRanges: fillRanges,
                 borderRanges: mergeRanges(members.map { bakedPaths[$0].borderRange }.filter { !$0.isEmpty })
             )
         }
+        print("MapBaker: pins: \(curatedPins) from the curated table (\(snappedCuratedPins) of them snapped onto land)")
         return result
+    }
+
+    // MARK: - Pins
+
+    /// The curated table's center for a map id, on the unit sphere, or nil for ids the table doesn't know (named island
+    /// paths, `pathNNNN`). Mainland variants look up their base country, so "usx" pins where "us" does.
+    private func curatedCenter(for id: String) -> SIMD3<Float>? {
+        var id = id
+        if id.count == 3, id.hasSuffix("x") { id = String(id.dropLast()) }
+        let key = Constants.isoOverrides[id] ?? id.uppercased()
+        return CountriesCoordinates.countryCenterCoordinates(key).map {
+            GlobeGeometry.unitSphere(latitudeDegrees: Float($0.latitude), longitudeDegrees: Float($0.longitude))
+        }
+    }
+
+    /// Where the disconnected pin renders. Uses `candidate` when it lands on the given fill, otherwise takes the
+    /// closest fill vertex and nudges it inland.
+    private func pinDirection(from candidate: SIMD3<Float>, fillRanges: [Range<Int>]) -> SIMD3<Float> {
+        if lands(candidate, onAnyOf: fillRanges) { return candidate }
+        var nearest = candidate
+        var nearestDot: Float = -2 // cos(angle), larger is nearer. Below any real dot, so the first vertex wins.
+        for range in fillRanges {
+            for index in range {
+                let vertex = fillVertices[Int(fillIndices[index])]
+                let dot = simd_dot(candidate, vertex)
+                if dot > nearestDot {
+                    nearestDot = dot
+                    nearest = vertex
+                }
+            }
+        }
+        guard nearestDot > -2 else { return candidate }
+        return nudgedInland(from: candidate, past: nearest, fillRanges: fillRanges)
+    }
+
+    /// Whether `point` lies on any triangle of the given fill ranges.
+    private func lands(_ point: SIMD3<Float>, onAnyOf fillRanges: [Range<Int>]) -> Bool {
+        for range in fillRanges {
+            var index = range.lowerBound
+            while index + 2 < range.upperBound {
+                let a = fillVertices[Int(fillIndices[index])]
+                let b = fillVertices[Int(fillIndices[index + 1])]
+                let c = fillVertices[Int(fillIndices[index + 2])]
+                // cos of the widest side, and of double it: cos(2x) = 2cos(x)^2 - 1. Cosines compare reversed.
+                let widest = min(min(simd_dot(a, b), simd_dot(b, c)), simd_dot(c, a))
+                let nearEnough = simd_dot(point, a) >= 2 * widest * widest - 1
+                if nearEnough, SphericalTriangle(a, b, c).contains(point) { return true }
+                index += 3
+            }
+        }
+        return false
+    }
+
+    /// Continues past the nearest vertex along the direction the candidate approached it from, which locally points
+    /// straight inland. Only accept a point that actually finds land, and then take a small half-step once more before
+    /// settling for the vertex itself. This is the best heuristic so far for dealing with tiny islands/slivers of land.
+    private func nudgedInland(
+        from direction: SIMD3<Float>,
+        past nearest: SIMD3<Float>,
+        fillRanges: [Range<Int>]
+    ) -> SIMD3<Float> {
+        let step = nearest - direction
+        guard simd_length_squared(step) > 1e-12 else { return nearest } // the candidate is the vertex itself
+        let inland = simd_normalize(step) // the chord approximates the tangent at these separations
+        for factor in [1, 0.5] as [Float] {
+            let nudged = simd_normalize(nearest + factor * Constants.pinInlandNudge * inland)
+            if lands(nudged, onAnyOf: fillRanges) { return nudged }
+        }
+        return nearest
     }
 }
 
@@ -320,10 +407,7 @@ private func mergeRanges(_ ranges: [Range<Int>]) -> [Range<Int>] {
 
 // MARK: - Natural Earth inversion + sphere mapping
 
-/// Inverts the Natural Earth projection, recovering latitude and longitude from map coordinates, and maps to the unit
-/// sphere. The projection's polynomials live once in `Triangulation.NaturalEarth`, shared with the app's forward pin
-/// placement so the two can't drift. This only layers on the map's pixel scale and undoes its 10-degree prime-meridian
-/// shift.
+/// Inverts the Natural Earth projection, recovering lat + long from map coordinates, and maps onto the unit sphere.
 struct Unprojector {
     private let ratioX: Double
     private let ratioY: Double
