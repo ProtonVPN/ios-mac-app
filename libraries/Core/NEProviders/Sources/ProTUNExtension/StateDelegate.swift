@@ -39,6 +39,11 @@ final class ProTUNAdapterStateDelegate: Sendable {
         }
     }
 
+    /// The last state ProTUN reported, or nil if it has not reported anything yet
+    var currentState: VpnState? {
+        get async { await coordinator.state }
+    }
+
     private let coordinator: StateCoordinator
     private let continuation: AsyncStream<VpnState>.Continuation
 

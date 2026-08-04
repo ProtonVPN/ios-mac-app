@@ -48,6 +48,21 @@ extension ProTUNConfiguration.Peer {
             exitLabel: exitLabel
         )
     }
+
+    /// Whether `current` is the same server as this peer, on a transport and port this peer still allows.
+    func matches(_ current: PeerConnectionInfo) -> Bool {
+        guard id == current.peerId else { return false }
+        return switch current.protocol {
+        case .wireguardUdp:
+            udpPorts.contains(current.port)
+        case .wireguardTcp:
+            tcpPorts.contains(current.port)
+        case .stealth:
+            tlsPorts.contains(current.port)
+        @unknown default:
+            unknownDefault(value: false)
+        }
+    }
 }
 
 extension PeerInfo {

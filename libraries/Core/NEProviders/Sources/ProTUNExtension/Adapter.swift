@@ -64,6 +64,10 @@ actor ProTUNAdapter {
         get async { await configurationStore.requestId }
     }
 
+    var currentPeer: PeerConnectionInfo? {
+        get async { await stateDelegate.currentState?.connectionState.currentPeer }
+    }
+
     var isPacketCaptureSessionRecording: Bool {
         packetCaptureSession.state.isRecording
     }
@@ -301,7 +305,10 @@ extension ProTUNAdapter {
 
     func applyProviderConfigurationUpdate(
         _ update: ConnectionUpdate
-    ) throws(ConfigurationUpdateError) -> NETunnelProviderProtocol.ConnectionUpdateResult {
+    ) async throws(ConfigurationUpdateError) -> NETunnelProviderProtocol.ConnectionUpdateResult {
+        // Read before touching the configuration (only works if connected).
+        let currentPeer = await currentPeer
+
         guard let configuration = packetTunnelProvider?.protocolConfiguration as? NETunnelProviderProtocol
         else {
             throw .badConfiguration
@@ -309,8 +316,7 @@ extension ProTUNAdapter {
 
         do {
             try configuration.apply(update: update)
-            let livePeers = try ProTUNConfigurationCoder.decode(from: configuration).constrainedPeers
-            return try configuration.liveUpdates(for: update, livePeers: livePeers)
+            return try configuration.updates(for: update, currentPeer: currentPeer)
         } catch {
             Logger.adapter.error(
                 "Encountered encoding error when applying config update: \(error, privacy: .public)"
