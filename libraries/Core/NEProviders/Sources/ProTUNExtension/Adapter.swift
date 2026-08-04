@@ -29,11 +29,20 @@ import NetworkingErgonomics
 import OSLog
 import PMLogger
 import protun
+import Queue
 import SharedErgonomics
+import VPNCoreCommon
 import VPNCoreTypes
 
-final class ProTUNAdapter: @unchecked Sendable {
+actor ProTUNAdapter {
+    enum State {
+        case idle
+        case starting
+        case running
+    }
+
     enum Error: Swift.Error {
+        case invalidState
         case noTunFileDescriptor
         case noEventStreamAvailable
         case failedToSetToNonBlocking(FileDescriptorError)
@@ -44,70 +53,51 @@ final class ProTUNAdapter: @unchecked Sendable {
         case noConnection
     }
 
-    private(set) weak var packetTunnelProvider: NEPacketTunnelProvider?
+    private(set) var state: State = .idle
 
-    private(set) var connection: Connection?
+    weak let packetTunnelProvider: NEPacketTunnelProvider?
 
     let stateDelegate: ProTUNAdapterStateDelegate
     let eventDelegate: ProTUNAdapterEventDelegate
-
-    private static let waitConnectedStateDuration: Duration = .seconds(30)
-    private static let protunStateDebounceInterval: Duration = .milliseconds(250)
-    private static let protunStateCheckInterval: Duration = .milliseconds(500)
-
-    var isPacketCaptureSessionRecording: Bool {
-        switch packetCaptureSession.state {
-        case .recording:
-            true
-        default:
-            false
-        }
-    }
-
-    private var packetCaptureSession: PacketCaptureSession = .init()
-    private var pcapStateTask: Task<Void, Never>?
-
-    private var localAgentCoordinator: LocalAgentCoordinator?
-
-    private let networkPath: OSAllocatedUnfairLock<NetworkPath> = .init(uncheckedState: .init(
-        status: .unsatisfied,
-        gateways: [],
-        supportsIPv4: false,
-        supportsIPv6: false
-    ))
-
-    private var localAgentTask: Task<Void, Never>?
-    private var pathUpdatesTask: Task<Void, Never>?
-
-    /// Serializes every change to the session configuration.
-    private let configurationStore: ConfigurationStore
 
     var currentRequestId: UUID? {
         get async { await configurationStore.requestId }
     }
 
-    @Dependency(\.extensionIPCServer) var extensionIPCServer
+    var isPacketCaptureSessionRecording: Bool {
+        packetCaptureSession.state.isRecording
+    }
+
+    private static let waitConnectedStateDuration: Duration = .seconds(30)
+    private static let protunStateDebounceInterval: Duration = .milliseconds(250)
+    private static let protunStateCheckInterval: Duration = .milliseconds(500)
+
+    private var connection: Connection?
+
+    private let startQueue = AsyncQueue()
+
+    @Dependency(\.extensionIPCServer) private var extensionIPCServer
+
+    /// Serializes every change to the session configuration.
+    private let configurationStore: ConfigurationStore
+
+    private var packetCaptureSession: PacketCaptureSession = .init()
+    private var pcapStateTask: Task<Void, Never>?
+
+    private var networkPath: NetworkPath = .initial
+
+    private var localAgentTask: Task<Void, Never>?
+    private var pathUpdatesTask: Task<Void, Never>?
+
     private let signposter = OSSignposter(logger: .adapter)
 
-    init(packetTunnelProvider: NEPacketTunnelProvider) {
-        self.packetTunnelProvider = packetTunnelProvider
+    init(packetTunnelProvider: UncheckedSendable<NEPacketTunnelProvider>) {
+        self.packetTunnelProvider = packetTunnelProvider.value
         self.stateDelegate = .init()
         self.eventDelegate = .init()
 
         let providerConfig = packetTunnelProvider.protocolConfiguration as? NETunnelProviderProtocol
         self.configurationStore = ConfigurationStore(initial: providerConfig?.requestId)
-    }
-
-    /// Acknowledges the app's receipt of the last reported error. If the error still pertains to the current request,
-    /// clear the error region and update the IPCConnectionData to include the error ID so that the connection layer
-    /// can properly quiesce. If the ack's id doesn't match the request ID that's currently in flighht, ignore it.
-    func acknowledgeError(_ errorId: UUID) async {
-        guard await currentRequestId == errorId else {
-            Logger.adapter.info("Ignoring stale error ack \(errorId.uuidString, privacy: .public)")
-            return
-        }
-        extensionIPCServer.restampConnectionData(errorId)
-        extensionIPCServer.clearError()
     }
 
     func prepare(with config: ProTUNConfiguration) async throws -> FileDescriptor {
@@ -122,56 +112,46 @@ final class ProTUNAdapter: @unchecked Sendable {
         return try setupTunnelDescriptor()
     }
 
-    func listenToPathUpdates() {
-        pathUpdatesTask?.cancel()
+    func start(config: Configuration) async throws {
+        let task = startQueue.addOperation { [weak self] in
+            guard let self else { throw CancellationError() }
+            try await _start(config: config)
+        }
 
-        pathUpdatesTask = Task {
-            @Dependency(\.pathMonitor) var pathMonitor
+        try await task.value
 
-            await withTaskCancellationHandler {
-                let stream = pathMonitor.subscribe()
-                pathMonitor.start()
+        guard case .running = state else {
+            throw CancellationError()
+        }
+    }
 
-                var currentPath = networkPath.withLock { $0 }
-                for await newPath in stream {
-                    handleNetworkPathUpdate(old: currentPath, new: newPath)
-                    currentPath = newPath
-                    networkPath.withLock { $0 = newPath }
-                }
-            } onCancel: {
-                pathMonitor.stop()
+    private func _start(config: Configuration) async throws {
+        try Task.checkCancellation()
+
+        guard case .idle = state else {
+            throw Error.invalidState
+        }
+
+        state = .starting
+        defer {
+            if case .starting = state {
+                stop(with: .providerFailed)
             }
         }
-    }
 
-    func handleNetworkPathUpdate(old: NetworkPath, new: NetworkPath) {
-        let event: ConnectivityEvent? = switch (old.isUsable, new.isUsable) {
-        case (false, true): .up
-        case (true, false): .down
-        // avoid flapping connectivity events if the status hasn't meaningfully changed
-        case (false, false): nil
-        case (true, true): old == new ? nil : .networkSwitch
-        }
-
-        guard let event else {
-            Logger.adapter.debug("Ignoring connectivity event: \(new, privacy: .public)")
-            return
-        }
-
-        Logger.adapter.info("Network path update: \(new, privacy: .public) (now \(event))")
-        connection?.onConnectivityChange(event: event)
-    }
-
-    func start(config: Configuration) async throws {
         // Measures the whole start sequence
         let signpostID = signposter.makeSignpostID()
         let startState = signposter.beginInterval("Start Tunnel", id: signpostID)
         defer { signposter.endInterval("Start Tunnel", startState) }
 
         Logger.adapter.info("Starting Adapter")
+
         extensionIPCServer.zeroAll()
 
+        listenToPathUpdates()
+
         let tunFd = try await prepare(with: config.proTUN)
+        try Task.checkCancellation()
         signposter.emitEvent("Tunnel prepared", id: signpostID)
 
         let rawTunFd = try tunFd.dup().take()
@@ -183,15 +163,11 @@ final class ProTUNAdapter: @unchecked Sendable {
         startLocalAgentRunLoop()
         signposter.emitEvent("Local agent run loop started", id: signpostID)
 
-        // TODO: ProTUN: rework this so we're TOCTOU resilient
-        let proTunInitialConfig = try networkPath.withLock { networkPath in
-            let isNetworkAvailable = networkPath.status == .satisfied
-            return try initialConnectionConfig(
-                proTUNConfig: config.proTUN,
-                networkAvailable: isNetworkAvailable,
-                localAgentSettings: localAgentSettings
-            )
-        }
+        let proTunInitialConfig = try initialConnectionConfig(
+            proTUNConfig: config.proTUN,
+            networkAvailable: networkPath.isUsable,
+            localAgentSettings: localAgentSettings
+        )
 
         connection = .unixConnect(
             config: proTunInitialConfig,
@@ -224,35 +200,10 @@ final class ProTUNAdapter: @unchecked Sendable {
                     Logger.adapter.debug("Adapter is started, `startTunnel` can complete")
                 }
         }
-    }
 
-    private func startLocalAgentRunLoop() {
-        let coordinator = LocalAgentCoordinator(adapter: self)
+        try Task.checkCancellation()
 
-        localAgentTask = Task {
-            await withTaskGroup(of: Void.self) { group in
-                group.addTask {
-                    await coordinator.start()
-                }
-                group.addTask {
-                    let debouncedStream = coordinator.streamSource.newStream._throttle(for: .milliseconds(250))
-                    for await event in debouncedStream {
-                        self.handleLocalAgentCoordinatorEvent(event)
-                    }
-                }
-            }
-        }
-
-        localAgentCoordinator = coordinator
-    }
-
-    private func handleLocalAgentCoordinatorEvent(_ event: LocalAgentCoordinator.Event) {
-        switch event {
-        case .forkSelectorRequest:
-            // packetTunnelProvider?.reasserting = true
-            Logger.localAgent.info("Sending forkSelectorRequest tunnel command")
-            extensionIPCServer.sendCommand(.forkSelectorRequest)
-        }
+        state = .running
     }
 
     func stop(with reason: NEProviderStopReason) {
@@ -262,7 +213,10 @@ final class ProTUNAdapter: @unchecked Sendable {
             handlePacketCaptureInterruption(reason: .connectionTerminated)
         }
 
-        connection?.disconnect()
+        startQueue.cancelAllPendingTasks()
+
+        connection?.disconnectAndWait()
+        connection = nil
 
         pathUpdatesTask?.cancel()
         pathUpdatesTask = nil
@@ -271,53 +225,8 @@ final class ProTUNAdapter: @unchecked Sendable {
 
         // Clear the shared memory regions just before stopping.
         extensionIPCServer.zeroAll()
-    }
-}
 
-// MARK: - Tunnel bringup + configuration
-
-extension ProTUNAdapter {
-    func handleForkSelector(_ selector: String, cookieName: String, cookieValue: String) {
-        Logger.localAgent.info("Received fork selector from app")
-        let forkSelectorInfo = ForkSelectorInfo(
-            selector: selector,
-            cookies: .init(cookies: [.init(name: cookieName, value: cookieValue)])
-        )
-        connection?.provideApiForkSelector(forkSelectorInfo: forkSelectorInfo)
-    }
-
-    func handlePeersUpdate(_ peers: [PeerInfo]) throws(Error) {
-        guard let connection else {
-            Logger.adapter.error("Cannot update peers: ProTUN connection is unavailable")
-            throw .noConnection
-        }
-        connection.updatePeers(peers: peers)
-    }
-
-    /// Single entry point for updating LocalAgentSettings.
-    func applyLocalAgentSettings(_ settings: LocalAgentSettings) throws(Error) {
-        guard let connection else {
-            Logger.adapter.error("Cannot update Local Agent settings: ProTUN connection is unavailable")
-            throw .noConnection
-        }
-        connection.updateLocalAgentSettings(settings: settings)
-    }
-
-    func enqueueConfigurationUpdate(_ update: ConnectionUpdate) async {
-        await configurationStore.apply(update, adapter: self)
-    }
-
-    func reasserting<T, E: Swift.Error>(
-        if required: Bool,
-        _ closure: () async throws(E) -> sending T
-    ) async throws(E) -> sending T {
-        if required {
-            packetTunnelProvider?.reasserting = true
-            defer { packetTunnelProvider?.reasserting = false }
-            return try await closure()
-        } else {
-            return try await closure()
-        }
+        state = .idle
     }
 }
 
@@ -342,6 +251,152 @@ extension ProTUNAdapter {
             throw .failedToSetToNonBlocking(error)
         }
         return tunFd
+    }
+}
+
+// MARK: - Tunnel bringup + configuration
+
+extension ProTUNAdapter {
+    func handleForkSelector(_ selector: String, cookieName: String, cookieValue: String) {
+        Logger.localAgent.info("Received fork selector from app")
+        let forkSelectorInfo = ForkSelectorInfo(
+            selector: selector,
+            cookies: .init(cookies: [.init(name: cookieName, value: cookieValue)])
+        )
+        connection?.provideApiForkSelector(forkSelectorInfo: forkSelectorInfo)
+    }
+
+    func handlePeersUpdate(_ peers: [PeerInfo]) throws(Error) {
+        guard let connection else {
+            Logger.adapter.error("Cannot update peers: ProTUN connection is unavailable")
+            throw .noConnection
+        }
+        connection.updatePeers(peers: peers)
+    }
+
+    /// Acknowledges the app's receipt of the last reported error. If the error still pertains to the current request,
+    /// clear the error region and update the IPCConnectionData to include the error ID so that the connection layer
+    /// can properly quiesce. If the ack's id doesn't match the request ID that's currently in flighht, ignore it.
+    func acknowledgeError(_ errorId: UUID) async {
+        guard await currentRequestId == errorId else {
+            Logger.adapter.info("Ignoring stale error ack \(errorId.uuidString, privacy: .public)")
+            return
+        }
+        extensionIPCServer.restampConnectionData(errorId)
+        extensionIPCServer.clearError()
+    }
+
+    /// Single entry point for updating LocalAgentSettings.
+    func applyLocalAgentSettings(_ settings: LocalAgentSettings) throws(Error) {
+        guard let connection else {
+            Logger.adapter.error("Cannot update Local Agent settings: ProTUN connection is unavailable")
+            throw .noConnection
+        }
+        connection.updateLocalAgentSettings(settings: settings)
+    }
+
+    func requestLocalAgentStats() {
+        connection?.requestLocalAgentStats()
+    }
+
+    func applyProviderConfigurationUpdate(
+        _ update: ConnectionUpdate
+    ) throws(ConfigurationUpdateError) -> NETunnelProviderProtocol.ConnectionUpdateResult {
+        guard let configuration = packetTunnelProvider?.protocolConfiguration as? NETunnelProviderProtocol
+        else {
+            throw .badConfiguration
+        }
+
+        do {
+            try configuration.apply(update: update)
+            let livePeers = try ProTUNConfigurationCoder.decode(from: configuration).constrainedPeers
+            return try configuration.liveUpdates(for: update, livePeers: livePeers)
+        } catch {
+            Logger.adapter.error(
+                "Encountered encoding error when applying config update: \(error, privacy: .public)"
+            )
+            throw .badEncoding
+        }
+    }
+
+    func enqueueConfigurationUpdate(_ update: ConnectionUpdate) async {
+        await configurationStore.apply(update, adapter: self)
+    }
+
+    func reasserting<T, E: Swift.Error>(
+        if required: Bool,
+        _ closure: () async throws(E) -> sending T
+    ) async throws(E) -> sending T {
+        if required {
+            packetTunnelProvider?.reasserting = true
+            defer { packetTunnelProvider?.reasserting = false }
+            return try await closure()
+        } else {
+            return try await closure()
+        }
+    }
+}
+
+// MARK: - Local Agent
+
+private extension ProTUNAdapter {
+    func startLocalAgentRunLoop() {
+        localAgentTask = Task {
+            let coordinator = LocalAgentCoordinator(adapter: self)
+
+            await withTaskGroup(of: Void.self) { group in
+                group.addTask {
+                    await coordinator.start()
+                }
+                group.addTask {
+                    let debouncedStream = coordinator.streamSource.newStream._throttle(for: .milliseconds(250))
+                    for await event in debouncedStream {
+                        await self.handleLocalAgentCoordinatorEvent(event)
+                    }
+                }
+            }
+        }
+    }
+
+    func handleLocalAgentCoordinatorEvent(_ event: LocalAgentCoordinator.Event) {
+        switch event {
+        case .forkSelectorRequest:
+            Logger.localAgent.info("Sending forkSelectorRequest tunnel command")
+            extensionIPCServer.sendCommand(.forkSelectorRequest)
+        }
+    }
+}
+
+// MARK: - Network Path updates
+
+extension ProTUNAdapter {
+    func listenToPathUpdates() {
+        pathUpdatesTask?.cancel()
+
+        pathUpdatesTask = Task {
+            @Dependency(\.pathMonitor) var pathMonitor
+
+            let stream = pathMonitor.subscribe()
+            pathMonitor.start()
+
+            await withTaskCancellationHandler {
+                for await newPath in stream {
+                    handleNetworkPathUpdate(old: networkPath, new: newPath)
+                    networkPath = newPath
+                }
+            } onCancel: {
+                pathMonitor.stop()
+            }
+        }
+    }
+
+    private func handleNetworkPathUpdate(old: NetworkPath, new: NetworkPath) {
+        guard let event = NetworkPath.eventFromUpdates(old: old, new: new) else {
+            Logger.adapter.debug("Ignoring connectivity event: \(new, privacy: .public)")
+            return
+        }
+        Logger.adapter.info("Network path update: \(new, privacy: .public) (now \(event))")
+        connection?.onConnectivityChange(event: event)
     }
 }
 
@@ -410,6 +465,18 @@ extension ProTUNAdapter {
 }
 
 // MARK: - Helpers
+
+extension NetworkPath {
+    static func eventFromUpdates(old: NetworkPath, new: NetworkPath) -> ConnectivityEvent? {
+        switch (old.isUsable, new.isUsable) {
+        case (false, true): .up
+        case (true, false): .down
+        // avoid flapping connectivity events if the status hasn't meaningfully changed
+        case (false, false): nil
+        case (true, true): old == new ? nil : .networkSwitch
+        }
+    }
+}
 
 extension ProTUNAdapter {
     func initialConnectionConfig(

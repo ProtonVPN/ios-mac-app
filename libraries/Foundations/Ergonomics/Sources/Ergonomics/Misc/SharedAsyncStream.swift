@@ -31,13 +31,16 @@ public final class SharedAsyncStream<Element: Sendable>: Sendable {
     public func subscribe() -> AsyncStream<Element> {
         let upstream = base.subscribe()
         return AsyncStream { continuation in
-            Task {
+            let task = Task {
                 do {
                     for try await element in upstream {
                         continuation.yield(element)
                     }
                 } catch {}
                 continuation.finish()
+            }
+            continuation.onTermination = { _ in
+                task.cancel()
             }
         }
     }

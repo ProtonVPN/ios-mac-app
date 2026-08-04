@@ -41,9 +41,9 @@ enum MessageRouter {
         case .retrieveLogsArchive:
             return handleRetrieveLogsArchive()
         case let .pcapRequest(request):
-            return handlePacketCaptureRequest(request, with: adapter)
+            return await handlePacketCaptureRequest(request, with: adapter)
         case let .pushForkInfo(selector, cookieName, cookieValue):
-            return handlePushSelector(selector, cookieName: cookieName, cookieValue: cookieValue, with: adapter)
+            return await handlePushSelector(selector, cookieName: cookieName, cookieValue: cookieValue, with: adapter)
         case let .updateConfiguration(update):
             return await handleConfigurationUpdate(update: update, with: adapter)
         case let .ack(errorId):
@@ -74,14 +74,14 @@ private extension MessageRouter {
     static func handlePacketCaptureRequest(
         _ request: ProTUNMessage.Request.PcapRequest,
         with adapter: ProTUNAdapter
-    ) -> ProTUNMessage.Response {
+    ) async -> ProTUNMessage.Response {
         switch request {
         case .fileURL:
             handlePacketCaptureFileURL()
         case .toggleCapture:
-            handlePacketCaptureToggle(with: adapter)
+            await handlePacketCaptureToggle(with: adapter)
         case .isRecording:
-            handlePacketCaptureIsRecording(with: adapter)
+            await handlePacketCaptureIsRecording(with: adapter)
         case .cleanup:
             handlePacketCaptureCleanup()
         }
@@ -103,29 +103,37 @@ private extension MessageRouter {
         }
     }
 
-    static func handlePacketCaptureToggle(with adapter: ProTUNAdapter) -> ProTUNMessage.Response {
-        if adapter.isPacketCaptureSessionRecording {
-            guard let urlWithSize = adapter.stopPacketCapture(reason: .explicitStop) else {
-                return .init(payload: .pcapUpdate(.captureFinished(.failure(.init(failureReason: "Empty PCAP file")))))
-            }
-            return .init(payload: .pcapUpdate(.captureFinished(.success(urlWithSize))))
-        } else {
-            do {
-                let url = try adapter.startPacketCapture()
-                return .init(payload: .pcapUpdate(.captureStartResult(.success(url))))
-            } catch {
-                let reason = error.localizedDescription
-                return .init(payload: .pcapUpdate(.captureStartResult(.failure(.init(failureReason: reason)))))
+    static func handlePacketCaptureToggle(with adapter: ProTUNAdapter) async -> sending ProTUNMessage.Response {
+        await adapter.run { adapter in
+            if adapter.isPacketCaptureSessionRecording {
+                guard let urlWithSize = adapter.stopPacketCapture(reason: .explicitStop) else {
+                    return .init(payload: .pcapUpdate(.captureFinished(.failure(.init(failureReason: "Empty PCAP file")))))
+                }
+                return .init(payload: .pcapUpdate(.captureFinished(.success(urlWithSize))))
+            } else {
+                do {
+                    let url = try adapter.startPacketCapture()
+                    return .init(payload: .pcapUpdate(.captureStartResult(.success(url))))
+                } catch {
+                    let reason = error.localizedDescription
+                    return .init(payload: .pcapUpdate(.captureStartResult(.failure(.init(failureReason: reason)))))
+                }
             }
         }
     }
 
-    static func handlePacketCaptureIsRecording(with adapter: ProTUNAdapter) -> ProTUNMessage.Response {
-        .init(payload: .pcapUpdate(.isRecording(adapter.isPacketCaptureSessionRecording)))
+    static func handlePacketCaptureIsRecording(with adapter: ProTUNAdapter) async -> ProTUNMessage.Response {
+        let isPacketCaptureSessionRecording = await adapter.isPacketCaptureSessionRecording
+        return .init(payload: .pcapUpdate(.isRecording(isPacketCaptureSessionRecording)))
     }
 
-    static func handlePushSelector(_ selector: String, cookieName: String, cookieValue: String, with adapter: ProTUNAdapter) -> Response {
-        adapter.handleForkSelector(selector, cookieName: cookieName, cookieValue: cookieValue)
+    static func handlePushSelector(
+        _ selector: String,
+        cookieName: String,
+        cookieValue: String,
+        with adapter: ProTUNAdapter
+    ) async -> Response {
+        await adapter.handleForkSelector(selector, cookieName: cookieName, cookieValue: cookieValue)
         return .init(payload: .ack)
     }
 
@@ -135,10 +143,6 @@ private extension MessageRouter {
     }
 
     static func handleConfigurationUpdate(update: ConnectionUpdate, with adapter: ProTUNAdapter) async -> Response {
-        guard adapter.packetTunnelProvider != nil else {
-            return .genericError("Missing reference to provider")
-        }
-
         // Always ack immediately, confirmation of request will come asynchronously through either the provider
         // configuration dictionary or a `RawChannel`.
         await adapter.enqueueConfigurationUpdate(update)

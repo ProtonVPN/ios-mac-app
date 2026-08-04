@@ -33,13 +33,13 @@ public extension AsyncSequence where Element: Equatable {
     ///   - deadlineDuration: the deadline that determines at which point we're calling.
     ///   - performOperationOnDeadlineHit: executes the ``operation`` closure or throw an error if `false`. Defaults to `true`.
     ///   - operation: the operation you want to perform.
-    func when<C: Clock>(
+    nonisolated(nonsending) func when<C: Clock>(
         equals checkingValue: Element,
         every interval: C.Duration,
         on clock: C = ContinuousClock(),
         deadline deadlineDuration: C.Duration,
         performOperationOnDeadlineHit: Bool = true,
-        operation: @escaping () async throws -> Void
+        operation: () async throws -> Void
     ) async throws where C.Duration: Hashable, Self: Sendable, Element: Sendable {
         try await when(
             willMatch: { $0 == checkingValue },
@@ -63,13 +63,13 @@ public extension AsyncSequence {
     ///   - deadlineDuration: the deadline that determines at which point we're calling.
     ///   - performOperationOnDeadlineHit: executes the ``operation`` closure or throw an error if `false`. Defaults to `true`.
     ///   - operation: the operation you want to perform.
-    func when<C: Clock>(
+    nonisolated(nonsending) func when<C: Clock>(
         willMatch matching: (Element) -> Bool,
         every interval: C.Duration,
         on clock: C = ContinuousClock(),
         deadline deadlineDuration: C.Duration,
         performOperationOnDeadlineHit: Bool = true,
-        operation: @escaping () async throws -> Void
+        operation: () async throws -> Void
     ) async throws where C.Duration: Hashable, Self: Sendable, Self.Element: Sendable {
         let combinedSequence = combineLatest(self, clock.timer(interval: interval))
         let deadline = clock.now.advanced(by: deadlineDuration)

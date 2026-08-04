@@ -89,29 +89,17 @@ actor ConfigurationStore {
 
     /// Update the tunnel by checking which settings are managed by the server (netshield, nattype, etc), and dispatch
     /// the configuration changes to ProTUN if necessary
-    private static func performUpdate(_ update: ConnectionUpdate, adapter: ProTUNAdapter) async throws(ConfigurationUpdateError) {
+    private static func performUpdate(
+        _ update: ConnectionUpdate,
+        adapter: ProTUNAdapter
+    ) async throws(ConfigurationUpdateError) {
         Logger.adapter.info("Applying configuration update...")
-        guard let configuration = adapter.packetTunnelProvider?.protocolConfiguration as? NETunnelProviderProtocol else {
-            throw .badConfiguration
-        }
 
-        let peersToApply: [PeerInfo]?
-        let agentSettingsToApply: LocalAgentSettings?
-
-        let networkSettingsUpdate: NetworkSettingsUpdate?
-        do {
-            let livePeers = try ProTUNConfigurationCoder.decode(from: configuration).constrainedPeers
-
-            try configuration.apply(update: update)
-            (
-                peersToApply,
-                agentSettingsToApply,
-                networkSettingsUpdate
-            ) = try configuration.liveUpdates(for: update, livePeers: livePeers)
-        } catch {
-            Logger.adapter.error("Encountered encoding error when applying config update: \(error, privacy: .public)")
-            throw ConfigurationUpdateError.badEncoding
-        }
+        let (
+            peersToApply,
+            agentSettingsToApply,
+            networkSettingsUpdate
+        ) = try await adapter.applyProviderConfigurationUpdate(update)
 
         // Only an actual peer change re-establishes the WG session, so only that reasserts.
         try await adapter.reasserting(if: peersToApply != nil) { () async throws(ConfigurationUpdateError) in
@@ -133,12 +121,12 @@ actor ConfigurationStore {
         do {
             if let peers {
                 Logger.adapter.info("Updating peers: \(peers.map(\.description))")
-                try adapter.handlePeersUpdate(peers)
+                try await adapter.handlePeersUpdate(peers)
             }
 
             if let settings {
                 Logger.adapter.info("Applying settings: \(settings)")
-                try adapter.applyLocalAgentSettings(settings)
+                try await adapter.applyLocalAgentSettings(settings)
             }
 
             if let networkSettingsUpdate {

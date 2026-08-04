@@ -40,6 +40,13 @@ struct PacketCaptureSession {
         case finished(duration: TimeInterval, fileSize: Int)
         case timerHit
         case maxFileSizeHit
+
+        var isRecording: Bool {
+            switch self {
+            case .recording: true
+            default: false
+            }
+        }
     }
 
     private(set) var state: State {

@@ -25,7 +25,7 @@ import enum VPNCoreCommon.ProTUNConfigurationCoder
 import struct VPNCoreTypes.ProTUNConfiguration
 
 open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
-    lazy var adapter = ProTUNAdapter(packetTunnelProvider: self)
+    lazy var adapter = ProTUNAdapter(packetTunnelProvider: UncheckedSendable(self))
 
     let loggingMode: LoggingMode = .singleOutputFile
 
@@ -86,8 +86,6 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
                     uncheckedCompletion(error)
                 }
             }
-
-            adapter.listenToPathUpdates()
         } catch {
             Logger.provider.error("Failed to start tunnel: \(error, privacy: .public)")
             completionHandler(error)
@@ -97,7 +95,7 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
     override open func stopTunnel(with reason: NEProviderStopReason) async {
         Logger.provider.info("Stopping tunnel with reason: \(reason, privacy: .public)")
 
-        adapter.stop(with: reason)
+        await adapter.stop(with: reason)
 
         if case .perSession = loggingMode {
             _ = try? Logger.flushSession()
