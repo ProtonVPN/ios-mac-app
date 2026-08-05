@@ -140,7 +140,7 @@ class NavigationService {
         case .connected:
             log.debug("Skipping auto-connect: already connected", category: .app)
             return false
-        case .connecting:
+        case .connecting, .authenticationRequired:
             log.debug("Skipping auto-connect: already connecting", category: .app)
             return false
         case .resolving:

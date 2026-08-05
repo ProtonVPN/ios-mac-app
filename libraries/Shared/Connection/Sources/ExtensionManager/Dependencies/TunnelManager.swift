@@ -93,7 +93,12 @@ public enum TunnelState: Equatable, Sendable {
     case invalid // VPN configuration not yet approved by the user
     case disconnected(TunnelConnectionError?)
     case connecting(TunnelConfiguration, tunnelActive: Bool) // `tunnelActive` indicates whether the interface is up
-    case connectingToLocalAgent(TunnelConfiguration, tunnelActive: Bool)
+    case connectingToLocalAgent(
+        TunnelConfiguration,
+        tunnelActive: Bool,
+        waitReason: IPCConnectionAgentWaitReason,
+        jail: IPCConnectionAgentJailReason
+    )
     case connected(TunnelConfiguration, DynamicConnectionData)
     case reasserting(TunnelConfiguration) // Briefly re-establishing an existing connection
     case disconnecting(TunnelConfiguration)
@@ -629,11 +634,16 @@ final class PacketTunnelManager: TunnelManager {
                 return .success(.reasserting(config))
             }
             return .success(.connecting(config, tunnelActive: tunnelActive))
-        case (_, .connectingToLocalAgent):
+        case let (_, .connectingToLocalAgent(_, waitReason, jail)):
             guard quiesced, let peerID = extensionState?.peerID, intendedPeers.contains(peerID) else {
                 return .success(.reasserting(config))
             }
-            return .success(.connectingToLocalAgent(config, tunnelActive: tunnelActive))
+            return .success(.connectingToLocalAgent(
+                config,
+                tunnelActive: tunnelActive,
+                waitReason: waitReason,
+                jail: jail
+            ))
         }
     }
 

@@ -113,6 +113,10 @@ final class HeaderViewModel {
         connectionState.isConnected
     }
 
+    var isAuthenticationRequired: Bool {
+        connectionState.is(\.authenticationRequired)
+    }
+
     var isKillSwitchBlocking: Bool {
         connectionState.is(\.killSwitchActive)
     }
@@ -163,7 +167,7 @@ final class HeaderViewModel {
     }
 
     func quickConnectAction() {
-        if isConnected {
+        if isConnected || isAuthenticationRequired {
             // Advanced KS keeps blocking after an intentional disconnect, so confirm first, but only when it's Active
             // (armed at connect). If it's merely Armed (enabled mid-session), a disconnect is a normal release with no
             // warning, since KS isn't in effect until the next connection.
@@ -403,6 +407,9 @@ final class HeaderViewModel {
     }
 
     private func formHeaderLabel() -> NSAttributedString {
+        if isAuthenticationRequired {
+            return "Authentication required".styled(.warning, font: .themeFont(.heading4, bold: true), alignment: .left)
+        }
         // Advanced kill switch is actively blocking (zero-peer)
         if case .killSwitchActive = connectionState {
             return Localizable.killSwitchAdvancedBannerTitle.styled(.warning, font: .themeFont(.heading4, bold: true), alignment: .left)
@@ -435,6 +442,9 @@ final class HeaderViewModel {
     }
 
     private func formIpLabel() -> NSAttributedString {
+        if isAuthenticationRequired {
+            return "VPN traffic is blocked until you authenticate.".styled(.warning, alignment: .left)
+        }
         if case .killSwitchActive = connectionState {
             return Localizable.killSwitchAdvancedBannerMessage.styled(alignment: .left)
         }

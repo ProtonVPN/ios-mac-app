@@ -32,6 +32,8 @@ struct ConnectionStatusView: View {
             Color(.background, .success)
         case .unprotected:
             Color(.background, .danger)
+        case .authenticationRequired:
+            Color(.background, .warning)
         case .protecting:
             .white
         }
@@ -45,6 +47,8 @@ struct ConnectionStatusView: View {
             Localizable.connectionStatusUnprotected
         case .protecting:
             Localizable.connectionStatusProtecting
+        case .authenticationRequired:
+            "Authentication required"
         }
     }
 
@@ -68,13 +72,16 @@ struct ConnectionStatusView: View {
             case .unprotected:
                 IconProvider.lockOpenFilled2
                     .styled(.danger)
+            case .authenticationRequired:
+                IconProvider.exclamationTriangleFilled
+                    .foregroundColor(Color(.icon, .warning))
             }
         }
     }
 
     func locationText(protectionState: ProtectionState) -> Text? {
         switch protectionState {
-        case .protected, .protectedSecureCore:
+        case .protected, .protectedSecureCore, .authenticationRequired:
             nil
         case let .unprotected(country, ip),
              let .protecting(country, ip):

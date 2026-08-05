@@ -389,6 +389,7 @@ final class HeaderViewController: NSViewController {
 
     private func setupButtons(with state: ServerChangeViewState? = nil) {
         connectButton.isConnected = viewModel.isConnected
+        connectButton.isAuthenticationRequired = viewModel.isAuthenticationRequired
         let shouldShowChangeServer = viewModel.shouldShowChangeServer
         if shouldShowChangeServer {
             let viewState = state ?? ServerChangeViewState.from(state: viewModel.canChangeServer)

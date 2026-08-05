@@ -60,6 +60,11 @@ struct ProtectionStatusView: View {
                 self.title = "Loading"
                 self.foregroundColor = Color(.text)
                 self.buttonTitle = "Cancel"
+            case .authenticationRequired:
+                self.icon = IconProvider.exclamationTriangleFilled
+                self.title = "Authentication required"
+                self.foregroundColor = Color(.text, .warning)
+                self.buttonTitle = "Disconnect"
             case .killSwitchActive:
                 self.icon = IconProvider.lockFilled
                 self.title = "Kill Switch Active"

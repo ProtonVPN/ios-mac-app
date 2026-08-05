@@ -19,6 +19,7 @@
 import Announcement
 import AppKit
 import Combine
+import CommonNetworking
 import ComposableArchitecture
 import Connection
 import CoreConnection
@@ -192,6 +193,8 @@ struct SidebarFeature {
     @Dependency(\.networkInterfacePropertiesProvider) private var networkInterfacePropertiesProvider
     @Dependency(\.profileManager) private var profileManager
     @Dependency(\.announcementRefresher) private var announcementRefresher
+    @Dependency(\.coreAlertService) private var coreAlertService
+    @Dependency(\.linkOpener) private var linkOpener
 
     @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
     @SharedReader(.connectionProtocol) private var sharedConnectionProtocol: ConnectionProtocol
@@ -433,6 +436,9 @@ private extension SidebarFeature {
                         syncConnectingOverlayState(&state, connectionState: connectionState)
                     }
                     return .cancel(id: CancelID.overlayDelay)
+                case .authenticationRequired:
+                    state.overlayState = .hidden
+                    return .cancel(id: CancelID.overlayDelay)
                 case .connected:
                     // .connected signals the in-place settings update has finished; clear the suppression so subsequent
                     // passive reconnects are visible.
@@ -645,11 +651,6 @@ private extension SidebarFeature {
                         }
                     }
                 )
-            // TODO: ProTUN: is it still needed?
-//            case .connection(.delegate(.disconnected)):
-//                return .run { _ in
-//                    await pendingDisconnectCompletions.drainAndInvoke()
-//                }
             case let .connection(.delegate(.intentResolutionFailed(intent, resolutionError))):
                 log.warning(
                     "Intent resolution failed; presenting upsell",
@@ -703,6 +704,17 @@ private extension SidebarFeature {
                         ))))
                     )
                 }
+            case let .connection(.delegate(.localAgentNotice(error))) where error.twoFactorRequired:
+                state.overlayState = .hidden
+                let connectionCommandClient = connectionCommandClient
+                let linkOpener = linkOpener
+                coreAlertService.push(
+                    alert: TwoFactorRequiredAlert(
+                        onConfirm: { linkOpener.open(CommonNetworking.ObfuscatedConstants.fidoPortal) },
+                        onCancel: { connectionCommandClient.send(.disconnect(.fidoAuthentication)) }
+                    )
+                )
+                return .cancel(id: CancelID.overlayDelay)
             case .connection:
                 return .none
             default:

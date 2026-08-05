@@ -65,7 +65,11 @@ extension SettingsClient: @retroactive DependencyKey {
             case .connecting(.unresolved, _):
                 return .immediate
 
-            case let .connecting(.resolved(intent), _):
+            case .authenticationRequired(.unresolved, _):
+                return .immediate
+
+            case let .connecting(.resolved(intent), _),
+                 let .authenticationRequired(.resolved(intent), _):
                 @SharedReader(.smartProtocolConfig) var smartProtocolConfig
                 let supportedProtocols = smartProtocolConfig.supportedProtocols
 

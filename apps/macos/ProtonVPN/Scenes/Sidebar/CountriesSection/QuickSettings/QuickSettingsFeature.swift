@@ -564,7 +564,7 @@ private extension QuickSettingsFeature {
     var isConnectionActive: Bool {
         switch connectionState {
         case .disconnected, .resolving, .killSwitchActive: false
-        case .connecting, .connected, .disconnecting: true
+        case .connecting, .authenticationRequired, .connected, .disconnecting: true
         }
     }
 }

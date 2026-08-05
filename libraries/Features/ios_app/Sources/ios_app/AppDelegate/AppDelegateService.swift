@@ -333,7 +333,7 @@ public final class AppDelegateService: AppDelegateProtocol {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
                     }
-                case .connecting, .resolving:
+                case .connecting, .authenticationRequired, .resolving:
                     return
                 case .disconnected, .disconnecting, .killSwitchActive:
                     deepLinkConnectStatusCancellable?.cancel()
@@ -388,7 +388,7 @@ public final class AppDelegateService: AppDelegateProtocol {
     private func switchToHomeIfConnecting() {
         @SharedReader(.connectionState) var connectionState: ConnectionState
         switch connectionState {
-        case .connecting, .resolving:
+        case .connecting, .authenticationRequired, .resolving:
             log.debug("Connection state is resolving or connecting, navigating to Home", category: .app)
             container.makeNavigationService().presentHome()
         default:

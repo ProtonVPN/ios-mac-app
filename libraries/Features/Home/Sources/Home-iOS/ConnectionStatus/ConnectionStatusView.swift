@@ -53,6 +53,8 @@ public struct ConnectionStatusView: View {
             Localizable.connectionStatusUnprotected
         case .protecting:
             Localizable.connectionStatusProtecting
+        case .authenticationRequired:
+            "Authentication required"
         }
     }
 
@@ -62,6 +64,8 @@ public struct ConnectionStatusView: View {
             Color(.background, .success)
         case .unprotected:
             Color(.background, .danger)
+        case .authenticationRequired:
+            Color(.background, .warning)
         case .protecting, .resolving, .killSwitchActive:
             .white
         }
@@ -92,6 +96,10 @@ public struct ConnectionStatusView: View {
             IconProvider.lockOpenFilled2
                 .styled(.danger)
                 .accessibilityHidden(true)
+        case .authenticationRequired:
+            IconProvider.exclamationTriangleFilled
+                .foregroundColor(Color(.icon, .warning))
+                .accessibilityHidden(true)
         }
     }
 
@@ -119,6 +127,9 @@ public struct ConnectionStatusView: View {
             case .unprotected:
                 IconProvider.lockOpenFilled2
                     .styled(.danger)
+            case .authenticationRequired:
+                IconProvider.exclamationTriangleFilled
+                    .foregroundColor(Color(.icon, .warning))
             }
         }
     }

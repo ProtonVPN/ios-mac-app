@@ -65,11 +65,13 @@ public struct ServerItemFeature {
         }
 
         var isConnecting: Bool {
-            guard case let .connecting(.resolved(intent), _) = connectionState,
-                  intent.resolvedServer.logical.id == serverInfo.logical.id else {
-                return false
+            switch connectionState {
+            case let .connecting(.resolved(intent), _),
+                 let .authenticationRequired(.resolved(intent), _):
+                intent.resolvedServer.logical.id == serverInfo.logical.id
+            default:
+                false
             }
-            return true
         }
 
         var isCurrentlyConnected: Bool {

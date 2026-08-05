@@ -123,6 +123,7 @@ public class WarningAlert: SystemAlert {
         confirmTitle: String = Localizable.continue,
         onConfirm: @escaping () -> Void,
         showCancel: Bool = true,
+        cancelTitle: String = Localizable.cancel,
         onCancel: (() -> Void)? = nil,
         learnMore: (title: String, urlString: String)? = nil
     ) {
@@ -130,7 +131,7 @@ public class WarningAlert: SystemAlert {
         self.message = message
         actions.append(AlertAction(title: confirmTitle, style: .confirmative, handler: onConfirm))
         if showCancel {
-            actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: onCancel))
+            actions.append(AlertAction(title: cancelTitle, style: .cancel, handler: onCancel))
         }
         if let learnMore {
             actions.append(AlertAction(title: learnMore.title, style: .secondary, handler: {
@@ -195,5 +196,21 @@ public class ForceUpgradeAlert: SystemAlert {
 
     public init() {
         actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: nil))
+    }
+}
+
+public final class TwoFactorRequiredAlert: @MainActor WarningAlert {
+    public init(onConfirm: @escaping () -> Void, onCancel: @escaping () -> Void) {
+        super.init(
+            title: "2FA Required",
+            message: """
+            You are connected to the VPN, but all traffic is blocked.
+            Authenticate with your hardware key to enable traffic.
+            """,
+            confirmTitle: "Open 2FA",
+            onConfirm: onConfirm,
+            cancelTitle: Localizable.disconnect,
+            onCancel: onCancel
+        )
     }
 }

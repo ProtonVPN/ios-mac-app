@@ -31,7 +31,7 @@ enum MainBackground: Equatable {
         switch connectionState {
         case .disconnected:
             self = .disconnected
-        case .connecting, .disconnecting, .none, .resolving:
+        case .connecting, .authenticationRequired, .disconnecting, .none, .resolving:
             self = .connecting
         case .connected:
             self = .connected

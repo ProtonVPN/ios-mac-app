@@ -205,6 +205,7 @@ extension ProtectionState {
         case .protectedSecureCore: "ProtectedSecureCore"
         case .resolving: "Loading"
         case .killSwitchActive: "KillSwitchBlocking"
+        case .authenticationRequired: "AuthenticationRequired"
         }
     }
 }
@@ -218,6 +219,7 @@ extension ConnectionState {
         case .disconnecting: "Disconnecting"
         case .connected: "Connected"
         case .killSwitchActive: "KillSwitchActive"
+        case .authenticationRequired: "AuthenticationRequired"
         }
     }
 }

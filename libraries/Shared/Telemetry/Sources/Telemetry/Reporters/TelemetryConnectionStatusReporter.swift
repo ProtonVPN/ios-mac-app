@@ -85,7 +85,7 @@ actor TelemetryConnectionStatusReporter {
         case .disconnected:
             timer.markConnectionStopped()
             eventType = try connectionEventType(oldValue, newValue)
-        case .disconnecting, .resolving, .killSwitchActive:
+        case .authenticationRequired, .disconnecting, .resolving, .killSwitchActive:
             // Ignoring the `resolving` and `disconnecting` status.
             // `killSwitchActive` was previously mapped to `disconnected`
             return
@@ -200,7 +200,7 @@ actor TelemetryConnectionStatusReporter {
         switch newValue {
         case .disconnected:
             switch oldValue {
-            case .connected, .connecting, .disconnecting:
+            case .connected, .connecting, .authenticationRequired, .disconnecting:
                 guard let userInitiatedVPNChange else {
                     return .failure
                 }
@@ -229,7 +229,7 @@ actor TelemetryConnectionStatusReporter {
             return .failure
         case .killSwitchActive:
             return .success
-        case .disconnecting, .resolving:
+        case .disconnecting, .resolving, .authenticationRequired:
             return .failure // We do not use this anyway
         }
     }

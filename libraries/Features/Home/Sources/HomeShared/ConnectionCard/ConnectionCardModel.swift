@@ -48,6 +48,8 @@ package struct ConnectionCardModel {
             return Localizable.connectionCardAccessibilityBrowsingFrom(countryName)
         case .connecting:
             return Localizable.connectionCardAccessibilityConnectingTo(countryName)
+        case .authenticationRequired:
+            return "Authentication required. VPN traffic is blocked until you authenticate."
         case .resolving:
             return Localizable.connectionCardAccessibilityLoading
         }
@@ -57,7 +59,7 @@ package struct ConnectionCardModel {
         switch connectionState {
         case .disconnected, .disconnecting, .killSwitchActive:
             Localizable.actionConnect
-        case .connected:
+        case .connected, .authenticationRequired:
             Localizable.actionDisconnect
         case .connecting, .resolving:
             Localizable.connectionCardActionCancel

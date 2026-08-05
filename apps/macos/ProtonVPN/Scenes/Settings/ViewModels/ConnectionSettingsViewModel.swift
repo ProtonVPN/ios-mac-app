@@ -345,7 +345,7 @@ final class ConnectionSettingsViewModel {
 
     func confirmEnableSmartProtocol(_ completion: @escaping (Result<Void, Error>) -> Void) {
         switch connectionState {
-        case .connected, .connecting:
+        case .connected, .connecting, .authenticationRequired:
             @SharedReader(.smartProtocolConfig) var smartProtocolConfig
             let config = smartProtocolConfig
             let supported = connectionState.resolvedServer?.endpoint.supports(protocolSet: ProtocolSupport(vpnProtocols: config.supportedProtocols)) ?? false

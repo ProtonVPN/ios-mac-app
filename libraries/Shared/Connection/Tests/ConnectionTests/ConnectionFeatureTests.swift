@@ -26,6 +26,7 @@
     import DomainTestSupport
     import Ergonomics
     @testable import ExtensionManager
+    import IPCDefinitions
     import Network
     import NetworkExtension
     import Testing
@@ -35,6 +36,48 @@
 
     #if !os(tvOS)
         struct ConnectionFeatureTransitionTests {
+            @Test
+            @MainActor
+            func hardJailed2FARequestsUserAuthentication() async {
+                let configuration = TunnelConfiguration(
+                    connectionSpec: .defaultFastest,
+                    tunnelProtocol: .wireGuard,
+                    peerIDs: ["peer-id"],
+                    killSwitch: false
+                )
+                @Shared(.connectionState) var connectionState
+                $connectionState.withLock {
+                    $0 = .connected(
+                        configuration,
+                        .init(
+                            currentPeer: .mock,
+                            connectionDate: .now,
+                            protocolConnectionData: .proTUN(.init(transport: .udp))
+                        )
+                    )
+                }
+                let store = TestStore(initialState: ConnectionFeature.State(
+                    shouldRegisterServerChangeOnConnection: false,
+                    tunnel: .unknown
+                )) {
+                    ConnectionFeature()
+                } withDependencies: {
+                    $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
+                }
+                store.exhaustivity = .off
+
+                await store.send(.tunnel(.tunnelStatusChanged(.connectingToLocalAgent(
+                    configuration,
+                    tunnelActive: true,
+                    waitReason: .hardJailed,
+                    jail: .need2Fa
+                ))))
+                await store.receive(\.delegate.localAgentNotice)
+
+                #expect(store.state.connectionState.is(\.authenticationRequired))
+                #expect(store.state.connectionState.tunnelActive)
+            }
+
             /// Disconnecting with Advanced kill switch Active (the live tunnel was armed at connect) switches to
             /// zero-peer blocking in place, reflected in the state immediately.
             @Test

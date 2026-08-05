@@ -319,7 +319,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                     }))
                 }
             }
-        case .connecting, .disconnecting, .resolving:
+        case .connecting, .authenticationRequired, .disconnecting, .resolving:
             $killSwitchMode.withLock { if $0 == .standard { $0 = .off } }
             connectionCommandClient.send(.disconnect(.signout, completion: { [weak self] in
                 self?.logoutRoutine(reason: reason)
