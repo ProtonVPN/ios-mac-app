@@ -233,8 +233,6 @@
 
 "_reconnecting_to" = "Reconectare la %@";
 
-"_reconnecting" = "Se configurează o nouă conexiune VPN pentru a vă proteja adresa IP";
-
 /* iOS status view */
 "_connected_to" = "Conectat la";
 
@@ -919,7 +917,7 @@
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_body" = "Toate datele Proton VPN vor fi șterse, iar aplicația se va închide. Doriți să continuați?";
 
-/* MacOS: killswitch blocking alert button */
+/* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Dezactivare întrerupător de conexiune";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
@@ -962,6 +960,111 @@
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blochează tot traficul din rețea când tunelul VPN este pierdut.";
+
+/* iOS: Kill switch settings - header description above the Off/Standard/Advanced options */
+"_kill_switch_header_description" = "Vă protejează adresa IP deconectându-vă de la internet dacă se pierde conexiunea prin VPN.";
+
+/* iOS: Kill switch settings - "Off" option title */
+"_kill_switch_mode_off" = "Oprit";
+
+/* iOS: Kill switch settings - "Standard" option title */
+"_kill_switch_mode_standard" = "Standard";
+
+/* iOS: Kill switch settings - "Advanced" option title */
+"_kill_switch_mode_advanced" = "Avansat";
+
+/* iOS: Kill switch status message when KS isn't protecting a dropped connection (Off, or Standard while disconnected) */
+"_kill_switch_status_exposed" = "Adresa IP v-ar putea fi expusă dacă se întrerupe conexiunea la VPN.";
+
+/* iOS: Kill switch settings - status message under the options when Standard is selected and VPN is connected */
+"_kill_switch_status_standard" = "Dacă se întrerupe conexiunea la VPN, se va întrerupe și conexiunea la internet până la reconectarea în VPN.";
+
+/* iOS: Kill switch settings - Advanced status message (VPN connected): blocks all non-VPN traffic */
+"_kill_switch_status_advanced_blocks_all" = "Blochează întregul acces la internet când nu există conexiune la Proton VPN.";
+
+/* iOS: Kill switch settings - Advanced status message (VPN connected): applies even on intentional disconnect */
+"_kill_switch_status_advanced_applies" = "Întrerupătorul avansat de conexiune se aplică chiar și când vă deconectați intenționat de la VPN.";
+
+/* iOS: Kill switch settings - Advanced status message (VPN disconnected): internet disabled to protect IP */
+"_kill_switch_status_advanced_disables_internet" = "Funcția de blocare a conexiunii avansată vă dezactivează accesul la internet pentru a vă proteja adresa IP cât timp nu aveți conexiune la Proton VPN";
+
+/* iOS: Kill switch confirmation - title when enabling Standard from Off */
+"_kill_switch_enable_standard_title" = "Activați întrerupătorul de conexiune?";
+
+/* iOS: Kill switch confirmation - title when enabling Advanced from Off */
+"_kill_switch_enable_advanced_title" = "Activați întrerupătorul de conexiune avansat?";
+
+/* iOS: Kill switch confirmation - title when switching from Standard to Advanced */
+"_kill_switch_switch_advanced_title" = "Comutați la întrerupătorul de conexiune avansat?";
+
+/* macOS: Kill switch popover - "Standard" option row label */
+"_kill_switch_option_standard" = "Întrerupător de conexiune standard";
+
+/* macOS: Kill switch popover - "Advanced" option row label */
+"_kill_switch_option_advanced" = "Întrerupător de conexiune avansat";
+
+/* macOS: Kill switch popover - explanation shown with the disabled "Advanced" option while the selected protocol (IKEv2) cannot support it */
+"_kill_switch_advanced_unavailable_protocol_description" = "Această setare nu este disponibilă pentru protocolul selectat. Alegeți un alt protocol pentru a utiliza funcția „Întrerupător de conexiune avansat”.";
+
+/* macOS: Kill switch confirmation - bullet: enabling KS disables split tunneling (macOS only) */
+"_kill_switch_bullet_split_tunneling" = "Aceasta va dezactiva divizarea traficului";
+
+/* iOS: Kill switch confirmation - bullet: Advanced blocking persists */
+"_kill_switch_bullet_advanced_persists" = "Internetul rămâne blocat în timpul repornirii sistemului și deconectărilor intenționate până când îl dezactivați";
+
+/* iOS: Kill switch confirmation - bullet: how to get back online with Advanced */
+"_kill_switch_bullet_advanced_recover" = "Pentru a reveni online, conectați-vă la VPN sau dezactivați întrerupătorul de conexiune.";
+
+/* iOS: Kill switch confirmation - bullet: KS activates on the next connection (deferred activation, both modes) */
+"_kill_switch_bullet_deferred" = "Intră în vigoare data viitoare când vă conectați la VPN";
+
+/* iOS: Kill switch confirmation - primary button to enable */
+"_kill_switch_confirm_enable" = "Activare";
+
+/* iOS: Kill switch confirmation - primary button to switch to advanced */
+"_kill_switch_confirm_switch" = "Comutare";
+
+/* iOS: Warning shown before disconnecting / signing out while Advanced kill switch is active */
+"_kill_switch_advanced_disconnect_warning" = "Întrerupătorul de conexiune avansat este activat. Dacă veți continua, accesul la internet va fi blocat.";
+
+/* iOS: Home map overlay title while Advanced kill switch is blocking */
+"_kill_switch_advanced_banner_title" = "Întrerupător de conexiune avansat activat";
+
+/* iOS: Persistent home banner message while Advanced kill switch is blocking */
+"_kill_switch_advanced_banner_message" = "Conectați-vă la VPN pentru a vă restaura conexiunea la internet.";
+
+/* iOS: Login screen banner shown while Advanced kill switch is blocking internet */
+"_kill_switch_login_blocking" = "Întrerupătorul de conexiune avansat vă blochează conexiunea la internet.";
+
+/* iOS: Confirmation banner shown after disabling kill switch from the login screen */
+"_kill_switch_disabled_confirmation" = "Întrerupătorul de conexiune este dezactivat.";
+
+/* iOS: Body of the alert shown when a user tries to sign in / sign up / continue as guest while Advanced kill switch is blocking */
+"_kill_switch_turn_off_to_get_online" = "Pentru a avea conexiune, trebuie să dezactivați întrerupătorul de conexiune.";
+
+/* iOS: Primary button of the kill-switch-blocking alert; turns the kill switch off */
+"_kill_switch_turn_off" = "Oprire întrerupător de conexiune";
+
+/* iOS: Sign-out confirmation title while Advanced kill switch is active (%@ is the username) */
+"_kill_switch_logout_advanced_title" = "Vă deconectați de la %@?";
+
+/* iOS: Sign-out confirmation body while Advanced kill switch is active */
+"_kill_switch_logout_advanced_body" = "Se va deconecta de la VPN.\nÎntrerupătorul de conexiune este activat. Dacă veți continua, veți pierde conexiunea la internet.";
+
+/* iOS: Title of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
+"_kill_switch_logout_blocking_failed_title" = "Întrerupătorul de conexiune nu a putut sta activ";
+
+/* iOS: Body of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
+"_kill_switch_logout_blocking_failed_body" = "Conexiunea a fost întreruptă, dar întrerupătorul de conexiune nu a putut fi menținut activ, așa că dispozitivul ar putea fi expus. Deschideți Proton VPN și reconectați-vă pentru a păstra protecția.";
+
+/* macOS: title of the confirmation shown when disconnecting with Advanced kill switch active */
+"_kill_switch_disconnect_advanced_title" = "Vă deconectați din VPN?";
+
+/* macOS: title of the quit confirmation shown while a VPN session is active */
+"_kill_switch_quit_title" = "Închideți Proton VPN?";
+
+/* macOS: quit confirmation body (Standard / non-advanced kill switch) */
+"_kill_switch_disconnected_from_vpn" = "Se va întrerupe conexiunea prin VPN.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "Redirecționare port";
@@ -1077,9 +1180,8 @@
 
 "_allow_lan_title" = "Permitere conexiuni LAN";
 
-"_allow_lan_info" = "Permite evitarea traficului prin VPN și conectarea la dispozitive din rețeaua locală, cum ar fi imprimanta.";
-
-"_allow_lan_description" = "Pentru a permite accesul în LAN, întrerupătorul de conexiune trebuie să fie oprit.\n\nContinuați?";
+/* Description of the Allow LAN connections feature */
+"_allow_lan_info" = "Vă conectați la dispozitivele din rețeaua locală (cum ar fi imprimanta sau unitatea NAS) atunci când întrerupătorul de conexiune este activ.";
 
 "_allow_lan_note" = "Conexiunea trebuie repornită pentru a se aplica această modificare";
 
@@ -1088,12 +1190,6 @@
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
 "_turn_ks_on_description_macos_st_conflict" = "• Aceasta va dezactiva divizarea traficului";
-
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
-"_turn_ks_on_description_macos_lan_conflict" = "• Nu veți putea accesa dispozitivele din rețeaua locală.";
-
-/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
-"_turn_ks_on_description_ios" = "Nu veți putea accesa dispozitivele din rețeaua locală.";
 
 /* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_title" = "Activați divizarea traficului?";
@@ -1495,7 +1591,7 @@
 
 "_quick_settings_netShield_note" = "Dacă paginile web nu se încarcă, încercați cu NetShield dezactivat.";
 
-"_quick_settings_killSwitch_note" = "Dacă nu vă puteți conecta la dispozitivele din rețeaua locală, încercați să dezactivați întrerupătorul de conexiune.";
+"_quick_settings_killSwitch_note" = "Dacă nu vă puteți conecta la dispozitivele din rețeaua locală, încercați să permiteți conexiunile LAN în Setări.";
 
 "_quick_settings_portForwarding_note" = "Introduceți numărul portului activ în aplicația BitTorrent pentru a vă îmbunătăți viteza P2P.";
 
@@ -2959,6 +3055,9 @@
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message" = "Acest protocol va fi eliminat în curând. Luați în considerare trecerea la protocolul Smart. Aflați mai multe.";
+
+/* Message added to the IKEv2 deprecation alert when Advanced kill switch is enabled: continuing with IKEv2 changes the setting to Standard */
+"_ike_deprecation_alert_kill_switch_downgrade_message" = "Setarea întrerupătorului de conexiune va fi modificată la standard.";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
 "_disable_plutonium_message" = "Aceasta va dezactiva divizarea traficului.";

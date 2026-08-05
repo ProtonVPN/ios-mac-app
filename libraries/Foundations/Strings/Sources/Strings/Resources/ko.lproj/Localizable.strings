@@ -233,8 +233,6 @@
 
 "_reconnecting_to" = "%@에 다시 연결 중";
 
-"_reconnecting" = "IP를 보호하기 위해 새로운 VPN 연결을 구성하는 중";
-
 /* iOS status view */
 "_connected_to" = "연결됨";
 
@@ -919,8 +917,8 @@
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_body" = "모든 Proton VPN 데이터가 삭제되고 어플리케이션이 종료됩니다. 계속하시겠습니까?";
 
-/* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "킬 스위치 비활성화";
+/* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Disable kill switch";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "킬 스위치 활성화";
@@ -962,6 +960,111 @@
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "VPN 터널이 끊기면 모든 네트워크 트래픽을 차단합니다.";
+
+/* iOS: Kill switch settings - header description above the Off/Standard/Advanced options */
+"_kill_switch_header_description" = "Protects your IP address by disconnecting you from the internet if you lose your VPN connection.";
+
+/* iOS: Kill switch settings - "Off" option title */
+"_kill_switch_mode_off" = "Off";
+
+/* iOS: Kill switch settings - "Standard" option title */
+"_kill_switch_mode_standard" = "Standard";
+
+/* iOS: Kill switch settings - "Advanced" option title */
+"_kill_switch_mode_advanced" = "Advanced";
+
+/* iOS: Kill switch status message when KS isn't protecting a dropped connection (Off, or Standard while disconnected) */
+"_kill_switch_status_exposed" = "Your IP address could be exposed if your VPN connection drops";
+
+/* iOS: Kill switch settings - status message under the options when Standard is selected and VPN is connected */
+"_kill_switch_status_standard" = "If your VPN connection drops, you'll be disconnected from the internet until VPN is restored";
+
+/* iOS: Kill switch settings - Advanced status message (VPN connected): blocks all non-VPN traffic */
+"_kill_switch_status_advanced_blocks_all" = "Blocks all internet access when you're not connected to Proton VPN";
+
+/* iOS: Kill switch settings - Advanced status message (VPN connected): applies even on intentional disconnect */
+"_kill_switch_status_advanced_applies" = "Advanced kill switch applies even if you intentionally disconnect from VPN";
+
+/* iOS: Kill switch settings - Advanced status message (VPN disconnected): internet disabled to protect IP */
+"_kill_switch_status_advanced_disables_internet" = "Advanced kill switch disables your internet to protect your IP address while you're not connected to Proton VPN";
+
+/* iOS: Kill switch confirmation - title when enabling Standard from Off */
+"_kill_switch_enable_standard_title" = "Enable kill switch?";
+
+/* iOS: Kill switch confirmation - title when enabling Advanced from Off */
+"_kill_switch_enable_advanced_title" = "Enable advanced kill switch?";
+
+/* iOS: Kill switch confirmation - title when switching from Standard to Advanced */
+"_kill_switch_switch_advanced_title" = "Switch to advanced kill switch?";
+
+/* macOS: Kill switch popover - "Standard" option row label */
+"_kill_switch_option_standard" = "Kill switch Standard";
+
+/* macOS: Kill switch popover - "Advanced" option row label */
+"_kill_switch_option_advanced" = "Kill switch Advanced";
+
+/* macOS: Kill switch popover - explanation shown with the disabled "Advanced" option while the selected protocol (IKEv2) cannot support it */
+"_kill_switch_advanced_unavailable_protocol_description" = "This setting is not available for the protocol you have selected. Please choose another protocol to use Advanced Kill Switch.";
+
+/* macOS: Kill switch confirmation - bullet: enabling KS disables split tunneling (macOS only) */
+"_kill_switch_bullet_split_tunneling" = "This will disable split tunneling";
+
+/* iOS: Kill switch confirmation - bullet: Advanced blocking persists */
+"_kill_switch_bullet_advanced_persists" = "Internet stays blocked across reboots and intentional disconnects until you turn it off";
+
+/* iOS: Kill switch confirmation - bullet: how to get back online with Advanced */
+"_kill_switch_bullet_advanced_recover" = "To get back online, connect to VPN or disable advanced kill switch";
+
+/* iOS: Kill switch confirmation - bullet: KS activates on the next connection (deferred activation, both modes) */
+"_kill_switch_bullet_deferred" = "Takes effect the next time you connect to VPN";
+
+/* iOS: Kill switch confirmation - primary button to enable */
+"_kill_switch_confirm_enable" = "Enable";
+
+/* iOS: Kill switch confirmation - primary button to switch to advanced */
+"_kill_switch_confirm_switch" = "Switch";
+
+/* iOS: Warning shown before disconnecting / signing out while Advanced kill switch is active */
+"_kill_switch_advanced_disconnect_warning" = "Advanced kill switch is enabled. If you continue, you will be disconnected from the internet.";
+
+/* iOS: Home map overlay title while Advanced kill switch is blocking */
+"_kill_switch_advanced_banner_title" = "Advanced kill switch activated";
+
+/* iOS: Persistent home banner message while Advanced kill switch is blocking */
+"_kill_switch_advanced_banner_message" = "Connect to VPN to restore your internet connection.";
+
+/* iOS: Login screen banner shown while Advanced kill switch is blocking internet */
+"_kill_switch_login_blocking" = "Advanced kill switch is blocking your internet connection.";
+
+/* iOS: Confirmation banner shown after disabling kill switch from the login screen */
+"_kill_switch_disabled_confirmation" = "Kill switch is disabled.";
+
+/* iOS: Body of the alert shown when a user tries to sign in / sign up / continue as guest while Advanced kill switch is blocking */
+"_kill_switch_turn_off_to_get_online" = "To get back online you need to turn off kill switch.";
+
+/* iOS: Primary button of the kill-switch-blocking alert; turns the kill switch off */
+"_kill_switch_turn_off" = "Turn off kill switch";
+
+/* iOS: Sign-out confirmation title while Advanced kill switch is active (%@ is the username) */
+"_kill_switch_logout_advanced_title" = "Sign out from %@?";
+
+/* iOS: Sign-out confirmation body while Advanced kill switch is active */
+"_kill_switch_logout_advanced_body" = "You'll be disconnected from VPN.\nAdvanced kill switch is enabled. If you continue, you will be disconnected from the internet.";
+
+/* iOS: Title of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
+"_kill_switch_logout_blocking_failed_title" = "Kill switch could not stay active";
+
+/* iOS: Body of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
+"_kill_switch_logout_blocking_failed_body" = "You've been signed out, but the kill switch couldn't be kept active, so your device may be exposed. Open Proton VPN and connect again to stay protected.";
+
+/* macOS: title of the confirmation shown when disconnecting with Advanced kill switch active */
+"_kill_switch_disconnect_advanced_title" = "Disconnect from VPN?";
+
+/* macOS: title of the quit confirmation shown while a VPN session is active */
+"_kill_switch_quit_title" = "Quit Proton VPN?";
+
+/* macOS: quit confirmation body (Standard / non-advanced kill switch) */
+"_kill_switch_disconnected_from_vpn" = "You'll be disconnected from VPN.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "포트 포워딩";
@@ -1077,9 +1180,8 @@
 
 "_allow_lan_title" = "LAN 연결 허용";
 
-"_allow_lan_info" = "VPN을 우회하고 프린터와 같은 로컬 네트워크의 장치에 연결할 수 있습니다.";
-
-"_allow_lan_description" = "LAN 접근을 허용하려면, 킬 스위치가 꺼져 있어야 합니다.\n\n계속하시겠습니까?";
+/* Description of the Allow LAN connections feature */
+"_allow_lan_info" = "Connect to devices on your local network (such as your printer or NAS drive) when the kill switch is active.";
 
 "_allow_lan_note" = "이 설정을 적용하려면 다시 연결해야 합니다";
 
@@ -1088,12 +1190,6 @@
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
 "_turn_ks_on_description_macos_st_conflict" = "• 이 작업은 분할 터널링을 비활성화합니다";
-
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
-"_turn_ks_on_description_macos_lan_conflict" = "• 사용자의 로컬 네트워크에 있는 장치에 접속할 수 없게 됩니다";
-
-/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
-"_turn_ks_on_description_ios" = "계속하기를 탭하면 사용자의 로컬 네트워크상의 장치에 접근할 수 없게 됩니다";
 
 /* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_title" = "분할 터널링을 활성화하시겠어요?";
@@ -1495,7 +1591,7 @@
 
 "_quick_settings_netShield_note" = "웹사이트가 로드되지 않는다면, NetShield를 비활성화해 보세요";
 
-"_quick_settings_killSwitch_note" = "디바이스가 로컬 네트워크에 연결할 수 없다면, 킬 스위치 해제를 시도하세요.";
+"_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try allowing LAN connections in Settings.";
 
 "_quick_settings_portForwarding_note" = "P2P 속도를 향상시키기 위해 BitTorrent 앱으로의 활성 포트 번호를 입력하세요.";
 
@@ -2959,6 +3055,9 @@
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message" = "이 프로토콜은 곧 제거됩니다. 스마트 프로토콜로 전환하는 것을 고려해 보세요. 더 알아보기";
+
+/* Message added to the IKEv2 deprecation alert when Advanced kill switch is enabled: continuing with IKEv2 changes the setting to Standard */
+"_ike_deprecation_alert_kill_switch_downgrade_message" = "Your Kill Switch setting will be changed to Standard.";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
 "_disable_plutonium_message" = "분할 터널링이 비활성화됩니다.";

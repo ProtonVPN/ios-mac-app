@@ -233,8 +233,6 @@
 
 "_reconnecting_to" = "Opätovné pripájanie k %@";
 
-"_reconnecting" = "Nastavuje sa nové VPN pripojenie na ochranu vašej IP";
-
 /* iOS status view */
 "_connected_to" = "Pripojené ku";
 
@@ -919,8 +917,8 @@
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_body" = "Všetky údaje Proton VPN sa odstránia a aplikácia sa ukončí. Chcete pokračovať?";
 
-/* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Vypnúť Kill Switch";
+/* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Deaktivovať Kill Switch";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "Zapnúť Kill Switch";
@@ -962,6 +960,111 @@
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Zablokuje všetku sieťovú prevádzku, keď sa stratí tunel VPN.";
+
+/* iOS: Kill switch settings - header description above the Off/Standard/Advanced options */
+"_kill_switch_header_description" = "Chráni vašu IP adresu tým, že vás odpojí od internetu, pokiaľ je prerušené pripojenie k VPN.";
+
+/* iOS: Kill switch settings - "Off" option title */
+"_kill_switch_mode_off" = "Vyp.";
+
+/* iOS: Kill switch settings - "Standard" option title */
+"_kill_switch_mode_standard" = "Štandardný";
+
+/* iOS: Kill switch settings - "Advanced" option title */
+"_kill_switch_mode_advanced" = "Pokročilý";
+
+/* iOS: Kill switch status message when KS isn't protecting a dropped connection (Off, or Standard while disconnected) */
+"_kill_switch_status_exposed" = "Vaša IP adresa môže byť odhalená, ak sa VPN pripojenie preruší";
+
+/* iOS: Kill switch settings - status message under the options when Standard is selected and VPN is connected */
+"_kill_switch_status_standard" = "Ak sa VPN pripojenie preruší, zostanete bez pripojenia na internet, kým sa VPN neobnoví";
+
+/* iOS: Kill switch settings - Advanced status message (VPN connected): blocks all non-VPN traffic */
+"_kill_switch_status_advanced_blocks_all" = "Blokuje všetok prístup na internet, keď nemáte pripojenie k Proton VPN";
+
+/* iOS: Kill switch settings - Advanced status message (VPN connected): applies even on intentional disconnect */
+"_kill_switch_status_advanced_applies" = "Pokročilý Kill Switch sa používa aj v prípade, že sa zámerne odpojíte od VPN";
+
+/* iOS: Kill switch settings - Advanced status message (VPN disconnected): internet disabled to protect IP */
+"_kill_switch_status_advanced_disables_internet" = "Pokročilý kill switch deaktivuje váš internet na ochranu vašej IP adresy, keď nemáte pripojenie k Proton VPN";
+
+/* iOS: Kill switch confirmation - title when enabling Standard from Off */
+"_kill_switch_enable_standard_title" = "Povoliť Kill Switch?";
+
+/* iOS: Kill switch confirmation - title when enabling Advanced from Off */
+"_kill_switch_enable_advanced_title" = "Povoliť pokročilý Kill Switch?";
+
+/* iOS: Kill switch confirmation - title when switching from Standard to Advanced */
+"_kill_switch_switch_advanced_title" = "Prepnúť na pokročilý Kill Switch?";
+
+/* macOS: Kill switch popover - "Standard" option row label */
+"_kill_switch_option_standard" = "Štandardný Kill Switch";
+
+/* macOS: Kill switch popover - "Advanced" option row label */
+"_kill_switch_option_advanced" = "Pokročilý Kill Switch";
+
+/* macOS: Kill switch popover - explanation shown with the disabled "Advanced" option while the selected protocol (IKEv2) cannot support it */
+"_kill_switch_advanced_unavailable_protocol_description" = "Toto nastavenie nie je k dispozícii pre protokol, ktorý ste vybrali. Ak chcete používať Pokročilý Kill Switch, vyberte si iný protokol, prosím.";
+
+/* macOS: Kill switch confirmation - bullet: enabling KS disables split tunneling (macOS only) */
+"_kill_switch_bullet_split_tunneling" = "Týmto zakážete split tunneling";
+
+/* iOS: Kill switch confirmation - bullet: Advanced blocking persists */
+"_kill_switch_bullet_advanced_persists" = "Internet bude blokovaný aj po reštartovaní počítača a úmyselnom odpojení, kým ho nevypnete";
+
+/* iOS: Kill switch confirmation - bullet: how to get back online with Advanced */
+"_kill_switch_bullet_advanced_recover" = "Keď sa chcete znova vrátiť do režimu online, pripojte sa k VPN alebo vypnite pokročilý kill switch";
+
+/* iOS: Kill switch confirmation - bullet: KS activates on the next connection (deferred activation, both modes) */
+"_kill_switch_bullet_deferred" = "Nadobudne platnosť pri najbližšom pripojení k VPN";
+
+/* iOS: Kill switch confirmation - primary button to enable */
+"_kill_switch_confirm_enable" = "Povoliť";
+
+/* iOS: Kill switch confirmation - primary button to switch to advanced */
+"_kill_switch_confirm_switch" = "Prepnúť";
+
+/* iOS: Warning shown before disconnecting / signing out while Advanced kill switch is active */
+"_kill_switch_advanced_disconnect_warning" = "Pokročilý kill switch je zapnutý. Ak budete pokračovať, dôjde k odpojeniu od internetu.";
+
+/* iOS: Home map overlay title while Advanced kill switch is blocking */
+"_kill_switch_advanced_banner_title" = "Pokročilý kill switch zapnutý";
+
+/* iOS: Persistent home banner message while Advanced kill switch is blocking */
+"_kill_switch_advanced_banner_message" = "Pripojte sa k VPN pre obnovenie vášho internetového pripojenia.";
+
+/* iOS: Login screen banner shown while Advanced kill switch is blocking internet */
+"_kill_switch_login_blocking" = "Pokročilý Kill Switch blokuje vaše pripojenie k internetu.";
+
+/* iOS: Confirmation banner shown after disabling kill switch from the login screen */
+"_kill_switch_disabled_confirmation" = "Kill Switch je deaktivovaný.";
+
+/* iOS: Body of the alert shown when a user tries to sign in / sign up / continue as guest while Advanced kill switch is blocking */
+"_kill_switch_turn_off_to_get_online" = "Ak sa chcete opäť pripojiť k internetu, musíte vypnúť Kill Switch.";
+
+/* iOS: Primary button of the kill-switch-blocking alert; turns the kill switch off */
+"_kill_switch_turn_off" = "Vypnúť Kill Switch";
+
+/* iOS: Sign-out confirmation title while Advanced kill switch is active (%@ is the username) */
+"_kill_switch_logout_advanced_title" = "Odhlásiť sa z %@?";
+
+/* iOS: Sign-out confirmation body while Advanced kill switch is active */
+"_kill_switch_logout_advanced_body" = "Dôjde k odpojeniu od VPN.\nPokročilý Kill Switch je zapnutý. Ak budete pokračovať, dôjde k odpojeniu od internetu.";
+
+/* iOS: Title of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
+"_kill_switch_logout_blocking_failed_title" = "Kill Switch nemohol zostať aktívny";
+
+/* iOS: Body of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
+"_kill_switch_logout_blocking_failed_body" = "Došlo k odhláseniu, ale Kill Switch sa nepodarilo ponechať aktívny, takže vaše zariadenie môže byť vystavené riziku. Otvorte Proton VPN a pripojte sa znovu, aby ste zostali pod ochranou.";
+
+/* macOS: title of the confirmation shown when disconnecting with Advanced kill switch active */
+"_kill_switch_disconnect_advanced_title" = "Odpojiť od VPN?";
+
+/* macOS: title of the quit confirmation shown while a VPN session is active */
+"_kill_switch_quit_title" = "Ukončiť Proton VPN?";
+
+/* macOS: quit confirmation body (Standard / non-advanced kill switch) */
+"_kill_switch_disconnected_from_vpn" = "Dôjde k odpojeniu od VPN.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "Presmerovanie portu";
@@ -1077,9 +1180,8 @@
 
 "_allow_lan_title" = "Povoliť pripojenie k sieti LAN";
 
-"_allow_lan_info" = "Umožňuje obísť sieť VPN a pripojiť sa k zariadeniam v miestnej sieti, napríklad k tlačiarni.";
-
-"_allow_lan_description" = "Ak chcete povoliť prístup do siete LAN, kill switch musí byť vypnutý.\n\nPokračovať?";
+/* Description of the Allow LAN connections feature */
+"_allow_lan_info" = "V prípade aktívneho Kill Switch sa môžete pripojiť k zariadeniam vo vašej lokálnej sieti (napríklad k tlačiarni alebo k zariadeniu NAS).";
 
 "_allow_lan_note" = "Pamätajte, že na uplatnenie tejto zmeny je potrebné reštartovať pripojenie.";
 
@@ -1088,12 +1190,6 @@
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
 "_turn_ks_on_description_macos_st_conflict" = "• Týmto zakážete split tunneling";
-
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
-"_turn_ks_on_description_macos_lan_conflict" = "• Nebudete mať prístup k zariadeniam vo vašej lokálnej sieti.";
-
-/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
-"_turn_ks_on_description_ios" = "Nebudete mať prístup k zariadeniam vo vašej lokálnej sieti.";
 
 /* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_title" = "Zapnúť rozdelené tunelovanie?";
@@ -1495,7 +1591,7 @@
 
 "_quick_settings_netShield_note" = "Pokiaľ sa webové stránky nenačítavajú, skúste vypnúť NetShield";
 
-"_quick_settings_killSwitch_note" = "Ak sa nemôžete pripojiť k zariadeniam v miestnej sieti, skúste vypnúť kill switch.";
+"_quick_settings_killSwitch_note" = "Ak sa nemôžete pripojiť k zariadeniam vo vašej lokálnej sieti, skúste v Nastaveniach povoliť pripojenia cez LAN.";
 
 "_quick_settings_portForwarding_note" = "Zadajte číslo aktívneho portu do aplikácie BitTorrent, aby ste zvýšili rýchlosť P2P";
 
@@ -2104,7 +2200,7 @@
 "connection_status_unprotected" = "Nie ste chránení";
 
 /* Connection status when zero peer killswitch is enabled */
-"connection_status_disconnectedByKillswitch" = "Disconnected due to Kill Switch";
+"connection_status_disconnectedByKillswitch" = "Odpojené kvôli Kill Switch";
 
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
 "connection_status_protecting" = "Vaša digitálna identita je chránená";
@@ -2959,6 +3055,9 @@
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message" = "Tento protokol bude čoskoro odstránený. Zvážte prechod na Smart protocol. Zistite viac";
+
+/* Message added to the IKEv2 deprecation alert when Advanced kill switch is enabled: continuing with IKEv2 changes the setting to Standard */
+"_ike_deprecation_alert_kill_switch_downgrade_message" = "Vaše nastavenie Kill Switch sa zmení na Štandardné.";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
 "_disable_plutonium_message" = "Týmto zakážete split tunneling.";

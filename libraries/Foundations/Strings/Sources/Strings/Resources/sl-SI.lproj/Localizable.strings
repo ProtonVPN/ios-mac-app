@@ -41,7 +41,7 @@
 "_not_found" = "Ni najdeno";
 
 /* Proton VPN Connected - used in Notifications */
-"_proton_vpn_connected" = "Proton VPN Connected";
+"_proton_vpn_connected" = "Proton VPN je povezan";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Razširite seznam strežnikov";
@@ -192,10 +192,10 @@
 "_secure_core" = "Secure Core";
 
 /* Used in MacOS app for Secure core button in quick settings to turn on */
-"_secure_core_status_on" = "Secure Core On";
+"_secure_core_status_on" = "Secure Core vklopljen";
 
 /* Used in MacOS app for Secure core button in quick settings to turn off */
-"_secure_core_status_off" = "Secure Core Off";
+"_secure_core_status_off" = "Secure Core izklopljen";
 
 /* %@ is a country e.g. Secure Core Switzerland */
 "_secure_core_country" = "Secure Core %@";
@@ -232,8 +232,6 @@
 "_connecting_to" = "Povezovanje z %@";
 
 "_reconnecting_to" = "Ponovna povezava z %@";
-
-"_reconnecting" = "Setting up a new VPN connection to protect your IP";
 
 /* iOS status view */
 "_connected_to" = "Povezano z";
@@ -555,10 +553,10 @@
 "_view_toggle_will_cause_disconnect" = "Preklop Secure Core bo prekinil vašo trenutno povezavo.";
 
 /* Body of the Secure Core toggle warning/discourage notice when turning SC on and a Secure Core server exists in the currently-connected country */
-"_view_toggle_on_reconnect_same_country" = "Turning on Secure Core will end your current connection and try to reconnect to the same country.";
+"_view_toggle_on_reconnect_same_country" = "Vklop funkcije \"Secure Core\" bo prekinil vašo trenutno povezavo in poskusil ponovno vzpostaviti povezavo z isto državo.";
 
 /* Body of the Secure Core toggle warning/discourage notice when turning SC on and no Secure Core server exists in the currently-connected country (fallback). %@ is the localized country name. */
-"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core isn't available in %@. Your VPN will reconnect through the fastest available Secure Core server.";
+"_view_toggle_on_reconnect_fastest_fallback" = "Secure Core ni na voljo v %@. Vaš VPN se bo ponovno povezal prek najhitrejšega razpoložljivega strežnika Secure Core.";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Obremenitev strežnika:";
@@ -919,8 +917,8 @@
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_body" = "Vsi podatki Proton VPN bodo izbrisani in aplikacija se bo zaprla. Želite nadaljevati?";
 
-/* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Onemogoči odklopno stikalo";
+/* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Disable kill switch";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "Omogoči odklopno stikalo";
@@ -963,14 +961,119 @@
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blokira ves omrežni promet, ko je tunel VPN izgubljen.";
 
+/* iOS: Kill switch settings - header description above the Off/Standard/Advanced options */
+"_kill_switch_header_description" = "Protects your IP address by disconnecting you from the internet if you lose your VPN connection.";
+
+/* iOS: Kill switch settings - "Off" option title */
+"_kill_switch_mode_off" = "Off";
+
+/* iOS: Kill switch settings - "Standard" option title */
+"_kill_switch_mode_standard" = "Standard";
+
+/* iOS: Kill switch settings - "Advanced" option title */
+"_kill_switch_mode_advanced" = "Advanced";
+
+/* iOS: Kill switch status message when KS isn't protecting a dropped connection (Off, or Standard while disconnected) */
+"_kill_switch_status_exposed" = "Your IP address could be exposed if your VPN connection drops";
+
+/* iOS: Kill switch settings - status message under the options when Standard is selected and VPN is connected */
+"_kill_switch_status_standard" = "If your VPN connection drops, you'll be disconnected from the internet until VPN is restored";
+
+/* iOS: Kill switch settings - Advanced status message (VPN connected): blocks all non-VPN traffic */
+"_kill_switch_status_advanced_blocks_all" = "Blocks all internet access when you're not connected to Proton VPN";
+
+/* iOS: Kill switch settings - Advanced status message (VPN connected): applies even on intentional disconnect */
+"_kill_switch_status_advanced_applies" = "Advanced kill switch applies even if you intentionally disconnect from VPN";
+
+/* iOS: Kill switch settings - Advanced status message (VPN disconnected): internet disabled to protect IP */
+"_kill_switch_status_advanced_disables_internet" = "Advanced kill switch disables your internet to protect your IP address while you're not connected to Proton VPN";
+
+/* iOS: Kill switch confirmation - title when enabling Standard from Off */
+"_kill_switch_enable_standard_title" = "Enable kill switch?";
+
+/* iOS: Kill switch confirmation - title when enabling Advanced from Off */
+"_kill_switch_enable_advanced_title" = "Enable advanced kill switch?";
+
+/* iOS: Kill switch confirmation - title when switching from Standard to Advanced */
+"_kill_switch_switch_advanced_title" = "Switch to advanced kill switch?";
+
+/* macOS: Kill switch popover - "Standard" option row label */
+"_kill_switch_option_standard" = "Kill switch Standard";
+
+/* macOS: Kill switch popover - "Advanced" option row label */
+"_kill_switch_option_advanced" = "Kill switch Advanced";
+
+/* macOS: Kill switch popover - explanation shown with the disabled "Advanced" option while the selected protocol (IKEv2) cannot support it */
+"_kill_switch_advanced_unavailable_protocol_description" = "This setting is not available for the protocol you have selected. Please choose another protocol to use Advanced Kill Switch.";
+
+/* macOS: Kill switch confirmation - bullet: enabling KS disables split tunneling (macOS only) */
+"_kill_switch_bullet_split_tunneling" = "This will disable split tunneling";
+
+/* iOS: Kill switch confirmation - bullet: Advanced blocking persists */
+"_kill_switch_bullet_advanced_persists" = "Internet stays blocked across reboots and intentional disconnects until you turn it off";
+
+/* iOS: Kill switch confirmation - bullet: how to get back online with Advanced */
+"_kill_switch_bullet_advanced_recover" = "To get back online, connect to VPN or disable advanced kill switch";
+
+/* iOS: Kill switch confirmation - bullet: KS activates on the next connection (deferred activation, both modes) */
+"_kill_switch_bullet_deferred" = "Takes effect the next time you connect to VPN";
+
+/* iOS: Kill switch confirmation - primary button to enable */
+"_kill_switch_confirm_enable" = "Enable";
+
+/* iOS: Kill switch confirmation - primary button to switch to advanced */
+"_kill_switch_confirm_switch" = "Switch";
+
+/* iOS: Warning shown before disconnecting / signing out while Advanced kill switch is active */
+"_kill_switch_advanced_disconnect_warning" = "Advanced kill switch is enabled. If you continue, you will be disconnected from the internet.";
+
+/* iOS: Home map overlay title while Advanced kill switch is blocking */
+"_kill_switch_advanced_banner_title" = "Advanced kill switch activated";
+
+/* iOS: Persistent home banner message while Advanced kill switch is blocking */
+"_kill_switch_advanced_banner_message" = "Connect to VPN to restore your internet connection.";
+
+/* iOS: Login screen banner shown while Advanced kill switch is blocking internet */
+"_kill_switch_login_blocking" = "Advanced kill switch is blocking your internet connection.";
+
+/* iOS: Confirmation banner shown after disabling kill switch from the login screen */
+"_kill_switch_disabled_confirmation" = "Kill switch is disabled.";
+
+/* iOS: Body of the alert shown when a user tries to sign in / sign up / continue as guest while Advanced kill switch is blocking */
+"_kill_switch_turn_off_to_get_online" = "To get back online you need to turn off kill switch.";
+
+/* iOS: Primary button of the kill-switch-blocking alert; turns the kill switch off */
+"_kill_switch_turn_off" = "Turn off kill switch";
+
+/* iOS: Sign-out confirmation title while Advanced kill switch is active (%@ is the username) */
+"_kill_switch_logout_advanced_title" = "Sign out from %@?";
+
+/* iOS: Sign-out confirmation body while Advanced kill switch is active */
+"_kill_switch_logout_advanced_body" = "You'll be disconnected from VPN.\nAdvanced kill switch is enabled. If you continue, you will be disconnected from the internet.";
+
+/* iOS: Title of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
+"_kill_switch_logout_blocking_failed_title" = "Kill switch could not stay active";
+
+/* iOS: Body of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
+"_kill_switch_logout_blocking_failed_body" = "You've been signed out, but the kill switch couldn't be kept active, so your device may be exposed. Open Proton VPN and connect again to stay protected.";
+
+/* macOS: title of the confirmation shown when disconnecting with Advanced kill switch active */
+"_kill_switch_disconnect_advanced_title" = "Disconnect from VPN?";
+
+/* macOS: title of the quit confirmation shown while a VPN session is active */
+"_kill_switch_quit_title" = "Quit Proton VPN?";
+
+/* macOS: quit confirmation body (Standard / non-advanced kill switch) */
+"_kill_switch_disconnected_from_vpn" = "You'll be disconnected from VPN.";
+
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "Posredovanje vrat";
 
 /* Used in MacOS app for Port forwarding button in quick settings to turn on */
-"_port_forwarding_status_on" = "Port forwarding On";
+"_port_forwarding_status_on" = "Posredovanje vrat je vklopljeno";
 
 /* Used in MacOS app for Port forwarding button in quick settings to turn off */
-"_port_forwarding_status_off" = "Port forwarding Off";
+"_port_forwarding_status_off" = "Posredovanje vrat je izklopljeno";
 
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "Vedno vključen VPN";
@@ -1077,9 +1180,8 @@
 
 "_allow_lan_title" = "Dovoli LAN povezave";
 
-"_allow_lan_info" = "Omogoči izogibanje VPN in se poveže z napravami v vašem lokalnem omrežju, kot je vaš tiskalnik.";
-
-"_allow_lan_description" = "Če želite omogočiti dostop do omrežja LAN, mora biti odklopno stikalo izklopljeno.\n\nNadaljujem?";
+/* Description of the Allow LAN connections feature */
+"_allow_lan_info" = "Connect to devices on your local network (such as your printer or NAS drive) when the kill switch is active.";
 
 "_allow_lan_note" = "Upoštevajte, da morate za uveljavitev te spremembe znova zagnati povezavo";
 
@@ -1088,12 +1190,6 @@
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
 "_turn_ks_on_description_macos_st_conflict" = "• To bo onemogočilo deljeno tuneliranje";
-
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
-"_turn_ks_on_description_macos_lan_conflict" = "• Ne boste mogli dostopati do naprav v lokalnem omrežju";
-
-/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
-"_turn_ks_on_description_ios" = "Ne boste mogli dostopati do naprav v lokalnem omrežju";
 
 /* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_title" = "Omogočiti razdeljeno tuneliranje?";
@@ -1177,7 +1273,7 @@
 "_web_only_feature" = "Web only";
 
 /* %@1 is the next payment date; %@2 the price per %@3 from that date, i.e., $11.99 / mo. %@3 is either `_per_month` or `_per_year`. */
-"_introductory_price_footer" = "Welcome offer. Auto-renews on %1$@ at %2$@%3$@.";
+"_introductory_price_footer" = "Ponudba dobrodošlice. Samodejno se obnovi dne %1$@ po ceni %2$@%3$@.";
 
 /* iOS plan feature */
 "_feature_server_count" = "Povežite se s strežniki v";
@@ -1442,7 +1538,7 @@
 "_netshield_level2" = "Blokiraj zlonamerne programe, oglase in sledilnike.";
 
 /* Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_netshield_level3" = "Block ads, trackers, malware, & adult content";
+"_netshield_level3" = "Blokiranje oglasov, sledilnikov, zlonamernih programov & vsebine za odrasle";
 
 "_netshield_alert_reconnect_description_on" = "Vaša povezava se bo znova zagnala, da se spremeni način NetShield.\nOpomba: Če se nekatera spletna mesta ne naložijo, poskusite onemogočiti NetShield.";
 
@@ -1495,7 +1591,7 @@
 
 "_quick_settings_netShield_note" = "Če se spletna mesta ne naložijo, poskusite onemogočiti NetShield.";
 
-"_quick_settings_killSwitch_note" = "Če se ne morete povezati z napravami v lokalnem omrežju, poskusite onemogočiti odklopno stikalo.";
+"_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try allowing LAN connections in Settings.";
 
 "_quick_settings_portForwarding_note" = "Vnesite številko aktivnih vrat v svojo aplikacijo BitTorrent, da izboljšate hitrosti P2P";
 
@@ -1523,7 +1619,7 @@
 "_quick_settings_netshield_option_level2" = "Blokiraj zlonamerne programe, oglase in sledilnike.";
 
 /* Quick Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_quick_settings_netshield_option_level3" = "Block ads, trackers, malware, & adult content";
+"_quick_settings_netshield_option_level3" = "Blokiranje oglasov, sledilnikov, zlonamernih programov & vsebine za odrasle";
 
 "_upgrade_required_securecore_description" = "Secure Core je na voljo s paketom Plus. Nadgradite zdaj za usmerjanje prometa prek naših najvarnejših strežnikov v zasebno prijaznih državah.";
 
@@ -2104,7 +2200,7 @@
 "connection_status_unprotected" = "Ste nezaščiteni";
 
 /* Connection status when zero peer killswitch is enabled */
-"connection_status_disconnectedByKillswitch" = "Disconnected due to Kill Switch";
+"connection_status_disconnectedByKillswitch" = "Odklopljeno zaradi odklopnega stikala";
 
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
 "connection_status_protecting" = "Zaščita vaše digitalne identitete";
@@ -2960,6 +3056,9 @@
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message" = "Ta protokol bo kmalu odstranjen. Razmislite o prehodu na protokol Smart. Izvedi več";
 
+/* Message added to the IKEv2 deprecation alert when Advanced kill switch is enabled: continuing with IKEv2 changes the setting to Standard */
+"_ike_deprecation_alert_kill_switch_downgrade_message" = "Your Kill Switch setting will be changed to Standard.";
+
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
 "_disable_plutonium_message" = "To bo onemogočilo deljeno tuneliranje.";
 
@@ -3303,7 +3402,7 @@
 "_pcap_capture_session_captured" = "VPN seja je zajeta";
 
 /* `it` refers to the exportable `<date>.pcap` file that is available while user sees this text */
-"_pcap_capture_file_sharing" = "You can now share it with our customer support by attaching it in your conversation, or by storing it securely on [Proton Drive](%@) and sharing a public link.";
+"_pcap_capture_file_sharing" = "Datoteko lahko pripnete pogovoru in posredujete naši službi za podporo strankam, ali pa jo varno shranite na [Proton Drive](%@) in delite javno povezavo.";
 
 /* Button title in the PCAP view. Starts the PCAP session */
 "_pcap_capture_session_start" = "Zaženi";
@@ -3312,31 +3411,31 @@
 "_pcap_capture_session_stop" = "Ustavi";
 
 /* Title of an alert when user starts the PCAP session */
-"_pcap_capture_session_should_start_session" = "Start capturing VPN session?";
+"_pcap_capture_session_should_start_session" = "Začnem z zajemanjem VPN seje?";
 
 /* Description of an alert when user starts the PCAP session */
-"_pcap_capture_session_issue_reproduction" = "If possible, apply the same settings and type of connection you used when you first faced the issue.\n\nAim to reproduce the issue in the same way it first happened (browsing the web, using an app, etc.)\n\nWhen you’ve reproduced the issue, you can stop the capture and share the file with the customer support team.";
+"_pcap_capture_session_issue_reproduction" = "Če je mogoče, uporabite iste nastavitve in isti tip povezave, kot ste jih uporabljali, ko se je težava prvič pojavila.\n\nPoskusite težavo ponoviti v istih pogojih, v katerih se je prvotno pojavila (brskanje po internetu, uporaba aplikacije, itd.).\n\nKo težavo ponovite, lahko ustavite zajemanje in datoteko posredujete ekipi za podporo strankam.";
 
 /* Description of an alert when user tries dismissing the PCAP sheet */
-"_pcap_capture_discard_description" = "The file will not be stored in the app. Make sure you’ve exported it before discarding.";
+"_pcap_capture_discard_description" = "Datoteka ne bo shranjena v aplikaciji. Preden jo izbrišete se prepričajte, da ste jo izvozili.";
 
 /* Title of an alert when user tries dismissing the PCAP sheet */
-"_pcap_capture_discard_title" = "Discard file?";
+"_pcap_capture_discard_title" = "Zavržem datoteko?";
 
 /* Button title in an alert */
-"_pcap_capture_discard_button" = "Discard file";
+"_pcap_capture_discard_button" = "Zavrzi datoteko";
 
 /* Commonly used title of a button */
-"_got_it" = "Got it";
+"_got_it" = "Razumem";
 
 /* Title of an alert that presents the reason for PCAP failure */
-"_pcap_capture_low_storage" = "Not enough storage";
+"_pcap_capture_low_storage" = "Ni dovolj proste shrambe";
 
 /* Description of an alert that presents the reason for PCAP failure */
 "_pcap_capture_low_storage_action_description" = "Za začetek snemanja potrebujete vsaj 200 MB prostega prostora";
 
 /* Title of an alert that presents the reason for PCAP failure */
-"_pcap_capture_failed" = "Capture failed";
+"_pcap_capture_failed" = "Zajemanje ni uspelo";
 
 /* Title of the alert shown when the VPN server refuses one of the user's requested settings */
 "_local_agent_setting_refused_title" = "Nastavitev ni uveljavljena";

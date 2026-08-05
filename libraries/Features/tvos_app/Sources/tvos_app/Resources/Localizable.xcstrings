@@ -5685,10 +5685,22 @@
             "value" : "مفتاح الإيقاف نشط"
           }
         },
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kill Switch актыўны"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "El Kill Switch és actiu"
+            "value" : "El Kill Switch està actiu"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kill Switch zapnut"
           }
         },
         "da" : {
@@ -5697,10 +5709,28 @@
             "value" : "Kill Switch er aktiv"
           }
         },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kill Switch aktiv"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kill Switch Ενεργό"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kill Switch Active"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interruptor de bloqueo activo"
           }
         },
         "fi" : {
@@ -5709,10 +5739,64 @@
             "value" : "Tappokytkin on aktivoitu"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'arrêt d'urgence (kill switch) est actif"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interruttore di emergenza attivo"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kill Switch აქტიურია"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nødstopp aktiv"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IP-beveiliging geactiveerd"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Întrerupător conexiune activat"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kill Switch aktívny"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odklopno stikalo je aktivno"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bağlantı kesici etkin"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "终止开关已启用"
           }
         }
       }
