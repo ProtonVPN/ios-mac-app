@@ -27,7 +27,12 @@ public class TelemetryOnboardingReporter {
     public static var isOnboardingInProgress: Bool = false
 
     @Dependency(\.credentialsProvider) private var credentialsProvider
-    @SharedReader(.userCountry) var userCountry
+    @SharedReader(.userLocation) var userLocation
+
+    /// Lowercased, which is the casing this dimension has always been reported with.
+    private var userCountry: String? {
+        userLocation?.location.country.lowercased()
+    }
 
     private var telemetryEventScheduler: TelemetryEventScheduler
 

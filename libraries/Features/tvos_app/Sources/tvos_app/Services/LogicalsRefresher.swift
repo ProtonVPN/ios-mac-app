@@ -33,7 +33,7 @@ struct LogicalsRefresher {
 
 struct LogicalsRefresherProvider {
     @Shared(.lastLogicalsRefresh) private var lastLogicalsRefresh: TimeInterval = 0
-    @SharedReader(.userLocation) var userLocation: UserLocation?
+    @SharedReader(.userLocation) var userLocation: StoredUserLocation?
 
     var liveValue: LogicalsRefresher {
         .init(
@@ -47,8 +47,9 @@ struct LogicalsRefresherProvider {
         try? await userLocationService.updateUserLocation()
 
         @Dependency(\.logicalsClient) var client
-        let truncatedIp = (userLocation?.ip).flatMap { TruncatedIp(ip: $0) }
-        let logicalsResponse = try await client.fetchLogicals(ip: truncatedIp, countryCode: userLocation?.country)
+        let location = userLocation?.location
+        let truncatedIp = (location?.ip).flatMap { TruncatedIp(ip: $0) }
+        let logicalsResponse = try await client.fetchLogicals(ip: truncatedIp, countryCode: location?.country)
 
         @Dependency(\.serverRepository) var repository
         repository.upsert(servers: logicalsResponse)

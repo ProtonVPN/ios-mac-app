@@ -86,11 +86,14 @@ struct PropertiesSharedKeyTests {
     @Test("userLocation reads legacy JSON data and round-trips")
     func userLocation() throws {
         try withStore { defaults in
+            // Values written before the location carried a timestamp are bare `UserLocation`s.
             let legacy = UserLocation(ip: "1.2.3.4", country: "PL", isp: "Play")
             try defaults.set(JSONEncoder().encode(legacy), forKey: "UserLocation")
 
             @Shared(.userLocation) var userLocation
-            #expect(userLocation == legacy)
+            #expect(userLocation?.location == legacy)
+            #expect(userLocation?.measuredAt == .distantPast) // so the next trigger measures again
+            #expect(userLocation?.source == .locationEndpoint)
 
             $userLocation.withLock { $0 = nil }
             #expect(defaults.data(forKey: "UserLocation") == nil)
@@ -118,9 +121,13 @@ struct PropertiesSharedKeyTests {
             $0.defaultAppStorage = defaults
         } operation: {
             @Shared(.userLocation) var userLocation
-            let expected = UserLocation(ip: "5.6.7.8", country: "US", isp: "AT&T")
+            let expected = StoredUserLocation(
+                location: UserLocation(ip: "5.6.7.8", country: "US", isp: "AT&T"),
+                measuredAt: Date(timeIntervalSince1970: 1),
+                source: .locationEndpoint
+            )
 
-            let received = LockIsolatedBox<[UserLocation?]>([])
+            let received = LockIsolatedBox<[StoredUserLocation?]>([])
             let cancellable = $userLocation.publisher.sink { received.value.append($0) }
             defer { cancellable.cancel() }
 

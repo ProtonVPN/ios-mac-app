@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import ConnectionDetailsShared
+import Domain
 import Strings
 import SwiftUI
 import Theme
@@ -87,8 +88,8 @@ public struct IPView: View {
 // MARK: - Previews
 
 #Preview {
-    @Shared(.userIP) var userIP: String?
-    $userIP.withLock { $0 = "127.0.0.1" }
+    @Shared(.userLocation) var userLocation: StoredUserLocation?
+    $userLocation.withLock { $0 = .measured(.init(ip: "127.0.0.1", country: "CH", isp: "Swisscom"), at: .now) }
 
     return IPView(store: Store(initialState: .init(), reducer: { IPViewFeature() }))
         .padding(16)

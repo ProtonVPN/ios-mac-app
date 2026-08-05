@@ -30,8 +30,16 @@ actor TelemetryConnectionStatusReporter {
         let localizedDescription: String
     }
 
-    @SharedReader(.userCountry) var userCountry
-    @SharedReader(.userISP) var userISP
+    @SharedReader(.userLocation) var userLocation
+
+    /// Lowercased, which is the casing this dimension has always been reported with.
+    private var userCountry: String? {
+        userLocation?.location.country.lowercased()
+    }
+
+    private var userISP: String? {
+        userLocation?.location.isp
+    }
 
     var networkType: ConnectionDimensions.NetworkType = .other
     var previousConnectionIntent: ServerConnectionIntent?

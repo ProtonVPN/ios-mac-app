@@ -21,23 +21,26 @@ import Dependencies
 import Domain
 import Foundation
 
+/// tvOS's trigger for measuring the user's location.
+///
+/// The value itself lives in the shared ``SharedKey/userLocation`` and is written through
+/// ``UserLocationStore``, the same as on the other platforms; this only decides *when* tvOS asks for
+/// it. The phone and desktop apps refresh on a timer, on foregrounding and on network changes
+/// (`UserLocationFeature`); tvOS measures once and keeps it.
 class UserLocationService {
-    @Shared(.userLocation) var userLocation: UserLocation?
+    @SharedReader(.userLocation) var userLocation: StoredUserLocation?
 
-    /// Update user location (ip)
-    ///
-    /// If it is not known, tries to get it
+    /// Measures the user's location if it isn't known yet.
     func updateUserLocation() async throws {
-        if userLocation == nil {
-            try await refresh()
-        }
+        guard userLocation == nil else { return }
+        try await refresh()
     }
 
     @MainActor
     private func refresh() async throws {
         @Dependency(\.locationClient) var client
-        let newLocation = try await client.fetchLocation()
-        $userLocation.withLock { $0 = newLocation }
+        @Dependency(\.userLocationStore) var userLocationStore
+        try await userLocationStore.recordMeasured(client.fetchLocation())
     }
 }
 

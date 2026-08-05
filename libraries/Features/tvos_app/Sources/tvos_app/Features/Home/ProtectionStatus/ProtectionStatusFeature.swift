@@ -27,7 +27,7 @@ struct ProtectionStatusFeature {
     @ObservableState
     struct State: Equatable {
         @SharedReader(.connectionState) var connectionState: ConnectionState
-        @SharedReader(.userLocation) var userLocation: UserLocation?
+        @SharedReader(.userLocation) var userLocation: StoredUserLocation?
     }
 
     enum Action {

@@ -54,9 +54,9 @@ struct ConnectionStatusBanner: View {
         case .protected, .protectedSecureCore, .authenticationRequired, .killSwitchActive:
             return nil
         case .unprotected:
-            let code = store.userCountry
-            displayCountry = LocalizationUtility.default.countryName(forCode: code ?? "")
-            displayIP = store.userIP
+            let location = store.userLocation?.location
+            displayCountry = LocalizationUtility.default.countryName(forCode: location?.country ?? "")
+            displayIP = location?.ip
         case let .protecting(country, ip):
             displayCountry = country
             displayIP = ip

@@ -20,36 +20,6 @@ import ComposableArchitecture
 import Domain
 import Foundation
 
-public extension SharedKey where Self == AppStorageKey<String?> {
-    static var userCountry: Self {
-        .appStorage("userCountry")
-    }
-}
-
-public extension SharedKey where Self == AppStorageKey<String?> {
-    /// The user's own public IP, i.e. the address the outside world sees them at without the VPN.
-    ///
-    /// Written from `/vpn/location` while disconnected, and from the ProTUN local agent's report of
-    /// the address the server observes while connected — the location endpoint would answer with the
-    /// exit IP through an active tunnel.
-    static var userIP: Self {
-        .appStorage("userIP")
-    }
-}
-
-public extension SharedKey where Self == AppStorageKey<String?> {
-    /// The user's ISP, from the same two sources as ``SharedKey/userIP``.
-    static var userISP: Self {
-        .appStorage("userISP")
-    }
-}
-
-public extension SharedKey where Self == AppStorageKey<Date?> {
-    static var lastLocationRetrieval: Self {
-        .appStorage("lastLocationRetrieval")
-    }
-}
-
 public extension SharedKey where Self == AppStorageKey<Bool>.Default {
     static var killSwitch: Self {
         Self[.appStorage("Firewall"), default: false]

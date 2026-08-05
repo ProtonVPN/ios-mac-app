@@ -32,8 +32,7 @@ public struct ConnectionStatusFeature {
     @ObservableState
     public struct State: Equatable {
         @Shared(.protectionState) package var protectionState: ProtectionState
-        @SharedReader(.userCountry) package var userCountry: String?
-        @SharedReader(.userIP) package var userIP: String?
+        @SharedReader(.userLocation) package var userLocation: StoredUserLocation?
         @SharedReader(.connectionState) package var connectionState: ConnectionState
 
         package var connectionStatusBanner: ConnectionStatusBannerFeature.State = .init()
@@ -125,10 +124,9 @@ public struct ConnectionStatusFeature {
                 .cancellable(id: IDs.watchConnectionStatus, cancelInFlight: true)
 
             case let .newConnectionState(connectionState):
-                let code = state.userCountry
-                let country = countryNameProvider.countryName(forCode: code ?? "") ?? ""
-                let userIP = state.userIP ?? ""
-                let protectionState = connectionState.protectionState(country: country, ip: userIP)
+                let location = state.userLocation?.location
+                let country = countryNameProvider.countryName(forCode: location?.country ?? "") ?? ""
+                let protectionState = connectionState.protectionState(country: country, ip: location?.ip ?? "")
                 return .send(.newProtectionState(protectionState))
 
             case let .newProtectionState(protectionState):

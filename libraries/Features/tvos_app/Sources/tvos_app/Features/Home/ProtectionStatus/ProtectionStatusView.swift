@@ -131,8 +131,8 @@ struct ProtectionStatusView: View {
             country = connectionData.currentPeer.logical.exitCountryCode
             ip = store.connectionState.vpnExitIP
         default:
-            country = store.userLocation?.country
-            ip = store.userLocation?.ip
+            country = store.userLocation?.location.country
+            ip = store.userLocation?.location.ip
         }
         guard let country, let ip else { return nil }
         return .init(ip: ip, country: country, isp: "")

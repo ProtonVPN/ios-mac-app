@@ -30,13 +30,11 @@ struct ConnectionStatusFeatureTests {
     // The protection state is in-memory shared state and the user location is app storage: both are
     // process-wide, so the suite runs serialized and starts every test from a known baseline.
     @Shared(.protectionState) private var protectionState: ProtectionState
-    @Shared(.userCountry) private var userCountry: String?
-    @Shared(.userIP) private var userIP: String?
+    @Shared(.userLocation) private var userLocation: StoredUserLocation?
 
     init() {
         $protectionState.withLock { $0 = .resolving }
-        $userCountry.withLock { $0 = nil }
-        $userIP.withLock { $0 = nil }
+        $userLocation.withLock { $0 = nil }
     }
 
     // MARK: - Masking lifecycle
@@ -189,7 +187,7 @@ struct ConnectionStatusFeatureTests {
         await store.finish()
     }
 
-    /// Regression test for the empty-input leak: nil userCountry/userIP fall back to "",
+    /// Regression test for the empty-input leak: an unknown location falls back to "",
     /// `partiallyMasked("")` returns nil, and the first tick must cancel the timer instead
     /// of spinning forever.
     @Test
@@ -242,8 +240,7 @@ struct ConnectionStatusFeatureTests {
     /// server's.
     @Test
     func connectingMapsToProtectingWithResolvedCountryName() async {
-        $userCountry.withLock { $0 = "PL" }
-        $userIP.withLock { $0 = "1.2.3.4" }
+        $userLocation.withLock { $0 = .measured(.init(ip: "1.2.3.4", country: "PL", isp: "Play"), at: .now) }
 
         let clock = TestClock()
         let store = makeStore(clock: clock, countryNames: ["PL": "Poland"])
@@ -269,8 +266,7 @@ struct ConnectionStatusFeatureTests {
     /// `.protected`.
     @Test
     func connectingWithActiveTunnelStillShowsUserLocation() async {
-        $userCountry.withLock { $0 = "PL" }
-        $userIP.withLock { $0 = "1.2.3.4" }
+        $userLocation.withLock { $0 = .measured(.init(ip: "1.2.3.4", country: "PL", isp: "Play"), at: .now) }
 
         let store = makeStore(clock: TestClock(), countryNames: ["PL": "Poland"])
         let protecting = ProtectionState.protecting(country: "Poland", ip: "1.2.3.4")

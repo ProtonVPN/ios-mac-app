@@ -31,17 +31,11 @@ import VPNAppCore
 @Suite("User Location Feature Tests", .serialized)
 struct UserLocationFeatureTests {
     @Shared(.connectionState) var connectionState
-    @Shared(.userCountry) var userCountry: String?
-    @Shared(.userIP) var userIP: String?
-    @Shared(.userISP) var userISP: String?
-    @Shared(.lastLocationRetrieval) var lastLocationRetrieval: Date?
+    @Shared(.userLocation) var userLocation: StoredUserLocation?
 
     init() {
         $connectionState.withLock { $0 = .disconnected }
-        $userCountry.withLock { $0 = nil }
-        $userIP.withLock { $0 = nil }
-        $userISP.withLock { $0 = nil }
-        $lastLocationRetrieval.withLock { $0 = nil }
+        $userLocation.withLock { $0 = nil }
     }
 
     @Test("Fetches location on launch")
@@ -66,12 +60,8 @@ struct UserLocationFeatureTests {
         await store.receive(\.userLocationFetchStarted)
 
         await locationClock.advance(by: LocationClient.responseDelay)
-        await store.receive(\.userLocationFetchFinished.success) {
-            $0.$userIP.withLock { $0 = UserLocation.poland.ip }
-            $0.$userISP.withLock { $0 = UserLocation.poland.isp }
-            $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
-            $0.$lastLocationRetrieval.withLock { $0 = now }
-        }
+        await store.receive(\.userLocationFetchFinished.success)
+        #expect(userLocation == .measured(.poland, at: now))
 
         await store.receive(\.delegate.userLocationChanged)
         await store.send(.tearDown)
@@ -101,12 +91,8 @@ struct UserLocationFeatureTests {
         await store.receive(\.userLocationFetchStarted)
 
         await locationClock.advance(by: LocationClient.responseDelay)
-        await store.receive(\.userLocationFetchFinished.success) {
-            $0.$userIP.withLock { $0 = UserLocation.poland.ip }
-            $0.$userISP.withLock { $0 = UserLocation.poland.isp }
-            $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
-            $0.$lastLocationRetrieval.withLock { $0 = now }
-        }
+        await store.receive(\.userLocationFetchFinished.success)
+        #expect(userLocation == .measured(.poland, at: now))
 
         await store.receive(\.delegate.userLocationChanged)
 
@@ -120,9 +106,8 @@ struct UserLocationFeatureTests {
         await store.receive(\.userLocationFetchStarted)
         await locationClock.advance(by: LocationClient.responseDelay)
         // The location is unchanged, so only the cooldown moves and no delegate action follows.
-        await store.receive(\.userLocationFetchFinished.success) {
-            $0.$lastLocationRetrieval.withLock { $0 = nextRefreshDate }
-        }
+        await store.receive(\.userLocationFetchFinished.success)
+        #expect(userLocation == .measured(.poland, at: nextRefreshDate))
         await store.send(.tearDown)
     }
 
@@ -150,12 +135,8 @@ struct UserLocationFeatureTests {
         await store.receive(\.userLocationFetchStarted)
 
         await locationClock.advance(by: LocationClient.responseDelay)
-        await store.receive(\.userLocationFetchFinished.success) {
-            $0.$userIP.withLock { $0 = UserLocation.poland.ip }
-            $0.$userISP.withLock { $0 = UserLocation.poland.isp }
-            $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
-            $0.$lastLocationRetrieval.withLock { $0 = now }
-        }
+        await store.receive(\.userLocationFetchFinished.success)
+        #expect(userLocation == .measured(.poland, at: now))
 
         await store.receive(\.delegate.userLocationChanged)
 
@@ -199,12 +180,8 @@ struct UserLocationFeatureTests {
         await store.receive(\.userLocationFetchStarted)
 
         await locationClock.advance(by: LocationClient.responseDelay)
-        await store.receive(\.userLocationFetchFinished.success) {
-            $0.$userIP.withLock { $0 = UserLocation.poland.ip }
-            $0.$userISP.withLock { $0 = UserLocation.poland.isp }
-            $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
-            $0.$lastLocationRetrieval.withLock { $0 = now }
-        }
+        await store.receive(\.userLocationFetchFinished.success)
+        #expect(userLocation == .measured(.poland, at: now))
 
         await store.receive(\.delegate.userLocationChanged)
 
@@ -226,13 +203,9 @@ struct UserLocationFeatureTests {
     @Test("Adopts the IP the tunnel reports while connected")
     func adoptsTunnelReportedIPWhileConnected() async {
         @Shared(.connectionState) var connectionState
-        // Values a `/vpn/location` fetch stored before the tunnel came up, now out of date.
-        $userIP.withLock { $0 = "10.9.8.7" }
-        $userISP.withLock { $0 = "Stale ISP" }
-        $userCountry.withLock { $0 = "pl" }
-
+        // What a `/vpn/location` fetch measured before the tunnel came up, now out of date.
         let now = Date.now
-        $lastLocationRetrieval.withLock { $0 = now }
+        $userLocation.withLock { $0 = .measured(.init(ip: "10.9.8.7", country: "PL", isp: "Play"), at: now) }
         $connectionState.withLock { $0 = Self.connected(userIP: "198.51.100.42", userISP: "Proton ISP") }
 
         let store = TestStore(initialState: .init()) {
@@ -244,17 +217,18 @@ struct UserLocationFeatureTests {
         }
 
         // `.listen` subscribes to the connection-state publisher, which replays the current value
-        // straight away — so the writes land while this `send` is still open, and are asserted here
+        // straight away — so the write lands while this `send` is still open, and is asserted here
         // rather than on the `.connectionStateUpdate` receive that delivers the action.
-        await store.send(.listen) {
-            $0.$userIP.withLock { $0 = "198.51.100.42" }
-            $0.$userISP.withLock { $0 = "Proton ISP" }
-            // The tunnel reports no country, so the cooldown is dropped to have the next
-            // disconnected fetch re-pair the country with this address.
-            $0.$lastLocationRetrieval.withLock { $0 = nil }
-        }
+        await store.send(.listen)
         await store.receive(\.connectionStateUpdate.connected)
-        #expect(userCountry == "pl") // no country to pair with it yet
+        // The country is the one the previous measurement left behind, which is exactly what
+        // recording this as a tunnel report says.
+        #expect(userLocation == .init(
+            location: .init(ip: "198.51.100.42", country: "PL", isp: "Proton ISP"),
+            measuredAt: now,
+            source: .tunnelReport
+        ))
+        #expect(userLocation?.isCountryVerified == false)
         await store.send(.tearDown)
     }
 
@@ -263,13 +237,10 @@ struct UserLocationFeatureTests {
     @Test("Refetches on disconnection despite the cooldown after adopting a tunnel IP")
     func refetchesOnDisconnectionAfterAdoptingTunnelIP() async {
         @Shared(.connectionState) var connectionState
-        $userIP.withLock { $0 = "10.9.8.7" }
-        $userCountry.withLock { $0 = "de" }
-
         let now = Date.now
-        // A fetch that just happened: without the tunnel-reported IP this would hold off the
-        // disconnection fetch for a full hour.
-        $lastLocationRetrieval.withLock { $0 = now }
+        // A measurement that just happened: without the tunnel report replacing it, this would hold
+        // off the disconnection fetch for a full hour.
+        $userLocation.withLock { $0 = .measured(.init(ip: "10.9.8.7", country: "DE", isp: "Telekom"), at: now) }
         $connectionState.withLock { $0 = Self.connected(userIP: "198.51.100.42", userISP: "Proton ISP") }
 
         let store = TestStore(initialState: .init()) {
@@ -280,12 +251,13 @@ struct UserLocationFeatureTests {
             $0.locationClient = .init() // a fetch is not expected while connected
         }
 
-        await store.send(.listen) {
-            $0.$userIP.withLock { $0 = "198.51.100.42" }
-            $0.$userISP.withLock { $0 = "Proton ISP" }
-            $0.$lastLocationRetrieval.withLock { $0 = nil } // cooldown dropped
-        }
+        await store.send(.listen)
         await store.receive(\.connectionStateUpdate.connected)
+        #expect(userLocation == .init(
+            location: .init(ip: "198.51.100.42", country: "DE", isp: "Proton ISP"),
+            measuredAt: now,
+            source: .tunnelReport
+        ))
         await store.send(.tearDown)
 
         // The disconnection is exercised on a second store: a TestStore resolves the shared
@@ -310,12 +282,8 @@ struct UserLocationFeatureTests {
         await disconnectedStore.receive(\.userLocationFetchStarted)
 
         await locationClock.advance(by: LocationClient.responseDelay)
-        await disconnectedStore.receive(\.userLocationFetchFinished.success) {
-            $0.$userIP.withLock { $0 = UserLocation.poland.ip }
-            $0.$userISP.withLock { $0 = UserLocation.poland.isp }
-            $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
-            $0.$lastLocationRetrieval.withLock { $0 = now }
-        }
+        await disconnectedStore.receive(\.userLocationFetchFinished.success)
+        #expect(userLocation == .measured(.poland, at: now))
         await disconnectedStore.receive(\.delegate.userLocationChanged)
         await disconnectedStore.send(.tearDown)
     }
@@ -348,9 +316,7 @@ struct UserLocationFeatureTests {
 
         await locationClock.advance(by: LocationClient.responseDelay)
         await store.receive(\.userLocationFetchFinished.success) // nothing stored, no delegate
-        #expect(userIP == nil)
-        #expect(userCountry == nil)
-        #expect(lastLocationRetrieval == nil) // no cooldown either, so the next attempt is free
+        #expect(userLocation == nil) // nothing stored, so the next attempt is free
         await store.send(.tearDown)
     }
 
@@ -363,9 +329,10 @@ struct UserLocationFeatureTests {
     @Test("Fetches on a network change even inside the routine cooldown")
     func fetchesOnNetworkChangeInsideRoutineCooldown() async {
         let now = Date.now
-        $userIP.withLock { $0 = "10.9.8.7" }
         // Recent enough that the routine cooldown still holds, old enough to clear the network floor.
-        $lastLocationRetrieval.withLock { $0 = now.addingTimeInterval(-.minutes(5)) }
+        $userLocation.withLock {
+            $0 = .measured(.init(ip: "10.9.8.7", country: "DE", isp: "Telekom"), at: now.addingTimeInterval(-.minutes(5)))
+        }
 
         let locationClock = TestClock()
         let (attachments, attachmentSource) = AsyncStream.makeStream(of: NetworkAttachment.self)
@@ -390,12 +357,8 @@ struct UserLocationFeatureTests {
         await store.receive(\.userLocationFetchStarted)
 
         await locationClock.advance(by: LocationClient.responseDelay)
-        await store.receive(\.userLocationFetchFinished.success) {
-            $0.$userIP.withLock { $0 = UserLocation.poland.ip }
-            $0.$userISP.withLock { $0 = UserLocation.poland.isp }
-            $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
-            $0.$lastLocationRetrieval.withLock { $0 = now }
-        }
+        await store.receive(\.userLocationFetchFinished.success)
+        #expect(userLocation == .measured(.poland, at: now))
         await store.receive(\.delegate.userLocationChanged)
         await store.send(.tearDown)
     }
@@ -404,8 +367,10 @@ struct UserLocationFeatureTests {
     @Test("Throttles network changes that follow a fetch immediately")
     func throttlesRepeatedNetworkChanges() async {
         let now = Date.now
-        $userIP.withLock { $0 = "10.9.8.7" }
-        $lastLocationRetrieval.withLock { $0 = now.addingTimeInterval(-30) } // inside the floor
+        // Inside the network-change floor.
+        $userLocation.withLock {
+            $0 = .measured(.init(ip: "10.9.8.7", country: "DE", isp: "Telekom"), at: now.addingTimeInterval(-30))
+        }
 
         let (attachments, attachmentSource) = AsyncStream.makeStream(of: NetworkAttachment.self)
         let store = TestStore(initialState: .init()) {
@@ -427,20 +392,17 @@ struct UserLocationFeatureTests {
         await store.receive(\.networkAttachmentChanged)
         await store.receive(\.fetchUserLocation)
         await store.receive(\.userLocationFetchFinished.failure.cooldown)
-        #expect(userIP == "10.9.8.7")
+        #expect(userLocation?.location.ip == "10.9.8.7")
         await store.send(.tearDown)
     }
 
     @Test("Keeps the stored IP when the tunnel reports none")
     func keepsStoredIPWhenTunnelReportsNone() async {
         @Shared(.connectionState) var connectionState
-        $userIP.withLock { $0 = "10.9.8.7" }
-        $userISP.withLock { $0 = "Stale ISP" }
-
         let now = Date.now
-        $lastLocationRetrieval.withLock { $0 = now }
-        // The local agent hasn't reported the observed address yet: nothing to adopt, and the
-        // values from the last fetch must survive.
+        // The local agent hasn't reported the observed address yet: nothing to adopt, and the last
+        // measurement must survive.
+        $userLocation.withLock { $0 = .measured(.init(ip: "10.9.8.7", country: "DE", isp: "Telekom"), at: now) }
         $connectionState.withLock { $0 = Self.connected(userIP: nil, userISP: nil) }
 
         let store = TestStore(initialState: .init()) {
@@ -453,9 +415,7 @@ struct UserLocationFeatureTests {
 
         await store.send(.listen)
         await store.receive(\.connectionStateUpdate.connected)
-        #expect(userIP == "10.9.8.7")
-        #expect(userISP == "Stale ISP")
-        #expect(lastLocationRetrieval == now)
+        #expect(userLocation == .measured(.init(ip: "10.9.8.7", country: "DE", isp: "Telekom"), at: now))
         await store.send(.tearDown)
     }
 
@@ -464,11 +424,8 @@ struct UserLocationFeatureTests {
     @Test("Ignores the tunnel-reported IP on Secure Core")
     func ignoresTunnelReportedIPOnSecureCore() async {
         @Shared(.connectionState) var connectionState
-        $userIP.withLock { $0 = "10.9.8.7" }
-        $userISP.withLock { $0 = "Stale ISP" }
-
         let now = Date.now
-        $lastLocationRetrieval.withLock { $0 = now }
+        $userLocation.withLock { $0 = .measured(.init(ip: "10.9.8.7", country: "DE", isp: "Telekom"), at: now) }
         $connectionState.withLock {
             $0 = Self.connected(userIP: "198.51.100.42", userISP: "Proton ISP", peer: .secureCoreMock)
         }
@@ -483,9 +440,7 @@ struct UserLocationFeatureTests {
 
         await store.send(.listen)
         await store.receive(\.connectionStateUpdate.connected)
-        #expect(userIP == "10.9.8.7")
-        #expect(userISP == "Stale ISP")
-        #expect(lastLocationRetrieval == now)
+        #expect(userLocation == .measured(.init(ip: "10.9.8.7", country: "DE", isp: "Telekom"), at: now))
         await store.send(.tearDown)
     }
 
@@ -513,12 +468,8 @@ struct UserLocationFeatureTests {
         await store.receive(\.fetchUserLocation)
         await store.receive(\.userLocationFetchStarted)
         await locationClock.advance(by: LocationClient.responseDelay)
-        await store.receive(\.userLocationFetchFinished.success) {
-            $0.$userIP.withLock { $0 = UserLocation.poland.ip }
-            $0.$userISP.withLock { $0 = UserLocation.poland.isp }
-            $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
-            $0.$lastLocationRetrieval.withLock { $0 = now }
-        }
+        await store.receive(\.userLocationFetchFinished.success)
+        #expect(userLocation == .measured(.poland, at: now))
         await store.receive(\.delegate.userLocationChanged)
 
         // Trigger a second fetch after one cooldown interval; location remains unchanged.
@@ -530,9 +481,8 @@ struct UserLocationFeatureTests {
         await store.receive(\.fetchUserLocation)
         await store.receive(\.userLocationFetchStarted)
         await locationClock.advance(by: LocationClient.responseDelay)
-        await store.receive(\.userLocationFetchFinished.success) {
-            $0.$lastLocationRetrieval.withLock { $0 = firstRefreshDate }
-        }
+        await store.receive(\.userLocationFetchFinished.success)
+        #expect(userLocation == .measured(.poland, at: firstRefreshDate))
 
         // A trigger only 30 minutes later should now respect cooldown.
         store.dependencies.date = .constant(halfwayPastFirstRefresh)

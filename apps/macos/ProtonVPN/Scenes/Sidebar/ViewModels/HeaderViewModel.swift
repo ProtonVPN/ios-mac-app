@@ -55,7 +55,7 @@ final class HeaderViewModel {
 
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.serverRepository) private var serverRepository
-    @SharedReader(.userLocation) private var userLocation: UserLocation?
+    @SharedReader(.userLocation) private var userLocation: StoredUserLocation?
     @Dependency(\.announcementManager) private var announcementManager
     @Dependency(\.notificationManager) private var notificationManager
 
@@ -459,7 +459,7 @@ final class HeaderViewModel {
         if isConnected {
             connectedServer?.endpoint.offsetExitIp
         } else {
-            userLocation?.ip
+            userLocation?.location.ip
         }
     }
 

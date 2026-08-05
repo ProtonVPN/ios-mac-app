@@ -39,8 +39,7 @@ public struct ConnectionStatusBannerFeature {
         }
 
         @SharedReader(.protectionState) public var protectionState: ProtectionState
-        @SharedReader(.userCountry) public var userCountry: String?
-        @SharedReader(.userIP) public var userIP: String?
+        @SharedReader(.userLocation) public var userLocation: StoredUserLocation?
         @SharedReader(.userTier) public var userTier: VpnTier?
         @SharedReader(.tunnelStats) public var netShieldStats: NetShieldModel = .zero(enabled: true)
 

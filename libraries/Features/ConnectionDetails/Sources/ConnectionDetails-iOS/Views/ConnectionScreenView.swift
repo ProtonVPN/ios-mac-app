@@ -136,8 +136,8 @@ public struct ConnectionScreenView: View {
             @Shared(.connectionState) var connectionState: ConnectionState
             $connectionState.withLock { $0 = connectedState }
 
-            @Shared(.userIP) var userIP: String?
-            $userIP.withLock { $0 = "127.0.0.1" }
+            @Shared(.userLocation) var userLocation: StoredUserLocation?
+            $userLocation.withLock { $0 = .measured(.init(ip: "127.0.0.1", country: "CH", isp: "Swisscom"), at: .now) }
 
             return StoreOf<ConnectionScreenFeature>(
                 initialState: connectionState.connectionScreenFeatureState()!,

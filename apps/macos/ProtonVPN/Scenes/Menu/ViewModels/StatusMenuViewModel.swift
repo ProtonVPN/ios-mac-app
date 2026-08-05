@@ -61,7 +61,7 @@ final class StatusMenuViewModel {
     @SharedReader(.connectionState) private var connectionState: ConnectionState
     @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
 
-    @SharedReader(.userLocation) private var userLocation: UserLocation?
+    @SharedReader(.userLocation) private var userLocation: StoredUserLocation?
     private lazy var navService: NavigationService = factory.makeNavigationService()
     @Dependency(\.upsellManager) private var upsellManager
     private lazy var wifiSecurityMonitor: WiFiSecurityMonitor = factory.makeWiFiSecurityMonitor()
@@ -594,7 +594,7 @@ final class StatusMenuViewModel {
         if isConnected {
             connectionState.resolvedServer?.endpoint.offsetExitIp
         } else {
-            userLocation?.ip
+            userLocation?.location.ip
         }
     }
 

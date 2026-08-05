@@ -62,6 +62,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.unauthKeychain) private var unauthKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.vpnApiClient) private var vpnApiClient
+    @Dependency(\.userLocationStore) private var userLocationStore
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.activeTunnelInspector) private var activeTunnelInspector
@@ -173,9 +174,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             )
         }
 
-        if isDisconnectedForPropertiesRefresh {
-            @Shared(.userLocation) var userLocation
-            $userLocation.withLock { $0 = properties.location }
+        // Only a properties refresh made outside of a tunnel measured the location; otherwise the
+        // response carries back whatever we passed in.
+        if isDisconnectedForPropertiesRefresh, let location = properties.location {
+            userLocationStore.recordMeasured(location)
         }
 
         @Shared(.userAccountCreationDate) var userAccountCreationDate
@@ -219,7 +221,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func getVPNProperties() async throws -> VpnProperties? {
         let isDisconnected = isDisconnectedForPropertiesRefresh
         @SharedReader(.userLocation) var userLocation
-        let location = userLocation
+        let location = userLocation?.location
 
         @Dependency(\.serverRepository) var serverRepository
         let shouldRefreshServersAccordingToUserTier = !serverRepository.shouldFetchFullServerList
@@ -239,7 +241,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             throw CommonVpnError.noConnectionsAvailable
         } catch {
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
-            if serverRepository.isEmpty || userLocation?.ip == nil {
+            if serverRepository.isEmpty || userLocation?.location.ip == nil {
                 // only throw if there is a major reason
                 throw error
             }

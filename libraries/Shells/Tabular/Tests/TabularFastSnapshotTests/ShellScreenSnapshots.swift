@@ -98,16 +98,14 @@ struct ShellScreenTests {
         @Shared(.protectionState) var protectionState
         @Shared(.connectionState) var connectionState
         @Shared(.userTier) var userTier
-        @Shared(.userCountry) var userCountry
-        @Shared(.userIP) var userIP
+        @Shared(.userLocation) var userLocation
         @Shared(.recentConnections) var recents
         @Shared(.netShieldLevel) var netShieldLevel
 
         let store = Store(initialState: TabularFeature.State(detent: .half), reducer: TabularFeature.init)
         $netShieldLevel.withLock { $0 = .level2 }
         $recents.withLock { $0 = [.connectionRegion, .connectionSecureCoreFastest, .connectionSecureCore] }
-        $userCountry.withLock { $0 = "PL" }
-        $userIP.withLock { $0 = "1.2.3.4" }
+        $userLocation.withLock { $0 = .measured(.init(ip: "1.2.3.4", country: "PL", isp: "Play"), at: .now) }
         $userTier.withLock { $0 = tier }
         $protectionState.withLock { $0 = state.protection }
         $connectionState.withLock { $0 = state.connection }

@@ -52,9 +52,9 @@ struct DisconnectedCountriesSnapshotsTests {
         // Declared in the test body, not as a suite stored property: the suite instance is created outside the
         // `.dependencies` trait's scope, so a projection bound there would write to a different shared storage than the
         // store reads.
-        @Shared(.userCountry) var userCountry
+        @Shared(.userLocation) var userLocation
         let countryCode = countryCode.uppercased()
-        $userCountry.withLock { $0 = countryCode }
+        $userLocation.withLock { $0 = .measured(.init(ip: "1.2.3.4", country: countryCode, isp: "Play"), at: .now) }
 
         let store = Store(initialState: HomeMapFeature.State(), reducer: HomeMapFeature.init)
         let size = try #require(ViewImageConfig.iPhoneSe.size)

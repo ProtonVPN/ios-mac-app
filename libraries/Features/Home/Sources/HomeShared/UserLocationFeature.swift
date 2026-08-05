@@ -43,14 +43,12 @@ let didBecomeActiveNotification: NSNotification.Name = {
 public struct UserLocationFeature {
     @Dependency(\.date) var date
 
+    @Dependency(\.userLocationStore) var userLocationStore
+
     @ObservableState
     public struct State: Equatable {
         @SharedReader(.connectionState) var connectionState: ConnectionState
-
-        @Shared(.userCountry) var userCountry: String?
-        @Shared(.userIP) var userIP: String?
-        @Shared(.userISP) var userISP: String?
-        @Shared(.lastLocationRetrieval) var lastLocationRetrieval: Date?
+        @SharedReader(.userLocation) var userLocation: StoredUserLocation?
     }
 
     public enum Action {
@@ -144,12 +142,15 @@ public struct UserLocationFeature {
                 )
 
             case let .fetchUserLocation(trigger):
-                if let lastLocationRetrieval = state.lastLocationRetrieval {
-                    let nextRetrievalDate = lastLocationRetrieval.addingTimeInterval(trigger.cooldown)
+                // A tunnel-reported address arrives without a country, so the pair on screen is only
+                // as good as the country the previous measurement left behind: measure again at the
+                // first opportunity rather than waiting out the interval.
+                if let stored = state.userLocation, stored.isCountryVerified {
+                    let nextRetrievalDate = stored.measuredAt.addingTimeInterval(trigger.cooldown)
                     guard date.now >= nextRetrievalDate else {
                         return .send(.userLocationFetchFinished(.failure(.cooldown(nextRetrievalDate))))
                     }
-                } // Nothing retrieved yet, so no cooldown to respect
+                } // Nothing measured yet, or measured against an address we have since replaced
 
                 // The endpoint answers with the exit IP while a tunnel is up, so only the
                 // disconnected state can tell us the user's own address. This is decided here rather
@@ -184,21 +185,15 @@ public struct UserLocationFeature {
                     return .none
                 }
 
-                let userIP = location.ip
-                let lowercasedUserCountry = location.country.lowercased()
-                // Refresh cooldown on every successful fetch, even if location is unchanged.
-                // Otherwise, repeated triggers can bypass throttling once the initial cooldown passes.
-                state.$lastLocationRetrieval.withLock { $0 = date.now }
+                let previous = state.userLocation
+                // Recorded on every successful fetch, even when the location is unchanged: the
+                // timestamp is what throttles the next trigger.
+                userLocationStore.recordMeasured(location)
 
-                if userIP == state.userIP, lowercasedUserCountry == state.userCountry?.lowercased() {
+                guard location != previous?.location else {
                     log.debug("User Location unchanged from last fetch", category: .api)
                     return .none
                 }
-
-                log.debug("Updating user location defaults", category: .persistence)
-                state.$userCountry.withLock { $0 = lowercasedUserCountry }
-                state.$userISP.withLock { $0 = location.isp }
-                state.$userIP.withLock { $0 = userIP }
                 return .send(.delegate(.userLocationChanged(location)))
 
             case let .userLocationFetchFinished(.failure(error)):
@@ -250,21 +245,16 @@ public struct UserLocationFeature {
                 // address the server observes for us, which is exactly the "my IP" we want to show.
                 guard let proTUNData = connectionState.proTUNConnectionData,
                       let userIP = proTUNData.userIP,
-                      userIP != state.userIP
+                      userIP != state.userLocation?.location.ip
                 else {
                     return .none
                 }
 
-                log.debug("Updating user location defaults from tunnel-reported data", category: .connection)
-                state.$userIP.withLock { $0 = userIP }
-                if let userISP = proTUNData.userISP {
-                    state.$userISP.withLock { $0 = userISP }
-                }
-                // The stored country was resolved from the address the previous fetch saw, and the
-                // tunnel doesn't report one to pair with this IP. Clearing the cooldown makes the
-                // fetch performed on the next disconnection re-establish a consistent country/IP pair
-                // instead of leaving the old country next to the new address.
-                state.$lastLocationRetrieval.withLock { $0 = nil }
+                log.debug("Updating user location from tunnel-reported data", category: .connection)
+                // Recorded as a tunnel report, which marks the country that comes with it as
+                // belonging to the address this one replaced — the fetch on the next disconnection
+                // re-establishes a consistent pair.
+                userLocationStore.recordTunnelReported(ip: userIP, isp: proTUNData.userISP)
                 return .none
             }
         }

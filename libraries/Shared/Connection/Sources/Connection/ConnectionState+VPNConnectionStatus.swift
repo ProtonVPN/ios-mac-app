@@ -140,9 +140,11 @@ public extension ConnectionState {
     /// Properties-refresh predicate: safe to refresh remote properties because no tunnel is up or going down.
     var isDisconnectedForPropertiesRefresh: Bool {
         switch self {
-        case .connected, .disconnecting:
+        case .connected, .disconnecting, .killSwitchActive:
             false
-        case .resolving, .disconnected, .connecting, .authenticationRequired, .killSwitchActive:
+        case let .connecting(_, tunnelActive):
+            !tunnelActive
+        case .resolving, .disconnected, .authenticationRequired:
             true
         }
     }

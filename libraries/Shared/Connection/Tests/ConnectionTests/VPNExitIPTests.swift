@@ -58,6 +58,31 @@ struct VPNExitIPTests {
         )
     }
 
+    /// The endpoint can only report the user's own address when nothing is routing their traffic.
+    @Test("Only states without a live interface allow a location measurement")
+    func propertiesRefreshExcludesLiveInterfaces() {
+        #expect(ConnectionState.disconnected.isDisconnectedForPropertiesRefresh)
+        #expect(ConnectionState.resolving.isDisconnectedForPropertiesRefresh)
+        #expect(Self.connecting(tunnelActive: false).isDisconnectedForPropertiesRefresh)
+
+        // A handover keeps the previous tunnel carrying traffic, so the endpoint would answer with
+        // the exit address.
+        #expect(!Self.connecting(tunnelActive: true).isDisconnectedForPropertiesRefresh)
+        #expect(!Self.connected(protocolConnectionData: .ike).isDisconnectedForPropertiesRefresh)
+        #expect(!ConnectionState.disconnecting(.wireGuard, .defaultFastest).isDisconnectedForPropertiesRefresh)
+        // Blocking: the request can only fail.
+        #expect(!ConnectionState.killSwitchActive(.defaultFastest, .init(
+            connectionSpec: .defaultFastest,
+            tunnelProtocol: .wireGuard,
+            peerIDs: [],
+            killSwitch: true
+        )).isDisconnectedForPropertiesRefresh)
+    }
+
+    private static func connecting(tunnelActive: Bool) -> ConnectionState {
+        .connecting(.unresolved(.init(spec: .defaultFastest, acceptableProtocols: .all)), tunnelActive: tunnelActive)
+    }
+
     private static func connected(serverExitV4: String?, serverExitV6: String?) -> ConnectionState {
         connected(protocolConnectionData: .proTUN(.init(
             transport: .udp,

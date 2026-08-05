@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import Connection
+import Domain
 import Foundation
 import Strings
 import VPNAppCore
@@ -30,8 +31,13 @@ public struct IPViewFeature {
         /// — or a screenshot — unasked.
         public var userIPHidden = true
 
-        @SharedReader(.userIP) public var userIP: String?
+        @SharedReader(.userLocation) private var userLocation: StoredUserLocation?
         @SharedReader(.connectionState) private var connectionState: ConnectionState
+
+        /// The user's own address, i.e. the one the outside world sees without the VPN.
+        public var userIP: String? {
+            userLocation?.location.ip
+        }
 
         public init() {}
 

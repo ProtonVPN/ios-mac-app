@@ -103,7 +103,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         guard loggedIn else { return }
 
         @SharedReader(.userLocation) var userLocation
-        let lastKnownIp = (userLocation?.ip).flatMap { TruncatedIp(ip: $0) }
+        let lastKnownIp = (userLocation?.location.ip).flatMap { TruncatedIp(ip: $0) }
         do {
             let properties = try await vpnApiClient.loads(lastKnownIp: lastKnownIp)
             let loads = properties.map(\.value)
