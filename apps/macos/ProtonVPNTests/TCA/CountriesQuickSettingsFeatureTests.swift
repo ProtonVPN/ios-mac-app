@@ -20,6 +20,7 @@ import ComposableArchitecture
 import Connection
 import Dependencies
 import Domain
+import Ergonomics
 import NetShield
 @testable import ProtonVPN
 import Sharing
@@ -355,6 +356,7 @@ struct CountriesQuickSettingsFeatureTests {
         )) {
             QuickSettingsFeature()
         } withDependencies: {
+            $0.featureFlags = .enabling()
             $0.netShieldPropertyProvider.getNetShieldType = { .off }
         }
 
@@ -439,6 +441,7 @@ struct CountriesQuickSettingsFeatureTests {
         let store = TestStore(initialState: QuickSettingsFeature.State()) {
             QuickSettingsFeature()
         } withDependencies: {
+            $0.featureFlags = .enabling()
             $0.hermesClient.setIsEnabled(true)
         }
 
@@ -457,6 +460,10 @@ struct CountriesQuickSettingsFeatureTests {
     private func makeStore() -> TestStoreOf<QuickSettingsFeature> {
         TestStore(initialState: .init()) {
             QuickSettingsFeature()
+        } withDependencies: {
+            // `QuickSettingsFeature.State` reads `VPNFeatureFlagType.portForwarding` while it is built, and the
+            // NetShield rows read `VPNFeatureFlagType.isNetShieldLevelThreeEnabled` when the detail view renders.
+            $0.featureFlags = .enabling()
         }
     }
 

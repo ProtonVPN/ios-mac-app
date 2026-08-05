@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import Domain
+import Ergonomics
 import Foundation
 import LegacyCommon
 import ProtonCoreFeatureFlags
@@ -28,11 +29,11 @@ import Testing
 struct SystemExtensionsFeatureTests {
     @Test("Requests are serialized and processed in order")
     func requestsAreSerialized() async {
-        FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.plutoniumMacOS, true)
-        defer { FeatureFlagsRepository.shared.resetFlagOverride(VPNFeatureFlagType.plutoniumMacOS) }
-
+        // `SystemExtensionType.plutonium.featureEnabled` gates the second request's extension list.
         let store = TestStore(initialState: SystemExtensionsFeature.State()) {
             SystemExtensionsFeature()
+        } withDependencies: {
+            $0.featureFlags = .enabling(VPNFeatureFlagType.plutoniumMacOS)
         }
         let firstRequest = SystemExtensionsRequest(
             origin: .connectionSettings,
@@ -129,6 +130,7 @@ struct SystemExtensionsFeatureTests {
         let store = TestStore(initialState: SystemExtensionsFeature.State()) {
             SystemExtensionsFeature()
         } withDependencies: {
+            $0.featureFlags = .enabling()
             $0.profileManager.customProfiles = { [] }
         }
 
@@ -178,6 +180,8 @@ struct SystemExtensionsFeatureTests {
                     observedResponse.setValue(response)
                 }
             )
+        } withDependencies: {
+            $0.featureFlags = .enabling()
         }
         store.exhaustivity = .off
 

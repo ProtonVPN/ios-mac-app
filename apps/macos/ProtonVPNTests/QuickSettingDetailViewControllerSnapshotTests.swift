@@ -19,6 +19,7 @@
 import AppKit
 import ComposableArchitecture
 import Domain
+import Ergonomics
 import NetShield
 @testable import ProtonVPN
 import SnapshotTesting
@@ -38,22 +39,31 @@ struct QuickSettingDetailViewControllerSnapshotTests {
         NSApp.appearance = NSAppearance(named: .darkAqua)
 
         @SharedReader(.userTier) var userTier: VpnTier? = .paid
-        let store = Store(initialState: makeState(type: type)) {
-            QuickSettingDetailFeature()
+        @Shared(.connectionProtocol) var connectionProtocol
+        $connectionProtocol.withLock { $0 = .vpnProtocol(.wireGuard(.udp)) }
+
+        // The NetShield rows read `VPNFeatureFlagType.isNetShieldLevelThreeEnabled` while the view body renders, and
+        // the recorded references include the level-3 row, so the flag has to be on for the whole render.
+        withDependencies {
+            $0.featureFlags = .enabling(VPNFeatureFlagType.isNetShieldLevelThreeEnabled)
+        } operation: {
+            let store = Store(initialState: makeState(type: type)) {
+                QuickSettingDetailFeature()
+            }
+            let view = QuickSettingDetailView(store: store)
+                .frame(width: snapshotSize.width, height: snapshotSize.height)
+                .background(Color(.background))
+
+            let hostingView = NSHostingView(rootView: view)
+            hostingView.frame = CGRect(origin: .zero, size: snapshotSize)
+            hostingView.layoutSubtreeIfNeeded()
+
+            assertSnapshot(
+                of: hostingView,
+                as: .image(size: snapshotSize),
+                named: "\(type)"
+            )
         }
-        let view = QuickSettingDetailView(store: store)
-            .frame(width: snapshotSize.width, height: snapshotSize.height)
-            .background(Color(.background))
-
-        let hostingView = NSHostingView(rootView: view)
-        hostingView.frame = CGRect(origin: .zero, size: snapshotSize)
-        hostingView.layoutSubtreeIfNeeded()
-
-        assertSnapshot(
-            of: hostingView,
-            as: .image(size: snapshotSize),
-            named: "\(type)"
-        )
     }
 
     private func makeState(type: QuickSettingType) -> QuickSettingDetailFeature.State {

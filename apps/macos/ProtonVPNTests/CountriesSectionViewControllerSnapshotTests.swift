@@ -21,6 +21,7 @@ import ComposableArchitecture
 import Countries
 import Dependencies
 import Domain
+import Ergonomics
 import LegacyCommon
 @testable import ProtonVPN
 import Sharing
@@ -141,6 +142,9 @@ struct CountriesSectionViewControllerSnapshotTests {
     private func withMockedDeps<T>(_ operation: () -> T) -> T {
         let serverGroups = makeSnapshotServerGroups()
         return withDependencies {
+            // `CountriesSectionFeature.State` reads `VPNFeatureFlagType.portForwarding` while it is built; the
+            // snapshot state forces `portForwarding.isVisible` afterwards, so nothing needs to be enabled here.
+            $0.featureFlags = .enabling()
             $0.mainQueue = .immediate
             // Keeping the same full serverRepository signature avoids linker issues in tests.
             $0.serverRepository = .init(
