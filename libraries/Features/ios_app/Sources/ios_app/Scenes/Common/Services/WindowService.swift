@@ -202,12 +202,16 @@ final class WindowServiceImplementation {
             return
         }
 
-        guard let topViewController = rootViewController.presentedViewController else {
-            rootViewController.dismiss(animated: true, completion: completion)
+        // Don't let anything dismiss the main sheets which hold things like Profiles, Countries, etc., which need to be
+        // permanent in order for the app to be usable.
+        let host = (rootViewController.presentedViewController as? ShellPagesController) ?? rootViewController
+
+        guard host.presentedViewController != nil else {
+            completion?()
             return
         }
 
-        topViewController.dismiss(animated: true, completion: completion)
+        host.dismiss(animated: true, completion: completion)
     }
 
     // MARK: - Alerts
