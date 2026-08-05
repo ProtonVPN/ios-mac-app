@@ -154,25 +154,31 @@ public enum ProtocolConnectionData: Equatable, Sendable, Codable {
     case ike
     case proTUN(ProTUNConnectionData)
 
-    var proTUNData: ProTUNConnectionData? {
+    /// The ProTUN payload, or `nil` when the connection runs over IKEv2.
+    public var proTUNData: ProTUNConnectionData? {
         guard case let .proTUN(data) = self else { return nil }
         return data
     }
 
     public struct ProTUNConnectionData: Equatable, Sendable, Codable {
         public let transport: Domain.WireGuardTransport
+        /// The exit addresses the local agent reports, per family. A server can answer with either,
+        /// or both.
         public let serverExitV4: String?
+        public let serverExitV6: String?
         public let userISP: String?
         public let userIP: String?
 
         public init(
             transport: Domain.WireGuardTransport,
             serverExitV4: String? = nil,
+            serverExitV6: String? = nil,
             userISP: String? = nil,
             userIP: String? = nil
         ) {
             self.transport = transport
             self.serverExitV4 = serverExitV4
+            self.serverExitV6 = serverExitV6
             self.userISP = userISP
             self.userIP = userIP
         }
@@ -624,6 +630,7 @@ final class PacketTunnelManager: TunnelManager {
                     protocolConnectionData: .proTUN(.init(
                         transport: peer.transport,
                         serverExitV4: peer.serverExitV4,
+                        serverExitV6: peer.serverExitV6,
                         userISP: peer.userISP,
                         userIP: peer.userIP
                     ))

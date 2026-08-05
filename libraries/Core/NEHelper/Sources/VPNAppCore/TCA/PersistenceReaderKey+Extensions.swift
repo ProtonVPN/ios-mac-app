@@ -27,12 +27,18 @@ public extension SharedKey where Self == AppStorageKey<String?> {
 }
 
 public extension SharedKey where Self == AppStorageKey<String?> {
+    /// The user's own public IP, i.e. the address the outside world sees them at without the VPN.
+    ///
+    /// Written from `/vpn/location` while disconnected, and from the ProTUN local agent's report of
+    /// the address the server observes while connected — the location endpoint would answer with the
+    /// exit IP through an active tunnel.
     static var userIP: Self {
         .appStorage("userIP")
     }
 }
 
 public extension SharedKey where Self == AppStorageKey<String?> {
+    /// The user's ISP, from the same two sources as ``SharedKey/userIP``.
     static var userISP: Self {
         .appStorage("userISP")
     }

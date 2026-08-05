@@ -34,16 +34,9 @@ public struct IPView: View {
     }
 
     private var ipAddressTuple: (value: String, accessibilityValue: String) {
-        let isLocalIpHidden = store.localIpHidden
-        if isLocalIpHidden {
-            let localizedAction = isLocalIpHidden ?
-                Localizable.connectionDetailsAccessibilityIpViewShowAddress :
-                Localizable.connectionDetailsAccessibilityIpViewHideAddress
-            return ("***.***.***.***", localizedAction)
-        } else {
-            let value = store.userIP ?? Localizable.connectionDetailsIpviewIpUnavailable
-            return (value, value)
-        }
+        let value = store.displayedUserIP
+        guard store.isUserIPMasked else { return (value, value) }
+        return (value, Localizable.connectionDetailsAccessibilityIpViewShowAddress)
     }
 
     public var body: some View {
@@ -53,7 +46,7 @@ public struct IPView: View {
                     Text(Localizable.connectionDetailsIpviewIpMy)
                         .foregroundColor(Color(.text, .weak))
 
-                    if store.buttonIsVisible {
+                    if store.canRevealUserIP {
                         Button {
                             store.send(.changeIPVisibility)
                         } label: {

@@ -40,21 +40,23 @@ public struct IPView: View {
                     Text(Localizable.connectionDetailsIpviewIpMy)
                         .foregroundColor(Color(.text, .weak))
 
-                    Button(action: {
-                        store.send(.changeIPVisibility)
-                    }, label: {
-                        (
-                            store.localIpHidden
-                        )
-                        .resizable().frame(width: buttonSize, height: buttonSize)
-                        .foregroundColor(Color(.text, .weak))
-                    })
-                    .buttonStyle(PlainButtonStyle())
+                    if store.canRevealUserIP {
+                        Button(action: {
+                            store.send(.changeIPVisibility)
+                        }, label: {
+                            (
+                                store.userIPHidden
                                     ? Theme.Asset.Icons.eye.swiftUIImage
                                     : Theme.Asset.Icons.eyeSlash.swiftUIImage
+                            )
+                            .resizable().frame(width: buttonSize, height: buttonSize)
+                            .foregroundColor(Color(.text, .weak))
+                        })
+                        .buttonStyle(PlainButtonStyle())
+                    }
                 }
 
-                Text(store.localIpHidden ? "***.***.***.***" : (store.userIP ?? Localizable.connectionDetailsIpviewIpUnavailable))
+                Text(store.displayedUserIP)
                     .foregroundColor(Color(.text, .normal))
             }
             .frame(maxWidth: .infinity) // Makes both sides equal width
@@ -65,6 +67,9 @@ public struct IPView: View {
             VStack(spacing: verticalSpacing) {
                 Text(Localizable.connectionDetailsIpviewIpVpn)
                     .foregroundColor(Color(.text, .weak))
+
+                Text(store.vpnIp ?? Localizable.connectionDetailsIpviewIpUnavailable)
+                    .foregroundColor(Color(.text, .normal))
             }
             .frame(maxWidth: .infinity) // Makes both sides equal width
         }

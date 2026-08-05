@@ -26,25 +26,42 @@ import VPNAppCore
 public struct IPViewFeature {
     @ObservableState
     public struct State: Equatable {
-        public var vpnIp: String? {
-            guard case let .connected(_, connectionData) = connectionState else {
-                return nil
-            }
-            if case let .proTUN(proTUNData) = connectionData.protocolConnectionData {
-                return proTUNData.serverExitV4 ?? connectionData.currentPeer.endpoint.offsetExitIp
-            }
-            return connectionData.currentPeer.endpoint.offsetExitIp
-        }
-
-        public var localIpHidden = true
+        /// Whether the user's own address is concealed. Starts hidden so it never reaches the screen
+        /// — or a screenshot — unasked.
+        public var userIPHidden = true
 
         @SharedReader(.userIP) public var userIP: String?
         @SharedReader(.connectionState) private var connectionState: ConnectionState
 
         public init() {}
 
-        public var buttonIsVisible: Bool {
+        /// The address the user's traffic leaves the VPN from, or `nil` when none is known.
+        public var vpnIp: String? {
+            connectionState.vpnExitIP
+        }
+
+        /// Whether the reveal toggle has an address to reveal.
+        public var canRevealUserIP: Bool {
             userIP != nil
+        }
+
+        /// The user's own address as the row should render it: the address itself, a mask of the
+        /// matching family while it is concealed, or a placeholder when none is known — never a mask
+        /// standing in for a value we don't have.
+        public var displayedUserIP: String {
+            guard let userIP else { return Localizable.connectionDetailsIpviewIpUnavailable }
+            return userIPHidden ? Self.mask(for: userIP) : userIP
+        }
+
+        /// Whether ``displayedUserIP`` is currently concealing a known address.
+        public var isUserIPMasked: Bool {
+            userIPHidden && userIP != nil
+        }
+
+        /// Fixed-width groups, so the mask matches the address family — the tunnel reports either
+        /// family — without giving away how long the address is.
+        private static func mask(for ip: String) -> String {
+            ip.contains(":") ? "****:****:****:****" : "***.***.***.***"
         }
     }
 
@@ -58,7 +75,7 @@ public struct IPViewFeature {
         Reduce { state, action in
             switch action {
             case .changeIPVisibility:
-                state.localIpHidden = !state.localIpHidden
+                state.userIPHidden.toggle()
                 return .none
             }
         }

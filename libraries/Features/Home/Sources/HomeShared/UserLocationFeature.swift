@@ -114,27 +114,30 @@ public struct UserLocationFeature {
                 )
 
             case .fetchUserLocation:
-                guard let lastLocationRetrieval = state.lastLocationRetrieval else {
-                    // We've not fetched user location yet, let's do it immediately
-                    return .send(.userLocationFetchStarted)
-                }
+                if let lastLocationRetrieval = state.lastLocationRetrieval {
+                    let nextRetrievalDate = lastLocationRetrieval.addingTimeInterval(Self.locationCooldownInterval)
+                    guard date.now >= nextRetrievalDate else {
+                        return .send(.userLocationFetchFinished(.failure(.cooldown(nextRetrievalDate))))
+                    }
+                } // Nothing retrieved yet, so no cooldown to respect
 
-                let nextRetrievalDate = lastLocationRetrieval.addingTimeInterval(Self.locationCooldownInterval)
-                let isLocationCooldownPassed = date.now >= nextRetrievalDate
-                if isLocationCooldownPassed {
-                    return .send(.userLocationFetchStarted)
-                } else {
-                    return .send(.userLocationFetchFinished(.failure(.cooldown(nextRetrievalDate))))
+                // The endpoint answers with the exit IP while a tunnel is up, so only the
+                // disconnected state can tell us the user's own address. This is decided here rather
+                // than inside the effect because a connected session that adopted a tunnel-reported
+                // IP carries no cooldown (see `.connectionStateUpdate`), which brings every timer
+                // tick and every foregrounding this far.
+                guard state.connectionState.is(\.disconnected) else {
+                    return .merge(
+                        // A request that was already in flight when the tunnel came up would answer
+                        // with the exit IP.
+                        .cancel(id: CancelID.userLocation),
+                        .send(.userLocationFetchFinished(.failure(.incorrectVPNState(state.connectionState))))
+                    )
                 }
+                return .send(.userLocationFetchStarted)
 
             case .userLocationFetchStarted:
-                let connectionState = state.connectionState
                 return .run { send in
-                    // UserLocation cannot be fetched while connected
-                    guard connectionState.is(\.disconnected) else {
-                        return await send(.userLocationFetchFinished(.failure(.incorrectVPNState(connectionState))))
-                    }
-
                     log.info("Explicit User Location retrieval attempt", category: .api)
                     @Dependency(\.locationClient) var locationClient
                     let result = await Result { try await locationClient.fetchLocation() }
@@ -143,6 +146,14 @@ public struct UserLocationFeature {
                 }.cancellable(id: CancelID.userLocation, cancelInFlight: true)
 
             case let .userLocationFetchFinished(.success(location)):
+                // A request can only start while disconnected, but the tunnel may have come up while
+                // it was in flight — in which case the endpoint answered with the exit IP, and the
+                // disconnection this connection ends with triggers a fresh fetch anyway.
+                guard state.connectionState.is(\.disconnected) else {
+                    log.debug("Discarding user location measured across a connection", category: .api)
+                    return .none
+                }
+
                 let userIP = location.ip
                 let lowercasedUserCountry = location.country.lowercased()
                 // Refresh cooldown on every successful fetch, even if location is unchanged.
@@ -161,7 +172,13 @@ public struct UserLocationFeature {
                 return .send(.delegate(.userLocationChanged(location)))
 
             case let .userLocationFetchFinished(.failure(error)):
-                log.error("User location request failed", category: .api, metadata: ["error": "\(error)"])
+                switch error {
+                case .cooldown, .incorrectVPNState:
+                    // Routine outcomes rather than failures: throttling, or a tunnel being up.
+                    log.debug("User location request skipped", category: .api, metadata: ["reason": "\(error)"])
+                case .network:
+                    log.error("User location request failed", category: .api, metadata: ["error": "\(error)"])
+                }
                 return .none
 
             case .didBecomeActive:
@@ -182,6 +199,36 @@ public struct UserLocationFeature {
                 if connectionState.is(\.disconnected) {
                     return .send(.fetchUserLocation)
                 }
+                // Secure Core puts a second hop between the device and the server running the local
+                // agent, so what that server observes is the entry node rather than the user. Leave
+                // the stored values alone for those sessions: the endpoint fetch performed on the
+                // next disconnection remains the only source we can trust there.
+                guard connectionState.resolvedServer?.logical.feature.contains(.secureCore) != true else {
+                    return .none
+                }
+
+                // `/vpn/location` reports the exit IP while the tunnel is up, so the fetch above is
+                // skipped and the stored values would otherwise keep whatever the last disconnected
+                // fetch saw — stale as soon as the underlying network changes, or as soon as the app
+                // is relaunched into an already-connected session. ProTUN's local agent reports the
+                // address the server observes for us, which is exactly the "my IP" we want to show.
+                guard let proTUNData = connectionState.proTUNConnectionData,
+                      let userIP = proTUNData.userIP,
+                      userIP != state.userIP
+                else {
+                    return .none
+                }
+
+                log.debug("Updating user location defaults from tunnel-reported data", category: .connection)
+                state.$userIP.withLock { $0 = userIP }
+                if let userISP = proTUNData.userISP {
+                    state.$userISP.withLock { $0 = userISP }
+                }
+                // The stored country was resolved from the address the previous fetch saw, and the
+                // tunnel doesn't report one to pair with this IP. Clearing the cooldown makes the
+                // fetch performed on the next disconnection re-establish a consistent country/IP pair
+                // instead of leaving the old country next to the new address.
+                state.$lastLocationRetrieval.withLock { $0 = nil }
                 return .none
             }
         }

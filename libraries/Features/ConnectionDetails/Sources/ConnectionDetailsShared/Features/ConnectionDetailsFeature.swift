@@ -32,16 +32,21 @@ public struct ConnectionDetailsFeature {
         public var server: String
         public var serverLoad: Int
         public var protocolName: String
-        public var localIpHidden = false
 
-        public init(connectedSince: Date, country: String, city: String, server: String, serverLoad: Int, protocolName: String, localIpHidden: Bool = false) {
+        public init(
+            connectedSince: Date,
+            country: String,
+            city: String,
+            server: String,
+            serverLoad: Int,
+            protocolName: String
+        ) {
             self.connectedSince = connectedSince
             self.country = country
             self.city = city
             self.server = server
             self.serverLoad = serverLoad
             self.protocolName = protocolName
-            self.localIpHidden = localIpHidden
         }
 
         public init(actual: VPNConnectionActual) {

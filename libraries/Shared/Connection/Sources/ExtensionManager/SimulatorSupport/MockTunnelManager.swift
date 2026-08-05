@@ -108,6 +108,7 @@
                     protocolConnectionData: .proTUN(.init(
                         transport: publishedPeer?.transport ?? .udp,
                         serverExitV4: publishedPeer?.serverExitV4,
+                        serverExitV6: publishedPeer?.serverExitV6,
                         userISP: publishedPeer?.userISP,
                         userIP: publishedPeer?.userIP
                     ))
