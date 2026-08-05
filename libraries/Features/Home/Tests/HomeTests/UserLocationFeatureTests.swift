@@ -25,6 +25,7 @@ import Ergonomics
 import Foundation
 @testable import HomeShared
 import Testing
+import VPNAppCore
 
 @MainActor
 @Suite("User Location Feature Tests", .serialized)
@@ -353,6 +354,83 @@ struct UserLocationFeatureTests {
         await store.send(.tearDown)
     }
 
+    // MARK: - Network changes
+
+    /// A different network means the stored address describes the previous one, so the hourly
+    /// cooldown must not hold the refresh back. Also covers the first value the stream reports being
+    /// the network the device is already on rather than a change: a second
+    /// `.networkAttachmentChanged` would land as an unexpected action.
+    @Test("Fetches on a network change even inside the routine cooldown")
+    func fetchesOnNetworkChangeInsideRoutineCooldown() async {
+        let now = Date.now
+        $userIP.withLock { $0 = "10.9.8.7" }
+        // Recent enough that the routine cooldown still holds, old enough to clear the network floor.
+        $lastLocationRetrieval.withLock { $0 = now.addingTimeInterval(-.minutes(5)) }
+
+        let locationClock = TestClock()
+        let (attachments, attachmentSource) = AsyncStream.makeStream(of: NetworkAttachment.self)
+        let store = TestStore(initialState: .init()) {
+            UserLocationFeature()
+        } withDependencies: {
+            $0.date = .constant(now)
+            $0.continuousClock = TestClock()
+            $0.locationClient = .suspending(until: locationClock, returning: .poland)
+            $0.networkAttachmentStream = { attachments }
+        }
+
+        await store.send(.listen)
+        await store.receive(\.connectionStateUpdate.disconnected)
+        await store.receive(\.fetchUserLocation) // routine, and throttled
+        await store.receive(\.userLocationFetchFinished.failure.cooldown)
+
+        attachmentSource.yield(.wifi) // the network the device is already on
+        attachmentSource.yield(.cellular)
+        await store.receive(\.networkAttachmentChanged)
+        await store.receive(\.fetchUserLocation)
+        await store.receive(\.userLocationFetchStarted)
+
+        await locationClock.advance(by: LocationClient.responseDelay)
+        await store.receive(\.userLocationFetchFinished.success) {
+            $0.$userIP.withLock { $0 = UserLocation.poland.ip }
+            $0.$userISP.withLock { $0 = UserLocation.poland.isp }
+            $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
+            $0.$lastLocationRetrieval.withLock { $0 = now }
+        }
+        await store.receive(\.delegate.userLocationChanged)
+        await store.send(.tearDown)
+    }
+
+    /// An interface that flaps must not turn into a request per flap.
+    @Test("Throttles network changes that follow a fetch immediately")
+    func throttlesRepeatedNetworkChanges() async {
+        let now = Date.now
+        $userIP.withLock { $0 = "10.9.8.7" }
+        $lastLocationRetrieval.withLock { $0 = now.addingTimeInterval(-30) } // inside the floor
+
+        let (attachments, attachmentSource) = AsyncStream.makeStream(of: NetworkAttachment.self)
+        let store = TestStore(initialState: .init()) {
+            UserLocationFeature()
+        } withDependencies: {
+            $0.date = .constant(now)
+            $0.continuousClock = TestClock()
+            $0.locationClient = .init() // no request is expected
+            $0.networkAttachmentStream = { attachments }
+        }
+
+        await store.send(.listen)
+        await store.receive(\.connectionStateUpdate.disconnected)
+        await store.receive(\.fetchUserLocation)
+        await store.receive(\.userLocationFetchFinished.failure.cooldown)
+
+        attachmentSource.yield(.wifi)
+        attachmentSource.yield(.cellular)
+        await store.receive(\.networkAttachmentChanged)
+        await store.receive(\.fetchUserLocation)
+        await store.receive(\.userLocationFetchFinished.failure.cooldown)
+        #expect(userIP == "10.9.8.7")
+        await store.send(.tearDown)
+    }
+
     @Test("Keeps the stored IP when the tunnel reports none")
     func keepsStoredIPWhenTunnelReportsNone() async {
         @Shared(.connectionState) var connectionState
@@ -491,6 +569,11 @@ struct UserLocationFeatureTests {
             )
         )
     }
+}
+
+private extension NetworkAttachment {
+    static let wifi = NetworkAttachment(isSatisfied: true, primaryInterface: "en0", gateways: ["192.168.1.1:0"])
+    static let cellular = NetworkAttachment(isSatisfied: true, primaryInterface: "pdp_ip0", gateways: [])
 }
 
 private extension LocationClient {

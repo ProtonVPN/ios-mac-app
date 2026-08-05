@@ -47,7 +47,10 @@ extension FeatureFlagsClient: DependencyKey {
 public extension FeatureFlagsClient {
     /// A client answering `true` for exactly the given flags and `false` for every other.
     static func enabling(_ flags: (any FeatureFlagTypeProtocol)...) -> FeatureFlagsClient {
-        let enabledFlagNames = Set(flags.map(\.rawValue))
+        var enabledFlagNames = Set<String>()
+        for flag in flags {
+            enabledFlagNames.insert(flag.rawValue)
+        }
         return FeatureFlagsClient { enabledFlagNames.contains($0.rawValue) }
     }
 }

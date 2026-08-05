@@ -54,14 +54,17 @@ public struct UserLocationFeature {
     }
 
     public enum Action {
-        /// Set up effects to request a location fetch every hour, or whenever app returns to foreground
+        /// Set up effects to request a location fetch every hour, whenever the app returns to the
+        /// foreground, and whenever the device attaches to a different network
         case listen
         case didBecomeActive(notification: Notification)
-        /// Fetch user location if we haven't recently done so already
-        case fetchUserLocation
+        /// Fetch user location unless the last fetch is younger than the trigger's cooldown
+        case fetchUserLocation(FetchTrigger)
         /// Fetch user location immediately, unless VPN is active
         case userLocationFetchStarted
         case userLocationFetchFinished(Result<UserLocation, LocationFetchFailure>)
+        /// The device attached to a different network, so the stored address describes the previous one
+        case networkAttachmentChanged
         case tearDown
         case delegate(Delegate)
 
@@ -73,14 +76,31 @@ public struct UserLocationFeature {
         }
     }
 
+    /// What prompted a fetch, and with it how stale the stored location has to be for the request to
+    /// be worth making.
+    public enum FetchTrigger: Equatable, Sendable {
+        /// The interval timer, the app coming to the foreground, or the tunnel going down. The stored
+        /// address is probably still correct, so the full interval applies.
+        case routine
+        /// The device attached to a different network, which invalidates the stored address outright.
+        /// Only a short floor applies, to keep a flapping interface from hammering the endpoint.
+        case networkChange
+
+        var cooldown: TimeInterval {
+            switch self {
+            case .routine: .hours(1)
+            case .networkChange: .minutes(1)
+            }
+        }
+    }
+
     private enum CancelID {
         case didBecomeActive
         case userLocationTimer
         case userLocation
         case watchConnectionState
+        case watchNetworkAttachment
     }
-
-    private static let locationCooldownInterval: TimeInterval = .hours(1)
 
     private let longLivingConnectionStateEffect: Effect<Action> = .publisher {
         @SharedReader(.connectionState) var connectionState
@@ -98,10 +118,19 @@ public struct UserLocationFeature {
     }.cancellable(id: CancelID.didBecomeActive, cancelInFlight: true)
 
     private let longLivingUserLocationTimerEffect: Effect<Action> = .timer(
-        interval: .seconds(Self.locationCooldownInterval)
+        interval: .seconds(FetchTrigger.routine.cooldown)
     ) { send in
-        send(.fetchUserLocation)
+        send(.fetchUserLocation(.routine))
     }.cancellable(id: CancelID.userLocationTimer, cancelInFlight: true)
+
+    private let longLivingNetworkAttachmentEffect: Effect<Action> = .run { send in
+        @Dependency(\.networkAttachmentStream) var networkAttachmentStream
+        // The stream opens with the network the device is already on, which is not a change: the
+        // fetch for that one is driven by `.listen`'s connection-state replay.
+        for await _ in networkAttachmentStream().dropFirst() {
+            await send(.networkAttachmentChanged)
+        }
+    }.cancellable(id: CancelID.watchNetworkAttachment, cancelInFlight: true)
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -110,12 +139,13 @@ public struct UserLocationFeature {
                 return .merge(
                     longLivingDidBecomeActiveEffect,
                     longLivingUserLocationTimerEffect,
-                    longLivingConnectionStateEffect
+                    longLivingConnectionStateEffect,
+                    longLivingNetworkAttachmentEffect
                 )
 
-            case .fetchUserLocation:
+            case let .fetchUserLocation(trigger):
                 if let lastLocationRetrieval = state.lastLocationRetrieval {
-                    let nextRetrievalDate = lastLocationRetrieval.addingTimeInterval(Self.locationCooldownInterval)
+                    let nextRetrievalDate = lastLocationRetrieval.addingTimeInterval(trigger.cooldown)
                     guard date.now >= nextRetrievalDate else {
                         return .send(.userLocationFetchFinished(.failure(.cooldown(nextRetrievalDate))))
                     }
@@ -182,14 +212,20 @@ public struct UserLocationFeature {
                 return .none
 
             case .didBecomeActive:
-                return .send(.fetchUserLocation)
+                return .send(.fetchUserLocation(.routine))
+
+            case .networkAttachmentChanged:
+                // Whatever is stored describes the network the device just left.
+                log.debug("Network attachment changed, refreshing user location", category: .api)
+                return .send(.fetchUserLocation(.networkChange))
 
             case .tearDown:
                 return .merge(
                     .cancel(id: CancelID.userLocation),
                     .cancel(id: CancelID.didBecomeActive),
                     .cancel(id: CancelID.userLocationTimer),
-                    .cancel(id: CancelID.watchConnectionState)
+                    .cancel(id: CancelID.watchConnectionState),
+                    .cancel(id: CancelID.watchNetworkAttachment)
                 )
 
             case .delegate:
@@ -197,7 +233,7 @@ public struct UserLocationFeature {
 
             case let .connectionStateUpdate(connectionState):
                 if connectionState.is(\.disconnected) {
-                    return .send(.fetchUserLocation)
+                    return .send(.fetchUserLocation(.routine))
                 }
                 // Secure Core puts a second hop between the device and the server running the local
                 // agent, so what that server observes is the entry node rather than the user. Leave

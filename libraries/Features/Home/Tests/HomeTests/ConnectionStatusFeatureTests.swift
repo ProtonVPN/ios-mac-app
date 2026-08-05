@@ -264,19 +264,28 @@ struct ConnectionStatusFeatureTests {
         await store.finish()
     }
 
-    /// A peer handover keeps the previous tunnel up, so `.connecting` with an active tunnel must
-    /// not fall back to showing the user's location.
+    /// `tunnelActive` is not consulted by the mapping: a peer handover that keeps the previous
+    /// interface carrying traffic still shows and masks the user's own location rather than reporting
+    /// `.protected`.
     @Test
-    func connectingWithActiveTunnelMapsToProtected() async {
+    func connectingWithActiveTunnelStillShowsUserLocation() async {
         $userCountry.withLock { $0 = "PL" }
         $userIP.withLock { $0 = "1.2.3.4" }
 
         let store = makeStore(clock: TestClock(), countryNames: ["PL": "Poland"])
+        let protecting = ProtectionState.protecting(country: "Poland", ip: "1.2.3.4")
 
         await store.send(.newConnectionState(Self.connecting(tunnelActive: true))) {
-            $0.$protectionState.withLock { $0 = .protected }
+            $0.$protectionState.withLock { $0 = protecting }
         }
-        await store.receive(.newProtectionState(.protected))
+        await store.receive(.newProtectionState(protecting)) {
+            $0.startingProtectionState = protecting
+        }
+        await store.receive(.startLocationMasking)
+
+        await store.send(.tearDown) {
+            $0.startingProtectionState = nil
+        }
         await store.finish()
     }
 
