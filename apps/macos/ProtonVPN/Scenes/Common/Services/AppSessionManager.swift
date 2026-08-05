@@ -179,10 +179,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             )
         }
 
-        // Only a properties refresh made outside of a tunnel measured the location; otherwise the
-        // response carries back whatever we passed in.
-        if measuresLocation, let location = properties.location {
-            userLocationStore.recordMeasured(location)
+        // `measuredLocation` is set only when this refresh actually measured the address, so a failed
+        // or skipped measurement can no longer re-stamp the value we passed in. The state is checked
+        // again because a tunnel that came up mid-request means the endpoint answered through it, and
+        // neither we nor the response can tell.
+        if let measured = properties.measuredLocation, isDisconnectedForPropertiesRefresh {
+            userLocationStore.recordMeasured(measured)
         }
 
         @Shared(.userAccountCreationDate) var userAccountCreationDate

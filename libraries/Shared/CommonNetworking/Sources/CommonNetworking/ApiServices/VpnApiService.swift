@@ -204,19 +204,28 @@ public enum VpnApiClientKey: DependencyKey {
 
         return VpnApiClient(
             vpnProperties: { isDisconnected, lastKnownLocation, serversAccordingToTier in
-                async let asyncLocation = (isDisconnected ? try? networking.perform(request: LocationRequest()) : lastKnownLocation) ?? lastKnownLocation
-                let clientConfig = try? await clientConfig(for: asyncLocation?.ip)
+                // The endpoint is only asked while no tunnel is up: through one it answers with the
+                // exit address rather than the user's own. A failed request leaves this nil too — the
+                // caller can't tell the two apart, and in both cases nothing new was measured.
+                async let asyncMeasuredLocation: UserLocation? = isDisconnected
+                    ? try? networking.perform(request: LocationRequest())
+                    : nil
+                let measuredLocation = await asyncMeasuredLocation
+                // Whatever the caller already knew stands in for scoring when nothing was measured.
+                let location = measuredLocation ?? lastKnownLocation
+                let clientConfig = try? await clientConfig(for: location?.ip)
                 let asyncCredentials = try await clientCredentials()
 
                 return try await VpnProperties(
                     serverInfo: serverInfo(
-                        ip: (asyncLocation?.ip).flatMap { TruncatedIp(ip: $0) },
-                        countryCode: asyncLocation?.country,
+                        ip: (location?.ip).flatMap { TruncatedIp(ip: $0) },
+                        countryCode: location?.country,
                         freeTier: asyncCredentials.maxTier.isFree && serversAccordingToTier
                     ),
                     streamingServices: try? virtualServices(),
                     vpnCredentials: asyncCredentials,
-                    location: asyncLocation,
+                    location: location,
+                    measuredLocation: measuredLocation,
                     clientConfig: clientConfig,
                     user: try? userInfo(),
                     addresses: try? userAddresses()

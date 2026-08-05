@@ -372,6 +372,7 @@ struct AppSessionManagerImplementationTests {
                     streamingServices: VPNStreamingResponse(code: 1, resourceBaseURL: "url", streamingServices: [:]),
                     vpnCredentials: credentials,
                     location: nil,
+                    measuredLocation: nil,
                     clientConfig: networkingDelegate.apiClientConfig ?? ClientConfig.defaultClientConfigForTests,
                     user: nil,
                     addresses: nil

@@ -224,8 +224,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             )
         }
 
-        if measuresLocation, let location = properties.location {
-            userLocationStore.recordMeasured(location)
+        // `measuredLocation` is set only when this refresh actually measured the address, so a failed
+        // or skipped measurement can no longer re-stamp the value we passed in. The state is checked
+        // again because a tunnel that came up mid-request means the endpoint answered through it.
+        if let measured = properties.measuredLocation, connectionState.isDisconnectedForPropertiesRefresh {
+            userLocationStore.recordMeasured(measured)
         }
         do {
             try await resolveActiveSession()
@@ -270,8 +273,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             @Shared(.userAccountCreationDate) var userAccountCreationDate
             $userAccountCreationDate.withLock { $0 = properties.userCreateTime }
 
-            if measuresLocation, let location = properties.location {
-                userLocationStore.recordMeasured(location)
+            if let measured = properties.measuredLocation, connectionState.isDisconnectedForPropertiesRefresh {
+                userLocationStore.recordMeasured(measured)
             }
             @Shared(.userAccountRecovery) var userAccountRecovery
             $userAccountRecovery.withLock { $0 = properties.userAccountRecovery }

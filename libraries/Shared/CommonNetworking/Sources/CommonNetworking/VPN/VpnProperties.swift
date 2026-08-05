@@ -29,7 +29,15 @@ public struct VpnProperties {
     public let serverInfo: ServerInfoResponse
     public let streamingResponse: VPNStreamingResponse?
     public let vpnCredentials: VpnCredentials
+    /// The best-known location: what this refresh measured, or the `lastKnownLocation` the caller
+    /// passed in when the endpoint wasn't asked or couldn't answer. Used for server scoring.
     public let location: UserLocation?
+    /// Set only when this refresh actually measured the user's own address, i.e. when it is safe to
+    /// store as a fresh measurement.
+    ///
+    /// `nil` both when the endpoint wasn't asked — it answers with the exit address through a live
+    /// tunnel — and when the request failed, because the two are indistinguishable from the response.
+    public let measuredLocation: UserLocation?
     public let clientConfig: ClientConfig?
     public let userRole: UserRole
     public let userCreateTime: Date?
@@ -41,6 +49,7 @@ public struct VpnProperties {
         streamingServices: VPNStreamingResponse?,
         vpnCredentials: VpnCredentials,
         location: UserLocation?,
+        measuredLocation: UserLocation?,
         clientConfig: ClientConfig?,
         user: User?,
         addresses: [Address]?
@@ -49,6 +58,7 @@ public struct VpnProperties {
         self.streamingResponse = streamingServices
         self.vpnCredentials = vpnCredentials
         self.location = location
+        self.measuredLocation = measuredLocation
         self.clientConfig = clientConfig
         self.userRole = .init(rawValue: user?.role ?? 0) ?? .noOrganization
         self.userAccountRecovery = user?.accountRecovery
