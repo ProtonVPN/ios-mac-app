@@ -65,14 +65,16 @@ private final class NotificationManagerImplementation: NSObject {
         UNUserNotificationCenter.current().delegate = self
         $connectionState
             .publisher
-            .compactMap { state -> Server? in
+            .compactMap { state -> ConnectedPeer? in
                 guard case let .connected(_, data) = state else { return nil }
-                return data.currentPeer
+                return ConnectedPeer(server: data.currentPeer, exitIP: state.vpnExitIP)
             }
-            .removeDuplicates()
+            // Deduplicated on the peer alone: the exit address can arrive after the tunnel comes up,
+            // and a second notification for the same connection would be worse than a stale address.
+            .removeDuplicates { $0.server == $1.server }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] server in
-                self?.vpnConnectionChanged(server)
+            .sink { [weak self] peer in
+                self?.vpnConnectionChanged(peer)
             }
             .store(in: &cancellables)
         setupActions()
@@ -100,19 +102,19 @@ private final class NotificationManagerImplementation: NSObject {
         UNUserNotificationCenter.current().setNotificationCategories([portForwardingCategory])
     }
 
-    private func vpnConnectionChanged(_ server: Server) {
+    private func vpnConnectionChanged(_ peer: ConnectedPeer) {
         if shouldShowNotification {
-            postTransient(connectedNotification(for: server))
+            postTransient(connectedNotification(for: peer))
         }
     }
 
-    private func connectedNotification(for server: Server) -> UNNotificationRequest {
+    private func connectedNotification(for peer: ConnectedPeer) -> UNNotificationRequest {
         @Dependency(\.uuid) var uuidgen
 
         let content = UNMutableNotificationContent()
         content.title = Localizable.protonVpnConnected
-        content.subtitle = connectSubtitle(forServer: server)
-        content.body = Localizable.ipValue(server.endpoint.offsetExitIp)
+        content.subtitle = connectSubtitle(forServer: peer.server)
+        content.body = Localizable.ipValue(peer.exitIP ?? Localizable.unavailable)
         let identifier = "connected-\(uuidgen)"
         return UNNotificationRequest(identifier: identifier, content: content, trigger: nil)
     }
@@ -123,6 +125,16 @@ private final class NotificationManagerImplementation: NSObject {
         } else {
             server.logical.exitCountry + " > " + server.logical.name
         }
+    }
+
+    /// The server a notification is about, with the address traffic actually leaves from.
+    ///
+    /// The address comes from ``ConnectionState/vpnExitIP`` rather than from the server list, so that
+    /// the notification, the window header and the menu bar all report what the connection details
+    /// screen reports.
+    private struct ConnectedPeer: Equatable {
+        let server: Server
+        let exitIP: String?
     }
 
     private func post(_ request: UNNotificationRequest) {

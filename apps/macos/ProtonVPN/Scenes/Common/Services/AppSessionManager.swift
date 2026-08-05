@@ -156,7 +156,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func retrieveProperties() async throws {
         @Dependency(\.serverRepository) var serverRepository
         @Dependency(\.serverListUpdater) var serverListUpdater
-        guard let properties = try await getVPNProperties() else {
+        // Captured before the request rather than read back after it: the endpoint only measures the
+        // user's own address while no tunnel is up, and the connection state can flip while the request
+        // is in flight. Re-reading it afterwards would either drop a real measurement, or stamp a fresh
+        // retrieval date on the location we passed in ourselves.
+        let measuresLocation = isDisconnectedForPropertiesRefresh
+        guard let properties = try await getVPNProperties(measuresLocation: measuresLocation) else {
             serverRepository.resetSuccessfulRefreshes()
             return
         }
@@ -176,7 +181,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         // Only a properties refresh made outside of a tunnel measured the location; otherwise the
         // response carries back whatever we passed in.
-        if isDisconnectedForPropertiesRefresh, let location = properties.location {
+        if measuresLocation, let location = properties.location {
             userLocationStore.recordMeasured(location)
         }
 
@@ -218,8 +223,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     /// - API returns `CommonVpnError.subuserWithoutSessions`
     /// - Server storage is empty or user IP is not known
     /// - We hit a keychain error
-    private func getVPNProperties() async throws -> VpnProperties? {
-        let isDisconnected = isDisconnectedForPropertiesRefresh
+    /// - Parameter measuresLocation: whether the response's location is a fresh measurement. Decided
+    ///   by the caller, which also records the result, so that one reading of the connection state
+    ///   drives both.
+    private func getVPNProperties(measuresLocation: Bool) async throws -> VpnProperties? {
         @SharedReader(.userLocation) var userLocation
         let location = userLocation?.location
 
@@ -227,7 +234,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         let shouldRefreshServersAccordingToUserTier = !serverRepository.shouldFetchFullServerList
         do {
             return try await vpnApiClient.vpnProperties(
-                isDisconnected: isDisconnected,
+                isDisconnected: measuresLocation,
                 lastKnownLocation: location,
                 serversAccordingToTier: shouldRefreshServersAccordingToUserTier
             )

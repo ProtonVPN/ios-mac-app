@@ -199,7 +199,7 @@ private extension ProtectionState {
         switch self {
         case .protectedSecureCore, .protected:
             true
-        case .resolving, .unprotected, .protecting, .killSwitchActive:
+        case .resolving, .unprotected, .protecting, .killSwitchActive, .authenticationRequired:
             false
         }
     }

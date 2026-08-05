@@ -590,12 +590,12 @@ final class StatusMenuViewModel {
         return attributedString
     }
 
+    /// The address traffic leaves from while connected, the user's own otherwise.
+    ///
+    /// `vpnExitIP` prefers what the tunnel's local agent reports over the server list's exit address,
+    /// which is what the connection details screen shows — and is `nil` unless connected.
     private func getCurrentIp() -> String? {
-        if isConnected {
-            connectionState.resolvedServer?.endpoint.offsetExitIp
-        } else {
-            userLocation?.location.ip
-        }
+        connectionState.vpnExitIP ?? userLocation?.location.ip
     }
 
     private func formConnectionLabel() -> NSAttributedString {

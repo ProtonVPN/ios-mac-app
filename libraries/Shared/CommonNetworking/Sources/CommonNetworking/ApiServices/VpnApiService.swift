@@ -204,9 +204,7 @@ public enum VpnApiClientKey: DependencyKey {
 
         return VpnApiClient(
             vpnProperties: { isDisconnected, lastKnownLocation, serversAccordingToTier in
-                // Only retrieve IP address when not connected to VPN
-                let userLocation: UserLocation? = try? await networking.perform(request: LocationRequest())
-                async let asyncLocation = (isDisconnected ? userLocation : lastKnownLocation) ?? lastKnownLocation
+                async let asyncLocation = (isDisconnected ? try? networking.perform(request: LocationRequest()) : lastKnownLocation) ?? lastKnownLocation
                 let clientConfig = try? await clientConfig(for: asyncLocation?.ip)
                 let asyncCredentials = try await clientCredentials()
 
