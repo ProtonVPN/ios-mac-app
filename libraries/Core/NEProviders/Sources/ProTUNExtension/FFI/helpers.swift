@@ -22,7 +22,7 @@ import IPCDefinitions
 import protun
 import VPNCoreTypes
 
-private func unknownDefault<T>(
+func unknownDefault<T>(
     function: StaticString = #function,
     file: StaticString = #file,
     line: UInt = #line,
@@ -131,6 +131,23 @@ public extension ConnectionState {
             ))
         @unknown default:
             unknownDefault(value: .disconnected(reason: .unset))
+        }
+    }
+
+    /// The peer the session is using right now, or nil if there is none. For `.connecting`, this is the first peer
+    /// being attempted.
+    var currentPeer: PeerConnectionInfo? {
+        switch self {
+        case let .connected(peer, _):
+            peer
+        case let .connectingToLocalAgent(peer, _):
+            peer
+        case let .connecting(peers, _):
+            peers.first
+        case .disconnected:
+            nil
+        @unknown default:
+            unknownDefault(value: nil)
         }
     }
 }

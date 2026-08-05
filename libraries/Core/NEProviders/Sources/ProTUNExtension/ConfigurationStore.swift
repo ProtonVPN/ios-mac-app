@@ -64,6 +64,7 @@ actor ConfigurationStore {
                     try await Self.performUpdate(update, adapter: adapter)
                 }
                 @Dependency(\.extensionIPCServer) var extensionIPCServer
+                Logger.adapter.info("Updated configuration, notifying with \(update.id, privacy: .public)...")
                 extensionIPCServer.restampConnectionData(update.id)
             } catch let error as ConfigurationUpdateError {
                 Logger.adapter.error("Configuration update failed: \(error, privacy: .public)")
@@ -152,20 +153,22 @@ extension NETunnelProviderProtocol {
         networkSettingsUpdate: NetworkSettingsUpdate?
     )
 
-    func liveUpdates(for update: ConnectionUpdate, livePeers: [ProTUNConfiguration.Peer]?) throws -> ConnectionUpdateResult {
+    func updates(for update: ConnectionUpdate, currentPeer: PeerConnectionInfo?) throws -> ConnectionUpdateResult {
         let requiresNetworkSettingsUpdate = update.requiresNetworkSettingsRefresh
 
         guard update.hasConfigurationChanges || requiresNetworkSettingsUpdate else { return (nil, nil, nil) }
 
         let protunConfig = try ProTUNConfigurationCoder.decode(from: self)
 
-        var newPeers: [PeerInfo]?
-        if update.hasPeerChanges {
-            let constrained = protunConfig.constrainedPeers
-            if constrained != livePeers {
-                newPeers = try constrained.map(PeerInfo.init)
+        let constrainedPeers = protunConfig.constrainedPeers
+        let newPeers: [PeerInfo]? =
+            if let currentPeer,
+            update.hasPeerChanges,
+            !constrainedPeers.contains(where: { $0.matches(currentPeer) }) {
+                try constrainedPeers.map(PeerInfo.init)
+            } else {
+                nil
             }
-        }
 
         let networkSettingsUpdate: NetworkSettingsUpdate? = requiresNetworkSettingsUpdate
             ? (dnsServers: update.customDNS ?? protunConfig.dnsServers, excludingRoutes: protunConfig.uniquePeerAddresses)
