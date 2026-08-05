@@ -45,8 +45,6 @@ constant float4 culledVertex = float4(2.0, 2.0, 2.0, 1.0);
 // The globe's look tuning, named here rather than inline at each formula:
 constant float nightShade = 0.85;     // globe brightness on the night side (shadeGlobe)
 constant float fullSunShade = 1.4;    // globe brightness at the subsolar point (shadeGlobe)
-constant float terminatorSoftness = 0.15; // day/night fade width for the eclipse dimming (eclipseDim)
-constant float eclipseMaxDim = 0.9;   // strongest day-side darkening a solar eclipse applies (eclipseDim)
 constant float moonEarthshine = 0.04; // Moon dark-side brightness, a hint of earthshine (fragment_moon)
 constant float3 lunarUmbraColor = float3(0.25, 0.07, 0.04); // coppery total-eclipse umbra (fragment_moon)
 
@@ -77,18 +75,6 @@ struct BorderVaryings {
     float segLength;
 };
 
-// Shared globe shading for fills and borders: diffuse sunlight added to the day side, tinted with the
-// connection color, and faded in by `lightFade`. Premultiplied for the (one, 1 - srcAlpha) blend over the
-// transparent drawable.
-static float4 shadeGlobe(float3 normal, float4 color, constant MapUniforms &u) {
-    float lambert = max(0.0, dot(normalize(normal), u.sunDirection));
-    float lit = lambert * u.lightFade;              // day-side intensity, faded in with the map open
-    float shade = mix(nightShade, fullSunShade, lambert);
-    float factor = mix(1.0, shade, u.lightFade);
-    float3 rgb = color.rgb * factor + u.sunTint * (u.tintStrength * lit);
-    return premultiply(rgb, color.a);
-}
-
 // Fraction of the Sun's disc covered by a sphere occluder (centre `occCenter`, radius `occRadius` in Earth
 // radii) as seen from `point`, with the Sun in the effectively parallel direction `sunDir`. 0 means the
 // Sun is clear, 1 fully covered. This is the whole eclipse calculation: the Earth dims where the Moon
@@ -111,15 +97,20 @@ static float sunOcclusion(float3 point, float3 sunDir, float3 occCenter, float o
     return min(coverage, min(1.0, (rOcc * rOcc) / (rSun * rSun)));
 }
 
-// Day-side darkening of the Earth from a solar eclipse, the Moon passing in front of the Sun above this
-// ground point. 1 means no eclipse. Faded out across the terminator, since there is no Sun to cover at
-// night, with a smooth ramp rather than a hard step: a penumbra straddling the day/night line would
-// otherwise show a sharp edge where the dimming cuts off. The softness matches the terminator the lighting
-// already uses.
-static float eclipseDim(float3 normal, constant MapUniforms &u) {
+// Shared globe shading for fills and borders: diffuse sunlight added to the day side, tinted with the
+// connection color, and faded in by `lightFade`. A solar eclipse attenuates the sunlight itself, before
+// the day/night mix, so the shadow rides the same ramp as the terminator: full occlusion lands exactly on
+// the night shade, never below it, and a shadow reaching the day/night line dissolves into it.
+// Premultiplied for the (one, 1 - srcAlpha) blend over the transparent drawable.
+static float4 shadeGlobe(float3 normal, float4 color, constant MapUniforms &u) {
     float3 n = normalize(normal);
-    float day = smoothstep(0.0, terminatorSoftness, dot(n, u.sunDirection));
-    return 1.0 - eclipseMaxDim * day * sunOcclusion(n, u.sunDirection, u.moonCenter, u.moonRadius);
+    float visibleSun = 1.0 - sunOcclusion(n, u.sunDirection, u.moonCenter, u.moonRadius);
+    float lambert = max(0.0, dot(n, u.sunDirection)) * visibleSun;
+    float lit = lambert * u.lightFade;              // day-side intensity, faded in with the map open
+    float shade = mix(nightShade, fullSunShade, lambert);
+    float factor = mix(1.0, shade, u.lightFade);
+    float3 rgb = color.rgb * factor + u.sunTint * (u.tintStrength * lit);
+    return premultiply(rgb, color.a);
 }
 
 // MARK: - Billboard + soft-edge helpers
@@ -182,14 +173,12 @@ vertex BorderVaryings vertex_globe_border(const device MapGlobeSegment *segs [[b
     return out;
 }
 
-// Fill fragment, also used by the base ocean sphere: the shared sun shading, then dimmed by any solar
-// eclipse. Premultiplied for the (one, 1 - srcAlpha) blend. The dim scales rgb only, so the silhouette
-// stays opaque.
+// Fill fragment, also used by the base ocean sphere: the shared sun shading, which includes any solar
+// eclipse. Premultiplied for the (one, 1 - srcAlpha) blend.
 fragment float4 fragment_solid(GlobeVaryings in [[stage_in]],
                                constant float4 &color [[buffer(0)]],
                                constant MapUniforms &u [[buffer(1)]]) {
-    float4 c = shadeGlobe(in.normal, color, u);
-    return float4(c.rgb * eclipseDim(in.normal, u), c.a);
+    return shadeGlobe(in.normal, color, u);
 }
 
 // Border fragment: rounds the square cap into a capsule. `dist` is the distance from the segment's clamped
@@ -204,8 +193,7 @@ fragment float4 fragment_globe_border(BorderVaryings in [[stage_in]],
     float aa = max(fwidth(dist), 1e-6);
     float coverage = softCoverage(dist, u.borderHalfWidth, aa); // edge centred on halfWidth, a pixel of AA
     if (coverage <= 0.0) discard_fragment();
-    float4 c = shadeGlobe(in.normal, color, u);
-    return float4(c.rgb * eclipseDim(in.normal, u), c.a) * coverage;
+    return shadeGlobe(in.normal, color, u) * coverage;
 }
 
 // The Moon: a Lambert-lit sphere, so it shows phases, drawn translated and scaled to its true position via
