@@ -228,7 +228,8 @@ public struct ExtensionFeature: Sendable {
             case let .tunnelStatusChanged(status):
                 state = status
                 switch status {
-                case .connected, .disconnected:
+                case .connected, .disconnected,
+                     .connectingToLocalAgent(_, _, .hardJailed, .need2Fa):
                     return .cancel(id: CancelID.connectionTimeout)
                 default:
                     return .none
@@ -361,7 +362,7 @@ extension TunnelState {
         case .disconnected, .disconnecting:
             // We can't simply update the config, since the tunnel will have to be started
             false
-        case let .connecting(config, _), let .connectingToLocalAgent(config, _):
+        case let .connecting(config, _), let .connectingToLocalAgent(config, _, _, _):
             // An empty peer list is either zero-peer kill switch or a stale on-demand echo, neither of which can
             // accept a location update through this transitional state.
             config.tunnelProtocol == .wireGuard && !config.peerIDs.isEmpty

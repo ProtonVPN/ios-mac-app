@@ -120,7 +120,7 @@ final class StatusMenuViewModel {
     }
 
     private var isQuickConnectInDisconnectMode: Bool {
-        connectionState.isConnected
+        connectionState.isConnected || connectionState.is(\.authenticationRequired)
     }
 
     var connectedCountryCode: String? {
@@ -129,7 +129,7 @@ final class StatusMenuViewModel {
 
     var isStateStable: Bool {
         switch connectionState {
-        case .connected, .disconnected, .killSwitchActive:
+        case .connected, .disconnected, .authenticationRequired, .killSwitchActive:
             true
         case .resolving, .connecting, .disconnecting:
             false
@@ -146,7 +146,7 @@ final class StatusMenuViewModel {
         switch connectionState {
         case .connecting, .resolving:
             true
-        case .connected, .disconnected, .disconnecting, .killSwitchActive:
+        case .connected, .disconnected, .disconnecting, .authenticationRequired, .killSwitchActive:
             false
         }
     }
@@ -599,6 +599,9 @@ final class StatusMenuViewModel {
     }
 
     private func formConnectionLabel() -> NSAttributedString {
+        if connectionState.is(\.authenticationRequired) {
+            return "Authentication required".styled(.warning)
+        }
         if !isConnected {
             return Localizable.notConnected.styled(.danger)
         }
@@ -657,7 +660,7 @@ final class StatusMenuViewModel {
         }
 
         let description: String = switch connectionState {
-        case .connected:
+        case .connected, .authenticationRequired:
             Localizable.disconnect
         case .disconnecting, .disconnected, .connecting, .resolving, .killSwitchActive:
             Localizable.quickConnect

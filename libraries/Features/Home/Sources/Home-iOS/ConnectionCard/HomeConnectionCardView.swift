@@ -82,7 +82,7 @@ struct HomeConnectionCardView: View {
                 switch store.connectionState {
                 case .disconnected, .disconnecting, .killSwitchActive:
                     store.send(.delegate(.connect(store.presentedSpec)))
-                case .connected:
+                case .connected, .authenticationRequired:
                     store.send(.delegate(.disconnect))
                 case .connecting:
                     store.send(.delegate(.disconnect))

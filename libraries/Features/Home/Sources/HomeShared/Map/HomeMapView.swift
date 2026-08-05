@@ -244,6 +244,7 @@ public struct HomeMapView: View {
         switch protectionState {
         case .protected, .protectedSecureCore: Color(.background, .success)
         case .unprotected, .killSwitchActive: Color(.background, .danger)
+        case .authenticationRequired: Color(.background, .warning)
         case .protecting, .resolving: .white
         }
     }

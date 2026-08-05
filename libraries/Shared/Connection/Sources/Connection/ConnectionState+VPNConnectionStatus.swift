@@ -32,11 +32,15 @@ public extension ConnectionState {
             connectionSpec
         case let .connecting(.resolved(intent), _):
             intent.spec
+        case let .authenticationRequired(.resolved(intent), _):
+            intent.spec
         case .resolving:
             nil
         case .disconnected:
             nil
         case let .connecting(.unresolved(intent), _):
+            intent.spec
+        case let .authenticationRequired(.unresolved(intent), _):
             intent.spec
         case let .killSwitchActive(spec, _):
             spec
@@ -52,9 +56,11 @@ public extension ConnectionState {
             nil // If spec specifies `exact` server, we could return that
         case let .connecting(.resolved(intent), _):
             intent.resolvedServer
+        case let .authenticationRequired(.resolved(intent), _):
+            intent.resolvedServer
         case .resolving:
             nil // TODO: ProTUN: check if this makes sense
-        case .disconnected, .connecting(.unresolved, _), .killSwitchActive:
+        case .disconnected, .connecting(.unresolved, _), .authenticationRequired(.unresolved, _), .killSwitchActive:
             nil
         }
     }
@@ -84,7 +90,7 @@ public extension ConnectionState {
         switch self {
         case .connected, .killSwitchActive:
             true
-        case let .connecting(_, tunnelActive):
+        case let .connecting(_, tunnelActive), let .authenticationRequired(_, tunnelActive):
             tunnelActive
         case .resolving, .disconnected, .disconnecting:
             false
@@ -92,7 +98,7 @@ public extension ConnectionState {
     }
 
     var isConnectedOrConnecting: Bool {
-        self.is(\.connected) || self.is(\.connecting)
+        self.is(\.connected) || self.is(\.connecting) || self.is(\.authenticationRequired)
     }
 
     /// Session-validation predicate: VPN tunnel is up (`.connected`) or being torn down (`.disconnecting`).
@@ -100,7 +106,7 @@ public extension ConnectionState {
         switch self {
         case .connected, .disconnecting:
             true
-        case .resolving, .disconnected, .connecting, .killSwitchActive:
+        case .resolving, .disconnected, .connecting, .authenticationRequired, .killSwitchActive:
             false
         }
     }
@@ -110,7 +116,7 @@ public extension ConnectionState {
         switch self {
         case .connected, .disconnecting:
             false
-        case .resolving, .disconnected, .connecting, .killSwitchActive:
+        case .resolving, .disconnected, .connecting, .authenticationRequired, .killSwitchActive:
             true
         }
     }
@@ -118,7 +124,7 @@ public extension ConnectionState {
     /// App-quit predicate: safe to terminate without disconnecting (no in-flight tunnel).
     var isSafeToEnd: Bool {
         switch self {
-        case .connected, .connecting, .disconnecting, .killSwitchActive:
+        case .connected, .connecting, .authenticationRequired, .disconnecting, .killSwitchActive:
             false
         case .resolving, .disconnected:
             true

@@ -17,23 +17,42 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import HomeShared
 import SharedViews
 import Strings
 import SwiftUI
 
-@MainActor
 public struct LocalAgentNoticeView: View {
     let store: StoreOf<LocalAgentNoticeFeature>
+
+    private let minSheetHeight: CGFloat = 300.0
 
     public init(store: StoreOf<LocalAgentNoticeFeature>) {
         self.store = store
     }
 
-    private let minSheetHeight: CGFloat = 300.0
-
     public var body: some View {
+        #if os(iOS)
+            LocalAgentNoticeContentView(store: store)
+                .interactiveDismissDisabled(true)
+                .presentationDragIndicator(.visible)
+                .presentationDetents([.height(minSheetHeight)])
+        #else
+            LocalAgentNoticeContentView(store: store)
+                .interactiveDismissDisabled(true)
+                .frame(minWidth: 420, minHeight: minSheetHeight)
+        #endif
+    }
+}
+
+private struct LocalAgentNoticeContentView: View {
+    let store: StoreOf<LocalAgentNoticeFeature>
+
+    var body: some View {
         VStack(spacing: .themeSpacing16) {
+            Image(systemName: "touchid")
+                .font(.system(size: 48))
+                .foregroundStyle(Color(.text, .normal))
+
             Text(
                 verbatim: """
                 You are connected to the VPN, but all traffic is blocked.
@@ -54,10 +73,7 @@ public struct LocalAgentNoticeView: View {
                 }
                 .buttonStyle(PrimaryButtonStyle())
             }
-            .interactiveDismissDisabled(true)
             .navigationTitle("2FA Required")
-            .presentationDragIndicator(.visible)
-            .presentationDetents([.height(minSheetHeight)])
             .background(Color(.background, .normal))
             .padding()
         }

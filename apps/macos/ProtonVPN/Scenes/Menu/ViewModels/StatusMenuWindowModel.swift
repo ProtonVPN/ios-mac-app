@@ -76,7 +76,7 @@ class StatusMenuWindowModel {
             return .connected
         case .connecting, .resolving:
             return .connecting
-        case .disconnected, .disconnecting, .killSwitchActive:
+        case .disconnected, .disconnecting, .authenticationRequired, .killSwitchActive:
             return .disconnected
         }
     }

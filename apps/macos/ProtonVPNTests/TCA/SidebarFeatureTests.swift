@@ -25,8 +25,10 @@ import Domain
 @testable import ExtensionSync
 import Foundation
 import LegacyCommon
+import os
 import PaymentsShared
 @testable import ProtonVPN
+import Strings
 import Testing
 import VPNAppCore
 import VPNShared
@@ -643,6 +645,21 @@ struct SidebarFeatureTests {
         await store.receive(\.syncPlutoniumState)
     }
 
+    @Test("2FA local agent notice shows an actionable alert")
+    func twoFactorLocalAgentNoticeShowsAlert() async {
+        let receivedAlert = OSAllocatedUnfairLock<WarningAlert?>(initialState: nil)
+        let store = makeStore(coreAlertService: .init(push: { alert in
+            guard let alert = alert as? WarningAlert else { return }
+            receivedAlert.withLock { $0 = alert }
+        }))
+
+        await store.send(.connection(.delegate(.localAgentNotice(.authenticationRequired))))
+
+        let alert = receivedAlert.withLock { $0 }
+        #expect(alert?.actions.map(\.title) == ["Open 2FA", Localizable.disconnect])
+        #expect(alert?.actions.allSatisfy { $0.handler != nil } == true)
+    }
+
     // MARK: - Private
 
     private func makeStore(
@@ -654,6 +671,7 @@ struct SidebarFeatureTests {
         defaults: UserDefaults = UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)")!,
         clock: TestClock<Duration>? = nil,
         connectionCommandClient: ConnectionCommandClient = .testValue,
+        coreAlertService: CoreAlertService = .testValue,
         pendingDisconnectCompletions: PendingDisconnectCompletions = PendingDisconnectCompletions(),
         portForwardingEnabled: Bool = false,
         serverChangeAuthorizer: ServerChangeAuthorizer = .availableValue
@@ -685,6 +703,7 @@ struct SidebarFeatureTests {
             $0.tunnelManager = MockTunnelManager(connection: session)
             $0.defaultAppStorage = defaults
             $0.connectionCommandClient = connectionCommandClient
+            $0.coreAlertService = coreAlertService
             $0.pendingDisconnectCompletions = pendingDisconnectCompletions
             $0.portForwardingPropertyProvider.setPortForwarding(portForwardingEnabled)
             $0.serverChangeAuthorizer = serverChangeAuthorizer

@@ -101,6 +101,9 @@ struct HomeConnectionCardHeader: View {
         case .connecting:
             Localizable.connectionCardConnectingTo
 
+        case .authenticationRequired:
+            "Authentication required"
+
         case .connected:
             Localizable.connectionCardSafelyBrowsingFrom
         }
@@ -112,6 +115,7 @@ struct HomeConnectionCardHeader: View {
         HomeConnectionCardHeader(model: .disconnected(isPaid: true), actionSender: { _ in })
         HomeConnectionCardHeader(model: .disconnected(isPaid: false), actionSender: { _ in })
         HomeConnectionCardHeader(model: .connecting, actionSender: { _ in })
+        HomeConnectionCardHeader(model: .authenticationRequired, actionSender: { _ in })
         HomeConnectionCardHeader(model: .connected, actionSender: { _ in })
     }.padding()
 }

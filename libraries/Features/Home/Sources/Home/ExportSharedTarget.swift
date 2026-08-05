@@ -23,13 +23,12 @@ public typealias HomeAsset = HomeShared.HomeAsset
 public typealias HomeFeature = HomeShared.HomeFeature
 public typealias HomeMapFeature = HomeShared.HomeMapFeature
 public typealias ConnectionStatusFeature = HomeShared.ConnectionStatusFeature
+public typealias LocalAgentNoticeView = HomeShared.LocalAgentNoticeView
 
 #if canImport(Home_iOS)
     import Home_iOS
 
     public typealias GlobeBackdropView = Home_iOS.GlobeBackdropView
     public typealias HomeView = Home_iOS.HomeView
-    public typealias LocalAgentNoticeView = Home_iOS.LocalAgentNoticeView
     public typealias WidgetSettingsView = Home_iOS.WidgetSettingsView
-
 #endif

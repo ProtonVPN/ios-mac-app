@@ -111,13 +111,15 @@ public struct HomeMapFeature {
                     code: connectionData.currentPeer.logical.exitCountryCode
                 )
 
-            case let .connecting(.resolved(intent), _):
+            case let .connecting(.resolved(intent), _),
+                 let .authenticationRequired(.resolved(intent), _):
                 self = .connecting(
                     coordinates: intent.resolvedServer.logical.coordinates,
                     code: intent.resolvedServer.logical.exitCountryCode
                 )
 
-            case let .connecting(.unresolved(intent), _):
+            case let .connecting(.unresolved(intent), _),
+                 let .authenticationRequired(.unresolved(intent), _):
                 // We've started connecting via a `ConnectionSpec` but haven't picked a specific server yet. If the spec
                 // matches a location pin we've already loaded, send the pin straight to its coordinates, since the
                 // resolved server will live in that city anyway. Otherwise keep just the country code, and the pin

@@ -151,7 +151,7 @@ extension ConnectingOverlayFeature.State {
             return .preparing
         case .killSwitchActive:
             return .preparing
-        case .resolving, .connecting, .disconnecting:
+        case .resolving, .connecting, .authenticationRequired, .disconnecting:
             return serverName.map { .connecting(serverName: $0) } ?? .preparing
         }
     }

@@ -137,7 +137,7 @@ class CountryAnnotationViewModel: CustomStyleContext {
 
     func appStateChanged(to state: ConnectionState) {
         switch state {
-        case .resolving, .connecting, .disconnecting:
+        case .resolving, .connecting, .authenticationRequired, .disconnecting:
             self.state = .idle
         case .connected, .disconnected, .killSwitchActive:
             break

@@ -102,7 +102,7 @@ struct HomeConnectionCardView: View {
                     switch connectionState {
                     case .disconnected:
                         sendAction(.connect(item.connection))
-                    case .connected, .connecting, .resolving:
+                    case .connected, .connecting, .authenticationRequired, .resolving:
                         sendAction(.disconnect)
                     case .disconnecting:
                         break

@@ -52,6 +52,8 @@ struct ProtectionStatusFeature {
                     .send(.delegate(.userClickedDisconnect))
                 case .connecting:
                     .send(.delegate(.userClickedCancel))
+                case .authenticationRequired:
+                    .send(.delegate(.userClickedDisconnect))
                 case .disconnected, .disconnecting, .resolving, .killSwitchActive:
                     .send(.delegate(.userClickedConnect))
                 }

@@ -300,6 +300,9 @@ public struct ConnectionFeature: Sendable {
                 state.$connectionState.withLock {
                     $0 = incoming
                 }
+                if case .connectingToLocalAgent(_, _, .hardJailed, .need2Fa) = state.tunnel {
+                    return .send(.delegate(.localAgentNotice(.authenticationRequired)))
+                }
                 return .none
 
             case let .tunnel(.delegate(.timedOut(stage))):
@@ -386,6 +389,8 @@ public enum ConnectionState: Equatable, Sendable, Codable {
     /// A connection attempt is underway. `tunnelActive` reports whether an interface already holds the user's traffic,
     /// which stays during peer handover.
     case connecting(Intent, tunnelActive: Bool)
+    /// The tunnel is established and blocking traffic until the user completes authentication.
+    case authenticationRequired(Intent, tunnelActive: Bool)
     /// The connected state is split across ``TunnelConfiguration`` (which is unlikely to change without user interaction),
     /// and `ResolvedDynamicConnectionData` which is the more transient/dynamic data.
     case connected(TunnelConfiguration, ResolvedDynamicConnectionData)
@@ -497,6 +502,8 @@ extension ConnectionState: CustomDebugStringConvertible {
             ".disconnecting(intent: \(intent), server: \(server))"
         case let .connecting(intent):
             ".connecting(\(intent))"
+        case let .authenticationRequired(intent, tunnelActive):
+            ".authenticationRequired(\(intent), tunnelActive: \(tunnelActive))"
         case let .connected(tunnelConfig, connectionData):
             ".connected(\(tunnelConfig), \(connectionData))"
         case let .killSwitchActive(spec, tunnelConfig):
@@ -514,6 +521,8 @@ extension ConnectionState: CustomDebugStringConvertible {
             ".disconnecting"
         case .connecting:
             ".connecting"
+        case .authenticationRequired:
+            ".authenticationRequired"
         case .connected:
             ".connected"
         case .killSwitchActive:
@@ -550,6 +559,8 @@ public extension ConnectionState {
 extension ConnectionState {
     /// IKE configurations have no `connectionSpec`, that's why we need a `fallbackSpec` for IKE.
     init(tunnel: ExtensionFeature.State, fallbackSpec: ConnectionSpec? = nil) {
+        @Dependency(\.serverIdentifier) var identifier
+
         func resolvedSpec(for tunnelConfig: TunnelConfiguration) -> ConnectionSpec {
             #if os(macOS)
                 guard tunnelConfig.tunnelProtocol == .ike, let fallbackSpec else {
@@ -561,27 +572,42 @@ extension ConnectionState {
             #endif
         }
 
+        func resolvedIntent(for tunnelConfig: TunnelConfiguration) -> ResolvedConnectionIntent? {
+            guard let peerID = tunnelConfig.peerIDs.first, let server = identifier.fullServerInfo(peerID) else {
+                return nil
+            }
+            return ResolvedConnectionIntent(
+                spec: resolvedSpec(for: tunnelConfig),
+                tunnelProtocol: tunnelConfig.tunnelProtocol,
+                resolvedServer: server
+            )
+        }
+
         switch tunnel {
         case .unknown:
             self = .resolving
 
-        case let .connectingToLocalAgent(tunnelConfig, tunnelActive):
+        case let .connectingToLocalAgent(tunnelConfig, tunnelActive, .hardJailed, .need2Fa):
+            #if os(macOS)
+                assert(tunnelConfig.tunnelProtocol != .ike, "IKE should have no local agent")
+            #endif
+            guard let intent = resolvedIntent(for: tunnelConfig) else {
+                self = .resolving
+                return
+            }
+            self = .authenticationRequired(.resolved(intent), tunnelActive: tunnelActive)
+
+        case let .connectingToLocalAgent(tunnelConfig, tunnelActive, _, _):
             #if os(macOS)
                 assert(tunnelConfig.tunnelProtocol != .ike, "IKE should have no local agent")
             #endif
             fallthrough
 
         case let .connecting(tunnelConfig, tunnelActive):
-            @Dependency(\.serverIdentifier) var identifier
-            guard let peerID = tunnelConfig.peerIDs.first, let server = identifier.fullServerInfo(peerID) else {
+            guard let intent = resolvedIntent(for: tunnelConfig) else {
                 self = .resolving
                 return
             }
-            let intent = ResolvedConnectionIntent(
-                spec: resolvedSpec(for: tunnelConfig),
-                tunnelProtocol: tunnelConfig.tunnelProtocol,
-                resolvedServer: server
-            )
             self = .connecting(.resolved(intent), tunnelActive: tunnelActive)
 
         case .reasserting:
@@ -589,7 +615,6 @@ extension ConnectionState {
             self = .resolving
 
         case let .connected(tunnelConfig, connectionData):
-            @Dependency(\.serverIdentifier) var identifier
             guard let peerID = connectionData.currentPeerId,
                   let server = identifier.fullServerInfo(peerID) else {
                 log.error("Server with id \(optional: connectionData.currentPeerId) not found")

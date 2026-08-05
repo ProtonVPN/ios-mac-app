@@ -133,6 +133,7 @@ package enum ConnectionCardHeaderModel: Equatable {
     case disconnected(isPaid: Bool)
     case connected
     case connecting
+    case authenticationRequired
 
     init(connectionState: ConnectionState, userTier: VpnTier) {
         switch connectionState {
@@ -147,6 +148,9 @@ package enum ConnectionCardHeaderModel: Equatable {
 
         case .connecting:
             self = .connecting
+
+        case .authenticationRequired:
+            self = .authenticationRequired
         }
     }
 }

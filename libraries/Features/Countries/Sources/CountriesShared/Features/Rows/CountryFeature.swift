@@ -117,10 +117,12 @@ public struct CountryFeature {
 
         var isConnecting: Bool {
             switch connectionState {
-            case let .connecting(.resolved(resolvedIntent), _):
+            case let .connecting(.resolved(resolvedIntent), _),
+                 let .authenticationRequired(.resolved(resolvedIntent), _):
                 serverGroup.matches(location: resolvedIntent.spec.location, logical: nil)
 
-            case let .connecting(.unresolved(unresolvedIntent), _):
+            case let .connecting(.unresolved(unresolvedIntent), _),
+                 let .authenticationRequired(.unresolved(unresolvedIntent), _):
                 serverGroup.matches(location: unresolvedIntent.spec.location, logical: nil)
 
             default:

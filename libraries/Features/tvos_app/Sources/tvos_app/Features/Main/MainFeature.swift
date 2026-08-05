@@ -201,6 +201,11 @@ struct MainFeature {
             intent.spec.location
         case let .connecting(.resolved(intent), _):
             intent.spec.location
+        case let .authenticationRequired(intent, _):
+            switch intent {
+            case let .unresolved(intent): intent.spec.location
+            case let .resolved(intent): intent.spec.location
+            }
         case .disconnected, .disconnecting, .resolving, .killSwitchActive:
             nil
         }

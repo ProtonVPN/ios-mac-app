@@ -67,6 +67,53 @@
         }
 
         @Test
+        func preservesLocalAgentJailDetails() async throws {
+            let providerManager = MockTunnelProviderManager(withBundleIdentifier: "wireguard")
+            providerManager.session = VPNSessionMock(status: .connected)
+
+            let requestId = UUID()
+            let config = NETunnelProviderProtocol()
+            try config.setProviderConfiguration(
+                value: JSONEncoder().encode(ConnectionSpec.defaultFastest),
+                forKey: "connectionSpec"
+            )
+            config.setProviderConfiguration(value: requestId.uuidString, forKey: "requestID")
+            try ProTUNConfigurationCoder.encode(
+                configuration: .init(preferredTransport: .udp, peers: [.mock(id: "peer-id")], dnsServers: []),
+                to: config
+            )
+            providerManager.protocolConfiguration = config
+
+            let status = try await withDependencies {
+                $0.vpnManagerRepository.managers = { [.wireGuard: providerManager] }
+                $0.extensionIPC.currentExtensionState = {
+                    .init(
+                        state: .connectingToLocalAgent(
+                            peerID: "peer-id",
+                            waitReason: .hardJailed,
+                            jail: .need2Fa
+                        ),
+                        requestId: requestId
+                    )
+                }
+            } operation: {
+                try await PacketTunnelManager().status
+            }
+
+            #expect(status == .connectingToLocalAgent(
+                TunnelConfiguration(
+                    connectionSpec: .defaultFastest,
+                    tunnelProtocol: .wireGuard,
+                    peerIDs: ["peer-id"],
+                    killSwitch: false
+                ),
+                tunnelActive: true,
+                waitReason: .hardJailed,
+                jail: .need2Fa
+            ))
+        }
+
+        @Test
         func treatsConnectingEchoAsDisconnectingAfterOnDemandIsDisabled() async throws {
             let providerManager = MockTunnelProviderManager(
                 session: VPNSessionMock(status: .connecting),

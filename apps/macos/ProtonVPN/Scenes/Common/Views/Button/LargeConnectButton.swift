@@ -34,11 +34,9 @@ class LargeConnectButton: HoverDetectionButton {
         }
     }
 
-    var isConnected: Bool = false {
-        didSet {
-            needsDisplay = true
-        }
-    }
+    @Invalidating(.display) var isConnected: Bool = false
+
+    @Invalidating(.display) var isAuthenticationRequired: Bool = false
 
     override func viewWillDraw() {
         super.viewWillDraw()
@@ -51,7 +49,7 @@ class LargeConnectButton: HoverDetectionButton {
             layer?.borderColor = self.cgColor(.border)
         }
 
-        let title: String = isConnected ? Localizable.disconnect : Localizable.quickConnect
+        let title: String = isConnected || isAuthenticationRequired ? Localizable.disconnect : Localizable.quickConnect
         attributedTitle = style(title, font: .themeFont(.heading4))
     }
 
@@ -67,7 +65,7 @@ extension LargeConnectButton: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
         switch context {
         case .background:
-            if isConnected {
+            if isConnected || isAuthenticationRequired {
                 return isHovered ? [.danger, .hovered] : .transparent
             } else {
                 let hover: AppTheme.Style = isHovered ? .hovered : []
