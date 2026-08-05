@@ -73,6 +73,7 @@ struct GlobeSurfaceView: GlobeViewRepresentable {
 
     final class Coordinator {
         var renderer: GlobeRenderer?
+        let frameRate = GlobeFrameRateRequest()
     }
 
     func makeCoordinator() -> Coordinator {
@@ -104,6 +105,7 @@ struct GlobeSurfaceView: GlobeViewRepresentable {
             log.error("Globe renderer setup failed: no Metal device, the map will not render")
             return view
         }
+
         view.device = device
         view.colorPixelFormat = GlobeSurface.colorFormat
         view.depthStencilPixelFormat = .invalid // no depth, back-face culling handles the far hemisphere
@@ -111,6 +113,8 @@ struct GlobeSurfaceView: GlobeViewRepresentable {
         view.clearColor = GlobeSurface.clearColor
         view.isPaused = true
         view.enableSetNeedsDisplay = true
+        view.preferredFramesPerSecond = 120
+
         #if canImport(UIKit)
             view.isOpaque = false
             view.backgroundColor = .clear
@@ -120,6 +124,7 @@ struct GlobeSurfaceView: GlobeViewRepresentable {
         #elseif canImport(AppKit)
             view.layer?.isOpaque = false
         #endif
+
         context.coordinator.renderer = GlobeRenderer(
             device: device,
             model: GlobeResource.model,
@@ -127,6 +132,7 @@ struct GlobeSurfaceView: GlobeViewRepresentable {
             colorFormat: view.colorPixelFormat,
             sampleCount: view.sampleCount
         )
+
         view.delegate = context.coordinator.renderer
         return view
     }
@@ -137,6 +143,9 @@ struct GlobeSurfaceView: GlobeViewRepresentable {
         // the globe's inputs change. A pixel-identical frame isn't worth a full MSAA redraw.
         guard apply(to: renderer) else { return }
         #if canImport(UIKit)
+            // A redraw that survived the guard above means the globe is visibly changing, so keep the
+            // ProMotion rate request open. Dragging, coasting, and camera animations all converge here.
+            context.coordinator.frameRate.extend()
             view.setNeedsDisplay()
         #elseif canImport(AppKit)
             view.needsDisplay = true
