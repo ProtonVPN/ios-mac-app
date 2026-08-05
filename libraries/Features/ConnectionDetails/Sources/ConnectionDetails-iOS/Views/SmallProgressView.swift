@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ProtonCoreUIFoundations
 import SwiftUI
 import Theme
 
@@ -48,7 +47,7 @@ public struct SmallProgressView: View {
     public var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: .themeRadius7)
-                .fill(ColorProvider.Shade40)
+                .fill(Theme.Asset.Colors.shade40)
 
             GeometryReader { geo in
                 RoundedRectangle(cornerRadius: .themeRadius7)

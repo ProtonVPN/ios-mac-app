@@ -19,8 +19,6 @@ let package = Package(
     ],
     dependencies: [
         // Local
-        .package(path: "../../../external/protoncore"),
-
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/Strings"),
         .package(path: "../../Foundations/Domain"),
@@ -55,7 +53,6 @@ let package = Package(
                 "SharedViews",
                 "Theme",
                 .product(name: "VPNAppCore", package: "NEHelper"),
-                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ]
@@ -65,6 +62,7 @@ let package = Package(
             dependencies: [
                 "Connection",
                 "ConnectionDetailsShared",
+                "Theme",
             ],
             resources: []
         ),
@@ -72,6 +70,7 @@ let package = Package(
             name: "ConnectionDetails-macOS",
             dependencies: [
                 "ConnectionDetailsShared",
+                "Theme",
             ],
             resources: []
         ),

@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import ConnectionDetailsShared
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Theme
@@ -46,13 +45,13 @@ public struct IPView: View {
                     }, label: {
                         (
                             store.localIpHidden
-                                ? IconProvider.eye
-                                : IconProvider.eyeSlash
                         )
                         .resizable().frame(width: buttonSize, height: buttonSize)
                         .foregroundColor(Color(.text, .weak))
                     })
                     .buttonStyle(PlainButtonStyle())
+                                    ? Theme.Asset.Icons.eye.swiftUIImage
+                                    : Theme.Asset.Icons.eyeSlash.swiftUIImage
                 }
 
                 Text(store.localIpHidden ? "***.***.***.***" : (store.userIP ?? Localizable.connectionDetailsIpviewIpUnavailable))
@@ -60,7 +59,7 @@ public struct IPView: View {
             }
             .frame(maxWidth: .infinity) // Makes both sides equal width
 
-            IconProvider.arrowRight
+            Theme.Asset.Icons.arrowRight.swiftUIImage
                 .foregroundColor(Color(.text, .weak))
 
             VStack(spacing: verticalSpacing) {

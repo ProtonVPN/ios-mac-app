@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import ConnectionDetailsShared
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Theme
@@ -59,9 +58,9 @@ public struct IPView: View {
                             store.send(.changeIPVisibility)
                         } label: {
                             (
-                                store.localIpHidden
-                                    ? IconProvider.eye
-                                    : IconProvider.eyeSlash
+                                store.userIPHidden
+                                    ? Theme.Asset.Icons.eye.swiftUIImage
+                                    : Theme.Asset.Icons.eyeSlash.swiftUIImage
                             )
                             .resizable().frame(width: buttonSize, height: buttonSize)
                             .foregroundColor(Color(.text, .weak))
@@ -81,7 +80,7 @@ public struct IPView: View {
             }
             .frame(maxWidth: .infinity) // Makes both sides equal width
 
-            IconProvider.arrowRight
+            Theme.Asset.Icons.arrowRight.swiftUIImage
                 .accessibilityHidden(true)
                 .foregroundColor(Color(.text, .weak))
 

@@ -17,17 +17,17 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import ProtonCoreUIFoundations
 import SharedViews
+import Theme
 
 public extension RecentsImages {
     static var coreImages: Self {
         .init(
-            wrenchImage: IconProvider.wrench,
-            threeDotsHorizontalImage: IconProvider.threeDotsHorizontal,
-            pinFilled: IconProvider.pinFilled,
-            pinSlashFilled: IconProvider.pinSlashFilled,
-            trashCrossFilled: IconProvider.trashCrossFilled
+            wrenchImage: Theme.Asset.Icons.wrench.swiftUIImage,
+            threeDotsHorizontalImage: Theme.Asset.Icons.threeDotsHorizontal.swiftUIImage,
+            pinFilled: Theme.Asset.Icons.pinFilled.swiftUIImage,
+            pinSlashFilled: Theme.Asset.Icons.pinSlashFilled.swiftUIImage,
+            trashCrossFilled: Theme.Asset.Icons.trashCrossFilled.swiftUIImage
         )
     }
 }

@@ -19,7 +19,6 @@
 import ComposableArchitecture
 import ConnectionDetailsShared
 import Domain
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Theme
@@ -166,7 +165,9 @@ struct ConnectionDetailsView: View {
                     .themeFont(.body1())
 
                 if case .info = accessory {
-                    IconProvider.infoCircle.resizable().frame(width: infoIconSize, height: infoIconSize)
+                    Theme.Asset.Icons.infoCircle.swiftUIImage
+                        .resizable()
+                        .frame(width: infoIconSize, height: infoIconSize)
                 }
             }
             .accessibilityLabel(title)

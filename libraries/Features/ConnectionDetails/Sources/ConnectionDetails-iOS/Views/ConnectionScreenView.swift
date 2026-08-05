@@ -21,10 +21,10 @@ import Connection
 import ConnectionDetailsShared
 import Domain
 import Persistence
-import ProtonCoreUIFoundations
 import SharedViews
 import Strings
 import SwiftUI
+import Theme
 import VPNAppCore
 
 public struct ConnectionScreenView: View {
@@ -63,8 +63,7 @@ public struct ConnectionScreenView: View {
                 Button(action: {
                     dismiss()
                 }, label: {
-                    IconProvider
-                        .cross
+                    Theme.Asset.Icons.cross.swiftUIImage
                         .resizable()
                         .frame(width: closeButtonSize, height: closeButtonSize)
                         .foregroundColor(Color(.icon, .weak))
