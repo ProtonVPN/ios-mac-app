@@ -36,33 +36,5 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
         if let loginError {
             throw loginError
         }
-
-        let isFree = try vpnKeychain.fetchCached().maxTier.isFree
-
-        try await withEscapedDependencies { dependencies in
-            guard let properties = try await vpnApiClient.refreshServerInfo(ifIpHasChangedFrom: nil, freeTier: isFree) else {
-                return
-            }
-
-            dependencies.yield {
-                if let userLocation = properties.location {
-                    @Shared(.userLocation) var sharedUserLocation
-                    $sharedUserLocation.withLock { $0 = userLocation }
-                }
-                if let services = properties.streamingServices {
-                    @Shared(.streamingServices) var streamingServices
-                    $streamingServices.withLock { $0 = services.streamingServices }
-                }
-
-                @Dependency(\.serverListUpdater) var serverListUpdater
-                if case let .modified(modifiedAt, servers, isFree) = properties.serverInfo {
-                    serverListUpdater.update(
-                        servers: servers.map { VPNServer(legacyModel: $0) },
-                        freeServersOnly: isFree,
-                        lastModifiedAt: modifiedAt
-                    )
-                }
-            }
-        }
     }
 }

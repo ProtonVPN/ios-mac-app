@@ -713,6 +713,7 @@ struct SidebarFeatureTests {
             $0.portForwardingPropertyProvider.setPortForwarding(portForwardingEnabled)
             $0.serverChangeAuthorizer = serverChangeAuthorizer
             $0.announcementRefresher.tryRefreshing = {}
+            $0.withRandomNumberGenerator = WithRandomNumberGenerator(SystemRandomNumberGenerator())
         }
     }
 }

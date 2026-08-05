@@ -380,6 +380,7 @@ struct AppSessionManagerImplementationTests {
             $0.vpnApiClient.loads = { _ in [:] }
             $0.vpnApiClient.virtualServices = { VPNStreamingResponse(code: 1, resourceBaseURL: "url", streamingServices: [:]) }
             $0.vpnApiClient.sessionsCount = { SessionsResponse(sessionCount: 1) }
+            $0.featureFlags = .enabling()
         } operation: {
             let manager = AppSessionManagerImplementation(factory: factory)
             let context = TestContext(
