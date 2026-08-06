@@ -90,18 +90,20 @@ public struct CaptureVPNSessionView: View {
         switch store.captureSession {
         case .noSession, .sessionEnded:
             emptyCaptureSession()
+        case let .sessionPending(_, date):
+            capturingView(startTime: date, isPending: true)
         case let .sessionStarted(urlWithData):
-            capturingView(startTime: urlWithData.date)
+            capturingView(startTime: urlWithData.date, isPending: false)
         }
     }
 
     private let maxDuration: String = Duration.minutes(DomainConstants.LogFiles.pcapMaxDurationInMinutes)
         .formatted(.time(pattern: .minuteSecond(padMinuteToLength: 2)))
 
-    private func capturingView(startTime: Date) -> some View {
+    private func capturingView(startTime: Date, isPending: Bool) -> some View {
         VStack(spacing: .themeSpacing24) {
             Spacer()
-            Text(Localizable.pcapCaptureSessionCapturing)
+            Text(isPending ? Localizable.pcapCaptureSessionPending : Localizable.pcapCaptureSessionCapturing)
                 .themeFont(.body1(.bold))
                 .foregroundStyle(Color(.text))
 

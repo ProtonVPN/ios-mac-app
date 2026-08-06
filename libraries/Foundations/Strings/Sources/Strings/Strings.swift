@@ -1184,6 +1184,8 @@ public enum Localizable {
   public static var pcapCaptureSessionExport: String { return Localizable.tr("Localizable", "_pcap_capture_session_export", fallback: "Save file") }
   /// Description of an alert when user starts the PCAP session
   public static var pcapCaptureSessionIssueReproduction: String { return Localizable.tr("Localizable", "_pcap_capture_session_issue_reproduction", fallback: "If possible, apply the same settings and type of connection you used when you first faced the issue.\n\nAim to reproduce the issue in the same way it first happened (browsing the web, using an app, etc.)\n\nWhen you’ve reproduced the issue, you can stop the capture and share the file with the customer support team.") }
+  /// Header of the pending PCAP session view
+  public static var pcapCaptureSessionPending: String { return Localizable.tr("Localizable", "_pcap_capture_session_pending", fallback: "Pending connection") }
   /// Title of an alert when user starts the PCAP session
   public static var pcapCaptureSessionShouldStartSession: String { return Localizable.tr("Localizable", "_pcap_capture_session_should_start_session", fallback: "Start capturing VPN session?") }
   /// Button title in the PCAP view. Starts the PCAP session

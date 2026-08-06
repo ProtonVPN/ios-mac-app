@@ -3264,6 +3264,9 @@
 /* Header of the active PCAP session view */
 "_pcap_capture_session_capturing" = "Capturing";
 
+/* Header of the pending PCAP session view */
+"_pcap_capture_session_pending" = "Pending connection";
+
 /* Button title on the PCAP export view. Presents a share sheet to save the file outside of the app */
 "_pcap_capture_session_export" = "Save file";
 

@@ -69,29 +69,38 @@ struct PacketCaptureSession {
     // TODO: ProTUN(pcap):  Add file storage capacity checks?
     mutating func start(
         with eventStream: AsyncStream<Event>,
-        performing action: (URL, Int) -> Void,
+        existingURL: URL?,
+        existingStartDate: Date?,
+        performing action: (URL, Int) -> Bool,
         stateStream: (AsyncStream<State>) -> Void
-    ) throws -> URL {
+    ) throws -> (URL, Bool) {
         guard state.canStart else {
             assertionFailure("Attempted to start PCAP session with invalid state")
             throw InvalidState()
         }
-        @Dependency(\.pcapFileManager) var pcapFileManager
-        try pcapFileManager.cleanUpAllPcapFiles()
+        let fileURL: URL
+        let startDate: Date
+        if let existingURL, let existingStartDate {
+            fileURL = existingURL
+            startDate = existingStartDate
+        } else {
+            @Dependency(\.pcapFileManager) var pcapFileManager
+            try pcapFileManager.cleanUpAllPcapFiles()
 
-        let startDate = date.now
+            startDate = date.now
 
-        let fileURL = try pcapFileManager.newFileURL(startDate: startDate)
+            fileURL = try pcapFileManager.newFileURL(startDate: startDate)
+        }
         let (combinedStream, continuation) = makeStream(from: eventStream)
 
         self.continuation = continuation
 
         stateStream(combinedStream)
-        action(fileURL, DomainConstants.LogFiles.pcapMaxFileSize)
 
         state = .recording(.init(startDate: startDate, url: fileURL))
 
-        return fileURL
+        let didStart = action(fileURL, DomainConstants.LogFiles.pcapMaxFileSize)
+        return (fileURL, didStart)
     }
 
     mutating func stop() -> (URL, TimeInterval, Int)? {

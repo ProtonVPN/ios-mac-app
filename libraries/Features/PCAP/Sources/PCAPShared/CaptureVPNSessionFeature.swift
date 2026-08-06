@@ -41,7 +41,7 @@ public struct CaptureVPNSessionFeature {
         @Presents public var destination: Destination.State?
 
         public var buttonText: String {
-            if case .sessionStarted = captureSession {
+            if captureSession.isRunning {
                 Localizable.pcapCaptureSessionStop
             } else {
                 Localizable.pcapCaptureSessionStart
@@ -91,7 +91,7 @@ public struct CaptureVPNSessionFeature {
                 return .none
             case let .captureSessionUpdate(captureSession):
                 switch captureSession {
-                case .noSession, .sessionStarted:
+                case .noSession, .sessionStarted, .sessionPending:
                     state.destination = nil
                 case .sessionEnded:
                     state.destination = .sessionCaptured(.init())
@@ -119,7 +119,7 @@ public struct CaptureVPNSessionFeature {
                     } else {
                         state.alert = Self.startCapturingAlert
                     }
-                case .sessionStarted:
+                case .sessionStarted, .sessionPending:
                     return .send(.togglePacketCapture)
                 }
                 return .none

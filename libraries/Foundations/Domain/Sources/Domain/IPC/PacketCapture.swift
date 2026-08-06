@@ -37,8 +37,13 @@ public enum CaptureSession: Equatable, Codable, Sendable {
     public static let storageKey: String = "PcapSession"
 
     case noSession
+    case sessionPending(url: URL, date: Date)
     case sessionStarted(urlWithDate: URLWithDate)
     case sessionEnded(urlWithSize: URLWithSize, reason: PacketCaptureInterruptionReason)
+
+    public var isRunning: Bool {
+        self.is(\.sessionStarted) || self.is(\.sessionPending)
+    }
 }
 
 public extension SharedKey where Self == AppStorageKey<CaptureSession>.Default {
@@ -68,7 +73,7 @@ public extension ProTUNMessage.Response {
         case fileURL(URL?)
         case isRecording(Bool)
         case cleanupResult(CodableResult<Bool, Error>)
-        case captureStartResult(CodableResult<URL, Error>)
+        case captureStartResult(PendingResult<URL, URL, Error>)
         case captureFinished(CodableResult<URLWithSize, Error>)
     }
 }

@@ -31,6 +31,7 @@ import PMLogger
 import protun
 import Queue
 import SharedErgonomics
+import Sharing
 import VPNCoreCommon
 import VPNCoreTypes
 
@@ -68,8 +69,10 @@ actor ProTUNAdapter {
         get async { await stateDelegate.currentState?.connectionState.currentPeer }
     }
 
+    @Shared(.captureSession) var captureSession
+
     var isPacketCaptureSessionRecording: Bool {
-        packetCaptureSession.state.isRecording
+        packetCaptureSession.state.isRecording || captureSession.is(\.sessionPending)
     }
 
     private static let waitConnectedStateDuration: Duration = .seconds(30)
@@ -198,6 +201,22 @@ actor ProTUNAdapter {
             socketFdAvailableCallback: nil,
             cache: cache
         )
+        // Here, the user started pcap while not being connected, thus the sessionPending state.
+        // We need to start the pcap as soon as we have a valid connection object.
+        if case let .sessionPending(url, date) = captureSession {
+            do {
+                let (url, didStart) = try startPacketCapture(existingURL: url, existingStartDate: date)
+                if didStart {
+                    $captureSession.withLock {
+                        $0 = .sessionStarted(urlWithDate: URLWithDate(url: url, date: date))
+                    }
+                }
+            } catch {
+                Logger.adapter.warning("Failed to start PCAP session with a `sessionPending` state, reverting to `noSession`")
+                $captureSession.withLock { $0 = .noSession }
+            }
+        }
+
         signposter.emitEvent("Connection established", id: signpostID)
 
         if config.proTUN.peers.isEmpty {
@@ -461,12 +480,24 @@ extension ProTUNAdapter {
         }
     }
 
+    func startPCAP(connection: Connection, fileURL: URL, maxBytes: Int) {
+        let file: PcapFile = .path(path: fileURL.absolutePath, mode: .overwrite)
+        connection.startPacketCapture(pcapFile: .init(file: file, maxBytes: UInt64(maxBytes)))
+    }
+
     @discardableResult
-    func startPacketCapture() throws -> URL {
+    func startPacketCapture(existingURL: URL?, existingStartDate: Date?) throws -> (URL, Bool) {
         let eventStream = eventDelegate.eventSource.newStream
-        return try packetCaptureSession.start(with: eventStream) { fileURL, maxBytes in
-            let file: PcapFile = .path(path: fileURL.absolutePath, mode: .overwrite)
-            self.connection?.startPacketCapture(pcapFile: .init(file: file, maxBytes: UInt64(maxBytes)))
+        return try packetCaptureSession.start(
+            with: eventStream,
+            existingURL: existingURL,
+            existingStartDate: existingStartDate
+        ) { fileURL, maxBytes in
+            if let connection {
+                startPCAP(connection: connection, fileURL: fileURL, maxBytes: maxBytes)
+                return true
+            }
+            return false
         } stateStream: { stream in
             listenToPacketCaptureUpdates(with: stream)
         }

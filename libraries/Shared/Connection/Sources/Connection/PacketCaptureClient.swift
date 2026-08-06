@@ -94,6 +94,8 @@ extension PacketCaptureClient: DependencyKey {
             switch response {
             case let .captureStartResult(.success(url)):
                 $captureSession.withLock { $0 = .sessionStarted(urlWithDate: .init(url: url, date: .now)) }
+            case let .captureStartResult(.pending(url)):
+                $captureSession.withLock { $0 = .sessionPending(url: url, date: .now) }
             case let .captureStartResult(.failure(error)):
                 throw PacketCaptureClientError.failedToStart(error)
             case let .captureFinished(.success(urlWithSize)):
