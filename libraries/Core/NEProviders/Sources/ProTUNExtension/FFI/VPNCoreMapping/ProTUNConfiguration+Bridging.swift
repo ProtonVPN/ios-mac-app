@@ -50,8 +50,9 @@ extension ProTUNConfiguration.Peer {
     }
 
     /// Whether `current` is the same server as this peer, on a transport and port this peer still allows.
-    func matches(_ current: PeerConnectionInfo) -> Bool {
-        guard id == current.peerId else { return false }
+    /// A nil `current` argument means no live peer (disconnected, e.g. 0 peer KS), which matches nothing.
+    func matches(_ current: PeerConnectionInfo?) -> Bool {
+        guard let current, id == current.peerId else { return false }
         return switch current.protocol {
         case .wireguardUdp:
             udpPorts.contains(current.port)
