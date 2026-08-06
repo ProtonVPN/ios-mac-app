@@ -221,7 +221,7 @@ actor ProTUNAdapter {
     }
 
     func stop(with reason: NEProviderStopReason) {
-        Logger.adapter.info("Stopping with reason: \(reason)")
+        Logger.adapter.info("Stopping with reason: \(reason, privacy: .public)")
 
         if isPacketCaptureSessionRecording {
             handlePacketCaptureInterruption(reason: .connectionTerminated)

@@ -121,7 +121,11 @@ actor ConfigurationStore {
     ) async throws(ConfigurationUpdateError) {
         do {
             if let peers {
-                Logger.adapter.info("Updating peers: \(peers.map(\.description))")
+                if peers.isEmpty {
+                    Logger.adapter.info("Updating peers, enabling zero peers KS")
+                } else {
+                    Logger.adapter.info("Updating peers: \(peers.map(\.description))")
+                }
                 try await adapter.handlePeersUpdate(peers)
             }
 
@@ -161,14 +165,10 @@ extension NETunnelProviderProtocol {
         let protunConfig = try ProTUNConfigurationCoder.decode(from: self)
 
         let constrainedPeers = protunConfig.constrainedPeers
-        let newPeers: [PeerInfo]? =
-            if let currentPeer,
-            update.hasPeerChanges,
-            !constrainedPeers.contains(where: { $0.matches(currentPeer) }) {
-                try constrainedPeers.map(PeerInfo.init)
-            } else {
-                nil
-            }
+        let shouldUpdatePeers = update.hasPeerChanges
+            && (!constrainedPeers.isEmpty || currentPeer != nil)
+            && !constrainedPeers.contains { $0.matches(currentPeer) }
+        let newPeers: [PeerInfo]? = shouldUpdatePeers ? try constrainedPeers.map(PeerInfo.init) : nil
 
         let networkSettingsUpdate: NetworkSettingsUpdate? = requiresNetworkSettingsUpdate
             ? (dnsServers: update.customDNS ?? protunConfig.dnsServers, excludingRoutes: protunConfig.uniquePeerAddresses)
