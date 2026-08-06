@@ -91,13 +91,6 @@
     },
     {
       "target": {
-        "containerPath": "container:../../libraries/Shells/Tabular",
-        "identifier": "TabularTests",
-        "name": "TabularTests"
-      }
-    },
-    {
-      "target": {
         "containerPath": "container:../../libraries/Features/Modals",
         "identifier": "ModalsTests",
         "name": "ModalsTests"
@@ -159,6 +152,13 @@
         "containerPath": "container:../../libraries/Features/Settings",
         "identifier": "SettingsTests",
         "name": "SettingsTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Shells/Tabular",
+        "identifier": "TabularTests",
+        "name": "TabularTests"
       }
     },
     {
