@@ -20,12 +20,8 @@ import Foundation
 
 /// The user's own location as last established, together with when and how it was established.
 ///
-/// The two sources answer different questions. `/vpn/location` returns a complete location but can
-/// only be asked while no tunnel is up; the tunnel's local agent reports the address the VPN server
-/// observes at any point during a session, but has no country to pair with it. Recording the source
-/// alongside the value is what lets a reader tell "this country describes this address" apart from
-/// "this country describes the address this one replaced", and lets the refresh policy live on the
-/// value instead of in a separate timestamp default.
+/// Two possible sources: 1. `/vpn/location` when no tunnel is up;
+/// 2. the tunnel's local agent report with the address of the VPN server
 public struct StoredUserLocation: Equatable, Sendable, Codable {
     /// Where a stored location came from.
     public enum Source: String, Equatable, Sendable, Codable {

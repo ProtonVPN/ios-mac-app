@@ -29,13 +29,13 @@ public enum ProtectionState: Equatable, Sendable {
     case protected
     case protectedSecureCore
     case unprotected
-    case protecting(country: String, ip: String)
+    case protecting(country: String?, ip: String?)
     case authenticationRequired
     case killSwitchActive
 }
 
 extension ConnectionState {
-    func protectionState(country: String, ip: String) -> ProtectionState {
+    func protectionState(country: String?, ip: String?) -> ProtectionState {
         switch self {
         case .disconnected:
             return .unprotected

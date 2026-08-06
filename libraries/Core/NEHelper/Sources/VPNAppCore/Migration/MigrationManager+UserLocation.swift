@@ -46,15 +46,7 @@ extension MigrationManager {
             let measuredAt = defaults.object(forKey: "lastLocationRetrieval") as? Date
 
             @Shared(.userLocation) var userLocation
-            $userLocation.withLock {
-                $0 = StoredUserLocation(
-                    location: location,
-                    // Without a retrieval date the value is of unknown age, so date it to the distant
-                    // past and let the first trigger after launch measure it again.
-                    measuredAt: measuredAt ?? .distantPast,
-                    source: .locationEndpoint
-                )
-            }
+            $userLocation.adoptLegacy(location, measuredAt: measuredAt)
             log.info(
                 "Migrated user location defaults into a single value",
                 category: .persistence,

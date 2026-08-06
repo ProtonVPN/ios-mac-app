@@ -82,12 +82,8 @@ struct ServerListUpdaterTests {
     @Test("Stores the last modified value of a free tier response")
     func storesLastModifiedOfFreeTierResponse() {
         let lastModified = "A few moments ago"
-        let recorder = RepositoryRecorder()
-
-        withTimestampedLogicals(enabled: true) {
-            recorder.update(servers: [], freeServersOnly: true, lastModifiedAt: lastModified)
-        }
-
+        let recorder = RepositoryRecorder(enableTimestampedLogicals: true)
+        recorder.update(servers: [], freeServersOnly: true, lastModifiedAt: lastModified)
         #expect(recorder.metadata[.lastModifiedFree] == lastModified)
         // A free tier response says nothing about the paid servers, so it is no baseline for a full request
         #expect(recorder.metadata[.lastModifiedAll] == nil)
@@ -96,46 +92,25 @@ struct ServerListUpdaterTests {
     @Test("Stores the last modified value of a full response for both tier scopes")
     func storesLastModifiedOfFullResponse() {
         let lastModified = "A few moments ago"
-        let recorder = RepositoryRecorder()
-
-        withTimestampedLogicals(enabled: true) {
-            recorder.update(servers: [], freeServersOnly: false, lastModifiedAt: lastModified)
-        }
-
+        let recorder = RepositoryRecorder(enableTimestampedLogicals: true)
+        recorder.update(servers: [], freeServersOnly: false, lastModifiedAt: lastModified)
         #expect(recorder.metadata[.lastModifiedFree] == lastModified)
         #expect(recorder.metadata[.lastModifiedAll] == lastModified)
     }
 
     @Test("Does not overwrite the last modified value when the response has none")
     func keepsLastModifiedWhenResponseHasNone() {
-        let recorder = RepositoryRecorder()
-
-        withTimestampedLogicals(enabled: true) {
-            recorder.update(servers: [], freeServersOnly: true, lastModifiedAt: nil)
-        }
-
+        let recorder = RepositoryRecorder(enableTimestampedLogicals: true)
+        recorder.update(servers: [], freeServersOnly: true, lastModifiedAt: nil)
         #expect(recorder.writtenMetadataKeys == [.consecutiveSuccessfulRefreshes])
     }
 
     @Test("Does not store the last modified value while timestamped logicals are disabled")
     func skipsLastModifiedWhenFeatureFlagDisabled() {
         let recorder = RepositoryRecorder()
-
-        withTimestampedLogicals(enabled: false) {
-            recorder.update(servers: [], freeServersOnly: true, lastModifiedAt: "A few moments ago")
-        }
-
+        recorder.update(servers: [], freeServersOnly: true, lastModifiedAt: "A few moments ago")
         #expect(recorder.writtenMetadataKeys == [.consecutiveSuccessfulRefreshes])
     }
-}
-
-// MARK: - Helpers
-
-private func withTimestampedLogicals<T>(enabled: Bool, operation: () throws -> T) rethrows -> T {
-    CheckedFeatureFlagsRepository.shared.markFlagsFetchedForTesting()
-    FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.timestampedLogicals, enabled)
-    defer { FeatureFlagsRepository.shared.resetFlagOverride(VPNFeatureFlagType.timestampedLogicals) }
-    return try operation()
 }
 
 /// Records what the live ``ServerListUpdater`` asks of the repository.
@@ -146,6 +121,11 @@ private final class RepositoryRecorder: @unchecked Sendable {
     private(set) var maxTiers: [Int] = []
     private(set) var writtenMetadataKeys: [DatabaseMetadata.Key] = []
     var metadata: [DatabaseMetadata.Key: String] = [:]
+    var enableTimestampedLogicals = false
+
+    init(enableTimestampedLogicals: Bool = false) {
+        self.enableTimestampedLogicals = enableTimestampedLogicals
+    }
 
     func update(servers: [VPNServer], freeServersOnly: Bool, lastModifiedAt: String?) {
         var repository = ServerRepository.empty()
@@ -162,6 +142,11 @@ private final class RepositoryRecorder: @unchecked Sendable {
 
         withDependencies {
             $0.serverRepository = repository
+            if enableTimestampedLogicals {
+                $0.featureFlags = .enabling(VPNFeatureFlagType.timestampedLogicals)
+            } else {
+                $0.featureFlags = .enabling()
+            }
         } operation: {
             ServerListUpdater.liveValue.update(
                 servers: servers,

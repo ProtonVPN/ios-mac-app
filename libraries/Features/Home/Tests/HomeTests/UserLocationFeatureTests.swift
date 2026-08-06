@@ -24,6 +24,7 @@ import DomainTestSupport
 import Ergonomics
 import Foundation
 @testable import HomeShared
+import NetworkingErgonomics
 import Testing
 import VPNAppCore
 
@@ -323,9 +324,8 @@ struct UserLocationFeatureTests {
     // MARK: - Network changes
 
     /// A different network means the stored address describes the previous one, so the hourly
-    /// cooldown must not hold the refresh back. Also covers the first value the stream reports being
-    /// the network the device is already on rather than a change: a second
-    /// `.networkAttachmentChanged` would land as an unexpected action.
+    /// cooldown must not hold the refresh back. The path that carries nothing is skipped, because a
+    /// request over it could only fail.
     @Test("Fetches on a network change even inside the routine cooldown")
     func fetchesOnNetworkChangeInsideRoutineCooldown() async {
         let now = Date.now
@@ -335,14 +335,14 @@ struct UserLocationFeatureTests {
         }
 
         let locationClock = TestClock()
-        let (attachments, attachmentSource) = AsyncStream.makeStream(of: NetworkAttachment.self)
+        let (paths, pathSource) = AsyncStream.makeStream(of: NetworkPath.self)
         let store = TestStore(initialState: .init()) {
             UserLocationFeature()
         } withDependencies: {
             $0.date = .constant(now)
             $0.continuousClock = TestClock()
             $0.locationClient = .suspending(until: locationClock, returning: .poland)
-            $0.networkAttachmentStream = { attachments }
+            $0.pathMonitor.subscribe = { paths }
         }
 
         await store.send(.listen)
@@ -350,9 +350,9 @@ struct UserLocationFeatureTests {
         await store.receive(\.fetchUserLocation) // routine, and throttled
         await store.receive(\.userLocationFetchFinished.failure.cooldown)
 
-        attachmentSource.yield(.wifi) // the network the device is already on
-        attachmentSource.yield(.cellular)
-        await store.receive(\.networkAttachmentChanged)
+        pathSource.yield(.unsatisfied) // between networks, so nothing to ask over
+        pathSource.yield(.cellular)
+        await store.receive(\.networkPathChanged)
         await store.receive(\.fetchUserLocation)
         await store.receive(\.userLocationFetchStarted)
 
@@ -372,14 +372,14 @@ struct UserLocationFeatureTests {
             $0 = .measured(.init(ip: "10.9.8.7", country: "DE", isp: "Telekom"), at: now.addingTimeInterval(-30))
         }
 
-        let (attachments, attachmentSource) = AsyncStream.makeStream(of: NetworkAttachment.self)
+        let (paths, pathSource) = AsyncStream.makeStream(of: NetworkPath.self)
         let store = TestStore(initialState: .init()) {
             UserLocationFeature()
         } withDependencies: {
             $0.date = .constant(now)
             $0.continuousClock = TestClock()
             $0.locationClient = .init() // no request is expected
-            $0.networkAttachmentStream = { attachments }
+            $0.pathMonitor.subscribe = { paths }
         }
 
         await store.send(.listen)
@@ -387,9 +387,14 @@ struct UserLocationFeatureTests {
         await store.receive(\.fetchUserLocation)
         await store.receive(\.userLocationFetchFinished.failure.cooldown)
 
-        attachmentSource.yield(.wifi)
-        attachmentSource.yield(.cellular)
-        await store.receive(\.networkAttachmentChanged)
+        // Two changes in a row, and the floor lets neither of them through.
+        pathSource.yield(.wifi)
+        await store.receive(\.networkPathChanged)
+        await store.receive(\.fetchUserLocation)
+        await store.receive(\.userLocationFetchFinished.failure.cooldown)
+
+        pathSource.yield(.cellular)
+        await store.receive(\.networkPathChanged)
         await store.receive(\.fetchUserLocation)
         await store.receive(\.userLocationFetchFinished.failure.cooldown)
         #expect(userLocation?.location.ip == "10.9.8.7")
@@ -521,9 +526,32 @@ struct UserLocationFeatureTests {
     }
 }
 
-private extension NetworkAttachment {
-    static let wifi = NetworkAttachment(isSatisfied: true, primaryInterface: "en0", gateways: ["192.168.1.1:0"])
-    static let cellular = NetworkAttachment(isSatisfied: true, primaryInterface: "pdp_ip0", gateways: [])
+private extension NetworkPath {
+    static let wifi = NetworkPath(
+        status: .satisfied,
+        interfaceName: "en0",
+        interfaceType: .wifi,
+        gateways: ["192.168.1.1:0"],
+        supportsIPv4: true,
+        supportsIPv6: true
+    )
+
+    static let cellular = NetworkPath(
+        status: .satisfied,
+        interfaceName: "pdp_ip0",
+        interfaceType: .cellular,
+        gateways: [],
+        supportsIPv4: true,
+        supportsIPv6: false
+    )
+
+    /// Reported while the device is between networks, and no address can be measured over it.
+    static let unsatisfied = NetworkPath(
+        status: .unsatisfied,
+        gateways: [],
+        supportsIPv4: false,
+        supportsIPv6: false
+    )
 }
 
 private extension LocationClient {

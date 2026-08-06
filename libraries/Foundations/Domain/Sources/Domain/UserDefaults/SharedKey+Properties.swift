@@ -108,10 +108,6 @@ public extension SharedKey where Self == AppStorageKey<Int>.Default {
 
 public extension SharedKey where Self == JSONAppStorageKey<StoredUserLocation?> {
     /// The user's location outside of the VPN, with the timestamp and source that established it.
-    ///
-    /// The single source of truth for "where is the user": every screen showing the user's own
-    /// address reads it here, and every measurement — the `/vpn/location` endpoint and the tunnel's
-    /// local agent alike — reaches it through ``UserLocationStore``
     static var userLocation: Self {
         .json("UserLocation")
     }

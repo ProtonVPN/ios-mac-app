@@ -38,9 +38,37 @@
     },
     {
       "target": {
+        "containerPath": "container:../../libraries/Shared/CommonNetworking",
+        "identifier": "CommonNetworkingTests",
+        "name": "CommonNetworkingTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Features/ConnectWidget",
+        "identifier": "ConnectWidgetTests",
+        "name": "ConnectWidgetTests"
+      }
+    },
+    {
+      "target": {
         "containerPath": "container:../../libraries/Features/ConnectionDetails",
         "identifier": "ConnectionDetailsTests",
         "name": "ConnectionDetailsTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Shared/ConnectionInventory",
+        "identifier": "ConnectionInventoryTests",
+        "name": "ConnectionInventoryTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Shared/Connection",
+        "identifier": "ConnectionTests",
+        "name": "ConnectionTests"
       }
     },
     {
@@ -66,9 +94,37 @@
     },
     {
       "target": {
+        "containerPath": "container:../../libraries/Shared/ExtensionIPC",
+        "identifier": "ExtensionIPCTests",
+        "name": "ExtensionIPCTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Shared/Connection",
+        "identifier": "ExtensionManagerTests",
+        "name": "ExtensionManagerTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Shared/Connection",
+        "identifier": "HermesTests",
+        "name": "HermesTests"
+      }
+    },
+    {
+      "target": {
         "containerPath": "container:../../libraries/Features/Home",
         "identifier": "HomeTests",
         "name": "HomeTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Foundations/Ergonomics",
+        "identifier": "IPCErgonomicsTests",
+        "name": "IPCErgonomicsTests"
       }
     },
     {
@@ -91,6 +147,13 @@
     },
     {
       "target": {
+        "containerPath": "container:../../libraries/Features/Home",
+        "identifier": "MapModelTests",
+        "name": "MapModelTests"
+      }
+    },
+    {
+      "target": {
         "containerPath": "container:../../libraries/Features/Modals",
         "identifier": "ModalsTests",
         "name": "ModalsTests"
@@ -101,6 +164,13 @@
         "containerPath": "container:../../libraries/Features/NetShield",
         "identifier": "NetShieldTests",
         "name": "NetShieldTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Foundations/Ergonomics",
+        "identifier": "NetworkErgonomicsTests",
+        "name": "NetworkErgonomicsTests"
       }
     },
     {
@@ -156,6 +226,13 @@
     },
     {
       "target": {
+        "containerPath": "container:../../libraries/Foundations/Ergonomics",
+        "identifier": "SharedErgonomicsTests",
+        "name": "SharedErgonomicsTests"
+      }
+    },
+    {
+      "target": {
         "containerPath": "container:../../libraries/Shells/Tabular",
         "identifier": "TabularTests",
         "name": "TabularTests"
@@ -171,8 +248,29 @@
     {
       "target": {
         "containerPath": "container:../../libraries/Core/NEHelper",
+        "identifier": "VPNAppCoreTests",
+        "name": "VPNAppCoreTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Core/NEHelper",
+        "identifier": "VPNCryptoTests",
+        "name": "VPNCryptoTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Core/NEHelper",
         "identifier": "VPNSharedTests",
         "name": "VPNSharedTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Shared/WidgetIntents",
+        "identifier": "WidgetIntentsTests",
+        "name": "WidgetIntentsTests"
       }
     },
     {

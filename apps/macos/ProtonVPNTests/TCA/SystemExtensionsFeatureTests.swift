@@ -29,7 +29,6 @@ import Testing
 struct SystemExtensionsFeatureTests {
     @Test("Requests are serialized and processed in order")
     func requestsAreSerialized() async {
-        // `SystemExtensionType.plutonium.featureEnabled` gates the second request's extension list.
         let store = TestStore(initialState: SystemExtensionsFeature.State()) {
             SystemExtensionsFeature()
         } withDependencies: {

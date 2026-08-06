@@ -55,7 +55,7 @@ struct ConnectionStatusBanner: View {
             return nil
         case .unprotected:
             let location = store.userLocation?.location
-            displayCountry = LocalizationUtility.default.countryName(forCode: location?.country ?? "")
+            displayCountry = location.flatMap { LocalizationUtility.default.countryName(forCode: $0.country) }
             displayIP = location?.ip
         case let .protecting(country, ip):
             displayCountry = country

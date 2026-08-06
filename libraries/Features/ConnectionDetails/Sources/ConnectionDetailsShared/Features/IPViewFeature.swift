@@ -27,8 +27,7 @@ import VPNAppCore
 public struct IPViewFeature {
     @ObservableState
     public struct State: Equatable {
-        /// Whether the user's own address is concealed. Starts hidden so it never reaches the screen
-        /// — or a screenshot — unasked.
+        /// Whether the user's own address is concealed. Starts hidden
         public var userIPHidden = true
 
         @SharedReader(.userLocation) private var userLocation: StoredUserLocation?
@@ -51,9 +50,7 @@ public struct IPViewFeature {
             userIP != nil
         }
 
-        /// The user's own address as the row should render it: the address itself, a mask of the
-        /// matching family while it is concealed, or a placeholder when none is known — never a mask
-        /// standing in for a value we don't have.
+        /// Whis IP address should be used: the address itself, a mask of the matching family, or a placeholder
         public var displayedUserIP: String {
             guard let userIP else { return Localizable.connectionDetailsIpviewIpUnavailable }
             return userIPHidden ? Self.mask(for: userIP) : userIP

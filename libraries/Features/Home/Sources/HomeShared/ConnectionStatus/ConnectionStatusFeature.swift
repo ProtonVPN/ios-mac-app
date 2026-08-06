@@ -39,14 +39,6 @@ public struct ConnectionStatusFeature {
 
         /// The unmasked `.protecting` state that started the current masking animation, or `nil`
         /// when no masking animation is in flight.
-        ///
-        /// Distinct `ConnectionState` values can map to the same `ProtectionState` (e.g.
-        /// `.connecting(intent:tunnelActive:)` fires once with an unresolved and once with a
-        /// resolved intent, both mapping to the same `.protecting(country:ip:)`), and
-        /// re-subscribing to the publisher replays the current value. Comparing incoming
-        /// `.protecting` states against this value deduplicates them so the masking animation
-        /// isn't restarted — the shared `protectionState` can't be used for that comparison
-        /// because the mask ticks progressively mutate it.
         var startingProtectionState: ProtectionState?
 
         public init() {}
@@ -60,8 +52,6 @@ public struct ConnectionStatusFeature {
         case newConnectionState(ConnectionState)
         case newProtectionState(ProtectionState)
 
-        /// Not currently sent by anyone: the view's `.task` modifier owns the effect lifetime and
-        /// cancels everything (including the mask timer, transitively) on disappear.
         case tearDown
 
         case connectionStatusBanner(ConnectionStatusBannerFeature.Action)
@@ -125,8 +115,10 @@ public struct ConnectionStatusFeature {
 
             case let .newConnectionState(connectionState):
                 let location = state.userLocation?.location
-                let country = countryNameProvider.countryName(forCode: location?.country ?? "") ?? ""
-                let protectionState = connectionState.protectionState(country: country, ip: location?.ip ?? "")
+                let protectionState = connectionState.protectionState(
+                    country: location.flatMap { countryNameProvider.countryName(forCode: $0.country) },
+                    ip: location?.ip
+                )
                 return .send(.newProtectionState(protectionState))
 
             case let .newProtectionState(protectionState):
@@ -168,15 +160,15 @@ public struct ConnectionStatusFeature {
     /// Advances the masking animation by one character.
     ///
     /// - Returns: the next `.protecting` state with one more character of the country or IP
-    ///   masked, or `nil` when both are fully masked (or unmaskable, e.g. empty strings) and
-    ///   the caller should stop the timer.
+    ///   masked, or `nil` when both are fully masked (or nothing was known to mask) and the
+    ///   caller should stop the timer.
     ///
     /// While both strings still have unmasked characters, which one advances is chosen at
     /// random for a staggered visual effect; once one of them is done, the other keeps
     /// advancing on every tick, so the animation always runs to completion.
-    func partiallyMaskedLocation(country: String, ip: String) -> ProtectionState? {
-        let maskedCountry = country.partiallyMasked()
-        let maskedIP = ip.partiallyMasked(onlyAlphanumerics: true)
+    func partiallyMaskedLocation(country: String?, ip: String?) -> ProtectionState? {
+        let maskedCountry = country.flatMap { $0.partiallyMasked() }
+        let maskedIP = ip.flatMap { $0.partiallyMasked(onlyAlphanumerics: true) }
         switch (maskedCountry, maskedIP) {
         case (nil, nil):
             return nil

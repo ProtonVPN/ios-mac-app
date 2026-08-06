@@ -62,7 +62,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.unauthKeychain) private var unauthKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.vpnApiClient) private var vpnApiClient
-    @Dependency(\.userLocationStore) private var userLocationStore
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.activeTunnelInspector) private var activeTunnelInspector
@@ -156,10 +155,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func retrieveProperties() async throws {
         @Dependency(\.serverRepository) var serverRepository
         @Dependency(\.serverListUpdater) var serverListUpdater
-        // Captured before the request rather than read back after it: the endpoint only measures the
-        // user's own address while no tunnel is up, and the connection state can flip while the request
-        // is in flight. Re-reading it afterwards would either drop a real measurement, or stamp a fresh
-        // retrieval date on the location we passed in ourselves.
         let measuresLocation = isDisconnectedForPropertiesRefresh
         guard let properties = try await getVPNProperties(measuresLocation: measuresLocation) else {
             serverRepository.resetSuccessfulRefreshes()
@@ -179,12 +174,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             )
         }
 
-        // `measuredLocation` is set only when this refresh actually measured the address, so a failed
-        // or skipped measurement can no longer re-stamp the value we passed in. The state is checked
-        // again because a tunnel that came up mid-request means the endpoint answered through it, and
-        // neither we nor the response can tell.
+        // Manager calls `recordMeasured` only when `measuredLocation` exists. It checks the state a second
+        // time because the tunnel can connect while the request is in flight (request will fail)
         if let measured = properties.measuredLocation, isDisconnectedForPropertiesRefresh {
-            userLocationStore.recordMeasured(measured)
+            @Shared(.userLocation) var userLocation
+            $userLocation.recordMeasured(measured)
         }
 
         @Shared(.userAccountCreationDate) var userAccountCreationDate
@@ -225,9 +219,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     /// - API returns `CommonVpnError.subuserWithoutSessions`
     /// - Server storage is empty or user IP is not known
     /// - We hit a keychain error
-    /// - Parameter measuresLocation: whether the response's location is a fresh measurement. Decided
-    ///   by the caller, which also records the result, so that one reading of the connection state
-    ///   drives both.
+    /// - Parameter measuresLocation: whether to ask the endpoint for the user's own address. True only
+    ///   while no tunnel is up (with tunnel it will answer with the exit address instead).
     private func getVPNProperties(measuresLocation: Bool) async throws -> VpnProperties? {
         @SharedReader(.userLocation) var userLocation
         let location = userLocation?.location

@@ -199,6 +199,7 @@
                     protocolConnectionData: .proTUN(.init(
                         transport: VPNSessionMock.testPeer.transport,
                         serverExitV4: VPNSessionMock.testPeer.serverExitV4,
+                        serverExitV6: VPNSessionMock.testPeer.serverExitV6,
                         userISP: VPNSessionMock.testPeer.userISP,
                         userIP: VPNSessionMock.testPeer.userIP
                     ))

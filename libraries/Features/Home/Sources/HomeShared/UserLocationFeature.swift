@@ -21,6 +21,7 @@ import enum Connection.ConnectionState
 import Domain
 import Ergonomics
 import Foundation
+import NetworkingErgonomics
 import VPNAppCore
 
 #if canImport(UIKit)
@@ -43,8 +44,6 @@ let didBecomeActiveNotification: NSNotification.Name = {
 public struct UserLocationFeature {
     @Dependency(\.date) var date
 
-    @Dependency(\.userLocationStore) var userLocationStore
-
     @ObservableState
     public struct State: Equatable {
         @SharedReader(.connectionState) var connectionState: ConnectionState
@@ -62,7 +61,7 @@ public struct UserLocationFeature {
         case userLocationFetchStarted
         case userLocationFetchFinished(Result<UserLocation, LocationFetchFailure>)
         /// The device attached to a different network, so the stored address describes the previous one
-        case networkAttachmentChanged
+        case networkPathChanged
         case tearDown
         case delegate(Delegate)
 
@@ -97,7 +96,7 @@ public struct UserLocationFeature {
         case userLocationTimer
         case userLocation
         case watchConnectionState
-        case watchNetworkAttachment
+        case watchNetworkPath
     }
 
     private let longLivingConnectionStateEffect: Effect<Action> = .publisher {
@@ -121,14 +120,19 @@ public struct UserLocationFeature {
         send(.fetchUserLocation(.routine))
     }.cancellable(id: CancelID.userLocationTimer, cancelInFlight: true)
 
-    private let longLivingNetworkAttachmentEffect: Effect<Action> = .run { send in
-        @Dependency(\.networkAttachmentStream) var networkAttachmentStream
-        // The stream opens with the network the device is already on, which is not a change: the
-        // fetch for that one is driven by `.listen`'s connection-state replay.
-        for await _ in networkAttachmentStream().dropFirst() {
-            await send(.networkAttachmentChanged)
+    private let longLivingNetworkPathEffect: Effect<Action> = .run { send in
+        @Dependency(\.pathMonitor) var pathMonitor
+
+        let paths = pathMonitor.subscribe()
+        // Other subscribers share this monitor, and stopping it stops it for all of them, so this
+        // effect starts it and leaves it running.
+        pathMonitor.start()
+
+        // The monitor drops repeated paths
+        for await path in paths where path.isUsable {
+            await send(.networkPathChanged)
         }
-    }.cancellable(id: CancelID.watchNetworkAttachment, cancelInFlight: true)
+    }.cancellable(id: CancelID.watchNetworkPath, cancelInFlight: true)
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -138,7 +142,7 @@ public struct UserLocationFeature {
                     longLivingDidBecomeActiveEffect,
                     longLivingUserLocationTimerEffect,
                     longLivingConnectionStateEffect,
-                    longLivingNetworkAttachmentEffect
+                    longLivingNetworkPathEffect
                 )
 
             case let .fetchUserLocation(trigger):
@@ -152,11 +156,7 @@ public struct UserLocationFeature {
                     }
                 } // Nothing measured yet, or measured against an address we have since replaced
 
-                // The endpoint answers with the exit IP while a tunnel is up, so only the
-                // disconnected state can tell us the user's own address. This is decided here rather
-                // than inside the effect because a connected session that adopted a tunnel-reported
-                // IP carries no cooldown (see `.connectionStateUpdate`), which brings every timer
-                // tick and every foregrounding this far.
+                // The endpoint will fail while a tunnel is up, we need a disconnected state.
                 guard state.connectionState.is(\.disconnected) else {
                     return .merge(
                         // A request that was already in flight when the tunnel came up would answer
@@ -188,7 +188,8 @@ public struct UserLocationFeature {
                 let previous = state.userLocation
                 // Recorded on every successful fetch, even when the location is unchanged: the
                 // timestamp is what throttles the next trigger.
-                userLocationStore.recordMeasured(location)
+                @Shared(.userLocation) var userLocation
+                $userLocation.recordMeasured(location)
 
                 guard location != previous?.location else {
                     log.debug("User Location unchanged from last fetch", category: .api)
@@ -209,9 +210,9 @@ public struct UserLocationFeature {
             case .didBecomeActive:
                 return .send(.fetchUserLocation(.routine))
 
-            case .networkAttachmentChanged:
+            case .networkPathChanged:
                 // Whatever is stored describes the network the device just left.
-                log.debug("Network attachment changed, refreshing user location", category: .api)
+                log.debug("Network path changed, refreshing user location", category: .api)
                 return .send(.fetchUserLocation(.networkChange))
 
             case .tearDown:
@@ -220,7 +221,7 @@ public struct UserLocationFeature {
                     .cancel(id: CancelID.didBecomeActive),
                     .cancel(id: CancelID.userLocationTimer),
                     .cancel(id: CancelID.watchConnectionState),
-                    .cancel(id: CancelID.watchNetworkAttachment)
+                    .cancel(id: CancelID.watchNetworkPath)
                 )
 
             case .delegate:
@@ -238,7 +239,7 @@ public struct UserLocationFeature {
                     return .none
                 }
 
-                // `/vpn/location` reports the exit IP while the tunnel is up, so the fetch above is
+                // `/vpn/location` will fail if the tunnel is up, so the fetch above is
                 // skipped and the stored values would otherwise keep whatever the last disconnected
                 // fetch saw — stale as soon as the underlying network changes, or as soon as the app
                 // is relaunched into an already-connected session. ProTUN's local agent reports the
@@ -254,7 +255,8 @@ public struct UserLocationFeature {
                 // Recorded as a tunnel report, which marks the country that comes with it as
                 // belonging to the address this one replaced — the fetch on the next disconnection
                 // re-establishes a consistent pair.
-                userLocationStore.recordTunnelReported(ip: userIP, isp: proTUNData.userISP)
+                @Shared(.userLocation) var userLocation
+                $userLocation.recordTunnelReported(ip: userIP, isp: proTUNData.userISP)
                 return .none
             }
         }

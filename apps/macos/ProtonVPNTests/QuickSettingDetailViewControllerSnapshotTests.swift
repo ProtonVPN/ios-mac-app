@@ -42,8 +42,6 @@ struct QuickSettingDetailViewControllerSnapshotTests {
         @Shared(.connectionProtocol) var connectionProtocol
         $connectionProtocol.withLock { $0 = .vpnProtocol(.wireGuard(.udp)) }
 
-        // The NetShield rows read `VPNFeatureFlagType.isNetShieldLevelThreeEnabled` while the view body renders, and
-        // the recorded references include the level-3 row, so the flag has to be on for the whole render.
         withDependencies {
             $0.featureFlags = .enabling(VPNFeatureFlagType.isNetShieldLevelThreeEnabled)
         } operation: {

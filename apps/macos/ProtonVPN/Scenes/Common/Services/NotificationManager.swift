@@ -65,13 +65,12 @@ private final class NotificationManagerImplementation: NSObject {
         UNUserNotificationCenter.current().delegate = self
         $connectionState
             .publisher
-            .compactMap { state -> ConnectedPeer? in
+            .map { state -> ConnectedPeer? in
                 guard case let .connected(_, data) = state else { return nil }
                 return ConnectedPeer(server: data.currentPeer, exitIP: state.vpnExitIP)
             }
-            // Deduplicated on the peer alone: the exit address can arrive after the tunnel comes up,
-            // and a second notification for the same connection would be worse than a stale address.
-            .removeDuplicates { $0.server == $1.server }
+            .removeDuplicates { $0?.server == $1?.server }
+            .compactMap { $0 }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] peer in
                 self?.vpnConnectionChanged(peer)

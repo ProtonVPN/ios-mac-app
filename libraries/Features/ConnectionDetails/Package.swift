@@ -22,6 +22,7 @@ let package = Package(
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/Strings"),
         .package(path: "../../Foundations/Domain"),
+        .package(path: "../../Foundations/Ergonomics"),
 
         .package(path: "../../Core/SharedViews"),
         .package(path: "../../Core/NEHelper"),
@@ -33,6 +34,7 @@ let package = Package(
         // 3rd party
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
     ],
     targets: [
         .target(
@@ -77,7 +79,14 @@ let package = Package(
 
         .testTarget(
             name: "ConnectionDetailsTests",
-            dependencies: ["ConnectionDetailsShared"]
+            dependencies: [
+                "ConnectionDetailsShared",
+                .target(name: "ConnectionDetails-iOS", condition: .when(platforms: [.iOS])),
+                .target(name: "ConnectionDetails-macOS", condition: .when(platforms: [.macOS])),
+                .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
+                .product(name: "TestingErgonomics", package: "Ergonomics"),
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+            ]
         ),
     ]
 )

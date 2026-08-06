@@ -48,9 +48,9 @@ struct ConnectionStatusFeatureTests {
         let clock = TestClock()
         let store = makeStore(clock: clock)
 
-        await store.send(.newProtectionState(.protecting(country: "A", ip: ""))) {
-            $0.startingProtectionState = .protecting(country: "A", ip: "")
-            $0.$protectionState.withLock { $0 = .protecting(country: "A", ip: "") }
+        await store.send(.newProtectionState(.protecting(country: "A", ip: nil))) {
+            $0.startingProtectionState = .protecting(country: "A", ip: nil)
+            $0.$protectionState.withLock { $0 = .protecting(country: "A", ip: nil) }
         }
         await store.receive(.startLocationMasking)
 
@@ -58,7 +58,7 @@ struct ConnectionStatusFeatureTests {
         // character, so the output is deterministic despite partiallyMasked()'s shuffle).
         await clock.advance(by: .milliseconds(50))
         await store.receive(.maskLocationTick) {
-            $0.$protectionState.withLock { $0 = .protecting(country: "*", ip: "") }
+            $0.$protectionState.withLock { $0 = .protecting(country: "*", ip: nil) }
         }
 
         // Tick 2: nothing left to mask → the tick cancels the timer, no state change.
@@ -80,22 +80,22 @@ struct ConnectionStatusFeatureTests {
         let clock = TestClock()
         let store = makeStore(clock: clock)
 
-        await store.send(.newProtectionState(.protecting(country: "A", ip: ""))) {
-            $0.startingProtectionState = .protecting(country: "A", ip: "")
-            $0.$protectionState.withLock { $0 = .protecting(country: "A", ip: "") }
+        await store.send(.newProtectionState(.protecting(country: "A", ip: nil))) {
+            $0.startingProtectionState = .protecting(country: "A", ip: nil)
+            $0.$protectionState.withLock { $0 = .protecting(country: "A", ip: nil) }
         }
         await store.receive(.startLocationMasking)
 
         await clock.advance(by: .milliseconds(50))
         await store.receive(.maskLocationTick) {
-            $0.$protectionState.withLock { $0 = .protecting(country: "*", ip: "") }
+            $0.$protectionState.withLock { $0 = .protecting(country: "*", ip: nil) }
         }
 
         // Duplicate arrives while the animation is in flight — e.g. `.connecting`'s intent
         // resolving produces a second distinct ConnectionState mapping to the same
         // ProtectionState, or the publisher replays on re-subscription.
         // No state change, no new effects (TestStore records an issue if either occurs).
-        await store.send(.newProtectionState(.protecting(country: "A", ip: "")))
+        await store.send(.newProtectionState(.protecting(country: "A", ip: nil)))
 
         // The original animation keeps running undisturbed to completion.
         await clock.advance(by: .milliseconds(50))
@@ -113,31 +113,31 @@ struct ConnectionStatusFeatureTests {
         let store = makeStore(clock: clock)
 
         // First location, animate to completion.
-        await store.send(.newProtectionState(.protecting(country: "A", ip: ""))) {
-            $0.startingProtectionState = .protecting(country: "A", ip: "")
-            $0.$protectionState.withLock { $0 = .protecting(country: "A", ip: "") }
+        await store.send(.newProtectionState(.protecting(country: "A", ip: nil))) {
+            $0.startingProtectionState = .protecting(country: "A", ip: nil)
+            $0.$protectionState.withLock { $0 = .protecting(country: "A", ip: nil) }
         }
         await store.receive(.startLocationMasking)
         await clock.advance(by: .milliseconds(50))
         await store.receive(.maskLocationTick) {
-            $0.$protectionState.withLock { $0 = .protecting(country: "*", ip: "") }
+            $0.$protectionState.withLock { $0 = .protecting(country: "*", ip: nil) }
         }
         await clock.advance(by: .milliseconds(50))
         await store.receive(.maskLocationTick) // fully masked → timer stops
 
         // A different location arrives: animation restarts from the new unmasked values.
-        await store.send(.newProtectionState(.protecting(country: "B", ip: ""))) {
-            $0.startingProtectionState = .protecting(country: "B", ip: "")
-            $0.$protectionState.withLock { $0 = .protecting(country: "B", ip: "") }
+        await store.send(.newProtectionState(.protecting(country: "B", ip: nil))) {
+            $0.startingProtectionState = .protecting(country: "B", ip: nil)
+            $0.$protectionState.withLock { $0 = .protecting(country: "B", ip: nil) }
         }
         await store.receive(.startLocationMasking)
 
         // ...and a duplicate of the *new* state is now the one being deduplicated.
-        await store.send(.newProtectionState(.protecting(country: "B", ip: "")))
+        await store.send(.newProtectionState(.protecting(country: "B", ip: nil)))
 
         await clock.advance(by: .milliseconds(50))
         await store.receive(.maskLocationTick) {
-            $0.$protectionState.withLock { $0 = .protecting(country: "*", ip: "") }
+            $0.$protectionState.withLock { $0 = .protecting(country: "*", ip: nil) }
         }
         await clock.advance(by: .milliseconds(50))
         await store.receive(.maskLocationTick)
@@ -151,9 +151,9 @@ struct ConnectionStatusFeatureTests {
         let clock = TestClock()
         let store = makeStore(clock: clock)
 
-        await store.send(.newProtectionState(.protecting(country: "A", ip: ""))) {
-            $0.startingProtectionState = .protecting(country: "A", ip: "")
-            $0.$protectionState.withLock { $0 = .protecting(country: "A", ip: "") }
+        await store.send(.newProtectionState(.protecting(country: "A", ip: nil))) {
+            $0.startingProtectionState = .protecting(country: "A", ip: nil)
+            $0.$protectionState.withLock { $0 = .protecting(country: "A", ip: nil) }
         }
         await store.receive(.startLocationMasking)
 
@@ -172,9 +172,9 @@ struct ConnectionStatusFeatureTests {
         await store.send(.newProtectionState(.unprotected)) {
             $0.$protectionState.withLock { $0 = .unprotected }
         }
-        await store.send(.newProtectionState(.protecting(country: "A", ip: ""))) {
-            $0.startingProtectionState = .protecting(country: "A", ip: "")
-            $0.$protectionState.withLock { $0 = .protecting(country: "A", ip: "") }
+        await store.send(.newProtectionState(.protecting(country: "A", ip: nil))) {
+            $0.startingProtectionState = .protecting(country: "A", ip: nil)
+            $0.$protectionState.withLock { $0 = .protecting(country: "A", ip: nil) }
         }
         await store.receive(.startLocationMasking)
 
@@ -187,17 +187,16 @@ struct ConnectionStatusFeatureTests {
         await store.finish()
     }
 
-    /// Regression test for the empty-input leak: an unknown location falls back to "",
-    /// `partiallyMasked("")` returns nil, and the first tick must cancel the timer instead
-    /// of spinning forever.
+    /// Regression test for the empty-input leak: an unknown location leaves nothing to mask, and
+    /// the first tick must cancel the timer instead of spinning forever.
     @Test
-    func emptyCountryAndIPCancelTimerOnFirstTick() async {
+    func unknownCountryAndIPCancelTimerOnFirstTick() async {
         let clock = TestClock()
         let store = makeStore(clock: clock)
 
-        await store.send(.newProtectionState(.protecting(country: "", ip: ""))) {
-            $0.startingProtectionState = .protecting(country: "", ip: "")
-            $0.$protectionState.withLock { $0 = .protecting(country: "", ip: "") }
+        await store.send(.newProtectionState(.protecting(country: nil, ip: nil))) {
+            $0.startingProtectionState = .protecting(country: nil, ip: nil)
+            $0.$protectionState.withLock { $0 = .protecting(country: nil, ip: nil) }
         }
         await store.receive(.startLocationMasking)
 
@@ -371,6 +370,8 @@ struct ConnectionStatusFeatureTests {
         let feature = makeFeature()
         #expect(feature.partiallyMaskedLocation(country: "*", ip: "*") == nil)
         #expect(feature.partiallyMaskedLocation(country: "", ip: "") == nil)
+        // Nothing established either side, so there is nothing to reveal and then mask.
+        #expect(feature.partiallyMaskedLocation(country: nil, ip: nil) == nil)
         // "." is punctuation, excluded by the onlyAlphanumerics predicate; "*" excluded on
         // both sides — so a fully-masked IP with separators intact also terminates.
         #expect(feature.partiallyMaskedLocation(country: "**", ip: "*.*") == nil)

@@ -74,7 +74,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.unauthKeychain) private var unauthKeychain
     @Dependency(\.vpnKeychain) private var vpnKeychain
     @Dependency(\.vpnApiClient) private var vpnApiClient
-    @Dependency(\.userLocationStore) private var userLocationStore
 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
     @Dependency(\.paymentsPlanServiceV2) private var planServiceV2
@@ -224,11 +223,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             )
         }
 
-        // `measuredLocation` is set only when this refresh actually measured the address, so a failed
-        // or skipped measurement can no longer re-stamp the value we passed in. The state is checked
-        // again because a tunnel that came up mid-request means the endpoint answered through it.
+        // Manager calls `recordMeasured` only when `measuredLocation` exists. It checks the state a second
+        // time because the tunnel can connect while the request is in flight (request will fail)
         if let measured = properties.measuredLocation, connectionState.isDisconnectedForPropertiesRefresh {
-            userLocationStore.recordMeasured(measured)
+            @Shared(.userLocation) var userLocation
+            $userLocation.recordMeasured(measured)
         }
         do {
             try await resolveActiveSession()
@@ -274,7 +273,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             $userAccountCreationDate.withLock { $0 = properties.userCreateTime }
 
             if let measured = properties.measuredLocation, connectionState.isDisconnectedForPropertiesRefresh {
-                userLocationStore.recordMeasured(measured)
+                @Shared(.userLocation) var userLocation
+                $userLocation.recordMeasured(measured)
             }
             @Shared(.userAccountRecovery) var userAccountRecovery
             $userAccountRecovery.withLock { $0 = properties.userAccountRecovery }
