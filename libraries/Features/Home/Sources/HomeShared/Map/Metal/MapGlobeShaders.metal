@@ -98,9 +98,9 @@ static float sunOcclusion(float3 point, float3 sunDir, float3 occCenter, float o
 }
 
 // Shared globe shading for fills and borders: diffuse sunlight added to the day side, tinted with the
-// connection color, and faded in by `lightFade`. A solar eclipse attenuates the sunlight itself, before
-// the day/night mix, so the shadow rides the same ramp as the terminator: full occlusion lands exactly on
-// the night shade, never below it, and a shadow reaching the day/night line dissolves into it.
+// connection color, and faded in by `lightFade`. A solar eclipse scales the sunlight itself, before the
+// day/night mix, so a fully shadowed point shades exactly like night, never darker, and a partial shadow
+// crossing the day/night line blends into it with no visible edge.
 // Premultiplied for the (one, 1 - srcAlpha) blend over the transparent drawable.
 static float4 shadeGlobe(float3 normal, float4 color, constant MapUniforms &u) {
     float3 n = normalize(normal);

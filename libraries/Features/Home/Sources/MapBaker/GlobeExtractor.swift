@@ -30,15 +30,156 @@ import Triangulation
 ///
 /// The pipeline per path: densify long segments so they hug the sphere, triangulate each polygon, un-project every
 /// vertex from map space to a unit-sphere position, and emit border segments. Country centroids and caps are
-/// accumulated for the rotate-to-country animation. Triangle count stays bounded because the source polylines are
+/// accumulated for the rotate-to-country animation. Before any geometry is built, a calibration is fitted against
+/// the bundled Natural Earth reference (`MapCalibration`) and applied inside the un-projection. Each country also
+/// gets a curated pin snapped onto its own land. Triangle count stays bounded because the source polylines are
 /// already dense, so densification only splits the rare long straight border.
 enum GlobeExtractor {
     static func extract(from root: SVGNode) -> MapGlobeModel<InMemory> {
-        var builder = GlobeBuilder(bounds: root.bounds())
-        for path in MapExtractor.collectPaths(from: root) {
+        let bounds = root.bounds()
+        let paths = MapExtractor.collectPaths(from: root)
+        let (calibration, calibrationReport) = MapCalibration.fitted(from: samples(from: paths, bounds: bounds))
+        calibrationReport.printSummary()
+        var builder = GlobeBuilder(bounds: bounds, calibration: calibration)
+        for path in paths {
             builder.append(path)
         }
         return builder.finish()
+    }
+
+    private enum Dimensions {
+        /// Farthest a crossing may sit from its reference vertex, along the direction being measured, and still
+        /// count as the same feature. Well above the map error itself, well below the distance between unrelated
+        /// coastlines.
+        static let matchToleranceKm = 30.0
+        /// How close to east-west (or north-south) a reference segment must run before its vertex is used: the
+        /// rise across the segment may be at most this fraction of the run along it.
+        static let zonalSlopeLimit = 0.6
+        /// Half-width of the strip `match` searches for a crossing in. Narrow enough to stay local to the reference
+        /// feature, wide enough that the drawn map always has vertices inside it, since the drawn outlines space
+        /// their vertices closer than this.
+        static let slabHalfWidthKm = 8.0
+        static let kmPerDegree = 111.19
+    }
+
+    /// The measured offsets between the Natural Earth reference and the drawn map that the calibration fits its
+    /// field to. Every vertex in the reference file lies on the real coastline or border, because simplification
+    /// removes points rather than inventing new ones. Each matched vertex therefore measures how far the map drew
+    /// that feature from where it belongs. The country outlines cover both kinds of feature at once: they trace
+    /// the coast wherever land meets sea and the border wherever two countries meet.
+    private static func samples(from paths: [MapExtractor.ExtractedPath], bounds: CGRect) -> [MapCalibration.Sample] {
+        guard let url = Bundle.module.url(forResource: "ne_50m_admin_0_countries", withExtension: "shp"),
+              let data = try? Data(contentsOf: url),
+              let reference = try? ShapefileReader.vertexPaths(from: data)
+        else {
+            print("MapBaker: WARNING: reference outlines unreadable, baking without calibration")
+            return []
+        }
+
+        // Every drawn ring vertex, unprojected without calibration, bucketed by integer longitude for the search.
+        let unprojector = Unprojector(bounds: bounds, calibration: .identity)
+        var drawnByLon: [Int: [(lat: Double, lon: Double)]] = [:]
+        for path in paths {
+            for ring in path.rings {
+                for point in ring.points {
+                    let (lat, lon) = unprojector.latLon(point)
+                    drawnByLon[Int(floor(lon)), default: []].append((lat, lon))
+                }
+            }
+        }
+
+        var samples: [MapCalibration.Sample] = []
+        for path in reference.paths {
+            // A closed ring repeats its first vertex as its last. Dropping that copy keeps the vertex from being
+            // measured twice, and leaves every remaining vertex with a real neighbor on each side for its tangent.
+            // Open paths keep all their vertices, but their two endpoints have a neighbor on one side only, so the
+            // endpoints are skipped instead.
+            let vertices = reference.closed ? Array(path.dropLast()) : path
+            guard vertices.count >= 3 else { continue }
+            let indices = reference.closed
+                ? Array(vertices.indices)
+                : Array(vertices.indices.dropFirst().dropLast())
+            for index in indices {
+                let vertex = vertices[index]
+                let before = vertices[(index + vertices.count - 1) % vertices.count]
+                let after = vertices[(index + 1) % vertices.count]
+                let stretch = max(0.2, cos(vertex.y * .pi / 180))
+                let tangentLatKm = (after.y - before.y) * Dimensions.kmPerDegree
+                let tangentLonKm = (after.x - before.x) * Dimensions.kmPerDegree * stretch
+
+                // An offset is only measurable across a feature, not along it. An east-west segment shows
+                // how far north or south it was drawn, a north-south segment shows how far east or west, and
+                // diagonal segments show neither cleanly, so they are skipped.
+                let component: MapCalibration.Component
+                if abs(tangentLatKm) < Dimensions.zonalSlopeLimit * abs(tangentLonKm) {
+                    component = .latitude
+                } else if abs(tangentLonKm) < Dimensions.zonalSlopeLimit * abs(tangentLatKm) {
+                    component = .longitude
+                } else {
+                    continue
+                }
+                if let sample = match(vertex, component, stretch, drawnByLon) {
+                    samples.append(sample)
+                }
+            }
+        }
+        return samples
+    }
+
+    /// Measures one reference vertex against the drawn map: finds where the drawn outline crosses the north-south
+    /// line through the vertex (or the east-west line, for a longitude sample) and reports how far away the
+    /// crossing is. Matching to the nearest drawn point instead would understate the error, because among many
+    /// jittery candidates the nearest one is nearest partly by luck.
+    private static func match(
+        _ vertex: SIMD2<Double>,
+        _ component: MapCalibration.Component,
+        _ stretch: Double,
+        _ drawnByLon: [Int: [(lat: Double, lon: Double)]]
+    ) -> MapCalibration.Sample? {
+        // For a latitude sample the search only needs to span the narrow strip. For a longitude sample the
+        // offset being measured runs east-west, so the search must span the full match tolerance.
+        let reachKm = component == .latitude ? Dimensions.slabHalfWidthKm : Dimensions.matchToleranceKm
+        let bucketReach = Int((reachKm / (Dimensions.kmPerDegree * stretch)).rounded(.up))
+        var best: Double?
+        let home = Int(floor(vertex.x))
+        for bucket in (home - bucketReach - 1) ... (home + bucketReach + 1) {
+            let wrapped = bucket < -180 ? bucket + 360 : bucket >= 180 ? bucket - 360 : bucket
+            for candidate in drawnByLon[wrapped] ?? [] {
+                var dLon = candidate.lon - vertex.x
+                if dLon > 180 { dLon -= 360 }
+                if dLon < -180 { dLon += 360 }
+                let dLonKm = dLon * Dimensions.kmPerDegree * stretch
+                let dLatKm = (candidate.lat - vertex.y) * Dimensions.kmPerDegree
+                let (delta, crossGap) = component == .latitude ? (dLatKm, dLonKm) : (dLonKm, dLatKm)
+                // The strip is what keeps the pair describing the same feature. A candidate outside it is some
+                // other piece of coastline that happens to pass nearby, and measuring against it would be noise.
+                guard abs(crossGap) < Dimensions.slabHalfWidthKm else { continue }
+                if best == nil || abs(delta) < abs(best!) {
+                    best = delta
+                }
+            }
+        }
+        guard let best, abs(best) < Dimensions.matchToleranceKm else { return nil }
+        return MapCalibration.Sample(
+            latitude: vertex.y,
+            longitude: vertex.x,
+            deltaKm: best,
+            component: component
+        )
+    }
+}
+
+/// Curated country-center lookup for a map id. Mainland variants resolve to their base country, and ids whose ISO
+/// form differs from the map's go through `isoOverrides`: the map says "uk" where ISO says "GB", and groups
+/// Svalbard under the non-ISO "xv" while the table lists it as "SJ".
+enum CuratedCenters {
+    private static let isoOverrides = ["uk": "GB", "xv": "SJ"]
+
+    static func center(forMapID id: String) -> CLLocationCoordinate2D? {
+        var id = id
+        if id.count == 3, id.hasSuffix("x") { id = String(id.dropLast()) }
+        let key = isoOverrides[id] ?? id.uppercased()
+        return CountriesCoordinates.countryCenterCoordinates(key)
     }
 }
 
@@ -60,9 +201,6 @@ private struct GlobeBuilder {
         static let densifyTolerance: Float = 1.0 * .pi / 180
         /// How far past the nearest fill vertex a snapped pin is carried inland, in radians. (About 20 km.)
         static let pinInlandNudge: Float = 0.2 * .pi / 180
-        /// Map ids whose curated-table key differs from their uppercased form: the map says "uk" where ISO says "GB",
-        /// and groups Svalbard under the non-ISO "xv" while the table lists it as "SJ".
-        static let isoOverrides = ["uk": "GB", "xv": "SJ"]
     }
 
     private enum Dimensions {
@@ -83,8 +221,8 @@ private struct GlobeBuilder {
     private var bakedPaths: [BakedPath] = []
     private var report = TriangulationReport()
 
-    init(bounds: CGRect) {
-        self.unprojector = Unprojector(bounds: bounds)
+    init(bounds: CGRect, calibration: MapCalibration) {
+        self.unprojector = Unprojector(bounds: bounds, calibration: calibration)
         self.halfWidthScale = Float(2 * Double.pi / Double(bounds.width))
     }
 
@@ -256,12 +394,9 @@ private struct GlobeBuilder {
     // MARK: - Pins
 
     /// The curated table's center for a map id, on the unit sphere, or nil for ids the table doesn't know (named island
-    /// paths, `pathNNNN`). Mainland variants look up their base country, so "usx" pins where "us" does.
+    /// paths, `pathNNNN`). Mainland variants look up their base country, so "usx" gets the same pin as "us".
     private func curatedCenter(for id: String) -> SIMD3<Float>? {
-        var id = id
-        if id.count == 3, id.hasSuffix("x") { id = String(id.dropLast()) }
-        let key = Constants.isoOverrides[id] ?? id.uppercased()
-        return CountriesCoordinates.countryCenterCoordinates(key).map {
+        CuratedCenters.center(forMapID: id).map {
             GlobeGeometry.unitSphere(latitudeDegrees: Float($0.latitude), longitudeDegrees: Float($0.longitude))
         }
     }
@@ -294,7 +429,9 @@ private struct GlobeBuilder {
                 let a = fillVertices[Int(fillIndices[index])]
                 let b = fillVertices[Int(fillIndices[index + 1])]
                 let c = fillVertices[Int(fillIndices[index + 2])]
-                // cos of the widest side, and of double it: cos(2x) = 2cos(x)^2 - 1. Cosines compare reversed.
+                // The point must be within twice the triangle's widest side of a vertex before the sign test is
+                // trusted. Farther out, the test is float noise. Computed in cosines: twice the angle comes from
+                // cos(2x) = 2cos(x)^2 - 1, and a larger dot product means a nearer point.
                 let widest = min(min(simd_dot(a, b), simd_dot(b, c)), simd_dot(c, a))
                 let nearEnough = simd_dot(point, a) >= 2 * widest * widest - 1
                 if nearEnough, SphericalTriangle(a, b, c).contains(point) { return true }
@@ -408,17 +545,21 @@ private func mergeRanges(_ ranges: [Range<Int>]) -> [Range<Int>] {
 // MARK: - Natural Earth inversion + sphere mapping
 
 /// Inverts the Natural Earth projection, recovering lat + long from map coordinates, and maps onto the unit sphere.
+/// The fitted calibration is applied on the way through, so the recovered coordinates are the true ones rather
+/// than the drawn map's.
 struct Unprojector {
     private let ratioX: Double
     private let ratioY: Double
     private let midX: Double
     private let midY: Double
+    private let calibration: MapCalibration
 
-    init(bounds: CGRect) {
+    init(bounds: CGRect, calibration: MapCalibration) {
         self.ratioX = Double(bounds.width) / (2 * NaturalEarth.halfWidth)
         self.ratioY = Double(bounds.height) / (2 * NaturalEarth.halfHeight)
         self.midX = Double(bounds.width) / 2
         self.midY = Double(bounds.height) / 2
+        self.calibration = calibration
     }
 
     func sphere(_ p: SIMD2<Float>) -> SIMD3<Float> {
@@ -433,13 +574,14 @@ struct Unprojector {
         acos(cosAngle(between: sphere(p0), sphere(p1)))
     }
 
-    private func latLon(_ p: SIMD2<Float>) -> (lat: Double, lon: Double) {
+    func latLon(_ p: SIMD2<Float>) -> (lat: Double, lon: Double) {
         let projX = (Double(p.x) - midX) / ratioX
         let projY = (midY - Double(p.y)) / ratioY
         let geo = NaturalEarth.unproject(SIMD2<Double>(projX, projY))
         var lon = geo.longitude.degrees + 10 // reverse the map's 10-degree prime-meridian shift
         if lon > 180 { lon -= 360 }
         if lon < -180 { lon += 360 }
-        return (geo.latitude.degrees, lon)
+        let corrected = calibration.corrected(latitudeDegrees: geo.latitude.degrees, longitudeDegrees: lon)
+        return (corrected.latitude, corrected.longitude)
     }
 }
