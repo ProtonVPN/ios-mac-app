@@ -119,16 +119,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         guard authKeychain.fetch()?.username != nil else {
             throw CommonVpnError.userCredentialsMissing
         }
-        do {
-            @Dependency(\.userSettingsClient) var userSettingsClient
-            @Shared(.userSettings) var userSettings
-            @Shared(.userInfo) var userInfo
-            let fetchedSettings = try await userSettingsClient.fetchUserSettings(authCredentials: authKeychain.fetch())
-            $userSettings.withLock { $0 = fetchedSettings }
-            $userInfo.withLock { $0?.apply(fetchedSettings) }
-        } catch {
-            log.error("UserSettings error", category: .app, metadata: ["error": "\(error)"])
-        }
+
         try await retrievePropertiesAndLogIn()
     }
 
@@ -141,6 +132,17 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             performLogoutCleanup()
         } catch {
             throw CommonVpnError.keychainWriteFailed
+        }
+
+        do {
+            @Dependency(\.userSettingsClient) var userSettingsClient
+            @Shared(.userSettings) var userSettings
+            @Shared(.userInfo) var userInfo
+            let fetchedSettings = try await userSettingsClient.fetchUserSettings(authCredentials: authCredentials)
+            $userSettings.withLock { $0 = fetchedSettings }
+            $userInfo.withLock { $0?.apply(fetchedSettings) }
+        } catch {
+            log.error("Failed to obtain user settings", category: .user, metadata: ["error": "\(error)"])
         }
 
         do {
