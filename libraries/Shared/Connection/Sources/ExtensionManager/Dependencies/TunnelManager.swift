@@ -548,11 +548,11 @@ final class PacketTunnelManager: TunnelManager {
         // states, this says whether traffic is already held.
         let tunnelActive = [.connected, .reasserting].contains(session.status)
 
-        // Disabling on-demand is persisted before stopTunnel(), so it is a reliable teardown intent even when
-        // NetworkExtension briefly echoes `.connecting` while saving preferences. The zero-peer kill switch
-        // configuration is the exception: it always runs with on-demand disabled, so that the user can stop
-        // it from the system settings.
-        if !isOnDemandEnabled, !requestsZeroPeerKillSwitch, session.status != .disconnected, session.status != .invalid {
+        // We need to suppress spurious `.connecting` events from the extension resulting from the configuration change
+        // of disabling on-demand.
+        let teardownEcho = session.status == .connecting && session.connectedDate != nil
+        if !isOnDemandEnabled, teardownEcho {
+            log.debug("Suppressing spurious `.connecting` event for on-demand disabled")
             return .success(.disconnecting(config))
         }
 

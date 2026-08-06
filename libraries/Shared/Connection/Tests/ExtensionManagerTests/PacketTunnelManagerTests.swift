@@ -66,6 +66,7 @@
             #expect(status == .reasserting(TunnelConfiguration(connectionSpec: .defaultFastest, tunnelProtocol: .wireGuard, peerIDs: [], killSwitch: false)))
         }
 
+        /// During the echo the extension has not been told to stop yet, so it is still sitting on the outgoing peer.
         @Test
         func preservesLocalAgentJailDetails() async throws {
             let providerManager = MockTunnelProviderManager(withBundleIdentifier: "wireguard")
@@ -115,6 +116,101 @@
 
         @Test
         func treatsConnectingEchoAsDisconnectingAfterOnDemandIsDisabled() async throws {
+            let requestId = UUID()
+            let providerManager = MockTunnelProviderManager(
+                session: VPNSessionMock(status: .connecting, connectedDate: Date(timeIntervalSince1970: 1000)),
+                vpnProtocolConfiguration: NETunnelProviderProtocol(),
+                isOnDemandEnabled: false,
+                isEnabled: true
+            )
+            let config = try #require(providerManager.vpnProtocolConfiguration)
+            try config.setProviderConfiguration(
+                value: JSONEncoder().encode(ConnectionSpec.defaultFastest),
+                forKey: "connectionSpec"
+            )
+            config.setProviderConfiguration(value: requestId.uuidString, forKey: "requestID")
+            try ProTUNConfigurationCoder.encode(
+                configuration: .init(preferredTransport: .udp, peers: [.mock(id: "peer-id")], dnsServers: []),
+                to: config
+            )
+            providerManager.protocolConfiguration = config
+
+            let status = try await withDependencies {
+                $0.vpnManagerRepository.managers = { [.wireGuard: providerManager] }
+                $0.extensionIPC.currentExtensionState = {
+                    .init(state: .connected(VPNSessionMock.testPeer), requestId: requestId)
+                }
+            } operation: {
+                try await PacketTunnelManager().status
+            }
+
+            #expect(status == .disconnecting(.init(
+                connectionSpec: .defaultFastest,
+                tunnelProtocol: .wireGuard,
+                peerIDs: ["peer-id"],
+                killSwitch: false
+            )))
+        }
+
+        /// A tunnel started from Control Centre or the Settings app reuses the saved configuration, so it runs with
+        /// the on-demand flag the last app-issued disconnection left disabled. That flag must not read as a teardown
+        /// for the whole life of the connection.
+        @Test
+        func reportsConnectedWhenTunnelIsStartedOutsideTheAppWithOnDemandDisabled() async throws {
+            let requestId = UUID()
+            let connectedDate = Date(timeIntervalSince1970: 1000)
+            let providerManager = MockTunnelProviderManager(
+                session: VPNSessionMock(status: .connected, connectedDate: connectedDate),
+                vpnProtocolConfiguration: NETunnelProviderProtocol(),
+                isOnDemandEnabled: false,
+                isEnabled: true
+            )
+            let config = try #require(providerManager.vpnProtocolConfiguration)
+            try config.setProviderConfiguration(
+                value: JSONEncoder().encode(ConnectionSpec.defaultFastest),
+                forKey: "connectionSpec"
+            )
+            config.setProviderConfiguration(value: requestId.uuidString, forKey: "requestID")
+            try ProTUNConfigurationCoder.encode(
+                configuration: .init(preferredTransport: .udp, peers: [.mock(id: "peer-id")], dnsServers: []),
+                to: config
+            )
+            providerManager.protocolConfiguration = config
+
+            let status = try await withDependencies {
+                $0.vpnManagerRepository.managers = { [.wireGuard: providerManager] }
+                $0.extensionIPC.currentExtensionState = {
+                    .init(state: .connected(VPNSessionMock.testPeer), requestId: requestId)
+                }
+            } operation: {
+                try await PacketTunnelManager().status
+            }
+
+            #expect(status == .connected(
+                .init(
+                    connectionSpec: .defaultFastest,
+                    tunnelProtocol: .wireGuard,
+                    peerIDs: ["peer-id"],
+                    killSwitch: false
+                ),
+                .init(
+                    currentPeerId: "peer-id",
+                    connectionDate: connectedDate,
+                    protocolConnectionData: .proTUN(.init(
+                        transport: VPNSessionMock.testPeer.transport,
+                        serverExitV4: VPNSessionMock.testPeer.serverExitV4,
+                        userISP: VPNSessionMock.testPeer.userISP,
+                        userIP: VPNSessionMock.testPeer.userIP
+                    ))
+                )
+            ))
+        }
+
+        /// The same start, halfway up: NetworkExtension is still `.connecting` with on-demand left disabled, but the
+        /// extension is walking forward through its own connecting states rather than holding an outgoing peer.
+        @Test
+        func reportsProgressWhileTunnelStartedOutsideTheAppComesUp() async throws {
+            let requestId = UUID()
             let providerManager = MockTunnelProviderManager(
                 session: VPNSessionMock(status: .connecting),
                 vpnProtocolConfiguration: NETunnelProviderProtocol(),
@@ -126,6 +222,7 @@
                 value: JSONEncoder().encode(ConnectionSpec.defaultFastest),
                 forKey: "connectionSpec"
             )
+            config.setProviderConfiguration(value: requestId.uuidString, forKey: "requestID")
             try ProTUNConfigurationCoder.encode(
                 configuration: .init(preferredTransport: .udp, peers: [.mock(id: "peer-id")], dnsServers: []),
                 to: config
@@ -135,18 +232,24 @@
             let status = try await withDependencies {
                 $0.vpnManagerRepository.managers = { [.wireGuard: providerManager] }
                 $0.extensionIPC.currentExtensionState = {
-                    .init(state: .connecting(peerID: nil, waitReason: .unset), requestId: nil)
+                    .init(
+                        state: .connectingToLocalAgent(peerID: "peer-id", waitReason: .unset, jail: .unset),
+                        requestId: requestId
+                    )
                 }
             } operation: {
                 try await PacketTunnelManager().status
             }
 
-            #expect(status == .disconnecting(.init(
-                connectionSpec: .defaultFastest,
-                tunnelProtocol: .wireGuard,
-                peerIDs: [],
-                killSwitch: false
-            )))
+            #expect(status == .connecting(
+                .init(
+                    connectionSpec: .defaultFastest,
+                    tunnelProtocol: .wireGuard,
+                    peerIDs: ["peer-id"],
+                    killSwitch: false
+                ),
+                tunnelActive: false
+            ))
         }
 
         /// Connecting out of the zero-peer blackhole updates the saved configuration with peers before the
