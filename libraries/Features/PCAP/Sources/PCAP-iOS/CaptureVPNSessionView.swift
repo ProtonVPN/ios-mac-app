@@ -29,8 +29,16 @@ import Theme
 public struct CaptureVPNSessionView: View {
     @Bindable private var store: StoreOf<CaptureVPNSessionFeature>
 
+    /// How often the capture timer redraws (one second in the app)
+    private let redrawInterval: TimeInterval
+
     public init(store: StoreOf<CaptureVPNSessionFeature>) {
+        self.init(store: store, redrawInterval: 1)
+    }
+
+    init(store: StoreOf<CaptureVPNSessionFeature>, redrawInterval: TimeInterval) {
         self.store = store
+        self.redrawInterval = redrawInterval
     }
 
     public var body: some View {
@@ -100,7 +108,7 @@ public struct CaptureVPNSessionView: View {
             VStack(spacing: .themeSpacing16) {
                 HStack(spacing: .themeSpacing8) {
                     RecordingPin()
-                    TimelineView(.periodic(from: startTime, by: 1)) { context in
+                    TimelineView(.periodic(from: startTime, by: redrawInterval)) { context in
                         let currentDuration = Duration.seconds(context.date.timeIntervalSince(startTime))
                             .formatted(.time(pattern: .minuteSecond(padMinuteToLength: 2)))
                         Text(Localizable.pcapCaptureSessionDuration(currentDuration, maxDuration))
