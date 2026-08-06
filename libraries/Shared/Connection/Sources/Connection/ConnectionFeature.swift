@@ -37,6 +37,7 @@ public struct ConnectionFeature: Sendable {
     @Dependency(\.connectionIntentResolver) private var intentResolver
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
     @Dependency(\.connectionFeatureProvider) private var connectionFeatureProvider
+    @Dependency(\.date) private var date
 
     public init() {}
 
@@ -267,7 +268,7 @@ public struct ConnectionFeature: Sendable {
                     metadata: ["date": "\(connectionData.connectionDate)", "serverID": "\(connectionData.currentPeerId ?? "")"]
                 )
                 if state.shouldRegisterServerChangeOnConnection {
-                    serverChangeAuthorizer.registerServerChange(connectedAt: connectionData.connectionDate)
+                    serverChangeAuthorizer.registerServerChange(connectedAt: date.now)
                     state.shouldRegisterServerChangeOnConnection = false
                 }
                 state.$connectionState.withLock {

@@ -30,6 +30,7 @@
     import Network
     import NetworkExtension
     import Testing
+    import VPNAppCore
     import VPNShared
     import VPNSharedTesting
     import XCTest
@@ -277,6 +278,57 @@
                 await store.finish()
 
                 #expect(store.state.connectionState.is(\.connecting))
+            }
+
+            /// A server change swaps the peer without restarting the tunnel session, so the reported
+            /// `connectionDate` stays pinned to the original connection. The free-tier cooldown must be
+            /// registered against the moment the change completed instead, otherwise every skip in a
+            /// session shares the first connection's timestamp and the limit stops applying once that
+            /// one cooldown lapses.
+            @Test
+            @MainActor
+            func serverChangeIsRegisteredAtChangeTimeNotTunnelStart() async {
+                let tunnelStart = Date(timeIntervalSince1970: 1_234_567_890)
+                let changeCompletedAt = tunnelStart.addingTimeInterval(600)
+                let registeredDate = LockIsolated<Date?>(nil)
+
+                let configuration = TunnelConfiguration(
+                    connectionSpec: ConnectionSpec(location: .any(.random), features: []),
+                    tunnelProtocol: .wireGuard,
+                    peerIDs: ["new-peer"],
+                    killSwitch: false
+                )
+                let connectionData = DynamicConnectionData(
+                    currentPeerId: "new-peer",
+                    connectionDate: tunnelStart,
+                    protocolConnectionData: .proTUN(.init(transport: .udp))
+                )
+
+                let store = TestStore(initialState: ConnectionFeature.State(
+                    shouldRegisterServerChangeOnConnection: true,
+                    tunnel: .connected(configuration, connectionData)
+                )) {
+                    ConnectionFeature()
+                } withDependencies: {
+                    $0.date = .constant(changeCompletedAt)
+                    $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
+                    $0.connectionFeatureProvider = .init(
+                        connectionFeatures: { .mock },
+                        requestedFeatures: { .init(killSwitchMode: .off, excludeLocalNetworks: false) },
+                        connectionProtocol: { .smartProtocol }
+                    )
+                    $0.serverChangeAuthorizer = ServerChangeAuthorizer {
+                        .available
+                    } registerServerChangeAtDate: { date in
+                        registeredDate.withValue { $0 = date }
+                    }
+                }
+                store.exhaustivity = .off
+
+                await store.send(.tunnel(.tunnelStatusChanged(.connected(configuration, connectionData))))
+
+                #expect(registeredDate.value == changeCompletedAt)
+                #expect(store.state.shouldRegisterServerChangeOnConnection == false)
             }
 
             /// A disconnect request while zero-peer blocking is active (e.g. sent by the widget) must not tear down the
