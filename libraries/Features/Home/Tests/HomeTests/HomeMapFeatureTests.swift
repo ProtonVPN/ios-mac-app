@@ -116,19 +116,15 @@ struct HomeMapFeatureTests {
         await store.send(.locationPinTapped(Self.geneva)) { $0.selectedLocationID = Self.geneva.id }
         await store.send(.pinClusterTapped) { $0.selectedLocationID = nil }
         await store.send(.locationPinTapped(Self.geneva)) { $0.selectedLocationID = Self.geneva.id }
-        await store.send(.userPinTapped) {
-            $0.selectedLocationID = nil
-            $0.isFollowingConnection = true
-        }
+        await store.send(.mapBackgroundTapped) { $0.selectedLocationID = nil }
     }
 
-    @Test("Gestures stop the camera following the connection; connection changes and the user pin resume it")
+    @Test("Gestures stop the camera following the connection; a connection change resumes it")
     func followingTracksWhoDrives() async {
         let store = TestStore(initialState: HomeMapFeature.State()) { HomeMapFeature() }
 
         await store.send(.mapMoved) { $0.isFollowingConnection = false }
-        await store.send(.userPinTapped) { $0.isFollowingConnection = true }
-        await store.send(.pinClusterTapped) { $0.isFollowingConnection = false }
+        await store.send(.pinClusterTapped)
 
         // Any change to the derived map state wins the camera back; a repeat of the same state does not.
         let poland = Server.mock(country: "PL", coordinates: .init(latitude: 52.23, longitude: 21.01))
