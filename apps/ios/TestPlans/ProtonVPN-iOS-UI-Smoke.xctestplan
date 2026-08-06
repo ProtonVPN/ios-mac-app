@@ -45,13 +45,6 @@
       }
     },
     {
-      "target": {
-        "containerPath": "container:../../libraries/Shells/Tabular",
-        "identifier": "TabularFastSnapshotTests",
-        "name": "TabularFastSnapshotTests"
-      }
-    },
-    {
       "selectedTests": [
         "LoginTests/testLoginAsSubuserWithNoConnectionsAssigned()",
         "LoginTests/testLoginWithIncorrectCredentials()",
@@ -65,6 +58,13 @@
         "containerPath": "container:iOS.xcodeproj",
         "identifier": "D5811D7C229BBD870087B63A",
         "name": "ProtonVPNUITests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Shells/Tabular",
+        "identifier": "TabularFastSnapshotTests",
+        "name": "TabularFastSnapshotTests"
       }
     }
   ],
