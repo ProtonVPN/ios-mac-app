@@ -76,11 +76,16 @@ actor ProTUNAdapter {
     private static let protunStateDebounceInterval: Duration = .milliseconds(250)
     private static let protunStateCheckInterval: Duration = .milliseconds(500)
 
+    /// A sleep this long or longer will result in ProTUN expiring the transport's handshake keys and NAT mappings,
+    /// causing a "reconnect" of sorts. A sleep shorter than this interval implies the connection is likely still fine.
+    private static let transportExpiryThreshold: TimeInterval = 30
+
     private var connection: Connection?
 
     private let startQueue = AsyncQueue()
 
     @Dependency(\.extensionIPCServer) private var extensionIPCServer
+    @Dependency(\.date) private var date
 
     /// Serializes every change to the session configuration.
     private let configurationStore: ConfigurationStore
@@ -89,6 +94,8 @@ actor ProTUNAdapter {
     private var pcapStateTask: Task<Void, Never>?
 
     private var networkPath: NetworkPath = .initial
+
+    private var didSleepOn: Date?
 
     private var localAgentTask: Task<Void, Never>?
     private var pathUpdatesTask: Task<Void, Never>?
@@ -236,11 +243,29 @@ actor ProTUNAdapter {
         pathUpdatesTask = nil
         localAgentTask?.cancel()
         localAgentTask = nil
+        didSleepOn = nil
 
         // Clear the shared memory regions just before stopping.
         extensionIPCServer.zeroAll()
 
         state = .idle
+    }
+
+    /// Records when the device went to sleep.
+    func sleep() {
+        guard case .running = state else { return }
+        didSleepOn = date.now
+    }
+
+    /// Sends a `.networkSwitch` event to ProTUN if the device was asleep for longer than `transportExpiryThreshold`.
+    /// ProTUN has a monotonic clock which doesn't advance during sleeps, so we need to poke it if we've been asleep for
+    /// any amount of time that's likely to go past the default keepalive interval.
+    func wake() {
+        guard case .running = state, let lastSleepTime = didSleepOn else { return }
+        didSleepOn = nil
+        if date.now.timeIntervalSince(lastSleepTime) >= Self.transportExpiryThreshold {
+            connection?.onConnectivityChange(event: .networkSwitch)
+        }
     }
 }
 

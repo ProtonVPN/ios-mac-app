@@ -114,11 +114,15 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
 
     override open func sleep() async {
         Logger.provider.info("Sleeping...")
+        await adapter.sleep()
         await super.sleep()
     }
 
     override open func wake() {
         Logger.provider.info("Waking up!")
+        Task { [adapter] in
+            await adapter.wake()
+        }
         super.wake()
     }
 
