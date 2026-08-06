@@ -99,6 +99,10 @@ import VPNShared
 extension AppDelegate: NSApplicationDelegate {
     /// Runs before `applicationDidFinishLaunching`, and before anything has touched the database.
     func applicationWillFinishLaunching(_: Notification) {
+        AppStartup.captureMagicKeysAtLaunch {
+            log.debug("Command+Option+Control+Shift held at launch, forcing system extension upgrade", category: .app)
+        }
+
         prepareDependencies {
             $0.telemetryService = .liveValue
             $0.notificationManager = .liveValue // Start the notification manager so it observes connection state and registers notification actions

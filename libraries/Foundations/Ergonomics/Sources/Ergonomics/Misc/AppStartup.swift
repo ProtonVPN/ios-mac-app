@@ -18,6 +18,11 @@
 
 import Foundation
 
+#if os(macOS)
+    import AppKit
+    import os
+#endif
+
 /// Collection of utilities to retrieve various informations about app startup.
 public enum AppStartup {
     /// The date at which the process was launched, either at user login or not.
@@ -31,4 +36,27 @@ public enum AppStartup {
         }
         return Date(timeIntervalSince1970: TimeInterval(proc.kp_proc.p_starttime.tv_sec))
     }
+
+    #if os(macOS)
+        public static let magicKeysHeldAtLaunch: OSAllocatedUnfairLock<Bool> = .init(initialState: false)
+
+        @MainActor
+        public static var magicKeysAreHeldNow: Bool {
+            areMagicKeysHeld
+        }
+
+        @MainActor
+        public static func captureMagicKeysAtLaunch(callback: () -> Void) {
+            let keysAreHeld = areMagicKeysHeld
+            magicKeysHeldAtLaunch.withLock { $0 = keysAreHeld }
+            if keysAreHeld {
+                callback()
+            }
+        }
+
+        @MainActor
+        private static var areMagicKeysHeld: Bool {
+            NSEvent.modifierFlags.isSuperset(of: [.command, .option, .control, .shift])
+        }
+    #endif
 }

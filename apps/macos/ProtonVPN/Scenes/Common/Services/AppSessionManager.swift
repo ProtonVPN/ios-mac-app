@@ -386,7 +386,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             guard let self else { return }
 
             @SharedReader(.uninstallSysexesOnTerminate) var uninstallSysexesOnTerminate
-            if uninstallSysexesOnTerminate {
+            if uninstallSysexesOnTerminate || AppStartup.magicKeysAreHeldNow {
                 await systemExtensionsCoordinator.uninstallAll(origin: .termination, userInitiated: false)
             }
 
