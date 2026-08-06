@@ -742,8 +742,7 @@ public enum Localizable {
   public static var killSwitchAdvancedBannerTitle: String { return Localizable.tr("Localizable", "_kill_switch_advanced_banner_title", fallback: "Advanced kill switch activated") }
   /// iOS: Warning shown before disconnecting / signing out while Advanced kill switch is active
   public static var killSwitchAdvancedDisconnectWarning: String { return Localizable.tr("Localizable", "_kill_switch_advanced_disconnect_warning", fallback: "Advanced kill switch is enabled. If you continue, you will be disconnected from the internet.") }
-  /// macOS: Kill switch popover - explanation shown with the disabled "Advanced" option while the selected protocol
-  /// (IKEv2) cannot support it
+  /// macOS: Kill switch popover - explanation shown with the disabled "Advanced" option while the selected protocol (IKEv2) cannot support it
   public static var killSwitchAdvancedUnavailableProtocolDescription: String { return Localizable.tr("Localizable", "_kill_switch_advanced_unavailable_protocol_description", fallback: "This setting is not available for the protocol you have selected. Please choose another protocol to use Advanced Kill Switch.") }
   /// Disconnect notification
   public static var killSwitchBlockingConnection: String { return Localizable.tr("Localizable", "_kill_switch_blocking_connection", fallback: "Kill switch blocking all connections") }
@@ -996,7 +995,7 @@ public enum Localizable {
   /// Enable anyway
   public static var neksT2Connect: String { return Localizable.tr("Localizable", "_neks_t2_connect", fallback: "Enable anyway") }
   /// The use of kill switch is unstable on this device.
-  ///
+  /// 
   /// Your device has a T2 Security Chip, which can result in system stability issues if the kill switch functionality of macOS is used by Proton VPN.
   public static var neksT2Description: String { return Localizable.tr("Localizable", "_neks_t2_description", fallback: "The use of kill switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the kill switch functionality of macOS is used by Proton VPN.") }
   /// Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string.
@@ -1761,7 +1760,7 @@ public enum Localizable {
   public static var streamingTitle: String { return Localizable.tr("Localizable", "_streaming_title", fallback: "Streaming") }
   /// iOS: button in human verification code form
   public static var submitVerificationCode: String { return Localizable.tr("Localizable", "_submit_verification_code", fallback: "Submit") }
-  /// Extend plan for 1 year
+  /// Extend plan for 1 year 
   /// %@.
   public static func subscriptionButton(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_subscription_button", String(describing: p1), fallback: "Extend plan for 1 year \n%@.")
@@ -1920,7 +1919,7 @@ public enum Localizable {
   public static var transactionLogNotAvailable: String { return Localizable.tr("Localizable", "_transaction_log_not_available_", fallback: "Transaction log is not available") }
   /// Purchase was successfully restored in account settings
   public static var transactionRecovered: String { return Localizable.tr("Localizable", "_transaction_recovered", fallback: "Transaction(s) recovered.") }
-  /// In case Proton sites are blocked, this setting allows the app to try alternative network routing to reach Proton, which can be useful for bypassing firewalls or network issues. We recommend keeping this setting on for greater reliability.
+  /// In case Proton sites are blocked, this setting allows the app to try alternative network routing to reach Proton, which can be useful for bypassing firewalls or network issues. We recommend keeping this setting on for greater reliability. 
   /// Learn more
   public static var troubleshootItemAltDescription: String { return Localizable.tr("Localizable", "_troubleshoot_item_alt_description", fallback: "In case Proton sites are blocked, this setting allows the app to try alternative network routing to reach Proton, which can be useful for bypassing firewalls or network issues. We recommend keeping this setting on for greater reliability. \nLearn more") }
   /// Learn more
@@ -2150,7 +2149,7 @@ public enum Localizable {
   /// iOS Settings: WireGuard logs row
   public static var wireguardLogs: String { return Localizable.tr("Localizable", "_wireguard_logs", fallback: "WireGuard Logs") }
   /// Settings -> Protocol: WireGuard TLS Option called "Stealth". Should not be translated.
-  public static var wireguardTls: String { return Localizable.tr("Localizable", "_wireguard_tls", fallback: "Stealth") }
+  public static var wireguardTls: String { return Localizable.tr("Localizable", "_wireguard_tls", fallback: "Proton Stealth") }
   /// Subtitle of banner shown on iOS apps to upsell users who want to select a country
   public static var wrongCountryBannerSubtitle: String { return Localizable.tr("Localizable", "_wrong_country_banner_subtitle", fallback: "Upgrade to choose any server") }
   /// Text of banner shown on macOS apps to upsell users who want to select a country
