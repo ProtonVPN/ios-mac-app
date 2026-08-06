@@ -30,7 +30,7 @@
     /// One reference per feature: each brings its own icon, title and description, and the smart-routing
     /// copy interpolates the two country names.
     @MainActor
-    @Suite(.serialized, .snapshots(record: .missing), .dependency(\.locale, SnapshotFixtures.locale))
+    @Suite(.serialized, .snapshots(record: .missing), .dependency(\.locale, SnapshotFixtures.localeEnUS))
     struct FeatureInfoViewSnapshotTests {
         @Test("Secure Core")
         func secureCore() {

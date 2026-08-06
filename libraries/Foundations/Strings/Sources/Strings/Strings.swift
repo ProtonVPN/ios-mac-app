@@ -1554,34 +1554,6 @@ public enum Localizable {
   public static var serverSelectionIsRequired: String { return Localizable.tr("Localizable", "_server_selection_is_required", fallback: "Please select a server") }
   /// Under maintenance alert
   public static var serverUnderMaintenance: String { return Localizable.tr("Localizable", "_server_under_maintenance", fallback: "Server under maintenance") }
-  /// Plural format key: "%#@DAYS@"
-  public static func sessionLengthDays(_ p1: Int) -> String {
-    return Localizable.tr("Localizable", "_session_length_days", p1, fallback: "Plural format key: \"%#@DAYS@\"")
-  }
-  /// Plural format key: "%#@DAYS@ %#@HOURS@"
-  public static func sessionLengthDaysAndHours(_ p1: Int, _ p2: Int) -> String {
-    return Localizable.tr("Localizable", "_session_length_days_and_hours", p1, p2, fallback: "Plural format key: \"%#@DAYS@ %#@HOURS@\"")
-  }
-  /// Plural format key: "%#@HOURS@"
-  public static func sessionLengthHours(_ p1: Int) -> String {
-    return Localizable.tr("Localizable", "_session_length_hours", p1, fallback: "Plural format key: \"%#@HOURS@\"")
-  }
-  /// Plural format key: "%#@HOURS@ %#@MINUTES@"
-  public static func sessionLengthHoursAndMinutes(_ p1: Int, _ p2: Int) -> String {
-    return Localizable.tr("Localizable", "_session_length_hours_and_minutes", p1, p2, fallback: "Plural format key: \"%#@HOURS@ %#@MINUTES@\"")
-  }
-  /// Plural format key: "%#@MINUTES@"
-  public static func sessionLengthMinutes(_ p1: Int) -> String {
-    return Localizable.tr("Localizable", "_session_length_minutes", p1, fallback: "Plural format key: \"%#@MINUTES@\"")
-  }
-  /// Plural format key: "%#@MINUTES@ %#@SECONDS@"
-  public static func sessionLengthMinutesAndSeconds(_ p1: Int, _ p2: Int) -> String {
-    return Localizable.tr("Localizable", "_session_length_minutes_and_seconds", p1, p2, fallback: "Plural format key: \"%#@MINUTES@ %#@SECONDS@\"")
-  }
-  /// Plural format key: "%#@SECONDS@"
-  public static func sessionLengthSeconds(_ p1: Int) -> String {
-    return Localizable.tr("Localizable", "_session_length_seconds", p1, fallback: "Plural format key: \"%#@SECONDS@\"")
-  }
   /// iOS status view
   public static var sessionTime: String { return Localizable.tr("Localizable", "_session_time", fallback: "Session Time") }
   /// iOS: Settings screen title and tab title
