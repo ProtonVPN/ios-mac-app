@@ -26,6 +26,7 @@ import Hermes
 import Localization
 import NetworkExtension
 import ProtonCoreFeatureFlags
+import Sharing
 import Strings
 import VPNCoreCommon
 import VPNCoreTypes
@@ -133,11 +134,9 @@ extension ManagerConfigurator {
 
     static func encodeProTUNConfiguration(connectionIntent: ServerConnectionIntent, on protocolConfiguration: NETunnelProviderProtocol) throws {
         @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
-        @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
-        @Dependency(\.credentiallessHelper) var credentiallessHelper
 
         let wgConfig = connectionConfigurationProvider.configuration().wireguardConfig
-        let features = credentiallessHelper.isCredentialLess() ? nil : connectionFeatureProvider.connectionFeatures()
+        let features = appropriateFeatures
 
         // Encode every peer with the full set of transports/ports, so that we can reconfigure the connection with a
         // specific transport later without supplying a new set of peers.
@@ -162,6 +161,16 @@ extension ManagerConfigurator {
             throw ManagerConfigurationError.userIdMissing
         }
         protocolConfiguration.userID = userID
+    }
+
+    private static var appropriateFeatures: AgentTunnelFeatures? {
+        @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
+        @Dependency(\.credentiallessHelper) var credentiallessHelper
+        @SharedReader(.userTier) var userTier: VpnTier?
+
+        let shouldReturnNil = userTier?.isFree == true || credentiallessHelper.isCredentialLess()
+
+        return shouldReturnNil ? nil : connectionFeatureProvider.connectionFeatures()
     }
 
     static var wireGuardConfigurator: ManagerConfigurator {
