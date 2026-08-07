@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Strings
 import Theme
 import UIKit
 
@@ -27,20 +26,11 @@ final class ShellTabBar: UITabBar {
     /// Called from layout, since the system decides this bar's height and only layout knows what it settled on.
     var onRoomChange: ((CGFloat) -> Void)?
 
-    /// One item per tab, created once and never replaced: the bar holds these objects, so what changes is their
-    /// contents.
-    private let itemsByTab: [TabularFeature.Tab: UITabBarItem] = .init(
-        uniqueKeysWithValues: TabularFeature.Tab.allCases.map { tab in
-            let item = UITabBarItem(title: tab.title, image: nil, selectedImage: nil)
-            item.accessibilityIdentifier = tab.accessibilityIdentifier
-            return (tab, item)
-        }
-    )
+    private let tabItems = TabularFeature.Tab.allCases.map { ShellTabBarItem(tab: $0) }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         applyAppearance()
-        items = TabularFeature.Tab.allCases.compactMap { itemsByTab[$0] }
     }
 
     @available(*, unavailable)
@@ -48,27 +38,23 @@ final class ShellTabBar: UITabBar {
         fatalError("init(coder:) has not been implemented")
     }
 
-    /// Redraws the bar from the store's state. Every drawn property is written on every call, so there is no
-    /// previous value to put back.
-    ///
-    /// `showsFilledSelection` follows the sheet's height rather than the store: as the sheet settles on the bar
-    /// detent, the selected glyph loses its filled variant, because the bar is then the only UI over the map and the
-    /// filled glyph stands out too much there.
+    /// Redraws the tab bar using the store's state
     func apply(_ state: TabularFeature.State, showsFilledSelection: Bool) {
-        for (tab, item) in itemsByTab {
-            let glyphs = tab.glyphs(badge: state.badge(for: tab))
-            item.image = glyphs.outline
-            item.selectedImage = showsFilledSelection ? glyphs.filled : glyphs.outline
+        for item in tabItems {
+            item.update(badge: state.badge(for: item.tab), showsFilledSelection: showsFilledSelection)
         }
-        let selected = itemsByTab[state.tab]
+
+        items = tabItems
+
+        let selected = tabItems.first { $0.tab == state.tab }
         if selectedItem !== selected {
             selectedItem = selected
         }
     }
 
-    /// The tab an item stands for, so a tap can be reported as the tab the user chose rather than as a position.
+    /// Which tab a given item stands for.
     func tab(for item: UITabBarItem) -> TabularFeature.Tab? {
-        itemsByTab.first { $0.value === item }?.key
+        (item as? ShellTabBarItem)?.tab
     }
 
     override func layoutSubviews() {
@@ -92,49 +78,5 @@ final class ShellTabBar: UITabBar {
         }
         standardAppearance = appearance
         scrollEdgeAppearance = appearance
-    }
-}
-
-private extension TabularFeature.Tab {
-    var title: String {
-        switch self {
-        case .home: Localizable.homeTab
-        case .countries: Localizable.countries
-        case .profiles: Localizable.profiles
-        case .settings: Localizable.settings
-        }
-    }
-
-    /// The identifiers the UI tests address the tabs by, kept word for word from the items the pages used to declare.
-    var accessibilityIdentifier: String {
-        switch self {
-        case .home: "Home"
-        case .countries: "Countries"
-        case .profiles: "Profiles"
-        case .settings: "Settings back btn"
-        }
-    }
-
-    /// The tab's outline and filled glyphs. Only home and settings have distinct filled variants; countries and
-    /// profiles show selection through tint alone. A capture in progress swaps the settings glyphs for the dotted
-    /// variants, which is why the badge is an input here rather than something drawn on top of the glyph.
-    func glyphs(badge: TabularFeature.Badge?) -> (outline: UIImage, filled: UIImage) {
-        switch self {
-        case .home:
-            (Asset.Icons.house.image, Asset.Icons.houseFilled.image)
-        case .countries:
-            (Asset.Icons.earth.image, Asset.Icons.earth.image)
-        case .profiles:
-            (Asset.Icons.windowTerminal.image, Asset.Icons.windowTerminal.image)
-        case .settings:
-            badge == .recording
-                ? (Self.settingsGlyph(.settingsTabbarDot), Self.settingsGlyph(.settingsTabbarDotActive))
-                : (Self.settingsGlyph(.settingsTabbar), Self.settingsGlyph(.settingsTabbarActive))
-        }
-    }
-
-    /// Settings brings its own colored glyphs, so they are passed through untinted.
-    private static func settingsGlyph(_ resource: ImageResource) -> UIImage {
-        UIImage(resource: resource).withRenderingMode(.alwaysOriginal)
     }
 }
