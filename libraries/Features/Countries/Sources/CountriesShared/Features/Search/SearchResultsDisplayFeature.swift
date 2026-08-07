@@ -102,12 +102,13 @@ public struct SearchResultsDisplayFeature {
                     return .none
                 }
                 let spec = CityStateConnectionSpecFactory.makeSpec(
-                    location: .exact(
-                        server.tier == .free ? .free : .paid,
+                    location: CityStateConnectionSpecFactory.serverLocation(
+                        tier: server.tier == .free ? .free : .paid,
                         logicalID: server.id,
                         number: nil,
                         subregion: nil,
-                        regionCode: server.exitCountryCode
+                        exitCountryCode: server.exitCountryCode,
+                        entryCountryCode: server.entryCountryCode
                     )
                 )
                 return .send(.delegate(.connectRequested(spec, .countriesServer)))
