@@ -19,6 +19,7 @@
 import Combine
 import ComposableArchitecture
 import Dependencies
+import Domain
 import HomeShared
 import Localization
 import NetShield
@@ -213,8 +214,8 @@ public struct ConnectionStatusView: View {
 
 #Preview("unprotected", traits: .sizeThatFitsLayout) {
     @SharedReader(.protectionState) var protectionState: ProtectionState = .unprotected
-    @SharedReader(.userCountry) var userCountry: String? = "PL"
-    @SharedReader(.userIP) var userIP: String? = "123.456.789.0"
+    @SharedReader(.userLocation) var userLocation: StoredUserLocation? =
+        .measured(.init(ip: "123.456.789.0", country: "PL", isp: "Play"), at: .now)
     return ConnectionStatusView(store: Store(initialState: .init()) {
         ConnectionStatusFeature()
     })
@@ -222,8 +223,8 @@ public struct ConnectionStatusView: View {
 
 #Preview("resolving", traits: .sizeThatFitsLayout) {
     @SharedReader(.protectionState) var protectionState: ProtectionState = .resolving
-    @SharedReader(.userCountry) var userCountry: String? = "PL"
-    @SharedReader(.userIP) var userIP: String? = "123.456.789.0"
+    @SharedReader(.userLocation) var userLocation: StoredUserLocation? =
+        .measured(.init(ip: "123.456.789.0", country: "PL", isp: "Play"), at: .now)
     ConnectionStatusView(store: Store(initialState: .init()) {
         ConnectionStatusFeature()
     })

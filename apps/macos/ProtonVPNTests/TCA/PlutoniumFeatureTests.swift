@@ -47,6 +47,7 @@ struct PlutoniumFeatureTests {
         } withDependencies: {
             $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: VpnTier(rawValue: .max))
             $connectionProtocol.withLock { $0 = .smartProtocol }
+            $0.featureFlags = .enabling()
         }
         #expect(store.state.requiresReconnection == false)
 
@@ -73,6 +74,7 @@ struct PlutoniumFeatureTests {
         } withDependencies: {
             $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: VpnTier(rawValue: .max))
             $connectionProtocol.withLock { $0 = .smartProtocol }
+            $0.featureFlags = .enabling()
         }
 
         await store.send(.toggleModeClicked) {
@@ -137,6 +139,7 @@ struct PlutoniumFeatureTests {
         } withDependencies: {
             $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: VpnTier(rawValue: .max))
             $connectionProtocol.withLock { $0 = .smartProtocol }
+            $0.featureFlags = .enabling()
         }
         #expect(store.state.requiresReconnection == false)
 

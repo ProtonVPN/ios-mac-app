@@ -83,12 +83,6 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             $0.vpnApiClient.virtualServices = {
                 VPNStreamingResponse(code: 0, resourceBaseURL: "url", streamingServices: [:])
             }
-            $0.vpnApiClient.userLocation = {
-                nil
-            }
-            $0.vpnApiClient.refreshServerInfo = { _, _ in
-                nil
-            }
             $0.coreAlertService = .init(push: { [alertService] in alertService?.push(alert: $0) })
         } operation: {
             AppSessionRefresherMock()
@@ -211,12 +205,6 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             }
             $0.vpnApiClient.virtualServices = {
                 VPNStreamingResponse(code: 0, resourceBaseURL: "url", streamingServices: [:])
-            }
-            $0.vpnApiClient.userLocation = {
-                nil
-            }
-            $0.vpnApiClient.refreshServerInfo = { _, _ in
-                nil
             }
             $0.coreAlertService = .init(push: { [alertService] in alertService?.push(alert: $0) })
         } operation: {

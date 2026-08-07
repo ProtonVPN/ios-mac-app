@@ -20,30 +20,6 @@ import ComposableArchitecture
 import Domain
 import Foundation
 
-public extension SharedKey where Self == AppStorageKey<String?> {
-    static var userCountry: Self {
-        .appStorage("userCountry")
-    }
-}
-
-public extension SharedKey where Self == AppStorageKey<String?> {
-    static var userIP: Self {
-        .appStorage("userIP")
-    }
-}
-
-public extension SharedKey where Self == AppStorageKey<String?> {
-    static var userISP: Self {
-        .appStorage("userISP")
-    }
-}
-
-public extension SharedKey where Self == AppStorageKey<Date?> {
-    static var lastLocationRetrieval: Self {
-        .appStorage("lastLocationRetrieval")
-    }
-}
-
 public extension SharedKey where Self == AppStorageKey<Bool>.Default {
     static var killSwitch: Self {
         Self[.appStorage("Firewall"), default: false]

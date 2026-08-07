@@ -46,7 +46,9 @@
                         alert: SettingsFeature.signOutAlert,
                         isLoading: false
                     ),
-                    userLocation: SharedReader<UserLocation?>(value: UserLocation(ip: "", country: "", isp: ""))
+                    userLocation: SharedReader<StoredUserLocation?>(
+                        value: .measured(UserLocation(ip: "", country: "", isp: ""), at: .now)
+                    )
                 )),
                 networking: .authenticated(.auth(uid: "sessionID"))
             )
@@ -94,7 +96,9 @@
                         mainBackground: .init(value: .clear),
                         isLoading: false
                     ),
-                    userLocation: SharedReader<UserLocation?>(value: UserLocation(ip: "", country: "", isp: ""))
+                    userLocation: SharedReader<StoredUserLocation?>(
+                        value: .measured(UserLocation(ip: "", country: "", isp: ""), at: .now)
+                    )
                 )),
                 networking: .authenticated(.auth(uid: "sessionID"))
             )

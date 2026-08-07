@@ -18,7 +18,7 @@
 
 import ComposableArchitecture
 import ConnectionDetailsShared
-import ProtonCoreUIFoundations
+import Domain
 import Strings
 import SwiftUI
 import Theme
@@ -41,31 +41,36 @@ public struct IPView: View {
                     Text(Localizable.connectionDetailsIpviewIpMy)
                         .foregroundColor(Color(.text, .weak))
 
-                    Button(action: {
-                        store.send(.changeIPVisibility)
-                    }, label: {
-                        (
-                            store.localIpHidden
-                                ? IconProvider.eye
-                                : IconProvider.eyeSlash
-                        )
-                        .resizable().frame(width: buttonSize, height: buttonSize)
-                        .foregroundColor(Color(.text, .weak))
-                    })
-                    .buttonStyle(PlainButtonStyle())
+                    if store.canRevealUserIP {
+                        Button(action: {
+                            store.send(.changeIPVisibility)
+                        }, label: {
+                            (
+                                store.userIPHidden
+                                    ? Theme.Asset.Icons.eye.swiftUIImage
+                                    : Theme.Asset.Icons.eyeSlash.swiftUIImage
+                            )
+                            .resizable().frame(width: buttonSize, height: buttonSize)
+                            .foregroundColor(Color(.text, .weak))
+                        })
+                        .buttonStyle(PlainButtonStyle())
+                    }
                 }
 
-                Text(store.localIpHidden ? "***.***.***.***" : (store.userIP ?? Localizable.connectionDetailsIpviewIpUnavailable))
+                Text(store.displayedUserIP)
                     .foregroundColor(Color(.text, .normal))
             }
             .frame(maxWidth: .infinity) // Makes both sides equal width
 
-            IconProvider.arrowRight
+            Theme.Asset.Icons.arrowRight.swiftUIImage
                 .foregroundColor(Color(.text, .weak))
 
             VStack(spacing: verticalSpacing) {
                 Text(Localizable.connectionDetailsIpviewIpVpn)
                     .foregroundColor(Color(.text, .weak))
+
+                Text(store.vpnIp ?? Localizable.connectionDetailsIpviewIpUnavailable)
+                    .foregroundColor(Color(.text, .normal))
             }
             .frame(maxWidth: .infinity) // Makes both sides equal width
         }
@@ -83,8 +88,8 @@ public struct IPView: View {
 // MARK: - Previews
 
 #Preview {
-    @Shared(.userIP) var userIP: String?
-    $userIP.withLock { $0 = "127.0.0.1" }
+    @Shared(.userLocation) var userLocation: StoredUserLocation?
+    $userLocation.withLock { $0 = .measured(.init(ip: "127.0.0.1", country: "CH", isp: "Swisscom"), at: .now) }
 
     return IPView(store: Store(initialState: .init(), reducer: { IPViewFeature() }))
         .padding(16)

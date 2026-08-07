@@ -104,28 +104,14 @@ public extension SharedKey where Self == AppStorageKey<Int>.Default {
     }
 }
 
-#if os(tvOS)
-    public extension SharedKey where Self == InMemoryKey<UserLocation?> {
-        /// tvOS-only in-memory runtime location (reset each launch, populated by `UserLocationService`).
-        static var userLocation: Self {
-            .inMemory("userLocation")
-        }
-    }
-#endif
-
 // MARK: - JSON-encoded Codable
 
-#if !os(tvOS)
-    public extension SharedKey where Self == JSONAppStorageKey<UserLocation?> {
-        /// The user's IP location (outside of the VPN)
-        ///
-        /// Observe changes via `$userLocation.publisher` — this replaces the legacy `AppEvent.userIp`
-        /// notification the property used to post on every write.
-        static var userLocation: Self {
-            .json("UserLocation")
-        }
+public extension SharedKey where Self == JSONAppStorageKey<StoredUserLocation?> {
+    /// The user's location outside of the VPN, with the timestamp and source that established it.
+    static var userLocation: Self {
+        .json("UserLocation")
     }
-#endif
+}
 
 public extension SharedKey where Self == JSONAppStorageKey<[String: Bool]?> {
     /// Manual feature-flag overrides (development builds)

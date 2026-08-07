@@ -155,7 +155,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func retrieveProperties() async throws {
         @Dependency(\.serverRepository) var serverRepository
         @Dependency(\.serverListUpdater) var serverListUpdater
-        guard let properties = try await getVPNProperties() else {
+        let measuresLocation = isDisconnectedForPropertiesRefresh
+        guard let properties = try await getVPNProperties(measuresLocation: measuresLocation) else {
             serverRepository.resetSuccessfulRefreshes()
             return
         }
@@ -173,9 +174,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             )
         }
 
-        if isDisconnectedForPropertiesRefresh {
+        // Manager calls `recordMeasured` only when `measuredLocation` exists. It checks the state a second
+        // time because the tunnel can connect while the request is in flight (request will fail)
+        if let measured = properties.measuredLocation, isDisconnectedForPropertiesRefresh {
             @Shared(.userLocation) var userLocation
-            $userLocation.withLock { $0 = properties.location }
+            $userLocation.recordMeasured(measured)
         }
 
         @Shared(.userAccountCreationDate) var userAccountCreationDate
@@ -216,16 +219,17 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     /// - API returns `CommonVpnError.subuserWithoutSessions`
     /// - Server storage is empty or user IP is not known
     /// - We hit a keychain error
-    private func getVPNProperties() async throws -> VpnProperties? {
-        let isDisconnected = isDisconnectedForPropertiesRefresh
+    /// - Parameter measuresLocation: whether to ask the endpoint for the user's own address. True only
+    ///   while no tunnel is up (with tunnel it will answer with the exit address instead).
+    private func getVPNProperties(measuresLocation: Bool) async throws -> VpnProperties? {
         @SharedReader(.userLocation) var userLocation
-        let location = userLocation
+        let location = userLocation?.location
 
         @Dependency(\.serverRepository) var serverRepository
         let shouldRefreshServersAccordingToUserTier = !serverRepository.shouldFetchFullServerList
         do {
             return try await vpnApiClient.vpnProperties(
-                isDisconnected: isDisconnected,
+                isDisconnected: measuresLocation,
                 lastKnownLocation: location,
                 serversAccordingToTier: shouldRefreshServersAccordingToUserTier
             )
@@ -239,7 +243,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             throw CommonVpnError.noConnectionsAvailable
         } catch {
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
-            if serverRepository.isEmpty || userLocation?.ip == nil {
+            if serverRepository.isEmpty || userLocation?.location.ip == nil {
                 // only throw if there is a major reason
                 throw error
             }

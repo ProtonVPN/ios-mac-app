@@ -55,7 +55,7 @@ final class HeaderViewModel {
 
     @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.serverRepository) private var serverRepository
-    @SharedReader(.userLocation) private var userLocation: UserLocation?
+    @SharedReader(.userLocation) private var userLocation: StoredUserLocation?
     @Dependency(\.announcementManager) private var announcementManager
     @Dependency(\.notificationManager) private var notificationManager
 
@@ -455,12 +455,12 @@ final class HeaderViewModel {
         return attributedString
     }
 
+    /// The address traffic leaves from while connected, the user's own otherwise.
+    ///
+    /// `vpnExitIP` prefers what the tunnel's local agent reports over the server list's exit address,
+    /// which is what the connection details screen shows — and is `nil` unless connected.
     private func getCurrentIp() -> String? {
-        if isConnected {
-            connectedServer?.endpoint.offsetExitIp
-        } else {
-            userLocation?.ip
-        }
+        connectionState.vpnExitIP ?? userLocation?.location.ip
     }
 
     private func formLoadLabel(short: Bool = false) -> NSAttributedString? {

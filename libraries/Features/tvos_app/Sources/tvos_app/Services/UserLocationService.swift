@@ -21,23 +21,20 @@ import Dependencies
 import Domain
 import Foundation
 
+/// tvOS's trigger for measuring the user's location.
 class UserLocationService {
-    @Shared(.userLocation) var userLocation: UserLocation?
+    @Shared(.userLocation) var userLocation: StoredUserLocation?
 
-    /// Update user location (ip)
-    ///
-    /// If it is not known, tries to get it
+    /// Measures the user's location if it isn't known yet.
     func updateUserLocation() async throws {
-        if userLocation == nil {
-            try await refresh()
-        }
+        guard userLocation == nil else { return }
+        try await refresh()
     }
 
     @MainActor
     private func refresh() async throws {
         @Dependency(\.locationClient) var client
-        let newLocation = try await client.fetchLocation()
-        $userLocation.withLock { $0 = newLocation }
+        try await $userLocation.recordMeasured(client.fetchLocation())
     }
 }
 

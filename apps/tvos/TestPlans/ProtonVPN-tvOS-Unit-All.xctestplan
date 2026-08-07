@@ -46,20 +46,6 @@
     },
     {
       "target": {
-        "containerPath": "container:../../libraries/Shared/Connection",
-        "identifier": "LocalAgentTests",
-        "name": "LocalAgentTests"
-      }
-    },
-    {
-      "target": {
-        "containerPath": "container:../../libraries/Modals",
-        "identifier": "ModalsTests",
-        "name": "ModalsTests"
-      }
-    },
-    {
-      "target": {
         "containerPath": "container:../../libraries/Features/tvos_app",
         "identifier": "tvos_appSnapshotTests",
         "name": "tvos_appSnapshotTests"

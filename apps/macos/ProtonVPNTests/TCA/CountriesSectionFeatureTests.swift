@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Ergonomics
 import Foundation
 @testable import ProtonVPN
 import Testing
@@ -25,10 +26,13 @@ import Testing
 struct CountriesSectionFeatureTests {
     @Test
     func `onAppear with started quick settings only dismisses details`() async {
+        // The quick settings state reads `VPNFeatureFlagType.portForwarding` while it is built.
         let store = TestStore(initialState: CountriesSectionFeature.State(
             hasStartedQuickSettings: true
         )) {
             CountriesSectionFeature()
+        } withDependencies: {
+            $0.featureFlags = .enabling()
         }
 
         await store.send(.onAppear)

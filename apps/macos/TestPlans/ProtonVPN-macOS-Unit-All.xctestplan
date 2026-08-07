@@ -55,9 +55,23 @@
     },
     {
       "target": {
+        "containerPath": "container:../../libraries/Shared/CommonNetworking",
+        "identifier": "CommonNetworkingTests",
+        "name": "CommonNetworkingTests"
+      }
+    },
+    {
+      "target": {
         "containerPath": "container:../../libraries/Features/ConnectionDetails",
         "identifier": "ConnectionDetailsTests",
         "name": "ConnectionDetailsTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Shared/ConnectionInventory",
+        "identifier": "ConnectionInventoryTests",
+        "name": "ConnectionInventoryTests"
       }
     },
     {
@@ -72,6 +86,34 @@
         "containerPath": "container:../../libraries/Foundations/Ergonomics",
         "identifier": "ErgonomicsTests",
         "name": "ErgonomicsTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Shared/ExtensionIPC",
+        "identifier": "ExtensionIPCTests",
+        "name": "ExtensionIPCTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Shared/Connection",
+        "identifier": "ExtensionManagerTests",
+        "name": "ExtensionManagerTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Shared/Connection",
+        "identifier": "HermesTests",
+        "name": "HermesTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Foundations/Ergonomics",
+        "identifier": "IPCErgonomicsTests",
+        "name": "IPCErgonomicsTests"
       }
     },
     {
@@ -118,6 +160,13 @@
     },
     {
       "target": {
+        "containerPath": "container:../../libraries/Foundations/Ergonomics",
+        "identifier": "NetworkErgonomicsTests",
+        "name": "NetworkErgonomicsTests"
+      }
+    },
+    {
+      "target": {
         "containerPath": "container:../../libraries/Foundations/PMLogger",
         "identifier": "PMLoggerTests",
         "name": "PMLoggerTests"
@@ -131,6 +180,13 @@
       }
     },
     {
+      "target": {
+        "containerPath": "container:../../libraries/Core/PlutoniumExtension",
+        "identifier": "PlutoniumExtensionTests",
+        "name": "PlutoniumExtensionTests"
+      }
+    },
+    {
       "skippedTests": [
         "AppSessionManagerImplementationTests"
       ],
@@ -138,6 +194,13 @@
         "containerPath": "container:macOS.xcodeproj",
         "identifier": "E15B754C20FA83CB0022C406",
         "name": "ProtonVPNmacOSTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Foundations/Ergonomics",
+        "identifier": "SharedErgonomicsTests",
+        "name": "SharedErgonomicsTests"
       }
     },
     {

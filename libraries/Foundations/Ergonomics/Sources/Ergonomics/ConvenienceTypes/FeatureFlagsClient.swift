@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import DependenciesMacros
 import IssueReporting
 import ProtonCoreFeatureFlags
 
@@ -28,21 +29,14 @@ import ProtonCoreFeatureFlags
 ///
 /// ```swift withDependencies { $0.featureFlags = .enabling(VPNFeatureFlagType.timestampedLogicals) } operation: { ... }
 /// ```
+@DependencyClient
 public struct FeatureFlagsClient: Sendable {
-    public var isEnabled: @Sendable (any FeatureFlagTypeProtocol) -> Bool
-
-    public init(isEnabled: @escaping @Sendable (any FeatureFlagTypeProtocol) -> Bool) {
-        self.isEnabled = isEnabled
-    }
+    public var isEnabled: @Sendable (any FeatureFlagTypeProtocol) -> Bool = { _ in false }
 }
 
 extension FeatureFlagsClient: DependencyKey {
     public static var liveValue: FeatureFlagsClient {
         FeatureFlagsClient { CheckedFeatureFlagsRepository.shared.isEnabled($0) }
-    }
-
-    public static var testValue: FeatureFlagsClient {
-        FeatureFlagsClient(isEnabled: unimplemented("FeatureFlagsClient.isEnabled", placeholder: false))
     }
 
     public static var previewValue: FeatureFlagsClient {

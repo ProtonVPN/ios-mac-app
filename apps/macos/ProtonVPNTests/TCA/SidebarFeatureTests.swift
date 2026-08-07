@@ -21,6 +21,7 @@ import ComposableArchitecture
 @testable import Connection
 @testable import CoreConnection
 import Domain
+import Ergonomics
 @testable import ExtensionManager
 @testable import ExtensionSync
 import Foundation
@@ -690,6 +691,10 @@ struct SidebarFeatureTests {
                 environment: environment
             )
         } withDependencies: {
+            // `SidebarFeature.State` (via the quick settings) and the NAT-PMP sync read
+            // `VPNFeatureFlagType.portForwarding`. Keep every flag off, matching the flagless environment these
+            // expectations were written against.
+            $0.featureFlags = .enabling()
             if let clock {
                 $0.continuousClock = clock
             }
@@ -708,6 +713,7 @@ struct SidebarFeatureTests {
             $0.portForwardingPropertyProvider.setPortForwarding(portForwardingEnabled)
             $0.serverChangeAuthorizer = serverChangeAuthorizer
             $0.announcementRefresher.tryRefreshing = {}
+            $0.withRandomNumberGenerator = WithRandomNumberGenerator(SystemRandomNumberGenerator())
         }
     }
 }

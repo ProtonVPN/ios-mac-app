@@ -63,7 +63,7 @@ extension MaintenanceChecker: DependencyKey {
             // This doesn't need to be a strict check, it's just to reduce load on the API
             @SharedReader(.userTier) var userTier
             @SharedReader(.userLocation) var userLocation
-            let location = userLocation
+            let location = userLocation?.location
 
             let result = try await vpnApiClient.serverInfo(
                 ip: (location?.ip).flatMap { TruncatedIp(ip: $0) },

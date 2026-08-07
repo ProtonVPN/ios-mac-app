@@ -184,7 +184,7 @@ private extension Bundle {
     var buildVersion: Version {
         let bundleVersion = infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0.0"
         let buildNumber = infoDictionary?["CFBundleVersion"] as? String ?? "0.0"
-        return Version("\(bundleVersion)+\(buildNumber)")!
+        return Version("\(bundleVersion)+\(buildNumber)") ?? Version(0, 0, 0)
     }
 }
 

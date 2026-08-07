@@ -98,6 +98,7 @@ let package = Package(
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "Triangulation", package: "Ergonomics"), // for the map view
+                .product(name: "NetworkingErgonomics", package: "Ergonomics"),
                 .product(name: "CoreConnection", package: "Connection"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
@@ -172,6 +173,7 @@ let package = Package(
             dependencies: [
                 "HomeShared",
                 .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "NetworkingErgonomics", package: "Ergonomics"),
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
             ]
         ),

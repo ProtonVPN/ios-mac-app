@@ -61,7 +61,7 @@ final class StatusMenuViewModel {
     @SharedReader(.connectionState) private var connectionState: ConnectionState
     @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
 
-    @SharedReader(.userLocation) private var userLocation: UserLocation?
+    @SharedReader(.userLocation) private var userLocation: StoredUserLocation?
     private lazy var navService: NavigationService = factory.makeNavigationService()
     @Dependency(\.upsellManager) private var upsellManager
     private lazy var wifiSecurityMonitor: WiFiSecurityMonitor = factory.makeWiFiSecurityMonitor()
@@ -590,12 +590,12 @@ final class StatusMenuViewModel {
         return attributedString
     }
 
+    /// The address traffic leaves from while connected, the user's own otherwise.
+    ///
+    /// `vpnExitIP` prefers what the tunnel's local agent reports over the server list's exit address,
+    /// which is what the connection details screen shows — and is `nil` unless connected.
     private func getCurrentIp() -> String? {
-        if isConnected {
-            connectionState.resolvedServer?.endpoint.offsetExitIp
-        } else {
-            userLocation?.ip
-        }
+        connectionState.vpnExitIP ?? userLocation?.location.ip
     }
 
     private func formConnectionLabel() -> NSAttributedString {

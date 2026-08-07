@@ -33,11 +33,9 @@ import VPNShared
 @DependencyClient
 public struct VpnApiClient: Sendable {
     public internal(set) var vpnProperties: @Sendable (_ isDisconnected: Bool, _ lastKnownLocation: UserLocation?, _ serversAccordingToTier: Bool) async throws -> VpnProperties
-    public internal(set) var refreshServerInfo: @Sendable (_ ifIpHasChangedFrom: String?, _ freeTier: Bool) async throws -> ServerInfoTuple?
     public internal(set) var clientCredentials: @Sendable () async throws -> VpnCredentials
     public internal(set) var serverInfo: @Sendable (_ ip: TruncatedIp?, _ countryCode: String?, _ freeTier: Bool) async throws -> ServerInfoResponse
     public internal(set) var serverState: @Sendable (_ serverId: String) async throws -> VpnServerState
-    public internal(set) var userLocation: @Sendable () async -> UserLocation?
     public internal(set) var sessionsCount: @Sendable () async throws -> SessionsResponse
     public internal(set) var loads: @Sendable (_ lastKnownIp: TruncatedIp?) async throws -> ContinuousServerPropertiesDictionary
     public internal(set) var clientConfig: @Sendable (_ for: String?) async throws -> ClientConfig
@@ -53,16 +51,6 @@ public enum VpnApiClientKey: DependencyKey {
         @Dependency(\.credentialsProvider) var credentialsProvider
         @Dependency(\.countryCodeProvider) var countryCodeProvider
         @Dependency(\.authKeychain) var authKeychain
-
-        @Sendable
-        func userLocation() async -> UserLocation? {
-            do {
-                return try await networking.perform(request: LocationRequest())
-            } catch {
-                log.error("Couldn't parse user's ip location response", category: .api, event: .response, metadata: ["error": "\(error)"])
-                return nil
-            }
-        }
 
         @Sendable
         func clientConfig(
@@ -216,42 +204,31 @@ public enum VpnApiClientKey: DependencyKey {
 
         return VpnApiClient(
             vpnProperties: { isDisconnected, lastKnownLocation, serversAccordingToTier in
-                // Only retrieve IP address when not connected to VPN
-                async let asyncLocation = (isDisconnected ? userLocation() : lastKnownLocation) ?? lastKnownLocation
-                let clientConfig = try? await clientConfig(for: asyncLocation?.ip)
+                // The endpoint is only asked while no tunnel is up: through one it answers with the
+                // exit address rather than the user's own. A failed request leaves this nil too — the
+                // caller can't tell the two apart, and in both cases nothing new was measured.
+                async let asyncMeasuredLocation: UserLocation? = isDisconnected
+                    ? try? networking.perform(request: LocationRequest())
+                    : nil
+                let measuredLocation = await asyncMeasuredLocation
+                // Whatever the caller already knew stands in for scoring when nothing was measured.
+                let location = measuredLocation ?? lastKnownLocation
+                let clientConfig = try? await clientConfig(for: location?.ip)
                 let asyncCredentials = try await clientCredentials()
 
                 return try await VpnProperties(
                     serverInfo: serverInfo(
-                        ip: (asyncLocation?.ip).flatMap { TruncatedIp(ip: $0) },
-                        countryCode: asyncLocation?.country,
+                        ip: (location?.ip).flatMap { TruncatedIp(ip: $0) },
+                        countryCode: location?.country,
                         freeTier: asyncCredentials.maxTier.isFree && serversAccordingToTier
                     ),
                     streamingServices: try? virtualServices(),
                     vpnCredentials: asyncCredentials,
-                    location: asyncLocation,
+                    location: location,
+                    measuredLocation: measuredLocation,
                     clientConfig: clientConfig,
                     user: try? userInfo(),
                     addresses: try? userAddresses()
-                )
-            },
-            refreshServerInfo: { lastKnownIp, freeTier in
-                let location = await userLocation()
-
-                guard lastKnownIp == nil || location?.ip != lastKnownIp else {
-                    return nil
-                }
-
-                let serverInfo = try await serverInfo(
-                    ip: (location?.ip).flatMap { TruncatedIp(ip: $0) },
-                    countryCode: location?.country,
-                    freeTier: freeTier
-                )
-
-                return await (
-                    serverInfo: serverInfo,
-                    location: location,
-                    streamingServices: try? virtualServices()
                 )
             },
             clientCredentials: {
@@ -280,9 +257,6 @@ public enum VpnApiClientKey: DependencyKey {
                 return try await withCheckedThrowingContinuation { continuation in
                     serverState(serverId: id, completion: continuation.resume(with:))
                 }
-            },
-            userLocation: {
-                await userLocation()
             },
             sessionsCount: {
                 try await networking.perform(request: VPNSessionsCountRequest())

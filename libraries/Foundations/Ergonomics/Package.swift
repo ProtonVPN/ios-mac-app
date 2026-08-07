@@ -102,7 +102,10 @@ let package = Package(
         ),
         .target(
             name: "NetworkingErgonomics",
-            dependencies: ["Ergonomics"],
+            dependencies: [
+                "Ergonomics",
+                .product(name: "DependenciesMacros", package: "swift-dependencies"),
+            ],
             path: "Sources/Networking"
         ),
         .target(

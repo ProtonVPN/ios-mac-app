@@ -17,6 +17,7 @@
 //  along with vpn-core-apple.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import DependenciesMacros
 import Dispatch
 import Ergonomics
 import Network
@@ -83,10 +84,18 @@ public extension NetworkPath {
     }
 }
 
+@DependencyClient
 public struct NetworkPathMonitor: Sendable {
-    public internal(set) var subscribe: @Sendable () -> AsyncStream<NetworkPath>
-    public internal(set) var start: @Sendable () -> Void
-    public internal(set) var stop: @Sendable () -> Void
+    /// Opens a stream of paths. Repeats are already dropped, so every value describes a path that
+    /// differs from the one before it.
+    public var subscribe: @Sendable () -> AsyncStream<NetworkPath> = { .finished }
+
+    /// Begins monitoring, unless another subscriber has already started it.
+    public var start: @Sendable () -> Void
+
+    /// Ends monitoring for every subscriber, not just the one that calls it. A subscriber that shares
+    /// the monitor with others should leave it running instead.
+    public var stop: @Sendable () -> Void
 }
 
 extension NetworkPathMonitor: DependencyKey {
@@ -132,24 +141,7 @@ extension NetworkPathMonitor: DependencyKey {
         }
     }()
 
-    public static let testValue: NetworkPathMonitor = {
-        let (stream, continuation) = AsyncStream<NetworkPath>.makeStream()
-
-        return .init {
-            stream
-        } start: {
-            continuation.yield(.init(
-                status: .satisfied,
-                interfaceName: "en0",
-                interfaceType: .wiredEthernet,
-                gateways: ["192.168.1.1"],
-                supportsIPv4: true,
-                supportsIPv6: false
-            ))
-        } stop: {
-            ()
-        }
-    }()
+    public static let testValue = NetworkPathMonitor(subscribe: { .finished }, start: {}, stop: {})
 }
 
 public extension DependencyValues {

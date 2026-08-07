@@ -110,16 +110,14 @@ struct FullMapSnapshots {
     func fullMapKillSwitch() throws {
         @Shared(.protectionState) var protectionState
         @Shared(.connectionState) var connectionState
-        @Shared(.userCountry) var userCountry
-        @Shared(.userIP) var userIP
+        @Shared(.userLocation) var userLocation
         @Shared(.userTier) var userTier
 
         var mapState = HomeMapFeature.State()
         mapState.locationPins = Self.locationPins
         let store = Store(initialState: mapState, reducer: HomeMapFeature.init)
         let statusStore = Store(initialState: ConnectionStatusFeature.State(), reducer: ConnectionStatusFeature.init)
-        $userCountry.withLock { $0 = "PL" }
-        $userIP.withLock { $0 = "1.2.3.4" }
+        $userLocation.withLock { $0 = .measured(.init(ip: "1.2.3.4", country: "PL", isp: "Play"), at: .now) }
         $userTier.withLock { $0 = .paid }
         $protectionState.withLock { $0 = .killSwitchActive }
         let blocked = ConnectionState.killSwitchActive(
@@ -156,16 +154,14 @@ struct FullMapSnapshots {
     func backdropAtBarOverWideCountry() throws {
         @Shared(.protectionState) var protectionState
         @Shared(.connectionState) var connectionState
-        @Shared(.userCountry) var userCountry
-        @Shared(.userIP) var userIP
+        @Shared(.userLocation) var userLocation
         @Shared(.userTier) var userTier
 
         var mapState = HomeMapFeature.State()
         mapState.locationPins = Self.locationPins
         let store = Store(initialState: mapState, reducer: HomeMapFeature.init)
         let statusStore = Store(initialState: ConnectionStatusFeature.State(), reducer: ConnectionStatusFeature.init)
-        $userCountry.withLock { $0 = "US" }
-        $userIP.withLock { $0 = "1.2.3.4" }
+        $userLocation.withLock { $0 = .measured(.init(ip: "1.2.3.4", country: "US", isp: "AT&T"), at: .now) }
         $userTier.withLock { $0 = .paid }
         $protectionState.withLock { $0 = .protected }
         let newYork = Server.mock(country: "US", coordinates: .init(latitude: 40.7, longitude: -74.0))

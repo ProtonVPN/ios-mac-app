@@ -128,16 +128,11 @@ struct ProtectionStatusView: View {
 
         switch store.connectionState {
         case let .connected(_, connectionData):
-            let server = connectionData.currentPeer
-            country = server.logical.exitCountryCode
-            if case let .proTUN(proTUNData) = connectionData.protocolConnectionData {
-                ip = proTUNData.serverExitV4 ?? server.endpoint.offsetExitIp
-            } else {
-                ip = server.endpoint.offsetExitIp
-            }
+            country = connectionData.currentPeer.logical.exitCountryCode
+            ip = store.connectionState.vpnExitIP
         default:
-            country = store.userLocation?.country
-            ip = store.userLocation?.ip
+            country = store.userLocation?.location.country
+            ip = store.userLocation?.location.ip
         }
         guard let country, let ip else { return nil }
         return .init(ip: ip, country: country, isp: "")

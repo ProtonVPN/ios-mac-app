@@ -32,13 +32,14 @@ public struct ConnectionStatusFeature {
     @ObservableState
     public struct State: Equatable {
         @Shared(.protectionState) package var protectionState: ProtectionState
-        @SharedReader(.userCountry) package var userCountry: String?
-        @SharedReader(.userIP) package var userIP: String?
+        @SharedReader(.userLocation) package var userLocation: StoredUserLocation?
         @SharedReader(.connectionState) package var connectionState: ConnectionState
 
         package var connectionStatusBanner: ConnectionStatusBannerFeature.State = .init()
 
-        fileprivate(set) var startingProtectionState: ProtectionState = .resolving
+        /// The unmasked `.protecting` state that started the current masking animation, or `nil`
+        /// when no masking animation is in flight.
+        var startingProtectionState: ProtectionState?
 
         public init() {}
     }
@@ -64,22 +65,20 @@ public struct ConnectionStatusFeature {
     public init() {}
 
     private static let maskTickTimerDuration: Duration = .milliseconds(50)
-    private static let statusDebounceIntervalInMilliseconds: Int = 50
-
-    private enum MaskLocation {
-        case task
-    }
 
     private enum IDs {
         case watchConnectionStatus
         case maskLocationTimer
-        case protectionState
     }
 
     @Dependency(\.continuousClock) private var clock
+    @Dependency(\.countryNameProvider) private var countryNameProvider
+    @Dependency(\.withRandomNumberGenerator) private var withRandomNumberGenerator
 
     public var body: some Reducer<State, Action> {
-        Scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner) { ConnectionStatusBannerFeature() }
+        Scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner) {
+            ConnectionStatusBannerFeature()
+        }
 
         Reduce { state, action in
             switch action {
@@ -92,56 +91,53 @@ public struct ConnectionStatusFeature {
                 .cancellable(id: IDs.maskLocationTimer, cancelInFlight: true)
 
             case .maskLocationTick:
-                guard case let .protecting(country, ip) = state.protectionState else {
+                // `partiallyMaskedLocation` returns nil once both country and IP are fully
+                // masked (or were empty/unmaskable to begin with) — that, or leaving the
+                // `.protecting` state, is the timer's termination condition.
+                guard case let .protecting(country, ip) = state.protectionState,
+                      let masked = partiallyMaskedLocation(country: country, ip: ip)
+                else {
                     return .cancel(id: IDs.maskLocationTimer)
                 }
-                if let masked = partiallyMaskedLocation(country: country, ip: ip) {
-                    if masked == state.protectionState { // fully masked already
-                        return .cancel(id: IDs.maskLocationTimer)
-                    }
-                    state.$protectionState.withLock { $0 = masked }
-                }
+                state.$protectionState.withLock { $0 = masked }
                 return .none
 
             case .watchConnectionStatus:
-                return .concatenate(
-                    .cancel(id: IDs.watchConnectionStatus),
-                    .publisher {
-                        state
-                            .$connectionState
-                            .publisher
-                            .removeDuplicates()
-                            .receive(on: UIScheduler.shared)
-                            .map(Action.newConnectionState)
-                    }.cancellable(id: IDs.watchConnectionStatus)
-                )
+                return .publisher {
+                    state
+                        .$connectionState
+                        .publisher
+                        .removeDuplicates()
+                        .receive(on: UIScheduler.shared)
+                        .map(Action.newConnectionState)
+                }
+                .cancellable(id: IDs.watchConnectionStatus, cancelInFlight: true)
 
             case let .newConnectionState(connectionState):
-                let code = state.userCountry
-                let country = LocalizationUtility.default.countryName(forCode: code ?? "") ?? ""
-                let userIP = state.userIP ?? ""
-                let protectionState = connectionState.protectionState(country: country, ip: userIP)
+                let location = state.userLocation?.location
+                let protectionState = connectionState.protectionState(
+                    country: location.flatMap { countryNameProvider.countryName(forCode: $0.country) },
+                    ip: location?.ip
+                )
                 return .send(.newProtectionState(protectionState))
 
             case let .newProtectionState(protectionState):
-                // let's check that we're not already masking location twice with same data
-                // THIS is a workaround... proper solution should make sure we're no receiving twice the same action
-                // with same data ?!
-                // we can debounce the action handling though but debounce delay cause unreactive UI...
                 if case .protecting = protectionState {
-                    // if it's a fresh new protection state...
-                    if case .unprotected = state.startingProtectionState {
-                        state.startingProtectionState = protectionState // let's store it
-                    } else if protectionState == state.startingProtectionState {
-                        return .none // however do nothing if we got the same protection state
+                    // Deduplicate: distinct connection states can map to the same
+                    // `.protecting` value, and re-subscription replays the current one.
+                    // Restarting the masking animation for an identical state would flash
+                    // the user's real country/IP back onto screen mid-animation.
+                    guard protectionState != state.startingProtectionState else {
+                        return .none
                     }
-                    state.$protectionState.withLock { $0 = protectionState } // store the new state
+                    state.startingProtectionState = protectionState
+                    state.$protectionState.withLock { $0 = protectionState }
                     return .send(.startLocationMasking)
                 } else {
                     withOptionalAnimation(shouldAnimate: protectionState.shouldAnimateChange) {
                         state.$protectionState.withLock { $0 = protectionState }
                     }
-                    state.startingProtectionState = .unprotected // reset startingProtectionState
+                    state.startingProtectionState = nil
                     return .cancel(id: IDs.maskLocationTimer)
                 }
 
@@ -152,36 +148,51 @@ public struct ConnectionStatusFeature {
                 return .none
 
             case .tearDown:
-                return .cancel(id: IDs.watchConnectionStatus)
+                state.startingProtectionState = nil
+                return .merge(
+                    .cancel(id: IDs.watchConnectionStatus),
+                    .cancel(id: IDs.maskLocationTimer)
+                )
             }
         }
     }
 
-    func partiallyMaskedLocation(country: String, ip: String) -> ProtectionState? {
-        let replacedCountry = country.partiallyMasked()
-        let replacedIP = ip.partiallyMasked(onlyAlphanumerics: true)
-        if let replacedIP, let replacedCountry {
-            if Bool.random() {
-                return .protecting(country: replacedCountry, ip: ip)
-            } else {
-                return .protecting(country: country, ip: replacedIP)
+    /// Advances the masking animation by one character.
+    ///
+    /// - Returns: the next `.protecting` state with one more character of the country or IP
+    ///   masked, or `nil` when both are fully masked (or nothing was known to mask) and the
+    ///   caller should stop the timer.
+    ///
+    /// While both strings still have unmasked characters, which one advances is chosen at
+    /// random for a staggered visual effect; once one of them is done, the other keeps
+    /// advancing on every tick, so the animation always runs to completion.
+    func partiallyMaskedLocation(country: String?, ip: String?) -> ProtectionState? {
+        let maskedCountry = country.flatMap { $0.partiallyMasked() }
+        let maskedIP = ip.flatMap { $0.partiallyMasked(onlyAlphanumerics: true) }
+        switch (maskedCountry, maskedIP) {
+        case (nil, nil):
+            return nil
+        case let (maskedCountry?, nil):
+            return .protecting(country: maskedCountry, ip: ip)
+        case let (nil, maskedIP?):
+            return .protecting(country: country, ip: maskedIP)
+        case let (maskedCountry?, maskedIP?):
+            return withRandomNumberGenerator { generator in
+                Bool.random(using: &generator)
+                    ? .protecting(country: maskedCountry, ip: ip)
+                    : .protecting(country: country, ip: maskedIP)
             }
-        } else if let replacedIP {
-            return .protecting(country: country, ip: replacedIP)
-        } else if let replacedCountry {
-            return .protecting(country: replacedCountry, ip: ip)
         }
-        return nil
     }
 }
 
 private extension ProtectionState {
     var shouldAnimateChange: Bool {
-        if case .protected = self {
-            return true
-        } else if case .protectedSecureCore = self {
-            return true
+        switch self {
+        case .protectedSecureCore, .protected:
+            true
+        case .resolving, .unprotected, .protecting, .killSwitchActive, .authenticationRequired:
+            false
         }
-        return false
     }
 }

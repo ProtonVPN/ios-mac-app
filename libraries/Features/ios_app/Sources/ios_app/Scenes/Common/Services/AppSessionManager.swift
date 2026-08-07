@@ -177,7 +177,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     func canPreviewApp() -> Bool {
         @SharedReader(.userLocation) var userLocation
-        return !isServerRepositoryEmpty && userLocation?.ip != nil
+        return !isServerRepositoryEmpty && userLocation?.location.ip != nil
     }
 
     func loadDataWithoutLogin() async throws {
@@ -186,20 +186,23 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         log.info("Attempting to load data without login")
 
-        @Shared(.userLocation) var userLocation
+        @SharedReader(.userLocation) var userLocation
+        // The endpoint is only asked for a location while no tunnel is up; otherwise it answers with
+        // the exit address, and the properties come back carrying whatever we passed in.
+        let measuresLocation = connectionState.isDisconnectedForPropertiesRefresh
         let shouldRefreshServers = !serverRepository.shouldFetchFullServerList
         let properties: VpnProperties
         do {
             properties = try await vpnApiClient.vpnProperties(
-                isDisconnected: connectionState.isDisconnectedForPropertiesRefresh,
-                lastKnownLocation: userLocation,
+                isDisconnected: measuresLocation,
+                lastKnownLocation: userLocation?.location,
                 serversAccordingToTier: shouldRefreshServers
             )
         } catch {
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
 
             // only fail if there is a major reason
-            if isServerRepositoryEmpty || userLocation?.ip == nil {
+            if isServerRepositoryEmpty || userLocation?.location.ip == nil {
                 throw error
             }
 
@@ -220,7 +223,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             )
         }
 
-        $userLocation.withLock { $0 = properties.location }
+        // Manager calls `recordMeasured` only when `measuredLocation` exists. It checks the state a second
+        // time because the tunnel can connect while the request is in flight (request will fail)
+        if let measured = properties.measuredLocation, connectionState.isDisconnectedForPropertiesRefresh {
+            @Shared(.userLocation) var userLocation
+            $userLocation.recordMeasured(measured)
+        }
         do {
             try await resolveActiveSession()
         } catch {
@@ -235,15 +243,16 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         @Dependency(\.serverRepository) var serverRepository
         let shouldRefreshServersAccordingToTier = !serverRepository.shouldFetchFullServerList
 
-        @Shared(.userLocation) var userLocation
+        @SharedReader(.userLocation) var userLocation
+        let measuresLocation = connectionState.isDisconnectedForPropertiesRefresh
 
         async let status = try planServiceV2.fetchIAPStatus()
 
         // Get VPN properties from API and save them
         do {
             let properties = try await vpnApiClient.vpnProperties(
-                isDisconnected: connectionState.isDisconnectedForPropertiesRefresh,
-                lastKnownLocation: userLocation,
+                isDisconnected: measuresLocation,
+                lastKnownLocation: userLocation?.location,
                 serversAccordingToTier: shouldRefreshServersAccordingToTier
             )
 
@@ -263,7 +272,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             @Shared(.userAccountCreationDate) var userAccountCreationDate
             $userAccountCreationDate.withLock { $0 = properties.userCreateTime }
 
-            $userLocation.withLock { $0 = properties.location }
+            if let measured = properties.measuredLocation, connectionState.isDisconnectedForPropertiesRefresh {
+                @Shared(.userLocation) var userLocation
+                $userLocation.recordMeasured(measured)
+            }
             @Shared(.userAccountRecovery) var userAccountRecovery
             $userAccountRecovery.withLock { $0 = properties.userAccountRecovery }
             @Shared(.userInfo) var userInfo
@@ -315,7 +327,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             // Also the error has to be not keychain related, because if there is a problem with
             // the keychain, use most probably will not be able to use API nor VPN connection.
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
-            if isServerRepositoryEmpty || userLocation?.ip == nil {
+            if isServerRepositoryEmpty || userLocation?.location.ip == nil {
                 throw error
             }
         }

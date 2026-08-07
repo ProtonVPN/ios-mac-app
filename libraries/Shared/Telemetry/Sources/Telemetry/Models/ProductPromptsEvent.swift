@@ -66,9 +66,9 @@ public struct ProductPromptsEvent: TelemetryEvent, Encodable {
     }
 
     init() {
-        @SharedReader(.userCountry) var userCountry
+        @SharedReader(.userLocation) var userLocation
         let dimensions = ProductPromptsEvent.Dimensions(
-            userCountry: userCountry ?? "n/a",
+            userCountry: userLocation?.location.country.lowercased() ?? "n/a",
             userTier: .readFromKeychain()
         )
 

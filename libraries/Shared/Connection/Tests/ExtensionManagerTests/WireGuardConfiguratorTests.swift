@@ -33,31 +33,33 @@
     import XCTest
 
     final class WireGuardConfiguratorTests: XCTestCase {
-        @MainActor
-        func testIkeConfigurationEncodesLegacyFeatureSuffixesAndEndpointID() async throws {
-            let configurator = ManagerConfigurator.wireGuardConfigurator
-            let session = VPNSessionMock(status: .disconnected, connectedDate: nil)
-            var manager: TunnelProviderManager = MockTunnelProviderManager(session: session, isOnDemandEnabled: false, isEnabled: false)
+        #if os(macOS)
+            @MainActor
+            func testIkeConfigurationEncodesLegacyFeatureSuffixesAndEndpointID() async throws {
+                let configurator = ManagerConfigurator.wireGuardConfigurator
+                let session = VPNSessionMock(status: .disconnected, connectedDate: nil)
+                var manager: TunnelProviderManager = MockTunnelProviderManager(session: session, isOnDemandEnabled: false, isEnabled: false)
 
-            let features = AgentTunnelFeatures(
-                netshield: .level2,
-                vpnAccelerator: false,
-                natType: .moderateNAT,
-                portForwarding: true
-            )
-            let server = Server.mock
-            let intent = ServerConnectionIntent.mock(server: server, protocolConfiguration: .ike, features: features)
-            let expectedUsername = "username+pm+f2+nst+nr+pmp+ep:\(server.endpoint.id)"
+                let features = AgentTunnelFeatures(
+                    netshield: .level2,
+                    vpnAccelerator: false,
+                    natType: .moderateNAT,
+                    portForwarding: true
+                )
+                let server = Server.mock
+                let intent = ServerConnectionIntent.mock(server: server, protocolConfiguration: .ike, features: features)
+                let expectedUsername = "username+pm+f2+nst+nr+pmp+ep:\(server.endpoint.id)"
 
-            try await withDependencies {
-                $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .free)
-            } operation: {
-                try await configurator.configure(&manager, for: .connection(intent))
+                try await withDependencies {
+                    $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .free)
+                } operation: {
+                    try await configurator.configure(&manager, for: .connection(intent))
+                }
+
+                let ikeConfig = try XCTUnwrap(manager.protocolConfiguration as? NEVPNProtocolIKEv2)
+                XCTAssertEqual(ikeConfig.username, expectedUsername)
             }
-
-            let ikeConfig = try XCTUnwrap(manager.protocolConfiguration as? NEVPNProtocolIKEv2)
-            XCTAssertEqual(ikeConfig.username, expectedUsername)
-        }
+        #endif
 
         #if !os(tvOS)
             @MainActor

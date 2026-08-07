@@ -136,8 +136,8 @@ public class DynamicBugReportManager {
             description: data.text,
             username: data.username,
             email: data.email,
-            country: userLocation?.country ?? "",
-            ISP: userLocation?.isp ?? "",
+            country: userLocation?.location.country ?? "",
+            ISP: userLocation?.location.isp ?? "",
             plan: credentialsProvider.planTitle ?? ""
         )
     }

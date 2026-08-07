@@ -79,7 +79,13 @@ public struct HomeMapFeature {
         }
 
         @SharedReader(.connectionState) public var connectionState: ConnectionState
-        @SharedReader(.userCountry) public var userCountry: String?
+        @SharedReader(.userLocation) public var userLocation: StoredUserLocation?
+
+        /// The country the user is in, when known — used to focus the globe before connecting.
+        public var userCountry: String? {
+            userLocation?.location.country
+        }
+
         @SharedReader(.userTier) public var userTier: VpnTier?
 
         public init() {}
