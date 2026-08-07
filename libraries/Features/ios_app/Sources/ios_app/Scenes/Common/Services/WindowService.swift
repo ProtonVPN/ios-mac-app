@@ -197,21 +197,14 @@ final class WindowServiceImplementation {
     }
 
     private func dismissModalIfNeeded(completion: (() -> Void)?) {
-        guard let rootViewController = window.rootViewController else {
+        // Guard against dismissing the main sheet by accident.
+        guard let rootViewController = window.rootViewController,
+              let presented = rootViewController.presentedViewController else {
             completion?()
             return
         }
 
-        // Don't let anything dismiss the main sheets which hold things like Profiles, Countries, etc., which need to be
-        // permanent in order for the app to be usable.
-        let host = (rootViewController.presentedViewController as? ShellPagesController) ?? rootViewController
-
-        guard host.presentedViewController != nil else {
-            completion?()
-            return
-        }
-
-        host.dismiss(animated: true, completion: completion)
+        presented.dismiss(animated: true, completion: completion)
     }
 
     // MARK: - Alerts

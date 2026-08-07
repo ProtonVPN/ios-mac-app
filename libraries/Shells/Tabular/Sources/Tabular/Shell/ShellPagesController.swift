@@ -77,6 +77,15 @@ public final class ShellPagesController: UIViewController {
         passenger.didMove(toParent: self)
     }
 
+    /// Guards against dismissing the main sheet by accident.
+    override public func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+        guard let closing = presentedViewController, !closing.isBeingDismissed else {
+            completion?()
+            return
+        }
+        super.dismiss(animated: flag, completion: completion)
+    }
+
     /// Shows `tab`'s page, if it has one and it is not already showing.
     func show(_ tab: TabularFeature.Tab) {
         guard let page = pages[tab], page !== shownPage else { return }
