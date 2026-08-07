@@ -29,6 +29,8 @@
     @MainActor
     @Suite(.serialized, .snapshots(record: .missing))
     struct KeychainDebugViewSnapshotTests {
+        private let expandedSize = CGSize(width: 430, height: 1100)
+
         @Test("KeychainDebugView")
         func keychainDebugView() {
             let store = Store(
@@ -46,6 +48,52 @@
 
             assertSnapshot(of: view, as: .image(layout: .device(config: .iPhone13Mini)))
         }
+
+        @Test("KeychainDebugView with loaded keychain data")
+        func keychainDebugViewLoaded() {
+            let store = Store(
+                initialState: KeychainDebugFeature.State(
+                    alert: nil,
+                    content: .loaded(.sample)
+                ),
+                reducer: { KeychainDebugFeature() }
+            )
+
+            let view = NavigationStack {
+                KeychainDebugView(store: .constant(store))
+            }
+            .environment(\.colorScheme, .dark)
+
+            assertSnapshot(of: view, as: .image(layout: .fixed(width: expandedSize.width, height: expandedSize.height)))
+        }
+    }
+
+    private extension KeychainDebugFeature.KeychainData {
+        static let sample = Self(
+            authKeychainData: .sample,
+            unauthKeychainData: nil,
+            proTUNCaches: [
+                ProTUNCache(
+                    service: "ProTUN_x1x9hSjRk0eIcm5DcxZ0Jw==",
+                    entries: [
+                        .init(account: "apiSession", byteCount: 512, decodedValue: "{\n  \"Internal\" : { }\n}"),
+                        .init(account: "certificate", byteCount: 1024, decodedValue: "-----BEGIN CERTIFICATE-----"),
+                        .init(account: "privateKey", byteCount: 128, decodedValue: "-----BEGIN PRIVATE KEY-----"),
+                    ]
+                ),
+            ]
+        )
+    }
+
+    private extension KeychainDebugFeature.AuthKeychainData {
+        static let sample = Self(
+            username: "vpn_user",
+            accessToken: "5up3r53cr3t4cc3ss70k3n",
+            refreshToken: "5up3r53cr3tr3fr35h70k3n",
+            sessionId: "5e5510n1d",
+            userId: "u53r1d",
+            scopes: ["self", "vpn"]
+        )
     }
 
     extension KeychainDebugViewSnapshotTests: @preconcurrency AssertSnapshot {

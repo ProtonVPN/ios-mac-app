@@ -29,6 +29,7 @@
     public struct KeychainDebugFeature: Sendable {
         @Dependency(\.unauthKeychain) var unauthKeychain
         @Dependency(\.authKeychain) var authKeychain
+        @Dependency(\.proTUNKeychainClient) var proTUNKeychainClient
 
         @ObservableState
         public struct State: Equatable, Sendable {
@@ -44,11 +45,14 @@
             case delegate(Delegate)
             case clearKeychainsTapped
             case clearKeychains
+            case clearProTUNKeychainTapped
+            case clearProTUNKeychain
             case alert(PresentationAction<Alert>)
 
             public enum Alert: Sendable {
                 case cancel
                 case confirmClear
+                case confirmClearProTUN
             }
 
             public enum Delegate {
@@ -79,14 +83,25 @@
                     return .none
 
                 case .clearKeychains:
-                    clearProTUNKeychainService()
+                    proTUNKeychainClient.clear()
                     unauthKeychain.clear()
                     authKeychain.clear(.clearApplicationData)
                     exit(EXIT_SUCCESS)
                     return .none
 
+                case .clearProTUNKeychainTapped:
+                    state.alert = confirmClearProTUNKeychain
+                    return .none
+
+                case .clearProTUNKeychain:
+                    proTUNKeychainClient.clear()
+                    return .send(.loadKeychainData)
+
                 case .alert(.presented(.confirmClear)):
                     return .send(.clearKeychains)
+
+                case .alert(.presented(.confirmClearProTUN)):
+                    return .send(.clearProTUNKeychain)
 
                 case .alert(.presented(.cancel)):
                     return .none
@@ -128,25 +143,9 @@
 
             return KeychainData(
                 authKeychainData: authKeychainData,
-                unauthKeychainData: unauthKeychainData
+                unauthKeychainData: unauthKeychainData,
+                proTUNCaches: proTUNKeychainClient.caches()
             )
-        }
-
-        private func clearProTUNKeychainService() {
-            let query: [CFString: Any] = [
-                kSecClass: kSecClassGenericPassword,
-                kSecReturnAttributes: true,
-                kSecMatchLimit: kSecMatchLimitAll,
-            ]
-            var result: AnyObject?
-            guard SecItemCopyMatching(query as CFDictionary, &result) == errSecSuccess,
-                  let items = result as? [[CFString: Any]] else { return }
-
-            let protunServices = Set(items.compactMap { $0[kSecAttrService] as? String }.filter { $0.hasPrefix("ProTUN_") })
-
-            for service in protunServices {
-                SecItemDelete([kSecClass: kSecClassGenericPassword, kSecAttrService: service] as CFDictionary)
-            }
         }
 
         private var confirmClearKeychains: AlertState<Action.Alert> {
@@ -157,6 +156,24 @@
                     ButtonState(role: .destructive, action: .send(.confirmClear), label: { TextState("Clear and exit") })
                 },
                 message: { TextState("Are you sure?") }
+            )
+        }
+
+        private var confirmClearProTUNKeychain: AlertState<Action.Alert> {
+            AlertState(
+                title: { TextState("Clear ProTUN keychain?") },
+                actions: {
+                    ButtonState(role: .cancel, action: .send(.cancel), label: { TextState("Cancel") })
+                    ButtonState(role: .destructive, action: .send(.confirmClearProTUN), label: { TextState("Clear") })
+                },
+                message: {
+                    TextState(
+                        """
+                        This deletes the cached ProTUN certificate, private key and API session.\n
+                        For best results, ensure ProTUN is disconnected before clearing the cache.
+                        """
+                    )
+                }
             )
         }
     }
@@ -171,17 +188,18 @@
         }
 
         struct KeychainData: Equatable, Sendable {
-            public let authKeychainData: AuthKeychainData?
-            public let unauthKeychainData: AuthKeychainData?
+            package let authKeychainData: AuthKeychainData?
+            package let unauthKeychainData: AuthKeychainData?
+            package let proTUNCaches: [ProTUNCache]
         }
 
         struct AuthKeychainData: Equatable, Sendable {
-            public let username: String
-            public let accessToken: String
-            public let refreshToken: String
-            public let sessionId: String
-            public let userId: String?
-            public let scopes: [String]
+            package let username: String
+            package let accessToken: String
+            package let refreshToken: String
+            package let sessionId: String
+            package let userId: String?
+            package let scopes: [String]
         }
     }
 #endif

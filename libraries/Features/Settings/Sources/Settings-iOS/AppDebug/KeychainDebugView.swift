@@ -65,6 +65,17 @@
                     } header: {
                         Text("Unauth Keychain")
                     }
+                    Section {
+                        proTUNKeychainCells(caches: data.proTUNCaches)
+
+                        Button("Clear ProTUN Keychain", role: .destructive) {
+                            store.send(.clearProTUNKeychainTapped)
+                        }
+                    } header: {
+                        Text("ProTUN Keychain")
+                    } footer: {
+                        Text("Disconnect ProTUN before clearing for best results.")
+                    }
                 }
 
             case let .failed(error):
@@ -120,6 +131,29 @@
         }
 
         @ViewBuilder
+        private func proTUNKeychainCells(caches: [ProTUNCache]) -> some View {
+            if caches.isEmpty {
+                HStack {
+                    Text("No Data")
+                    Spacer()
+                    Image(systemName: "nosign")
+                }
+            } else {
+                ForEach(caches) { cache in
+                    VStack(alignment: .leading) {
+                        Text("Service")
+                        copyableText(cache.service)
+
+                        ForEach(cache.entries) { entry in
+                            Divider()
+                            ProTUNCacheEntryRow(entry: entry)
+                        }
+                    }
+                }
+            }
+        }
+
+        @ViewBuilder
         private func featuresCell(features: AgentTunnelFeatures?) -> some View {
             if let features {
                 VStack(alignment: .leading) {
@@ -147,6 +181,35 @@
         private func copyableText(_ value: String) -> some View {
             Text(value)
                 .onTapGesture { UIPasteboard.general.string = value }
+        }
+    }
+
+    /// Reveals the decoded contents when tapped, copies them when the value itself is tapped.
+    private struct ProTUNCacheEntryRow: View {
+        let entry: ProTUNCache.Entry
+
+        @State private var isExpanded = false
+
+        var body: some View {
+            VStack(alignment: .leading) {
+                HStack {
+                    Text(entry.account)
+                    Spacer()
+                    Text("\(entry.byteCount) bytes")
+                        .styled(.disabled)
+                    Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                        .styled(.disabled)
+                }
+                .contentShape(.rect)
+                .onTapGesture { isExpanded.toggle() }
+
+                if isExpanded {
+                    Text(entry.decodedValue)
+                        .font(.footnote.monospaced())
+                        .textSelection(.enabled)
+                        .onTapGesture { UIPasteboard.general.string = entry.decodedValue }
+                }
+            }
         }
     }
 
