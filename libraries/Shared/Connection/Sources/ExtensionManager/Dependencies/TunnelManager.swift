@@ -546,8 +546,16 @@ final class PacketTunnelManager: TunnelManager {
             peerIDs: extensionState?.peerID.map { [$0] } ?? [],
             killSwitch: killSwitch
         )
-        let intendedPeers = (try? configuration.peerIDs) ?? []
-        let requestsZeroPeerKillSwitch = killSwitch && intendedPeers.isEmpty
+        let decodedPeers: [String]?
+        do {
+            decodedPeers = try configuration.peerIDs
+        } catch {
+            log.error("Unable to decode peers \(error)", category: .connection)
+            decodedPeers = nil
+        }
+        let intendedPeers = decodedPeers ?? []
+        // A failed decode says nothing about intent, so only a decoded empty peer list means zero-peer blocking.
+        let requestsZeroPeerKillSwitch = killSwitch && decodedPeers?.isEmpty == true
 
         // NetworkExtension reports a connected interface during peer handover, and only transitions from its own
         // connecting status when the interface is genuinely new. So while the extension works through its connecting
@@ -579,7 +587,9 @@ final class PacketTunnelManager: TunnelManager {
             let sessionIsUp = [.connected, .connecting, .reasserting].contains(session.status)
             if requestsZeroPeerKillSwitch {
                 if sessionIsUp {
-                    guard quiesced else { return .success(.reasserting(config)) }
+                    guard quiesced else {
+                        return .success(.reasserting(config))
+                    }
                     return .success(.killSwitchActive(config))
                 }
                 if session.status == .disconnecting {
@@ -889,8 +899,17 @@ extension NEVPNProtocol {
                 return try [ikePeerID]
             }
 
-            let config = try ProTUNConfigurationCoder.decode(from: self)
-            return config.peers.map(\.id)
+            let configuration: ProTUNConfiguration
+            do {
+                configuration = try ProTUNConfigurationCoder.decode(from: self)
+            } catch .providerConfigurationMissing, .proTUNConfigurationMissing {
+                // Migration from a previous WireGuard connection:
+                // Attempt to recover the peer ID from the legacy keychain
+                configuration = try ProTUNConfigurationCoder.legacyDecode(from: self)
+            } catch {
+                throw error
+            }
+            return configuration.peers.map(\.id)
         }
     }
 }
