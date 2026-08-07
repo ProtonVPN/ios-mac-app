@@ -20,6 +20,10 @@
     import AdAttributionKit
 #endif
 
+#if canImport(StoreKit)
+    import StoreKit
+#endif
+
 import Dependencies
 import Ergonomics
 import ProtonCorePaymentsV2
@@ -44,49 +48,65 @@ struct ConversionValue: RawRepresentable, OptionSet {
     static let paidSubscription = ConversionValue(bitPosition: 5)
     static let empty: Self = []
 
-    #if canImport(AdAttributionKit)
-        @available(iOS 17.4, *)
-        var coarseValue: CoarseConversionValue {
-            // If the user has paid for a subscription, the coarse value is high.
-            if contains(.paidSubscription) {
-                return .high
-            }
+    enum CoarseValue: String {
+        case low
+        case medium
+        case high
+    }
 
-            // Otherwise, if the user hasn't paid, but has engaged in an action, the coarse value is medium.
-            if contains(.firstAction) {
-                return .medium
-            }
+    var intValue: Int {
+        Int(rawValue)
+    }
 
-            // In all other cases, the coarse value is low.
-            return .low
+    var coarseValue: CoarseValue {
+        // If the user has paid for a subscription, the coarse value is high.
+        if contains(.paidSubscription) {
+            return .high
         }
-    #endif
+
+        // Otherwise, if the user hasn't paid, but has engaged in an action, the coarse value is medium.
+        if contains(.firstAction) {
+            return .medium
+        }
+
+        // In all other cases, the coarse value is low.
+        return .low
+    }
 }
 
 public struct TelemetryConversionReporter {
     public init() {}
 
     private func post(_ value: ConversionValue, lock: Bool = false, caller: StaticString = #function) {
-        #if canImport(AdAttributionKit)
-            guard #available(iOS 17.4, *) else {
-                log.info("Not sending postback value \(value.rawValue): AAK unavailable")
-                return
-            }
-
+        #if os(iOS) || os(tvOS)
             Task {
                 do {
-                    try await Postback.updateConversionValue(
-                        Int(value.rawValue),
-                        coarseConversionValue: value.coarseValue,
-                        lockPostback: lock
-                    )
-                    log.info("Sent AAK postback for \(caller): \(value.rawValue) (\(value.coarseValue))")
+                    // We need to post both for now, since ad networks haven't fully migrated to AAK
+                    #if canImport(StoreKit)
+                        try await SKAdNetwork.updatePostbackConversionValue(
+                            value.intValue,
+                            coarseValue: value.storeKitCoarseValue,
+                            lockWindow: lock
+                        )
+                    #endif
+
+                    #if canImport(AdAttributionKit)
+                        if #available(iOS 17.4, *) {
+                            log.info("Not sending AAK postback value \(value.rawValue): not available")
+
+                            try await Postback.updateConversionValue(
+                                value.intValue,
+                                coarseConversionValue: value.aakCoarseValue,
+                                lockPostback: lock
+                            )
+                        }
+                    #endif
+
+                    log.info("Sent AAK/StoreKit postback for \(caller): \(value.rawValue) (\(value.coarseValue))")
                 } catch {
-                    log.error("Couldn't send AAK postback \(value.rawValue) (\(value.coarseValue)) for \(caller): \(error)")
+                    log.error("Couldn't send AAK/StoreKit postback \(value.rawValue) (\(value.coarseValue)) for \(caller): \(error)")
                 }
             }
-        #else
-            log.info("Not sending postback value \(value.rawValue): AAK unavailable")
         #endif
     }
 
@@ -129,3 +149,35 @@ public struct TelemetryConversionReporter {
         post(conversionValue, lock: true)
     }
 }
+
+#if os(iOS) || os(tvOS)
+    private extension ConversionValue {
+        #if canImport(StoreKit)
+            /// - Note: we can get rid of this after we fully move to AAK
+            var storeKitCoarseValue: SKAdNetwork.CoarseConversionValue {
+                switch coarseValue {
+                case .low:
+                    .low
+                case .medium:
+                    .medium
+                case .high:
+                    .high
+                }
+            }
+        #endif
+
+        #if canImport(AdAttributionKit)
+            @available(iOS 17.4, *)
+            var aakCoarseValue: CoarseConversionValue {
+                switch coarseValue {
+                case .high:
+                    .high
+                case .medium:
+                    .medium
+                case .low:
+                    .low
+                }
+            }
+        #endif
+    }
+#endif
