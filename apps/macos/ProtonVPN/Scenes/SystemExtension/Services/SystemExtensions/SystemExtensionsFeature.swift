@@ -109,7 +109,7 @@ struct SystemExtensionsFeature {
 
                 state.inFlightRequestID = nextRequest.id
                 @SharedReader(.forceExtensionUpgrade) var forceExtensionUpgrade
-                let forceUpgrade = forceExtensionUpgrade
+                let forceUpgrade = forceExtensionUpgrade || AppStartup.magicKeysHeldAtLaunch.withLock { $0 }
 
                 switch nextRequest.kind {
                 case let .installOrUpdate(shouldStartTour, includedTypes):
