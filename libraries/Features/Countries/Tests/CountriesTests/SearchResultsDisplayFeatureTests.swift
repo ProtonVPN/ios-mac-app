@@ -194,4 +194,38 @@ struct SearchResultsDisplayFeatureReducerTests {
             ))
         )
     }
+
+    @Test("secure core results connect through a secure core hop")
+    func secureCoreServerConnectsThroughHop() async {
+        let server = SearchServerIndex(
+            id: "ch-1",
+            serverName: "CH#1",
+            cityName: "Zurich",
+            translatedCityName: nil,
+            countryName: "Switzerland",
+            exitCountryCode: "CH",
+            entryCountryCode: "SE",
+            tier: .plus,
+            load: 12,
+            isP2PAvailable: false,
+            isTorAvailable: false,
+            isSmartAvailable: false,
+            isStreamingAvailable: false,
+            isUsersTierTooLow: false,
+            underMaintenance: false
+        )
+        let store = TestStore(
+            initialState: .init(rows: [.secureCoreCountry(server)], searchText: "sw", isFree: false)
+        ) {
+            SearchResultsDisplayFeature()
+        }
+
+        await store.send(.serverSelected(server))
+        await store.receive(
+            .delegate(.connectRequested(
+                ConnectionSpec(location: .secureCore(.hop(to: "CH", via: "SE")), features: []),
+                .countriesServer
+            ))
+        )
+    }
 }
