@@ -23,7 +23,6 @@ import Theme
 
 public struct PlanOptionsViewV2TCA: View {
     @Bindable var store: StoreOf<PaymentsFeature>
-    @Environment(\.dismiss) var dismiss
 
     public init(store: StoreOf<PaymentsFeature>) {
         self.store = store
@@ -88,7 +87,6 @@ public struct PlanOptionsViewV2TCA: View {
             HStack {
                 Button {
                     store.send(.notNowTapped)
-                    dismiss()
                 } label: {
                     Image(systemName: "xmark")
                 }
