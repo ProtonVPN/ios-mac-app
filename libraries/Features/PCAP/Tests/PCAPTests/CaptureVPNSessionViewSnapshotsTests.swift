@@ -42,10 +42,15 @@ struct CaptureVPNSessionViewSnapshotsTests {
     @Test
     func `session started`() {
         let url = URL(filePath: "file.pcap")
-        let view = CaptureVPNSessionView(store: .init(
-            initialState: CaptureVPNSessionFeature.State(captureSession: .sessionStarted(urlWithDate: .init(url: url, date: .now))),
-            reducer: EmptyReducer.init
-        ))
+        let view = CaptureVPNSessionView(
+            store: .init(
+                initialState: CaptureVPNSessionFeature.State(
+                    captureSession: .sessionStarted(urlWithDate: .init(url: url, date: .now))
+                ),
+                reducer: EmptyReducer.init
+            ),
+            redrawInterval: .infinity
+        )
         .colorScheme(.dark)
 
         assertSnapshot(of: view, as: .image(layout: .device(config: .iPhone13Mini)))

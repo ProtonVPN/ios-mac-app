@@ -162,6 +162,15 @@ let package = Package(
                 .product(name: "SVGView", package: "SVGView"),
                 .product(name: "geos", package: "geos"),
                 .product(name: "Triangulation", package: "Ergonomics"),
+            ],
+            exclude: [
+                // Records which Natural Earth release the outlines came from. Kept beside them in the repo, but
+                // nothing reads it, so it stays out of the built tool.
+                "Resources/ne_50m_admin_0_countries.VERSION.txt",
+            ],
+            resources: [
+                // Natural Earth reference country polygons. The bake calibrates the SVG's geography against them.
+                .copy("Resources/ne_50m_admin_0_countries.shp"),
             ]
         ),
         // Test targets link only the target under test plus test-support products that are not

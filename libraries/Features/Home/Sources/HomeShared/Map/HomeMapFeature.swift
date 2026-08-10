@@ -46,8 +46,7 @@ public struct HomeMapFeature {
 
         /// Whether the camera still tracks the connection: it re-centers on the connected or user country whenever that
         /// target or the visible region changes. A drag, pinch, or cluster zoom means the user took the camera
-        /// somewhere deliberate, so tracking stops until the connection changes again or the user pin is tapped, both
-        /// of which result in a re-centering of the connection pin.
+        /// somewhere deliberate, so tracking stops until the connection changes again.
         public internal(set) var isFollowingConnection = true
 
         public internal(set) var selectedLocationID: LocationPin.ID?
@@ -194,8 +193,6 @@ public struct HomeMapFeature {
         case connectPillTapped(LocationPin)
         /// A coalesced multi-pin disc was tapped. The view zooms the camera; any pill is dismissed.
         case pinClusterTapped
-        /// The user/connection pin was tapped. The view recenters the camera; any pill is dismissed.
-        case userPinTapped
         /// A tap on the map that hit no pin: dismisses the selected location's pill, if one is up.
         case mapBackgroundTapped
         /// The user started moving the map with a drag or a pinch; any pill is dismissed.
@@ -283,11 +280,6 @@ public struct HomeMapFeature {
                 // If the user moves the map, stop following the location and de-select any pin they may have tapped on.
                 state.selectedLocationID = nil
                 state.isFollowingConnection = false
-                return .none
-
-            case .userPinTapped:
-                state.selectedLocationID = nil
-                state.isFollowingConnection = true
                 return .none
 
             case .mapBackgroundTapped:

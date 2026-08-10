@@ -24,8 +24,8 @@ import SwiftUI
 import Theme
 import Triangulation
 
-/// The app's globe. The camera is driven by pan and pinch, location pins coalesce where they overlap, tapping a
-/// location reveals its connect pill, and tapping the user pin recenters.
+/// The app's globe. The camera is driven by pan and pinch, location pins coalesce where they overlap, and tapping a
+/// location reveals its connect pill.
 ///
 /// Selection is feature state; the camera, gestures, and pill choreography stay view-owned because they update at frame
 /// rate, far too often for the TCA store.
@@ -165,8 +165,7 @@ public struct HomeMapView: View {
                     selectedLocationID: store.selectedLocationID,
                     pill: connectPill,
                     onGesture: globeGestureRecognized,
-                    onConnect: connectPillTapped,
-                    onRecenter: userPinTapped
+                    onConnect: connectPillTapped
                 )
             }
         }
@@ -371,17 +370,6 @@ public struct HomeMapView: View {
             currentDistance: trackball.distance,
             minDistance: connectPill.minZoomDistance(framing: fitFraming)
         )
-        withAnimation(transitionAnimation) {
-            trackball.focus(orientation: GlobeCamera.orientation(facing: target.direction), distance: target.distance)
-        }
-    }
-
-    /// Tapping the user pin returns to the default (connection-derived) view: the reducer dismisses any pill, and the
-    /// camera (view-owned) flies home.
-    private func userPinTapped() {
-        trackball.stopCoast()
-        store.send(.userPinTapped)
-        let target = followTarget
         withAnimation(transitionAnimation) {
             trackball.focus(orientation: GlobeCamera.orientation(facing: target.direction), distance: target.distance)
         }

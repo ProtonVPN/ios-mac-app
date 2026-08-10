@@ -68,7 +68,7 @@ struct TabularFeatureTests {
 
         await store.send(.map(.mapMoved)) { $0.detent = .bar }
         // Already on the bar: gestures are plain map interactions and move nothing.
-        await store.send(.map(.userPinTapped))
+        await store.send(.map(.mapBackgroundTapped))
     }
 
     @Test("A page pushed beyond its root holds the sheet at full until it pops")

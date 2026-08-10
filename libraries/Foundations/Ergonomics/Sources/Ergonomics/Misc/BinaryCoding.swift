@@ -441,6 +441,14 @@ public struct BinaryDecoder<Storage: BinaryBacking>: BinaryCoder, ~Escapable {
         }
     }
 
+    /// Advances past bytes without reading them, for fields the caller has no use for and for the remainder of a
+    /// record whose header declares its length. Bounds-checked like every read, so a corrupt length throws rather
+    /// than walking past the end. An encoder has no counterpart, since writing a gap would mean inventing bytes.
+    public mutating func skip(_ byteCount: Int) throws {
+        try require(byteCount)
+        offset += byteCount
+    }
+
     /// Copies `count` elements out of the input, which `require` has already vouched for, in one `memcpy`.
     private mutating func readElements<T: BitwiseCopyable>(count: Int) -> [T] {
         let byteCount = count * MemoryLayout<T>.stride
@@ -449,8 +457,11 @@ public struct BinaryDecoder<Storage: BinaryBacking>: BinaryCoder, ~Escapable {
         return copyElements(from: region, count: count)
     }
 
+    /// The one check every read passes through, so the length rules live in a single place. Lengths reaching here
+    /// are usually read out of the input itself, which is why a negative one counts as corrupt input rather than
+    /// a caller's mistake: it would otherwise walk the cursor backwards and re-read what it just consumed.
     private func require(_ byteCount: Int) throws {
-        if offset + byteCount > bytes.byteCount { throw BinaryDecodeError.truncated }
+        if byteCount < 0 || offset + byteCount > bytes.byteCount { throw BinaryDecodeError.truncated }
     }
 }
 
