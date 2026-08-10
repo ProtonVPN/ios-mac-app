@@ -44,8 +44,10 @@ public struct SearchRoot {
         public enum Delegate: Equatable {
             case showUpsell
             case showCountryUpsell(String)
-            case navigateToCountry(String)
+            case navigateTo(ServerGroupInfo.Kind)
             case connectRequested(ConnectionSpec, UserInitiatedVPNChange.VPNTrigger?)
+            case disconnectRequested(UserInitiatedVPNChange.VPNTrigger)
+            case showMaintenanceAlert(SearchMaintenanceScope)
         }
     }
 
@@ -70,8 +72,9 @@ public struct SearchRoot {
                     let countries = countryStates.map { country in
                         SearchCountryIndex(
                             id: country.id,
-                            countryCode: country.countryCode,
-                            name: country.description
+                            kind: country.serverGroup.kind,
+                            name: country.description,
+                            underMaintenance: country.underMaintenance
                         )
                     }
 
@@ -117,11 +120,17 @@ public struct SearchRoot {
             case let .loaded(.delegate(.showCountryUpsell(countryCode))):
                 return .send(.delegate(.showCountryUpsell(countryCode)))
 
-            case let .loaded(.delegate(.navigateToCountry(countryCode))):
-                return .send(.delegate(.navigateToCountry(countryCode)))
+            case let .loaded(.delegate(.navigateTo(kind))):
+                return .send(.delegate(.navigateTo(kind)))
 
             case let .loaded(.delegate(.connectRequested(connectionSpec, trigger))):
                 return .send(.delegate(.connectRequested(connectionSpec, trigger)))
+
+            case let .loaded(.delegate(.disconnectRequested(trigger))):
+                return .send(.delegate(.disconnectRequested(trigger)))
+
+            case let .loaded(.delegate(.showMaintenanceAlert(scope))):
+                return .send(.delegate(.showMaintenanceAlert(scope)))
 
             case .loaded:
                 return .none
@@ -176,34 +185,25 @@ public struct SearchRoot {
                 }
 
                 try Task.checkCancellation()
-                guard let cityName = serverInfo.logical.city, !cityName.isEmpty else { continue }
-                let cityID = "\(cityName)-\(country.countryCode)"
 
-                if var city = citiesByID[cityID] {
-                    city.add(server: server)
-                    citiesByID[cityID] = city
-                } else {
-                    citiesByID[cityID] = SearchCityAccumulator(
-                        cityName: cityName,
-                        translatedCityName: server.translatedCityName,
+                if let cityName = serverInfo.logical.city, !cityName.isEmpty {
+                    let cityID = "\(cityName)-\(country.countryCode)"
+                    citiesByID[cityID, default: SearchCityAccumulator(
+                        place: .city,
+                        name: cityName,
                         countryName: server.countryName,
                         countryCode: country.countryCode
-                    )
+                    )].add(server: server)
                 }
 
-                guard let stateName = serverInfo.logical.state, !stateName.isEmpty else { continue }
-                let stateID = "\(stateName)-\(country.countryCode)"
-
-                if var state = statesByID[stateID] {
-                    state.add(server: server)
-                    statesByID[stateID] = state
-                } else {
-                    statesByID[stateID] = SearchCityAccumulator(
-                        cityName: stateName,
-                        translatedCityName: nil,
+                if let stateName = serverInfo.logical.state, !stateName.isEmpty {
+                    let stateID = "\(stateName)-\(country.countryCode)"
+                    statesByID[stateID, default: SearchCityAccumulator(
+                        place: .state,
+                        name: stateName,
                         countryName: server.countryName,
                         countryCode: country.countryCode
-                    )
+                    )].add(server: server)
                 }
             }
         }
@@ -246,24 +246,40 @@ public struct SearchRoot {
 }
 
 private struct SearchCityAccumulator {
-    let cityName: String
-    var translatedCityName: String?
+    enum Place {
+        case city
+        case state
+    }
+
+    let place: Place
+    let name: String
     let countryName: String
     let countryCode: String
+    private(set) var translatedCityName: String?
+    private(set) var underMaintenance = true
+
+    init(place: Place, name: String, countryName: String, countryCode: String) {
+        self.place = place
+        self.name = name
+        self.countryName = countryName
+        self.countryCode = countryCode
+    }
 
     mutating func add(server: SearchServerIndex) {
-        if translatedCityName == nil {
+        if place == .city, translatedCityName == nil {
             translatedCityName = server.translatedCityName
         }
+        underMaintenance = underMaintenance && server.underMaintenance
     }
 
     var asIndex: SearchCityIndex {
         SearchCityIndex(
-            id: "\(cityName)-\(countryCode)",
-            cityName: cityName,
+            id: "\(name)-\(countryCode)",
+            cityName: name,
             translatedCityName: translatedCityName,
             countryName: countryName,
-            countryCode: countryCode
+            countryCode: countryCode,
+            underMaintenance: underMaintenance
         )
     }
 }

@@ -83,7 +83,7 @@ struct SearchFeatureReducerTests {
 
             let initialState = SearchFeature.State(
                 allCountries: [
-                    SearchCountryIndex(id: "GB", countryCode: "GB", name: "United Kingdom"),
+                    SearchCountryIndex(id: "GB", kind: .country(code: "GB"), name: "United Kingdom"),
                 ],
                 allCities: [],
                 freeServers: [
@@ -145,7 +145,7 @@ struct SearchFeatureReducerTests {
 
             let initialState = SearchFeature.State(
                 allCountries: [
-                    SearchCountryIndex(id: "CH", countryCode: "CH", name: "Switzerland"),
+                    SearchCountryIndex(id: "CH", kind: .country(code: "CH"), name: "Switzerland"),
                 ],
                 allCities: [],
                 freeServers: [

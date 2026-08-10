@@ -24,6 +24,14 @@ import Theme
 struct SearchResultsView: View {
     var store: StoreOf<SearchResultsDisplayFeature>
     private let disabledContentOpacity = 0.5
+    private let maintenanceContentOpacity = 0.25
+
+    private func alphaOfMainElements(isUnderMaintenance: Bool, isFree: Bool) -> Double {
+        if isUnderMaintenance {
+            return maintenanceContentOpacity
+        }
+        return isFree ? disabledContentOpacity : 1
+    }
 
     private enum Dimensions {
         static let flagWidth: CGFloat = 30
@@ -63,7 +71,7 @@ struct SearchResultsView: View {
             .listRowSeparator(.hidden)
 
         case let .country(country):
-            searchCountryRow(country)
+            searchCountryRow(country, isCurrentlyConnected: store.state.isCurrentlyConnected(row))
                 .listRowInsets(EdgeInsets.zero)
                 .listRowBackground(Color(.background))
                 .listRowSeparator(.hidden)
@@ -72,7 +80,7 @@ struct SearchResultsView: View {
                 }
 
         case let .city(city):
-            searchCityRow(city) {
+            searchCityRow(city, isCurrentlyConnected: store.state.isCurrentlyConnected(row)) {
                 store.send(.citySelected(city))
             }
             .listRowInsets(EdgeInsets.zero)
@@ -83,7 +91,7 @@ struct SearchResultsView: View {
             }
 
         case let .state(stateItem):
-            searchCityRow(stateItem) {
+            searchCityRow(stateItem, isCurrentlyConnected: store.state.isCurrentlyConnected(row)) {
                 store.send(.stateSelected(stateItem))
             }
             .listRowInsets(EdgeInsets.zero)
@@ -94,7 +102,7 @@ struct SearchResultsView: View {
             }
 
         case let .server(server):
-            searchServerRow(server, isSecureCore: false)
+            searchServerRow(server, isSecureCore: false, isCurrentlyConnected: store.state.isCurrentlyConnected(row))
                 .listRowInsets(EdgeInsets.zero)
                 .listRowBackground(Color(.background))
                 .listRowSeparator(.hidden)
@@ -103,7 +111,7 @@ struct SearchResultsView: View {
                 }
 
         case let .secureCoreCountry(server):
-            searchServerRow(server, isSecureCore: true)
+            searchServerRow(server, isSecureCore: true, isCurrentlyConnected: store.state.isCurrentlyConnected(row))
                 .listRowInsets(EdgeInsets.zero)
                 .listRowBackground(Color(.background))
                 .listRowSeparator(.hidden)
@@ -113,23 +121,25 @@ struct SearchResultsView: View {
         }
     }
 
-    private func searchCountryRow(_ country: SearchCountryIndex) -> some View {
-        let isFree = store.isFree
+    private func searchCountryRow(_ country: SearchCountryIndex, isCurrentlyConnected: Bool) -> some View {
+        let isFree = store.isFree && !country.kind.isGateway
+        let contentOpacity = alphaOfMainElements(isUnderMaintenance: country.underMaintenance, isFree: isFree)
 
         return HStack(spacing: .themeSpacing16) {
-            if let flag = UIImage.flag(countryCode: country.countryCode) {
-                flag.swiftUIImage
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: Dimensions.flagWidth, height: Dimensions.flagHeight)
-                    .cornerRadius(.themeRadius4)
-                    .clipped()
-                    .opacity(isFree ? disabledContentOpacity : 1)
-            }
+            Group {
+                if let flag = country.kind.flag {
+                    flag.swiftUIImage
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: Dimensions.flagWidth, height: Dimensions.flagHeight)
+                        .cornerRadius(country.kind.flagCornerRadius)
+                        .clipped()
+                }
 
-            highlightedText(country.name, searchText: store.searchText)
-                .foregroundColor(Color(.text))
-                .opacity(isFree ? disabledContentOpacity : 1)
+                highlightedText(country.name, searchText: store.searchText)
+                    .foregroundColor(Color(.text))
+            }
+            .opacity(contentOpacity)
 
             Spacer()
 
@@ -137,8 +147,8 @@ struct SearchResultsView: View {
                 store.send(.countryConnectTapped(country))
             }) {
                 ConnectButtonView(
-                    isUnderMaintenance: false,
-                    shouldConnect: !isFree,
+                    isUnderMaintenance: country.underMaintenance,
+                    shouldConnect: !isCurrentlyConnected,
                     isUsersTierTooLow: isFree
                 )
             }
@@ -162,33 +172,35 @@ struct SearchResultsView: View {
         .contentShape(Rectangle())
     }
 
-    private func searchCityRow(_ city: SearchCityIndex, onConnectTapped: @escaping () -> Void) -> some View {
+    private func searchCityRow(
+        _ city: SearchCityIndex,
+        isCurrentlyConnected: Bool,
+        onConnectTapped: @escaping () -> Void
+    ) -> some View {
         let isFree = store.isFree
+        let contentOpacity = alphaOfMainElements(isUnderMaintenance: city.underMaintenance, isFree: isFree)
 
         return HStack(spacing: .themeSpacing16) {
-            if let flag = ImageAsset.Image.flag(countryCode: city.countryCode) {
-                flag.swiftUIImage
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: Dimensions.flagWidth, height: Dimensions.flagHeight)
-                    .cornerRadius(.themeRadius4)
-                    .clipped()
-                    .opacity(isFree ? disabledContentOpacity : 1)
-            }
+            Group {
+                if let flag = ImageAsset.Image.flag(countryCode: city.countryCode) {
+                    flag.swiftUIImage
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: Dimensions.flagWidth, height: Dimensions.flagHeight)
+                        .cornerRadius(.themeRadius4)
+                        .clipped()
+                }
 
-            VStack(alignment: .leading, spacing: .themeSpacing2) {
-                highlightedText(city.translatedCityName ?? city.cityName, searchText: store.searchText)
-                    .themeFont(.body2())
-                    .foregroundColor(Color(.text))
-                    .opacity(isFree ? disabledContentOpacity : 1)
+                VStack(alignment: .leading, spacing: .themeSpacing2) {
+                    highlightedText(city.translatedCityName ?? city.cityName, searchText: store.searchText)
+                        .themeFont(.body2())
+                        .foregroundColor(Color(.text))
 
-                highlightedWeakText(
-                    city.countryName,
-                    searchText: store.searchText,
-                    isFree: isFree
-                )
-                .themeFont(.body2())
+                    highlightedWeakText(city.countryName, searchText: store.searchText)
+                        .themeFont(.body2())
+                }
             }
+            .opacity(contentOpacity)
 
             Spacer()
 
@@ -196,8 +208,8 @@ struct SearchResultsView: View {
                 onConnectTapped()
             }) {
                 ConnectButtonView(
-                    isUnderMaintenance: false,
-                    shouldConnect: !isFree,
+                    isUnderMaintenance: city.underMaintenance,
+                    shouldConnect: !isCurrentlyConnected,
                     isUsersTierTooLow: isFree
                 )
             }
@@ -208,7 +220,11 @@ struct SearchResultsView: View {
         .contentShape(Rectangle())
     }
 
-    private func searchServerRow(_ server: SearchServerIndex, isSecureCore: Bool) -> some View {
+    private func searchServerRow(
+        _ server: SearchServerIndex,
+        isSecureCore: Bool,
+        isCurrentlyConnected: Bool
+    ) -> some View {
         HStack(spacing: .themeSpacing16) {
             Group {
                 if isSecureCore {
@@ -277,7 +293,7 @@ struct SearchResultsView: View {
                 }) {
                     ConnectButtonView(
                         isUnderMaintenance: server.underMaintenance,
-                        shouldConnect: !server.isUsersTierTooLow,
+                        shouldConnect: !isCurrentlyConnected,
                         isUsersTierTooLow: server.isUsersTierTooLow
                     )
                 }
@@ -308,10 +324,8 @@ struct SearchResultsView: View {
         .reduce(Text(""), +)
     }
 
-    private func highlightedWeakText(_ text: String, searchText: String, isFree: Bool) -> Text {
-        let weakColor = isFree
-            ? Color(.text, .weak).opacity(disabledContentOpacity)
-            : Color(.text, .weak)
+    private func highlightedWeakText(_ text: String, searchText: String) -> Text {
+        let weakColor = Color(.text, .weak)
 
         guard !searchText.isEmpty else { return Text(text).foregroundColor(weakColor) }
         let parts = text.highlightedParts(searchText: searchText)

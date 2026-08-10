@@ -332,8 +332,8 @@ public struct CountriesFeature {
             case let .path(.element(id: _, action: .search(.delegate(.showCountryUpsell(countryCode))))):
                 return .send(.presentCountryUpsell(countryCode))
 
-            case let .path(.element(id: _, action: .search(.delegate(.navigateToCountry(countryCode))))):
-                guard let countryState = state.countryState(for: countryCode) else {
+            case let .path(.element(id: _, action: .search(.delegate(.navigateTo(kind))))):
+                guard let countryState = state.countryState(for: kind) else {
                     return .none
                 }
                 state.path.append(.country(countryState))
@@ -341,6 +341,13 @@ public struct CountriesFeature {
 
             case let .path(.element(id: _, action: .search(.delegate(.connectRequested(connectionSpec, trigger))))):
                 return .send(.connectRequested(connectionSpec, nil, trigger))
+
+            case let .path(.element(id: _, action: .search(.delegate(.disconnectRequested(trigger))))):
+                return .send(.disconnectRequested(trigger))
+
+            case let .path(.element(id: _, action: .search(.delegate(.showMaintenanceAlert(scope))))):
+                state.alert = maintenanceAlert(for: scope)
+                return .none
 
             case let .path(.element(id: _, action: .country(.showCountryUpsell(countryCode)))):
                 return .send(.presentCountryUpsell(countryCode))
@@ -547,6 +554,21 @@ public struct CountriesFeature {
         AlertState { TextState(Localizable.serverUnderMaintenance) }
     }
 
+    private func maintenanceAlert(for scope: SearchMaintenanceScope) -> AlertState<Action.Alert> {
+        switch scope {
+        case .country:
+            AlertState { TextState(Localizable.allServersInCountryUnderMaintenance) }
+        case .gateway:
+            AlertState { TextState(Localizable.allServersInGatewayUnderMaintenance) }
+        case .city:
+            AlertState { TextState(Localizable.allServersInCityUnderMaintenance) }
+        case .state:
+            AlertState { TextState(Localizable.allServersInStateUnderMaintenance) }
+        case .server:
+            maintenanceAlert
+        }
+    }
+
     /// Maps server-group kinds to disconnect/connect telemetry triggers.
     /// Country and gateway share `.country` here for parity with legacy analytics.
     private func trigger(for kind: ServerGroupInfo.Kind) -> UserInitiatedVPNChange.VPNTrigger? {
@@ -687,13 +709,13 @@ extension CountriesFeature.State {
         return countryState
     }
 
-    func countryState(for countryCode: String) -> CountryFeature.State? {
+    func countryState(for kind: ServerGroupInfo.Kind) -> CountryFeature.State? {
         for section in sections {
             for row in section.rows {
                 guard case let .country(countryState) = row else {
                     continue
                 }
-                if countryState.countryCode == countryCode {
+                if countryState.serverGroup.kind == kind {
                     return countryState
                 }
             }

@@ -17,11 +17,9 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import Connection
 import CountriesShared
 import Domain
 import SharedViews
-import Sharing
 import Strings
 import SwiftUI
 import Theme
@@ -29,7 +27,6 @@ import VPNAppCore
 
 public struct CityStateListView: View {
     @Bindable var store: StoreOf<CityStateListFeature>
-    @SharedReader(.connectionState) var connectionState
 
     public init(store: StoreOf<CityStateListFeature>) {
         self.store = store
@@ -103,18 +100,10 @@ public struct CityStateListView: View {
         .listStyle(.plain)
     }
 
-    private func shouldConnect(location: ConnectionSpec.Location) -> Bool {
-        if let locationConnected = connectionState.location, locationConnected == location {
-            false
-        } else {
-            true
-        }
-    }
-
     @ViewBuilder
     private func row(groupInfo: ServerGroupInfo) -> some View {
         let location = groupInfo.kind.locationWithOrder()
-        let shouldConnect = shouldConnect(location: location)
+        let shouldConnect = !store.state.isCurrentlyConnected(to: groupInfo)
 
         HStack(spacing: .themeSpacing12) {
             Group {
@@ -131,12 +120,14 @@ public struct CityStateListView: View {
             }
             .opacity(Double(groupInfo.isUnderMaintenance ? 0.25 : 1))
             Button {
-                if groupInfo.isUnderMaintenance {
-                    store.send(.serversUnderMaintenance)
-                } else if shouldConnect {
-                    store.send(.connect(location: location, trigger: nil)) // reducer will add the trigger
-                } else {
+                // If this place goes into maintenance when connected,
+                // the user still needs the button to disconnect
+                if !shouldConnect {
                     store.send(.disconnect)
+                } else if groupInfo.isUnderMaintenance {
+                    store.send(.serversUnderMaintenance)
+                } else {
+                    store.send(.connect(location: location, trigger: nil)) // reducer will add the trigger
                 }
             } label: {
                 CityStateConnectButtonView(

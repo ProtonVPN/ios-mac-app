@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Domain
 import Foundation
 import Strings
 import SwiftUI
@@ -24,6 +25,14 @@ import Theme
 public enum SearchMode: Equatable {
     case standard(isFree: Bool)
     case secureCore
+}
+
+public enum SearchMaintenanceScope: Equatable, Sendable {
+    case country
+    case gateway
+    case city
+    case state
+    case server
 }
 
 public enum ServerTier: Int, Equatable, Sendable {
@@ -55,8 +64,16 @@ public enum ServerTier: Int, Equatable, Sendable {
 
 public struct SearchCountryIndex: Equatable, Identifiable, Sendable {
     public let id: String
-    public let countryCode: String
+    public let kind: ServerGroupInfo.Kind
     public let name: String
+    public let underMaintenance: Bool
+
+    public init(id: String, kind: ServerGroupInfo.Kind, name: String, underMaintenance: Bool = false) {
+        self.id = id
+        self.kind = kind
+        self.name = name
+        self.underMaintenance = underMaintenance
+    }
 }
 
 public struct SearchCityIndex: Equatable, Identifiable, Sendable {
@@ -65,6 +82,23 @@ public struct SearchCityIndex: Equatable, Identifiable, Sendable {
     public let translatedCityName: String?
     public let countryName: String
     public let countryCode: String
+    public let underMaintenance: Bool
+
+    public init(
+        id: String,
+        cityName: String,
+        translatedCityName: String?,
+        countryName: String,
+        countryCode: String,
+        underMaintenance: Bool = false
+    ) {
+        self.id = id
+        self.cityName = cityName
+        self.translatedCityName = translatedCityName
+        self.countryName = countryName
+        self.countryCode = countryCode
+        self.underMaintenance = underMaintenance
+    }
 }
 
 public struct SearchServerIndex: Equatable, Identifiable, Sendable {

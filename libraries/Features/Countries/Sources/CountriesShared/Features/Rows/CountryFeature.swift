@@ -119,7 +119,7 @@ public struct CountryFeature {
             switch connectionState {
             case let .connecting(.resolved(resolvedIntent), _),
                  let .authenticationRequired(.resolved(resolvedIntent), _):
-                serverGroup.matches(location: resolvedIntent.spec.location, logical: nil)
+                serverGroup.matchesLogical(resolvedIntent.resolvedServer.logical)
 
             case let .connecting(.unresolved(unresolvedIntent), _),
                  let .authenticationRequired(.unresolved(unresolvedIntent), _):
@@ -341,57 +341,6 @@ public struct ServerSection {
         }
         .forEach(\.servers, action: \.servers) {
             ServerItemFeature()
-        }
-    }
-}
-
-// MARK: - Helper Extensions
-
-private extension ServerGroupInfo {
-    func matchesLogical(_ logical: Logical) -> Bool {
-        switch kind {
-        case let .gateway(name):
-            logical.kind == .gateway(name: name)
-        case let .country(code) where code == logical.exitCountryCode:
-            switch (featureIntersection == .secureCore, logical.kind) {
-            case (true, .secureCore), (false, .country):
-                true
-            default:
-                false
-            }
-        default:
-            false
-        }
-    }
-
-    func matches(location: ConnectionSpec.Location, logical: Logical?) -> Bool {
-        switch location {
-        case let .gateway(name):
-            kind == .gateway(name: name)
-
-        case .any:
-            logical.map { matchesLogical($0) } ?? false
-
-        case let .country(code, _):
-            kind == .country(code: code)
-
-        case let .city(name, code, _):
-            kind == .city(name: name, code: code)
-
-        case let .state(name, code, order):
-            kind == .state(name: name, code: code)
-
-        case let .exact(_, logicalID, number, subregion, regionCode):
-            logical.map { matchesLogical($0) } ?? false
-
-        case .secureCore(.any):
-            logical.map { matchesLogical($0) } ?? false
-
-        case let .secureCore(.anyHop(to, _)):
-            kind == .country(code: to)
-
-        case let .secureCore(.hop(to, via)):
-            kind == .country(code: to)
         }
     }
 }

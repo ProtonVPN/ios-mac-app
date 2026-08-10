@@ -38,8 +38,10 @@ public struct SearchResultsFeature {
         public enum Delegate: Equatable {
             case showUpsell
             case showCountryUpsell(String)
-            case navigateToCountry(String)
+            case navigateTo(ServerGroupInfo.Kind)
             case connectRequested(ConnectionSpec, UserInitiatedVPNChange.VPNTrigger?)
+            case disconnectRequested(UserInitiatedVPNChange.VPNTrigger)
+            case showMaintenanceAlert(SearchMaintenanceScope)
         }
     }
 
@@ -52,11 +54,17 @@ public struct SearchResultsFeature {
             case let .resultsDisplay(.delegate(.showCountryUpsell(countryCode))):
                 .send(.delegate(.showCountryUpsell(countryCode)))
 
-            case let .resultsDisplay(.delegate(.navigateToCountry(countryCode))):
-                .send(.delegate(.navigateToCountry(countryCode)))
+            case let .resultsDisplay(.delegate(.navigateTo(kind))):
+                .send(.delegate(.navigateTo(kind)))
 
             case let .resultsDisplay(.delegate(.connectRequested(connectionSpec, trigger))):
                 .send(.delegate(.connectRequested(connectionSpec, trigger)))
+
+            case let .resultsDisplay(.delegate(.disconnectRequested(trigger))):
+                .send(.delegate(.disconnectRequested(trigger)))
+
+            case let .resultsDisplay(.delegate(.showMaintenanceAlert(scope))):
+                .send(.delegate(.showMaintenanceAlert(scope)))
 
             case .resultsDisplay:
                 .none

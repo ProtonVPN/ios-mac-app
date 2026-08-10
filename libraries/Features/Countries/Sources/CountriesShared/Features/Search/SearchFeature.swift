@@ -67,8 +67,10 @@ public struct SearchFeature {
         public enum Delegate: Equatable {
             case showUpsell
             case showCountryUpsell(String)
-            case navigateToCountry(String)
+            case navigateTo(ServerGroupInfo.Kind)
             case connectRequested(ConnectionSpec, UserInitiatedVPNChange.VPNTrigger?)
+            case disconnectRequested(UserInitiatedVPNChange.VPNTrigger)
+            case showMaintenanceAlert(SearchMaintenanceScope)
         }
     }
 
@@ -139,11 +141,17 @@ public struct SearchFeature {
             case let .searchResults(.delegate(.showCountryUpsell(countryCode))):
                 return .send(.delegate(.showCountryUpsell(countryCode)))
 
-            case let .searchResults(.delegate(.navigateToCountry(countryCode))):
-                return .send(.delegate(.navigateToCountry(countryCode)))
+            case let .searchResults(.delegate(.navigateTo(kind))):
+                return .send(.delegate(.navigateTo(kind)))
 
             case let .searchResults(.delegate(.connectRequested(connectionSpec, trigger))):
                 return .send(.delegate(.connectRequested(connectionSpec, trigger)))
+
+            case let .searchResults(.delegate(.disconnectRequested(trigger))):
+                return .send(.delegate(.disconnectRequested(trigger)))
+
+            case let .searchResults(.delegate(.showMaintenanceAlert(scope))):
+                return .send(.delegate(.showMaintenanceAlert(scope)))
 
             case .binding:
                 return .none
@@ -234,7 +242,7 @@ public struct SearchFeature {
             let allServers = state.freeServers + state.plusServers
             let servers = allServers.filter { server in
                 countries.contains { country in
-                    country.countryCode == server.exitCountryCode
+                    country.kind == .country(code: server.exitCountryCode)
                 }
             }
 

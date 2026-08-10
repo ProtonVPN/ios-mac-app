@@ -67,15 +67,7 @@ public extension CountryFeature.State {
     }
 
     var flag: ImageAsset.Image? {
-        switch serverGroup.kind {
-        case let .country(countryCode):
-            return ImageAsset.Image.flag(countryCode: countryCode)
-        case .gateway:
-            return Theme.Asset.Flags.gateway.image
-        case .city, .state:
-            assertionFailure("Unexpected grouping kind: \(serverGroup.kind)")
-            return nil
-        }
+        serverGroup.kind.flag
     }
 
     var connectIcon: Theme.ThemeIcon {
