@@ -43,6 +43,8 @@ public struct NATPMPFeature: Sendable {
 
     private var cancellables: [AnyCancellable] = []
 
+    public init() {}
+
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {

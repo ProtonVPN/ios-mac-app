@@ -27,6 +27,7 @@ public extension Asset {
     enum Icons {
         // ProtonCoreUI icons
         public static let alias = ThemeIcon(iconProviderKeyPath: \.alias)
+        public static let arrowDown = ThemeIcon(iconProviderKeyPath: \.arrowDown)
         public static let arrowInToRectangle = ThemeIcon(iconProviderKeyPath: \.arrowInToRectangle)
         public static let arrowRight = ThemeIcon(iconProviderKeyPath: \.arrowRight)
         public static let arrowRightArrowLeft = ThemeIcon(iconProviderKeyPath: \.arrowRightArrowLeft)
@@ -35,6 +36,7 @@ public extension Asset {
         public static let arrowRotateRight = ThemeIcon(iconProviderKeyPath: \.arrowRotateRight)
         public static let arrowsSwitch = ThemeIcon(iconProviderKeyPath: \.arrowsSwitch)
         public static let arrowsSwapRight = ThemeIcon(iconProviderKeyPath: \.arrowsSwapRight)
+        public static let arrowUp = ThemeIcon(iconProviderKeyPath: \.arrowUp)
         public static let arrowUpBounceLeft = ThemeIcon(iconProviderKeyPath: \.arrowUpBounceLeft)
         public static let bell = ThemeIcon(iconProviderKeyPath: \.bell)
         public static let bolt = ThemeIcon(iconProviderKeyPath: \.bolt)
@@ -65,6 +67,7 @@ public extension Asset {
         public static let grid2 = ThemeIcon(iconProviderKeyPath: \.grid2)
         public static let house = ThemeIcon(iconProviderKeyPath: \.house)
         public static let houseFilled = ThemeIcon(iconProviderKeyPath: \.houseFilled)
+        public static let hourglass = ThemeIcon(iconProviderKeyPath: \.hourglass)
         public static let infoCircle = ThemeIcon(iconProviderKeyPath: \.infoCircle)
         public static let infoCircleFilled = ThemeIcon(iconProviderKeyPath: \.infoCircleFilled)
         public static let keySkeleton = ThemeIcon(iconProviderKeyPath: \.keySkeleton)

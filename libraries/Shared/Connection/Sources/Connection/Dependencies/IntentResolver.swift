@@ -61,7 +61,7 @@ package struct ConnectionIntentResolver: DependencyKey {
         let server: Server
         do throws(ServerSelector.SelectionError) {
             // First, let's try to resolve the server we want to connect to.
-            server = try serverSelector.select(intent.spec, userTier ?? .free, intent.acceptableProtocols)
+            server = try serverSelector.select(intent.spec, userTier.orFree, intent.acceptableProtocols)
             log.info("Server selected: \(server.fullDescription)", category: .connection)
         } catch {
             throw .serverSelectionFailed(error)

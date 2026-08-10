@@ -96,7 +96,7 @@ public struct AuthorizedFeatureValue<Feature: ProvidableFeature & Sendable>: Sen
     public func value() -> Feature {
         @SharedReader(.userTier) var userTier: VpnTier?
         @SharedReader(.featureFlags) var featureFlags: FeatureFlags
-        return effectiveValue(userTier: userTier ?? .free, featureFlags: featureFlags)
+        return effectiveValue(userTier: userTier.orFree, featureFlags: featureFlags)
     }
 
     /// A stream of effective values: the current value immediately, then re-derived on every
@@ -120,7 +120,7 @@ public struct AuthorizedFeatureValue<Feature: ProvidableFeature & Sendable>: Sen
 
         // The one-time legacy migration (if any) runs here, in the creation scope; the observer
         // below intentionally reads raw storage only.
-        let initial = effectiveValue(userTier: userTier ?? .free, featureFlags: featureFlags)
+        let initial = effectiveValue(userTier: userTier.orFree, featureFlags: featureFlags)
 
         let readEffective: @Sendable () -> Feature = {
             Self.clamp(

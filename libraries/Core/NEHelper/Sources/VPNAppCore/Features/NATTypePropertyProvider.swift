@@ -70,7 +70,7 @@ extension NATTypePropertyProvider: DependencyKey {
             @SharedReader(.featureFlags) var featureFlags: FeatureFlags
             return effectiveValue(
                 stored: storage().currentValue(),
-                userTier: userTier ?? .free,
+                userTier: userTier.orFree,
                 featureFlags: featureFlags
             )
         }

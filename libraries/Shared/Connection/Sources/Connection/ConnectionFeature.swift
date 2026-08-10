@@ -122,7 +122,7 @@ public struct ConnectionFeature: Sendable {
 
             case let .input(.connect(intent)):
                 do throws(ConnectionIntentResolutionError) {
-                    try intentResolver.authorize(intent, state.userTier ?? .free)
+                    try intentResolver.authorize(intent, state.userTier.orFree)
                 } catch {
                     return .send(.delegate(.intentResolutionFailed(intent, with: error)))
                 }

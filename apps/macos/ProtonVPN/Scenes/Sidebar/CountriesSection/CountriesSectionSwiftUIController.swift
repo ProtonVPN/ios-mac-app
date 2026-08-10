@@ -38,7 +38,6 @@ final class CountriesSectionViewController: NSHostingController<CountriesSection
     }
 
     override func loadView() {
-        super.loadView()
         // The sidebar embeds child controller views with Auto Layout constraints.
         // Prevent NSHostingView from generating autoresizing-mask constraints.
         view.translatesAutoresizingMaskIntoConstraints = false

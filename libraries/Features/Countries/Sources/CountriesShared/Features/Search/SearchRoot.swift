@@ -175,7 +175,7 @@ public struct SearchRoot {
             let server = buildServerIndex(
                 serverInfo: serverInfo,
                 serverType: serverType,
-                userTier: userTier ?? .free,
+                userTier: userTier.orFree,
                 underMaintenance: serverInfo.logical.isUnderMaintenance
                     || serverInfo.protocolSupport.isDisjoint(with: currentProtocolSupport())
             )

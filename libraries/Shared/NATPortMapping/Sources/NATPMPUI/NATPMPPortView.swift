@@ -215,74 +215,67 @@ struct PortErrorView: View {
 
 // MARK: - Status Port View
 
-public class MappedPort: ObservableObject {
-    @Published public var portNumber: UInt16?
-
-    public init() {}
-
-    init(portNumber: UInt16?) {
-        self.portNumber = portNumber
-    }
-}
-
-struct StatusPortView: View {
+/// One line reading "Active port: NNNN", which copies the port number when clicked.
+public struct StatusPortView: View {
     static let toolTipHideDelayInterval: DispatchTimeInterval = .seconds(2)
 
-    @ObservedObject var portModel: MappedPort = .init()
+    public let portNumber: UInt16
     @State private var hovered = false
     @State private var showCopiedTooltip = false
 
-    var body: some View {
-        if let portNumber = portModel.portNumber {
-            HStack {
-                Button(action: {
-                    copyPortNumber(portNumber) {
-                        // Show copied tooltip
-                        showCopiedTooltip = true
+    public init(portNumber: UInt16) {
+        self.portNumber = portNumber
+    }
 
-                        // Hide tooltip after 2 seconds
-                        DispatchQueue.main.asyncAfter(deadline: .now() + Self.toolTipHideDelayInterval) {
-                            showCopiedTooltip = false
+    public var body: some View {
+        HStack {
+            Button(action: {
+                copyPortNumber(portNumber) {
+                    // Show copied tooltip
+                    showCopiedTooltip = true
+
+                    // Hide tooltip after 2 seconds
+                    DispatchQueue.main.asyncAfter(deadline: .now() + Self.toolTipHideDelayInterval) {
+                        showCopiedTooltip = false
+                    }
+                }
+            }) {
+                HStack(spacing: .themeSpacing4) {
+                    Text(Localizable.pfActivePortStatus)
+                        .foregroundColor(Color(.text))
+                        .themeFont(.body(emphasised: true))
+
+                    Asset.pfIndicator.swiftUIImage
+                        .resizable()
+                        .frame(.square(.themeSpacing12))
+
+                    Text(String(portNumber))
+                        .foregroundColor(Color(.text))
+                        .font(.title3(emphasised: false))
+                        .popover(isPresented: $showCopiedTooltip, arrowEdge: .top) {
+                            Text(Localizable.pfCopied)
+                                .padding(.vertical, .themeSpacing8)
+                                .padding(.horizontal, .themeSpacing16)
                         }
-                    }
-                }) {
-                    HStack(spacing: .themeSpacing4) {
-                        Text(Localizable.pfActivePortStatus)
-                            .foregroundColor(Color(.text))
-                            .themeFont(.body(emphasised: true))
 
-                        Asset.pfIndicator.swiftUIImage
-                            .resizable()
-                            .frame(.square(.themeSpacing12))
-
-                        Text(String(portNumber))
-                            .foregroundColor(Color(.text))
-                            .font(.title3(emphasised: false))
-                            .popover(isPresented: $showCopiedTooltip, arrowEdge: .top) {
-                                Text(Localizable.pfCopied)
-                                    .padding(.vertical, .themeSpacing8)
-                                    .padding(.horizontal, .themeSpacing16)
-                            }
-
-                        IconProvider.squares
-                            .resizable()
-                            .frame(.square(.themeSpacing12))
-                    }
-                    .overlay {
-                        CursorAreaViewRepresentable()
-                    }
-                    .padding(.themeSpacing2)
-                    .background(hovered ? .white.opacity(0.15) : .clear)
-                    .cornerRadius(.themeRadius4)
+                    IconProvider.squares
+                        .resizable()
+                        .frame(.square(.themeSpacing12))
                 }
-                .onHover { isHovered in
-                    hovered = isHovered
+                .overlay {
+                    CursorAreaViewRepresentable()
                 }
-                .buttonStyle(.plain)
-                .help(Localizable.pfCopyPortNumber)
-
-                Spacer()
+                .padding(.themeSpacing2)
+                .background(hovered ? .white.opacity(0.15) : .clear)
+                .cornerRadius(.themeRadius4)
             }
+            .onHover { isHovered in
+                hovered = isHovered
+            }
+            .buttonStyle(.plain)
+            .help(Localizable.pfCopyPortNumber)
+
+            Spacer()
         }
     }
 }
@@ -315,7 +308,7 @@ private func copyPortNumber(_ portNumber: UInt16, onCopied: (() -> Void)? = nil)
             PortErrorView()
 
             // Status view
-            StatusPortView(portModel: MappedPort(portNumber: 36528))
+            StatusPortView(portNumber: 36528)
         }
         .padding()
         .background(Color(.background))

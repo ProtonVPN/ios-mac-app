@@ -612,6 +612,10 @@ public enum Localizable {
   public static var getVerificationSms: String { return Localizable.tr("Localizable", "_get_verification_sms", fallback: "Get verification SMS") }
   /// Commonly used title of a button
   public static var gotIt: String { return Localizable.tr("Localizable", "_got_it", fallback: "Got it") }
+  /// macos header title when authentication is needed
+  public static var headerAuthRequired: String { return Localizable.tr("Localizable", "_header_auth_required", fallback: "Authentication required") }
+  /// macos header subtitle when authentication is needed
+  public static var headerVpnTrafficBlocked: String { return Localizable.tr("Localizable", "_header_vpn_traffic_blocked", fallback: "VPN traffic is blocked until you authenticate.") }
   /// Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page.
   public static var help: String { return Localizable.tr("Localizable", "_help", fallback: "Help") }
   /// Hermes apply changes notification alert title on iOS

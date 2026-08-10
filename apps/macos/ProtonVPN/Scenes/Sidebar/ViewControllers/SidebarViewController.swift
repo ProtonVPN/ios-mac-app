@@ -34,14 +34,12 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private let headerControllerViewContainer = NSView(frame: .zero)
     private let tabBarControllerViewContainer = NSView(frame: .zero)
     private let activeControllerViewContainer = NSView(frame: .zero)
-    private let announcementsControllerViewContainer = NSView(frame: .zero)
     private let connectionOverlay = ConnectionOverlay(frame: .zero)
     private let sidebarContainerView = NSView(frame: .zero)
     private let mapSectionViewContainer = NSView(frame: .zero)
     private let expandButton = ExpandMapButton(frame: .zero)
     private var expandButtonLeading: NSLayoutConstraint!
 
-    private var headerViewController: HeaderViewController!
     private var activeController: NSViewController!
 
     private var connectingViewController: ConnectingViewController?
@@ -54,6 +52,10 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private var announcementsCancellable: AnyCancellable?
 
     private lazy var tabBarViewController: SidebarTabBarViewController = .init()
+
+    private lazy var headerViewController: HeaderHostingController = { [unowned self] in
+        HeaderHostingController(store: store.scope(state: \.header, action: \.header))
+    }()
 
     private lazy var countriesSectionViewController: CountriesSectionViewController = { [unowned self] in
         CountriesSectionViewController(
@@ -191,7 +193,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             allThings.addSubview(item)
         }
 
-        for item in [activeControllerViewContainer, tabBarControllerViewContainer, headerControllerViewContainer, announcementsControllerViewContainer] {
+        for item in [activeControllerViewContainer, tabBarControllerViewContainer, headerControllerViewContainer] {
             item.translatesAutoresizingMaskIntoConstraints = false
             sidebarContainerView.addSubview(item)
         }
@@ -200,13 +202,14 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     }
 
     private func setupLayoutConstraints(in rootView: NSView) {
-        let announcementsPreferredWidth = announcementsControllerViewContainer.widthAnchor.constraint(equalToConstant: Dimensions.announcementsWidth)
-        announcementsPreferredWidth.priority = .defaultLow
-        let announcementsPreferredHeight = announcementsControllerViewContainer.heightAnchor.constraint(equalToConstant: Dimensions.announcementsHeight)
-        announcementsPreferredHeight.priority = .defaultLow
-
+        // The header keeps this height and the tab below it takes the rest of the sidebar. The
+        // priority sits between the two claims on that space. Above the tab's content hugging (250),
+        // because the countries tab hosts a SwiftUI view whose intrinsic height is 10pt, and at equal
+        // priority the split is ambiguous and the header can end up filling the whole sidebar. Below
+        // the header's own content resistance (750), because the header grows when it has more to
+        // show, such as the change server button or the port forwarding row.
         let headerPreferredHeight = headerControllerViewContainer.heightAnchor.constraint(equalToConstant: Dimensions.headerPreferredHeight)
-        headerPreferredHeight.priority = .defaultLow
+        headerPreferredHeight.priority = .init(500)
 
         expandButtonLeading = mapSectionViewContainer.leadingAnchor.constraint(equalTo: expandButton.trailingAnchor)
 
@@ -250,13 +253,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             activeControllerViewContainer.leadingAnchor.constraint(equalTo: sidebarContainerView.leadingAnchor),
             activeControllerViewContainer.trailingAnchor.constraint(equalTo: sidebarContainerView.trailingAnchor),
             activeControllerViewContainer.bottomAnchor.constraint(equalTo: sidebarContainerView.bottomAnchor),
-
-            announcementsControllerViewContainer.topAnchor.constraint(equalTo: sidebarContainerView.topAnchor, constant: Dimensions.announcementsTopOffset),
-            announcementsControllerViewContainer.trailingAnchor.constraint(equalTo: sidebarContainerView.trailingAnchor, constant: Dimensions.announcementsTrailingOffset),
-            announcementsPreferredWidth,
-            announcementsPreferredHeight,
-            announcementsControllerViewContainer.widthAnchor.constraint(lessThanOrEqualToConstant: Dimensions.announcementsWidth),
-            announcementsControllerViewContainer.heightAnchor.constraint(lessThanOrEqualToConstant: Dimensions.announcementsHeight),
         ])
     }
 
@@ -265,10 +261,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     }
 
     private func setupHeader() {
-        headerViewController = HeaderViewController(viewModel: HeaderViewModel())
-        headerViewController.announcementsButtonPressed = {
-            AnnouncementOfferCoordinator().presentCurrentAnnouncement()
-        }
         headerControllerViewContainer.pin(viewController: headerViewController)
 
         expandButton.target = self
@@ -404,10 +396,6 @@ extension SidebarViewController {
         static let tabBarHeight: CGFloat = 50
         static let initialViewHeight: CGFloat = 600
         static let defaultMapContainerWidth: CGFloat = 600
-        static let announcementsWidth: CGFloat = 300
-        static let announcementsHeight: CGFloat = 200
-        static let announcementsTopOffset: CGFloat = 45
-        static let announcementsTrailingOffset: CGFloat = -20
         static let headerPreferredHeight: CGFloat = 200
 
         static let animationDuration: CGFloat = 0.4
