@@ -36,7 +36,7 @@ public struct CityEntity: AppEntity, Identifiable {
 }
 
 public struct CityQuery: EntityQuery {
-    @IntentParameterDependency<ConnectToRegionSynchronizedIntent>(\.$country) var country
+    @IntentParameterDependency<ConnectToRegionIntent>(\.$country) var country
 
     public init() {}
 
