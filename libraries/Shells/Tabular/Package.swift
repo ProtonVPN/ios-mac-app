@@ -25,6 +25,7 @@ let package = Package(
 
         .package(path: "../../Core/NEHelper"),
 
+        .package(path: "../../Shared/Connection"),
         .package(path: "../../Shared/Persistence"),
 
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
@@ -36,6 +37,7 @@ let package = Package(
             dependencies: [
                 "Home",
                 .product(name: "HomeShared", package: "Home"),
+                .product(name: "Connection", package: "Connection"),
                 "Domain",
                 .product(name: "Payments", package: "Payments"),
                 .product(name: "PaymentsShared", package: "Payments"),

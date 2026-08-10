@@ -32,7 +32,6 @@ struct SessionCapturedFeatureTests {
         } withDependencies: {
             $0.packetCaptureClient = .stub(onCleanup: {
                 cleanupCalled = true
-                return true
             })
         }
         await store.send(.doneTapped) {

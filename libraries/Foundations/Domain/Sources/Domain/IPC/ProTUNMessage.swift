@@ -60,7 +60,6 @@ public extension ProTUNMessage.Response {
     enum Payload: Sendable, Codable, Equatable {
         case ack
         case logs(CodableResult<URL, Error>)
-        case pcapUpdate(PcapUpdate)
         case error(GenericError)
         #if DEBUG
             case pong
@@ -126,10 +125,8 @@ extension ProTUNMessage.Request.Payload: CustomStringConvertible {
 extension ProTUNMessage.Request.PcapRequest: CustomStringConvertible {
     public var description: String {
         switch self {
-        case .fileURL: "fileURL"
-        case .isRecording: "isRecording"
-        case .cleanup: "cleanup"
-        case .toggleCapture: "toggleCapture"
+        case let .start(fileURL): "start(\(fileURL.lastPathComponent))"
+        case .stop: "stop"
         }
     }
 }

@@ -198,6 +198,10 @@ extension ManagerConfigurator {
                         manager.protocolConfiguration = try ikeConfiguration(with: connectionIntent)
                     case .wireGuard:
                         let protocolConfig = try await providerConfiguration(with: connectionIntent)
+                        // Connecting builds a provider configuration from scratch, so carry over the capture the app
+                        // declared beforehand. Otherwise the connection a capture is waiting for is the very thing that
+                        // discards it.
+                        protocolConfig.pcapCaptureFileURL = manager.vpnProtocolConfiguration?.pcapCaptureFileURL
                         manager.vpnProtocolConfiguration = protocolConfig
                     }
                     manager.localizedDescription = configurationTitle(for: connectionIntent)
@@ -224,6 +228,23 @@ extension ManagerConfigurator {
                         }
                     #endif
 
+                case let .packetCapture(fileURL):
+                    // Only the capture declaration changes here. Leaving the tunnel's enabled and on-demand state alone
+                    // keeps starting a capture from disturbing a connection, or making one.
+                    if let protocolConfig = manager.vpnProtocolConfiguration {
+                        protocolConfig.pcapCaptureFileURL = fileURL
+                        manager.vpnProtocolConfiguration = protocolConfig
+                    } else if let fileURL {
+                        // A declaration can precede the first connection ever configured. A minimal configuration
+                        // sets it up, to be amended by the first connection attempt.
+                        @Dependency(\.bundleIDClient) var bundleIDClient
+                        let protocolConfig = NETunnelProviderProtocol()
+                        protocolConfig.providerBundleIdentifier = bundleIDClient.bundleIdentifier(.wireGuard)
+                        protocolConfig.serverAddress = ""
+                        protocolConfig.pcapCaptureFileURL = fileURL
+                        manager.vpnProtocolConfiguration = protocolConfig
+                    }
+
                 case .disconnection:
                     #if !os(tvOS)
                         // Turn off Kill Switch as the user asks for it, rather than when the tunnel finishes going
@@ -241,7 +262,11 @@ extension ManagerConfigurator {
 
                 #if !os(tvOS)
                     case .zeroPeerColdStart:
-                        manager.vpnProtocolConfiguration = try zeroPeerProviderConfiguration()
+                        let zeroPeerConfig = try zeroPeerProviderConfiguration()
+                        // A zero-peer tunnel has nothing to capture, but the declaration still belongs to the app and
+                        // has to survive for whichever real connection comes next.
+                        zeroPeerConfig.pcapCaptureFileURL = manager.vpnProtocolConfiguration?.pcapCaptureFileURL
+                        manager.vpnProtocolConfiguration = zeroPeerConfig
                         manager.localizedDescription = killSwitchConfigurationTitle
                         manager.isOnDemandEnabled = false
                         manager.isEnabled = true
@@ -397,12 +422,71 @@ enum WireguardConfiguratorError: Error {
     case keychainError(Error)
 }
 
+extension WireguardConfiguratorError: ProtonVPNError {
+    var charCode: FourCharCode {
+        switch self {
+        case let .entryUnavailableForTransport(transport):
+            switch transport {
+            case .udp:
+                "WGEU"
+            case .tcp:
+                "WGET"
+            case .tls:
+                "WGES"
+            }
+        case .incorrectProtocolConfiguration:
+            "WGPC"
+        case .configurationEncodingError:
+            "WGCE"
+        case .keychainImplementationError:
+            "WGKI"
+        case .keychainError:
+            "WGKC"
+        }
+    }
+
+    var underlyingError: Error? {
+        switch self {
+        case let .configurationEncodingError(error), let .keychainError(error):
+            error
+        case let .keychainImplementationError(error):
+            error
+        case .entryUnavailableForTransport, .incorrectProtocolConfiguration:
+            nil
+        }
+    }
+
+    var errorDescription: String? {
+        includeCode(inside: Localizable.connectionErrorConfiguration)
+    }
+}
+
 /// Errors raised while building an IKEv2 `NEVPNProtocolIKEv2` configuration. Kept separate
 /// from `WireguardConfiguratorError` so callers can pattern-match on protocol-specific
 /// failures without conflating the two transports.
 enum IkeConfiguratorError: Error {
     /// VPN keychain credentials could not be read while preparing the IKE configuration.
     case ikeCredentialsUnavailable(Error)
+}
+
+extension IkeConfiguratorError: ProtonVPNError {
+    var charCode: FourCharCode {
+        switch self {
+        case .ikeCredentialsUnavailable:
+            "IKCU"
+        }
+    }
+
+    var underlyingError: Error? {
+        switch self {
+        case let .ikeCredentialsUnavailable(error):
+            error
+        }
+    }
+
+    var errorDescription: String? {
+        includeCode(inside: Localizable.connectionErrorConfiguration)
+    }
 }
 
 enum IkeUsernameComponent {
@@ -594,4 +678,21 @@ enum ManagerConfigurationError: Error {
     case entryIpMissing
     case emptyServerPublicKey
     case userIdMissing
+}
+
+extension ManagerConfigurationError: ProtonVPNError {
+    var charCode: FourCharCode {
+        switch self {
+        case .entryIpMissing:
+            "MCEI"
+        case .emptyServerPublicKey:
+            "MCPK"
+        case .userIdMissing:
+            "MCUI"
+        }
+    }
+
+    var errorDescription: String? {
+        includeCode(inside: Localizable.connectionErrorConfigurationInvalid)
+    }
 }

@@ -25,7 +25,7 @@ import Strings
 public struct SessionCapturedFeature: Equatable {
     @ObservableState
     public struct State: Equatable {
-        @SharedReader(.captureSession) public var captureSession
+        @SharedReader(.captureSession) public var captureSession: CaptureSession = .noSession
         @Presents public var alert: AlertState<Action.Alert>?
 
         public init() {}
@@ -53,7 +53,7 @@ public struct SessionCapturedFeature: Equatable {
             case .alert(.presented(.discardFile)):
                 return .run { _ in
                     @Dependency(\.packetCaptureClient) var packetCaptureClient
-                    _ = try await packetCaptureClient.cleanup()
+                    try await packetCaptureClient.cleanup()
                 } catch: { error, _ in
                     // We can fail to cleanup, but we shouldn't show any errors to the user here
                     // Otherwise we might lock the user out of using the app because the pcap modal

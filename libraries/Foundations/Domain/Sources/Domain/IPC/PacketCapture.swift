@@ -16,14 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CasePaths
 import Foundation
-import IPCErgonomics
-import Sharing
 
 public enum PacketCaptureInterruptionReason: UInt64 {
-    case unknown
-    case connectionTerminated
+    case connectionTerminated = 0 // coincides with `zeroAll()`
     case explicitStop
     case timerHit
     case storageLimitHit
@@ -32,51 +28,18 @@ public enum PacketCaptureInterruptionReason: UInt64 {
 extension PacketCaptureInterruptionReason: Codable {}
 extension PacketCaptureInterruptionReason: Sendable {}
 
-@CasePathable
-public enum CaptureSession: Equatable, Codable, Sendable {
-    public static let storageKey: String = "PcapSession"
-
-    case noSession
-    case sessionPending(urlWithDate: URLWithDate)
-    case sessionStarted(urlWithDate: URLWithDate)
-    case sessionEnded(urlWithSize: URLWithSize, reason: PacketCaptureInterruptionReason)
-
-    public var isRunning: Bool {
-        self.is(\.sessionStarted) || self.is(\.sessionPending)
-    }
-}
-
-public extension SharedKey where Self == AppStorageKey<CaptureSession>.Default {
-    static var captureSession: Self {
-        Self[.appStorage(CaptureSession.storageKey), default: .noSession]
-    }
-}
-
-public extension IPCNotifications.Notification {
-    static let pcapInterrupted: Self = .init(name: "ch.protonvpn.protun.pcapInterrupted")
-    static let pcapSessionChanged: Self = .init(name: "ch.protonvpn.protun.pcapSessionChanged")
-}
-
 public extension ProTUNMessage.Request {
+    /// IPC request to start/stop the PCAP feature. The `.start` case is only used in the scenario where a tunnel
+    /// already exists. If the tunnel doesn't exist, the PCAP gets started by setting the file location in the provider
+    /// configuration.
     enum PcapRequest: Codable {
-        case fileURL
-        case isRecording
-        case cleanup
-        case toggleCapture
+        case start(fileURL: URL)
+        case stop
     }
 }
 
 extension ProTUNMessage.Request.PcapRequest: Sendable {}
-
-public extension ProTUNMessage.Response {
-    enum PcapUpdate: Codable {
-        case fileURL(URL?)
-        case isRecording(Bool)
-        case cleanupResult(CodableResult<Bool, Error>)
-        case captureStartResult(PendingResult<URL, URL, Error>)
-        case captureFinished(CodableResult<URLWithSize, Error>)
-    }
-}
+extension ProTUNMessage.Request.PcapRequest: Equatable {}
 
 public struct URLWithSize: Codable, Equatable, Sendable {
     public let url: URL
@@ -95,6 +58,3 @@ public struct URLWithDate: Codable, Equatable, Sendable {
         self.date = date
     }
 }
-
-extension ProTUNMessage.Response.PcapUpdate: Equatable {}
-extension ProTUNMessage.Response.PcapUpdate: Sendable {}

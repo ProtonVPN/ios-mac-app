@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Ergonomics
 import os.log
 import protun
@@ -42,6 +43,59 @@ final class ProTUNAdapterStateDelegate: Sendable {
     /// The last state ProTUN reported, or nil if it has not reported anything yet
     var currentState: VpnState? {
         get async { await coordinator.state }
+    }
+
+    /// How long ``whenState(_:timeout:)`` waits for its condition before giving up.
+    enum Timeout {
+        case duration(Duration)
+        case never
+    }
+
+    enum WaitError: Swift.Error {
+        case timeout
+        /// The state stream finished, or the waiting task was cancelled, before the condition held.
+        case streamEnded
+    }
+
+    /// Resolves once `condition` holds, immediately when it already does.
+    func whenState(
+        _ condition: @escaping @Sendable (VpnState) -> Bool,
+        timeout: Timeout
+    ) async throws(WaitError) {
+        let upcomingStates = stateSource.newStream
+        if let current = await coordinator.state, condition(current) {
+            return
+        }
+
+        enum Outcome {
+            case matched
+            case ended
+            case timedOut
+        }
+        let outcome = await withTaskGroup(of: Outcome.self) { group in
+            group.addTask {
+                for await state in upcomingStates where condition(state) {
+                    return .matched
+                }
+                return .ended
+            }
+            if case let .duration(limit) = timeout {
+                group.addTask {
+                    @Dependency(\.continuousClock) var clock
+                    try? await clock.sleep(for: limit)
+                    return Task.isCancelled ? .ended : .timedOut
+                }
+            }
+            let first = await group.next() ?? .ended
+            group.cancelAll()
+            return first
+        }
+
+        switch outcome {
+        case .matched: return
+        case .timedOut: throw .timeout
+        case .ended: throw .streamEnded
+        }
     }
 
     private let coordinator: StateCoordinator

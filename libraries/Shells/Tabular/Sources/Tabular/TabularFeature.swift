@@ -18,6 +18,7 @@
 
 import CasePaths
 import ComposableArchitecture
+import Connection
 import CoreGraphics
 import Domain
 import Home
@@ -82,8 +83,8 @@ public struct TabularFeature {
             deepTabs.contains(tab)
         }
 
-        /// The capture session, read from the capture's own storage so the settings tab can wear its recording badge.
-        @SharedReader(.captureSession) public var captureSession
+        /// The capture session, so the settings tab can display the recording badge.
+        @SharedReader(.captureSession) public var captureSession: CaptureSession = .noSession
 
         /// The mark the bar shows over a tab's glyph, or nil for none. A packet capture in progress is the only badge
         /// today; it rides the settings tab because that is where a capture is stopped.

@@ -137,6 +137,25 @@ typedef struct {
 
 IPC_DECLARE_SHARED_REGION(IPCAgentFeaturesRegion, IPCAgentFeaturesPayload);
 
+// Whether ProTUN is writing a packet capture. The file it writes to is declared by the app in the provider
+// configuration, so nothing here needs to name it.
+IPC_ENUM(uint8_t, IPCPacketCaptureState) {
+    IPCPacketCaptureStateStopped   = 0,
+    IPCPacketCaptureStateRecording = 1,
+    IPCPacketCaptureStateStarting  = 2,
+};
+
+// A zeroed region reads as stopped by the connection going away, which is what `zeroAll` clearing it at
+// disconnect means.
+typedef struct {
+    uint16_t                version;
+    uint8_t                 state;          // IPCPacketCaptureState
+    uint8_t                 stop_reason;    // PacketCaptureInterruptionReason.rawValue
+    int64_t                 started_at_ms;  // zero while stopped
+} IPCPacketCapturePayload;
+
+IPC_DECLARE_SHARED_REGION(IPCPacketCaptureRegion, IPCPacketCapturePayload);
+
 // This is a single backing memory region for all of the connection data regions. Each subregion is padded to 1024 bytes
 // and has its own seqlock + versioning. iOS and tvOS share this using a file-backed mmap while macOS must accomplish
 // the same using an IOSurface sent over an XPC session.
@@ -148,4 +167,5 @@ typedef struct {
     IPCConnectionStatsRegion    connection_stats;
     IPCErrorRegion              error;
     IPCAgentFeaturesRegion      agent_features;
+    IPCPacketCaptureRegion      packet_capture;
 } IPCTunnelData;

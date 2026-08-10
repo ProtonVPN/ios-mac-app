@@ -47,10 +47,6 @@ final class LogSelectionViewController: UIViewController {
         tableView.reloadData()
     }
 
-    deinit {
-        store.send(.onDisappear)
-    }
-
     private func setupView() {
         view.backgroundColor = .backgroundColor()
         view.layer.backgroundColor = UIColor.backgroundColor().cgColor

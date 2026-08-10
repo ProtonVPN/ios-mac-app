@@ -33,7 +33,7 @@ struct CaptureVPNSessionFeatureTests {
         } withDependencies: {
             $0.volumeAvailableCapacity = .value(with: CaptureVPNSessionFeature.minimumStorageCapacity - 1)
         }
-        await store.send(.onAppear)
+        let task = await store.send(.task)
         await store.receive(\.refreshStorageCapacity) {
             $0.storageCapacity = CaptureVPNSessionFeature.minimumStorageCapacity - 1
         }
@@ -44,21 +44,21 @@ struct CaptureVPNSessionFeatureTests {
         await store.send(.alert(.dismiss)) {
             $0.alert = nil
         }
-        await store.send(.onDisappear)
+        await task.cancel()
     }
 
     @Test
     func `start capturing alert`() async {
-        var onTogglePacketCaptureCalled = false
+        var onStartCalled = false
         let store = TestStore(initialState: CaptureVPNSessionFeature.State()) {
             CaptureVPNSessionFeature()
         } withDependencies: {
             $0.volumeAvailableCapacity = .value(with: CaptureVPNSessionFeature.minimumStorageCapacity)
-            $0.packetCaptureClient = .stub(onTogglePacketCapture: {
-                onTogglePacketCaptureCalled = true
+            $0.packetCaptureClient = .stub(onStart: {
+                onStartCalled = true
             })
         }
-        await store.send(.onAppear)
+        let task = await store.send(.task)
         await store.receive(\.refreshStorageCapacity) {
             $0.storageCapacity = CaptureVPNSessionFeature.minimumStorageCapacity
         }
@@ -70,24 +70,24 @@ struct CaptureVPNSessionFeatureTests {
         await store.send(.alert(.presented(.startCapturing))) {
             $0.alert = nil
         }
-        await store.receive(\.togglePacketCapture)
-        #expect(onTogglePacketCaptureCalled)
-        await store.send(.onDisappear)
+        await store.receive(\.startPacketCapture)
+        #expect(onStartCalled)
+        await task.cancel()
     }
 
     @Test
     func `start capturing error`() async {
-        var onTogglePacketCaptureCalled = false
+        var onStartCalled = false
         let store = TestStore(initialState: CaptureVPNSessionFeature.State()) {
             CaptureVPNSessionFeature()
         } withDependencies: {
             $0.volumeAvailableCapacity = .value(with: CaptureVPNSessionFeature.minimumStorageCapacity)
-            $0.packetCaptureClient = .stub(onTogglePacketCapture: {
-                onTogglePacketCaptureCalled = true
-                throw PacketCaptureClientError.failedToStart(PCAPTestError.testError)
+            $0.packetCaptureClient = .stub(onStart: {
+                onStartCalled = true
+                throw PCAPTestError.testError
             })
         }
-        await store.send(.onAppear)
+        let task = await store.send(.task)
         await store.receive(\.refreshStorageCapacity) {
             $0.storageCapacity = CaptureVPNSessionFeature.minimumStorageCapacity
         }
@@ -99,75 +99,71 @@ struct CaptureVPNSessionFeatureTests {
         await store.send(.alert(.presented(.startCapturing))) {
             $0.alert = nil
         }
-        await store.receive(\.togglePacketCapture)
+        await store.receive(\.startPacketCapture)
         await store.receive(\.showErrorMessage) {
-            $0.alert = CaptureVPNSessionFeature.sessionCaptureFailedAlert(message: "The operation couldn’t be completed. (Connection.PacketCaptureClientError error 0.)")
+            $0.alert = CaptureVPNSessionFeature.sessionCaptureFailedAlert(message: "The operation couldn’t be completed. (PCAPTests.PCAPTestError error 0.)")
         }
-        #expect(onTogglePacketCaptureCalled)
-        await store.send(.onDisappear)
+        #expect(onStartCalled)
+        await task.cancel()
     }
 
     @Test
     func `stop capturing`() async {
-        @Shared(.captureSession) var captureSession
-        $captureSession.withLock {
-            $0 = .sessionStarted(urlWithDate: URLWithDate(url: URL(filePath: "file.pcap"), date: .now))
-        }
-        var onTogglePacketCaptureCalled = false
+        var onStartCalled = false
         let store = TestStore(initialState: CaptureVPNSessionFeature.State()) {
             CaptureVPNSessionFeature()
         } withDependencies: {
             $0.volumeAvailableCapacity = .value(with: CaptureVPNSessionFeature.minimumStorageCapacity)
-            $0.packetCaptureClient = .stub(onTogglePacketCapture: {
-                onTogglePacketCaptureCalled = true
-            })
+            $0.packetCaptureClient = .stub(
+                session: .sessionStarted(urlWithDate: URLWithDate(url: URL(filePath: "file.pcap"), date: .now)),
+                onStart: {
+                    onStartCalled = true
+                }
+            )
         }
-        await store.send(.onAppear)
+        let task = await store.send(.task)
         await store.receive(\.refreshStorageCapacity) {
             $0.storageCapacity = CaptureVPNSessionFeature.minimumStorageCapacity
         }
         await store.receive(\.captureSessionUpdate.sessionStarted)
 
         await store.send(.captureButtonPressed)
-        await store.receive(\.togglePacketCapture)
-        #expect(onTogglePacketCaptureCalled)
-        await store.send(.onDisappear)
+        await store.receive(\.stopPacketCapture)
+        #expect(!onStartCalled)
+        await task.cancel()
     }
 
     @Test
     func `session ended presents session captured sheet`() async {
-        @Shared(.captureSession) var captureSession
-        $captureSession.withLock {
-            $0 = .sessionEnded(
-                urlWithSize: URLWithSize(url: URL(filePath: "file.pcap"), size: 123),
-                reason: .explicitStop
-            )
-        }
         let store = TestStore(initialState: CaptureVPNSessionFeature.State()) {
             CaptureVPNSessionFeature()
+        } withDependencies: {
+            $0.packetCaptureClient = .stub(
+                session: .sessionEnded(urlWithSize: URLWithSize(url: URL(filePath: "file.pcap"), size: 123))
+            )
         }
-        await store.send(.onAppear)
+        let task = await store.send(.task)
         await store.receive(\.refreshStorageCapacity) {
             $0.storageCapacity = 100
         }
         await store.receive(\.captureSessionUpdate.sessionEnded) {
             $0.destination = .sessionCaptured(.init())
         }
-        await store.send(.onDisappear)
+        await task.cancel()
     }
 
     @Test
     func `cant read volumeAvailableCapacity allows capture`() async {
-        var onTogglePacketCaptureCalled = false
+        var onStartCalled = false
         let store = TestStore(initialState: CaptureVPNSessionFeature.State()) {
             CaptureVPNSessionFeature()
         } withDependencies: {
             $0.volumeAvailableCapacity = .throwing(error: .failedRetrievingAvailableCapacity)
-            $0.packetCaptureClient = .stub(onTogglePacketCapture: {
-                onTogglePacketCaptureCalled = true
+            $0.packetCaptureClient = .stub(onStart: {
+                onStartCalled = true
             })
         }
-        await store.send(.onAppear)
+        let task = await store.send(.task)
         await store.receive(\.refreshStorageCapacity)
         await store.receive(\.captureSessionUpdate.noSession)
 
@@ -177,9 +173,9 @@ struct CaptureVPNSessionFeatureTests {
         await store.send(.alert(.presented(.startCapturing))) {
             $0.alert = nil
         }
-        await store.receive(\.togglePacketCapture)
-        #expect(onTogglePacketCaptureCalled)
-        await store.send(.onDisappear)
+        await store.receive(\.startPacketCapture)
+        #expect(onStartCalled)
+        await task.cancel()
     }
 }
 

@@ -26,6 +26,7 @@ public extension NETunnelProviderProtocol {
         case uidKey = "UID"
         case wgProtocolKey = "wg-protocol"
         case forceConflictRefreshKey = "ShouldForceConflictRefresh"
+        case pcapFileKey = "PVPNPcapFile"
     }
 
     private func ensureProviderConfig() {
@@ -72,6 +73,17 @@ public extension NETunnelProviderProtocol {
         set {
             ensureProviderConfig()
             providerConfiguration?[.wgProtocolKey] = newValue
+        }
+    }
+
+    /// The file the app wants ProTUN to write a packet capture into, or `nil` when it wants no capture.
+    var pcapCaptureFileURL: URL? {
+        get {
+            (providerConfiguration?[.pcapFileKey] as? String).flatMap(URL.init(string:))
+        }
+        set {
+            ensureProviderConfig()
+            providerConfiguration?[.pcapFileKey] = newValue?.absoluteString
         }
     }
 

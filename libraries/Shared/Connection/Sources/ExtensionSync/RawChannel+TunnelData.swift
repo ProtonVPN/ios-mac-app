@@ -82,6 +82,16 @@ public extension IPCNotifications.RawChannel where Payload == IPCAgentFeaturesPa
     }
 }
 
+public extension IPCNotifications.RawChannel where Payload == IPCPacketCapturePayload, Role == ReaderRole, Backing: ~Copyable {
+    func packetCaptureReport() -> PacketCaptureReport {
+        (try? read())?.packetCaptureReport ?? .cleared
+    }
+
+    func packetCaptureStream(reconcileOn resumeSignals: AsyncStream<Void>...) -> AsyncStream<PacketCaptureReport> {
+        stream(reconcileOn: resumeSignals) { $0.packetCaptureReport }
+    }
+}
+
 public extension IPCNotifications.RawChannel where Payload == IPCErrorPayload, Role == ReaderRole, Backing: ~Copyable {
     func currentExtensionError() -> ExtensionError? {
         (try? read())?.extensionError

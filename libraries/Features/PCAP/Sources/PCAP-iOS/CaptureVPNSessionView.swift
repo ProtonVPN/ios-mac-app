@@ -68,11 +68,10 @@ public struct CaptureVPNSessionView: View {
             state: \.destination?.sessionCaptured,
             action: \.destination.sessionCaptured
         ), content: SessionCapturedSheetView.init(store:))
-        .onAppear {
-            store.send(.onAppear)
-        }
-        .onDisappear {
-            store.send(.onDisappear)
+        .task {
+            // Awaiting effects here ties their lifetime to the view, which cancels observations when the view goes
+            // away.
+            await store.send(.task).finish()
         }
     }
 
@@ -149,16 +148,20 @@ public struct CaptureVPNSessionView: View {
 
 #Preview("no session") {
     CaptureVPNSessionView(store: .init(
-        initialState: CaptureVPNSessionFeature.State(captureSession: .noSession),
+        initialState: CaptureVPNSessionFeature.State(),
         reducer: EmptyReducer.init
     ))
     .colorScheme(.dark)
 }
 
 #Preview("capture started") {
+    let _ = prepareDependencies {
+        $0.packetCaptureClient = .stub(
+            session: .sessionStarted(urlWithDate: .init(url: .init(string: "file")!, date: .now))
+        )
+    }
     CaptureVPNSessionView(store: .init(
-        initialState: CaptureVPNSessionFeature.State(captureSession: .sessionStarted(urlWithDate: .init(url: .init(string: "file")!, date: .now))),
-
+        initialState: CaptureVPNSessionFeature.State(),
         reducer: EmptyReducer.init
     ))
     .colorScheme(.dark)

@@ -24,13 +24,3 @@ public enum CodableResult<Success: Codable, Failure: Error & Codable>: Codable {
 
 extension CodableResult: Sendable where Success: Sendable, Failure: Sendable {}
 extension CodableResult: Equatable where Success: Equatable, Failure: Equatable {}
-
-// A Result like type with an additional `Pending` state, heavily constrained to be mainly `Codable`
-public enum PendingResult<Success: Codable, Pending: Codable, Failure: Error & Codable>: Codable {
-    case success(Success)
-    case pending(Pending)
-    case failure(Failure)
-}
-
-extension PendingResult: Sendable where Success: Sendable, Pending: Sendable, Failure: Sendable {}
-extension PendingResult: Equatable where Success: Equatable, Pending: Equatable, Failure: Equatable {}

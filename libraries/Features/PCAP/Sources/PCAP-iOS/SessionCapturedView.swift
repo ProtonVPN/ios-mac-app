@@ -26,7 +26,7 @@ public struct SessionCapturedView: View {
     public var body: some View {
         VStack(spacing: .themeSpacing24) {
             switch store.captureSession {
-            case let .sessionEnded(urlWithSize, _):
+            case let .sessionEnded(urlWithSize):
                 SessionCapturedExportView(url: urlWithSize.url)
             default:
                 EmptyView()

@@ -176,7 +176,7 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
             throw ProTUNAdapter.Error.missingUserID
         }
 
-        return .init(userID: userID, proTUN: proTUN)
+        return .init(userID: userID, proTUN: proTUN, pcapCaptureFileURL: config.pcapCaptureFileURL)
     }
 }
 

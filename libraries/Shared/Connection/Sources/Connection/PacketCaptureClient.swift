@@ -16,110 +16,144 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import AsyncAlgorithms
 import CoreConnection
 import Dependencies
 import DependenciesMacros
 import Domain
+import Ergonomics
+import ExtensionSync
 import Foundation
-import IPCErgonomics
-import Sharing
+import VPNAppCore
 
-public enum PacketCaptureClientError: Swift.Error {
-    case ipcInvalidResponse
-    case failedToStart(any Swift.Error)
-    case cleanupFailed(any Swift.Error)
-    case tunnelMessageSenderError(any Swift.Error)
-}
-
+/// Starts, stops and cleans up packet captures, and reads the ``CaptureSession`` they produce.
 @DependencyClient
 public struct PacketCaptureClient {
-    public internal(set) var lastFileLogURL: () async throws -> URL?
-    public internal(set) var isCaptureRunning: () async throws -> Bool = { false }
-    public internal(set) var cleanup: () async throws -> Bool = { false }
-    public internal(set) var togglePacketCapture: () async throws -> Void
+    public internal(set) var start: () async throws -> Void
+    public internal(set) var stop: () async -> Void
+    public internal(set) var cleanup: () async throws -> Void
+
+    public internal(set) var session: () -> CaptureSession = { .noSession }
+    public internal(set) var observeSession: () -> AsyncStream<CaptureSession> = { .finished }
 }
 
 extension PacketCaptureClient: DependencyKey {
+    public static var testValue: PacketCaptureClient {
+        var client = PacketCaptureClient()
+        client.session = { .noSession }
+        client.observeSession = { .finished }
+        return client
+    }
+
     public static var liveValue: PacketCaptureClient {
         @Dependency(\.tunnelMessageSender) var messageSender
-        @Dependency(\.fileManagerClient) var fileManagerClient
+        @Dependency(\.extensionIPC) var extensionIPC
+        @Dependency(\.pcapFileManager) var pcapFileManager
+
+        let (fileChanges, fileChanged) = AsyncStream<Void>.makeStream()
+        let fileChangeSource = StreamSource.source(for: fileChanges)
+
+        /// Send a PcapRequest to the extension to request that it start a packet capture (if the tunnel is already up)
+        /// or stop one that is already running.
+        @Sendable
+        func send(_ request: ProTUNMessage.Request.PcapRequest) async throws {
+            do {
+                _ = try await messageSender.sendProTUN(.init(payload: .pcapRequest(request)))
+            } catch {
+                if case let .sendingError(.managerUnavailable(underlying)) = error {
+                    log.error(
+                        "Failed to record the capture declaration",
+                        category: .connection,
+                        metadata: ["request": "\(request)", "error": "\(underlying)"]
+                    )
+                    SentryHelper.shared?.log(error: underlying)
+                    throw underlying
+                }
+                log.debug(
+                    "No tunnel to tell about the capture",
+                    category: .connection,
+                    metadata: ["request": "\(request)", "error": "\(error)"]
+                )
+            }
+        }
 
         @Sendable
-        func sendProTUNPcapRequest(
-            _ request: ProTUNMessage.Request.PcapRequest
-        ) async throws(PacketCaptureClientError) -> ProTUNMessage.Response.PcapUpdate {
-            let pcapResponse: ProTUNMessage.Response
-            do {
-                pcapResponse = try await messageSender.sendProTUN(.init(payload: .pcapRequest(request)))
-            } catch {
-                throw .tunnelMessageSenderError(error)
+        func session() -> CaptureSession {
+            guard let file = pcapFileManager.captureFile() else { return .noSession }
+
+            switch extensionIPC.currentPacketCapture() {
+            case let .recording(since):
+                return .sessionStarted(urlWithDate: .init(url: file.url, date: since))
+            case .stopped where file.size > 0:
+                return .sessionEnded(urlWithSize: .init(url: file.url, size: file.size))
+            case .starting, .stopped:
+                return .sessionPending(urlWithDate: .init(url: file.url, date: file.created))
             }
-            guard case let .pcapUpdate(pcapUpdate) = pcapResponse.payload else {
-                throw .ipcInvalidResponse
-            }
-            return pcapUpdate
         }
 
         return PacketCaptureClient {
-            guard case let .fileURL(url) = try await sendProTUNPcapRequest(.fileURL) else {
-                throw PacketCaptureClientError.ipcInvalidResponse
+            let fileURL = try pcapFileManager.createCaptureFile()
+            fileChanged.yield()
+
+            do {
+                try await send(.start(fileURL: fileURL))
+            } catch {
+                // Without a declaration the pending file would wait for a capture that can never come.
+                do {
+                    try pcapFileManager.removeCaptureFiles()
+                } catch let removalError {
+                    log.error(
+                        "Failed to remove the undeclared capture file",
+                        category: .connection,
+                        metadata: ["error": "\(removalError)"]
+                    )
+                }
+                fileChanged.yield()
+                throw error
             }
-            return url
-        } isCaptureRunning: {
-            guard case let .isRecording(isRecording) = try await sendProTUNPcapRequest(.isRecording) else {
-                throw PacketCaptureClientError.ipcInvalidResponse
+        } stop: {
+            // An empty capture at stop gets discarded.
+            if let file = pcapFileManager.captureFile(), file.size == 0 {
+                do {
+                    try pcapFileManager.removeCaptureFiles()
+                } catch {
+                    log.error("Failed to remove the empty capture file", category: .connection, metadata: ["error": "\(error)"])
+                }
+                fileChanged.yield()
             }
-            return isRecording
+
+            try? await send(.stop)
         } cleanup: {
-            @Shared(.captureSession) var captureSession
+            try pcapFileManager.removeCaptureFiles()
+            fileChanged.yield()
 
-            defer {
-                $captureSession.withLock { $0 = .noSession }
-            }
-
-            guard case let .cleanupResult(result) = try await sendProTUNPcapRequest(.cleanup) else {
-                throw PacketCaptureClientError.ipcInvalidResponse
-            }
-            switch result {
-            case let .success(didCleanup):
-                return didCleanup
-            case let .failure(error):
-                throw PacketCaptureClientError.cleanupFailed(error)
-            }
-        } togglePacketCapture: {
-            @Shared(.captureSession) var captureSession
-            @Dependency(\.date) var date
-
-            let response = try await sendProTUNPcapRequest(.toggleCapture)
-
-            switch response {
-            case let .captureStartResult(.success(url)):
-                $captureSession.withLock { $0 = .sessionStarted(urlWithDate: .init(url: url, date: date.now)) }
-            case let .captureStartResult(.pending(url)):
-                $captureSession.withLock { $0 = .sessionPending(urlWithDate: .init(url: url, date: date.now)) }
-            case let .captureStartResult(.failure(error)):
-                throw PacketCaptureClientError.failedToStart(error)
-            case let .captureFinished(.success(urlWithSize)):
-                $captureSession.withLock { $0 = .sessionEnded(urlWithSize: urlWithSize, reason: .explicitStop) }
-            case .captureFinished(.failure(_)):
-                // We failed to stop the capture. This will only occur when there was no file.
-                $captureSession.withLock { $0 = .noSession }
-            default:
-                throw PacketCaptureClientError.ipcInvalidResponse
-            }
+            try? await send(.stop)
+        } session: {
+            session()
+        } observeSession: {
+            merge(
+                extensionIPC.observePacketCapture().map { _ in },
+                fileChangeSource.newStream
+            )
+            .map { session() }
+            .eraseToStream()
         }
     }
 
     #if DEBUG
-        public static func stub(onCleanup: (() -> Bool)? = nil, onTogglePacketCapture: (() throws -> Void)? = nil) -> PacketCaptureClient {
+        public static func stub(
+            session: CaptureSession = .noSession,
+            onStart: (() throws -> Void)? = nil,
+            onCleanup: (() throws -> Void)? = nil
+        ) -> PacketCaptureClient {
             .init {
-                nil
-            } isCaptureRunning: {
-                true
-            } cleanup: {
-                onCleanup?() ?? true
-            } togglePacketCapture: {
-                try onTogglePacketCapture?()
+                try onStart?()
+            } stop: {} cleanup: {
+                try onCleanup?()
+            } session: {
+                session
+            } observeSession: {
+                .finished
             }
         }
     #endif
@@ -129,12 +163,5 @@ public extension DependencyValues {
     var packetCaptureClient: PacketCaptureClient {
         get { self[PacketCaptureClient.self] }
         set { self[PacketCaptureClient.self] = newValue }
-    }
-}
-
-private extension FileManager {
-    func fileSize(for url: URL) throws -> Int {
-        let fileAttributes = try attributesOfItem(atPath: url.path())
-        return (fileAttributes[.size] as? Int) ?? .zero
     }
 }

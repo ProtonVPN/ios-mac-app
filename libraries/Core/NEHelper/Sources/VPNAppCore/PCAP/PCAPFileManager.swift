@@ -20,60 +20,83 @@ import Dependencies
 import DependenciesMacros
 import Foundation
 
+/// Manages the packet capture file, ensuring that it is consistent with the capture state.
 @DependencyClient
 public struct PCAPFileManager: Sendable {
-    static let pcapPathExtension: String = "pcap"
-    static let pcapDirectoryPath: String = "/PcapFiles"
+    public struct CaptureFile: Equatable, Sendable {
+        public let url: URL
+        public let size: Int
+        public let created: Date
 
-    public var newFileURL: @Sendable (_ startDate: Date) throws -> URL
-    public var cleanUpAllPcapFiles: @Sendable () throws -> Void
-    public var retrieveLastPcapFileURL: @Sendable () -> URL?
+        public init(url: URL, size: Int, created: Date) {
+            self.url = url
+            self.size = size
+            self.created = created
+        }
+    }
+
+    /// Creates an capture file and clears out whatever an earlier capture left behind.
+    public var createCaptureFile: @Sendable () throws -> URL
+    /// The capture file as it currently stands, or nil when none exists.
+    public var captureFile: @Sendable () -> CaptureFile?
+    public var removeCaptureFiles: @Sendable () throws -> Void
 }
 
 extension PCAPFileManager: DependencyKey {
+    static let captureFileName = "capture.pcap"
+    static let pcapDirectoryPath = "/PcapFiles"
+
     public static var liveValue: PCAPFileManager {
-        @Sendable
-        func pcapDirectory() throws -> URL {
-            try FileManager.default
-                .mainContainerURL
-                .appendingPathComponent(pcapDirectoryPath)
-        }
+        PCAPFileManager(
+            createCaptureFile: {
+                let fileManager = FileManager.default
+                let directory = try pcapDirectory()
+                try fileManager.createDirectory(at: directory, withIntermediateDirectories: true)
+                try removeDirectoryContents()
 
-        return PCAPFileManager(
-            newFileURL: { date in
-                let formatter = DateFormatter()
-                formatter.dateFormat = "ddMMyyyyHHmmss"
-                formatter.locale = Locale(identifier: "en_US_POSIX")
-
-                let timestamp = formatter.string(from: date)
-
-                return try pcapDirectory()
-                    .appendingPathComponent(timestamp)
-                    .appendingPathExtension(Self.pcapPathExtension)
+                let fileURL = directory.appendingPathComponent(captureFileName)
+                fileManager.createFile(atPath: fileURL.path(percentEncoded: false), contents: Data())
+                return fileURL
             },
-            cleanUpAllPcapFiles: {
-                try FileManager.default.subpaths(atPath: pcapDirectory().absoluteString)?.forEach { path in
-                    try FileManager.default.removeItem(atPath: path)
-                }
-            },
-            retrieveLastPcapFileURL: {
+            captureFile: {
                 do {
-                    let directory = try pcapDirectory()
-                    let files = try FileManager.default.contentsOfDirectory(
-                        at: directory,
-                        includingPropertiesForKeys: [.creationDateKey],
-                        options: [.skipsHiddenFiles]
+                    let fileURL = try pcapDirectory().appendingPathComponent(captureFileName)
+                    let attributes = try FileManager.default.attributesOfItem(
+                        atPath: fileURL.path(percentEncoded: false)
                     )
-                    return files
-                        .filter { $0.pathExtension == Self.pcapPathExtension }
-                        .sortedByCreationDate
-                        .first
+                    return CaptureFile(
+                        url: fileURL,
+                        size: attributes[.size] as? Int ?? 0,
+                        created: attributes[.creationDate] as? Date ?? .distantPast
+                    )
+                } catch let error as CocoaError where [.fileNoSuchFile, .fileReadNoSuchFile].contains(error.code) {
+                    // No file means no capture, the ordinary case for anyone not using the feature.
+                    return nil
                 } catch {
-                    log.error("Failed to retrieve last PCAP file URL", category: .app, metadata: ["error": "\(error)"])
+                    log.error("Failed to read the capture file", category: .app, metadata: ["error": "\(error)"])
                     return nil
                 }
+            },
+            removeCaptureFiles: {
+                try removeDirectoryContents()
             }
         )
+    }
+
+    private static func pcapDirectory() throws -> URL {
+        try FileManager.default
+            .mainContainerURL
+            .appendingPathComponent(pcapDirectoryPath)
+    }
+
+    private static func removeDirectoryContents() throws {
+        let directory = try pcapDirectory()
+        guard FileManager.default.fileExists(atPath: directory.path(percentEncoded: false)) else {
+            return
+        }
+        for file in try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil) {
+            try FileManager.default.removeItem(at: file)
+        }
     }
 }
 
@@ -81,15 +104,5 @@ public extension DependencyValues {
     var pcapFileManager: PCAPFileManager {
         get { self[PCAPFileManager.self] }
         set { self[PCAPFileManager.self] = newValue }
-    }
-}
-
-private extension Collection<URL> {
-    var sortedByCreationDate: [URL] {
-        sorted { a, b in
-            let d1 = (try? a.resourceValues(forKeys: [.creationDateKey]))?.creationDate ?? .distantPast
-            let d2 = (try? b.resourceValues(forKeys: [.creationDateKey]))?.creationDate ?? .distantPast
-            return d1 > d2
-        }
     }
 }

@@ -36,6 +36,8 @@ public struct ExtensionIPCServer: Sendable {
     public internal(set) var publishConnectionStats: @Sendable (LocalAgent.ConnectionStats) -> Void
     public internal(set) var publishFeatures: @Sendable (AgentTunnelFeatures) -> Void
     public internal(set) var publishError: @Sendable (any Error, UUID?) -> Void
+    /// Reports whether ProTUN is writing the packet capture the app declared in the provider configuration, if any.
+    public internal(set) var publishPacketCapture: @Sendable (PacketCaptureReport) -> Void
 
     /// Touches the `IPCConnectionData` similar to `publishExtensionState`, but only touches the UUID. This is how error
     /// "acking" works from the main app: the acknowledged error UUID is cleared from the error channel, and placed as
@@ -92,6 +94,9 @@ extension ExtensionIPCServer: DependencyKey {
             publishError: { error, requestId in
                 withStore { $0.channels.localAgentError.mutate { $0 = IPCErrorPayload(error, requestId: requestId) } }
             },
+            publishPacketCapture: { report in
+                withStore { $0.channels.packetCapture.mutate { $0 = IPCPacketCapturePayload(report) } }
+            },
             restampConnectionData: { requestId in
                 withStore { $0.channels.connectionData.mutate { $0.requestId = requestId } }
             },
@@ -106,6 +111,7 @@ extension ExtensionIPCServer: DependencyKey {
                     store.channels.localAgentConnectionStats.zero()
                     store.channels.localAgentError.zero()
                     store.channels.localAgentFeatures.zero()
+                    store.channels.packetCapture.zero()
                 }
             },
             attachIOSurfaceBackedRegion: { surface in
