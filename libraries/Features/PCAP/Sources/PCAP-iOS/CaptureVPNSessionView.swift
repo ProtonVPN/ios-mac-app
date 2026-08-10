@@ -90,8 +90,8 @@ public struct CaptureVPNSessionView: View {
         switch store.captureSession {
         case .noSession, .sessionEnded:
             emptyCaptureSession()
-        case let .sessionPending(_, date):
-            capturingView(startTime: date, isPending: true)
+        case let .sessionPending(urlWithData):
+            capturingView(startTime: urlWithData.date, isPending: true)
         case let .sessionStarted(urlWithData):
             capturingView(startTime: urlWithData.date, isPending: false)
         }

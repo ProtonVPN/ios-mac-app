@@ -88,14 +88,15 @@ extension PacketCaptureClient: DependencyKey {
             }
         } togglePacketCapture: {
             @Shared(.captureSession) var captureSession
+            @Dependency(\.date) var date
 
             let response = try await sendProTUNPcapRequest(.toggleCapture)
 
             switch response {
             case let .captureStartResult(.success(url)):
-                $captureSession.withLock { $0 = .sessionStarted(urlWithDate: .init(url: url, date: .now)) }
+                $captureSession.withLock { $0 = .sessionStarted(urlWithDate: .init(url: url, date: date.now)) }
             case let .captureStartResult(.pending(url)):
-                $captureSession.withLock { $0 = .sessionPending(url: url, date: .now) }
+                $captureSession.withLock { $0 = .sessionPending(urlWithDate: .init(url: url, date: date.now)) }
             case let .captureStartResult(.failure(error)):
                 throw PacketCaptureClientError.failedToStart(error)
             case let .captureFinished(.success(urlWithSize)):

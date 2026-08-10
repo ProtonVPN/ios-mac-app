@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AsyncAlgorithms
+import CasePaths
 import Clocks
 import Dependencies
 import Domain
@@ -34,6 +35,7 @@ struct PacketCaptureSession {
         let url: URL
     }
 
+    @CasePathable
     enum State: Equatable {
         case idle
         case recording(PcapFileHandle)
@@ -66,11 +68,16 @@ struct PacketCaptureSession {
 
     private struct InvalidState: Swift.Error {}
 
+    mutating func combinedStream(with eventStream: AsyncStream<Event>) -> AsyncStream<State> {
+        let (combinedStream, continuation) = makeStream(from: eventStream)
+        self.continuation = continuation
+        return combinedStream
+    }
+
     // TODO: ProTUN(pcap):  Add file storage capacity checks?
     mutating func start(
         with eventStream: AsyncStream<Event>,
-        existingURL: URL?,
-        existingStartDate: Date?,
+        existingURLWithDate: URLWithDate?,
         performing action: (URL, Int) -> Bool,
         stateStream: (AsyncStream<State>) -> Void
     ) throws -> (URL, Bool) {
@@ -78,29 +85,28 @@ struct PacketCaptureSession {
             assertionFailure("Attempted to start PCAP session with invalid state")
             throw InvalidState()
         }
-        let fileURL: URL
-        let startDate: Date
-        if let existingURL, let existingStartDate {
-            fileURL = existingURL
-            startDate = existingStartDate
+        let pcapFileHandle: PcapFileHandle
+        if let existingURLWithDate {
+            pcapFileHandle = .init(
+                startDate: existingURLWithDate.date,
+                url: existingURLWithDate.url
+            )
         } else {
             @Dependency(\.pcapFileManager) var pcapFileManager
             try pcapFileManager.cleanUpAllPcapFiles()
 
-            startDate = date.now
+            let startDate = date.now
 
-            fileURL = try pcapFileManager.newFileURL(startDate: startDate)
+            let fileURL = try pcapFileManager.newFileURL(startDate: startDate)
+            pcapFileHandle = .init(startDate: startDate, url: fileURL)
         }
-        let (combinedStream, continuation) = makeStream(from: eventStream)
 
-        self.continuation = continuation
+        stateStream(combinedStream(with: eventStream))
 
-        stateStream(combinedStream)
+        state = .recording(pcapFileHandle)
 
-        state = .recording(.init(startDate: startDate, url: fileURL))
-
-        let didStart = action(fileURL, DomainConstants.LogFiles.pcapMaxFileSize)
-        return (fileURL, didStart)
+        let didStart = action(pcapFileHandle.url, DomainConstants.LogFiles.pcapMaxFileSize)
+        return (pcapFileHandle.url, didStart)
     }
 
     mutating func stop() -> (URL, TimeInterval, Int)? {

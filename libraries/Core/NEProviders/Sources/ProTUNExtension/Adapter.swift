@@ -72,7 +72,7 @@ actor ProTUNAdapter {
     @Shared(.captureSession) var captureSession
 
     var isPacketCaptureSessionRecording: Bool {
-        packetCaptureSession.state.isRecording || captureSession.is(\.sessionPending)
+        packetCaptureSession.state.is(\.recording) || captureSession.is(\.sessionPending)
     }
 
     private static let waitConnectedStateDuration: Duration = .seconds(30)
@@ -137,6 +137,9 @@ actor ProTUNAdapter {
         guard case .running = state else {
             throw CancellationError()
         }
+        let eventStream = eventDelegate.eventSource.newStream
+        let stateStream = packetCaptureSession.combinedStream(with: eventStream)
+        listenToPacketCaptureUpdates(with: stateStream)
     }
 
     private func _start(config: Configuration) async throws {
@@ -179,10 +182,18 @@ actor ProTUNAdapter {
         startLocalAgentRunLoop()
         signposter.emitEvent("Local agent run loop started", id: signpostID)
 
+        var pcapFile: PcapFileInfo?
+        // Here, the user started pcap while not being connected, thus the sessionPending state.
+        if case let .sessionPending(urlWithDate) = captureSession {
+            let file: PcapFile = .path(path: urlWithDate.url.absolutePath, mode: .overwrite)
+            pcapFile = PcapFileInfo(file: file, maxBytes: UInt64(DomainConstants.LogFiles.pcapMaxFileSize))
+        }
+
         let proTunInitialConfig = try initialConnectionConfig(
             proTUNConfig: config.proTUN,
             networkAvailable: networkPath.isUsable,
-            localAgentSettings: localAgentSettings
+            localAgentSettings: localAgentSettings,
+            pcapFile: pcapFile
         )
 
         #if os(iOS)
@@ -201,21 +212,6 @@ actor ProTUNAdapter {
             socketFdAvailableCallback: nil,
             cache: cache
         )
-        // Here, the user started pcap while not being connected, thus the sessionPending state.
-        // We need to start the pcap as soon as we have a valid connection object.
-        if case let .sessionPending(url, date) = captureSession {
-            do {
-                let (url, didStart) = try startPacketCapture(existingURL: url, existingStartDate: date)
-                if didStart {
-                    $captureSession.withLock {
-                        $0 = .sessionStarted(urlWithDate: URLWithDate(url: url, date: date))
-                    }
-                }
-            } catch {
-                Logger.adapter.warning("Failed to start PCAP session with a `sessionPending` state, reverting to `noSession`")
-                $captureSession.withLock { $0 = .noSession }
-            }
-        }
 
         signposter.emitEvent("Connection established", id: signpostID)
 
@@ -473,7 +469,11 @@ extension ProTUNAdapter {
                     handlePacketCaptureInterruption(reason: .timerHit)
                 case .maxFileSizeHit:
                     handlePacketCaptureInterruption(reason: .storageLimitHit)
-                case .idle, .recording, .finished:
+                case let .recording(file):
+                    $captureSession.withLock {
+                        $0 = .sessionStarted(urlWithDate: .init(url: file.url, date: file.startDate))
+                    }
+                case .idle, .finished:
                     break
                 }
             }
@@ -486,12 +486,11 @@ extension ProTUNAdapter {
     }
 
     @discardableResult
-    func startPacketCapture(existingURL: URL?, existingStartDate: Date?) throws -> (URL, Bool) {
+    func startPacketCapture(existingURLWithDate: URLWithDate?) throws -> (URL, Bool) {
         let eventStream = eventDelegate.eventSource.newStream
         return try packetCaptureSession.start(
             with: eventStream,
-            existingURL: existingURL,
-            existingStartDate: existingStartDate
+            existingURLWithDate: existingURLWithDate
         ) { fileURL, maxBytes in
             if let connection {
                 startPCAP(connection: connection, fileURL: fileURL, maxBytes: maxBytes)
@@ -567,7 +566,8 @@ extension ProTUNAdapter {
     func initialConnectionConfig(
         proTUNConfig: ProTUNConfiguration,
         networkAvailable: Bool,
-        localAgentSettings: LocalAgentSettings
+        localAgentSettings: LocalAgentSettings,
+        pcapFile: protun.PcapFileInfo?
     ) throws(ProTUNAdapter.Error) -> InitialConnectionConfig {
         // Restrict transports ProTUN will attempt to connect with by constraining the peers
         let peers = try proTUNConfig.peers
@@ -580,7 +580,7 @@ extension ProTUNAdapter {
         return .init(
             peers: peers,
             networkAvailable: networkAvailable,
-            pcapFile: nil,
+            pcapFile: pcapFile,
             connectionMode: .localAgent(
                 userAgent: appInfo.userAgent,
                 appVersion: appInfo.appVersion,

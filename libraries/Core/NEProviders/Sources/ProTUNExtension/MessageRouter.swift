@@ -112,7 +112,7 @@ private extension MessageRouter {
                 return .init(payload: .pcapUpdate(.captureFinished(.success(urlWithSize))))
             } else {
                 do {
-                    let (url, didStart) = try adapter.startPacketCapture(existingURL: nil, existingStartDate: nil)
+                    let (url, didStart) = try adapter.startPacketCapture(existingURLWithDate: nil)
                     if didStart {
                         return .init(payload: .pcapUpdate(.captureStartResult(.success(url))))
                     } else {

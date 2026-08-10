@@ -37,7 +37,7 @@ public enum CaptureSession: Equatable, Codable, Sendable {
     public static let storageKey: String = "PcapSession"
 
     case noSession
-    case sessionPending(url: URL, date: Date)
+    case sessionPending(urlWithDate: URLWithDate)
     case sessionStarted(urlWithDate: URLWithDate)
     case sessionEnded(urlWithSize: URLWithSize, reason: PacketCaptureInterruptionReason)
 
