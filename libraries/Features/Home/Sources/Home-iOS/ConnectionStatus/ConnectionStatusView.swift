@@ -205,43 +205,45 @@ public struct ConnectionStatusView: View {
     }
 }
 
-#Preview("protected", traits: .sizeThatFitsLayout) {
-    @SharedReader(.protectionState) var protectionState: ProtectionState = .protected
-    return ConnectionStatusView(store: Store(initialState: .init()) {
-        ConnectionStatusFeature()
-    })
-}
+#if DEBUG
+    #Preview("protected", traits: .sizeThatFitsLayout) {
+        @SharedReader(.protectionState) var protectionState: ProtectionState = .protected
+        return ConnectionStatusView(store: Store(initialState: .init()) {
+            ConnectionStatusFeature()
+        })
+    }
 
-#Preview("unprotected", traits: .sizeThatFitsLayout) {
-    @SharedReader(.protectionState) var protectionState: ProtectionState = .unprotected
-    @SharedReader(.userLocation) var userLocation: StoredUserLocation? =
-        .measured(.init(ip: "123.456.789.0", country: "PL", isp: "Play"), at: .now)
-    return ConnectionStatusView(store: Store(initialState: .init()) {
-        ConnectionStatusFeature()
-    })
-}
+    #Preview("unprotected", traits: .sizeThatFitsLayout) {
+        @SharedReader(.protectionState) var protectionState: ProtectionState = .unprotected
+        @SharedReader(.userLocation) var userLocation: StoredUserLocation? =
+            .measured(.init(ip: "123.456.789.0", country: "PL", isp: "Play"), at: .now)
+        return ConnectionStatusView(store: Store(initialState: .init()) {
+            ConnectionStatusFeature()
+        })
+    }
 
-#Preview("resolving", traits: .sizeThatFitsLayout) {
-    @SharedReader(.protectionState) var protectionState: ProtectionState = .resolving
-    @SharedReader(.userLocation) var userLocation: StoredUserLocation? =
-        .measured(.init(ip: "123.456.789.0", country: "PL", isp: "Play"), at: .now)
-    ConnectionStatusView(store: Store(initialState: .init()) {
-        ConnectionStatusFeature()
-    })
-}
+    #Preview("resolving", traits: .sizeThatFitsLayout) {
+        @SharedReader(.protectionState) var protectionState: ProtectionState = .resolving
+        @SharedReader(.userLocation) var userLocation: StoredUserLocation? =
+            .measured(.init(ip: "123.456.789.0", country: "PL", isp: "Play"), at: .now)
+        ConnectionStatusView(store: Store(initialState: .init()) {
+            ConnectionStatusFeature()
+        })
+    }
 
-#Preview("protecting", traits: .sizeThatFitsLayout) {
-    @SharedReader(.protectionState) var protectionState: ProtectionState = .protecting(country: "PL", ip: "123.456.789.0")
-    return ConnectionStatusView(store: Store(initialState: .init()) {
-        ConnectionStatusFeature()
-    })
-    .background(Color.black)
-}
+    #Preview("protecting", traits: .sizeThatFitsLayout) {
+        @SharedReader(.protectionState) var protectionState: ProtectionState = .protecting(country: "PL", ip: "123.456.789.0")
+        return ConnectionStatusView(store: Store(initialState: .init()) {
+            ConnectionStatusFeature()
+        })
+        .background(Color.black)
+    }
 
-#Preview("protected", traits: .sizeThatFitsLayout) {
-    @SharedReader(.protectionState) var protectionState: ProtectionState = .protected
-    return ConnectionStatusView(store: Store(initialState: .init()) {
-        ConnectionStatusFeature()
-    })
-    .background(Color.black)
-}
+    #Preview("protected", traits: .sizeThatFitsLayout) {
+        @SharedReader(.protectionState) var protectionState: ProtectionState = .protected
+        return ConnectionStatusView(store: Store(initialState: .init()) {
+            ConnectionStatusFeature()
+        })
+        .background(Color.black)
+    }
+#endif
