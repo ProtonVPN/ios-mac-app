@@ -27,7 +27,8 @@ import Sharing
 import UIKit
 import WidgetKit
 
-public struct DisconnectVPNIntent: AppIntent {
+/// Sends the disconnect command and returns without waiting. Widget buttons and quick actions only.
+public struct DisconnectCommandIntent: AppIntent {
     public static let title: LocalizedStringResource = "Disconnect from VPN"
 
     public static let isDiscoverable: Bool = false
@@ -36,9 +37,9 @@ public struct DisconnectVPNIntent: AppIntent {
 
     public init() {}
 
-    public func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
+    public func perform() async throws -> some IntentResult {
         @Dependencies.Dependency(\.connectionCommandClient) var connectionCommandClient
         connectionCommandClient.send(.disconnect(.widget))
-        return .result(value: true)
+        return .result()
     }
 }

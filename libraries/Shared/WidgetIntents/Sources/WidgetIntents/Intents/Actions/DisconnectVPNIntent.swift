@@ -22,7 +22,7 @@ import Ergonomics
 import Sharing
 import UIKit
 
-public struct DisconnectVPNSynchronizedIntent: AppIntent {
+public struct DisconnectVPNIntent: AppIntent {
     public static let title: LocalizedStringResource = "Disconnect from VPN"
     static let description = IntentDescription(
         "Disconnects your active VPN connection.",

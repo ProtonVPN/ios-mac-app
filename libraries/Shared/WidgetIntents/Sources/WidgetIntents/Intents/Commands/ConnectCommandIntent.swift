@@ -1,5 +1,5 @@
 //
-//  Created on 2026-02-19 by Pawel Jurczyk.
+//  Created on 2026-02-10 by Pawel Jurczyk.
 //
 //  Copyright (c) 2026 Proton AG
 //
@@ -17,23 +17,25 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppIntents
-import WidgetKit
 
-public struct ConnectVPNIntent: AppIntent {
-    public static let title: LocalizedStringResource = "Connect to VPN"
-    static let description = IntentDescription(
-        "Connects to Proton VPN using your default connection settings.",
-        resultValueName: "connected"
-    )
+/// Sends a connect command and returns without waiting. Widget buttons and quick actions only.
+public struct ConnectCommandIntent: AppIntent {
+    public static let title: LocalizedStringResource = "Connect to VPN with parameters"
     public static let openAppWhenRun = true
-    public static let isDiscoverable = false
+    public static let isDiscoverable: Bool = false
 
-    private static let timeOut: Duration = .seconds(30)
+    /// Without @Parameter the widget archives the button with the default connection instead of the recent one.
+    @Parameter(title: "Recent Index")
+    var recentIndex: Int?
 
     public init() {}
 
-    public func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
-        let result = try await ConnectVPNWithParametersIntent().perform().value ?? false
-        return .result(value: result)
+    public init(recentIndex: Int) {
+        self.recentIndex = recentIndex
+    }
+
+    public func perform() async throws -> some IntentResult {
+        try await ConnectRequest(recentIndex: recentIndex).send()
+        return .result()
     }
 }
