@@ -68,13 +68,16 @@ final class SettingsViewController: UIViewController {
                 self?.pushViewController(viewController, translucentNavBar: translucent, hidesBackButton: hidesBackButton)
             }
         }
-        self.viewModel.reloadNeeded = { [weak self] in
-            guard let self, isViewLoaded else {
-                return
-            }
+        self.viewModel.reloadNeeded = {
+            // TODO: This reload method is called way too many times in a row in the connection process, try reducing the
+            executeOnUIThread { [weak self] in
+                guard let self, isViewLoaded else {
+                    return
+                }
 
-            setupTableView()
-            tableView.reloadData()
+                setupTableView()
+                tableView.reloadData()
+            }
         }
     }
 
