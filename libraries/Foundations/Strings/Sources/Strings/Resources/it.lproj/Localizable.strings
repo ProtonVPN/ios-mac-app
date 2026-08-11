@@ -1001,13 +1001,13 @@
 "_kill_switch_option_standard" = "Kill switch Standard";
 
 /* macOS: Kill switch popover - "Advanced" option row label */
-"_kill_switch_option_advanced" = "Kill switch Advanced";
+"_kill_switch_option_advanced" = "Kill switch Avanzato";
 
 /* macOS: Kill switch popover - explanation shown with the disabled "Advanced" option while the selected protocol (IKEv2) cannot support it */
-"_kill_switch_advanced_unavailable_protocol_description" = "This setting is not available for the protocol you have selected. Please choose another protocol to use Advanced Kill Switch.";
+"_kill_switch_advanced_unavailable_protocol_description" = "Questa impostazione non è disponibile per il protocollo selezionato. Si prega di scegliere un altro protocollo per utilizzare la funzione Advanced Kill Switch.";
 
 /* macOS: Kill switch confirmation - bullet: enabling KS disables split tunneling (macOS only) */
-"_kill_switch_bullet_split_tunneling" = "This will disable split tunneling";
+"_kill_switch_bullet_split_tunneling" = "Questo disabiliterà lo split tunneling";
 
 /* iOS: Kill switch confirmation - bullet: Advanced blocking persists */
 "_kill_switch_bullet_advanced_persists" = "La connessione Internet rimane bloccata anche dopo riavvii e disconnessioni intenzionali, finché non la disattivi.";
@@ -1058,13 +1058,13 @@
 "_kill_switch_logout_blocking_failed_body" = "Hai effettuato il logout, ma il kill switch non è rimasto attivo, quindi il tuo dispositivo potrebbe essere esposto. Apri Proton VPN e connettiti di nuovo per rimanere protetto.";
 
 /* macOS: title of the confirmation shown when disconnecting with Advanced kill switch active */
-"_kill_switch_disconnect_advanced_title" = "Disconnect from VPN?";
+"_kill_switch_disconnect_advanced_title" = "Disconnettere dalla VPN?";
 
 /* macOS: title of the quit confirmation shown while a VPN session is active */
-"_kill_switch_quit_title" = "Quit Proton VPN?";
+"_kill_switch_quit_title" = "Chiudere Proton VPN?";
 
 /* macOS: quit confirmation body (Standard / non-advanced kill switch) */
-"_kill_switch_disconnected_from_vpn" = "You'll be disconnected from VPN.";
+"_kill_switch_disconnected_from_vpn" = "La VPN verrà disconnessa.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "Port forwarding";
@@ -1181,7 +1181,7 @@
 "_allow_lan_title" = "Consenti le connessioni LAN";
 
 /* Description of the Allow LAN connections feature */
-"_allow_lan_info" = "Connect to devices on your local network (such as your printer or NAS drive) when the kill switch is active.";
+"_allow_lan_info" = "Connettiti ai dispositivi della tua rete locale (come la stampante o l'unità NAS) quando l'interruttore di spegnimento è attivo.";
 
 "_allow_lan_note" = "Nota che la tua connessione dev'esser riavviata per applicare questa modifica";
 
@@ -1591,7 +1591,7 @@
 
 "_quick_settings_netShield_note" = "Se i siti web non si caricano, prova a disabilitare NetShield";
 
-"_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try allowing LAN connections in Settings.";
+"_quick_settings_killSwitch_note" = "Se non riesci a connetterti ai dispositivi sulla tua rete locale, prova ad abilitare le connessioni LAN nelle Impostazioni.";
 
 "_quick_settings_portForwarding_note" = "Inserisci il numero della porta attiva nella tua app BitTorrent per migliorare la velocità del P2P.";
 
@@ -3057,7 +3057,7 @@
 "_ike_deprecation_alert_message" = "Questo protocollo verrà rimosso a breve. Prova a passare al protocollo Smart. Scopri di più";
 
 /* Message added to the IKEv2 deprecation alert when Advanced kill switch is enabled: continuing with IKEv2 changes the setting to Standard */
-"_ike_deprecation_alert_kill_switch_downgrade_message" = "Your Kill Switch setting will be changed to Standard.";
+"_ike_deprecation_alert_kill_switch_downgrade_message" = "L'impostazione del tuo Kill Switch verrà modificata in Standard.";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
 "_disable_plutonium_message" = "Questo disabiliterà lo split tunneling.";

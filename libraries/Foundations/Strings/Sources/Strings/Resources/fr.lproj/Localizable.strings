@@ -974,19 +974,19 @@
 "_kill_switch_mode_advanced" = "Avancé";
 
 /* iOS: Kill switch status message when KS isn't protecting a dropped connection (Off, or Standard while disconnected) */
-"_kill_switch_status_exposed" = "Your IP address could be exposed if your VPN connection drops";
+"_kill_switch_status_exposed" = "Votre adresse IP pourrait être exposée si votre connexion VPN est interrompue.";
 
 /* iOS: Kill switch settings - status message under the options when Standard is selected and VPN is connected */
-"_kill_switch_status_standard" = "If your VPN connection drops, you'll be disconnected from the internet until VPN is restored";
+"_kill_switch_status_standard" = "Si votre connexion VPN est interrompue, vous serez déconnecté d'internet jusqu'à ce que le VPN soit rétabli.";
 
 /* iOS: Kill switch settings - Advanced status message (VPN connected): blocks all non-VPN traffic */
-"_kill_switch_status_advanced_blocks_all" = "Blocks all internet access when you're not connected to Proton VPN";
+"_kill_switch_status_advanced_blocks_all" = "Bloque tous les accès internet quand vous n'êtes pas connecté à Proton VPN.";
 
 /* iOS: Kill switch settings - Advanced status message (VPN connected): applies even on intentional disconnect */
-"_kill_switch_status_advanced_applies" = "Advanced kill switch applies even if you intentionally disconnect from VPN";
+"_kill_switch_status_advanced_applies" = "L'arrêt d'urgence avancé reste activé même si vous vous déconnectez volontairement du VPN.";
 
 /* iOS: Kill switch settings - Advanced status message (VPN disconnected): internet disabled to protect IP */
-"_kill_switch_status_advanced_disables_internet" = "Advanced kill switch disables your internet to protect your IP address while you're not connected to Proton VPN";
+"_kill_switch_status_advanced_disables_internet" = "L'arrêt d'urgence avancé désactive votre connexion internet pour protéger votre adresse IP tant que vous n'êtes pas connecté à Proton VPN.";
 
 /* iOS: Kill switch confirmation - title when enabling Standard from Off */
 "_kill_switch_enable_standard_title" = "Activer l'arrêt d'urgence ?";
@@ -1031,10 +1031,10 @@
 "_kill_switch_advanced_banner_title" = "L'arrêt d'urgence avancé est activé.";
 
 /* iOS: Persistent home banner message while Advanced kill switch is blocking */
-"_kill_switch_advanced_banner_message" = "Connect to VPN to restore your internet connection.";
+"_kill_switch_advanced_banner_message" = "Connectez-vous au VPN pour restaurer votre connexion internet.";
 
 /* iOS: Login screen banner shown while Advanced kill switch is blocking internet */
-"_kill_switch_login_blocking" = "Advanced kill switch is blocking your internet connection.";
+"_kill_switch_login_blocking" = "L'arrêt d'urgence avancé bloque votre connexion internet.";
 
 /* iOS: Confirmation banner shown after disabling kill switch from the login screen */
 "_kill_switch_disabled_confirmation" = "L'arrêt d'urgence est désactivé.";
@@ -1049,13 +1049,13 @@
 "_kill_switch_logout_advanced_title" = "Se déconnecter de %@ ?";
 
 /* iOS: Sign-out confirmation body while Advanced kill switch is active */
-"_kill_switch_logout_advanced_body" = "You'll be disconnected from VPN.\nAdvanced kill switch is enabled. If you continue, you will be disconnected from the internet.";
+"_kill_switch_logout_advanced_body" = "Vous allez être déconnecté d'internet.\nL'arrêt d'urgence avancé est activé. Si vous continuez, vous serez déconnecté d'internet.";
 
 /* iOS: Title of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
 "_kill_switch_logout_blocking_failed_title" = "L'arrêt d'urgence n'a pas pu rester actif.";
 
 /* iOS: Body of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
-"_kill_switch_logout_blocking_failed_body" = "You've been signed out, but the kill switch couldn't be kept active, so your device may be exposed. Open Proton VPN and connect again to stay protected.";
+"_kill_switch_logout_blocking_failed_body" = "Vous avez été déconnecté, mais l'arrêt d'urgence n'a pas pu rester actif. Votre appareil pourrait être exposé. Ouvrez Proton VPN et reconnectez-vous pour rester protégé.";
 
 /* macOS: title of the confirmation shown when disconnecting with Advanced kill switch active */
 "_kill_switch_disconnect_advanced_title" = "Se déconnecter du VPN ?";
@@ -1181,7 +1181,7 @@
 "_allow_lan_title" = "Autoriser les connexions LAN";
 
 /* Description of the Allow LAN connections feature */
-"_allow_lan_info" = "Connect to devices on your local network (such as your printer or NAS drive) when the kill switch is active.";
+"_allow_lan_info" = "Connectez-vous à des périphériques de votre réseau local (tels que votre imprimante ou votre disque NAS) lorsque l'arrêt d'urgence est activé.";
 
 "_allow_lan_note" = "Notez que votre connexion doit être relancée pour appliquer ce changement.";
 
@@ -1591,7 +1591,7 @@
 
 "_quick_settings_netShield_note" = "Si les sites web ne se chargent pas, essayez de désactiver NetShield.";
 
-"_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try allowing LAN connections in Settings.";
+"_quick_settings_killSwitch_note" = "Si vous ne parvenez pas à vous connecter aux appareils de votre réseau local, essayez d'autoriser les connexions LAN dans les paramètres.";
 
 "_quick_settings_portForwarding_note" = "Saisissez le numéro du port actif dans votre application BitTorrent pour améliorer vos vitesses P2P.";
 
@@ -3057,7 +3057,7 @@
 "_ike_deprecation_alert_message" = "Ce protocole sera bientôt retiré. Envisagez de passer à Smart Protocol. En savoir plus";
 
 /* Message added to the IKEv2 deprecation alert when Advanced kill switch is enabled: continuing with IKEv2 changes the setting to Standard */
-"_ike_deprecation_alert_kill_switch_downgrade_message" = "Your Kill Switch setting will be changed to Standard.";
+"_ike_deprecation_alert_kill_switch_downgrade_message" = "L'arrêt d'urgence passera au mode « Standard ».";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
 "_disable_plutonium_message" = "Ceci désactivera la fonctionnalité Split tunneling.";

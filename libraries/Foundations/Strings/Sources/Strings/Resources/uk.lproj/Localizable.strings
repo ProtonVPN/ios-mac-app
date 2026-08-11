@@ -918,7 +918,7 @@
 "_delete_application_data_popup_body" = "Усі дані Proton VPN будуть видалені та виконається вихід із програми. Бажаєте продовжити?";
 
 /* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Disable kill switch";
+"_kill_switch_disable" = "Вимкнути Kill Switch";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "Увімкнути Kill Switch";
@@ -962,109 +962,109 @@
 "_kill_switch_tooltip" = "Блокування всього мережевого трафіку, якщо втрачено VPN-тунель.";
 
 /* iOS: Kill switch settings - header description above the Off/Standard/Advanced options */
-"_kill_switch_header_description" = "Protects your IP address by disconnecting you from the internet if you lose your VPN connection.";
+"_kill_switch_header_description" = "Захист вашої IP-адреси шляхом блокування доступу до інтернету, якщо втрачено VPN-з'єднання.";
 
 /* iOS: Kill switch settings - "Off" option title */
-"_kill_switch_mode_off" = "Off";
+"_kill_switch_mode_off" = "Вимкнено";
 
 /* iOS: Kill switch settings - "Standard" option title */
-"_kill_switch_mode_standard" = "Standard";
+"_kill_switch_mode_standard" = "Стандартний";
 
 /* iOS: Kill switch settings - "Advanced" option title */
-"_kill_switch_mode_advanced" = "Advanced";
+"_kill_switch_mode_advanced" = "Розширений";
 
 /* iOS: Kill switch status message when KS isn't protecting a dropped connection (Off, or Standard while disconnected) */
-"_kill_switch_status_exposed" = "Your IP address could be exposed if your VPN connection drops";
+"_kill_switch_status_exposed" = "У разі втрати VPN-з'єднання може розкритися ваша IP-адреса";
 
 /* iOS: Kill switch settings - status message under the options when Standard is selected and VPN is connected */
-"_kill_switch_status_standard" = "If your VPN connection drops, you'll be disconnected from the internet until VPN is restored";
+"_kill_switch_status_standard" = "Якщо VPN-з'єднання розірветься, доступ до інтернету буде заблоковано доки не відновиться VPN.";
 
 /* iOS: Kill switch settings - Advanced status message (VPN connected): blocks all non-VPN traffic */
-"_kill_switch_status_advanced_blocks_all" = "Blocks all internet access when you're not connected to Proton VPN";
+"_kill_switch_status_advanced_blocks_all" = "Блокування інтернету, якщо ви не під'єднані до Proton VPN.";
 
 /* iOS: Kill switch settings - Advanced status message (VPN connected): applies even on intentional disconnect */
-"_kill_switch_status_advanced_applies" = "Advanced kill switch applies even if you intentionally disconnect from VPN";
+"_kill_switch_status_advanced_applies" = "Розширений Kill Switch активується навіть у разі навмисного від'єднання від VPN.";
 
 /* iOS: Kill switch settings - Advanced status message (VPN disconnected): internet disabled to protect IP */
-"_kill_switch_status_advanced_disables_internet" = "Advanced kill switch disables your internet to protect your IP address while you're not connected to Proton VPN";
+"_kill_switch_status_advanced_disables_internet" = "Розширений Kill Switch вимикає інтернет-з'єднання, щоб захистити вашу IP-адресу, поки не встановлено з'єднання Proton VPN";
 
 /* iOS: Kill switch confirmation - title when enabling Standard from Off */
-"_kill_switch_enable_standard_title" = "Enable kill switch?";
+"_kill_switch_enable_standard_title" = "Увімкнути Kill Switch?";
 
 /* iOS: Kill switch confirmation - title when enabling Advanced from Off */
-"_kill_switch_enable_advanced_title" = "Enable advanced kill switch?";
+"_kill_switch_enable_advanced_title" = "Увімкнути розширений Kill Switch?";
 
 /* iOS: Kill switch confirmation - title when switching from Standard to Advanced */
-"_kill_switch_switch_advanced_title" = "Switch to advanced kill switch?";
+"_kill_switch_switch_advanced_title" = "Перейти на розширений Kill Switch?";
 
 /* macOS: Kill switch popover - "Standard" option row label */
-"_kill_switch_option_standard" = "Kill switch Standard";
+"_kill_switch_option_standard" = "Стандартний Kill Switch";
 
 /* macOS: Kill switch popover - "Advanced" option row label */
-"_kill_switch_option_advanced" = "Kill switch Advanced";
+"_kill_switch_option_advanced" = "Розширений Kill Switch";
 
 /* macOS: Kill switch popover - explanation shown with the disabled "Advanced" option while the selected protocol (IKEv2) cannot support it */
-"_kill_switch_advanced_unavailable_protocol_description" = "This setting is not available for the protocol you have selected. Please choose another protocol to use Advanced Kill Switch.";
+"_kill_switch_advanced_unavailable_protocol_description" = "Цей параметр недоступний для вибраного протоколу. Щоб використовувати розширений Kill Switch, виберіть інший протокол.";
 
 /* macOS: Kill switch confirmation - bullet: enabling KS disables split tunneling (macOS only) */
-"_kill_switch_bullet_split_tunneling" = "This will disable split tunneling";
+"_kill_switch_bullet_split_tunneling" = "Ця дія вимкне роздільне тунелювання";
 
 /* iOS: Kill switch confirmation - bullet: Advanced blocking persists */
-"_kill_switch_bullet_advanced_persists" = "Internet stays blocked across reboots and intentional disconnects until you turn it off";
+"_kill_switch_bullet_advanced_persists" = "Інтернет блокується між перезавантаженнями та спеціально від'єднується доки ви не вимкнете цю функцію";
 
 /* iOS: Kill switch confirmation - bullet: how to get back online with Advanced */
-"_kill_switch_bullet_advanced_recover" = "To get back online, connect to VPN or disable advanced kill switch";
+"_kill_switch_bullet_advanced_recover" = "Щоб відновити доступ до інтернету, під'єднайтеся до VPN або вимкніть розширений Kill Switch";
 
 /* iOS: Kill switch confirmation - bullet: KS activates on the next connection (deferred activation, both modes) */
-"_kill_switch_bullet_deferred" = "Takes effect the next time you connect to VPN";
+"_kill_switch_bullet_deferred" = "Застосовується під час наступного під'єднання до VPN";
 
 /* iOS: Kill switch confirmation - primary button to enable */
-"_kill_switch_confirm_enable" = "Enable";
+"_kill_switch_confirm_enable" = "Увімкнути";
 
 /* iOS: Kill switch confirmation - primary button to switch to advanced */
-"_kill_switch_confirm_switch" = "Switch";
+"_kill_switch_confirm_switch" = "Перемкнути";
 
 /* iOS: Warning shown before disconnecting / signing out while Advanced kill switch is active */
-"_kill_switch_advanced_disconnect_warning" = "Advanced kill switch is enabled. If you continue, you will be disconnected from the internet.";
+"_kill_switch_advanced_disconnect_warning" = "Увімкнено розширений Kill Switch. Якщо ви продовжите, інтернет-з'єднання перерветься.";
 
 /* iOS: Home map overlay title while Advanced kill switch is blocking */
-"_kill_switch_advanced_banner_title" = "Advanced kill switch activated";
+"_kill_switch_advanced_banner_title" = "Розширений Kill Switch активовано";
 
 /* iOS: Persistent home banner message while Advanced kill switch is blocking */
-"_kill_switch_advanced_banner_message" = "Connect to VPN to restore your internet connection.";
+"_kill_switch_advanced_banner_message" = "Під'єднайтеся до VPN, щоб відновити інтернет-з'єднання.";
 
 /* iOS: Login screen banner shown while Advanced kill switch is blocking internet */
-"_kill_switch_login_blocking" = "Advanced kill switch is blocking your internet connection.";
+"_kill_switch_login_blocking" = "Розширений Kill Switch блокує ваше інтернет-з'єднання.";
 
 /* iOS: Confirmation banner shown after disabling kill switch from the login screen */
-"_kill_switch_disabled_confirmation" = "Kill switch is disabled.";
+"_kill_switch_disabled_confirmation" = "Kill Switch вимкнено.";
 
 /* iOS: Body of the alert shown when a user tries to sign in / sign up / continue as guest while Advanced kill switch is blocking */
-"_kill_switch_turn_off_to_get_online" = "To get back online you need to turn off kill switch.";
+"_kill_switch_turn_off_to_get_online" = "Щоб відновити інтернет-з'єднання, необхідно вимкнути Kill Switch.";
 
 /* iOS: Primary button of the kill-switch-blocking alert; turns the kill switch off */
-"_kill_switch_turn_off" = "Turn off kill switch";
+"_kill_switch_turn_off" = "Вимкнути Kill Switch";
 
 /* iOS: Sign-out confirmation title while Advanced kill switch is active (%@ is the username) */
-"_kill_switch_logout_advanced_title" = "Sign out from %@?";
+"_kill_switch_logout_advanced_title" = "Вийти з %@?";
 
 /* iOS: Sign-out confirmation body while Advanced kill switch is active */
-"_kill_switch_logout_advanced_body" = "You'll be disconnected from VPN.\nAdvanced kill switch is enabled. If you continue, you will be disconnected from the internet.";
+"_kill_switch_logout_advanced_body" = "Вас буде від'єднано від VPN.\nРозширений Kill Switch увімкнено. Якщо ви продовжите, інтернет-з'єднання буде вимкнено.";
 
 /* iOS: Title of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
-"_kill_switch_logout_blocking_failed_title" = "Kill switch could not stay active";
+"_kill_switch_logout_blocking_failed_title" = "Не вдається залишити активним Kill Switch";
 
 /* iOS: Body of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
-"_kill_switch_logout_blocking_failed_body" = "You've been signed out, but the kill switch couldn't be kept active, so your device may be exposed. Open Proton VPN and connect again to stay protected.";
+"_kill_switch_logout_blocking_failed_body" = "Ви вийшли з облікового запису, але Kill Swith не вдалося залишити активним, тому ваш пристрій може бути викрито. Щоб і надалі бути захищеними, відкрийте Proton VPN і під'єднайтеся повторно.";
 
 /* macOS: title of the confirmation shown when disconnecting with Advanced kill switch active */
-"_kill_switch_disconnect_advanced_title" = "Disconnect from VPN?";
+"_kill_switch_disconnect_advanced_title" = "Від'єднатися від VPN?";
 
 /* macOS: title of the quit confirmation shown while a VPN session is active */
-"_kill_switch_quit_title" = "Quit Proton VPN?";
+"_kill_switch_quit_title" = "Вийти з Proton VPN?";
 
 /* macOS: quit confirmation body (Standard / non-advanced kill switch) */
-"_kill_switch_disconnected_from_vpn" = "You'll be disconnected from VPN.";
+"_kill_switch_disconnected_from_vpn" = "Ви будете від'єднані від VPN.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "Переспрямування портів";
@@ -1173,7 +1173,7 @@
 "_protun_logs" = "Журнали ProTUN";
 
 /* iOS Settings: Troubleshooting logs row */
-"_create_troubleshooting_file" = "Create a troubleshooting file";
+"_create_troubleshooting_file" = "Створити файл для усунення несправностей";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Повідомити про проблему";
@@ -1181,7 +1181,7 @@
 "_allow_lan_title" = "Дозволити LAN-з'єднання";
 
 /* Description of the Allow LAN connections feature */
-"_allow_lan_info" = "Connect to devices on your local network (such as your printer or NAS drive) when the kill switch is active.";
+"_allow_lan_info" = "Можливість під'єднання до пристроїв у вашій локальній мережі (як-от принтер або NAS), якщо ввімкнено Kill Switch.";
 
 "_allow_lan_note" = "Зверніть увагу, що для застосування змін необхідно перезапустити з'єднання";
 
@@ -1451,7 +1451,7 @@
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Усунення проблем";
 
-"_troubleshooting_file" = "Troubleshooting file";
+"_troubleshooting_file" = "Файл для усунення проблем";
 
 "_troubleshoot_item_alt_title" = "Альтернативна маршрутизація";
 
@@ -1591,7 +1591,7 @@
 
 "_quick_settings_netShield_note" = "Якщо вебсайти не завантажуються, спробуйте вимкнути NetShield";
 
-"_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try allowing LAN connections in Settings.";
+"_quick_settings_killSwitch_note" = "Якщо вам не вдається під'єднатися до пристроїв у своїй локальній мережі, спробуйте дозволити LAN-з'єднання у налаштуваннях.";
 
 "_quick_settings_portForwarding_note" = "Введіть номер активного порту в програмі BitTorrent, щоб покращити швидкість P2P";
 
@@ -2200,7 +2200,7 @@
 "connection_status_unprotected" = "Ви не захищені";
 
 /* Connection status when zero peer killswitch is enabled */
-"connection_status_disconnectedByKillswitch" = "Disconnected due to Kill Switch";
+"connection_status_disconnectedByKillswitch" = "Від'єднано через Kill Switch";
 
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
 "connection_status_protecting" = "Захист ваших цифрових особистих даних";
@@ -3057,7 +3057,7 @@
 "_ike_deprecation_alert_message" = "Цей протокол буде невдовзі вилучено. Рекомендуємо перейти на протокол Smart. Докладніше";
 
 /* Message added to the IKEv2 deprecation alert when Advanced kill switch is enabled: continuing with IKEv2 changes the setting to Standard */
-"_ike_deprecation_alert_kill_switch_downgrade_message" = "Your Kill Switch setting will be changed to Standard.";
+"_ike_deprecation_alert_kill_switch_downgrade_message" = "Налаштування Kill Switch буде змінено на стандартне.";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
 "_disable_plutonium_message" = "Увімкнення цієї функції деактивує роздільне тунелювання.";
@@ -3381,67 +3381,67 @@
 "_transaction_log_" = "Журнал транзакції";
 
 /* Footer note that is visible across the whole flow of the PCAP session */
-"_pcap_capture_file_storage" = "The troubleshooting file is stored on your device and is not sent to Proton unless you share it. It captures your VPN traffic, which may include the websites you visit. [Learn more](%@)";
+"_pcap_capture_file_storage" = "Файл для усунення несправностей збережено на вашому пристрої. Його не буде надіслано до Proton доки ви не поділитеся ним. У цьому файлі записано дані про ваш трафік VPN, які можуть містити інформацію про відвідані вебсайти. [Докладніше](%@)";
 
 /* Description of the PCAP feature presented to the user before they start the PCAP session */
-"_pcap_capture_feature_description" = "Reproduce a specific issue you’re facing when using Proton VPN to get help from our customer support team.\n\nThe app will create a file containing technical details about your VPN connection.";
+"_pcap_capture_feature_description" = "Відтворіть проблему, з якою ви зіткнулися під час використання Proton VPN, щоб отримати допомогу від нашої команди підтримки.\n\nПрограма створить файл, який міститиме технічні подробиці про ваше з'єднання VPN.";
 
 /* Directions to the user shown on the active PCAP session view */
-"_pcap_capture_session_directions" = "Reproduce the issue then stop the capture.";
+"_pcap_capture_session_directions" = "Відтворіть проблему, а потім зупиніть запис.";
 
 /* Format: mm:ss / mm:ss. Left hand side is the counter, right hand side is the maximum allowed time */
 "_pcap_capture_session_duration" = "%@ / %@";
 
 /* Header of the active PCAP session view */
-"_pcap_capture_session_capturing" = "Capturing";
+"_pcap_capture_session_capturing" = "Запис";
 
 /* Button title on the PCAP export view. Presents a share sheet to save the file outside of the app */
-"_pcap_capture_session_export" = "Save file";
+"_pcap_capture_session_export" = "Зберегти файл";
 
 /* Header of the PCAP export view */
-"_pcap_capture_session_captured" = "VPN session captured";
+"_pcap_capture_session_captured" = "Сеанс VPN записано";
 
 /* `it` refers to the exportable `<date>.pcap` file that is available while user sees this text */
-"_pcap_capture_file_sharing" = "You can now share it with our customer support by attaching it in your conversation, or by storing it securely on [Proton Drive](%@) and sharing a public link.";
+"_pcap_capture_file_sharing" = "Тепер ви можете поділитися ним з нашими фахівцями, додавши його до розмови або надійно зберегти на [Proton Drive](%@) і поділитися загальнодоступним посиланням.";
 
 /* Button title in the PCAP view. Starts the PCAP session */
-"_pcap_capture_session_start" = "Start";
+"_pcap_capture_session_start" = "Почати";
 
 /* Button title in the PCAP view. Stops the PCAP session */
-"_pcap_capture_session_stop" = "Stop";
+"_pcap_capture_session_stop" = "Зупинити";
 
 /* Title of an alert when user starts the PCAP session */
-"_pcap_capture_session_should_start_session" = "Start capturing VPN session?";
+"_pcap_capture_session_should_start_session" = "Почати запис сеансу VPN?";
 
 /* Description of an alert when user starts the PCAP session */
-"_pcap_capture_session_issue_reproduction" = "If possible, apply the same settings and type of connection you used when you first faced the issue.\n\nAim to reproduce the issue in the same way it first happened (browsing the web, using an app, etc.)\n\nWhen you’ve reproduced the issue, you can stop the capture and share the file with the customer support team.";
+"_pcap_capture_session_issue_reproduction" = "Якщо можливо, застосуйте такі ж параметри й тип з'єднання, під час яких ви вперше зіткнулися з цією проблемою.\n\nНамагайтеся відтворити проблему так само, як вона сталася вперше (під час користування інтернетом, програмою тощо)\n\nПісля успішного відтворення проблеми ви можете зупинити запис і поділитися створеним файлом з командою підтримки.";
 
 /* Description of an alert when user tries dismissing the PCAP sheet */
-"_pcap_capture_discard_description" = "The file will not be stored in the app. Make sure you’ve exported it before discarding.";
+"_pcap_capture_discard_description" = "Файл не зберігатиметься у програмі. Обов'язково експортуйте його, перш ніж відхилити.";
 
 /* Title of an alert when user tries dismissing the PCAP sheet */
-"_pcap_capture_discard_title" = "Discard file?";
+"_pcap_capture_discard_title" = "Відхилити файл?";
 
 /* Button title in an alert */
-"_pcap_capture_discard_button" = "Discard file";
+"_pcap_capture_discard_button" = "Відхилити файл";
 
 /* Commonly used title of a button */
-"_got_it" = "Got it";
+"_got_it" = "Зрозуміло";
 
 /* Title of an alert that presents the reason for PCAP failure */
-"_pcap_capture_low_storage" = "Not enough storage";
+"_pcap_capture_low_storage" = "Недостатньо місця у сховищі";
 
 /* Description of an alert that presents the reason for PCAP failure */
-"_pcap_capture_low_storage_action_description" = "You need at least 200MB of available space to start a capture";
+"_pcap_capture_low_storage_action_description" = "Вам знадобиться щонайменше 200 Мб доступного місця, щоб почати запис";
 
 /* Title of an alert that presents the reason for PCAP failure */
-"_pcap_capture_failed" = "Capture failed";
+"_pcap_capture_failed" = "Збій запису";
 
 /* Title of the alert shown when the VPN server refuses one of the user's requested settings */
-"_local_agent_setting_refused_title" = "Setting not applied";
+"_local_agent_setting_refused_title" = "Параметр не застосовано";
 
 /* Alert body shown when the server refuses a named setting. %@ is the setting name, e.g. NetShield */
-"_local_agent_setting_refused_message" = "%@ is not an available setting for this connection.";
+"_local_agent_setting_refused_message" = "Параметр %@ недоступний для цього з'єднання.";
 
 /* Alert body shown when the server refuses a setting the app doesn't surface as a named control */
-"_local_agent_setting_refused_message_generic" = "One of your settings is not available for this connection, it has been turned off.";
+"_local_agent_setting_refused_message_generic" = "Один з параметрів недоступний для цього з'єднання, тому його вимкнено.";

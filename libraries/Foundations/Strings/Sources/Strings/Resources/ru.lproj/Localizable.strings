@@ -2164,13 +2164,13 @@
 "_action_help" = "Справка";
 
 /* For buttons which have an action that connects to a server. [Redesign_2023] */
-"_action_connect" = "Подключиться";
+"_action_connect" = "Подключить";
 
 /* For buttons which have an action that removes an item. [Redesign_2023] */
 "_action_remove" = "Удалить";
 
 /* For buttons which have an action that disconnects from a server. [Redesign_2023] */
-"_action_disconnect" = "Отключиться";
+"_action_disconnect" = "Отключить";
 
 /* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
 "_connection_card_action_cancel" = "Отменить";

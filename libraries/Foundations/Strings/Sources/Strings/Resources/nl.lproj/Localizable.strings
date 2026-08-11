@@ -918,7 +918,7 @@
 "_delete_application_data_popup_body" = "Alle Proton VPN-gegevens worden verwijderd en de applicatie wordt afgesloten. Wilt u doorgaan?";
 
 /* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Disable kill switch";
+"_kill_switch_disable" = "Schakel IP-beveiliging uit";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "Schakel IP-beveiliging in";
@@ -962,109 +962,109 @@
 "_kill_switch_tooltip" = "Blokkeert al het netwerkverkeer als de VPN-tunnel is weggevallen.";
 
 /* iOS: Kill switch settings - header description above the Off/Standard/Advanced options */
-"_kill_switch_header_description" = "Protects your IP address by disconnecting you from the internet if you lose your VPN connection.";
+"_kill_switch_header_description" = "Beschermt uw IP-adres door de internetverbinding te verbreken als uw VPN-verbinding wegvalt.";
 
 /* iOS: Kill switch settings - "Off" option title */
-"_kill_switch_mode_off" = "Off";
+"_kill_switch_mode_off" = "Uit";
 
 /* iOS: Kill switch settings - "Standard" option title */
-"_kill_switch_mode_standard" = "Standard";
+"_kill_switch_mode_standard" = "Standaard";
 
 /* iOS: Kill switch settings - "Advanced" option title */
-"_kill_switch_mode_advanced" = "Advanced";
+"_kill_switch_mode_advanced" = "Geavanceerd";
 
 /* iOS: Kill switch status message when KS isn't protecting a dropped connection (Off, or Standard while disconnected) */
-"_kill_switch_status_exposed" = "Your IP address could be exposed if your VPN connection drops";
+"_kill_switch_status_exposed" = "Uw IP-adres kan worden blootgesteld als uw VPN-verbinding wegvalt";
 
 /* iOS: Kill switch settings - status message under the options when Standard is selected and VPN is connected */
-"_kill_switch_status_standard" = "If your VPN connection drops, you'll be disconnected from the internet until VPN is restored";
+"_kill_switch_status_standard" = "Als uw VPN-verbinding wegvalt, wordt u losgekoppeld van het internet totdat de VPN is hersteld";
 
 /* iOS: Kill switch settings - Advanced status message (VPN connected): blocks all non-VPN traffic */
-"_kill_switch_status_advanced_blocks_all" = "Blocks all internet access when you're not connected to Proton VPN";
+"_kill_switch_status_advanced_blocks_all" = "Blokkeert alle internettoegang wanneer u niet verbonden bent met Proton VPN";
 
 /* iOS: Kill switch settings - Advanced status message (VPN connected): applies even on intentional disconnect */
-"_kill_switch_status_advanced_applies" = "Advanced kill switch applies even if you intentionally disconnect from VPN";
+"_kill_switch_status_advanced_applies" = "Geavanceerde IP-beveiliging is van toepassing zelfs als u de verbinding met VPN opzettelijk verbreekt";
 
 /* iOS: Kill switch settings - Advanced status message (VPN disconnected): internet disabled to protect IP */
-"_kill_switch_status_advanced_disables_internet" = "Advanced kill switch disables your internet to protect your IP address while you're not connected to Proton VPN";
+"_kill_switch_status_advanced_disables_internet" = "Geavanceerde IP-beveiliging schakelt u internet uit om uw IP-adres te beschermen terwijl u niet bent verbonden met Proton VPN";
 
 /* iOS: Kill switch confirmation - title when enabling Standard from Off */
-"_kill_switch_enable_standard_title" = "Enable kill switch?";
+"_kill_switch_enable_standard_title" = "IP-beveiliging inschakelen?";
 
 /* iOS: Kill switch confirmation - title when enabling Advanced from Off */
-"_kill_switch_enable_advanced_title" = "Enable advanced kill switch?";
+"_kill_switch_enable_advanced_title" = "Geavanceerde IP-beveiliging inschakelen?";
 
 /* iOS: Kill switch confirmation - title when switching from Standard to Advanced */
-"_kill_switch_switch_advanced_title" = "Switch to advanced kill switch?";
+"_kill_switch_switch_advanced_title" = "Overschakelen naar geavanceerde IP-beveiliging?";
 
 /* macOS: Kill switch popover - "Standard" option row label */
-"_kill_switch_option_standard" = "Kill switch Standard";
+"_kill_switch_option_standard" = "Standaard IP-beveiliging";
 
 /* macOS: Kill switch popover - "Advanced" option row label */
-"_kill_switch_option_advanced" = "Kill switch Advanced";
+"_kill_switch_option_advanced" = "Geavanceerde IP-beveiliging";
 
 /* macOS: Kill switch popover - explanation shown with the disabled "Advanced" option while the selected protocol (IKEv2) cannot support it */
-"_kill_switch_advanced_unavailable_protocol_description" = "This setting is not available for the protocol you have selected. Please choose another protocol to use Advanced Kill Switch.";
+"_kill_switch_advanced_unavailable_protocol_description" = "Deze instelling is niet beschikbaar voor het protocol dat u hebt geselecteerd. Kies een ander protocol om geavanceerde IP-beveiliging te gebruiken.";
 
 /* macOS: Kill switch confirmation - bullet: enabling KS disables split tunneling (macOS only) */
-"_kill_switch_bullet_split_tunneling" = "This will disable split tunneling";
+"_kill_switch_bullet_split_tunneling" = "Hierdoor wordt split-tunneling uitgeschakeld";
 
 /* iOS: Kill switch confirmation - bullet: Advanced blocking persists */
-"_kill_switch_bullet_advanced_persists" = "Internet stays blocked across reboots and intentional disconnects until you turn it off";
+"_kill_switch_bullet_advanced_persists" = "Internet blijft geblokkeerd bij opnieuw opstarten en opzettelijke verbroken verbindingen totdat u het uitschakelt";
 
 /* iOS: Kill switch confirmation - bullet: how to get back online with Advanced */
-"_kill_switch_bullet_advanced_recover" = "To get back online, connect to VPN or disable advanced kill switch";
+"_kill_switch_bullet_advanced_recover" = "Om weer online te gaan, maakt u verbinding met VPN of schakelt u de geavanceerde IP-beveiliging uit";
 
 /* iOS: Kill switch confirmation - bullet: KS activates on the next connection (deferred activation, both modes) */
-"_kill_switch_bullet_deferred" = "Takes effect the next time you connect to VPN";
+"_kill_switch_bullet_deferred" = "Wordt van kracht de volgende keer dat u verbinding maakt met VPN";
 
 /* iOS: Kill switch confirmation - primary button to enable */
-"_kill_switch_confirm_enable" = "Enable";
+"_kill_switch_confirm_enable" = "Inschakelen";
 
 /* iOS: Kill switch confirmation - primary button to switch to advanced */
-"_kill_switch_confirm_switch" = "Switch";
+"_kill_switch_confirm_switch" = "Omschakelen";
 
 /* iOS: Warning shown before disconnecting / signing out while Advanced kill switch is active */
-"_kill_switch_advanced_disconnect_warning" = "Advanced kill switch is enabled. If you continue, you will be disconnected from the internet.";
+"_kill_switch_advanced_disconnect_warning" = "Geavanceerde IP-beveiliging is ingeschakeld. Als u doorgaat, wordt de verbinding met het internet verbroken.";
 
 /* iOS: Home map overlay title while Advanced kill switch is blocking */
-"_kill_switch_advanced_banner_title" = "Advanced kill switch activated";
+"_kill_switch_advanced_banner_title" = "Geavanceerde IP-beveiliging geactiveerd";
 
 /* iOS: Persistent home banner message while Advanced kill switch is blocking */
-"_kill_switch_advanced_banner_message" = "Connect to VPN to restore your internet connection.";
+"_kill_switch_advanced_banner_message" = "Maak verbinding met VPN om uw internetverbinding te herstellen.";
 
 /* iOS: Login screen banner shown while Advanced kill switch is blocking internet */
-"_kill_switch_login_blocking" = "Advanced kill switch is blocking your internet connection.";
+"_kill_switch_login_blocking" = "Geavanceerde IP-beveiliging blokkeert uw internetverbinding.";
 
 /* iOS: Confirmation banner shown after disabling kill switch from the login screen */
-"_kill_switch_disabled_confirmation" = "Kill switch is disabled.";
+"_kill_switch_disabled_confirmation" = "IP-beveiliging is uitgeschakeld.";
 
 /* iOS: Body of the alert shown when a user tries to sign in / sign up / continue as guest while Advanced kill switch is blocking */
-"_kill_switch_turn_off_to_get_online" = "To get back online you need to turn off kill switch.";
+"_kill_switch_turn_off_to_get_online" = "Om weer online te komen, moet je de IP-beveiliging uitschakelen.";
 
 /* iOS: Primary button of the kill-switch-blocking alert; turns the kill switch off */
-"_kill_switch_turn_off" = "Turn off kill switch";
+"_kill_switch_turn_off" = "IP-beveiliging uitschakelen";
 
 /* iOS: Sign-out confirmation title while Advanced kill switch is active (%@ is the username) */
-"_kill_switch_logout_advanced_title" = "Sign out from %@?";
+"_kill_switch_logout_advanced_title" = "Uitloggen van %@?";
 
 /* iOS: Sign-out confirmation body while Advanced kill switch is active */
-"_kill_switch_logout_advanced_body" = "You'll be disconnected from VPN.\nAdvanced kill switch is enabled. If you continue, you will be disconnected from the internet.";
+"_kill_switch_logout_advanced_body" = "De verbinding met VPN wordt verbroken.\nGeavanceerde IP-beveiliging is ingeschakeld. Als u doorgaat, wordt de verbinding met internet verbroken.";
 
 /* iOS: Title of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
-"_kill_switch_logout_blocking_failed_title" = "Kill switch could not stay active";
+"_kill_switch_logout_blocking_failed_title" = "IP-beveiliging kon niet actief blijven";
 
 /* iOS: Body of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
-"_kill_switch_logout_blocking_failed_body" = "You've been signed out, but the kill switch couldn't be kept active, so your device may be exposed. Open Proton VPN and connect again to stay protected.";
+"_kill_switch_logout_blocking_failed_body" = "U bent uitgelogd, maar de IP-beveiliging kan niet actief worden gehouden, waardoor uw apparaat mogelijk zichtbaar is. Open Proton VPN en maak opnieuw verbinding om beschermd te blijven.";
 
 /* macOS: title of the confirmation shown when disconnecting with Advanced kill switch active */
-"_kill_switch_disconnect_advanced_title" = "Disconnect from VPN?";
+"_kill_switch_disconnect_advanced_title" = "Verbinding met VPN verbreken?";
 
 /* macOS: title of the quit confirmation shown while a VPN session is active */
-"_kill_switch_quit_title" = "Quit Proton VPN?";
+"_kill_switch_quit_title" = "Proton VPN afsluiten?";
 
 /* macOS: quit confirmation body (Standard / non-advanced kill switch) */
-"_kill_switch_disconnected_from_vpn" = "You'll be disconnected from VPN.";
+"_kill_switch_disconnected_from_vpn" = "U wordt losgekoppeld van de VPN.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "Port forwarding";
@@ -1181,7 +1181,7 @@
 "_allow_lan_title" = "LAN-verbindingen toestaan";
 
 /* Description of the Allow LAN connections feature */
-"_allow_lan_info" = "Connect to devices on your local network (such as your printer or NAS drive) when the kill switch is active.";
+"_allow_lan_info" = "Maak verbinding met apparaten op uw lokale netwerk (zoals uw printer of NAS-schijf) wanneer de IP-beveiliging actief is.";
 
 "_allow_lan_note" = "Merk op dat uw verbinding opnieuw gestart moet worden om deze wijziging toe te passen";
 
@@ -1591,7 +1591,7 @@
 
 "_quick_settings_netShield_note" = "Als websites niet laden, probeer NetShield dan uit te schakelen";
 
-"_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try allowing LAN connections in Settings.";
+"_quick_settings_killSwitch_note" = "Als u geen verbinding kunt maken met apparaten op uw lokale netwerk, probeer dan LAN-verbindingen toe te staan ​​in Instellingen.";
 
 "_quick_settings_portForwarding_note" = "Voer het actieve poortnummer in op uw BitTorrent-app in om uw P2P-snelheid te verbeteren";
 
@@ -3057,7 +3057,7 @@
 "_ike_deprecation_alert_message" = "Dit protocol wordt binnenkort verwijderd. Overweeg om te schakelen naar Smart protocol. Meer informatie";
 
 /* Message added to the IKEv2 deprecation alert when Advanced kill switch is enabled: continuing with IKEv2 changes the setting to Standard */
-"_ike_deprecation_alert_kill_switch_downgrade_message" = "Your Kill Switch setting will be changed to Standard.";
+"_ike_deprecation_alert_kill_switch_downgrade_message" = "Uw IP-beveiliging wordt omgeschakeld naar Standaard.";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
 "_disable_plutonium_message" = "Hiermee wordt split tunneling uitgeschakeld.";

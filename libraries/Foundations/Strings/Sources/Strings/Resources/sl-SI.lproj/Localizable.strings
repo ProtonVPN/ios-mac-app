@@ -953,10 +953,10 @@
 "_kill_switch" = "Odklopno stikalo";
 
 /* Used in MacOS app for Kill switch button in quick settings to turn on */
-"_kill_switch_status_on" = "Vklopi stikalo za izklop";
+"_kill_switch_status_on" = "Vklopi izklopno stikalo";
 
 /* Used in MacOS app for Kill switch button in quick settings to turn off */
-"_kill_switch_status_off" = "Izklopi stikalo za izklop";
+"_kill_switch_status_off" = "Izklopi izklopno stikalo";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blokira ves omrežni promet, ko je tunel VPN izgubljen.";
@@ -1538,7 +1538,7 @@
 "_netshield_level2" = "Blokiraj zlonamerne programe, oglase in sledilnike.";
 
 /* Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_netshield_level3" = "Blokiranje oglasov, sledilnikov, zlonamernih programov & vsebine za odrasle";
+"_netshield_level3" = "Blokiranje oglasov, sledilnikov, zlonamernih programov in vsebine za odrasle";
 
 "_netshield_alert_reconnect_description_on" = "Vaša povezava se bo znova zagnala, da se spremeni način NetShield.\nOpomba: Če se nekatera spletna mesta ne naložijo, poskusite onemogočiti NetShield.";
 
@@ -1619,7 +1619,7 @@
 "_quick_settings_netshield_option_level2" = "Blokiraj zlonamerne programe, oglase in sledilnike.";
 
 /* Quick Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_quick_settings_netshield_option_level3" = "Blokiranje oglasov, sledilnikov, zlonamernih programov & vsebine za odrasle";
+"_quick_settings_netshield_option_level3" = "Blokiranje oglasov, sledilnikov, zlonamernih programov in vsebine za odrasle";
 
 "_upgrade_required_securecore_description" = "Secure Core je na voljo s paketom Plus. Nadgradite zdaj za usmerjanje prometa prek naših najvarnejših strežnikov v zasebno prijaznih državah.";
 
@@ -3381,7 +3381,7 @@
 "_transaction_log_" = "Dnevnik transakcij";
 
 /* Footer note that is visible across the whole flow of the PCAP session */
-"_pcap_capture_file_storage" = "Datoteka za odpravljanje težav je shranjena na vaši napravi in se ne pošilja podjetju Proton, razen, če jo sami delite. V njej se beleži vaš promet preko VPN, ki lahko vključuje tudi spletne strani, ki jih obiščete. [Več informacij](%@)";
+"_pcap_capture_file_storage" = "Datoteka za odpravljanje težav je shranjena na vaši napravi in se ne pošilja podjetju Proton, razen če jo sami delite. V njej se beleži vaš promet preko VPN, ki lahko vključuje tudi spletne strani, ki jih obiščete. [Več informacij](%@)";
 
 /* Description of the PCAP feature presented to the user before they start the PCAP session */
 "_pcap_capture_feature_description" = "Poskusite ponoviti konkretno težavo, s katero se srečujete pri uporabi Proton VPN, da boste lahko zaprosili za pomoč našo službo za podporo strankam.\n\nAplikacija bo ustvarila datoteko s tehničnimi podatki o vaši VPN povezavi.";
