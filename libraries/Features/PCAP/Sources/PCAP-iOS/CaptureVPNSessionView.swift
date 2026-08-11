@@ -146,23 +146,25 @@ public struct CaptureVPNSessionView: View {
     }
 }
 
-#Preview("no session") {
-    CaptureVPNSessionView(store: .init(
-        initialState: CaptureVPNSessionFeature.State(),
-        reducer: EmptyReducer.init
-    ))
-    .colorScheme(.dark)
-}
-
-#Preview("capture started") {
-    let _ = prepareDependencies {
-        $0.packetCaptureClient = .stub(
-            session: .sessionStarted(urlWithDate: .init(url: .init(string: "file")!, date: .now))
-        )
+#if DEBUG
+    #Preview("no session") {
+        CaptureVPNSessionView(store: .init(
+            initialState: CaptureVPNSessionFeature.State(),
+            reducer: EmptyReducer.init
+        ))
+        .colorScheme(.dark)
     }
-    CaptureVPNSessionView(store: .init(
-        initialState: CaptureVPNSessionFeature.State(),
-        reducer: EmptyReducer.init
-    ))
-    .colorScheme(.dark)
-}
+
+    #Preview("capture started") {
+        let _ = prepareDependencies {
+            $0.packetCaptureClient = .stub(
+                session: .sessionStarted(urlWithDate: .init(url: .init(string: "file")!, date: .now))
+            )
+        }
+        CaptureVPNSessionView(store: .init(
+            initialState: CaptureVPNSessionFeature.State(),
+            reducer: EmptyReducer.init
+        ))
+        .colorScheme(.dark)
+    }
+#endif
