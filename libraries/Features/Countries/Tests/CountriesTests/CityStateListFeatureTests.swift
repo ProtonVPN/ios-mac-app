@@ -45,6 +45,34 @@ struct CityStateListFeatureTests {
         }
     }
 
+    @Test("Navigating to a city passes the translated name to the servers list")
+    func navigateToCityPassesTranslatedName() async {
+        let group = ServerGroupInfo(
+            kind: .city(name: "Geneva", code: "CH"),
+            featureIntersection: [],
+            featureUnion: [],
+            minTier: .paid,
+            maxTier: .paid,
+            serverCount: 1,
+            cityCount: 1,
+            latitude: 0,
+            longitude: 0,
+            translatedCity: "Genève",
+            supportsSmartRouting: false,
+            isUnderMaintenance: false,
+            protocolSupport: .all
+        )
+        let store = TestStore(initialState: .init(countryCode: "CH")) {
+            CityStateListFeature()
+        }
+
+        await store.send(.navigateTo(group)) {
+            $0.path[id: 0] = .serversList(
+                .init(countryCode: "CH", listType: .city("Geneva"), translatedName: "Genève")
+            )
+        }
+    }
+
     // MARK: - Connected Row Tests
 
     @Test("a state row reads as connected for any server inside it")

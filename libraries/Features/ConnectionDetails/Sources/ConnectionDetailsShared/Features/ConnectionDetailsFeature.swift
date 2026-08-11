@@ -55,7 +55,7 @@ public struct ConnectionDetailsFeature {
             self = .init(
                 connectedSince: actual.connectedDate ?? .now,
                 country: country,
-                city: actual.server.logical.city ?? "-",
+                city: actual.server.logical.translatedCity ?? actual.server.logical.city ?? "-",
                 server: actual.server.logical.name,
                 serverLoad: actual.server.logical.load,
                 protocolName: actual.vpnProtocol.localizedDescription

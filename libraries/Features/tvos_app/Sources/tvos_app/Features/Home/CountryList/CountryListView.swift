@@ -111,9 +111,9 @@ struct CountryListView: View {
                 if case let .connected(tunnelConfig, _) = connectionState,
                    case let .city(name, code, _) = tunnelConfig.connectionSpec.location,
                    item.code == code, city.name == name {
-                    Label(city.name, systemImage: "lock.fill")
+                    Label(city.displayName, systemImage: "lock.fill")
                 } else {
-                    Text(city.name)
+                    Text(city.displayName)
                 }
             }
         }

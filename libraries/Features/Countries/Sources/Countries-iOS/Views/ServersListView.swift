@@ -75,11 +75,17 @@ struct ServersListView: View {
 
             switch store.listType {
             case let .city(name):
-                ServerToolbarItemView(kind: .city(name: name, code: store.countryCode))
-                    .padding(.top, .themeSpacing16)
+                ServerToolbarItemView(
+                    kind: .city(name: name, code: store.countryCode),
+                    translatedName: store.translatedName
+                )
+                .padding(.top, .themeSpacing16)
             case let .state(name):
-                ServerToolbarItemView(kind: .state(name: name, code: store.countryCode))
-                    .padding(.top, .themeSpacing16)
+                ServerToolbarItemView(
+                    kind: .state(name: name, code: store.countryCode),
+                    translatedName: store.translatedName
+                )
+                .padding(.top, .themeSpacing16)
             }
             Spacer(minLength: 0)
         }

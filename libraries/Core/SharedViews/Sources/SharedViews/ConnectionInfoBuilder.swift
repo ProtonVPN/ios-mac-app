@@ -62,7 +62,10 @@ public struct ConnectionInfoBuilder {
             return server.logical.name
         case .country:
             return nil
-        case let .city(name, _, _), let .state(name, _, _):
+        case let .city(name, _, _):
+            // The backend translates city names only; state names have no translated form.
+            return server.logical.translatedCity ?? name
+        case let .state(name, _, _):
             return name
         case .exact:
             return server.logical.name

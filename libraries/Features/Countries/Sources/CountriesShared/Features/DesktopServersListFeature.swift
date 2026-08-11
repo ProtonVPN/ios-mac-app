@@ -34,9 +34,14 @@ public struct DesktopServersListFeature: Sendable {
             case loaded([ServerInfo])
         }
 
-        public init(kind: ServerGroupInfo.Kind, search: String) {
+        /// The backend's translated name for this list's city, shown in the header in place of the kind's
+        /// canonical name. Server selection keeps using the canonical name.
+        public let translatedName: String?
+
+        public init(kind: ServerGroupInfo.Kind, search: String, translatedName: String? = nil) {
             self.kind = kind
             self.search = search
+            self.translatedName = translatedName
         }
     }
 

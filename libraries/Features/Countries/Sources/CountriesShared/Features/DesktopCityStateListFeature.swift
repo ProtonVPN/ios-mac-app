@@ -70,7 +70,11 @@ public struct DesktopCityStateListFeature: Sendable {
                 state.isExpanded.toggle()
                 return .none
             case let .navigateToServers(groupInfo):
-                state.serversList = .init(kind: groupInfo.kind, search: state.search)
+                state.serversList = .init(
+                    kind: groupInfo.kind,
+                    search: state.search,
+                    translatedName: groupInfo.translatedCity
+                )
                 return .none
             case .connectToCountry:
                 if case .secureCores = state.listType,

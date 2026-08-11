@@ -106,7 +106,7 @@ struct CityStateListView: View {
                 Theme.Asset.Icons.mapPin.swiftUIImage
                     .renderingMode(.template)
                     .foregroundColor(Color(.icon, .weak))
-                Text(groupInfo.kind.name)
+                Text(groupInfo.translatedCity ?? groupInfo.kind.name)
                     .themeFont(.body1(.regular))
                     .foregroundStyle(Color(.text))
                     .lineLimit(1)

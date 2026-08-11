@@ -57,7 +57,7 @@ extension ConnectWidgetEntry {
                     currentServer.logical.tier.isPaid ? .paid : .free,
                     logicalID: currentServer.logical.id,
                     number: currentServer.logical.serverNameComponents.sequence,
-                    subregion: currentServer.logical.city,
+                    subregion: currentServer.logical.translatedCity ?? currentServer.logical.city,
                     regionCode: currentServer.logical.exitCountryCode
                 )
             }
