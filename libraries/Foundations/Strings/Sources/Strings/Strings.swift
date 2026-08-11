@@ -297,6 +297,10 @@ public enum Localizable {
   public static var connectionDetailsTitle: String { return Localizable.tr("Localizable", "_connection_details_title", fallback: "Connection details") }
   /// Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur.
   public static var connectionErrorCertificateAuthentication: String { return Localizable.tr("Localizable", "_connection_error_certificate_authentication", fallback: "An issue occurred authenticating with the server.") }
+  /// Error message: a problem occurred while building the VPN configuration, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds.
+  public static var connectionErrorConfiguration: String { return Localizable.tr("Localizable", "_connection_error_configuration", fallback: "There was a problem configuring the VPN connection.") }
+  /// Error message: the VPN configuration is missing something it needs, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds.
+  public static var connectionErrorConfigurationInvalid: String { return Localizable.tr("Localizable", "_connection_error_configuration_invalid", fallback: "There was a problem with the VPN configuration.") }
   /// Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection.
   public static var connectionErrorIntentMissing: String { return Localizable.tr("Localizable", "_connection_error_intent_missing", fallback: "We were unable to connect to the server..") }
   /// Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed.
@@ -1184,6 +1188,8 @@ public enum Localizable {
   public static var pcapCaptureSessionExport: String { return Localizable.tr("Localizable", "_pcap_capture_session_export", fallback: "Save file") }
   /// Description of an alert when user starts the PCAP session
   public static var pcapCaptureSessionIssueReproduction: String { return Localizable.tr("Localizable", "_pcap_capture_session_issue_reproduction", fallback: "If possible, apply the same settings and type of connection you used when you first faced the issue.\n\nAim to reproduce the issue in the same way it first happened (browsing the web, using an app, etc.)\n\nWhen you’ve reproduced the issue, you can stop the capture and share the file with the customer support team.") }
+  /// Header of the pending PCAP session view
+  public static var pcapCaptureSessionPending: String { return Localizable.tr("Localizable", "_pcap_capture_session_pending", fallback: "Pending connection") }
   /// Title of an alert when user starts the PCAP session
   public static var pcapCaptureSessionShouldStartSession: String { return Localizable.tr("Localizable", "_pcap_capture_session_should_start_session", fallback: "Start capturing VPN session?") }
   /// Button title in the PCAP view. Starts the PCAP session

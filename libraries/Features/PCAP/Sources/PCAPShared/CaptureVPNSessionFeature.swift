@@ -18,6 +18,7 @@
 
 import Combine
 import ComposableArchitecture
+import Connection
 import Domain
 import Foundation
 import SharedErgonomics
@@ -35,13 +36,13 @@ public struct CaptureVPNSessionFeature {
 
     @ObservableState
     public struct State: Equatable {
-        @Shared(.captureSession) public var captureSession
+        @SharedReader(.captureSession) public var captureSession: CaptureSession = .noSession
         @Presents public var alert: AlertState<Action.Alert>?
         var storageCapacity: Int?
         @Presents public var destination: Destination.State?
 
         public var buttonText: String {
-            if case .sessionStarted = captureSession {
+            if captureSession.isRunning {
                 Localizable.pcapCaptureSessionStop
             } else {
                 Localizable.pcapCaptureSessionStart
@@ -51,34 +52,24 @@ public struct CaptureVPNSessionFeature {
         public init(destination: Destination.State? = nil) {
             self.destination = destination
         }
-
-        public init(captureSession: CaptureSession) {
-            self.$captureSession.withLock {
-                $0 = captureSession
-            }
-        }
     }
 
     @CasePathable
     public enum Action {
-        case onAppear
-        case onDisappear
+        case task
         case captureButtonPressed
         case alert(PresentationAction<Alert>)
         case captureSessionUpdate(CaptureSession)
         case showErrorMessage(String)
         case destination(PresentationAction<Destination.Action>)
-        case togglePacketCapture
+        case startPacketCapture
+        case stopPacketCapture
         case refreshStorageCapacity
 
         @CasePathable
         public enum Alert {
             case startCapturing
         }
-    }
-
-    private enum CancelID {
-        case captureSession
     }
 
     public init() {}
@@ -91,15 +82,13 @@ public struct CaptureVPNSessionFeature {
                 return .none
             case let .captureSessionUpdate(captureSession):
                 switch captureSession {
-                case .noSession, .sessionStarted:
+                case .noSession, .sessionStarted, .sessionPending:
                     state.destination = nil
                 case .sessionEnded:
                     state.destination = .sessionCaptured(.init())
                 }
                 return .none
-            case .onDisappear:
-                return .cancel(id: CancelID.captureSession)
-            case .onAppear:
+            case .task:
                 return .merge(
                     .send(.refreshStorageCapacity),
                     .publisher {
@@ -109,7 +98,6 @@ public struct CaptureVPNSessionFeature {
                             .removeDuplicates()
                             .map(Action.captureSessionUpdate)
                     }
-                    .cancellable(id: CancelID.captureSession)
                 )
             case .captureButtonPressed:
                 switch state.captureSession {
@@ -119,18 +107,23 @@ public struct CaptureVPNSessionFeature {
                     } else {
                         state.alert = Self.startCapturingAlert
                     }
-                case .sessionStarted:
-                    return .send(.togglePacketCapture)
+                case .sessionStarted, .sessionPending:
+                    return .send(.stopPacketCapture)
                 }
                 return .none
             case .alert(.presented(.startCapturing)):
-                return .send(.togglePacketCapture)
-            case .togglePacketCapture:
+                return .send(.startPacketCapture)
+            case .startPacketCapture:
                 return .run { _ in
                     @Dependency(\.packetCaptureClient) var packetCaptureClient
-                    try await packetCaptureClient.togglePacketCapture()
+                    try await packetCaptureClient.start()
                 } catch: { error, send in
                     await send(.showErrorMessage(error.localizedDescription))
+                }
+            case .stopPacketCapture:
+                return .run { _ in
+                    @Dependency(\.packetCaptureClient) var packetCaptureClient
+                    await packetCaptureClient.stop()
                 }
             case .destination, .alert:
                 return .none

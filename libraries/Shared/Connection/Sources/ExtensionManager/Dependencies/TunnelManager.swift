@@ -307,24 +307,36 @@ final class PacketTunnelManager: TunnelManager {
     }
 
     func sendProTUN(request: ProTUNMessage.Request) async throws(ProviderMessageError) -> ProTUNMessage.Response {
+        let manager: TunnelProviderManager
         do {
-            let manager = if case let .updateConfiguration(update) = request.payload {
+            manager = switch request.payload {
+            case let .updateConfiguration(update):
                 try await managerRepository.prepareManager(.wireGuard, .update(update))
-            } else {
+            case let .pcapRequest(.start(fileURL)):
+                try await managerRepository.prepareManager(.wireGuard, .packetCapture(fileURL: fileURL))
+            case .pcapRequest(.stop):
+                try await managerRepository.prepareManager(.wireGuard, .packetCapture(fileURL: nil))
+            default:
                 try await managerRepository.manager(for: .wireGuard)
             }
-            return try await manager.session.sendProTUNRequest(request)
+        } catch let error as ProviderMessageError {
+            throw error
+        } catch is CancellationError {
+            throw .cancelled
         } catch {
-            if let error = error as? ProviderMessageError {
-                throw error
-            }
-
-            log.debug(
-                "Failed to send ProTUN request",
-                category: .ipc,
-                metadata: ["error": "\(error)"]
-            )
+            log.debug("Failed to prepare the manager for a ProTUN request", category: .ipc, metadata: ["error": "\(error)"])
             throw .sendingError(.managerUnavailable(error))
+        }
+
+        do {
+            return try await manager.session.sendProTUNRequest(request)
+        } catch let error as ProviderMessageError {
+            throw error
+        } catch is CancellationError {
+            throw .cancelled
+        } catch {
+            log.debug("Failed to send ProTUN request", category: .ipc, metadata: ["error": "\(error)"])
+            throw .sendingError(.internalSendFailed(error))
         }
     }
 

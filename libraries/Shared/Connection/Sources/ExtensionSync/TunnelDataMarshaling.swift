@@ -32,6 +32,7 @@ public enum IPCTunnelDataVersion {
     public static let connectionStats: UInt16 = 1
     public static let error: UInt16 = 1
     public static let agentFeatures: UInt16 = 1
+    public static let packetCapture: UInt16 = 1
 }
 
 public extension IPCConnectionTransport {
@@ -301,6 +302,35 @@ public extension IPCAgentFeaturesPayload {
             natType: moderate_nat != 0 ? .moderateNAT : .strictNAT,
             portForwarding: port_forwarding != 0
         )
+    }
+}
+
+public extension IPCPacketCapturePayload {
+    init(_ report: PacketCaptureReport) {
+        self.init()
+        version = IPCTunnelDataVersion.packetCapture
+        switch report {
+        case let .recording(since):
+            state = UInt8(IPCPacketCaptureState.recording.rawValue)
+            started_at_ms = Int64(since.timeIntervalSince1970 * 1000)
+        case .starting:
+            state = UInt8(IPCPacketCaptureState.starting.rawValue)
+        case let .stopped(reason):
+            state = UInt8(IPCPacketCaptureState.stopped.rawValue)
+            stop_reason = UInt8(truncatingIfNeeded: reason.rawValue)
+        }
+    }
+
+    /// A zeroed region lands here as ``PacketCaptureReport/cleared``.
+    var packetCaptureReport: PacketCaptureReport {
+        switch IPCPacketCaptureState(rawValue: state) {
+        case .recording:
+            .recording(since: Date(timeIntervalSince1970: Double(started_at_ms) / 1000))
+        case .starting:
+            .starting
+        default:
+            .stopped(PacketCaptureInterruptionReason(rawValue: UInt64(stop_reason)) ?? .connectionTerminated)
+        }
     }
 }
 

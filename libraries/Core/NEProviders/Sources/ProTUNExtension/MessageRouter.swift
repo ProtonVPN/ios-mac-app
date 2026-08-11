@@ -76,55 +76,12 @@ private extension MessageRouter {
         with adapter: ProTUNAdapter
     ) async -> ProTUNMessage.Response {
         switch request {
-        case .fileURL:
-            handlePacketCaptureFileURL()
-        case .toggleCapture:
-            await handlePacketCaptureToggle(with: adapter)
-        case .isRecording:
-            await handlePacketCaptureIsRecording(with: adapter)
-        case .cleanup:
-            handlePacketCaptureCleanup()
+        case let .start(fileURL):
+            await adapter.startPacketCapture(into: fileURL)
+        case .stop:
+            await adapter.stopPacketCapture()
         }
-    }
-
-    static func handlePacketCaptureFileURL() -> ProTUNMessage.Response {
-        @Dependency(\.pcapFileManager) var pcapFileManager
-        let fileURL = pcapFileManager.retrieveLastPcapFileURL()
-        return .init(payload: .pcapUpdate(.fileURL(fileURL)))
-    }
-
-    static func handlePacketCaptureCleanup() -> ProTUNMessage.Response {
-        do {
-            @Dependency(\.pcapFileManager) var pcapFileManager
-            try pcapFileManager.cleanUpAllPcapFiles()
-            return .init(payload: .pcapUpdate(.cleanupResult(.success(true))))
-        } catch {
-            return .init(payload: .pcapUpdate(.cleanupResult(.failure(.init(failureReason: error.localizedDescription)))))
-        }
-    }
-
-    static func handlePacketCaptureToggle(with adapter: ProTUNAdapter) async -> sending ProTUNMessage.Response {
-        await adapter.run { adapter in
-            if adapter.isPacketCaptureSessionRecording {
-                guard let urlWithSize = adapter.stopPacketCapture(reason: .explicitStop) else {
-                    return .init(payload: .pcapUpdate(.captureFinished(.failure(.init(failureReason: "Empty PCAP file")))))
-                }
-                return .init(payload: .pcapUpdate(.captureFinished(.success(urlWithSize))))
-            } else {
-                do {
-                    let url = try adapter.startPacketCapture()
-                    return .init(payload: .pcapUpdate(.captureStartResult(.success(url))))
-                } catch {
-                    let reason = error.localizedDescription
-                    return .init(payload: .pcapUpdate(.captureStartResult(.failure(.init(failureReason: reason)))))
-                }
-            }
-        }
-    }
-
-    static func handlePacketCaptureIsRecording(with adapter: ProTUNAdapter) async -> ProTUNMessage.Response {
-        let isPacketCaptureSessionRecording = await adapter.isPacketCaptureSessionRecording
-        return .init(payload: .pcapUpdate(.isRecording(isPacketCaptureSessionRecording)))
+        return .init(payload: .ack)
     }
 
     static func handlePushSelector(

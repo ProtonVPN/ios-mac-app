@@ -31,7 +31,7 @@ struct CaptureVPNSessionViewSnapshotsTests {
     @Test
     func `no session`() {
         let view = CaptureVPNSessionView(store: .init(
-            initialState: CaptureVPNSessionFeature.State(captureSession: .noSession),
+            initialState: CaptureVPNSessionFeature.State(),
             reducer: EmptyReducer.init
         ))
         .colorScheme(.dark)
@@ -42,13 +42,13 @@ struct CaptureVPNSessionViewSnapshotsTests {
     @Test
     func `session started`() {
         let url = URL(filePath: "file.pcap")
+        let state = withDependencies {
+            $0.packetCaptureClient = .stub(session: .sessionStarted(urlWithDate: .init(url: url, date: .now)))
+        } operation: {
+            CaptureVPNSessionFeature.State()
+        }
         let view = CaptureVPNSessionView(
-            store: .init(
-                initialState: CaptureVPNSessionFeature.State(
-                    captureSession: .sessionStarted(urlWithDate: .init(url: url, date: .now))
-                ),
-                reducer: EmptyReducer.init
-            ),
+            store: .init(initialState: state, reducer: EmptyReducer.init),
             redrawInterval: .infinity
         )
         .colorScheme(.dark)

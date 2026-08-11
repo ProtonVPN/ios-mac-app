@@ -69,69 +69,62 @@ struct LogSelectionFeature {
         case binding(BindingAction<State>)
         case destination(PresentationAction<Destination.Action>)
         case rowTapped(State.Row)
-        case downloadResponse(Result<URL, Error>)
-        case onDisappear
     }
 
     @Dependency(\.fileManagerClient) private var fileManagerClient
     @Dependency(\.paymentsPlanServiceV2) private var paymentsPlanServiceV2
 
-    private enum CancelID {
-        case appleTVLogsDownload
-    }
-
     var body: some ReducerOf<Self> {
-        BindingReducer()
-        Reduce { state, action in
-            switch action {
-            case .binding:
-                return .none
-            case let .rowTapped(row):
-                switch row {
-                case .pcap:
-                    state.destination = .captureVPNSession(.init())
+        CombineReducers {
+            BindingReducer()
+            Reduce { state, action in
+                switch action {
+                case .binding:
                     return .none
-                case let .logSource(source):
-                    switch source {
-                    case .transactionLog:
-                        if let transactionLogURL = paymentsPlanServiceV2.generateTransactionLog() {
-                            state.shareLogsURL = transactionLogURL
-                        } else {
-                            state.alertMessage = LogSelectionError.transactionLogNotFound.localizedDescription
-                        }
+                case let .rowTapped(row):
+                    switch row {
+                    case .pcap:
+                        state.destination = .captureVPNSession(.init())
                         return .none
-                    default:
-                        state.destination = .logs(.init(logSource: source))
-                    }
+                    case let .logSource(source):
+                        switch source {
+                        case .transactionLog:
+                            if let transactionLogURL = paymentsPlanServiceV2.generateTransactionLog() {
+                                state.shareLogsURL = transactionLogURL
+                            } else {
+                                state.alertMessage = LogSelectionError.transactionLogNotFound.localizedDescription
+                            }
+                            return .none
+                        default:
+                            state.destination = .logs(.init(logSource: source))
+                        }
 
+                        return .none
+                    }
+                case let .destination(.presented(.logs(.shareFilePrepared(fileURL)))):
+                    state.shareLogsURL = fileURL
+                    return .none
+                case .destination(.dismiss):
+                    state.shareLogsURL = nil
+                    return .none
+                case .destination:
                     return .none
                 }
-            case let .downloadResponse(.success(fileURL)):
-                state.shareLogsURL = fileURL
-                return .none
-            case let .downloadResponse(.failure(error)):
-                state.alertMessage = error.localizedDescription
-                return .none
-            case let .destination(.presented(.logs(.shareFilePrepared(fileURL)))):
-                state.shareLogsURL = fileURL
-                return .none
-            case .destination(.dismiss):
-                cleanupFile(at: state.shareLogsURL)
-                state.shareLogsURL = nil
-                return .none
-            case .destination:
-                return .none
-            case .onDisappear:
-                cleanupFile(at: state.shareLogsURL)
-                return .none
             }
         }
         .ifLet(\.$destination, action: \.destination)
-    }
-
-    private func cleanupFile(at url: URL?) {
-        guard let url else { return }
-        try? fileManagerClient.removeItem(at: url)
+        // The shared file is temporary, so it is deleted whenever its URL goes away from the state.
+        .onChange(of: \.shareLogsURL) { oldValue, _ in
+            Reduce { _, _ in
+                guard let oldValue else { return .none }
+                do {
+                    try fileManagerClient.removeItem(at: oldValue)
+                } catch {
+                    log.error("Failed to remove the shared log file", category: .app, metadata: ["error": "\(error)"])
+                }
+                return .none
+            }
+        }
     }
 }
 

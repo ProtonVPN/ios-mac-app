@@ -63,6 +63,8 @@ public struct ExtensionIPCClient: Sendable {
     public package(set) var currentFeatures: @Sendable () -> AgentTunnelFeatures?
     /// The extension's most-recent reported error, or `nil` if it's empty.
     public package(set) var currentExtensionError: @Sendable () -> ExtensionError? = { nil }
+    /// What ProTUN is doing with the declared packet capture. A cleared region reads as stopped.
+    public package(set) var currentPacketCapture: @Sendable () -> PacketCaptureReport = { .cleared }
 
     /// The live connection state according to ProTUN in the network extension.
     public package(set) var observeExtensionState: @Sendable () -> AsyncStream<ExtensionStateSnapshot> = { .finished }
@@ -72,6 +74,8 @@ public struct ExtensionIPCClient: Sendable {
     public package(set) var observeFeatures: @Sendable () -> AsyncStream<AgentTunnelFeatures?> = { .finished }
     /// The extension's most-recent reported error (`nil` when the slot is empty), decoded from the raw payload.
     public package(set) var observeError: @Sendable () -> AsyncStream<ExtensionError?> = { .finished }
+    /// The live state of the declared packet capture.
+    public package(set) var observePacketCapture: @Sendable () -> AsyncStream<PacketCaptureReport> = { .finished }
     /// Commands the extension posts over the `.tunnelCmd` notification.
     public package(set) var observeCommands: @Sendable () -> AsyncStream<TunnelCommand> = { .finished }
 
@@ -152,6 +156,8 @@ public struct ExtensionIPCClient: Sendable {
                 current.withLock { $0?.channels.localAgentFeatures.agentFeatures() }
             } currentExtensionError: {
                 current.withLock { $0?.channels.localAgentError.currentExtensionError() }
+            } currentPacketCapture: {
+                current.withLock { $0?.channels.packetCapture.packetCaptureReport() } ?? .cleared
             } observeExtensionState: {
                 observe(attachSource: attachSource, reconcileOn: appBecameActiveTicks()) { store, since in
                     store.channels.connectionData.readIfChanged(since: since)
@@ -178,6 +184,12 @@ public struct ExtensionIPCClient: Sendable {
                     store.channels.localAgentError.readIfChanged(since: since)
                 } transform: { payload in
                     payload.extensionError
+                }
+            } observePacketCapture: {
+                observe(attachSource: attachSource, reconcileOn: appBecameActiveTicks()) { store, since in
+                    store.channels.packetCapture.readIfChanged(since: since)
+                } transform: { payload in
+                    payload.packetCaptureReport
                 }
             } observeCommands: {
                 IPCNotifications.streamRawState(.tunnelCmd)
@@ -214,6 +226,8 @@ public struct ExtensionIPCClient: Sendable {
                 store.channels.localAgentFeatures.agentFeatures()
             } currentExtensionError: {
                 store.channels.localAgentError.currentExtensionError()
+            } currentPacketCapture: {
+                store.channels.packetCapture.packetCaptureReport()
             } observeExtensionState: {
                 store.channels.connectionData.extensionStateStream(reconcileOn: appBecameActiveTicks())
             } observeStats: {
@@ -222,6 +236,8 @@ public struct ExtensionIPCClient: Sendable {
                 store.channels.localAgentFeatures.agentFeaturesStream(reconcileOn: appBecameActiveTicks())
             } observeError: {
                 store.channels.localAgentError.errorStream(reconcileOn: appBecameActiveTicks())
+            } observePacketCapture: {
+                store.channels.packetCapture.packetCaptureStream(reconcileOn: appBecameActiveTicks())
             } observeCommands: {
                 IPCNotifications.streamRawState(.tunnelCmd)
                     .map { Int($0) }
@@ -248,6 +264,7 @@ public struct ExtensionIPCClient: Sendable {
             currentStats: { nil },
             currentFeatures: { nil },
             currentExtensionError: { nil },
+            currentPacketCapture: { .cleared },
             observeExtensionState: {
                 // The reader is resolved per call so each test / `withDependencies` scope binds to its own value.
                 @SharedReader(.mockExtensionState) var state
@@ -269,6 +286,7 @@ public struct ExtensionIPCClient: Sendable {
             observeStats: { .finished },
             observeFeatures: { .finished },
             observeError: { .finished },
+            observePacketCapture: { .finished },
             observeCommands: { .finished },
             attachRegion: { _ in },
             currentRegionID: { nil }

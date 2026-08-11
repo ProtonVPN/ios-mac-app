@@ -101,8 +101,10 @@ private extension LocalAgentCoordinator {
                 await sendError(error: LocalAgent.Error.policyRefusedError(from: setting))
             case .error(.certificateRefreshFatalError):
                 await sendError(error: ExtensionTunnelError.certificateRefreshFatalError)
-            case .packetCaptureStarted, .packetCaptureStopped:
-                break
+            case .packetCaptureStarted:
+                await adapter.reportPacketCaptureWhenConnected()
+            case let .packetCaptureStopped(reason):
+                handlePacketCaptureStopped(reason)
             @unknown default:
                 assertionFailure("Unknown value encountered in \(#function)")
             }
@@ -135,6 +137,23 @@ private extension LocalAgentCoordinator {
 }
 
 private extension LocalAgentCoordinator {
+    func handlePacketCaptureStopped(_ reason: CaptureStopReason) {
+        switch reason {
+        case .request:
+            extensionIPCServer.publishPacketCapture(.stopped(.explicitStop))
+        case .maxSizeReached:
+            extensionIPCServer.publishPacketCapture(.stopped(.storageLimitHit))
+        case .disconnected:
+            extensionIPCServer.publishPacketCapture(.stopped(.connectionTerminated))
+        case .alreadyStopped:
+            // already reported to the app, nothing to do
+            break
+        @unknown default:
+            assertionFailure("Unknown value encountered in \(#function)")
+            extensionIPCServer.publishPacketCapture(.stopped(.connectionTerminated))
+        }
+    }
+
     func sendLocalAgentStats(stats: LocalAgent.Stats) {
         extensionIPCServer.publishStats(stats)
     }

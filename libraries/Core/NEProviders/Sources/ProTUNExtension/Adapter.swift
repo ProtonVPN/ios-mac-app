@@ -31,6 +31,7 @@ import PMLogger
 import protun
 import Queue
 import SharedErgonomics
+import Sharing
 import VPNCoreCommon
 import VPNCoreTypes
 
@@ -68,13 +69,7 @@ actor ProTUNAdapter {
         get async { await stateDelegate.currentState?.connectionState.currentPeer }
     }
 
-    var isPacketCaptureSessionRecording: Bool {
-        packetCaptureSession.state.isRecording
-    }
-
     private static let waitConnectedStateDuration: Duration = .seconds(30)
-    private static let protunStateDebounceInterval: Duration = .milliseconds(250)
-    private static let protunStateCheckInterval: Duration = .milliseconds(500)
 
     /// A sleep this long or longer will result in ProTUN expiring the transport's handshake keys and NAT mappings,
     /// causing a "reconnect" of sorts. A sleep shorter than this interval implies the connection is likely still fine.
@@ -90,8 +85,7 @@ actor ProTUNAdapter {
     /// Serializes every change to the session configuration.
     private let configurationStore: ConfigurationStore
 
-    private var packetCaptureSession: PacketCaptureSession = .init()
-    private var pcapStateTask: Task<Void, Never>?
+    private var pcapDurationTask: Task<Void, Never>?
 
     private var networkPath: NetworkPath = .initial
 
@@ -161,6 +155,13 @@ actor ProTUNAdapter {
 
         extensionIPCServer.zeroAll()
 
+        let pcapFile = configuredPacketCapture(for: config)
+
+        // Published before ProTUN can open the file, so the app can distinguish between `.stopped` and `.starting`.
+        if pcapFile != nil {
+            extensionIPCServer.publishPacketCapture(.starting)
+        }
+
         listenToPathUpdates()
 
         let tunFd = try await prepare(with: config.proTUN)
@@ -169,8 +170,8 @@ actor ProTUNAdapter {
 
         let rawTunFd = try tunFd.dup().take()
 
-        // Initial Local Agent settings come from the app, while the extension manages all protocol settings
-        // once it's running.
+        // Initial Local Agent settings come from the app, while the extension manages all protocol settings once it's
+        // running.
         let localAgentSettings = LocalAgentSettings(config.proTUN)
 
         startLocalAgentRunLoop()
@@ -179,7 +180,8 @@ actor ProTUNAdapter {
         let proTunInitialConfig = try initialConnectionConfig(
             proTUNConfig: config.proTUN,
             networkAvailable: networkPath.isUsable,
-            localAgentSettings: localAgentSettings
+            localAgentSettings: localAgentSettings,
+            pcapFile: pcapFile
         )
 
         #if os(iOS)
@@ -198,7 +200,12 @@ actor ProTUNAdapter {
             socketFdAvailableCallback: nil,
             cache: cache
         )
+
         signposter.emitEvent("Connection established", id: signpostID)
+
+        if pcapFile != nil {
+            reportPacketCaptureWhenConnected()
+        }
 
         if config.proTUN.peers.isEmpty {
             // Lib connection object will never transition to connected with 0 peers so completing immediately
@@ -209,17 +216,19 @@ actor ProTUNAdapter {
                 currentRequestId
             )
         } else {
-            try await stateDelegate.stateSource.newStream
-                .debounce(for: Self.protunStateDebounceInterval)
-                .when(
-                    willMatch: \.canCompleteStart,
-                    every: Self.protunStateCheckInterval,
-                    deadline: Self.waitConnectedStateDuration
-                ) {
-                    // Reached `.connected` / `.connectingToLocalAgent`: the tunnel is up.
-                    self.signposter.emitEvent("Connected", id: signpostID)
-                    Logger.adapter.debug("Adapter is started, `startTunnel` can complete")
-                }
+            do {
+                try await stateDelegate.whenState(\.canCompleteStart, timeout: .duration(Self.waitConnectedStateDuration))
+                // Reached `.connected` / `.connectingToLocalAgent`: the tunnel is up.
+                signposter.emitEvent("Connected", id: signpostID)
+                Logger.adapter.debug("Adapter is started, `startTunnel` can complete")
+            } catch .timeout {
+                // Complete the start anyway: ProTUN keeps retrying in the background, and the app follows the attempts
+                // on the state channel rather than failing the whole tunnel here.
+                Logger.adapter.info("Tunnel start deadline passed while still connecting, completing anyway")
+            } catch {
+                // The state stream ended, so the extension is going down before the tunnel reported connected.
+                throw CancellationError()
+            }
         }
 
         try Task.checkCancellation()
@@ -230,10 +239,7 @@ actor ProTUNAdapter {
     func stop(with reason: NEProviderStopReason) {
         Logger.adapter.info("Stopping with reason: \(reason, privacy: .public)")
 
-        if isPacketCaptureSessionRecording {
-            handlePacketCaptureInterruption(reason: .connectionTerminated)
-        }
-
+        cancelPacketCaptureDurationLimit()
         startQueue.cancelAllPendingTasks()
 
         connection?.disconnectAndWait()
@@ -444,77 +450,104 @@ extension ProTUNAdapter {
 // MARK: - Packet Capture
 
 extension ProTUNAdapter {
-    func listenToPacketCaptureUpdates(with stream: AsyncStream<PacketCaptureSession.State>) {
-        pcapStateTask = Task {
-            for await state in stream {
-                Logger.adapter.info("Packet Capture is now in state: \(state, privacy: .public)")
+    /// The capture to hand ProTUN with the initial connection, or nil when `config` declares none.
+    private func configuredPacketCapture(for config: Configuration) -> PcapFileInfo? {
+        guard let url = config.pcapCaptureFileURL else { return nil }
 
-                switch state {
-                case .timerHit:
-                    handlePacketCaptureInterruption(reason: .timerHit)
-                case .maxFileSizeHit:
-                    handlePacketCaptureInterruption(reason: .storageLimitHit)
-                case .idle, .recording, .finished:
-                    break
-                }
+        @Dependency(\.fileManagerClient) var fileManagerClient
+        let declaredFileSize: Int
+        do {
+            declaredFileSize = try fileManagerClient.fileSize(at: url)
+        } catch {
+            // A file we cannot read is one ProTUN creates on open, same as an empty one.
+            Logger.adapter.info("Could not read the declared capture file: \(error, privacy: .public)")
+            declaredFileSize = 0
+        }
+
+        guard declaredFileSize == 0 else {
+            // The file already holds a finished capture, and opening it again would erase it. The app shows it as an
+            // ended session, and the user's next capture start replaces it. This also handles the case where an
+            // extension configured to start pcap on launch that crashes or otherwise exits will not re-start packet
+            // capture on every launch.
+            Logger.adapter.info("Declared capture file already holds packets, not starting over it")
+            return nil
+        }
+
+        return PcapFileInfo(url: url, maxBytes: DomainConstants.LogFiles.pcapMaxFileSize)
+    }
+
+    /// Asks ProTUN to capture into `fileURL` on the running connection.
+    func startPacketCapture(into fileURL: URL) {
+        guard let connection else {
+            Logger.adapter.info("No connection to capture from yet, leaving the request for the next start")
+            return
+        }
+
+        extensionIPCServer.publishPacketCapture(.starting)
+        connection.startPacketCapture(
+            pcapFile: .init(url: fileURL, maxBytes: DomainConstants.LogFiles.pcapMaxFileSize)
+        )
+    }
+
+    /// Reports the capture, and starts its time allowance, once the tunnel is connected. Works in both the tunnel start
+    /// and active tunnel scenarios.
+    func reportPacketCaptureWhenConnected() {
+        cancelPacketCaptureDurationLimit()
+        pcapDurationTask = Task {
+            do {
+                try await stateDelegate.whenState(\.isConnected, timeout: .never)
+            } catch {
+                // Tunnel was torn down or pcap was cancelled before connecting.
+                return
             }
+            Logger.adapter.info("Reporting the running packet capture")
+            extensionIPCServer.publishPacketCapture(.recording(since: date.now))
+            await stopCaptureAfterAllowedDuration()
         }
     }
 
-    @discardableResult
-    func startPacketCapture() throws -> URL {
-        let eventStream = eventDelegate.eventSource.newStream
-        return try packetCaptureSession.start(with: eventStream) { fileURL, maxBytes in
-            let file: PcapFile = .path(path: fileURL.absolutePath, mode: .overwrite)
-            self.connection?.startPacketCapture(pcapFile: .init(file: file, maxBytes: UInt64(maxBytes)))
-        } stateStream: { stream in
-            listenToPacketCaptureUpdates(with: stream)
-        }
+    /// Asks ProTUN to stop capturing.
+    func stopPacketCapture() {
+        cancelPacketCaptureDurationLimit()
+        connection?.stopPacketCapture()
     }
 
-    @discardableResult
-    func stopPacketCapture(reason: PacketCaptureInterruptionReason) -> URLWithSize? {
-        guard let (pcapFileURL, duration, fileSize) = packetCaptureSession.stop() else { return nil }
-        switch reason {
-        case .unknown, .timerHit, .explicitStop:
-            connection?.stopPacketCapture()
-        // We don't want to call stopCaptureAgain if it was already stopped
-        case .storageLimitHit, .connectionTerminated:
-            break
-        }
-
-        let formattedDuration = Duration.seconds(duration).formatted(.units(allowed: [.minutes, .seconds]))
-        Logger.adapter.info("Capture lasted \(formattedDuration, privacy: .public) and file size is \(fileSize) bytes")
-        pcapStateTask?.cancel()
-        pcapStateTask = nil
-        return .init(url: pcapFileURL, size: fileSize)
+    private func stopCaptureAfterAllowedDuration() async {
+        @Dependency(\.continuousClock) var clock
+        try? await clock.sleep(for: .minutes(DomainConstants.LogFiles.pcapMaxDurationInMinutes))
+        guard !Task.isCancelled else { return }
+        Logger.adapter.info("Packet capture time limit reached, asking ProTUN to stop")
+        stopPacketCapture()
     }
 
-    private func handlePacketCaptureInterruption(reason: PacketCaptureInterruptionReason) {
-        stopPacketCapture(reason: reason)
-
-        @Dependency(\.pcapSharedPropertyUpdater) var pcapSharedPropertyUpdater
-        pcapSharedPropertyUpdater.finishPCAPSession(reason: reason)
-
-        IPCNotifications.postState(.pcapInterrupted, state: reason)
+    private func cancelPacketCaptureDurationLimit() {
+        pcapDurationTask?.cancel()
+        pcapDurationTask = nil
     }
 
     struct Configuration {
         let userID: String
         let proTUN: ProTUNConfiguration
+        var pcapCaptureFileURL: URL?
 
         static func legacy(proTUN: ProTUNConfiguration) -> Self {
             self.init(userID: legacyUserID, proTUN: proTUN)
         }
 
-        /// Whether `proTUN` was recovered from the pre-ProTUN WireGuard Go keychain entry rather than from the
-        /// provider configuration. In this case the session state alongside it needs migrating too.
-        /// See ``LegacyKeychainMigration``.
+        /// Whether `proTUN` was recovered from the pre-ProTUN WireGuard Go keychain entry rather than from the provider
+        /// configuration. In this case the session state alongside it needs migrating too. See
+        /// ``LegacyKeychainMigration``.
         var isLegacyFallback: Bool {
             userID == Self.legacyUserID
         }
 
         private static let legacyUserID = "legacyWireGuardFallback"
+    }
+}
+
+private extension PcapFileInfo {
+    init(url: URL, maxBytes: Int) {
+        self.init(file: .path(path: url.absolutePath, mode: .overwrite), maxBytes: UInt64(maxBytes))
     }
 }
 
@@ -536,7 +569,8 @@ extension ProTUNAdapter {
     func initialConnectionConfig(
         proTUNConfig: ProTUNConfiguration,
         networkAvailable: Bool,
-        localAgentSettings: LocalAgentSettings
+        localAgentSettings: LocalAgentSettings,
+        pcapFile: protun.PcapFileInfo?
     ) throws(ProTUNAdapter.Error) -> InitialConnectionConfig {
         // Restrict transports ProTUN will attempt to connect with by constraining the peers
         let peers = try proTUNConfig.peers
@@ -549,7 +583,7 @@ extension ProTUNAdapter {
         return .init(
             peers: peers,
             networkAvailable: networkAvailable,
-            pcapFile: nil,
+            pcapFile: pcapFile,
             connectionMode: .localAgent(
                 userAgent: appInfo.userAgent,
                 appVersion: appInfo.appVersion,
@@ -571,6 +605,15 @@ extension VpnState {
         case .connected, .connectingToLocalAgent:
             true
         default:
+            false
+        }
+    }
+
+    /// Whether ProTUN reports an established peer connection.
+    var isConnected: Bool {
+        if case .connected = connectionState {
+            true
+        } else {
             false
         }
     }

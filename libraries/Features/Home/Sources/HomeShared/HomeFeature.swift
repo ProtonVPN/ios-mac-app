@@ -75,7 +75,7 @@ public struct HomeFeature {
 
         fileprivate var shouldPushAlert: Bool = false
 
-        @SharedReader(.captureSession) public var captureSession
+        @SharedReader(.captureSession) public var captureSession: CaptureSession = .noSession
         @SharedReader(.connectionState) public var connectionState: ConnectionState
 
         @Presents public var destination: Destination.State?

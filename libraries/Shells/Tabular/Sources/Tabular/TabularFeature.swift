@@ -16,7 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CasePaths
 import ComposableArchitecture
+import Connection
 import CoreGraphics
 import Domain
 import Home
@@ -81,14 +83,14 @@ public struct TabularFeature {
             deepTabs.contains(tab)
         }
 
-        /// The capture session, read from the capture's own storage so the settings tab can wear its recording badge.
-        @SharedReader(.captureSession) public var captureSession
+        /// The capture session, so the settings tab can display the recording badge.
+        @SharedReader(.captureSession) public var captureSession: CaptureSession = .noSession
 
         /// The mark the bar shows over a tab's glyph, or nil for none. A packet capture in progress is the only badge
         /// today; it rides the settings tab because that is where a capture is stopped.
         public func badge(for tab: Tab) -> Badge? {
-            guard tab == .settings, case .sessionStarted = captureSession else { return nil }
-            return .recording
+            guard tab == .settings else { return nil }
+            return captureSession.isRunning ? .recording : nil
         }
 
         public var commands = ConnectionCommandsFeature.State()
