@@ -998,16 +998,16 @@
 "_kill_switch_switch_advanced_title" = "Switch to advanced kill switch?";
 
 /* macOS: Kill switch popover - "Standard" option row label */
-"_kill_switch_option_standard" = "Kill switch Standard";
+"_kill_switch_option_standard" = "مفتاح الإيقاف القياسي";
 
 /* macOS: Kill switch popover - "Advanced" option row label */
-"_kill_switch_option_advanced" = "Kill switch Advanced";
+"_kill_switch_option_advanced" = "مفتاح الإيقاف المتقدم";
 
 /* macOS: Kill switch popover - explanation shown with the disabled "Advanced" option while the selected protocol (IKEv2) cannot support it */
-"_kill_switch_advanced_unavailable_protocol_description" = "This setting is not available for the protocol you have selected. Please choose another protocol to use Advanced Kill Switch.";
+"_kill_switch_advanced_unavailable_protocol_description" = "هذا الإعداد غير متاح للبروتوكول الذي حددته. يُرجى اختيار بروتوكول آخر لاستخدام مفتاح الإيقاف المتقدم.";
 
 /* macOS: Kill switch confirmation - bullet: enabling KS disables split tunneling (macOS only) */
-"_kill_switch_bullet_split_tunneling" = "This will disable split tunneling";
+"_kill_switch_bullet_split_tunneling" = "سيؤدي هذا إلى تعطيل تقسيم الأنفاق";
 
 /* iOS: Kill switch confirmation - bullet: Advanced blocking persists */
 "_kill_switch_bullet_advanced_persists" = "Internet stays blocked across reboots and intentional disconnects until you turn it off";
@@ -1058,13 +1058,13 @@
 "_kill_switch_logout_blocking_failed_body" = "You've been signed out, but the kill switch couldn't be kept active, so your device may be exposed. Open Proton VPN and connect again to stay protected.";
 
 /* macOS: title of the confirmation shown when disconnecting with Advanced kill switch active */
-"_kill_switch_disconnect_advanced_title" = "Disconnect from VPN?";
+"_kill_switch_disconnect_advanced_title" = "قطع الاتصال بشبكة VPN؟";
 
 /* macOS: title of the quit confirmation shown while a VPN session is active */
-"_kill_switch_quit_title" = "Quit Proton VPN?";
+"_kill_switch_quit_title" = "هل تريد إنهاء Proton VPN؟";
 
 /* macOS: quit confirmation body (Standard / non-advanced kill switch) */
-"_kill_switch_disconnected_from_vpn" = "You'll be disconnected from VPN.";
+"_kill_switch_disconnected_from_vpn" = "سيتم قطع اتصالك بشبكة VPN.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "توجيه المنافذ";
@@ -1591,7 +1591,7 @@
 
 "_quick_settings_netShield_note" = "لضمان انسيابية التحميل، جرب تعطيل NetShield إن تعذر فتح المواقع";
 
-"_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try allowing LAN connections in Settings.";
+"_quick_settings_killSwitch_note" = "إذا تعذّر عليك الاتصال بالأجهزة الموجودة على شبكتك المحلية، فجرّب السماح باتصالات الشبكة المحلية (LAN) من الإعدادات.";
 
 "_quick_settings_portForwarding_note" = "لتحقيق أقصى استفادة من P2P، أدخل رقم المنفذ النشط في تطبيق BitTorrent";
 
@@ -3057,7 +3057,7 @@
 "_ike_deprecation_alert_message" = "سيُزال هذا البروتوكول قريبًا. يُنصح بالتحويل إلى Smart protocol. معرفة المزيد";
 
 /* Message added to the IKEv2 deprecation alert when Advanced kill switch is enabled: continuing with IKEv2 changes the setting to Standard */
-"_ike_deprecation_alert_kill_switch_downgrade_message" = "Your Kill Switch setting will be changed to Standard.";
+"_ike_deprecation_alert_kill_switch_downgrade_message" = "سيتم تغيير إعداد مفتاح القتل الخاص بك إلى قياسي.";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
 "_disable_plutonium_message" = "سيؤدي هذا إلى تعطيل الانقسام النفقي.";

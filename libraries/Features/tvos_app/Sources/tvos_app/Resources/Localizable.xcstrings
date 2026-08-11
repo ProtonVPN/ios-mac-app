@@ -5793,6 +5793,12 @@
             "value" : "Bağlantı kesici etkin"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kill Switch активний"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",

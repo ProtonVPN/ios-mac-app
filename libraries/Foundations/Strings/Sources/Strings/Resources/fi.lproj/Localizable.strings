@@ -918,7 +918,7 @@
 "_delete_application_data_popup_body" = "Kaikki Proton VPN:n tiedot poistetaan ja sovellus suljetaan. Haluatko jatkaa?";
 
 /* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Disable kill switch";
+"_kill_switch_disable" = "Poista tappokytkin käytöstä";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "Ota Tappokytkin käyttöön";
@@ -965,22 +965,22 @@
 "_kill_switch_header_description" = "Protects your IP address by disconnecting you from the internet if you lose your VPN connection.";
 
 /* iOS: Kill switch settings - "Off" option title */
-"_kill_switch_mode_off" = "Off";
+"_kill_switch_mode_off" = "Ei käytössä";
 
 /* iOS: Kill switch settings - "Standard" option title */
-"_kill_switch_mode_standard" = "Standard";
+"_kill_switch_mode_standard" = "Tavallinen";
 
 /* iOS: Kill switch settings - "Advanced" option title */
-"_kill_switch_mode_advanced" = "Advanced";
+"_kill_switch_mode_advanced" = "Edistynyt";
 
 /* iOS: Kill switch status message when KS isn't protecting a dropped connection (Off, or Standard while disconnected) */
-"_kill_switch_status_exposed" = "Your IP address could be exposed if your VPN connection drops";
+"_kill_switch_status_exposed" = "IP-osoitteesi saattaa paljastua, jos VPN-yhteytesi katkeaa.";
 
 /* iOS: Kill switch settings - status message under the options when Standard is selected and VPN is connected */
 "_kill_switch_status_standard" = "If your VPN connection drops, you'll be disconnected from the internet until VPN is restored";
 
 /* iOS: Kill switch settings - Advanced status message (VPN connected): blocks all non-VPN traffic */
-"_kill_switch_status_advanced_blocks_all" = "Blocks all internet access when you're not connected to Proton VPN";
+"_kill_switch_status_advanced_blocks_all" = "Estää kaiken Internet-yhteyden, kun et ole yhdistettynä Proton VPN:ään";
 
 /* iOS: Kill switch settings - Advanced status message (VPN connected): applies even on intentional disconnect */
 "_kill_switch_status_advanced_applies" = "Advanced kill switch applies even if you intentionally disconnect from VPN";
@@ -989,25 +989,25 @@
 "_kill_switch_status_advanced_disables_internet" = "Advanced kill switch disables your internet to protect your IP address while you're not connected to Proton VPN";
 
 /* iOS: Kill switch confirmation - title when enabling Standard from Off */
-"_kill_switch_enable_standard_title" = "Enable kill switch?";
+"_kill_switch_enable_standard_title" = "Otetaanko tappokytkin käyttöön?";
 
 /* iOS: Kill switch confirmation - title when enabling Advanced from Off */
-"_kill_switch_enable_advanced_title" = "Enable advanced kill switch?";
+"_kill_switch_enable_advanced_title" = "Otetaanko edistynyt tappokytkin käyttöön?";
 
 /* iOS: Kill switch confirmation - title when switching from Standard to Advanced */
-"_kill_switch_switch_advanced_title" = "Switch to advanced kill switch?";
+"_kill_switch_switch_advanced_title" = "Vaihdetaanko edistyneeseen tappokytkimeen?";
 
 /* macOS: Kill switch popover - "Standard" option row label */
-"_kill_switch_option_standard" = "Kill switch Standard";
+"_kill_switch_option_standard" = "Tavallinen tappokytkin";
 
 /* macOS: Kill switch popover - "Advanced" option row label */
-"_kill_switch_option_advanced" = "Kill switch Advanced";
+"_kill_switch_option_advanced" = "Edistynyt tappokytkin";
 
 /* macOS: Kill switch popover - explanation shown with the disabled "Advanced" option while the selected protocol (IKEv2) cannot support it */
 "_kill_switch_advanced_unavailable_protocol_description" = "This setting is not available for the protocol you have selected. Please choose another protocol to use Advanced Kill Switch.";
 
 /* macOS: Kill switch confirmation - bullet: enabling KS disables split tunneling (macOS only) */
-"_kill_switch_bullet_split_tunneling" = "This will disable split tunneling";
+"_kill_switch_bullet_split_tunneling" = "Tämä poistaa jaetun tunneloinnin käytöstä";
 
 /* iOS: Kill switch confirmation - bullet: Advanced blocking persists */
 "_kill_switch_bullet_advanced_persists" = "Internet stays blocked across reboots and intentional disconnects until you turn it off";
@@ -1019,52 +1019,52 @@
 "_kill_switch_bullet_deferred" = "Takes effect the next time you connect to VPN";
 
 /* iOS: Kill switch confirmation - primary button to enable */
-"_kill_switch_confirm_enable" = "Enable";
+"_kill_switch_confirm_enable" = "Ota käyttöön";
 
 /* iOS: Kill switch confirmation - primary button to switch to advanced */
-"_kill_switch_confirm_switch" = "Switch";
+"_kill_switch_confirm_switch" = "Vaihda";
 
 /* iOS: Warning shown before disconnecting / signing out while Advanced kill switch is active */
 "_kill_switch_advanced_disconnect_warning" = "Advanced kill switch is enabled. If you continue, you will be disconnected from the internet.";
 
 /* iOS: Home map overlay title while Advanced kill switch is blocking */
-"_kill_switch_advanced_banner_title" = "Advanced kill switch activated";
+"_kill_switch_advanced_banner_title" = "Edistynyt tappokytkin aktivoitu";
 
 /* iOS: Persistent home banner message while Advanced kill switch is blocking */
-"_kill_switch_advanced_banner_message" = "Connect to VPN to restore your internet connection.";
+"_kill_switch_advanced_banner_message" = "Yhdistä VPN:ään palauttaaksesi Internet-yhteytesi.";
 
 /* iOS: Login screen banner shown while Advanced kill switch is blocking internet */
-"_kill_switch_login_blocking" = "Advanced kill switch is blocking your internet connection.";
+"_kill_switch_login_blocking" = "Edistynyt tappokytkin estää yhteytesi Internetiin.";
 
 /* iOS: Confirmation banner shown after disabling kill switch from the login screen */
-"_kill_switch_disabled_confirmation" = "Kill switch is disabled.";
+"_kill_switch_disabled_confirmation" = "Tappokytkin ei ole käytössä.";
 
 /* iOS: Body of the alert shown when a user tries to sign in / sign up / continue as guest while Advanced kill switch is blocking */
 "_kill_switch_turn_off_to_get_online" = "To get back online you need to turn off kill switch.";
 
 /* iOS: Primary button of the kill-switch-blocking alert; turns the kill switch off */
-"_kill_switch_turn_off" = "Turn off kill switch";
+"_kill_switch_turn_off" = "Poista tappokytkin käytöstä";
 
 /* iOS: Sign-out confirmation title while Advanced kill switch is active (%@ is the username) */
-"_kill_switch_logout_advanced_title" = "Sign out from %@?";
+"_kill_switch_logout_advanced_title" = "Kirjaudutaanko ulos tililtä %@?";
 
 /* iOS: Sign-out confirmation body while Advanced kill switch is active */
 "_kill_switch_logout_advanced_body" = "You'll be disconnected from VPN.\nAdvanced kill switch is enabled. If you continue, you will be disconnected from the internet.";
 
 /* iOS: Title of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
-"_kill_switch_logout_blocking_failed_title" = "Kill switch could not stay active";
+"_kill_switch_logout_blocking_failed_title" = "Tappokytkin ei voinut pysyä aktiivisena";
 
 /* iOS: Body of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
 "_kill_switch_logout_blocking_failed_body" = "You've been signed out, but the kill switch couldn't be kept active, so your device may be exposed. Open Proton VPN and connect again to stay protected.";
 
 /* macOS: title of the confirmation shown when disconnecting with Advanced kill switch active */
-"_kill_switch_disconnect_advanced_title" = "Disconnect from VPN?";
+"_kill_switch_disconnect_advanced_title" = "Katkaistaanko VPN-yhteys?";
 
 /* macOS: title of the quit confirmation shown while a VPN session is active */
-"_kill_switch_quit_title" = "Quit Proton VPN?";
+"_kill_switch_quit_title" = "Suljetaanko Proton VPN?";
 
 /* macOS: quit confirmation body (Standard / non-advanced kill switch) */
-"_kill_switch_disconnected_from_vpn" = "You'll be disconnected from VPN.";
+"_kill_switch_disconnected_from_vpn" = "VPN-yhteytesi katkaistaan.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "Porttiohjaus";
@@ -1451,7 +1451,7 @@
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Vianetsintä";
 
-"_troubleshooting_file" = "Troubleshooting file";
+"_troubleshooting_file" = "Vianetsintätiedosto";
 
 "_troubleshoot_item_alt_title" = "Salli vaihtoehtoinen reititys";
 
@@ -1538,7 +1538,7 @@
 "_netshield_level2" = "Estä haittaohjelmia, mainoksia ja seurantoja";
 
 /* Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_netshield_level3" = "Block ads, trackers, malware, & adult content";
+"_netshield_level3" = "Estä mainokset seurannat, haittaohjelmat ja aikuissisältö";
 
 "_netshield_alert_reconnect_description_on" = "Yhteys muodostetaan uudelleen NetShield-tilan muuttamiseksi.\nHuomioi: Jos jotkin sivustot eivät lataudu, kokeile poistaa NetShield käytöstä.";
 
@@ -1619,7 +1619,7 @@
 "_quick_settings_netshield_option_level2" = "Estä haittaohjelmia, mainoksia ja seurantoja";
 
 /* Quick Settings -> Netshield: Block malware, ads, trackers, and adult content */
-"_quick_settings_netshield_option_level3" = "Block ads, trackers, malware, & adult content";
+"_quick_settings_netshield_option_level3" = "Estä mainokset seurannat, haittaohjelmat ja aikuissisältö";
 
 "_upgrade_required_securecore_description" = "Secure Core on käytettävissä Plus-tilauksella. Päivitä nyt ohjataksesi tietoliikenteesi turvallisimpien, tietosuojaystävällisissä maissa sijaitsevien palvelintemme kautta.";
 
@@ -3396,7 +3396,7 @@
 "_pcap_capture_session_capturing" = "Capturing";
 
 /* Button title on the PCAP export view. Presents a share sheet to save the file outside of the app */
-"_pcap_capture_session_export" = "Save file";
+"_pcap_capture_session_export" = "Tallenna tiedosto";
 
 /* Header of the PCAP export view */
 "_pcap_capture_session_captured" = "VPN session captured";
@@ -3405,10 +3405,10 @@
 "_pcap_capture_file_sharing" = "You can now share it with our customer support by attaching it in your conversation, or by storing it securely on [Proton Drive](%@) and sharing a public link.";
 
 /* Button title in the PCAP view. Starts the PCAP session */
-"_pcap_capture_session_start" = "Start";
+"_pcap_capture_session_start" = "Aloita";
 
 /* Button title in the PCAP view. Stops the PCAP session */
-"_pcap_capture_session_stop" = "Stop";
+"_pcap_capture_session_stop" = "Pysäytä";
 
 /* Title of an alert when user starts the PCAP session */
 "_pcap_capture_session_should_start_session" = "Start capturing VPN session?";
@@ -3420,16 +3420,16 @@
 "_pcap_capture_discard_description" = "The file will not be stored in the app. Make sure you’ve exported it before discarding.";
 
 /* Title of an alert when user tries dismissing the PCAP sheet */
-"_pcap_capture_discard_title" = "Discard file?";
+"_pcap_capture_discard_title" = "Hylätäänkö tiedosto?";
 
 /* Button title in an alert */
-"_pcap_capture_discard_button" = "Discard file";
+"_pcap_capture_discard_button" = "Hylkää tiedsto";
 
 /* Commonly used title of a button */
-"_got_it" = "Got it";
+"_got_it" = "Selvä";
 
 /* Title of an alert that presents the reason for PCAP failure */
-"_pcap_capture_low_storage" = "Not enough storage";
+"_pcap_capture_low_storage" = "Ei tarpeeksi tallennustilaa";
 
 /* Description of an alert that presents the reason for PCAP failure */
 "_pcap_capture_low_storage_action_description" = "Tarvitset vähintaan 200Mt vapaata tilaa aloittaaksesi tallennuksen";
@@ -3438,7 +3438,7 @@
 "_pcap_capture_failed" = "Capture failed";
 
 /* Title of the alert shown when the VPN server refuses one of the user's requested settings */
-"_local_agent_setting_refused_title" = "Setting not applied";
+"_local_agent_setting_refused_title" = "Asetuksia ei otettu käyttöön";
 
 /* Alert body shown when the server refuses a named setting. %@ is the setting name, e.g. NetShield */
 "_local_agent_setting_refused_message" = "%@ is not an available setting for this connection.";

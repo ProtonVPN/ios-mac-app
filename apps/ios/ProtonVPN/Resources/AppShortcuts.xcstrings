@@ -700,7 +700,7 @@
             "values" : [
               "Подключить ${applicationName}",
               "Подключить через ${applicationName}",
-              "Защитить меня с помощью ${applicationName}",
+              "Защитить с помощью ${applicationName}",
               "Подключиться к ${applicationName}",
               "Запустить ${applicationName}",
               "${applicationName} подключить"
@@ -1222,7 +1222,7 @@
               "Подключить ${applicationName} к ${country}",
               "Подключить ${applicationName} к ${city}",
               "Подключить ${applicationName} к ${state}",
-              "Защитить меня с помощью ${applicationName}",
+              "Защитить с помощью ${applicationName}",
               "Подключиться к ${applicationName}",
               "${applicationName} подключить"
             ]
