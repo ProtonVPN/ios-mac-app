@@ -48,9 +48,6 @@ public enum VPNFeatureFlagType: String, CaseIterable, FeatureFlagTypeProtocol {
     /// CustomDNS flag
     case customDNS = "CustomDNS"
 
-    /// Whether we include the "If-Modified-Since" header for v1/logicals to reduce load
-    case timestampedLogicals = "TimestampedLogicals"
-
     /// Allow Sandbox purchases on TestFlight builds.
     case allowSandboxPurchases = "AllowSandboxPurchases"
 

@@ -85,33 +85,43 @@ struct ServerListRefreshTests {
     func fetchesFullServerListOnFirstRefresh() {
         #expect(repository.getMetadata(.consecutiveSuccessfulRefreshes) == nil)
         #expect(repository.consecutiveSuccessfulRefreshes == 0)
-        #expect(repository.shouldFetchFullServerList)
+        #expect(repository.shouldFetchFullServerList(language: "en"))
+    }
+
+    @Test("Fetches the full server list when the app language changed")
+    func fetchesFullServerListAfterLanguageChange() {
+        repository.setMetadata("en", for: .translationsLanguage)
+        repository.recordSuccessfulRefresh()
+        #expect(!repository.shouldFetchFullServerList(language: "en"))
+        #expect(repository.shouldFetchFullServerList(language: "fr"))
     }
 
     @Test("Counts consecutive refreshes, wrapping back to a full server list fetch")
     func countsConsecutiveRefreshes() {
+        repository.setMetadata("en", for: .translationsLanguage)
         for expectedRefreshes in 1 ..< ServerRepository.fullServerListRefreshInterval {
             repository.recordSuccessfulRefresh()
 
             #expect(repository.consecutiveSuccessfulRefreshes == expectedRefreshes)
-            #expect(!repository.shouldFetchFullServerList)
+            #expect(!repository.shouldFetchFullServerList(language: "en"))
         }
 
         repository.recordSuccessfulRefresh()
 
         #expect(repository.consecutiveSuccessfulRefreshes == 0)
-        #expect(repository.shouldFetchFullServerList)
+        #expect(repository.shouldFetchFullServerList(language: "en"))
     }
 
     @Test("Resetting the counter forces the next refresh to fetch the full server list")
     func resettingCounterForcesFullServerListFetch() {
+        repository.setMetadata("en", for: .translationsLanguage)
         repository.recordSuccessfulRefresh()
-        #expect(!repository.shouldFetchFullServerList)
+        #expect(!repository.shouldFetchFullServerList(language: "en"))
 
         repository.resetSuccessfulRefreshes()
 
         #expect(repository.consecutiveSuccessfulRefreshes == 0)
-        #expect(repository.shouldFetchFullServerList)
+        #expect(repository.shouldFetchFullServerList(language: "en"))
     }
 
     @Test("Treats an unparsable stored counter as zero")
@@ -119,7 +129,7 @@ struct ServerListRefreshTests {
         repository.setMetadata("not a number", for: .consecutiveSuccessfulRefreshes)
 
         #expect(repository.consecutiveSuccessfulRefreshes == 0)
-        #expect(repository.shouldFetchFullServerList)
+        #expect(repository.shouldFetchFullServerList(language: "en"))
     }
 
     // MARK: - Logout
@@ -137,7 +147,7 @@ struct ServerListRefreshTests {
         #expect(repository.getMetadata(.lastModifiedFree) == nil)
         #expect(repository.getMetadata(.lastModifiedAll) == nil)
         #expect(repository.getMetadata(.consecutiveSuccessfulRefreshes) == nil)
-        #expect(repository.shouldFetchFullServerList)
+        #expect(repository.shouldFetchFullServerList(language: "en"))
     }
 
     // MARK: - Conditional requests

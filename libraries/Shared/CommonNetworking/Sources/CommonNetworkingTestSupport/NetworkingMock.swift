@@ -20,6 +20,7 @@
 // due to previous linking issues.
 #if DEBUG
     @testable import CommonNetworking
+    import Dependencies
     import Domain
     import Foundation
     import IssueReporting
@@ -245,7 +246,8 @@
         }
 
         public var locale: String {
-            NSLocale.current.language.languageCode?.identifier ?? "en_US"
+            @Dependency(\.appLanguage) var appLanguage
+            return appLanguage()
         }
 
         public var appVersion: String {

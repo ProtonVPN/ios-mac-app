@@ -19,14 +19,12 @@
 @testable import CommonNetworking
 import Dependencies
 import Domain
-import Ergonomics // CheckedFeatureFlagsRepository
 import Foundation
 import Persistence
 import PersistenceTestSupport
-import ProtonCoreFeatureFlags
 import Testing
 
-/// Serialized because the `timestampedLogicals` override is global state.
+/// Serialized because the updater posts to the process-global default notification center.
 @Suite("Server list updater", .serialized)
 struct ServerListUpdaterTests {
     // MARK: - Storing servers
@@ -127,11 +125,48 @@ struct ServerListUpdaterTests {
         #expect(recorder.writtenMetadataKeys == [.consecutiveSuccessfulRefreshes])
     }
 
-    @Test("Does not store the last modified value while timestamped logicals are disabled")
-    func skipsLastModifiedWhenFeatureFlagDisabled() {
+    @Test("Only a full response stamps the translations language")
+    func onlyFullResponsesStampTranslationsLanguage() {
         let recorder = RepositoryRecorder()
-        recorder.update(servers: [], scope: .freeTier, lastModifiedAt: "A few moments ago")
-        #expect(recorder.writtenMetadataKeys == [.consecutiveSuccessfulRefreshes])
+        recorder.update(servers: [], freeServersOnly: true, lastModifiedAt: nil, language: "fr")
+        // The refresh policy forces a full fetch after a language change, so a free tier response can
+        // only arrive in the language already stored.
+        #expect(recorder.metadata[.translationsLanguage] == nil)
+
+        recorder.update(servers: [], freeServersOnly: false, lastModifiedAt: nil, language: "fr")
+        #expect(recorder.metadata[.translationsLanguage] == "fr")
+    }
+
+    // MARK: - Request baseline
+
+    @Test("Provides the last modified value while the stored language matches the request's")
+    func providesBaselineWhenLanguageMatches() {
+        let repository = makeRepository(metadata: [
+            .lastModifiedFree: "A few moments ago",
+            .translationsLanguage: "fr",
+        ])
+        #expect(repository.logicalsRequestBaseline(freeTier: true, language: "fr") == "A few moments ago")
+    }
+
+    @Test("Provides no baseline after a language change, so the response arrives in full")
+    func providesNoBaselineAfterLanguageChange() {
+        let repository = makeRepository(metadata: [
+            .lastModifiedFree: "A few moments ago",
+            .translationsLanguage: "en",
+        ])
+        #expect(repository.logicalsRequestBaseline(freeTier: true, language: "fr") == nil)
+    }
+
+    @Test("Provides no baseline when no translations language was recorded")
+    func providesNoBaselineWithoutRecordedLanguage() {
+        let repository = makeRepository(metadata: [.lastModifiedAll: "A few moments ago"])
+        #expect(repository.logicalsRequestBaseline(freeTier: false, language: "en") == nil)
+    }
+
+    private func makeRepository(metadata: [DatabaseMetadata.Key: String]) -> ServerRepository {
+        var repository = ServerRepository.empty()
+        repository.getMetadata = { metadata[$0] }
+        return repository
     }
 }
 
@@ -143,13 +178,8 @@ private final class RepositoryRecorder: @unchecked Sendable {
     private(set) var maxTiers: [Int] = []
     private(set) var writtenMetadataKeys: [DatabaseMetadata.Key] = []
     var metadata: [DatabaseMetadata.Key: String] = [:]
-    var enableTimestampedLogicals = false
 
-    init(enableTimestampedLogicals: Bool = false) {
-        self.enableTimestampedLogicals = enableTimestampedLogicals
-    }
-
-    func update(servers: [VPNServer], scope: ServerListScope, lastModifiedAt: String?) {
+    func update(servers: [VPNServer], freeServersOnly: Bool, lastModifiedAt: String?, language: String = "en") {
         var repository = ServerRepository.empty()
         repository.replaceServers = { [self] servers, maxTier in
             replacedServerIDs.append(servers.map(\.id))
@@ -164,16 +194,12 @@ private final class RepositoryRecorder: @unchecked Sendable {
 
         withDependencies {
             $0.serverRepository = repository
-            if enableTimestampedLogicals {
-                $0.featureFlags = .enabling(VPNFeatureFlagType.timestampedLogicals)
-            } else {
-                $0.featureFlags = .enabling()
-            }
         } operation: {
             ServerListUpdater.liveValue.update(
                 servers: servers,
-                scope: scope,
-                lastModifiedAt: lastModifiedAt
+                freeServersOnly: freeServersOnly,
+                lastModifiedAt: lastModifiedAt,
+                language: language
             )
         }
     }

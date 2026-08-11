@@ -41,21 +41,23 @@ public extension ShortcutItem {
     var shortcutItem: UIApplicationShortcutItem {
         switch self {
         case .connect:
-            UIApplicationShortcutItem(
+            return UIApplicationShortcutItem(
                 type: type,
                 localizedTitle: "Connect",
                 localizedSubtitle: "Connect to VPN",
                 icon: UIApplicationShortcutIcon(systemImageName: "lock.fill")
             )
         case let .connectToFirstPinnedRecent(recent):
-            UIApplicationShortcutItem(
+            // The recent carries display fields the app keeps current with the server list.
+            let location = recent.displayLocation
+            return UIApplicationShortcutItem(
                 type: type,
-                localizedTitle: "Connect to \(recent.connection.location.text(locale: .current))",
-                localizedSubtitle: recent.connection.location.subtext(locale: .current),
+                localizedTitle: "Connect to \(location.text(locale: .current))",
+                localizedSubtitle: location.subtext(locale: .current),
                 icon: UIApplicationShortcutIcon(systemImageName: "pin.fill")
             )
         case .disconnect:
-            UIApplicationShortcutItem(
+            return UIApplicationShortcutItem(
                 type: type,
                 localizedTitle: "Disconnect",
                 localizedSubtitle: "Disconnect from VPN",

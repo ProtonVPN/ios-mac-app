@@ -20,6 +20,7 @@ import Dependencies
 import Domain
 import Foundation
 import OrderedCollections
+import Persistence
 import VPNAppCore
 
 public extension OrderedSet<RecentConnection> {
@@ -50,7 +51,7 @@ public extension OrderedSet<RecentConnection> {
         ]).first
     }
 
-    mutating func updateList(with spec: ConnectionSpec) {
+    mutating func updateList(with spec: ConnectionSpec, display: RecentConnection.ServerDisplay? = nil) {
         var oldRecent: RecentConnection?
         if let index = index(for: spec) {
             oldRecent = remove(at: index)
@@ -61,11 +62,27 @@ public extension OrderedSet<RecentConnection> {
             pinnedDate: oldRecent?.pinnedDate,
             underMaintenance: oldRecent?.underMaintenance ?? false,
             connectionDate: date(),
-            connection: spec
+            connection: spec,
+            serverDisplay: display
         )
 
         insert(recent, at: 0)
         self = sanitized()
+    }
+
+    /// Rewrites each exact-server recent's display fields from the current server list, so stored recents
+    /// follow the app language and server renames. The app calls this when the server list updates.
+    func refreshingServerDisplay(from repository: ServerRepository) -> Self {
+        Self(map { recent in
+            guard let id = recent.connection.location.logicalID,
+                  let logical = repository.getFirstServer(filteredBy: [.logicalID(id)], orderedBy: .fastest)?.logical
+            else {
+                return recent
+            }
+            var recent = recent
+            recent.serverDisplay = RecentConnection.ServerDisplay(logical: logical)
+            return recent
+        })
     }
 
     mutating func unpin(recent: RecentConnection) {
@@ -78,7 +95,12 @@ public extension OrderedSet<RecentConnection> {
 
     private mutating func updatePin(recent: RecentConnection, pinnedDate: Date?) {
         var recent = recent
-        remove(recent)
+        // Match by identity rather than value: the stored copy's display fields can be newer than the
+        // one the row handed us.
+        if let index = firstIndex(where: { $0.id == recent.id }) {
+            recent.serverDisplay = self[index].serverDisplay
+            remove(at: index)
+        }
         recent.pinnedDate = pinnedDate
         if pinnedDate != nil, let index = lastIndex(where: { $0.pinned }) { // insert it exactly where it should be
             insert(recent, at: index)

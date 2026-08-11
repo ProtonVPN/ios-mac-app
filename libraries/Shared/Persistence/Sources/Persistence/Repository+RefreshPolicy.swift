@@ -43,9 +43,12 @@ public extension ServerRepository {
     ///
     /// Returning `false` means we limit the maximum server tier received to the current tier. The full server list is
     /// fetched every ``fullServerListRefreshInterval``-th time, including the first time: when the database is cleared
-    /// the counter is back to zero, so the full server list is fetched again.
-    var shouldFetchFullServerList: Bool {
+    /// the counter is back to zero, so the full server list is fetched again. The full list is also fetched whenever
+    /// the app language changed since the stored translations arrived, so every stored name comes back in the new
+    /// language at once.
+    func shouldFetchFullServerList(language: String) -> Bool {
         (consecutiveSuccessfulRefreshes % Self.fullServerListRefreshInterval) == 0
+            || getMetadata(.translationsLanguage) != language
     }
 
     /// Advances the refresh counter, wrapping back to zero on every ``fullServerListRefreshInterval``-th refresh.

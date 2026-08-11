@@ -145,8 +145,9 @@ enum VpnApiClientKey: DependencyKey {
                 .uniqued
 
             // The write side of this contract lives in `ServerListUpdater`
+            @Dependency(\.appLanguage) var appLanguage
             let shouldSendLastModifiedValue = VPNFeatureFlagType.timestampedLogicals.enabled
-            let lastModified = serverRepository.getMetadata(.lastModified(for: scope))
+            let lastModified = serverRepository.getMetadata(.lastModified(for: scope), language: requestLanguage)
 
             networking.request(
                 LogicalsRequest(
@@ -170,7 +171,8 @@ enum VpnApiClientKey: DependencyKey {
                         result = .success(.modified(
                             at: lastModified,
                             servers: servers.map(\.vpnServer),
-                            scope: scope
+                            scope: scope,
+                            language: language
                         ))
 
                     case let .unreadable(receivedServerCount):

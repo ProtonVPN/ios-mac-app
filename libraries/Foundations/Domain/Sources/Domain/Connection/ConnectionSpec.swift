@@ -119,6 +119,38 @@ public extension ConnectionSpec.Location {
             nil
         }
     }
+
+    /// The logical server ID this location pins down, when it names one exact server.
+    var logicalID: String? {
+        guard case let .exact(_, id, _, _, _) = self else {
+            return nil
+        }
+        return id
+    }
+
+    /// The same location with its display fields replaced by the stored ones the app keeps for it.
+    ///
+    /// For display only. The result can carry a translated subregion, which must never be persisted or
+    /// matched against the server list. Identity fields, the logical ID and the region code, stay
+    /// unchanged, as does everything when there is nothing stored.
+    func applying(_ display: RecentConnection.ServerDisplay?) -> Self {
+        guard let display, case let .exact(tier, id, number, subregion, regionCode) = self else {
+            return self
+        }
+        return .exact(
+            tier,
+            logicalID: id,
+            number: display.number ?? number,
+            subregion: display.city ?? subregion,
+            regionCode: regionCode
+        )
+    }
+
+    /// Bridges ``LogicalProvider``'s display refresh until the stored fields on the recents replace it.
+    /// The bridge leaves together with the provider.
+    func refreshingDisplayFields(from logical: Logical) -> Self {
+        applying(ServerDisplay(logical: logical))
+    }
 }
 
 #if DEBUG

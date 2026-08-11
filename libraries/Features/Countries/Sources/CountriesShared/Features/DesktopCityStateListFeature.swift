@@ -97,10 +97,7 @@ public struct DesktopCityStateListFeature: Sendable {
             case let .serversList(.presented(.connect(server))):
                 return .send(.connectToServer(server))
             case let .connectToServer(server):
-                let location = CityStateConnectionSpecFactory.serverLocation(
-                    for: server,
-                    subregion: state.groupInfo.kind.name
-                )
+                let location = CityStateConnectionSpecFactory.serverLocation(for: server.logical)
                 return .send(.connect(location: location, trigger: .countriesServer))
             case .serversList:
                 return .none

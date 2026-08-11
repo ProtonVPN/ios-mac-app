@@ -38,6 +38,16 @@ public final class LocalizationUtility {
         namesToShorten[name] ?? name
     }
 
+    /// The language code of the user's preferred language for this app: the per-app language when one is
+    /// set, the system language otherwise. Country names derive from the same list, so a request made
+    /// with this code brings back translated names in the language of the names around them.
+    public var preferredLanguageCode: String {
+        guard let preferred = Self.localeResolver.preferredLanguages.first else {
+            return "en_US"
+        }
+        return Locale(identifier: preferred).language.languageCode?.identifier ?? "en_US"
+    }
+
     /// First, try to get the user's first preferred language, and return the country name for that language.
     ///
     /// - If we can't find the country name for the user's first language, try finding the country name for a more standard

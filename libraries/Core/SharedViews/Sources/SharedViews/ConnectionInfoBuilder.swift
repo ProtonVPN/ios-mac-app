@@ -36,6 +36,7 @@ public struct ConnectionInfoBuilder {
     }
 
     @Dependency(\.locale) private var locale
+    @Dependency(\.logicalProvider) private var logicalProvider
     @SharedReader(.userTier) private var userTier: VpnTier?
 
     public init(intent: ConnectionSpec, server: Server?, withServerNumber: Bool) {
@@ -46,7 +47,9 @@ public struct ConnectionInfoBuilder {
 
     private var subheaderString: String? {
         guard let server else {
-            return location.subtext(locale: locale)
+            // A bare intent's stored display fields date from connect time. Refresh them from the
+            // current server list so the city follows the app language and server renames.
+            return logicalProvider.refreshedDisplayFields(for: location).subtext(locale: locale)
         }
         switch location {
         case .any(.fastest):

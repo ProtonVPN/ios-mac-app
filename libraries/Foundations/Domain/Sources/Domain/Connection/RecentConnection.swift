@@ -19,6 +19,24 @@
 import Foundation
 
 public struct RecentConnection: Equatable, Hashable, Sendable {
+    /// Display fields for the one server an exact-server recent names. Captured from the connected
+    /// logical when the recent is written, and rewritten by the app when the server list updates, so the
+    /// city follows the app language and server renames while the spec keeps its canonical fields.
+    public struct ServerDisplay: Codable, Equatable, Hashable, Sendable {
+        public let city: String?
+        public let number: Int?
+
+        public init(city: String?, number: Int?) {
+            self.city = city
+            self.number = number
+        }
+
+        public init(logical: Logical) {
+            self.city = logical.translatedCity ?? logical.city
+            self.number = logical.serverNameComponents.sequence
+        }
+    }
+
     public var pinnedDate: Date?
     public var underMaintenance: Bool
     public let connectionDate: Date
@@ -28,12 +46,20 @@ public struct RecentConnection: Equatable, Hashable, Sendable {
     }
 
     public let connection: ConnectionSpec
+    public var serverDisplay: ServerDisplay?
 
-    public init(pinnedDate: Date?, underMaintenance: Bool, connectionDate: Date, connection: ConnectionSpec) {
+    public init(
+        pinnedDate: Date?,
+        underMaintenance: Bool,
+        connectionDate: Date,
+        connection: ConnectionSpec,
+        serverDisplay: ServerDisplay? = nil
+    ) {
         self.pinnedDate = pinnedDate
         self.underMaintenance = underMaintenance
         self.connectionDate = connectionDate
         self.connection = connection
+        self.serverDisplay = serverDisplay
     }
 
     public static var defaultFastest: Self {
@@ -53,6 +79,13 @@ public struct RecentConnection: Equatable, Hashable, Sendable {
 extension RecentConnection: Identifiable {
     public var id: String {
         "\(connection)"
+    }
+}
+
+public extension RecentConnection {
+    /// The connection's location with its stored display fields applied, for rendering.
+    var displayLocation: ConnectionSpec.Location {
+        connection.location.applying(serverDisplay)
     }
 }
 

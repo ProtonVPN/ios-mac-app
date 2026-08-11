@@ -622,26 +622,7 @@ public struct CountriesFeature {
 
     /// Builds connection target for explicit server selections from country detail.
     private func connectionSpec(for server: VPNServer) -> ConnectionSpec {
-        if case let .secureCore(entryCountryCode) = server.logical.kind {
-            return .init(
-                location: .secureCore(.hop(
-                    to: server.logical.exitCountryCode,
-                    via: entryCountryCode
-                )),
-                features: []
-            )
-        }
-
-        return ConnectionSpec(
-            location: .exact(
-                server.logical.tier.isFree ? .free : .paid,
-                logicalID: server.logical.id,
-                number: server.logical.serverNameComponents.sequence,
-                subregion: server.logical.city,
-                regionCode: server.logical.exitCountryCode
-            ),
-            features: []
-        )
+        .init(location: CityStateConnectionSpecFactory.serverLocation(for: server.logical), features: [])
     }
 
     private func connectionSpec(for profile: Profile) -> ConnectionSpec {

@@ -27,7 +27,8 @@ import Persistence
 ///
 /// This is the write side of the conditional request contract that ``VpnApiService`` reads when it builds a
 /// `LogicalsRequest`: it records the response's last modified timestamp so that subsequent requests can be answered
-/// with a cheap "not modified". It also broadcasts ``ServerListUpdateNotification`` so observers reload their servers.
+/// with a cheap "not modified", and the language the response's translations arrived in so that a language change
+/// forces a full refresh. It also broadcasts ``ServerListUpdateNotification`` so observers reload their servers.
 ///
 /// Everything else about storing servers - purging stale ones, tracking when to fetch the full list again - belongs to
 /// ``ServerRepository``, so reach for `@Dependency(\.serverRepository)` directly rather than widening this client.
@@ -41,12 +42,19 @@ public struct ServerListUpdater: Sendable {
     ///   - scope: Which servers were asked for. A free tier response leaves the paid servers untouched, since it says
     ///   nothing about them, and each scope records its own conditional request baseline.
     ///   - lastModifiedAt: The response's last modified timestamp, used for subsequent conditional requests.
-    public var update: @Sendable (_ servers: [VPNServer], _ scope: ServerListScope, _ lastModifiedAt: String?) -> Void
+    ///   - language: The `x-pm-locale` language the request was made with, which is the language the response's
+    ///   translated names arrived in.
+    public var update: @Sendable (
+        _ servers: [VPNServer],
+        _ scope: ServerListScope,
+        _ lastModifiedAt: String?,
+        _ language: String
+    ) -> Void
 }
 
 extension ServerListUpdater: DependencyKey {
     public static let liveValue = ServerListUpdater(
-        update: { servers, scope, lastModifiedAt in
+        update: { servers, scope, lastModifiedAt, language in
             @Dependency(\.serverRepository) var repository
 
             // If we're only fetching a subset of servers up to a certain tier, we must not purge stale servers above it
@@ -77,6 +85,11 @@ extension ServerListUpdater: DependencyKey {
             if VPNFeatureFlagType.timestampedLogicals.enabled, let lastModifiedAt {
                 repository.recordServerList(scope: scope, lastModifiedAt: lastModifiedAt)
             }
+            if !freeServersOnly {
+                // The refresh policy forces a full fetch after a language change, so free tier requests
+                // only go out while the stored language matches. Full responses alone stamp the language.
+                repository.setMetadata(language, for: .translationsLanguage)
+            }
 
             NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
         }
@@ -91,7 +104,7 @@ extension ServerListUpdater: DependencyKey {
     public extension ServerListUpdater {
         /// Drops server list updates on the floor, for tests that drive a refresh but don't assert on its servers.
         static var noOp: ServerListUpdater {
-            ServerListUpdater(update: { _, _, _ in })
+            ServerListUpdater(update: { _, _, _, _ in })
         }
     }
 #endif
@@ -100,5 +113,19 @@ public extension DependencyValues {
     var serverListUpdater: ServerListUpdater {
         get { self[ServerListUpdater.self] }
         set { self[ServerListUpdater.self] = newValue }
+    }
+}
+
+public extension ServerRepository {
+    /// The `If-Modified-Since` baseline for a logicals request made in `language`.
+    ///
+    /// This is the read side of the conditional request contract that ``ServerListUpdater`` writes. When the
+    /// stored translations arrived in a different language, there is no baseline: the request must skip the
+    /// condition so the response arrives in full, in the current language.
+    func logicalsRequestBaseline(freeTier: Bool, language: String) -> String? {
+        guard getMetadata(.translationsLanguage) == language else {
+            return nil
+        }
+        return getMetadata(.lastModified(freeTier: freeTier))
     }
 }

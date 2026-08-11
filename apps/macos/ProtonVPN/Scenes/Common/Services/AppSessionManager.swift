@@ -155,6 +155,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func retrieveProperties() async throws {
         @Dependency(\.serverRepository) var serverRepository
         @Dependency(\.serverListUpdater) var serverListUpdater
+        @Dependency(\.appLanguage) var appLanguage
         let measuresLocation = isDisconnectedForPropertiesRefresh
         guard let properties = try await getVPNProperties(measuresLocation: measuresLocation) else {
             serverRepository.resetSuccessfulRefreshes()
@@ -162,11 +163,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
 
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: properties.vpnCredentials)
-        if case let .modified(lastModified, servers, scope) = properties.serverInfo {
+        if case let .modified(lastModified, servers, scope, language) = properties.serverInfo {
             serverListUpdater.update(
                 servers: servers,
                 scope: scope,
-                lastModifiedAt: lastModified
+                lastModifiedAt: lastModified,
+                language: language
             )
         }
 
@@ -222,7 +224,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         let location = userLocation?.location
 
         @Dependency(\.serverRepository) var serverRepository
-        let shouldRefreshServersAccordingToUserTier = !serverRepository.shouldFetchFullServerList
+        @Dependency(\.appLanguage) var appLanguage
+        let shouldRefreshServersAccordingToUserTier = !serverRepository.shouldFetchFullServerList(language: appLanguage())
         do {
             return try await vpnApiClient.vpnProperties(
                 isDisconnected: measuresLocation,

@@ -323,8 +323,8 @@ extension CoreNetworking: APIServiceDelegate {
     }
 
     public var locale: String {
-        @Dependency(\.locale) var locale
-        return locale.language.languageCode?.identifier ?? "en_US"
+        @Dependency(\.appLanguage) var appLanguage
+        return appLanguage()
     }
 
     public var appVersion: String {

@@ -16,11 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import ComposableArchitecture
 import Connection
 import Domain
 import Foundation
 import OrderedCollections
+import Persistence
 import SwiftUI
 import VPNAppCore
 import WidgetKit
@@ -57,7 +59,8 @@ public struct RecentsFeature {
     }
 
     public enum Action {
-        case connectionEstablished(ConnectionSpec)
+        case connectionEstablished(ConnectionSpec, display: RecentConnection.ServerDisplay?)
+        case serverListUpdated
         case pin(RecentConnection)
         case unpin(RecentConnection)
         case remove(RecentConnection)
@@ -86,29 +89,48 @@ public struct RecentsFeature {
         Reduce { state, action in
             switch action {
             case .watchConnectionStatus:
-                return .publisher {
-                    state
-                        .$connectionState
-                        .publisher
-                        .removeDuplicates()
-                        .receive(on: UIScheduler.shared)
-                        .map(Action.newConnectionState)
-                }
+                return .merge(
+                    .publisher {
+                        state
+                            .$connectionState
+                            .publisher
+                            .removeDuplicates()
+                            .receive(on: UIScheduler.shared)
+                            .map(Action.newConnectionState)
+                    },
+                    .publisher {
+                        NotificationCenter.default
+                            .publisher(for: ServerListUpdateNotification.name)
+                            .receive(on: UIScheduler.shared)
+                            .map { _ in Action.serverListUpdated }
+                    }
+                )
                 .cancellable(id: CancelId.watchConnectionStatus)
 
             case let .upsellTapped(type):
                 return .send(.delegate(.upsellTapped(type)))
 
             case let .newConnectionState(connectionState):
-                guard case let .connected(tunnelConfig, _) = connectionState else { return .none }
-                return .send(.connectionEstablished(tunnelConfig.connectionSpec))
+                guard case let .connected(tunnelConfig, connectionData) = connectionState else { return .none }
+                return .send(.connectionEstablished(
+                    tunnelConfig.connectionSpec,
+                    display: RecentConnection.ServerDisplay(logical: connectionData.currentPeer.logical)
+                ))
 
-            case let .connectionEstablished(spec):
+            case let .connectionEstablished(spec, display):
                 withAnimation {
-                    state.$recentConnections.withLock { $0?.updateList(with: spec) }
+                    state.$recentConnections.withLock { $0?.updateList(with: spec, display: display) }
                     WidgetCenter.shared.reloadAllTimelines()
                 }
 
+                return .none
+
+            case .serverListUpdated:
+                // The list changed under the stored recents: rewrite their display fields so the city
+                // follows the app language and server renames, then hand the widget the fresh copies.
+                @Dependency(\.serverRepository) var serverRepository
+                state.$recentConnections.withLock { $0 = $0?.refreshingServerDisplay(from: serverRepository) }
+                WidgetCenter.shared.reloadAllTimelines()
                 return .none
 
             case let .pin(recent):

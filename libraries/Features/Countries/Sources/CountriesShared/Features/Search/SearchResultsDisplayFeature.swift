@@ -224,7 +224,7 @@ public extension SearchResultRow {
             tier: server.tier == .free ? .free : .paid,
             logicalID: server.id,
             number: nil,
-            subregion: nil,
+            subregion: server.cityName,
             exitCountryCode: server.exitCountryCode,
             entryCountryCode: server.entryCountryCode
         )

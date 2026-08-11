@@ -17,6 +17,8 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(path: "../Persistence"),
+
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Strings"),
 
@@ -34,6 +36,7 @@ let package = Package(
             name: "ConnectionInventory",
             dependencies: [
                 "Domain",
+                "Persistence",
                 "SharedViews",
                 "Strings",
                 .product(name: "VPNAppCore", package: "NEHelper"),
@@ -51,6 +54,7 @@ let package = Package(
                 "ConnectionInventory",
                 "Domain",
                 .product(name: "OrderedCollections", package: "swift-collections"),
+                .product(name: "PersistenceTestSupport", package: "Persistence"),
             ]
         ),
     ]

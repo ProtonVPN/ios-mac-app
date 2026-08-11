@@ -26,21 +26,27 @@ public enum CityStateConnectionSpecFactory {
         .init(location: location, features: features)
     }
 
-    public static func serverLocation(for server: ServerInfo, subregion: String) -> ConnectionSpec.Location {
-        let entryCountryCode: String? = if case let .secureCore(code) = server.logical.kind { code } else { nil }
+    /// Builds the location for a single server the user picked out of a list.
+    ///
+    /// Every field comes from the logical itself. `subregion` is the canonical city name, never the
+    /// translated one: the server selector matches it against the city column when the logical ID is
+    /// missing, and recents compare locations for identity.
+    public static func serverLocation(for logical: Logical) -> ConnectionSpec.Location {
+        if case let .secureCore(entryCountryCode) = logical.kind {
+            return .secureCore(.hop(to: logical.exitCountryCode, via: entryCountryCode))
+        }
 
-        return serverLocation(
-            tier: .paid,
-            logicalID: server.logical.id,
-            number: server.logical.serverNameComponents.sequence,
-            subregion: subregion,
-            exitCountryCode: server.logical.exitCountryCode,
-            entryCountryCode: entryCountryCode
+        return .exact(
+            logical.tier.isFree ? .free : .paid,
+            logicalID: logical.id,
+            number: logical.serverNameComponents.sequence,
+            subregion: logical.city,
+            regionCode: logical.exitCountryCode
         )
     }
 
-    /// Builds the location for a single server the user picked out of a list.
-    /// Pass the entry country code when the server is a Secure Core, `nil` otherwise.
+    /// Builds the location for a server selection when only search index data is available.
+    /// Prefer ``serverLocation(for:)`` wherever a `Logical` is available.
     public static func serverLocation(
         tier: ConnectionSpec.Server,
         logicalID: String?,
