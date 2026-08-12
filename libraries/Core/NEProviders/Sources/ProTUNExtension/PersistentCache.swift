@@ -59,6 +59,21 @@ final class SecurePersistentCache: PersistentCache {
         }
     }
 
+    func remove(key: CacheKey) {
+        @Dependency(\.lightKeychain) var lightKeychain
+
+        let status = lightKeychain.removePassword(service: service, account: key.keychainAccount)
+
+        switch status {
+        case errSecSuccess:
+            Logger.adapter.debug("Removed Keychain item for \(key, privacy: .public)")
+        case errSecItemNotFound:
+            Logger.adapter.debug("No Keychain item to remove for \(key, privacy: .public)")
+        default:
+            Logger.adapter.error("Failed to remove Keychain item for \(key, privacy: .public): \(describe(status), privacy: .public)")
+        }
+    }
+
     func get(key: CacheKey) -> Data? {
         @Dependency(\.lightKeychain) var lightKeychain
 
@@ -72,7 +87,7 @@ final class SecurePersistentCache: PersistentCache {
         return data
     }
 
-    func clear() {
+    func clearAll() {
         @Dependency(\.lightKeychain) var lightKeychain
 
         let status = lightKeychain.clear(service: service)
