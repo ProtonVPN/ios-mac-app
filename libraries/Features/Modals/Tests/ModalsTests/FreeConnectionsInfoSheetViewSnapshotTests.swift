@@ -1,5 +1,5 @@
 //
-//  Created on 12/03/2026 by Max Kupetskyi.
+//  Created on 10/04/2026 by Max Kupetskyi.
 //
 //  Copyright (c) 2025 Proton AG
 //
@@ -16,10 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if os(iOS)
+#if os(macOS)
     import ComposableArchitecture
-    @testable import Countries_iOS
-    import CountriesShared
+    import ModalsShared
     import SnapshotTesting
     import SwiftUI
     import System
@@ -28,27 +27,38 @@
 
     @MainActor
     @Suite(.serialized, .snapshots(record: .missing))
-    struct FreeConnectionsViewSnapshotTests {
-        @Test("Free connections with countries")
-        func freeConnectionsViewFilled() {
+    struct FreeConnectionsInfoSheetViewSnapshotTests {
+        @Test("Free connections info sheet")
+        func freeConnectionsInfoSheetViewDefault() {
+            let countries: IdentifiedArrayOf<FreeConnectionsFeature.State.Country> = [
+                FreeConnectionsFeature.State.Country(code: "US", name: "United States"),
+                .init(code: "JP", name: "Japan"),
+                .init(code: "NL", name: "Netherlands"),
+                .init(code: "RO", name: "Romania"),
+                .init(code: "PL", name: "Poland"),
+                .init(code: "DE", name: "Germany"),
+            ]
             let view = FreeConnectionsView(
-                store: Store(initialState: .mock) {
+                store: Store(
+                    initialState: .init(countries: countries)
+                ) {
                     EmptyReducer()
                 }
             )
             .background(Color(.background))
             .environment(\.colorScheme, .dark)
 
-            assertSnapshot(of: view, as: .image(layout: .device(config: .iPhone13Mini)))
+            let nsView = NSHostingView(rootView: view)
+            assertSnapshot(of: nsView, as: .image(size: CGSize(width: 520, height: 500)))
         }
     }
 
-    extension FreeConnectionsViewSnapshotTests: @preconcurrency AssertSnapshot {
+    extension FreeConnectionsInfoSheetViewSnapshotTests: @preconcurrency AssertSnapshot {
         func snapshotDirectory() -> String? {
             if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
                 let path = FilePath(String(describing: #filePath))
                 let suite = path.lastComponent?.stem ?? ""
-                return "\(projectDir)/libraries/Features/Countries/Tests/CountriesTests/__Snapshots__/\(suite)"
+                return "\(projectDir)/libraries/Features/Modals/Tests/ModalsTests/__Snapshots__/\(suite)"
             } else {
                 return nil
             }

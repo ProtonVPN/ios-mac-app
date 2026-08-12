@@ -1,7 +1,7 @@
 //
 //  Created on 12/03/2026 by Max Kupetskyi.
 //
-//  Copyright (c) 2025 Proton AG
+//  Copyright (c) 2026 Proton AG
 //
 //  Proton VPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -19,12 +19,17 @@
 import ComposableArchitecture
 import Foundation
 
+/// Lists the countries a free user can connect to, and offers an upgrade for the rest of the network.
+///
+/// Home presents it when a free user taps the connection card, Countries when they tap the info button next to
+/// the free connections. The parent owns both the presentation and the upsell that `upgradeTapped` asks for.
 @Reducer
 public struct FreeConnectionsFeature: Sendable {
     public init() {}
 
     @ObservableState
     public struct State: Equatable, Sendable {
+        /// One country in the list, already named in the user's language.
         public struct Country: Equatable, Identifiable, Sendable {
             public let code: String
             public let name: String
@@ -47,6 +52,7 @@ public struct FreeConnectionsFeature: Sendable {
     }
 
     public enum Action {
+        /// The user tapped the banner. The parent presents the upsell.
         case upgradeTapped
     }
 

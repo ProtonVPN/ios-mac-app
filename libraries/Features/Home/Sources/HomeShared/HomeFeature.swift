@@ -28,7 +28,9 @@ import Dependencies
 import Domain
 import ExtensionSync
 import Foundation
+import Localization
 import ModalsServices
+import ModalsShared
 import NetShield
 import Payments
 import PaymentsShared
@@ -57,7 +59,7 @@ public struct HomeFeature {
     public enum Destination {
         case changeServer(ChangeServerFeature)
         case connectionDetails(ConnectionScreenFeature)
-        case freeConnectionsInfo(FreeConnectionInfoFeature)
+        case freeConnectionsInfo(FreeConnectionsFeature)
         case defaultConnection(DefaultConnectionFeature)
         case whatsNew(WhatsNewPresenterFeature)
         case payments(PaymentsMainFeature)
@@ -117,7 +119,6 @@ public struct HomeFeature {
         case connectionFailed(ConnectionError)
         case sharedProperties(SharedPropertiesFeature.Action)
         case connectionDetails(ConnectionScreenFeature.Action)
-        case freeConnectionsInfo(FreeConnectionInfoFeature.Action)
         case announcementBanner(AnnouncementBannerFeature.Action)
 
         case whatsNewChecker(WhatsNewCheckerFeature.Action)
@@ -156,6 +157,21 @@ public struct HomeFeature {
         case .more:
             .customization
         }
+    }
+
+    /// The countries a free user can reach, one entry per country, in the order the repository lists their servers.
+    private func freeCountries() -> IdentifiedArrayOf<FreeConnectionsFeature.State.Country> {
+        let servers = serverRepository.getServers(
+            filteredBy: [.tier(.exact(tier: .free))],
+            orderedBy: .nameAscending
+        )
+        let countries = servers.map(\.logical.exitCountryCode).map { code in
+            FreeConnectionsFeature.State.Country(
+                code: code,
+                name: LocalizationUtility.default.countryName(forCode: code) ?? Localizable.unavailable
+            )
+        }
+        return IdentifiedArray(countries, uniquingIDsWith: { first, _ in first })
     }
 
     public var body: some Reducer<State, Action> {
@@ -308,14 +324,7 @@ private extension HomeFeature {
                     if let detailsState = state.connectionState.connectionScreenFeatureState() {
                         state.destination = .connectionDetails(detailsState)
                     } else if userTier.isFree {
-                        let freeCountries = Array(Set(
-                            serverRepository.getServers(
-                                filteredBy: [.tier(.exact(tier: .free))],
-                                orderedBy: .nameAscending
-                            ).map(\.logical.exitCountryCode)
-                        ))
-
-                        state.destination = .freeConnectionsInfo(.init(countryCodes: freeCountries))
+                        state.destination = .freeConnectionsInfo(.init(countries: freeCountries()))
                     }
                     return .none
                 case .changeServerButtonTapped:
@@ -347,12 +356,11 @@ private extension HomeFeature {
                 case .changeServerButtonTapped:
                     return .send(.changeServer)
                 }
-            case .destination(.presented(.freeConnectionsInfo(.dismissButtonTapped))),
-                 .destination(.presented(.defaultConnection(.preferenceSelected))),
+            case .destination(.presented(.defaultConnection(.preferenceSelected))),
                  .destination(.presented(.whatsNew(.dismissItem))):
                 state.destination = nil
                 return .none
-            case .destination(.presented(.freeConnectionsInfo(.upgradeButtonTapped))):
+            case .destination(.presented(.freeConnectionsInfo(.upgradeTapped))):
                 state.destination = .payments(.init(upsellModalType: .allCountries))
                 return .none
             case .destination(.presented(.payments(.delegate(.completed)))),

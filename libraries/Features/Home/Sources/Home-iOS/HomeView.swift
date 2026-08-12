@@ -25,6 +25,7 @@ import Domain
 import Ergonomics
 import HomeShared
 import Modals
+import ModalsShared
 import Payments
 import PCAP
 import SharedViews
@@ -140,7 +141,7 @@ private extension View {
 
     func freeConnectionsInfoSheet(store: Bindable<StoreOf<HomeFeature>>) -> some View {
         sheet(item: store.scope(state: \.destination?.freeConnectionsInfo, action: \.destination.freeConnectionsInfo)) { store in
-            FreeConnectionInfoModal(store: store)
+            FreeConnectionsView(store: store)
         }
     }
 

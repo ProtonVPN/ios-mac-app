@@ -23,9 +23,11 @@ import Domain
 import DomainTestSupport
 import Foundation
 @testable import HomeShared
+import Localization
 import PaymentsShared
 import Persistence
 import PersistenceTestSupport
+import Strings
 import Testing
 import VPNAppCore
 
@@ -130,7 +132,13 @@ struct HomeFeatureTests {
         }
 
         await store.send(.connectionCard(.delegate(.tapAction))) {
-            $0.destination = .freeConnectionsInfo(.init(countryCodes: [Logical.mock.exitCountryCode]))
+            $0.destination = .freeConnectionsInfo(.init(countries: [
+                .init(
+                    code: Logical.mock.exitCountryCode,
+                    name: LocalizationUtility.default.countryName(forCode: Logical.mock.exitCountryCode)
+                        ?? Localizable.unavailable
+                ),
+            ]))
         }
     }
 
@@ -144,18 +152,18 @@ struct HomeFeatureTests {
 
     @Test("Upgrading from the free countries list swaps in the upsell")
     func freeCountriesUpgradeOpensTheUpsell() async {
-        let store = makeStore(destination: .freeConnectionsInfo(.init(countryCodes: ["CH"])))
+        let store = makeStore(destination: .freeConnectionsInfo(.mock))
 
-        await store.send(.destination(.presented(.freeConnectionsInfo(.upgradeButtonTapped)))) {
+        await store.send(.destination(.presented(.freeConnectionsInfo(.upgradeTapped)))) {
             $0.destination = .payments(.init(upsellModalType: .allCountries))
         }
     }
 
     @Test("Dismissing the free countries list closes it")
     func freeCountriesDismissClosesTheList() async {
-        let store = makeStore(destination: .freeConnectionsInfo(.init(countryCodes: ["CH"])))
+        let store = makeStore(destination: .freeConnectionsInfo(.mock))
 
-        await store.send(.destination(.presented(.freeConnectionsInfo(.dismissButtonTapped)))) {
+        await store.send(.destination(.dismiss)) {
             $0.destination = nil
         }
     }

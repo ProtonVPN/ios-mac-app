@@ -23,6 +23,7 @@ import CountriesShared
 import Dependencies
 import Domain
 import LegacyCommon
+import ModalsShared
 import Payments
 import SharedViews
 import Sharing
