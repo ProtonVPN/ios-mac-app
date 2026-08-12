@@ -183,6 +183,7 @@ let package = Package(
                 "HomeShared",
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "NetworkingErgonomics", package: "Ergonomics"),
+                .product(name: "PersistenceTestSupport", package: "Persistence"),
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
             ]
         ),
