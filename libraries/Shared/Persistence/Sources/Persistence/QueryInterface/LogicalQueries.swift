@@ -61,7 +61,11 @@ extension QueryInterfaceRequest {
         }
     }
 
-    func ordering(by groupOrder: VPNServerGroupOrder, logicalAlias: TableAlias<Logical>) -> Self {
+    func ordering(
+        by groupOrder: VPNServerGroupOrder,
+        grouping: VPNServerGrouping,
+        logicalAlias: TableAlias<Logical>
+    ) -> Self {
         switch groupOrder {
         case .exitCountryCodeAscending:
             order(
@@ -73,6 +77,21 @@ extension QueryInterfaceRequest {
                 logicalAlias[Logical.Columns.gatewayName].ascNullsLast,
                 localizedCountryName(logicalAlias[Logical.Columns.exitCountryCode]).asc
             )
+        case .localizedGroupNameAscending:
+            switch grouping {
+            case .cityName:
+                // `translatedCity` must be aggregated here for the same reason as in the grouped
+                // selection: this query has several min/max aggregates, so SQLite pins no bare column.
+                order(
+                    normalizedName(
+                        max(logicalAlias[Logical.Columns.translatedCity]) ?? logicalAlias[Logical.Columns.city]
+                    ).asc
+                )
+            case .stateName:
+                order(normalizedName(logicalAlias[Logical.Columns.state]).asc)
+            case .serverType:
+                ordering(by: .localizedCountryNameAscending, grouping: grouping, logicalAlias: logicalAlias)
+            }
         }
     }
 }
@@ -186,7 +205,7 @@ extension GroupInfoResult {
             .filterServers(filters, logicalAlias: logicals, statusAlias: statuses, endpointAlias: endpoints)
             .annotatedWithAggregateData(logicalAlias: logicals, statusAlias: statuses, endpointAlias: endpoints, grouping: grouping)
             .grouping(by: grouping, logicalAlias: logicals)
-            .ordering(by: groupOrder, logicalAlias: logicals)
+            .ordering(by: groupOrder, grouping: grouping, logicalAlias: logicals)
     }
 }
 

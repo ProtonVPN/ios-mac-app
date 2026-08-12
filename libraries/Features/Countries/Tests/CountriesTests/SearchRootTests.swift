@@ -44,9 +44,20 @@ private func britishSection(isUnderMaintenance: Bool) -> CountrySectionFeature.S
     )
 }
 
-private func repository(returning servers: [ServerInfo]) -> ServerRepository {
+private func repository(
+    returning servers: [ServerInfo],
+    cities: [ServerGroupInfo] = [],
+    states: [ServerGroupInfo] = []
+) -> ServerRepository {
     var repository = ServerRepository.notEmpty()
     repository.servers = { _, _ in servers }
+    repository.groups = { _, grouping, _ in
+        switch grouping {
+        case .cityName: cities
+        case .stateName: states
+        case .serverType: []
+        }
+    }
     return repository
 }
 
@@ -60,6 +71,7 @@ struct SearchRootTests {
         defaults.removePersistentDomain(forName: suiteName)
         await withDependencies {
             $0.defaultAppStorage = defaults
+            $0.serverRepository = .empty()
         } operation: {
             @Shared(.recentSearches) var recentSearches
             $recentSearches.withLock { $0 = [] }
@@ -83,6 +95,7 @@ struct SearchRootTests {
         defaults.removePersistentDomain(forName: suiteName)
         await withDependencies {
             $0.defaultAppStorage = defaults
+            $0.serverRepository = .empty()
         } operation: {
             @Shared(.recentSearches) var recentSearches
             $recentSearches.withLock { $0 = ["uk"] }
@@ -114,30 +127,34 @@ struct SearchRootTests {
         let defaults = try #require(UserDefaults(suiteName: suiteName))
         defaults.removePersistentDomain(forName: suiteName)
 
-        // London keeps one working server. Every server in Manchester is down, and so is the whole
-        // Northwest state that holds it. The last server names a state but no city.
+        // London keeps one working server, so its group is not under maintenance. Every server in
+        // Manchester is down, and so is the whole Northwest state. The database computes these
+        // aggregates; this test checks that they reach the search rows.
         let servers = [
             ServerInfo.stub(logical: .stub(id: "UK#1", exitCountryCode: "GB", city: "London", state: "England")),
             ServerInfo.stub(logical: .stub(
                 id: "UK#2",
                 exitCountryCode: "GB",
-                city: "London",
-                state: "England",
-                isUnderMaintenance: true
-            )),
-            ServerInfo.stub(logical: .stub(
-                id: "UK#3",
-                exitCountryCode: "GB",
                 city: "Manchester",
                 state: "Northwest",
                 isUnderMaintenance: true
             )),
-            ServerInfo.stub(logical: .stub(id: "UK#4", exitCountryCode: "GB", state: "Southeast")),
         ]
 
         try await withDependencies {
             $0.defaultAppStorage = defaults
-            $0.serverRepository = repository(returning: servers)
+            $0.serverRepository = repository(
+                returning: servers,
+                cities: [
+                    .stub(kind: .city(name: "London", code: "GB")),
+                    .stub(kind: .city(name: "Manchester", code: "GB"), isUnderMaintenance: true),
+                ],
+                states: [
+                    .stub(kind: .state(name: "England", code: "GB")),
+                    .stub(kind: .state(name: "Northwest", code: "GB"), isUnderMaintenance: true),
+                    .stub(kind: .state(name: "Southeast", code: "GB")),
+                ]
+            )
         } operation: {
             @Shared(.userTier) var userTier: VpnTier?
             $userTier.withLock { $0 = .paid }
@@ -161,7 +178,6 @@ struct SearchRootTests {
             let states = Dictionary(uniqueKeysWithValues: searchState.allStates.map { ($0.cityName, $0.underMaintenance) })
             #expect(states["England"] == false)
             #expect(states["Northwest"] == true)
-            // A server that names its state but not its city still reaches its state row.
             #expect(states["Southeast"] == false)
 
             // A state row shows the state's own name, never a city borrowed from one of its servers.

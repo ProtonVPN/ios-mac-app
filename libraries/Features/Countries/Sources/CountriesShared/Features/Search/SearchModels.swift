@@ -104,6 +104,10 @@ public struct SearchCityIndex: Equatable, Identifiable, Sendable {
 public struct SearchServerIndex: Equatable, Identifiable, Sendable {
     public let id: String
     public let serverName: String
+
+    /// The number in the server's name, captured when the index is built so a tapped row can hand the
+    /// connection its full canonical location without another lookup.
+    public var sequence: Int?
     public let cityName: String
     public let translatedCityName: String?
     public let countryName: String

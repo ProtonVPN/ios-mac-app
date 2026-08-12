@@ -78,7 +78,7 @@ public struct SearchRoot {
                         )
                     }
 
-                    let (cities, states, freeServers, plusServers) = try Self.computeSearchableData(from: countryStates)
+                    let (cities, states, freeServers, plusServers) = try Self.computeSearchableData()
                     try Task.checkCancellation()
 
                     @SharedReader(.recentSearches) var storedSearches
@@ -144,77 +144,80 @@ public struct SearchRoot {
         }
     }
 
-    /// Computes all searchable data once from countries
+    /// Computes all searchable data once.
     /// Returns: (cities, states, freeServers, plusServers)
-    private static func computeSearchableData(
-        from countries: [CountryFeature.State]
-    ) throws -> (cities: [SearchCityIndex], states: [SearchCityIndex], freeServers: [SearchServerIndex], plusServers: [SearchServerIndex]) {
+    ///
+    /// The database computes the city and state groups, their translated names, their display order, and
+    /// their maintenance aggregates, so the index build runs three statements instead of one server query
+    /// per country.
+    private static func computeSearchableData() throws -> (cities: [SearchCityIndex], states: [SearchCityIndex], freeServers: [SearchServerIndex], plusServers: [SearchServerIndex]) {
         @Dependency(\.serverRepository) var serverRepository
         @SharedReader(.secureCoreToggle) var isSecureCore: Bool
         @SharedReader(.userTier) var userTier: VpnTier?
 
-        var citiesByID: [String: SearchCityAccumulator] = [:]
-        var statesByID: [String: SearchCityAccumulator] = [:]
+        let serverType: ServerType = isSecureCore ? .secureCore : .standard
+        let protocolFilter = VPNServerFilter.supports(protocol: currentProtocolSupport())
+        let featureFilter = VPNServerFilter.features(isSecureCore ? .secureCore : .standard)
+        // Gateways carry no city or state, so the group queries exclude them the way the map's does.
+        let groupFilters = [featureFilter, protocolFilter, VPNServerFilter.kind(.country(code: nil))]
+
+        let cities = serverRepository
+            .getGroups(filteredBy: groupFilters, groupedBy: .cityName, orderedBy: .localizedGroupNameAscending)
+            .compactMap(placeIndex(for:))
+        try Task.checkCancellation()
+
+        let states = serverRepository
+            .getGroups(filteredBy: groupFilters, groupedBy: .stateName, orderedBy: .localizedGroupNameAscending)
+            .compactMap(placeIndex(for:))
+        try Task.checkCancellation()
+
         var freeServers: [SearchServerIndex] = []
         var plusServers: [SearchServerIndex] = []
+        for serverInfo in serverRepository.getServers(filteredBy: [featureFilter, protocolFilter], orderedBy: .nameAscending) {
+            let server = buildServerIndex(
+                serverInfo: serverInfo,
+                serverType: serverType,
+                userTier: userTier ?? .free,
+                underMaintenance: serverInfo.logical.isUnderMaintenance
+                    || serverInfo.protocolSupport.isDisjoint(with: currentProtocolSupport())
+            )
 
-        for country in countries {
-            try Task.checkCancellation()
-
-            // Get servers for this country
-            let kindFilter = country.serverGroup.kind.filter
-            let protocolFilter = VPNServerFilter.supports(protocol: currentProtocolSupport())
-            let featureFilter = VPNServerFilter.features(isSecureCore ? .secureCore : .standard)
-            let filters = [kindFilter, featureFilter, protocolFilter]
-
-            let servers = serverRepository.getServers(filteredBy: filters, orderedBy: .loadAscending)
-
-            for serverInfo in servers {
-                let server = buildServerIndex(
-                    serverInfo: serverInfo,
-                    serverType: country.serverType,
-                    userTier: userTier ?? .free,
-                    underMaintenance: serverInfo.logical.isUnderMaintenance
-                        || serverInfo.protocolSupport.isDisjoint(with: currentProtocolSupport())
-                )
-
-                if server.tier == .free {
-                    freeServers.append(server)
-                } else {
-                    plusServers.append(server)
-                }
-
-                try Task.checkCancellation()
-
-                if let cityName = serverInfo.logical.city, !cityName.isEmpty {
-                    let cityID = "\(cityName)-\(country.countryCode)"
-                    citiesByID[cityID, default: SearchCityAccumulator(
-                        place: .city,
-                        name: cityName,
-                        countryName: server.countryName,
-                        countryCode: country.countryCode
-                    )].add(server: server)
-                }
-
-                if let stateName = serverInfo.logical.state, !stateName.isEmpty {
-                    let stateID = "\(stateName)-\(country.countryCode)"
-                    statesByID[stateID, default: SearchCityAccumulator(
-                        place: .state,
-                        name: stateName,
-                        countryName: server.countryName,
-                        countryCode: country.countryCode
-                    )].add(server: server)
-                }
+            if server.tier == .free {
+                freeServers.append(server)
+            } else {
+                plusServers.append(server)
             }
         }
 
-        let sortedCities = citiesByID.values
-            .map(\.asIndex)
-            .sorted { $0.cityName < $1.cityName }
-        let sortedStates = statesByID.values
-            .map(\.asIndex)
-            .sorted { $0.cityName < $1.cityName }
-        return (sortedCities, sortedStates, freeServers, plusServers)
+        return (cities, states, freeServers, plusServers)
+    }
+
+    /// The search row for a city or state group, or nil for any other grouping the query returns.
+    private static func placeIndex(for group: ServerGroupInfo) -> SearchCityIndex? {
+        let name: String
+        let code: String
+        let translatedName: String?
+        switch group.kind {
+        case let .city(cityName, countryCode):
+            name = cityName
+            code = countryCode
+            translatedName = group.translatedCity
+        case let .state(stateName, countryCode):
+            name = stateName
+            code = countryCode
+            translatedName = nil
+        case .country, .gateway:
+            return nil
+        }
+        return SearchCityIndex(
+            id: "\(name)-\(code)",
+            cityName: name,
+            translatedCityName: translatedName,
+            countryName: LocalizationUtility.default.countryName(forCode: code) ?? "",
+            countryCode: code,
+            underMaintenance: group.isUnderMaintenance
+                || group.protocolSupport.isDisjoint(with: currentProtocolSupport())
+        )
     }
 
     private static func buildServerIndex(
@@ -228,6 +231,7 @@ public struct SearchRoot {
         return SearchServerIndex(
             id: logical.id,
             serverName: logical.name,
+            sequence: logical.serverNameComponents.sequence,
             cityName: logical.city ?? "",
             translatedCityName: logical.translatedCity,
             countryName: LocalizationUtility.default.countryName(forCode: logical.exitCountryCode) ?? "",
@@ -240,45 +244,6 @@ public struct SearchRoot {
             isSmartAvailable: logical.isVirtual,
             isStreamingAvailable: serverType != .secureCore && logical.feature.contains(.streaming),
             isUsersTierTooLow: userTier < logical.tier,
-            underMaintenance: underMaintenance
-        )
-    }
-}
-
-private struct SearchCityAccumulator {
-    enum Place {
-        case city
-        case state
-    }
-
-    let place: Place
-    let name: String
-    let countryName: String
-    let countryCode: String
-    private(set) var translatedCityName: String?
-    private(set) var underMaintenance = true
-
-    init(place: Place, name: String, countryName: String, countryCode: String) {
-        self.place = place
-        self.name = name
-        self.countryName = countryName
-        self.countryCode = countryCode
-    }
-
-    mutating func add(server: SearchServerIndex) {
-        if place == .city, translatedCityName == nil {
-            translatedCityName = server.translatedCityName
-        }
-        underMaintenance = underMaintenance && server.underMaintenance
-    }
-
-    var asIndex: SearchCityIndex {
-        SearchCityIndex(
-            id: "\(name)-\(countryCode)",
-            cityName: name,
-            translatedCityName: translatedCityName,
-            countryName: countryName,
-            countryCode: countryCode,
             underMaintenance: underMaintenance
         )
     }

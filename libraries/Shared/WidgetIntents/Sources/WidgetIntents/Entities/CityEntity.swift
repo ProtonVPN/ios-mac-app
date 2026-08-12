@@ -51,7 +51,8 @@ public struct CityQuery: EntityQuery {
         let countries = repository
             .getGroups(
                 filteredBy: [.isNotUnderMaintenance, .kind(.country(code: countryCode))],
-                groupedBy: .cityName
+                groupedBy: .cityName,
+                orderedBy: .localizedGroupNameAscending
             )
 
         return countries

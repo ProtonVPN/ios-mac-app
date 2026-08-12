@@ -75,7 +75,8 @@ struct CountryListItem: Identifiable, Equatable, Hashable {
         self.cities = repository
             .getGroups(
                 filteredBy: [.isNotUnderMaintenance, .kind(.country(code: code))],
-                groupedBy: .cityName
+                groupedBy: .cityName,
+                orderedBy: .localizedGroupNameAscending
             )
             .compactMap { group in
                 guard let cityName = group.cityName else {

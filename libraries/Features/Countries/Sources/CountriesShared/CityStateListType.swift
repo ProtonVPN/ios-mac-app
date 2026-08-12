@@ -73,7 +73,8 @@ public enum CityStateListType: Equatable, Sendable {
                     .matches(search),
                     ProtocolFilters().supportedProtocolsFilter,
                 ],
-                groupedBy: .stateName
+                groupedBy: .stateName,
+                orderedBy: .localizedGroupNameAscending
             ).filter { element in
                 guard case .state = element.kind else { return false }
                 return true
@@ -92,7 +93,8 @@ public enum CityStateListType: Equatable, Sendable {
                     .matches(search),
                     ProtocolFilters().supportedProtocolsFilter,
                 ],
-                groupedBy: .cityName
+                groupedBy: .cityName,
+                orderedBy: .localizedGroupNameAscending
             ).filter { element in
                 guard case .city = element.kind else { return false }
                 return true
