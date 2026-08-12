@@ -25,6 +25,7 @@ struct LightKeychain {
     var updateStatus: @Sendable (_ service: String, _ account: String, _ bytes: Data) -> OSStatus = { _, _, _ in .zero }
     var addPassword: @Sendable (_ service: String, _ account: String, _ bytes: Data) -> OSStatus = { _, _, _ in .zero }
     var getPassword: @Sendable (_ service: String, _ account: String) -> (OSStatus, Data?) = { _, _ in (.zero, nil) }
+    var removePassword: @Sendable (_ service: String, _ account: String) -> OSStatus = { _, _ in .zero }
     var clear: @Sendable (_ service: String) -> OSStatus = { _ in .zero }
 }
 
@@ -63,6 +64,14 @@ extension LightKeychain: DependencyKey {
         } else {
             return (status, nil)
         }
+    } removePassword: { service, account in
+        SecItemDelete(
+            [
+                kSecClass: kSecClassGenericPassword,
+                kSecAttrService: service,
+                kSecAttrAccount: account,
+            ] as CFDictionary
+        )
     } clear: { service in
         SecItemDelete(
             [
