@@ -38,17 +38,6 @@ fi
 defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES
 defaults write com.apple.dt.Xcode IDEPackageEnablePrebuilts YES
 
-configure_protun_mirror() {
-    if [ -z "$CI_NEXUS_URL" ]; then
-        echo "CI_NEXUS_URL not set — skipping ProTUN mirror setup."
-        return
-    fi
-
-    "$CI_PROJECT_DIR/Integration/Scripts/setup-mirrors.sh"
-}
-
-configure_protun_mirror
-
 if [ "$SKIP_MINT_BOOTSTRAP" != "true" ]; then
     # Check if 'mint bootstrap' is already running
     while pgrep -f "mint bootstrap" > /dev/null; do
