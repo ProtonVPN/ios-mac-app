@@ -343,7 +343,7 @@ struct SearchResultsDisplayFeatureReducerTests {
         await store.receive(
             .delegate(.connectRequested(
                 ConnectionSpec(
-                    location: .exact(.paid, logicalID: "gb-2", number: nil, subregion: nil, regionCode: "GB"),
+                    location: .exact(.paid, logicalID: "gb-2", number: nil, subregion: "London", regionCode: "GB"),
                     features: []
                 ),
                 .searchServer

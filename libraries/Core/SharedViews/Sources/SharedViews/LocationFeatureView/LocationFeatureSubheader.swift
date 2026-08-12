@@ -72,12 +72,12 @@ struct LocationFeatureSubheader: View {
     }
 }
 
-public enum LocationFeatureSubheaderModel: Equatable {
+public enum LocationFeatureSubheaderModel: Equatable, Sendable {
     case textual(TextSubheaderModel)
     case freeServerSelectionDisclaimer(additionalFreeCountryCount: Int)
     case none
 
-    public struct TextSubheaderModel: Equatable {
+    public struct TextSubheaderModel: Equatable, Sendable {
         let location: String
         let showTor: Bool
         let showP2P: Bool

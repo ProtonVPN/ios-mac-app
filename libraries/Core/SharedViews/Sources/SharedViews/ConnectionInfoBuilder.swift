@@ -31,25 +31,27 @@ public struct ConnectionInfoBuilder {
     let withServerNumber: Bool
     public let intent: ConnectionSpec
     public let server: Server?
+
+    /// Display fields the app stores for an exact-server intent, standing in for the missing server.
+    public let display: RecentConnection.ServerDisplay?
+
     public var location: ConnectionSpec.Location {
         intent.location
     }
 
     @Dependency(\.locale) private var locale
-    @Dependency(\.logicalProvider) private var logicalProvider
     @SharedReader(.userTier) private var userTier: VpnTier?
 
-    public init(intent: ConnectionSpec, server: Server?, withServerNumber: Bool) {
+    public init(intent: ConnectionSpec, server: Server?, display: RecentConnection.ServerDisplay? = nil, withServerNumber: Bool) {
         self.intent = intent
         self.server = server
+        self.display = display
         self.withServerNumber = withServerNumber
     }
 
     private var subheaderString: String? {
         guard let server else {
-            // A bare intent's stored display fields date from connect time. Refresh them from the
-            // current server list so the city follows the app language and server renames.
-            return logicalProvider.refreshedDisplayFields(for: location).subtext(locale: locale)
+            return location.applying(display).subtext(locale: locale)
         }
         switch location {
         case .any(.fastest):

@@ -24,7 +24,6 @@ import OrderedCollections
 import Persistence
 import PersistenceTestSupport
 import Testing
-import VPNAppCore
 
 @Suite("City state connection spec factory")
 struct CityStateConnectionSpecFactoryTests {
@@ -64,107 +63,74 @@ struct CityStateConnectionSpecFactoryTests {
     }
 }
 
-@Suite("Recents identity")
-struct RecentsIdentityTests {
-    private static let listMade = ConnectionSpec(
+@Suite("Recents server display")
+struct RecentsServerDisplayTests {
+    private static let spec = ConnectionSpec(
         location: .exact(.paid, logicalID: "ch-12", number: 12, subregion: "Geneva", regionCode: "CH"),
         features: []
     )
-    private static let searchMade = ConnectionSpec(
-        location: .exact(.paid, logicalID: "ch-12", number: nil, subregion: "Geneva", regionCode: "CH"),
-        features: []
-    )
 
-    @Test("An exact recent updates in place when the same server connects from another list")
-    func sameLogicalUpdatesInPlace() {
+    @Test("Connecting captures the display fields alongside the spec")
+    func updateListCapturesDisplay() {
         var recents = OrderedSet<RecentConnection>()
 
         withDependencies {
             $0.date = .constant(Date(timeIntervalSince1970: 100))
         } operation: {
-            recents.updateList(with: Self.listMade)
-            recents.pin(recent: recents[0], pinnedDate: Date(timeIntervalSince1970: 150))
-            recents.updateList(with: Self.searchMade)
+            recents.updateList(with: Self.spec, display: RecentConnection.ServerDisplay(city: "Genève", number: 12))
+        }
+
+        #expect(recents[0].serverDisplay == RecentConnection.ServerDisplay(city: "Genève", number: 12))
+    }
+
+    @Test("A server list update rewrites each recent's display fields")
+    func refreshRewritesDisplayFromRepository() {
+        var recents = OrderedSet<RecentConnection>()
+        withDependencies {
+            $0.date = .constant(Date(timeIntervalSince1970: 100))
+        } operation: {
+            recents.updateList(with: Self.spec, display: RecentConnection.ServerDisplay(city: "Geneva", number: 12))
+            recents.updateList(with: ConnectionSpec(location: .country(code: "CH", order: .fastest), features: []))
+        }
+
+        var repository = ServerRepository.empty()
+        repository.server = { filters, _ in
+            guard case .logicalID("ch-12") = filters.first else { return nil }
+            return VPNServer(
+                logical: .make(id: "ch-12", name: "CH#14", city: "Geneva", translatedCity: "Genève"),
+                endpoints: []
+            )
+        }
+
+        let refreshed = recents.refreshingServerDisplay(from: repository)
+
+        let exact = refreshed.first { $0.connection == Self.spec }
+        #expect(exact?.serverDisplay == RecentConnection.ServerDisplay(city: "Genève", number: 14))
+        // The country recent names no single server, so it keeps what it had.
+        #expect(
+            refreshed.first { $0.connection.location == .country(code: "CH", order: .fastest) }?
+                .serverDisplay == nil
+        )
+    }
+
+    @Test("Pinning keeps the stored copy's display fields")
+    func pinningKeepsStoredDisplay() {
+        var recents = OrderedSet<RecentConnection>()
+
+        withDependencies {
+            $0.date = .constant(Date(timeIntervalSince1970: 100))
+        } operation: {
+            recents.updateList(with: Self.spec, display: RecentConnection.ServerDisplay(city: "Genève", number: 12))
+
+            // The row hands back a copy from before the display fields were rewritten.
+            var stale = recents[0]
+            stale.serverDisplay = nil
+            recents.pin(recent: stale, pinnedDate: Date(timeIntervalSince1970: 150))
         }
 
         #expect(recents.count == 1)
-        #expect(recents[0].connection == Self.searchMade)
         #expect(recents[0].pinned)
-    }
-
-    @Test("Different servers stay distinct recents")
-    func differentLogicalsStayDistinct() {
-        let otherServer = ConnectionSpec(
-            location: .exact(.paid, logicalID: "ch-13", number: 13, subregion: "Geneva", regionCode: "CH"),
-            features: []
-        )
-        var recents = OrderedSet<RecentConnection>()
-
-        withDependencies {
-            $0.date = .constant(Date(timeIntervalSince1970: 100))
-        } operation: {
-            recents.updateList(with: Self.listMade)
-            recents.updateList(with: otherServer)
-        }
-
-        #expect(recents.count == 2)
-    }
-
-    @Test("Exact locations without logical IDs fall back to whole-location identity")
-    func nilLogicalIDComparesWholeLocation() {
-        let geneva = ConnectionSpec(
-            location: .exact(.paid, logicalID: nil, number: nil, subregion: "Geneva", regionCode: "CH"),
-            features: []
-        )
-        let zurich = ConnectionSpec(
-            location: .exact(.paid, logicalID: nil, number: nil, subregion: "Zurich", regionCode: "CH"),
-            features: []
-        )
-        var recents = OrderedSet<RecentConnection>()
-
-        withDependencies {
-            $0.date = .constant(Date(timeIntervalSince1970: 100))
-        } operation: {
-            recents.updateList(with: geneva)
-            recents.updateList(with: zurich)
-            recents.updateList(with: geneva)
-        }
-
-        #expect(recents.count == 2)
-    }
-}
-
-@Suite("Repository backed logical provider")
-struct LogicalProviderRepositoryTests {
-    @Test("Fetches the logical for the requested server ID")
-    func fetchesLogicalByID() {
-        let logical = withDependencies {
-            var repository = ServerRepository.empty()
-            repository.server = { filters, _ in
-                guard case .logicalID("ch-12") = filters.first else {
-                    return nil
-                }
-                return VPNServer(logical: .make(id: "ch-12"), endpoints: [])
-            }
-            $0.serverRepository = repository
-        } operation: {
-            LogicalProvider.repositoryBacked.logical(id: "ch-12")
-        }
-
-        #expect(logical?.id == "ch-12")
-    }
-
-    @Test("Returns nil for servers missing from the repository")
-    func returnsNilForMissingServers() {
-        let logical = withDependencies {
-            var repository = ServerRepository.empty()
-            repository.server = { _, _ in nil }
-            $0.serverRepository = repository
-        } operation: {
-            LogicalProvider.repositoryBacked.logical(id: "gone")
-        }
-
-        #expect(logical == nil)
+        #expect(recents[0].serverDisplay == RecentConnection.ServerDisplay(city: "Genève", number: 12))
     }
 }
 

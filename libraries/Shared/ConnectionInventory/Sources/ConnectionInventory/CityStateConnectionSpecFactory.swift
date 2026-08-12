@@ -44,27 +44,4 @@ public enum CityStateConnectionSpecFactory {
             regionCode: logical.exitCountryCode
         )
     }
-
-    /// Builds the location for a server selection when only search index data is available.
-    /// Prefer ``serverLocation(for:)`` wherever a `Logical` is available.
-    public static func serverLocation(
-        tier: ConnectionSpec.Server,
-        logicalID: String?,
-        number: Int?,
-        subregion: String?,
-        exitCountryCode: String,
-        entryCountryCode: String?
-    ) -> ConnectionSpec.Location {
-        if let entryCountryCode {
-            return .secureCore(.hop(to: exitCountryCode, via: entryCountryCode))
-        }
-
-        return .exact(
-            tier,
-            logicalID: logicalID,
-            number: number,
-            subregion: subregion,
-            regionCode: exitCountryCode
-        )
-    }
 }

@@ -60,10 +60,27 @@ final class LogicalsRefresherTests: XCTestCase {
 
         withDependencies {
             $0.serverRepository = .notEmpty()
+            $0.serverRepository.getMetadata = { _ in "en" }
             $0.date = .constant(.distantPast)
+            $0.appLanguage = { "en" }
         } operation: {
             let sut = LogicalsRefresherProvider().liveValue
             XCTAssertFalse(sut.shouldRefreshLogicals())
+        }
+    }
+
+    @MainActor
+    func testShouldRefreshLogicalsAfterLanguageChange() {
+        @SharedReader(.lastLogicalsRefresh) var lastLogicalsRefresh: TimeInterval = notEnoughTimePassed
+
+        withDependencies {
+            $0.serverRepository = .notEmpty()
+            $0.serverRepository.getMetadata = { _ in "fr" }
+            $0.date = .constant(.distantPast)
+            $0.appLanguage = { "en" }
+        } operation: {
+            let sut = LogicalsRefresherProvider().liveValue
+            XCTAssertTrue(sut.shouldRefreshLogicals())
         }
     }
 
@@ -72,10 +89,13 @@ final class LogicalsRefresherTests: XCTestCase {
         @SharedReader(.lastLogicalsRefresh) var lastLogicalsRefresh: TimeInterval = enoughTimePassed
 
         var upserted: [VPNServer] = []
+        var stampedLanguages: [DatabaseMetadata.Key: String] = [:]
 
         try await withDependencies {
             $0.serverRepository.upsertServers = { upserted = $0 }
+            $0.serverRepository.setMetadata = { key, value in stampedLanguages[key] = value }
             $0.date = .constant(.distantPast)
+            $0.appLanguage = { "fr" }
             $0.logicalsClient.fetchLogicals = { _, _ in [.mock] }
             $0.userLocationService = .testValue
             $0.locationClient = .testValue
@@ -83,6 +103,7 @@ final class LogicalsRefresherTests: XCTestCase {
             let sut = LogicalsRefresherProvider().liveValue
             try await sut.refreshLogicals()
             XCTAssertEqual(upserted, [.mock])
+            XCTAssertEqual(stampedLanguages, [.translationsLanguage: "fr"])
         }
     }
 }

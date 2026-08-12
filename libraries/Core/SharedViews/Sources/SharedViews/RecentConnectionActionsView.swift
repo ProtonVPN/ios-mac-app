@@ -16,12 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Domain
 import Strings
 import SwiftUI
 
 struct RecentConnectionActionsView: View {
     let intent: ConnectionSpec
+    let serverDisplay: RecentConnection.ServerDisplay?
     let isPinned: Bool
     let images: RecentsImages
     let detailAction: (ConnectionFlagInfoView.Action) -> Void
@@ -56,10 +58,14 @@ struct RecentConnectionActionsView: View {
         )
     }
 
-    @ViewBuilder
     private var recentListItem: some View {
-        let infoBuilder = ConnectionInfoBuilder(intent: intent, server: nil, withServerNumber: true)
-        LocationFeatureView(model: .init(
+        let infoBuilder = ConnectionInfoBuilder(
+            intent: intent,
+            server: nil,
+            display: serverDisplay,
+            withServerNumber: true
+        )
+        return LocationFeatureView(model: .init(
             flag: intent.location.flagComposition,
             header: .init(title: infoBuilder.textHeader, showConnectedPin: false),
             subheader: infoBuilder.subheader

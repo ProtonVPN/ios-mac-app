@@ -145,12 +145,6 @@ public extension ConnectionSpec.Location {
             regionCode: regionCode
         )
     }
-
-    /// Bridges ``LogicalProvider``'s display refresh until the stored fields on the recents replace it.
-    /// The bridge leaves together with the provider.
-    func refreshingDisplayFields(from logical: Logical) -> Self {
-        applying(ServerDisplay(logical: logical))
-    }
 }
 
 #if DEBUG
