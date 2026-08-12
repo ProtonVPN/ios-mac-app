@@ -24,7 +24,13 @@ enum SettingsGenerator {
     static func settings(excludingRoutes excludedRoutes: [String], dnsServers: [String]) -> NETunnelNetworkSettings {
         let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: .ipv4Loopback)
 
-        settings.mtu = 1420
+        #if os(macOS)
+            settings.tunnelOverheadBytes = 80
+        #else
+            // Path MTU information is unreliable on cellular networks, stick with 1280 to stay at the IPv6 minimum MTU
+            // until we have MTU probing support ready
+            settings.mtu = 1280
+        #endif
 
         settings.dnsSettings = dnsSettings(from: dnsServers)
         settings.dnsSettings?.matchDomains = [""]
@@ -38,6 +44,13 @@ enum SettingsGenerator {
         ipv4Settings.excludedRoutes = excludedRoutes.map { NEIPv4Route(destinationAddress: $0, subnetMask: .hostMask) }
 
         settings.ipv4Settings = ipv4Settings
+
+        // No IPv6 support for now, route IPv6 traffic to a dummy address so it doesn't leak
+        let ipv6Settings = NEIPv6Settings(addresses: [.tunnelAddressV6], networkPrefixLengths: [128])
+        ipv6Settings.includedRoutes = [
+            NEIPv6Route(destinationAddress: .defaultRouteAddressV6, networkPrefixLength: 0),
+        ]
+        settings.ipv6Settings = ipv6Settings
 
         return settings
     }
@@ -69,6 +82,11 @@ private extension String {
     static let localAgentAddress = "10.2.0.1"
     static let tunnelAddress = "10.2.0.2"
     static let defaultRouteAddress = "0.0.0.0"
+
+    /// The system requires an interface address, even if we're only adding this to get the traffic sent through our
+    /// tunnel through the default route. For now provide an arbitrary LAN IP until we get IPv6 support.
+    static let tunnelAddressV6 = "fd00:7076:706e::2"
+    static let defaultRouteAddressV6 = "::"
 
     static let hostMask = "255.255.255.255"
     static let anyMask = "0.0.0.0"
