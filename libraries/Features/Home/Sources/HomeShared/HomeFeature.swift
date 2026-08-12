@@ -361,7 +361,6 @@ private extension HomeFeature {
                 return .none
             #if os(iOS)
                 case .destination(.presented(.payments(.delegate(.createAccountFirstRequested)))):
-                    state.destination = nil
                     return .run { @MainActor _ in
                         openCredentiallessSignUp()
                     }
