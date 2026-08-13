@@ -4,10 +4,18 @@
 import PackageDescription
 
 enum ProTUNFFITargetKind {
-    static let current: Self = .remote(
-        url: "https://vpn.protondownload.com/download/protun/2.2.1_3408843.2608071450.1/protun-release.xcframework.zip",
-        checksum: "13dc324162b1ddd2a5f15eb410e2c591f1f87686d9acbad309fc38d40438fbab"
-    )
+    private static let artifact = "2.2.2_3422564.2608121415.2/protun-release.xcframework.zip"
+    private static let checksum = "51a5e4a2d0bb13cd9ba2e5835ba7995377c509331e8e12bead2d3b55440ae757"
+
+    private static var url: String {
+        guard let nexus = Context.environment["CI_NEXUS_URL"], !nexus.isEmpty else {
+            return "https://vpn.protondownload.com/download/protun/\(artifact)"
+        }
+        let base = nexus.hasSuffix("/") ? String(nexus.dropLast()) : nexus
+        return "\(base)/repository/vpn-release-candidates/protun/\(artifact)"
+    }
+
+    static let current: Self = .remote(url: url, checksum: checksum)
 
     case local
     case remote(url: String, checksum: String)

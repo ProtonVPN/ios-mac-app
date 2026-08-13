@@ -1,52 +1,45 @@
-//
-//  Created on 17.07.2026 by Larissa Perara.
-//
-//  Copyright (c) 2026 Proton AG
-//
-//  Proton VPN is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  Proton VPN is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-//
-//  You should have received a copy of the GNU General Public License
-//  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
+# NEProviders
+This package contains the code responsible for connection with the ProTUN core framework extension.
 
-# NEProviders 
-This package contains the code responsible for connection with the ProTUN core framework extension. 
+## Where protun.xcframework comes from
 
-## Setup 
-Get the Nexus host from a teammate and export it in your shell profile (e.g. `~/.zshrc`) as CI_NEXUS_URL.
+`Package.swift` downloads the framework from the public host by default. Set `CI_NEXUS_URL` and it downloads
+from the internal Nexus mirror instead, which is how CI builds it and how anyone can build a release candidate
+before it reaches the public host. The manifest reads the variable through `Context.environment`, so no setup
+script is involved.
+
+The checksum is the same for both hosts, so it also confirms the mirror serves the same file.
+
+## Setup
+
+Get the Nexus host from a teammate and export it in your shell profile (e.g. `~/.zshrc`):
+
+```bash
+export CI_NEXUS_URL=https://nexus.example.invalid
+```
+
+You only need this to build a version that has not been published to the public host yet. Without it, builds
+of published versions work normally.
+
+Xcode.app does not inherit your shell profile. To make the variable reach a manifest that Xcode evaluates,
+either launch Xcode from a terminal, or register the variable with launchd and restart Xcode:
+
+```bash
+launchctl setenv CI_NEXUS_URL https://nexus.example.invalid
+```
 
 ## Every time the ProTUN version changes
 
-Run the setup script after making the change to the `Package.swift`. The script will parse the file and update the mirrors accordingly to match the new version changed in the `Package.swift`.
+Edit the `artifact` and `checksum` constants in `Package.swift`. Nothing else to do; both hosts follow the
+same path layout below their prefix.
+
+## Verification
+
+Check which URL the manifest produces, without downloading anything:
 
 ```bash
-   ./Integration/Scripts/setup-mirrors.sh
-```
-
-If it completes without an error, you're done — no need to inspect any
-files manually for routine use.
-
-> **Note:** if `CI_NEXUS_URL` isn't set, the script will fail with clear
-> instructions rather than silently doing nothing.
-
-## Verification 
-If you'd like to verify that this setup has been properly applied follow the steps below: 
-
-1. Verify the mirror file exists and the values in it. 
-```bash
-cat libraries/Core/NEProviders/.swiftpm/configuration/mirrors.json
-```
-
-2. Verify that it is reaching the mirrored URL 
-``` bash 
-rm -rf libraries/Core/NEProviders/.build
 cd libraries/Core/NEProviders
-swift package resolve --verbose 2>&1 | grep -i nexus
+swift package dump-package | grep -o 'https://[^"]*xcframework.zip'
 ```
+
+Run it with and without `CI_NEXUS_URL` set to see each host.
