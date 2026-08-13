@@ -18,27 +18,26 @@
 
 import Dependencies
 import Foundation
-import os
 import Sharing
 
 /// A `SharedKey` that persists a `Codable` value as JSON `Data` in `UserDefaults`, under a fixed
 /// (non-per-user) key.
-///
-/// The underlying `UserDefaults` suite is the one configured for swift-sharing
-/// (`\.defaultAppStorage`) — the same suite the legacy storage targeted once the app aligns its
-/// default store. Use the ``json(_:)`` factory for an optional value (absence reads as `nil`) or
-/// ``json(_:default:)`` for a non-optional value with a fallback default.
-///
-/// `subscribe` observes `UserDefaults.didChangeNotification` and only forwards when the raw `Data`
-/// at this key actually changes, so a write to an unrelated key in the suite does not produce a
-/// redundant emission.
-public final class JSONAppStorageKey<Value: Sendable>: SharedKey {
+public struct JSONAppStorageKey<Value: Sendable>: SharedKey {
     private let key: String
+    private let store: UncheckedSendable<UserDefaults>
     private let decode: @Sendable (UserDefaults, String) throws -> Value
     private let encode: @Sendable (Value, UserDefaults, String) throws -> Void
 
-    public var id: some Hashable {
-        key
+    /// The id includes both the key name and which UserDefaults it lives in. `swift-sharing` reuses one
+    /// cached value per id, so the same key name in two different UserDefaults must count as two
+    /// different things — otherwise they'd wrongly share one value.
+    public struct ID: Hashable, Sendable {
+        fileprivate let key: String
+        fileprivate let store: ObjectIdentifier
+    }
+
+    public var id: ID {
+        ID(key: key, store: ObjectIdentifier(store.wrappedValue))
     }
 
     init(
@@ -46,15 +45,16 @@ public final class JSONAppStorageKey<Value: Sendable>: SharedKey {
         decode: @escaping @Sendable (UserDefaults, String) throws -> Value,
         encode: @escaping @Sendable (Value, UserDefaults, String) throws -> Void
     ) {
+        @Dependency(\.defaultAppStorage) var store
         self.key = key
+        self.store = UncheckedSendable(store)
         self.decode = decode
         self.encode = encode
     }
 
     public func load(context _: LoadContext<Value>, continuation: LoadContinuation<Value>) {
-        @Dependency(\.defaultAppStorage) var store
         do {
-            try continuation.resume(returning: decode(store, key))
+            try continuation.resume(returning: decode(store.wrappedValue, key))
         } catch {
             continuation.resume(throwing: error)
         }
@@ -62,15 +62,34 @@ public final class JSONAppStorageKey<Value: Sendable>: SharedKey {
 
     public func subscribe(
         context _: LoadContext<Value>,
-        subscriber _: SharedSubscriber<Value>
+        subscriber: SharedSubscriber<Value>
     ) -> SharedSubscription {
-        SharedSubscription {}
+        // Capture the resolved store/key/decoder: the observer escapes the dependency scope this
+        // reference was created in, so it must not touch `@Dependency` itself
+        let store = store.wrappedValue
+        let key = key
+        let decode = decode
+        let gate = ChangeGate(initial: store.data(forKey: key))
+        let observer = NotificationCenter.default.addObserver(
+            forName: UserDefaults.didChangeNotification,
+            object: store,
+            queue: nil
+        ) { _ in
+            guard gate.isChange(store.data(forKey: key)) else { return }
+            do {
+                try subscriber.yield(decode(store, key))
+            } catch {
+                subscriber.yield(with: .failure(error))
+            }
+        }
+        return SharedSubscription {
+            NotificationCenter.default.removeObserver(observer)
+        }
     }
 
     public func save(_ value: Value, context _: SaveContext, continuation: SaveContinuation) {
-        @Dependency(\.defaultAppStorage) var store
         do {
-            try encode(value, store, key)
+            try encode(value, store.wrappedValue, key)
             continuation.resume()
         } catch {
             continuation.resume(throwing: error)

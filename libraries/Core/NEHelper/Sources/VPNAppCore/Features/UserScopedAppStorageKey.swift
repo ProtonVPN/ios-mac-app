@@ -17,24 +17,11 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import Domain
 import Foundation
 import Sharing
 import VPNShared
 
-/// A `SharedKey` that persists a value in `UserDefaults` under a *per-user* key.
-///
-/// The on-disk key is `baseKey + username`, where `username` is resolved dynamically from
-/// `authKeychain` on every load/save — exactly mirroring the legacy `Storage.setForUser` /
-/// `UserDefaults.setUserValue` behaviour (`key + username`, no separator). This guarantees that
-/// values written by previous app versions are read transparently, with no migration step.
-///
-/// The underlying `UserDefaults` suite is the one configured for swift-sharing
-/// (`\.defaultAppStorage`), which on iOS is the shared app-group suite and on macOS is
-/// `.standard` — the same suite the legacy storage targeted.
-///
-/// The key's identity is *feature-scoped* (the `baseKey`, not the resolved per-user key), matching
-/// the previous `FeatureSharedKey`. The per-user value is resolved on each access, so a change of
-/// logged-in user is reflected on the next load.
 /// Which authenticated-user identifier a ``UserScopedAppStorageKey``'s on-disk key is scoped to.
 public enum UserScope: Sendable {
     /// `baseKey + authKeychain.username` — the default
@@ -43,15 +30,36 @@ public enum UserScope: Sendable {
     case userId
 }
 
-public final class UserScopedAppStorageKey<Value: Sendable>: SharedKey {
+/// A `SharedKey` that persists a value in `UserDefaults` under a *per-user* key.
+public struct UserScopedAppStorageKey<Value: Sendable>: SharedKey {
+    /// Identity of the storage location: the resolved per-user key (or the base key while logged
+    /// out, kept so distinct features don't collide on `resolvedKey == nil`) plus the suite object.
+    public struct ID: Hashable, Sendable {
+        fileprivate let baseKey: String
+        fileprivate let resolvedKey: String?
+        fileprivate let store: ObjectIdentifier
+    }
+
     private let baseKey: String
-    private let scope: UserScope
+    /// `baseKey + user identifier`, or `nil` when no user was logged in at construction time.
+    private let resolvedKey: String?
+    private let store: UncheckedSendable<UserDefaults>
     private let valueWhenNoUser: Value
     private let decode: @Sendable (UserDefaults, String) -> Value
     private let encode: @Sendable (Value, UserDefaults, String) -> Void
 
-    public var id: some Hashable {
-        baseKey
+    public var id: ID {
+        ID(
+            baseKey: baseKey,
+            resolvedKey: resolvedKey,
+            store: ObjectIdentifier(store.wrappedValue)
+        )
+    }
+
+    /// Whether a logged-in user was resolved when this key was constructed. When `false`, loads
+    /// return `valueWhenNoUser` and writes are no-ops.
+    public var isBoundToUser: Bool {
+        resolvedKey != nil
     }
 
     init(
@@ -61,48 +69,51 @@ public final class UserScopedAppStorageKey<Value: Sendable>: SharedKey {
         decode: @escaping @Sendable (UserDefaults, String) -> Value,
         encode: @escaping @Sendable (Value, UserDefaults, String) -> Void
     ) {
-        self.baseKey = baseKey
-        self.scope = scope
-        self.valueWhenNoUser = valueWhenNoUser
-        self.decode = decode
-        self.encode = encode
-    }
-
-    private func resolvedKey() -> String? {
         @Dependency(\.authKeychain) var authKeychain
+        @Dependency(\.defaultAppStorage) var defaults
+
         let identifier: String? = switch scope {
         case .username:
             authKeychain.username
         case .userId:
             authKeychain.userId
         }
-        guard let identifier else { return nil }
-        return baseKey + identifier
+
+        self.baseKey = baseKey
+        self.resolvedKey = identifier.map { baseKey + $0 }
+        self.store = UncheckedSendable(defaults)
+        self.valueWhenNoUser = valueWhenNoUser
+        self.decode = decode
+        self.encode = encode
     }
 
     public func load(context _: LoadContext<Value>, continuation: LoadContinuation<Value>) {
-        @Dependency(\.defaultAppStorage) var store
-        guard let key = resolvedKey() else {
+        guard let key = resolvedKey else {
             continuation.resume(returning: valueWhenNoUser)
             return
         }
-        continuation.resume(returning: decode(store, key))
+        continuation.resume(returning: decode(store.wrappedValue, key))
     }
 
     public func subscribe(
         context _: LoadContext<Value>,
         subscriber: SharedSubscriber<Value>
     ) -> SharedSubscription {
-        @Dependency(\.defaultAppStorage) var store
-        let gate = ChangeGate(initial: currentValue())
+        // No logged-in user: the value is the constant `valueWhenNoUser`; nothing to observe.
+        guard let key = resolvedKey else { return SharedSubscription {} }
+
+        // Capture the resolved store/key/decoder. The observer closure escapes the dependency
+        // scope the key was created in, so it must not touch `@Dependency` itself.
+        let store = store.wrappedValue
+        let decode = decode
+        let gate = ChangeGate(initial: decode(store, key))
         let observer = NotificationCenter.default.addObserver(
             forName: UserDefaults.didChangeNotification,
             object: store,
             queue: nil
-        ) { [weak self] _ in
-            guard let self else { return }
+        ) { _ in
             // `didChangeNotification` fires for *any* key in the suite; forward only on real changes.
-            let newValue = currentValue()
+            let newValue = decode(store, key)
             guard gate.isChange(newValue) else { return }
             subscriber.yield(newValue)
         }
@@ -112,51 +123,52 @@ public final class UserScopedAppStorageKey<Value: Sendable>: SharedKey {
     }
 
     public func save(_ value: Value, context _: SaveContext, continuation: SaveContinuation) {
-        guard let key = resolvedKey() else {
+        guard let key = resolvedKey else {
             // No logged-in user: nothing to persist against. Treat as a no-op success.
             continuation.resume()
             return
         }
-        @Dependency(\.defaultAppStorage) var store
-        encode(value, store, key)
+        encode(value, store.wrappedValue, key)
         continuation.resume()
     }
 
     // MARK: - Synchronous access
 
-    /// Reads the current per-user value synchronously (resolving the username at call time), or
-    /// `valueWhenNoUser` if there is no logged-in user.
+    /// Reads the current per-user value synchronously, or `valueWhenNoUser` if no user was logged
+    /// in when the key was constructed.
     public func currentValue() -> Value {
-        guard let key = resolvedKey() else { return valueWhenNoUser }
-        @Dependency(\.defaultAppStorage) var store
-        return decode(store, key)
+        guard let key = resolvedKey else { return valueWhenNoUser }
+        return decode(store.wrappedValue, key)
     }
 
-    /// Writes the per-user value synchronously (resolving the username at call time). No-op when
-    /// there is no logged-in user.
+    /// Writes the per-user value synchronously. No-op when no user was logged in at construction.
     public func setCurrentValue(_ value: Value) {
-        guard let key = resolvedKey() else { return }
-        @Dependency(\.defaultAppStorage) var store
-        encode(value, store, key)
+        guard let key = resolvedKey else { return }
+        encode(value, store.wrappedValue, key)
     }
 
-    /// An `AsyncStream` of value changes, replacing the per-provider `CurrentValueSubject`s. Emits
-    /// the current value immediately, then re-reads on every `UserDefaults` change (the same signal
-    /// `@Shared` app storage observes), suppressing consecutive duplicates so a write to an
-    /// unrelated key in the suite doesn't produce a redundant emission.
+    /// An `AsyncStream` of value changes. Emits the current value immediately, then re-reads on every `UserDefaults` change,
+    /// suppressing consecutive duplicates so a write to an unrelated key in the suite doesn't produce a redundant emission.
     public func valuesStream() -> AsyncStream<Value> {
-        @Dependency(\.defaultAppStorage) var store
+        let store = store.wrappedValue
+        let resolvedKey = resolvedKey
+        let valueWhenNoUser = valueWhenNoUser
+        let decode = decode
         return AsyncStream { continuation in
-            let initial = currentValue()
+            guard let key = resolvedKey else {
+                continuation.yield(valueWhenNoUser)
+                continuation.finish()
+                return
+            }
+            let initial = decode(store, key)
             continuation.yield(initial)
             let gate = ChangeGate(initial: initial)
             let observer = NotificationCenter.default.addObserver(
                 forName: UserDefaults.didChangeNotification,
                 object: store,
                 queue: nil
-            ) { [weak self] _ in
-                guard let self else { return }
-                let newValue = currentValue()
+            ) { _ in
+                let newValue = decode(store, key)
                 guard gate.isChange(newValue) else { return }
                 continuation.yield(newValue)
             }
@@ -166,10 +178,8 @@ public final class UserScopedAppStorageKey<Value: Sendable>: SharedKey {
         }
     }
 
-    /// Like ``valuesStream()`` but maps each raw value through `transform` and suppresses
-    /// consecutive duplicates — the equivalent of the previous `CurrentValueSubject` +
-    /// `removeDuplicates()` streams. `transform` typically re-derives the authorized/effective
-    /// value, so it may ignore its input and read the clamped getter instead.
+    /// Like ``valuesStream()`` but maps each raw value through `transform` and suppresses consecutive duplicates
+    /// `transform` typically re-derives the authorized/effective value, so it may ignore its input and read the clamped getter instead.
     public func mappedStream<T: Equatable & Sendable>(
         _ transform: @escaping @Sendable (Value) -> T
     ) -> AsyncStream<T> {
@@ -250,7 +260,7 @@ public extension UserScopedAppStorageKey {
         )
     }
 
-    /// A per-user key for an optional `Bool`, stored as a native `Bool
+    /// A per-user key for an optional `Bool`, stored as a native `Bool`
     static func bool(
         _ baseKey: String
     ) -> UserScopedAppStorageKey<Bool?> {

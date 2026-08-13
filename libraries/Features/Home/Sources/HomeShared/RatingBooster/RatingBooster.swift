@@ -55,20 +55,24 @@ extension RatingBooster: DependencyKey {
     }()
 }
 
+/// Stateless: the shared keys are constructed per call, never stored, so each call resolves the
+/// reference cache and `defaultAppStorage` of the caller's scope
 struct RatingBoosterImplementation {
-    @Shared(.whenFirstSuccessfulConnectionStarted) var successfulTimestamp
-    @Shared(.whenActiveConnectionStarted) var activeConnectionStartTimestamp
-    @Shared(.successfulConnectionsInARow) var successfulConnectionsInARow
-    @Shared(.successfulConnectionsSinceLastPrompt) var successfulConnectionsSinceLastPrompt
-
     @Dependency(\.date) var date
 
     func connectionFailed() {
+        @Shared(.whenActiveConnectionStarted) var activeConnectionStartTimestamp
+        @Shared(.successfulConnectionsInARow) var successfulConnectionsInARow
         $activeConnectionStartTimestamp.withLock { $0 = nil }
         $successfulConnectionsInARow.withLock { $0 = 0 }
     }
 
     func didConnect() {
+        @Shared(.whenFirstSuccessfulConnectionStarted) var successfulTimestamp
+        @Shared(.whenActiveConnectionStarted) var activeConnectionStartTimestamp
+        @Shared(.successfulConnectionsInARow) var successfulConnectionsInARow
+        @Shared(.successfulConnectionsSinceLastPrompt) var successfulConnectionsSinceLastPrompt
+
         if successfulTimestamp == nil {
             log.info("Saving first successful connection timestamp.")
             $successfulTimestamp.withLock { $0 = date.now }
@@ -82,6 +86,7 @@ struct RatingBoosterImplementation {
     }
 
     func didDisconnect() {
+        @Shared(.whenActiveConnectionStarted) var activeConnectionStartTimestamp
         $activeConnectionStartTimestamp.withLock { $0 = nil }
     }
 }

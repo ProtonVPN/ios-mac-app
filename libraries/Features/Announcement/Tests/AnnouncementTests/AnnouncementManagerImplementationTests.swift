@@ -31,7 +31,6 @@ extension Offer {
     static let empty: Offer = .init(label: "", icon: "", panel: nil)
 }
 
-@Suite(.serialized)
 struct AnnouncementManagerImplementationTests {
     private static let announcements: [Announcement] = [
         Announcement(
@@ -84,17 +83,10 @@ struct AnnouncementManagerImplementationTests {
         ),
     ]
 
-    /// Runs `body` with the live manager against a fresh, isolated `UserDefaults` suite (as
-    /// `defaultAppStorage`) and a mock keychain reporting a username, seeded with ``announcements``.
-    /// The manager reads through the per-user key on each call, so it observes this scope's storage.
     private func withManager<T>(_ body: (AnnouncementManager) throws -> T) rethrows -> T {
-        let suiteName = "AnnouncementManagerImplementationTests-\(UUID().uuidString)"
-        let defaults = UserDefaults(suiteName: suiteName)!
-        defaults.removePersistentDomain(forName: suiteName)
         let keychain = MockAuthKeychain()
         keychain.setMockUsername("test-user")
         return try withDependencies {
-            $0.defaultAppStorage = defaults
             $0.authKeychain = keychain
         } operation: {
             @Shared(.announcements) var announcements: [Announcement]?

@@ -91,49 +91,71 @@ extension NetShieldPropertyProvider: DependencyKey {
     }
 
     public static let liveValue: Self = {
-        // Per-user storage on swift-sharing; authorization computed directly from the shared user
-        // tier + feature flags + the business NetShield settings from the keychain.
-        let netShieldStorage: UserScopedAppStorageKey<NetShieldType?> = .rawInt(StorageKey.netShield.rawValue)
-        let lastActiveStorage: UserScopedAppStorageKey<NetShieldType?> = .rawInt(StorageKey.lastActive.rawValue)
+        @Sendable
+        func netShieldStorage() -> UserScopedAppStorageKey<NetShieldType?> {
+            .rawInt(StorageKey.netShield.rawValue)
+        }
+        @Sendable
+        func lastActiveStorage() -> UserScopedAppStorageKey<NetShieldType?> {
+            .rawInt(StorageKey.lastActive.rawValue)
+        }
 
-        let authorize: (NetShieldType) -> FeatureAuthorizationResult = { level in
+        /// Resolves the tier/flag readers and the credentials client from the *current* dependency
+        /// scope, returning a dependency-free authorization closure.
+        @Sendable
+        func makeAuthorize() -> @Sendable (NetShieldType) -> FeatureAuthorizationResult {
             @SharedReader(.userTier) var userTier: VpnTier?
             @SharedReader(.featureFlags) var featureFlags: FeatureFlags
             @Dependency(\.credentialsProvider) var credentialsProvider
-            return level.canUse(
-                userTier: userTier ?? .free,
-                featureFlags: featureFlags,
-                netshieldSettings: credentialsProvider.netShield,
-                isBusiness: credentialsProvider.isBusiness
-            )
-        }
-
-        let getStoredNetShieldValue: (UserScopedAppStorageKey<NetShieldType?>) -> NetShieldType? = { storage in
-            guard let type = storage.currentValue() else { return nil }
-            guard authorize(type).isAllowed else {
-                return authorize(.level2) == .success ? .level2 : .off
+            let tierReader = $userTier
+            let flagsReader = $featureFlags
+            return { level in
+                level.canUse(
+                    userTier: tierReader.wrappedValue ?? .free,
+                    featureFlags: flagsReader.wrappedValue,
+                    netshieldSettings: credentialsProvider.netShield,
+                    isBusiness: credentialsProvider.isBusiness
+                )
             }
-            return type
         }
 
-        let defaultNetShieldType: () -> NetShieldType = {
+        /// The level to fall back to whenever nothing usable is stored.
+        @Sendable
+        func defaultType(
+            authorize: @Sendable (NetShieldType) -> FeatureAuthorizationResult
+        ) -> NetShieldType {
             authorize(.level2) == .success ? .level2 : .off
         }
 
+        /// The stored value clamped by authorization, or `nil` when nothing is stored.
+        @Sendable
+        func clampedStoredValue(
+            _ stored: NetShieldType?,
+            authorize: @Sendable (NetShieldType) -> FeatureAuthorizationResult
+        ) -> NetShieldType? {
+            guard let stored else { return nil }
+            guard authorize(stored).isAllowed else {
+                return defaultType(authorize: authorize)
+            }
+            return stored
+        }
+
         let getNetShieldType: () -> NetShieldType = {
-            guard let value = getStoredNetShieldValue(netShieldStorage) else {
-                let defaultType = defaultNetShieldType()
-                netShieldStorage.setCurrentValue(defaultType)
-                return defaultType
+            let authorize = makeAuthorize()
+            let storage = netShieldStorage()
+            guard let value = clampedStoredValue(storage.currentValue(), authorize: authorize) else {
+                let fallback = defaultType(authorize: authorize)
+                storage.setCurrentValue(fallback)
+                return fallback
             }
             return value
         }
 
         let setNetShieldType: (NetShieldType) -> Void = { newValue in
-            netShieldStorage.setCurrentValue(newValue)
+            netShieldStorage().setCurrentValue(newValue)
             if newValue != .off {
                 // Remember the last active level so the V1 UI can toggle off/on.
-                lastActiveStorage.setCurrentValue(newValue)
+                lastActiveStorage().setCurrentValue(newValue)
             }
         }
 
@@ -141,12 +163,16 @@ extension NetShieldPropertyProvider: DependencyKey {
             getNetShieldType: getNetShieldType,
             setNetShieldType: setNetShieldType,
             getLastActiveNetShieldType: {
-                getStoredNetShieldValue(lastActiveStorage) ?? getNetShieldType()
+                let authorize = makeAuthorize()
+                if let lastActive = clampedStoredValue(lastActiveStorage().currentValue(), authorize: authorize) {
+                    return lastActive
+                }
+                return getNetShieldType()
             },
             netShieldTypeStream: {
-                // Re-derive the effective value without `getNetShieldType`'s write-back side effect.
-                netShieldStorage.mappedStream { _ in
-                    getStoredNetShieldValue(netShieldStorage) ?? defaultNetShieldType()
+                let authorize = makeAuthorize()
+                return netShieldStorage().mappedStream { stored in
+                    clampedStoredValue(stored, authorize: authorize) ?? defaultType(authorize: authorize)
                 }
             }
         )

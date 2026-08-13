@@ -18,10 +18,6 @@
 
 import Sharing
 
-// Per-user keys migrated off the legacy `PropertiesManager` per-user methods. The current username
-// is resolved internally from `\.authKeychain`, and the on-disk key (`baseKey + username`) matches
-// the legacy representation, so existing profiles are read transparently.
-
 public extension SharedKey where Self == UserScopedAppStorageKey<String?> {
     /// The auto-connect profile id for the current user
     static var autoConnectProfileId: Self {

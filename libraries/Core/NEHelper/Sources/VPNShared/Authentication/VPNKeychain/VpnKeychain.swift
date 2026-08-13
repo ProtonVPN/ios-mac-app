@@ -131,8 +131,13 @@ public class VpnKeychain: VpnKeychainProtocol {
         } catch {
             /// Stored data can't be decoded — treat it as missing and evict the blob so we don't
             /// keep hitting the same decode failure on every launch. The user will be routed
-            /// through the login flow on the next session check.
+            /// through the login flow on the next session check. Drop the in-memory cache and the
+            /// shared tier/plan mirror along with it: after eviction, `fetchCached()` must not
+            /// keep serving the evicted credentials, and features must not keep authorizing
+            /// against the evicted user's tier.
             try? appKeychain.remove(key)
+            cached = nil
+            VpnCredentialsMetadataMirror.clear()
             log.error("Failed to decode VpnCredentials; removed stale keychain entry", category: .keychain, metadata: ["error": "\(error)"])
             throw KeychainError.credentialsMissing(key)
         }
@@ -214,13 +219,25 @@ public class VpnKeychain: VpnKeychainProtocol {
         VpnCredentialsMetadataMirror.clear()
         appKeychain[data: StorageKey.widgetPublicKey] = nil
         deleteServerCertificate()
+
+        // Tolerate individual delete failures (`errSecItemNotFound` is expected whenever a
+        // password was never stored, e.g. fresh installs): they must not prevent the remaining
+        // deletes, nor the change event below
         do {
             try clearPassword(forKey: StorageKey.vpnServerPassword)
+        } catch {
+            log.debug("Could not clear vpn server password", category: .keychain, metadata: ["error": "\(error)"])
+        }
+        do {
             try clearPassword(forKey: StorageKey.wireguardSettings)
-            DispatchQueue.main.async {
-                AppEvent.credentialsChanged.post()
-            }
-        } catch {}
+        } catch {
+            log.debug("Could not clear wireguard settings", category: .keychain, metadata: ["error": "\(error)"])
+        }
+
+        // Posted under the lock — must stay `async`, see `storeAndDetectDowngrade`.
+        DispatchQueue.main.async {
+            AppEvent.credentialsChanged.post()
+        }
     }
 
     // Password is set and retrieved without using the library because NEVPNProtocol reuquires it to be
@@ -441,7 +458,10 @@ enum VpnCredentialsMetadataMirror {
 
 public struct VpnKeychainDependencyKey: DependencyKey {
     public static let liveValue: VpnKeychainProtocol = VpnKeychain.instance
-    public static let testValue: VpnKeychainProtocol = VpnKeychainMock()
+
+    public static var testValue: VpnKeychainProtocol {
+        VpnKeychainMock()
+    }
 }
 
 public extension DependencyValues {

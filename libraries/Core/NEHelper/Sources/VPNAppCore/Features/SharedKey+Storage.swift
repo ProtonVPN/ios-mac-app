@@ -20,9 +20,6 @@ import Domain
 import OrderedCollections
 import Sharing
 
-// Per-user keys migrated off the legacy `Storage` protocol. Each reuses the exact UserDefaults key
-// and JSON representation the legacy `Storage.get/set` / `Storage.getForUser/setForUser` used.
-
 public extension SharedKey where Self == UserScopedAppStorageKey<OrderedSet<RecentConnection>?> {
     /// The user's recent connections
     static var recentConnections: Self {

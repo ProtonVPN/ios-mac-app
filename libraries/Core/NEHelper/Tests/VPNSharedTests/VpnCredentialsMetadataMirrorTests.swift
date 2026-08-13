@@ -20,7 +20,6 @@ import Sharing
 import Testing
 @testable import VPNShared
 
-@Suite(.serialized)
 struct VpnCredentialsMetadataMirrorTests {
     @Test
     func projectsOnlySuccessfullyStoredCredentialsAndClearsThem() {

@@ -25,8 +25,7 @@ import Sharing
 import Testing
 import VPNAppCore
 
-/// Serialized because each test swaps the app storage backing the shared feature flags.
-@Suite("Maintenance polling", .serialized)
+@Suite("Maintenance polling")
 struct MaintenanceFeatureTests {
     private static let intervalMinutes = 10
     private static let interval = Duration.seconds(intervalMinutes * 60)
@@ -173,9 +172,10 @@ private final class TestContext {
         featureFlags: FeatureFlags = .allEnabled,
         isUnderMaintenance: Bool = false
     ) {
-        // Unique suite per instance: swift-sharing memoizes a store per suite name.
-        let suiteName = "MaintenanceFeatureTests-\(UUID().uuidString)"
-        self.defaults = UserDefaults(suiteName: suiteName)!
+        // Fresh in-memory suite per instance
+        self.defaults = UserDefaults.inMemory
+        // Seeded before any shared reference exists, so the feature reads it through `load` —
+        // and under the legacy (misspelled, load-bearing) key.
         defaults.set(intervalMinutes, forKey: "MaintenanceServerRefreshIntereval")
         self.featureFlags = featureFlags
         self.isUnderMaintenance = isUnderMaintenance
@@ -183,6 +183,10 @@ private final class TestContext {
 
     @MainActor
     func store() -> TestStoreOf<MaintenanceFeature> {
+        // `defaultAppStorage` is set twice on purpose: the outer scope is what the seeding
+        // `@Shared(.featureFlags)` below resolves against; the inner one is what the TestStore
+        // hands the reducer. Both must point at this context's suite so the seeded reference and
+        // the reducer's references share an identity.
         withDependencies {
             $0.defaultAppStorage = defaults
         } operation: {

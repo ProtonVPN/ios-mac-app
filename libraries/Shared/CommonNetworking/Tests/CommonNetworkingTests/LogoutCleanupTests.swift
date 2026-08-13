@@ -24,14 +24,12 @@ import Sharing
 import Testing
 import VPNAppCore
 
-@Suite(.serialized)
 struct LogoutCleanupTests {
     @Test("performLogoutCleanup resets user-scoped settings to their defaults")
-    func resetsSettings() throws {
-        let suiteName = "LogoutCleanupTests-\(UUID().uuidString)"
-        let defaults = try #require(UserDefaults(suiteName: suiteName))
+    func resetsSettings() {
+        // The suite is injected explicitly only so the whole test runs against one known store
         withDependencies {
-            $0.defaultAppStorage = defaults
+            $0.defaultAppStorage = UserDefaults.inMemory
         } operation: {
             @Shared(.hasConnected) var hasConnected
             @Shared(.discourageSecureCore) var discourageSecureCore
