@@ -33,6 +33,7 @@ public extension Logger {
         case net
         case `protocol`
         case app
+        case appIntent
         case appUpdate = "app.update"
         case os
         case settings

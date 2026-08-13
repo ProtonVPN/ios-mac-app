@@ -48,29 +48,35 @@ struct ConnectRequest {
     }
 
     func send() async throws {
-        guard let resolvedSpec, isAllowed(resolvedSpec) else { return }
-        if skipReconnect, try await isAlreadyConnected(to: resolvedSpec) { return }
+        let resolvedSpec = allowedSpec()
+        if skipReconnect, try await isAlreadyConnected(to: resolvedSpec) {
+            log.error("Ignoring connection request, already connected to resolved spec", category: .appIntent)
+            return
+        }
         do {
             try sendConnectCommand(for: resolvedSpec)
         } catch {
-            log.error("Failed to connect to VPN from widget with error: \(error)")
+            log.error("Failed to connect to VPN from widget with error: \(error)", category: .appIntent)
         }
     }
 
     func sendAndAwaitOutcome() async throws -> Bool {
-        guard let resolvedSpec, isAllowed(resolvedSpec) else { return false }
+        let resolvedSpec = allowedSpec()
         do {
             try await finishResolving()
         } catch {
-            log.error("The connectionState hasn’t been changed from `resolving` in \(Self.timeOut) seconds. Skipping the widget connection intent.")
+            log.error("The connectionState hasn’t been changed from `resolving` in \(Self.timeOut) seconds. Skipping the widget connection intent.", category: .appIntent)
             return false
         }
-        if skipReconnect, try await isAlreadyConnected(to: resolvedSpec) { return true }
+        if skipReconnect, try await isAlreadyConnected(to: resolvedSpec) {
+            log.debug("Ignoring connection request, already connected to resolved spec", category: .appIntent)
+            return true
+        }
         do {
             try sendConnectCommand(for: resolvedSpec)
             try await finishConnecting()
         } catch {
-            log.error("Failed to connect to VPN from widget with error: \(error)")
+            log.error("Failed to connect to VPN from widget with error: \(error)", category: .appIntent)
             return false
         }
         try await $connectionState.load()
@@ -79,8 +85,18 @@ struct ConnectRequest {
 
     // MARK: - Private helpers:
 
-    private var resolvedSpec: ConnectionSpec? {
+    private var resolvedSpec: ConnectionSpec {
         spec ?? recentIndex.flatMap { recentConnection(at: $0) } ?? defaultConnection()
+    }
+
+    private func allowedSpec() -> ConnectionSpec {
+        let spec = resolvedSpec
+        if isAllowed(spec) {
+            return spec
+        } else {
+            log.info("Resolved spec not allowed for current tier, falling back to fastest", category: .appIntent)
+            return .defaultFastest
+        }
     }
 
     private func isAllowed(_ spec: ConnectionSpec) -> Bool {
@@ -143,7 +159,7 @@ struct ConnectRequest {
         ).elements[safe: index]?.connection
     }
 
-    private func defaultConnection() -> ConnectionSpec? {
+    private func defaultConnection() -> ConnectionSpec {
         switch storedDefaultConnectionPreference ?? .fastest {
         case .fastest:
             return .defaultFastest

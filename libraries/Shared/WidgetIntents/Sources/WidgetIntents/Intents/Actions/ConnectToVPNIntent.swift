@@ -31,6 +31,7 @@ public struct ConnectToVPNIntent: AppIntent {
     public init() {}
 
     public func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
+        log.debug("Received ConnectToVPNIntent, perform method called", category: .appIntent)
         let value = try await ConnectRequest().sendAndAwaitOutcome()
         return .result(value: value)
     }

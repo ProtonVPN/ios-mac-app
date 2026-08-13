@@ -36,6 +36,7 @@ public struct ShowConnectionStatus: AppIntent {
     public init() {}
 
     public func perform() async throws -> some IntentResult & ReturnsValue<Bool> & ProvidesDialog {
+        log.debug("Received ShowConnectionStatus, perform method called", category: .appIntent)
         @SharedReader(.connectionState) var connectionState
         try await $connectionState.load()
         if connectionState.is(\.connected) {

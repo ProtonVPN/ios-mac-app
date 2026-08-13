@@ -35,6 +35,7 @@ public struct ConnectCommandIntent: AppIntent {
     }
 
     public func perform() async throws -> some IntentResult {
+        log.debug("Received ConnectCommandIntent, perform method called", category: .appIntent)
         try await ConnectRequest(recentIndex: recentIndex).send()
         return .result()
     }
