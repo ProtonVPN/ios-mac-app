@@ -87,12 +87,14 @@ public struct IPView: View {
 
 // MARK: - Previews
 
-#Preview {
-    @Shared(.userLocation) var userLocation: StoredUserLocation?
-    $userLocation.withLock { $0 = .measured(.init(ip: "127.0.0.1", country: "CH", isp: "Swisscom"), at: .now) }
+#if DEBUG
+    #Preview {
+        @Shared(.userLocation) var userLocation: StoredUserLocation?
+        let _ = $userLocation.withLock { $0 = .measured(.init(ip: "127.0.0.1", country: "CH", isp: "Swisscom"), at: .now) }
 
-    return IPView(store: Store(initialState: .init(), reducer: { IPViewFeature() }))
-        .padding(16)
-        .background(Color(.background))
-        .colorScheme(.dark)
-}
+        IPView(store: Store(initialState: .init(), reducer: { IPViewFeature() }))
+            .padding(16)
+            .background(Color(.background))
+            .colorScheme(.dark)
+    }
+#endif
