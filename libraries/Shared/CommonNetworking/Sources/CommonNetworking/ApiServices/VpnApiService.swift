@@ -156,7 +156,7 @@ public enum VpnApiClientKey: DependencyKey {
                     freeTier: freeTier,
                     lastModified: shouldSendLastModifiedValue ? lastModified : nil
                 )
-            ) { (response: Result<IfModifiedSinceResponse<JSONDictionary>, Error>) in
+            ) { (response: Result<IfModifiedSinceResponse<LogicalsResponse>, Error>) in
                 let result: Result<ServerInfoResponse, Error>
                 defer { completion(result) }
 
@@ -165,31 +165,40 @@ public enum VpnApiClientKey: DependencyKey {
                     log.debug("Logicals unchanged since last request", metadata: ["lastModified": "\(optional: lastModified)"])
                     result = .success(.notModified(since: lastModified))
 
-                case let .success(.modified(lastModified, json)):
-                    guard let serversJson = json.jsonArray(key: "LogicalServers") else {
-                        log.error("'Servers' field not present in server info request's response", category: .api, event: .response)
-                        let error = ParseError.serverParse
-                        result = .failure(error)
-                        return
-                    }
+                case let .success(.modified(lastModified, logicals)):
+                    switch logicals {
+                    case let .servers(servers):
+                        result = .success(.modified(
+                            at: lastModified,
+                            servers: servers.map(\.vpnServer),
+                            freeServersOnly: freeTier
+                        ))
 
-                    guard !serversJson.isEmpty else {
-                        // throw error to log the user out
+                    case let .unreadable(receivedServerCount):
+                        // The response is unreadable (and not the account losing its servers), so
+                        // report a parse failure. That leaves the caller with the servers it already
+                        // stored, where `noConnectionsAvailable` would log every user out over a
+                        // decoding regression.
+                        log.error(
+                            "Discarded every server in the logicals response",
+                            category: .api,
+                            event: .response,
+                            metadata: ["receivedServerCount": "\(receivedServerCount)"]
+                        )
+                        result = .failure(ParseError.serverParse)
+
+                    case .empty:
+                        // The account has no server to connect to. Throw so the caller logs the user out.
                         result = .failure(CommonVpnError.noConnectionsAvailable)
-                        return
                     }
 
-                    var serverModels: [ServerModel] = []
-                    for json in serversJson {
-                        do {
-                            try serverModels.append(ServerModel(dic: json))
-                        } catch {
-                            log.error("Failed to parse server info for json", category: .api, event: .response, metadata: ["error": "\(error)", "json": "\(json)"])
-                        }
-                    }
-                    result = .success(.modified(at: lastModified, servers: serverModels, freeServersOnly: freeTier))
-
-                case .failure:
+                case let .failure(error):
+                    log.error(
+                        "Failed to read the logicals response",
+                        category: .api,
+                        event: .response,
+                        metadata: ["error": "\(error)"]
+                    )
                     result = .failure(CommonVpnError.logicalsEndpointFailed)
                 }
             }

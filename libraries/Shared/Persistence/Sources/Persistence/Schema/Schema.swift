@@ -61,16 +61,12 @@ extension Endpoint: TableRecord, FetchableRecord, PersistableRecord {
     enum Columns: String, ColumnExpression {
         case id
         case status
+        case protocolMask // bit flags/mask representing protocol support
     }
 }
 
 extension EndpointOverrides: TableRecord, FetchableRecord, PersistableRecord {
     static let endpoint = belongsTo(Endpoint.self)
-
-    enum Columns: String, ColumnExpression {
-        case endpointId
-        case protocolMask // bit flags/mask representing protocol support
-    }
 }
 
 extension DatabaseMetadata: TableRecord, FetchableRecord, PersistableRecord {

@@ -25,11 +25,10 @@ extension QueryInterfaceRequest {
         _ filters: [VPNServerFilter],
         logicalAlias: TableAlias<Logical>,
         statusAlias: TableAlias<LogicalStatus>,
-        overrideAlias: TableAlias<EndpointOverrides>,
         endpointAlias: TableAlias<Endpoint>
     ) -> Self {
         filters
-            .map { $0.sqlExpression(logical: logicalAlias, status: statusAlias, overrides: overrideAlias, endpoint: endpointAlias) }
+            .map { $0.sqlExpression(logical: logicalAlias, status: statusAlias, endpoint: endpointAlias) }
             .reduce(self) { request, sqlExpression in request.filter(sqlExpression) }
     }
 
@@ -86,12 +85,10 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
     /// operations such as filtering.
     ///
     /// Joins performed:
-    /// - Left join with EndpointOverrides
     /// - Inner join Logical and LogicalStatus (transitively)
     func joiningAndAliasing(
         logicalAlias: TableAlias<Logical>,
-        statusAlias: TableAlias<LogicalStatus>,
-        overrideAlias: TableAlias<EndpointOverrides>
+        statusAlias: TableAlias<LogicalStatus>
     ) -> QueryInterfaceRequest<Endpoint> {
         joining(
             required: Endpoint.logical
@@ -99,7 +96,6 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
                 .select(Logical.Columns.exitCountryCode, Logical.Columns.gatewayName, Logical.Columns.city)
                 .joining(required: Logical.status.aliased(statusAlias))
         )
-        .joining(optional: Endpoint.overrides.aliased(overrideAlias))
     }
 
     /// Represents the condition of whether a logical server is virtual (a.k.a. supports smart routing or not)
@@ -121,7 +117,7 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
     func annotatedWithAggregateData(
         logicalAlias: TableAlias<Logical>,
         statusAlias: TableAlias<LogicalStatus>,
-        overrideAlias: TableAlias<EndpointOverrides>,
+        endpointAlias: TableAlias<Endpoint>,
         grouping: VPNServerGrouping
     ) -> QueryInterfaceRequest<Endpoint> {
         let result = annotated(with: bitwiseOr(statusAlias[LogicalStatus.Columns.status & Endpoint.Columns.status]).forKey("statusUnion"))
@@ -133,7 +129,7 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
             .annotated(with: logicalAlias[Logical.Columns.gatewayName])
             .annotated(with: bitwiseOr(logicalAlias[Logical.Columns.feature]).forKey("featureUnion"))
             .annotated(with: bitwiseAnd(logicalAlias[Logical.Columns.feature]).forKey("featureIntersection"))
-            .annotated(with: bitwiseOr(overrideAlias[EndpointOverrides.Columns.protocolMask] ?? ProtocolSupport.all.rawValue).forKey("protocolSupport"))
+            .annotated(with: bitwiseOr(endpointAlias[Endpoint.Columns.protocolMask]).forKey("protocolSupport"))
             .annotated(with: min(logicalAlias[Logical.Columns.tier]).forKey("minTier"))
             .annotated(with: max(logicalAlias[Logical.Columns.tier]).forKey("maxTier"))
             .annotated(with: logicalAlias[Logical.Columns.latitude])
@@ -184,13 +180,12 @@ extension GroupInfoResult {
     ) -> QueryInterfaceRequest<GroupInfoResult> {
         let logicals = TableAlias<Logical>()
         let statuses = TableAlias<LogicalStatus>()
-        let overrides = TableAlias<EndpointOverrides>()
         let endpoints = TableAlias<Endpoint>()
 
         return Endpoint.aliased(endpoints)
-            .joiningAndAliasing(logicalAlias: logicals, statusAlias: statuses, overrideAlias: overrides)
-            .filterServers(filters, logicalAlias: logicals, statusAlias: statuses, overrideAlias: overrides, endpointAlias: endpoints)
-            .annotatedWithAggregateData(logicalAlias: logicals, statusAlias: statuses, overrideAlias: overrides, grouping: grouping)
+            .joiningAndAliasing(logicalAlias: logicals, statusAlias: statuses)
+            .filterServers(filters, logicalAlias: logicals, statusAlias: statuses, endpointAlias: endpoints)
+            .annotatedWithAggregateData(logicalAlias: logicals, statusAlias: statuses, endpointAlias: endpoints, grouping: grouping)
             .grouping(by: grouping, logicalAlias: logicals)
             .ordering(by: groupOrder, logicalAlias: logicals)
     }
@@ -203,11 +198,10 @@ extension ServerResult {
         let endpointAlias = TableAlias<Endpoint>()
         let logicalAlias = TableAlias<Logical>()
         let statusAlias = TableAlias<LogicalStatus>()
-        let overrideAlias = TableAlias<EndpointOverrides>()
 
         return Logical.aliased(logicalAlias)
-            .joining(required: Logical.endpoints.aliased(endpointAlias).joining(optional: Endpoint.overrides.aliased(overrideAlias)))
-            .filterServers(filters, logicalAlias: logicalAlias, statusAlias: statusAlias, overrideAlias: overrideAlias, endpointAlias: endpointAlias)
+            .joining(required: Logical.endpoints.aliased(endpointAlias))
+            .filterServers(filters, logicalAlias: logicalAlias, statusAlias: statusAlias, endpointAlias: endpointAlias)
             .including(all: Logical.endpoints.including(optional: Endpoint.overrides.forKey("overrideInfo")))
             .including(required: Logical.status.aliased(statusAlias))
             .asRequest(of: ServerResult.self)
@@ -220,14 +214,12 @@ extension ServerInfoResult {
     static func request(filters: [VPNServerFilter], order: VPNServerOrder) -> QueryInterfaceRequest<ServerInfoResult> {
         let logicalAlias = TableAlias<Logical>()
         let statusAlias = TableAlias<LogicalStatus>()
-        let overrideAlias = TableAlias<EndpointOverrides>()
         let endpointAlias = TableAlias<Endpoint>()
 
         return Endpoint.aliased(endpointAlias)
             .including(required: Endpoint.logical.aliased(logicalAlias).including(required: Logical.status.aliased(statusAlias)))
-            .joining(optional: Endpoint.overrides.aliased(overrideAlias))
-            .annotated(with: bitwiseOr(overrideAlias[EndpointOverrides.Columns.protocolMask] ?? ProtocolSupport.all.rawValue).forKey("protocolMask"))
-            .filterServers(filters, logicalAlias: logicalAlias, statusAlias: statusAlias, overrideAlias: overrideAlias, endpointAlias: endpointAlias)
+            .annotated(with: bitwiseOr(endpointAlias[Endpoint.Columns.protocolMask]).forKey("protocolMask"))
+            .filterServers(filters, logicalAlias: logicalAlias, statusAlias: statusAlias, endpointAlias: endpointAlias)
             .asRequest(of: ServerInfoResult.self)
             .group(logicalAlias[Logical.Columns.id])
             .order(order, logicalAlias: logicalAlias, statusAlias: statusAlias)

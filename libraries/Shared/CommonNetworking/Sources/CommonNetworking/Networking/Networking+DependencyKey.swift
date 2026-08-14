@@ -44,7 +44,7 @@ public protocol VPNNetworking {
 
     // Completion handler methods
     func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void)
-    func request(_ route: ConditionalRequest, completion: @escaping (_ result: Result<IfModifiedSinceResponse<JSONDictionary>, Error>) -> Void)
+    func request<T: Decodable>(_ route: ConditionalRequest, completion: @escaping (_ result: Result<IfModifiedSinceResponse<T>, Error>) -> Void)
     func request<T: Codable>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void)
     func request(_ route: URLRequest, completion: @escaping (_ result: Result<String, Error>) -> Void)
     func request<T: Codable>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void)
@@ -127,9 +127,9 @@ public struct CoreNetworkingWrapper: VPNNetworking {
         wrapped.request(route, completion: completion)
     }
 
-    public func request(
+    public func request<T: Decodable>(
         _ route: any ConditionalRequest,
-        completion: @escaping (Result<IfModifiedSinceResponse<JSONDictionary>, any Error>) -> Void
+        completion: @escaping (Result<IfModifiedSinceResponse<T>, any Error>) -> Void
     ) {
         wrapped.request(route, completion: completion)
     }
@@ -229,9 +229,9 @@ public extension DependencyValues {
 
         func request(_: any Request, completion _: @escaping (Result<JSONDictionary, any Error>) -> Void) {}
 
-        func request(
+        func request<T: Decodable>(
             _: any ConditionalRequest,
-            completion _: @escaping (Result<IfModifiedSinceResponse<JSONDictionary>, any Error>) -> Void
+            completion _: @escaping (Result<IfModifiedSinceResponse<T>, any Error>) -> Void
         ) {}
 
         func request<T: Codable>(

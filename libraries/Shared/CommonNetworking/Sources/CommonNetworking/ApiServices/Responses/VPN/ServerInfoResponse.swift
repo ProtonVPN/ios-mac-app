@@ -20,7 +20,7 @@ import Domain
 
 public enum ServerInfoResponse {
     case notModified(since: String?)
-    case modified(at: String?, servers: [ServerModel], freeServersOnly: Bool)
+    case modified(at: String?, servers: [VPNServer], freeServersOnly: Bool)
 }
 
 public typealias ServerInfoTuple = (

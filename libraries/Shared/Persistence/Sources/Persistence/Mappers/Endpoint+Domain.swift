@@ -36,10 +36,6 @@ extension Domain.ServerEndpoint {
     var overrideInfo: EndpointOverrides? {
         guard let protocolEntries else { return nil }
 
-        return EndpointOverrides(
-            endpointId: id,
-            protocolMask: supportedProtocols.rawValue,
-            protocolEntries: protocolEntries
-        )
+        return EndpointOverrides(endpointId: id, protocolEntries: protocolEntries)
     }
 }

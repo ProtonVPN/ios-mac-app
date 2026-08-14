@@ -53,6 +53,7 @@
         "endpoints": [
             {
                 "id": "fastestVancouverServerIP1",
+                "entryIp": "10.0.1.1",
                 "domain": "ca-01.protonvpn.com",
                 "status": 1,
                 "exitIp": "1.2.3.7",
@@ -158,6 +159,7 @@
         "endpoints": [
             {
                 "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111112==",
+                "entryIp": "10.0.1.2",
                 "exitIp": "1.2.3.6",
                 "domain": "hk-03.protonvpn.com",
                 "status": 1
@@ -185,6 +187,7 @@
                 "status": 1,
                 "exitIp": "1.2.3.7",
                 "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111113==",
+                "entryIp": "10.0.1.3",
                 "domain": "jp-04.protonvpn.com"
             }
         ]
@@ -208,11 +211,13 @@
             {
                 "exitIp": "1.2.4.8",
                 "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111124==",
+                "entryIp": "10.0.1.4",
                 "status": 1,
                 "domain": "jp-09.protonvpn.com"
             },
             {
                 "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111134==",
+                "entryIp": "10.0.1.5",
                 "domain": "jp-10.protonvpn.com",
                 "status": 1,
                 "exitIp": "1.2.5.8"
@@ -221,6 +226,7 @@
                 "status": 0,
                 "domain": "jp-11.protonvpn.com",
                 "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111144==",
+                "entryIp": "10.0.1.6",
                 "exitIp": "1.2.6.8"
             }
         ]
@@ -244,12 +250,14 @@
             {
                 "status": 1,
                 "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111112111125==",
+                "entryIp": "10.0.1.7",
                 "exitIp": "1.2.4.11",
                 "domain": "se-ca-15a.protonvpn.com"
             },
             {
                 "status": 1,
                 "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111113111135==",
+                "entryIp": "10.0.1.8",
                 "exitIp": "1.2.4.12",
                 "domain": "se-ca-15b.protonvpn.com"
             }
@@ -274,12 +282,14 @@
             {
                 "status": 1,
                 "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111125==",
+                "entryIp": "10.0.1.9",
                 "exitIp": "1.2.4.9",
                 "domain": "ch-ca-01a.protonvpn.com"
             },
             {
                 "status": 1,
                 "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111135==",
+                "entryIp": "10.0.1.10",
                 "exitIp": "1.2.4.10",
                 "domain": "ch-ca-01b.protonvpn.com"
             }
@@ -304,12 +314,14 @@
             {
                 "status": 1,
                 "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111141111125==",
+                "entryIp": "10.0.1.11",
                 "exitIp": "1.2.9.9",
                 "domain": "is-ca-12a.protonvpn.com"
             },
             {
                 "status": 1,
                 "id": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111151111135==",
+                "entryIp": "10.0.1.12",
                 "exitIp": "1.2.9.10",
                 "domain": "is-ca-12b.protonvpn.com"
             }
@@ -404,6 +416,7 @@
                 "exitIp": "1.2.3.14",
                 "status": 1,
                 "id": "fastestMegaGateway1000ServerIP1",
+                "entryIp": "10.0.1.13",
                 "domain": "US-GTW-02.protonvpn.com"
             }
         ]
@@ -429,6 +442,7 @@
                 "exitIp": "1.2.3.14",
                 "status": 1,
                 "id": "fastestMegaGateway2000ServerIP1",
+                "entryIp": "10.0.1.14",
                 "domain": "US-GTW-02.protonvpn.com"
             }
         ]
@@ -454,6 +468,7 @@
                 "exitIp": "1.2.3.14",
                 "status": 1,
                 "id": "fastestMegaGateway1000ServerIP3",
+                "entryIp": "10.0.1.15",
                 "domain": "US-GTW-02.protonvpn.com"
             }
         ]

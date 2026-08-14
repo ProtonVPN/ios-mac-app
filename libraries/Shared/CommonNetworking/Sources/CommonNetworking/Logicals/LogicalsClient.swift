@@ -40,7 +40,25 @@ extension LogicalsClient: DependencyKey {
                     lastModified: nil
                 )
                 let response: LogicalsResponse = try await networking.perform(request: request)
-                return response.logicalServers.map(\.vpnServer)
+                switch response {
+                case let .servers(servers):
+                    return servers.map(\.vpnServer)
+
+                case let .unreadable(receivedServerCount):
+                    // Fail the refresh rather than report success with nothing to store. The caller keeps
+                    // the servers it has and tries again, instead of holding a stale list it believes is
+                    // fresh until the next refresh interval comes around.
+                    log.error(
+                        "Discarded every server in the logicals response",
+                        category: .api,
+                        event: .response,
+                        metadata: ["receivedServerCount": "\(receivedServerCount)"]
+                    )
+                    throw ParseError.serverParse
+
+                case .empty:
+                    return []
+                }
             },
             fetchLoads: { location in
                 let truncatedIP = location.flatMap { TruncatedIp(ip: $0.ip) }

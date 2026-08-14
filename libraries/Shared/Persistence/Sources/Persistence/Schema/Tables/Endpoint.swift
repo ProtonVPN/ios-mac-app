@@ -29,4 +29,9 @@ struct Endpoint: Codable {
     let status: Int
     let label: String?
     let x25519PublicKey: String?
+
+    /// Bit mask of the protocols this endpoint has an address for, cached so that queries can filter on
+    /// protocol support without reading the per-protocol entries. `ServerEndpoint.supportedProtocols`
+    /// computes it.
+    let protocolMask: Int
 }

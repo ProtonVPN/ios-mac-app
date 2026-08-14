@@ -168,7 +168,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             let isFreeTierRequest = shouldRefreshServersAccordingToUserTier && credentials.maxTier == .free
             assert(isFreeTierRequest == isFree)
             serverListUpdater.update(
-                servers: servers.map { VPNServer(legacyModel: $0) },
+                servers: servers,
                 freeServersOnly: isFreeTierRequest,
                 lastModifiedAt: lastModified
             )

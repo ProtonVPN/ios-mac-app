@@ -65,17 +65,6 @@ public struct ServerIp: Codable {
         self.protocolEntries = protocolEntries
     }
 
-    public init(dic: JSONDictionary) throws {
-        self.id = try dic.stringOrThrow(key: "ID")
-        self.exitIp = try dic.stringOrThrow(key: "ExitIP")
-        self.domain = try dic.stringOrThrow(key: "Domain")
-        self.status = try dic.intOrThrow(key: "Status")
-        self.entryIp = dic.string("EntryIP")
-        self.label = dic.string("Label")
-        self.x25519PublicKey = dic["X25519PublicKey"] as? String
-        self.protocolEntries = PerProtocolEntries(dic: dic)
-    }
-
     public func entryIp(using vpnProtocol: VpnProtocol) -> String? {
         guard let protocolEntries else {
             return entryIp
@@ -96,43 +85,34 @@ public struct ServerIp: Codable {
             return supports(vpnProtocol: vpnProtocol)
         }
 
-        // Skip the loop if there are no overrides.
-        guard protocolEntries?.isEmpty != true else {
-            return true
-        }
+        return smartProtocolConfig.supportedProtocols.contains { supports(vpnProtocol: $0) }
+    }
 
-        for vpnProtocol in smartProtocolConfig.supportedProtocols {
-            if supports(vpnProtocol: vpnProtocol) {
-                return true
+    #if DEBUG
+        public var asDict: [String: Any] {
+            var result: [String: Any] = [
+                "ID": id,
+                "ExitIP": exitIp,
+                "Domain": domain,
+                "Status": status,
+            ]
+
+            if let x25519PublicKey {
+                result["X25519PublicKey"] = x25519PublicKey
             }
-        }
-        return false
-    }
+            if let label {
+                result["Label"] = label
+            }
+            if let entryIp {
+                result["EntryIP"] = entryIp
+            }
+            if let protocolEntries {
+                result["EntryPerProtocol"] = protocolEntries.asDict
+            }
 
-    /// Used for testing purposes.
-    public var asDict: [String: Any] {
-        var result: [String: Any] = [
-            "ID": id,
-            "ExitIP": exitIp,
-            "Domain": domain,
-            "Status": status,
-        ]
-
-        if let x25519PublicKey {
-            result["X25519PublicKey"] = x25519PublicKey
+            return result
         }
-        if let label {
-            result["Label"] = label
-        }
-        if let entryIp {
-            result["EntryIP"] = entryIp
-        }
-        if let protocolEntries {
-            result["EntryPerProtocol"] = protocolEntries.asDict
-        }
-
-        return result
-    }
+    #endif
 
     public var underMaintenance: Bool {
         status == 0
@@ -146,42 +126,27 @@ public struct ServerIp: Codable {
     }
 }
 
-public extension PerProtocolEntries {
-    // looks like:
-    // "EntryPerProtocol": {
-    //     "WireGuardTLS": {"IPv4": "5.6.7.8"},
-    //     "OpenVPNTCP": {"Ports": [22, 23]}
-    //  }
-    init?(dic: JSONDictionary) {
-        guard let entries = dic["EntryPerProtocol"] as? [String: JSONDictionary] else {
-            return nil
-        }
-
-        self = .init(rawValue: entries.mapValues(ServerProtocolEntry.init(dic:)))
-    }
-
-    var asDict: JSONDictionary {
-        rawValue.reduce(into: [:]) { partialResult, keyPair in
-            partialResult[keyPair.key] = keyPair.value?.asDict as? AnyObject
+#if DEBUG
+    public extension PerProtocolEntries {
+        var asDict: [String: Any] {
+            rawValue.reduce(into: [:]) { partialResult, keyPair in
+                partialResult[keyPair.key] = keyPair.value?.asDict as? AnyObject
+            }
         }
     }
-}
 
-public extension ServerProtocolEntry {
-    init?(dic: JSONDictionary) {
-        self.init(ipv4: dic.string("IPv4"), ports: dic.intArray(key: "Ports"))
-    }
+    public extension ServerProtocolEntry {
+        var asDict: [String: Any] {
+            var result: [String: Any] = [:]
+            if let ipv4 {
+                result["IPv4"] = ipv4 as AnyObject
+            }
 
-    var asDict: JSONDictionary {
-        var result: JSONDictionary = [:]
-        if let ipv4 {
-            result["IPv4"] = ipv4 as AnyObject
+            if let ports {
+                result["Ports"] = ports as AnyObject
+            }
+
+            return result
         }
-
-        if let ports {
-            result["Ports"] = ports as AnyObject
-        }
-
-        return result
     }
-}
+#endif
