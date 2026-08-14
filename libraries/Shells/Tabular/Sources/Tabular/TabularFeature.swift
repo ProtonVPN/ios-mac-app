@@ -245,7 +245,6 @@ public struct TabularFeature {
                 return .none
 
             case .payments(.presented(.delegate(.createAccountFirstRequested))):
-                state.payments = nil
                 return .run { @MainActor [openCredentiallessSignUp] _ in
                     openCredentiallessSignUp()
                 }
