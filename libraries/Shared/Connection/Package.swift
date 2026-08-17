@@ -29,11 +29,13 @@ let package = Package(
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/PMLogger"),
+        .package(path: "../../Foundations/Strings"),
         .package(path: "../../Shared/ExtensionIPC"),
         .package(path: "../../Shared/Localization"),
         .package(path: "../../Core/NEHelper"),
 
         .package(url: "https://github.com/apple/swift-async-algorithms", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/pointfreeco/swift-case-paths", .upToNextMajor(from: "1.6.1")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
         .package(url: "https://github.com/pointfreeco/swift-custom-dump", .upToNextMajor(from: "1.5.0")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
@@ -49,9 +51,9 @@ let package = Package(
                 "Ergonomics",
                 "PMLogger",
                 "ExtensionIPC",
-                .product(name: "ProtonCoreFeatureFlags", package: "protoncore"), // Temporary
-                .product(name: "VPNShared", package: "NEHelper"),
+                "Strings",
                 .product(name: "VPNAppCore", package: "NEHelper"), // Sentry
+                .product(name: "CasePaths", package: "swift-case-paths"),
                 // Required for CustomDumpStringConvertible.
                 .product(name: "CustomDump", package: "swift-custom-dump"),
             ]
@@ -62,7 +64,7 @@ let package = Package(
             dependencies: [
                 "Domain",
                 .product(name: "SharedErgonomics", package: "Ergonomics"),
-                .product(name: "VPNCore", package: "vpn-core-apple"),
+                .product(name: "VPNCoreTypes", package: "vpn-core-apple"),
                 .product(name: "VPNCoreCommon", package: "vpn-core-apple"),
             ]
         ),
@@ -80,7 +82,6 @@ let package = Package(
                 "IPCDefinitions",
                 "CoreConnection",
                 .product(name: "IPCErgonomics", package: "Ergonomics"),
-                .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
@@ -98,14 +99,16 @@ let package = Package(
                 "Localization",
                 "Hermes",
                 "CommonNetworking",
+                "Strings",
                 .product(name: "SharedErgonomics", package: "Ergonomics"),
-                .product(name: "VPNCore", package: "vpn-core-apple"),
-                .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
+                .product(name: "VPNCoreTypes", package: "vpn-core-apple"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
+                .product(name: "CasePaths", package: "swift-case-paths"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Sharing", package: "swift-sharing"),
+                .product(name: "IPCErgonomics", package: "Ergonomics"),
             ]
         ),
         .target(
@@ -117,11 +120,12 @@ let package = Package(
                 "Localization",
                 "ExtensionSync",
                 "CommonNetworking",
+                "Strings",
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
+                .product(name: "CasePaths", package: "swift-case-paths"),
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "Ergonomics", package: "Ergonomics"),
-                .product(name: "IPCErgonomics", package: "Ergonomics"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
@@ -142,7 +146,9 @@ let package = Package(
             name: "CoreConnectionTestSupport",
             dependencies: [
                 "CoreConnection",
+                "ExtensionIPC",
                 .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         ),
         .target(
@@ -150,6 +156,8 @@ let package = Package(
             dependencies: [
                 "Connection",
                 "CoreConnectionTestSupport",
+                .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
             ]
         ),
@@ -159,6 +167,8 @@ let package = Package(
                 "Connection",
                 "CoreConnectionTestSupport",
                 "ConnectionTestSupport",
+                .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "VPNShared", package: "NEHelper"),
             ]
         ),
         .testTarget(

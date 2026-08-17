@@ -26,7 +26,6 @@ import Ergonomics
 import ExtensionIPC
 import ExtensionSync
 import Foundation
-import ProtonCoreFeatureFlags
 import Strings
 import VPNAppCore
 

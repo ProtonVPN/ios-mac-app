@@ -40,9 +40,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
-        .package(url: "https://github.com/Alamofire/AlamofireImage", exact: "4.2.0"),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
-        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.9.0")),
     ],
     targets: [
         .target(
@@ -55,7 +53,6 @@ let package = Package(
         .target(
             name: "CountriesShared",
             dependencies: [
-                "Announcement",
                 "Connection",
                 "ConnectionInventory",
                 "LegacyCommon",
@@ -74,7 +71,6 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "Sharing", package: "swift-sharing"),
-                .product(name: "AlamofireImage", package: "AlamofireImage"),
             ],
             resources: [
                 .process("Resources"),
@@ -85,7 +81,6 @@ let package = Package(
             dependencies: [
                 "CountriesShared",
                 "Connection",
-                "ConnectionInventory",
                 "Modals",
                 "SharedViews",
                 "Domain",
@@ -102,6 +97,7 @@ let package = Package(
         .target(
             name: "Countries-macOS",
             dependencies: [
+                "Announcement",
                 "CountriesShared",
                 "ConnectionInventory",
                 .product(name: "Payments", package: "Payments"),
@@ -118,7 +114,6 @@ let package = Package(
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
                 .product(name: "DomainTestSupport", package: "Domain"),
 
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
             ]

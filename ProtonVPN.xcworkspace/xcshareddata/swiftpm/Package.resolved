@@ -10,15 +10,6 @@
       }
     },
     {
-      "identity" : "alamofireimage",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Alamofire/AlamofireImage",
-      "state" : {
-        "revision" : "98cbb00ce0ec5fc8e52a5b50a6bfc08d3e5aee10",
-        "version" : "4.2.0"
-      }
-    },
-    {
       "identity" : "atlantis",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ProxymanApp/atlantis",
@@ -142,15 +133,6 @@
       "state" : {
         "revision" : "38826d0b8838ce5edcdafa1ffb2f507693d5abcb",
         "version" : "0.2.2"
-      }
-    },
-    {
-      "identity" : "reachability.swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ashleymills/Reachability.swift",
-      "state" : {
-        "revision" : "21d1dc412cfecbe6e34f1f4c4eb88d3f912654a6",
-        "version" : "5.2.4"
       }
     },
     {
@@ -385,15 +367,6 @@
       "state" : {
         "revision" : "93d4942c90dd498580988ffb9971e2ddf91d5a28",
         "version" : "2.0.3"
-      }
-    },
-    {
-      "identity" : "swiftybeaver",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SwiftyBeaver/SwiftyBeaver",
-      "state" : {
-        "revision" : "12b5acf96d98f91d50de447369bd18df74600f1a",
-        "version" : "1.9.6"
       }
     },
     {

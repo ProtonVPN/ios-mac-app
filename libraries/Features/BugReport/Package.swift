@@ -46,7 +46,6 @@ let package = Package(
                 "Ergonomics",
                 "Theme",
                 .product(name: "Logging", package: "swift-log"),
-                .product(name: "SwiftUINavigation", package: "swift-navigation"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "SwiftNavigation", package: "swift-navigation"),

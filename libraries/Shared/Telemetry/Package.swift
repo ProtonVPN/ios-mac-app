@@ -21,16 +21,18 @@ let package = Package(
 
         .package(path: "../Connection"),
         .package(path: "../ConnectionInventory"),
+        .package(path: "../CommonNetworking"),
 
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),
+        .package(path: "../../Foundations/PMLogger"),
+
         .package(path: "../../Core/NEHelper"),
 
         .package(url: "https://github.com/almazrafi/DictionaryCoder", .upToNextMajor(from: "1.1.0")),
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.5.2")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
-
     ],
     targets: [
         .target(
@@ -40,6 +42,7 @@ let package = Package(
                 "Domain",
                 "Connection",
                 "ConnectionInventory",
+                "PMLogger",
                 .product(name: "ExtensionSync", package: "Connection"),
                 .product(name: "NetworkingErgonomics", package: "Ergonomics"),
                 .product(name: "DictionaryCoder", package: "DictionaryCoder"),
@@ -48,14 +51,13 @@ let package = Package(
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ProtonCorePaymentsV2", package: "protoncore"),
-                .product(name: "ProtonCoreTelemetry", package: "protoncore"),
             ]
         ),
         .testTarget(
             name: "TelemetryTests",
             dependencies: [
                 "Telemetry",
-                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+                .product(name: "CommonNetworkingTestSupport", package: "CommonNetworking"),
                 .product(name: "InlineSnapshotTesting", package: "swift-snapshot-testing"),
             ]
         ),

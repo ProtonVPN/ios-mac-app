@@ -25,7 +25,6 @@ import Foundation
 import Hermes
 import Localization
 import NetworkExtension
-import ProtonCoreFeatureFlags
 import Sharing
 import Strings
 import VPNCoreCommon

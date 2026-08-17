@@ -31,7 +31,6 @@ let package = Package(
             dependencies: [
                 "PMLogger",
                 .product(name: "VPNAppCore", package: "NEHelper"),
-                .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "NetworkingErgonomics", package: "Ergonomics"),
                 .product(name: "Besogne", package: "Besogne"),
             ]

@@ -27,7 +27,6 @@ let package = Package(
         .package(path: "../../Core/NEHelper"),
 
         .package(path: "../../Shared/CommonNetworking"),
-        .package(path: "../../Shared/Connection"),
 
         .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.15.8"),
         .package(url: "https://github.com/SDWebImage/SDWebImageSwiftUI.git", from: "3.0.0"),
@@ -46,9 +45,7 @@ let package = Package(
                 "Domain",
                 "Theme",
                 "CommonNetworking",
-                "Connection",
                 .product(name: "VPNAppCore", package: "NEHelper"),
-                .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "ProtonCoreNetworking", package: "protoncore"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
@@ -65,9 +62,7 @@ let package = Package(
             name: "AnnouncementTests",
             dependencies: [
                 "Announcement",
-                .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "VPNShared", package: "NEHelper"),
-                .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Sharing", package: "swift-sharing"),

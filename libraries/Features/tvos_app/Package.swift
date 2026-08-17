@@ -34,7 +34,6 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
         .package(url: "https://github.com/pointfreeco/swift-case-paths", .upToNextMajor(from: "1.5.6")),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
-        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.9.0")),
         .package(url: "https://github.com/ProxymanApp/atlantis", .upToNextMajor(from: "1.34.0")),
     ],
     targets: [
@@ -53,7 +52,6 @@ let package = Package(
                 .product(name: "ModalsServices", package: "Modals"),
                 .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain
 
-                .product(name: "ProtonCoreChallenge", package: "protoncore"),
                 .product(name: "ProtonCoreForceUpgrade", package: "protoncore"),
                 .product(name: "ProtonCoreFoundations", package: "protoncore"),
                 .product(name: "ProtonCoreNetworking", package: "protoncore"),
@@ -65,7 +63,6 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "CasePaths", package: "swift-case-paths"),
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "Atlantis", package: "atlantis"),
             ],
             exclude: ["Resources/ObfuscatedConstants.example.swift"],

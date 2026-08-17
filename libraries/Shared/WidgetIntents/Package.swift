@@ -19,14 +19,19 @@ let package = Package(
     dependencies: [
         .package(path: "../ConnectionInventory"),
         .package(path: "../Connection"),
+        .package(path: "../Localization"),
+        .package(path: "../Persistence"),
+        .package(path: "../Strings"),
 
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),
+
         .package(path: "../../Core/NEHelper"),
 
-        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
         .package(url: "https://github.com/apple/swift-log", .upToNextMajor(from: "1.6.2")),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
+        .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
     ],
     targets: [
         .target(
@@ -36,10 +41,13 @@ let package = Package(
                 "Ergonomics",
                 "Connection",
                 "ConnectionInventory",
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
+                "Localization",
+                "Persistence",
+                "Strings",
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "Sharing", package: "swift-sharing"),
             ]
         ),
         .testTarget(

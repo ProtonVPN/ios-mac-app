@@ -21,7 +21,6 @@ import Connection
 import Dependencies
 import Domain
 import Ergonomics
-import ExtensionManager
 import NetworkExtension
 import Sharing
 import UIKit
