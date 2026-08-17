@@ -75,7 +75,7 @@ extension MaintenanceChecker: DependencyKey {
             case let .modified(at: modifiedAt, servers: servers, freeServersOnly: isFree):
                 @Dependency(\.serverListUpdater) var serverListUpdater
                 serverListUpdater.update(
-                    servers: servers.map { VPNServer(legacyModel: $0) },
+                    servers: servers,
                     freeServersOnly: isFree,
                     lastModifiedAt: modifiedAt
                 )

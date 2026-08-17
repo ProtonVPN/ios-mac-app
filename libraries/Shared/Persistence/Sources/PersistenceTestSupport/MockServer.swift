@@ -20,6 +20,10 @@ import Domain
 import Foundation
 
 public enum TestData {
+    /// Builds a server with a single endpoint.
+    ///
+    /// - Parameter entryIp: The endpoint's address. Pass `nil` to build the shape the API sends for an
+    /// endpoint that has no address for any protocol, which no connection can be made to.
     public static func createMockServer(
         withID id: String,
         name: String? = nil,
@@ -29,7 +33,8 @@ public enum TestData {
         tier: Int = 0,
         load: Int = 0,
         score: Double = 1,
-        status: Int = 1
+        status: Int = 1,
+        entryIp: String? = "10.0.0.1"
     ) -> VPNServer {
         VPNServer(
             logical: .init(
@@ -54,7 +59,7 @@ public enum TestData {
             endpoints: [
                 Domain.ServerEndpoint(
                     id: "endpoint\(id)",
-                    entryIp: nil,
+                    entryIp: entryIp,
                     exitIp: "1",
                     domain: "a",
                     status: status,
@@ -98,7 +103,7 @@ public enum TestData {
             endpoints: [
                 Domain.ServerEndpoint(
                     id: "endpoint1-\(id)",
-                    entryIp: nil,
+                    entryIp: "10.0.0.1",
                     exitIp: "1",
                     domain: "a1",
                     status: 0,
@@ -108,7 +113,7 @@ public enum TestData {
                 ),
                 Domain.ServerEndpoint(
                     id: "endpoint2-\(id)",
-                    entryIp: nil,
+                    entryIp: "10.0.0.2",
                     exitIp: "2",
                     domain: "a2",
                     status: 0,
@@ -152,7 +157,7 @@ public enum TestData {
             endpoints: [
                 Domain.ServerEndpoint(
                     id: "endpoint1-\(id)",
-                    entryIp: nil,
+                    entryIp: "10.0.0.1",
                     exitIp: "1",
                     domain: "a1",
                     status: 0,
@@ -162,7 +167,7 @@ public enum TestData {
                 ),
                 Domain.ServerEndpoint(
                     id: "endpoint2-\(id)",
-                    entryIp: nil,
+                    entryIp: "10.0.0.2",
                     exitIp: "2",
                     domain: "a2",
                     status: 0,

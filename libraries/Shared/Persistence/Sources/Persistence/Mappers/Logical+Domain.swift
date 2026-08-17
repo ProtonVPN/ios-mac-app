@@ -68,7 +68,8 @@ extension VPNServer {
                 domain: endpoint.domain,
                 status: endpoint.status,
                 label: endpoint.label,
-                x25519PublicKey: endpoint.x25519PublicKey
+                x25519PublicKey: endpoint.x25519PublicKey,
+                protocolMask: endpoint.supportedProtocols.rawValue
             )
         }
     }

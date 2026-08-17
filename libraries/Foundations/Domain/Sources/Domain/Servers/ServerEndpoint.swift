@@ -97,12 +97,9 @@ public extension ServerEndpoint {
         !supportedProtocols.isDisjoint(with: protocolSet)
     }
 
+    /// The protocols this endpoint can be reached over.
     var supportedProtocols: ProtocolSupport {
-        if protocolEntries == nil {
-            return .all
-        }
-
-        return VpnProtocol.allCases.reduce(into: .zero) {
+        VpnProtocol.allCases.reduce(into: .zero) {
             if supports(vpnProtocol: $1) {
                 $0.insert($1.protocolSupport)
             }

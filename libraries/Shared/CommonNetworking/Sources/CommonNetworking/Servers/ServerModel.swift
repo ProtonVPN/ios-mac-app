@@ -130,66 +130,45 @@ public extension ServerModel {
         }
     }
 
-    init(dic: JSONDictionary) throws {
-        try self.init(
-            id: dic.stringOrThrow(key: "ID"), // "ID": "-Bpgivr5H2qQ4-7gm3GtQPF9xwx9-VUA=="
-            name: dic.stringOrThrow(key: "Name"), // "Name": "ES#1"
-            domain: dic.stringOrThrow(key: "Domain"), // "Domain": "es-05.protonvpn.com"
-            load: Int(dic.doubleOrThrow(key: "Load")), // "Load": 13
-            entryCountryCode: dic.stringOrThrow(key: "EntryCountry"), // "EntryCountry": "ES"
-            exitCountryCode: dic.stringOrThrow(key: "ExitCountry"), // "ExitCountry": "ES" //this replace old countryCode
-            tier: VpnTier(rawValue: dic.intOrThrow(key: "Tier")), // "Tier": 2
-            feature: ServerFeature(rawValue: dic.intOrThrow(key: "Features")), // "Features": 12
-            city: dic.string("City"), // "City": "Zurich"
-            state: dic.string("State"), // "State": "Colorado"
-            ips: dic.jsonArrayOrThrow(key: "Servers").map { try ServerIp(dic: $0) },
-            score: dic.doubleOrThrow(key: "Score"), // "Score": 1
-            status: dic.intOrThrow(key: "Status"), // "Status": 1,
-            location: ServerLocation(dic: dic.jsonDictionaryOrThrow(key: "Location")), // "Location"
-            hostCountry: dic.string("HostCountry"),
-            translatedCity: (dic["Translations"] as? AnyObject)?["City"] as? String,
-            gatewayName: dic.string("GatewayName")
-        )
-    }
-
-    /// Used for testing purposes.
-    var asDict: [String: Any] {
-        var result: [String: Any] = [
-            "ID": id,
-            "Name": name,
-            "Domain": domain,
-            "Load": load,
-            "EntryCountry": entryCountryCode,
-            "ExitCountry": exitCountryCode,
-            "Tier": tier,
-            "Score": score,
-            "Status": status,
-            "Features": feature.rawValue,
-            "Location": location.asDict,
-            "Servers": ips.map(\.asDict),
-        ]
-
-        if let city {
-            result["City"] = city
-        }
-
-        if let state {
-            result["State"] = state
-        }
-        if let hostCountry {
-            result["HostCountry"] = hostCountry
-        }
-        if let translatedCity {
-            result["Translations"] = [
-                "City": translatedCity,
+    #if DEBUG
+        var asDict: [String: Any] {
+            var result: [String: Any] = [
+                "ID": id,
+                "Name": name,
+                "Domain": domain,
+                "Load": load,
+                "EntryCountry": entryCountryCode,
+                "ExitCountry": exitCountryCode,
+                "Tier": tier.rawValue,
+                "Score": score,
+                "Status": status,
+                "Features": feature.rawValue,
+                "Location": location.asDict,
+                "Servers": ips.map(\.asDict),
             ]
-        }
-        if let gatewayName {
-            result["GatewayName"] = gatewayName
-        }
 
-        return result
-    }
+            if let city {
+                result["City"] = city
+            }
+
+            if let state {
+                result["State"] = state
+            }
+            if let hostCountry {
+                result["HostCountry"] = hostCountry
+            }
+            if let translatedCity {
+                result["Translations"] = [
+                    "City": translatedCity,
+                ]
+            }
+            if let gatewayName {
+                result["GatewayName"] = gatewayName
+            }
+
+            return result
+        }
+    #endif
 
     func matches(searchQuery: String) -> Bool {
         let query = searchQuery.lowercased()

@@ -45,7 +45,7 @@ public protocol Networking: APIServiceDelegate {
     var apiService: PMAPIService { get }
 
     func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void)
-    func request(_ route: ConditionalRequest, completion: @escaping (_ result: Result<IfModifiedSinceResponse<JSONDictionary>, Error>) -> Void)
+    func request<T: Decodable>(_ route: ConditionalRequest, completion: @escaping (_ result: Result<IfModifiedSinceResponse<T>, Error>) -> Void)
     func request<T: Codable>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void)
     func request(_ route: URLRequest, completion: @escaping (_ result: Result<String, Error>) -> Void)
     func request<T: Codable>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void)
@@ -171,9 +171,9 @@ public final class CoreNetworking: Networking {
         }
     }
 
-    public func request(
+    public func request<T: Decodable>(
         _ route: ConditionalRequest,
-        completion: @escaping (_ result: Result<IfModifiedSinceResponse<JSONDictionary>, Error>) -> Void
+        completion: @escaping (_ result: Result<IfModifiedSinceResponse<T>, Error>) -> Void
     ) {
         let url = fullUrl(route)
         log.debug("Request started", category: .net, metadata: [
@@ -192,39 +192,53 @@ public final class CoreNetworking: Networking {
             customAuthCredential: route.authCredential,
             nonDefaultTimeout: nil,
             retryPolicy: route.retryPolicy
-        ) { (_ task: URLSessionDataTask?, _ result: Result<JSONDictionary, NSError>) in
-            let httpResponse = task?.response as? HTTPURLResponse
-            let statusCode = httpResponse?.statusCode
-            let lastModified = httpResponse?.headers["Last-Modified"]
-            switch result {
-            case let .success(data):
-                log.debug("Request finished OK", category: .net, metadata: [
-                    "url": "\(url)",
-                    "method": "\(route.method.rawValue.uppercased())",
-                    "Last-Modified": "\(lastModified ?? "nil")",
-                ])
-                completion(.success(.modified(at: lastModified, value: data)))
+        ) { (_ task: URLSessionDataTask?, _ result: Result<T, NSError>) in
+            completion(Self.conditionalResponse(from: result, task: task, route: route, url: url))
+        }
+    }
 
-            case let .failure(error):
-                if case HttpStatusCode.notModified.rawValue = statusCode {
-                    log.debug("Request finished - not modified", category: .net, event: .response, metadata: [
-                        "error": "\(error)",
-                        "url": "\(url)",
-                        "method": "\(route.method.rawValue.uppercased())",
-                        "Last-Modified": "\(optional: lastModified)",
-                    ])
-                    completion(.success(.notModified(since: lastModified)))
-                    return
-                }
+    /// Sorts one answer to a conditional request into modified, not modified, or failed, and logs it.
+    ///
+    /// A `304` arrives as a failure, since there is no body to hand back, so the status code on the task
+    /// is what tells an unchanged response apart from a real error.
+    private static func conditionalResponse<T>(
+        from result: Result<T, NSError>,
+        task: URLSessionDataTask?,
+        route: ConditionalRequest,
+        url: String
+    ) -> Result<IfModifiedSinceResponse<T>, Error> {
+        let httpResponse = task?.response as? HTTPURLResponse
+        let statusCode = httpResponse?.statusCode
+        let lastModified = httpResponse?.headers["Last-Modified"]
+        let method = route.method.rawValue.uppercased()
 
-                log.error("Request failed", category: .net, event: .response, metadata: [
+        switch result {
+        case let .success(value):
+            log.debug("Request finished OK", category: .net, metadata: [
+                "url": "\(url)",
+                "method": "\(method)",
+                "Last-Modified": "\(lastModified ?? "nil")",
+            ])
+            return .success(.modified(at: lastModified, value: value))
+
+        case let .failure(error):
+            if case HttpStatusCode.notModified.rawValue = statusCode {
+                log.debug("Request finished - not modified", category: .net, event: .response, metadata: [
                     "error": "\(error)",
                     "url": "\(url)",
-                    "method": "\(route.method.rawValue.uppercased())",
-                    "code": "\(statusCode ?? -1)",
+                    "method": "\(method)",
+                    "Last-Modified": "\(optional: lastModified)",
                 ])
-                completion(.failure(error))
+                return .success(.notModified(since: lastModified))
             }
+
+            log.error("Request failed", category: .net, event: .response, metadata: [
+                "error": "\(error)",
+                "url": "\(url)",
+                "method": "\(method)",
+                "code": "\(statusCode ?? -1)",
+            ])
+            return .failure(error)
         }
     }
 

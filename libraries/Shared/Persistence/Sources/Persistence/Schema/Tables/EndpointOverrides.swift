@@ -19,9 +19,10 @@
 import Domain
 import Foundation
 
+/// Which protocols an endpoint supports is tracked on ``Endpoint`` instead, so every
+/// endpoint has a mask — even the ones that handle all protocols through one shared default address.
 struct EndpointOverrides: Codable {
     let endpointId: String
 
-    let protocolMask: Int // used for efficient filtering of servers based on which protocols they support
     let protocolEntries: PerProtocolEntries // coding handled by GRDB
 }

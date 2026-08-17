@@ -23,7 +23,6 @@ extension VPNServerFilter {
     func sqlExpression(
         logical: TableAlias<Logical>,
         status: TableAlias<LogicalStatus>,
-        overrides: TableAlias<EndpointOverrides>,
         endpoint: TableAlias<Endpoint>
     ) -> SQLExpression {
         switch self {
@@ -62,8 +61,7 @@ extension VPNServerFilter {
             return status[LogicalStatus.Columns.status] != 0 && existsExpression
 
         case let .supports(protocolMask):
-            return overrides[EndpointOverrides.Columns.endpointId] == nil
-                || overrides[EndpointOverrides.Columns.protocolMask] & protocolMask.rawValue > 0
+            return endpoint[Endpoint.Columns.protocolMask] & protocolMask.rawValue > 0
 
         case let .kind(.gateway(name)):
             guard let name else {

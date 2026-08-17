@@ -169,19 +169,20 @@
             }
         }
 
-        public func request(
+        public func request<T: Decodable>(
             _ route: ConditionalRequest,
-            completion: @escaping (Result<IfModifiedSinceResponse<JSONDictionary>, Error>) -> Void
+            completion: @escaping (Result<IfModifiedSinceResponse<T>, Error>) -> Void
         ) {
             request(route) { (result: Result<Data, Error>) in
                 switch result {
                 case let .success(data):
-                    guard let dict = data.jsonDictionary else {
-                        completion(.failure(POSIXError(.EBADMSG)))
-                        return
+                    do {
+                        let decoder = JSONDecoder()
+                        decoder.keyDecodingStrategy = .decapitaliseFirstLetter
+                        try completion(.success(.modified(at: "", value: decoder.decode(T.self, from: data))))
+                    } catch {
+                        completion(.failure(error))
                     }
-
-                    completion(.success(.modified(at: "", value: dict)))
                 case let .failure(error):
                     completion(.failure(error))
                 }

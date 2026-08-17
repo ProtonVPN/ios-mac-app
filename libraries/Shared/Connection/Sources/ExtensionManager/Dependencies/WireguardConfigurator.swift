@@ -415,7 +415,6 @@ extension ManagerConfigurator {
 }
 
 enum WireguardConfiguratorError: Error {
-    case entryUnavailableForTransport(Domain.WireGuardTransport)
     case incorrectProtocolConfiguration
     case configurationEncodingError(Error)
     case keychainImplementationError(TunnelKeychainImplementationError)
@@ -425,15 +424,6 @@ enum WireguardConfiguratorError: Error {
 extension WireguardConfiguratorError: ProtonVPNError {
     var charCode: FourCharCode {
         switch self {
-        case let .entryUnavailableForTransport(transport):
-            switch transport {
-            case .udp:
-                "WGEU"
-            case .tcp:
-                "WGET"
-            case .tls:
-                "WGES"
-            }
         case .incorrectProtocolConfiguration:
             "WGPC"
         case .configurationEncodingError:
@@ -451,7 +441,7 @@ extension WireguardConfiguratorError: ProtonVPNError {
             error
         case let .keychainImplementationError(error):
             error
-        case .entryUnavailableForTransport, .incorrectProtocolConfiguration:
+        case .incorrectProtocolConfiguration:
             nil
         }
     }
@@ -557,19 +547,31 @@ extension Server {
     /// But, if the IP address of the server has been overridden for any of the transports, the array will include an
     /// additional peer for each. If the IP is overridden for each transport, there will **not** be a fourth peer with
     /// the default IP.
-    func peerInfo(using wgConfig: WireguardConfig) throws -> [ProTUNConfiguration.Peer] {
-        try [peerWithDefaultIP(with: wgConfig)].compactMap { $0 }
+    ///
+    /// - Throws: `entryIpMissing` when the endpoint has no address for any transport.
+    func peerInfo(using wgConfig: WireguardConfig) throws(ManagerConfigurationError) -> [ProTUNConfiguration.Peer] {
+        let peers = try [peerWithDefaultIP(with: wgConfig)].compactMap { $0 }
             + peersWithOverriddenIPs(with: wgConfig)
+
+        guard !peers.isEmpty else {
+            throw .entryIpMissing
+        }
+        return peers
     }
 
     private func peerWithDefaultIP(
         with config: WireguardConfig
     ) throws(ManagerConfigurationError) -> ProTUNConfiguration.Peer? {
+        // With no default address there is no default peer. Every transport this endpoint serves has an
+        // address of its own, and `peersWithOverriddenIPs` builds a peer for each one.
+        guard let entryIp = endpoint.entryIp else {
+            return nil
+        }
         let perTransportPortOverrides: [Domain.WireGuardTransport: [UInt16]] = Domain.WireGuardTransport.allCases
             .reduce(into: [:]) { overrides, transport in
-                let usesDefaultIp = endpoint.entryIp(using: .wireGuard(transport)) == endpoint.entryIp
+                let usesDefaultIp = endpoint.entryIp(using: .wireGuard(transport)) == entryIp
                 guard usesDefaultIp else {
-                    // Skip this transport if it uses a custom IP
+                    // Skip this transport if it uses a custom IP, or has no address at all
                     return
                 }
                 overrides[transport] = ports(for: transport, with: config)
@@ -577,9 +579,6 @@ extension Server {
         if perTransportPortOverrides.isEmpty {
             // No transports use the default IP, so we shouldn't return the default peer
             return nil
-        }
-        guard let entryIp = endpoint.entryIp else {
-            throw .entryIpMissing
         }
         guard let serverPublicKey = endpoint.x25519PublicKey else {
             throw .emptyServerPublicKey
@@ -598,9 +597,9 @@ extension Server {
 
     private func peersWithOverriddenIPs(
         with config: WireguardConfig
-    ) throws -> [ProTUNConfiguration.Peer] {
-        Domain.WireGuardTransport.allCases
-            .compactMap { transport in
+    ) throws(ManagerConfigurationError) -> [ProTUNConfiguration.Peer] {
+        let overriddenTransports = Domain.WireGuardTransport.allCases
+            .compactMap { transport -> (Domain.WireGuardTransport, String)? in
                 guard let customIp = endpoint.entryIp(using: .wireGuard(transport)) else {
                     // Skip this transport if no custom IP is defined
                     return nil
@@ -609,17 +608,26 @@ extension Server {
                     // Sanity check
                     return nil
                 }
-                return ProTUNConfiguration.Peer(
-                    id: endpoint.id,
-                    serverIP: customIp,
-                    serverPublicKey: endpoint.x25519PublicKey ?? "",
-                    udpPorts: transport == .udp ? ports(for: .udp, with: config) : [],
-                    tcpPorts: transport == .tcp ? ports(for: .tcp, with: config) : [],
-                    tlsPorts: transport == .tls ? ports(for: .tls, with: config) : [],
-                    priority: 0,
-                    exitLabel: endpoint.label
-                )
+                return (transport, customIp)
             }
+        guard !overriddenTransports.isEmpty else {
+            return []
+        }
+        guard let serverPublicKey = endpoint.x25519PublicKey else {
+            throw .emptyServerPublicKey
+        }
+        return overriddenTransports.map { transport, customIp in
+            ProTUNConfiguration.Peer(
+                id: endpoint.id,
+                serverIP: customIp,
+                serverPublicKey: serverPublicKey,
+                udpPorts: transport == .udp ? ports(for: .udp, with: config) : [],
+                tcpPorts: transport == .tcp ? ports(for: .tcp, with: config) : [],
+                tlsPorts: transport == .tls ? ports(for: .tls, with: config) : [],
+                priority: 0,
+                exitLabel: endpoint.label
+            )
+        }
     }
 
     private func ports(for transport: Domain.WireGuardTransport, with config: WireguardConfig) -> [UInt16] {
@@ -674,7 +682,7 @@ extension WireguardConfig {
     }
 }
 
-enum ManagerConfigurationError: Error {
+enum ManagerConfigurationError: Error, Equatable {
     case entryIpMissing
     case emptyServerPublicKey
     case userIdMissing

@@ -35,11 +35,12 @@ public class ServerLocation: Codable {
         self.long = long
     }
 
-    /// Used for testing purposes.
-    public var asDict: [String: Any] {
-        [
-            "Lat": lat,
-            "Long": long,
-        ]
-    }
+    #if DEBUG
+        public var asDict: [String: Any] {
+            [
+                "Lat": lat,
+                "Long": long,
+            ]
+        }
+    #endif
 }
