@@ -8,7 +8,6 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         .iOS(.v17),
-        .macOS(.v14),
     ],
     products: [
         .library(
@@ -20,6 +19,7 @@ let package = Package(
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/Strings"),
         .package(path: "../../Foundations/Domain"),
+        .package(path: "../../Foundations/PMLogger"),
 
         .package(path: "../../Core/NEHelper"),
         .package(path: "../../Core/SharedViews"),
@@ -31,6 +31,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
         .package(url: "https://github.com/apple/swift-collections", .upToNextMajor(from: "1.1.4")),
+        .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
     ],
     targets: [
         .target(
@@ -43,6 +44,10 @@ let package = Package(
                 "Connection",
                 "ConnectionInventory",
                 "WidgetIntents",
+                .product(name: "ExtensionSync", package: "Connection"),
+                .product(name: "CoreConnection", package: "Connection"),
+                .product(name: "PMLogger", package: "PMLogger"),
+                .product(name: "Logging", package: "swift-log"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),

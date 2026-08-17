@@ -121,7 +121,7 @@ public struct RecentsFeature {
             case let .connectionEstablished(spec, display):
                 withAnimation {
                     state.$recentConnections.withLock { $0?.updateList(with: spec, display: display) }
-                    WidgetCenter.shared.reloadAllTimelines()
+                    widgetReload.reloadAllTimelines(.connectionStateChanged(.connected))
                 }
 
                 return .none

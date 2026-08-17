@@ -20,10 +20,16 @@ import AppIntents
 import ComposableArchitecture
 import Connection
 import ConnectionInventory
+import ConnectionShared
+import CoreConnection
 import Dependencies
 import Domain
+import ExtensionManager
+import ExtensionSync
+import NetworkExtension
 import OrderedCollections
 import VPNAppCore
+import VPNCoreCommon
 import VPNShared
 import WidgetKit
 
@@ -68,11 +74,7 @@ struct Provider: TimelineProvider {
         }
     }
 
-    private func createTimelineEntry() async -> ConnectWidgetEntry {
-        guard authKeychain.fetch()?.userId != nil else {
-            return ConnectWidgetEntry.loggedOutEntry
-        }
-
+    func refreshSharedProperties() async {
         // We have to load the values here before accessing because swift sharing doesn't sync data
         // between the widget and the app
         _ = try? await (
@@ -80,36 +82,73 @@ struct Provider: TimelineProvider {
             $storedDefaultConnectionPreference.load(),
             $connectionState.load()
         )
+    }
+
+    private func createTimelineEntry() async -> ConnectWidgetEntry {
+        guard authKeychain.userIdCachedOrFetched != nil else {
+            return ConnectWidgetEntry.loggedOutEntry
+        }
+
+        await refreshSharedProperties()
+
         let preference = storedDefaultConnectionPreference ?? .fastest
-        let resolvedSpec = connectionState.resolvedSpec
+        let specFromSharedProperty = connectionState.resolvedSpec
+        let specFromPreference = connectionSpec(preference: preference)
 
         let recents = connectionInventory.recentConnectionList(
             preference,
             recentConnections ?? [],
-            resolvedSpec
+            specFromSharedProperty
         )
 
-        let connectionSpec = resolvedSpec ?? connectionSpec(preference: preference)
-
+        let protectionState = protectionState()
+        let connectionSpec = if protectionState == .unprotected {
+            specFromSharedProperty ?? specFromPreference
+        } else {
+            await providerConfigurationConnectionSpec()
+        }
         return ConnectWidgetEntry(
             date: .now,
-            connectionSpec: connectionSpec,
+            connectionSpec: connectionSpec ?? specFromSharedProperty ?? specFromPreference,
             currentServer: connectionState.resolvedServer,
-            protectionState: connectionState.protectionState,
+            protectionState: protectionState,
             recentServers: recents
         )
     }
-}
 
-private extension ConnectionState {
-    var protectionState: ConnectWidgetEntry.ProtectionState {
-        switch self {
-        case .resolving, .disconnected, .disconnecting, .authenticationRequired, .killSwitchActive:
-            .unprotected
-        case .connecting:
-            .protecting
+    func providerConfigurationConnectionSpec() async -> ConnectionSpec? {
+        do {
+            let tunnelManagers = try await NETunnelProviderManager.loadAllFromPreferences()
+
+            @Dependency(\.bundleIDClient) var bundleIDClient
+            let bundleIdentifier = bundleIDClient.bundleIdentifier(.wireGuard)
+
+            let proTUNManager = tunnelManagers.first {
+                $0.providerBundleIdentifier == bundleIdentifier
+            }
+            guard let proTUNManager,
+                  let protocolConfiguration = proTUNManager.protocolConfiguration,
+                  let tunnelProviderProtocol = protocolConfiguration as? NETunnelProviderProtocol else {
+                log.error("Failed to retrieve protocolConfiguration from NETunnelProviderManager preferences", category: .widget)
+                return nil
+            }
+            return try tunnelProviderProtocol.connectionSpec
+        } catch {
+            log.error("Failed to retrieve connectionSpec from NETunnelProviderManager preferences", category: .widget)
+            return nil
+        }
+    }
+
+    func protectionState() -> ConnectWidgetEntry.ProtectionState {
+        @Dependency(\.extensionIPC) var extensionIPC
+        let state = extensionIPC.currentExtensionState()
+        switch state.state {
+        case .disconnected:
+            return .unprotected
+        case .connecting, .connectingToLocalAgent:
+            return .protecting
         case .connected:
-            .protected
+            return .protected
         }
     }
 }

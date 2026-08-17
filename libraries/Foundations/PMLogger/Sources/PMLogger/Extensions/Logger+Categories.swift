@@ -46,6 +46,7 @@ public extension Logger {
         case review
         case core
         case telemetry
+        case widget
     }
 
     enum Event: String {

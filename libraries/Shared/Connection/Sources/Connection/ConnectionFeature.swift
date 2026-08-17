@@ -384,7 +384,7 @@ public struct ConnectionFeature: Sendable {
     }
 }
 
-extension ConnectionState {
+public extension ConnectionState {
     var widgetReloadChange: WidgetReloadReason.ConnectionStateChange {
         switch self {
         case .connected:

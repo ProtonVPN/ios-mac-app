@@ -35,15 +35,20 @@ public enum WidgetReloadReason: Sendable, Equatable {
     case defaultConnectionChanged
     case loggedInOrOut
 
-    var shouldDebounce: Bool {
-        switch self {
-        case .connectionStateChanged:
-            // don't reload if the last two reasons are the same connection state
-            false
-        default:
-            true
+    #if canImport(WidgetKit)
+        func shouldReload() async -> Bool {
+            guard self != .recentsListChanged else { return true }
+            guard #available(iOS 18.0, macOS 15.0, *) else { return true }
+            let configs = await (try? WidgetCenter.shared.currentConfigurations()) ?? []
+            return configs.contains {
+                [.systemLarge, .systemExtraLarge].contains($0.family)
+            }
         }
-    }
+    #else
+        func shouldReload() async -> Bool {
+            false
+        }
+    #endif
 }
 
 @DependencyClient
@@ -64,27 +69,21 @@ extension WidgetReload: DependencyKey {
     public static let testValue = WidgetReload(reloadAllTimelines: { _ in })
 
     private actor Debouncer {
-        private var lastReason: WidgetReloadReason?
         private var pending: Task<Void, Never>?
 
-        func reload(_ reason: WidgetReloadReason) {
+        private static let debounceDuration = Duration.seconds(0.5)
+
+        func reload(_ reason: WidgetReloadReason) async {
+            guard await reason.shouldReload() else { return }
             pending?.cancel()
-            if reason == lastReason {
-                if reason.shouldDebounce {
-                    pending = Task {
-                        try? await Task.sleep(for: .seconds(0.5))
-                        guard !Task.isCancelled else { return }
-                        Self.reloadNow()
-                    }
-                }
-            } else {
-                lastReason = reason
-                pending = nil
-                Self.reloadNow()
+            pending = Task {
+                try? await Task.sleep(for: Self.debounceDuration)
+                guard !Task.isCancelled else { return }
+                reloadNow(reason)
             }
         }
 
-        private static func reloadNow() {
+        private func reloadNow(_: WidgetReloadReason) {
             #if canImport(WidgetKit)
                 WidgetCenter.shared.reloadAllTimelines()
             #endif
@@ -93,7 +92,7 @@ extension WidgetReload: DependencyKey {
 }
 
 public extension DependencyValues {
-    /// Reloads widget timelines, debouncing repeated reloads that share the same ``WidgetReloadReason``.
+    /// Reloads widget timelines, debouncing repeated reloads.
     var widgetReload: WidgetReload {
         get { self[WidgetReload.self] }
         set { self[WidgetReload.self] = newValue }

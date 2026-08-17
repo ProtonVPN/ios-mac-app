@@ -25,10 +25,10 @@ import class NetworkExtension.NEVPNProtocol
 import VPNAppCore
 
 @DependencyClient
-package struct BundleIDClient {
-    package private(set) var bundleIdentifier: @Sendable (_ protocol: TunnelProtocol) -> String = { _ in "" }
-    package private(set) var allBundleIdentifiers: @Sendable () -> [String] = { [] }
-    package private(set) var tunnelProtocol: @Sendable (_ configuration: NEVPNProtocol) -> TunnelProtocol?
+public struct BundleIDClient {
+    public private(set) var bundleIdentifier: @Sendable (_ protocol: TunnelProtocol) -> String = { _ in "" }
+    public private(set) var allBundleIdentifiers: @Sendable () -> [String] = { [] }
+    public private(set) var tunnelProtocol: @Sendable (_ configuration: NEVPNProtocol) -> TunnelProtocol?
 }
 
 enum BuildType {
@@ -62,7 +62,7 @@ extension BundleIDClient: DependencyKey {
         /// static let legacyProTUNiOSStaging = "ch.protonmail.vpn.debug.ProTUN-Extension-Mobile"
     }
 
-    package static let liveValue = BundleIDClient(
+    public static let liveValue = BundleIDClient(
         bundleIdentifier: { proto in
             switch (proto, BuildType.buildType) {
             case (.wireGuard, .staging):
@@ -135,7 +135,7 @@ extension BundleIDClient: DependencyKey {
     public static let testValue = liveValue
 }
 
-package extension DependencyValues {
+public extension DependencyValues {
     var bundleIDClient: BundleIDClient {
         get { self[BundleIDClient.self] }
         set { self[BundleIDClient.self] = newValue }
