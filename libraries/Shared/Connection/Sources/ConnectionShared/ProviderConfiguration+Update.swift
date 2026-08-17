@@ -20,7 +20,7 @@ import Domain
 import Foundation
 import NetworkExtension
 import VPNCoreCommon
-import enum VPNCoreTypes.WireGuardTransport
+import VPNCoreTypes
 
 public extension NETunnelProviderProtocol {
     /// Applies an update to the stored configuration: the request id, the OS-enforced flags, the connection spec, and
@@ -44,7 +44,7 @@ public extension NETunnelProviderProtocol {
         // If we don't have changes to make to the `ProTUNConfiguration`, don't bother unpacking it.
         guard update.hasConfigurationChanges else { return }
 
-        try withProTUNConfiguration { protunConfig in
+        try withMigratedProTUNConfiguration { protunConfig in
             if let location = update.location {
                 try setConnectionSpec(location.spec)
                 protunConfig = protunConfig.with(peers: location.peers)
@@ -67,6 +67,22 @@ public extension NETunnelProviderProtocol {
                 portForwarding: update.portForwarding,
                 randomNat: update.moderateNAT?.flag
             )
+        }
+    }
+
+    /// Performs the same function as `withProTUNConfiguration`.
+    /// For legacy tunnels configured before ProTUN, additionally derives a ProTUNConfig from data the WG Go extension
+    /// stored in the keychain.
+    private func withMigratedProTUNConfiguration<T>(_ body: (inout ProTUNConfiguration) throws -> T) throws -> T {
+        do {
+            return try withProTUNConfiguration { try body(&$0) }
+        } catch ProTUNConfigurationCoder.CodingError.proTUNConfigurationMissing {
+            // If we can't find a configuration, retry after migrating data the legacy extension saved to the keychain
+            let migratedConfiguration = try ProTUNConfigurationCoder.legacyDecode(from: self)
+            try ProTUNConfigurationCoder.encode(configuration: migratedConfiguration, to: self)
+            return try withProTUNConfiguration { try body(&$0) }
+        } catch {
+            throw error
         }
     }
 }

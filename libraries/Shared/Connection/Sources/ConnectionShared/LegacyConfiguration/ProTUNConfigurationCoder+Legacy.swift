@@ -79,20 +79,29 @@ private extension ProTUNConfiguration {
         guard let peerId = providerConfiguration?["PVPNServerIpID"] as? String else {
             throw .peerIdMissing
         }
-        let preferredTransport = WireGuardTransport(
-            legacyWgProtocol: providerConfiguration?["wg-protocol"] as? String
-        )
+        let currentTransport = WireGuardTransport(legacyWgProtocol: tunnelProviderProtocol?.wgProtocol)
+
+        // The legacy keychain config only stored the ports for the active transport
+        // Rebuild the ports for the peer's other transports using defaults ports for those transports
+        func ports(for transport: WireGuardTransport, defaults: [Int]) -> [UInt16] {
+            if transport == currentTransport {
+                return (stored.ports + defaults)
+                    .map { UInt16($0) }
+                    .uniqued
+            }
+            return defaults.map { UInt16($0) }
+        }
 
         self.init(
-            preferredTransport: preferredTransport,
+            preferredTransport: currentTransport,
             peers: [
                 Peer(
                     id: peerId,
                     serverIP: stored.entryServerAddress,
                     serverPublicKey: serverPublicKey,
-                    udpPorts: wgConfig.defaultUdpPorts.map { UInt16($0) },
-                    tcpPorts: wgConfig.defaultTcpPorts.map { UInt16($0) },
-                    tlsPorts: wgConfig.defaultTlsPorts.map { UInt16($0) },
+                    udpPorts: ports(for: .udp, defaults: wgConfig.defaultUdpPorts),
+                    tcpPorts: ports(for: .tcp, defaults: wgConfig.defaultTcpPorts),
+                    tlsPorts: ports(for: .tls, defaults: wgConfig.defaultTlsPorts),
                     priority: 0,
                     exitLabel: nil
                 ),
