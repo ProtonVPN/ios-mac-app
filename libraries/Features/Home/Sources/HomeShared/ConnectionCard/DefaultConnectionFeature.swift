@@ -21,11 +21,12 @@ import ComposableArchitecture
 import ConnectionInventory
 import Domain
 import VPNAppCore
-import WidgetKit
 
 @Reducer
 public struct DefaultConnectionFeature {
     public typealias ActionSender = (Action) -> Void
+
+    @Dependency(\.widgetReload) var widgetReload
 
     public init() {}
 
@@ -51,7 +52,7 @@ public struct DefaultConnectionFeature {
             switch action {
             case let .preferenceSelected(preference):
                 state.$defaultConnectionPreference.withLock { $0 = preference }
-                WidgetCenter.shared.reloadAllTimelines()
+                widgetReload.reloadAllTimelines(.defaultConnectionChanged)
                 return .none
             }
         }

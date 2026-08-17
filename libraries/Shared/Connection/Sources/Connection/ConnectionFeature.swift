@@ -27,9 +27,6 @@ import Foundation
 import IPCDefinitions
 import Sharing
 import VPNAppCore
-#if canImport(WidgetKit)
-    import WidgetKit
-#endif
 
 @Reducer
 public struct ConnectionFeature: Sendable {
@@ -84,7 +81,7 @@ public struct ConnectionFeature: Sendable {
         case input(Input)
         case delegate(Delegate)
         case connectionStateUpdated(ConnectionState)
-        case reloadWidgetTimelines
+        case reloadWidgetTimelines(ConnectionState)
         case stopObserving
 
         /// A subset of this reducer's actions suitable to be sent from outside
@@ -352,13 +349,12 @@ public struct ConnectionFeature: Sendable {
             case let .connectionStateUpdated(newValue):
                 return .merge(
                     .send(.delegate(.stateChanged(newValue))),
-                    .send(.reloadWidgetTimelines)
+                    .send(.reloadWidgetTimelines(newValue))
                 )
 
-            case .reloadWidgetTimelines:
-                #if canImport(WidgetKit)
-                    WidgetCenter.shared.reloadAllTimelines()
-                #endif
+            case let .reloadWidgetTimelines(connectionState):
+                @Dependency(\.widgetReload) var widgetReload
+                widgetReload.reloadAllTimelines(.connectionStateChanged(connectionState.widgetReloadChange))
                 return .none
 
             case .delegate:
@@ -385,6 +381,19 @@ public struct ConnectionFeature: Sendable {
         }
         state.isBlockingIntended = true
         return .send(.tunnel(.requestConfigChange(.zeroPeer(using: tunnelConfig.connectionSpec))))
+    }
+}
+
+extension ConnectionState {
+    var widgetReloadChange: WidgetReloadReason.ConnectionStateChange {
+        switch self {
+        case .connected:
+            .connected
+        case .resolving, .connecting, .authenticationRequired:
+            .connecting
+        case .disconnected, .disconnecting, .killSwitchActive:
+            .disconnected
+        }
     }
 }
 
