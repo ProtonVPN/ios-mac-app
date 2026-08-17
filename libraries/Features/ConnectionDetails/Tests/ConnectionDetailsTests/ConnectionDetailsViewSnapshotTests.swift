@@ -30,20 +30,40 @@
     @MainActor
     @Suite(.serialized, .snapshots(record: .missing))
     struct ConnectionDetailsViewSnapshotTests {
-        @Test("Connection details")
-        func connectionDetails() {
-            assertSnapshot(of: Self.view(state: Self.state()), as: .image(layout: .sizeThatFits))
+        private static let locales: [Locale] = [
+            SnapshotFixtures.localeEnUS,
+            SnapshotFixtures.localeEnUk,
+            SnapshotFixtures.localeEsEs,
+            SnapshotFixtures.localeFrCh,
+            SnapshotFixtures.localeDeCh,
+            SnapshotFixtures.localeUk,
+        ]
+
+        /// One reference per locale
+        @Test("Connection details", arguments: locales)
+        func connectionDetails(locale: Locale) {
+            assertSnapshot(
+                of: Self.view(state: Self.state(), locale: locale),
+                as: .image(layout: .sizeThatFits),
+                named: "connectionDetails_\(locale.identifier)"
+            )
         }
 
         /// A server with no city drops that row rather than showing the placeholder the API sends.
         @Test("Connection details without a city")
         func withoutCity() {
-            assertSnapshot(of: Self.view(state: Self.state(city: "-")), as: .image(layout: .sizeThatFits))
+            assertSnapshot(
+                of: Self.view(state: Self.state(city: "-"), locale: SnapshotFixtures.localeEnUS),
+                as: .image(layout: .sizeThatFits)
+            )
         }
 
         @Test("Connection details under load")
         func underLoad() {
-            assertSnapshot(of: Self.view(state: Self.state(serverLoad: 91)), as: .image(layout: .sizeThatFits))
+            assertSnapshot(
+                of: Self.view(state: Self.state(serverLoad: 91), locale: SnapshotFixtures.localeEnUS),
+                as: .image(layout: .sizeThatFits)
+            )
         }
 
         private static func state(
@@ -60,11 +80,12 @@
             )
         }
 
-        private static func view(state: ConnectionDetailsFeature.State) -> some View {
+        private static func view(state: ConnectionDetailsFeature.State, locale: Locale) -> some View {
             ConnectionDetailsView(store: Store(initialState: state, reducer: { EmptyReducer() }))
                 .frame(width: SnapshotFixtures.phoneWidth)
                 .background(Color(.background, .strong))
                 .environment(\.colorScheme, .dark)
+                .environment(\.locale, locale)
         }
     }
 

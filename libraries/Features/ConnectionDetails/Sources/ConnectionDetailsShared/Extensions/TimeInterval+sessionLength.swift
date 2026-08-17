@@ -16,45 +16,71 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Foundation
 import Strings
 
 public extension TimeInterval {
-    /// VPN session length text (with translation)
+    internal static let secondsPerMinute = 60
+    internal static let secondsPerHour = 60 * 60
+    internal static let secondsPerDay = 60 * 60 * 24
+
+    /// VPN session length text, localized by the system.
+    /// Expects a non-positive interval (e.g. `sessionStart.timeIntervalSinceNow`).
     var sessionLengthText: String {
-        let time = -self
-
-        switch time {
-        case 0 ..< Self.minute:
-            return Localizable.sessionLengthSeconds(Int(time))
-
-        case Self.minute ..< Self.hour:
-            let minutes = Int(time / Self.minute)
-            let seconds = Int(time - Double(minutes) * Self.minute)
-            return seconds > 0
-                ? Localizable.sessionLengthMinutesAndSeconds(Int(minutes), Int(seconds))
-                : Localizable.sessionLengthMinutes(Int(minutes))
-
-        case Self.hour ..< Self.day:
-            let hours = Int(time / (Self.hour))
-            let minutes = Int((time - Double(hours) * Self.hour) / Self.minute)
-            return minutes > 0
-                ? Localizable.sessionLengthHoursAndMinutes(Int(hours), Int(minutes))
-                : Localizable.sessionLengthHours(Int(hours))
-
-        case Self.day...:
-            let days = Int(time / (Self.day))
-            let hours = Int((time - Double(days) * Self.day) / Self.hour)
-            return hours > 0
-                ? Localizable.sessionLengthDaysAndHours(Int(days), Int(hours))
-                : Localizable.sessionLengthDays(Int(days))
-
-        default:
-            return ""
-        }
+        @Dependency(\.locale) var locale
+        return sessionLengthText(locale: locale)
     }
 
-    static var minute: Self = 60
-    static var hour: Self = 60 * 60
-    static var day: Self = 60 * 60 * 24
+    func sessionLengthText(locale: Locale) -> String {
+        let totalSeconds = max(0, Int(-self)) // truncation + positive-input clamp
+
+        guard totalSeconds > 0 else {
+            // .dropAll would suppress a lone zero unit, so format it explicitly.
+            return Self.makeZeroLengthFormatter(locale: locale).string(from: DateComponents(second: 0)) ?? ""
+        }
+
+        var components = DateComponents()
+        switch totalSeconds {
+        case 0 ..< Self.secondsPerMinute:
+            components.second = totalSeconds
+
+        case Self.secondsPerMinute ..< Self.secondsPerHour:
+            components.minute = totalSeconds / Self.secondsPerMinute
+            components.second = totalSeconds % Self.secondsPerMinute
+
+        case Self.secondsPerHour ..< Self.secondsPerDay:
+            components.hour = totalSeconds / Self.secondsPerHour
+            components.minute = (totalSeconds % Self.secondsPerHour) / Self.secondsPerMinute
+
+        default:
+            components.day = totalSeconds / Self.secondsPerDay
+            components.hour = (totalSeconds % Self.secondsPerDay) / Self.secondsPerHour
+        }
+
+        return Self.makeSessionLengthFormatter(locale: locale).string(from: components) ?? ""
+    }
+
+    private static func makeSessionLengthFormatter(locale: Locale) -> DateComponentsFormatter {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.day, .hour, .minute, .second]
+        formatter.unitsStyle = .short
+        formatter.zeroFormattingBehavior = .dropAll
+        formatter.calendar = Self.calendar(for: locale)
+        return formatter
+    }
+
+    private static func makeZeroLengthFormatter(locale: Locale) -> DateComponentsFormatter {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.second]
+        formatter.unitsStyle = .short
+        formatter.calendar = Self.calendar(for: locale)
+        return formatter
+    }
+
+    private static func calendar(for locale: Locale) -> Calendar {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = locale
+        return calendar
+    }
 }

@@ -23,9 +23,17 @@ import Foundation
 /// Shared state for the connection-details snapshot suites, so every reference image is rendered from
 /// the same connection.
 enum SnapshotFixtures {
-    /// The locale the suites pin, so localized country names don't follow the machine that recorded
-    /// the references — and so `@Dependency(\.locale)` isn't read live from a test.
-    static let locale = Locale(identifier: "en_US")
+    /// The locales the suites pin, so localized country names, durations and percentages don't follow
+    /// the machine that recorded the references — and so `@Dependency(\.locale)` isn't read live from
+    /// a test.
+    ///
+    /// - Note: `en_UK` canonicalizes to `en_GB`, which is what appears in the recorded file names.
+    static let localeEnUS = Locale(identifier: "en_US")
+    static let localeEnUk = Locale(identifier: "en_UK")
+    static let localeEsEs = Locale(identifier: "es_ES")
+    static let localeFrCh = Locale(identifier: "fr_CH")
+    static let localeDeCh = Locale(identifier: "de_CH")
+    static let localeUk = Locale(identifier: "uk")
 
     /// Where the reference images live on CI, relative to the repository root.
     static let testsDirectory = "libraries/Features/ConnectionDetails/Tests/ConnectionDetailsTests"
