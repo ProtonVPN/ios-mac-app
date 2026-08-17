@@ -24,7 +24,6 @@ let package = Package(
         .package(path: "../../Core/NEHelper"),
 
         .package(url: "https://github.com/apple/swift-collections", .upToNextMajor(from: "1.1.4")),
-        .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.9.0")),
@@ -41,7 +40,6 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Collections", package: "swift-collections"),
                 .product(name: "OrderedCollections", package: "swift-collections"),
-                .product(name: "Algorithms", package: "swift-algorithms"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "Logging", package: "swift-log"),
@@ -49,7 +47,11 @@ let package = Package(
         ),
         .testTarget(
             name: "ConnectionInventoryTests",
-            dependencies: ["ConnectionInventory"]
+            dependencies: [
+                "ConnectionInventory",
+                "Domain",
+                .product(name: "OrderedCollections", package: "swift-collections"),
+            ]
         ),
     ]
 )

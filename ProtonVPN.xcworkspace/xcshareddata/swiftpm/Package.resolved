@@ -46,15 +46,6 @@
       }
     },
     {
-      "identity" : "dictionarycoder",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/almazrafi/DictionaryCoder.git",
-      "state" : {
-        "revision" : "c340c90eeb4ff318ccea992e57e9ace8aaf3357d",
-        "version" : "1.1.0"
-      }
-    },
-    {
       "identity" : "geos",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/GEOSwift/geos",
@@ -190,15 +181,6 @@
       }
     },
     {
-      "identity" : "swift-algorithms",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-algorithms",
-      "state" : {
-        "revision" : "87e50f483c54e6efd60e885f7f5aa946cee68023",
-        "version" : "1.2.1"
-      }
-    },
-    {
       "identity" : "swift-argument-parser",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser",
@@ -304,15 +286,6 @@
       "state" : {
         "revision" : "fad75807c596fecd724b0fc81cd61c94008faad4",
         "version" : "2.10.3"
-      }
-    },
-    {
-      "identity" : "swift-numerics",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-numerics.git",
-      "state" : {
-        "revision" : "0c0290ff6b24942dadb83a929ffaaa1481df04a2",
-        "version" : "1.1.1"
       }
     },
     {

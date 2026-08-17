@@ -29,7 +29,6 @@ let package = Package(
 
         .package(path: "../../Core/NEHelper"),
 
-        .package(url: "https://github.com/almazrafi/DictionaryCoder", .upToNextMajor(from: "1.1.0")),
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.5.2")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
@@ -45,7 +44,6 @@ let package = Package(
                 "PMLogger",
                 .product(name: "ExtensionSync", package: "Connection"),
                 .product(name: "NetworkingErgonomics", package: "Ergonomics"),
-                .product(name: "DictionaryCoder", package: "DictionaryCoder"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "VPNShared", package: "NEHelper"),

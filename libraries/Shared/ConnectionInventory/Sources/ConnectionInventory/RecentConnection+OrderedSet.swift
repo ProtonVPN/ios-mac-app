@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Algorithms
 import Dependencies
 import Domain
 import Foundation
@@ -34,16 +33,13 @@ public extension OrderedSet<RecentConnection> {
     }
 
     internal func sanitized() -> OrderedSet<RecentConnection> {
-        OrderedSet(
-            chunked { $0.pinned }
-                .sorted(by: { lhs, _ in lhs.0 }) // first should appear the pinned
-                .flatMap {
-                    if $0.0 { // pinned
-                        $0.1.sorted(using: KeyPathComparator(\.pinnedDate, order: .forward))
-                    } else { // unpinned
-                        $0.1.sorted(using: KeyPathComparator(\.connectionDate, order: .reverse))
-                    }
-                }
+        let pinned = filter(\.pinned)
+            .sorted(using: KeyPathComparator(\.pinnedDate, order: .forward))
+        let unpinned = filter { !$0.pinned }
+            .sorted(using: KeyPathComparator(\.connectionDate, order: .reverse))
+
+        return OrderedSet(
+            (pinned + unpinned)
                 .prefix(Self.maxConnections)
         )
     }

@@ -20,14 +20,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>Packages/AlamofireImage</string>
-			<key>Title</key>
-			<string>AlamofireImage</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>Packages/Atlantis</string>
 			<key>Title</key>
 			<string>Atlantis</string>
@@ -52,9 +44,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>Packages/DictionaryCoder</string>
+			<string>Packages/geos</string>
 			<key>Title</key>
-			<string>DictionaryCoder</string>
+			<string>geos</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -124,14 +116,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>Packages/Reachability</string>
-			<key>Title</key>
-			<string>Reachability</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>Packages/SDWebImage</string>
 			<key>Title</key>
 			<string>SDWebImage</string>
@@ -175,14 +159,6 @@
 			<string>Packages/SVGView</string>
 			<key>Title</key>
 			<string>SVGView</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>Packages/swift-algorithms</string>
-			<key>Title</key>
-			<string>swift-algorithms</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -284,14 +260,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>Packages/swift-numerics</string>
-			<key>Title</key>
-			<string>swift-numerics</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>Packages/swift-perception</string>
 			<key>Title</key>
 			<string>swift-perception</string>
@@ -335,14 +303,6 @@
 			<string>Packages/SwiftOTP</string>
 			<key>Title</key>
 			<string>SwiftOTP</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>Packages/SwiftyBeaver</string>
-			<key>Title</key>
-			<string>SwiftyBeaver</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
