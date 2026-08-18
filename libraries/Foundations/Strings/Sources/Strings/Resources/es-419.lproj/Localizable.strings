@@ -3171,10 +3171,10 @@
 "_connection_error_intent_missing" = "No pudimos conectarnos al servidor.";
 
 /* Error message: a problem occurred while building the VPN configuration, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds. */
-"_connection_error_configuration" = "Hubo un problema configurando la conexión VPN.";
+"_connection_error_configuration" = "Hubo un problema al configurar la conexión VPN.";
 
 /* Error message: the VPN configuration is missing something it needs, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds. */
-"_connection_error_configuration_invalid" = "Hubo un problema con la configuración VPN.";
+"_connection_error_configuration_invalid" = "Hubo un problema con la configuración de la VPN.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
 "_connection_error_preparation" = "Hubo un problema preparando la conexión.";

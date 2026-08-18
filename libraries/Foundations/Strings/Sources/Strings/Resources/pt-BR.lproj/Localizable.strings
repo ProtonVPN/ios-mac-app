@@ -1007,16 +1007,16 @@
 "_kill_switch_advanced_unavailable_protocol_description" = "This setting is not available for the protocol you have selected. Please choose another protocol to use Advanced Kill Switch.";
 
 /* macOS: Kill switch confirmation - bullet: enabling KS disables split tunneling (macOS only) */
-"_kill_switch_bullet_split_tunneling" = "This will disable split tunneling";
+"_kill_switch_bullet_split_tunneling" = "Isso desativará o tunelamento dividido";
 
 /* iOS: Kill switch confirmation - bullet: Advanced blocking persists */
-"_kill_switch_bullet_advanced_persists" = "Internet stays blocked across reboots and intentional disconnects until you turn it off";
+"_kill_switch_bullet_advanced_persists" = "A internet permanece bloqueada mesmo após reinicializações e desconexões intencionais, até que você a desligue";
 
 /* iOS: Kill switch confirmation - bullet: how to get back online with Advanced */
 "_kill_switch_bullet_advanced_recover" = "Para voltar a ficar on-line, conecte-se à VPN ou desative o kill switch avançado";
 
 /* iOS: Kill switch confirmation - bullet: KS activates on the next connection (deferred activation, both modes) */
-"_kill_switch_bullet_deferred" = "Takes effect the next time you connect to VPN";
+"_kill_switch_bullet_deferred" = "Entrará em vigor na próxima vez que você se conectar à VPN";
 
 /* iOS: Kill switch confirmation - primary button to enable */
 "_kill_switch_confirm_enable" = "Ativar";
@@ -1040,7 +1040,7 @@
 "_kill_switch_disabled_confirmation" = "Kill switch está desativado.";
 
 /* iOS: Body of the alert shown when a user tries to sign in / sign up / continue as guest while Advanced kill switch is blocking */
-"_kill_switch_turn_off_to_get_online" = "To get back online you need to turn off kill switch.";
+"_kill_switch_turn_off_to_get_online" = "Para voltar a ficar on-line, você precisa desativar o kill switch.";
 
 /* iOS: Primary button of the kill-switch-blocking alert; turns the kill switch off */
 "_kill_switch_turn_off" = "Desativar kill switch";
@@ -1591,7 +1591,7 @@
 
 "_quick_settings_netShield_note" = "Se os sites não carregarem, tente desativar o NetShield";
 
-"_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try allowing LAN connections in Settings.";
+"_quick_settings_killSwitch_note" = "Se você não conseguir se conectar a dispositivos na sua rede local, tente ativar as conexões LAN em Configurações.";
 
 "_quick_settings_portForwarding_note" = "Insira o número da porta ativa em seu aplicativo BitTorrent para melhorar suas velocidades de P2P";
 
@@ -3057,7 +3057,7 @@
 "_ike_deprecation_alert_message" = "Esse protocolo será removido em breve. Considere trocar para o protocolo Smart. Saiba mais";
 
 /* Message added to the IKEv2 deprecation alert when Advanced kill switch is enabled: continuing with IKEv2 changes the setting to Standard */
-"_ike_deprecation_alert_kill_switch_downgrade_message" = "Your Kill Switch setting will be changed to Standard.";
+"_ike_deprecation_alert_kill_switch_downgrade_message" = "A configuração do Kill Switch será alterada para Padrão.";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
 "_disable_plutonium_message" = "Isso desativará o tunelamento dividido.";
@@ -3171,10 +3171,10 @@
 "_connection_error_intent_missing" = "Não foi possível conectar com o servidor.";
 
 /* Error message: a problem occurred while building the VPN configuration, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds. */
-"_connection_error_configuration" = "Ocorreu um problema ao configurar a conexão VPN.";
+"_connection_error_configuration" = "There was a problem configuring the VPN connection.";
 
 /* Error message: the VPN configuration is missing something it needs, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds. */
-"_connection_error_configuration_invalid" = "Ocorreu um problema com a configuração da VPN.";
+"_connection_error_configuration_invalid" = "There was a problem with the VPN configuration.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
 "_connection_error_preparation" = "Ocorreu um problema ao preparar a conexão";

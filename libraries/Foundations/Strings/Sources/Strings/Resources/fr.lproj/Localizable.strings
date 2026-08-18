@@ -3174,7 +3174,7 @@
 "_connection_error_configuration" = "Un problème est survenu lors de la configuration de la connexion VPN.";
 
 /* Error message: the VPN configuration is missing something it needs, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds. */
-"_connection_error_configuration_invalid" = "Un problème est survenu avec la configuration du VPN.";
+"_connection_error_configuration_invalid" = "Un problème est survenu lors de la configuration du VPN.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
 "_connection_error_preparation" = "Un problème est survenu lors de la préparation de la connexion";
@@ -3402,7 +3402,7 @@
 "_pcap_capture_session_capturing" = "En cours de capture";
 
 /* Header of the pending PCAP session view */
-"_pcap_capture_session_pending" = "En attente de connexion";
+"_pcap_capture_session_pending" = "Connexion en attente";
 
 /* Button title on the PCAP export view. Presents a share sheet to save the file outside of the app */
 "_pcap_capture_session_export" = "Enregistrer le fichier";

@@ -3174,7 +3174,7 @@
 "_connection_error_configuration" = "A apărut o problemă la configurarea conexiunii VPN.";
 
 /* Error message: the VPN configuration is missing something it needs, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds. */
-"_connection_error_configuration_invalid" = "A apărut o problemă cu configurarea VPN.";
+"_connection_error_configuration_invalid" = "A apărut o problemă cu configurația VPN.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
 "_connection_error_preparation" = "A apărut o problemă la pregătirea conexiunii.";
