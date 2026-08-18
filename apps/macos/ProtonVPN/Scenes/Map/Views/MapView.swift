@@ -53,11 +53,9 @@ class MapView: NSView {
     var minZoom: CGFloat = 1 {
         didSet {
             didZoom?()
-            halfZoom = (maxZoom - minZoom) * 0.6
         }
     }
 
-    var halfZoom: CGFloat = (8 - 1) * 0.6
     var zoom: CGFloat = 1 {
         didSet {
             didZoom?()

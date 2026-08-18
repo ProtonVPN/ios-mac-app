@@ -103,12 +103,4 @@ final class ImageSubtitleImageTableViewCell: UITableViewCell {
         accessoryType = .none
         backgroundColor = .secondaryBackgroundColor()
     }
-
-    func setup(title: NSAttributedString, subtitle: NSAttributedString, leadingImage: UIImage, trailingImage: UIImage, handler: @escaping () -> Void) {
-        titleLabel.attributedText = title
-        subtitleLabel.attributedText = subtitle
-        leadingImageView.image = leadingImage
-        trailingImageView.image = trailingImage
-        selectionHandler = handler
-    }
 }

@@ -204,8 +204,8 @@ extension UpsellViewController {
     .preferredColorScheme(.dark)
 }
 
-public final class UpsellHostingViewController: NSHostingController<UpsellViewController> {
-    public init(
+final class UpsellHostingViewController: NSHostingController<UpsellViewController> {
+    init(
         modalType: UpsellModalType,
         upgradeAction: (() -> Void)?,
         skipAction: (() -> Void)? = nil,
@@ -224,7 +224,7 @@ public final class UpsellHostingViewController: NSHostingController<UpsellViewCo
         fatalError("init(coder:) has not been implemented")
     }
 
-    override public func viewWillAppear() {
+    override func viewWillAppear() {
         super.viewWillAppear()
         view.window?.applyUpsellModalAppearance()
         view.window?.styleMask.remove(.fullSizeContentView)

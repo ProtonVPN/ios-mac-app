@@ -62,6 +62,9 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
+            ],
+            resources: [
+                .process("Resources"),
             ]
         ),
         .target(
@@ -78,6 +81,7 @@ let package = Package(
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
             ],
             resources: [
+                .copy("Resources/example1.json"),
                 .copy("Resources/test_log_1.log"),
                 .copy("Resources/test_log_2.log"),
             ]

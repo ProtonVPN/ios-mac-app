@@ -25,14 +25,10 @@ import GRDB
 ///
 /// For more information about types of potential errors thrown within `operation`, visit:
 /// [Error Handling](https://github.com/groue/GRDB.swift/blob/master/README.md#error-handling)
-public struct ErrorHandlingAndLoggingDatabaseExecutor: DatabaseExecutor {
+struct ErrorHandlingAndLoggingDatabaseExecutor: DatabaseExecutor {
     let logError: (@Sendable (String, Error) -> Void)?
 
-    public init(logError: @escaping @Sendable (String, Error) -> Void) {
-        self.logError = logError
-    }
-
-    public func execute<T>(operation: () throws -> T, fallback: T) -> T {
+    func execute<T>(operation: () throws -> T, fallback: T) -> T {
         do {
             // Note: GRDB operations can also fatalError()
             // This helps "uncover programmer errors, false assumptions, and prevent misuses"
@@ -42,12 +38,10 @@ public struct ErrorHandlingAndLoggingDatabaseExecutor: DatabaseExecutor {
             // Also includes errors thrown from custom database functions (see `convertCodeToLocalizedCountryName`)
             logError?("Caught DatabaseError (\(error.extendedResultCode))", error)
             assertionFailure("DatabaseError are thrown on SQLite errors and should be handled inside `operation`")
-
         } catch let error as RecordError {
             // RecordErrors: attempting to update a record that doesn't exist, or modifying one inside read transactions
             logError?("Caught RecordError", error)
             assertionFailure("Record errors should be handled inside `operation`")
-
         } catch {
             // From GRDB docs: GRDB can throw DatabaseError, RecordError, or crash your program with a fatal error.
             // Since we are catching Database and Record errors above, we should never trigger this block.

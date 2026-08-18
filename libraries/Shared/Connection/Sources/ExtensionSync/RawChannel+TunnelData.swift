@@ -61,16 +61,6 @@ public extension IPCNotifications.RawChannel where Payload == IPCStatsPayload, R
     }
 }
 
-public extension IPCNotifications.RawChannel where Payload == IPCConnectionStatsPayload, Role == ReaderRole, Backing: ~Copyable {
-    func connectionStats() -> LocalAgent.ConnectionStats? {
-        (try? read()).flatMap(\.localAgentConnectionStats)
-    }
-
-    func connectionStatsStream(reconcileOn resumeSignals: AsyncStream<Void>...) -> AsyncStream<LocalAgent.ConnectionStats?> {
-        stream(reconcileOn: resumeSignals) { $0.localAgentConnectionStats }
-    }
-}
-
 public extension IPCNotifications.RawChannel where Payload == IPCAgentFeaturesPayload, Role == ReaderRole, Backing: ~Copyable {
     /// The server-applied features, or `nil` until the extension has published them (or after a disconnect zeroes the region).
     func agentFeatures() -> AgentTunnelFeatures? {

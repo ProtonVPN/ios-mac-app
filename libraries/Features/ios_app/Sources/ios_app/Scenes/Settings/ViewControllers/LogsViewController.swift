@@ -22,7 +22,6 @@
 
 import ComposableArchitecture
 import Ergonomics
-import LegacyCommon
 import UIKit
 
 final class LogsViewController: UIViewController {

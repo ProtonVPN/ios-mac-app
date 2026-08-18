@@ -39,14 +39,6 @@ public enum TunnelProtocol: Equatable, Hashable, Sendable, Codable {
 
     case wireGuard
 
-    package static var availableProtocols: [Self] {
-        #if os(macOS)
-            [.ike, .wireGuard]
-        #else
-            [.wireGuard]
-        #endif
-    }
-
     public init(_ protocol: ConnectionProtocol) {
         switch `protocol` {
         case .vpnProtocol(.ike):

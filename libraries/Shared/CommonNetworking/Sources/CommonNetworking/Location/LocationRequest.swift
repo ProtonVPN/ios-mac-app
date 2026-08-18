@@ -19,18 +19,18 @@
 import Foundation
 import ProtonCoreNetworking
 
-public final class LocationRequest: Request {
-    public var path: String {
+final class LocationRequest: Request {
+    var path: String {
         "/vpn/v1/location"
     }
 
-    public var isAuth: Bool {
+    var isAuth: Bool {
         false
     }
 
-    public var retryPolicy: ProtonRetryPolicy.RetryMode {
+    var retryPolicy: ProtonRetryPolicy.RetryMode {
         .userInitiated
     }
 
-    public init() {}
+    init() {}
 }

@@ -8,9 +8,7 @@
 //  See LICENSE for up to date license information.
 
 import ComposableArchitecture
-import LegacyCommon
 import PCAP
-import Strings
 import SwiftUI
 import UIKit
 

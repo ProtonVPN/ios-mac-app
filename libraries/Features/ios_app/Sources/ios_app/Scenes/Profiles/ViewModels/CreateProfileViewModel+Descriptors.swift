@@ -25,7 +25,6 @@ import Domain
 import Foundation
 import LegacyCommon
 import Localization
-import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
 import Strings
 import UIKit

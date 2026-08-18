@@ -110,14 +110,6 @@ public struct ConnectionInfoBuilder {
         return currentlyConnectedServer.features.contains(feature)
     }
 
-    private var showFeatureP2P: Bool {
-        shouldShow(feature: .p2p)
-    }
-
-    private var showFeatureTor: Bool {
-        shouldShow(feature: .tor)
-    }
-
     public var textHeader: String {
         if let locationHeaderText = location.headerText(locale: locale) {
             return locationHeaderText

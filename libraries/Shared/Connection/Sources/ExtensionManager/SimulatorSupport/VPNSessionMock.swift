@@ -85,10 +85,6 @@
             }
         }
 
-        func fetchLastDisconnectError() async throws -> Error? {
-            lastDisconnectError
-        }
-
         /// Fakes a `RawChannel` publisher from the extension.
         private func publish(_ state: ExtensionState) {
             $publishedExtensionState.withLock { $0 = state }

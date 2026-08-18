@@ -24,7 +24,6 @@ import Domain
 import TrustKit
 
 // Accounts
-import ProtonCoreAuthentication
 import ProtonCoreEnvironment
 import ProtonCoreFeatureFlags
 import ProtonCoreNetworking
@@ -36,11 +35,7 @@ import Ergonomics
 import VPNAppCore // UnauthKeychain
 import VPNShared // AuthKeychain
 
-public typealias SuccessCallback = () -> Void
-public typealias SuccessConfirmationCallback = (@escaping SuccessCallback) -> Void
 public typealias GenericCallback<T> = (T) -> Void
-public typealias ErrorCallback = GenericCallback<Error>
-
 public protocol Networking: APIServiceDelegate {
     var apiService: PMAPIService { get }
 
@@ -442,7 +437,6 @@ extension CoreNetworking: AuthDelegate {
             if let authCredentials = authKeychain.fetch(),
                authCredentials.sessionId == sessionUID {
                 try authKeychain.store(authCredentials.updatedWithAuth(auth: credential), source: .credentialsUpdated)
-
             } else if let unauthCredential = unauthKeychain.fetch(),
                       unauthCredential.sessionID == sessionUID {
                 unauthKeychain.store(AuthCredential(credential))
@@ -451,8 +445,6 @@ extension CoreNetworking: AuthDelegate {
             log.error("Failed to save updated credentials", category: .keychain, event: .change)
         }
     }
-
-    public func onForceUpgrade() {}
 }
 
 extension CoreNetworking: AuthSessionInvalidatedDelegate {

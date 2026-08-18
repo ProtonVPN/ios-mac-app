@@ -99,15 +99,6 @@ public class VpnKeychainMock: VpnKeychainProtocol {
         VpnCredentialsMetadataMirror.clear()
     }
 
-    public func setVpnCredentials(with planName: String, maxTier: VpnTier = .free) {
-        let credentials = VpnKeychainMock.vpnCredentials(planName: planName, maxTier: maxTier)
-        self.credentials = credentials
-        VpnCredentialsMetadataMirror.update(
-            afterStoring: credentials,
-            succeeded: true
-        )
-    }
-
     public static func vpnCredentials(planName: String, maxTier: VpnTier) -> VpnCredentials {
         VpnCredentials(
             status: 0,
@@ -129,12 +120,6 @@ public class VpnKeychainMock: VpnKeychainProtocol {
             netshield: NetShieldFeatureSettings(malware: true, adsAndTrackers: true, adultContent: true)
         )
     }
-
-    public func hasOldVpnPassword() -> Bool {
-        false
-    }
-
-    public func clearOldVpnPassword() throws {}
 
     public func store(wireguardConfiguration _: Data) throws -> Data {
         Data()

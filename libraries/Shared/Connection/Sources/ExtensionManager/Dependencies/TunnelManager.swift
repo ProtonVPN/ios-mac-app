@@ -26,7 +26,6 @@ import ExtensionIPC
 import ExtensionSync
 import Foundation
 import IPCDefinitions
-import IPCErgonomics
 import NetworkExtension
 import os
 import SharedErgonomics
@@ -61,13 +60,6 @@ extension DependencyValues {
         get { self[TunnelDataXPC.self] }
         set { self[TunnelDataXPC.self] = newValue }
     }
-}
-
-enum TunnelMessageTarget {
-    /// Send to whichever extension is currently active.
-    case active
-    /// Send to the extension managing the specified tunnel protocol.
-    case specific(TunnelProtocol)
 }
 
 protocol TunnelManager {
@@ -924,13 +916,4 @@ extension NEVPNProtocol {
             return configuration.peers.map(\.id)
         }
     }
-}
-
-enum TunnelDataError: Error {
-    case unsupportedBackend
-    case missingConnectionSpec
-}
-
-enum ProTUNConnectionError: FourCharCode, ProtonVPNError {
-    case tunEstablishFailed = "PTEF"
 }

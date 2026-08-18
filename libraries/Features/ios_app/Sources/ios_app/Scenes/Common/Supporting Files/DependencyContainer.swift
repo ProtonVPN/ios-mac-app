@@ -20,10 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import BugReport
-import CommonNetworking
 import Dependencies
-import Domain
 import Ergonomics
 import Foundation
 import LegacyCommon
@@ -52,7 +49,7 @@ final class DependencyContainer: Container {
     )
 
     // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
-    private lazy var dynamicBugReportManager = DynamicBugReportManager()
+    lazy var dynamicBugReportManager = DynamicBugReportManager()
 
     // MARK: - Init
 
@@ -63,12 +60,7 @@ final class DependencyContainer: Container {
     }
 }
 
-extension DependencyContainer: AppSessionRefreshTimerDelegate {
-    func canRefreshAccount() -> Bool {
-        @Dependency(\.authKeychain) var authKeychain
-        return authKeychain.username != nil
-    }
-}
+extension DependencyContainer: AppSessionRefreshTimerDelegate {}
 
 // MARK: NavigationServiceFactory
 
@@ -83,14 +75,6 @@ extension DependencyContainer: NavigationServiceFactory {
 extension DependencyContainer: SettingsServiceFactory {
     func makeSettingsService() -> SettingsService {
         navigationService
-    }
-}
-
-// MARK: DynamicBugReportManagerFactory
-
-extension DependencyContainer: DynamicBugReportManagerFactory {
-    func makeDynamicBugReportManager() -> DynamicBugReportManager {
-        dynamicBugReportManager
     }
 }
 
@@ -115,21 +99,5 @@ extension DependencyContainer: AppSessionRefreshTimerFactory {
 extension DependencyContainer: AppSessionRefresherFactory {
     func makeAppSessionRefresher() -> AppSessionRefresher {
         appSessionManager
-    }
-}
-
-// MARK: LoginServiceFactory
-
-extension DependencyContainer: LoginServiceFactory {
-    func makeLoginService() -> LoginService {
-        CoreLoginService(factory: self)
-    }
-}
-
-// MARK: OnboardingServiceFactory
-
-extension DependencyContainer: OnboardingServiceFactory {
-    func makeOnboardingService() -> OnboardingService {
-        OnboardingModuleService(factory: self)
     }
 }

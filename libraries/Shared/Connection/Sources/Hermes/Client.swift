@@ -196,8 +196,6 @@ private extension HermesFeature {
         static let cloudFlareDoT: HermesResolver = "tls://1.1.1.1"
         static let cloudFlareDoH: HermesResolver = "https://1.1.1.1/dns-query"
         static let google: HermesResolver = "8.8.8.8"
-        static let googleDoT: HermesResolver = "tls://8.8.8.8"
-        static let googleDoH: HermesResolver = "https://8.8.8.8/dns-query"
         static let quadNine: HermesResolver = "9.9.9.9"
     }
 #endif

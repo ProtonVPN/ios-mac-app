@@ -22,9 +22,7 @@ import Connection
 import Dependencies
 import Domain
 import Foundation
-import LegacyCommon
 import VPNAppCore
-import VPNShared
 
 @Reducer
 public struct ServerItemFeature {

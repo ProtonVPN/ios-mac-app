@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import struct Payments.PlanOptionV2
-import ProtonCoreUIFoundations
 import struct StoreKit.Product
 import SwiftUI
 import Theme

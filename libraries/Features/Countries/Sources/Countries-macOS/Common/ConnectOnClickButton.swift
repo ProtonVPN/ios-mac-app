@@ -22,7 +22,6 @@ import Sharing
 import Strings
 import SwiftUI
 import Theme
-import VPNAppCore
 
 struct ConnectOnClickButton: View {
     let action: () -> Void

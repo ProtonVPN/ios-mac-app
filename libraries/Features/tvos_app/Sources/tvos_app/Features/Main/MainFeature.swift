@@ -232,11 +232,6 @@ private extension ServerGroupInfo.Kind {
     }
 }
 
-enum ServerResolutionError: Error {
-    case noActiveServers(String)
-    case serverHasNoEndpoints
-}
-
 private extension ServerGroupInfo.Kind {
     var selectedItem: (code: String, cityName: String?) {
         switch self {

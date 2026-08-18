@@ -51,17 +51,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
         return URL(string: string)
     }
 
-    func urlOrThrow(key: Key) throws -> URL {
-        let string: String = try valueOrThrow(key)
-        guard let url = URL(string: string) else { throw genericKeyErrorFor(key) }
-        return url
-    }
-
     // MARK: Double
-
-    func double(_ key: Key) -> Double? {
-        self[key] as? Double
-    }
 
     func doubleOrThrow(key: Key) throws -> Double {
         try valueOrThrow(key)
@@ -91,62 +81,10 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
         try valueOrThrow(key)
     }
 
-    // MARK: Date
-
-    func unixTimestamp(_ key: Key) -> Date? {
-        guard let timestamp = double(key) else {
-            return nil
-        }
-        return Date(timeIntervalSince1970: timestamp)
-    }
-
-    func unixTimestampOrThrow(key: Key) throws -> Date {
-        guard let date = unixTimestamp(key) else {
-            throw genericKeyErrorFor(key)
-        }
-        return date
-    }
-
-    func unixTimestampFromNow(_ key: Key) -> Date? {
-        guard let timestamp = double(key) else {
-            return nil
-        }
-        return Date(timeIntervalSinceNow: timestamp)
-    }
-
-    func unixTimestampFromNowOrThrow(key: Key) throws -> Date {
-        guard let date = unixTimestampFromNow(key) else {
-            throw genericKeyErrorFor(key)
-        }
-        return date
-    }
-
-    // MARK: - Array
-
-    func stringArray(key: Key) -> [String]? {
-        self[key] as? [String]
-    }
-
-    func stringArrayOrThrow(key: Key) throws -> [String] {
-        try valueOrThrow(key)
-    }
-
-    func intArray(key: Key) -> [Int]? {
-        self[key] as? [Int]
-    }
-
-    func intArrayOrThrow(key: Key) throws -> [Int] {
-        try valueOrThrow(key)
-    }
-
     // MARK: Json
 
     func jsonArray(key: Key) -> JSONArray? {
         self[key] as? JSONArray
-    }
-
-    func jsonArrayOrThrow(key: Key) throws -> JSONArray {
-        try valueOrThrow(key)
     }
 
     func jsonDictionary(key: Key) -> JSONDictionary? {
@@ -155,22 +93,6 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
 
     func jsonDictionaryOrThrow(key: Key) throws -> JSONDictionary {
         try valueOrThrow(key)
-    }
-
-    // MARK: - Misc
-
-    func stringOrDoubleAsString(key: Key) -> String? {
-        if let str = string(key) { return str }
-        if let double = double(key) { return String(double) }
-
-        return nil
-    }
-
-    func anyAsString(key: Key) -> String? {
-        if let val = self[key] {
-            return "\(val)"
-        }
-        return nil
     }
 
     // MARK: - Generic

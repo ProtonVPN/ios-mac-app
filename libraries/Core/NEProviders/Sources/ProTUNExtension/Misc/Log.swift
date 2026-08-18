@@ -67,10 +67,8 @@ private enum Category: String, CaseIterable {
 
 extension Logger {
     enum LogsError: Swift.Error {
-        case osLogStoreError(any Swift.Error)
         case noLogsFound
         case serializationFailure
-        case archiveCreationFailure
     }
 
     static func fetch(sinceDate: Date, predicateFormat: String? = nil) throws -> some Collection<String> {

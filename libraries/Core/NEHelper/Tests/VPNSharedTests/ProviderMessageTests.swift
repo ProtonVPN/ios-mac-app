@@ -18,7 +18,6 @@
 
 import ExtensionIPC
 import Foundation
-@testable import VPNShared
 import XCTest
 
 class ProviderMessageTests: XCTestCase {

@@ -18,10 +18,10 @@
 
 import Dependencies
 
-public struct CountryCodeProviderKey: DependencyKey {
-    public static let liveValue: CountryCodeProvider = CountryCodeProviderImplementation()
+struct CountryCodeProviderKey: DependencyKey {
+    static let liveValue: CountryCodeProvider = CountryCodeProviderImplementation()
 
-    public static let testValue: CountryCodeProvider = CountryCodeProviderMock()
+    static let testValue: CountryCodeProvider = CountryCodeProviderMock()
 }
 
 public extension DependencyValues {

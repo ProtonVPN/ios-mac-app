@@ -52,8 +52,5 @@
             unsafeLanWarnings: true,
             mismatchedCertificateRecovery: true
         )
-
-        static let wireGuardTlsDisabled: Self = .allEnabled
-            .disabling(\.wireGuardTls)
     }
 #endif

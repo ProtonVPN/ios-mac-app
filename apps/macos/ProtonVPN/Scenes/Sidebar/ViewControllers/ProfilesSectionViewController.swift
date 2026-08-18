@@ -24,11 +24,6 @@ import Cocoa
 import Ergonomics
 
 class ProfileSectionViewController: NSViewController {
-    fileprivate enum CellIdentifier {
-        static let profile = "Profile"
-        static let footer = "Footer"
-    }
-
     fileprivate enum Cell: String, CaseIterable {
         case profile = "ProfileItemView"
         case footer = "FooterItemView"

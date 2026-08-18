@@ -20,8 +20,6 @@ import Foundation
 import Strings
 
 public struct PlanOptionV2: Hashable, Sendable, Identifiable {
-    private static let minimumVisibleDiscount = 5
-
     public enum PlanType: Hashable, Sendable {
         case iap
         case web

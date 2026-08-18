@@ -21,7 +21,6 @@
 //
 
 import Foundation
-import LegacyCommon
 
 class ProfilesContainerViewModel {
     let initialTab: ProfilesTab

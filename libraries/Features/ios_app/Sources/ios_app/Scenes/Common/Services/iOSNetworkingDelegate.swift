@@ -12,14 +12,11 @@ import Connection
 import Dependencies
 import Domain
 import Foundation
-import LegacyCommon
 import ProtonCoreDataModel
 import ProtonCoreFeatureFlags
-import ProtonCoreForceUpgrade
 import ProtonCoreHumanVerification
 import ProtonCoreNetworking
 import ProtonCoreServices
-import VPNAppCore
 
 final class iOSNetworkingDelegate: NetworkingDelegate {
     let sessionAuthenticatedEvents: AsyncStream<Bool>

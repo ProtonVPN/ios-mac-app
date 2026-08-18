@@ -17,7 +17,6 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
-import LegacyCommon
 import Strings
 
 final class MenuManager {

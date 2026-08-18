@@ -21,8 +21,8 @@ import Dependencies
 import Domain
 import Persistence
 
-extension ServerWrapper {
-    public var server: ServerModel {
+public extension ServerWrapper {
+    var server: ServerModel {
         @Dependency(\.serverRepository) var repository: ServerRepository
         if let vpnServer = repository.getFirstServer(filteredBy: [.logicalID(_server.id)], orderedBy: .fastest) {
             return ServerModel(server: vpnServer)
@@ -30,9 +30,5 @@ extension ServerWrapper {
             log.warning("Unable to retrieve up to date server from repository... Returning wrapped ServerModel")
             return _server
         }
-    }
-
-    static func == (lhs: ServerWrapper, rhs: ServerWrapper) -> Bool {
-        lhs.server == rhs.server
     }
 }

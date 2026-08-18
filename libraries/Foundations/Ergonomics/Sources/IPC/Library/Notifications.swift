@@ -42,14 +42,6 @@ public extension IPCNotifications {
         center.post(notification.name)
     }
 
-    static func observe(_ notification: Notification, callback: @escaping Callback) {
-        let notificationName = notification.name as CFString
-        callbacks.withLock {
-            $0[notificationName] = callback
-        }
-        center.addObserver(notificationName)
-    }
-
     static func stopObserving(_ notification: Notification) {
         let notificationName = notification.name as CFString
         _ = callbacks.withLock {

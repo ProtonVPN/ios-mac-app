@@ -22,7 +22,6 @@
 
 import Foundation
 import ProtonCoreNetworking
-import VPNShared
 
 public struct VpnServerState {
     public let id: String!

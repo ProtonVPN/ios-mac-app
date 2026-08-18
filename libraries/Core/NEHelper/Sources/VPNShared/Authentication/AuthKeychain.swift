@@ -45,8 +45,6 @@ public protocol AuthKeychainHandle {
 
 public enum AuthCredentialsSource {
     case sessionObtained
-    case storageMigration
-    case tokenExpired
     case additionalCredentialsInfoObtained
     case credentialsUpdated
     case userLogin
@@ -80,9 +78,9 @@ public extension AuthKeychainHandle {
     }
 }
 
-public struct AuthKeychainHandleDependencyKey: DependencyKey {
-    public static let liveValue: AuthKeychainHandle = AuthKeychain.default
-    public static let testValue: AuthKeychainHandle = MockAuthKeychain()
+struct AuthKeychainHandleDependencyKey: DependencyKey {
+    static let liveValue: AuthKeychainHandle = AuthKeychain.default
+    static let testValue: AuthKeychainHandle = MockAuthKeychain()
 }
 
 public extension DependencyValues {
@@ -93,8 +91,6 @@ public extension DependencyValues {
 }
 
 public final class AuthKeychain {
-    public static let clearNotification = Notification.Name("AuthKeychain.clear")
-
     private enum StorageKey {
         static let authCredentials = "authCredentials"
 

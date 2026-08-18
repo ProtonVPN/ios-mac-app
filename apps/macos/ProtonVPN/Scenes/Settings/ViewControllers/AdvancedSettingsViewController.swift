@@ -21,8 +21,6 @@ import ComposableArchitecture
 import Domain
 import Ergonomics
 import Hermes
-import LegacyCommon
-import ProtonCoreFeatureFlags
 import SharedViews
 import Strings
 import Theme

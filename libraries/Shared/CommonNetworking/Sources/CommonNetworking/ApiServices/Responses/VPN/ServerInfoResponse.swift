@@ -22,9 +22,3 @@ public enum ServerInfoResponse {
     case notModified(since: String?)
     case modified(at: String?, servers: [VPNServer], freeServersOnly: Bool)
 }
-
-public typealias ServerInfoTuple = (
-    serverInfo: ServerInfoResponse?,
-    location: UserLocation?,
-    streamingServices: VPNStreamingResponse?
-)

@@ -69,10 +69,7 @@ let package = Package(
         ),
         .testTarget(
             name: "BugReportTests",
-            dependencies: ["BugReportShared"],
-            resources: [
-                .process("example1.json"),
-            ]
+            dependencies: ["BugReportShared"]
         ),
     ]
 )

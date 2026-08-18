@@ -25,7 +25,6 @@ import Foundation
 import Localization
 import Persistence
 import VPNAppCore
-import VPNShared
 
 @Reducer
 public struct CountryFeature {

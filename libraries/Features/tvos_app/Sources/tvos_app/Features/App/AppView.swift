@@ -22,7 +22,6 @@ import SwiftUI
 struct AppView: View {
     @Binding var store: StoreOf<AppFeature>
 
-    @Environment(\.scenePhase) var scenePhase
     @Environment(\.locale) var locale
 
     init(store: StoreOf<AppFeature>) {

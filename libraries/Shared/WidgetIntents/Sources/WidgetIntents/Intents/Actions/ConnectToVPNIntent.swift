@@ -17,7 +17,6 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppIntents
-import Strings
 
 public struct ConnectToVPNIntent: AppIntent {
     public static let title: LocalizedStringResource = "Connect to VPN"

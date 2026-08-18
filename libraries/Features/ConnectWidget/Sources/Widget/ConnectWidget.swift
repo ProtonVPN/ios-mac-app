@@ -30,10 +30,10 @@ struct ConnectWidgetBundle: WidgetBundle {
     }
 }
 
-public struct ConnectWidget: Widget {
+struct ConnectWidget: Widget {
     static let kind: String = "ConnectWidget"
 
-    public init() {
+    init() {
         prepareDependencies {
             // Align swift-sharing's default store with the app-group suite so `@Shared`
             // keys read the same UserDefaults values as the containing app.
@@ -41,7 +41,7 @@ public struct ConnectWidget: Widget {
         }
     }
 
-    public var body: some WidgetConfiguration {
+    var body: some WidgetConfiguration {
         StaticConfiguration(kind: Self.kind, provider: Provider()) { entry in
             ConnectWidgetView(entry: entry)
         }

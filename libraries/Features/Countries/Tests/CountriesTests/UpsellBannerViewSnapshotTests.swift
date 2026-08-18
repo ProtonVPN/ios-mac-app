@@ -29,7 +29,7 @@
     struct UpsellBannerViewSnapshotTests {
         @Test("UpsellBannerView")
         func upsellBannerView() {
-            let view = UpsellBannerView(numberOfCountries: 129, onUpgrade: {})
+            let view = UpsellBannerView(variant: .search(numberOfCountries: 129), onUpgrade: {})
                 .background(Color(.background))
                 .environment(\.colorScheme, .dark)
 

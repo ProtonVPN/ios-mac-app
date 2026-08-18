@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CoreConnection
-import ExtensionIPC
 import Foundation
 import IssueReporting
 

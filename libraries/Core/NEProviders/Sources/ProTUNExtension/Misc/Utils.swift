@@ -37,11 +37,3 @@ struct UncheckedCompletion: @unchecked Sendable {
         block?(error)
     }
 }
-
-extension Actor {
-    func run<Result, Failure: Error>(
-        _ body: @Sendable (isolated Self) throws(Failure) -> Result
-    ) throws(Failure) -> Result {
-        try body(self)
-    }
-}

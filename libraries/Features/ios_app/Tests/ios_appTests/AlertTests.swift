@@ -23,19 +23,13 @@
 import ComposableArchitecture
 import Dependencies
 import GSMessages
-import Home
 @testable import ios_app
 import LegacyCommon
-import Modals
 import PMLogger
-import ProtonCoreAccountRecovery
 import ProtonCoreNetworking
-import ProtonCorePasswordChange
 import SwiftUI
 import VPNAppCore
 import XCTest
-
-private let uiAlertService = IosUiAlertService()
 
 class AlertTests: XCTestCase {
     let alertService = IosAlertService()
@@ -105,17 +99,5 @@ class AlertTests: XCTestCase {
         alert1.actions[1].handler?()
 
         XCTAssert(confirmRan && cancelRan)
-    }
-}
-
-private class LogContentMock: LogContent {
-    var isEmpty: Bool
-
-    init(isEmpty: Bool) {
-        self.isEmpty = isEmpty
-    }
-
-    func loadContent(callback: @escaping (String) -> Void) {
-        callback("")
     }
 }

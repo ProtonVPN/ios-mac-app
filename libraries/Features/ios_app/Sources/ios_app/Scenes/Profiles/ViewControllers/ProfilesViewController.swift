@@ -22,8 +22,6 @@
 
 import Domain
 import GSMessages
-import LegacyCommon
-import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
 import Strings
 import Theme

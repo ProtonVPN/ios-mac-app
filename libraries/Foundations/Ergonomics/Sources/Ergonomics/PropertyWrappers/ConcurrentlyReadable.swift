@@ -20,7 +20,7 @@ import Foundation
 
 /// Allow multiple readers concurrent access to a value, and allow thread-safe barrier writes to this value using
 /// dispatch_barrier_sync on a per-instance queue.
-public class ConcurrentReaders<T> {
+class ConcurrentReaders<T> {
     private var value: T
 
     /// Concurrent queue for accessing the value.
@@ -35,7 +35,7 @@ public class ConcurrentReaders<T> {
     /// Schedule an asynchronous operation on the queue, inserting a barrier before and after the operation.
     private var asyncBarrier: ((@escaping () -> Void) -> Void)!
 
-    public init(_ value: T, queue: DispatchQueue? = nil) {
+    init(_ value: T, queue: DispatchQueue? = nil) {
         self.value = value
         let label = "ch.protonvpn.rwsync.\(String(describing: T.self)).\(UUID().uuidString)"
         self.queue = queue ?? DispatchQueue(label: label, attributes: .concurrent)
@@ -53,19 +53,19 @@ public class ConcurrentReaders<T> {
         }
     }
 
-    public func get() -> T {
+    func get() -> T {
         sync { value }
     }
 
-    public func update(_ closure: @escaping ((inout T) -> Void)) {
+    func update(_ closure: @escaping ((inout T) -> Void)) {
         syncBarrier { closure(&value) }
     }
 
-    public func updateAsync(_ closure: @escaping ((inout T) -> Void)) {
+    func updateAsync(_ closure: @escaping ((inout T) -> Void)) {
         asyncBarrier { [unowned self] in closure(&value) }
     }
 
-    public func unsafeUpdateNoSync(_ closure: @escaping ((inout T) -> Void)) {
+    func unsafeUpdateNoSync(_ closure: @escaping ((inout T) -> Void)) {
         closure(&value)
     }
 }

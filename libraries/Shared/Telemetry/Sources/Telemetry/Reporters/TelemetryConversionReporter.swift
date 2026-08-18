@@ -74,9 +74,7 @@ struct ConversionValue: RawRepresentable, OptionSet {
     }
 }
 
-public struct TelemetryConversionReporter {
-    public init() {}
-
+struct TelemetryConversionReporter {
     private func post(_ value: ConversionValue, lock: Bool = false, caller: StaticString = #function) {
         #if os(iOS) || os(tvOS)
             Task {
@@ -110,7 +108,7 @@ public struct TelemetryConversionReporter {
         #endif
     }
 
-    public func onboardingEvent(_ event: OnboardingEvent.Event) {
+    func onboardingEvent(_ event: OnboardingEvent.Event) {
         var conversionValue: ConversionValue = .empty
 
         @Dependency(\.authKeychain) var keychain
@@ -131,7 +129,7 @@ public struct TelemetryConversionReporter {
         post(conversionValue)
     }
 
-    public func upsellEvent(_ event: UpsellEvent.Event, newPlanName: String?, cycle: Int?) {
+    func upsellEvent(_ event: UpsellEvent.Event, newPlanName: String?, cycle: Int?) {
         guard case .success = event, let newPlanName, let cycle else {
             return
         }

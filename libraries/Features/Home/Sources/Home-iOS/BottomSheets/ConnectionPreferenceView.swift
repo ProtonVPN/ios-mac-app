@@ -26,22 +26,11 @@ import SwiftUI
 import Theme
 
 struct ConnectionPreferenceView: View {
-    @Dependency(\.locale) private var locale
     static let itemCellHeight: CGFloat = .themeSpacing64
 
     let model: ConnectionPreferenceModel
     let isSelected: Bool
     let sendAction: DefaultConnectionFeature.ActionSender
-
-    init(
-        model: ConnectionPreferenceModel,
-        isSelected: Bool,
-        sendAction: @escaping DefaultConnectionFeature.ActionSender
-    ) {
-        self.model = model
-        self.isSelected = isSelected
-        self.sendAction = sendAction
-    }
 
     var body: some View {
         Button {

@@ -21,6 +21,8 @@ import ModalsShared
 public typealias ModalType = ModalsShared.ModalType
 public typealias DiscourageSecureCoreFeature = ModalsShared.DiscourageSecureCoreFeature
 public typealias DiscourageSecureCoreView = ModalsShared.DiscourageSecureCoreView
+public typealias FreeConnectionsFeature = ModalsShared.FreeConnectionsFeature
+public typealias FreeConnectionsView = ModalsShared.FreeConnectionsView
 
 #if canImport(Modals_macOS)
     import Modals_macOS

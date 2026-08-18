@@ -22,12 +22,9 @@ package enum KeychainEnvironment {
     static let secItemAdd = SecItemAdd
     static let secItemDelete = SecItemDelete
     static let secItemCopyMatching = SecItemCopyMatching
-    static let secKeyCreateWithData = SecKeyCreateWithData
-    static let secKeyVerifySignature = SecKeyVerifySignature
 }
 
-public enum VPNKeychainError: Error {
-    case encodingError
+enum VPNKeychainError: Error {
     case referenceAlreadyExists
     case resultIsNotADictionary
     case resultDictionaryHasNoData
@@ -38,25 +35,23 @@ public enum TunnelKeychainImplementationError: Error {
     case invalidDataFormatRetrievedFromKeychain
 }
 
-public struct TunnelKeychainImplementation {
+struct TunnelKeychainImplementation {
     private enum StorageKey {
         static let wireguardSettings = "ProtonVPN_wg_settings"
     }
 
-    private let encoder = JSONEncoder()
+    init() {}
 
-    public init() {}
-
-    public func store(_ configData: Data) throws -> Data {
+    func store(_ configData: Data) throws -> Data {
         try setPassword(configData, forKey: StorageKey.wireguardSettings)
         return try fetchWireguardConfigurationReference()
     }
 
-    public func loadWireguardConfig() throws -> Data? {
+    func loadWireguardConfig() throws -> Data? {
         try getPasswordData(forKey: StorageKey.wireguardSettings)
     }
 
-    public func clear() throws {
+    func clear() throws {
         try clearPassword(forKey: StorageKey.wireguardSettings)
     }
 

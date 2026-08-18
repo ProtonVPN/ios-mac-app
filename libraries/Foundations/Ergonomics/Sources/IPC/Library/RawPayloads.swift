@@ -126,52 +126,10 @@ public extension IPCNotifications {
 }
 
 public extension IPCNotifications {
-    static func observeState<T: RawRepresentable>(
-        _ notification: Notification,
-        handler: @MainActor @escaping (T?) -> Void
-    ) -> Token where T.RawValue == UInt64 {
-        observeRawState(notification) { value in
-            handler(T(rawValue: value))
-        }
-    }
-
-    static func observeState<T: RawRepresentable>(
-        _ notification: Notification,
-        queue: DispatchQueue,
-        handler: @escaping (T?) -> Void
-    ) -> Token where T.RawValue == UInt64 {
-        observeRawState(notification, queue: queue) { value in
-            handler(T(rawValue: value))
-        }
-    }
-
-    static func postState<T: RawRepresentable>(
-        _ notification: Notification,
-        state: T
-    ) where T.RawValue == UInt64 {
-        postRawState(notification, state: state.rawValue)
-    }
-}
-
-public extension IPCNotifications {
     static func streamRawState(_ notification: Notification) -> AsyncStream<UInt64> {
         .init { continuation in
             let token = observeRawState(notification) { value in
                 continuation.yield(value)
-            }
-            let observation = token.observation()
-            continuation.onTermination = { _ in
-                observation.cancel()
-            }
-        }
-    }
-
-    static func streamState<T: RawRepresentable>(
-        _ notification: Notification
-    ) -> AsyncStream<T?> where T.RawValue == UInt64 {
-        .init { continuation in
-            let token = observeRawState(notification) { value in
-                continuation.yield(T(rawValue: value))
             }
             let observation = token.observation()
             continuation.onTermination = { _ in

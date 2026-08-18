@@ -124,7 +124,7 @@ struct ConnectionStatusView: View {
                     }
                 }
                 .background(
-                    .translucentLight,
+                    .thinMaterial,
                     in: RoundedRectangle(
                         cornerRadius: .themeRadius8,
                         style: .continuous

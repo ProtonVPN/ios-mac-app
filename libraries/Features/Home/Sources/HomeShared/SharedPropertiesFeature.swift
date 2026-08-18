@@ -24,8 +24,6 @@ import Domain
 import Ergonomics
 import Foundation
 import Persistence
-import ProtonCoreFeatureFlags
-import VPNAppCore
 import WidgetKit
 
 @Reducer
@@ -116,15 +114,3 @@ public struct SharedPropertiesFeature {
         }
     }
 }
-
-#if DEBUG
-    import Combine
-
-    public extension LocationClient {
-        static func jumping(every interval: TimeInterval = 1) -> some Publisher<UserLocation, Never> {
-            Timer.publish(every: interval, on: .main, in: .default)
-                .autoconnect()
-                .map { _ in UserLocation.samples.randomElement()! }
-        }
-    }
-#endif

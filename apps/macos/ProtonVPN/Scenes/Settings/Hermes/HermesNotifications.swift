@@ -17,7 +17,6 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppKit
-import Domain
 import Strings
 import SwiftUI
 import VPNAppCore
@@ -74,16 +73,9 @@ private extension HermesNotificationType {
 
 // Ideally, this would be private...
 final class HermesSettingsViewAlert: SystemAlert {
-    typealias ActionHandler = () -> Void
-
     var title: String?
     var message: String?
-    var joinedTitleAndMessage: Bool {
-        true
-    }
-
     var actions: [VPNAppCore.AlertAction]
-    var isError: Bool = true
     var dismiss: (() -> Void)?
 
     init(

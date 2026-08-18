@@ -24,7 +24,6 @@ import var ProtonCoreUIFoundations.IconProvider
 import Strings
 import SwiftUI
 import Theme
-import VPNAppCore
 
 struct HomeConnectionCardHeader: View {
     private let model: ConnectionCardHeaderModel

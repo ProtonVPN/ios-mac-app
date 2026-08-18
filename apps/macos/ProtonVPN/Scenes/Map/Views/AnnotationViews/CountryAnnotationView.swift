@@ -21,7 +21,6 @@
 //
 
 import Cocoa
-import LegacyCommon
 import MapKit
 import Theme
 

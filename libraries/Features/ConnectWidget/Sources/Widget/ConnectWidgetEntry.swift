@@ -22,14 +22,14 @@ import Foundation
 import SwiftUI
 import WidgetKit
 
-public struct ConnectWidgetEntry: TimelineEntry {
-    public let date: Date
-    public let connectionSpec: ConnectionSpec?
-    public let currentServer: Server?
-    public let protectionState: ProtectionState
-    public let recentServers: OrderedSet<RecentConnection>
+struct ConnectWidgetEntry: TimelineEntry {
+    let date: Date
+    let connectionSpec: ConnectionSpec?
+    let currentServer: Server?
+    let protectionState: ProtectionState
+    let recentServers: OrderedSet<RecentConnection>
 
-    public enum ProtectionState: Equatable {
+    enum ProtectionState: Equatable {
         case signedOut
         case protected
         case unprotected

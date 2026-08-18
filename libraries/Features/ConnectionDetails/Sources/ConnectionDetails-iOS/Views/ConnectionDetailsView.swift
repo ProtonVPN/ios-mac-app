@@ -18,14 +18,12 @@
 
 import ComposableArchitecture
 import ConnectionDetailsShared
-import Domain
 import Strings
 import SwiftUI
 import Theme
 
 struct ConnectionDetailsView: View {
     let store: StoreOf<ConnectionDetailsFeature>
-    @Environment(\.locale) private var locale
 
     private enum AccessibilityIdentifiers {
         static let connectionDetailsCountry: String = "connection_details_country"
@@ -48,9 +46,7 @@ struct ConnectionDetailsView: View {
                     TimelineView(PeriodicTimelineSchedule(from: connectedSince, by: 1)) { _ in
                         Row(
                             title: Localizable.connectionDetailsConnectedFor,
-                            contentType: .text(
-                                connectedSince.timeIntervalSinceNow.sessionLengthText(locale: locale)
-                            )
+                            contentType: .text(connectedSince.sessionLengthText)
                         )
                         Divider().padding([.leading], .themeSpacing8)
                     }

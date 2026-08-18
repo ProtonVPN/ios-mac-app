@@ -68,8 +68,6 @@ public struct ServerEndpoint: Codable, Equatable, Identifiable, Sendable {
     }
 }
 
-typealias ProtocolOverrides = [VpnProtocol: ServerProtocolEntry]
-
 // VPNAPPL-2099 This connection/business logic should probably live in a shared package in a layer above Domain.
 public extension ServerEndpoint {
     func supports(vpnProtocol: VpnProtocol) -> Bool {

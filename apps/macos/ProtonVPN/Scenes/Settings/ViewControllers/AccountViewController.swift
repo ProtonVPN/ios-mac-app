@@ -22,7 +22,6 @@
 
 import Cocoa
 import Ergonomics
-import LegacyCommon
 import Strings
 import Theme
 
@@ -36,7 +35,6 @@ final class AccountViewController: NSViewController {
     @IBOutlet private var accountPlanSeparator: NSBox!
 
     @IBOutlet private var manageSubscriptionButton: InteractiveActionButton!
-    private var banner: BannerView?
 
     private let viewModel: AccountViewModel
 

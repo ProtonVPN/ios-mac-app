@@ -26,7 +26,6 @@ import Sharing
 import Strings
 import SwiftUI
 import Theme
-import VPNAppCore
 
 struct ServersListView: View {
     enum Dimensions {

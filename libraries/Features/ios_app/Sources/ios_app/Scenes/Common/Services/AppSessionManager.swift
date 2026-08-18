@@ -64,10 +64,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     typealias Factory = AppSessionRefreshTimerFactory & NavigationServiceFactory
     private let factory: Factory
 
-    private var navService: NavigationService? {
-        factory.makeNavigationService()
-    }
-
     private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
     @Dependency(\.networking) private var networking
     @Dependency(\.authKeychain) private var authKeychain

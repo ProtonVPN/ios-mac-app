@@ -19,7 +19,6 @@
 import AppKit
 import Combine
 import Foundation
-import LegacyCommon
 import ProtonCoreUIFoundations
 import SharedViews
 import Strings

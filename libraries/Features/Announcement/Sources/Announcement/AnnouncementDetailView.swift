@@ -21,22 +21,12 @@ import Strings
 import SwiftUI
 import Theme
 
-public struct AnnouncementDetailView: View {
-    private let panel: OfferPanel.LegacyPanel
-    private let onAction: () -> Void
-    private let onClose: () -> Void
+struct AnnouncementDetailView: View {
+    let panel: OfferPanel.LegacyPanel
+    let onAction: () -> Void
+    let onClose: () -> Void
 
-    public init(
-        panel: OfferPanel.LegacyPanel,
-        onAction: @escaping () -> Void,
-        onClose: @escaping () -> Void
-    ) {
-        self.panel = panel
-        self.onAction = onAction
-        self.onClose = onClose
-    }
-
-    public var body: some View {
+    var body: some View {
         ZStack(alignment: .topTrailing) {
             ScrollView {
                 VStack(spacing: .themeSpacing16) {

@@ -18,7 +18,6 @@
 
 import AppKit
 import Foundation
-import LegacyCommon
 import Strings
 import Theme
 

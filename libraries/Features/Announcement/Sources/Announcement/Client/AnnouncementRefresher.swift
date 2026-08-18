@@ -27,7 +27,6 @@ import DependenciesMacros
 import Domain
 import Ergonomics
 import Foundation
-import ProtonCoreFeatureFlags
 import Sharing
 import VPNAppCore
 

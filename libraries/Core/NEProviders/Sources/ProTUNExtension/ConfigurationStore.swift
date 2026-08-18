@@ -21,7 +21,6 @@ import Dependencies
 import Domain
 import ExtensionSync
 import IPCDefinitions
-import IPCErgonomics
 import NetworkExtension
 import OSLog
 import protun

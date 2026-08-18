@@ -34,7 +34,6 @@ import Sharing
 import Testing
 import VPNAppCore // UnauthKeychain
 import VPNShared
-import VPNSharedTesting
 
 private func mockAuthCredentials(username: String) -> AuthCredentials {
     AuthCredentials(username: username, accessToken: "", refreshToken: "", sessionId: "", userId: "", scopes: [], mailboxPassword: "", isCredentialLess: false)
@@ -489,10 +488,6 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
 
     func makeAppSessionRefreshTimer() -> AppSessionRefreshTimer {
         appSessionRefreshTimerMock
-    }
-
-    func makeNetworking() -> Networking {
-        NetworkingMock()
     }
 }
 

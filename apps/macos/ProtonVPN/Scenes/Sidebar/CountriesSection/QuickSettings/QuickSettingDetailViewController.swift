@@ -155,13 +155,7 @@ struct QuickSettingDetailView: View {
 
 private extension QuickSettingDetailView {
     enum Dimensions {
-        static let arrowWidth: CGFloat = 30
-        static let arrowHeight: CGFloat = 10
-
         static let netShieldStatsHeight: CGFloat = 72
-
-        static let noteIconSize: CGFloat = 16
-        static let borderLineWidth: CGFloat = 1
     }
 }
 

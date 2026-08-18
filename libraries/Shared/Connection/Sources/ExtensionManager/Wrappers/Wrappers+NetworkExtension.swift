@@ -77,14 +77,4 @@ extension NEVPNConnection: VPNSession {
     public func stopTunnel() {
         stopVPNTunnel()
     }
-
-    public func fetchLastDisconnectError() async -> Error? {
-        // For some reason, the native async alternative returns `Void`
-        // return try await fetchLastDisconnectError()
-        await withCheckedContinuation { [weak self] continuation in
-            self?.fetchLastDisconnectError(completionHandler: { error in
-                continuation.resume(returning: error)
-            })
-        }
-    }
 }

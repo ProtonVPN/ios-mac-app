@@ -23,7 +23,6 @@ import Domain
 import Foundation
 import Strings
 import VPNAppCore
-import VPNShared
 
 @Reducer
 public struct DefaultProfileFeature {

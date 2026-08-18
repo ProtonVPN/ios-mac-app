@@ -40,10 +40,11 @@ struct NATPortMapCLI: AsyncParsableCommand {
 
 extension NATPortMapCLI {
     func run() async throws {
-        let client = NATPortMappingClient(gatewayAddress: gatewayAddress)
+        let client = NATPortMappingClient()
 
         let portResponse = try await client.requestPortMapping(
-            portProtocol: tcp ? .tcp : .udp,
+            gatewayAddress: gatewayAddress,
+            portProtocol: tcp ? PortMappingProtocol.tcp : .udp,
             internalPort: internalPort,
             externalPort: externalPort,
             lifetime: lifetime

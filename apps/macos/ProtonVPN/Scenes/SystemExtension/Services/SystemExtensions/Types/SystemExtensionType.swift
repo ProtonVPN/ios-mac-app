@@ -19,15 +19,15 @@
 import Domain
 import VPNAppCore
 
-public enum SystemExtensionType: String, CaseIterable, Sendable, Equatable {
+enum SystemExtensionType: String, CaseIterable, Sendable, Equatable {
     case proTUN = "ch.protonvpn.mac.WireGuard-Extension"
     case plutonium = "ch.protonvpn.mac.Transparent-Proxy"
 
-    public var machServiceName: String {
+    var machServiceName: String {
         "\(DomainConstants.appIdentifierPrefix)group.\(rawValue)"
     }
 
-    public var featureEnabled: Bool {
+    var featureEnabled: Bool {
         switch self {
         case .proTUN:
             true

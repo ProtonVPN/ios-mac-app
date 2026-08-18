@@ -19,7 +19,6 @@
 import ComposableArchitecture
 @testable import CountriesShared
 import Foundation
-import Strings
 import Testing
 
 @Suite("SearchRecentsFeature Tests")

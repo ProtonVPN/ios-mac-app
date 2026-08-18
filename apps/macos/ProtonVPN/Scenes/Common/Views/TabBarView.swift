@@ -21,7 +21,6 @@
 //
 
 import Cocoa
-import LegacyCommon
 
 class TabBarView: NSView {
     private let minimumTabWidth: CGFloat = 150

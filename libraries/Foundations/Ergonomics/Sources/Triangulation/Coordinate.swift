@@ -40,7 +40,7 @@ public struct EquatorialCoordinate: Sendable, Equatable {
     }
 }
 
-public extension EclipticCoordinate {
+extension EclipticCoordinate {
     /// Meeus 13.3 and 13.4: rotate ecliptic (λ, β) by the obliquity of the ecliptic into equatorial (α, δ).
     func equatorial(obliquity ε: Angle) -> EquatorialCoordinate {
         let λ = longitude, β = latitude

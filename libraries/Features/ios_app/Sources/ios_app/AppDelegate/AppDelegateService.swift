@@ -22,14 +22,12 @@ import Connection
 import Dependencies
 import Domain
 import Ergonomics
-import ExtensionIPC
 import Foundation
 import HomeShared
 import LegacyCommon
 import Logging
 import Persistence
 import PMLogger
-import ProtonCoreAccountRecovery
 import ProtonCoreEnvironment
 import ProtonCoreFeatureFlags
 import ProtonCoreForceUpgrade
@@ -66,7 +64,6 @@ public final class AppDelegateService: AppDelegateProtocol {
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var pushNotificationService = container.makePushNotificationService()
 
-    private var tokens: [NotificationToken] = []
     private var cancellables = Set<AnyCancellable>()
     private var deepLinkConnectStatusCancellable: AnyCancellable?
 
@@ -139,7 +136,7 @@ public final class AppDelegateService: AppDelegateProtocol {
             await self.navigationService.launched()
         }
 
-        _ = container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.
+        _ = container.dynamicBugReportManager // Loads initial bug report config and sets up a timer to refresh it daily.
 
         container.applicationDidFinishLaunching()
 
@@ -464,13 +461,9 @@ public final class AppDelegateService: AppDelegateProtocol {
             case false:
                 self?.disableExternalLogging()
             }
-            self?.setSentryCrashReporting(isEnabled: crashReportsEnabled)
+            SentryHelper.shared?.setSentryEnabled(crashReportsEnabled)
         }
         .store(in: &cancellables)
-    }
-
-    private func setSentryCrashReporting(isEnabled: Bool) {
-        SentryHelper.shared?.setSentryEnabled(isEnabled)
     }
 
     // MARK: - Networking Events

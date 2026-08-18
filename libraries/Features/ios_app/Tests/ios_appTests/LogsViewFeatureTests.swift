@@ -20,7 +20,6 @@ import ComposableArchitecture
 import Foundation
 @testable import ios_app
 import PMLogger
-import Strings
 import Testing
 
 @Suite("Logs View Feature Tests")

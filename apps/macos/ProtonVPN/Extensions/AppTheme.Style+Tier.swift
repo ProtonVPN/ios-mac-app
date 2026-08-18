@@ -18,7 +18,6 @@
 
 import AppKit
 import Domain
-import LegacyCommon
 import Theme
 
 public extension AppTheme.Style {

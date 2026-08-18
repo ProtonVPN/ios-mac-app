@@ -184,9 +184,3 @@ extension ConnectionSpec {
         }
     }
 }
-
-extension Domain.Logical {
-    func satisfies(_ filter: VPNServerFilter.ServerFeatureFilter) -> Bool {
-        feature.isDisjoint(with: filter.excluded) && feature.isSuperset(of: filter.required)
-    }
-}

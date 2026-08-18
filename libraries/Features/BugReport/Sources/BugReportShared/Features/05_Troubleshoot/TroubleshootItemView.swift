@@ -25,10 +25,10 @@ import ProtonCoreUIFoundations
 import SwiftUI
 import Theme
 
-public struct TroubleshootRowView: View {
+struct TroubleshootRowView: View {
     @Bindable var store: StoreOf<TroubleshootItem>
 
-    public var body: some View {
+    var body: some View {
         HStack(alignment: .center, spacing: .themeSpacing16) {
             VStack(alignment: .leading, spacing: .themeSpacing4) {
                 Text(store.title)

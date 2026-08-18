@@ -105,10 +105,6 @@ class ServersHeaderView: UITableViewHeaderFooterView {
         serversName.text = name
     }
 
-    func setColor(color: UIColor) {
-        colorView.backgroundColor = color
-    }
-
     @objc
     private func didTapInfoBtn(_: Any) {
         callback?()

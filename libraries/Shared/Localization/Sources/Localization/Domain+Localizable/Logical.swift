@@ -18,7 +18,6 @@
 
 import Domain
 import Foundation
-import Strings
 
 public extension Logical {
     var entryCountry: String {

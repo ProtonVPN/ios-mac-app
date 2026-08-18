@@ -72,9 +72,3 @@ public enum VPNFeatureFlagType: String, CaseIterable, FeatureFlagTypeProtocol {
     /// false on `VpnCredentials.netshield`.
     case isNetShieldLevelThreeEnabled = "IsNetShieldLevelThreeEnabled"
 }
-
-public extension FeatureFlagsRepository {
-    var isProTUNEnabled: Bool {
-        isEnabled(VPNFeatureFlagType.protun)
-    }
-}

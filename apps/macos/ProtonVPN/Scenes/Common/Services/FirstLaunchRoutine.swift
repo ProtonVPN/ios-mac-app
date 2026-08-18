@@ -23,9 +23,7 @@
 import Dependencies
 import Domain
 import Foundation
-import LegacyCommon
 import Sharing
-import VPNShared
 
 class AppLaunchRoutine {
     static var launchedBefore = true

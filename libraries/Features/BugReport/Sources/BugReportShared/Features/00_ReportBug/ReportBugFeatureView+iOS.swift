@@ -21,13 +21,13 @@
     import Foundation
     import SwiftUI
 
-    public struct ReportBugView: View {
+    struct ReportBugView: View {
         @Bindable var store: StoreOf<ReportBugFeature>
 
         @Environment(\.colors) var colors: Colors
         @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
 
-        public var body: some View {
+        var body: some View {
             ZStack {
                 colors.background.ignoresSafeArea()
 

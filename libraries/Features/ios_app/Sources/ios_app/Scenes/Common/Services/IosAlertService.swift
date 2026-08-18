@@ -20,12 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Announcement
-import BugReport
 import Dependencies
 import Domain
 import Ergonomics
-import Modals
 import Strings
 import SwiftUI
 import VPNAppCore
@@ -114,29 +111,10 @@ extension IosAlertService {
         }
     }
 
-    private func show(_ alert: MaintenanceAlert) {
-        switch alert.type {
-        case .alert:
-            showDefaultSystemAlert(alert)
-        case .notification:
-            showNotificationStyleAlert(message: alert.title ?? alert.message ?? "")
-        }
-    }
-
     private func showDefaultSystemAlert(_ alert: SystemAlert) {
         if alert.actions.isEmpty {
             alert.actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: nil))
         }
         uiAlertService.displayAlert(alert)
-    }
-
-    private func showNotificationStyleAlert(message: String, type: NotificationStyleAlertType = .error, accessibilityIdentifier: String? = nil) {
-        uiAlertService.displayNotificationStyleAlert(message: message, type: type, accessibilityIdentifier: accessibilityIdentifier)
-    }
-}
-
-private extension ReconnectInfo {
-    func servers() -> (from: (String, UIImage), to: (String, UIImage)) {
-        ((fromServer.name, fromServer.image), (toServer.name, toServer.image))
     }
 }

@@ -18,12 +18,10 @@
 
 import Clocks
 import ComposableArchitecture
-import ConnectionShared
 import CoreConnection
 import Dependencies
 import Domain
 import Ergonomics
-import ExtensionIPC
 import ExtensionSync
 import Foundation
 import Strings

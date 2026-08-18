@@ -179,13 +179,6 @@
 			);
 			target = EED534801EEC112000013607 /* ProtonVPN-mac */;
 		};
-		A468236A2FD96AD700901B14 /* Exceptions for "ProtonVPN" folder in "ProtonVPNmacOSTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Extensions/Dictionary+Extension.swift",
-			);
-			target = E15B754C20FA83CB0022C406 /* ProtonVPNmacOSTests */;
-		};
 		A468236B2FD96AD700901B14 /* Exceptions for "ProtonVPN" folder in "ProtonVPNmacOSUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -264,7 +257,6 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				A46823692FD96AD700901B14 /* Exceptions for "ProtonVPN" folder in "ProtonVPN-mac" target */,
-				A468236A2FD96AD700901B14 /* Exceptions for "ProtonVPN" folder in "ProtonVPNmacOSTests" target */,
 				A468236B2FD96AD700901B14 /* Exceptions for "ProtonVPN" folder in "ProtonVPNmacOSUITests" target */,
 				A454BAD22FDC15A200218EF0 /* Exceptions for "ProtonVPN" folder in "ProTUN-Extension-Desktop" target */,
 			);

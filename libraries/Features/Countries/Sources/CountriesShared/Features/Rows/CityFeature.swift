@@ -20,8 +20,6 @@ import ComposableArchitecture
 import Domain
 import Foundation
 import Localization
-import VPNAppCore
-import VPNShared
 
 @Reducer
 public struct CityFeature {

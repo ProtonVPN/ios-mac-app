@@ -20,9 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Domain
 import UIKit
-import VPNShared
 
 class AppConstants {
     enum Filenames {

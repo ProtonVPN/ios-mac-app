@@ -9,7 +9,6 @@
 
 import Foundation
 @testable import ios_app
-import LegacyCommon
 
 class ProtocolServiceMock: ProtocolService {
     func makeVpnProtocolViewController(viewModel _: VpnProtocolViewModel) -> VpnProtocolViewController {

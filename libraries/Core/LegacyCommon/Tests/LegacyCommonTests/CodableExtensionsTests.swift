@@ -18,7 +18,6 @@
 
 import Ergonomics
 import Foundation
-@testable import LegacyCommon
 import XCTest
 
 class CodableExtensionsTests: XCTestCase {

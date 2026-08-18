@@ -26,7 +26,6 @@ import ComposableArchitecture
 import Connection
 import Domain
 import Ergonomics
-import LegacyCommon
 import VPNAppCore
 
 protocol StatusMenuWindowModelFactory {

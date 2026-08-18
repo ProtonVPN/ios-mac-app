@@ -1,4 +1,3 @@
-@testable import ConnectionInventory
 import Testing
 
 @Test

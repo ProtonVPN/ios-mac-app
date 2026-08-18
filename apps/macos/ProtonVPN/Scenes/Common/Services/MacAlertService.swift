@@ -20,15 +20,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Announcement
 import AppKit
-import BugReport
 import Dependencies
 import Domain
 import Ergonomics
 import Strings
 import VPNAppCore
-import VPNShared
 
 final class MacAlertService {
     private lazy var uiAlertService = OsxUiAlertService()

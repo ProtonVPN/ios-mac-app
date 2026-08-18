@@ -44,35 +44,30 @@
         ),
     ]
 
-    public class LocaleResolverMock: LocaleResolver {
-        public var preferredLanguages: [String] = []
+    class LocaleResolverMock: LocaleResolver {
+        var preferredLanguages: [String] = []
 
-        public var currentLocale: LocaleWrapper = locales["fr"]!
+        var currentLocale: LocaleWrapper = locales["fr"]!
 
-        public func locale(withIdentifier identifier: String) -> LocaleWrapper {
+        func locale(withIdentifier identifier: String) -> LocaleWrapper {
             locales[identifier]!
         }
 
-        public init(preferredLanguages: [String], currentLocale: LocaleWrapper) {
+        init(preferredLanguages: [String], currentLocale: LocaleWrapper) {
             self.preferredLanguages = preferredLanguages
             self.currentLocale = currentLocale
         }
 
-        public init() {}
+        init() {}
     }
 
-    public struct LocaleWrapperMock: LocaleWrapper {
-        public let ietfRegionTag: String?
+    struct LocaleWrapperMock: LocaleWrapper {
+        let ietfRegionTag: String?
 
-        public let regionCodeDict: [String: String]
+        let regionCodeDict: [String: String]
 
-        public func localizedString(forRegionCode regionCode: String) -> String? {
+        func localizedString(forRegionCode regionCode: String) -> String? {
             regionCodeDict[regionCode]
-        }
-
-        public init(ietfRegionTag: String?, regionCodeDict: [String: String]) {
-            self.ietfRegionTag = ietfRegionTag
-            self.regionCodeDict = regionCodeDict
         }
     }
 #endif

@@ -26,13 +26,13 @@ import Network
 // Marshaling between the live tunnel-data C payloads (LocalAgentIPC) and their Swift domain types.
 
 /// Versions of the different RawChannel structs. Bump when changing formats to avoid ABI mismatch issues.
-public enum IPCTunnelDataVersion {
-    public static let connectionData: UInt16 = 1
-    public static let stats: UInt16 = 1
-    public static let connectionStats: UInt16 = 1
-    public static let error: UInt16 = 1
-    public static let agentFeatures: UInt16 = 1
-    public static let packetCapture: UInt16 = 1
+enum IPCTunnelDataVersion {
+    static let connectionData: UInt16 = 1
+    static let stats: UInt16 = 1
+    static let connectionStats: UInt16 = 1
+    static let error: UInt16 = 1
+    static let agentFeatures: UInt16 = 1
+    static let packetCapture: UInt16 = 1
 }
 
 public extension IPCConnectionTransport {
@@ -237,19 +237,6 @@ public extension IPCConnectionStatsPayload {
         time_since_last_handshake = stats.timeSinceLastHandshake
         estimated_loss = Double(stats.estimatedLoss)
         estimated_rtt = stats.estimatedRoundTripTime
-    }
-
-    /// The per-handshake metrics, or `nil` until the extension has published them (a zeroed region has `version == 0`).
-    var localAgentConnectionStats: LocalAgent.ConnectionStats? {
-        guard version != 0 else { return nil }
-        return .init(
-            timestampMs: timestamp_ms,
-            receivedBytes: received_bytes,
-            sentBytes: sent_bytes,
-            timeSinceLastHandshake: time_since_last_handshake,
-            estimatedLoss: Float(estimated_loss),
-            estimatedRoundTripTime: estimated_rtt
-        )
     }
 }
 

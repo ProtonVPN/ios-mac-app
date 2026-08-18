@@ -19,9 +19,6 @@
 import CountriesShared
 
 public typealias CountriesMainFeature = CountriesShared.CountriesMainFeature
-public typealias CityStateListType = CountriesShared.CityStateListType
-public typealias CityStateListFeature = CountriesShared.CityStateListFeature
-public typealias ServersListFeature = CountriesShared.ServersListFeature
 
 #if canImport(Countries_macOS)
 
@@ -41,7 +38,5 @@ public typealias ServersListFeature = CountriesShared.ServersListFeature
     import Countries_iOS
 
     public typealias CountriesMainView = Countries_iOS.CountriesMainView
-    public typealias CityStateListView = Countries_iOS.CityStateListView
-    public typealias ServersListView = Countries_iOS.ServersListView
 
 #endif

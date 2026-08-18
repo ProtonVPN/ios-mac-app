@@ -22,7 +22,6 @@ import Dependencies
 import Domain
 import Hermes
 @testable import ios_app
-import LegacyCommon
 import ProtonCoreFeatureFlags
 import VPNAppCore
 import XCTest
@@ -132,11 +131,5 @@ private extension HermesSettingsViewModelTests {
         .quadNine,
 //        .cloudFlareDoH,
 //        .cloudFlareDoT
-    ]
-
-    static let extraExpectedResolvers: [HermesResolver] = [
-        .cloudFlare,
-        .cloudFlareDoH,
-        .cloudFlareDoT,
     ]
 }

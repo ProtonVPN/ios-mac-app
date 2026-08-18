@@ -22,7 +22,6 @@
 
 import Dependencies
 import Foundation
-import LegacyCommon
 import UIKit
 import VPNAppCore
 
@@ -40,10 +39,6 @@ final class IosUiAlertService {
 
         currentAlerts.append(alert)
         displayTrackedAlert(alert: alert)
-    }
-
-    func displayNotificationStyleAlert(message: String, type: NotificationStyleAlertType, accessibilityIdentifier: String?) {
-        windowService.presentMessage(message, type: type.presentedMessageType, accessibilityIdentifier: accessibilityIdentifier)
     }
 
     private func alertIsNew(_ alert: SystemAlert) -> Bool {
@@ -97,18 +92,4 @@ extension PrimaryActionType {
             .cancel
         }
     }
-}
-
-extension NotificationStyleAlertType {
-    var presentedMessageType: PresentedMessageType {
-        switch self {
-        case .error: PresentedMessageType.error
-        case .success: PresentedMessageType.success
-        }
-    }
-}
-
-public enum NotificationStyleAlertType {
-    case error
-    case success
 }

@@ -23,15 +23,10 @@ import CommonNetworking
 import Domain
 import Foundation
 import VPNAppCore
-import VPNShared
 
 public extension Profile {
     var logDescription: String {
         description
-    }
-
-    var isDefaultProfile: Bool {
-        ProfileConstants.defaultIds.contains(id)
     }
 
     /// Convenience for callers that only need the spec (location + server features) and not the
@@ -110,47 +105,6 @@ public extension Profile {
             name: name,
             connectionProtocol: connectionProtocol,
             lastConnectedDate: lastConnectedDate
-        )
-    }
-
-    func copyWith(newNetShieldType _: NetShieldType) -> Profile {
-        Profile(
-            id: id,
-            accessTier: accessTier,
-            profileIcon: profileIcon,
-            profileType: profileType,
-            serverType: serverType,
-            serverOffering: serverOffering,
-            name: name,
-            connectionProtocol: connectionProtocol,
-            lastConnectedDate: lastConnectedDate
-        )
-    }
-
-    func withUpdatedConnectionDate() -> Profile {
-        Profile(
-            id: id,
-            accessTier: accessTier,
-            profileIcon: profileIcon,
-            profileType: profileType,
-            serverType: serverType,
-            serverOffering: serverOffering,
-            name: name,
-            connectionProtocol: connectionProtocol,
-            lastConnectedDate: Date()
-        )
-    }
-
-    func withProtocol(_ protocol: ConnectionProtocol) -> Profile {
-        Profile(
-            id: id,
-            accessTier: accessTier,
-            profileIcon: profileIcon,
-            profileType: profileType,
-            serverType: serverType,
-            serverOffering: serverOffering,
-            name: name,
-            connectionProtocol: `protocol`
         )
     }
 }

@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ProtonCoreNetworking
-import ProtonCoreUIFoundations
 #if canImport(UIKit)
     import UIKit
 #elseif canImport(AppKit)

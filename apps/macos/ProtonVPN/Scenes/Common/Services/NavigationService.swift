@@ -22,7 +22,6 @@
 
 import Cocoa
 import Combine
-import CommonNetworking
 import ComposableArchitecture
 import Connection
 import ConnectionInventory

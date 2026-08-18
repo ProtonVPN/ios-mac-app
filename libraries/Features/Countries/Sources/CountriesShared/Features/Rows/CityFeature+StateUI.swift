@@ -19,7 +19,7 @@
 import SwiftUI
 import Theme
 
-public extension CityFeature.State {
+extension CityFeature.State {
     var displayName: String {
         translatedCityName ?? cityName
     }

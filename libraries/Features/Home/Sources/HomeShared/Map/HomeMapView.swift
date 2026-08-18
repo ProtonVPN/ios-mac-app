@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import Foundation
-import MapModel
 import simd
 import SwiftUI
 import Theme

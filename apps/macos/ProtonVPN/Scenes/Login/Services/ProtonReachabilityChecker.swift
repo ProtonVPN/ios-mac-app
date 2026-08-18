@@ -18,7 +18,6 @@
 
 import Domain
 import Foundation
-import LegacyCommon
 
 protocol ProtonReachabilityCheckerFactory {
     func makeProtonReachabilityChecker() -> ProtonReachabilityChecker

@@ -154,24 +154,6 @@
         }
 
         @ViewBuilder
-        private func featuresCell(features: AgentTunnelFeatures?) -> some View {
-            if let features {
-                VStack(alignment: .leading) {
-                    Text("Certificate Features")
-                    Divider()
-                    FeaturesView(features: features)
-                }
-
-            } else {
-                HStack {
-                    Text("Features")
-                    Spacer()
-                    Image(systemName: "nosign")
-                }
-            }
-        }
-
-        @ViewBuilder
         private func cell(title: String, value: String) -> some View {
             Text(title)
                 .styled(.disabled)
@@ -209,30 +191,6 @@
                         .textSelection(.enabled)
                         .onTapGesture { UIPasteboard.general.string = entry.decodedValue }
                 }
-            }
-        }
-    }
-
-    struct FeaturesView: View {
-        private let features: AgentTunnelFeatures
-
-        init(features: AgentTunnelFeatures) {
-            self.features = features
-        }
-
-        var body: some View {
-            VStack {
-                row(key: "NetShield", value: "\(optional: NetShieldType(rawValue: features.netshield.rawValue))")
-                row(key: "VPN Accelerator", value: "\(features.vpnAccelerator)")
-                row(key: "Moderate NAT", value: "\(optional: NATType(rawValue: features.natType.rawValue))")
-            }
-        }
-
-        private func row(key: String, value: String) -> some View {
-            HStack {
-                Text(key)
-                Spacer()
-                Text(value)
             }
         }
     }

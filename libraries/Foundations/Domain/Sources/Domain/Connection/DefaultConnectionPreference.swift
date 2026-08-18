@@ -25,6 +25,4 @@ public enum DefaultConnectionPreference: Equatable, Hashable, Codable, Sendable 
     case fastest
     case mostRecent
     case recent(ConnectionSpec)
-
-    public static let staticPreferences: [Self] = [.fastest, .mostRecent]
 }

@@ -25,11 +25,8 @@ import Combine
 import Dependencies
 import Domain
 import Ergonomics
-import LegacyCommon
-import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
 import SDWebImage
-import Settings
 import Sharing
 import Strings
 import Theme

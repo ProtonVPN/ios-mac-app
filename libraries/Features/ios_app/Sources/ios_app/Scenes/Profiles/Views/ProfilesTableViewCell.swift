@@ -20,7 +20,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import LegacyCommon
 import ProtonCoreUIFoundations
 import UIKit
 

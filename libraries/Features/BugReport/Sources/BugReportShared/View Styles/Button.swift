@@ -27,10 +27,6 @@ private extension ButtonStyle {
     var cornerRadius: CGFloat {
         8
     }
-
-    var pressedColorOpacity: Double {
-        0.5
-    }
 }
 
 struct PrimaryButtonStyle: ButtonStyle {
@@ -105,19 +101,5 @@ struct CategoryButtonStyle: ButtonStyle {
                 Image(systemName: "chevron.right").padding(.trailing, horizontalPadding)
             })
             .cornerRadius(cornerRadius)
-    }
-}
-
-struct BackButtonStyle: ButtonStyle {
-    @Environment(\.colors) var colors: Colors
-
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .hidden()
-            .background(Image(systemName: "arrow.left").font(.system(size: 18)))
-            .padding(.horizontal, .themeSpacing8)
-            .padding(.vertical, .themeSpacing8)
-            .foregroundColor(colors.textPrimary)
-            .opacity(configuration.isPressed ? 0.5 : 1)
     }
 }

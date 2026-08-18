@@ -19,7 +19,6 @@
 import ComposableArchitecture
 import Domain
 import Foundation
-import NetShield
 @testable import ProtonVPN
 import Strings
 import Testing

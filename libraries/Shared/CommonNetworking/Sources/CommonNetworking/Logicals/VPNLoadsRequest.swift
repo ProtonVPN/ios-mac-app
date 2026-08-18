@@ -23,26 +23,26 @@
 import Ergonomics
 import ProtonCoreNetworking
 
-public final class VPNLoadsRequest: Request {
+final class VPNLoadsRequest: Request {
     private let ip: String?
 
     private init(ip: String?) {
         self.ip = ip
     }
 
-    public convenience init(truncatedIP: TruncatedIp?) {
+    convenience init(truncatedIP: TruncatedIp?) {
         self.init(ip: truncatedIP?.value)
     }
 
-    public var path: String {
+    var path: String {
         "/vpn/v1/loads"
     }
 
-    public var isAuth: Bool {
+    var isAuth: Bool {
         false
     }
 
-    public var header: [String: Any] {
+    var header: [String: Any] {
         if let ip {
             return ["x-pm-netzone": ip]
         }
@@ -50,7 +50,7 @@ public final class VPNLoadsRequest: Request {
         return [:]
     }
 
-    public var retryPolicy: ProtonRetryPolicy.RetryMode {
+    var retryPolicy: ProtonRetryPolicy.RetryMode {
         .background
     }
 }

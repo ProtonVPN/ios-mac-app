@@ -7,7 +7,6 @@
 //
 //  See LICENSE for up to date license information.
 
-import LegacyCommon
 import Strings
 import UIKit
 

@@ -21,8 +21,8 @@ import Domain
 import Strings
 import VPNAppCore
 
-public enum SettingsAlert {
-    public static func reconnectionAlertState(for protocol: ConnectionProtocol) -> AlertState<ProtocolSettingsFeature.Action.Alert> {
+enum SettingsAlert {
+    static func reconnectionAlertState(for protocol: ConnectionProtocol) -> AlertState<ProtocolSettingsFeature.Action.Alert> {
         AlertState {
             TextState(Localizable.settingsProtocolAlertTitle)
         } actions: {

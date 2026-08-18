@@ -17,7 +17,6 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppKit
-import Settings
 
 final class TroubleshootingWindowController: WindowController {
     @available(*, unavailable)

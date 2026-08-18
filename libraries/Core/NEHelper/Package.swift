@@ -23,6 +23,7 @@ let package = Package(
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/PMLogger"),
         .package(path: "../../Foundations/Strings"),
+        .package(path: "../../Foundations/Theme"),
 
         .package(path: "../../Shared/Localization"),
         .package(path: "../../Shared/ExtensionIPC"),
@@ -62,6 +63,7 @@ let package = Package(
                 "VPNCrypto",
                 "Strings",
                 "Localization",
+                "Theme", // LinkButtonStyle, macOS only
                 .product(name: "Ergonomics", package: "Ergonomics"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "DependenciesMacros", package: "swift-dependencies"),
@@ -100,6 +102,5 @@ let package = Package(
             ]
         ),
         .testTarget(name: "VPNSharedTests", dependencies: ["VPNShared", "ExtensionIPC"]),
-        .testTarget(name: "VPNCryptoTests", dependencies: ["VPNCrypto"]),
     ]
 )

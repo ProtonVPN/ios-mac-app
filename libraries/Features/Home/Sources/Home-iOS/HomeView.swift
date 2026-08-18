@@ -21,18 +21,14 @@ import Combine
 import ComposableArchitecture
 import ConnectionDetails
 import Dependencies
-import Domain
 import Ergonomics
 import HomeShared
 import Modals
-import ModalsShared
 import Payments
 import PCAP
 import SharedViews
-import Strings
 import SwiftUI
 import Theme
-import VPNAppCore
 
 public struct HomeView: View {
     @Bindable var store: StoreOf<HomeFeature>

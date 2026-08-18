@@ -21,7 +21,6 @@
 //
 
 import CommonNetworking
-import CommonNetworkingTestSupport
 import Dependencies
 import Domain
 @testable import ios_app
@@ -31,7 +30,6 @@ import Persistence
 import Strings
 import VPNAppCore // UnauthKeychain
 import VPNShared
-import VPNSharedTesting
 import XCTest
 
 class CreateOrEditProfileViewModelTests: XCTestCase {
@@ -51,9 +49,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     lazy var vpnKeychainMock: VpnKeychainProtocol = VpnKeychainMock(planName: "visionary", maxTier: VpnTier(rawValue: 4))
 
     var profileService: ProfileServiceMock!
-
-    var usIndexStandard = 2
-    var usIndexSecureCore = 3
 
     override func setUp() {
         super.setUp()

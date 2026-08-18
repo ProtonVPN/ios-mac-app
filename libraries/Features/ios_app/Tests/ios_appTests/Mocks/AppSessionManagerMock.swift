@@ -23,7 +23,6 @@
 import Domain
 import Foundation
 @testable import ios_app
-import LegacyCommon
 import VPNShared
 
 class AppSessionManagerMock: AppSessionManager {

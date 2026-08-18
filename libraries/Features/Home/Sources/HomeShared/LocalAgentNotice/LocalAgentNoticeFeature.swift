@@ -18,7 +18,6 @@
 
 import CommonNetworking
 import ComposableArchitecture
-import Connection
 import ExtensionSync
 
 @Reducer

@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 @testable import Connection
+import CoreConnectionTestSupport
 import Domain
 import DomainTestSupport
 @testable import ExtensionManager

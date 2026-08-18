@@ -22,13 +22,13 @@ import Strings
 import SwiftUI
 import Theme
 
-public struct BugReportResultView: View {
+struct BugReportResultView: View {
     @Bindable var store: StoreOf<BugReportResultFeature>
 
     @Environment(\.colors) var colors: Colors
     @Environment(\.dismiss) var dismiss
 
-    public var body: some View {
+    var body: some View {
         makeBody()
         #if os(iOS)
             .navigationBarBackButtonHidden(true)

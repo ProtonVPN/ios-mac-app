@@ -21,7 +21,6 @@ import Connection
 import Dependencies
 import Domain
 import Foundation
-import Strings
 import VPNAppCore
 
 public enum ProtectionState: Equatable, Sendable {

@@ -21,7 +21,6 @@
 //
 
 import GSMessages
-import LegacyCommon
 import Strings
 import UIKit
 

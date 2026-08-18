@@ -47,14 +47,3 @@ public struct CurrentPeer: Codable, Sendable, Equatable {
         self.userIP = userIP
     }
 }
-
-package extension NetShieldType {
-    var shouldObserveNetShieldStats: Bool {
-        switch self {
-        case .off, .level1:
-            false
-        case .level2, .level3:
-            true
-        }
-    }
-}

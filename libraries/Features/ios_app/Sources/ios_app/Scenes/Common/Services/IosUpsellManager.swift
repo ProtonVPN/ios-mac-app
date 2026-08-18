@@ -23,7 +23,6 @@ import Foundation
 import LegacyCommon
 import Modals
 import Payments
-import Strings
 import Telemetry
 import UIKit
 import VPNAppCore

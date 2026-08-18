@@ -19,8 +19,6 @@
 import Dependencies
 import Domain
 import Foundation
-import LegacyCommon
-import Payments
 import ProtonCorePaymentsV2
 import Strings
 import SwiftUI

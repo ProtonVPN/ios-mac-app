@@ -18,7 +18,7 @@
 
 import Foundation
 
-public final class UpdateViewModel: ObservableObject {
+final class UpdateViewModel: ObservableObject {
     @Published var updateIsAvailable: Bool
 
     init(updateIsAvailable: Bool) {

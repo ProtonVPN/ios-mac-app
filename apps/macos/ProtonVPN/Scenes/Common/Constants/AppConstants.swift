@@ -21,13 +21,10 @@
 //
 
 import Cocoa
-import Domain
-import VPNShared
 
 enum AppConstants {
     enum Filenames {
         static let appLogFilename = "ProtonVPN.log"
-        static let openVpnLogFilename = "OpenVPN.log"
         static let wireGuardLogFilename = "WireGuard.log"
         static let plutoniumLogFilename = "SplitTunneling.log"
     }
@@ -52,6 +49,5 @@ enum AppConstants {
 
     enum DeepLinking {
         static let deepLinkScheme = "protonvpn"
-        static let deepLinkBaseUrl = "\(deepLinkScheme)://"
     }
 }

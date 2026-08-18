@@ -22,7 +22,6 @@
 
 import Cocoa
 import Ergonomics
-import LegacyCommon
 import SharedViews
 import Strings
 import Theme

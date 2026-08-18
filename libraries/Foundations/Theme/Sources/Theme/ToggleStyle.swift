@@ -19,17 +19,8 @@
 import SwiftUI
 
 @available(tvOS 16.0, *)
-extension ToggleStyle where Self == ChecklistToggleStyle {
-    static var checklist: ChecklistToggleStyle {
-        .init()
-    }
-}
-
-@available(tvOS 16.0, *)
-public struct ChecklistToggleStyle: ToggleStyle {
-    public init() {}
-
-    public func makeBody(configuration: Configuration) -> some View {
+struct ChecklistToggleStyle: ToggleStyle {
+    func makeBody(configuration: Configuration) -> some View {
         HStack {
             configuration.label
             Spacer()

@@ -17,12 +17,9 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Connection
-import CoreConnectionTestSupport
 import Domain
-import DomainTestSupport
 import ExtensionManager
 import Foundation
-import VPNShared
 
 public extension ConnectionFeature.State {
     static let connected: ConnectionFeature.State = {

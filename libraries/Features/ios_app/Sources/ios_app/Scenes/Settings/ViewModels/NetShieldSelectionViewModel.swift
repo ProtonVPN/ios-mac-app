@@ -21,13 +21,11 @@ import Dependencies
 import Domain
 import ExtensionManager
 import Foundation
-import LegacyCommon
 import Sharing
 import Strings
 import Theme
 import UIKit
 import VPNAppCore
-import VPNShared
 
 final class NetShieldSelectionViewModel {
     @Dependency(\.upsellManager) private var upsellManager

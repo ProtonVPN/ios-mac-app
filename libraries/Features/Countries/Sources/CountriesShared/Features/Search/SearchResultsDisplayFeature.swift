@@ -21,7 +21,6 @@ import Connection
 import ConnectionInventory
 import Domain
 import Persistence
-import Strings
 
 @Reducer
 public struct SearchResultsDisplayFeature {

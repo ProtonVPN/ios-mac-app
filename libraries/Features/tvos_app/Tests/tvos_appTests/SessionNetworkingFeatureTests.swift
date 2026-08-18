@@ -23,7 +23,6 @@ import struct Ergonomics.GenericError
 import ProtonCoreNetworking
 @testable import tvos_app
 @testable import VPNShared
-@testable import VPNSharedTesting
 import XCTest
 
 final class SessionNetworkingFeatureTests: XCTestCase {

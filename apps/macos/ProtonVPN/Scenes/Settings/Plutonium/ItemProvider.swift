@@ -20,14 +20,14 @@ import Foundation
 import UniformTypeIdentifiers
 
 /// NSItemProvider is not Sendable, we need to wrap it in a Sendable type.
-public struct ItemProvider: @unchecked Sendable {
-    public var provider: NSItemProvider {
+struct ItemProvider: @unchecked Sendable {
+    var provider: NSItemProvider {
         _provider.clone()
     }
 
     private var _provider: NSItemProvider
 
-    public init(provider: NSItemProvider) {
+    init(provider: NSItemProvider) {
         self._provider = provider
     }
 }
@@ -39,7 +39,7 @@ private extension NSItemProvider {
     }
 }
 
-public extension ItemProvider {
+extension ItemProvider {
     func loadFileURL() async -> URL? {
         guard let item = try? await provider.loadItem(forTypeIdentifier: UTType.fileURL.identifier),
               let data = item as? Data,

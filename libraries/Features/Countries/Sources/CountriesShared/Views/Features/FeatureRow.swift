@@ -21,14 +21,10 @@ import Strings
 import SwiftUI
 import Theme
 
-public struct FeatureRow: View {
+struct FeatureRow: View {
     let store: StoreOf<ServerFeatureItem>
 
-    public init(store: StoreOf<ServerFeatureItem>) {
-        self.store = store
-    }
-
-    public var body: some View {
+    var body: some View {
         VStack(alignment: .leading, spacing: .themeSpacing4) {
             // Top: Icon + Title
             HStack(spacing: .themeSpacing8) {

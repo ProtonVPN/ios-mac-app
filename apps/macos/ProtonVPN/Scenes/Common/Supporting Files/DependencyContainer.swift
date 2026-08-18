@@ -21,10 +21,7 @@
 //
 
 import AppKit
-import BugReport
-import CommonNetworking
 import Dependencies
-import Domain
 import Ergonomics
 import Foundation
 import LegacyCommon
@@ -40,7 +37,7 @@ final class DependencyContainer: Container {
     private lazy var appSessionManager: AppSessionManagerImplementation = .init(factory: self)
 
     // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
-    private lazy var dynamicBugReportManager = DynamicBugReportManager()
+    lazy var dynamicBugReportManager = DynamicBugReportManager()
 
     // Refreshes app data at predefined time intervals
     private lazy var refreshTimer: AppSessionRefreshTimer = AppSessionRefreshTimerImplementation(
@@ -112,14 +109,6 @@ extension DependencyContainer: WindowServiceFactory {
 extension DependencyContainer: AppSessionManagerFactory {
     func makeAppSessionManager() -> AppSessionManager {
         appSessionManager
-    }
-}
-
-// MARK: DynamicBugReportManagerFactory
-
-extension DependencyContainer: DynamicBugReportManagerFactory {
-    func makeDynamicBugReportManager() -> DynamicBugReportManager {
-        dynamicBugReportManager
     }
 }
 

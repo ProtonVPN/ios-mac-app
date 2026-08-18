@@ -19,6 +19,7 @@
 import ComposableArchitecture
 import Domain
 @testable import tvos_app
+import tvOSTestSupport
 import XCTest
 
 final class WelcomeFeatureTests: XCTestCase {

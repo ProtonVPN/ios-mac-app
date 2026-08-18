@@ -74,25 +74,9 @@ public struct SmartProtocolConfig: Codable, Equatable, Sendable {
         )
     }
 
-    public func configWithWireGuard(udpEnabled: Bool? = nil, tcpEnabled: Bool? = nil, tlsEnabled: Bool? = nil) -> SmartProtocolConfig {
-        SmartProtocolConfig(
-            iKEv2: iKEv2,
-            wireGuardUdp: udpEnabled ?? wireGuardUdp,
-            wireGuardTcp: tcpEnabled ?? wireGuardTcp,
-            wireGuardTls: tlsEnabled ?? wireGuardTls
-        )
-    }
-
     public static func == (lhs: SmartProtocolConfig, rhs: SmartProtocolConfig) -> Bool {
         lhs.iKEv2 == rhs.iKEv2 &&
             lhs.wireGuardUdp == rhs.wireGuardUdp &&
             lhs.wireGuardTls == rhs.wireGuardTls
     }
 }
-
-#if DEBUG
-    public extension SmartProtocolConfig {
-        static let onlyWgTcpAndTls = SmartProtocolConfig(iKEv2: false, wireGuardUdp: false, wireGuardTcp: true, wireGuardTls: true)
-        static let onlyIke = SmartProtocolConfig(iKEv2: true, wireGuardUdp: false, wireGuardTcp: false, wireGuardTls: false)
-    }
-#endif

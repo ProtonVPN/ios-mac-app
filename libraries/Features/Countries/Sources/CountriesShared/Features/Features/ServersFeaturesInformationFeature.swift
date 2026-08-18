@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import Foundation
-import LegacyCommon
 import Strings
 
 @Reducer

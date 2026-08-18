@@ -23,11 +23,9 @@
 import Cocoa
 import Dependencies
 import Ergonomics
-import LegacyCommon
 import SharedViews
 import Sharing
 import Strings
-import Telemetry
 import Theme
 import VPNAppCore
 

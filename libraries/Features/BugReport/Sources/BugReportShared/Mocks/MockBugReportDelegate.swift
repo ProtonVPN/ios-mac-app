@@ -37,12 +37,6 @@ class MockBugReportDelegate: BugReportDelegate {
         finishedCallback?()
     }
 
-    var troubleshootingCallback: (() -> Void)?
-
-    func troubleshootingRequired() {
-        troubleshootingCallback?()
-    }
-
     var updateAvailable: Bool = true
 
     func checkUpdateAvailability() {

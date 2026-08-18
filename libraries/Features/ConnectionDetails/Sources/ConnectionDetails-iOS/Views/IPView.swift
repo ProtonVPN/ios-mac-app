@@ -23,16 +23,12 @@ import Strings
 import SwiftUI
 import Theme
 
-public struct IPView: View {
+struct IPView: View {
     let store: StoreOf<IPViewFeature>
 
     private let minTopHeight: CGFloat = 16
     @ScaledMetric var buttonSize: CGFloat = 16
     @ScaledMetric var buttonSpacing: CGFloat = 4
-
-    public init(store: StoreOf<IPViewFeature>) {
-        self.store = store
-    }
 
     private var ipAddressTuple: (value: String, accessibilityValue: String) {
         let value = store.displayedUserIP
@@ -40,7 +36,7 @@ public struct IPView: View {
         return (value, Localizable.connectionDetailsAccessibilityIpViewShowAddress)
     }
 
-    public var body: some View {
+    var body: some View {
         HStack {
             VStack {
                 HStack(spacing: buttonSpacing) {

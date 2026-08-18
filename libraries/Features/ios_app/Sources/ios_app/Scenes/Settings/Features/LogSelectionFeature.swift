@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import Foundation
-import Payments
 import PCAP
 import PMLogger
 import SharedErgonomics

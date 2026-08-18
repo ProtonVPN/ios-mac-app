@@ -21,29 +21,29 @@ import Domain
 import Foundation
 import Sharing
 
-public struct ProductPromptsEvent: TelemetryEvent, Encodable {
-    public let measurementGroup: String = "vpn.any.product_prompts"
-    public let event: Event
-    public let dimensions: Dimensions
+struct ProductPromptsEvent: TelemetryEvent, Encodable {
+    let measurementGroup: String = "vpn.any.product_prompts"
+    let event: Event
+    let dimensions: Dimensions
 
     @SharedReader(.successfulConnectionsSinceLastPrompt) var successfulConnectionsSinceLastPrompt
     @SharedReader(.whenLastReviewShown) var reviewTimestamp
 
-    public enum Event: String, Encodable {
+    enum Event: String, Encodable {
         case ratingBoosterPromptRequested = "rating_booster_prompt_requested"
     }
 
-    public struct Dimensions: Encodable {
-        public enum CodingKeys: String, CodingKey {
+    struct Dimensions: Encodable {
+        enum CodingKeys: String, CodingKey {
             case userCountry = "user_country"
             case userTier = "user_tier"
         }
 
-        public let userCountry: String
-        public let userTier: CommonTelemetryDimensions.UserTier
+        let userCountry: String
+        let userTier: CommonTelemetryDimensions.UserTier
     }
 
-    public var values: Values {
+    var values: Values {
         let daysSinceLastPrompt = reviewTimestamp.flatMap {
             @Dependency(\.calendar) var calendar
             @Dependency(\.date) var date
@@ -55,14 +55,14 @@ public struct ProductPromptsEvent: TelemetryEvent, Encodable {
         )
     }
 
-    public struct Values: Encodable {
-        public enum CodingKeys: String, CodingKey {
+    struct Values: Encodable {
+        enum CodingKeys: String, CodingKey {
             case connectionsSinceLastPrompt = "connections_since_last_prompt"
             case daysSinceLastPrompt = "days_since_last_prompt"
         }
 
-        public let connectionsSinceLastPrompt: Int
-        public let daysSinceLastPrompt: Int
+        let connectionsSinceLastPrompt: Int
+        let daysSinceLastPrompt: Int
     }
 
     init() {
@@ -78,19 +78,19 @@ public struct ProductPromptsEvent: TelemetryEvent, Encodable {
 }
 
 extension ProductPromptsEvent: CustomDebugStringConvertible {
-    public var debugDescription: String {
+    var debugDescription: String {
         "| measurementGroup: \(measurementGroup) | event: \(event) | dimensions: \(dimensions) | values: \(values) |"
     }
 }
 
 extension ProductPromptsEvent.Dimensions: CustomDebugStringConvertible {
-    public var debugDescription: String {
+    var debugDescription: String {
         "| userCountry: \(userCountry) | userTier: \(userTier) |"
     }
 }
 
 extension ProductPromptsEvent.Values: CustomDebugStringConvertible {
-    public var debugDescription: String {
+    var debugDescription: String {
         "| connectionsSinceLastPrompt: \(connectionsSinceLastPrompt) | daysSinceLastPrompt: \(daysSinceLastPrompt) |"
     }
 }

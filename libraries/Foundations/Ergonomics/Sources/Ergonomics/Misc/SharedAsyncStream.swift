@@ -47,7 +47,7 @@ public final class SharedAsyncStream<Element: Sendable>: Sendable {
 }
 
 @available(iOS, deprecated: 18, renamed: "AsyncShareSequence")
-public final class SharedAsyncThrowingStream<Element: Sendable>: Sendable {
+final class SharedAsyncThrowingStream<Element: Sendable>: Sendable {
     private struct State {
         var continuations: [UUID: AsyncThrowingStream<Element, any Error>.Continuation] = [:]
         var isFinished = false
@@ -90,7 +90,7 @@ public final class SharedAsyncThrowingStream<Element: Sendable>: Sendable {
     }
 }
 
-public extension SharedAsyncThrowingStream {
+extension SharedAsyncThrowingStream {
     func subscribe() -> AsyncThrowingStream<Element, any Error> {
         AsyncThrowingStream { continuation in
             let id = UUID()
@@ -114,13 +114,6 @@ public extension AsyncSequence where Self: Sendable, Element: Sendable {
     @available(iOS, introduced: 17, obsoleted: 18, message: "Use .shared() from swift-async-algorithms on iOS 18+")
     var sharedStream: SharedAsyncStream<Element> {
         SharedAsyncStream(self)
-    }
-}
-
-public extension AsyncSequence where Self: Sendable, Element: Sendable {
-    @available(iOS, introduced: 17, obsoleted: 18, message: "Use .shared() from swift-async-algorithms on iOS 18+")
-    var sharedThrowingStream: SharedAsyncThrowingStream<Element> {
-        SharedAsyncThrowingStream(self)
     }
 }
 

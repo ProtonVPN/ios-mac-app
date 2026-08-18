@@ -89,6 +89,7 @@ let package = Package(
                 "PCAP",
                 "MapModel",
                 "MapShaderTypes",
+                .product(name: "Modals", package: "Modals"),
                 .product(name: "ModalsServices", package: "Modals"),
                 .product(name: "Payments", package: "Payments", condition: .when(platforms: [.iOS])),
                 .product(name: "PaymentsShared", package: "Payments", condition: .when(platforms: [.iOS])),

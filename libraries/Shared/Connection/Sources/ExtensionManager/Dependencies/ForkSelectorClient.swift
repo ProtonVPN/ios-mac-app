@@ -23,7 +23,7 @@ import DependenciesMacros
 import class Foundation.HTTPCookie
 import VPNAppCore
 
-public enum ForkSelectorClientError: Error {
+enum ForkSelectorClientError: Error {
     case cancelled
     case sessionForkingFailed(Error)
     case ipcInvalidResponse

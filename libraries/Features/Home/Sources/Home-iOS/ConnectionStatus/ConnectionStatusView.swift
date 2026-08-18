@@ -22,16 +22,13 @@ import Dependencies
 import Domain
 import HomeShared
 import Localization
-import NetShield
 import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Theme
-import VPNAppCore
-import VPNShared
 
 @MainActor
-public struct ConnectionStatusView: View {
+struct ConnectionStatusView: View {
     private static let maxContentWidth: CGFloat = 480
 
     @Bindable var store: StoreOf<ConnectionStatusFeature>
@@ -40,7 +37,6 @@ public struct ConnectionStatusView: View {
 
     private static let headerHeight: CGFloat = 58
     private static let viewHeight: CGFloat = 200
-    private static let headerPaddingHeight: CGFloat = 13
 
     // `.killSwitchActive` never reaches these helpers, since `body` renders the KillSwitchBlockingBanner. Group its
     // case with `.unprotected`.
@@ -135,7 +131,7 @@ public struct ConnectionStatusView: View {
         }
     }
 
-    public var body: some View {
+    var body: some View {
         Group {
             if store.protectionState == .killSwitchActive {
                 // Advanced kill switch is blocking: show the grey KS overlay in place of the connection status.
@@ -172,7 +168,7 @@ public struct ConnectionStatusView: View {
                 .allowsHitTesting(false)
                 ConnectionStatusBanner(store: store.scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner))
                     .background(
-                        .translucentLight,
+                        .thinMaterial,
                         in: RoundedRectangle(
                             cornerRadius: .themeRadius8,
                             style: .continuous

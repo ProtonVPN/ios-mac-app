@@ -30,10 +30,4 @@ class ColorPickerItemView: NSCollectionViewItem {
             colorPickerCircle.isSelected = isSelected
         }
     }
-
-    var circleColor: NSColor? {
-        didSet {
-            colorPickerCircle.color = circleColor
-        }
-    }
 }

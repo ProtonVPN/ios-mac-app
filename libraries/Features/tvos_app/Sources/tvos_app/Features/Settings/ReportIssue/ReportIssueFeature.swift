@@ -22,7 +22,6 @@ import Foundation
 import PMLogger
 import ProtonCoreAPIClient
 import SharedErgonomics
-import VPNShared
 
 @Reducer
 struct ReportIssueFeature {

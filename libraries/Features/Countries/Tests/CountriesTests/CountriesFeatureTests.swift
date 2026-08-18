@@ -59,19 +59,6 @@ private let _testEndpoint = ServerEndpoint(
     x25519PublicKey: nil,
     protocolEntries: nil
 )
-private let _testServer = Server(logical: _testLogical, endpoint: _testEndpoint)
-private let _testIntent = ServerConnectionIntent(
-    spec: .defaultFastest,
-    server: _testServer,
-    protocolConfiguration: .ike,
-    features: AgentTunnelFeatures(
-        netshield: .off,
-        vpnAccelerator: true,
-        natType: .moderateNAT,
-        portForwarding: nil
-    ),
-    tunnelFeatures: .mock
-)
 
 private extension ConnectionState {
     static var fakeConnected: ConnectionState {

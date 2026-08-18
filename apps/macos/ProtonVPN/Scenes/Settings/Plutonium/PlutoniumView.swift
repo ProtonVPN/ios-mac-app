@@ -28,12 +28,8 @@ import Theme
 import UniformTypeIdentifiers
 import VPNAppCore
 
-public struct PlutoniumView: View {
-    @Bindable public var store: StoreOf<PlutoniumFeature>
-
-    public init(store: StoreOf<PlutoniumFeature>) {
-        self.store = store
-    }
+struct PlutoniumView: View {
+    @Bindable var store: StoreOf<PlutoniumFeature>
 
     static let appsSectionWidth: CGFloat = 308
 
@@ -42,7 +38,7 @@ public struct PlutoniumView: View {
 
     @State private var dragOver = false
 
-    public var body: some View {
+    var body: some View {
         VStack(spacing: .themeSpacing24) {
             // TODO: Remove this hint with [VPNAPPL-3084]
             HStack(spacing: .themeSpacing6) {

@@ -23,18 +23,12 @@ import Cocoa
 import Combine
 import Domain
 import Ergonomics
-import LegacyCommon
-import ProtonCoreFeatureFlags
 import SharedViews
 import Sharing
 import Strings
 import VPNAppCore
 
 final class ConnectionSettingsViewController: NSViewController, ReloadableViewController {
-    fileprivate enum SwitchButtonOption: Int {
-        case killSwitch
-    }
-
     @IBOutlet private var autoConnectView: SettingsDropDownView!
     @IBOutlet private var quickConnectView: SettingsDropDownView!
     @IBOutlet private var protocolView: SettingsDropDownView!

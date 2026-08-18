@@ -24,10 +24,8 @@ import Cocoa
 import Combine
 import ComposableArchitecture
 import Connection
-import Domain
 import Strings
 import Theme
-import VPNAppCore
 
 class MapHeaderViewModel {
     @SharedReader(.connectionState) private var connectionState: ConnectionState
@@ -55,15 +53,5 @@ class MapHeaderViewModel {
         let text = (isConnected ? Localizable.connected : Localizable.disconnected).uppercased()
         let style: AppTheme.Style = isConnected ? .link : .danger
         return text.styled(style, font: .themeFont(literalSize: 19, bold: true))
-    }
-
-    var isSecureCore: Bool {
-        guard let server = connectionState.resolvedServer else {
-            return false
-        }
-        if case .secureCore = server.logical.kind {
-            return true
-        }
-        return false
     }
 }

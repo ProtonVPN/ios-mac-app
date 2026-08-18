@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Strings
 
 /// Defines users intent as to where (s)he wanted to connect
 public struct ConnectionSpec: Equatable, Hashable, Codable, Sendable {
@@ -108,15 +107,6 @@ package extension ConnectionSpec.Feature {
 }
 
 public extension ConnectionSpec.Location {
-    func withServer(number: Int) -> Self {
-        switch self {
-        case let .exact(server, logicalID, _, subregion, regionCode):
-            .exact(server, logicalID: logicalID, number: number, subregion: subregion, regionCode: regionCode)
-        default:
-            self
-        }
-    }
-
     var selectionSpec: ConnectionSpec.SelectionSpec? {
         switch self {
         case let .any(select),
@@ -161,7 +151,6 @@ public extension ConnectionSpec.Location {
 
 public extension ConnectionSpec {
     static let defaultFastest = ConnectionSpec(location: .any(.fastest), features: [])
-    static let defaultRandom = ConnectionSpec(location: .any(.random), features: [])
     static let secureCoreFastest = ConnectionSpec(location: .secureCore(.any(.fastest)), features: [])
 
     #if DEBUG

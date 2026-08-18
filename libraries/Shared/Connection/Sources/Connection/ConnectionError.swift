@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CasePaths
-import CoreConnection
 import Dependencies
 import Domain
 import Ergonomics

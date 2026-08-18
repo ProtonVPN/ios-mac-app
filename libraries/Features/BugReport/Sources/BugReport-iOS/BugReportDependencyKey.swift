@@ -25,13 +25,6 @@ public struct BugReportDependencyKey: DependencyKey {
     public static let testValue: BugReportCreator = MockBugReportCreator()
 }
 
-public extension DependencyValues {
-    var bugReport: BugReportCreator {
-        get { self[BugReportDependencyKey.self] }
-        set { self[BugReportDependencyKey.self] = newValue }
-    }
-}
-
 struct MockBugReportCreator: BugReportCreator {
     func createBugReportViewController(delegate _: any BugReportDelegate, colors _: Colors) -> UIViewController? {
         nil

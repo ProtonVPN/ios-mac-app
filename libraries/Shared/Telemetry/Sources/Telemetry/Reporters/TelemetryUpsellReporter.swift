@@ -23,7 +23,7 @@ import Foundation
 import Sharing
 import VPNAppCore
 
-public final class TelemetryUpsellReporter {
+final class TelemetryUpsellReporter {
     struct Error: Swift.Error {
         let localizedDescription: String
     }
@@ -47,11 +47,11 @@ public final class TelemetryUpsellReporter {
 
     private var telemetryEventScheduler: TelemetryEventScheduler
 
-    public init(telemetryEventScheduler: TelemetryEventScheduler) async {
+    init(telemetryEventScheduler: TelemetryEventScheduler) async {
         self.telemetryEventScheduler = telemetryEventScheduler
     }
 
-    public func upsellEvent(
+    func upsellEvent(
         _ event: UpsellEvent.Event,
         modalSource _modalSource: UpsellModalSource?,
         newPlanName: String?,

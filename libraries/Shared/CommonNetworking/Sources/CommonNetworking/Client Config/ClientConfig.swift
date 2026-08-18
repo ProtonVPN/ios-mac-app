@@ -23,7 +23,6 @@
 import Domain
 import Ergonomics
 import Foundation
-import VPNShared
 
 public struct ClientConfig {
     public let featureFlags: FeatureFlags

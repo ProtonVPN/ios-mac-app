@@ -22,7 +22,6 @@ import Dependencies
 import Domain
 import DomainTestSupport
 import Testing
-import VPNShared
 
 struct IntentResolverTests {
     @Test

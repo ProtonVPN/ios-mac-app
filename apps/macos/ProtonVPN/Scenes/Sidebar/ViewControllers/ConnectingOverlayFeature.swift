@@ -22,7 +22,6 @@ import Dependencies
 import Domain
 import Sharing
 import VPNAppCore
-import VPNShared
 
 @Reducer
 struct ConnectingOverlayFeature {

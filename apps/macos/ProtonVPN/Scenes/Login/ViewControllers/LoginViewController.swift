@@ -27,8 +27,6 @@ import Dependencies
 import Domain
 import Ergonomics
 import Foundation
-import LegacyCommon
-import ProtonCoreFeatureFlags
 import ProtonCoreLoginUI
 import ProtonCoreObservability
 import ProtonCoreServices
@@ -310,11 +308,6 @@ final class LoginViewController: NSViewController {
     }
 
     // MARK: - Private functions
-
-    private func setupLoadingView() {
-        loadingView.isHidden = true
-        reachabilityCheckIndicator.set(tintColor: .color(.icon, .interactive))
-    }
 
     private func setupTwoFactorView() {
         twoFactorView.isHidden = true

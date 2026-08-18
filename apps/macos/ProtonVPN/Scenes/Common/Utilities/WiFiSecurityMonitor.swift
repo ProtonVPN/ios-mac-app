@@ -23,7 +23,6 @@
 import Combine
 import CoreWLAN
 import Foundation
-import LegacyCommon
 import Network
 import VPNShared
 
@@ -33,7 +32,7 @@ protocol WiFiSecurityMonitorFactory {
 
 // MARK: - Delegate
 
-public protocol WiFiSecurityMonitorDelegate: AnyObject {
+protocol WiFiSecurityMonitorDelegate: AnyObject {
     /// Called (on the main queue) when the device is connected via an insecure Wi-Fi network
     func unsecureWiFiDetected()
     /// Called (on the main queue) when a previously reported insecure connection is gone,
@@ -45,7 +44,7 @@ public protocol WiFiSecurityMonitorDelegate: AnyObject {
 
 /// Monitors network path changes and reports connections over insecure Wi-Fi
 /// (open, WEP, or dynamic WEP networks).
-public final class WiFiSecurityMonitor: NSObject {
+final class WiFiSecurityMonitor: NSObject {
     // MARK: Configuration
 
     /// Security modes treated as insecure. Everything else (WPA/WPA2/WPA3,
@@ -63,8 +62,8 @@ public final class WiFiSecurityMonitor: NSObject {
 
     // MARK: State
 
-    public weak var delegate: WiFiSecurityMonitorDelegate?
-    public private(set) var wifiName: String?
+    weak var delegate: WiFiSecurityMonitorDelegate?
+    private(set) var wifiName: String?
 
     /// Fingerprint of the last insecure network we reported, used to avoid
     /// firing the delegate repeatedly for the same network on flapping
@@ -86,7 +85,7 @@ public final class WiFiSecurityMonitor: NSObject {
 
     // MARK: Public API
 
-    public func startMonitoring() {
+    func startMonitoring() {
         networkMonitorCancellable = networkMonitor
             .pathSubject
             .removeDuplicates()
@@ -100,7 +99,7 @@ public final class WiFiSecurityMonitor: NSObject {
         networkMonitor.start()
     }
 
-    public func stopMonitoring() {
+    func stopMonitoring() {
         networkMonitorCancellable?.cancel()
         networkMonitorCancellable = nil
         networkMonitor.stop()
