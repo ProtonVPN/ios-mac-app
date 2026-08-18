@@ -46,4 +46,49 @@ struct ServersListFeatureTests {
             }
         }
     }
+
+    // MARK: - Connected Row Tests
+
+    @Test("a server row shows as connected if connected")
+    func serverRowFollowsTheConnectedServer() {
+        // Reached by tapping California, which landed the user on US-CA#5 rather than on US-CA#6.
+        @Shared(.connectionState) var connectionState
+        $connectionState.withLock {
+            $0 = .connected(to: .stub(id: "us-ca-5", exitCountryCode: "US", city: "Los Angeles", state: "California"))
+        }
+
+        let state = ServersListFeature.State(countryCode: "US", listType: .state("California"))
+
+        #expect(state.isCurrentlyConnected(to: .stub(logical: .stub(id: "us-ca-5", exitCountryCode: "US"))))
+        #expect(!state.isCurrentlyConnected(to: .stub(logical: .stub(id: "us-ca-6", exitCountryCode: "US"))))
+    }
+
+    @Test("a server row shows as connected for connecting state")
+    func serverRowFollowsTheRequestBeforeTheServerIsPicked() {
+        @Shared(.connectionState) var connectionState
+        $connectionState.withLock {
+            $0 = .connecting(to: .exact(
+                .paid,
+                logicalID: "us-ca-5",
+                number: 5,
+                subregion: "California",
+                regionCode: "US"
+            ))
+        }
+
+        let state = ServersListFeature.State(countryCode: "US", listType: .state("California"))
+
+        #expect(state.isCurrentlyConnected(to: .stub(logical: .stub(id: "us-ca-5", exitCountryCode: "US"))))
+        #expect(!state.isCurrentlyConnected(to: .stub(logical: .stub(id: "us-ca-6", exitCountryCode: "US"))))
+    }
+
+    @Test("no server row shows as connected once the connection is down")
+    func noServerRowIsConnectedWhileDisconnected() {
+        @Shared(.connectionState) var connectionState
+        $connectionState.withLock { $0 = .disconnected }
+
+        let state = ServersListFeature.State(countryCode: "US", listType: .state("California"))
+
+        #expect(!state.isCurrentlyConnected(to: .stub(logical: .stub(id: "us-ca-5", exitCountryCode: "US"))))
+    }
 }

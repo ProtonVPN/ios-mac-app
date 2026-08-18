@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import Domain
 import Strings
 
@@ -46,9 +47,23 @@ public struct ServersListFeature: Sendable {
             }
         }
 
+        @SharedReader(.connectionState) var connectionState: ConnectionState
+
         public init(countryCode: String, listType: ListType) {
             self.countryCode = countryCode
             self.listType = listType
+        }
+
+        /// Whether the tunnel is connecting or connected on this server
+        public func isCurrentlyConnected(to server: ServerInfo) -> Bool {
+            if let logical = connectionState.currentLogical {
+                return logical.id == server.logical.id
+            }
+            // The app has yet to pick a server, so only a request naming this one counts.
+            if case let .exact(_, logicalID, _, _, _) = connectionState.location {
+                return logicalID == server.logical.id
+            }
+            return false
         }
     }
 

@@ -37,7 +37,7 @@
                 rows: IdentifiedArray(uniqueElements: [
                     .upsell,
                     .sectionHeader("Countries (1)"),
-                    .country(.init(id: "us", countryCode: "US", name: "United States")),
+                    .country(.init(id: "us", kind: .country(code: "US"), name: "United States")),
                     .sectionHeader("Cities (1)"),
                     .city(.init(
                         id: "new-york-us",

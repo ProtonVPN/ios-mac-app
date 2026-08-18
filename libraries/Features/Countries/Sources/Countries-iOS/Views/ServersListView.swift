@@ -17,12 +17,10 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import Connection
 import CountriesShared
 import Domain
 import Persistence
 import SharedViews
-import Sharing
 import Strings
 import SwiftUI
 import Theme
@@ -30,7 +28,6 @@ import VPNAppCore
 
 public struct ServersListView: View {
     @Bindable var store: StoreOf<ServersListFeature>
-    @SharedReader(.connectionState) var connectionState
 
     @Environment(\.dismiss) private var dismiss
     @State var showingFeaturesInfo: Bool = false
@@ -153,14 +150,16 @@ public struct ServersListView: View {
             subregion: store.listType.name,
             regionCode: store.countryCode
         )
-        let shouldConnect = !connectionState.isConnectedTo(location)
+        let shouldConnect = !store.state.isCurrentlyConnected(to: server)
         Button {
-            if server.logical.isUnderMaintenance {
-                store.send(.serversUnderMaintenance)
-            } else if shouldConnect {
-                store.send(.connect(location: location))
-            } else {
+            // If this server goes into maintenance when connected,
+            // the user still needs the button to disconnect
+            if !shouldConnect {
                 store.send(.disconnect)
+            } else if server.logical.isUnderMaintenance {
+                store.send(.serversUnderMaintenance)
+            } else {
+                store.send(.connect(location: location))
             }
         } label: {
             CityStateConnectButtonView(
@@ -169,11 +168,5 @@ public struct ServersListView: View {
             )
         }
         .buttonStyle(.plain)
-    }
-}
-
-private extension ConnectionState {
-    func isConnectedTo(_ location: ConnectionSpec.Location) -> Bool {
-        self.location == location
     }
 }

@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Connection
 import ConnectionInventory
 import Domain
 import Persistence
@@ -38,6 +39,19 @@ public struct CityStateListFeature: Sendable {
 
         public var sectionTitle: String?
         public var listState: ListState = .loading
+
+        @SharedReader(.connectionState) var connectionState: ConnectionState
+
+        /// Whether the tunnel is connecting or connected through a server in this city or state
+        public func isCurrentlyConnected(to groupInfo: ServerGroupInfo) -> Bool {
+            if let logical = connectionState.currentLogical {
+                return groupInfo.matchesLogical(logical)
+            }
+            if let location = connectionState.location {
+                return groupInfo.matches(location: location, logical: nil)
+            }
+            return false
+        }
 
         public enum ListState: Equatable, Sendable {
             case loading
