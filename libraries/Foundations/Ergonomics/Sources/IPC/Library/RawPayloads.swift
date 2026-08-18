@@ -113,13 +113,19 @@ public extension IPCNotifications {
         }
     }
 
-    static func postRawState(_ notification: Notification, state: UInt64) {
+    /// Sets `state` and returns an observation token that can be held to avoid clearing the state for future readers.
+    static func announceRawState(_ notification: Notification, state: UInt64) -> Observation {
         let token = Token(checking: notification.name)
         token.setState(state)
         notify_post(notification.name)
+        return token.observation()
     }
 
-    /// Just posts a bare notification, without an associated token.
+    /// Posts the state without guaranteeing that a reader can later subscribe and get the notification.
+    static func postRawState(_ notification: Notification, state: UInt64) {
+        _ = announceRawState(notification, state: state)
+    }
+
     static func signal(_ notification: Notification) {
         notify_post(notification.name)
     }

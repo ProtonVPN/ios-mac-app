@@ -99,7 +99,7 @@ public extension IPCNotifications.RawChannel where Backing: ~Copyable {
 
 // MARK: - Writers
 
-public extension IPCNotifications.RawChannel where Role == WriterRole, Backing: ~Copyable {
+public extension IPCNotifications.RawChannel where Role == WriterRole, Backing: MutableRegionBacking & ~Copyable {
     /// Mutates the payload in-place under seqlock protection, then notifies observers.
     /// - Parameter body: invoked while writing the window, do not yield to any continuations within this closure.
     func mutate(_ body: (inout Payload) -> Void) {

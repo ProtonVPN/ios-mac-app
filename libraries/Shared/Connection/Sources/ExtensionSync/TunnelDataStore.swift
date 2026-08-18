@@ -19,7 +19,6 @@
 import Foundation
 import IPCDefinitions
 @_spi(Internals) import IPCErgonomics
-import IssueReporting
 import os
 #if os(macOS)
     import IOSurface
@@ -31,14 +30,16 @@ public enum TunnelCommand: Int, Sendable, CaseIterable {
     case forkSelectorRequest = 1
 }
 
-/// Manages unidirectional communication channels for tunnel data, providing access to data streams
-/// through a shared memory-mapped buffer. The store maintains a single mapping of the entire `IPCTunnelData` buffer
-/// and exposes individual ``IPCNotifications/RawChannel`` views for each field
-/// All channels emit the same `.tunnelData` notification when updated.
+/// Manages unidirectional communication channels for tunnel data, providing access to data streams through a shared
+/// memory-mapped buffer. The store maintains a single mapping of the entire `IPCTunnelData` buffer and exposes
+/// individual ``IPCNotifications/RawChannel`` views for each field. All channels emit the same `.tunnelData`
+/// notification when updated, and sequence locks are used to detect which regions have changed as well as protect
+/// against torn reads.
 ///
-/// The implementation uses platform-specific strategies for accessing the shared buffer: iOS/tvOS establish a
-/// persistent file mapping in ``live()``, while macOS waits for the extension's IOSurface to arrive via
-/// ``attached(to:)`` during the connection handshake.
+/// Since the backing storage of the memory region being written to can change due to the daemon and device lifecycles,
+/// the extension process announces the identity of the region (file inode on App Store builds, IOSurface ID on
+/// externally-distributed apps) through the value announced in the `.tunnelData` notify message. Clients keep track of
+/// this value and re-attach their mappings when they detect that it has changed.
 final class TunnelDataStore<Role, Backing: RegionBacking & ~Copyable>: Sendable {
     struct Channels: ~Copyable, Sendable {
         let connectionData: IPCNotifications.RawChannel<IPCConnectionDataPayload, Role, Backing>
@@ -51,6 +52,11 @@ final class TunnelDataStore<Role, Backing: RegionBacking & ~Copyable>: Sendable 
 
     let channels: Channels
     private let region: IPCNotifications.SharedRegion<Backing>
+
+    /// The identity the writer announces over the `.tunnelData` notify state.
+    var regionID: UInt64 {
+        region.backing.regionID
+    }
 
     private static func channel<T: BitwiseCopyable>(
         from region: IPCNotifications.SharedRegion<Backing>,
@@ -94,20 +100,47 @@ final class TunnelDataStore<Role, Backing: RegionBacking & ~Copyable>: Sendable 
     }
 #else
 
-    extension TunnelDataStore where Backing == FileBackedRegion {
-        /// Map the shared app group container up front. iOS and tvOS use a fixed file mapping for the lifetime of the
-        /// store.
-        static func live() -> TunnelDataStore {
-            do {
-                let containerURL = try FileManager.default.mainContainerURL
-                let backing = try FileBackedRegion(
-                    fileURL: containerURL.appending(component: "tunnel_data"),
-                    size: MemoryLayout<IPCTunnelData>.size
-                )
-                return TunnelDataStore(region: IPCNotifications.SharedRegion(backing))
-            } catch {
-                preconditionFailure("Failed to map the tunnel-data shared region: \(error)")
+    /// Where the region file lives, created by the writer only.
+    private var tunnelDataFileURL: URL {
+        get throws(FileManager.NoContainerFoundError) {
+            try FileManager.default.mainContainerURL.appending(component: "tunnel_data")
+        }
+    }
+
+    extension TunnelDataStore where Role == WriterRole, Backing == FileBackedRegion {
+        #if os(tvOS)
+            /// tvOS has no lock states.
+            private static var regionProtection: FileProtectionType {
+                .completeUntilFirstUserAuthentication
             }
+        #else
+            /// Seals the payloads whenever the device is locked, while still letting the extension create and write the
+            /// region in any lock state (Class B).
+            private static var regionProtection: FileProtectionType {
+                .completeUnlessOpen
+            }
+        #endif
+
+        /// Replaces any previous region file and maps the new one for writing.
+        static func createdForWriting() throws -> TunnelDataStore {
+            let backing = try FileBackedRegion(
+                creating: tunnelDataFileURL,
+                size: MemoryLayout<IPCTunnelData>.size,
+                protection: regionProtection
+            )
+            return TunnelDataStore(region: IPCNotifications.SharedRegion(backing))
+        }
+    }
+
+    extension TunnelDataStore where Role == ReaderRole, Backing == ReadOnlyFileBackedRegion {
+        /// Maps the file the extension most recently created, read-only. Throws when none exists or when inaccessible
+        /// due to the device being locked.
+        static func openedForReading() throws -> TunnelDataStore {
+            let backing = try ReadOnlyFileBackedRegion(
+                opening: tunnelDataFileURL,
+                size: MemoryLayout<IPCTunnelData>.size
+            )
+            return TunnelDataStore(region: IPCNotifications.SharedRegion(backing))
         }
     }
 #endif
