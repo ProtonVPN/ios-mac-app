@@ -69,6 +69,20 @@ public enum AppTheme {
         }
     }
 
+    public enum MacAppLayout: CGFloat {
+        case mainContainerMinWidth = 360
+        case mainContainerMinHeight = 480
+
+        case rightSidebarWidth = 260
+        case leftSidebarWidth = 160
+
+        case connectionCardMaxWidth = 620
+        public static let connectionCardMinWidth = Self.mainContainerMinWidth
+
+        case mainAppDefaultHeight = 580
+        public static let mainAppDefaultWidth = Self.connectionCardMaxWidth
+    }
+
     public enum CornerRadius: CGFloat {
         case radius2 = 2
         case radius2½ = 2.5

@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 @testable import CountriesShared
+import Domain
 import PersistenceTestSupport
 import Testing
 
