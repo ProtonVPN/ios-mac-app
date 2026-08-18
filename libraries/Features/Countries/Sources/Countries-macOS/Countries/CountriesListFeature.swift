@@ -22,6 +22,7 @@ import ConnectionInventory
 import CountriesShared
 import Domain
 import Localization
+import ModalsShared
 import Payments
 import PaymentsShared
 import Persistence

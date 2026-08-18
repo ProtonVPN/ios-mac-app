@@ -31,6 +31,7 @@ public enum Asset {
   public static let bannerIcon = ImageAsset(name: "bannerIcon")
   public static let getStarted = ImageAsset(name: "getStarted")
   public static let welcomeRedesigned = ImageAsset(name: "welcomeRedesigned")
+  public static let worldwideCoverage = ImageAsset(name: "worldwide-coverage")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

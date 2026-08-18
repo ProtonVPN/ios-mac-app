@@ -439,7 +439,7 @@ public struct CountriesFeature {
 
             case .destination(.presented(.freeConnectionsView(.upgradeTapped))):
                 state.destination = nil
-                return .send(.presentSubscriptionManagement)
+                return .send(.presentAllCountriesUpsell)
 
             case .destination:
                 return .none

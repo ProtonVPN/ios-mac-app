@@ -606,21 +606,24 @@ struct CountriesFeatureTests {
         }
     }
 
-    @Test("Free connections upgrade opens subscription management and dismisses sheet")
-    func freeConnectionsUpgradeOpensSubscriptionManagement() async {
+    @Test("Free connections upgrade dismisses the sheet and opens the all countries upsell")
+    func freeConnectionsUpgradeOpensAllCountriesUpsell() async {
         var state = CountriesFeature.State(sections: [])
         state.destination = .freeConnectionsView(.mock)
 
         let store = TestStore(initialState: state) {
             CountriesFeature()
+        } withDependencies: {
+            // The upsell counts the countries it advertises.
+            $0.serverRepository = .notEmpty()
         }
 
         await store.send(.destination(.presented(.freeConnectionsView(.upgradeTapped)))) {
             $0.destination = nil
         }
-        await store.receive(\.presentSubscriptionManagement) {
+        await store.receive(\.presentAllCountriesUpsell) {
             $0.destination = .payments(
-                .init(presentationKind: .directSubscriptionManagement)
+                .init(upsellModalType: .allCountries)
             )
         }
     }
