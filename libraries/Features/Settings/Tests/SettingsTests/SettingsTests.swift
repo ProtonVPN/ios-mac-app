@@ -22,7 +22,7 @@ import Connection
 @testable import SettingsShared
 import Testing
 
-@Suite("Settings Tests", .serialized)
+@Suite("Settings Tests")
 @MainActor
 struct SettingsTests {
     @Test("Child feature is presented when tapped")

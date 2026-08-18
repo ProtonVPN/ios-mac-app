@@ -62,16 +62,11 @@ public extension SharedKey where Self == AppStorageKey<Date?> {
     }
 }
 
-/// Holds the throttle state and the long-lived feature-flag / deep-link observations that drive
-/// refreshing. Wrapped by ``AnnouncementRefresher/liveValue``.
+/// Holds the throttle state and the long-lived feature-flag / deep-link observations that drive refreshing
 final class AnnouncementRefresherImplementation: @unchecked Sendable {
     static let defaultRefreshInterval: TimeInterval = .hours(3)
 
-    @Shared(.announcements) private var announcements: [Announcement]?
-
     private let refreshInterval: TimeInterval
-
-    @Shared(.lastAnnouncementRefreshDate) var lastRefreshDate
 
     @SharedReader(.featureFlags) private var featureFlags: Domain.FeatureFlags
     private var featureFlagsObservation: AnyCancellable?
@@ -88,6 +83,7 @@ final class AnnouncementRefresherImplementation: @unchecked Sendable {
 
     @objc
     func tryRefreshing() {
+        @Shared(.lastAnnouncementRefreshDate) var lastRefreshDate
         // a single lock
         let shouldRefresh = $lastRefreshDate.withLock { lastRefresh -> Bool in
             if let last = lastRefresh, Date().timeIntervalSince(last) < refreshInterval {
@@ -120,6 +116,7 @@ final class AnnouncementRefresherImplementation: @unchecked Sendable {
     /// Persists freshly fetched announcements, carrying over the read flags of any currently-stored
     /// announcements (this merge previously lived inside `AnnouncementStorage.store`).
     private func store(_ newAnnouncements: [Announcement]) {
+        @Shared(.announcements) var announcements: [Announcement]?
         $announcements.withLock { stored in
             let readFlags = (stored ?? []).reduce(into: [String: Bool]()) { flags, announcement in
                 flags[announcement.notificationID] = announcement.isRead
@@ -133,6 +130,8 @@ final class AnnouncementRefresherImplementation: @unchecked Sendable {
     }
 
     func clear() {
+        @Shared(.lastAnnouncementRefreshDate) var lastRefreshDate
+        @Shared(.announcements) var announcements: [Announcement]?
         $lastRefreshDate.withLock {
             $0 = nil
         }

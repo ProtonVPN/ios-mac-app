@@ -25,7 +25,6 @@ import ProtonCorePaymentsV2
 import Testing
 @testable import tvos_app
 
-@Suite(.serialized)
 @MainActor
 struct UpsellFeatureTests {
     @Test
@@ -152,6 +151,28 @@ struct UpsellFeatureTests {
                 purchaseInProgress: true
             )
         }
+        await store.receive(\.pollTierUpdate)
+        await store.receive(\.finishedPollingTierUpdate)
+        await store.receive(\.upsold)
+    }
+
+    @Test
+    func backgroundTransactionWhileLoadingPollsWithoutTripping() async throws {
+        // A purchase can complete in the background while products are still loading (e.g. after
+        // an app relaunch mid-transaction)
+        let fixture = try makeDateFixture()
+        let networking = VPNNetworkingMock(userTierResult: .success(2))
+
+        let store = TestStore(initialState: UpsellFeature.State.loading) {
+            UpsellFeature()
+        } withDependencies: {
+            $0.date = .constant(fixture.date)
+            $0.calendar = fixture.calendar
+            $0.continuousClock = TestClock()
+            $0.networking = networking
+        }
+
+        await store.send(.event(.transactionCompleted(planName: PlanOptionV2.oneYear.id, cycle: PlanOptionV2.oneYear.amountOfMonths)))
         await store.receive(\.pollTierUpdate)
         await store.receive(\.finishedPollingTierUpdate)
         await store.receive(\.upsold)

@@ -61,31 +61,48 @@ public struct ConnectionProtocolSharedKey: SharedKey {
     public static let vpnProtocolKey = "VpnProtocol"
     public static let smartProtocolKey = "smartProtocol"
 
-    public var id: some Hashable {
-        "ConnectionProtocolSharedKey"
+    /// The `UserDefaults` suite (`\.defaultAppStorage`), resolved once at construction
+    private let store: UncheckedSendable<UserDefaults>
+
+    /// The id is simply which UserDefaults this key reads from (the key names are fixed).
+    /// Sharing reuses one cached value per id, so two places using different UserDefaults must
+    /// count as two different things — otherwise they'd wrongly share one value.
+    public struct ID: Hashable, Sendable {
+        fileprivate let store: ObjectIdentifier
     }
 
-    public init() {}
+    public var id: ID {
+        ID(store: ObjectIdentifier(store.wrappedValue))
+    }
+
+    public init() {
+        @Dependency(\.defaultAppStorage) var store
+        self.store = UncheckedSendable(store)
+    }
 
     public func load(
         context _: LoadContext<ConnectionProtocol>,
         continuation: LoadContinuation<ConnectionProtocol>
     ) {
-        @Dependency(\.defaultAppStorage) var store
-        continuation.resume(returning: Self.read(from: store))
+        continuation.resume(returning: Self.read(from: store.wrappedValue))
     }
 
     public func subscribe(
         context _: LoadContext<ConnectionProtocol>,
         subscriber: SharedSubscriber<ConnectionProtocol>
     ) -> SharedSubscription {
-        @Dependency(\.defaultAppStorage) var store
+        let store = store.wrappedValue
+        // `didChangeNotification` fires for *any* key in the suite (and echoes our own saves);
+        // forward only on real changes.
+        let gate = ChangeGate(initial: Self.read(from: store))
         let observer = NotificationCenter.default.addObserver(
             forName: UserDefaults.didChangeNotification,
             object: store,
             queue: nil
         ) { _ in
-            subscriber.yield(Self.read(from: store))
+            let newValue = Self.read(from: store)
+            guard gate.isChange(newValue) else { return }
+            subscriber.yield(newValue)
         }
         return SharedSubscription {
             NotificationCenter.default.removeObserver(observer)
@@ -97,12 +114,11 @@ public struct ConnectionProtocolSharedKey: SharedKey {
         context _: SaveContext,
         continuation: SaveContinuation
     ) {
-        @Dependency(\.defaultAppStorage) var store
-        Self.write(value, to: store)
+        Self.write(value, to: store.wrappedValue)
         continuation.resume()
     }
 
-    // MARK: Storage encoding (matches the legacy PropertiesManager representation)
+    // MARK: Storage encoding
 
     public static func read(from store: UserDefaults) -> ConnectionProtocol {
         let smartProtocol = store.object(forKey: smartProtocolKey) != nil
@@ -120,12 +136,18 @@ public struct ConnectionProtocolSharedKey: SharedKey {
     static func write(_ value: ConnectionProtocol, to store: UserDefaults) {
         switch value {
         case .smartProtocol:
+            // Deliberately leaves `vpnProtocolKey` untouched: it remembers the last manually
+            // chosen protocol for when smart protocol is toggled back off.
             store.set(true, forKey: smartProtocolKey)
         case let .vpnProtocol(vpnProtocol):
-            store.set(false, forKey: smartProtocolKey)
+            // Payload before flag: each write posts a notification, and observers re-derive the
+            // full state on each one. Written in this order, the intermediate notification reads
+            // either the unchanged previous state (gated out as a duplicate) or the complete new
+            // state — flag-first would expose a transient `.vpnProtocol(oldProtocol)`.
             if let data = try? JSONEncoder().encode(vpnProtocol) {
                 store.set(data, forKey: vpnProtocolKey)
             }
+            store.set(false, forKey: smartProtocolKey)
         }
     }
 }

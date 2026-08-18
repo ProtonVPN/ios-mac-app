@@ -57,6 +57,11 @@ extension ServerChangeAuthorizer: DependencyKey {
         let cache = ServerChangeAvailabilityCache()
         return ServerChangeAuthorizer(
             serverChangeAvailability: {
+                // Tier is checked *before* the cache: the rate limit only exists for free user
+                @Dependency(\.credentialsProvider) var credentials
+                guard credentials.tier.isFree else {
+                    return .available
+                }
                 @Dependency(\.date) var date
                 if let cached = cache.value(asOf: date.now) {
                     return cached
@@ -74,7 +79,7 @@ extension ServerChangeAuthorizer: DependencyKey {
         )
     }
 
-    public static var liveValue: ServerChangeAuthorizer = makeLive()
+    public static let liveValue: ServerChangeAuthorizer = makeLive()
 
     public static let testValue = ServerChangeAuthorizer {
         .unavailable(until: .distantFuture, duration: .infinity, exhaustedSkips: true)

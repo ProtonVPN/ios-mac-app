@@ -60,6 +60,12 @@ struct UpsellFeature {
         case loaded(planOptions: [PlanOptionV2], introRenewalDates: [String: Date], purchaseInProgress: Bool)
     }
 
+    private enum CancelID {
+        case loadProducts
+        case purchase
+        case poll
+    }
+
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
@@ -67,6 +73,7 @@ struct UpsellFeature {
                 return .run { send in
                     await send(Action.finishedLoadingProducts(Result { try await client.getOptions() }))
                 }
+                .cancellable(id: CancelID.loadProducts, cancelInFlight: true)
 
             case let .finishedLoadingProducts(.success(planOptions)):
                 let sortedPlanOptions = planOptions
@@ -119,6 +126,7 @@ struct UpsellFeature {
                 return .run { send in
                     await send(.finishedPurchasing(Result { try await client.attemptPurchase(option) }))
                 }
+                .cancellable(id: CancelID.purchase, cancelInFlight: true)
 
             case let .finishedPurchasing(.success(composedPlan)):
                 log.debug("UpsellFeature purchased plan: \(String(describing: composedPlan?.plan.name))", category: .iap)
@@ -177,6 +185,7 @@ struct UpsellFeature {
                         )
                     ))
                 }
+                .cancellable(id: CancelID.poll, cancelInFlight: true)
 
             case let .finishedPollingTierUpdate(result):
                 if case let .success(tier) = result.tierResult, tier.isPaid {
@@ -190,9 +199,16 @@ struct UpsellFeature {
                     try await clock.sleep(for: .seconds(2))
                     await send(.pollTierUpdate(remainingAttempts: result.remainingAttempts))
                 }
+                .cancellable(id: CancelID.poll, cancelInFlight: true)
 
             case .onExit:
-                return .none
+                // The poll chain alone is up to `maxPollAttempts` two-second sleeps; left running
+                // after dismissal, its sends land in a possibly-deallocated store.
+                return .merge(
+                    .cancel(id: CancelID.loadProducts),
+                    .cancel(id: CancelID.purchase),
+                    .cancel(id: CancelID.poll)
+                )
 
             case .upsold:
                 return .none
@@ -203,7 +219,9 @@ struct UpsellFeature {
     /// After we've loaded products, this function toggles the `purchaseInProgress` flag with some extra assertions
     private func setPurchaseInProgress(_ purchaseInProgress: Bool, state: inout State, shouldAssertLoading: Bool = true) {
         guard case let .loaded(planOptions, introRenewalDates, currentPurchaseInProgress) = state else {
-            assertionFailure("Cannot toggle purchase in progress while still loading")
+            if shouldAssertLoading {
+                assertionFailure("Cannot toggle purchase in progress while still loading")
+            }
             return
         }
 

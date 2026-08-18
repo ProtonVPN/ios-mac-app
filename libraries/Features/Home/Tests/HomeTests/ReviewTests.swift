@@ -24,6 +24,7 @@ import Foundation
 import Sharing
 import Testing
 
+// Serialized to reduce contention on the process-global main-serial-executor
 @MainActor
 @Suite("Review Tests", .serialized)
 struct ReviewTests {
@@ -34,8 +35,6 @@ struct ReviewTests {
     @Shared(.successfulConnectionsInARow) var successfulConnectionsInARow
     @Shared(.whenFirstSuccessfulConnectionStarted) var successfulTimestamp
     @Shared(.whenActiveConnectionStarted) var activeConnectionStartTimestamp
-
-    @Dependency(\.ratingBooster) var ratingBooster
 
     init() {
         $ratingSettings.withLock {
@@ -49,12 +48,6 @@ struct ReviewTests {
         }
         $didPrompt.withLock { $0 = false }
         $userPlan.withLock { $0 = nil }
-    }
-
-    func clear() {
-        $successfulConnectionsInARow.withLock { $0 = 0 }
-        $activeConnectionStartTimestamp.withLock { $0 = nil }
-        $successfulTimestamp.withLock { $0 = nil }
     }
 
     @Test("Does not prompt if days from first connection not high enough")
@@ -76,8 +69,6 @@ struct ReviewTests {
         await testClock.advance(by: .seconds(2))
 
         #expect(!didPrompt)
-
-        clear()
     }
 
     @Test("Prompts after 3 successful connections and 15 days")
@@ -102,8 +93,6 @@ struct ReviewTests {
         await store.send(.activate)
         await testClock.advance(by: .seconds(2))
         #expect(didPrompt)
-
-        clear()
     }
 
     @Test("Does not prompt after 3 successful connections with ineligible plan")
@@ -119,7 +108,6 @@ struct ReviewTests {
         }
         store.exhaustivity = .off
 
-        @Shared(.userPlan) var userPlan
         $userPlan.withLock { $0 = "basic" }
 
         // 1
@@ -137,8 +125,6 @@ struct ReviewTests {
         await store.send(.activate)
         await testClock.advance(by: .seconds(2))
         #expect(!didPrompt)
-
-        clear()
     }
 
     @Test("Does not prompt after being connected for only 5 days")
@@ -149,10 +135,10 @@ struct ReviewTests {
             ReviewFeature()
         } withDependencies: {
             $0.date = .init { now.value }
+            $0.continuousClock = testClock
         }
         store.exhaustivity = .off
 
-        @Shared(.userPlan) var userPlan
         $userPlan.withLock { $0 = "plus" }
 
         await store.send(.activate)
@@ -163,8 +149,6 @@ struct ReviewTests {
         await store.send(.activate)
         await testClock.advance(by: .seconds(2))
         #expect(!didPrompt)
-
-        clear()
     }
 
     @Test("Prompts after being connected for 5 days following a first connection 15 days ago")
@@ -179,7 +163,6 @@ struct ReviewTests {
         }
         store.exhaustivity = .off
 
-        @Shared(.userPlan) var userPlan
         $userPlan.withLock { $0 = "plus" }
 
         await store.send(.activate)
@@ -197,8 +180,6 @@ struct ReviewTests {
         await store.send(.activate)
         await testClock.advance(by: .seconds(2))
         #expect(didPrompt)
-
-        clear()
     }
 
     @Test("Does not prompt after being connected for 5 days with ineligible plan")
@@ -213,7 +194,6 @@ struct ReviewTests {
         }
         store.exhaustivity = .off
 
-        @Shared(.userPlan) var userPlan
         $userPlan.withLock { $0 = "basic" }
 
         await store.send(.activate)
@@ -224,8 +204,6 @@ struct ReviewTests {
         await store.send(.activate)
         await testClock.advance(by: .seconds(2))
         #expect(!didPrompt)
-
-        clear()
     }
 
     @Test("Does not prompt twice after being connected for 15 days")
@@ -252,8 +230,6 @@ struct ReviewTests {
         await store.send(.activate)
         await testClock.advance(by: .seconds(2))
         #expect(!didPrompt)
-
-        clear()
     }
 
     @Test("Failed connections reset the success count")
@@ -265,22 +241,30 @@ struct ReviewTests {
         } withDependencies: {
             $0.date = .init { now.value }
             $0.continuousClock = testClock
+            let implementation = RatingBoosterImplementation()
+            $0.ratingBooster = RatingBooster(
+                connectionFailed: implementation.connectionFailed,
+                didConnect: implementation.didConnect,
+                didDisconnect: implementation.didDisconnect
+            )
         }
         store.exhaustivity = .off
 
-        @Shared(.userPlan) var userPlan
         $userPlan.withLock { $0 = "plus" }
 
         #expect(!didPrompt)
         $successfulConnectionsInARow.withLock { $0 = 1 }
+        $activeConnectionStartTimestamp.withLock { $0 = now.value }
         $successfulTimestamp.withLock { $0 = now.value }
 
         now.withValue { $0 = $0.addingTimeInterval(.days(15)) }
 
         $successfulConnectionsInARow.withLock { $0 = 2 }
 
-        // Fail, reset to 0
+        // Fail: the count and the active-connection timestamp are reset.
         await store.send(.connectionFailed)
+        #expect(successfulConnectionsInARow == 0)
+        #expect(activeConnectionStartTimestamp == nil)
         #expect(!didPrompt)
 
         $successfulConnectionsInARow.withLock { $0 = 3 }
@@ -292,7 +276,5 @@ struct ReviewTests {
         await store.send(.activate)
         await testClock.advance(by: .seconds(2))
         #expect(didPrompt)
-
-        clear()
     }
 }

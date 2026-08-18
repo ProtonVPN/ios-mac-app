@@ -28,6 +28,7 @@ import NetworkingErgonomics
 import Testing
 import VPNAppCore
 
+// Serialized to reduce contention on the process-global main-serial-executor
 @MainActor
 @Suite("User Location Feature Tests", .serialized)
 struct UserLocationFeatureTests {

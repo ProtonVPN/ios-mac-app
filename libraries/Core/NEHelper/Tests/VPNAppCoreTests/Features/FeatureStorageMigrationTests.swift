@@ -25,16 +25,13 @@ import Testing
 @testable import VPNAppCore
 import VPNShared
 
-@Suite(.serialized)
 struct FeatureStorageMigrationTests {
     private static let username = "test-user"
 
     /// Runs `body` with a fresh, isolated `UserDefaults` suite as `defaultAppStorage` and a mock
     /// keychain reporting `username`, so per-user keys resolve to `key + username`.
     private func withFreshStorage<T>(_ body: (UserDefaults) throws -> T) rethrows -> T {
-        let suiteName = "FeatureStorageMigrationTests-\(Self.username)"
-        let defaults = UserDefaults(suiteName: suiteName)!
-        defaults.removePersistentDomain(forName: suiteName)
+        let defaults = UserDefaults.inMemory
         let keychain = MockAuthKeychain()
         keychain.setMockUsername(Self.username)
         return try withDependencies {
@@ -126,10 +123,8 @@ struct FeatureStorageMigrationTests {
     }
 
     @Test("valuesStream suppresses duplicate and unrelated-key writes")
-    func valuesStreamSuppressesRedundantEmissions() async throws {
-        let suiteName = "FeatureStorageMigrationTests-\(Self.username)"
-        let defaults = try #require(UserDefaults(suiteName: suiteName))
-        defaults.removePersistentDomain(forName: suiteName)
+    func valuesStreamSuppressesRedundantEmissions() async {
+        let defaults = UserDefaults.inMemory
         let keychain = MockAuthKeychain()
         keychain.setMockUsername(Self.username)
 
@@ -148,7 +143,9 @@ struct FeatureStorageMigrationTests {
             // A re-write of the same value and a write to an unrelated key in the suite both fire
             // `didChangeNotification` but must NOT emit; the next value the stream produces should be
             // the genuinely-changed one. (If the gate is broken, `next()` will return a stale
-            // `.level1` here instead)
+            // `.level1` here instead.) Deterministic because `didChangeNotification` is delivered
+            // synchronously on the writing thread, so all three writes are fully processed —
+            // gated or buffered — before `next()` is awaited.
             key.setCurrentValue(.level1)
             defaults.set("unrelated", forKey: "SomeOtherKey")
             key.setCurrentValue(.level2)
@@ -162,6 +159,9 @@ struct FeatureStorageMigrationTests {
         let netShield = LockIsolated<[NetShieldType]>([])
         let portForwarding = LockIsolated<[Bool?]>([])
 
+        // NB: only the setters are replaced; the copied providers' getters/streams still share the
+        // `CurrentValueSubject` captured by the static `testValue`s, so they must not be exercised
+        // here until those `testValue`s become computed properties.
         func install(_ values: inout DependencyValues) {
             var natProvider = NATTypePropertyProvider.testValue
             natProvider.setNATType = { value in nat.withValue { $0.append(value) } }
@@ -176,9 +176,9 @@ struct FeatureStorageMigrationTests {
     }
 
     @Test("Plan downgrade to free turns paid features off and disables Secure Core")
-    func planDowngradeResetsFeatures() throws {
+    func planDowngradeResetsFeatures() {
         let spies = PlanChangeSpies()
-        let defaults = try #require(UserDefaults(suiteName: "PlanChangeTests-\(UUID().uuidString)"))
+        let defaults = UserDefaults.inMemory
         defaults.set(true, forKey: "secureCoreToggle")
 
         withDependencies {
@@ -195,9 +195,9 @@ struct FeatureStorageMigrationTests {
     }
 
     @Test("Plan upgrade from free enables NetShield and leaves other features untouched")
-    func planUpgradeEnablesNetShield() throws {
+    func planUpgradeEnablesNetShield() {
         let spies = PlanChangeSpies()
-        let defaults = try #require(UserDefaults(suiteName: "PlanChangeTests-\(UUID().uuidString)"))
+        let defaults = UserDefaults.inMemory
         defaults.set(true, forKey: "secureCoreToggle")
 
         withDependencies {

@@ -311,14 +311,16 @@ private extension SidebarFeature {
                         }
                     }
                     .cancellable(id: CancelID.portForwardingSetting),
-                    .run { [plutoniumFeature = $plutoniumFeature] send in
-                        for await _ in plutoniumFeature.publisher.values {
+                    .run { send in
+                        @SharedReader(.plutoniumFeature) var plutoniumFeature
+                        for await _ in $plutoniumFeature.publisher.values {
                             await send(.syncPlutoniumState)
                         }
                     }
                     .cancellable(id: CancelID.plutoniumSetting),
-                    .run { [killSwitchMode = $killSwitchMode] send in
-                        for await value in killSwitchMode.publisher.removeDuplicates().values.dropFirst() {
+                    .run { send in
+                        @SharedReader(.killSwitchMode) var killSwitchMode
+                        for await value in $killSwitchMode.publisher.removeDuplicates().values.dropFirst() {
                             await send(.killSwitchModeChanged(value))
                         }
                     }
@@ -362,7 +364,8 @@ private extension SidebarFeature {
                     .cancel(id: CancelID.connectionConnectCommandEffect),
                     .cancel(id: CancelID.plutoniumSync),
                     .cancel(id: CancelID.planChange),
-                    .cancel(id: CancelID.announcementRefresh)
+                    .cancel(id: CancelID.announcementRefresh),
+                    .cancel(id: CancelID.killSwitchSetting)
                 )
             case let .planChanged(planChange):
                 // update the persisted feature settings so a downgrade clears paid features

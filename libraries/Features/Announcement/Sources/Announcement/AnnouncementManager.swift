@@ -84,11 +84,13 @@ public extension AnnouncementManager {
 
 extension AnnouncementManager: DependencyKey {
     public static let liveValue: AnnouncementManager = {
-        // Read/write directly against the user-scoped key
-        let key: UserScopedAppStorageKey<[Announcement]?> = .announcements
+        @Sendable
+        func key() -> UserScopedAppStorageKey<[Announcement]?> {
+            .announcements
+        }
 
         let currentAnnouncements: @Sendable () -> [Announcement] = {
-            (key.currentValue() ?? [])
+            (key().currentValue() ?? [])
                 .filter { $0.startTime.isPast && $0.endTime.isFuture && $0.offer != nil }
                 // sorting is needed because we only want to consider the first announcement
                 .sorted { $0.startTime < $1.startTime }
@@ -97,7 +99,7 @@ extension AnnouncementManager: DependencyKey {
         return AnnouncementManager(
             fetchCurrentAnnouncementsFromStorage: { currentAnnouncements() },
             fetchCurrentOfferBannerFromStorage: {
-                let offers = (key.currentValue() ?? [])
+                let offers = (key().currentValue() ?? [])
                     .filter { $0.knownType == .banner && $0.startTime.isPast && $0.endTime.isFuture && $0.offer != nil }
                     .sorted { $0.endTime < $1.endTime }
                 if offers.count > 1 {
@@ -107,6 +109,7 @@ extension AnnouncementManager: DependencyKey {
                 return offers.first?.isRead == false ? offers.first : nil
             },
             markAsRead: { notificationID in
+                let key = key()
                 guard var current = key.currentValue(),
                       let index = current.firstIndex(where: { $0.notificationID == notificationID }) else {
                     return

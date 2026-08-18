@@ -28,7 +28,7 @@ import Foundation
 /// this type.
 ///
 /// - Note: Check `VPNAccelerator` for implementation ideas.
-public typealias ProvidableFeature = AppFeature & DefaultableFeature & ModularAppFeature & StorableFeature
+public typealias ProvidableFeature = AppFeature & DefaultableFeature & Equatable & ModularAppFeature & StorableFeature
 
 public protocol DefaultableFeature {
     static func defaultValue(userTier: VpnTier, featureFlags: FeatureFlags) -> Self

@@ -21,15 +21,14 @@ import Foundation
 import Sharing
 
 /// A `SharedKey` exposing a `ProvidableFeature`'s *effective* (authorized) value through `@Shared`.
-///
-/// Reads return the clamped value (`AuthorizedFeatureValue.value()`); writes persist the raw user
-/// value; observation re-derives on `UserDefaults` changes. This replaces the previous
-/// `FeatureSharedKey` (which wrapped the removed `AppFeaturePropertyProvider`).
-public final class AuthorizedFeatureSharedKey<Value: ProvidableFeature & Sendable>: SharedKey {
+public struct AuthorizedFeatureSharedKey<Value: ProvidableFeature & Sendable>: SharedKey {
     private let feature: AuthorizedFeatureValue<Value>
 
-    public var id: some Hashable {
-        Value.storageKey
+    /// This key's id says exactly whose value it is and where it's stored. That matters because
+    /// `swift-sharing` reuses one cached value per id — if the id didn't mention the user or the storage,
+    /// everyone would get whatever value was cached first, even if it belonged to someone else.
+    public var id: UserScopedAppStorageKey<Value?>.ID {
+        feature.id
     }
 
     public init() {

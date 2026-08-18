@@ -25,10 +25,7 @@ import DomainTestSupport
 import Testing
 
 @MainActor
-@Suite(.serialized)
 struct ConnectionStatusFeatureTests {
-    // The protection state is in-memory shared state and the user location is app storage: both are
-    // process-wide, so the suite runs serialized and starts every test from a known baseline.
     @Shared(.protectionState) private var protectionState: ProtectionState
     @Shared(.userLocation) private var userLocation: StoredUserLocation?
 

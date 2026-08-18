@@ -21,16 +21,16 @@ import Foundation
 
 /// Tracks the last value forwarded through a `UserDefaults`-backed stream and reports whether a new
 /// value differs from it
-struct ChangeGate<Value: Sendable>: Sendable {
+public struct ChangeGate<Value: Sendable>: Sendable {
     private let previous: LockIsolated<Value>
 
-    init(initial: Value) {
+    public init(initial: Value) {
         self.previous = LockIsolated(initial)
     }
 
     /// Returns `true` — and stores `newValue` when `newValue` differs from the
     /// last value seen; `false` when it is an duplicate
-    func isChange(_ newValue: Value) -> Bool {
+    public func isChange(_ newValue: Value) -> Bool {
         previous.withValue { last in
             if Self.valuesAreEqual(newValue, last) == true { return false }
             last = newValue

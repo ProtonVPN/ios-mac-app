@@ -88,30 +88,36 @@ private extension SharedKey where Self == AuthorizedFeatureSharedKey<HermesFeatu
 #endif
 
 extension HermesClient: DependencyKey {
-    @Shared(.hermesResolvers) private static var hermesResolvers
-    @Shared(.hermesEnabled) private static var hermesEnabled = .defaultValue
-
+    // Shared state is deliberately constructed inside each closure, never in static properties
     public static let liveValue: HermesClient = .init {
-        $hermesEnabled.read { $0.boolValue }
+        @Shared(.hermesEnabled) var hermesEnabled = .defaultValue
+        return $hermesEnabled.read { $0.boolValue }
     } setIsEnabled: { newValue in
+        @Shared(.hermesEnabled) var hermesEnabled = .defaultValue
         $hermesEnabled.withLock { $0 = .fromBoolValue(newValue) }
     } activeHermesResolvers: {
-        $hermesResolvers.read { $0 }
+        @Shared(.hermesResolvers) var hermesResolvers
+        return $hermesResolvers.read { $0 }
     } validateHermesLocation: { location in
         HermesResolverLocationValidator.isValidIPv4(location) != nil
     } addHermesResolver: { newResolver in
-        let newResolvers = hermesResolvers + [newResolver]
-        $hermesResolvers.withLock { $0 = newResolvers }
+        @Shared(.hermesResolvers) var hermesResolvers
+        // Mutate inside the lock: a read-copy-write across separate statements loses updates when
+        // two mutations race.
+        $hermesResolvers.withLock { $0.append(newResolver) }
         return true
     } removeHermesResolver: { index in
-        var copy = hermesResolvers
-        copy.remove(at: index)
-        $hermesResolvers.withLock { $0 = copy }
-        return true
+        @Shared(.hermesResolvers) var hermesResolvers
+        var removed = false
+        $hermesResolvers.withLock { resolvers in
+            guard resolvers.indices.contains(index) else { return }
+            resolvers.remove(at: index)
+            removed = true
+        }
+        return removed
     } applyDiff: { diff in
-        var copy = hermesResolvers
-        copy = copy.applying(diff) ?? copy
-        $hermesResolvers.withLock { $0 = copy }
+        @Shared(.hermesResolvers) var hermesResolvers
+        $hermesResolvers.withLock { $0 = $0.applying(diff) ?? $0 }
     }
 
     #if DEBUG
@@ -126,20 +132,20 @@ extension HermesClient: DependencyKey {
             HermesResolverLocationValidator.isValidIPv4(location) != nil
         } addHermesResolver: { newResolver in
             @Shared(.testHermesResolvers) var hermesResolvers
-            let newResolvers = hermesResolvers + [newResolver]
-            $hermesResolvers.withLock { $0 = newResolvers }
+            $hermesResolvers.withLock { $0.append(newResolver) }
             return true
         } removeHermesResolver: { index in
             @Shared(.testHermesResolvers) var hermesResolvers
-            var copy = hermesResolvers
-            copy.remove(at: index)
-            $hermesResolvers.withLock { $0 = copy }
-            return true
+            var removed = false
+            $hermesResolvers.withLock { resolvers in
+                guard resolvers.indices.contains(index) else { return }
+                resolvers.remove(at: index)
+                removed = true
+            }
+            return removed
         } applyDiff: { diff in
             @Shared(.testHermesResolvers) var hermesResolvers
-            var copy = hermesResolvers
-            copy = copy.applying(diff) ?? copy
-            $hermesResolvers.withLock { $0 = copy }
+            $hermesResolvers.withLock { $0 = $0.applying(diff) ?? $0 }
         }
     #endif
 }

@@ -73,16 +73,20 @@ public extension CredentialsProvider {
 
 extension CredentialsProvider: DependencyKey {
     public static var liveValue: CredentialsProvider {
-        CredentialsProvider(
+        // Provider values are captured into escaped contexts, where a deferred
+        // `@Dependency` lookup would resolve outside any dependency scope
+        @Dependency(\.vpnKeychain) var vpnKeychain
+        return CredentialsProvider(
             getCredentials: {
-                @Dependency(\.vpnKeychain) var vpnKeychain
-                return try? vpnKeychain.fetchCached()
+                try? vpnKeychain.fetchCached()
             }
         )
     }
 
     #if DEBUG
-        public static var testValue: CredentialsProvider = .constant(credentials: .tier(.paid))
+        public static var testValue: CredentialsProvider {
+            .constant(credentials: .tier(.paid))
+        }
 
         /// Creates a provider that always returns `credentials`.
         public static func constant(credentials: CachedVpnCredentials?) -> CredentialsProvider {

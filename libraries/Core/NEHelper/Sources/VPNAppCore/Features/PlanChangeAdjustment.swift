@@ -42,17 +42,15 @@ public struct PlanChangeClient: Sendable {
 }
 
 extension PlanChangeClient: DependencyKey {
-    public static let liveValue = PlanChangeClient {
-        AsyncStream { continuation in
-            let observer = AppEvent.planChanged.subscribe { notification in
-                guard let info = notification.object as? VpnDowngradeInfo else { return }
-                continuation.yield(PlanChange(oldTier: info.from.maxTier, newTier: info.to.maxTier))
-            }
-            continuation.onTermination = { _ in
-                NotificationCenter.default.removeObserver(observer)
-            }
-        }
-    }
+    public static let liveValue = PlanChangeClient(events: {
+        UncheckedSendable(
+            NotificationCenter.default
+                .notifications(named: AppEvent.planChanged.name)
+                .compactMap { $0.object as? VpnDowngradeInfo }
+                .map { info in PlanChange(oldTier: info.from.maxTier, newTier: info.to.maxTier) }
+        )
+        .eraseToStream()
+    })
 
     public static let testValue = PlanChangeClient { AsyncStream { $0.finish() } }
 }
@@ -63,10 +61,6 @@ public extension DependencyValues {
         set { self[PlanChangeClient.self] = newValue }
     }
 }
-
-/// Restores `VpnGateway.userPlanChanged` performed on a plan
-/// change: reset paid feature settings back to their free defaults on a downgrade to free,
-/// and enable NetShield on an upgrade from free
 
 public func applyPlanChangeFeatureResets(_ planChange: PlanChange) {
     @Dependency(\.natTypePropertyProvider) var natTypePropertyProvider

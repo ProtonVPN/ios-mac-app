@@ -48,23 +48,49 @@ extension NATTypePropertyProvider: DependencyKey {
     private static let key = "NATType"
 
     public static let liveValue: Self = {
-        let storage: UserScopedAppStorageKey<NATType?> = .rawInt(key)
+        @Sendable
+        func storage() -> UserScopedAppStorageKey<NATType?> {
+            .rawInt(key)
+        }
 
-        let canUse: () -> Bool = {
-            @SharedReader(.userTier) var userTier: VpnTier?
-            @SharedReader(.featureFlags) var featureFlags: FeatureFlags
-            return NATFeature.canUse(userTier: userTier ?? .free, featureFlags: featureFlags).isAllowed
+        @Sendable
+        func effectiveValue(
+            stored: NATType?,
+            userTier: VpnTier,
+            featureFlags: FeatureFlags
+        ) -> NATType {
+            guard NATFeature.canUse(userTier: userTier, featureFlags: featureFlags).isAllowed else {
+                return .default
+            }
+            return stored ?? .default
         }
 
         let getNATType: () -> NATType = {
-            guard canUse() else { return .default }
-            return storage.currentValue() ?? .default
+            @SharedReader(.userTier) var userTier: VpnTier?
+            @SharedReader(.featureFlags) var featureFlags: FeatureFlags
+            return effectiveValue(
+                stored: storage().currentValue(),
+                userTier: userTier ?? .free,
+                featureFlags: featureFlags
+            )
         }
 
         return Self(
             getNATType: getNATType,
-            setNATType: { storage.setCurrentValue($0) },
-            natTypeStream: { storage.mappedStream { _ in getNATType() } }
+            setNATType: { storage().setCurrentValue($0) },
+            natTypeStream: {
+                @SharedReader(.userTier) var userTier: VpnTier?
+                @SharedReader(.featureFlags) var featureFlags: FeatureFlags
+                let tierReader = $userTier
+                let flagsReader = $featureFlags
+                return storage().mappedStream { stored in
+                    effectiveValue(
+                        stored: stored,
+                        userTier: tierReader.wrappedValue ?? .free,
+                        featureFlags: flagsReader.wrappedValue
+                    )
+                }
+            }
         )
     }()
 

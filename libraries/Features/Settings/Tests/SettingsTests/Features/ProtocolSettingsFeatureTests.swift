@@ -21,9 +21,11 @@ import Connection
 import Ergonomics
 @testable import Settings
 @testable import SettingsShared
+import Sharing
 import Testing
+import VPNAppCore
 
-@Suite("Protocol Settings Tests", .serialized)
+@Suite("Protocol Settings Tests")
 @MainActor
 struct ProtocolSettingsTests {
     @Test("Protocol is set when disconnected")
@@ -40,6 +42,9 @@ struct ProtocolSettingsTests {
         await store.receive(.setProtocol(.success(.vpnProtocol(.ike)))) { resultState in
             resultState.connectionProtocol = .vpnProtocol(.ike)
         }
+
+        @SharedReader(.connectionProtocol) var connectionProtocol
+        #expect(connectionProtocol == .vpnProtocol(.ike))
     }
 
     @Test("Reconnection alert is shown when connected")
@@ -59,6 +64,10 @@ struct ProtocolSettingsTests {
         await store.receive(.showReconnectionAlert(.vpnProtocol(.ike))) { resultState in
             resultState.reconnectionAlert = SettingsAlert.reconnectionAlertState(for: .vpnProtocol(.ike))
         }
+
+        // Showing the alert must not persist anything yet.
+        @SharedReader(.connectionProtocol) var connectionProtocol
+        #expect(connectionProtocol == .smartProtocol)
     }
 
     @Test("Connection is restarted with the new protocol")
@@ -78,6 +87,9 @@ struct ProtocolSettingsTests {
         await store.receive(.setProtocol(.success(.vpnProtocol(.ike)))) { resultState in
             resultState.connectionProtocol = .vpnProtocol(.ike)
         }
+
+        @SharedReader(.connectionProtocol) var connectionProtocol
+        #expect(connectionProtocol == .vpnProtocol(.ike))
     }
 
     @Test("Connection is uninterrupted when the alert is dismissed")
@@ -95,5 +107,9 @@ struct ProtocolSettingsTests {
         await store.send(.reconnectionAlert(.dismiss)) { resultState in
             resultState.reconnectionAlert = nil
         }
+
+        // Dismissing the alert must leave the stored protocol untouched.
+        @SharedReader(.connectionProtocol) var connectionProtocol
+        #expect(connectionProtocol == .smartProtocol)
     }
 }

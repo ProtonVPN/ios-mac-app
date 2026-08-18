@@ -25,13 +25,9 @@ import Testing
 
 /// Verifies the `@Shared` keys migrated off the legacy `PropertiesManager` read the same
 /// UserDefaults representation the legacy properties used, and round-trip correctly.
-@Suite(.serialized)
 struct PropertiesSharedKeyTests {
     private func withStore<T>(_ body: (UserDefaults) throws -> T) rethrows -> T {
-        // Unique suite per invocation: swift-sharing memoizes a store per suite *name*, so reusing a
-        // name with a fresh `UserDefaults` object across tests trips its "new store object" check.
-        let suiteName = "PropertiesSharedKeyTests-\(UUID().uuidString)"
-        let defaults = UserDefaults(suiteName: suiteName)!
+        let defaults = UserDefaults.inMemory
         return try withDependencies {
             $0.defaultAppStorage = defaults
         } operation: {
@@ -67,6 +63,7 @@ struct PropertiesSharedKeyTests {
             @SharedReader(.maintenanceServerRefreshIntereval) var interval
             #expect(interval == DomainConstants.Maintenance.defaultMaintenanceCheckTime)
 
+            // NB: the misspelling is the legacy on-disk key; it must stay.
             defaults.set(42, forKey: "MaintenanceServerRefreshIntereval")
             #expect(interval == 42)
         }
@@ -87,6 +84,8 @@ struct PropertiesSharedKeyTests {
     func userLocation() throws {
         try withStore { defaults in
             // Values written before the location carried a timestamp are bare `UserLocation`s.
+            // Seeded *before* the reference is created, so this exercises `load`, not the
+            // subscription — which is the legacy-read contract under test.
             let legacy = UserLocation(ip: "1.2.3.4", country: "PL", isp: "Play")
             try defaults.set(JSONEncoder().encode(legacy), forKey: "UserLocation")
 
@@ -113,12 +112,9 @@ struct PropertiesSharedKeyTests {
     }
 
     @Test("userLocation publisher emits on change")
-    func userLocationPublisher() async throws {
-        let suiteName = "PropertiesSharedKeyTests-publisher"
-        let defaults = try #require(UserDefaults(suiteName: suiteName))
-        defaults.removePersistentDomain(forName: suiteName)
-        try await withDependencies {
-            $0.defaultAppStorage = defaults
+    func userLocationPublisher() async {
+        await withDependencies {
+            $0.defaultAppStorage = UserDefaults.inMemory
         } operation: {
             @Shared(.userLocation) var userLocation
             let expected = StoredUserLocation(
@@ -133,6 +129,7 @@ struct PropertiesSharedKeyTests {
 
             $userLocation.withLock { $0 = expected }
 
+            await Task.yield()
             #expect(received.value.contains(expected))
         }
     }

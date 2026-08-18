@@ -34,30 +34,47 @@ import Telemetry
 struct ReviewPrompter: DependencyKey {
     let prompt: () async -> Void
 
-    @MainActor static var liveValue = ReviewPrompter {
-        @Shared(.whenLastReviewShown) var reviewTimestamp
-        @Shared(.successfulConnectionsSinceLastPrompt) var successfulConnectionsSinceLastPrompt
-        @Dependency(\.date) var date
-        #if canImport(UIKit) && canImport(StoreKit)
-            let activeScene = UIApplication.shared
-                .connectedScenes
-                .first { $0.activationState == .foregroundActive } as? UIWindowScene
+    static let liveValue = ReviewPrompter {
+        let requested = await MainActor.run { () -> Bool in
+            #if canImport(UIKit) && canImport(StoreKit)
+                let activeScene = UIApplication.shared
+                    .connectedScenes
+                    .first { $0.activationState == .foregroundActive } as? UIWindowScene
 
-            activeScene.map { AppStore.requestReview(in: $0) }
+                guard let activeScene else { return false }
+                AppStore.requestReview(in: activeScene)
+                return true
+            #elseif canImport(StoreKit)
+                SKStoreReviewController.requestReview()
+                return true
+            #else
+                return false
+            #endif
+        }
 
-        #elseif canImport(StoreKit)
-            SKStoreReviewController.requestReview()
-        #endif
+        // Only consume the cooldown when there was a scene to ask in. `requestReview` itself
+        // never reports whether the system actually showed anything, so a missing foreground
+        // scene (the app backgrounded during the 2s prompt delay) is the one detectable failure —
+        // previously it burned the timestamp and counter anyway, silencing prompts for the full
+        // `daysLastReviewPassed` window without one ever having been shown.
+        guard requested else {
+            log.info("Review prompt skipped: no foreground-active scene to present in")
+            return
+        }
 
         @Dependency(\.telemetryService) var telemetryService
         await telemetryService.ratingBoosterPromptRequested()
+
+        @Dependency(\.date) var date
+        @Shared(.whenLastReviewShown) var reviewTimestamp
+        @Shared(.successfulConnectionsSinceLastPrompt) var successfulConnectionsSinceLastPrompt
         $successfulConnectionsSinceLastPrompt.withLock { $0 = 0 }
         $reviewTimestamp.withLock { $0 = date.now }
     }
 
     #if DEBUG
         /// Sets a simple ``SharedKey`` to say that the prompt did in fact happen.
-        static var testValue = ReviewPrompter {
+        static let testValue = ReviewPrompter {
             @Shared(.didPromptReview) var didPrompt
             $didPrompt.withLock {
                 $0 = true

@@ -23,7 +23,6 @@ import Sharing
 import Testing
 import VPNShared
 
-@Suite(.serialized)
 struct AnnouncementRefresherImplementationTests {
     /// Counts how many times the mocked API endpoint was hit (from the refresher's detached `Task`)
     private actor CallCounter {
@@ -36,20 +35,13 @@ struct AnnouncementRefresherImplementationTests {
     // MARK: - Helpers
 
     private func withStorage<T>(_ body: () async -> T) async -> T {
-        let suiteName = "AnnouncementRefresherImplementationTests-\(UUID().uuidString)"
-        let defaults = UserDefaults(suiteName: suiteName)!
-        defaults.removePersistentDomain(forName: suiteName)
         let keychain = MockAuthKeychain()
         keychain.setMockUsername("test-user")
         return await withDependencies {
-            $0.defaultAppStorage = defaults
+            $0.defaultAppStorage = UserDefaults.inMemory
             $0.authKeychain = keychain
         } operation: {
-            @Shared(.lastAnnouncementRefreshDate) var lastRefreshDate: Date?
-            @Shared(.announcements) var announcements: [Announcement]?
-            $lastRefreshDate.withLock { $0 = nil }
-            $announcements.withLock { $0 = nil }
-            return await body()
+            await body()
         }
     }
 

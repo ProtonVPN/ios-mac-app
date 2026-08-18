@@ -50,23 +50,49 @@ extension PortForwardingPropertyProvider: DependencyKey {
     private static let key = "PortForwarding_"
 
     public static let liveValue: Self = {
-        let storage: UserScopedAppStorageKey<Bool?> = .bool(key)
+        @Sendable
+        func storage() -> UserScopedAppStorageKey<Bool?> {
+            .bool(key)
+        }
 
-        let canUse: () -> Bool = {
-            @SharedReader(.userTier) var userTier: VpnTier?
-            @SharedReader(.featureFlags) var featureFlags: FeatureFlags
-            return PortForwardingFeature.canUse(userTier: userTier ?? .free, featureFlags: featureFlags).isAllowed
+        @Sendable
+        func effectiveValue(
+            stored: Bool?,
+            userTier: VpnTier,
+            featureFlags: FeatureFlags
+        ) -> Bool? {
+            guard PortForwardingFeature.canUse(userTier: userTier, featureFlags: featureFlags).isAllowed else {
+                return nil
+            }
+            return stored ?? false // false is the default value
         }
 
         let getPortForwarding: () -> Bool? = {
-            guard canUse() else { return nil }
-            return storage.currentValue() ?? false // false is the default value
+            @SharedReader(.userTier) var userTier: VpnTier?
+            @SharedReader(.featureFlags) var featureFlags: FeatureFlags
+            return effectiveValue(
+                stored: storage().currentValue(),
+                userTier: userTier ?? .free,
+                featureFlags: featureFlags
+            )
         }
 
         return Self(
             getPortForwarding: getPortForwarding,
-            setPortForwarding: { storage.setCurrentValue($0) },
-            portForwardingStream: { storage.mappedStream { _ in getPortForwarding() } }
+            setPortForwarding: { storage().setCurrentValue($0) },
+            portForwardingStream: {
+                @SharedReader(.userTier) var userTier: VpnTier?
+                @SharedReader(.featureFlags) var featureFlags: FeatureFlags
+                let tierReader = $userTier
+                let flagsReader = $featureFlags
+                return storage().mappedStream { stored in
+                    effectiveValue(
+                        stored: stored,
+                        userTier: tierReader.wrappedValue ?? .free,
+                        featureFlags: flagsReader.wrappedValue
+                    )
+                }
+            }
         )
     }()
 

@@ -24,7 +24,6 @@ import Testing
 @testable import VPNAppCore
 import VPNShared
 
-@Suite(.serialized)
 struct ServerChangeAuthorizerTests {
     private static let username = "test-user"
 
@@ -49,17 +48,14 @@ struct ServerChangeAuthorizerTests {
         config: ServerChangeConfig = Self.config,
         connectionStack: [ConnectionStackItem] = [],
         _ body: (ServerChangeAuthorizer) throws -> T
-    ) throws -> T {
-        let suiteName = "ServerChangeAuthorizerTests-\(Self.username)"
-        let defaults = try #require(UserDefaults(suiteName: suiteName))
-        defaults.removePersistentDomain(forName: suiteName)
+    ) rethrows -> T {
         let keychain = MockAuthKeychain()
         keychain.setMockUsername(Self.username)
 
         return try withDependencies {
             $0.date = .constant(date)
             $0.credentialsProvider = .constant(credentials: .tier(freeTier ? .free : .paid))
-            $0.defaultAppStorage = defaults
+            $0.defaultAppStorage = UserDefaults.inMemory
             $0.authKeychain = keychain
             $0.serverChangeAuthorizer = .makeLive()
         } operation: {
@@ -74,33 +70,33 @@ struct ServerChangeAuthorizerTests {
     }
 
     @Test
-    func authorizesServerChangeWhenStackIsEmpty() throws {
-        try withServerChange(date: Self.start, connectionStack: []) { authorizer in
+    func authorizesServerChangeWhenStackIsEmpty() {
+        withServerChange(date: Self.start, connectionStack: []) { authorizer in
             #expect(authorizer.serverChangeAvailability() == .available)
         }
     }
 
     @Test
-    func returnsShortDelayWhenStackContainsRecentServerChange() throws {
+    func returnsShortDelayWhenStackContainsRecentServerChange() {
         let delayExpiryDate = Self.start.addingTimeInterval(5)
         let connectionStack = [ConnectionStackItem(intent: .random, date: Self.start, upsellNext: false)]
 
-        try withServerChange(date: Self.start, connectionStack: connectionStack) { authorizer in
+        withServerChange(date: Self.start, connectionStack: connectionStack) { authorizer in
             #expect(authorizer.serverChangeAvailability() == .unavailable(until: delayExpiryDate, duration: 5, exhaustedSkips: false))
         }
 
-        try withServerChange(date: delayExpiryDate, connectionStack: connectionStack) { authorizer in
+        withServerChange(date: delayExpiryDate, connectionStack: connectionStack) { authorizer in
             #expect(authorizer.serverChangeAvailability() == .available)
         }
     }
 
     @Test
-    func ignoresNonRandomServerConnectionItems() throws {
+    func ignoresNonRandomServerConnectionItems() {
         let later = Self.start.addingTimeInterval(1)
         let delayExpiryDate = Self.start.addingTimeInterval(5)
         let nonRandomItem = ConnectionStackItem(intent: .fastest, date: later, upsellNext: false)
 
-        try withServerChange(
+        withServerChange(
             date: Self.start,
             connectionStack: [ConnectionStackItem(intent: .fastest, date: Self.start, upsellNext: false)]
         ) { authorizer in
@@ -117,40 +113,40 @@ struct ServerChangeAuthorizerTests {
     }
 
     @Test
-    func alwaysReturnsAvailableForPaidUsers() throws {
+    func alwaysReturnsAvailableForPaidUsers() {
         let delayExpiryDate = Self.start.addingTimeInterval(5)
         let connectionStack = [ConnectionStackItem(intent: .random, date: Self.start, upsellNext: false)]
 
-        try withServerChange(date: Self.start, freeTier: true, connectionStack: connectionStack) { authorizer in
+        withServerChange(date: Self.start, freeTier: true, connectionStack: connectionStack) { authorizer in
             #expect(authorizer.serverChangeAvailability() == .unavailable(until: delayExpiryDate, duration: 5, exhaustedSkips: false))
         }
 
-        try withServerChange(date: Self.start, freeTier: false, connectionStack: connectionStack) { authorizer in
+        withServerChange(date: Self.start, freeTier: false, connectionStack: connectionStack) { authorizer in
             #expect(authorizer.serverChangeAvailability() == .available)
         }
     }
 
     @Test
-    func returnsLongDelayWhenStackContainsRecentServerChangeWithFlagTrue() throws {
+    func returnsLongDelayWhenStackContainsRecentServerChangeWithFlagTrue() {
         let midDelay = Self.start.addingTimeInterval(5)
         let delayExpiryDate = Self.start.addingTimeInterval(10)
         let connectionStack = [ConnectionStackItem(intent: .random, date: Self.start, upsellNext: true)]
 
-        try withServerChange(date: Self.start, connectionStack: connectionStack) { authorizer in
+        withServerChange(date: Self.start, connectionStack: connectionStack) { authorizer in
             #expect(authorizer.serverChangeAvailability() == .unavailable(until: delayExpiryDate, duration: 10, exhaustedSkips: true))
         }
 
-        try withServerChange(date: midDelay, connectionStack: connectionStack) { authorizer in
+        withServerChange(date: midDelay, connectionStack: connectionStack) { authorizer in
             #expect(authorizer.serverChangeAvailability() == .unavailable(until: delayExpiryDate, duration: 10, exhaustedSkips: true))
         }
 
-        try withServerChange(date: delayExpiryDate, connectionStack: connectionStack) { authorizer in
+        withServerChange(date: delayExpiryDate, connectionStack: connectionStack) { authorizer in
             #expect(authorizer.serverChangeAvailability() == .available)
         }
     }
 
     @Test
-    func registeringAttemptPushesItemWithCorrectFlagValue() throws {
+    func registeringAttemptPushesItemWithCorrectFlagValue() {
         let second = Self.start.addingTimeInterval(5)
         let third = Self.start.addingTimeInterval(10)
         let config = ServerChangeConfig(
@@ -159,7 +155,7 @@ struct ServerChangeAuthorizerTests {
             changeServerLongDelayInSeconds: 10
         )
 
-        try withServerChange(date: Self.start, config: config, connectionStack: []) { authorizer in
+        withServerChange(date: Self.start, config: config, connectionStack: []) { authorizer in
             @SharedReader(.serverChangeConnectionStack) var sharedStack
 
             authorizer.registerServerChange(connectedAt: Self.start)
@@ -183,14 +179,14 @@ struct ServerChangeAuthorizerTests {
     }
 
     @Test
-    func servesActiveCooldownFromCacheInsteadOfRereadingStorage() throws {
+    func servesActiveCooldownFromCacheInsteadOfRereadingStorage() {
         let cooldown = ServerChangeAuthorizer.ServerChangeAvailability.unavailable(
             until: Self.start.addingTimeInterval(5),
             duration: 5,
             exhaustedSkips: false
         )
 
-        try withServerChange(
+        withServerChange(
             date: Self.start,
             connectionStack: [ConnectionStackItem(intent: .random, date: Self.start, upsellNext: false)]
         ) { authorizer in
@@ -202,6 +198,23 @@ struct ServerChangeAuthorizerTests {
             // The cooldown hasn't expired yet, so it is answered from the cache — an emptied
             // stack only takes effect once the cached window lapses.
             #expect(authorizer.serverChangeAvailability() == cooldown)
+        }
+    }
+
+    @Test
+    func upgradingToPaidBypassesCachedCooldown() {
+        let connectionStack = [ConnectionStackItem(intent: .random, date: Self.start, upsellNext: false)]
+
+        withServerChange(date: Self.start, connectionStack: connectionStack) { authorizer in
+            // Cache with an active free-tier cooldown
+            #expect(authorizer.serverChangeAvailability() != .available)
+
+            // The tier check runs before the cache: no free-tier waiting
+            withDependencies {
+                $0.credentialsProvider = .constant(credentials: .tier(.paid))
+            } operation: {
+                #expect(authorizer.serverChangeAvailability() == .available)
+            }
         }
     }
 }
