@@ -393,7 +393,7 @@ private extension ProTUNAdapter {
                     await coordinator.start()
                 }
                 group.addTask {
-                    let debouncedStream = coordinator.streamSource.newStream._throttle(for: .milliseconds(250))
+                    let debouncedStream = coordinator.events.subscribe()._throttle(for: .milliseconds(250))
                     for await event in debouncedStream {
                         await self.handleLocalAgentCoordinatorEvent(event)
                     }

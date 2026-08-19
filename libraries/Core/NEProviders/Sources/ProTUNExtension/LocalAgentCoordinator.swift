@@ -30,7 +30,7 @@ final class LocalAgentCoordinator: @unchecked Sendable {
         case forkSelectorRequest
     }
 
-    let streamSource: StreamSource<Event>
+    let events = Broadcast<Event>()
 
     private static let statsFetchingInterval: Duration = .seconds(30)
     private static let statsFetchingTolerance: Duration = .seconds(1)
@@ -39,13 +39,8 @@ final class LocalAgentCoordinator: @unchecked Sendable {
 
     @Dependency(\.extensionIPCServer) private var extensionIPCServer
 
-    private let continuation: AsyncStream<Event>.Continuation
-
     init(adapter: ProTUNAdapter) {
         self.adapter = adapter
-        let (stream, continuation) = AsyncStream<Event>.makeStream()
-        self.streamSource = StreamSource.source(for: stream)
-        self.continuation = continuation
     }
 
     func start() async {
@@ -65,7 +60,7 @@ final class LocalAgentCoordinator: @unchecked Sendable {
 
 private extension LocalAgentCoordinator {
     func listenToEvents() async {
-        for await event in adapter.eventDelegate.eventSource.newStream {
+        for await event in adapter.eventDelegate.events.subscribe() {
             switch event {
             case let .localAgentStats(br, bs, mb, ab, tb, acb, dataSaved):
                 sendLocalAgentStats(
@@ -93,7 +88,7 @@ private extension LocalAgentCoordinator {
             case let .error(.apiError(_, _, _, _, refreshTokenInvalid)) where refreshTokenInvalid:
                 fallthrough
             case .error(.forkSelectorNeeded):
-                continuation.yield(.forkSelectorRequest)
+                events.send(.forkSelectorRequest)
             case let .error(.apiError(_, httpCode, bodyCode, _, _)):
                 Logger.localAgent.error("Encountered API error: \(event)")
                 await sendError(error: APIError(httpCode: httpCode ?? 0, bodyCode: bodyCode ?? 0))
@@ -113,7 +108,7 @@ private extension LocalAgentCoordinator {
 
     /// Listen for connection-state updates from ProTUN and dispatch updates to the raw channels.
     func listenToConnectionState() async {
-        for await state in adapter.stateDelegate.stateSource.newStream {
+        for await state in adapter.stateDelegate.states.subscribe() {
             // Every state transition includes the UUID of the current (or last) request handled by the
             // ConfigurationStore, so the app can know if its requested settings have been applied.
             await extensionIPCServer.publishExtensionState(

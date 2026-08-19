@@ -26,14 +26,14 @@ final class ProTUNAdapterStateDelegate: Sendable {
         case streamTerminated
     }
 
-    let stateSource: StreamSource<VpnState>
+    let states = Broadcast<VpnState>()
 
     var state: VpnState {
         get async throws {
             if let state = await coordinator.state {
                 return state
             }
-            for await state in stateSource.newStream {
+            for await state in states.subscribe() {
                 return state
             }
             throw StateDelegateError.streamTerminated
@@ -62,7 +62,7 @@ final class ProTUNAdapterStateDelegate: Sendable {
         _ condition: @escaping @Sendable (VpnState) -> Bool,
         timeout: Timeout
     ) async throws(WaitError) {
-        let upcomingStates = stateSource.newStream
+        let upcomingStates = states.subscribe()
         if let current = await coordinator.state, condition(current) {
             return
         }
@@ -99,17 +99,13 @@ final class ProTUNAdapterStateDelegate: Sendable {
     }
 
     private let coordinator: StateCoordinator
-    private let continuation: AsyncStream<VpnState>.Continuation
 
     private let task: Task<Void, Never>
 
     init() {
-        let (stream, continuation) = AsyncStream<VpnState>.makeStream()
-        self.continuation = continuation
-        self.stateSource = StreamSource.source(for: stream)
         self.coordinator = StateCoordinator()
-        self.task = Task { [unowned coordinator, stateSource] in
-            await coordinator.startListening(to: stateSource)
+        self.task = Task { [unowned coordinator, states] in
+            await coordinator.startListening(to: states)
         }
     }
 
@@ -120,7 +116,7 @@ final class ProTUNAdapterStateDelegate: Sendable {
 
 extension ProTUNAdapterStateDelegate: StateChangedCallback {
     func onStateChanged(state: VpnState) {
-        continuation.yield(state)
+        states.send(state)
     }
 }
 
@@ -137,8 +133,8 @@ extension ProTUNAdapterStateDelegate {
             }
         }
 
-        func startListening(to stateSource: StreamSource<VpnState>) async {
-            for await newState in stateSource.newStream {
+        func startListening(to states: Broadcast<VpnState>) async {
+            for await newState in states.subscribe() {
                 state = newState
             }
         }

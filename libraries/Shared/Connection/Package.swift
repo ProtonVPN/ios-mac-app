@@ -175,6 +175,7 @@ let package = Package(
             name: "ExtensionManagerTests",
             dependencies: [
                 "ExtensionManager",
+                "ExtensionSync",
                 "CoreConnectionTestSupport",
                 .product(name: "SharedErgonomics", package: "Ergonomics"),
                 .product(name: "VPNShared", package: "NEHelper"),

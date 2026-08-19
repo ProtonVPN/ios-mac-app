@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ConcurrencyExtras
 import Foundation
 import notify
 
@@ -132,6 +133,11 @@ public extension IPCNotifications {
 }
 
 public extension IPCNotifications {
+    /// The notification's post stream reduced to bare wakeups, for merging with other tick sources.
+    static func ticks(_ notification: Notification) -> AsyncStream<Void> {
+        UncheckedSendable(streamRawState(notification).map { _ in () }).eraseToStream()
+    }
+
     static func streamRawState(_ notification: Notification) -> AsyncStream<UInt64> {
         .init { continuation in
             let token = observeRawState(notification) { value in
