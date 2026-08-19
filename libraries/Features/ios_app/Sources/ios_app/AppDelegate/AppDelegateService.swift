@@ -128,7 +128,7 @@ public final class AppDelegateService: AppDelegateProtocol {
                         return telemetryCrashReports == String(true)
                     },
                     getUserId: { [weak self] in
-                        self?.authKeychain.userId
+                        self?.authKeychain.userIdCachedOrFetched
                     }
                 )
             }

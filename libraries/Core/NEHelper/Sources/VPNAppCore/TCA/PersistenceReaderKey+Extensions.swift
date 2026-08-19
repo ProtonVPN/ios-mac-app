@@ -35,7 +35,7 @@ public extension SharedKey where Self == AppStorageKey<KillSwitchMode>.Default {
 public extension SharedKey {
     private static func keyForUser(for propertyName: String) -> String {
         @Dependency(\.authKeychain) var authKeychain
-        guard let username = authKeychain.username else {
+        guard let username = authKeychain.usernameCachedOrFetched else {
             log.error("No username available. \(propertyName) key will use no user identifier.", category: .keychain)
             return propertyName
         }

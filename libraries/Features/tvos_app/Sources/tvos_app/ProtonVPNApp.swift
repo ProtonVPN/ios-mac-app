@@ -91,7 +91,7 @@ extension ProtonVPNApp {
             isEnabled: { true },
             getUserId: {
                 @Dependency(\.authKeychain) var authKeychain
-                return authKeychain.userId
+                return authKeychain.userIdCachedOrFetched
             }
         )
     }
