@@ -19,7 +19,6 @@
 import Strings
 import SwiftUI
 import Theme
-import enum Theme.Asset
 
 struct LocationFeatureSubheader: View {
     let model: LocationFeatureSubheaderModel

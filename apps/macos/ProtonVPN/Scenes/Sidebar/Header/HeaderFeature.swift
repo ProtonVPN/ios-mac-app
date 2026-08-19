@@ -45,6 +45,9 @@ struct HeaderFeature {
         /// The forwarded port to show, set by the sidebar, which owns port forwarding.
         var mappedPort: UInt16?
 
+        /// Whether the window is on screen. Sampling the transfer rate stops while it is not.
+        var isWindowVisible = true
+
         init() {}
     }
 
@@ -64,6 +67,7 @@ struct HeaderFeature {
 
         case connectionStateChanged(ConnectionState)
         case bitrateSampled(Bitrate)
+        case windowVisibilityChanged(Bool)
         case announcementsChanged
         case serverChangeCooldownElapsed
     }
@@ -76,6 +80,7 @@ struct HeaderFeature {
         case announcements
         case connectionState
         case serverChangeCooldown
+        case windowVisibility
     }
 
     @Dependency(\.announcementManager) private var announcementManager
@@ -86,6 +91,7 @@ struct HeaderFeature {
     @Dependency(\.imagePrefetcher) private var imagePrefetcher
     @Dependency(\.networkTraffic) private var networkTraffic
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
+    @Dependency(\.windowVisibility) private var windowVisibility
 
     @SharedReader(.killSwitchMode) private var killSwitchMode: KillSwitchMode
 
@@ -108,7 +114,13 @@ struct HeaderFeature {
                         announcementManager.announcementsPublisher()
                             .map { _ in Action.announcementsChanged }
                     }
-                    .cancellable(id: CancelID.announcements, cancelInFlight: true)
+                    .cancellable(id: CancelID.announcements, cancelInFlight: true),
+                    .run { send in
+                        for await isVisible in windowVisibility.isVisible() {
+                            await send(.windowVisibilityChanged(isVisible))
+                        }
+                    }
+                    .cancellable(id: CancelID.windowVisibility, cancelInFlight: true)
                 )
 
             case .onDisappear:
@@ -117,7 +129,8 @@ struct HeaderFeature {
                     .cancel(id: CancelID.bitrate),
                     .cancel(id: CancelID.announcements),
                     .cancel(id: CancelID.connectionState),
-                    .cancel(id: CancelID.serverChangeCooldown)
+                    .cancel(id: CancelID.serverChangeCooldown),
+                    .cancel(id: CancelID.windowVisibility)
                 )
 
             case let .connectionStateChanged(newState):
@@ -128,6 +141,11 @@ struct HeaderFeature {
             case let .bitrateSampled(bitrate):
                 state.bitrate = bitrate
                 return .none
+
+            case let .windowVisibilityChanged(isVisible):
+                guard state.isWindowVisible != isVisible else { return .none }
+                state.isWindowVisible = isVisible
+                return startSamplingBitrate(&state)
 
             case .serverChangeCooldownElapsed:
                 return refreshServerChangeAvailability(&state)
@@ -174,9 +192,9 @@ struct HeaderFeature {
 
     // MARK: - Effects
 
-    /// Samples the transfer rate every second while connected, and stops otherwise.
+    /// Samples the transfer rate every second while connected and on screen, and stops otherwise.
     private func startSamplingBitrate(_ state: inout State, connectionState: ConnectionState? = nil) -> Effect<Action> {
-        guard (connectionState ?? state.connectionState).isConnected else {
+        guard state.isWindowVisible, (connectionState ?? state.connectionState).isConnected else {
             state.bitrate = nil
             return .cancel(id: CancelID.bitrate)
         }

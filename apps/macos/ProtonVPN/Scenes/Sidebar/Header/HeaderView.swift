@@ -75,7 +75,7 @@ struct HeaderView: View {
 
             VStack(alignment: .leading, spacing: Dimensions.stackSpacing) {
                 HeaderAddressRow(addressLine: store.addressLine, load: store.serverLoad)
-                HeaderProtocolRow(vpnProtocolName: store.vpnProtocolName, bitrate: store.bitrate)
+                HeaderSpeedRow(store: store)
                 if let mappedPort = store.mappedPort {
                     StatusPortView(portNumber: mappedPort)
                 }
@@ -102,6 +102,19 @@ struct HeaderView: View {
         static let stackSpacing: CGFloat = 8
         static let headerRowHeight: CGFloat = 24
         static let killSwitchIconSize: CGFloat = 24
+    }
+}
+
+/// The protocol in use and the transfer rate, which arrives once a second while connected.
+///
+/// The rate is read here rather than in `HeaderView`, so a new sample only runs this row's body. Read
+/// from `HeaderView` it would run the whole header's body every second, and every text and icon in it
+/// asks the theme for a color.
+private struct HeaderSpeedRow: View {
+    let store: StoreOf<HeaderFeature>
+
+    var body: some View {
+        HeaderProtocolRow(vpnProtocolName: store.vpnProtocolName, bitrate: store.bitrate)
     }
 }
 
