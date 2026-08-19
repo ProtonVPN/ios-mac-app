@@ -64,6 +64,7 @@ public struct ConnectToRegionIntent: AppIntent {
 
     @MainActor
     public func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
+        log.debug("Received ConnectToRegionIntent, perform method called", category: .appIntent)
         let request = ConnectRequest(spec: specForSelection(), skipReconnect: skipReconnect)
         return try await .result(value: request.sendAndAwaitOutcome())
     }

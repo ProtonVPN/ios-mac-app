@@ -28,11 +28,18 @@ extension MigrationManager {
     /// Users who had the kill switch **on** migrate to **Standard**.
     /// Users with it off (and new users) default to Off.
     func checkingKillSwitchMode() -> Self {
-        checking(.platform(iOS: "7.5.2", macOS: "6.5.1", tvOS: nil)) { _ in
+        checking(.platform(iOS: "8.0.0", macOS: "7.0.0", tvOS: nil)) { _ in
             @Dependency(\.defaultAppStorage) var defaults
 
             // Don't overwrite a mode the user may already have chosen via the new picker.
-            guard defaults.object(forKey: KillSwitchMode.storageKey) == nil else { return }
+            if let mode = defaults.object(forKey: KillSwitchMode.storageKey) {
+                log.info(
+                    "Didn't Migrate kill switch 3-state mode, value already present",
+                    category: .persistence,
+                    metadata: ["mode": "\(mode)"]
+                )
+                return
+            }
 
             let wasEnabled = defaults.bool(forKey: "Firewall")
             let mode: KillSwitchMode = wasEnabled ? .standard : .off

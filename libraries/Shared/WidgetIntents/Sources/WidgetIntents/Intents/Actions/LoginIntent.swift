@@ -26,6 +26,7 @@ public struct LoginIntent: AppIntent {
     public init() {}
 
     public func perform() async throws -> some IntentResult {
-        .result()
+        log.debug("Received LoginIntent, perform method called", category: .appIntent)
+        return .result()
     }
 }

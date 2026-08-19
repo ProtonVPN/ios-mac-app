@@ -38,6 +38,7 @@ public struct DisconnectCommandIntent: AppIntent {
     public init() {}
 
     public func perform() async throws -> some IntentResult {
+        log.debug("Received DisconnectCommandIntent, perform method called", category: .appIntent)
         @Dependencies.Dependency(\.connectionCommandClient) var connectionCommandClient
         connectionCommandClient.send(.disconnect(.widget))
         return .result()

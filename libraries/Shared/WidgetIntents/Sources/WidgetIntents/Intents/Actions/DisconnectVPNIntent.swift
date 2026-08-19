@@ -49,6 +49,7 @@ public struct DisconnectVPNIntent: AppIntent {
     }
 
     public func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
+        log.debug("Received DisconnectVPNIntent, perform method called", category: .appIntent)
         do {
             try await finishResolving()
         } catch {
