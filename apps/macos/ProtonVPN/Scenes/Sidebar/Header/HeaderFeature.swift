@@ -31,6 +31,7 @@ struct HeaderFeature {
     @ObservableState
     struct State: Equatable {
         @SharedReader(.connectionState) var connectionState: ConnectionState
+        @SharedReader(.killSwitchMode) var killSwitchMode: KillSwitchMode
         @SharedReader(.userLocation) var userLocation: StoredUserLocation?
         @SharedReader(.userTier) var userTier: VpnTier?
 
@@ -93,8 +94,6 @@ struct HeaderFeature {
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
     @Dependency(\.windowVisibility) private var windowVisibility
 
-    @SharedReader(.killSwitchMode) private var killSwitchMode: KillSwitchMode
-
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -156,7 +155,7 @@ struct HeaderFeature {
                     connectionCommandClient.quickConnect(trigger: .quick)
                     return .none
                 }
-                guard advancedKillSwitchActive(state) else {
+                guard state.advancedKillSwitchActive else {
                     log.debug("Disconnect requested by selecting Quick connect", category: .connectionDisconnect, event: .trigger)
                     connectionCommandClient.send(.disconnect(.quick))
                     return .none
@@ -240,15 +239,16 @@ struct HeaderFeature {
             hasUnread: announcementManager.hasUnreadAnnouncements()
         )
     }
-
-    private func advancedKillSwitchActive(_ state: State) -> Bool {
-        killSwitchMode.isAdvanced && state.connectionState.tunnelKillSwitch
-    }
 }
 
 // MARK: - What the view renders
 
 extension HeaderFeature.State {
+    /// Advanced Kill Switch is actively blocking traffic.
+    var advancedKillSwitchActive: Bool {
+        killSwitchMode.isAdvanced && connectionState.tunnelKillSwitch
+    }
+
     enum Title: Equatable {
         case authenticationRequired
         case killSwitchActive

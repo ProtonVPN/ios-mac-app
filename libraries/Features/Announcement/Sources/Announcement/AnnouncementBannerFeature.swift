@@ -23,8 +23,6 @@ import VPNAppCore
 
 @Reducer
 public struct AnnouncementBannerFeature {
-    @SharedReader(.announcementBanner) var announcementBanner: Announcement?
-
     @ObservableState
     public enum State: Equatable {
         case noBanner
@@ -73,9 +71,9 @@ public struct AnnouncementBannerFeature {
         Reduce { state, action in
             switch action {
             case .onStart:
-                return .publisher {
-                    $announcementBanner.publisher
-                        .map(Action.fetchCurrentOfferBannerFromStorage)
+                @SharedReader(.announcementBanner) var announcementBanner: Announcement?
+                return .publisher { [publisher = $announcementBanner.publisher] in
+                    publisher.map(Action.fetchCurrentOfferBannerFromStorage)
                 }
                 .cancellable(id: CancelID.announcementBanner)
             case let .fetchCurrentOfferBannerFromStorage(announcement):

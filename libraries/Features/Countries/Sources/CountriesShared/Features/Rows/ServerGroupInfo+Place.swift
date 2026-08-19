@@ -86,9 +86,6 @@ extension ServerGroupInfo {
         return kind.holds(logical)
     }
 
-    /// Whether a request for `location` is a request for this group. Used for the short window where the
-    /// user has asked to connect somewhere and the app has yet to pick the server, so pass the connected
-    /// `logical` when there is one.
     func matches(location: ConnectionSpec.Location, logical: Logical?) -> Bool {
         switch location {
         case .country, .city, .state, .gateway:

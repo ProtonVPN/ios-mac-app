@@ -48,6 +48,8 @@ public struct Default<T: DefaultValue> {
 
 extension Default: Sendable where T.Value: Sendable {}
 
+extension Default: Equatable where T.Value: Equatable {}
+
 extension Default: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()

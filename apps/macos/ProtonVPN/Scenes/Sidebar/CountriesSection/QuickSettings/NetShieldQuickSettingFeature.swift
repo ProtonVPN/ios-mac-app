@@ -93,7 +93,6 @@ struct NetShieldQuickSettingFeature {
 
     @Dependency(\.extensionIPC) var extensionIPC
     @Dependency(\.netShieldPropertyProvider) var netShieldPropertyProvider
-    @SharedReader(.featureFlags) var featureFlags
 
     private enum CancelID { case netShieldObservations }
 
@@ -101,6 +100,7 @@ struct NetShieldQuickSettingFeature {
         Reduce { state, action in
             switch action {
             case .startObserving:
+                @SharedReader(.featureFlags) var featureFlags: FeatureFlags
                 state.type = netShieldPropertyProvider.getNetShieldType()
                 state.isVisible = featureFlags.netShield
                 state.isStatsEnabled = featureFlags.netShieldStats
@@ -120,6 +120,7 @@ struct NetShieldQuickSettingFeature {
                     }
                 ).cancellable(id: CancelID.netShieldObservations)
             case .updateNetShield:
+                @SharedReader(.featureFlags) var featureFlags: FeatureFlags
                 state.type = netShieldPropertyProvider.getNetShieldType()
                 state.isVisible = featureFlags.netShield
                 return .none

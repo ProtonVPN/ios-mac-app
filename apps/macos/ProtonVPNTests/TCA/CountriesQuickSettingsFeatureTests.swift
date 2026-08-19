@@ -422,6 +422,12 @@ struct CountriesQuickSettingsFeatureTests {
             }
             await store.send(.alert(.presented(.confirmKillSwitchMode(.standard)))) {
                 $0.alert = nil
+                $0.$killSwitchMode.withLock {
+                    $0 = .standard
+                }
+                $0.$plutonium.withLock {
+                    $0 = .disabled(.exclusion)
+                }
             }
             await store.receive(\.dismissDetails) {
                 $0.destination = nil
