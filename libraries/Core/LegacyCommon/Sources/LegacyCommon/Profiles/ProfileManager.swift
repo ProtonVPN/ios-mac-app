@@ -57,33 +57,33 @@ public struct ProfileManager {
     public var deleteProfile: (_ profile: Profile) -> Void
 }
 
-public final class ProfileManagerImplementation {
-    public var customProfiles: [Profile] = []
-    public var defaultProfiles: [Profile] {
+final class ProfileManagerImplementation {
+    var customProfiles: [Profile] = []
+    var defaultProfiles: [Profile] {
         @SharedReader(.connectionProtocol) var connectionProtocol
         return ProfileConstants.defaultProfiles(connectionProtocol: connectionProtocol)
     }
 
     @Dependency(\.profileStorage) private var profileStorage
 
-    public var allProfiles: [Profile] {
+    var allProfiles: [Profile] {
         defaultProfiles + customProfiles
     }
 
-    public init() {
+    init() {
         refreshProfiles()
     }
 
-    public func refreshProfiles() {
+    func refreshProfiles() {
         customProfiles = profileStorage.fetch()
     }
 
-    public var username: String? {
+    var username: String? {
         @Dependency(\.authKeychain) var authKeychain
         return authKeychain.username
     }
 
-    public var autoConnectProfile: Profile? {
+    var autoConnectProfile: Profile? {
         guard username != nil else {
             return nil
         }
@@ -96,7 +96,7 @@ public final class ProfileManagerImplementation {
         return profile(withId: profileID)
     }
 
-    public var quickConnectProfile: Profile? {
+    var quickConnectProfile: Profile? {
         guard username != nil else {
             return nil
         }
@@ -107,11 +107,11 @@ public final class ProfileManagerImplementation {
         return profile(withId: profileID)
     }
 
-    public func profile(withId id: String) -> Profile? {
+    func profile(withId id: String) -> Profile? {
         defaultProfiles.first { id == $0.id } ?? ProfileUtility.profile(withId: id, in: customProfiles)
     }
 
-    public func createProfile(_ profile: Profile) -> ProfileManagerOperationOutcome {
+    func createProfile(_ profile: Profile) -> ProfileManagerOperationOutcome {
         let result = ProfileUtility.createProfile(profile, in: customProfiles)
         switch result {
         case let .success(updatedProfiles):
@@ -123,7 +123,7 @@ public final class ProfileManagerImplementation {
         return ProfileManagerOperationOutcome(outcome: result)
     }
 
-    public func updateProfile(_ profile: Profile) -> ProfileManagerOperationOutcome {
+    func updateProfile(_ profile: Profile) -> ProfileManagerOperationOutcome {
         let result = ProfileUtility.updateProfile(profile, in: customProfiles)
         switch result {
         case let .success(updatedProfiles):
@@ -135,7 +135,7 @@ public final class ProfileManagerImplementation {
         return ProfileManagerOperationOutcome(outcome: result)
     }
 
-    public func deleteProfile(_ profile: Profile) {
+    func deleteProfile(_ profile: Profile) {
         let updatedProfiles = ProfileUtility.delete(profile: profile, in: customProfiles)
         profileStorage.store(profiles: updatedProfiles, storageVersion: .current)
         profilesChanged(updatedProfiles)
@@ -149,8 +149,8 @@ public final class ProfileManagerImplementation {
     }
 }
 
-public enum ProfileManagerKey: DependencyKey {
-    public static var liveValue: ProfileManager = {
+enum ProfileManagerKey: DependencyKey {
+    static var liveValue: ProfileManager = {
         let profileManagerImpl = ProfileManagerImplementation()
         return ProfileManager(
             customProfiles: { profileManagerImpl.customProfiles },

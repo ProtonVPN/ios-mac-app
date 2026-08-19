@@ -39,31 +39,47 @@
             SnapshotFixtures.localeUk,
         ]
 
-        /// One reference per locale
         @Test("Connection details", arguments: locales)
         func connectionDetails(locale: Locale) {
-            assertSnapshot(
-                of: Self.view(state: Self.state(), locale: locale),
-                as: .image(layout: .sizeThatFits),
-                named: "connectionDetails_\(locale.identifier)"
-            )
+            assert(state: Self.state(), locale: locale, named: "connectionDetails_\(locale.identifier)")
         }
 
-        /// A server with no city drops that row rather than showing the placeholder the API sends.
         @Test("Connection details without a city")
         func withoutCity() {
-            assertSnapshot(
-                of: Self.view(state: Self.state(city: "-"), locale: SnapshotFixtures.localeEnUS),
-                as: .image(layout: .sizeThatFits)
-            )
+            assert(state: Self.state(city: "-"), locale: SnapshotFixtures.localeEnUS)
         }
 
         @Test("Connection details under load")
         func underLoad() {
-            assertSnapshot(
-                of: Self.view(state: Self.state(serverLoad: 91), locale: SnapshotFixtures.localeEnUS),
-                as: .image(layout: .sizeThatFits)
-            )
+            assert(state: Self.state(serverLoad: 91), locale: SnapshotFixtures.localeEnUS)
+        }
+
+        /// Overrides must wrap the *render* (assertSnapshot), not just view construction —
+        /// `@Dependency(\.locale)` is read during body evaluation.
+        private func assert(
+            state: ConnectionDetailsFeature.State,
+            locale: Locale,
+            named name: String? = nil,
+            fileID: StaticString = #fileID,
+            file filePath: StaticString = #filePath,
+            testName: String = #function,
+            line: UInt = #line,
+            column: UInt = #column
+        ) {
+            withDependencies {
+                $0.locale = locale
+            } operation: {
+                assertSnapshot(
+                    of: Self.view(state: state),
+                    as: .image(layout: .sizeThatFits),
+                    named: name,
+                    fileID: fileID,
+                    file: filePath,
+                    testName: testName,
+                    line: line,
+                    column: column
+                )
+            }
         }
 
         private static func state(
@@ -80,12 +96,11 @@
             )
         }
 
-        private static func view(state: ConnectionDetailsFeature.State, locale: Locale) -> some View {
+        private static func view(state: ConnectionDetailsFeature.State) -> some View {
             ConnectionDetailsView(store: Store(initialState: state, reducer: { EmptyReducer() }))
                 .frame(width: SnapshotFixtures.phoneWidth)
                 .background(Color(.background, .strong))
                 .environment(\.colorScheme, .dark)
-                .environment(\.locale, locale)
         }
     }
 

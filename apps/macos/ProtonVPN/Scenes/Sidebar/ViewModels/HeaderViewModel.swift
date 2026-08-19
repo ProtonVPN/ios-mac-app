@@ -26,7 +26,6 @@ import Combine
 import CommonNetworking
 import ComposableArchitecture
 import Connection
-import ConnectionInventory
 import Dependencies
 import Domain
 import Ergonomics
@@ -35,7 +34,6 @@ import Sharing
 import Strings
 import Theme
 import VPNAppCore
-import VPNShared
 
 protocol HeaderViewModelDelegate: AnyObject {
     func bitrateUpdated(with attributedString: NSAttributedString)

@@ -22,7 +22,6 @@
 
 import Dependencies
 import Foundation
-import LegacyCommon
 import Sharing
 import VPNAppCore
 

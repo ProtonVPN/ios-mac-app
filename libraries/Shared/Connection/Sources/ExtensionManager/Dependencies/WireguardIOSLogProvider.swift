@@ -18,7 +18,6 @@
 
 import let CoreConnection.log
 import Dependencies
-import ExtensionIPC
 import Foundation
 import PMLogger
 

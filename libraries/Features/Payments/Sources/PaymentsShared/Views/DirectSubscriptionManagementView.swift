@@ -57,7 +57,6 @@
     @MainActor
     private final class Coordinator: ObservableObject {
         @Published var viewModel: AvailablePlansViewModel?
-        private var cancellables = Set<AnyCancellable>()
 
         func setupIfNeeded(
             apiService: any APIService,

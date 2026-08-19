@@ -18,8 +18,6 @@
 
 import HomeShared
 
-public typealias ImageAsset = HomeShared.ImageAsset
-public typealias HomeAsset = HomeShared.HomeAsset
 public typealias HomeFeature = HomeShared.HomeFeature
 public typealias HomeMapFeature = HomeShared.HomeMapFeature
 public typealias ConnectionStatusFeature = HomeShared.ConnectionStatusFeature

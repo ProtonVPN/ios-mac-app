@@ -19,7 +19,6 @@
 import ComposableArchitecture
 import Connection
 import Domain
-import ProtonCoreUIFoundations
 import SwiftUI
 
 @Reducer

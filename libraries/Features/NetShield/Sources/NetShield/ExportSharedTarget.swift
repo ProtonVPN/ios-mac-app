@@ -19,8 +19,6 @@
 import NetShieldShared
 
 public typealias NetShieldModel = NetShieldShared.NetShieldModel
-public typealias NetShieldStatsNotification = NetShieldShared.NetShieldStatsNotification
-public typealias StatModel = NetShieldShared.StatModel
 
 #if canImport(NetShield_macOS)
     import NetShield_macOS

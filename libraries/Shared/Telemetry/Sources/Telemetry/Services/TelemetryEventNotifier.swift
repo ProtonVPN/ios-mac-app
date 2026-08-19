@@ -24,12 +24,10 @@ import Domain
 import Foundation
 import Network
 import NetworkingErgonomics
-import ProtonCoreFeatureFlags
 import Sharing
 import VPNAppCore
-import VPNShared
 
-public class TelemetryEventNotifier {
+class TelemetryEventNotifier {
     typealias ModalSource = UpsellModalSource
 
     @Dependency(\.telemetryService) var telemetryService
@@ -37,7 +35,7 @@ public class TelemetryEventNotifier {
     private var cancellables = Set<AnyCancellable>()
     private var pathUpdatesTask: Task<Void, Never>?
 
-    public init() {
+    init() {
         startObserving()
     }
 

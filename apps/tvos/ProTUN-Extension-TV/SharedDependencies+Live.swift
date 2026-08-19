@@ -17,11 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
-import Domain
 import Ergonomics
 import Foundation
 import PMLogger
-import SharedErgonomics
 
 extension AppInfoKey: @retroactive DependencyKey {
     public static let liveValue: AppInfo = .live(context: .proTUNExtension, beta: Bundle.isTestflight)

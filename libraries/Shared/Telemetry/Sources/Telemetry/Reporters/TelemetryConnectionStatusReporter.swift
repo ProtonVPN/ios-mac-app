@@ -20,7 +20,6 @@ import CommonNetworking
 import Connection
 import Dependencies
 import Domain
-import ExtensionSync
 import Foundation
 import Sharing
 import VPNAppCore
@@ -42,7 +41,6 @@ actor TelemetryConnectionStatusReporter {
     }
 
     var networkType: ConnectionDimensions.NetworkType = .other
-    var previousConnectionIntent: ServerConnectionIntent?
 
     var userInitiatedVPNChange: UserInitiatedVPNChange?
 

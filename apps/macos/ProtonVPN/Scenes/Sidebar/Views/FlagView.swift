@@ -21,7 +21,6 @@
 //
 
 import Cocoa
-import LegacyCommon
 
 class FlagView: NSView {
     var backgroundImage: NSImage? {

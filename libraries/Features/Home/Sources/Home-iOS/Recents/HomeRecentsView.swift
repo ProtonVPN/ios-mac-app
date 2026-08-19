@@ -30,7 +30,7 @@ import SwiftUI
 import Theme
 import VPNAppCore
 
-public struct RecentsSectionView: View {
+struct RecentsSectionView: View {
     let store: StoreOf<RecentsFeature>
 
     private func sectionTitleView(title: String) -> some View {
@@ -74,7 +74,7 @@ public struct RecentsSectionView: View {
         }
     }
 
-    public var body: some View {
+    var body: some View {
         content
             .task { store.send(.watchConnectionStatus) }
     }

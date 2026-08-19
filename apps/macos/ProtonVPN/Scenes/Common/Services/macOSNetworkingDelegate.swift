@@ -12,7 +12,6 @@ import Connection
 import Dependencies
 import Domain
 import Foundation
-import LegacyCommon
 import ProtonCoreNetworking
 import ProtonCoreServices
 import VPNAppCore

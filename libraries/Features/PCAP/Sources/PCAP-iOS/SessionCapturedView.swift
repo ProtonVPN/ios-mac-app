@@ -20,10 +20,10 @@ import ComposableArchitecture
 import PCAPShared
 import SwiftUI
 
-public struct SessionCapturedView: View {
+struct SessionCapturedView: View {
     @Bindable var store: StoreOf<SessionCapturedFeature>
 
-    public var body: some View {
+    var body: some View {
         VStack(spacing: .themeSpacing24) {
             switch store.captureSession {
             case let .sessionEnded(urlWithSize):

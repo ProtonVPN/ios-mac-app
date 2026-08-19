@@ -79,8 +79,6 @@ enum KeychainEnvironment {
     static var secItemAdd = SecItemAdd
     static var secItemDelete = SecItemDelete
     static var secItemCopyMatching = SecItemCopyMatching
-    static var secKeyCreateWithData = SecKeyCreateWithData
-    static var secKeyVerifySignature = SecKeyVerifySignature
 }
 
 public class VpnKeychain: VpnKeychainProtocol {
@@ -90,7 +88,6 @@ public class VpnKeychain: VpnKeychainProtocol {
 
     private enum StorageKey {
         static let vpnCredentials = "vpnCredentials"
-        static let openVpnPassword_old = "openVpnPassword"
         static let vpnServerPassword = "ProtonVPN-Server-Password"
         static let serverCertificate = "ProtonVPN_ike_root"
         static let wireguardSettings = "ProtonVPN_wg_settings"
@@ -412,7 +409,6 @@ public class VpnKeychain: VpnKeychainProtocol {
             let config = String(data: item, encoding: String.Encoding.utf8)
             log.debug("Config read", category: .keychain, metadata: ["config": "\(config ?? "-")"])
             return config
-
         } else {
             log.error("Keychain error: can't read data", category: .keychain)
             return nil
@@ -456,12 +452,9 @@ enum VpnCredentialsMetadataMirror {
     }
 }
 
-public struct VpnKeychainDependencyKey: DependencyKey {
-    public static let liveValue: VpnKeychainProtocol = VpnKeychain.instance
-
-    public static var testValue: VpnKeychainProtocol {
-        VpnKeychainMock()
-    }
+struct VpnKeychainDependencyKey: DependencyKey {
+    static let liveValue: VpnKeychainProtocol = VpnKeychain.instance
+    static let testValue: VpnKeychainProtocol = VpnKeychainMock()
 }
 
 public extension DependencyValues {

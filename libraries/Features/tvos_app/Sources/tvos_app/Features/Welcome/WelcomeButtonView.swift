@@ -32,18 +32,3 @@ struct WelcomeButtonView: View {
         .buttonStyle(TVButtonStyle())
     }
 }
-
-struct InformationButtonView: View {
-    let title: LocalizedStringKey
-    let action: () -> Void
-
-    @FocusState var focusState: Bool
-
-    var body: some View {
-        Button(action: action) {
-            Text(title)
-        }
-        .focused($focusState, equals: true)
-        .buttonStyle(TVButtonStyle())
-    }
-}

@@ -57,10 +57,6 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
         profile.profileType == .system
     }
 
-    var connectButtonTitle: String {
-        formConnectButtonTitle()
-    }
-
     init(profile: Profile, editProfile: ((Profile) -> Void)?, userTier: VpnTier) {
         self.editProfile = editProfile
         super.init(profile: profile, userTier: userTier)
@@ -100,13 +96,5 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
                 profileManager.deleteProfile(profile)
             }
         ))
-    }
-
-    private func formConnectButtonTitle() -> String {
-        if underMaintenance {
-            Localizable.maintenance
-        } else {
-            Localizable.connect
-        }
     }
 }

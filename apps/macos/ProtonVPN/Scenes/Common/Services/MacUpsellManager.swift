@@ -24,7 +24,6 @@ import Foundation
 import LegacyCommon
 import Modals
 import Payments
-import Strings
 import VPNAppCore
 
 /// Presents upsell and welcome modals on macOS

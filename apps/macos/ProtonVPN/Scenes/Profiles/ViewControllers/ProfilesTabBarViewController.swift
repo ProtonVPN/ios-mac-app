@@ -22,7 +22,6 @@
 
 import Cocoa
 import Ergonomics
-import LegacyCommon
 import Strings
 
 enum ProfilesTab: Equatable {

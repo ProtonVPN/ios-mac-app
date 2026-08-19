@@ -19,19 +19,11 @@
 import Dependencies
 import Domain
 import Foundation
-import LegacyCommon
 import Modals
 import Payments
-import Persistence
-import ProtonCoreFeatureFlags
 import Sharing
-import Telemetry
 import UIKit
 import VPNShared
-
-protocol OnboardingServiceFactory: AnyObject {
-    func makeOnboardingService() -> OnboardingService
-}
 
 protocol OnboardingServiceDelegate: AnyObject {
     func onboardingServiceDidFinish()

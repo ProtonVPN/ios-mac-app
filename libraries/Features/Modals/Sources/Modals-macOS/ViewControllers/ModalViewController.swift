@@ -28,7 +28,7 @@ import Strings
 import SwiftUI
 import Theme
 
-public final class ModalViewController: NSViewController {
+final class ModalViewController: NSViewController {
     @IBOutlet private var borderView: NSView! {
         didSet {
             borderView.wantsLayer = true
@@ -62,11 +62,11 @@ public final class ModalViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public init() {
+    init() {
         super.init(nibName: NSNib.Name("ModalView"), bundle: .module)
     }
 
-    override public func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
         view.wantsLayer = true
         DarkAppearance {
@@ -74,7 +74,7 @@ public final class ModalViewController: NSViewController {
         }
     }
 
-    override public func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         addGradient()
         setupText()
@@ -156,7 +156,7 @@ public final class ModalViewController: NSViewController {
         }
     }
 
-    override public func viewWillAppear() {
+    override func viewWillAppear() {
         super.viewWillAppear()
         view.window?.applyUpsellModalAppearance()
     }

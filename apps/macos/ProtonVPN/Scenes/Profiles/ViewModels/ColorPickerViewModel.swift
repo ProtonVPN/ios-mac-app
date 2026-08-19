@@ -51,10 +51,6 @@ class ColorPickerViewModel {
         self.selectedColorIndex = colors.randomIndex
     }
 
-    func selectRandom() {
-        selectedColorIndex = colors.randomIndex
-    }
-
     func select(rgbHex: Int) {
         if let newIndex = colors.firstIndex(where: { $0.hexRepresentation == rgbHex }) {
             selectedColorIndex = newIndex

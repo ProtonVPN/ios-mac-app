@@ -41,11 +41,4 @@ public struct PaymentTransactionFinishedEvent: Sendable {
         self.offerReference = offerReference
         self.flowType = flowType
     }
-
-    public static let webIntroFinishEvent: PaymentTransactionFinishedEvent = .init(
-        newPlanName: "vpn2024", // TODO: update it to be dynamic VPNAPPL-3103
-        cycle: 24,
-        offerReference: "VPNINTROPRICE2024",
-        flowType: .external
-    )
 }

@@ -16,19 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CommonNetworking
-import CommonNetworkingTestSupport
 import Dependencies
 import Ergonomics
 import Foundation
-import ProtonCoreNetworking
 @testable import Telemetry
-import VPNShared
 import XCTest
 
 class TelemetryTimerMock: TelemetryTimer {
     var reportedConnectionDuration: TimeInterval = 0
-    var reportedTimeToConnect: TimeInterval = 0
     func updateConnectionStarted(_: Date?) {}
     func markStartedConnecting() {}
     func markFinishedConnecting() {}
@@ -39,10 +34,6 @@ class TelemetryTimerMock: TelemetryTimer {
 
     func connectionDuration(connectedDate _: Date) -> TimeInterval {
         0
-    }
-
-    var timeToConnect: TimeInterval {
-        reportedTimeToConnect
     }
 
     var timeConnecting: TimeInterval {

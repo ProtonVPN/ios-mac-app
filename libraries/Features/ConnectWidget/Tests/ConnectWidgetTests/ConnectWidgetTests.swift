@@ -1,4 +1,3 @@
-@testable import ConnectWidget
 import Testing
 
 @Test

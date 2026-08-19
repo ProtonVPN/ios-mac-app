@@ -116,7 +116,7 @@ private extension DatabaseType {
     }
 }
 
-public enum DatabaseConfigurationKey: DependencyKey {
+enum DatabaseConfigurationKey: DependencyKey {
     /// Logs database errors, but reports them nowhere else.
     ///
     /// Apps that want database errors in crash reporting override this at their entry point, before anything has
@@ -127,17 +127,17 @@ public enum DatabaseConfigurationKey: DependencyKey {
     ///     $0.databaseConfiguration = .live(reportError: SentryHelper.reportError)
     /// }
     /// ```
-    public static var liveValue: DatabaseConfiguration {
+    static var liveValue: DatabaseConfiguration {
         .live()
     }
 
     /// Configured with global/shared in-memory database
-    public static var testValue: DatabaseConfiguration {
+    static var testValue: DatabaseConfiguration {
         .withTestExecutor(databaseType: .inMemory)
     }
 
     /// Previews get the same in-memory database as tests, so they never touch the real one on disk.
-    public static var previewValue: DatabaseConfiguration {
+    static var previewValue: DatabaseConfiguration {
         testValue
     }
 }

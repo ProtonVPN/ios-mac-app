@@ -30,9 +30,9 @@ extension XPCConnectionsRepositoryImplementation: XPCConnectionsRepository {
 
 // MARK: - TCA Dependency
 
-public enum XPCConnectionsRepositoryKey: DependencyKey {
-    public static var liveValue: XPCConnectionsRepository = XPCConnectionsRepositoryImplementation()
-    public static var testValue: XPCConnectionsRepository = UnimplementedXPCConnectionsRepository()
+enum XPCConnectionsRepositoryKey: DependencyKey {
+    static var liveValue: XPCConnectionsRepository = XPCConnectionsRepositoryImplementation()
+    static var testValue: XPCConnectionsRepository = UnimplementedXPCConnectionsRepository()
 }
 
 public extension DependencyValues {

@@ -23,13 +23,13 @@ public struct CredentiallessHelper: Sendable {
     public internal(set) var isCredentialLess: @Sendable () -> Bool
 }
 
-public struct CredentiallessHelperDependencyKey: DependencyKey {
-    public static let liveValue: CredentiallessHelper = .init(isCredentialLess: {
+struct CredentiallessHelperDependencyKey: DependencyKey {
+    static let liveValue: CredentiallessHelper = .init(isCredentialLess: {
         @Dependency(\.authKeychain) var authKeychain
         @Dependency(\.unauthKeychain) var unauthKeychain
         return authKeychain.fetch()?.isCredentialLess ?? unauthKeychain.fetch()?.isCredentialLess ?? false
     })
-    public static let testValue: CredentiallessHelper = .init(isCredentialLess: { false })
+    static let testValue: CredentiallessHelper = .init(isCredentialLess: { false })
 }
 
 public extension DependencyValues {

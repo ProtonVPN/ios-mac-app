@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Domain
-import Strings
 import SwiftUI
 import Theme
 import VPNAppCore
@@ -124,27 +123,6 @@ public struct ConnectionFlagInfoView: View {
         .contentShape(Rectangle())
         .frame(maxWidth: .infinity)
         .accessibilityIdentifier(AccessibilityIdentifiers.connectionFlagInfo)
-    }
-
-    var connectedPin: some View {
-        ZStack {
-            Circle()
-                .fill(Color(.icon, .vpnGreen).opacity(0.2))
-                .frame(.square(20))
-            Circle()
-                .fill(Color(.icon, .vpnGreen))
-                .frame(.square(8))
-        }
-    }
-
-    var textHeader: some View {
-        Text(textHeaderString)
-            .styled()
-        #if canImport(Cocoa)
-            .themeFont(.body(emphasised: true))
-        #elseif canImport(UIKit)
-            .themeFont(.body1(.semibold))
-        #endif
     }
 }
 

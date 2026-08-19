@@ -69,18 +69,3 @@ public struct StreamReaderKey<Value: Sendable>: SharedReaderKey {
         _subscribe(subscriber)
     }
 }
-
-public extension Effect {
-    /// Streams an `AsyncStream`'s values into the reducer as actions. Used instead of ``SharedReader`` for error
-    /// values, or other situations where modeling messages as actions that produce effects makes more sense.
-    static func observe<Payload>(
-        _ stream: AsyncStream<Payload>,
-        action: @escaping @MainActor (Payload) -> Action
-    ) -> Self {
-        .run { send in
-            for await payload in stream {
-                await send(action(payload))
-            }
-        }
-    }
-}

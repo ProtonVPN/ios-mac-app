@@ -21,17 +21,14 @@
 //
 
 import GSMessages
-import LegacyCommon
 import UIKit
 
 class UIConstants {
     // MARK: - Cell constants
 
-    static let connectionStatusCellHeight: CGFloat = 48
     static let cellHeight: CGFloat = 52.5
     static let headerHeight: CGFloat = 56
     static let separatorHeight: CGFloat = 8
-    static let countriesHeaderHeight: CGFloat = 40
 
     // MARK: - Messages
 

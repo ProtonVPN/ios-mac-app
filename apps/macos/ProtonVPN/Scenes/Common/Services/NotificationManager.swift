@@ -22,18 +22,15 @@
 
 import AppKit
 import Combine
-import CommonNetworking
 import ComposableArchitecture
 import Connection
 import Dependencies
 import DependenciesMacros
 import Domain
 import Foundation
-import LegacyCommon
 import Strings
 import UserNotifications
 import VPNAppCore
-import VPNShared
 
 extension NotificationManager: @retroactive DependencyKey {
     public static let liveValue: NotificationManager = {

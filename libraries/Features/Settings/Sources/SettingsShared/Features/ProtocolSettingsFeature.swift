@@ -21,7 +21,6 @@ import Connection
 import Dependencies
 import Domain
 import VPNAppCore
-import VPNShared
 
 @Reducer
 public struct ProtocolSettingsFeature: Sendable {

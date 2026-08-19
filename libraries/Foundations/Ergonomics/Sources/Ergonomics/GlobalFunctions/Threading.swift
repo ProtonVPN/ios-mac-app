@@ -47,9 +47,3 @@ public func executeOnUIThread<T>(
         }
     }
 }
-
-public func dispatchAssert(condition: DispatchPredicate) {
-    #if DEBUG
-        dispatchPrecondition(condition: condition)
-    #endif
-}

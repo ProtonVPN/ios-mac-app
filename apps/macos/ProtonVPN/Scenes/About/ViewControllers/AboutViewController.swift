@@ -24,7 +24,6 @@ import Cocoa
 import Combine
 import Dependencies
 import Ergonomics
-import LegacyCommon
 import PMLogger
 import Strings
 import Theme

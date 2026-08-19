@@ -127,15 +127,6 @@ final class StatusMenuViewModel {
         connectionState.resolvedServer?.logical.exitCountryCode
     }
 
-    var isStateStable: Bool {
-        switch connectionState {
-        case .connected, .disconnected, .authenticationRequired, .killSwitchActive:
-            true
-        case .resolving, .connecting, .disconnecting:
-            false
-        }
-    }
-
     var profileListViewModel: StatusMenuProfilesListViewModel {
         StatusMenuProfilesListViewModel()
     }
@@ -210,16 +201,6 @@ final class StatusMenuViewModel {
 
     var upgradeToPlusTitle: NSAttributedString {
         Localizable.upgradeToPlus.styled([.interactive, .active])
-    }
-
-    // MARK: - Quick action section - Outputs
-
-    var killSwitchDescription: String? {
-        formKillSwitchDescription()
-    }
-
-    var quickActionDescription: String? {
-        formQuickActionDescription()
     }
 
     // MARK: - Quick action section - Inputs
@@ -643,29 +624,6 @@ final class StatusMenuViewModel {
             )
             return NSAttributedString.concatenate(flag, country, serverName)
         }
-    }
-
-    private func formKillSwitchDescription() -> String? {
-        guard isSessionEstablished else {
-            return nil
-        }
-
-        let description = killSwitchMode.isProtected ? Localizable.enabled.lowercased() : Localizable.disabled.lowercased()
-        return Localizable.killSwitch + " " + description
-    }
-
-    private func formQuickActionDescription() -> String? {
-        guard isSessionEstablished else {
-            return nil
-        }
-
-        let description: String = switch connectionState {
-        case .connected, .authenticationRequired:
-            Localizable.disconnect
-        case .disconnecting, .disconnected, .connecting, .resolving, .killSwitchActive:
-            Localizable.quickConnect
-        }
-        return description
     }
 }
 

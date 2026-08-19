@@ -34,7 +34,6 @@ import Localization
 import MapKit
 import Persistence
 import Sharing
-import Strings
 import VPNAppCore
 
 // Refactor annotation O(n^2) grouping logic when number of secure core servers ever exceed this value
@@ -47,8 +46,6 @@ struct AnnotationChange {
 
 class MapSectionViewModel {
     private let countrySelected = Notification.Name("MapSectionViewModelCountrySelected")
-    private let scEntryCountrySelected = Notification.Name("MapSectionViewModelScEntryCountrySelected")
-    private let scExitCountrySelected = Notification.Name("MapSectionViewModelScExitCountrySelected")
     @Dependency(\.credentialsProvider) private var credentialsProvider
     @SharedReader(.secureCoreToggle) private var secureCoreToggle: Bool
     @SharedReader(.connectionState) private var connectionState: ConnectionState

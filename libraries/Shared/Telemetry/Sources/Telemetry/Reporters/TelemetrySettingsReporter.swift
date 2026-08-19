@@ -18,7 +18,6 @@
 
 import Clocks
 import CommonNetworking
-import ConnectionInventory
 import Dependencies
 import Domain
 import Ergonomics
@@ -36,14 +35,14 @@ extension SharedKey where Self == UserScopedAppStorageKey<Date?> {
     }
 }
 
-public final class TelemetrySettingsReporter {
+final class TelemetrySettingsReporter {
     private var telemetryEventScheduler: TelemetryEventScheduler
 
     private let heartbeatInterval: TimeInterval = 24 * 60 * 60 // 24 hours
 
     private var heartbeatTask: Task<Void, Error>?
     #if DEBUG
-        public var lastHeartbeatEvent: SettingsEvent?
+        var lastHeartbeatEvent: SettingsEvent?
     #endif
 
     @Dependency(\.continuousClock) var clock
@@ -52,14 +51,14 @@ public final class TelemetrySettingsReporter {
 
     // MARK: - Initialization
 
-    public init(telemetryEventScheduler: TelemetryEventScheduler) {
+    init(telemetryEventScheduler: TelemetryEventScheduler) {
         self.telemetryEventScheduler = telemetryEventScheduler
     }
 
     // MARK: - Public Interface
 
     // Starts the internal scheduler that checks for and sends the settings heartbeat.
-    public func start() async {
+    func start() async {
         await checkAndSendHeartbeat()
         heartbeatTask = Task {
             for await _ in clock.timer(interval: .seconds(heartbeatInterval)) {

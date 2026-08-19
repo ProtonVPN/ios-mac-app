@@ -21,7 +21,6 @@
 //
 
 import Cocoa
-import LegacyCommon
 
 class ProfilesTabBarView: NSView {
     private let tabWidth: CGFloat = 200

@@ -17,17 +17,14 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import ConnectionInventory
 import CountriesShared
 import Dependencies
 import Domain
 import LegacyCommon
 import SharedViews
 import Sharing
-import Strings
 import SwiftUI
 import Theme
-import VPNAppCore
 
 public struct CityStateListView: View {
     @Bindable var store: StoreOf<DesktopCityStateListFeature>

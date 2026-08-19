@@ -23,7 +23,6 @@ import PMLogger
 import ProtonCoreAPIClient
 import Testing
 @testable import tvos_app
-import VPNShared
 
 @MainActor
 struct ReportIssueFeatureTests {

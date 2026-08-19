@@ -66,10 +66,6 @@ public class DoHVPN: DoH, ServerConfig {
         customApiHost
     }
 
-    public var statusHost: String {
-        "http://protonstatus.com"
-    }
-
     public var humanVerificationV3Host: String {
         if defaultHost == liveURL {
             return verifyHost

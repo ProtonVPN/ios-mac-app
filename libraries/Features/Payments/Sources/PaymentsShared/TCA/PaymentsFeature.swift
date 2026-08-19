@@ -351,12 +351,12 @@ extension PaymentsFeature {
     }
 }
 
-public enum PaymentsError: LocalizedError, Equatable, ProtonVPNError {
+enum PaymentsError: LocalizedError, Equatable, ProtonVPNError {
     case credentialless
     case missingWebCheckoutURL
     case upgradeUnavailable(String?)
 
-    public var errorDescription: String? {
+    var errorDescription: String? {
         switch self {
         case .credentialless:
             Localizable.createAccountFirstBeforeUpgrade
@@ -367,7 +367,7 @@ public enum PaymentsError: LocalizedError, Equatable, ProtonVPNError {
         }
     }
 
-    public var charCode: FourCharCode {
+    var charCode: FourCharCode {
         switch self {
         case .credentialless:
             "PMCR"

@@ -22,7 +22,6 @@
 
 import Cocoa
 import Domain
-import LegacyCommon
 import ProtonCoreUIFoundations
 
 class ProfileItemView: NSView {

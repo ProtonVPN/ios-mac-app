@@ -18,7 +18,6 @@
 
 import ConnectionInventory
 import Domain
-@testable import ProtonVPN
 import Testing
 
 struct SecureCoreConnectionSpecResolverTests {

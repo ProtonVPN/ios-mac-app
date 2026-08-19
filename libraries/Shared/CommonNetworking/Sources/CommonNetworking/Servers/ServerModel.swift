@@ -23,9 +23,7 @@ import Domain
 import Ergonomics
 import Foundation
 import Localization
-import Strings
 import VPNAppCore
-import VPNShared
 
 public extension ServerModel {
     var description: String {
@@ -194,29 +192,6 @@ public extension ServerModel {
         }
 
         return false
-    }
-
-    static func < (lhs: ServerModel, rhs: ServerModel) -> Bool {
-        // Servers whose name contains word Free come
-        // first in the ordering.
-        let lhsIsFree = lhs.isFree
-        let rhsIsFree = rhs.isFree
-        if lhsIsFree, !rhsIsFree {
-            return true
-        }
-        if !lhsIsFree, rhsIsFree {
-            return false
-        }
-
-        let (lhsSplitName, rhsSplitName) = (lhs.serverNameComponents, rhs.serverNameComponents)
-        guard let lhsSeqNum = lhsSplitName.sequence, let rhsSeqNum = rhsSplitName.sequence else {
-            // if server names don't have the sequence numbers, it's enough to compare the names
-            return lhs.name < rhs.name
-        }
-        guard lhsSplitName.name == rhsSplitName.name else {
-            return lhsSplitName.name < rhsSplitName.name
-        }
-        return lhsSeqNum < rhsSeqNum
     }
 }
 

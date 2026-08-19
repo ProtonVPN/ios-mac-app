@@ -22,7 +22,6 @@ import DependenciesMacros
 import Domain
 import Ergonomics
 import Foundation
-import IssueReporting
 import SwiftUI
 
 @DependencyClient

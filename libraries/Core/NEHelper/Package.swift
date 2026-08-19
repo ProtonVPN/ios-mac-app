@@ -23,18 +23,16 @@ let package = Package(
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/PMLogger"),
         .package(path: "../../Foundations/Strings"),
+        .package(path: "../../Foundations/Theme"),
 
         .package(path: "../../Shared/Localization"),
         .package(path: "../../Shared/ExtensionIPC"),
-
-        .package(path: "../../Features/NetShield"),
 
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
         .package(url: "https://github.com/apple/swift-async-algorithms", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "4.2.2"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
-        .package(url: "https://github.com/pointfreeco/swift-case-paths", .upToNextMajor(from: "1.6.1")),
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
         .package(url: "https://github.com/pointfreeco/swift-concurrency-extras", .upToNextMajor(from: "1.3.1")),
         .package(url: "https://github.com/getsentry/sentry-cocoa", exact: "9.19.0"),
@@ -46,7 +44,6 @@ let package = Package(
             name: "VPNShared",
             dependencies: [
                 "Domain",
-                "ExtensionIPC",
                 "VPNCrypto",
                 "Strings",
                 .product(name: "Ergonomics", package: "Ergonomics"),
@@ -62,14 +59,13 @@ let package = Package(
             name: "VPNAppCore",
             dependencies: [
                 "Domain",
-                "NetShield",
                 "VPNShared",
                 "VPNCrypto",
                 "Strings",
                 "Localization",
+                "Theme", // LinkButtonStyle, macOS only
                 .product(name: "Ergonomics", package: "Ergonomics"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
-                .product(name: "CasePaths", package: "swift-case-paths"),
                 .product(name: "DependenciesMacros", package: "swift-dependencies"),
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),
@@ -105,7 +101,6 @@ let package = Package(
                 .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),
             ]
         ),
-        .testTarget(name: "VPNSharedTests", dependencies: ["VPNShared"]),
-        .testTarget(name: "VPNCryptoTests", dependencies: ["VPNCrypto"]),
+        .testTarget(name: "VPNSharedTests", dependencies: ["VPNShared", "ExtensionIPC"]),
     ]
 )

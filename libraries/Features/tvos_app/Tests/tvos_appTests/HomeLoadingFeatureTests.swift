@@ -20,7 +20,6 @@
 import ComposableArchitecture
 import struct Ergonomics.GenericError
 @testable import tvos_app
-import tvOSTestSupport
 import XCTest
 
 final class HomeLoadingFeatureTests: XCTestCase {

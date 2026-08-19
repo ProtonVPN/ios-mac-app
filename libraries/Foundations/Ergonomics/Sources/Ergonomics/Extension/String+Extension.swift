@@ -43,24 +43,6 @@ public extension String {
         !matches(for: regex).isEmpty
     }
 
-    func preg_replace_none_regex(_ partten: String, replaceto: String) -> String {
-        replacingOccurrences(of: partten, with: replaceto, options: NSString.CompareOptions.caseInsensitive, range: nil)
-    }
-
-    func preg_replace(_ partten: String, replaceto: String) -> String {
-        let options: NSRegularExpression.Options = [.caseInsensitive, .dotMatchesLineSeparators]
-        do {
-            let regex = try NSRegularExpression(pattern: partten, options: options)
-            let replacedString = regex.stringByReplacingMatches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSRange(location: 0, length: count), withTemplate: replaceto)
-            if !replacedString.isEmpty {
-                return replacedString
-            }
-        } catch let error as NSError {
-            reportIssue(error, "Invalid regex")
-        }
-        return self
-    }
-
     static func randomString(length: Int) -> String {
         let allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         let allowedCharsCount = UInt32(allowedChars.count)

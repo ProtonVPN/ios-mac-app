@@ -18,15 +18,14 @@
 
 import ComposableArchitecture
 import Domain
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Theme
 
-public struct SessionCaptureInfoView: View {
-    public var body: some View {
+struct SessionCaptureInfoView: View {
+    var body: some View {
         HStack(alignment: .top) {
-            IconProvider.infoCircleFilled
+            Theme.Asset.Icons.infoCircleFilled
                 .swiftUIImage
                 .resizable()
                 .frame(.square(.themeSpacing16))

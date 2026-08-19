@@ -21,7 +21,6 @@ import Connection
 import ConnectionInventory
 import Domain
 import Ergonomics
-import LegacyCommon
 import Localization
 import Modals
 import NetShield
@@ -31,7 +30,6 @@ import Strings
 import SwiftUI
 import Theme
 import VPNAppCore
-import VPNShared
 
 @Reducer
 struct QuickSettingsFeature {

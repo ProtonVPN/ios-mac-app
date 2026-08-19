@@ -19,7 +19,6 @@
 import AppKit
 import Combine
 import Domain
-import LegacyCommon
 import SwiftUI
 import VPNAppCore
 

@@ -23,7 +23,6 @@
 import Cocoa
 import Dependencies
 import Domain
-import LegacyCommon
 import Strings
 import VPNAppCore
 

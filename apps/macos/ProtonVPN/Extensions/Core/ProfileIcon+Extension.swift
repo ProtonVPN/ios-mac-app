@@ -23,7 +23,6 @@
 import AppKit
 import Domain
 import Foundation
-import LegacyCommon
 import ProtonCoreUIFoundations
 
 extension ProfileIcon {

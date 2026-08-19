@@ -21,7 +21,6 @@
 //
 
 import Cocoa
-import LegacyCommon
 import SharedViews
 import Strings
 import Theme

@@ -17,7 +17,6 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Lottie
-import Strings
 import SwiftUI
 
 public struct WidgetSettingsView: View {

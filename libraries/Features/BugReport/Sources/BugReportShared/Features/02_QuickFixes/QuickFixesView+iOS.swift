@@ -23,14 +23,14 @@
     import SwiftUI
     import Theme
 
-    public struct QuickFixesView: View {
+    struct QuickFixesView: View {
         @Bindable var store: StoreOf<QuickFixesFeature>
 
         let assetsBundle = CurrentEnv.assetsBundle
         @Environment(\.colors) private var colors: Colors
         @Environment(\.dismiss) private var dismiss
 
-        public var body: some View {
+        var body: some View {
             ZStack {
                 colors.background.ignoresSafeArea()
 

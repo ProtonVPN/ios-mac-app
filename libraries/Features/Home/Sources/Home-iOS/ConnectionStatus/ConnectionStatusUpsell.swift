@@ -19,11 +19,9 @@
 import ComposableArchitecture
 import Dependencies
 import HomeShared
-import NetShield
 import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
-import VPNAppCore
 
 struct ConnectionStatusUpsell: View {
     private struct Model {

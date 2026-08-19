@@ -20,7 +20,6 @@ import ComposableArchitecture
 import Connection
 import Domain
 import Foundation
-import LegacyCommon
 import NetShield
 import Strings
 import SwiftUI

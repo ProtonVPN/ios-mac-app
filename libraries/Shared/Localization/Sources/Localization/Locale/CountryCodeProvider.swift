@@ -18,7 +18,6 @@
 
 import Foundation
 import ProtonCoreUtilities // Array and Dictionary extensions
-import Strings
 
 #if canImport(CoreTelephony)
     import CoreTelephony
@@ -28,8 +27,8 @@ public protocol CountryCodeProvider {
     var countryCodes: [String] { get }
 }
 
-public class CountryCodeProviderImplementation: CountryCodeProvider {
-    public private(set) var countryCodes: [String]
+class CountryCodeProviderImplementation: CountryCodeProvider {
+    private(set) var countryCodes: [String]
 
     private static let localeResolver = LocaleResolverImplementation.default
 
@@ -37,7 +36,7 @@ public class CountryCodeProviderImplementation: CountryCodeProvider {
     /// Then, go over all of the preferred languages on a device. If we're able
     /// to generate a locale from this language, then insert its region code
     /// into the set as well.
-    public init() {
+    init() {
         var result: [String] = []
 
         if let localeTag = Self.localeResolver.currentLocale.ietfRegionTag {

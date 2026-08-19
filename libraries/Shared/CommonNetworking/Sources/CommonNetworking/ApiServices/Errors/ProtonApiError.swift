@@ -21,21 +21,13 @@
 
 import Foundation
 import Strings
-import VPNShared
 
-public enum ParseError: LocalizedError {
-    case authInfoParse
-    case authCredentialsParse
-    case modulusParse
-    case refreshTokenParse
+enum ParseError: LocalizedError {
     case vpnCredentialsParse
     case serverParse
     case loadsParse
-    case clientConfigParse
-    case createPaymentTokenParse
-    case stringToDataConversion
 
-    public var localizedDescription: String {
+    var localizedDescription: String {
         switch self {
         case .serverParse:
             "Can't parse the servers info"
@@ -47,6 +39,6 @@ public enum ParseError: LocalizedError {
     }
 }
 
-public enum VpnApiServiceError: Error {
+enum VpnApiServiceError: Error {
     case endpointRequiresAuthentication
 }

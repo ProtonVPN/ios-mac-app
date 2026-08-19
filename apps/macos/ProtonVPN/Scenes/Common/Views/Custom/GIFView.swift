@@ -36,14 +36,6 @@ class GIFView: NSView {
         fatalError("Not implemented: \(#function)")
     }
 
-    init?(frame frameRect: NSRect, gifResourceURLString: String) {
-        guard let frames = Self.getGifFrames(fromAssetURLString: gifResourceURLString) else {
-            return nil
-        }
-        self.frames = frames
-        super.init(frame: frameRect)
-    }
-
     init?(frame frameRect: NSRect, pngDirectoryString: String) {
         guard let dirs = Bundle(for: type(of: self)).urls(forResourcesWithExtension: "png", subdirectory: pngDirectoryString) else {
             return nil
@@ -82,36 +74,6 @@ class GIFView: NSView {
         }
 
         frameCache[parentDir] = frames
-        return frames
-    }
-
-    private static func getGifFrames(fromAssetURLString urlString: String) -> [CGImage]? {
-        if let frames = frameCache[urlString] {
-            return frames
-        }
-
-        let url = URL(fileURLWithPath: urlString)
-        guard let data = try? Data(contentsOf: url), let frames = getGifFrames(from: data) else {
-            return nil
-        }
-
-        frameCache[urlString] = frames
-        return frames
-    }
-
-    private static func getGifFrames(from data: Data) -> [CGImage]? {
-        guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil) else {
-            return nil
-        }
-
-        let count = CGImageSourceGetCount(imageSource)
-        var frames: [CGImage] = []
-        for index in 0 ..< count {
-            guard let frame = CGImageSourceCreateImageAtIndex(imageSource, index, nil) else {
-                return nil
-            }
-            frames.append(frame)
-        }
         return frames
     }
 

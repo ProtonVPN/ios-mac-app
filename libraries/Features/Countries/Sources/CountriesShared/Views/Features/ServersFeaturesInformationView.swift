@@ -114,11 +114,8 @@ public struct ServersFeaturesInformationView: View {
     }
 
     public enum Dimensions {
-        public static let preferredSheetWidth: CGFloat = 300
-        public static let maxSheetHeight: CGFloat = 500
         public static let topHeaderHeight: CGFloat = 44
         public static let sectionHeaderHeight: CGFloat = 52
-        public static let estimatedFeatureRowHeight: CGFloat = 108
         static let closeButtonIconSize: CGFloat = 12
     }
 }

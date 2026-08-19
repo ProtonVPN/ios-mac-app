@@ -255,13 +255,6 @@
     {
       "target": {
         "containerPath": "container:../../libraries/Core/NEHelper",
-        "identifier": "VPNCryptoTests",
-        "name": "VPNCryptoTests"
-      }
-    },
-    {
-      "target": {
-        "containerPath": "container:../../libraries/Core/NEHelper",
         "identifier": "VPNSharedTests",
         "name": "VPNSharedTests"
       }

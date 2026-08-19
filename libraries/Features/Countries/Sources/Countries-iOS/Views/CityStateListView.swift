@@ -20,19 +20,15 @@ import ComposableArchitecture
 import CountriesShared
 import Domain
 import SharedViews
-import Strings
+import Sharing
 import SwiftUI
 import Theme
 import VPNAppCore
 
-public struct CityStateListView: View {
+struct CityStateListView: View {
     @Bindable var store: StoreOf<CityStateListFeature>
 
-    public init(store: StoreOf<CityStateListFeature>) {
-        self.store = store
-    }
-
-    public var body: some View {
+    var body: some View {
         Group {
             switch store.listState {
             case .loading:

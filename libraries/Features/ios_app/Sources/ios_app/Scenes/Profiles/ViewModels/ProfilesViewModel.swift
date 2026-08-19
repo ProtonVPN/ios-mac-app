@@ -23,7 +23,6 @@
 import Dependencies
 import Domain
 import LegacyCommon
-import ProtonCoreFeatureFlags
 import Strings
 import UIKit
 import VPNAppCore
@@ -35,7 +34,6 @@ class ProfilesViewModel {
     private let profileService: ProfileService
     @Dependency(\.profileManager) private var profileManager
     private let connectionStatusService: ConnectionStatusService
-    @Dependency(\.portForwardingPropertyProvider) private var portForwardingPropertyProvider
     @Dependency(\.credentialsProvider) private var credentialsProvider
 
     private let sectionTitles = [Localizable.recommended, Localizable.myProfiles]
@@ -103,10 +101,7 @@ class ProfilesViewModel {
 
     func defaultCellModel(for row: Int) -> DefaultProfileViewModel {
         let serverOffering = row == 0 ? ServerOffering.fastest(nil) : ServerOffering.random(nil)
-        return DefaultProfileViewModel(
-            serverOffering: serverOffering,
-            connectionStatusService: connectionStatusService
-        )
+        return DefaultProfileViewModel(serverOffering: serverOffering)
     }
 
     func cellModel(for index: Int) -> ProfileItemViewModel? {
@@ -116,8 +111,7 @@ class ProfilesViewModel {
         }
         return ProfileItemViewModel(
             profile: customProfiles[index],
-            userTier: userTier,
-            connectionStatusService: connectionStatusService
+            userTier: userTier
         )
     }
 

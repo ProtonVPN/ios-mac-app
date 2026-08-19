@@ -26,7 +26,7 @@ import Sharing
 import VPNAppCore
 import VPNShared
 
-public final class TelemetryServiceImplementation {
+final class TelemetryServiceImplementation {
     private let eventNotifier: TelemetryEventNotifier
 
     private var telemetryUpsellReporter: TelemetryUpsellReporter?
@@ -71,7 +71,7 @@ public final class TelemetryServiceImplementation {
         #endif
     }
 
-    public func ratingBoosterPromptRequested() async {
+    func ratingBoosterPromptRequested() async {
         do {
             try await telemetryEventScheduler?.report(event: ProductPromptsEvent())
         } catch {
@@ -79,17 +79,17 @@ public final class TelemetryServiceImplementation {
         }
     }
 
-    public func reachabilityChanged(_ networkType: ConnectionDimensions.NetworkType) async {
+    func reachabilityChanged(_ networkType: ConnectionDimensions.NetworkType) async {
         _ = await initializeTask.value
         await telemetryConnectionStatusReporter?.setNetworkType(networkType)
     }
 
-    public func userInitiatedVPNChange(_ change: UserInitiatedVPNChange) async {
+    func userInitiatedVPNChange(_ change: UserInitiatedVPNChange) async {
         _ = await initializeTask.value
         await telemetryConnectionStatusReporter?.setUserInitiatedVPNChange(change)
     }
 
-    public func onboardingEvent(_ event: OnboardingEvent.Event) async throws {
+    func onboardingEvent(_ event: OnboardingEvent.Event) async throws {
         _ = await initializeTask.value
         telemetryConversionReporter?.onboardingEvent(event)
         try await telemetryOnboardingReporter?.onboardingEvent(event)
@@ -112,7 +112,7 @@ public final class TelemetryServiceImplementation {
         }
     }
 
-    public func upsellEvent(
+    func upsellEvent(
         _ event: UpsellEvent.Event,
         modalSource _modalSource: UpsellModalSource?,
         newPlanName: String?,
@@ -133,7 +133,7 @@ public final class TelemetryServiceImplementation {
         )
     }
 
-    public func connectionStateChanged(_ oldValue: Connection.ConnectionState, _ newValue: Connection.ConnectionState) async throws {
+    func connectionStateChanged(_ oldValue: Connection.ConnectionState, _ newValue: Connection.ConnectionState) async throws {
         try await telemetryConnectionStatusReporter?.connectionStateChanged(oldValue, newValue)
     }
 }

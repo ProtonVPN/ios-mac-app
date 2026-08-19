@@ -25,7 +25,6 @@ import Foundation
 import Testing
 @testable import VPNAppCore
 import VPNShared
-import VPNSharedTesting
 
 @Suite(.serialized)
 @MainActor

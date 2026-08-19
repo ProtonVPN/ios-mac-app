@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import Foundation
-import LegacyCommon
 
 enum SystemExtensionsOperationKind: Equatable, Hashable {
     case install
@@ -47,20 +46,10 @@ public enum SystemExtensionInstallationFailure: Error, Sendable {
 }
 
 /// Side-effect-free install result used by TCA orchestration layers.
-public struct SystemExtensionRawInstallationResult: Sendable {
-    public let accumulated: SystemExtensionResult
-    public let individualResults: [SystemExtensionType: SystemExtensionResult]
-    public let didRequireUserApproval: Bool
-
-    public init(
-        accumulated: SystemExtensionResult,
-        individualResults: [SystemExtensionType: SystemExtensionResult],
-        didRequireUserApproval: Bool
-    ) {
-        self.accumulated = accumulated
-        self.individualResults = individualResults
-        self.didRequireUserApproval = didRequireUserApproval
-    }
+struct SystemExtensionRawInstallationResult: Sendable {
+    let accumulated: SystemExtensionResult
+    let individualResults: [SystemExtensionType: SystemExtensionResult]
+    let didRequireUserApproval: Bool
 }
 
 @Reducer

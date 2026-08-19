@@ -19,7 +19,6 @@ let package = Package(
 
         .package(path: "../Localization"),
         .package(path: "../Persistence"),
-        .package(path: "../ExtensionIPC"),
 
         .package(path: "../../Foundations/PMLogger"),
         .package(path: "../../Foundations/Domain"),
@@ -43,7 +42,6 @@ let package = Package(
                 "Localization",
                 "Persistence",
                 "Strings",
-                "ExtensionIPC",
                 .product(name: "VPNAppCore", package: "NEHelper"), // UnauthKeychain
                 .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain
 
@@ -64,6 +62,9 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
+            ],
+            resources: [
+                .process("Resources"),
             ]
         ),
         .target(
@@ -80,6 +81,7 @@ let package = Package(
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
             ],
             resources: [
+                .copy("Resources/example1.json"),
                 .copy("Resources/test_log_1.log"),
                 .copy("Resources/test_log_2.log"),
             ]

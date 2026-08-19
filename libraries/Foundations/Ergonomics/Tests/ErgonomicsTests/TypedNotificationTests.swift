@@ -23,10 +23,6 @@ import XCTest
 private let timeout: TimeInterval = 1.0
 
 extension [NotificationToken] {
-    static func + (_ lhs: Self, _ rhs: NotificationToken) -> Self {
-        lhs + [rhs]
-    }
-
     static func += (_ lhs: inout Self, _ rhs: NotificationToken) {
         lhs = lhs + [rhs]
     }

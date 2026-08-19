@@ -48,7 +48,6 @@
                   "Code" : 5099,
                   "ErrorDescription" : "",
                   "Details" : {
-
                   }
                 }
             """

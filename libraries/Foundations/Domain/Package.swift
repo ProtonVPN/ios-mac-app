@@ -24,7 +24,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.9.0")),
-        .package(url: "https://github.com/pointfreeco/swift-concurrency-extras", .upToNextMajor(from: "1.3.1")),
+        .package(url: "https://github.com/pointfreeco/swift-case-paths", .upToNextMajor(from: "1.6.1")),
     ],
     targets: [
         .executableTarget(name: "errordecoder", path: "Sources/ErrorDecoder"),
@@ -39,8 +39,9 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
-                .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),
-            ],
+                .product(name: "CasePaths", package: "swift-case-paths"),
+                .product(name: "DependenciesMacros", package: "swift-dependencies"),
+           ],
             resources: [.process("Resources")]
         ),
         .target(name: "DomainTestSupport", dependencies: ["Domain"]),

@@ -26,13 +26,13 @@ import VPNAppCore
 import WidgetIntents
 import WidgetKit
 
-public struct ConnectWidgetView: View {
+struct ConnectWidgetView: View {
     let entry: ConnectWidgetEntry
 
     @Environment(\.widgetFamily) var widgetFamily
     @Environment(\.widgetRenderingMode) var renderingMode
 
-    public var body: some View {
+    var body: some View {
         if case .accented = renderingMode {
             content
                 .luminanceToAlpha()

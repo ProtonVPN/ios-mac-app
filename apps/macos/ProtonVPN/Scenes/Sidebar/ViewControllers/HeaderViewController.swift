@@ -24,7 +24,6 @@ import Announcement
 import Cocoa
 import Combine
 import Dependencies
-import Domain
 import Ergonomics
 import NATPMPUI
 import SDWebImage

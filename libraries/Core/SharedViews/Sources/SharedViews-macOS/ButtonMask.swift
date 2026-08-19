@@ -23,7 +23,7 @@
 import Cocoa
 import Ergonomics
 
-public class ButtonMask: NSView {
+class ButtonMask: NSView {
     var drawBorder: Bool = false {
         didSet {
             needsDisplay = true
@@ -36,7 +36,7 @@ public class ButtonMask: NSView {
         }
     }
 
-    override public init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         DarkAppearance {
             self.maskColor = .cgColor(.background, .weak)
@@ -44,11 +44,11 @@ public class ButtonMask: NSView {
     }
 
     @available(*, unavailable)
-    public required init?(coder _: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override public func draw(_: NSRect) {
+    override func draw(_: NSRect) {
         guard let context = NSGraphicsContext.current?.cgContext else { return }
         drawMask(context: context)
 

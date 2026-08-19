@@ -20,7 +20,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import LegacyCommon
 import Strings
 import Theme
 import UIKit
@@ -59,10 +58,6 @@ final class UpsellStandardTableViewCell: UITableViewCell {
     func select() {
         guard canSelect else { return }
         completionHandler?()
-    }
-
-    func invert() {
-        setupViews(inverted: true)
     }
 
     func setupViews(inverted: Bool = false, icon: UIImage? = nil) {

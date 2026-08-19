@@ -35,24 +35,13 @@ import Strings
 public protocol SystemAlert: AnyObject {
     var title: String? { get }
     var message: String? { get }
-    var joinedTitleAndMessage: Bool { get }
     var actions: [AlertAction] { get set }
-    var isError: Bool { get }
     var dismiss: (() -> Void)? { get set }
     var activatingApp: Bool { get }
-    var displayOnActiveScreen: Bool { get }
 }
 
 public extension SystemAlert {
-    var joinedTitleAndMessage: Bool {
-        false
-    }
-
     var activatingApp: Bool {
-        false
-    }
-
-    var displayOnActiveScreen: Bool {
         false
     }
 }
@@ -86,42 +75,10 @@ public extension SystemAlert {
     }
 }
 
-public struct ReconnectInfo {
-    public let fromServer: Server
-    public let toServer: Server
-
-    public struct Server {
-        public let name: String
-
-        #if canImport(UIKit)
-            public let image: UIImage
-
-            public init(name: String, image: UIImage) {
-                self.name = name
-                self.image = image
-            }
-
-        #elseif canImport(Cocoa)
-            public let image: NSImage
-
-            public init(name: String, image: NSImage) {
-                self.name = name
-                self.image = image
-            }
-        #endif
-    }
-
-    public init(fromServer: Server, toServer: Server) {
-        self.fromServer = fromServer
-        self.toServer = toServer
-    }
-}
-
 public final class AccountDeletionErrorAlert: SystemAlert {
     public var title: String? = Localizable.accountDeletionError
     public var message: String?
     public var actions = [AlertAction]()
-    public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
     public init(message: String) {
@@ -133,7 +90,6 @@ public final class AccountDeletionWarningAlert: SystemAlert {
     public var title: String? = Localizable.vpnConnectionActive
     public var message: String? = Localizable.accountDeletionConnectionWarning
     public var actions = [AlertAction]()
-    public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
     public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
@@ -147,7 +103,6 @@ public final class AppUpdateRequiredAlert: SystemAlert {
     public var title: String? = Localizable.updateRequired
     public var message: String? = Localizable.updateRequiredNoLongerSupported
     public var actions = [AlertAction]()
-    public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
     public init(_ error: Error) {
@@ -159,7 +114,6 @@ public final class UpgradeUnavailableAlert: SystemAlert {
     public var title: String? = Localizable.upgradeUnavailableTitle
     public var message: String?
     public var actions = [AlertAction]()
-    public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
     public init(message: String? = nil, accountDashboardURL url: URL? = nil) {
@@ -194,7 +148,6 @@ public final class MaintenanceAlert: SystemAlert {
     public var title: String? = Localizable.allServersInProfileUnderMaintenance
     public var message: String?
     public var actions = [AlertAction]()
-    public let isError: Bool = true
     public var dismiss: (() -> Void)?
     public let type: MaintenanceAlertType
 
@@ -233,7 +186,6 @@ public final class ChangeProtocolDisconnectAlert: SystemAlert {
     public var title: String? = Localizable.vpnConnectionActive
     public var message: String? = Localizable.changeProtocolDisconnectWarning
     public var actions = [AlertAction]()
-    public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
     public init(confirmHandler: @escaping () -> Void) {
@@ -249,7 +201,6 @@ public final class ProtocolNotAvailableForServerAlert: SystemAlert {
     public var title: String? = Localizable.vpnProtocolNotSupportedTitle
     public var message: String? = Localizable.vpnProtocolNotSupportedText
     public var actions = [AlertAction]()
-    public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
     public init(confirmHandler: (() -> Void)? = nil, cancelHandler: (() -> Void)? = nil) {
@@ -279,7 +230,6 @@ public final class ReconnectOnSettingsChangeAlert: SystemAlert {
     public var title: String? = Localizable.changeSettings
     public var message: String? = Localizable.reconnectOnSettingsChangeBody
     public var actions = [AlertAction]()
-    public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
     public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
@@ -295,7 +245,6 @@ public final class ReconnectOnActionAlert: SystemAlert {
     public var title: String?
     public var message: String? = Localizable.actionRequiresReconnect
     public var actions = [AlertAction]()
-    public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
     public init(actionTitle: String, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
@@ -318,7 +267,6 @@ public final class ReconnectOnSmartProtocolChangeAlert: SystemAlert {
     public var title: String? = Localizable.smartProtocolReconnectModalTitle
     public var message: String? = Localizable.smartProtocolReconnectModalBody
     public var actions = [AlertAction]()
-    public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
     public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
@@ -331,7 +279,6 @@ public class LogoutWarningAlert: SystemAlert {
     public var title: String? = Localizable.vpnConnectionActive
     public var message: String? = Localizable.logOutWarning
     public var actions = [AlertAction]()
-    public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
     public init(confirmHandler: @escaping () -> Void) {
@@ -368,7 +315,6 @@ public final class KillSwitchLogoutBlockingFailedAlert: SystemAlert {
     public var title: String? = Localizable.killSwitchLogoutBlockingFailedTitle
     public var message: String? = Localizable.killSwitchLogoutBlockingFailedBody
     public var actions = [AlertAction]()
-    public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
     public init() {
@@ -380,7 +326,6 @@ public final class UnreachableNetworkAlert: SystemAlert {
     public var title: String? = Localizable.warning
     public var message: String? = Localizable.neUnableToConnectToHost
     public var actions = [AlertAction]()
-    public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
     public init(error: Error, troubleshoot: @escaping () -> Void) {
@@ -394,7 +339,6 @@ public final class ProtonUnreachableAlert: SystemAlert {
     public var title: String?
     public var message: String? = Localizable.protonWebsiteUnreachable
     public var actions = [AlertAction]()
-    public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
     public init() {}
@@ -404,7 +348,6 @@ public final class UpgradeOperatingSystemAlert: SystemAlert {
     public var title: String?
     public var message: String?
     public var actions: [AlertAction]
-    public var isError = false
     public var dismiss: (() -> Void)?
 
     public init(minimumOSVersionRequired version: OperatingSystemVersion) {
@@ -435,7 +378,6 @@ public final class DisconnectToSignInAlert: SystemAlert {
     public var title: String? = Localizable.disconnectRequired
     public var message: String? = Localizable.disconnectToSignInDescription
     public var actions = [AlertAction]()
-    public let isError: Bool = false
     public var dismiss: (() -> Void)?
 
     public init(continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
@@ -458,11 +400,6 @@ public final class PaymentRestorationAlert: SystemAlert {
 
     public init(_ variant: Variant) {
         self.variant = variant
-    }
-
-    public var isError: Bool {
-        guard case .error = variant else { return false }
-        return true
     }
 
     public var title: String? {
@@ -496,7 +433,6 @@ public final class PaymentRestorationAlert: SystemAlert {
         public var title: String? = Localizable.sysexCannotEnable
         public var message: String?
         public var actions = [AlertAction]()
-        public let isError: Bool = true
         public var dismiss: (() -> Void)?
 
         public init?(error: Error) {
@@ -527,7 +463,6 @@ public final class PaymentRestorationAlert: SystemAlert {
         public var title: String?
         public var message: String?
         public var actions = [AlertAction]()
-        public let isError: Bool = false
         public var dismiss: (() -> Void)?
         public var cancelHandler: () -> Void
 

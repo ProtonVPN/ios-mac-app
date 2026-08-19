@@ -23,15 +23,12 @@ import Strings
 import SwiftUI
 import Theme
 import VPNAppCore
-import VPNShared
 
 struct ProtocolSettingsView: View {
     @Bindable var store: StoreOf<ProtocolSettingsFeature>
 
     // Remove default leading indentation and add padding above and below the header
     private let sectionHeaderInsets = EdgeInsets(top: .themeSpacing12, leading: 0, bottom: .themeSpacing12, trailing: 0)
-
-    private let protocolArticleAddress = "https://protonvpn.com/blog/whats-the-best-vpn-protocol/"
 
     func cell(for connectionProtocol: ConnectionProtocol) -> ProtocolCell {
         ProtocolCell(

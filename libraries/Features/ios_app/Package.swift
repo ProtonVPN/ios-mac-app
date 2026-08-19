@@ -52,12 +52,9 @@ let package = Package(
         .package(url: "https://github.com/wxxsw/GSMessages", exact: "1.7.5"),
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
-        .package(url: "https://github.com/Alamofire/Alamofire", exact: "5.4.4"),
-        .package(url: "https://github.com/Alamofire/AlamofireImage", exact: "4.2.0"),
         .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.15.8"),
         .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.2")),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
-        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.9.0")),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -110,7 +107,6 @@ let package = Package(
                 .product(name: "ProtonCorePasswordChange", package: "protoncore"),
                 .product(name: "ProtonCorePayments", package: "protoncore"),
                 .product(name: "ProtonCorePaymentsV2", package: "protoncore"),
-                .product(name: "ProtonCorePaymentsUIV2", package: "protoncore"),
                 .product(name: "ProtonCorePushNotifications", package: "protoncore"),
                 .product(name: "ProtonCoreServices", package: "protoncore"),
                 .product(name: "ProtonCoreTelemetry", package: "protoncore"),
@@ -121,8 +117,6 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "GSMessages", package: "GSMessages"),
                 .product(name: "Sharing", package: "swift-sharing"),
-                .product(name: "Alamofire", package: "Alamofire"),
-                .product(name: "AlamofireImage", package: "AlamofireImage"),
                 .product(name: "SDWebImage", package: "SDWebImage"),
                 .product(name: "SwiftUINavigation", package: "swift-navigation"),
             ],
@@ -136,8 +130,6 @@ let package = Package(
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
-                .product(name: "PersistenceTestSupport", package: "Persistence"),
             ],
             resources: [.copy("Resources/ProtonVPN.log")]
         ),

@@ -23,7 +23,6 @@ import Connection
 import Dependencies
 import Domain
 import Hermes
-import LegacyCommon
 import Observation
 import Settings
 import Sharing
@@ -52,7 +51,6 @@ final class HermesViewModel {
     @SharedReader var isEnabled: Bool
 
     @Dependency(\.hermesClient) private var hermesClient
-    @Dependency(\.sessionService) private var sessionService: SessionService
     @Dependency(\.linkOpener) private var linkOpener
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @SharedReader(.connectionState) private var connectionState: ConnectionState

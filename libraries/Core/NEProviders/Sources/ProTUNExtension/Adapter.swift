@@ -23,7 +23,6 @@ import Domain
 import Ergonomics
 import ExtensionSync
 import IPCDefinitions
-import IPCErgonomics
 import NetworkExtension
 import NetworkingErgonomics
 import OSLog
@@ -45,9 +44,7 @@ actor ProTUNAdapter {
     enum Error: Swift.Error {
         case invalidState
         case noTunFileDescriptor
-        case noEventStreamAvailable
         case failedToSetToNonBlocking(FileDescriptorError)
-        case noPeers
         case invalidKeys
         case missingUserID
         case missingConfiguration

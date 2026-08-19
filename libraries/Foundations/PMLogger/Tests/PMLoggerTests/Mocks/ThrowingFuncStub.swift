@@ -2402,24 +2402,24 @@ public extension StubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8,
 
 // Inspired by https://www.objc.io/blog/2018/12/18/atomic-variables/ article
 
-public final class Atomic<A> {
+final class Atomic<A> {
     private let serialAccessQueue = DispatchQueue(label: "ch.proton.atomic_queue")
     private var internalValue: A
-    public init(_ value: A) {
+    init(_ value: A) {
         self.internalValue = value
     }
 
-    public var value: A {
+    var value: A {
         serialAccessQueue.sync { self.internalValue }
     }
 
-    public func mutate(_ transform: (inout A) -> Void) {
+    func mutate(_ transform: (inout A) -> Void) {
         serialAccessQueue.sync {
             transform(&self.internalValue)
         }
     }
 
-    public func transform<T>(_ transform: (A) -> T) -> T {
+    func transform<T>(_ transform: (A) -> T) -> T {
         serialAccessQueue.sync {
             transform(self.internalValue)
         }

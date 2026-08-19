@@ -23,7 +23,6 @@ import Foundation
 import OrderedCollections
 import SwiftUI
 import VPNAppCore
-import VPNShared
 import WidgetKit
 
 @Reducer

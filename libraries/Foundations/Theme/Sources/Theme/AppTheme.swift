@@ -93,7 +93,6 @@ public enum AppTheme {
         case radius16 = 16
         case radius24 = 24
         case radius32 = 32
-        case radius36 = 36
     }
 
     public enum Spacing: CGFloat {
@@ -138,8 +137,6 @@ public enum AppTheme {
         case rect(width: CGFloat, height: CGFloat)
 
         public static let profileIconSize: Self = .square(18)
-        public static let flagIconSize: Self = .rect(width: 32, height: 21.33)
-        public static let secureCoreFlagIconSize: Self = .rect(width: 18, height: 12)
 
         public var width: CGFloat? {
             switch self {

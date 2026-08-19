@@ -112,7 +112,6 @@ final class NavigationService {
     // MARK: Properties
 
     @Dependency(\.windowService) private var windowService
-    @Dependency(\.vpnApiClient) private var vpnApiClient
     @Dependency(\.credentialsProvider) private var credentialsProvider
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
@@ -120,18 +119,17 @@ final class NavigationService {
     private var cancellables = Set<AnyCancellable>()
     @Dependency(\.authKeychain) private var authKeychain
     private lazy var loginService: LoginService = {
-        let loginService = factory.makeLoginService()
+        let loginService = CoreLoginService(factory: factory)
         loginService.delegate = self
         return loginService
     }()
 
     private lazy var pushNotificationService = factory.makePushNotificationService()
 
-    @Dependency(\.announcementManager) var announcementManager
     @Dependency(\.networking) private var networking
 
     private lazy var onboardingService: OnboardingService = {
-        let onboardingService = factory.makeOnboardingService()
+        let onboardingService = OnboardingModuleService(factory: factory)
         onboardingService.delegate = self
         return onboardingService
     }()
@@ -396,7 +394,7 @@ extension NavigationService: SettingsService {
     }
 
     func presentReportBug() {
-        let manager = factory.makeDynamicBugReportManager()
+        let manager = factory.dynamicBugReportManager
         if let viewController = bugReportCreator.createBugReportViewController(delegate: manager, colors: Colors()) {
             manager.closeBugReportHandler = { [weak self] in
                 self?.windowService.dismissModal {}

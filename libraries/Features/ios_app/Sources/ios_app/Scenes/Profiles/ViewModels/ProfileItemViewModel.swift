@@ -42,7 +42,6 @@ final class ProfileItemViewModel {
     private let profile: Profile
     @Dependency(\.coreAlertService) private var alertService
     @Dependency(\.upsellManager) private var upsellManager
-    private let connectionStatusService: ConnectionStatusService
 
     private let userTier: VpnTier
     private let lowestServerTier: VpnTier
@@ -66,10 +65,6 @@ final class ProfileItemViewModel {
 
     private var connectedUiState: Bool {
         isConnected || isConnecting
-    }
-
-    private var canConnect: Bool {
-        !underMaintenance
     }
 
     private var isUsersTierTooLow: Bool {
@@ -108,22 +103,16 @@ final class ProfileItemViewModel {
         attributedDescription(forProfile: profile)
     }
 
-    var connectButtonTitle: String {
-        underMaintenance ? Localizable.maintenance : Localizable.connect
-    }
-
     var alphaOfMainElements: CGFloat {
         isUsersTierTooLow ? 0.5 : 1.0
     }
 
     init(
         profile: Profile,
-        userTier: VpnTier,
-        connectionStatusService: ConnectionStatusService
+        userTier: VpnTier
     ) {
         self.profile = profile
         self.userTier = userTier
-        self.connectionStatusService = connectionStatusService
 
         @Dependency(\.serverRepository) var serverRepository
         let serverAvailability = serverRepository.serverAvailability(for: profile)

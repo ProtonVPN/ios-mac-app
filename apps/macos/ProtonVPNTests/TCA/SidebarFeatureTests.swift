@@ -25,15 +25,12 @@ import Ergonomics
 @testable import ExtensionManager
 @testable import ExtensionSync
 import Foundation
-import LegacyCommon
 import os
 import PaymentsShared
 @testable import ProtonVPN
 import Strings
 import Testing
 import VPNAppCore
-import VPNShared
-import VPNSharedTesting
 
 @MainActor
 @Suite(.serialized)

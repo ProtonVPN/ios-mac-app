@@ -19,7 +19,6 @@
 import CommonNetworking
 import Dependencies
 import Foundation
-import LegacyCommon
 import VPNAppCore
 
 final class SecureCoreWarningViewModel {

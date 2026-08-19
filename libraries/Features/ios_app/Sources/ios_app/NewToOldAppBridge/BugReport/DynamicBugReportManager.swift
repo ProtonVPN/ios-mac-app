@@ -21,7 +21,6 @@ import CommonNetworking
 import Dependencies
 import Domain
 import Foundation
-import LegacyCommon
 import PMLogger
 import ProtonCoreAPIClient
 import Sharing
@@ -29,18 +28,14 @@ import UIKit
 import VPNAppCore
 import VPNShared
 
-public protocol DynamicBugReportManagerFactory {
-    func makeDynamicBugReportManager() -> DynamicBugReportManager
-}
-
-public class DynamicBugReportManager {
-    public var model: BugReportModel
-    public var isUserCredentialless: Bool {
+class DynamicBugReportManager {
+    @Shared(.dynamicBugReport) var model
+    var isUserCredentialless: Bool {
         @Dependency(\.credentiallessHelper) var credentiallessHelper
         return credentiallessHelper.isCredentialLess()
     }
 
-    public var prefilledEmail: String {
+    var prefilledEmail: String {
         get {
             @SharedReader(.reportBugEmail) var reportBugEmail
             return reportBugEmail ?? ""
@@ -51,14 +46,14 @@ public class DynamicBugReportManager {
         }
     }
 
-    public var prefilledUsername: String {
+    var prefilledUsername: String {
         @Dependency(\.authKeychain) var authKeychain
         return authKeychain.username ?? ""
     }
 
-    public var closeBugReportHandler: (() -> Void)? // To not have a dependency on windowService
-    public var createAccountCallback: (() -> Void)? // To not have a depdendency on navigationService
-    public var signInCallback: (() -> Void)? // To not have a depdendency on navigationService
+    var closeBugReportHandler: (() -> Void)? // To not have a dependency on windowService
+    var createAccountCallback: (() -> Void)? // To not have a depdendency on navigationService
+    var signInCallback: (() -> Void)? // To not have a depdendency on navigationService
 
     @Dependency(\.reportsApiClient) private var reportsApiClient
     private var timer: Timer?
@@ -67,13 +62,8 @@ public class DynamicBugReportManager {
     @Dependency(\.logContentProvider) private var logContentProvider
     private let logSources: [LogSource]
 
-    public init(
-        logSources: [LogSource] = LogSource.allCases
-    ) {
+    init(logSources: [LogSource] = LogSource.allCases) {
         self.logSources = logSources
-
-        @SharedReader(.dynamicBugReport) var dynamicBugReport
-        self.model = dynamicBugReport ?? Self.getDefaultConfig()
         setupRefresh()
     }
 
@@ -92,9 +82,7 @@ public class DynamicBugReportManager {
     private func loadConfig() async {
         do {
             let config = try await reportsApiClient.dynamicBugReportConfig()
-            model = config
-            @Shared(.dynamicBugReport) var dynamicBugReport
-            $dynamicBugReport.withLock { $0 = config }
+            $model.withLock { $0 = config }
             log.debug("Dynamic bug report config downloaded and saved", category: .app)
         } catch {
             log.debug("Dynamic bug report config download error", category: .app, event: .error, metadata: ["error": "\(error)"])
@@ -102,33 +90,14 @@ public class DynamicBugReportManager {
         }
     }
 
-    private static func getDefaultConfig() -> BugReportModel {
-        let bundle = Bundle.module
-        guard let configFile = bundle.url(forResource: "BugReportConfig", withExtension: "json") else {
-            log.error("BugReportConfig.json file not found. Returning empty config.", category: .app)
-            return BugReportModel()
-        }
-        do {
-            let data = try Data(contentsOf: configFile)
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .custom(decapitalizeFirstLetter)
-            return try decoder.decode(BugReportModel.self, from: data)
-
-        } catch {
-            return BugReportModel()
-        }
-    }
-
     private func fillReportBug(withData data: BugReportResult) -> ReportBug {
-        let os = "iOS"
-        let osVersion = UIDevice.current.systemVersion
-
         @Dependency(\.appInfo) var appInfo
         @SharedReader(.userLocation) var userLocation
+        let os = appInfo.platformName
 
         return ReportBug(
             os: os,
-            osVersion: osVersion,
+            osVersion: appInfo.osVersion().osVersionString,
             client: "App",
             clientVersion: "\(appInfo.bundleShortVersion) (\(appInfo.bundleVersion))",
             clientType: 2,
@@ -143,11 +112,11 @@ public class DynamicBugReportManager {
     }
 
     // BugReportDelegate
-    public var updateAvailabilityChanged: ((Bool) -> Void)?
+    var updateAvailabilityChanged: ((Bool) -> Void)?
 }
 
 extension DynamicBugReportManager: BugReportDelegate {
-    public func send(form: BugReportResult) async throws {
+    func send(form: BugReportResult) async throws {
         var report = fillReportBug(withData: form)
 
         guard form.logs else {
@@ -172,47 +141,26 @@ extension DynamicBugReportManager: BugReportDelegate {
         prefilledEmail = report.email
     }
 
-    public func finished() {
+    func finished() {
         closeBugReportHandler?()
     }
 
-    public func updateApp() {
+    func updateApp() {
         updateManager.startUpdate()
     }
 
-    public func checkUpdateAvailability() {
+    func checkUpdateAvailability() {
         Task.detached {
             let available = await self.updateManager.isUpdateAvailable()
             self.updateAvailabilityChanged?(available)
         }
     }
 
-    public func createAccount() {
+    func createAccount() {
         createAccountCallback?()
     }
 
-    public func signIn() {
+    func signIn() {
         signInCallback?()
-    }
-}
-
-func decapitalizeFirstLetter(_ path: [CodingKey]) -> CodingKey {
-    let original: String = path.last!.stringValue
-    let uncapitalized = original.prefix(1).lowercased() + original.dropFirst()
-    return JSONKey(stringValue: uncapitalized) ?? path.last!
-}
-
-private struct JSONKey: CodingKey {
-    var stringValue: String
-    var intValue: Int?
-
-    init?(stringValue: String) {
-        self.stringValue = stringValue
-        self.intValue = nil
-    }
-
-    init?(intValue: Int) {
-        self.stringValue = "\(intValue)"
-        self.intValue = intValue
     }
 }

@@ -33,7 +33,6 @@ import Sharing
 import Strings
 import Theme
 import VPNAppCore
-import VPNShared
 
 enum ConnectionSettingsError: FourCharCode, ProtonVPNError {
     static let errorDomain: String = "ConnectionSettingsErrorDomain"
@@ -44,7 +43,6 @@ enum ConnectionSettingsError: FourCharCode, ProtonVPNError {
 
 final class ConnectionSettingsViewModel {
     @Dependency(\.profileAuthorizer) var profileAuthorizer
-    @Dependency(\.featureAuthorizerProvider) var authorizerProvider
 
     typealias Factory = NavigationServiceFactory & VpnProtocolChangeManagerFactory
 
@@ -266,10 +264,6 @@ final class ConnectionSettingsViewModel {
         }
 
         return availableConnectionProtocols[index]
-    }
-
-    func refreshSysexPending(for connectionProtocol: ConnectionProtocol) {
-        sysexPending = connectionProtocol.requiresSystemExtension
     }
 
     func shouldShowSysexProgress(for protocolIndex: Int) -> Bool {

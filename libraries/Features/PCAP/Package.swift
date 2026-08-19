@@ -20,7 +20,6 @@ let package = Package(
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Shared/Connection"),
-        .package(path: "../../Shared/Localization"),
 
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
@@ -41,7 +40,6 @@ let package = Package(
                 "Connection",
                 "Theme",
                 "Domain",
-                "Localization",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "Sharing", package: "swift-sharing"),

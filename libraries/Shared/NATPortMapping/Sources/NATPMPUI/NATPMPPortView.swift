@@ -225,18 +225,14 @@ public class MappedPort: ObservableObject {
     }
 }
 
-public struct StatusPortView: View {
+struct StatusPortView: View {
     static let toolTipHideDelayInterval: DispatchTimeInterval = .seconds(2)
 
-    @ObservedObject public var portModel: MappedPort = .init()
+    @ObservedObject var portModel: MappedPort = .init()
     @State private var hovered = false
     @State private var showCopiedTooltip = false
 
-    public init(portModel: MappedPort) {
-        self.portModel = portModel
-    }
-
-    public var body: some View {
+    var body: some View {
         if let portNumber = portModel.portNumber {
             HStack {
                 Button(action: {

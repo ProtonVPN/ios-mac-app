@@ -24,7 +24,6 @@ import Cocoa
 import Dependencies
 import Domain
 import Ergonomics
-import LegacyCommon
 import Strings
 
 final class CreateNewProfileViewController: NSViewController {

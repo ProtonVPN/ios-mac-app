@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import ProtonCoreAPIClient
 import ProtonCoreNetworking
 
 public struct ForkSessionRequest: Request {

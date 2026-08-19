@@ -19,7 +19,6 @@
 import Domain
 import Foundation
 import VPNAppCore
-import VPNShared
 
 public struct ConnectionDimensions: Encodable {
     public typealias VPNStatus = CommonTelemetryDimensions.VPNStatus

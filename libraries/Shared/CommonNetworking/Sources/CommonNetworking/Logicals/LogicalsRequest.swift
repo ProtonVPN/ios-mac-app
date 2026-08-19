@@ -19,15 +19,12 @@
 import Domain
 import Ergonomics
 import Foundation
-import ProtonCoreAPIClient
-import ProtonCoreFeatureFlags
 import ProtonCoreNetworking
-import VPNShared
 
 /// The following route is used to retrieve VPN server information, including scores for the best server to connect to depending on a user's proximity to a server and its load. To provide relevant scores even when connected to VPN, we send a truncated version of the user's public IP address. In keeping with our no-logs policy, this partial IP address is not stored on the server and is only used to fulfill this one-off API request.
-public struct LogicalsRequest: ConditionalRequest {
+struct LogicalsRequest: ConditionalRequest {
     private static let protocolDescriptions = VpnProtocol.allCases.map(\.apiDescription).joined(separator: ",")
-    public let condition: RequestCondition? // public because of protocol requirement
+    let condition: RequestCondition? // public because of protocol requirement
 
     /// Truncated ip as seen from VPN API
     let ip: TruncatedIp?
@@ -39,7 +36,7 @@ public struct LogicalsRequest: ConditionalRequest {
     /// Whether or not this request is just for the free logicals.
     let freeTier: Bool
 
-    public init(ip: TruncatedIp?, countryCodes: [String], freeTier: Bool, lastModified: String?) {
+    init(ip: TruncatedIp?, countryCodes: [String], freeTier: Bool, lastModified: String?) {
         self.ip = ip
         self.countryCodes = countryCodes
         self.freeTier = freeTier
@@ -52,7 +49,7 @@ public struct LogicalsRequest: ConditionalRequest {
         }
     }
 
-    public var path: String {
+    var path: String {
         let path = URL(string: "/vpn/v1/logicals")!
 
         let queryItems: [URLQueryItem] = Array(
@@ -65,11 +62,11 @@ public struct LogicalsRequest: ConditionalRequest {
         return path.appending(queryItems: queryItems).absoluteString
     }
 
-    public var isAuth: Bool {
+    var isAuth: Bool {
         true
     }
 
-    public var baseHeaders: [String: Any] {
+    var baseHeaders: [String: Any] {
         var result: [String: String] = [:]
 
         if let ip {
@@ -83,7 +80,7 @@ public struct LogicalsRequest: ConditionalRequest {
         return result
     }
 
-    public var retryPolicy: ProtonRetryPolicy.RetryMode {
+    var retryPolicy: ProtonRetryPolicy.RetryMode {
         .background
     }
 }

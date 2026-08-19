@@ -18,7 +18,6 @@
 
 import Foundation
 import InlineSnapshotTesting
-import ProtonCoreNetworking
 @testable import Telemetry
 import XCTest
 

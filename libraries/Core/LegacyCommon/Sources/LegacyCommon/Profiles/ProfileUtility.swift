@@ -19,10 +19,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import CommonNetworking
 import Domain
 import Foundation
-import VPNShared
 
 enum ProfileUtilityOperationOutcome {
     case success([Profile])
@@ -81,17 +79,5 @@ enum ProfileUtility {
             return index
         }
         return nil
-    }
-
-    private static func pickName(for server: ServerModel, in profiles: [Profile]) -> String {
-        var name = server.name
-        var counter = 1
-
-        while existsProfile(withName: name, in: profiles) {
-            name = server.name + " (\(counter))"
-            counter += 1
-        }
-
-        return name
     }
 }

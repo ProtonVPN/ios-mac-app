@@ -16,11 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import DictionaryCoder
 import Ergonomics
 import Foundation
-
-private let encoder = DictionaryEncoder()
 
 public protocol TelemetryEvent: Encodable {
     associatedtype Event: Encodable
@@ -51,7 +48,13 @@ public extension TelemetryEvent {
     }
 
     func toJSONDictionary() -> JSONDictionary {
-        let result = (try? encoder.encode(self)) ?? [:]
-        return result.mapValues { $0 as AnyObject }
+        guard
+            let data = try? JSONEncoder().encode(self),
+            let object = try? JSONSerialization.jsonObject(with: data),
+            let dictionary = object as? JSONDictionary
+        else {
+            return [:]
+        }
+        return dictionary
     }
 }

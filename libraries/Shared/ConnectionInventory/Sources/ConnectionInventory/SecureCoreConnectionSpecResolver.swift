@@ -108,15 +108,6 @@ public enum SecureCoreConnectionSpecResolver {
         )
     }
 
-    /// Proper random ConnectionSpec.Location respecting SC.
-    public static func randomLocation(secureCoreEnabled: Bool) -> ConnectionSpec.Location {
-        secureCoreEnabled ? .secureCore(.any(.random)) : .any(.random)
-    }
-
-    public static func randomSpec(secureCoreEnabled: Bool) -> ConnectionSpec {
-        .init(location: randomLocation(secureCoreEnabled: secureCoreEnabled), features: [])
-    }
-
     /// Text for the Secure Core toggle disconnect/reconnect warning.
     ///
     /// ```

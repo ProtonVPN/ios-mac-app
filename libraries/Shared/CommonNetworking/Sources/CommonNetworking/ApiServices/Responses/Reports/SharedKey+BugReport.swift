@@ -19,9 +19,10 @@
 import Domain
 import Sharing
 
-public extension SharedKey where Self == JSONAppStorageKey<BugReportModel?> {
-    /// The persisted dynamic bug-report model
+public extension SharedKey where Self == JSONAppStorageKey<BugReportModel>.Default {
+    /// The bug report form: the one last downloaded from the API, or the one bundled with the app
+    /// when no download has succeeded yet.
     static var dynamicBugReport: Self {
-        .json("DynamicBugReport")
+        Self[.json("DynamicBugReport", default: .bundled), default: .bundled]
     }
 }

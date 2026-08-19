@@ -21,7 +21,6 @@
 //
 
 import Cocoa
-import LegacyCommon
 
 class ColorPickerCircle: NSView {
     private let radiusIndentation: CGFloat = 3

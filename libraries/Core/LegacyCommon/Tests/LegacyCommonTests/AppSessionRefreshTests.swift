@@ -30,7 +30,6 @@ import ProtonCoreNetworking
 import ProtonCoreTestingToolkitUnitTestsCore
 import VPNAppCore
 import VPNShared
-import VPNSharedTesting
 import XCTest
 
 class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {

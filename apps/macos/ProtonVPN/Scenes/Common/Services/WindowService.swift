@@ -66,9 +66,6 @@ protocol WindowService: WindowControllerDelegate {
 
     func presentKeyModal(viewController: NSViewController, activatingApp: Bool)
     func presentKeyModalOnActiveScreen(viewController: NSViewController, activatingApp: Bool)
-
-    /// Check if window with view controller of the same class is already open.
-    func isKeyModalPresent(viewController: NSViewController) -> Bool
 }
 
 extension WindowService {
@@ -97,9 +94,7 @@ extension DependencyValues {
 
 // this need to abstract class for common functions. for sharing code. ios/mac should have different implementation
 final class WindowServiceImplementation: WindowService {
-    typealias Factory = CreateNewProfileViewModelFactory
-        & DynamicBugReportManagerFactory
-        & NavigationServiceFactory
+    typealias Factory = DependencyContainer
 
     private let factory: Factory
 
@@ -228,7 +223,7 @@ final class WindowServiceImplementation: WindowService {
         NSApp.setActivationPolicy(.regular)
 
         let viewController: NSViewController
-        let manager = factory.makeDynamicBugReportManager()
+        let manager = factory.dynamicBugReportManager
 
         let vc = bugReportCreator.createBugReportViewController(delegate: manager, colors: Colors())
         manager.closeBugReportHandler = { [weak self] in
@@ -363,17 +358,6 @@ final class WindowServiceImplementation: WindowService {
             if presented == viewController {
                 parent.dismiss(presented)
             }
-        }
-    }
-
-    func isKeyModalPresent(viewController: NSViewController) -> Bool {
-        let parent = mainWindowController?.contentViewController ?? statusMenuWindowController?.contentViewController
-
-        guard let presentedViewControllers = parent?.presentedViewControllers else {
-            return false
-        }
-        return presentedViewControllers.contains {
-            type(of: $0) == type(of: viewController)
         }
     }
 }

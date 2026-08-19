@@ -30,58 +30,58 @@ struct SessionLengthTextTests {
     // MARK: Test data (explicitly typed — keeps the type checker fast)
 
     private static let secondsCases: [(TimeInterval, String)] = [
-        (-1, "1 sec"),
-        (-59, "59 sec"),
+        (1, "1 sec"),
+        (59, "59 sec"),
     ]
 
     private static let minutesCases: [(TimeInterval, String)] = [
-        (-minute, "1 min"),
-        (-(minute + 1), "1 min, 1 sec"),
-        (-(minute + 59), "1 min, 59 sec"),
-        (-(2 * minute + 5), "2 min, 5 sec"),
-        (-(hour - 1), "59 min, 59 sec"),
+        (minute, "1 min"),
+        (minute + 1, "1 min, 1 sec"),
+        (minute + 59, "1 min, 59 sec"),
+        (2 * minute + 5, "2 min, 5 sec"),
+        (hour - 1, "59 min, 59 sec"),
     ]
 
     private static let hoursCases: [(TimeInterval, String)] = [
-        (-hour, "1 hr"),
-        (-(hour + minute), "1 hr, 1 min"),
-        (-(hour + 59 * minute), "1 hr, 59 min"),
-        (-(2 * hour), "2 hr"),
-        (-(day - minute), "23 hr, 59 min"),
+        (hour, "1 hr"),
+        (hour + minute, "1 hr, 1 min"),
+        (hour + 59 * minute, "1 hr, 59 min"),
+        (2 * hour, "2 hr"),
+        (day - minute, "23 hr, 59 min"),
     ]
 
     private static let daysCases: [(TimeInterval, String)] = [
-        (-day, "1 day"),
-        (-(day + hour), "1 day, 1 hr"),
-        (-(day + 23 * hour), "1 day, 23 hr"),
-        (-(2 * day), "2 days"),
-        (-(381 * day + 16 * hour), "381 days, 16 hr"),
+        (day, "1 day"),
+        (day + hour, "1 day, 1 hr"),
+        (day + 23 * hour, "1 day, 23 hr"),
+        (2 * day, "2 days"),
+        (381 * day + 16 * hour, "381 days, 16 hr"),
     ]
 
     private static let truncationCases: [(TimeInterval, String)] = [
-        (-(hour + 59 * minute + 50), "1 hr, 59 min"), // 50 sec dropped, must NOT round to "2 hr"
-        (-(hour + 59 * minute + 25), "1 hr, 59 min"),
-        (-(day + 23 * hour + 55), "1 day, 23 hr"), // 55 sec dropped, no promotion to minutes
-        (-(day - 0.001), "23 hr, 59 min"), // 1 ms short of a day stays in hours bucket
+        (hour + 59 * minute + 50, "1 hr, 59 min"), // 50 sec dropped, must NOT round to "2 hr"
+        (hour + 59 * minute + 25, "1 hr, 59 min"),
+        (day + 23 * hour + 55, "1 day, 23 hr"), // 55 sec dropped, no promotion to minutes
+        (day - 0.001, "23 hr, 59 min"), // 1 ms short of a day stays in hours bucket
     ]
 
     private static let boundaryCases: [(TimeInterval, String)] = [
-        (-(minute - 1), "59 sec"),
-        (-minute, "1 min"),
-        (-(hour - 1), "59 min, 59 sec"),
-        (-hour, "1 hr"),
-        (-(day - minute), "23 hr, 59 min"),
-        (-day, "1 day"),
+        (minute - 1, "59 sec"),
+        (minute, "1 min"),
+        (hour - 1, "59 min, 59 sec"),
+        (hour, "1 hr"),
+        (day - minute, "23 hr, 59 min"),
+        (day, "1 day"),
     ]
 
     private static let fractionalCases: [(TimeInterval, String)] = [
-        (-(minute - 0.1), "59 sec"), // stays in seconds bucket, not "1 min"
-        (-(minute + 0.5), "1 min"),
-        (-(hour + 0.9), "1 hr"),
+        (minute - 0.1, "59 sec"), // stays in seconds bucket, not "1 min"
+        (minute + 0.5, "1 min"),
+        (hour + 0.9, "1 hr"),
     ]
 
-    private static let zeroCases: [TimeInterval] = [-0.0, -0.4, -0.999]
-    private static let positiveCases: [TimeInterval] = [1, minute, day]
+    private static let zeroCases: [TimeInterval] = [0.0, 0.4, 0.999]
+    private static let negativeCases: [TimeInterval] = [-1, -minute, -day]
 
     // MARK: Helper
 
@@ -136,7 +136,7 @@ struct SessionLengthTextTests {
         #expect(text(interval) == "0 sec")
     }
 
-    @Test("positive intervals are clamped to zero, not empty", arguments: positiveCases)
+    @Test("positive intervals are clamped to zero, not empty", arguments: negativeCases)
     func positiveInput(interval: TimeInterval) {
         #expect(text(interval) == "0 sec")
     }

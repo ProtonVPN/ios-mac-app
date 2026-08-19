@@ -20,7 +20,7 @@ import SwiftUI
 import Theme
 
 /// Progress indicator that changes color based on the percentage
-public struct SmallProgressView: View {
+struct SmallProgressView: View {
     let percentage: Int
 
     private let thresholdHigh = 90
@@ -29,7 +29,7 @@ public struct SmallProgressView: View {
     @ScaledMetric var width: CGFloat = 32
     @ScaledMetric var height: CGFloat = 4
 
-    public init(percentage: Int) {
+    init(percentage: Int) {
         self.percentage = min(100, max(0, percentage))
     }
 
@@ -44,7 +44,7 @@ public struct SmallProgressView: View {
         return Color(.icon, circleStyle)
     }
 
-    public var body: some View {
+    var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: .themeRadius7)
                 .fill(Theme.Asset.Colors.shade40)

@@ -30,11 +30,6 @@
         )
     }
 
-    public extension ConnectionEvent.Values {
-        static let connectionMock1 = ConnectionEvent.Values(timeToConnection: 123)
-        static let disconnectionMock1 = ConnectionEvent.Values(sessionLength: 123)
-    }
-
     public extension ConnectionDimensions {
         static let connectionSuccessMock1 = ConnectionDimensions(
             outcome: .success,

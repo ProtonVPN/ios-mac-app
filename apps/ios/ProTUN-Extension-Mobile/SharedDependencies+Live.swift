@@ -17,11 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
-import Domain
 import Ergonomics
 import Foundation
 import PMLogger
-import SharedErgonomics
 
 // MARK: Live implementations of dependencies required by the iOS app AND its extensions
 

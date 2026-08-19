@@ -23,38 +23,35 @@
 import Dependencies
 import Domain
 import Foundation
-import LegacyCommon
 import os
 import Sharing
 import Strings
 import VPNAppCore
 
-public class ClearApplicationDataAlert: SystemAlert {
-    public var title: String? = Localizable.deleteApplicationDataPopupTitle
-    public var message: String? = Localizable.deleteApplicationDataPopupBody
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
+class ClearApplicationDataAlert: SystemAlert {
+    var title: String? = Localizable.deleteApplicationDataPopupTitle
+    var message: String? = Localizable.deleteApplicationDataPopupBody
+    var actions = [AlertAction]()
+    var dismiss: (() -> Void)?
 
-    public init(confirmHandler: @escaping () -> Void) {
+    init(confirmHandler: @escaping () -> Void) {
         actions.append(AlertAction(title: Localizable.delete, style: .destructive, handler: confirmHandler))
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: nil))
     }
 }
 
-public class ActiveSessionWarningAlert: SystemAlert {
-    public var title: String? = Localizable.vpnConnectionActive
-    public var message: String? = Localizable.warningVpnSessionIsActive
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
+class ActiveSessionWarningAlert: SystemAlert {
+    var title: String? = Localizable.vpnConnectionActive
+    var message: String? = Localizable.warningVpnSessionIsActive
+    var actions = [AlertAction]()
+    var dismiss: (() -> Void)?
 
     private let deliverCancelUnlessHandled: () -> Void
 
     /// Exactly one of the two handlers runs, on every exit path. The buttons deliver directly, and an alert that goes
     /// away without either running (host window closed, programmatic dismissal, or the alert service discarding this
     /// instance after moving its actions onto an already-presented one) delivers the cancel outcome from `deinit`.
-    public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
+    init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
         let delivered = OSAllocatedUnfairLock(initialState: false)
         let once: @Sendable (@escaping () -> Void) -> Void = { handler in
             let first = delivered.withLock { delivered in
@@ -74,16 +71,15 @@ public class ActiveSessionWarningAlert: SystemAlert {
     }
 }
 
-public class QuitWarningAlert: SystemAlert {
-    public var title: String?
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
+class QuitWarningAlert: SystemAlert {
+    var title: String?
+    var message: String?
+    var actions = [AlertAction]()
+    var dismiss: (() -> Void)?
 
     /// Quit confirmation while a VPN session is active. Standard KS allows disconnecting on quit, whereas advanced KS
     /// will warn the user that Kill Switch will engage if they quit, and they will lose access to the Internet.
-    public init(advancedKillSwitchActive: Bool, confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
+    init(advancedKillSwitchActive: Bool, confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
         self.title = Localizable.killSwitchQuitTitle
         // Only warn "you'll stay blocked after quit" when Advanced KS is ready.
         self.message = advancedKillSwitchActive
@@ -96,28 +92,26 @@ public class QuitWarningAlert: SystemAlert {
 
 /// Confirmation shown when the user clicks the in-app Disconnect button while Advanced kill switch is
 /// active. Disconnecting is a clean disconnect, but Advanced keeps blocking traffic afterward.
-public class DisconnectWithAdvancedKillSwitchAlert: SystemAlert {
-    public var title: String? = Localizable.killSwitchDisconnectAdvancedTitle
-    public var message: String? = Localizable.killSwitchAdvancedDisconnectWarning
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
+class DisconnectWithAdvancedKillSwitchAlert: SystemAlert {
+    var title: String? = Localizable.killSwitchDisconnectAdvancedTitle
+    var message: String? = Localizable.killSwitchAdvancedDisconnectWarning
+    var actions = [AlertAction]()
+    var dismiss: (() -> Void)?
 
-    public init(confirmHandler: @escaping () -> Void) {
+    init(confirmHandler: @escaping () -> Void) {
         actions.append(AlertAction(title: Localizable.disconnect, style: .confirmative, handler: confirmHandler))
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: nil))
     }
 }
 
 /// Generic confirm/cancel warning
-public class WarningAlert: SystemAlert {
-    public var title: String?
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
+class WarningAlert: SystemAlert {
+    var title: String?
+    var message: String?
+    var actions = [AlertAction]()
+    var dismiss: (() -> Void)?
 
-    public init(
+    init(
         title: String,
         message: String,
         confirmTitle: String = Localizable.continue,
@@ -142,9 +136,9 @@ public class WarningAlert: SystemAlert {
     }
 }
 
-public class IkeDeprecatedAlert: SystemAlert {
-    public var title: String? = Localizable.ikeDeprecationAlertTitle
-    public var message: String? = {
+class IkeDeprecatedAlert: SystemAlert {
+    var title: String? = Localizable.ikeDeprecationAlertTitle
+    var message: String? = {
         @SharedReader(.plutoniumFeature) var feature: PlutoniumFeatureToggle
         @SharedReader(.killSwitchMode) var killSwitchMode: KillSwitchMode
         var paragraphs = [
@@ -161,14 +155,13 @@ public class IkeDeprecatedAlert: SystemAlert {
         return paragraphs.joined(separator: "\n\n")
     }()
 
-    public let confirmTitle: String = Localizable.ikeDeprecationAlertEnableSmartButtonTitle
-    public let dismissTitle: String = Localizable.ikeDeprecationAlertContinueButtonTitle
+    let confirmTitle: String = Localizable.ikeDeprecationAlertEnableSmartButtonTitle
+    let dismissTitle: String = Localizable.ikeDeprecationAlertContinueButtonTitle
 
-    public var actions = [AlertAction]()
-    public var isError: Bool = false
-    public var dismiss: (() -> Void)?
+    var actions = [AlertAction]()
+    var dismiss: (() -> Void)?
 
-    public init(
+    init(
         enableSmartProtocolHandler: @escaping () -> Void,
         continueHandler: @escaping () -> Void,
         learnMoreHandler: @escaping () -> Void
@@ -187,20 +180,19 @@ public class IkeDeprecatedAlert: SystemAlert {
     }
 }
 
-public class ForceUpgradeAlert: SystemAlert {
-    public var title: String? = Localizable.vpnConnectionActive
-    public var message: String? = Localizable.quitWarning
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
+class ForceUpgradeAlert: SystemAlert {
+    var title: String? = Localizable.vpnConnectionActive
+    var message: String? = Localizable.quitWarning
+    var actions = [AlertAction]()
+    var dismiss: (() -> Void)?
 
-    public init() {
+    init() {
         actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: nil))
     }
 }
 
-public final class TwoFactorRequiredAlert: @MainActor WarningAlert {
-    public init(onConfirm: @escaping () -> Void, onCancel: @escaping () -> Void) {
+final class TwoFactorRequiredAlert: @MainActor WarningAlert {
+    init(onConfirm: @escaping () -> Void, onCancel: @escaping () -> Void) {
         super.init(
             title: "2FA Required",
             message: """

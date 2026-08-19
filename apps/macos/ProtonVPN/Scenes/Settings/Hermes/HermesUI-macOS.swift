@@ -17,17 +17,14 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
-import Domain
 import Ergonomics
 import Hermes
-import LegacyCommon
 import ProtonCoreUIFoundations
 import SharedViews
 import Sharing
 import Strings
 import SwiftUI
 import Theme
-import VPNAppCore
 
 // MARK: - View Definitions
 

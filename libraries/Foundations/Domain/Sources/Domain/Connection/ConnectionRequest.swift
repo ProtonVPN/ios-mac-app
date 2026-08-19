@@ -21,7 +21,7 @@
 
 import Foundation
 
-public enum ConnectionRequestCodingError: Error {
+enum ConnectionRequestCodingError: Error {
     case unknownValue
 }
 

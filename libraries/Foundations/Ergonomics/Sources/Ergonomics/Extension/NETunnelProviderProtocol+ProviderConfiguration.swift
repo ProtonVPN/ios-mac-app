@@ -20,12 +20,10 @@ import Foundation
 import NetworkExtension
 
 public extension NETunnelProviderProtocol {
-    fileprivate enum CustomKeys: String, CaseIterable {
+    fileprivate enum CustomKeys: String {
         case connectedLogicalIdKey = "PVPNLogicalID"
         case connectedServerIpIdKey = "PVPNServerIpID"
-        case uidKey = "UID"
         case wgProtocolKey = "wg-protocol"
-        case forceConflictRefreshKey = "ShouldForceConflictRefresh"
         case pcapFileKey = "PVPNPcapFile"
     }
 
@@ -56,16 +54,6 @@ public extension NETunnelProviderProtocol {
         }
     }
 
-    var appUid: uid_t? {
-        get {
-            providerConfiguration?[.uidKey] as? uid_t
-        }
-        set {
-            ensureProviderConfig()
-            providerConfiguration?[.uidKey] = newValue
-        }
-    }
-
     var wgProtocol: String? {
         get {
             providerConfiguration?[.wgProtocolKey] as? String
@@ -84,40 +72,6 @@ public extension NETunnelProviderProtocol {
         set {
             ensureProviderConfig()
             providerConfiguration?[.pcapFileKey] = newValue?.absoluteString
-        }
-    }
-
-    var unleashFeatureFlagShouldForceConflictRefresh: Bool {
-        get {
-            (providerConfiguration?[.forceConflictRefreshKey] as? Bool) ?? false
-        }
-        set {
-            ensureProviderConfig()
-            providerConfiguration?[.forceConflictRefreshKey] = newValue
-        }
-    }
-
-    // MARK: -
-
-    func backupCustomSettings() -> [String: Any] {
-        ensureProviderConfig()
-
-        var custom = [String: Any]()
-        for key in CustomKeys.allCases {
-            if providerConfiguration!.keys.contains(key.rawValue) {
-                custom[key.rawValue] = providerConfiguration![key.rawValue]
-            }
-        }
-        return custom
-    }
-
-    func restoreCustomSettingsFrom(backup: [String: Any]) {
-        ensureProviderConfig()
-
-        for key in CustomKeys.allCases {
-            if backup.keys.contains(key.rawValue) {
-                providerConfiguration![key.rawValue] = backup[key.rawValue]
-            }
         }
     }
 }

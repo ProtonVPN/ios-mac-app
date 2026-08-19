@@ -149,7 +149,6 @@ let package = Package(
                 "Triangulation", // NaturalEarthTests exercises the shared projection directly
                 "Version",
                 .product(name: "Clocks", package: "swift-clocks"),
-                .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
             ]
         ),
         .testTarget(

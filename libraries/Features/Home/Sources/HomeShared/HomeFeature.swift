@@ -22,21 +22,17 @@ import ComposableArchitecture
 import Connection
 import ConnectionDetails
 import ConnectionDetailsShared
-import ConnectionInventory
-import CoreConnection // LocalAgent
 import Dependencies
 import Domain
 import ExtensionSync
 import Foundation
 import Localization
-import ModalsServices
-import ModalsShared
+import Modals
 import NetShield
 import Payments
 import PaymentsShared
 import PCAP
 import PCAPShared
-import ProtonCoreFeatureFlags
 import Sharing
 import Strings
 import VPNAppCore

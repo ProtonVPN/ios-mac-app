@@ -1,4 +1,3 @@
-@testable import ExtensionIPC
 import XCTest
 
 final class ExtensionIPCTests: XCTestCase {

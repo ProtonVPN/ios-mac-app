@@ -20,7 +20,6 @@ import AppKit
 import ComposableArchitecture
 import Domain
 import Ergonomics
-import NetShield
 @testable import ProtonVPN
 import SnapshotTesting
 import SwiftUI

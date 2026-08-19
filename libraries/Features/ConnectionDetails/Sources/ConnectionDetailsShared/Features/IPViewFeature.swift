@@ -21,7 +21,6 @@ import Connection
 import Domain
 import Foundation
 import Strings
-import VPNAppCore
 
 @Reducer
 public struct IPViewFeature {

@@ -30,7 +30,6 @@ import Sharing
 import Strings
 import Theme
 import VPNAppCore
-import VPNShared
 
 protocol CreateNewProfileViewModelFactory {
     func makeCreateNewProfileViewModel(editProfile: Notification.Name) -> CreateNewProfileViewModel

@@ -44,8 +44,8 @@ public struct VpnApiClient: Sendable {
     public internal(set) var userAddresses: @Sendable () async throws -> [Address]
 }
 
-public enum VpnApiClientKey: DependencyKey {
-    public static var liveValue: VpnApiClient = {
+enum VpnApiClientKey: DependencyKey {
+    static var liveValue: VpnApiClient = {
         @Dependency(\.networking) var networking
         @Dependency(\.serverRepository) var serverRepository
         @Dependency(\.credentialsProvider) var credentialsProvider
@@ -73,7 +73,6 @@ public enum VpnApiClientKey: DependencyKey {
                         let clientConfigResponse = try decoder.decode(ClientConfigResponse.self, from: data)
 
                         completion(.success(clientConfigResponse.clientConfig))
-
                     } catch {
                         log.error("Failed to parse load info for json", category: .api, event: .response, metadata: ["error": "\(error)", "json": "\(response)"])
                         let error = ParseError.loadsParse

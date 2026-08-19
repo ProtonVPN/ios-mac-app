@@ -59,19 +59,4 @@ public extension ServerType {
             .standard
         }
     }
-
-    var serverFilter: VPNServerFilter {
-        switch self {
-        case .secureCore:
-            .features(.secureCore)
-        case .tor:
-            .features(.standard(with: .tor))
-        case .standard:
-            .features(.standard)
-        case .p2p:
-            .features(.standard(with: .p2p))
-        case .unspecified:
-            .features(.init(required: .zero, excluded: .zero))
-        }
-    }
 }

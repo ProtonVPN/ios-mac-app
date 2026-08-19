@@ -24,36 +24,6 @@ import VPNAppCore
 
 #if DEBUG
     public extension RecentConnection {
-        static var pinnedConnection: RecentConnection {
-            .init(
-                pinnedDate: Date(),
-                underMaintenance: false,
-                connectionDate: Date(),
-                connection: .init(
-                    location: .exact(
-                        .paid,
-                        logicalID: nil,
-                        number: 42,
-                        subregion: nil,
-                        regionCode: "CH"
-                    ),
-                    features: [.p2p]
-                )
-            )
-        }
-
-        static var previousConnection: RecentConnection {
-            .init(
-                pinnedDate: nil,
-                underMaintenance: false,
-                connectionDate: Date().addingTimeInterval(-5 * 60.0),
-                connection: .init(
-                    location: .any(.fastest),
-                    features: []
-                )
-            )
-        }
-
         static var connectionRegion: RecentConnection {
             .init(
                 pinnedDate: nil,
@@ -78,24 +48,6 @@ import VPNAppCore
             )
         }
 
-        static var previousFreeConnection: RecentConnection {
-            .init(
-                pinnedDate: nil,
-                underMaintenance: false,
-                connectionDate: Date().addingTimeInterval(-2 * 60.0),
-                connection: .init(
-                    location: .exact(
-                        .free,
-                        logicalID: nil,
-                        number: 42,
-                        subregion: nil,
-                        regionCode: "FR"
-                    ),
-                    features: []
-                )
-            )
-        }
-
         static var connectionSecureCore: RecentConnection {
             .init(
                 pinnedDate: Date(),
@@ -104,30 +56,6 @@ import VPNAppCore
                 connection: .init(
                     location: .secureCore(.hop(to: "US", via: "CH")),
                     features: [.streaming]
-                )
-            )
-        }
-
-        static var connectionRegionPinned: RecentConnection {
-            .init(
-                pinnedDate: Date(),
-                underMaintenance: true,
-                connectionDate: Date().addingTimeInterval(-8 * 60.0),
-                connection: .init(
-                    location: .country(code: "UA", order: .fastest),
-                    features: [.streaming]
-                )
-            )
-        }
-
-        static var connectionSecureCoreFastestTo: RecentConnection {
-            .init(
-                pinnedDate: nil,
-                underMaintenance: false,
-                connectionDate: Date().addingTimeInterval(-6 * 60 * 60.0),
-                connection: .init(
-                    location: .secureCore(.anyHop(to: "AR", .fastest)),
-                    features: []
                 )
             )
         }

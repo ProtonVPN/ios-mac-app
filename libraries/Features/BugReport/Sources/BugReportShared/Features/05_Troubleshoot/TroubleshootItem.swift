@@ -24,7 +24,6 @@ import ComposableArchitecture
 import Domain
 import Foundation
 import Sharing
-import Strings
 
 @Reducer
 public struct TroubleshootItem {

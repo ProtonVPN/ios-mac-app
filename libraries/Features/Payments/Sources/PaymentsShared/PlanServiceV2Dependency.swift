@@ -36,7 +36,6 @@ import VPNAppCore
 
 public protocol PaymentsPlanServiceV2: Sendable {
     var countryCode: String? { get async }
-    var countriesCount: Int { get }
     var iapStatus: IAPSupportStatusV2 { get }
     var mostExpensivePlan: ComposedPlan? { get }
 
@@ -90,11 +89,6 @@ final class CorePaymentsPlanServiceV2: PaymentsPlanServiceV2, @unchecked Sendabl
 
     var iapStatus: IAPSupportStatusV2 {
         iapCachedStatus.iapSupportStatus
-    }
-
-    var countriesCount: Int {
-        @Dependency(\.serverRepository) var serverRepository
-        return serverRepository.countryCount()
     }
 
     var mostExpensivePlan: ComposedPlan? {
@@ -423,10 +417,6 @@ private enum PlanServiceV2Key: DependencyKey {
 private struct UnimplementedPlanServiceV2: PaymentsPlanServiceV2 {
     var countryCode: String? {
         get async { nil }
-    }
-
-    var countriesCount: Int {
-        0
     }
 
     var iapStatus: IAPSupportStatusV2 {

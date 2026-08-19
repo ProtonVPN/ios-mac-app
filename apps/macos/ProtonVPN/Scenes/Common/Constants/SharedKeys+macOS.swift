@@ -18,7 +18,6 @@
 
 import Domain
 import Foundation
-import LegacyCommon
 import ServiceManagement
 import Sharing
 

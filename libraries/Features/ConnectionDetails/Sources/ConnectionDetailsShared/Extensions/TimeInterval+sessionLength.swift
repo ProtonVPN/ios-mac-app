@@ -18,12 +18,11 @@
 
 import Dependencies
 import Foundation
-import Strings
 
-public extension TimeInterval {
-    internal static let secondsPerMinute = 60
-    internal static let secondsPerHour = 60 * 60
-    internal static let secondsPerDay = 60 * 60 * 24
+extension TimeInterval {
+    static let secondsPerMinute = 60
+    static let secondsPerHour = 60 * 60
+    static let secondsPerDay = 60 * 60 * 24
 
     /// VPN session length text, localized by the system.
     /// Expects a non-positive interval (e.g. `sessionStart.timeIntervalSinceNow`).
@@ -33,7 +32,7 @@ public extension TimeInterval {
     }
 
     func sessionLengthText(locale: Locale) -> String {
-        let totalSeconds = max(0, Int(-self)) // truncation + positive-input clamp
+        let totalSeconds = max(0, Int(self))
 
         guard totalSeconds > 0 else {
             // .dropAll would suppress a lone zero unit, so format it explicitly.
@@ -82,5 +81,12 @@ public extension TimeInterval {
         var calendar = Calendar(identifier: .gregorian)
         calendar.locale = locale
         return calendar
+    }
+}
+
+public extension Date {
+    /// Localized elapsed time since this date, e.g. "1 hr, 59 min".
+    var sessionLengthText: String {
+        Date.now.timeIntervalSince(self).sessionLengthText // reuses the duration formatter
     }
 }

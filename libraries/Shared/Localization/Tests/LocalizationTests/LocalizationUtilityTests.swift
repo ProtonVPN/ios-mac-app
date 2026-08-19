@@ -18,7 +18,6 @@
 
 import Foundation
 import Localization
-import Strings
 import XCTest
 
 class LocalizationUtilityTests: XCTestCase {

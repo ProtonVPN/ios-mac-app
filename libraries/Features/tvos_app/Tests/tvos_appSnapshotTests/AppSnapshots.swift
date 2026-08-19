@@ -152,7 +152,3 @@ extension AppFeatureSnapshotTests: @preconcurrency AssertSnapshot {
         return "\(projectDir)/libraries/Features/tvos_app/Tests/tvos_appSnapshotTests/__Snapshots__/\(suite)"
     }
 }
-
-private extension Locale {
-    static let en_US: Self = .init(identifier: "en_US")
-}

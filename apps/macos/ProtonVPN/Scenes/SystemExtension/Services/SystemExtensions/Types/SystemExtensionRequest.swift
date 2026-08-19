@@ -17,13 +17,12 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import LegacyCommon
 import SystemExtensions
 
 /// Wrapper class for `OSSystemExtensionRequest` that lets us keep track of individual requests more easily.
 /// Every call to a delegate function is routed through the `stateChangeCallback` property so request lifecycle
 /// transitions can be tracked by the async service reducer.
-public class SystemExtensionRequest: NSObject {
+class SystemExtensionRequest: NSObject {
     private static let requestQueue = DispatchQueue(label: "ch.proton.sysex.requests")
     private static let activeRequestsLock = NSLock()
     private static var activeRequests: [UUID: SystemExtensionRequest] = [:]
@@ -132,7 +131,7 @@ public class SystemExtensionRequest: NSObject {
 }
 
 extension SystemExtensionRequest: OSSystemExtensionRequestDelegate {
-    public func request(
+    func request(
         _: OSSystemExtensionRequest,
         actionForReplacingExtension existing: OSSystemExtensionProperties,
         withExtension ext: OSSystemExtensionProperties
@@ -172,11 +171,11 @@ extension SystemExtensionRequest: OSSystemExtensionRequestDelegate {
         return .replace
     }
 
-    public func requestNeedsUserApproval(_: OSSystemExtensionRequest) {
+    func requestNeedsUserApproval(_: OSSystemExtensionRequest) {
         stateChangeCallback(.userActionRequired)
     }
 
-    public func request(_: OSSystemExtensionRequest, didFailWithError error: Error) {
+    func request(_: OSSystemExtensionRequest, didFailWithError error: Error) {
         guard let sysextError = error as? OSSystemExtensionError else {
             stateChangeCallback(.failed(error))
             return
@@ -194,7 +193,7 @@ extension SystemExtensionRequest: OSSystemExtensionRequestDelegate {
         Self.mutateActiveRequests { $0[uuid] = nil }
     }
 
-    public func request(_: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
+    func request(_: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
         stateChangeCallback(.succeeded(result))
 
         Self.mutateActiveRequests { $0[uuid] = nil }

@@ -24,14 +24,10 @@ import Announcement
 import Cocoa
 import Combine
 import ComposableArchitecture
-import Connection
 import Dependencies
-import Domain
 import Ergonomics
-import LegacyCommon
 import Strings
 import Theme
-import VPNShared
 
 final class SidebarViewController: NSViewController, NSWindowDelegate {
     private let allThings = NSView(frame: .zero)
@@ -50,8 +46,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
 
     private var connectingViewController: ConnectingViewController?
     private var isAnimatingMapResize = false
-    // Retain header view model to set `changeServerStateUpdated` when needed
-    private var headerViewModel: HeaderViewModel?
 
     private let navService: NavigationService
     private let store: StoreOf<SidebarFeature>

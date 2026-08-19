@@ -28,7 +28,6 @@ import StoreKit
 import VPNShared
 
 final class PlanService {
-    private var cancellables: [AnyCancellable] = []
     private var transactionSubscriptionCancellable: Cancellable?
 
     @Dependency(\.networking) var networking
@@ -39,8 +38,6 @@ final class PlanService {
 
     var iapSupportStatus: IAPSupportStatusV2 = .disabled(localizedReason: nil)
     var transactionProgress: CurrentValueSubject<TransactionHandlerState, Never> = .init(.idle)
-
-    @Dependency(\.appInfo) private var appInfo
 
     // MARK: - Init
 
@@ -158,7 +155,6 @@ final class PlanService {
 
 extension PlanService {
     enum PurchaseError: Error, LocalizedError {
-        case ffDisabled
         case planNotFound(String)
     }
 }

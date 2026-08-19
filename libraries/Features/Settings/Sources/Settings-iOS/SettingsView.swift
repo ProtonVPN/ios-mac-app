@@ -23,17 +23,17 @@ import Strings
 import SwiftUI
 import Theme
 
-public struct SettingsView: View {
+struct SettingsView: View {
     // Remove default leading indentation and add padding above and below the header
     private let sectionHeaderInsets = EdgeInsets(top: .themeSpacing12, leading: 0, bottom: .themeSpacing12, trailing: 0)
 
     @Bindable var store: StoreOf<SettingsFeature>
 
-    public init(store: StoreOf<SettingsFeature>) {
+    init(store: StoreOf<SettingsFeature>) {
         self.store = store
     }
 
-    public init() {
+    init() {
         self.store = .init(initialState: .init(
             netShield: .off,
             killSwitch: .off,
@@ -87,7 +87,7 @@ public struct SettingsView: View {
         signOut: ChildFeature(icon: Theme.Asset.Icons.arrowInToRectangle.swiftUIImage, title: Localizable.settingsTitleSignOut, accessory: .none)
     )
 
-    public var body: some View {
+    var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             List {
                 listOffsetView // Adding top padding to the List itself breaks navigation title animations
@@ -212,10 +212,6 @@ public struct SettingsView: View {
         section {
             makeCell(for: features.signOut, value: nil)
         }
-    }
-
-    private var footerSection: some View {
-        Section(footer: footerView) { EmptyView() }
     }
 }
 

@@ -22,8 +22,6 @@ import Connection
 import Dependencies
 import Ergonomics
 import Foundation
-import LegacyCommon
-import Persistence
 import PMLogger
 import ProtonCoreFoundations
 import Sharing

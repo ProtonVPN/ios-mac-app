@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 @testable import CountriesShared
-import Strings
 import Testing
 
 @Suite("SearchResultsFeature Tests")

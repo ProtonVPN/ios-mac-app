@@ -47,7 +47,6 @@ let package = Package(
         .package(path: "../../Shared/ConnectionInventory"),
         .package(path: "../../Shared/Telemetry"),
 
-        .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),
         .package(url: "https://github.com/apple/swift-collections", .upToNextMajor(from: "1.1.4")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.24.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.11.0")),
@@ -55,7 +54,6 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
         .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
         .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.3")),
-        .package(url: "https://github.com/SDWebImage/SDWebImageSwiftUI.git", from: "3.0.0"),
         .package(url: "https://github.com/airbnb/lottie-spm", .upToNextMajor(from: "4.6.0")),
         // GEOS and SVGView not used at runtime, only used by the MapBaker command line tool to generate the 3D model.
         .package(url: "https://github.com/GEOSwift/geos", .upToNextMajor(from: "9.0.0")),
@@ -110,9 +108,7 @@ let package = Package(
                 .product(name: "Sharing", package: "swift-sharing"),
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "Collections", package: "swift-collections"),
-                .product(name: "Algorithms", package: "swift-algorithms"),
                 .product(name: "CombineSchedulers", package: "combine-schedulers"),
-                .product(name: "SDWebImageSwiftUI", package: "SDWebImageSwiftUI"),
                 .product(name: "OrderedCollections", package: "swift-collections"),
             ],
             exclude: [
@@ -129,6 +125,7 @@ let package = Package(
             name: "Home-iOS",
             dependencies: [
                 "HomeShared",
+                .product(name: "Modals", package: "Modals"),
                 .product(name: "Payments", package: "Payments"),
             ]
         ),

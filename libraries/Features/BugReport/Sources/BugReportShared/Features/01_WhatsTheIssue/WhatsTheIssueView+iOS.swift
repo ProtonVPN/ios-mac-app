@@ -23,12 +23,12 @@
     import SwiftUI
     import Theme
 
-    public struct WhatsTheIssueView: View {
+    struct WhatsTheIssueView: View {
         @Bindable var store: StoreOf<WhatsTheIssueFeature>
 
         @Environment(\.colors) private var colors: Colors
 
-        public var body: some View {
+        var body: some View {
             ZStack {
                 colors.background.ignoresSafeArea()
 

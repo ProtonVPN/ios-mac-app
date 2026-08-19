@@ -17,7 +17,6 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
-import Domain
 import ExtensionSync
 import Foundation
 import Sharing

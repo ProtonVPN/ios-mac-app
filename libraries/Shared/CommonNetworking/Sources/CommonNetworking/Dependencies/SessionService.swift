@@ -165,13 +165,9 @@ public extension SessionService {
             return url
         }
     }
-
-    func getExtensionSessionSelector(extensionContext: AppContext) async throws -> String {
-        try await selector(.appContext(extensionContext))
-    }
 }
 
-public enum SessionServiceError: FourCharCode, ProtonVPNError {
+enum SessionServiceError: FourCharCode, ProtonVPNError {
     /// Credentialless users shouldn't be able to login to a web session.
     case forkingCredentiallessWebLogin = "FCWL"
 }

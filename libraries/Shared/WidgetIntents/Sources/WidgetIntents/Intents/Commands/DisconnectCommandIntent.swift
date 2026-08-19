@@ -17,11 +17,9 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppIntents
-import Connection
 import Dependencies
 import Domain
 import Ergonomics
-import ExtensionManager
 import NetworkExtension
 import Sharing
 import UIKit

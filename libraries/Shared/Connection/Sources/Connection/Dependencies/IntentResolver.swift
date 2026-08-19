@@ -21,7 +21,6 @@ import CoreConnection
 import Dependencies
 import Domain
 import Foundation
-import ProtonCoreFeatureFlags
 import VPNShared
 
 @CasePathable

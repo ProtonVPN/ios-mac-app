@@ -22,7 +22,6 @@
 
 import Ergonomics
 import Foundation
-import VPNShared
 
 public typealias StreamingDictServices = [String: [String: [VpnStreamingOption]]]
 

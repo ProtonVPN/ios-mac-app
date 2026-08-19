@@ -19,9 +19,9 @@
 import Dependencies
 import Foundation
 
-public struct UnauthKeychainHandleDependencyKey: DependencyKey {
-    public static let liveValue: UnauthKeychainHandle = UnauthKeychain.default
-    public static let testValue: UnauthKeychainHandle = UnauthKeychainMock()
+struct UnauthKeychainHandleDependencyKey: DependencyKey {
+    static let liveValue: UnauthKeychainHandle = UnauthKeychain.default
+    static let testValue: UnauthKeychainHandle = UnauthKeychainMock()
 }
 
 public extension DependencyValues {

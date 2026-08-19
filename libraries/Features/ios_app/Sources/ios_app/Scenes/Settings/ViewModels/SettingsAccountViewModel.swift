@@ -25,11 +25,9 @@ import Dependencies
 import Domain
 import Ergonomics
 import Foundation
-import LegacyCommon
 import Payments
 import ProtonCoreAccountDeletion
 import ProtonCoreFeatureFlags
-import ProtonCoreNetworking
 import ProtonCorePasswordChange
 import Sharing
 import Strings

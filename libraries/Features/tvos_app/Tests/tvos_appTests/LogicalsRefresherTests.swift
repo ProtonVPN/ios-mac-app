@@ -22,7 +22,6 @@ import Domain
 import Persistence
 @testable import PersistenceTestSupport
 @testable import tvos_app
-@testable import tvOSTestSupport
 import XCTest
 
 final class LogicalsRefresherTests: XCTestCase {

@@ -25,7 +25,6 @@ import Dependencies
 import Domain
 import Ergonomics
 import Foundation
-import LegacyCommon
 import Strings
 import VPNAppCore
 import VPNShared

@@ -24,7 +24,6 @@ let package = Package(
         .package(path: "../../Shared/Localization"),
 
         .package(url: "https://github.com/lachlanbell/SwiftOTP.git", .upToNextMinor(from: "2.0.3")),
-        .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", "1.7.2" ..< "1.9.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -36,7 +35,6 @@ let package = Package(
                 "Localization",
                 .product(name: "fusion", package: "apple-fusion"),
                 .product(name: "SwiftOTP", package: "SwiftOTP"),
-                .product(name: "CryptoSwift", package: "CryptoSwift"),
                 .product(name: "ProtonCoreTestingToolkitPerformance", package: "protoncore"),
             ]
         ),

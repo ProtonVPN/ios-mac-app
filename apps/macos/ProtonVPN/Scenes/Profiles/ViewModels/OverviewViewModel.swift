@@ -21,7 +21,6 @@
 //
 
 import Cocoa
-import CommonNetworking
 import Dependencies
 import Domain
 import LegacyCommon
@@ -30,8 +29,6 @@ import VPNAppCore
 final class OverviewViewModel {
     @Dependency(\.profileManager) private var profileManager
     @Dependency(\.credentialsProvider) private var credentialsProvider
-
-    @Dependency(\.sessionService) private var sessionService: SessionService
 
     var contentChanged: (() -> Void)?
     var createNewProfile: (() -> Void)?

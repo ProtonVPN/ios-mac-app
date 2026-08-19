@@ -61,13 +61,9 @@ public struct WireguardConfig: Codable, Equatable, Sendable {
 }
 
 public struct StoredWireguardConfig: Codable {
-    /// Change this if you're changing `StoredWireguardConfig` in a
-    /// non-backwards-compatible way, and make sure to update
-    /// `tunnelConfigurationFromData`. A more sensible strategy
-    /// might be to allow for optional fields for any new values introduced.
-    /// (See usage of the @Default property wrapper for an example.)
-    static let configurationVersion = Version.v1
-
+    /// Add a case here if you change `StoredWireguardConfig` in a way old data cannot satisfy, and
+    /// teach `decodeLegacyKeychainData` how to read the new layout. Adding optional fields instead
+    /// keeps older stored data readable and needs no new version.
     public enum Version: Int {
         case v1 = 1
     }
@@ -97,21 +93,6 @@ public struct StoredWireguardConfig: Codable {
         self.ports = ports
         self.timestamp = timestamp
     }
-
-    public func withNewServerPublicKey(
-        _ newServerPublicKey: String?,
-        andEntryServerAddress newEntryServerAddress: String
-    ) -> Self {
-        Self(
-            wireguardConfig: wireguardConfig,
-            clientPrivateKey: clientPrivateKey,
-            serverPublicKey: newServerPublicKey,
-            entryServerAddress: newEntryServerAddress,
-            ports: ports,
-            // update the timestamp since the configuration has changed
-            timestamp: Date()
-        )
-    }
 }
 
 public extension StoredWireguardConfig {
@@ -138,39 +119,5 @@ public extension StoredWireguardConfig {
         } catch {
             throw .decodingFailed(error)
         }
-    }
-}
-
-/// This is what gets stored in the keychain, to communicate the connection
-/// details with the WireGuard network extension.
-public extension StoredWireguardConfig {
-    /// `asWireguardConfiguration` translates this object into a text configuration file
-    /// that the `wireguard-go` backend understands.
-    func asWireguardConfiguration() -> String {
-        var output = "[Interface]\n"
-
-        if let clientPrivateKey {
-            output.append("PrivateKey = \(clientPrivateKey)\n")
-        }
-        output.append("Address = \(wireguardConfig.address)\n")
-
-        output.append("DNS = \(wireguardConfig.dnsServers?.joined(separator: ",") ?? "10.2.0.1")\n")
-
-        output.append("\n[Peer]\n")
-        if let serverPublicKey {
-            output.append("PublicKey = \(serverPublicKey)\n")
-        }
-        output.append("AllowedIPs = \(wireguardConfig.allowedIPs)\n")
-
-        // VPNAPPL-1447 - find out why the wireguard-go backend is improperly parsing the
-        // IPv4 address from the config
-        let endpointLine = "Endpoint = \(entryServerAddress):\(ports.first!)\n"
-
-        output.append(endpointLine)
-        if let persistentKeepalive = wireguardConfig.persistentKeepalive {
-            output.append("PersistentKeepalive = \(persistentKeepalive)")
-        }
-
-        return output
     }
 }

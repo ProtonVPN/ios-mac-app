@@ -33,28 +33,12 @@ public extension NSWindow {
         backgroundColor = .color(.background, .weak)
     }
 
-    func applyWarningAppearance(withTitle warningTitle: String) {
-        styleMask.remove(NSWindow.StyleMask.resizable)
-        styleMask.remove(NSWindow.StyleMask.closable)
-        title = warningTitle
-        titlebarAppearsTransparent = true
-        appearance = NSAppearance(named: .darkAqua)
-        backgroundColor = .color(.background, .weak)
-    }
-
     // For windows without any borders such as the welcome window
     func applyInfoAppearance() {
         styleMask = [.titled, .fullSizeContentView]
         isOpaque = false
         titlebarAppearsTransparent = true
         titleVisibility = .hidden
-        appearance = NSAppearance(named: .darkAqua)
-        backgroundColor = .color(.background, .weak)
-    }
-
-    func applyLoginAppearance() {
-        titlebarAppearsTransparent = true
-        title = "Proton VPN"
         appearance = NSAppearance(named: .darkAqua)
         backgroundColor = .color(.background, .weak)
     }

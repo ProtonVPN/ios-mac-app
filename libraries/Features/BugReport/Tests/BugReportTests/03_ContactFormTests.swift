@@ -23,12 +23,6 @@ import Testing
 
 @MainActor
 struct ContactFormTests {
-    private let delegate = MockBugReportDelegate(model: .mock)
-
-    private var categoryWithoutQuickFixes: CommonNetworking.Category {
-        delegate.model.categories.last!
-    }
-
     @Test
     func formAcceptsDataFromUser() async {
         // Short String

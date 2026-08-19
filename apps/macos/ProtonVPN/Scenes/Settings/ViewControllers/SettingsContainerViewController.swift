@@ -21,7 +21,6 @@
 //
 
 import Cocoa
-import LegacyCommon
 
 final class SettingsContainerViewController: NSViewController {
     @IBOutlet private var tabBarControllerViewContainer: NSView!

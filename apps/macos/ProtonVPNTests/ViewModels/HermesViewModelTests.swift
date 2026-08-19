@@ -21,7 +21,6 @@ import Connection
 import Dependencies
 import Domain
 import Hermes
-import LegacyCommon
 @testable import ProtonVPN
 import VPNAppCore
 import XCTest
@@ -174,11 +173,5 @@ private extension HermesViewModelTests {
         .quadNine,
 //        .cloudFlareDoH,
 //        .cloudFlareDoT
-    ]
-
-    static let extraExpectedResolvers: [HermesResolver] = [
-        .cloudFlare,
-        .cloudFlareDoH,
-        .cloudFlareDoT,
     ]
 }

@@ -21,7 +21,6 @@
 //
 
 import Foundation
-import LegacyCommon
 
 final class SettingsContainerViewModel {
     typealias Factory = NavigationServiceFactory & VpnProtocolChangeManagerFactory

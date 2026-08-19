@@ -20,7 +20,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import LegacyCommon
 import SwiftUI
 import UIKit
 import VPNAppCore
@@ -74,10 +73,6 @@ enum TableViewCellModel {
     case attributedTooltip(text: NSAttributedString)
     case markdownTooltip(String, align: NSTextAlignment)
     case newAccountCard(handler: (NewAccountCardView.Action) -> Void)
-
-    static func markdownTooltip(_ markdown: String, alignment: NSTextAlignment = .left) -> Self {
-        .markdownTooltip(markdown, align: alignment)
-    }
 }
 
 protocol ButtonWithLoadingIndicatorController: AnyObject {

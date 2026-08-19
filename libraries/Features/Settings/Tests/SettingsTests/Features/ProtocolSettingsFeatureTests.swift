@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import Connection
-import Ergonomics
 @testable import Settings
 @testable import SettingsShared
 import Sharing

@@ -21,7 +21,6 @@
 //
 
 import Cocoa
-import LegacyCommon
 
 class SidebarTabBarView: NSView {
     var activeTab: SidebarTab? {

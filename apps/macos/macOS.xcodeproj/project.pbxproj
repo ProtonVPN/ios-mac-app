@@ -29,13 +29,11 @@
 		4C660DB42CCA810300780D42 /* Version in Frameworks */ = {isa = PBXBuildFile; productRef = 4C660DB32CCA810300780D42 /* Version */; };
 		4C74D32B2A0B9D7F004F8528 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4C74D32A2A0B9D7F004F8528 /* PMLogger */; };
 		4C7D40592A60251700ACDBED /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 4C7D40582A60251700ACDBED /* SDWebImage */; };
-		4C8571DC2A7CEC5B0057FED6 /* TrustKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8571DB2A7CEC5B0057FED6 /* TrustKit */; };
 		4C93F57B2CDCDD4D006BFD77 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4C93F57A2CDCDD4D006BFD77 /* Ergonomics */; };
 		4C9FF48A2D64967A004DBF89 /* Announcement in Frameworks */ = {isa = PBXBuildFile; productRef = 4C9FF4892D64967A004DBF89 /* Announcement */; };
 		4CD1F7872A72BEDA00E8AB01 /* BugReport in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7862A72BEDA00E8AB01 /* BugReport */; };
 		4CD1F7892A72BEE700E8AB01 /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7882A72BEE700E8AB01 /* ProtonCoreUIFoundations */; };
 		4CD1F78B2A72BF0100E8AB01 /* LegacyCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F78A2A72BF0100E8AB01 /* LegacyCommon */; };
-		4CD1F7972A72DF2700E8AB01 /* DictionaryCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7962A72DF2700E8AB01 /* DictionaryCoder */; };
 		4CEBB4092CDA68DE00AB5556 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 4CEBB4082CDA68DE00AB5556 /* Sparkle */; };
 		6640FF402ED5B24C004A4A9A /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE182C551F617C0000F3BA4C /* NetworkExtension.framework */; };
 		6640FF522ED5B34D004A4A9A /* ProTUNExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 6640FF512ED5B34D004A4A9A /* ProTUNExtension */; };
@@ -181,13 +179,6 @@
 			);
 			target = EED534801EEC112000013607 /* ProtonVPN-mac */;
 		};
-		A468236A2FD96AD700901B14 /* Exceptions for "ProtonVPN" folder in "ProtonVPNmacOSTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Extensions/Dictionary+Extension.swift",
-			);
-			target = E15B754C20FA83CB0022C406 /* ProtonVPNmacOSTests */;
-		};
 		A468236B2FD96AD700901B14 /* Exceptions for "ProtonVPN" folder in "ProtonVPNmacOSUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -266,7 +257,6 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				A46823692FD96AD700901B14 /* Exceptions for "ProtonVPN" folder in "ProtonVPN-mac" target */,
-				A468236A2FD96AD700901B14 /* Exceptions for "ProtonVPN" folder in "ProtonVPNmacOSTests" target */,
 				A468236B2FD96AD700901B14 /* Exceptions for "ProtonVPN" folder in "ProtonVPNmacOSUITests" target */,
 				A454BAD22FDC15A200218EF0 /* Exceptions for "ProtonVPN" folder in "ProTUN-Extension-Desktop" target */,
 			);
@@ -388,7 +378,6 @@
 				E5E48CF92A4C365000B09111 /* ConnectionDetails in Frameworks */,
 				E5776A2D2EC5D5ED00A0F9EE /* Telemetry in Frameworks */,
 				E5A6921B2EB0B4550050AB7F /* VPNShared in Frameworks */,
-				4CD1F7972A72DF2700E8AB01 /* DictionaryCoder in Frameworks */,
 				A4B9A7362E38FC2600A21B35 /* Atlantis in Frameworks */,
 				EEFA87661F6170F200DE880D /* MapKit.framework in Frameworks */,
 				E57B263229C3188D00533B7C /* AVKit.framework in Frameworks */,
@@ -402,7 +391,6 @@
 				AD9F19502B55D6770034F329 /* Persistence in Frameworks */,
 				4C7D40592A60251700ACDBED /* SDWebImage in Frameworks */,
 				4CD1F78B2A72BF0100E8AB01 /* LegacyCommon in Frameworks */,
-				4C8571DC2A7CEC5B0057FED6 /* TrustKit in Frameworks */,
 				E5867D7D2C4E7D55009FB802 /* NetShield in Frameworks */,
 				A443C5732E3B76BC003D91FA /* NATPMPUI in Frameworks */,
 				E5E48D012A4C37F000B09111 /* PMLogger in Frameworks */,
@@ -633,9 +621,7 @@
 				4CD1F7862A72BEDA00E8AB01 /* BugReport */,
 				4CD1F7882A72BEE700E8AB01 /* ProtonCoreUIFoundations */,
 				4CD1F78A2A72BF0100E8AB01 /* LegacyCommon */,
-				4CD1F7962A72DF2700E8AB01 /* DictionaryCoder */,
 				4C25999B2A7AA29800A31895 /* Dependencies */,
-				4C8571DB2A7CEC5B0057FED6 /* TrustKit */,
 				E59447532A86217A00E1E241 /* ProtonCoreLoginUI */,
 				AD9F194F2B55D6770034F329 /* Persistence */,
 				E5867D7C2C4E7D55009FB802 /* NetShield */,
@@ -767,9 +753,6 @@
 				E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log" */,
 				E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
 				4C7D40572A60251700ACDBED /* XCRemoteSwiftPackageReference "SDWebImage" */,
-				4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */,
-				4C2599922A7AA25800A31895 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
-				4C8571DA2A7CEC5B0057FED6 /* XCRemoteSwiftPackageReference "TrustKit" */,
 				4C660DB22CCA810300780D42 /* XCRemoteSwiftPackageReference "Version" */,
 				4CEBB4072CDA68DE00AB5556 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				A4B9A7342E38FC2600A21B35 /* XCRemoteSwiftPackageReference "atlantis" */,
@@ -2233,15 +2216,6 @@
 			traits = (
 			);
 		};
-		4C2599922A7AA25800A31895 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftyBeaver/SwiftyBeaver";
-			requirement = {
-				kind = versionRange;
-				maximumVersion = 2.0.0;
-				minimumVersion = 1.9.0;
-			};
-		};
 		4C660DB22CCA810300780D42 /* XCRemoteSwiftPackageReference "Version" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mxcl/Version";
@@ -2257,22 +2231,6 @@
 				kind = versionRange;
 				maximumVersion = 5.16.0;
 				minimumVersion = 0.0.0;
-			};
-		};
-		4C8571DA2A7CEC5B0057FED6 /* XCRemoteSwiftPackageReference "TrustKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ProtonMail/TrustKit";
-			requirement = {
-				kind = revision;
-				revision = d107d7cc825f38ae2d6dc7c54af71d58145c3506;
-			};
-		};
-		4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/almazrafi/DictionaryCoder.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.1.0;
 			};
 		};
 		4CEBB4072CDA68DE00AB5556 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
@@ -2353,11 +2311,6 @@
 			package = 4C7D40572A60251700ACDBED /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImage;
 		};
-		4C8571DB2A7CEC5B0057FED6 /* TrustKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4C8571DA2A7CEC5B0057FED6 /* XCRemoteSwiftPackageReference "TrustKit" */;
-			productName = TrustKit;
-		};
 		4C93F57A2CDCDD4D006BFD77 /* Ergonomics */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Ergonomics;
@@ -2377,11 +2330,6 @@
 		4CD1F78A2A72BF0100E8AB01 /* LegacyCommon */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LegacyCommon;
-		};
-		4CD1F7962A72DF2700E8AB01 /* DictionaryCoder */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */;
-			productName = DictionaryCoder;
 		};
 		4CEBB4082CDA68DE00AB5556 /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;

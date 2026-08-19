@@ -71,12 +71,10 @@ import VPNShared
         @Dependency(\.appInfo) private var appInfo
         @Dependency(\.systemExtensionsCoordinator) private var systemExtensionsCoordinator
         private var appInactivityTask: Task<Void, Error>?
-        private lazy var pushNotificationService = PushNotificationService.shared
         private lazy var menuManager = MenuManager(container: container)
 
         @SharedReader(.telemetryCrashReports) var telemetryCrashReports
 
-        private var tokens: [NotificationToken] = []
         private var cancellables = Set<AnyCancellable>()
 
         @Dependency(\.defaultAppStorage) private var defaults
@@ -165,7 +163,7 @@ extension AppDelegate: NSApplicationDelegate {
                 #if !REDESIGN
                     self.menuManager.updateMenuControllers()
                 #endif
-                _ = container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.
+                _ = container.dynamicBugReportManager // Loads initial bug report config and sets up a timer to refresh it daily.
 
                 // Check sysex approval and protocol deprecation and revert to Smart or IKE if necessary, but only if we're logged in
                 if credentialsProvider.hasCredentials {
@@ -435,12 +433,14 @@ extension AppDelegate {
 
     private func registerForTelemetryChanges() {
         $telemetryCrashReports.publisher.sink { value in
-            switch value == String(true) {
+            let crashReportsEnabled = value == String(true)
+            switch crashReportsEnabled {
             case true:
                 self.enableExternalLogging()
             case false:
                 self.disableExternalLogging()
             }
+            SentryHelper.shared?.setSentryEnabled(crashReportsEnabled)
         }
         .store(in: &cancellables)
     }

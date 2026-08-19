@@ -41,10 +41,10 @@ public enum TunnelConfigurationOperation {
 }
 
 package struct ManagerConfigurator {
-    public typealias ConfigurationHandler = @Sendable (inout TunnelProviderManager, TunnelConfigurationOperation) async throws -> Void
+    typealias ConfigurationHandler = @Sendable (inout TunnelProviderManager, TunnelConfigurationOperation) async throws -> Void
 
-    public private(set) var changes: @Sendable (ServerConnectionIntent) throws -> ConnectionUpdate
-    public private(set) var configure: ConfigurationHandler
+    private(set) var changes: @Sendable (ServerConnectionIntent) throws -> ConnectionUpdate
+    private(set) var configure: ConfigurationHandler
 }
 
 /// Convenience API with labels

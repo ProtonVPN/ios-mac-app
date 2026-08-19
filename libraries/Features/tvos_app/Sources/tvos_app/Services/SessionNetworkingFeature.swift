@@ -23,7 +23,6 @@ import Domain
 import Foundation
 import ModalsServices
 import PMLogger
-import ProtonCoreForceUpgrade
 import ProtonCoreNetworking
 import ProtonCoreServices
 import VPNShared

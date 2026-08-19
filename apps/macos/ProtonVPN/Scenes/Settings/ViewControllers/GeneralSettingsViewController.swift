@@ -23,11 +23,10 @@
 import AppKit
 import Cocoa
 import Ergonomics
-import LegacyCommon
 import SharedViews
 import Strings
 
-public protocol ReloadableViewController: AnyObject {
+protocol ReloadableViewController: AnyObject {
     func reloadView()
 }
 

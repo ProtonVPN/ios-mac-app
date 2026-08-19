@@ -18,7 +18,6 @@
 
 import Announcement
 import ComposableArchitecture
-import ConnectionInventory
 import CountriesShared
 import Dependencies
 import Domain
@@ -233,19 +232,3 @@ private extension View {
         modifier(CountriesListSheetsModifier(store: store.wrappedValue))
     }
 }
-
-#if DEBUG
-    private enum MockServerGroup {
-        static var warsaw: ServerGroupInfo {
-            .init(kind: .country(code: "PL"), featureIntersection: .restricted, featureUnion: .restricted, minTier: .paid, maxTier: .paid, serverCount: 2, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: false, isUnderMaintenance: false, protocolSupport: .wireGuardUDP)
-        }
-
-        static var malmo: ServerGroupInfo {
-            .init(kind: .country(code: "SE"), featureIntersection: .zero, featureUnion: .zero, minTier: .paid, maxTier: .paid, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: [.wireGuardTCP, .wireGuardUDP, .wireGuardTLS])
-        }
-
-        static var zurich: ServerGroupInfo {
-            .init(kind: .country(code: "CH"), featureIntersection: .zero, featureUnion: .zero, minTier: .paid, maxTier: .paid, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: .ikev2)
-        }
-    }
-#endif

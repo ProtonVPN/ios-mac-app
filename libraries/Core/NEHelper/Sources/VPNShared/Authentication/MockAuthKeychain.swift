@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
-import Domain
 import Foundation
 import PMLogger
 
@@ -26,8 +25,6 @@ public class MockAuthKeychain: AuthKeychainHandle {
     public var userId: String?
 
     public func saveToCache(_: VPNShared.AuthCredentials?) {}
-
-    @Dependency(\.appInfo) private var appInfo
 
     var credentialsWereStored: (() -> Void)?
     var credentialsWereCleared: (() -> Void)?

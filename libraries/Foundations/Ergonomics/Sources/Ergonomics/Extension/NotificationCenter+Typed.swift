@@ -100,20 +100,6 @@ public extension NotificationCenter {
         return NotificationToken(notificationCenter: self, observer: observer, name: notificationName, object: object)
     }
 
-    /// Register a block to be executed when the specified object, (or any object if nil is provided) posts a
-    /// notification matching any of the names given.
-    ///
-    /// The notification center copies the block for each notification and strongly holds each separately while the
-    /// corresponding token exists.
-    func addObservers(
-        for notifications: [Notification.Name],
-        queue: OperationQueue? = nil,
-        object: Any?,
-        handler: @escaping (Notification) -> Void
-    ) -> [NotificationToken] {
-        notifications.map { addObserver(for: $0, queue: queue, object: object, handler: handler) }
-    }
-
     /// Similarly to the above overloads, returns a `NotificationToken` which is used to control the lifetime of the
     /// observer that handles responding to the subscribed notification.
     ///
@@ -155,14 +141,6 @@ public extension NotificationCenter {
                 handler(data)
             }
         }
-    }
-
-    func notifications<N: TypedNotification<T>, T>(
-        _: N.Type
-    ) -> AsyncStream<T> {
-        notifications(named: N.name)
-            .compactMap { N.data(from: $0) }
-            .eraseToStream()
     }
 }
 

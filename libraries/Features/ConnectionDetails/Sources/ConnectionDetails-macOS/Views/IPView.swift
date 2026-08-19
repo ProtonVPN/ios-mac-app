@@ -23,18 +23,18 @@ import Strings
 import SwiftUI
 import Theme
 
-public struct IPView: View {
+struct IPView: View {
     let store: StoreOf<IPViewFeature>
 
     @ScaledMetric var buttonSize: CGFloat = 16
     @ScaledMetric var buttonSpacing: CGFloat = 4
     private var verticalSpacing: CGFloat = .themeSpacing4
 
-    public init(store: StoreOf<IPViewFeature>) {
+    init(store: StoreOf<IPViewFeature>) {
         self.store = store
     }
 
-    public var body: some View {
+    var body: some View {
         HStack {
             VStack(spacing: verticalSpacing) {
                 HStack(alignment: .center, spacing: buttonSpacing) {

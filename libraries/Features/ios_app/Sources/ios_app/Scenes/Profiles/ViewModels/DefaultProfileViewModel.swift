@@ -31,24 +31,6 @@ import Theme
 import UIKit
 import VPNAppCore
 
-/// Special case of `DefaultProfileViewModel`, used for free users, that have profiles disabled
-/// but have this special `Fastest` connection type in countries list.
-///
-/// Differences:
-/// - Doesn't check users tier for UI purposes
-/// - Doesn't check `authorizer` during connection attempt
-class FastestConnectionViewModel: DefaultProfileViewModel {
-    override var isUsersTierTooLow: Bool {
-        false
-    }
-
-    override func connectAction() {
-        log.debug("Connect requested by selecting default profile in countries list.", category: .connectionConnect, event: .trigger)
-
-        authorizedConnectAction()
-    }
-}
-
 class DefaultProfileViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
@@ -56,7 +38,6 @@ class DefaultProfileViewModel {
     @Dependency(\.upsellManager) private var upsellManager
 
     private let serverOffering: ServerOffering
-    private let connectionStatusService: ConnectionStatusService
 
     private let defaultAccessTier: VpnTier
 
@@ -107,11 +88,7 @@ class DefaultProfileViewModel {
         return spec == profileConnectionSpec
     }
 
-    private var connectedUiState: Bool {
-        isConnected || isConnecting
-    }
-
-    fileprivate var isUsersTierTooLow: Bool {
+    private var isUsersTierTooLow: Bool {
         !authorizer.canUseProfile(ofTier: defaultAccessTier)
     }
 
@@ -155,11 +132,9 @@ class DefaultProfileViewModel {
 
     init(
         serverOffering: ServerOffering,
-        connectionStatusService: ConnectionStatusService,
         extraMargin: Bool = false
     ) {
         self.serverOffering = serverOffering
-        self.connectionStatusService = connectionStatusService
         self.defaultAccessTier = .paid
         self.extraMargin = extraMargin
         startObserving()
@@ -176,7 +151,7 @@ class DefaultProfileViewModel {
         authorizedConnectAction()
     }
 
-    fileprivate func authorizedConnectAction() {
+    private func authorizedConnectAction() {
         if isConnecting {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
             log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
@@ -220,46 +195,7 @@ class DefaultProfileViewModel {
 #if DEBUG
     extension DefaultProfileViewModel {
         static var mock = DefaultProfileViewModel(
-            serverOffering: .fastest("Server"),
-            connectionStatusService: ConnectionStatusServiceMock()
+            serverOffering: .fastest("Server")
         )
-
-        static var fastestMock = DefaultProfileViewModel(
-            serverOffering: .fastest("Server"),
-            connectionStatusService: ConnectionStatusServiceMock()
-        )
-
-        static var randomMock = DefaultProfileViewModel(
-            serverOffering: .random("Server"),
-            connectionStatusService: ConnectionStatusServiceMock()
-        )
-
-        static var withExtraMarginMock = DefaultProfileViewModel(
-            serverOffering: .fastest("Server"),
-            connectionStatusService: ConnectionStatusServiceMock(),
-            extraMargin: true
-        )
-
-        static var connectedMock: DefaultProfileViewModel {
-            @Shared(.connectionState) var connectionState
-            $connectionState.withLock { $0 = .previewConnected(for: .defaultFastest) }
-            return DefaultProfileViewModel(
-                serverOffering: .fastest("Server"),
-                connectionStatusService: ConnectionStatusServiceMock()
-            )
-        }
-
-        static var connectingMock: DefaultProfileViewModel {
-            @Shared(.connectionState) var connectionState
-            $connectionState.withLock { $0 = .previewConnecting(for: .defaultFastest) }
-            return DefaultProfileViewModel(
-                serverOffering: .fastest("Server"),
-                connectionStatusService: ConnectionStatusServiceMock()
-            )
-        }
-    }
-
-    private class ConnectionStatusServiceMock: ConnectionStatusService {
-        func presentHome() {}
     }
 #endif

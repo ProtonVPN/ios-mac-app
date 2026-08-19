@@ -18,17 +18,16 @@
 
 import ComposableArchitecture
 import Domain
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Theme
 
-public struct SessionCapturedExportView: View {
+struct SessionCapturedExportView: View {
     let url: URL
 
-    public var body: some View {
+    var body: some View {
         VStack(spacing: .themeSpacing24) {
-            IconProvider.checkmarkCircleFilled.swiftUIImage.resizable()
+            Theme.Asset.Icons.checkmarkCircleFilled.swiftUIImage.resizable()
                 .frame(.square(.themeSpacing24))
                 .foregroundStyle(Color(.icon, .success))
             VStack(spacing: .themeSpacing16) {
@@ -41,7 +40,7 @@ public struct SessionCapturedExportView: View {
                     .foregroundStyle(Color(.text, .weak))
             }
             HStack(spacing: .themeSpacing8) {
-                IconProvider.fileLines
+                Theme.Asset.Icons.fileLines.swiftUIImage
                     .resizable()
                     .frame(.square(.themeSpacing16))
                 Text(url.lastPathComponent)

@@ -19,7 +19,6 @@
 @testable import CommonNetworking
 import ComposableArchitecture
 @testable import Connection
-import ConnectionTestSupport
 @testable import CoreConnection
 import Domain
 import Ergonomics

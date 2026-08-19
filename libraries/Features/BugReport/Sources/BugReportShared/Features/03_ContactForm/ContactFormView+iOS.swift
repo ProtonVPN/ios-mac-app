@@ -23,13 +23,13 @@
     import SwiftUI
     import Theme
 
-    public struct ContactFormView: View {
+    struct ContactFormView: View {
         @Bindable var store: StoreOf<ContactFormFeature>
 
         @Environment(\.colors) private var colors: Colors
         @Environment(\.dismiss) private var dismiss
 
-        public var body: some View {
+        var body: some View {
             ZStack {
                 colors.background.ignoresSafeArea()
 

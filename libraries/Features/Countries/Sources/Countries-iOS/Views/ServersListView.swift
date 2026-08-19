@@ -26,17 +26,13 @@ import SwiftUI
 import Theme
 import VPNAppCore
 
-public struct ServersListView: View {
+struct ServersListView: View {
     @Bindable var store: StoreOf<ServersListFeature>
 
     @Environment(\.dismiss) private var dismiss
     @State var showingFeaturesInfo: Bool = false
 
-    public init(store: StoreOf<ServersListFeature>) {
-        self.store = store
-    }
-
-    public var body: some View {
+    var body: some View {
         VStack(spacing: 0) {
             header
             loadingList

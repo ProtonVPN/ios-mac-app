@@ -39,7 +39,7 @@ public struct ProfileStorage {
     public var store: (_ profiles: [Profile], _ storageVersion: StorageVersion) -> Void = { _, _ in }
 }
 
-public final class ProfileStorageImplementation {
+final class ProfileStorageImplementation {
     private static let storageVersion = StorageVersion.v2
     private static let versionKey = "profileCacheVersion"
 
@@ -47,8 +47,6 @@ public final class ProfileStorageImplementation {
 
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
-
-    public init() {}
 
     func fetch() -> [Profile] {
         @Dependency(\.defaultAppStorage) var defaults
@@ -123,8 +121,8 @@ public final class ProfileStorageImplementation {
     }
 }
 
-public enum ProfileStorageKey: DependencyKey {
-    public static var liveValue: ProfileStorage = {
+enum ProfileStorageKey: DependencyKey {
+    static var liveValue: ProfileStorage = {
         let profileStorageImpl = ProfileStorageImplementation()
         return ProfileStorage(
             fetch: {

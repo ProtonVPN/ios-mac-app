@@ -28,12 +28,10 @@ import GSMessages
 import LegacyCommon
 import Localization
 import Persistence
-import ProtonCoreFeatureFlags
 import Sharing
 import Strings
 import UIKit
 import VPNAppCore
-import VPNShared
 
 class CreateOrEditProfileViewModel: NSObject {
     @Dependency(\.upsellManager) private var upsellManager
@@ -327,11 +325,6 @@ class CreateOrEditProfileViewModel: NSObject {
         selectedServerOffering = nil
 
         completion(state == .secureCore)
-    }
-
-    private func toggleDefault() {
-        isDefaultProfile = !isDefaultProfile
-        saveButtonEnabled = true
     }
 
     private var serverGroups: [ServerGroupInfo] {

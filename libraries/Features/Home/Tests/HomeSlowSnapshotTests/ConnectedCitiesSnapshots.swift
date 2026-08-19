@@ -27,7 +27,6 @@ import SnapshotTesting
 import SwiftUI
 import Testing
 import TestingErgonomics
-import Theme
 import VPNAppCore
 
 // `.serialized` + the `.dependencies` trait give every city its own dependency context (store construction and view

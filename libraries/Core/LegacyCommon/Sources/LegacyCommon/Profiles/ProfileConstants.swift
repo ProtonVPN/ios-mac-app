@@ -35,8 +35,6 @@ public enum ProfileConstants {
     public static let fastestId = "st_f"
     public static let randomId = "st_r"
 
-    public static let defaultIds = [fastestId, randomId]
-
     // WARNING: consuming client must contain "fastest" and "random" image assets
     //
     // NOTE: this is old behaviour. These two default profiles used to split by plan: 'random' was

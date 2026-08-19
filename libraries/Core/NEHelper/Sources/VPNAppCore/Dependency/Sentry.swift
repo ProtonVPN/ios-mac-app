@@ -15,11 +15,48 @@ private let moduleLog = VPNAppCore.log
 public final class SentryHelper {
     public private(set) nonisolated(unsafe) static var shared: SentryHelper?
 
+    /// Prepares Sentry and starts it when the user currently shares crash reports.
+    ///
+    /// The helper keeps `dsn` and `isEnabled` so `setSentryEnabled(_:)` can start and stop the SDK
+    /// later, when the user changes the setting.
     public static func setupSentry(dsn: String, isEnabled: @escaping () -> Bool, getUserId _: @escaping () -> String?) {
         guard shared == nil else {
             moduleLog.assertionFailure("Sentry already setup")
             return
         }
+
+        let helper = SentryHelper(dsn: dsn, isEnabled: isEnabled)
+        shared = helper
+        helper.setSentryEnabled(isEnabled())
+    }
+
+    private let dsn: String
+    private let isEnabled: () -> Bool
+
+    private init(dsn: String, isEnabled: @escaping () -> Bool) {
+        self.dsn = dsn
+        self.isEnabled = isEnabled
+    }
+
+    /// Starts or stops Sentry to follow the user's crash report sharing choice.
+    ///
+    /// Stopping removes Sentry's crash and signal handlers, so a disabled Sentry collects nothing.
+    /// Refusing the upload alone would leave those handlers installed.
+    public func setSentryEnabled(_ enabled: Bool) {
+        switch (enabled, SentrySDK.isEnabled) {
+        case (true, false):
+            start()
+        case (false, true):
+            moduleLog.info("Crash reports sharing is disabled. Shutting Sentry down.")
+            SentrySDK.close()
+        case (true, true), (false, false):
+            break
+        }
+    }
+
+    private func start() {
+        let dsn = dsn
+        let isEnabled = isEnabled
 
         SentrySDK.start { options in
             options.dsn = dsn
@@ -28,8 +65,8 @@ public final class SentryHelper {
             options.maxBreadcrumbs = 50
 
             options.beforeSend = { event in
-                // Make sure crash reporting is still enabled.
-                // If not, returning nil will prevent Sentry from sending the report.
+                // The user can withdraw consent while Sentry is shutting down, and closing it sends
+                // whatever it has already queued. Drop those events too.
                 guard isEnabled() else {
                     moduleLog.warning("Crash reports sharing is disabled. Won't send error report.", metadata: ["error": "\(String(describing: event.error))"])
                     return nil
@@ -37,19 +74,7 @@ public final class SentryHelper {
 
                 return event
             }
-
-            shared = SentryHelper(isEnabled: isEnabled)
         }
-    }
-
-    private var sentryEnabled: () -> Bool
-
-    init(isEnabled: @escaping () -> Bool) {
-        self.sentryEnabled = isEnabled
-    }
-
-    public func setSentryEnabled(_ isEnabled: Bool) {
-        sentryEnabled = { isEnabled }
     }
 
     public func log(error: Error) {

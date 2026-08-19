@@ -20,19 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import LegacyCommon
 import UIKit
 
 extension NSAttributedString {
-    static func imageAttachment(named name: String, size: CGSize? = nil) -> NSAttributedString? {
-        // swiftlint:disable:next hardcoded_assets
-        guard let image = UIImage(named: name.lowercased()) else {
-            log.debug("Could not obtain image named for text attachment", category: .app)
-            return nil
-        }
-        return imageAttachment(image: image, size: size)
-    }
-
     static func imageAttachment(image: UIImage, baselineOffset: CGFloat? = nil, size: CGSize? = nil) -> NSAttributedString {
         let attachment = NSTextAttachment()
         if let size {

@@ -59,6 +59,7 @@ public extension Asset {
         public static let exclamationTriangleFilled = ThemeIcon(iconProviderKeyPath: \.exclamationTriangleFilled)
         public static let eye = ThemeIcon(iconProviderKeyPath: \.eye)
         public static let eyeSlash = ThemeIcon(iconProviderKeyPath: \.eyeSlash)
+        public static let fileLines = ThemeIcon(iconProviderKeyPath: \.fileLines)
         public static let gift = ThemeIcon(iconProviderKeyPath: \.gift)
         public static let globe = ThemeIcon(iconProviderKeyPath: \.globe)
         public static let grid2 = ThemeIcon(iconProviderKeyPath: \.grid2)

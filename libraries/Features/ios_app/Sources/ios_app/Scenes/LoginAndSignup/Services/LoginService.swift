@@ -24,7 +24,6 @@ import ProtonCorePayments
 import ProtonCorePushNotifications
 import ProtonCoreServices
 import ProtonCoreUIFoundations
-import Settings
 import SharedErgonomics
 import Sharing
 import Strings
@@ -32,10 +31,6 @@ import SwiftUI
 import UIKit
 import VPNAppCore
 import VPNShared
-
-protocol LoginServiceFactory: AnyObject {
-    func makeLoginService() -> LoginService
-}
 
 enum SilentLoginResult {
     case loggedIn

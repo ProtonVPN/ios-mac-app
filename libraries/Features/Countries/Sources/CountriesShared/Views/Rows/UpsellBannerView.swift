@@ -66,11 +66,6 @@ public struct UpsellBannerView: View {
         self.onUpgrade = onUpgrade
     }
 
-    public init(numberOfCountries: Int, onUpgrade: @escaping () -> Void) {
-        self.variant = .search(numberOfCountries: numberOfCountries)
-        self.onUpgrade = onUpgrade
-    }
-
     public var body: some View {
         Button(action: onUpgrade) {
             HStack(spacing: .themeSpacing8) {
@@ -125,7 +120,7 @@ public struct UpsellBannerView: View {
 
 #if DEBUG
     #Preview("Upsell Banner Search") {
-        UpsellBannerView(numberOfCountries: 42, onUpgrade: {})
+        UpsellBannerView(variant: .search(numberOfCountries: 42), onUpgrade: {})
             .padding()
             .preferredColorScheme(.dark)
     }

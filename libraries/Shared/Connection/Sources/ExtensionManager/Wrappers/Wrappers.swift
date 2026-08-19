@@ -32,8 +32,6 @@ import enum NetworkExtension.NEVPNStatus
 public protocol VPNSession: AnyObject {
     var status: NEVPNStatus { get }
     var connectedDate: Date? { get }
-    func fetchLastDisconnectError() async throws -> Error?
-
     func startTunnel() throws
     func stopTunnel()
 

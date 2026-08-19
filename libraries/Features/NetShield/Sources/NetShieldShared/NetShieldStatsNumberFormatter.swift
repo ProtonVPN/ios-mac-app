@@ -19,8 +19,8 @@
 import Foundation
 import Strings
 
-public class NetShieldStatsNumberFormatter: NumberFormatter {
-    override public init() {
+class NetShieldStatsNumberFormatter: NumberFormatter {
+    override init() {
         super.init()
         allowsFloats = true
         maximumFractionDigits = 1
@@ -58,7 +58,7 @@ public class NetShieldStatsNumberFormatter: NumberFormatter {
         }
     }
 
-    public func string(from number: Int) -> String {
+    func string(from number: Int) -> String {
         var reduced = CGFloat(abs(number))
         var multiplier = 0
         while reduced >= 1000 {

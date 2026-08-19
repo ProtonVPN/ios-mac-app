@@ -113,17 +113,6 @@ public struct ServerIp: Codable {
             return result
         }
     #endif
-
-    public var underMaintenance: Bool {
-        status == 0
-    }
-
-    // MARK: - Static functions
-
-    // swiftlint:disable:next nsobject_prefer_isequal
-    public static func == (lhs: ServerIp, rhs: ServerIp) -> Bool {
-        lhs.domain == rhs.domain
-    }
 }
 
 #if DEBUG

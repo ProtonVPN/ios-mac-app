@@ -34,8 +34,6 @@ final class StatusMenuWindowController: WindowController {
     private var windowModel: StatusMenuWindowModel?
 
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-    private let statusMenu = NSMenu()
-
     private let iconManager: StatusBarIconBlinker
 
     private var eventsMonitor: Any?
@@ -43,8 +41,6 @@ final class StatusMenuWindowController: WindowController {
     var windowIsVisible: Bool {
         window?.isVisible == true
     }
-
-    var lastOpenApplication: NSRunningApplication?
 
     weak var windowService: WindowService?
 
@@ -294,14 +290,6 @@ class StatusBarIconBlinker {
     }
 }
 
-enum KeyCode: UInt16, CaseIterable {
-    case enter = 36
+enum KeyCode: UInt16 {
     case escape = 53
-
-    static func isEventEligibleForDismiss(_ event: NSEvent) -> Bool {
-        guard case .keyDown = event.type else {
-            return false
-        }
-        return allCases.map(\.rawValue).contains(event.keyCode)
-    }
 }

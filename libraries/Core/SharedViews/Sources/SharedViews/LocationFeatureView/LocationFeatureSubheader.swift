@@ -21,14 +21,10 @@ import Strings
 import SwiftUI
 import enum Theme.Asset
 
-public struct LocationFeatureSubheader: View {
-    private let model: LocationFeatureSubheaderModel
+struct LocationFeatureSubheader: View {
+    let model: LocationFeatureSubheaderModel
 
-    public init(model: LocationFeatureSubheaderModel) {
-        self.model = model
-    }
-
-    public var body: some View {
+    var body: some View {
         content
             .frame(maxWidth: .infinity, alignment: .leading)
             .fixedSize(horizontal: false, vertical: true)
