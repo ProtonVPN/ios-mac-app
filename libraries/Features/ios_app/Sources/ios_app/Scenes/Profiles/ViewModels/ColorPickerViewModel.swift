@@ -21,6 +21,7 @@
 //
 
 import LegacyCommon
+import Theme
 import UIKit
 
 class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -92,7 +93,7 @@ class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UIColl
     }
 
     init(with color: UIColor? = nil) {
-        self.colors = ProfileConstants.profileColors
+        self.colors = Theme.Asset.Colors.profileColors
 
         super.init()
 

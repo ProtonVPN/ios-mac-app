@@ -19,7 +19,6 @@
 import AppKit
 import Combine
 import Foundation
-import ProtonCoreUIFoundations
 import SharedViews
 import Strings
 import Theme
@@ -73,7 +72,7 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
 
     private var observationToken: Any?
 
-    static let infoIcon = AppTheme.Icon.infoCircleFilled.colored(.hint)
+    static let infoIcon = Theme.Asset.Icons.infoCircleFilled.image.colored(.hint)
 
     var isOn: Bool {
         switchButton?.currentButtonState == .on
@@ -108,7 +107,7 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
         guard let onOffLabel else { return }
 
         let imageAttachment = NSTextAttachment()
-        imageAttachment.image = IconProvider.chevronRight
+        imageAttachment.image = Theme.Asset.Icons.chevronRight.image
             .colored(.color(.text))
             .resizeWhilePreservingRatio(newHeight: .themeSpacing16)
         imageAttachment.bounds = .init(

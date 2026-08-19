@@ -22,7 +22,6 @@ import Dependencies
 import Domain
 import HomeShared
 import Localization
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Theme
@@ -90,11 +89,11 @@ struct ConnectionStatusView: View {
                 .controlSize(.regular)
                 .tint(.white)
         case .unprotected:
-            IconProvider.lockOpenFilled2
+            Theme.Asset.Icons.lockOpenFilled2.swiftUIImage
                 .styled(.danger)
                 .accessibilityHidden(true)
         case .authenticationRequired:
-            IconProvider.exclamationTriangleFilled
+            Theme.Asset.Icons.exclamationTriangleFilled.swiftUIImage
                 .foregroundColor(Color(.icon, .warning))
                 .accessibilityHidden(true)
         }
@@ -110,11 +109,11 @@ struct ConnectionStatusView: View {
         HStack(alignment: .bottom) {
             switch protectionState {
             case .protected:
-                IconProvider.lockFilled
+                Theme.Asset.Icons.lockFilled.swiftUIImage
                     .foregroundColor(Asset.vpnGreen.swiftUIColor)
                 protectedText
             case .protectedSecureCore:
-                IconProvider.locksFilled
+                Theme.Asset.Icons.locksFilled.swiftUIImage
                     .foregroundColor(Asset.vpnGreen.swiftUIColor)
                 protectedText
             case .protecting, .resolving, .killSwitchActive:
@@ -122,10 +121,10 @@ struct ConnectionStatusView: View {
                     .controlSize(.regular)
                     .tint(.white)
             case .unprotected:
-                IconProvider.lockOpenFilled2
+                Theme.Asset.Icons.lockOpenFilled2.swiftUIImage
                     .styled(.danger)
             case .authenticationRequired:
-                IconProvider.exclamationTriangleFilled
+                Theme.Asset.Icons.exclamationTriangleFilled.swiftUIImage
                     .foregroundColor(Color(.icon, .warning))
             }
         }

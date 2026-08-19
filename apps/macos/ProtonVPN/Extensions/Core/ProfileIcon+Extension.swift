@@ -23,15 +23,15 @@
 import AppKit
 import Domain
 import Foundation
-import ProtonCoreUIFoundations
+import Theme
 
 extension ProfileIcon {
     func attributedAttachment(width: Int = 12) -> NSAttributedString {
         switch self {
         case .arrowsSwapRight:
-            return IconProvider.arrowsSwapRight.asAttachment(style: .normal, size: .square(CGFloat(width)))
+            return Theme.Asset.Icons.arrowsSwapRight.image.asAttachment(style: .normal, size: .square(CGFloat(width)))
         case .bolt:
-            return IconProvider.bolt.asAttachment(style: .normal, size: .square(CGFloat(width)))
+            return Theme.Asset.Icons.bolt.image.asAttachment(style: .normal, size: .square(CGFloat(width)))
         case let .circle(color):
             let profileCircle = ProfileCircle(frame: CGRect(x: 0, y: 0, width: width, height: width))
             profileCircle.profileColor = NSColor(rgbHex: color)

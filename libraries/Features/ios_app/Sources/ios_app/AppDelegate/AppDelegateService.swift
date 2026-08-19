@@ -37,7 +37,6 @@ import ProtonCoreObservability
 import ProtonCorePushNotifications
 import ProtonCoreServices
 import ProtonCoreTelemetry
-import ProtonCoreUIFoundations
 import Settings
 import SharedErgonomics
 import Sharing

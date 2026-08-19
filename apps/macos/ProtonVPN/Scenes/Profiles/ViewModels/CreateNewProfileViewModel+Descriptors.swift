@@ -26,7 +26,6 @@ import Domain
 import Foundation
 import LegacyCommon
 import Localization
-import ProtonCoreUIFoundations
 import Strings
 import Theme
 
@@ -44,7 +43,7 @@ extension CreateNewProfileViewModel {
     }
 
     private func flagString(_ countryCode: String) -> NSAttributedString {
-        AppTheme.Icon.flag(countryCode: countryCode)?.asAttachment(size: .profileIconSize) ?? NSAttributedString(string: "")
+        AppTheme.flag(countryCode: countryCode)?.asAttachment(size: .profileIconSize) ?? NSAttributedString(string: "")
     }
 
     // MARK: - Country / Gateway
@@ -55,10 +54,10 @@ extension CreateNewProfileViewModel {
 
         switch group.kind {
         case let .country(countryCode), let .city(_, countryCode), let .state(_, countryCode):
-            imageAttributedString = AppTheme.Icon.flag(countryCode: countryCode)?.asAttachment(size: .profileIconSize) ?? NSAttributedString(string: "")
+            imageAttributedString = AppTheme.flag(countryCode: countryCode)?.asAttachment(size: .profileIconSize) ?? NSAttributedString(string: "")
             countryString = "  " + (LocalizationUtility.default.countryName(forCode: countryCode) ?? "")
         case let .gateway(name):
-            imageAttributedString = IconProvider.servers.asAttachment(style: .normal, size: .profileIconSize)
+            imageAttributedString = Theme.Asset.Icons.servers.image.asAttachment(style: .normal, size: .profileIconSize)
             countryString = "  " + name
         }
 
@@ -91,9 +90,9 @@ extension CreateNewProfileViewModel {
         case let .custom(serverWrapper):
             serverDescriptor(for: serverWrapper.server)
         case .fastest:
-            defaultServerDescriptor(image: IconProvider.bolt, name: Localizable.fastest)
+            defaultServerDescriptor(image: Theme.Asset.Icons.bolt.image, name: Localizable.fastest)
         case .random:
-            defaultServerDescriptor(image: IconProvider.arrowsSwapRight, name: Localizable.random)
+            defaultServerDescriptor(image: Theme.Asset.Icons.arrowsSwapRight.image, name: Localizable.random)
         }
     }
 

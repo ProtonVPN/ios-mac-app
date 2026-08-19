@@ -56,7 +56,6 @@ let package = Package(
                 .product(name: "ProtonCoreFoundations", package: "protoncore"),
                 .product(name: "ProtonCoreNetworking", package: "protoncore"),
                 .product(name: "ProtonCorePaymentsV2", package: "protoncore"),
-                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ProtonCoreServices", package: "protoncore"),
                 .product(name: "ProtonCoreAPIClient", package: "protoncore"),
 

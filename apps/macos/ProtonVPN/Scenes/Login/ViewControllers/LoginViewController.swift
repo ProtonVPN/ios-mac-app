@@ -356,8 +356,8 @@ final class LoginViewController: NSViewController {
         passwordSecureTextField.setAccessibilityIdentifier("PasswordTextField")
 
         passwordRevealButton.setButtonType(.toggle)
-        passwordRevealButton.image = AppTheme.Icon.eye
-        passwordRevealButton.alternateImage = AppTheme.Icon.eyeSlash
+        passwordRevealButton.image = Theme.Asset.Icons.eye.image
+        passwordRevealButton.alternateImage = Theme.Asset.Icons.eyeSlash.image
         passwordRevealButton.contentTintColor = .color(.icon, .interactive)
         passwordRevealButton.imagePosition = .imageOnly
         passwordRevealButton.isBordered = false

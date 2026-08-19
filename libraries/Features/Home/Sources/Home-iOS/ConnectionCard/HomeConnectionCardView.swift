@@ -22,7 +22,6 @@ import Dependencies
 import Domain
 import Foundation
 import HomeShared
-import ProtonCoreUIFoundations
 import SharedViews
 import Strings
 import SwiftUI
@@ -65,10 +64,10 @@ struct HomeConnectionCardView: View {
     @ViewBuilder
     private var trailingIcon: some View {
         if store.connectionState.connectionStatusAvailable {
-            IconProvider.chevronRight
+            Theme.Asset.Icons.chevronRight.swiftUIImage
                 .foregroundColor(Color(.icon, .weak))
         } else if store.connectionState == .disconnected, store.userTier.isFree {
-            IconProvider.infoCircle
+            Theme.Asset.Icons.infoCircle.swiftUIImage
                 .foregroundColor(Color(.icon, .weak))
         }
     }

@@ -19,15 +19,16 @@
 import ComposableArchitecture
 import Dependencies
 import HomeShared
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
+import Theme
 
 struct ConnectionStatusUpsell: View {
     private struct Model {
         let title: String
         let subtitle: String
-        let icon: ImageAsset
+        // Both HomeShared and Theme generate an `ImageAsset`, so say which one this is.
+        let icon: HomeShared.ImageAsset
 
         init(mode: ConnectionStatusBannerFeature.UpsellMode) {
             switch mode {
@@ -62,7 +63,7 @@ struct ConnectionStatusUpsell: View {
                         .themeFont(.body3(emphasised: false))
                 }
             }
-            IconProvider.chevronRight
+            Theme.Asset.Icons.chevronRight.swiftUIImage
                 .renderingMode(.template)
                 .foregroundStyle(Color(.text, .hint))
         }

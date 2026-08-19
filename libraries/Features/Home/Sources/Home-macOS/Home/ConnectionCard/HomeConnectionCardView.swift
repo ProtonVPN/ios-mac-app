@@ -22,7 +22,6 @@ import Dependencies
 import Domain
 import Foundation
 import HomeShared
-import ProtonCoreUIFoundations
 import SharedViews
 import Strings
 import SwiftUI
@@ -57,7 +56,7 @@ struct HomeConnectionCardView: View {
             } label: {
                 HStack(spacing: .themeSpacing4) {
                     Text(Localizable.actionHelp)
-                    IconProvider.questionCircle
+                    Theme.Asset.Icons.questionCircle.swiftUIImage
                         .resizable()
                         .frame(.square(16))
                 }
@@ -74,7 +73,7 @@ struct HomeConnectionCardView: View {
             }
             Spacer(minLength: 0)
             if showConnectionDetailsEnabled {
-                IconProvider.chevronRight
+                Theme.Asset.Icons.chevronRight.swiftUIImage
                     .resizable()
                     .frame(.square(16))
                     .foregroundColor(Color(.icon, .weak))

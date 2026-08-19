@@ -47,7 +47,7 @@ struct SmallProgressView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: .themeRadius7)
-                .fill(Theme.Asset.Colors.shade40)
+                .fill(Theme.Asset.Colors.shade40.color)
 
             GeometryReader { geo in
                 RoundedRectangle(cornerRadius: .themeRadius7)

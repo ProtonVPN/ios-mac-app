@@ -18,8 +18,8 @@
 
 import ComposableArchitecture
 import PMLogger
-import ProtonCoreUIFoundations
 import SwiftUI
+import Theme
 
 struct LogSelectionView: View {
     @Bindable var store: StoreOf<LogSelectionFeature>
@@ -29,7 +29,7 @@ struct LogSelectionView: View {
             ForEach(store.logSources, id: \.title) { source in
                 SettingsCellView(
                     title: LocalizedStringKey(source.title),
-                    icon: IconProvider.fileEmpty
+                    icon: Theme.Asset.Icons.fileEmpty.swiftUIImage
                 ) {
                     store.send(.logSelected(source))
                 }

@@ -61,7 +61,6 @@ let package = Package(
                 .product(name: "ProtonCoreNetworking", package: "protoncore"),
                 .product(name: "ProtonCorePushNotifications", package: "protoncore"),
                 .product(name: "ProtonCoreServices", package: "protoncore"),
-                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
 
                 // External
                 .product(name: "Clocks", package: "swift-clocks"),

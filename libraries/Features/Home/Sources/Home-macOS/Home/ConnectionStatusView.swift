@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import HomeShared
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Theme
@@ -56,13 +55,13 @@ struct ConnectionStatusView: View {
         HStack(alignment: .bottom, spacing: .themeSpacing8) {
             switch protectionState {
             case .protected:
-                IconProvider.lockFilled
+                Theme.Asset.Icons.lockFilled.swiftUIImage
                     .foregroundColor(Color(.background, .success))
                 Text(Localizable.connectionStatusProtected)
                     .themeFont(.title2(emphasised: true))
                     .foregroundColor(Color(.text, .success))
             case .protectedSecureCore:
-                IconProvider.locksFilled
+                Theme.Asset.Icons.locksFilled.swiftUIImage
                     .foregroundColor(Color(.background, .success))
                 Text(Localizable.connectionStatusProtected)
                     .themeFont(.title2(emphasised: true))
@@ -70,10 +69,10 @@ struct ConnectionStatusView: View {
             case .protecting:
                 ProgressView()
             case .unprotected:
-                IconProvider.lockOpenFilled2
+                Theme.Asset.Icons.lockOpenFilled2.swiftUIImage
                     .styled(.danger)
             case .authenticationRequired:
-                IconProvider.exclamationTriangleFilled
+                Theme.Asset.Icons.exclamationTriangleFilled.swiftUIImage
                     .foregroundColor(Color(.icon, .warning))
             }
         }

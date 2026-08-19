@@ -25,8 +25,8 @@ import Domain
 import Foundation
 import LegacyCommon
 import Localization
-import ProtonCoreUIFoundations
 import Strings
+import Theme
 import UIKit
 
 extension CreateOrEditProfileViewModel {
@@ -49,7 +49,7 @@ extension CreateOrEditProfileViewModel {
             imageAttributedString = embeddedCountryFlag(countryCode: countryCode)
             countryString = "  " + (LocalizationUtility.default.countryName(forCode: countryCode) ?? "")
         case let .gateway(name):
-            imageAttributedString = embeddedImageIcon(image: IconProvider.servers)
+            imageAttributedString = embeddedImageIcon(image: Theme.Asset.Icons.servers.image)
             countryString = "  " + name
         case let .city(name, code), let .state(name, code):
             imageAttributedString = embeddedCountryFlag(countryCode: code)
@@ -161,10 +161,10 @@ extension CreateOrEditProfileViewModel {
 
         switch index {
         case 0:
-            image = IconProvider.bolt
+            image = Theme.Asset.Icons.bolt.image
             name = Localizable.fastest
         default:
-            image = IconProvider.arrowsSwapRight
+            image = Theme.Asset.Icons.arrowsSwapRight.image
             name = Localizable.random
         }
 

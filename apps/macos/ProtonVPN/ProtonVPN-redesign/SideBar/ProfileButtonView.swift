@@ -18,13 +18,12 @@
 
 #if REDESIGN
 
-    import ProtonCoreUIFoundations
     import SwiftUI
     import Theme
 
     struct ProfileButtonView: View {
         var body: some View {
-            IconProvider.userCircle
+            Theme.Asset.Icons.userCircle.swiftUIImage
                 .resizable()
                 .frame(.square(.themeSpacing16))
                 .tint(Color(.text))

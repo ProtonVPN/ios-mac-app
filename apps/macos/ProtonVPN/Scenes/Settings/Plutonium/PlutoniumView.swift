@@ -20,7 +20,6 @@ import ComposableArchitecture
 import Dependencies
 import Domain
 import Foundation
-import ProtonCoreUIFoundations
 import SharedViews
 import Strings
 import SwiftUI
@@ -42,8 +41,7 @@ struct PlutoniumView: View {
         VStack(spacing: .themeSpacing24) {
             // TODO: Remove this hint with [VPNAPPL-3084]
             HStack(spacing: .themeSpacing6) {
-                IconProvider
-                    .exclamationCircleFilled
+                Theme.Asset.Icons.exclamationCircleFilled.swiftUIImage
                     .resizable()
                     .frame(.square(.themeSpacing16))
                     .foregroundStyle(Color(.text, .hint))
@@ -82,8 +80,7 @@ struct PlutoniumView: View {
 
     private func reconnectionNotice() -> some View {
         HStack(spacing: .themeSpacing8) {
-            IconProvider
-                .infoCircle
+            Theme.Asset.Icons.infoCircle.swiftUIImage
                 .resizable()
                 .frame(.square(.themeSpacing16))
             Text(Localizable.plutoniumReconnectionNotice)
@@ -289,7 +286,7 @@ struct PlutoniumView: View {
             Button {
                 store.send(.entryClicked(.ip(ip), .remove, store.feature.mode))
             } label: {
-                IconProvider.cross
+                Theme.Asset.Icons.cross.swiftUIImage
                     .resizable()
                     .frame(.square(.themeSpacing16))
                     .padding(.themeSpacing4)
@@ -499,9 +496,9 @@ extension PlutoniumFeature.State.Operation {
     var icon: Image {
         switch self {
         case .add:
-            IconProvider.plusCircle
+            Theme.Asset.Icons.plusCircle.swiftUIImage
         case .remove:
-            IconProvider.minusCircle
+            Theme.Asset.Icons.minusCircle.swiftUIImage
         }
     }
 }

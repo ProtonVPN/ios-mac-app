@@ -25,7 +25,6 @@ import ConnectionInventory
 import Dependencies
 import Domain
 import LegacyCommon
-import ProtonCoreUIFoundations
 import Theme
 import VPNAppCore
 
@@ -37,9 +36,9 @@ class StatusMenuCountryItemViewModel {
     var flag: NSImage {
         switch serverGroup.kind {
         case let .country(code), let .city(_, code), let .state(_, code):
-            AppTheme.Icon.flag(countryCode: code) ?? NSImage()
+            AppTheme.flag(countryCode: code) ?? NSImage()
         case .gateway:
-            IconProvider.servers
+            Theme.Asset.Icons.servers.image
         }
     }
 
@@ -85,7 +84,11 @@ class StatusMenuCountryItemViewModel {
         }
 
         if type == .secureCore {
-            let secureCoreIcon = AppTheme.Icon.chevronsRight.asAttachment(style: [.interactive, .strong], size: .square(16), centeredVerticallyForFont: font)
+            let secureCoreIcon = Theme.Asset.Icons.chevronsRight.image.asAttachment(
+                style: [.interactive, .strong],
+                size: .square(16),
+                centeredVerticallyForFont: font
+            )
             let code = (" " + name).styled(font: font)
             label = NSAttributedString.concatenate(secureCoreIcon, code)
         } else {

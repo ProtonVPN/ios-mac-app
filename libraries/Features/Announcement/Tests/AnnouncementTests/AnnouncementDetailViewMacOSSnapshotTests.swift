@@ -18,7 +18,6 @@
 
 #if os(macOS)
     @testable import Announcement
-    import ProtonCoreUIFoundations
     import SnapshotTesting
     import SwiftUI
     import System

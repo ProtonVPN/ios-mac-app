@@ -19,9 +19,9 @@
 import ComposableArchitecture
 import Ergonomics
 import HomeShared
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
+import Theme
 
 struct ChangeServerButtonLabel: View {
     let sendAction: HomeConnectionCardFeature.ActionSender
@@ -46,8 +46,7 @@ struct ChangeServerButtonLabel: View {
                     Spacer()
                     if changeServerAllowedDate > date.now {
                         HStack(spacing: .themeSpacing8) {
-                            IconProvider
-                                .hourglass
+                            Theme.Asset.Icons.hourglass.swiftUIImage
                                 .resizable()
                                 .frame(.square(.themeSpacing16))
                             Text(

@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ProtonCoreUIFoundations
 import SwiftUI
 import Theme
 
@@ -36,7 +35,7 @@ struct ClearButton: ViewModifier {
                 Button {
                     text = ""
                 } label: {
-                    IconProvider.crossCircleFilled.swiftUIImage
+                    Theme.Asset.Icons.crossCircleFilled.swiftUIImage
                         .resizable()
                         .foregroundStyle(Color(.text, .weak))
                         .frame(.square(.themeSpacing12))

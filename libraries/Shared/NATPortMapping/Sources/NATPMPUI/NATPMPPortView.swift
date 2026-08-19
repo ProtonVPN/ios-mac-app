@@ -17,7 +17,6 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Theme
@@ -105,7 +104,7 @@ struct ActivePortView: View {
                                 .padding(.horizontal, .themeSpacing16)
                         }
 
-                    IconProvider.squares
+                    Theme.Asset.Icons.squares.swiftUIImage
                         .resizable()
                         .frame(.square(.themeSpacing16))
 
@@ -196,7 +195,7 @@ struct PortErrorView: View {
                     .themeFont(.callout(emphasised: true))
 
                 HStack(spacing: .themeSpacing8) {
-                    IconProvider.circleSlash
+                    Theme.Asset.Icons.circleSlash.swiftUIImage
                         .resizable()
                         .frame(.square(.themeSpacing16))
 
@@ -258,7 +257,7 @@ public struct StatusPortView: View {
                                 .padding(.horizontal, .themeSpacing16)
                         }
 
-                    IconProvider.squares
+                    Theme.Asset.Icons.squares.swiftUIImage
                         .resizable()
                         .frame(.square(.themeSpacing12))
                 }

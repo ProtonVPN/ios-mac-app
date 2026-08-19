@@ -19,10 +19,10 @@
 import ComposableArchitecture
 import Domain
 import HomeShared
-import ProtonCoreUIFoundations
 import SharedViews
 import Strings
 import SwiftUI
+import Theme
 
 struct RecentRowItemView: View {
     static let itemCellHeight: CGFloat = .themeSpacing64
@@ -97,7 +97,7 @@ struct RecentRowItemView: View {
 
 extension RecentConnection {
     var icon: Image {
-        pinned ? IconProvider.pinFilled : IconProvider.clockRotateLeft
+        pinned ? Theme.Asset.Icons.pinFilled.swiftUIImage : Theme.Asset.Icons.clockRotateLeft.swiftUIImage
     }
 }
 

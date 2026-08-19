@@ -21,13 +21,13 @@
 //
 
 @testable import ios_app
-import LegacyCommon
+import Theme
 import XCTest
 
 class ColorPickerViewModelTests: XCTestCase {
     func testCorrectColorSelection() throws {
         let viewModel = ColorPickerViewModel()
-        let newCorrectColor = ProfileConstants.profileColors.first
+        let newCorrectColor = Asset.Colors.profileColors.first
         viewModel.select(color: newCorrectColor)
         XCTAssertNotNil(viewModel.selectedColorIndex)
         XCTAssert(try newCorrectColor == viewModel.colorAt(index: XCTUnwrap(viewModel.selectedColorIndex)), "Correct color was not selected")

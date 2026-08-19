@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppKit
-import ProtonCoreUIFoundations
 import Strings
+import Theme
 
 protocol TwoFactorDelegate: WarningViewDelegate {
     func twoFactorButtonAction(code: String)
@@ -90,7 +90,7 @@ final class TwoFactorView: NSView {
 
         backButton.target = self
         backButton.action = #selector(backAction)
-        backButton.image = IconProvider.arrowLeft
+        backButton.image = Theme.Asset.Icons.arrowLeft.image
         backButton.contentTintColor = .color(.text, .weak)
     }
 

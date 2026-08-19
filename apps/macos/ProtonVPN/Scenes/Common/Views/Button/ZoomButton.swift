@@ -42,7 +42,7 @@ class ZoomButton: HoverDetectionButton {
     init(type zoomType: ZoomType) {
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
 
-        let image = zoomType == .in ? AppTheme.Icon.plus : AppTheme.Icon.minus
+        let image = zoomType == .in ? Theme.Asset.Icons.plus.image : Theme.Asset.Icons.minus.image
         imageView.image = colorImage(image)
         imageView.isHidden = false
 

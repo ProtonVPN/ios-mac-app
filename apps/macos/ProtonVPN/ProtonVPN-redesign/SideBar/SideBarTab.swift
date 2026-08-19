@@ -19,7 +19,6 @@
 #if REDESIGN
 
     import Home
-    import ProtonCoreUIFoundations
     import Strings
     import SwiftUI
     import Theme
@@ -54,11 +53,11 @@
         var image: SwiftUI.Image {
             switch self {
             case .home:
-                IconProvider.house
+                Theme.Asset.Icons.house.swiftUIImage
             case .countries:
-                IconProvider.earth
+                Theme.Asset.Icons.earth.swiftUIImage
             case .settings:
-                IconProvider.cogWheel
+                Theme.Asset.Icons.cogWheel.swiftUIImage
             }
         }
     }

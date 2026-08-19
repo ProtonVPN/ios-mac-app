@@ -22,7 +22,6 @@
     import ConnectionDetails
     import ConnectionDetails_macOS
     import Home
-    import ProtonCoreUIFoundations
     import SwiftUI
     import Theme
 
@@ -79,7 +78,7 @@
                     Button(action: {
                         toggleSidebar()
                     }, label: {
-                        IconProvider.sidePanelLeft
+                        Theme.Asset.Icons.sidePanelLeft.swiftUIImage
                             .resizable()
                             .foregroundColor(Color(.text, .weak))
                             .frame(.square(.themeSpacing16))

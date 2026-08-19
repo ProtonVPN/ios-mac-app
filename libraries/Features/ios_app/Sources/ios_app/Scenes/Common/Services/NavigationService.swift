@@ -41,7 +41,6 @@ import ProtonCoreNetworking
 import ProtonCorePasswordChange
 import ProtonCorePushNotifications
 import ProtonCoreServices
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Tabular

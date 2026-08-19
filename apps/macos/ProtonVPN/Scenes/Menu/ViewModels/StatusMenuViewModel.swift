@@ -593,11 +593,11 @@ final class StatusMenuViewModel {
 
         if server.logical.feature.contains(.secureCore) {
             let font = NSFont.themeFont()
-            let secureCoreIcon = AppTheme.Icon.locks.asAttachment(style: .normal, size: .square(16), centeredVerticallyForFont: font)
+            let secureCoreIcon = Theme.Asset.Icons.locks.image.asAttachment(style: .normal, size: .square(16), centeredVerticallyForFont: font)
             let entryCountryCode = server.logical.entryCountryCode
             let entryCountryName = LocalizationUtility.default.countryName(forCode: entryCountryCode) ?? entryCountryCode
             let entryCountry = (" " + entryCountryName + " ").styled([.interactive, .active], font: font)
-            let doubleArrows = AppTheme.Icon.chevronsRight.asAttachment(style: .normal, size: .square(16), centeredVerticallyForFont: font)
+            let doubleArrows = Theme.Asset.Icons.chevronsRight.image.asAttachment(style: .normal, size: .square(16), centeredVerticallyForFont: font)
             let exitCountryCode = server.logical.exitCountryCode
             let exitCountryName = LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? exitCountryCode
             let exitCountry = (" " + exitCountryName + " ").styled(font: font)
@@ -605,7 +605,7 @@ final class StatusMenuViewModel {
         } else {
             let countryCode = server.logical.exitCountryCode
             let countryName = LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
-            let flag = AppTheme.Icon.flag(countryCode: countryCode)?.asAttachment(size: .square(18)) ?? NSAttributedString()
+            let flag = AppTheme.flag(countryCode: countryCode)?.asAttachment(size: .square(18)) ?? NSAttributedString()
             let country = NSMutableAttributedString(
                 string: "  " + countryName + " ",
                 attributes: [

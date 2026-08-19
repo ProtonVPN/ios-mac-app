@@ -20,7 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import ProtonCoreUIFoundations
+import Theme
 import UIKit
 
 class ServersHeaderView: UITableViewHeaderFooterView {
@@ -43,7 +43,7 @@ class ServersHeaderView: UITableViewHeaderFooterView {
     private let infoBtn: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(IconProvider.infoCircle, for: .normal)
+        button.setImage(Theme.Asset.Icons.infoCircle.image, for: .normal)
         button.tintColor = .iconNorm()
         button.isHidden = true
         return button

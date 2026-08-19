@@ -99,7 +99,6 @@ let package = Package(
                 .product(name: "NetworkingErgonomics", package: "Ergonomics"),
                 .product(name: "CoreConnection", package: "Connection"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
-                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
 
                 .product(name: "Lottie", package: "lottie-spm"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),

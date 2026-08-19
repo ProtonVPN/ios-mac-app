@@ -19,15 +19,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-#if canImport(UIKit)
-    import UIKit
-#elseif canImport(AppKit)
-    import AppKit
-#endif
-
 import Dependencies
 import Domain
-import ProtonCoreUIFoundations
 import Strings
 import VPNAppCore
 
@@ -76,23 +69,4 @@ public enum ProfileConstants {
             connectionProtocol: connectionProtocol
         )
     }
-
-    #if canImport(UIKit)
-        public typealias ProfileColors = [UIColor]
-    #elseif canImport(AppKit)
-        public typealias ProfileColors = [NSColor]
-    #endif
-
-    public static let profileColors: ProfileColors = [
-        ColorProvider.PurpleBase,
-        ColorProvider.PinkBase,
-        ColorProvider.StrawberryBase,
-        ColorProvider.CarrotBase,
-        ColorProvider.SaharaBase,
-        ColorProvider.SlateblueBase,
-        ColorProvider.PacificBase,
-        ColorProvider.ReefBase,
-        ColorProvider.FernBase,
-        ColorProvider.OliveBase,
-    ]
 }

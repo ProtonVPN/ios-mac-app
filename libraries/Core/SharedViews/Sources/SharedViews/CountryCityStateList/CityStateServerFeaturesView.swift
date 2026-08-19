@@ -17,7 +17,6 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Domain
-import ProtonCoreUIFoundations
 import SwiftUI
 import Theme
 
@@ -61,17 +60,17 @@ public struct CityStateServerFeaturesView: View {
     public var body: some View {
         HStack(spacing: .themeSpacing8) {
             if hasP2P {
-                IconProvider.arrowRightArrowLeft
+                Theme.Asset.Icons.arrowRightArrowLeft.swiftUIImage
                     .resizable()
                     .frame(.square(edgeLength))
             }
             if hasTor {
-                IconProvider.brandTor
+                Theme.Asset.Icons.brandTor.swiftUIImage
                     .resizable()
                     .frame(.square(edgeLength))
             }
             if hasSmartRouting {
-                IconProvider.globe
+                Theme.Asset.Icons.globe.swiftUIImage
                     .resizable()
                     .frame(.square(edgeLength))
             }

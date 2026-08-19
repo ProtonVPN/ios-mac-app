@@ -17,27 +17,27 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import BugReport
-import ProtonCoreUIFoundations
 import SwiftUI
+import Theme
 
 public extension BugReport.Colors {
     init() {
         self.init(
-            primary: ColorProvider.Primary,
-            interactive: ColorProvider.InteractionNorm,
-            interactiveSecondary: ColorProvider.InteractionNormActive,
-            interactiveActive: ColorProvider.InteractionNormHover,
-            interactiveDisabled: ColorProvider.InteractionWeak,
-            textPrimary: ColorProvider.TextNorm,
-            textSecondary: ColorProvider.TextWeak,
-            textAccent: ColorProvider.TextHint,
-            background: ColorProvider.BackgroundNorm,
-            backgroundWeak: ColorProvider.BackgroundWeak,
-            backgroundStrong: ColorProvider.BackgroundStrong,
-            backgroundUpdateButton: ColorProvider.InteractionWeak,
-            separator: ColorProvider.BorderWeak,
-            qfIcon: ColorProvider.SignalWarning,
-            externalLinkIcon: ColorProvider.TextHint
+            primary: Theme.Asset.Colors.primary.color,
+            interactive: Theme.Asset.Colors.interactionNorm.color,
+            interactiveSecondary: Theme.Asset.Colors.interactionNormActive.color,
+            interactiveActive: Theme.Asset.Colors.interactionNormHover.color,
+            interactiveDisabled: Theme.Asset.Colors.interactionWeak.color,
+            textPrimary: Theme.Asset.Colors.textNorm.color,
+            textSecondary: Theme.Asset.Colors.textWeak.color,
+            textAccent: Theme.Asset.Colors.textHint.color,
+            background: Theme.Asset.Colors.backgroundNorm.color,
+            backgroundWeak: Theme.Asset.Colors.backgroundWeak.color,
+            backgroundStrong: Theme.Asset.Colors.backgroundStrong.color,
+            backgroundUpdateButton: Theme.Asset.Colors.interactionWeak.color,
+            separator: Theme.Asset.Colors.borderWeak.color,
+            qfIcon: Theme.Asset.Colors.signalWarning.color,
+            externalLinkIcon: Theme.Asset.Colors.textHint.color
         )
     }
 }

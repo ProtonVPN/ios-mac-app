@@ -33,7 +33,6 @@ import ProtonCoreAccountRecovery
 import ProtonCoreDataModel
 import ProtonCoreFeatureFlags
 import ProtonCoreLoginUI
-import ProtonCoreUIFoundations
 import Settings
 import Sharing
 import Strings
