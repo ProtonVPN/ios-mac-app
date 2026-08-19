@@ -106,6 +106,8 @@ extension ExtensionIPCClient: DependencyKey {
             }
         }
 
+        /// non-macOS builds need to re-attach manually when they detect that the file inode has changed, whereas macOS
+        /// gets the new region pushed to it over the XPC interface.
         private static let attachLifetime: Task<Void, Never> = {
             let posts = IPCNotifications.ticks(.tunnelData)
             reattachIfNeeded()
@@ -119,10 +121,10 @@ extension ExtensionIPCClient: DependencyKey {
 
     public static let liveValue: ExtensionIPCClient = {
         #if !os(macOS)
-            // Once-guarded like any static: the initial attach inside it completes before any caller holds this
-            // value, and concurrent first accesses wait rather than race it.
+            // not needed on macOS, see doc comment on `attachLifetime`
             _ = attachLifetime
         #endif
+
         return ExtensionIPCClient {
             region.store?.channels.connectionData.currentExtensionState()
                 ?? .init(state: .disconnected(reason: .unset), requestId: nil)

@@ -18,11 +18,13 @@
 
 import AsyncAlgorithms
 import ConnectionShared
+import Darwin
 import Dependencies
 import Domain
 import Ergonomics
 import ExtensionSync
 import IPCDefinitions
+import IPCErgonomics
 import NetworkExtension
 import NetworkingErgonomics
 import OSLog
@@ -74,6 +76,11 @@ actor ProTUNAdapter {
 
     private var connection: Connection?
 
+    /// The tunnel's utun file descriptor, saved here for the duration of the tunnel session. Every time startTunnel
+    /// gets called, we hand a duplicate file descriptor to ProTUN, which gets closed if/when ProTUN disconnects through
+    /// a call to `stop(reason:)`. Keeping the original lets us fully restart the tunnel by creating another duplicate.
+    private var tunnelFd: CInt?
+
     private let startQueue = AsyncQueue()
 
     @Dependency(\.extensionIPCServer) private var extensionIPCServer
@@ -90,6 +97,7 @@ actor ProTUNAdapter {
 
     private var localAgentTask: Task<Void, Never>?
     private var pathUpdatesTask: Task<Void, Never>?
+    private var firstUnlockTask: Task<Void, Never>?
 
     private let signposter = OSSignposter(logger: .adapter)
 
@@ -102,7 +110,8 @@ actor ProTUNAdapter {
         self.configurationStore = ConfigurationStore(initial: providerConfig?.requestId)
     }
 
-    func prepare(with config: ProTUNConfiguration) async throws -> FileDescriptor {
+    /// Prepares the tunnel network settings according to the ProTUN configuration on the protocol settings.
+    func prepare(with config: ProTUNConfiguration) async throws {
         Logger.adapter.info("Preparing...")
         if config.peers.isEmpty {
             // Preparing the Adapter without any peer is allowed
@@ -110,8 +119,6 @@ actor ProTUNAdapter {
             Logger.adapter.info("Preparing in zero-peer killswitch mode (no peers)")
         }
         try await setNetworkSettings(excludingRoutes: config.uniquePeerAddresses, dnsServers: config.dnsServers)
-
-        return try setupTunnelDescriptor()
     }
 
     func start(config: Configuration) async throws {
@@ -160,12 +167,18 @@ actor ProTUNAdapter {
         }
 
         listenToPathUpdates()
+        listenForFirstUnlock()
 
-        let tunFd = try await prepare(with: config.proTUN)
+        try await prepare(with: config.proTUN)
+        if tunnelFd == nil {
+            tunnelFd = try setupTunnelDescriptor().take()
+        }
         try Task.checkCancellation()
         signposter.emitEvent("Tunnel prepared", id: signpostID)
 
-        let rawTunFd = try tunFd.dup().take()
+        guard let tunnelFd, case let rawTunFd = dup(tunnelFd), rawTunFd >= 0 else {
+            throw Error.noTunFileDescriptor
+        }
 
         // Initial Local Agent settings come from the app, while the extension manages all protocol settings once it's
         // running.
@@ -233,11 +246,26 @@ actor ProTUNAdapter {
         state = .running
     }
 
+    /// Ends the tunnel session as part of the Network Extension lifecycle (cancels queued operations, tears the
+    /// connection down, and closes the tunnel file descriptor).
     func stop(with reason: NEProviderStopReason) {
         Logger.adapter.info("Stopping with reason: \(reason, privacy: .public)")
 
-        cancelPacketCaptureDurationLimit()
         startQueue.cancelAllPendingTasks()
+        _stop()
+
+        // System is tearing down the utun interface, close and set it to nil.
+        if let tunnelFd {
+            close(tunnelFd)
+            self.tunnelFd = nil
+        }
+    }
+
+    /// The symmetric case of `_stop`, where we want to disconnect ProTUN outside of the Network Extension lifecycle.
+    /// Releases everything created by a connection without cancelling everything on the queue, since if we're
+    /// restarting (e.g. due to device unlock) this would mean cancelling ourselves as well.
+    private func _stop() {
+        cancelPacketCaptureDurationLimit()
 
         connection?.disconnectAndWait()
         connection = nil
@@ -246,12 +274,29 @@ actor ProTUNAdapter {
         pathUpdatesTask = nil
         localAgentTask?.cancel()
         localAgentTask = nil
+        firstUnlockTask?.cancel()
+        firstUnlockTask = nil
         didSleepOn = nil
 
         // Clear the shared memory regions just before stopping.
         extensionIPCServer.zeroAll()
 
         state = .idle
+    }
+
+    private func restartIfNotConnected() async {
+        guard connection != nil, await stateDelegate.currentState?.isConnected != true else { return }
+        guard let protocolConfiguration = packetTunnelProvider?.protocolConfiguration else { return }
+        Logger.adapter.info("Restarting the connection (we were not previously connected)...")
+        do {
+            let config = try Configuration(decoding: protocolConfiguration)
+            try await reasserting(if: true) {
+                _stop()
+                try await _start(config: config)
+            }
+        } catch {
+            Logger.adapter.error("Failed to restart the connection: \(error, privacy: .public)")
+        }
     }
 
     /// Records when the device went to sleep.
@@ -407,6 +452,29 @@ private extension ProTUNAdapter {
         case .forkSelectorRequest:
             Logger.localAgent.info("Sending forkSelectorRequest tunnel command")
             extensionIPCServer.sendCommand(.forkSelectorRequest)
+        }
+    }
+}
+
+// MARK: - Device first unlock
+
+extension ProTUNAdapter {
+    /// Watches for the device's first unlock, restarting the tunnel if necessary.
+    func listenForFirstUnlock() {
+        firstUnlockTask?.cancel()
+
+        let firstUnlock = IPCNotifications.ticks(.deviceFirstUnlocked)
+        firstUnlockTask = Task {
+            for await _ in firstUnlock {
+                Logger.adapter.info("Device unlocked; checking connection for restart")
+                handleFirstUnlock()
+            }
+        }
+    }
+
+    func handleFirstUnlock() {
+        startQueue.addOperation { [weak self] in
+            await self?.restartIfNotConnected()
         }
     }
 }
@@ -614,4 +682,9 @@ extension VpnState {
             false
         }
     }
+}
+
+private extension IPCNotifications.Notification {
+    /// Posted by keybagd when the user first unlocks the device after boot, opening sealed keychain items.
+    static let deviceFirstUnlocked = Self(name: "com.apple.mobile.keybagd.first_unlock")
 }

@@ -73,6 +73,7 @@ let package = Package(
                 .product(name: "ExtensionSync", package: "Connection"),
                 .product(name: "Hermes", package: "Connection"),
                 .product(name: "IPCDefinitions", package: "Connection"),
+                .product(name: "IPCErgonomics", package: "Ergonomics"),
                 .product(name: "NetworkingErgonomics", package: "Ergonomics"),
                 .product(name: "ExtensionIPC", package: "ExtensionIPC", condition: .when(platforms: [.macOS])),
                 .target(name: "protun"),

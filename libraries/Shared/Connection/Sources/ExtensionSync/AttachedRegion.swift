@@ -29,9 +29,11 @@ import os
     typealias ReaderStore = TunnelDataStore<ReaderRole, ReadOnlyFileBackedRegion>
 #endif
 
-/// The reader side's mutable state, which keeps track of the store for the region plus the change ticks.
+/// The reader side's mutable state, which keeps track of the store for the region plus notifications for attaching to a
+/// new region.
 final class AttachedRegion: Sendable {
     private let current = OSAllocatedUnfairLock<ReaderStore?>(initialState: nil)
+    /// Notification that the backing region has changed and should be checked for updates
     private let swaps = Broadcast<Void>()
 
     /// The store for the announced region, or `nil` if none has been observed.
