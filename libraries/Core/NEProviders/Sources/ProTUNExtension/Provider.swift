@@ -153,6 +153,12 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
     }
 
     private func decodeConfiguration() throws -> ProTUNAdapter.Configuration {
+        try .init(decoding: protocolConfiguration)
+    }
+}
+
+extension ProTUNAdapter.Configuration {
+    init(decoding protocolConfiguration: NEVPNProtocol) throws {
         let proTUN: ProTUNConfiguration
         var legacy = false
 
@@ -169,14 +175,15 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
 
         if legacy {
             Logger.provider.info("Note: falling back to legacy WireGuard keychain entry, no ProTUN config found")
-            return .legacy(proTUN: proTUN)
+            self = .legacy(proTUN: proTUN)
+            return
         }
 
         guard let config = protocolConfiguration as? NETunnelProviderProtocol, let userID = config.userID else {
             throw ProTUNAdapter.Error.missingUserID
         }
 
-        return .init(userID: userID, proTUN: proTUN, pcapCaptureFileURL: config.pcapCaptureFileURL)
+        self.init(userID: userID, proTUN: proTUN, pcapCaptureFileURL: config.pcapCaptureFileURL)
     }
 }
 

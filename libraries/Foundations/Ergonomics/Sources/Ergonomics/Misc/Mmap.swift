@@ -17,7 +17,9 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Darwin
+import DarwinShims
 import struct Foundation.Data
+import struct Foundation.FileProtectionType
 import struct Foundation.POSIXError
 
 public enum MmapBufferError: Error {
@@ -25,21 +27,29 @@ public enum MmapBufferError: Error {
     case mmapFailed(POSIXError)
     case fstatFailed(POSIXError)
     case truncateFailed(POSIXError)
+    case renameFailed(POSIXError)
     case tooLargePayload
     case zeroSizePayload
+    case unexpectedFileSize
 }
 
 public struct MmapBuffer: ~Copyable, Sendable {
     public let totalSize: Int
+    public let inode: UInt64
     private let fd: FileDescriptor
     private nonisolated(unsafe) let pointer: UnsafeMutableRawPointer
 
     public init(path: String, size: Int = 65536) throws(MmapBufferError) {
         let rawFd = Darwin.open(path, O_RDWR | O_CREAT, 0o644)
-        let fd: FileDescriptor = .init(fd: rawFd)
-        guard fd.fd >= 0 else {
+        guard rawFd >= 0 else {
             throw .openFailed(POSIXError.shared)
         }
+        try self.init(adoptingDescriptor: rawFd, size: size)
+    }
+
+    /// Private init that just takes a file descriptor, grows the file if needed, and mmap's it.
+    private init(adoptingDescriptor rawFd: CInt, size: Int) throws(MmapBufferError) {
+        let fd: FileDescriptor = .init(fd: rawFd)
 
         // Grow the file to the required size (no-op if already large enough).
         var info = stat()
@@ -59,13 +69,65 @@ public struct MmapBuffer: ~Copyable, Sendable {
 
         self.pointer = mmapRv
         self.totalSize = size
+        self.inode = UInt64(info.st_ino)
         self.fd = fd
     }
 
-    /// Maps an existing file read-only (`PROT_READ`, `MAP_PRIVATE`), spanning the whole file, for consuming baked
-    /// resources in place. Unlike `init(path:size:)` this never creates, grows, or writes: app-bundle resources live on
-    /// a read-only volume, where an `O_RDWR` open fails outright, and the read-only pages mean even a stray write
-    /// through the region traps instead of corrupting the file.
+    /// Maps `size` bytes of an existing file read-only and for sharing with another process (`PROT_READ`, `MAP_SHARED`)
+    /// for use with the ``ExtensionIPCClient``.
+    public init(readingExistingPath path: String, size: Int) throws(MmapBufferError) {
+        let rawFd = Darwin.open(path, O_RDONLY)
+        guard rawFd >= 0 else {
+            throw .openFailed(POSIXError.shared)
+        }
+        let fd = FileDescriptor(fd: rawFd)
+
+        var info = stat()
+        guard fstat(fd.fd, &info) == 0 else {
+            throw .fstatFailed(.shared)
+        }
+        guard info.st_size >= off_t(size) else {
+            throw .unexpectedFileSize
+        }
+
+        let mmapRv = mmap(nil, size, PROT_READ, MAP_SHARED, fd.fd, 0)
+        guard mmapRv != MAP_FAILED, let mmapRv else {
+            throw .mmapFailed(.shared)
+        }
+
+        self.pointer = mmapRv
+        self.totalSize = size
+        self.inode = UInt64(info.st_ino)
+        self.fd = fd
+    }
+
+    /// Replaces `path` with a file of size `size` in the given protection class, and maps it read-write for use with
+    /// the ``ExtensionIPCServer``.
+    public init(replacingPath path: String, size: Int, protection: FileProtectionType) throws(MmapBufferError) {
+        let stagingPath = path + ".new"
+        // Clears any staging file a previous process might have had
+        unlink(stagingPath)
+
+        let rawFd = shim_open_dprotected(stagingPath, O_RDWR | O_CREAT | O_EXCL, protection.dataProtectionClass, 0o644)
+        guard rawFd >= 0 else {
+            throw .openFailed(POSIXError.shared)
+        }
+        let fd = FileDescriptor(fd: rawFd)
+
+        guard ftruncate(fd.fd, off_t(size)) == 0 else {
+            unlink(stagingPath)
+            throw .truncateFailed(.shared)
+        }
+        guard rename(stagingPath, path) == 0 else {
+            unlink(stagingPath)
+            throw .renameFailed(.shared)
+        }
+
+        try self.init(adoptingDescriptor: fd.take(), size: size)
+    }
+
+    /// Maps an existing file locally and read-only (`MAP_PRIVATE`, `PROT_READ`), for decoding large binaries like the
+    /// globe view.
     public init(readingPath path: String) throws(MmapBufferError) {
         let rawFd = Darwin.open(path, O_RDONLY)
         guard rawFd >= 0 else {
@@ -89,6 +151,7 @@ public struct MmapBuffer: ~Copyable, Sendable {
 
         self.pointer = mmapRv
         self.totalSize = size
+        self.inode = UInt64(info.st_ino)
         self.fd = fd
     }
 
@@ -183,3 +246,15 @@ public extension MmapBuffer {
 }
 
 extension MmapBufferError: Equatable {}
+
+private extension FileProtectionType {
+    /// Maps directly to the value passed to the `open_dprotected_np` syscall, declared in DarwinShims.h.
+    var dataProtectionClass: DataProtectionClass {
+        switch self {
+        case .complete: .classA
+        case .completeUnlessOpen: .classB
+        case .completeUntilFirstUserAuthentication: .classC
+        default: .classD
+        }
+    }
+}

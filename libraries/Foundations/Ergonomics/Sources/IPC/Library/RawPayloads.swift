@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ConcurrencyExtras
 import Foundation
 import notify
 
@@ -113,19 +114,30 @@ public extension IPCNotifications {
         }
     }
 
-    static func postRawState(_ notification: Notification, state: UInt64) {
+    /// Sets `state` and returns an observation token that can be held to avoid clearing the state for future readers.
+    static func announceRawState(_ notification: Notification, state: UInt64) -> Observation {
         let token = Token(checking: notification.name)
         token.setState(state)
         notify_post(notification.name)
+        return token.observation()
     }
 
-    /// Just posts a bare notification, without an associated token.
+    /// Posts the state without guaranteeing that a reader can later subscribe and get the notification.
+    static func postRawState(_ notification: Notification, state: UInt64) {
+        _ = announceRawState(notification, state: state)
+    }
+
     static func signal(_ notification: Notification) {
         notify_post(notification.name)
     }
 }
 
 public extension IPCNotifications {
+    /// The notification's post stream reduced to bare wakeups, for merging with other tick sources.
+    static func ticks(_ notification: Notification) -> AsyncStream<Void> {
+        UncheckedSendable(streamRawState(notification).map { _ in () }).eraseToStream()
+    }
+
     static func streamRawState(_ notification: Notification) -> AsyncStream<UInt64> {
         .init { continuation in
             let token = observeRawState(notification) { value in

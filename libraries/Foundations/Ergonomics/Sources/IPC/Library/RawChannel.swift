@@ -99,7 +99,7 @@ public extension IPCNotifications.RawChannel where Backing: ~Copyable {
 
 // MARK: - Writers
 
-public extension IPCNotifications.RawChannel where Role == WriterRole, Backing: ~Copyable {
+public extension IPCNotifications.RawChannel where Role == WriterRole, Backing: MutableRegionBacking & ~Copyable {
     /// Mutates the payload in-place under seqlock protection, then notifies observers.
     /// - Parameter body: invoked while writing the window, do not yield to any continuations within this closure.
     func mutate(_ body: (inout Payload) -> Void) {
@@ -221,16 +221,10 @@ public extension IPCNotifications.RawChannel where Role == ReaderRole, Backing: 
         reconcileOn reconcileSignals: some Collection<AsyncStream<Void>>,
         _ transform: sending @escaping (Payload) -> T
     ) -> AsyncStream<T> {
-        let posts = IPCNotifications.streamRawState(notification)
         let region = region
         let regionOffset = regionOffset
         let payloadBaseOffset = payloadBaseOffset
-
-        // Fold all reconcile signals into one merged tick source alongside the channel's darwin notification.
-        // Each `eraseToStream()` wraps the merge in a task that propagates cancellation outward.
-        let ticks: AsyncStream<Void> = reconcileSignals.reduce(posts.map { _ in () }.eraseToStream()) {
-            merge($0, $1).eraseToStream()
-        }
+        let ticks: AsyncStream<Void> = .merging([IPCNotifications.ticks(notification)] + reconcileSignals)
 
         return UncheckedSendable(
             ticks

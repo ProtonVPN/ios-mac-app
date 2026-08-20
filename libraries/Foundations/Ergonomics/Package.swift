@@ -83,6 +83,7 @@ let package = Package(
             dependencies: [
                 "Version",
                 "SharedErgonomics",
+                "DarwinShims",
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Clocks", package: "swift-clocks"),
@@ -107,6 +108,11 @@ let package = Package(
                 .product(name: "DependenciesMacros", package: "swift-dependencies"),
             ],
             path: "Sources/Networking"
+        ),
+        .target(
+            name: "DarwinShims",
+            path: "Sources/DarwinShims",
+            publicHeadersPath: "include"
         ),
         .target(
             name: "IPCSeqlockHelpers",
@@ -146,7 +152,7 @@ let package = Package(
             name: "ErgonomicsTests",
             dependencies: [
                 "Ergonomics",
-                "Triangulation", // NaturalEarthTests exercises the shared projection directly
+                "Triangulation",
                 "Version",
                 .product(name: "Clocks", package: "swift-clocks"),
             ]

@@ -21,22 +21,12 @@ import os.log
 import protun
 
 final class ProTUNAdapterEventDelegate: Sendable {
-    let eventSource: StreamSource<Event>
-
-    private let stream: AsyncStream<Event>
-    private let continuation: AsyncStream<Event>.Continuation
-
-    init() {
-        let (stream, continuation) = AsyncStream<Event>.makeStream()
-        self.stream = stream
-        self.continuation = continuation
-        self.eventSource = StreamSource.source(for: stream)
-    }
+    let events = Broadcast<Event>()
 }
 
 extension ProTUNAdapterEventDelegate: EventCallback {
     func onEvent(event: Event) {
         Logger.adapter.info("Received internal event: \(event, privacy: .public)")
-        continuation.yield(event)
+        events.send(event)
     }
 }

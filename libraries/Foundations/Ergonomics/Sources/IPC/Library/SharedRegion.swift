@@ -26,25 +26,38 @@ import os
 
 // MARK: - RegionBacking
 
-/// How a ``IPCNotifications/SharedRegion`` reaches its bytes. Used **only as a generic constraint**, never as `any
-/// RegionBacking` — so calls through it are specialized per concrete backing (no witness-table dispatch). New backings
-/// (a different shared-memory transport) just conform here.
 public protocol RegionBacking: ~Copyable, Sendable {
+    /// A stable identity for the mapping (file inode, surface id), announced by the writer, and compared by the reader
+    /// for detecting if the backing region has changed.
+    var regionID: UInt64 { get }
+
     borrowing func withRawSpan<R, E: Error>(_ body: (RawSpan) throws(E) -> R) throws(E) -> R
+}
+
+/// A backing whose bytes can also be written, for use with ``ExtensionIPCServer``.
+public protocol MutableRegionBacking: RegionBacking, ~Copyable {
     borrowing func withMutableRawSpan<R, E: Error>(_ body: (inout MutableRawSpan) throws(E) -> R) throws(E) -> R
 }
 
-/// A single `mmap`'d file. Used on iOS and tvOS via the shared app group container, and by tests. Never moves once
-/// mapped, so reads are lock-free. Noncopyable: it owns the mapping and `munmap`s it on `deinit`.
+/// A single `mmap`'d file, mapped read-write.
 public struct FileBackedRegion: ~Copyable, Sendable {
     @_spi(Internals) public let mmapBuffer: MmapBuffer
 
     public init(fileURL: URL, size: Int) throws {
         self.mmapBuffer = try MmapBuffer(path: fileURL.path(), size: size)
     }
+
+    /// Replaces whatever is at `fileURL` with a fresh file in the given protection class and maps it read-write.
+    public init(creating fileURL: URL, size: Int, protection: FileProtectionType) throws(MmapBufferError) {
+        self.mmapBuffer = try MmapBuffer(replacingPath: fileURL.path(), size: size, protection: protection)
+    }
 }
 
-extension FileBackedRegion: RegionBacking {
+extension FileBackedRegion: MutableRegionBacking {
+    public var regionID: UInt64 {
+        mmapBuffer.inode
+    }
+
     public borrowing func withRawSpan<R, E: Error>(_ body: (RawSpan) throws(E) -> R) throws(E) -> R {
         try mmapBuffer.withRawSpan(body)
     }
@@ -54,14 +67,34 @@ extension FileBackedRegion: RegionBacking {
     }
 }
 
+/// The reading side of a ``FileBackedRegion``, mapped read-only and shared.
+public struct ReadOnlyFileBackedRegion: ~Copyable, Sendable {
+    @_spi(Internals) public let mmapBuffer: MmapBuffer
+
+    /// Maps the existing file at `fileURL` without creating or growing it.
+    public init(opening fileURL: URL, size: Int) throws(MmapBufferError) {
+        self.mmapBuffer = try MmapBuffer(readingExistingPath: fileURL.path(), size: size)
+    }
+}
+
+extension ReadOnlyFileBackedRegion: RegionBacking {
+    /// The mapped file's inode, compared against what the writer announced.
+    public var regionID: UInt64 {
+        mmapBuffer.inode
+    }
+
+    public borrowing func withRawSpan<R, E: Error>(_ body: (RawSpan) throws(E) -> R) throws(E) -> R {
+        try mmapBuffer.withRawSpan(body)
+    }
+}
+
 #if os(macOS)
     /// An `IOSurface` the extension allocates and vends over XPC, since System Extensions can't reach the app group
     /// container. Noncopyable: it owns one retain of the surface.
     public struct IOSurfaceBackedRegion: ~Copyable, Sendable {
         @_spi(Internals) public let ioSurface: IOSurface
 
-        /// The kernel's identifier for this surface, and with it the identity of the process that allocated it. The
-        /// writer announces this value so readers can tell whether the region they mapped is the one being written to.
+        /// The kernel's identifier for this surface
         public var id: IOSurfaceID {
             IOSurfaceGetID(ioSurface)
         }
@@ -81,7 +114,11 @@ extension FileBackedRegion: RegionBacking {
         }
     }
 
-    extension IOSurfaceBackedRegion: RegionBacking {
+    extension IOSurfaceBackedRegion: MutableRegionBacking {
+        public var regionID: UInt64 {
+            UInt64(id)
+        }
+
         public borrowing func withRawSpan<R, E: Error>(_ body: (RawSpan) throws(E) -> R) throws(E) -> R {
             let bufferPtr = UnsafeRawBufferPointer(
                 start: IOSurfaceGetBaseAddress(ioSurface),
@@ -118,14 +155,16 @@ public extension IPCNotifications {
             try backing.withRawSpan(body)
         }
 
-        func withMutableRawSpan<R, E: Error>(_ body: (inout MutableRawSpan) throws(E) -> R) throws(E) -> R {
-            try backing.withMutableRawSpan(body)
-        }
-
-        /// Vend a handle to the seqlock window whose header begins at `offset`.
+        /// Provide a handle to the seqlock window whose header begins at `offset`.
         public func seqlockRegion(at offset: Int = 0, length: Int = Int(IPC_SHARED_REGION_SIZE)) -> SeqlockRegion<Backing> {
             SeqlockRegion(region: self, regionOffset: offset, length: length)
         }
+    }
+}
+
+extension IPCNotifications.SharedRegion where Backing: MutableRegionBacking & ~Copyable {
+    func withMutableRawSpan<R, E: Error>(_ body: (inout MutableRawSpan) throws(E) -> R) throws(E) -> R {
+        try backing.withMutableRawSpan(body)
     }
 }
 

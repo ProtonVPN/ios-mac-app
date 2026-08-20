@@ -104,12 +104,9 @@
         /// cannot act on an id that has since moved on.
         private func attachAnnouncedRegion() async {
             let announced = IPCNotifications.getRawState(.tunnelData)
-            let mapped = extensionIPC.currentRegionID().map(UInt64.init)
+            let mapped = extensionIPC.currentRegionID()
 
-            // With nothing mapped, whatever surface the extension has is an improvement, including one from an
-            // extension too old to announce itself, which reads as zero here. With a region already mapped, only a
-            // different announcement means the process that wrote it is gone. Compared as the wider type so a state
-            // word we did not write cannot trap on the way down to an `IOSurfaceID`.
+            // Either nothing is mapped, or the value has changed and isn't simply being cleared
             let needsRegion = mapped == nil || (announced != 0 && announced != mapped)
             guard needsRegion else { return }
 

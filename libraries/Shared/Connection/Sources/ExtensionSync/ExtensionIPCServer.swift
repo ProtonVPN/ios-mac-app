@@ -28,6 +28,8 @@ import IPCErgonomics
 import Logging
 import os
 
+private let log: Logging.Logger = .init(label: "ProtonVPN.ExtensionIPCServer.logger")
+
 /// The server-side of the memory-backed IPC channel. The extension should be the only process to write these values.
 @DependencyClient
 public struct ExtensionIPCServer: Sendable {
@@ -51,15 +53,15 @@ public struct ExtensionIPCServer: Sendable {
     /// Zero every sub-region on disconnect and tunnel start to clear out stale values.
     public internal(set) var zeroAll: @Sendable () -> Void
     /// Attach the `IOSurface` this process writes into (macOS). Builds a fresh writer store on each (re)connection.
-    /// No-op on iOS/tvOS, which write into a fixed file mapping built up front.
+    /// No-op on iOS/tvOS, where the first publish creates the region file this process writes into and announces it.
     public internal(set) var attachIOSurfaceBackedRegion: @Sendable (IOSurfaceRef) -> Void
 }
 
 extension ExtensionIPCServer: DependencyKey {
     public static let liveValue: ExtensionIPCServer = {
-        // macOS starts empty and the store arrives/swaps via `attachIOSurfaceBackedRegion`, so its
-        // lock holds an optional and skips writes until attached; iOS/tvOS map a fixed file up front, so the store is
-        // always present and the lock is non-optional.
+        // notifyd frees a name's state once the last registration cancels, so `postRawState`'s announcement can
+        // evaporate before a reader sees it. Holding one keeps it readable.
+        let announcement = OSAllocatedUnfairLock<IPCNotifications.Observation?>(initialState: nil)
         #if os(macOS)
             let current = OSAllocatedUnfairLock<TunnelDataStore<WriterRole, IOSurfaceBackedRegion>?>(initialState: nil)
             let withStore: @Sendable (@Sendable (TunnelDataStore<WriterRole, IOSurfaceBackedRegion>) -> Void) -> Void = { body in
@@ -68,9 +70,20 @@ extension ExtensionIPCServer: DependencyKey {
                 }
             }
         #else
-            let current = OSAllocatedUnfairLock<TunnelDataStore<WriterRole, FileBackedRegion>>(initialState: .live())
+            let current = OSAllocatedUnfairLock<TunnelDataStore<WriterRole, FileBackedRegion>?>(initialState: nil)
             let withStore: @Sendable (@Sendable (TunnelDataStore<WriterRole, FileBackedRegion>) -> Void) -> Void = { body in
-                current.withLock { body($0) }
+                current.withLock { store in
+                    if store == nil {
+                        do {
+                            let created = try TunnelDataStore<WriterRole, FileBackedRegion>.createdForWriting()
+                            store = created
+                            announcement.withLock { $0 = IPCNotifications.announceRawState(.tunnelData, state: created.regionID) }
+                        } catch {
+                            log.error("Could not create the tunnel-data region file: \(error)")
+                        }
+                    }
+                    store.map(body)
+                }
             }
         #endif
 
@@ -118,10 +131,7 @@ extension ExtensionIPCServer: DependencyKey {
                 #if os(macOS)
                     let store = TunnelDataStore<WriterRole, IOSurfaceBackedRegion>.attached(to: surface)
                     current.withLock { $0 = store }
-                    // Announce the surface this process writes into. The notify state persists until it is set again,
-                    // so every later channel update carries it without extra work, and a reader that mapped a previous
-                    // process's surface can tell it is stale.
-                    IPCNotifications.postRawState(.tunnelData, state: UInt64(store.surfaceID))
+                    announcement.withLock { $0 = IPCNotifications.announceRawState(.tunnelData, state: store.regionID) }
                 #else
                     _ = surface
                     assertionFailure("This should be used only on macOS.")

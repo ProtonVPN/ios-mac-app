@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import AsyncAlgorithms
 import Combine
 import ConcurrencyExtras
 import Dependencies
@@ -27,8 +26,11 @@ import Foundation
 import IOSurface
 import IPCDefinitions
 import IPCErgonomics
+import Logging
 import os
 import Sharing
+
+private let log: Logging.Logger = .init(label: "ProtonVPN.ExtensionIPCClient.logger")
 
 /// The platform "app became active" notification
 private let appDidBecomeActiveNotification: Notification.Name = {
@@ -79,180 +81,113 @@ public struct ExtensionIPCClient: Sendable {
     /// Commands the extension posts over the `.tunnelCmd` notification.
     public package(set) var observeCommands: @Sendable () -> AsyncStream<TunnelCommand> = { .finished }
 
-    /// Attach the `IOSurface` received from the extension over XPC (macOS). Builds a fresh reader store; a reconnection
-    /// re-attaches and observers re-subscribe (nothing observes while disconnected). No-op on iOS/tvOS, which use a
-    /// fixed file mapping built up front.
+    /// Attach the `IOSurface` received from the extension over XPC (macOS).
     public var attachRegion: @Sendable (IOSurfaceRef) -> Void
 
-    /// Identifies the tunnel-data region currently mapped, or `nil` when nothing is attached (macOS). Compared against
-    /// the id the extension announces, to notice a mapping left behind by a process that no longer exists.
-    public package(set) var currentRegionID: @Sendable () -> IOSurfaceID? = { nil }
+    /// The identity of the region currently mapped, or `nil` when nothing is attached.
+    public package(set) var currentRegionID: @Sendable () -> UInt64? = { nil }
 }
 
-#if os(macOS)
-    extension ExtensionIPCClient: DependencyKey {
-        private static let current = OSAllocatedUnfairLock<TunnelDataStore<ReaderRole, IOSurfaceBackedRegion>?>(initialState: nil)
+extension ExtensionIPCClient: DependencyKey {
+    /// The region the writer last announced.
+    private static let region = AttachedRegion()
 
-        // Per-observer read progress: resets whenever `current` points at a different store than last tick,
-        // forcing an unconditional re-read (the attach tick itself is what triggers that reset in practice).
-        private struct ReadState<T: Sendable>: Sendable {
-            var surfaceID: ObjectIdentifier?
-            var sequence = UInt64.max
-            var value: T?
-        }
-
-        private typealias ReadHandler<Payload> = @Sendable (TunnelDataStore<ReaderRole, IOSurfaceBackedRegion>, _ since: UInt64) -> (value: Payload?, sequence: UInt64)?
-
-        // macOS has no IOSurface backing until the extension vends it on each (re)connection.
-        // We want to merge multiple tick sources into one stream that lives for
-        // the app's lifetime, and on every tick re-reads whatever `Self.current` points to right now.
-        //
-        // So we need a this specific observation helper. It explicitly avoids recent `swift-async-algorithm`
-        // `flatMapLatest` because the way it is implemented isn't fitting the model we want here because of starvation issues
-        // (inner vs outer tasks priorities)...
-        // So we leverage `merge` here since it treats every source equally.
-        private static func observe<Payload: BitwiseCopyable & Sendable, T: Sendable>(
-            attachSource: StreamSource<TunnelDataStore<ReaderRole, IOSurfaceBackedRegion>>,
-            reconcileOn extraSignals: AsyncStream<Void>...,
-            read: @escaping ReadHandler<Payload>,
-            transform: @escaping @Sendable (Payload) -> T
-        ) -> AsyncStream<T> {
-            let attachTicks = attachSource.newStream.map { _ in () }.eraseToStream()
-            let posts = IPCNotifications.streamRawState(.tunnelData).map { _ in () }.eraseToStream()
-            let ticks: AsyncStream<Void> = ([posts] + extraSignals).reduce(attachTicks) {
-                merge($0, $1).eraseToStream()
+    #if !os(macOS)
+        /// Remaps to the announced region when it changed. State 0 means nothing announced yet.
+        private static func reattachIfNeeded() {
+            let announced = IPCNotifications.getRawState(.tunnelData)
+            guard announced != 0 else { return }
+            do {
+                try region.replace(when: { $0?.regionID != announced }) {
+                    try ReaderStore.openedForReading()
+                }
+            } catch {
+                log.error("Could not map announced tunnel-data region \(announced): \(error)")
             }
-
-            return UncheckedSendable(
-                ticks
-                    .reductions(into: ReadState<T>()) { acc, _ in
-                        acc.value = nil
-                        let store = current.withLock { $0 }
-                        guard let store else { return }
-                        let surfaceID = ObjectIdentifier(store.surface)
-                        if acc.surfaceID != surfaceID {
-                            acc.surfaceID = surfaceID
-                            acc.sequence = .max
-                        }
-                        guard let (payload, sequence) = read(store, acc.sequence) else { return }
-                        acc.sequence = sequence
-                        guard let payload else { return }
-                        acc.value = transform(payload)
-                    }
-                    .compactMap(\.value)
-            ).eraseToStream()
         }
 
-        public static let liveValue: ExtensionIPCClient = {
-            let (attachStream, attachContinuation) = AsyncStream<TunnelDataStore<ReaderRole, IOSurfaceBackedRegion>>.makeStream()
-            let attachSource = StreamSource.source(for: attachStream)
-
-            return ExtensionIPCClient {
-                current.withLock { $0?.channels.connectionData.currentExtensionState() }
-                    ?? .init(state: .disconnected(reason: .unset), requestId: nil)
-            } currentStats: {
-                current.withLock { $0?.channels.localAgentStats.stats() }
-            } currentFeatures: {
-                current.withLock { $0?.channels.localAgentFeatures.agentFeatures() }
-            } currentExtensionError: {
-                current.withLock { $0?.channels.localAgentError.currentExtensionError() }
-            } currentPacketCapture: {
-                current.withLock { $0?.channels.packetCapture.packetCaptureReport() } ?? .cleared
-            } observeExtensionState: {
-                observe(attachSource: attachSource, reconcileOn: appBecameActiveTicks()) { store, since in
-                    store.channels.connectionData.readIfChanged(since: since)
-                } transform: { payload in
-                    .init(
-                        state: payload.extensionState,
-                        requestId: payload.requestId
-                    )
+        /// non-macOS builds need to re-attach manually when they detect that the file inode has changed, whereas macOS
+        /// gets the new region pushed to it over the XPC interface.
+        private static let attachLifetime: Task<Void, Never> = {
+            let posts = IPCNotifications.ticks(.tunnelData)
+            reattachIfNeeded()
+            return Task {
+                for await _ in AsyncStream.merging([posts, appBecameActiveTicks()]) {
+                    reattachIfNeeded()
                 }
-            } observeStats: {
-                observe(attachSource: attachSource, reconcileOn: appBecameActiveTicks()) { store, since in
-                    store.channels.localAgentStats.readIfChanged(since: since)
-                } transform: { payload in
-                    payload.localAgentStats
-                }
-            } observeFeatures: {
-                observe(attachSource: attachSource, reconcileOn: appBecameActiveTicks()) { store, since in
-                    store.channels.localAgentFeatures.readIfChanged(since: since)
-                } transform: { payload in
-                    payload.agentFeatures
-                }
-            } observeError: {
-                observe(attachSource: attachSource, reconcileOn: appBecameActiveTicks()) { store, since in
-                    store.channels.localAgentError.readIfChanged(since: since)
-                } transform: { payload in
-                    payload.extensionError
-                }
-            } observePacketCapture: {
-                observe(attachSource: attachSource, reconcileOn: appBecameActiveTicks()) { store, since in
-                    store.channels.packetCapture.readIfChanged(since: since)
-                } transform: { payload in
-                    payload.packetCaptureReport
-                }
-            } observeCommands: {
-                IPCNotifications.streamRawState(.tunnelCmd)
-                    .map { Int($0) }
-                    .compactMap(TunnelCommand.init(rawValue:))
-                    .eraseToStream()
-            } attachRegion: { surface in
-                // Each XPC fetch decodes a fresh IOSurface instance, so compare kernel surface ids rather than object
-                // identity. Re-attaching the surface we already have must not reset observer read positions.
-                let store = current.withLock { attached -> TunnelDataStore<ReaderRole, IOSurfaceBackedRegion>? in
-                    if let attached, attached.surfaceID == IOSurfaceGetID(surface) {
-                        return nil
-                    }
-                    let store = TunnelDataStore<ReaderRole, IOSurfaceBackedRegion>.attached(to: surface)
-                    attached = store
-                    return store
-                }
-                guard let store else { return }
-                attachContinuation.yield(store)
-            } currentRegionID: {
-                current.withLock { $0?.surfaceID }
             }
         }()
-    }
-#else
-    extension ExtensionIPCClient: DependencyKey {
-        public static let liveValue: ExtensionIPCClient = {
-            let store = TunnelDataStore<ReaderRole, FileBackedRegion>.live()
-            return ExtensionIPCClient {
-                store.channels.connectionData.currentExtensionState()
-            } currentStats: {
-                store.channels.localAgentStats.stats()
-            } currentFeatures: {
-                store.channels.localAgentFeatures.agentFeatures()
-            } currentExtensionError: {
-                store.channels.localAgentError.currentExtensionError()
-            } currentPacketCapture: {
-                store.channels.packetCapture.packetCaptureReport()
-            } observeExtensionState: {
-                store.channels.connectionData.extensionStateStream(reconcileOn: appBecameActiveTicks())
-            } observeStats: {
-                store.channels.localAgentStats.statsStream(reconcileOn: appBecameActiveTicks())
-            } observeFeatures: {
-                store.channels.localAgentFeatures.agentFeaturesStream(reconcileOn: appBecameActiveTicks())
-            } observeError: {
-                store.channels.localAgentError.errorStream(reconcileOn: appBecameActiveTicks())
-            } observePacketCapture: {
-                store.channels.packetCapture.packetCaptureStream(reconcileOn: appBecameActiveTicks())
-            } observeCommands: {
-                IPCNotifications.streamRawState(.tunnelCmd)
-                    .map { Int($0) }
-                    .compactMap(TunnelCommand.init(rawValue:))
-                    .eraseToStream()
-            } attachRegion: { _ in
+    #endif
+
+    public static let liveValue: ExtensionIPCClient = {
+        #if !os(macOS)
+            // not needed on macOS, see doc comment on `attachLifetime`
+            _ = attachLifetime
+        #endif
+
+        return ExtensionIPCClient {
+            region.store?.channels.connectionData.currentExtensionState()
+                ?? .init(state: .disconnected(reason: .unset), requestId: nil)
+        } currentStats: {
+            region.store?.channels.localAgentStats.stats()
+        } currentFeatures: {
+            region.store?.channels.localAgentFeatures.agentFeatures()
+        } currentExtensionError: {
+            region.store?.channels.localAgentError.currentExtensionError()
+        } currentPacketCapture: {
+            region.store?.channels.packetCapture.packetCaptureReport() ?? .cleared
+        } observeExtensionState: {
+            region.stream(reconcileOn: appBecameActiveTicks()) { store, since in
+                store.channels.connectionData.readIfChanged(since: since)
+            } transform: { payload in
+                ExtensionStateSnapshot(
+                    state: payload.extensionState,
+                    requestId: payload.requestId
+                )
+            }
+        } observeStats: {
+            region.stream(reconcileOn: appBecameActiveTicks()) { store, since in
+                store.channels.localAgentStats.readIfChanged(since: since)
+            } transform: { payload in
+                payload.localAgentStats
+            }
+        } observeFeatures: {
+            region.stream(reconcileOn: appBecameActiveTicks()) { store, since in
+                store.channels.localAgentFeatures.readIfChanged(since: since)
+            } transform: { payload in
+                payload.agentFeatures
+            }
+        } observeError: {
+            region.stream(reconcileOn: appBecameActiveTicks()) { store, since in
+                store.channels.localAgentError.readIfChanged(since: since)
+            } transform: { payload in
+                payload.extensionError
+            }
+        } observePacketCapture: {
+            region.stream(reconcileOn: appBecameActiveTicks()) { store, since in
+                store.channels.packetCapture.readIfChanged(since: since)
+            } transform: { payload in
+                payload.packetCaptureReport
+            }
+        } observeCommands: {
+            IPCNotifications.streamRawState(.tunnelCmd)
+                .map { Int($0) }
+                .compactMap(TunnelCommand.init(rawValue:))
+                .eraseToStream()
+        } attachRegion: { surface in
+            #if os(macOS)
+                region.replace(when: { $0?.surfaceID != IOSurfaceGetID(surface) }) {
+                    .attached(to: surface)
+                }
+            #else
+                _ = surface
                 assertionFailure("This should be used only on macOS")
-            } currentRegionID: {
-                // The mapping here is a file that lives as long as the app does, so there is no region identity to
-                // compare and nothing that can go stale underneath us.
-                nil
-            }
-        }()
-    }
-#endif
+            #endif
+        } currentRegionID: {
+            region.regionID
+        }
+    }()
+}
 
 #if DEBUG
     extension ExtensionIPCClient: TestDependencyKey {

@@ -50,8 +50,7 @@ extension PacketCaptureClient: DependencyKey {
         @Dependency(\.extensionIPC) var extensionIPC
         @Dependency(\.pcapFileManager) var pcapFileManager
 
-        let (fileChanges, fileChanged) = AsyncStream<Void>.makeStream()
-        let fileChangeSource = StreamSource.source(for: fileChanges)
+        let fileChanges = Broadcast<Void>()
 
         /// Send a PcapRequest to the extension to request that it start a packet capture (if the tunnel is already up)
         /// or stop one that is already running.
@@ -93,7 +92,7 @@ extension PacketCaptureClient: DependencyKey {
 
         return PacketCaptureClient {
             let fileURL = try pcapFileManager.createCaptureFile()
-            fileChanged.yield()
+            fileChanges.send()
 
             do {
                 try await send(.start(fileURL: fileURL))
@@ -108,7 +107,7 @@ extension PacketCaptureClient: DependencyKey {
                         metadata: ["error": "\(removalError)"]
                     )
                 }
-                fileChanged.yield()
+                fileChanges.send()
                 throw error
             }
         } stop: {
@@ -119,13 +118,13 @@ extension PacketCaptureClient: DependencyKey {
                 } catch {
                     log.error("Failed to remove the empty capture file", category: .connection, metadata: ["error": "\(error)"])
                 }
-                fileChanged.yield()
+                fileChanges.send()
             }
 
             try? await send(.stop)
         } cleanup: {
             try pcapFileManager.removeCaptureFiles()
-            fileChanged.yield()
+            fileChanges.send()
 
             try? await send(.stop)
         } session: {
@@ -133,7 +132,7 @@ extension PacketCaptureClient: DependencyKey {
         } observeSession: {
             merge(
                 extensionIPC.observePacketCapture().map { _ in },
-                fileChangeSource.newStream
+                fileChanges.subscribe()
             )
             .map { session() }
             .eraseToStream()
