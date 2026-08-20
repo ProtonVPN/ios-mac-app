@@ -21,8 +21,10 @@ import Foundation
 import Strings
 
 public extension ConnectionSpec.Location {
-    private func regionName(locale: Locale, code: String) -> String {
-        locale.localizedString(forRegionCode: code) ?? code
+    private func regionName(locale _: Locale, code: String) -> String {
+        // Region names follow the app language, like every other country name in the UI. The locale's
+        // own language can disagree with it, for example under a per-app language override.
+        LocalizationUtility.default.countryName(forCode: code) ?? code
     }
 
     func accessibilityText(locale: Locale) -> String {

@@ -123,7 +123,7 @@ public struct ConnectionInfoBuilder {
             return locationHeaderText
         } else if let server {
             let countryCode = server.logical.exitCountryCode
-            return locale.localizedString(forRegionCode: countryCode) ?? countryCode
+            return LocalizationUtility.default.countryName(forCode: countryCode) ?? countryCode
         } else {
             return location.text(locale: locale)
         }
