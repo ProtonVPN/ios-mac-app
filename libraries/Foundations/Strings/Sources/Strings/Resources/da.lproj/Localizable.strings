@@ -3171,10 +3171,10 @@
 "_connection_error_intent_missing" = "Vi kunne ikke oprette forbindelse til serveren..";
 
 /* Error message: a problem occurred while building the VPN configuration, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds. */
-"_connection_error_configuration" = "Der opstod et problem med at konfigurere VPN-forbindelsen.";
+"_connection_error_configuration" = "Der opstod en fejl under konfiguration af VPN-forbindelsen.";
 
 /* Error message: the VPN configuration is missing something it needs, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds. */
-"_connection_error_configuration_invalid" = "Der opstod et problem med VPN-konfigurationen.";
+"_connection_error_configuration_invalid" = "Der var et problem med VPN-forbindelsen.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
 "_connection_error_preparation" = "Der opstod en fejl under forberedelsen af forbindelsen";
@@ -3402,7 +3402,7 @@
 "_pcap_capture_session_capturing" = "Optager";
 
 /* Header of the pending PCAP session view */
-"_pcap_capture_session_pending" = "Afventer forbindelse";
+"_pcap_capture_session_pending" = "Forbindelse afventer";
 
 /* Button title on the PCAP export view. Presents a share sheet to save the file outside of the app */
 "_pcap_capture_session_export" = "Gemmer filen";

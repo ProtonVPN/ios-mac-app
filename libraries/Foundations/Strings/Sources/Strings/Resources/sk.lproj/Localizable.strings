@@ -3171,7 +3171,7 @@
 "_connection_error_intent_missing" = "Nepodarilo sa nám pripojiť k serveru.";
 
 /* Error message: a problem occurred while building the VPN configuration, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds. */
-"_connection_error_configuration" = "Pri konfigurácii VPN pripojenia sa vyskytol problém.";
+"_connection_error_configuration" = "Pri konfigurácii VPN pripojenia došlo k problému.";
 
 /* Error message: the VPN configuration is missing something it needs, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds. */
 "_connection_error_configuration_invalid" = "Nastal problém s konfiguráciou VPN.";
@@ -3402,7 +3402,7 @@
 "_pcap_capture_session_capturing" = "Zaznamenávanie";
 
 /* Header of the pending PCAP session view */
-"_pcap_capture_session_pending" = "Čakanie na pripojenie";
+"_pcap_capture_session_pending" = "Čaká sa na pripojenie";
 
 /* Button title on the PCAP export view. Presents a share sheet to save the file outside of the app */
 "_pcap_capture_session_export" = "Uložiť súbor";

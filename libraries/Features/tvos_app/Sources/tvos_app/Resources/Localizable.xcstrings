@@ -5769,6 +5769,12 @@
             "value" : "IP-beveiliging geactiveerd"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Kill Switch está ativo"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
