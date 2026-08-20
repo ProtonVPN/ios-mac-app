@@ -24,8 +24,8 @@ import SwiftUI
 import Theme
 import Triangulation
 
-/// A connectable location — a city, a state for countries modelled that way, or a gateway — shown as a grey pin on the
-/// interactive globe. Tapping it connects to the fastest server there, or routes free users to the upsell.
+/// A connectable location, shown as a grey pin on the interactive globe. Usually a city but can also be a gateway or
+/// Secure Core exit country.
 public struct LocationPin: Equatable, Identifiable, Sendable {
     public let id: String
 
@@ -38,13 +38,10 @@ public struct LocationPin: Equatable, Identifiable, Sendable {
 
     /// The minimum user tier to connect. `.free` for cities/countries with free servers.
     let minTier: VpnTier
-    /// Where a tap connects to (`.city`/`.state`, fastest server in the location).
+    /// Where a tap connects to, always resolving the location's fastest server (or entry hop for Secure Core)
     let location: ConnectionSpec.Location
 
-    /// Unit-sphere position for projecting to screen, clustering, and re-centering the camera. Snapped onto
-    /// the country's coast at load, so a coastal city whose true coordinate falls just offshore of the
-    /// simplified coastline still sits on land. `latitude` and `longitude` keep the true coordinate; only
-    /// the rendered position is corrected.
+    /// The position on the unit sphere, used for projecting to screen, clustering, and re-centering the camera.
     let direction: SIMD3<Float>
 
     init(
@@ -71,13 +68,12 @@ public struct LocationPin: Equatable, Identifiable, Sendable {
         ConnectionSpec(location: location, features: [])
     }
 
-    /// Country code of this location (e.g. "DE"), for the flag on the connect pill. Non-nil for city/state
-    /// locations (which is what these pins are).
+    /// Country code of this location (e.g. "DE"), for the flag on the connect button when tapped. `nil` for Gateways.
     var countryCode: String? {
         connectionSpec.countryCode
     }
 
-    /// The label name: the backend's localized city name if present, else the server's city name.
+    /// The label name for the pin when the user taps on it.
     var localizedName: String {
         translatedCity ?? displayName
     }

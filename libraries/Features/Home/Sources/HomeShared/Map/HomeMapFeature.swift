@@ -22,8 +22,10 @@ import Connection
 import CoreLocation
 import Domain
 import Foundation
+import Localization
 import Persistence
 import SwiftUI
+import Triangulation
 import VPNAppCore
 
 @Reducer
@@ -51,8 +53,7 @@ public struct HomeMapFeature {
 
         public internal(set) var selectedLocationID: LocationPin.ID?
 
-        /// Connectable locations shown as grey pins when the map is in interactive (full) view: one per city or state
-        /// group, plus one per gateway. Loaded once when observation starts.
+        /// Connectable locations shown as grey pins when the map is in interactive (full) view.
         public internal(set) var locationPins: [LocationPin] = []
 
         /// The selected pin resolved against the current pin set, or nil when nothing is selected (or the selected
@@ -87,11 +88,15 @@ public struct HomeMapFeature {
 
         @SharedReader(.userTier) public var userTier: VpnTier?
 
+        /// With the Secure Core toggle set to on, the pins are Secure Core exit locations, centered in the middle of
+        /// their respective countries. (This is because the server list only sends us the lat+long of the entry nodes.)
+        @SharedReader(.secureCoreToggle) public var secureCoreToggle: Bool
+
         public init() {}
     }
 
     public enum MapConnectionState: Equatable {
-        /// Connected: the exit server's position and country.
+        /// Connected: the exit server's map position (see ``mapCoordinates``) and country.
         case connected(coordinates: CLLocationCoordinate2D, code: String?)
         /// Connecting: the target's position when known (a resolved server, or a spec matching a loaded location pin),
         /// else nil while only the country is known and the pin waits for the server to resolve.
@@ -111,16 +116,18 @@ public struct HomeMapFeature {
                 self = .disconnected
 
             case let .connected(_, connectionData):
+                let logical = connectionData.currentPeer.logical
                 self = .connected(
-                    coordinates: connectionData.currentPeer.logical.coordinates,
-                    code: connectionData.currentPeer.logical.exitCountryCode
+                    coordinates: Self.mapCoordinates(of: logical),
+                    code: logical.exitCountryCode
                 )
 
             case let .connecting(.resolved(intent), _),
                  let .authenticationRequired(.resolved(intent), _):
+                let logical = intent.resolvedServer.logical
                 self = .connecting(
-                    coordinates: intent.resolvedServer.logical.coordinates,
-                    code: intent.resolvedServer.logical.exitCountryCode
+                    coordinates: Self.mapCoordinates(of: logical),
+                    code: logical.exitCountryCode
                 )
 
             case let .connecting(.unresolved(intent), _),
@@ -147,6 +154,18 @@ public struct HomeMapFeature {
 //                    self = .disconnected
 //                }
             }
+        }
+
+        /// Where the map places a connection pin to a given `logical` on the globe.
+        private static func mapCoordinates(of logical: Logical) -> CLLocationCoordinate2D {
+            guard case .secureCore = logical.kind,
+                  let country = GlobeResource.mainland(code: logical.exitCountryCode)
+            else { return logical.coordinates }
+            let coordinate = GlobeGeometry.coordinate(of: country.pin)
+            return CLLocationCoordinate2D(
+                latitude: coordinate.latitude.degrees,
+                longitude: coordinate.longitude.degrees
+            )
         }
 
         var pinMode: ConnectionPin.Mode {
@@ -186,6 +205,7 @@ public struct HomeMapFeature {
     public enum Action {
         case observeConnectionState
         case connectionStateUpdated(ConnectionState)
+        case secureCoreToggleUpdated(Bool)
         case locationPinsLoaded([LocationPin])
         case locationPinTapped(LocationPin)
 
@@ -211,6 +231,7 @@ public struct HomeMapFeature {
     private enum CancelID {
         case locationPins
         case connectionState
+        case secureCoreToggle
     }
 
     @Dependency(\.debounceScheduler) private var scheduler
@@ -222,17 +243,14 @@ public struct HomeMapFeature {
         Reduce { state, action in
             switch action {
             case .observeConnectionState:
-                // Kick off connection-state observation and load the connectable locations (grey pins).
-                // `cancelInFlight` keeps a repeated kick (scene reconstruction) from stacking a duplicate subscription
-                // or re-running the repository sweep concurrently.
-                let repository = serverRepository
+                // Debounce connection state to avoid stacking duplicate events. Monitor Secure Core toggle state as
+                // well in order to reload the updated connection pins if necessary.
                 let debounceInterval = Constants.connectionStateDebounceIntervalInMilliseconds
                 let scheduler = scheduler
                 return .merge(
                     .publisher {
-                        // The shared publisher replays the current value on subscription; let that first emission
-                        // through immediately so the initial render isn't delayed, and debounce the rest to coalesce
-                        // rapid connection transitions.
+                        // Let the current value through immediately so the initial render isn't delayed, and debounce
+                        // the rest to coalesce back-to-back transitions.
                         let updates = state.$connectionState.publisher
                         return Publishers.Merge(
                             updates.first(),
@@ -242,9 +260,22 @@ public struct HomeMapFeature {
                         .map(Action.connectionStateUpdated)
                     }
                     .cancellable(id: CancelID.connectionState, cancelInFlight: true),
-                    .run { send in await send(.locationPinsLoaded(Self.loadLocationPins(from: repository))) }
-                        .cancellable(id: CancelID.locationPins, cancelInFlight: true)
+                    .publisher {
+                        state.$secureCoreToggle.publisher
+                            .removeDuplicates()
+                            .receive(on: UIScheduler.shared)
+                            .map(Action.secureCoreToggleUpdated)
+                    }
+                    .cancellable(id: CancelID.secureCoreToggle, cancelInFlight: true)
                 )
+
+            case let .secureCoreToggleUpdated(secureCore):
+                // Reload the pins according to the new SecureCore state.
+                let repository = serverRepository
+                return .run { send in
+                    await send(.locationPinsLoaded(Self.loadLocationPins(from: repository, secureCore: secureCore)))
+                }
+                .cancellable(id: CancelID.locationPins, cancelInFlight: true)
 
             case let .connectionStateUpdated(connectionState):
                 // The view derives the highlight, camera, and pin from this state, and animates the change itself.
@@ -257,6 +288,10 @@ public struct HomeMapFeature {
 
             case let .locationPinsLoaded(pins):
                 state.locationPins = pins
+                // A reload can remove the selected location, drop the current selection if it's no longer in the pins.
+                if let selectedID = state.selectedLocationID, !pins.contains(where: { $0.id == selectedID }) {
+                    state.selectedLocationID = nil
+                }
                 // `MapConnectionState` derives from the pins as well: the unresolved-connect path parks the user pin on
                 // a loaded city. The load can lose the race against the first connection-state emission (the shared
                 // publisher replays synchronously on subscription), so re-derive here rather than leaving the pin
@@ -292,12 +327,19 @@ public struct HomeMapFeature {
         }
     }
 
-    /// Reads the connectable locations — one entry per city or state group, plus one per gateway — skipping secure core
-    /// and under-maintenance groups, and maps them to grey pins at each group's representative coordinate (one member
-    /// server's position; a group's servers are colocated, so any member is close).
-    static func loadLocationPins(from repository: ServerRepository) -> [LocationPin] {
-        // Two sweeps: cities/states (grouped by city, gateways excluded SQL-side), then gateways (grouped by server
-        // type, which yields one group per gateway per country).
+    /// Reads the connectable locations, skipping under-maintenance groups, and maps them to connection pins.
+    static func loadLocationPins(from repository: ServerRepository, secureCore: Bool) -> [LocationPin] {
+        if secureCore {
+            // One group per exit country.
+            return repository
+                .getGroups(
+                    filteredBy: [.features(.secureCore), .isNotUnderMaintenance, .kind(.country(code: nil))],
+                    groupedBy: .serverType
+                )
+                .compactMap(secureCorePin(for:))
+        }
+
+        // If not Secure Core, show cities + gateways.
         let cities = repository
             .getGroups(
                 filteredBy: [.features(.standard), .isNotUnderMaintenance, .kind(.country(code: nil))],
@@ -341,6 +383,25 @@ public struct HomeMapFeature {
                 longitudeDegrees: group.longitude,
                 countryCode: code
             )
+        )
+    }
+
+    /// A Secure Core location as a pin, labelled with the exit country's localized name. Connecting to this pin picks
+    /// the fastest of its Secure Core servers regardless of which entry country each one routes through.
+    private static func secureCorePin(for group: ServerGroupInfo) -> LocationPin? {
+        @Dependency(\.countryNameProvider) var countryNameProvider
+        guard case let .country(code) = group.kind,
+              let country = GlobeResource.mainland(code: code)
+        else { return nil }
+        let coordinate = GlobeGeometry.coordinate(of: country.pin)
+        return LocationPin(
+            id: "secureCore#\(code)",
+            displayName: countryNameProvider.countryName(forCode: code) ?? code,
+            latitude: coordinate.latitude.degrees,
+            longitude: coordinate.longitude.degrees,
+            minTier: group.minTier,
+            location: .secureCore(.anyHop(to: code, .fastest)),
+            direction: country.pin
         )
     }
 
