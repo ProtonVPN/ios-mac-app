@@ -70,8 +70,8 @@ public extension OrderedSet<RecentConnection> {
         self = sanitized()
     }
 
-    /// Rewrites each exact-server recent's display fields from the current server list, so stored recents
-    /// follow the app language and server renames. The app calls this when the server list updates.
+    /// Rewrites `.exact` recents' display fields from the current server list so it stays up to date with the current
+    /// locale setting.
     func refreshingServerDisplay(from repository: ServerRepository) -> Self {
         Self(map { recent in
             guard let id = recent.connection.location.logicalID,
@@ -95,8 +95,8 @@ public extension OrderedSet<RecentConnection> {
 
     private mutating func updatePin(recent: RecentConnection, pinnedDate: Date?) {
         var recent = recent
-        // Match by identity rather than value: the stored copy's display fields can be newer than the
-        // one the row handed us.
+        // The stored copy's display fields can be newer than the one the row handed us, so match by identity rather
+        // than value.
         if let index = firstIndex(where: { $0.id == recent.id }) {
             recent.serverDisplay = self[index].serverDisplay
             remove(at: index)

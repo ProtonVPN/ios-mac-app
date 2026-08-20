@@ -19,9 +19,8 @@
 import Foundation
 
 public struct RecentConnection: Equatable, Hashable, Sendable {
-    /// Display fields for the one server an exact-server recent names. Captured from the connected
-    /// logical when the recent is written, and rewritten by the app when the server list updates, so the
-    /// city follows the app language and server renames while the spec keeps its canonical fields.
+    /// Used for displaying localizations in Recents when an item specifies an exact server, so that we can easily look
+    /// up the related city and apply the localized name for it.
     public struct ServerDisplay: Codable, Equatable, Hashable, Sendable {
         public let city: String?
         public let number: Int?

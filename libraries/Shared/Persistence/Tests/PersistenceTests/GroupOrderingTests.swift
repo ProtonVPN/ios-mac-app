@@ -24,8 +24,6 @@ import XCTest
 final class GroupOrderingTests: CaseIsolatedDatabaseTestCase {
     override class func setUp() {
         super.setUp()
-        // A German-language fixture. The display names are Évora, Köln, Naples, Warschau, Wien. Raw
-        // byte order would list Vienna before Warsaw and sink Évora below Z.
         let servers = [
             TestData.createMockServer(withID: "de-1", countryCode: "DE", city: "Cologne", translatedCity: "Köln"),
             TestData.createMockServer(withID: "de-2", countryCode: "DE", city: "Vienna", translatedCity: "Wien"),

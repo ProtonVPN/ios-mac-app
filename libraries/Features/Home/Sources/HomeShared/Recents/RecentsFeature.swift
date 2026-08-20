@@ -126,8 +126,7 @@ public struct RecentsFeature {
                 return .none
 
             case .serverListUpdated:
-                // The list changed under the stored recents: rewrite their display fields so the city
-                // follows the app language and server renames, then hand the widget the fresh copies.
+                // The list changed under the precomputed recents, so rewrite their display fields.
                 @Dependency(\.serverRepository) var serverRepository
                 state.$recentConnections.withLock { $0 = $0?.refreshingServerDisplay(from: serverRepository) }
                 WidgetCenter.shared.reloadAllTimelines()

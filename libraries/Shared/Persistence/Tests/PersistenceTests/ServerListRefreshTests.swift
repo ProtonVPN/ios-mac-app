@@ -195,4 +195,57 @@ struct ServerListRefreshTests {
             #expect(repository.getMetadata(.lastModified(for: scope)) == nil)
         }
     }
+
+    @Test("Requests against the stored baseline while the stored language matches the request's")
+    func providesBaselineWhenLanguageMatches() {
+        let timestamp = "Sat, 01 Aug 2026 00:00:00 GMT"
+        repository.setMetadata("fr", for: .translationsLanguage)
+        repository.recordServerList(scope: .freeTier, lastModifiedAt: timestamp)
+
+        #expect(repository.logicalsRequestBaseline(scope: .freeTier, language: "fr") == timestamp)
+    }
+
+    @Test("Requests without a baseline after a language change, so the response arrives in full")
+    func providesNoBaselineAfterLanguageChange() {
+        repository.setMetadata("en", for: .translationsLanguage)
+        repository.recordServerList(scope: .freeTier, lastModifiedAt: "Sat, 01 Aug 2026 00:00:00 GMT")
+
+        #expect(repository.logicalsRequestBaseline(scope: .freeTier, language: "fr") == nil)
+    }
+
+    @Test("Requests without a baseline when no translations language was recorded")
+    func providesNoBaselineWithoutRecordedLanguage() {
+        repository.recordServerList(scope: .allTiers, lastModifiedAt: "Sat, 01 Aug 2026 00:00:00 GMT")
+
+        #expect(repository.logicalsRequestBaseline(scope: .allTiers, language: "en") == nil)
+    }
+
+    // MARK: - Request scope
+
+    @Test(
+        "Asks for the scope the caller wanted while the stored names are in the right language",
+        arguments: ServerListScope.allCases
+    )
+    func keepsTheRequestedScopeWhenTranslationsAreCurrent(scope: ServerListScope) {
+        repository.setMetadata("fr", for: .translationsLanguage)
+
+        #expect(repository.logicalsRequestScope(for: scope, language: "fr") == scope)
+    }
+
+    @Test("Asks for every tier after a language change, so no paid server keeps its old name")
+    func widensAFreeTierRequestAfterALanguageChange() {
+        repository.setMetadata("en", for: .translationsLanguage)
+
+        #expect(repository.logicalsRequestScope(for: .freeTier, language: "fr") == .allTiers)
+    }
+
+    @Test(
+        "Leaves a request that already covers every tier alone after a language change",
+        arguments: [ServerListScope.allTiers, .guestSession]
+    )
+    func leavesFullScopesAloneAfterALanguageChange(scope: ServerListScope) {
+        repository.setMetadata("en", for: .translationsLanguage)
+
+        #expect(repository.logicalsRequestScope(for: scope, language: "fr") == scope)
+    }
 }

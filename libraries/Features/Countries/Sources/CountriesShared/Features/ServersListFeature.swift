@@ -49,8 +49,7 @@ public struct ServersListFeature: Sendable {
 
         @SharedReader(.connectionState) var connectionState: ConnectionState
 
-        /// The backend's translated name for this list's city, shown in the header in place of the
-        /// canonical `listType` name. Server selection keeps using the canonical name.
+        /// The backend's translated name for this list's city.
         public let translatedName: String?
 
         public init(countryCode: String, listType: ListType, translatedName: String? = nil) {

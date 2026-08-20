@@ -25,8 +25,8 @@ public struct ServerToolbarItemView: View {
     let subheader: LocationFeatureSubheaderModel
     let location: ConnectionSpec.Location
 
-    /// Builds the header for a server list from the group's kind. When `translatedName` is present it
-    /// replaces the kind's canonical city or state name in the subheader.
+    /// Builds the header for a server list from the group's kind. When `translatedName` is present it replaces the
+    /// kind's unlocalized city or state name in the subheader.
     public init(kind: ServerGroupInfo.Kind, translatedName: String? = nil) {
         switch kind {
         case let .city(name, code):

@@ -48,7 +48,6 @@ public extension ShortcutItem {
                 icon: UIApplicationShortcutIcon(systemImageName: "lock.fill")
             )
         case let .connectToFirstPinnedRecent(recent):
-            // The recent carries display fields the app keeps current with the server list.
             let location = recent.displayLocation
             return UIApplicationShortcutItem(
                 type: type,

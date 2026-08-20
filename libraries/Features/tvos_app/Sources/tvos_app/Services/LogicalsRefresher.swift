@@ -56,7 +56,6 @@ struct LogicalsRefresherProvider {
 
         @Dependency(\.serverRepository) var repository
         repository.upsert(servers: logicalsResponse)
-        // A full fetch refreshes every stored translation, so record the language the payload arrived in.
         repository.setMetadata(requestLanguage, for: .translationsLanguage)
 
         let now = Dependency(\.date).wrappedValue.now
@@ -73,8 +72,8 @@ struct LogicalsRefresherProvider {
         if repository.isEmpty {
             return true
         }
-        // The stored translations arrived in the language of the fetch that stored them. A language
-        // change makes them stale, so refresh early instead of waiting out the interval.
+
+        // Check if the stored translations are stale, and refresh no matter what if so.
         @Dependency(\.appLanguage) var appLanguage
         if repository.getMetadata(.translationsLanguage) != appLanguage() {
             return true

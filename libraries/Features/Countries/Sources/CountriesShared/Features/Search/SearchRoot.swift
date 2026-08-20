@@ -144,12 +144,10 @@ public struct SearchRoot {
         }
     }
 
-    /// Computes all searchable data once.
-    /// Returns: (cities, states, freeServers, plusServers)
+    /// Computes all searchable data once. Returns: (cities, states, freeServers, plusServers)
     ///
-    /// The database computes the city and state groups, their translated names, their display order, and
-    /// their maintenance aggregates, so the index build runs three statements instead of one server query
-    /// per country.
+    /// The database computes the city and state groups, their translated names, their display order, and their
+    /// maintenance aggregates, so the index build runs three statements instead of one server query per country.
     private static func computeSearchableData() throws -> (cities: [SearchCityIndex], states: [SearchCityIndex], freeServers: [SearchServerIndex], plusServers: [SearchServerIndex]) {
         @Dependency(\.serverRepository) var serverRepository
         @SharedReader(.secureCoreToggle) var isSecureCore: Bool
@@ -158,7 +156,7 @@ public struct SearchRoot {
         let serverType: ServerType = isSecureCore ? .secureCore : .standard
         let protocolFilter = VPNServerFilter.supports(protocol: currentProtocolSupport())
         let featureFilter = VPNServerFilter.features(isSecureCore ? .secureCore : .standard)
-        // Gateways carry no city or state, so the group queries exclude them the way the map's does.
+        // Gateways have no city or state, so group queries exclude them.
         let groupFilters = [featureFilter, protocolFilter, VPNServerFilter.kind(.country(code: nil))]
 
         let cities = serverRepository

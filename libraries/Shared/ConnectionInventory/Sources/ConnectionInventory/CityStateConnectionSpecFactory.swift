@@ -27,10 +27,6 @@ public enum CityStateConnectionSpecFactory {
     }
 
     /// Builds the location for a single server the user picked out of a list.
-    ///
-    /// Every field comes from the logical itself. `subregion` is the canonical city name, never the
-    /// translated one: the server selector matches it against the city column when the logical ID is
-    /// missing, and recents compare locations for identity.
     public static func serverLocation(for logical: Logical) -> ConnectionSpec.Location {
         if case let .secureCore(entryCountryCode) = logical.kind {
             return .secureCore(.hop(to: logical.exitCountryCode, via: entryCountryCode))

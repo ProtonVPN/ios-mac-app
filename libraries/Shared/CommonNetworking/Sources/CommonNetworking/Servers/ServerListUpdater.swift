@@ -23,22 +23,15 @@ import Ergonomics
 import Foundation
 import Persistence
 
-/// Stores the server list returned by the logicals endpoint.
-///
-/// This is the write side of the conditional request contract that ``VpnApiService`` reads when it builds a
-/// `LogicalsRequest`: it records the response's last modified timestamp so that subsequent requests can be answered
-/// with a cheap "not modified", and the language the response's translations arrived in so that a language change
-/// forces a full refresh. It also broadcasts ``ServerListUpdateNotification`` so observers reload their servers.
-///
-/// Everything else about storing servers - purging stale ones, tracking when to fetch the full list again - belongs to
-/// ``ServerRepository``, so reach for `@Dependency(\.serverRepository)` directly rather than widening this client.
+/// Stores the server list returned by the logicals endpoint (not responsible for lookup, check out
+/// ``ServerRepository``).
 @DependencyClient
 public struct ServerListUpdater: Sendable {
     /// Stores the servers from a modified logicals response.
     ///
     /// - Parameters:
-    ///   - servers: The servers the response contained. These become the complete set of servers within `scope`, so
-    ///   any server the scope covers but the response omitted is purged.
+    ///   - servers: The servers the response contained. These become the complete set of servers up to the
+    ///   tier that was requested, so any server missing from them is purged.
     ///   - scope: Which servers were asked for. A free tier response leaves the paid servers untouched, since it says
     ///   nothing about them, and each scope records its own conditional request baseline.
     ///   - lastModifiedAt: The response's last modified timestamp, used for subsequent conditional requests.
@@ -82,12 +75,14 @@ extension ServerListUpdater: DependencyKey {
 
             // Store the last modified value, so we can use it when making subsequent logicals requests, to take
             // advantage of the `If-Modified-Since` header
-            if VPNFeatureFlagType.timestampedLogicals.enabled, let lastModifiedAt {
+            if let lastModifiedAt {
                 repository.recordServerList(scope: scope, lastModifiedAt: lastModifiedAt)
             }
-            if !freeServersOnly {
-                // The refresh policy forces a full fetch after a language change, so free tier requests
-                // only go out while the stored language matches. Full responses alone stamp the language.
+
+            // A response that covers every tier carries every translated name, so it settles which language the
+            // stored names are in. A free tier response cannot, since it says nothing about the paid servers and
+            // leaves them under the names they already had.
+            if scope.coversEveryTier {
                 repository.setMetadata(language, for: .translationsLanguage)
             }
 
@@ -113,19 +108,5 @@ public extension DependencyValues {
     var serverListUpdater: ServerListUpdater {
         get { self[ServerListUpdater.self] }
         set { self[ServerListUpdater.self] = newValue }
-    }
-}
-
-public extension ServerRepository {
-    /// The `If-Modified-Since` baseline for a logicals request made in `language`.
-    ///
-    /// This is the read side of the conditional request contract that ``ServerListUpdater`` writes. When the
-    /// stored translations arrived in a different language, there is no baseline: the request must skip the
-    /// condition so the response arrives in full, in the current language.
-    func logicalsRequestBaseline(freeTier: Bool, language: String) -> String? {
-        guard getMetadata(.translationsLanguage) == language else {
-            return nil
-        }
-        return getMetadata(.lastModified(freeTier: freeTier))
     }
 }

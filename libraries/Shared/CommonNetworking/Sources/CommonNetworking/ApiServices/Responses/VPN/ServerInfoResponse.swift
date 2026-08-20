@@ -20,7 +20,7 @@ import Domain
 
 public enum ServerInfoResponse {
     case notModified(since: String?)
-    /// A full logicals payload. `language` is the `x-pm-locale` the request was made with, and therefore
-    /// the language of the payload's translated names.
+    /// `language` is the `x-pm-locale` the request was made with, which affects the names of regions in the server list
+    /// response.
     case modified(at: String?, servers: [VPNServer], scope: ServerListScope, language: String)
 }

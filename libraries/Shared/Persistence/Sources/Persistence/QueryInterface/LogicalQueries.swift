@@ -80,8 +80,6 @@ extension QueryInterfaceRequest {
         case .localizedGroupNameAscending:
             switch grouping {
             case .cityName:
-                // `translatedCity` must be aggregated here for the same reason as in the grouped
-                // selection: this query has several min/max aggregates, so SQLite pins no bare column.
                 order(
                     normalizedName(
                         max(logicalAlias[Logical.Columns.translatedCity]) ?? logicalAlias[Logical.Columns.city]

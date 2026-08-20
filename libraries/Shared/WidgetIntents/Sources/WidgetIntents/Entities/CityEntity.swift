@@ -26,8 +26,6 @@ public struct CityEntity: AppEntity, Identifiable {
     let name: String
     let countryCode: String
 
-    /// The backend's translated city name, preferred over `name` for display. The `id` and the
-    /// connection spec keep using `name`, the canonical city name.
     let translatedName: String?
 
     public var displayRepresentation: DisplayRepresentation {

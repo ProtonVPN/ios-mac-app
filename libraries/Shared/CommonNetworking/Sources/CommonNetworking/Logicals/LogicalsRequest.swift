@@ -41,8 +41,6 @@ struct LogicalsRequest: ConditionalRequest {
         self.countryCodes = countryCodes
         self.freeTier = freeTier
 
-        // A nil baseline falls back to the epoch, which every server list postdates, so the response
-        // arrives in full.
         let lastModifiedIMFString = lastModified ?? DateFormatter.imf.string(from: Date(timeIntervalSince1970: 0))
         self.condition = .ifModifiedSince(date: lastModifiedIMFString)
     }

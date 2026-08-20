@@ -20,9 +20,7 @@ import Foundation
 import GRDB
 import Localization
 
-/// Folds diacritics and case out of a display name, so that ORDER BY ranks "Genève" beside "Geneva"
-/// instead of after "Z". The country code map behind `LOCALIZED_COUNTRY_NAME` applies the same folding,
-/// so city and country lists sort by the same rules.
+/// Folds diacritics and case out of a display name, so that, for example, ORDER BY ranks "Genève" beside "Geneva".
 nonisolated(unsafe) let normalizedName = DatabaseFunction(
     "NORMALIZED_NAME",
     argumentCount: 1,

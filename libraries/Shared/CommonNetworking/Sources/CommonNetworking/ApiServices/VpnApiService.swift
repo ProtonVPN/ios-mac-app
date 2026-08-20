@@ -137,7 +137,7 @@ enum VpnApiClientKey: DependencyKey {
         func serverInfo(
             ip: TruncatedIp?,
             countryCode: String?,
-            scope: ServerListScope,
+            scope requestedScope: ServerListScope,
             completion: @escaping (Result<ServerInfoResponse, Error>) -> Void
         ) {
             let countryCodes: [String] = (countryCode.map { [$0] } ?? []) // country code from v1/locations response
@@ -146,15 +146,16 @@ enum VpnApiClientKey: DependencyKey {
 
             // The write side of this contract lives in `ServerListUpdater`
             @Dependency(\.appLanguage) var appLanguage
-            let shouldSendLastModifiedValue = VPNFeatureFlagType.timestampedLogicals.enabled
-            let lastModified = serverRepository.getMetadata(.lastModified(for: scope), language: requestLanguage)
+            let requestLanguage = appLanguage()
+            let scope = serverRepository.logicalsRequestScope(for: requestedScope, language: requestLanguage)
+            let lastModified = serverRepository.logicalsRequestBaseline(scope: scope, language: requestLanguage)
 
             networking.request(
                 LogicalsRequest(
                     ip: ip,
                     countryCodes: countryCodes,
                     freeTier: scope.isCappedAtFreeTier,
-                    lastModified: shouldSendLastModifiedValue ? lastModified : nil
+                    lastModified: lastModified
                 )
             ) { (response: Result<IfModifiedSinceResponse<LogicalsResponse>, Error>) in
                 let result: Result<ServerInfoResponse, Error>
@@ -172,7 +173,7 @@ enum VpnApiClientKey: DependencyKey {
                             at: lastModified,
                             servers: servers.map(\.vpnServer),
                             scope: scope,
-                            language: language
+                            language: requestLanguage
                         ))
 
                     case let .unreadable(receivedServerCount):

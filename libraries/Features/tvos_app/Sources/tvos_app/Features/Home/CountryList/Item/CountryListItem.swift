@@ -25,8 +25,7 @@ struct CityItem: Equatable, Hashable {
     let name: String
     let countryCode: String
 
-    /// The backend's translated city name, preferred over `name` for display. The connection spec and
-    /// the connected-city match keep using `name`, the canonical city name.
+    /// The backend's translated city name.
     let translatedName: String?
 
     /// True if *any* servers in this city group are marked as having streaming support.

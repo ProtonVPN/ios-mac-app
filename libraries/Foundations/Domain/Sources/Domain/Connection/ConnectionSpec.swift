@@ -120,7 +120,7 @@ public extension ConnectionSpec.Location {
         }
     }
 
-    /// The logical server ID this location pins down, when it names one exact server.
+    /// The logical server ID this location names exactly, if any.
     var logicalID: String? {
         guard case let .exact(_, id, _, _, _) = self else {
             return nil
@@ -128,11 +128,8 @@ public extension ConnectionSpec.Location {
         return id
     }
 
-    /// The same location with its display fields replaced by the stored ones the app keeps for it.
-    ///
-    /// For display only. The result can carry a translated subregion, which must never be persisted or
-    /// matched against the server list. Identity fields, the logical ID and the region code, stay
-    /// unchanged, as does everything when there is nothing stored.
+    /// Returns the same location, with its display fields updated for localization purposes. Used for the `.exact` case
+    /// only since we can't easily get at its actual location/city.
     func applying(_ display: RecentConnection.ServerDisplay?) -> Self {
         guard let display, case let .exact(tier, id, number, subregion, regionCode) = self else {
             return self

@@ -79,7 +79,7 @@ struct ServerListUpdaterTests {
 
     @Test("Stores no last modified value when the response carries no timestamp")
     func storesNoBaselineWithoutATimestamp() {
-        let recorder = RepositoryRecorder(enableTimestampedLogicals: true)
+        let recorder = RepositoryRecorder()
 
         recorder.update(servers: [], scope: .allTiers, lastModifiedAt: nil)
 
@@ -90,7 +90,7 @@ struct ServerListUpdaterTests {
     @Test("Keeps a guest response's last modified value out of the account baselines")
     func storesGuestBaselineOnItsOwn() {
         let lastModified = "A few moments ago"
-        let recorder = RepositoryRecorder(enableTimestampedLogicals: true)
+        let recorder = RepositoryRecorder()
 
         recorder.update(servers: [], scope: .guestSession, lastModifiedAt: lastModified)
 
@@ -102,7 +102,7 @@ struct ServerListUpdaterTests {
     @Test("Stores the last modified value of a free tier response")
     func storesLastModifiedOfFreeTierResponse() {
         let lastModified = "A few moments ago"
-        let recorder = RepositoryRecorder(enableTimestampedLogicals: true)
+        let recorder = RepositoryRecorder()
         recorder.update(servers: [], scope: .freeTier, lastModifiedAt: lastModified)
         #expect(recorder.metadata[.lastModifiedFree] == lastModified)
         // A free tier response says nothing about the paid servers, so it is no baseline for a full request
@@ -112,7 +112,7 @@ struct ServerListUpdaterTests {
     @Test("Stores the last modified value of a full response for both tier scopes")
     func storesLastModifiedOfFullResponse() {
         let lastModified = "A few moments ago"
-        let recorder = RepositoryRecorder(enableTimestampedLogicals: true)
+        let recorder = RepositoryRecorder()
         recorder.update(servers: [], scope: .allTiers, lastModifiedAt: lastModified)
         #expect(recorder.metadata[.lastModifiedFree] == lastModified)
         #expect(recorder.metadata[.lastModifiedAll] == lastModified)
@@ -120,7 +120,7 @@ struct ServerListUpdaterTests {
 
     @Test("Does not overwrite the last modified value when the response has none")
     func keepsLastModifiedWhenResponseHasNone() {
-        let recorder = RepositoryRecorder(enableTimestampedLogicals: true)
+        let recorder = RepositoryRecorder()
         recorder.update(servers: [], scope: .freeTier, lastModifiedAt: nil)
         #expect(recorder.writtenMetadataKeys == [.consecutiveSuccessfulRefreshes])
     }
@@ -128,45 +128,13 @@ struct ServerListUpdaterTests {
     @Test("Only a full response stamps the translations language")
     func onlyFullResponsesStampTranslationsLanguage() {
         let recorder = RepositoryRecorder()
-        recorder.update(servers: [], freeServersOnly: true, lastModifiedAt: nil, language: "fr")
-        // The refresh policy forces a full fetch after a language change, so a free tier response can
-        // only arrive in the language already stored.
+        recorder.update(servers: [], scope: .freeTier, lastModifiedAt: nil, language: "fr")
+        // The refresh policy forces a full fetch after a language change, so a free tier response can only arrive in
+        // the language already stored.
         #expect(recorder.metadata[.translationsLanguage] == nil)
 
-        recorder.update(servers: [], freeServersOnly: false, lastModifiedAt: nil, language: "fr")
+        recorder.update(servers: [], scope: .allTiers, lastModifiedAt: nil, language: "fr")
         #expect(recorder.metadata[.translationsLanguage] == "fr")
-    }
-
-    // MARK: - Request baseline
-
-    @Test("Provides the last modified value while the stored language matches the request's")
-    func providesBaselineWhenLanguageMatches() {
-        let repository = makeRepository(metadata: [
-            .lastModifiedFree: "A few moments ago",
-            .translationsLanguage: "fr",
-        ])
-        #expect(repository.logicalsRequestBaseline(freeTier: true, language: "fr") == "A few moments ago")
-    }
-
-    @Test("Provides no baseline after a language change, so the response arrives in full")
-    func providesNoBaselineAfterLanguageChange() {
-        let repository = makeRepository(metadata: [
-            .lastModifiedFree: "A few moments ago",
-            .translationsLanguage: "en",
-        ])
-        #expect(repository.logicalsRequestBaseline(freeTier: true, language: "fr") == nil)
-    }
-
-    @Test("Provides no baseline when no translations language was recorded")
-    func providesNoBaselineWithoutRecordedLanguage() {
-        let repository = makeRepository(metadata: [.lastModifiedAll: "A few moments ago"])
-        #expect(repository.logicalsRequestBaseline(freeTier: false, language: "en") == nil)
-    }
-
-    private func makeRepository(metadata: [DatabaseMetadata.Key: String]) -> ServerRepository {
-        var repository = ServerRepository.empty()
-        repository.getMetadata = { metadata[$0] }
-        return repository
     }
 }
 
@@ -179,7 +147,7 @@ private final class RepositoryRecorder: @unchecked Sendable {
     private(set) var writtenMetadataKeys: [DatabaseMetadata.Key] = []
     var metadata: [DatabaseMetadata.Key: String] = [:]
 
-    func update(servers: [VPNServer], freeServersOnly: Bool, lastModifiedAt: String?, language: String = "en") {
+    func update(servers: [VPNServer], scope: ServerListScope, lastModifiedAt: String?, language: String = "en") {
         var repository = ServerRepository.empty()
         repository.replaceServers = { [self] servers, maxTier in
             replacedServerIDs.append(servers.map(\.id))
@@ -197,7 +165,7 @@ private final class RepositoryRecorder: @unchecked Sendable {
         } operation: {
             ServerListUpdater.liveValue.update(
                 servers: servers,
-                freeServersOnly: freeServersOnly,
+                scope: scope,
                 lastModifiedAt: lastModifiedAt,
                 language: language
             )

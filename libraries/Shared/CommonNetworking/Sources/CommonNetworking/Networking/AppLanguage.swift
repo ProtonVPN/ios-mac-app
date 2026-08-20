@@ -20,9 +20,8 @@ import Dependencies
 import Foundation
 import Localization
 
-/// The language the API session sends as `x-pm-locale`, so the backend's translated names arrive in the
-/// language the user chose for the app. ``LocalizationUtility`` supplies the value, so the request
-/// language and the country names on screen always come from the same derivation.
+/// The language the API session sends as `x-pm-locale`, so the backend's translated names arrive in the language the
+/// user chose for the app.
 public enum AppLanguageKey: DependencyKey {
     public static let liveValue: @Sendable () -> String = {
         LocalizationUtility.default.preferredLanguageCode
