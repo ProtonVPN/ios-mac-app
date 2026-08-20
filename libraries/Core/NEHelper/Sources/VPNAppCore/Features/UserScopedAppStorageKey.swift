@@ -74,9 +74,9 @@ public struct UserScopedAppStorageKey<Value: Sendable>: SharedKey {
 
         let identifier: String? = switch scope {
         case .username:
-            authKeychain.username
+            authKeychain.usernameCachedOrFetched
         case .userId:
-            authKeychain.userId
+            authKeychain.userIdCachedOrFetched
         }
 
         self.baseKey = baseKey

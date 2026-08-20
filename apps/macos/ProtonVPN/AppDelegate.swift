@@ -155,7 +155,7 @@ extension AppDelegate: NSApplicationDelegate {
                         self?.telemetryCrashReports == String(true)
                     },
                     getUserId: { [weak self] in
-                        self?.authKeychain.userId
+                        self?.authKeychain.userIdCachedOrFetched
                     }
                 )
 

@@ -33,6 +33,8 @@ import PMLogger
 public protocol AuthKeychainHandle {
     var username: String? { get }
     var userId: String? { get }
+    var usernameCachedOrFetched: String? { get }
+    var userIdCachedOrFetched: String? { get }
     /// Whenever we try storing credentials or fetching them from keychain
     /// We also save them to memory as a quick cache that would save us
     /// a lot of trips to the keychain.
@@ -41,6 +43,16 @@ public protocol AuthKeychainHandle {
     func fetch(forContext: AppContext?) throws -> AuthCredentials
     func store(_ credentials: AuthCredentials, forContext: AppContext?, source: AuthCredentialsSource) throws
     func clear(_ reason: ClearKeychainReason)
+}
+
+public extension AuthKeychainHandle {
+    var usernameCachedOrFetched: String? {
+        username ?? fetch()?.username
+    }
+
+    var userIdCachedOrFetched: String? {
+        userId ?? fetch()?.userId
+    }
 }
 
 public enum AuthCredentialsSource {
