@@ -93,8 +93,14 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         super.viewDidLoad()
     }
 
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        refreshContent()
+    }
+
     override func viewDidDisappear() {
         hideProfilesList()
+        loadingView.animate(false)
     }
 
     private func initialViewSetup() {
@@ -240,21 +246,26 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     }
 
     private func contentChanged() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else {
-                return
-            }
-
-            connectionLabel.attributedStringValue = viewModel.connectionLabel
-            ipLabel.attributedStringValue = viewModel.ipAddress
-
-            updateViewLayout()
-            setupHeaderButtons(with: .from(state: viewModel.canChangeServer))
-
-            secureCoreSwitch.setState(viewModel.serverType == .secureCore ? .on : .off)
-
-            countryCollection.reloadData()
+        DispatchQueue.main.async {
+            guard self.isMenuVisible else { return }
+            self.refreshContent()
         }
+    }
+
+    private var isMenuVisible: Bool {
+        view.window?.isVisible == true
+    }
+
+    private func refreshContent() {
+        connectionLabel.attributedStringValue = viewModel.connectionLabel
+        ipLabel.attributedStringValue = viewModel.ipAddress
+
+        updateViewLayout()
+        setupHeaderButtons(with: .from(state: viewModel.canChangeServer))
+
+        secureCoreSwitch.setState(viewModel.serverType == .secureCore ? .on : .off)
+
+        countryCollection.reloadData()
     }
 
     private func setupHeaderButtons(with _: ServerChangeViewState? = nil) {

@@ -202,18 +202,24 @@ extension NSEvent {
 }
 
 extension StatusIcon {
-    var image: NSImage {
-        var result: NSImage = switch self {
-        case .connected: Theme.Asset.connected.image
-        case .disconnected: Theme.Asset.disconnected.image
-        case .connecting: Theme.Asset.idle.image
-        case .unknown: Theme.Asset.emptyIcon.image
-        }
+    private static let connectedImage = statusBarImage(Theme.Asset.connected)
+    private static let disconnectedImage = statusBarImage(Theme.Asset.disconnected)
+    private static let connectingImage = statusBarImage(Theme.Asset.idle)
+    private static let unknownImage = statusBarImage(Theme.Asset.emptyIcon)
 
-        result = result
-            .resize(newWidth: Self.size, newHeight: Self.size)
-        result.isTemplate = true
-        return result
+    var image: NSImage {
+        switch self {
+        case .connected: Self.connectedImage
+        case .disconnected: Self.disconnectedImage
+        case .connecting: Self.connectingImage
+        case .unknown: Self.unknownImage
+        }
+    }
+
+    private static func statusBarImage(_ asset: ImageAsset) -> NSImage {
+        let image = asset.image.resize(newWidth: size, newHeight: size)
+        image.isTemplate = true
+        return image
     }
 }
 
@@ -235,23 +241,22 @@ extension AppIcon {
     }
 }
 
-class StatusBarIconBlinker {
-    private var statusItem: NSStatusItem
+final class StatusBarIconBlinker {
+    private let statusItem: NSStatusItem
     private var statusIcon: StatusIcon
+    /// True on the ticks where the icon is blanked out. The timer owns it, so it cannot be derived.
+    private var isBlankedOut = false
 
-    private var emptyImage: NSImage = StatusIcon.unknown.image
     private var interval: TimeInterval = AppConstants.Time.statusIconBlink
     private var timer: Timer?
 
     var isBlinking: Bool = false {
         didSet {
-            if isBlinking, timer == nil {
+            guard isBlinking != oldValue else { return }
+            if isBlinking {
                 start()
-                return
-            }
-            if !isBlinking, timer != nil {
+            } else {
                 stop()
-                return
             }
         }
     }
@@ -262,12 +267,13 @@ class StatusBarIconBlinker {
     }
 
     func setImage(_ statusIcon: StatusIcon) {
-        if statusIcon != self.statusIcon {
-            self.statusIcon = statusIcon
-            if statusItem.button?.image != emptyImage {
-                statusItem.button?.image = statusIcon.image
-            }
-        }
+        guard statusIcon != self.statusIcon else { return }
+        self.statusIcon = statusIcon
+        showCurrentIcon()
+    }
+
+    private func showCurrentIcon() {
+        statusItem.button?.image = isBlankedOut ? StatusIcon.unknown.image : statusIcon.image
     }
 
     private func start() {
@@ -277,16 +283,14 @@ class StatusBarIconBlinker {
     private func stop() {
         timer?.invalidate()
         timer = nil
-        statusItem.button?.image = statusIcon.image
+        isBlankedOut = false
+        showCurrentIcon()
     }
 
     @objc
     func fireTimer() {
-        if statusItem.button?.image == emptyImage {
-            statusItem.button?.image = statusIcon.image
-        } else {
-            statusItem.button?.image = emptyImage
-        }
+        isBlankedOut.toggle()
+        showCurrentIcon()
     }
 }
 

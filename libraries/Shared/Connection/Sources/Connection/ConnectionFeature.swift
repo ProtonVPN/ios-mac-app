@@ -62,6 +62,18 @@ public struct ConnectionFeature: Sendable {
             self.shouldRegisterServerChangeOnConnection = shouldRegisterServerChangeOnConnection
             self.tunnel = tunnel
         }
+
+        func updateConnectionState(_ build: (ConnectionState) -> ConnectionState) {
+            let current = connectionState
+            let newValue = build(current)
+            guard current != newValue else { return }
+            $connectionState.withLock { $0 = newValue }
+        }
+
+        /// ``updateConnectionState(_:)`` for a value the caller has already worked out.
+        func setConnectionState(_ newValue: ConnectionState) {
+            updateConnectionState { _ in newValue }
+        }
     }
 
     @DebugDescription
@@ -134,8 +146,8 @@ public struct ConnectionFeature: Sendable {
 
                 // Transition to connecting to give the user immediate feedback while we perform the somewhat expensive
                 // database operations to resolve the server.
-                state.$connectionState.withLock {
-                    $0 = .connecting(.unresolved(intent), tunnelActive: $0.tunnelActive)
+                state.updateConnectionState {
+                    .connecting(.unresolved(intent), tunnelActive: $0.tunnelActive)
                 }
                 return .send(.prepare(intent))
 
@@ -227,8 +239,8 @@ public struct ConnectionFeature: Sendable {
             case let .finishedPreparing(.failure(error)):
                 log.error("Failed to preparing connection with error: \(error)")
                 // Revert state to actual tunnel state
-                state.$connectionState.withLock {
-                    $0 = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
+                state.updateConnectionState {
+                    ConnectionState(tunnel: state.tunnel, fallbackSpec: $0.resolvedSpec)
                 }
                 return .send(.delegate(.connectionFailed(.preparation(.intentResolution(error)))))
 
@@ -248,14 +260,14 @@ public struct ConnectionFeature: Sendable {
                         // if the fresh tunnel fails, further disconnected reports skip this branch.
                         // The state becomes `.killSwitchActive` only once the extension confirms the
                         // new tunnel is up, since reporting it earlier would overstate the protection.
-                        state.$connectionState.withLock {
-                            $0 = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
+                        state.updateConnectionState {
+                            ConnectionState(tunnel: state.tunnel, fallbackSpec: $0.resolvedSpec)
                         }
                         return .send(.tunnel(.startZeroPeerColdStart))
                     }
                 #endif
-                state.$connectionState.withLock {
-                    $0 = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
+                state.updateConnectionState {
+                    ConnectionState(tunnel: state.tunnel, fallbackSpec: $0.resolvedSpec)
                 }
                 guard let disconnectError else { return .none }
                 state.isBlockingIntended = false
@@ -271,8 +283,8 @@ public struct ConnectionFeature: Sendable {
                     serverChangeAuthorizer.registerServerChange(connectedAt: date.now)
                     state.shouldRegisterServerChangeOnConnection = false
                 }
-                state.$connectionState.withLock {
-                    $0 = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
+                state.updateConnectionState {
+                    ConnectionState(tunnel: state.tunnel, fallbackSpec: $0.resolvedSpec)
                 }
                 // Advanced KS "activates" on a successful connection: from Armed → Active. Mark the
                 // intent so a later intentional disconnect or unexpected drop keeps blocking. The session/tokens
@@ -288,9 +300,7 @@ public struct ConnectionFeature: Sendable {
                     // Zero-peer blocking is active (cold start success, or the app relaunched into a blocking
                     // tunnel).
                     state.isBlockingIntended = true
-                    state.$connectionState.withLock {
-                        $0 = incoming
-                    }
+                    state.setConnectionState(incoming)
                     // Blocking may only persist under Advanced. If the mode was downgraded while the switch
                     // to zero-peer was still in flight, or a stale blocking tunnel resurfaced, release it.
                     guard connectionFeatureProvider.requestedFeatures().killSwitchMode.isAdvanced else {
@@ -298,9 +308,7 @@ public struct ConnectionFeature: Sendable {
                     }
                     return .none
                 }
-                state.$connectionState.withLock {
-                    $0 = incoming
-                }
+                state.setConnectionState(incoming)
                 if case .connectingToLocalAgent(_, _, .hardJailed, .need2Fa) = state.tunnel {
                     return .send(.delegate(.localAgentNotice(.authenticationRequired)))
                 }
@@ -312,8 +320,8 @@ public struct ConnectionFeature: Sendable {
             case let .tunnel(.delegate(.reconfigurationFailed(error))):
                 // Reconfiguring an already-running tunnel failed. Make sure we have an accurate view of the current
                 // tunnel state in case the extension couldn't notify us, and then surface the error.
-                state.$connectionState.withLock {
-                    $0 = ConnectionState(tunnel: state.tunnel, fallbackSpec: state.connectionState.resolvedSpec)
+                state.updateConnectionState {
+                    ConnectionState(tunnel: state.tunnel, fallbackSpec: $0.resolvedSpec)
                 }
                 return .send(.delegate(.connectionFailed(.tunnel(.reconfigurationFailure(error)))))
 
