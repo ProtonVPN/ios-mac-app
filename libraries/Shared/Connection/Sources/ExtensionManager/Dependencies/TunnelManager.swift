@@ -206,6 +206,13 @@ final class PacketTunnelManager: TunnelManager {
     /// The extension's most-recent reported error (carrying the request id it pertains to), sent over the error channel.
     @SharedReader(.extensionError) private var extensionError: ExtensionError? = nil
 
+    /// Where the user last asked to connect, falling back to persisted recents if none was recorded.
+    private func recoveredConnectionSpec() -> ConnectionSpec? {
+        @SharedReader(.recentConnections) var recentConnections
+        return lastConnectionSpec.withLock { $0 }
+            ?? recentConnections?.elements.first?.connection
+    }
+
     /// Fork requests posted by the extension, a new stream for each observer
     /// we should use shared() streams in the future for this
     var forkRequestsStream: AsyncStream<Void> {
@@ -465,7 +472,7 @@ final class PacketTunnelManager: TunnelManager {
                 peerIDs = []
             }
 
-            connectionSpec = lastConnectionSpec.withLock { $0 } ?? ConnectionSpec()
+            connectionSpec = recoveredConnectionSpec() ?? ConnectionSpec()
 
             let config = TunnelConfiguration(
                 connectionSpec: connectionSpec,
@@ -536,7 +543,7 @@ final class PacketTunnelManager: TunnelManager {
         // do our best to respect it since it may differ from what we have stashed in memory, e.g. due to MDM profiles
         // or the app launching while the extension is already connected.
         let connectionSpec = (try? configuration.connectionSpec) ??
-            lastConnectionSpec.withLock { $0 } ??
+            recoveredConnectionSpec() ??
             ConnectionSpec()
 
         #if os(tvOS)

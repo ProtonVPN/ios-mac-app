@@ -80,6 +80,8 @@ public extension NETunnelProviderProtocol {
             // If we can't find a configuration, retry after migrating data the legacy extension saved to the keychain
             let migratedConfiguration = try ProTUNConfigurationCoder.legacyDecode(from: self)
             try ProTUNConfigurationCoder.encode(configuration: migratedConfiguration, to: self)
+            // Make sure we keep using the previous session information until the app is used to initiate a connection
+            userID = Self.legacyMigrationUserID
             return try withProTUNConfiguration { try body(&$0) }
         } catch {
             throw error

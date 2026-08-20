@@ -28,11 +28,15 @@ public extension NETunnelProviderProtocol {
         static let connectionSpec = "connectionSpec"
     }
 
+    /// Used to identify the connection as one migrated from WireGuard Go. Replaced by the real user id on the next
+    /// connection made from the app.
+    static let legacyMigrationUserID = "legacyWireGuardFallback"
+
     /// The id of the user that requested this connection
     ///
     /// Stored in the `providerConfiguration` so the ProTUN extension can namespace its per-user
     /// persistent cache (keychain) storage, preventing connection credentials from being shared between
-    /// accounts on the same device. `nil` for legacy-migrated configurations that predate this key.
+    /// accounts on the same device. `nil` for legacy configurations that predate this key.
     var userID: String? {
         get { providerConfiguration?[ProviderConfigurationKey.userID] as? String }
         set {
