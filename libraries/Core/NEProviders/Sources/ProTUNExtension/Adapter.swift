@@ -596,17 +596,16 @@ extension ProTUNAdapter {
         var pcapCaptureFileURL: URL?
 
         static func legacy(proTUN: ProTUNConfiguration) -> Self {
-            self.init(userID: legacyUserID, proTUN: proTUN)
+            self.init(userID: NETunnelProviderProtocol.legacyMigrationUserID, proTUN: proTUN)
         }
 
-        /// Whether `proTUN` was recovered from the pre-ProTUN WireGuard Go keychain entry rather than from the provider
-        /// configuration. In this case the session state alongside it needs migrating too. See
-        /// ``LegacyKeychainMigration``.
+        /// Whether `proTUN` was recovered from the pre-ProTUN WireGuard Go keychain entry rather than built from a
+        /// connection request. In this case the session state alongside it needs migrating too. (See  ``LegacyKeychainMigration``).
+        /// The app stores the same userID when it saves the migrated configuration it derived from that keychain
+        /// entry; the same session is used until the user initiates their first connection with the app.
         var isLegacyFallback: Bool {
-            userID == Self.legacyUserID
+            userID == NETunnelProviderProtocol.legacyMigrationUserID
         }
-
-        private static let legacyUserID = "legacyWireGuardFallback"
     }
 }
 
