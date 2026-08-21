@@ -23,14 +23,33 @@ import UIKit
 /// strangely when flicking the detent sheet up + down otherwise.
 final class ShellTabBar: UITabBar {
     /// Reports the room the bar wants above the safe area, so the pages behind it can keep their content clear of it.
-    /// Called from layout, since the system decides this bar's height and only layout knows what it settled on.
+    /// Called from layout, since only layout knows what the height settled at.
     var onRoomChange: ((CGFloat) -> Void)?
 
     private let tabItems = TabularFeature.Tab.allCases.map { ShellTabBarItem(tab: $0) }
 
+    /// The room reported last, so the pages hear about the height once per change rather than once per layout pass.
+    private var lastReportedRoom: CGFloat?
+
+    /// The bar's height, kept equal to `sizeThatFits` by `updateHeight`. Owned by the bar itself so it survives the
+    /// unmount + remount that a logout causes; constraints to the window do not.
+    ///
+    /// One notch below required, so that a transient system layout (the encapsulated frames UIKit imposes
+    /// mid-presentation and mid-rotation) breaks nothing and the bar snaps back the next pass.
+    private lazy var heightConstraint: NSLayoutConstraint = {
+        let constraint = heightAnchor.constraint(equalToConstant: 0)
+        constraint.priority = .required - 1
+        return constraint
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         applyAppearance()
+        heightConstraint.isActive = true
+        updateHeight()
+        registerForTraitChanges([UITraitVerticalSizeClass.self, UITraitPreferredContentSizeCategory.self]) {
+            (bar: ShellTabBar, _) in bar.updateHeight()
+        }
     }
 
     @available(*, unavailable)
@@ -57,9 +76,39 @@ final class ShellTabBar: UITabBar {
         (item as? ShellTabBarItem)?.tab
     }
 
+    // MARK: Height
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        // Attachment is when the first honest measurement becomes possible: the initial one ran with no window, no
+        // traits, and no safe area, and `sizeThatFits` answers for the state the bar is in when asked.
+        updateHeight()
+    }
+
+    override func safeAreaInsetsDidChange() {
+        super.safeAreaInsetsDidChange()
+        updateHeight()
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
-        onRoomChange?(max(0, bounds.height - safeAreaInsets.bottom))
+        updateHeight()
+
+        let room = max(0, bounds.height - safeAreaInsets.bottom)
+        if room != lastReportedRoom {
+            lastReportedRoom = room
+            onRoomChange?(room)
+        }
+    }
+
+    /// Re-measures the bar and moves the height constraint to match, if it doesn't already.
+    private func updateHeight() {
+        let width = window?.bounds.width ?? superview?.bounds.width ?? bounds.width
+        let fitting = sizeThatFits(CGSize(width: width, height: .greatestFiniteMagnitude)).height
+        // Half a point: below the finest pixel grid the bar can render on, so anything smaller is measurement
+        // noise rather than a real height change worth a layout pass.
+        guard fitting > 0, abs(heightConstraint.constant - fitting) > 0.5 else { return }
+        heightConstraint.constant = fitting
     }
 
     private func applyAppearance() {
