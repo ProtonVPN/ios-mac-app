@@ -88,6 +88,14 @@ public struct HomeMapView: View {
         /// How often the Sun and Moon positions are re-sampled. They drift about a quarter of a degree per minute, so
         /// at this cadence each step is invisible.
         static let solarSystemRefreshInterval: Duration = .seconds(15)
+        /// When the landmarks the camera would frame all sit within this many degrees of one spot, the zoom has nothing
+        /// to fit, so we frame the country's enclosing circle instead. Secure Core and one-city countries behave this
+        /// way. Half a degree is about 55 km, which is enough to catch pins in the same place, small enough that
+        /// spread-out cities keep their normal framing.
+        static let pointlikeSpanDegrees = 0.5
+        /// How many points to sample around a circle enclosing a country when zooming out, until the whole circle fits
+        /// on the screen.
+        static let countryRimSamples = 8
     }
 
     public init(
@@ -321,9 +329,12 @@ public struct HomeMapView: View {
         GlobeFocus.cameraDistance(forCountry: highlightedCode)
     }
 
-    /// Where the follow flight lands: the connected country's cities and the connection pin, centered on their own
-    /// enclosing cap and zoomed until all of them fit the currently visible region. Centering comes first, then the
-    /// fit, so that we can behave properly for large countries with weird centroids like the US.
+    /// Where the "follow" by the camera will end. This is computed using the connected country's cities as well as its
+    /// active connection pin, so that the camera can center over all of them and then zoom to fit the region.
+    ///
+    /// Centering for Secure Core is a bit trickier since the pin is in the very middle of the country and doesn't give
+    /// us a suitable bound for zooming properly, so in that case we compute the zoom distance according to the whole
+    /// country.
     private var followTarget: (direction: SIMD3<Float>, distance: Float) {
         var landmarks: [SIMD3<Float>] = []
         if highlightedCode != nil {
@@ -335,7 +346,14 @@ public struct HomeMapView: View {
             landmarks.append(pinDirection)
         }
         guard !landmarks.isEmpty else { return (targetDirection, cameraDistance) }
-        let center = SphericalCap.enclosing(landmarks).center
+        let constellation = SphericalCap.enclosing(landmarks)
+        var center = constellation.center
+        if constellation.radius.degrees < Constants.pointlikeSpanDegrees,
+           let code = highlightedCode,
+           let country = GlobeResource.mainland(code: code) {
+            center = country.cap.center
+            landmarks = country.cap.rim(count: Constants.countryRimSamples)
+        }
         let distance = GlobeFocus.distance(
             showing: landmarks,
             facing: center,

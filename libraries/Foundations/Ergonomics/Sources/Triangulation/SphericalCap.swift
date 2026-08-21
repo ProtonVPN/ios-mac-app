@@ -18,9 +18,9 @@
 
 import simd
 
-/// A spherical cap: every unit-sphere direction within `radius` of `center`. Names the centroid plus enclosing angular
-/// radius pair the globe leans on for framing. Zooming to fit a country or a cluster of pins means finding the cap that
-/// bounds the points, then backing the camera up until it fills the view.
+/// A spherical cap: every unit-sphere direction within `radius` of `center`. A "cap" is a Claudeism for a circle
+/// fitting somewhere on a sphere. If for example you imagined slicing a sphere at a certain angle and thickness, the
+/// circle that you would get back is a "cap." This is represented by a center point on the sphere, and a radius.
 public struct SphericalCap: Sendable, Equatable {
     /// Unit direction to the cap's centre.
     public let center: SIMD3<Float>
@@ -58,5 +58,23 @@ public extension SphericalCap {
             radius = max(radius, angle(between: center, cap.center) + cap.radius)
         }
         return SphericalCap(center: center, radius: radius)
+    }
+
+    /// Generate a "rim" of `count` points evenly on the cap's circumference. These points are fed into the zoom
+    /// algorithm to center the camera on the spherical cap of the country and make sure that it fits on screen.
+    func rim(count: Int) -> [SIMD3<Float>] {
+        guard count > 0 else { return [] }
+        let rho = Float(radius.radians)
+        guard rho > 0 else { return Array(repeating: center, count: count) }
+        // Tangent-plane basis: `north` points as poleward as the plane allows, `east` completes it.
+        let pole = SIMD3<Float>(0, 1, 0)
+        let projected = pole - center * dot(pole, center)
+        let length = simd_length(projected)
+        let north = length > 1e-6 ? projected / length : SIMD3<Float>(1, 0, 0)
+        let east = cross(center, north)
+        return (0 ..< count).map { index in
+            let turn = Float(index) / Float(count) * 2 * .pi
+            return cos(rho) * center + sin(rho) * (cos(turn) * north + sin(turn) * east)
+        }
     }
 }

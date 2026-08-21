@@ -23,8 +23,10 @@ import Domain
 import DomainTestSupport
 import Foundation
 @testable import HomeShared
+import Localization
 import Persistence
 import Testing
+import Triangulation
 
 @Suite("Home map feature")
 @MainActor
@@ -46,6 +48,8 @@ struct HomeMapFeatureTests {
         minTier: .free,
         location: .city(name: "Zurich", code: "CH", order: .fastest)
     )
+
+    private static let reykjavik = CLLocationCoordinate2D(latitude: 64.15, longitude: -21.94)
 
     // MARK: - Displayed pins
 
@@ -218,7 +222,7 @@ struct HomeMapFeatureTests {
             }
         }
 
-        let pins = HomeMapFeature.loadLocationPins(from: repository)
+        let pins = HomeMapFeature.loadLocationPins(from: repository, secureCore: false)
 
         #expect(pins.map(\.id) == ["CH#Geneva", "DE#Bavaria", "gateway#Acme@50.1,8.68"])
         #expect(pins.map(\.localizedName) == ["Genève", "Bavaria", "Acme"])
@@ -232,6 +236,118 @@ struct HomeMapFeatureTests {
         #expect(pins.last?.minTier == .paid)
     }
 
+    @Test("With Secure Core on, loading maps exit countries to pins that connect via the fastest hop")
+    func loadSecureCorePins() throws {
+        var repository = ServerRepository()
+        repository.groups = { filters, grouping, _ in
+            #expect(grouping == .serverType)
+            #expect(filters.map(\.description) == [
+                VPNServerFilter.features(.secureCore),
+                .isNotUnderMaintenance,
+                .kind(.country(code: nil)),
+            ].map(\.description))
+            return [
+                .mock(kind: .country(code: "CH"), coordinates: Self.reykjavik, minTier: .paid),
+                .mock(kind: .country(code: "US"), coordinates: Self.reykjavik, minTier: .paid),
+            ]
+        }
+
+        let pins = HomeMapFeature.loadLocationPins(from: repository, secureCore: true)
+
+        #expect(pins.map(\.id) == ["secureCore#CH", "secureCore#US"])
+        #expect(pins.map(\.location) == [
+            .secureCore(.anyHop(to: "CH", .fastest)),
+            .secureCore(.anyHop(to: "US", .fastest)),
+        ])
+        // Each pin renders on its own country's baked map position
+        #expect(pins.map(\.direction) == ["ch", "us"].compactMap { GlobeResource.mainland(code: $0)?.pin })
+        let switzerland = try #require(GlobeResource.mainland(code: "ch"))
+        #expect(pins.first?.latitude == GlobeGeometry.coordinate(of: switzerland.pin).latitude.degrees)
+        // The pill shows the exit country's flag and localized name.
+        #expect(pins.map(\.countryCode) == ["CH", "US"])
+        #expect(pins.first?.localizedName == LocalizationUtility.default.countryName(forCode: "CH") ?? "CH")
+        #expect(pins.map(\.minTier) == [.paid, .paid])
+    }
+
+    @Test("Flipping Secure Core reloads the pins")
+    func secureCoreToggleReloadsPins() async {
+        var repository = ServerRepository()
+        repository.groups = { _, grouping, _ in
+            guard grouping == .serverType else { return [] }
+            return [.mock(kind: .country(code: "CH"), coordinates: Self.reykjavik, minTier: .paid)]
+        }
+        let expected = HomeMapFeature.loadLocationPins(from: repository, secureCore: true)
+        #expect(expected.map(\.id) == ["secureCore#CH"])
+        var state = HomeMapFeature.State()
+        state.locationPins = [Self.geneva, Self.zurich]
+        let store = TestStore(initialState: state) {
+            HomeMapFeature()
+        } withDependencies: {
+            $0.serverRepository = repository
+        }
+
+        await store.send(.secureCoreToggleUpdated(true))
+        await store.receive(\.locationPinsLoaded) {
+            $0.locationPins = expected
+        }
+    }
+
+    @Test("A Secure Core connection sits on the exit country's map position, not the entry hub's")
+    func secureCoreConnectionSitsOnExitCountry() async throws {
+        let viaIceland = Server(
+            logical: Logical(
+                id: "sc-ch",
+                name: "IS-CH#1",
+                domain: "is-ch-1.mock.protonvpn.net",
+                load: 10,
+                entryCountryCode: "IS",
+                exitCountryCode: "CH",
+                tier: .paid,
+                score: 1,
+                status: 1,
+                feature: .secureCore,
+                city: nil,
+                state: nil,
+                hostCountry: nil,
+                translatedCity: nil,
+                latitude: Self.reykjavik.latitude,
+                longitude: Self.reykjavik.longitude,
+                gatewayName: nil
+            ),
+            endpoint: .mock
+        )
+        let spec = ConnectionSpec(location: .secureCore(.anyHop(to: "CH", .fastest)), features: [])
+        let switzerland = try #require(GlobeResource.mainland(code: "ch"))
+        let coordinate = GlobeGeometry.coordinate(of: switzerland.pin)
+        let store = TestStore(initialState: HomeMapFeature.State()) { HomeMapFeature() }
+
+        await store.send(.connectionStateUpdated(.previewConnected(for: spec, server: viaIceland))) {
+            $0.mapConnectionState = .connected(
+                coordinates: CLLocationCoordinate2D(
+                    latitude: coordinate.latitude.degrees,
+                    longitude: coordinate.longitude.degrees
+                ),
+                code: "CH"
+            )
+        }
+    }
+
+    @Test("A pin reload drops a selection the new set no longer contains, and keeps one it still has")
+    func pinReloadDropsVanishedSelection() async {
+        var state = HomeMapFeature.State()
+        state.locationPins = [Self.geneva, Self.zurich]
+        state.selectedLocationID = Self.geneva.id
+        let store = TestStore(initialState: state) { HomeMapFeature() }
+
+        await store.send(.locationPinsLoaded([Self.geneva])) {
+            $0.locationPins = [Self.geneva]
+        }
+        await store.send(.locationPinsLoaded([Self.zurich])) {
+            $0.locationPins = [Self.zurich]
+            $0.selectedLocationID = nil
+        }
+    }
+
     @Test("Same-named gateways in two countries stay two distinct pins")
     func gatewayPinsDisambiguateByCoordinate() {
         var repository = ServerRepository()
@@ -243,7 +359,7 @@ struct HomeMapFeatureTests {
             ]
         }
 
-        let pins = HomeMapFeature.loadLocationPins(from: repository)
+        let pins = HomeMapFeature.loadLocationPins(from: repository, secureCore: false)
 
         #expect(pins.count == 2)
         #expect(Set(pins.map(\.id)).count == 2, "coordinate-disambiguated IDs must not collide")
@@ -251,6 +367,10 @@ struct HomeMapFeatureTests {
 }
 
 private extension ServerGroupInfo {
+    static func mock(kind: Kind, coordinates: CLLocationCoordinate2D, minTier: VpnTier = .free) -> ServerGroupInfo {
+        mock(kind: kind, latitude: coordinates.latitude, longitude: coordinates.longitude, minTier: minTier)
+    }
+
     static func mock(
         kind: Kind,
         latitude: Double,
