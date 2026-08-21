@@ -36,29 +36,29 @@ public struct ServerListUpdater: Sendable {
     /// Stores the servers from a modified logicals response.
     ///
     /// - Parameters:
-    ///   - servers: The servers the response contained. These become the complete set of servers up to the tier that
-    ///   was requested, so any server missing from them is purged.
-    ///   - freeServersOnly: Whether the request was capped at the free tier. Paid servers are left untouched when it
-    ///   was, since a free tier response says nothing about them.
+    ///   - servers: The servers the response contained. These become the complete set of servers within `scope`, so
+    ///   any server the scope covers but the response omitted is purged.
+    ///   - scope: Which servers were asked for. A free tier response leaves the paid servers untouched, since it says
+    ///   nothing about them, and each scope records its own conditional request baseline.
     ///   - lastModifiedAt: The response's last modified timestamp, used for subsequent conditional requests.
-    public var update: @Sendable (_ servers: [VPNServer], _ freeServersOnly: Bool, _ lastModifiedAt: String?) -> Void
+    public var update: @Sendable (_ servers: [VPNServer], _ scope: ServerListScope, _ lastModifiedAt: String?) -> Void
 }
 
 extension ServerListUpdater: DependencyKey {
     public static let liveValue = ServerListUpdater(
-        update: { servers, freeServersOnly, lastModifiedAt in
+        update: { servers, scope, lastModifiedAt in
             @Dependency(\.serverRepository) var repository
 
             // If we're only fetching a subset of servers up to a certain tier, we must not purge stale servers above it
-            let maxTier = freeServersOnly ? VpnTier.free.rawValue : VpnTier.internal.rawValue
+            let maxTier = scope.coversEveryTier ? VpnTier.internal.rawValue : VpnTier.free.rawValue
 
             #if DEBUG
                 // Somewhat expensive O(n) sanity check
                 let containsFreeServersOnly = servers.allSatisfy(\.logical.tier.isFree)
-                if containsFreeServersOnly != freeServersOnly {
+                if containsFreeServersOnly != scope.isCappedAtFreeTier {
                     log.warning("Server list tier does not match the requested tier", category: .api, metadata: [
                         "containsFreeServersOnly": "\(containsFreeServersOnly)",
-                        "freeServersOnly": "\(freeServersOnly)",
+                        "scope": "\(scope)",
                     ])
                 }
             #endif
@@ -75,11 +75,7 @@ extension ServerListUpdater: DependencyKey {
             // Store the last modified value, so we can use it when making subsequent logicals requests, to take
             // advantage of the `If-Modified-Since` header
             if VPNFeatureFlagType.timestampedLogicals.enabled, let lastModifiedAt {
-                // A full response is also a valid baseline for a subsequent free tier request, but not the reverse
-                repository.setMetadata(lastModifiedAt, for: .lastModifiedFree)
-                if !freeServersOnly {
-                    repository.setMetadata(lastModifiedAt, for: .lastModifiedAll)
-                }
+                repository.recordServerList(scope: scope, lastModifiedAt: lastModifiedAt)
             }
 
             NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)

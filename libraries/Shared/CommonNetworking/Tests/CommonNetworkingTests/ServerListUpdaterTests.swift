@@ -36,7 +36,7 @@ struct ServerListUpdaterTests {
         let recorder = RepositoryRecorder()
 
         let servers = [TestData.createMockServer(withID: "a"), TestData.createMockServer(withID: "b")]
-        recorder.update(servers: servers, freeServersOnly: true, lastModifiedAt: nil)
+        recorder.update(servers: servers, scope: .freeTier, lastModifiedAt: nil)
 
         #expect(recorder.replacedServerIDs == [["a", "b"]])
         #expect(recorder.maxTiers == [VpnTier.free.rawValue])
@@ -46,7 +46,7 @@ struct ServerListUpdaterTests {
     func storesFullResponseAcrossAllTiers() {
         let recorder = RepositoryRecorder()
 
-        recorder.update(servers: [TestData.createMockServer(withID: "a")], freeServersOnly: false, lastModifiedAt: nil)
+        recorder.update(servers: [TestData.createMockServer(withID: "a")], scope: .allTiers, lastModifiedAt: nil)
 
         #expect(recorder.maxTiers == [VpnTier.internal.rawValue])
     }
@@ -56,7 +56,7 @@ struct ServerListUpdaterTests {
         let recorder = RepositoryRecorder()
         recorder.metadata[.consecutiveSuccessfulRefreshes] = "5"
 
-        recorder.update(servers: [], freeServersOnly: true, lastModifiedAt: nil)
+        recorder.update(servers: [], scope: .freeTier, lastModifiedAt: nil)
 
         #expect(recorder.metadata[.consecutiveSuccessfulRefreshes] == "6")
     }
@@ -73,17 +73,39 @@ struct ServerListUpdaterTests {
             ) { _ in posted() }
             defer { NotificationCenter.default.removeObserver(observer) }
 
-            recorder.update(servers: [], freeServersOnly: true, lastModifiedAt: nil)
+            recorder.update(servers: [], scope: .freeTier, lastModifiedAt: nil)
         }
     }
 
     // MARK: - Conditional requests
 
+    @Test("Stores no last modified value when the response carries no timestamp")
+    func storesNoBaselineWithoutATimestamp() {
+        let recorder = RepositoryRecorder(enableTimestampedLogicals: true)
+
+        recorder.update(servers: [], scope: .allTiers, lastModifiedAt: nil)
+
+        #expect(recorder.metadata[.lastModifiedFree] == nil)
+        #expect(recorder.metadata[.lastModifiedAll] == nil)
+    }
+
+    @Test("Keeps a guest response's last modified value out of the account baselines")
+    func storesGuestBaselineOnItsOwn() {
+        let lastModified = "A few moments ago"
+        let recorder = RepositoryRecorder(enableTimestampedLogicals: true)
+
+        recorder.update(servers: [], scope: .guestSession, lastModifiedAt: lastModified)
+
+        #expect(recorder.metadata[.lastModifiedGuest] == lastModified)
+        #expect(recorder.metadata[.lastModifiedFree] == nil)
+        #expect(recorder.metadata[.lastModifiedAll] == nil)
+    }
+
     @Test("Stores the last modified value of a free tier response")
     func storesLastModifiedOfFreeTierResponse() {
         let lastModified = "A few moments ago"
         let recorder = RepositoryRecorder(enableTimestampedLogicals: true)
-        recorder.update(servers: [], freeServersOnly: true, lastModifiedAt: lastModified)
+        recorder.update(servers: [], scope: .freeTier, lastModifiedAt: lastModified)
         #expect(recorder.metadata[.lastModifiedFree] == lastModified)
         // A free tier response says nothing about the paid servers, so it is no baseline for a full request
         #expect(recorder.metadata[.lastModifiedAll] == nil)
@@ -93,7 +115,7 @@ struct ServerListUpdaterTests {
     func storesLastModifiedOfFullResponse() {
         let lastModified = "A few moments ago"
         let recorder = RepositoryRecorder(enableTimestampedLogicals: true)
-        recorder.update(servers: [], freeServersOnly: false, lastModifiedAt: lastModified)
+        recorder.update(servers: [], scope: .allTiers, lastModifiedAt: lastModified)
         #expect(recorder.metadata[.lastModifiedFree] == lastModified)
         #expect(recorder.metadata[.lastModifiedAll] == lastModified)
     }
@@ -101,14 +123,14 @@ struct ServerListUpdaterTests {
     @Test("Does not overwrite the last modified value when the response has none")
     func keepsLastModifiedWhenResponseHasNone() {
         let recorder = RepositoryRecorder(enableTimestampedLogicals: true)
-        recorder.update(servers: [], freeServersOnly: true, lastModifiedAt: nil)
+        recorder.update(servers: [], scope: .freeTier, lastModifiedAt: nil)
         #expect(recorder.writtenMetadataKeys == [.consecutiveSuccessfulRefreshes])
     }
 
     @Test("Does not store the last modified value while timestamped logicals are disabled")
     func skipsLastModifiedWhenFeatureFlagDisabled() {
         let recorder = RepositoryRecorder()
-        recorder.update(servers: [], freeServersOnly: true, lastModifiedAt: "A few moments ago")
+        recorder.update(servers: [], scope: .freeTier, lastModifiedAt: "A few moments ago")
         #expect(recorder.writtenMetadataKeys == [.consecutiveSuccessfulRefreshes])
     }
 }
@@ -127,7 +149,7 @@ private final class RepositoryRecorder: @unchecked Sendable {
         self.enableTimestampedLogicals = enableTimestampedLogicals
     }
 
-    func update(servers: [VPNServer], freeServersOnly: Bool, lastModifiedAt: String?) {
+    func update(servers: [VPNServer], scope: ServerListScope, lastModifiedAt: String?) {
         var repository = ServerRepository.empty()
         repository.replaceServers = { [self] servers, maxTier in
             replacedServerIDs.append(servers.map(\.id))
@@ -150,7 +172,7 @@ private final class RepositoryRecorder: @unchecked Sendable {
         } operation: {
             ServerListUpdater.liveValue.update(
                 servers: servers,
-                freeServersOnly: freeServersOnly,
+                scope: scope,
                 lastModifiedAt: lastModifiedAt
             )
         }

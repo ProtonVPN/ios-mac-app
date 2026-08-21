@@ -68,15 +68,15 @@ extension MaintenanceChecker: DependencyKey {
             let result = try await vpnApiClient.serverInfo(
                 ip: (location?.ip).flatMap { TruncatedIp(ip: $0) },
                 countryCode: location?.country,
-                freeTier: userTier.isFree
+                scope: userTier.isFree ? .freeTier : .allTiers
             )
 
             switch result {
-            case let .modified(at: modifiedAt, servers: servers, freeServersOnly: isFree):
+            case let .modified(at: modifiedAt, servers: servers, scope: scope):
                 @Dependency(\.serverListUpdater) var serverListUpdater
                 serverListUpdater.update(
                     servers: servers,
-                    freeServersOnly: isFree,
+                    scope: scope,
                     lastModifiedAt: modifiedAt
                 )
 

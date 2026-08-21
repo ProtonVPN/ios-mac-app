@@ -23,8 +23,10 @@ public struct DatabaseMetadata: Codable, Sendable {
     let value: String
 
     public enum Key: String, Codable, Sendable {
+        // When each scope of the server list was last answered. See `lastModified(for:)`.
         case lastModifiedFree
         case lastModifiedAll
+        case lastModifiedGuest
         // Used to track when the full server list should be fetched for free users
         case consecutiveSuccessfulRefreshes
     }

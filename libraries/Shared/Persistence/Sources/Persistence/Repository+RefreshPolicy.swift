@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Domain
 import Foundation
 
 // MARK: - Full server list refresh policy
@@ -65,11 +66,32 @@ public extension ServerRepository {
 // MARK: - Conditional requests
 
 public extension DatabaseMetadata.Key {
-    /// The `If-Modified-Since` timestamp of the last logicals response for the given tier scope.
+    /// Where the `If-Modified-Since` timestamp of the last logicals response for `scope` is kept
+    static func lastModified(for scope: ServerListScope) -> Self {
+        switch scope {
+        case .allTiers: .lastModifiedAll
+        case .freeTier: .lastModifiedFree
+        case .guestSession: .lastModifiedGuest
+        }
+    }
+}
+
+public extension ServerRepository {
+    /// Records that the stored servers are a copy of `scope` as of `lastModifiedAt`.
     ///
-    /// Free tier and full server list responses are tracked separately: a full response is a valid baseline for both,
-    /// but a free-only response says nothing about the paid servers.
-    static func lastModified(freeTier: Bool) -> Self {
-        freeTier ? .lastModifiedFree : .lastModifiedAll
+    /// A full account response is a valid baseline for a subsequent free tier request too, so it
+    /// counts for both
+    func recordServerList(scope: ServerListScope, lastModifiedAt: String) {
+        setMetadata(lastModifiedAt, for: .lastModified(for: scope))
+        if scope == .allTiers {
+            setMetadata(lastModifiedAt, for: .lastModified(for: .freeTier))
+        }
+    }
+
+    /// Forgets which server list the database holds a copy of
+    func deleteServerListBaseline() {
+        for scope in ServerListScope.allCases {
+            deleteMetadata(for: .lastModified(for: scope))
+        }
     }
 }

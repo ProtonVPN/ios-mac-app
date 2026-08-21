@@ -367,7 +367,7 @@ struct AppSessionManagerImplementationTests {
                     throw NSError.testError()
                 }
                 return VpnProperties(
-                    serverInfo: .modified(at: nil, servers: [], freeServersOnly: false),
+                    serverInfo: .modified(at: nil, servers: [], scope: .allTiers),
                     streamingServices: VPNStreamingResponse(code: 1, resourceBaseURL: "url", streamingServices: [:]),
                     vpnCredentials: credentials,
                     location: nil,

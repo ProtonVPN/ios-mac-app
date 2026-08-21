@@ -28,6 +28,7 @@ import Domain
 import Foundation
 import LegacyCommon
 import Payments
+import Persistence
 import ProtonCoreFeatureFlags
 import Sharing
 import Strings
@@ -126,6 +127,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             unauthKeychain.clear()
             vpnKeychain.clear()
             performLogoutCleanup()
+            forgetServerListBaseline()
         } catch {
             throw CommonVpnError.keychainWriteFailed
         }
@@ -209,12 +211,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         let credentials = properties.vpnCredentials
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
 
-        if case let .modified(lastModified, servers, isFree) = properties.serverInfo {
-            let isFreeTierRequest = shouldRefreshServers && properties.vpnCredentials.maxTier.isFree
-            assert(isFreeTierRequest == isFree)
+        if case let .modified(lastModified, servers, scope) = properties.serverInfo {
             serverListUpdater.update(
                 servers: servers,
-                freeServersOnly: isFreeTierRequest,
+                scope: scope,
                 lastModifiedAt: lastModified
             )
         }
@@ -231,6 +231,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             logOutCleanup()
             throw error
         }
+    }
+
+    private func forgetServerListBaseline() {
+        @Dependency(\.serverRepository) var serverRepository
+        serverRepository.deleteServerListBaseline()
     }
 
     // swiftlint:disable function_body_length
@@ -255,12 +260,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             let credentials = properties.vpnCredentials
             vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
 
-            if case let .modified(lastModified, servers, isFree) = properties.serverInfo {
-                let isFreeTierRequest = shouldRefreshServersAccordingToTier && credentials.maxTier.isFree
-                assert(isFreeTierRequest == isFree)
+            if case let .modified(lastModified, servers, scope) = properties.serverInfo {
                 serverListUpdater.update(
                     servers: servers,
-                    freeServersOnly: isFreeTierRequest,
+                    scope: scope,
                     lastModifiedAt: lastModified
                 )
             }

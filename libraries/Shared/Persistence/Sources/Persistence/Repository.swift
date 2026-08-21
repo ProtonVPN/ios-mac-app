@@ -86,8 +86,7 @@ public extension ServerRepository {
     /// Used on logout: the next session starts from an empty database and fetches the full server list.
     func deleteAllServers() {
         _ = delete(serversWithIDsNotIn: [], maxTier: .max)
-        deleteMetadata(for: .lastModifiedFree)
-        deleteMetadata(for: .lastModifiedAll)
+        deleteServerListBaseline()
         deleteMetadata(for: .consecutiveSuccessfulRefreshes)
     }
 
