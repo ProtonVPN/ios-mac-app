@@ -164,8 +164,12 @@ extension NETunnelProviderProtocol {
         let protunConfig = try ProTUNConfigurationCoder.decode(from: self)
 
         let constrainedPeers = protunConfig.constrainedPeers
+        // An explicit zero-peer request must always reach the ProTUN connection, even before any
+        // peer is established. Skipping it would leave ProTUN dialing peers that the configuration
+        // no longer holds, while the app reads that saved zero-peer configuration as blocking.
+        let requestsZeroPeers = update.location?.peers.isEmpty == true
         let shouldUpdatePeers = update.hasPeerChanges
-            && (!constrainedPeers.isEmpty || currentPeer != nil)
+            && (requestsZeroPeers || !constrainedPeers.isEmpty || currentPeer != nil)
             && !constrainedPeers.contains { $0.matches(currentPeer) }
         let newPeers: [PeerInfo]? = shouldUpdatePeers ? try constrainedPeers.map(PeerInfo.init) : nil
 

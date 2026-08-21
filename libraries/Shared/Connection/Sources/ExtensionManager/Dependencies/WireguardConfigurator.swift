@@ -93,6 +93,9 @@ extension ManagerConfigurator {
         #if !os(tvOS)
             protocolConfiguration.includeAllNetworks = connectionIntent.tunnelFeatures.killSwitch
             protocolConfiguration.excludeLocalNetworks = connectionIntent.tunnelFeatures.excludeLocalNetworks
+            if connectionIntent.tunnelFeatures.killSwitchMode.isAdvanced {
+                protocolConfiguration.applyAdvancedKillSwitchExclusions()
+            }
         #endif
 
         try encodeProTUNConfiguration(connectionIntent: connectionIntent, on: protocolConfiguration)
@@ -110,6 +113,13 @@ extension ManagerConfigurator {
             protocolConfiguration.serverAddress = "" // If nil, start fails. Empty string is accepted.
             protocolConfiguration.username = nil
             protocolConfiguration.includeAllNetworks = true
+            // The zero-peer tunnel only exists under Advanced kill switch, so the default
+            // exclusions are cleared unconditionally. `excludeLocalNetworks` follows the user's
+            // current preference rather than the platform default, which lets LAN traffic through
+            // on iOS but not on macOS.
+            protocolConfiguration.applyAdvancedKillSwitchExclusions()
+            @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
+            protocolConfiguration.excludeLocalNetworks = connectionFeatureProvider.requestedFeatures().excludeLocalNetworks
 
             @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
             let wgConfig = connectionConfigurationProvider.configuration().wireguardConfig
@@ -344,7 +354,8 @@ extension ManagerConfigurator {
             config.serverCertificateIssuerCommonName = "ProtonVPN Root CA"
 
             // Advanced kill switch needs ProTUN's zero-peer blocking and the settings UI prevents combining it with
-            // IKEv2, so a protected mode here means Standard behavior.
+            // IKEv2, so a protected mode here means Standard behavior, and Apple's default tunnel
+            // exclusions stay in place.
             config.includeAllNetworks = intent.tunnelFeatures.killSwitch
             config.excludeLocalNetworks = intent.tunnelFeatures.excludeLocalNetworks
         #endif

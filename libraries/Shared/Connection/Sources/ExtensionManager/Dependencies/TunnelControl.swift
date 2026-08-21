@@ -17,7 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ConnectionShared
-import let CoreConnection.log
+import CoreConnection
 import Dependencies
 import Domain
 import NetworkExtension
@@ -71,5 +71,9 @@ public func enterZeroPeerBlockingTunnel() async throws {
 }
 
 private func requestZeroPeerUpdate(spec: ConnectionSpec, tunnelManager: any TunnelManager) async throws {
-    _ = try await tunnelManager.sendProTUN(request: .init(payload: .updateConfiguration(.zeroPeer(using: spec))))
+    @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
+    let allowLAN = connectionFeatureProvider.requestedFeatures().excludeLocalNetworks
+    _ = try await tunnelManager.sendProTUN(
+        request: .init(payload: .updateConfiguration(.zeroPeer(using: spec, allowLAN: allowLAN)))
+    )
 }
