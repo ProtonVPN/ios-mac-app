@@ -102,12 +102,15 @@ public final class TabularShell {
             sheet.largestUndimmedDetentIdentifier = TabularFeature.Detent.allCases.last?.identifier
             sheet.prefersScrollingExpandsWhenScrolledToEdge = true
             sheet.prefersGrabberVisible = true
+            // On a window wider than the pages' content column the sheet stops at the column's width
+            sheet.prefersEdgeAttachedInCompactHeight = true
+            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
             sheetController.observeShellState(sheet: sheet, pages: pages, bar: bar)
         }
 
-        backdrop.present(pages, animated: false) { [backdrop, bar] in
+        backdrop.present(pages, animated: false) { [backdrop, pages, bar] in
             // Mounted once the sheet is up, so the bar goes in over the container it was presented into.
-            backdrop.view.window.map { Self.mountBar(bar, in: $0) }
+            backdrop.view.window.map { Self.mountBar(bar, in: $0, matching: pages.view) }
         }
     }
 
@@ -139,25 +142,35 @@ public final class TabularShell {
     /// layer depth of its own on purpose: the paywall, onboarding, and page sheets present in containers beside it
     /// and must cover it. Re-mounting after such a presentation brings the bar back to the front, which subview
     /// order alone would not do.
-    private static func mountBar(_ barView: ShellTabBar, in window: UIWindow) {
+    ///
+    /// Only the bar's position is pinned here; the bar holds its own height at its fitting height (see
+    /// `ShellTabBar.heightConstraint`).
+    ///
+    /// Width differs by OS. On iOS 26 the bar spans the window and the system floats its material inside that span
+    /// at a size of its own choosing. Before iOS 26 the bar's bounds are the bar — background, items, everything — so
+    /// it matches the pages instead: pinned to the width the sheet actually resolved, not the width the pages asked
+    /// for, because the system may grant less than `preferredContentSize` (and did, on iPad). Constraining to the
+    /// pages' view is legal here because mounting runs after the presentation completes, when bar and pages share
+    /// the window as an ancestor, and it keeps tracking through rotations and re-resolutions for free. On windows
+    /// the sheet spans fully, the bar spans fully with it, which is the iPhone behavior unchanged.
+    private static func mountBar(_ barView: ShellTabBar, in window: UIWindow, matching pagesView: UIView) {
+        // Read before `addSubview`, which is what makes the answer mean "first mount": constraints between the bar
+        // and the window (and the pages) die with `removeFromSuperview` on logout, so a remount must rebuild them.
         let isFirstMount = barView.superview !== window
         barView.translatesAutoresizingMaskIntoConstraints = false
         window.addSubview(barView)
         guard isFirstMount else { return }
-        var constraints = [
-            barView.leadingAnchor.constraint(equalTo: window.leadingAnchor),
-            barView.trailingAnchor.constraint(equalTo: window.trailingAnchor),
-            barView.bottomAnchor.constraint(equalTo: window.bottomAnchor),
-        ]
-        if #unavailable(iOS 26.0) {
-            // Before iOS 26 the bar draws edge to edge and resolves its height differently. Rebuild the classic
-            // geometry by hand: pin the item band above the bottom safe area and let the background run under it to the
-            // screen's bottom edge.
-            let itemBand = barView.sizeThatFits(window.bounds.size).height
-            constraints.append(barView.topAnchor.constraint(
-                equalTo: window.safeAreaLayoutGuide.bottomAnchor,
-                constant: -itemBand
-            ))
+        var constraints = [barView.bottomAnchor.constraint(equalTo: window.bottomAnchor)]
+        if #available(iOS 26.0, *) {
+            constraints += [
+                barView.leadingAnchor.constraint(equalTo: window.leadingAnchor),
+                barView.trailingAnchor.constraint(equalTo: window.trailingAnchor),
+            ]
+        } else {
+            constraints += [
+                barView.centerXAnchor.constraint(equalTo: pagesView.centerXAnchor),
+                barView.widthAnchor.constraint(equalTo: pagesView.widthAnchor),
+            ]
         }
         NSLayoutConstraint.activate(constraints)
     }
