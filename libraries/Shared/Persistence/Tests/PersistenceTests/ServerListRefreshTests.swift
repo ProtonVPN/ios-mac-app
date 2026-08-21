@@ -142,9 +142,47 @@ struct ServerListRefreshTests {
 
     // MARK: - Conditional requests
 
-    @Test("Scopes the last modified timestamp to the tier of the response")
-    func scopesLastModifiedToResponseTier() {
-        #expect(DatabaseMetadata.Key.lastModified(freeTier: true) == .lastModifiedFree)
-        #expect(DatabaseMetadata.Key.lastModified(freeTier: false) == .lastModifiedAll)
+    @Test(
+        "Gives every scope of the server list its own last modified timestamp",
+        arguments: [
+            (ServerListScope.freeTier, DatabaseMetadata.Key.lastModifiedFree),
+            (.allTiers, .lastModifiedAll),
+            (.guestSession, .lastModifiedGuest),
+        ]
+    )
+    func scopesLastModifiedToTheResponse(scope: ServerListScope, key: DatabaseMetadata.Key) {
+        #expect(DatabaseMetadata.Key.lastModified(for: scope) == key)
+    }
+
+    @Test(
+        "Only a full response counts as a baseline for another scope",
+        arguments: [
+            (ServerListScope.allTiers, [DatabaseMetadata.Key.lastModifiedAll, .lastModifiedFree]),
+            (.freeTier, [.lastModifiedFree]),
+            (.guestSession, [.lastModifiedGuest]),
+        ]
+    )
+    func recordsTheBaselinesAResponseSpeaksFor(scope: ServerListScope, expected: [DatabaseMetadata.Key]) {
+        let timestamp = "Sat, 01 Aug 2026 00:00:00 GMT"
+
+        repository.recordServerList(scope: scope, lastModifiedAt: timestamp)
+
+        for other in ServerListScope.allCases {
+            let key = DatabaseMetadata.Key.lastModified(for: other)
+            #expect(repository.getMetadata(key) == (expected.contains(key) ? timestamp : nil))
+        }
+    }
+
+    @Test("Forgetting the baseline clears every scope")
+    func forgettingTheBaselineClearsEveryScope() {
+        for scope in ServerListScope.allCases {
+            repository.recordServerList(scope: scope, lastModifiedAt: "Sat, 01 Aug 2026 00:00:00 GMT")
+        }
+
+        repository.deleteServerListBaseline()
+
+        for scope in ServerListScope.allCases {
+            #expect(repository.getMetadata(.lastModified(for: scope)) == nil)
+        }
     }
 }

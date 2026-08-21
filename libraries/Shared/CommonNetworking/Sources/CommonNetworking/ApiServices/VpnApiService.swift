@@ -34,7 +34,7 @@ import VPNShared
 public struct VpnApiClient: Sendable {
     public internal(set) var vpnProperties: @Sendable (_ isDisconnected: Bool, _ lastKnownLocation: UserLocation?, _ serversAccordingToTier: Bool) async throws -> VpnProperties
     public internal(set) var clientCredentials: @Sendable () async throws -> VpnCredentials
-    public internal(set) var serverInfo: @Sendable (_ ip: TruncatedIp?, _ countryCode: String?, _ freeTier: Bool) async throws -> ServerInfoResponse
+    public internal(set) var serverInfo: @Sendable (_ ip: TruncatedIp?, _ countryCode: String?, _ scope: ServerListScope) async throws -> ServerInfoResponse
     public internal(set) var serverState: @Sendable (_ serverId: String) async throws -> VpnServerState
     public internal(set) var sessionsCount: @Sendable () async throws -> SessionsResponse
     public internal(set) var loads: @Sendable (_ lastKnownIp: TruncatedIp?) async throws -> ContinuousServerPropertiesDictionary
@@ -137,7 +137,7 @@ enum VpnApiClientKey: DependencyKey {
         func serverInfo(
             ip: TruncatedIp?,
             countryCode: String?,
-            freeTier: Bool,
+            scope: ServerListScope,
             completion: @escaping (Result<ServerInfoResponse, Error>) -> Void
         ) {
             let countryCodes: [String] = (countryCode.map { [$0] } ?? []) // country code from v1/locations response
@@ -146,13 +146,13 @@ enum VpnApiClientKey: DependencyKey {
 
             // The write side of this contract lives in `ServerListUpdater`
             let shouldSendLastModifiedValue = VPNFeatureFlagType.timestampedLogicals.enabled
-            let lastModified = serverRepository.getMetadata(.lastModified(freeTier: freeTier))
+            let lastModified = serverRepository.getMetadata(.lastModified(for: scope))
 
             networking.request(
                 LogicalsRequest(
                     ip: ip,
                     countryCodes: countryCodes,
-                    freeTier: freeTier,
+                    freeTier: scope.isCappedAtFreeTier,
                     lastModified: shouldSendLastModifiedValue ? lastModified : nil
                 )
             ) { (response: Result<IfModifiedSinceResponse<LogicalsResponse>, Error>) in
@@ -170,7 +170,7 @@ enum VpnApiClientKey: DependencyKey {
                         result = .success(.modified(
                             at: lastModified,
                             servers: servers.map(\.vpnServer),
-                            freeServersOnly: freeTier
+                            scope: scope
                         ))
 
                     case let .unreadable(receivedServerCount):
@@ -204,9 +204,9 @@ enum VpnApiClientKey: DependencyKey {
         }
 
         @Sendable
-        func serverInfo(ip: TruncatedIp?, countryCode: String?, freeTier: Bool) async throws -> ServerInfoResponse {
+        func serverInfo(ip: TruncatedIp?, countryCode: String?, scope: ServerListScope) async throws -> ServerInfoResponse {
             try await withCheckedThrowingContinuation { continuation in
-                serverInfo(ip: ip, countryCode: countryCode, freeTier: freeTier, completion: continuation.resume(with:))
+                serverInfo(ip: ip, countryCode: countryCode, scope: scope, completion: continuation.resume(with:))
             }
         }
 
@@ -224,11 +224,19 @@ enum VpnApiClientKey: DependencyKey {
                 let clientConfig = try? await clientConfig(for: location?.ip)
                 let asyncCredentials = try await clientCredentials()
 
+                let scope: ServerListScope = if authKeychain.usernameCachedOrFetched == nil {
+                    .guestSession
+                } else if asyncCredentials.maxTier.isFree, serversAccordingToTier {
+                    .freeTier
+                } else {
+                    .allTiers
+                }
+
                 return try await VpnProperties(
                     serverInfo: serverInfo(
                         ip: (location?.ip).flatMap { TruncatedIp(ip: $0) },
                         countryCode: location?.country,
-                        freeTier: asyncCredentials.maxTier.isFree && serversAccordingToTier
+                        scope: scope
                     ),
                     streamingServices: try? virtualServices(),
                     vpnCredentials: asyncCredentials,
@@ -242,8 +250,8 @@ enum VpnApiClientKey: DependencyKey {
             clientCredentials: {
                 try await clientCredentials()
             },
-            serverInfo: { ip, countryCode, freeTier in
-                try await serverInfo(ip: ip, countryCode: countryCode, freeTier: freeTier)
+            serverInfo: { ip, countryCode, scope in
+                try await serverInfo(ip: ip, countryCode: countryCode, scope: scope)
             },
             serverState: { id in
                 func serverState(serverId id: String, completion: @escaping (Result<VpnServerState, Error>) -> Void) {

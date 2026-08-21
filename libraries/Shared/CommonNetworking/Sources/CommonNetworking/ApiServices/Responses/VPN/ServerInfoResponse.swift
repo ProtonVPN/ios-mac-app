@@ -20,5 +20,5 @@ import Domain
 
 public enum ServerInfoResponse {
     case notModified(since: String?)
-    case modified(at: String?, servers: [VPNServer], freeServersOnly: Bool)
+    case modified(at: String?, servers: [VPNServer], scope: ServerListScope)
 }
