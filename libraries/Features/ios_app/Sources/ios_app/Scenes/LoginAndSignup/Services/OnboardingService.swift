@@ -50,6 +50,8 @@ final class OnboardingModuleService {
     private let navigationService: NavigationService
     private let paymentsFlowCoordinator = PaymentsFlowCoordinator()
 
+    /// The stack onboarding runs in, either the window's root or a modal covering the main interface
+    private weak var onboardingNavigation: UIViewController?
     private var oneClickIapVC: UIViewController?
 
     weak var delegate: OnboardingServiceDelegate?
@@ -66,6 +68,7 @@ extension OnboardingModuleService: OnboardingService {
         log.debug("Starting onboarding", category: .app)
         let navigationController = UINavigationController(rootViewController: welcomeToProtonViewController())
         navigationController.setNavigationBarHidden(true, animated: false)
+        onboardingNavigation = navigationController
         if overMainInterface {
             // guest -> create account: the shell is already showing, so onboarding covers it
             navigationController.modalPresentationStyle = .fullScreen
@@ -77,12 +80,9 @@ extension OnboardingModuleService: OnboardingService {
 
     func showPaywall() {
         log.debug("Starting paywall", category: .app)
-        guard let oneClickIapVC = createOneClickIapVC() else {
-            // if for any reason we didn't show oneClick, `createOneClickIapVC` will present the main interface instead
-            return
-        }
-        let navigationController = UINavigationController(rootViewController: oneClickIapVC)
+        let navigationController = UINavigationController(rootViewController: createOneClickIapVC())
         navigationController.setNavigationBarHidden(true, animated: false)
+        onboardingNavigation = navigationController
         windowService.show(viewController: navigationController)
     }
 
@@ -113,37 +113,43 @@ extension OnboardingModuleService: OnboardingService {
     }
 
     func postOnboardingAction() {
-        guard let oneClickIapVC = createOneClickIapVC() else {
-            // if for any reason we didn't show oneClick, we should present main interface
-            return onboardingCoordinatorDidFinish()
-        }
-        windowService.addToStack(oneClickIapVC, checkForDuplicates: false)
+        windowService.addToStack(createOneClickIapVC(), checkForDuplicates: false)
     }
 
-    private func createOneClickIapVC() -> UIViewController? {
+    private func createOneClickIapVC() -> UIViewController {
         let viewController = paymentsFlowCoordinator.makeViewController(
-            request: .upsell(.subscription)
-        ) { [weak self] event in
-            guard let self else { return }
-            switch event {
-            case .completed, .dismissed:
-                onboardingCoordinatorDidFinish()
-            case .createAccountFirstRequested:
-                guard let oneClickIapVC else { return }
-                navigationService.presentSignUp(over: oneClickIapVC, flow: .credentiallessUpsell)
-            case .engaged:
-                break
+            request: .upsell(.subscription),
+            onEvent: { [weak self] event in
+                guard let self else { return }
+                switch event {
+                case .completed, .dismissed:
+                    onboardingCoordinatorDidFinish()
+                case .createAccountFirstRequested:
+                    guard let oneClickIapVC else { return }
+                    navigationService.presentSignUp(over: oneClickIapVC, flow: .credentiallessUpsell)
+                case .engaged:
+                    break
+                }
             }
-        }
+        )
 
         oneClickIapVC = viewController
-        return oneClickIapVC
+        return viewController
     }
 }
 
 extension OnboardingModuleService {
+    @MainActor
     private func onboardingCoordinatorDidFinish() {
         log.debug("Onboarding finished", category: .app)
-        delegate?.onboardingServiceDidFinish()
+        guard let onboardingNavigation, onboardingNavigation.presentingViewController != nil else {
+            // window's root (delegate will replace)
+            delegate?.onboardingServiceDidFinish()
+            return
+        }
+        // modal (to dismiss)
+        onboardingNavigation.dismiss(animated: true) { [weak self] in
+            self?.delegate?.onboardingServiceDidFinish()
+        }
     }
 }

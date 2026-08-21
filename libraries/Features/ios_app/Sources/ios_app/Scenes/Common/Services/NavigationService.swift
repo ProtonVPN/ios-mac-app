@@ -199,12 +199,6 @@ final class NavigationService {
         }
     }
 
-    @MainActor
-    private func presentMainInterface() {
-        setupTabs()
-        showInitialModals()
-    }
-
     private func registerForPushNotificationsIfNeeded() {
         if CoreFeatureFlagType.pushNotifications.enabled {
             pushNotificationService.setup()
@@ -224,7 +218,7 @@ final class NavigationService {
         }
     }
 
-    func showInitialModals() {
+    private func showInitialModals() {
         @Shared(.showWhatsNewModal) var showWhatsNewModal
         guard showWhatsNewModal else {
             return
@@ -255,7 +249,7 @@ final class NavigationService {
     /// Builds the main view. The globe backdrop becomes the window's root, with tabs presented over it in a sheet the
     /// user can raise and lower.
     @MainActor
-    private func setupTabs() {
+    private func presentMainInterface() {
         guard shell == nil else {
             // Built on an earlier pass. Another flow (a paywall, onboarding) may have taken the window root since,
             // which tears the sheet's presentation down with it, so the shell is put back in front rather than assumed
@@ -291,6 +285,7 @@ final class NavigationService {
         store.send(.map(.observeConnectionState))
 
         presentShell()
+        showInitialModals()
     }
 
     /// Puts the shell in front, rooting its backdrop through the window service.

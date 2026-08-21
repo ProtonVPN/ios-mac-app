@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Combine
 import ComposableArchitecture
 import PaymentsShared
 import SwiftUI
@@ -34,15 +33,14 @@ public enum PaymentsFlowEvent: Equatable, Sendable {
     case createAccountFirstRequested
 }
 
+/// Builds the payments screen for UIKit callers.
 public final class PaymentsFlowCoordinator {
-    private var activeFlowCancellable: AnyCancellable?
-
     public init() {}
 
     @MainActor
     public func makeViewController(
         request: PaymentsFlowRequest,
-        onEvent: ((PaymentsFlowEvent) -> Void)? = nil
+        onEvent: @escaping @Sendable @MainActor (PaymentsFlowEvent) -> Void = { _ in }
     ) -> UIViewController {
         let state: PaymentsFeature.State = switch request {
         case let .upsell(upsellModalType):
@@ -51,61 +49,30 @@ public final class PaymentsFlowCoordinator {
             .init(presentationKind: .directSubscriptionManagement)
         }
 
-        let store = Store(initialState: PaymentsFlowBridgeFeature.State(payments: state)) {
-            PaymentsFlowBridgeFeature()
+        let store = Store(initialState: state) {
+            PaymentsFeature()
+            Reduce { _, action in
+                guard case let .delegate(delegate) = action else { return .none }
+                let event = PaymentsFlowEvent(delegate)
+                return .run { @MainActor _ in onEvent(event) }
+            }
         }
 
-        activeFlowCancellable = store.publisher.latestEvent
-            .compactMap { $0 }
-            .sink { event in
-                onEvent?(event)
-                store.send(.eventHandled)
-            }
-
-        let rootView = PlanOptionsViewV2TCA(
-            store: store.scope(state: \.payments, action: \.payments)
-        )
-        return UIHostingController(rootView: rootView)
+        return UIHostingController(rootView: PlanOptionsViewV2TCA(store: store))
     }
 }
 
-@Reducer
-private struct PaymentsFlowBridgeFeature {
-    @ObservableState
-    struct State: Equatable {
-        var payments: PaymentsFeature.State
-        var latestEvent: PaymentsFlowEvent?
-    }
-
-    enum Action {
-        case payments(PaymentsFeature.Action)
-        case eventHandled
-    }
-
-    var body: some ReducerOf<Self> {
-        Scope(state: \.payments, action: \.payments) {
-            PaymentsFeature()
-        }
-        Reduce { state, action in
-            switch action {
-            case let .payments(.delegate(delegate)):
-                state.latestEvent = switch delegate {
-                case .completed:
-                    .completed
-                case .dismissed:
-                    .dismissed
-                case let .engaged(planId, purchaseType):
-                    .engaged(planId: planId, purchaseType: purchaseType)
-                case .createAccountFirstRequested:
-                    .createAccountFirstRequested
-                }
-                return .none
-            case .eventHandled:
-                state.latestEvent = nil
-                return .none
-            case .payments:
-                return .none
-            }
+private extension PaymentsFlowEvent {
+    init(_ delegate: PaymentsFeature.Action.Delegate) {
+        self = switch delegate {
+        case .completed:
+            .completed
+        case .dismissed:
+            .dismissed
+        case let .engaged(planId, purchaseType):
+            .engaged(planId: planId, purchaseType: purchaseType)
+        case .createAccountFirstRequested:
+            .createAccountFirstRequested
         }
     }
 }
