@@ -26,39 +26,18 @@ public enum CityStateConnectionSpecFactory {
         .init(location: location, features: features)
     }
 
-    public static func serverLocation(for server: ServerInfo, subregion: String) -> ConnectionSpec.Location {
-        let entryCountryCode: String? = if case let .secureCore(code) = server.logical.kind { code } else { nil }
-
-        return serverLocation(
-            tier: .paid,
-            logicalID: server.logical.id,
-            number: server.logical.serverNameComponents.sequence,
-            subregion: subregion,
-            exitCountryCode: server.logical.exitCountryCode,
-            entryCountryCode: entryCountryCode
-        )
-    }
-
     /// Builds the location for a single server the user picked out of a list.
-    /// Pass the entry country code when the server is a Secure Core, `nil` otherwise.
-    public static func serverLocation(
-        tier: ConnectionSpec.Server,
-        logicalID: String?,
-        number: Int?,
-        subregion: String?,
-        exitCountryCode: String,
-        entryCountryCode: String?
-    ) -> ConnectionSpec.Location {
-        if let entryCountryCode {
-            return .secureCore(.hop(to: exitCountryCode, via: entryCountryCode))
+    public static func serverLocation(for logical: Logical) -> ConnectionSpec.Location {
+        if case let .secureCore(entryCountryCode) = logical.kind {
+            return .secureCore(.hop(to: logical.exitCountryCode, via: entryCountryCode))
         }
 
         return .exact(
-            tier,
-            logicalID: logicalID,
-            number: number,
-            subregion: subregion,
-            regionCode: exitCountryCode
+            logical.tier.isFree ? .free : .paid,
+            logicalID: logical.id,
+            number: logical.serverNameComponents.sequence,
+            subregion: logical.city,
+            regionCode: logical.exitCountryCode
         )
     }
 }

@@ -26,8 +26,10 @@ public struct CityEntity: AppEntity, Identifiable {
     let name: String
     let countryCode: String
 
+    let translatedName: String?
+
     public var displayRepresentation: DisplayRepresentation {
-        DisplayRepresentation(title: .init(stringLiteral: name))
+        DisplayRepresentation(title: .init(stringLiteral: translatedName ?? name))
     }
 
     public static let typeDisplayRepresentation: TypeDisplayRepresentation = "City"
@@ -47,24 +49,36 @@ public struct CityQuery: EntityQuery {
         let countries = repository
             .getGroups(
                 filteredBy: [.isNotUnderMaintenance, .kind(.country(code: countryCode))],
-                groupedBy: .cityName
+                groupedBy: .cityName,
+                orderedBy: .localizedGroupNameAscending
             )
 
         return countries
             .compactMap { group in
                 if case let .city(name, code) = group.kind {
-                    return CityEntity(id: code + "_" + name, name: name, countryCode: code)
+                    return CityEntity(
+                        id: code + "_" + name,
+                        name: name,
+                        countryCode: code,
+                        translatedName: group.translatedCity
+                    )
                 }
                 return nil
             }
     }
 
     public func entities(for identifiers: [String]) async throws -> [CityEntity] {
-        identifiers.map {
-            let idParts = $0.components(separatedBy: "_")
+        @Dependencies.Dependency(\.serverRepository) var repository
+
+        return identifiers.map { identifier in
+            let idParts = identifier.components(separatedBy: "_")
             let code = idParts.first ?? ""
             let name = idParts.last ?? ""
-            return CityEntity(id: $0, name: name, countryCode: code)
+            let translatedName = repository
+                .getGroups(filteredBy: [.kind(.country(code: code))], groupedBy: .cityName)
+                .first { $0.kind == .city(name: name, code: code) }?
+                .translatedCity
+            return CityEntity(id: identifier, name: name, countryCode: code, translatedName: translatedName)
         }
     }
 }

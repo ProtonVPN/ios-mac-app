@@ -28,7 +28,7 @@ public extension CountryFeature.State {
         case let .gateway(gatewayName):
             gatewayName
         case let .city(name, _), let .state(name, _):
-            name
+            serverGroup.translatedCity ?? name
         }
     }
 

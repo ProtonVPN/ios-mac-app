@@ -41,12 +41,8 @@ struct LogicalsRequest: ConditionalRequest {
         self.countryCodes = countryCodes
         self.freeTier = freeTier
 
-        if VPNFeatureFlagType.timestampedLogicals.enabled {
-            let lastModifiedIMFString = lastModified ?? DateFormatter.imf.string(from: Date(timeIntervalSince1970: 0))
-            self.condition = .ifModifiedSince(date: lastModifiedIMFString)
-        } else {
-            self.condition = nil
-        }
+        let lastModifiedIMFString = lastModified ?? DateFormatter.imf.string(from: Date(timeIntervalSince1970: 0))
+        self.condition = .ifModifiedSince(date: lastModifiedIMFString)
     }
 
     var path: String {

@@ -119,6 +119,29 @@ public extension ConnectionSpec.Location {
             nil
         }
     }
+
+    /// The logical server ID this location names exactly, if any.
+    var logicalID: String? {
+        guard case let .exact(_, id, _, _, _) = self else {
+            return nil
+        }
+        return id
+    }
+
+    /// Returns the same location, with its display fields updated for localization purposes. Used for the `.exact` case
+    /// only since we can't easily get at its actual location/city.
+    func applying(_ display: RecentConnection.ServerDisplay?) -> Self {
+        guard let display, case let .exact(tier, id, number, subregion, regionCode) = self else {
+            return self
+        }
+        return .exact(
+            tier,
+            logicalID: id,
+            number: display.number ?? number,
+            subregion: display.city ?? subregion,
+            regionCode: regionCode
+        )
+    }
 }
 
 #if DEBUG

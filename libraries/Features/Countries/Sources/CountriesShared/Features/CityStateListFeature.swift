@@ -108,10 +108,14 @@ public struct CityStateListFeature: Sendable {
             case let .navigateTo(groupInfo):
                 switch groupInfo.kind {
                 case let .city(name, code):
-                    state.path.append(.serversList(.init(countryCode: code, listType: .city(name))))
+                    state.path.append(.serversList(
+                        .init(countryCode: code, listType: .city(name), translatedName: groupInfo.translatedCity)
+                    ))
 
                 case let .state(name, code):
-                    state.path.append(.serversList(.init(countryCode: code, listType: .state(name))))
+                    state.path.append(.serversList(
+                        .init(countryCode: code, listType: .state(name), translatedName: groupInfo.translatedCity)
+                    ))
 
                 default:
                     break

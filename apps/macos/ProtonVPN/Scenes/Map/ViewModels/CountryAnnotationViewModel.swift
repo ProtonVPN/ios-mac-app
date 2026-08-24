@@ -238,7 +238,7 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
         } else {
             let server = servers[row]
             let spec = CityStateConnectionSpecFactory.makeSpec(
-                location: CityStateConnectionSpecFactory.serverLocation(for: server, subregion: server.logical.city ?? "")
+                location: CityStateConnectionSpecFactory.serverLocation(for: server.logical)
             )
             log.debug("Server on the map clicked. Will connect to \(server.logical.name)", category: .connectionConnect, event: .trigger)
             connectionCommandClient.send(.connect(spec, nil, .map))

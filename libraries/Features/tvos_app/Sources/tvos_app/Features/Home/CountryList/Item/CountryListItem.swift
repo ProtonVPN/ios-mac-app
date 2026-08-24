@@ -25,10 +25,17 @@ struct CityItem: Equatable, Hashable {
     let name: String
     let countryCode: String
 
+    /// The backend's translated city name.
+    let translatedName: String?
+
     /// True if *any* servers in this city group are marked as having streaming support.
     /// When connecting to this item, use this property to determine whether to require the selected server
     /// to support streaming or not.
     let supportsStreaming: Bool
+
+    var displayName: String {
+        translatedName ?? name
+    }
 
     var connectableItem: ConnectableItem {
         ConnectableItem(countryCode: countryCode, cityName: name, supportsStreaming: supportsStreaming)
@@ -67,7 +74,8 @@ struct CountryListItem: Identifiable, Equatable, Hashable {
         self.cities = repository
             .getGroups(
                 filteredBy: [.isNotUnderMaintenance, .kind(.country(code: code))],
-                groupedBy: .cityName
+                groupedBy: .cityName,
+                orderedBy: .localizedGroupNameAscending
             )
             .compactMap { group in
                 guard let cityName = group.cityName else {
@@ -76,6 +84,7 @@ struct CountryListItem: Identifiable, Equatable, Hashable {
                 return CityItem(
                     name: cityName,
                     countryCode: code,
+                    translatedName: group.translatedCity,
                     supportsStreaming: group.featureUnion.contains(.streaming)
                 )
             }

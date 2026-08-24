@@ -180,7 +180,7 @@ private struct RecentsView: View {
     }
 
     private func recentItem(index: Int, recentConnection: RecentConnection) -> some View {
-        let location = recentConnection.connection.location
+        let location = recentConnection.displayLocation
         return Button(intent: ConnectCommandIntent(recentIndex: index)) {
             VStack(alignment: .center, spacing: .themeSpacing8) {
                 if recentConnection.underMaintenance {

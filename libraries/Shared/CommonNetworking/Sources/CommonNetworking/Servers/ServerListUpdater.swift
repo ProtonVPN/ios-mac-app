@@ -23,30 +23,31 @@ import Ergonomics
 import Foundation
 import Persistence
 
-/// Stores the server list returned by the logicals endpoint.
-///
-/// This is the write side of the conditional request contract that ``VpnApiService`` reads when it builds a
-/// `LogicalsRequest`: it records the response's last modified timestamp so that subsequent requests can be answered
-/// with a cheap "not modified". It also broadcasts ``ServerListUpdateNotification`` so observers reload their servers.
-///
-/// Everything else about storing servers - purging stale ones, tracking when to fetch the full list again - belongs to
-/// ``ServerRepository``, so reach for `@Dependency(\.serverRepository)` directly rather than widening this client.
+/// Stores the server list returned by the logicals endpoint (not responsible for lookup, check out
+/// ``ServerRepository``).
 @DependencyClient
 public struct ServerListUpdater: Sendable {
     /// Stores the servers from a modified logicals response.
     ///
     /// - Parameters:
-    ///   - servers: The servers the response contained. These become the complete set of servers within `scope`, so
-    ///   any server the scope covers but the response omitted is purged.
+    ///   - servers: The servers the response contained. These become the complete set of servers up to the
+    ///   tier that was requested, so any server missing from them is purged.
     ///   - scope: Which servers were asked for. A free tier response leaves the paid servers untouched, since it says
     ///   nothing about them, and each scope records its own conditional request baseline.
     ///   - lastModifiedAt: The response's last modified timestamp, used for subsequent conditional requests.
-    public var update: @Sendable (_ servers: [VPNServer], _ scope: ServerListScope, _ lastModifiedAt: String?) -> Void
+    ///   - language: The `x-pm-locale` language the request was made with, which is the language the response's
+    ///   translated names arrived in.
+    public var update: @Sendable (
+        _ servers: [VPNServer],
+        _ scope: ServerListScope,
+        _ lastModifiedAt: String?,
+        _ language: String
+    ) -> Void
 }
 
 extension ServerListUpdater: DependencyKey {
     public static let liveValue = ServerListUpdater(
-        update: { servers, scope, lastModifiedAt in
+        update: { servers, scope, lastModifiedAt, language in
             @Dependency(\.serverRepository) var repository
 
             // If we're only fetching a subset of servers up to a certain tier, we must not purge stale servers above it
@@ -74,8 +75,15 @@ extension ServerListUpdater: DependencyKey {
 
             // Store the last modified value, so we can use it when making subsequent logicals requests, to take
             // advantage of the `If-Modified-Since` header
-            if VPNFeatureFlagType.timestampedLogicals.enabled, let lastModifiedAt {
+            if let lastModifiedAt {
                 repository.recordServerList(scope: scope, lastModifiedAt: lastModifiedAt)
+            }
+
+            // A response that covers every tier carries every translated name, so it settles which language the
+            // stored names are in. A free tier response cannot, since it says nothing about the paid servers and
+            // leaves them under the names they already had.
+            if scope.coversEveryTier {
+                repository.setMetadata(language, for: .translationsLanguage)
             }
 
             NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
@@ -91,7 +99,7 @@ extension ServerListUpdater: DependencyKey {
     public extension ServerListUpdater {
         /// Drops server list updates on the floor, for tests that drive a refresh but don't assert on its servers.
         static var noOp: ServerListUpdater {
-            ServerListUpdater(update: { _, _, _ in })
+            ServerListUpdater(update: { _, _, _, _ in })
         }
     }
 #endif

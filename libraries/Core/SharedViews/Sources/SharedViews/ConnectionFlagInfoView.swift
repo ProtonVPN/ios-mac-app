@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Domain
 import SwiftUI
 import Theme
@@ -33,6 +34,7 @@ public struct ConnectionFlagInfoView: View {
     }
 
     let intent: ConnectionSpec
+    let serverDisplay: RecentConnection.ServerDisplay?
     let isPinned: Bool
     let underMaintenance: Bool
     let isConnected: Bool
@@ -55,6 +57,7 @@ public struct ConnectionFlagInfoView: View {
         underMaintenance: Bool = false,
         isPinned: Bool,
         server: Server? = nil,
+        serverDisplay: RecentConnection.ServerDisplay? = nil,
         withServerNumber: Bool = false,
         isConnected: Bool,
         images: RecentsImages = .init(),
@@ -68,10 +71,12 @@ public struct ConnectionFlagInfoView: View {
         self.detailAction = detailAction
         self.isPinned = isPinned
         self.images = images
+        self.serverDisplay = serverDisplay
 
         let infoBuilder = ConnectionInfoBuilder(
             intent: intent,
             server: server,
+            display: serverDisplay,
             withServerNumber: withServerNumber
         )
         self.textHeaderString = infoBuilder.textHeader
@@ -111,7 +116,12 @@ public struct ConnectionFlagInfoView: View {
                         .frame(.square(.themeSpacing64))
                 })
                 .sheet(isPresented: $showDetail) {
-                    RecentConnectionActionsView(intent: intent, isPinned: isPinned, images: images) { action in
+                    RecentConnectionActionsView(
+                        intent: intent,
+                        serverDisplay: serverDisplay,
+                        isPinned: isPinned,
+                        images: images
+                    ) { action in
                         showDetail = false
                         detailAction(action)
                     }

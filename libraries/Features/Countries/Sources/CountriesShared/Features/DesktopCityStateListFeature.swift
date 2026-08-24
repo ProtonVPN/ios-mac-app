@@ -70,7 +70,11 @@ public struct DesktopCityStateListFeature: Sendable {
                 state.isExpanded.toggle()
                 return .none
             case let .navigateToServers(groupInfo):
-                state.serversList = .init(kind: groupInfo.kind, search: state.search)
+                state.serversList = .init(
+                    kind: groupInfo.kind,
+                    search: state.search,
+                    translatedName: groupInfo.translatedCity
+                )
                 return .none
             case .connectToCountry:
                 if case .secureCores = state.listType,
@@ -93,10 +97,7 @@ public struct DesktopCityStateListFeature: Sendable {
             case let .serversList(.presented(.connect(server))):
                 return .send(.connectToServer(server))
             case let .connectToServer(server):
-                let location = CityStateConnectionSpecFactory.serverLocation(
-                    for: server,
-                    subregion: state.groupInfo.kind.name
-                )
+                let location = CityStateConnectionSpecFactory.serverLocation(for: server.logical)
                 return .send(.connect(location: location, trigger: .countriesServer))
             case .serversList:
                 return .none

@@ -48,6 +48,7 @@ struct RecentRowItemView: View {
             intent: item.connection,
             underMaintenance: item.underMaintenance,
             isPinned: item.pinned,
+            serverDisplay: item.serverDisplay,
             isConnected: isConnected,
             images: .coreImages,
             attachedLeadingView: { AnyView(erasing: leadingIcon) }

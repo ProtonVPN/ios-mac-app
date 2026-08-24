@@ -111,6 +111,7 @@ extension DatabaseWriter {
         config.prepareDatabase { db in
             db.add(function: bitwiseOr)
             db.add(function: bitwiseAnd)
+            db.add(function: normalizedName)
             db.add(function: localizedCountryName.createFunctionForRegistration())
         }
 

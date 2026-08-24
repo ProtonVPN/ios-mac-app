@@ -39,13 +39,16 @@ public extension ServerRepository {
         return existingRefreshes
     }
 
+    /// Whether the stored server names are already translated into `language`.
+    func translationsAreCurrent(in language: String) -> Bool {
+        getMetadata(.translationsLanguage) == language
+    }
+
     /// Whether the next logicals request should ask for the full server list rather than one capped at the user's tier.
-    ///
-    /// Returning `false` means we limit the maximum server tier received to the current tier. The full server list is
-    /// fetched every ``fullServerListRefreshInterval``-th time, including the first time: when the database is cleared
-    /// the counter is back to zero, so the full server list is fetched again.
-    var shouldFetchFullServerList: Bool {
+    /// The full server list is fetched every ``fullServerListRefreshInterval``-th time.
+    func shouldFetchFullServerList(language: String) -> Bool {
         (consecutiveSuccessfulRefreshes % Self.fullServerListRefreshInterval) == 0
+            || !translationsAreCurrent(in: language)
     }
 
     /// Advances the refresh counter, wrapping back to zero on every ``fullServerListRefreshInterval``-th refresh.
@@ -77,6 +80,25 @@ public extension DatabaseMetadata.Key {
 }
 
 public extension ServerRepository {
+    /// The scope a logicals request should use, given the `requested` one and the `language` it asks in.
+    ///
+    /// A language change makes every stored name out of date, not just the free ones. A response capped at the
+    /// free tier would leave the paid servers named in the old language, so the request widens to every tier.
+    func logicalsRequestScope(for requested: ServerListScope, language: String) -> ServerListScope {
+        translationsAreCurrent(in: language) ? requested : requested.coveringEveryTier
+    }
+
+    /// The `If-Modified-Since` baseline for a logicals request for `scope` made in `language`.
+    ///
+    /// A language change makes every stored translated name out of date, so there is no baseline to request
+    /// against and the response arrives in full.
+    func logicalsRequestBaseline(scope: ServerListScope, language: String) -> String? {
+        guard translationsAreCurrent(in: language) else {
+            return nil
+        }
+        return getMetadata(.lastModified(for: scope))
+    }
+
     /// Records that the stored servers are a copy of `scope` as of `lastModifiedAt`.
     ///
     /// A full account response is a valid baseline for a subsequent free tier request too, so it

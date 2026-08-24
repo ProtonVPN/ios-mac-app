@@ -49,9 +49,13 @@ public struct ServersListFeature: Sendable {
 
         @SharedReader(.connectionState) var connectionState: ConnectionState
 
-        public init(countryCode: String, listType: ListType) {
+        /// The backend's translated name for this list's city.
+        public let translatedName: String?
+
+        public init(countryCode: String, listType: ListType, translatedName: String? = nil) {
             self.countryCode = countryCode
             self.listType = listType
+            self.translatedName = translatedName
         }
 
         /// Whether the tunnel is connecting or connected on this server

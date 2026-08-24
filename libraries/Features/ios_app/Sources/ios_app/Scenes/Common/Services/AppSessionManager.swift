@@ -181,6 +181,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     func loadDataWithoutLogin() async throws {
         @Dependency(\.serverListUpdater) var serverListUpdater
         @Dependency(\.serverRepository) var serverRepository
+        @Dependency(\.appLanguage) var appLanguage
 
         log.info("Attempting to load data without login")
 
@@ -188,7 +189,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         // The endpoint is only asked for a location while no tunnel is up; otherwise it answers with
         // the exit address, and the properties come back carrying whatever we passed in.
         let measuresLocation = connectionState.isDisconnectedForPropertiesRefresh
-        let shouldRefreshServers = !serverRepository.shouldFetchFullServerList
+        let shouldRefreshServers = !serverRepository.shouldFetchFullServerList(language: appLanguage())
         let properties: VpnProperties
         do {
             properties = try await vpnApiClient.vpnProperties(
@@ -211,11 +212,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         let credentials = properties.vpnCredentials
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
 
-        if case let .modified(lastModified, servers, scope) = properties.serverInfo {
+        if case let .modified(lastModified, servers, scope, language) = properties.serverInfo {
             serverListUpdater.update(
                 servers: servers,
                 scope: scope,
-                lastModifiedAt: lastModified
+                lastModifiedAt: lastModified,
+                language: language
             )
         }
 
@@ -242,7 +244,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func retrievePropertiesAndLogIn() async throws {
         @Dependency(\.serverListUpdater) var serverListUpdater
         @Dependency(\.serverRepository) var serverRepository
-        let shouldRefreshServersAccordingToTier = !serverRepository.shouldFetchFullServerList
+        @Dependency(\.appLanguage) var appLanguage
+        let shouldRefreshServersAccordingToTier = !serverRepository.shouldFetchFullServerList(language: appLanguage())
 
         @SharedReader(.userLocation) var userLocation
         let measuresLocation = connectionState.isDisconnectedForPropertiesRefresh
@@ -260,11 +263,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             let credentials = properties.vpnCredentials
             vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
 
-            if case let .modified(lastModified, servers, scope) = properties.serverInfo {
+            if case let .modified(lastModified, servers, scope, language) = properties.serverInfo {
                 serverListUpdater.update(
                     servers: servers,
                     scope: scope,
-                    lastModifiedAt: lastModified
+                    lastModifiedAt: lastModified,
+                    language: language
                 )
             }
 

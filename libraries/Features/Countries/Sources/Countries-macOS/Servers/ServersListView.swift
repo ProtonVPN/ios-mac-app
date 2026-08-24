@@ -65,7 +65,7 @@ struct ServersListView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: .themeSpacing16) {
-            ServerToolbarItemView(kind: store.kind)
+            ServerToolbarItemView(kind: store.kind, translatedName: store.translatedName)
                 .font(AppTheme.Typography.title2(emphasised: false))
                 .padding(.leading, .themeSpacing12)
             HStack(spacing: 0) {

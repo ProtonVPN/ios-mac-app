@@ -168,6 +168,9 @@ public enum VPNServerGroupOrder {
 
     /// Sorted by gateways first, then by localized country name (from the exit country code), ascending
     case localizedCountryNameAscending
+
+    /// Sorted by each group's display name, ignoring diacritics and case. Uses translated names if possible.
+    case localizedGroupNameAscending
 }
 
 extension VPNServerFilter: CustomStringConvertible {

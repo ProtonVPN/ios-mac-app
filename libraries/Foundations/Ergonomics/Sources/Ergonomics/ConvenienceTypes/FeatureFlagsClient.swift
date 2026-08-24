@@ -27,8 +27,7 @@ import ProtonCoreFeatureFlags
 /// Tests get an unimplemented client that records an issue for any flag they consult without declaring it, and override
 /// the flags they rely on:
 ///
-/// ```swift withDependencies { $0.featureFlags = .enabling(VPNFeatureFlagType.timestampedLogicals) } operation: { ... }
-/// ```
+/// ```swift withDependencies { $0.featureFlags = .enabling(VPNFeatureFlagType.portForwarding) } operation: { ... } ```
 @DependencyClient
 public struct FeatureFlagsClient: Sendable {
     public var isEnabled: @Sendable (any FeatureFlagTypeProtocol) -> Bool = { _ in false }

@@ -29,5 +29,7 @@ public struct DatabaseMetadata: Codable, Sendable {
         case lastModifiedGuest
         // Used to track when the full server list should be fetched for free users
         case consecutiveSuccessfulRefreshes
+        // The x-pm-locale language the stored translations arrived in
+        case translationsLanguage
     }
 }

@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Dependencies
 import Domain
+import Localization
 import Strings
 import SwiftUI
 import Theme
@@ -88,9 +88,8 @@ extension FeatureInfoView {
             self.text = Localizable.connectionDetailsFeatureDescriptionP2p
 
         case let .smart(hostCountryCode, exitCountryCode):
-            @Dependency(\.locale) var locale
-            let hostCountry = locale.localizedString(forRegionCode: hostCountryCode) ?? hostCountryCode
-            let exitCountry = locale.localizedString(forRegionCode: exitCountryCode) ?? exitCountryCode
+            let hostCountry = LocalizationUtility.default.countryName(forCode: hostCountryCode) ?? hostCountryCode
+            let exitCountry = LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? exitCountryCode
 
             self.icon = Theme.Asset.Icons.globe.swiftUIImage
             self.title = Localizable.connectionDetailsFeatureTitleSmartRouting

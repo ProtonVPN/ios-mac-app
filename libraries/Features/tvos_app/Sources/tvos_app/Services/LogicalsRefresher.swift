@@ -16,12 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import ComposableArchitecture
 import Dependencies
 import DependenciesMacros
 import Domain
 import Ergonomics
 import Foundation
+import Persistence
 import SwiftUI
 
 @DependencyClient
@@ -46,12 +48,15 @@ struct LogicalsRefresherProvider {
         try? await userLocationService.updateUserLocation()
 
         @Dependency(\.logicalsClient) var client
+        @Dependency(\.appLanguage) var appLanguage
+        let requestLanguage = appLanguage()
         let location = userLocation?.location
         let truncatedIp = (location?.ip).flatMap { TruncatedIp(ip: $0) }
         let logicalsResponse = try await client.fetchLogicals(ip: truncatedIp, countryCode: location?.country)
 
         @Dependency(\.serverRepository) var repository
         repository.upsert(servers: logicalsResponse)
+        repository.setMetadata(requestLanguage, for: .translationsLanguage)
 
         let now = Dependency(\.date).wrappedValue.now
         $lastLogicalsRefresh.withLock { $0 = now.timeIntervalSince1970 }
@@ -65,6 +70,12 @@ struct LogicalsRefresherProvider {
         }
         @Dependency(\.serverRepository) var repository
         if repository.isEmpty {
+            return true
+        }
+
+        // Check if the stored translations are stale, and refresh no matter what if so.
+        @Dependency(\.appLanguage) var appLanguage
+        if repository.getMetadata(.translationsLanguage) != appLanguage() {
             return true
         }
         return false

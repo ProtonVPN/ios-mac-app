@@ -19,14 +19,12 @@
 @testable import CommonNetworking
 import Dependencies
 import Domain
-import Ergonomics // CheckedFeatureFlagsRepository
 import Foundation
 import Persistence
 import PersistenceTestSupport
-import ProtonCoreFeatureFlags
 import Testing
 
-/// Serialized because the `timestampedLogicals` override is global state.
+/// Serialized because the updater posts to the process-global default notification center.
 @Suite("Server list updater", .serialized)
 struct ServerListUpdaterTests {
     // MARK: - Storing servers
@@ -81,7 +79,7 @@ struct ServerListUpdaterTests {
 
     @Test("Stores no last modified value when the response carries no timestamp")
     func storesNoBaselineWithoutATimestamp() {
-        let recorder = RepositoryRecorder(enableTimestampedLogicals: true)
+        let recorder = RepositoryRecorder()
 
         recorder.update(servers: [], scope: .allTiers, lastModifiedAt: nil)
 
@@ -92,7 +90,7 @@ struct ServerListUpdaterTests {
     @Test("Keeps a guest response's last modified value out of the account baselines")
     func storesGuestBaselineOnItsOwn() {
         let lastModified = "A few moments ago"
-        let recorder = RepositoryRecorder(enableTimestampedLogicals: true)
+        let recorder = RepositoryRecorder()
 
         recorder.update(servers: [], scope: .guestSession, lastModifiedAt: lastModified)
 
@@ -104,7 +102,7 @@ struct ServerListUpdaterTests {
     @Test("Stores the last modified value of a free tier response")
     func storesLastModifiedOfFreeTierResponse() {
         let lastModified = "A few moments ago"
-        let recorder = RepositoryRecorder(enableTimestampedLogicals: true)
+        let recorder = RepositoryRecorder()
         recorder.update(servers: [], scope: .freeTier, lastModifiedAt: lastModified)
         #expect(recorder.metadata[.lastModifiedFree] == lastModified)
         // A free tier response says nothing about the paid servers, so it is no baseline for a full request
@@ -114,7 +112,7 @@ struct ServerListUpdaterTests {
     @Test("Stores the last modified value of a full response for both tier scopes")
     func storesLastModifiedOfFullResponse() {
         let lastModified = "A few moments ago"
-        let recorder = RepositoryRecorder(enableTimestampedLogicals: true)
+        let recorder = RepositoryRecorder()
         recorder.update(servers: [], scope: .allTiers, lastModifiedAt: lastModified)
         #expect(recorder.metadata[.lastModifiedFree] == lastModified)
         #expect(recorder.metadata[.lastModifiedAll] == lastModified)
@@ -122,16 +120,21 @@ struct ServerListUpdaterTests {
 
     @Test("Does not overwrite the last modified value when the response has none")
     func keepsLastModifiedWhenResponseHasNone() {
-        let recorder = RepositoryRecorder(enableTimestampedLogicals: true)
+        let recorder = RepositoryRecorder()
         recorder.update(servers: [], scope: .freeTier, lastModifiedAt: nil)
         #expect(recorder.writtenMetadataKeys == [.consecutiveSuccessfulRefreshes])
     }
 
-    @Test("Does not store the last modified value while timestamped logicals are disabled")
-    func skipsLastModifiedWhenFeatureFlagDisabled() {
+    @Test("Only a full response stamps the translations language")
+    func onlyFullResponsesStampTranslationsLanguage() {
         let recorder = RepositoryRecorder()
-        recorder.update(servers: [], scope: .freeTier, lastModifiedAt: "A few moments ago")
-        #expect(recorder.writtenMetadataKeys == [.consecutiveSuccessfulRefreshes])
+        recorder.update(servers: [], scope: .freeTier, lastModifiedAt: nil, language: "fr")
+        // The refresh policy forces a full fetch after a language change, so a free tier response can only arrive in
+        // the language already stored.
+        #expect(recorder.metadata[.translationsLanguage] == nil)
+
+        recorder.update(servers: [], scope: .allTiers, lastModifiedAt: nil, language: "fr")
+        #expect(recorder.metadata[.translationsLanguage] == "fr")
     }
 }
 
@@ -143,13 +146,8 @@ private final class RepositoryRecorder: @unchecked Sendable {
     private(set) var maxTiers: [Int] = []
     private(set) var writtenMetadataKeys: [DatabaseMetadata.Key] = []
     var metadata: [DatabaseMetadata.Key: String] = [:]
-    var enableTimestampedLogicals = false
 
-    init(enableTimestampedLogicals: Bool = false) {
-        self.enableTimestampedLogicals = enableTimestampedLogicals
-    }
-
-    func update(servers: [VPNServer], scope: ServerListScope, lastModifiedAt: String?) {
+    func update(servers: [VPNServer], scope: ServerListScope, lastModifiedAt: String?, language: String = "en") {
         var repository = ServerRepository.empty()
         repository.replaceServers = { [self] servers, maxTier in
             replacedServerIDs.append(servers.map(\.id))
@@ -164,16 +162,12 @@ private final class RepositoryRecorder: @unchecked Sendable {
 
         withDependencies {
             $0.serverRepository = repository
-            if enableTimestampedLogicals {
-                $0.featureFlags = .enabling(VPNFeatureFlagType.timestampedLogicals)
-            } else {
-                $0.featureFlags = .enabling()
-            }
         } operation: {
             ServerListUpdater.liveValue.update(
                 servers: servers,
                 scope: scope,
-                lastModifiedAt: lastModifiedAt
+                lastModifiedAt: lastModifiedAt,
+                language: language
             )
         }
     }

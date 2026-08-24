@@ -72,12 +72,13 @@ extension MaintenanceChecker: DependencyKey {
             )
 
             switch result {
-            case let .modified(at: modifiedAt, servers: servers, scope: scope):
+            case let .modified(at: modifiedAt, servers: servers, scope: scope, language: language):
                 @Dependency(\.serverListUpdater) var serverListUpdater
                 serverListUpdater.update(
                     servers: servers,
                     scope: scope,
-                    lastModifiedAt: modifiedAt
+                    lastModifiedAt: modifiedAt,
+                    language: language
                 )
 
             case let .notModified(lastModified):

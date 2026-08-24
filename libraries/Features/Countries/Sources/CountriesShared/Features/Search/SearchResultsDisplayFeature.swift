@@ -220,13 +220,15 @@ public extension SearchResultRow {
         guard let server = serverIndex else {
             return nil
         }
-        return CityStateConnectionSpecFactory.serverLocation(
-            tier: server.tier == .free ? .free : .paid,
+        if let entryCountryCode = server.entryCountryCode {
+            return .secureCore(.hop(to: server.exitCountryCode, via: entryCountryCode))
+        }
+        return .exact(
+            server.tier == .free ? .free : .paid,
             logicalID: server.id,
-            number: nil,
-            subregion: nil,
-            exitCountryCode: server.exitCountryCode,
-            entryCountryCode: server.entryCountryCode
+            number: server.sequence,
+            subregion: server.cityName,
+            regionCode: server.exitCountryCode
         )
     }
 

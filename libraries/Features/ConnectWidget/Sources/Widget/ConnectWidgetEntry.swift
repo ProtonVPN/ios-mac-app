@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Collections
+import ConnectionInventory
 import Domain
 import Foundation
 import SwiftUI
@@ -53,13 +54,8 @@ extension ConnectWidgetEntry {
         case .protected, .protecting:
             // For `random` connections, when connecting/connected, we show the resolved server.
             if connectionSpec?.location.selectionSpec == .random, let currentServer {
-                return ConnectionSpec.Location.exact(
-                    currentServer.logical.tier.isPaid ? .paid : .free,
-                    logicalID: currentServer.logical.id,
-                    number: currentServer.logical.serverNameComponents.sequence,
-                    subregion: currentServer.logical.city,
-                    regionCode: currentServer.logical.exitCountryCode
-                )
+                return CityStateConnectionSpecFactory.serverLocation(for: currentServer.logical)
+                    .applying(RecentConnection.ServerDisplay(logical: currentServer.logical))
             }
         case .signedOut, .unprotected:
             break

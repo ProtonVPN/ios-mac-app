@@ -30,4 +30,11 @@ public enum ServerListScope: Sendable, Equatable, CaseIterable {
     public var coversEveryTier: Bool {
         self != .freeTier
     }
+
+    /// The same scope, never capped at the free tier.
+    ///
+    /// A guest request already asks for every tier, so only a free tier request widens.
+    public var coveringEveryTier: Self {
+        self == .freeTier ? .allTiers : self
+    }
 }

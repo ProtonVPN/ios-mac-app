@@ -51,7 +51,7 @@ struct ConnectOnClickButton: View {
                         .foregroundStyle(Color(.icon, isDisabled ? .hint : .weak))
                         .frame(.square(.themeSpacing20))
                         .padding(.horizontal, .themeSpacing4)
-                    Text(groupInfo.kind.name)
+                    Text(groupInfo.translatedCity ?? groupInfo.kind.name)
                         .themeFont(.title3(emphasised: false))
                         .lineLimit(1)
                         .foregroundStyle(Color(.text, isDisabled ? .hint : .normal))

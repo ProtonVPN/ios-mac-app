@@ -25,12 +25,13 @@ import Strings
 import Theme
 import VPNAppCore
 
-// VPNAPPL-2542: Separate out view (e.g. Locale) and business (what elements to display) logic into separate
-// dependencies used in the appropriate layers. Remove usages of business logic dependencies from view layer.
 public struct ConnectionInfoBuilder {
     let withServerNumber: Bool
     public let intent: ConnectionSpec
     public let server: Server?
+
+    public let display: RecentConnection.ServerDisplay?
+
     public var location: ConnectionSpec.Location {
         intent.location
     }
@@ -38,15 +39,16 @@ public struct ConnectionInfoBuilder {
     @Dependency(\.locale) private var locale
     @SharedReader(.userTier) private var userTier: VpnTier?
 
-    public init(intent: ConnectionSpec, server: Server?, withServerNumber: Bool) {
+    public init(intent: ConnectionSpec, server: Server?, display: RecentConnection.ServerDisplay? = nil, withServerNumber: Bool) {
         self.intent = intent
         self.server = server
+        self.display = display
         self.withServerNumber = withServerNumber
     }
 
     private var subheaderString: String? {
         guard let server else {
-            return location.subtext(locale: locale)
+            return location.applying(display).subtext(locale: locale)
         }
         switch location {
         case .any(.fastest):
@@ -62,7 +64,10 @@ public struct ConnectionInfoBuilder {
             return server.logical.name
         case .country:
             return nil
-        case let .city(name, _, _), let .state(name, _, _):
+        case let .city(name, _, _):
+            // The backend translates city names only; state names have no translated form.
+            return server.logical.translatedCity ?? name
+        case let .state(name, _, _):
             return name
         case .exact:
             return server.logical.name
@@ -115,7 +120,7 @@ public struct ConnectionInfoBuilder {
             return locationHeaderText
         } else if let server {
             let countryCode = server.logical.exitCountryCode
-            return locale.localizedString(forRegionCode: countryCode) ?? countryCode
+            return LocalizationUtility.default.countryName(forCode: countryCode) ?? countryCode
         } else {
             return location.text(locale: locale)
         }
