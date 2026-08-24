@@ -39,33 +39,17 @@ struct SidebarFeatureTests {
     func connectCommandForwardsToConnectionFeature() async {
         let spec = ConnectionSpec(location: .any(.fastest), features: [])
         let store = makeStore()
+        store.exhaustivity = .off // the connection layer runs for real here
 
         await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .quick))) {
             $0.overlayState = .connecting(spec: spec)
         }
-        await store.receive(\.connection.input.connect) {
-            // TODO: ProTUN: Revisit
-//            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
-//                spec: spec,
-//                connectionProtocol: .vpnProtocol(.ike),
-//                acceptableProtocols: .ikev2
-//            )
-            $0.connection.$connectionState.withLock {
-                $0 = .connecting(.unresolved(ConnectionPreparationIntent(
-                    spec: spec,
-                    connectionProtocol: .vpnProtocol(.ike),
-                    acceptableProtocols: .ikev2
-                )), tunnelActive: false)
-            }
-        }
+        await store.receive(\.connection.input.connect, ConnectionPreparationIntent(
+            spec: spec,
+            connectionProtocol: .vpnProtocol(.ike),
+            acceptableProtocols: .ikev2
+        ))
         await store.receive(\.connection.delegate.stateChanged.connecting)
-        await store.receive(\.connectionStateChanged.connecting) {
-            $0.overlayState = .connecting(synced: .connecting(.unresolved(ConnectionPreparationIntent(
-                spec: spec,
-                connectionProtocol: .vpnProtocol(.ike),
-                acceptableProtocols: .ikev2
-            )), tunnelActive: false))
-        }
         await store.receive(\.syncNATPortMappingState)
         await store.receive(\.syncPlutoniumState)
     }
@@ -73,34 +57,33 @@ struct SidebarFeatureTests {
     @Test("disconnect command forwards to connection feature and runs completion when already disconnected")
     func disconnectCommandForwardsToConnectionFeatureAndRunsCompletion() async {
         await confirmation("completion called once") { called in
-            let store = makeStore()
-            @Shared(.connectionState) var connectionState
-            $connectionState.withLock { $0 = .disconnected }
+            let store = makeStore(connectionState: .disconnected)
+            store.exhaustivity = .off
+
             await store.send(.connectionCommandReceived(.disconnect(.tray, completion: {
                 called()
             })))
-            // TODO: ProTUN: Revisit
-//            await store.receive(\.connection.input.disconnect) {
-//                $0.connection.core.shouldDisconnectWhenAllowed = true
-//            }
+            await store.receive(\.connection.input.disconnect)
+            await store.receive(\.connection.tunnel.disconnect)
         }
     }
 
     @Test("disconnect command queues completion until disconnected delegate fires")
     func disconnectCommandQueuesCompletionUntilDisconnectedDelegate() async {
-        let completions = PendingDisconnectCompletions()
         await confirmation("completion called once") { called in
-            let store = makeStore(pendingDisconnectCompletions: completions)
-            // connectionState defaults to .resolving in makeStore — not yet disconnected.
+            let store = makeStore()
+            store.exhaustivity = .off
+
+            // connectionState defaults to .resolving in makeStore, so the tunnel is not down yet and the completion
+            // waits in the queue.
             await store.send(.connectionCommandReceived(.disconnect(.tray, completion: {
                 called()
             })))
-            // TODO: ProTUN: Revisit
-//            await store.receive(\.connection.input.disconnect) {
-//                $0.connection.core.shouldDisconnectWhenAllowed = true
-//            }
-//            // Simulate ConnectionFeature emitting the disconnected delegate after the actual transition.
-//            await store.send(.connection(.delegate(.disconnected)))
+            await store.receive(\.connection.input.disconnect)
+
+            // The queue drains once the connection layer reports the tunnel really is down.
+            let reportDisconnected = await store.send(.connection(.delegate(.stateChanged(.disconnected))))
+            await reportDisconnected.finish()
         }
     }
 
@@ -110,29 +93,17 @@ struct SidebarFeatureTests {
         let store = makeStore()
         store.exhaustivity = .off
 
-        // TODO: ProTUN: Revisit
-//        await store.send(.connectionCommandReceived(.disconnect(.auto))) {
-//            $0.connection.core.shouldDisconnectWhenAllowed = false
-//        }
+        await store.send(.connectionCommandReceived(.disconnect(.auto)))
+        await store.receive(\.connection.input.disconnect)
+
         await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .quick))) {
             $0.overlayState = .connecting(spec: spec)
         }
-
-        await store.receive(\.connection.input.connect) {
-            // TODO: ProTUN: Revisit
-//            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
-//                spec: spec,
-//                connectionProtocol: .vpnProtocol(.ike),
-//                acceptableProtocols: .ikev2
-//            )
-            $0.connection.$connectionState.withLock {
-                $0 = .connecting(.unresolved(ConnectionPreparationIntent(
-                    spec: spec,
-                    connectionProtocol: .vpnProtocol(.ike),
-                    acceptableProtocols: .ikev2
-                )), tunnelActive: false)
-            }
-        }
+        await store.receive(\.connection.input.connect, ConnectionPreparationIntent(
+            spec: spec,
+            connectionProtocol: .vpnProtocol(.ike),
+            acceptableProtocols: .ikev2
+        ))
     }
 
     @Test("disconnect command hides overlay immediately")
@@ -151,32 +122,17 @@ struct SidebarFeatureTests {
     func retryCommandForwardsToConnectionFeature() async {
         let spec = ConnectionSpec(location: .any(.fastest), features: [])
         let store = makeStore()
+        store.exhaustivity = .off // the connection layer runs for real here; see the note on the suite
+
         await store.send(.connectionCommandReceived(.retry)) {
             $0.overlayState = .connecting(spec: spec)
         }
-        await store.receive(\.connection.input.connect) {
-            // TODO: ProTUN: Revisit
-//            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
-//                spec: spec,
-//                connectionProtocol: .vpnProtocol(.ike),
-//                acceptableProtocols: .ikev2
-//            )
-            $0.connection.$connectionState.withLock {
-                $0 = .connecting(.unresolved(ConnectionPreparationIntent(
-                    spec: spec,
-                    connectionProtocol: .vpnProtocol(.ike),
-                    acceptableProtocols: .ikev2
-                )), tunnelActive: false)
-            }
-        }
+        await store.receive(\.connection.input.connect, ConnectionPreparationIntent(
+            spec: spec,
+            connectionProtocol: .vpnProtocol(.ike),
+            acceptableProtocols: .ikev2
+        ))
         await store.receive(\.connection.delegate.stateChanged.connecting)
-        await store.receive(\.connectionStateChanged.connecting) {
-            $0.overlayState = .connecting(synced: .connecting(.unresolved(ConnectionPreparationIntent(
-                spec: spec,
-                connectionProtocol: .vpnProtocol(.ike),
-                acceptableProtocols: .ikev2
-            )), tunnelActive: false))
-        }
         await store.receive(\.syncNATPortMappingState)
         await store.receive(\.syncPlutoniumState)
     }
@@ -186,33 +142,17 @@ struct SidebarFeatureTests {
         let spec = ConnectionSpec(location: .any(.fastest), features: [])
         let p2pSpec = ConnectionSpec(location: .any(.fastest), features: [.p2p])
         let store = makeStore(portForwardingEnabled: true)
+        store.exhaustivity = .off // the connection layer runs for real here; see the note on the suite
 
         await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .quick))) {
             $0.overlayState = .connecting(spec: p2pSpec)
         }
-        await store.receive(\.connection.input.connect) {
-            // TODO: ProTUN: Revisit
-//            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
-//                spec: p2pSpec,
-//                connectionProtocol: .vpnProtocol(.ike),
-//                acceptableProtocols: .ikev2
-//            )
-            $0.connection.$connectionState.withLock {
-                $0 = .connecting(.unresolved(ConnectionPreparationIntent(
-                    spec: p2pSpec,
-                    connectionProtocol: .vpnProtocol(.ike),
-                    acceptableProtocols: .ikev2
-                )), tunnelActive: false)
-            }
-        }
+        await store.receive(\.connection.input.connect, ConnectionPreparationIntent(
+            spec: p2pSpec,
+            connectionProtocol: .vpnProtocol(.ike),
+            acceptableProtocols: .ikev2
+        ))
         await store.receive(\.connection.delegate.stateChanged.connecting)
-        await store.receive(\.connectionStateChanged.connecting) {
-            $0.overlayState = .connecting(synced: .connecting(.unresolved(ConnectionPreparationIntent(
-                spec: p2pSpec,
-                connectionProtocol: .vpnProtocol(.ike),
-                acceptableProtocols: .ikev2
-            )), tunnelActive: false))
-        }
         await store.receive(\.syncNATPortMappingState)
         await store.receive(\.syncPlutoniumState)
     }
@@ -226,6 +166,7 @@ struct SidebarFeatureTests {
             $0.overlayState = .suppressed
         }
         await store.receive(\.connection.input.applySettings)
+        await store.receive(\.connection.tunnel.requestConfigChange)
     }
 
     @Test("apply settings suppresses and clears connecting overlay state")
@@ -499,6 +440,7 @@ struct SidebarFeatureTests {
                 registerServerChangeAtDate: { _ in }
             )
         )
+        store.exhaustivity = .off // the connection layer runs for real here; see the note on the suite
 
         // First attempt: blocked, so cantSkip upsell is presented.
         await store.send(.connectionCommandReceived(.connect(spec, .vpnProtocol(.ike), .changeServer))) {
@@ -526,37 +468,13 @@ struct SidebarFeatureTests {
             $0.countriesSection.quickSettings.destination = nil
             $0.pendingReconnectIntent = nil
             $0.overlayState = .connecting(spec: spec)
-            $0.connection.$connectionState.withLock {
-                $0 = .connecting(.unresolved(ConnectionPreparationIntent(
-                    spec: spec,
-                    connectionProtocol: .vpnProtocol(.ike),
-                    acceptableProtocols: .ikev2
-                )), tunnelActive: false)
-            }
         }
-        await store.receive(\.connection.input.connect) {
-            // TODO: ProTUN: Revisit
-//            $0.connection.reconnectionIntent = ConnectionPreparationIntent(
-//                spec: spec,
-//                connectionProtocol: .vpnProtocol(.ike),
-//                acceptableProtocols: .ikev2
-//            )
-            $0.connection.$connectionState.withLock {
-                $0 = .connecting(.unresolved(ConnectionPreparationIntent(
-                    spec: spec,
-                    connectionProtocol: .vpnProtocol(.ike),
-                    acceptableProtocols: .ikev2
-                )), tunnelActive: false)
-            }
-        }
+        await store.receive(\.connection.input.connect, ConnectionPreparationIntent(
+            spec: spec,
+            connectionProtocol: .vpnProtocol(.ike),
+            acceptableProtocols: .ikev2
+        ))
         await store.receive(\.connection.delegate.stateChanged.connecting)
-        await store.receive(\.connectionStateChanged.connecting) {
-            $0.overlayState = .connecting(synced: .connecting(.unresolved(ConnectionPreparationIntent(
-                spec: spec,
-                connectionProtocol: .vpnProtocol(.ike),
-                acceptableProtocols: .ikev2
-            )), tunnelActive: false))
-        }
         await store.receive(\.syncNATPortMappingState)
         await store.receive(\.syncPlutoniumState)
         #expect(store.state.shouldPresentLoadingOverlay)
@@ -616,7 +534,8 @@ struct SidebarFeatureTests {
     func viewDidLoadLoadsInitialMapWidth() async throws {
         let defaults = try #require(UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)"))
         defaults.set(720, forKey: "MapWidth")
-        let store = makeStore(defaults: defaults)
+        // `startObservingEvents` starts the maintenance feature, which schedules its refresh on the continuous clock.
+        let store = makeStore(defaults: defaults, clock: TestClock())
         store.exhaustivity = .off
 
         await store.send(.viewDidLoad) {
@@ -630,15 +549,14 @@ struct SidebarFeatureTests {
         await store.send(.stopObservingEvents)
     }
 
-    @Test("connection delegate state updates shared connection and vpn status")
-    func connectionDelegateStateUpdatesSharedConnectionAndVpnStatus() async {
+    @Test("connection delegate state change re-syncs NAT port mapping and plutonium")
+    func connectionDelegateStateChangeResyncsNATAndPlutonium() async {
         let store = makeStore()
         #expect(store.state.connectionState == .resolving)
 
-        await store.send(.connection(.delegate(.stateChanged(.disconnected)))) {
-            $0.connection.$connectionState.withLock { $0 = .disconnected }
-        }
-        await store.receive(\.connectionStateChanged.disconnected)
+        // The delegate only reports; the connection layer owns `.connectionState` and has already written it. The
+        // sidebar's own reaction is to re-evaluate the two services that follow the connection.
+        await store.send(.connection(.delegate(.stateChanged(.disconnected))))
         await store.receive(\.syncNATPortMappingState)
         await store.receive(\.syncPlutoniumState)
     }
@@ -666,22 +584,24 @@ struct SidebarFeatureTests {
             expandButtonWidth: 28,
             defaultMapWidth: 600
         ),
+        connectionState: ConnectionState = .resolving,
         defaults: UserDefaults = .inMemory,
         clock: TestClock<Duration>? = nil,
-        connectionCommandClient: ConnectionCommandClient = .testValue,
         coreAlertService: CoreAlertService = .testValue,
-        pendingDisconnectCompletions: PendingDisconnectCompletions = PendingDisconnectCompletions(),
         portForwardingEnabled: Bool = false,
         serverChangeAuthorizer: ServerChangeAuthorizer = .availableValue
     ) -> TestStoreOf<SidebarFeature> {
         withDependencies {
             $0.defaultAppStorage = defaults
         } operation: {
-            @Shared(.connectionState) var connectionState
-            @Shared(.connectionProtocol) var connectionProtocol
+            // Both handles have to be created in this dependency scope: `.connectionState` is keyed by the
+            // `UserDefaults` it lives in, so a handle made outside `withDependencies` addresses other storage than
+            // the store does.
+            @Shared(.connectionState) var sharedConnectionState
+            @Shared(.connectionProtocol) var sharedConnectionProtocol
 
-            $connectionState.withLock { $0 = .resolving }
-            $connectionProtocol.withLock { $0 = .vpnProtocol(.ike) }
+            $sharedConnectionState.withLock { $0 = connectionState }
+            $sharedConnectionProtocol.withLock { $0 = .vpnProtocol(.ike) }
 
             let session = VPNSessionMock(status: .disconnected)
             session.messageHandler = MessageHandler.full
@@ -706,9 +626,10 @@ struct SidebarFeatureTests {
                     connectionProtocol: { .smartProtocol }
                 )
                 $0.tunnelManager = MockTunnelManager(connection: session)
-                $0.connectionCommandClient = connectionCommandClient
+                $0.connectionCommandClient = .testValue
                 $0.coreAlertService = coreAlertService
-                $0.pendingDisconnectCompletions = pendingDisconnectCompletions
+                // A fresh queue per store, so a completion left behind by one test cannot run in the next.
+                $0.pendingDisconnectCompletions = PendingDisconnectCompletions()
                 $0.portForwardingPropertyProvider.setPortForwarding(portForwardingEnabled)
                 $0.serverChangeAuthorizer = serverChangeAuthorizer
                 $0.announcementRefresher.tryRefreshing = {}
@@ -771,10 +692,11 @@ private extension ConnectionState {
         )
     }
 
-    /// Build a `.connected` state from a spec and a `VPNConnectionActual`
-    static func testConnected(_ spec: ConnectionSpec, _: VPNConnectionActual) -> ConnectionState {
-        let actual = VPNConnectionActual.mock()
-        return .connected(
+    /// Build a `.connected` state from a spec and a `VPNConnectionActual`. The caller passes the actual in so that
+    /// the state it sends and the state it asserts against carry the same connection date: `VPNConnectionActual.mock()`
+    /// stamps `Date()` on every call, so building one here would make the two dates differ by a few milliseconds.
+    static func testConnected(_ spec: ConnectionSpec, _ actual: VPNConnectionActual) -> ConnectionState {
+        .connected(
             .init(connectionSpec: spec, tunnelProtocol: .ike, peerIDs: ["peer-id"], killSwitch: false),
             .init(currentPeer: actual.server, connectionDate: actual.connectedDate ?? .now, protocolConnectionData: .ike)
         )
