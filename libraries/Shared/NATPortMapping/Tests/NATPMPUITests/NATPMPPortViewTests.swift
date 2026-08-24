@@ -167,7 +167,7 @@ struct NATPMPPortViewTests {
         withDependencies {
             $0.date.now = .init()
         } operation: {
-            let view = StatusPortView(portModel: MappedPort(portNumber: 36528))
+            let view = StatusPortView(portNumber: 36528)
             let nsView = NSHostingView(rootView: view)
 
             assertSnapshot(of: nsView, as: .image(size: .init(width: 188, height: 25)))
@@ -179,39 +179,10 @@ struct NATPMPPortViewTests {
         withDependencies {
             $0.date.now = .init()
         } operation: {
-            let view = StatusPortView(portModel: MappedPort(portNumber: 36528)).environment(\.colorScheme, .dark)
+            let view = StatusPortView(portNumber: 36528).environment(\.colorScheme, .dark)
             let nsView = NSHostingView(rootView: view)
 
             assertSnapshot(of: nsView, as: .image(size: .init(width: 188, height: 25)))
-        }
-    }
-
-    @Test
-    func statusAppKitView() {
-        withDependencies {
-            $0.date.now = .init()
-        } operation: {
-            let view = StatusPortAppKitView()
-            view.portNumber = 36528
-            view.frame = .init(x: 0, y: 0, width: 188, height: 25)
-            view.layoutSubtreeIfNeeded()
-
-            assertSnapshot(of: view, as: .image(size: .init(width: 188, height: 25)))
-        }
-    }
-
-    @Test
-    func statusAppKitViewDark() {
-        withDependencies {
-            $0.date.now = .init()
-        } operation: {
-            let view = StatusPortAppKitView()
-            view.portNumber = 36528
-            view.appearance = NSAppearance(named: .darkAqua)
-            view.frame = .init(x: 0, y: 0, width: 188, height: 25)
-            view.layoutSubtreeIfNeeded()
-
-            assertSnapshot(of: view, as: .image(size: .init(width: 188, height: 25)))
         }
     }
 

@@ -588,7 +588,7 @@ extension QuickSettingsFeature {
         case (.secureCoreDisplay, .secureCoreOn):
             return userTier.isFree
         case let (.netShieldDisplay, .netShield(level)):
-            return level.isUserTierTooLow(userTier ?? .free)
+            return level.isUserTierTooLow(userTier.orFree)
         case (.portForwardingDisplay, .portForwardingOn):
             return userTier.isFree
         default:

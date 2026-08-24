@@ -25,12 +25,14 @@ import Ergonomics
 @testable import ExtensionManager
 @testable import ExtensionSync
 import Foundation
+import NATPortMapping
 import os
 import PaymentsShared
 @testable import ProtonVPN
 import Strings
 import Testing
 import VPNAppCore
+import VPNShared
 
 @MainActor
 @Suite(.serialized)
@@ -576,6 +578,53 @@ struct SidebarFeatureTests {
         #expect(alert?.actions.allSatisfy { $0.handler != nil } == true)
     }
 
+    // MARK: - Port forwarding
+
+    @Test("a failed port mapping is reported to the user and clears the port")
+    func failedPortMappingIsReported() async {
+        await confirmation("port forwarding error shown") { shown in
+            let store = makeStore(
+                clock: TestClock(),
+                portForwardingNotifications: true,
+                notificationManager: .init(
+                    displayServerGoingOnMaintenance: {},
+                    displayPFChange: { _ in Issue.record("No port was mapped") },
+                    displayPFError: { shown() }
+                )
+            )
+            store.exhaustivity = .off(showSkippedAssertions: false)
+
+            await store.send(.startObservingEvents)
+            @Dependency(\.natPortMappingService) var service
+            service.portMappingStream.send(.failure(NATPortMappingError.mappingFailed))
+
+            await store.receive(\.portMappingChanged)
+            #expect(store.state.header.mappedPort == nil)
+            await store.send(.stopObservingEvents)
+        }
+    }
+
+    @Test("nothing is reported while port forwarding notifications are off")
+    func nothingReportedWhileNotificationsOff() async {
+        let store = makeStore(
+            clock: TestClock(),
+            portForwardingNotifications: false,
+            notificationManager: .init(
+                displayServerGoingOnMaintenance: {},
+                displayPFChange: { _ in Issue.record("The user asked not to hear about this") },
+                displayPFError: { Issue.record("The user asked not to hear about this") }
+            )
+        )
+        store.exhaustivity = .off(showSkippedAssertions: false)
+
+        await store.send(.startObservingEvents)
+        @Dependency(\.natPortMappingService) var service
+        service.portMappingStream.send(.failure(NATPortMappingError.mappingFailed))
+
+        await store.receive(\.portMappingChanged)
+        await store.send(.stopObservingEvents)
+    }
+
     // MARK: - Private
 
     private func makeStore(
@@ -589,6 +638,12 @@ struct SidebarFeatureTests {
         clock: TestClock<Duration>? = nil,
         coreAlertService: CoreAlertService = .testValue,
         portForwardingEnabled: Bool = false,
+        portForwardingNotifications: Bool = false,
+        notificationManager: NotificationManager = .init(
+            displayServerGoingOnMaintenance: {},
+            displayPFChange: { _ in },
+            displayPFError: {}
+        ),
         serverChangeAuthorizer: ServerChangeAuthorizer = .availableValue
     ) -> TestStoreOf<SidebarFeature> {
         withDependencies {
@@ -602,6 +657,20 @@ struct SidebarFeatureTests {
 
             $sharedConnectionState.withLock { $0 = connectionState }
             $sharedConnectionProtocol.withLock { $0 = .vpnProtocol(.ike) }
+
+            // Port forwarding notifications are a paid setting stored per user, so the reducer's check
+            // needs a tier that may use it and a username to resolve the storage key with.
+            let keychain = MockAuthKeychain()
+            keychain.username = "test-user"
+            withDependencies {
+                $0.defaultAppStorage = defaults
+                $0.authKeychain = keychain
+            } operation: {
+                @Shared(.userTier) var userTier
+                $userTier.withLock { $0 = .paid }
+                AuthorizedFeatureValue<PortForwardingNotifications>()
+                    .setValue(portForwardingNotifications ? .on : .off)
+            }
 
             let session = VPNSessionMock(status: .disconnected)
             session.messageHandler = MessageHandler.full
@@ -632,6 +701,8 @@ struct SidebarFeatureTests {
                 $0.pendingDisconnectCompletions = PendingDisconnectCompletions()
                 $0.portForwardingPropertyProvider.setPortForwarding(portForwardingEnabled)
                 $0.serverChangeAuthorizer = serverChangeAuthorizer
+                $0.authKeychain = keychain
+                $0.notificationManager = notificationManager
                 $0.announcementRefresher.tryRefreshing = {}
                 $0.withRandomNumberGenerator = WithRandomNumberGenerator(SystemRandomNumberGenerator())
             }

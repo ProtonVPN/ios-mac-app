@@ -274,7 +274,7 @@ public struct CountryFeature {
         }
 
         // Sort sections: available tiers first, then by tier descending
-        let userTier = (state.userTier ?? .free).rawValue
+        let userTier = state.userTier.orFree.rawValue
         let sortedSections = sections.sorted { section1, section2 in
             if userTier >= section1.tier.rawValue && userTier >= section2.tier.rawValue ||
                 userTier < section1.tier.rawValue && userTier < section2.tier.rawValue {

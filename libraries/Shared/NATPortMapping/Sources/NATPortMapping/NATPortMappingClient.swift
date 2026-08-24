@@ -184,7 +184,7 @@ final class NATPortMappingClient: Sendable {
     }
 }
 
-enum NATPortMappingError: Error {
+public enum NATPortMappingError: Error {
     case invalidResponse
     case malformedPacket
     case timeoutError

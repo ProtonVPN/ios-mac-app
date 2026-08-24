@@ -29,6 +29,7 @@ import Ergonomics
 import ExtensionManager
 import Foundation
 import Hermes
+import NATPortMapping
 import PaymentsShared
 import Persistence
 import ProtonCoreFeatureFlags
@@ -81,6 +82,7 @@ struct SidebarFeature {
         var mapWidth: CGFloat = 600
         var isFullscreen = false
         var natPortMappingRunning = false
+        var header = HeaderFeature.State()
         var countriesSection = CountriesSectionFeature.State()
         @Presents var alert: AlertState<Action.Alert>?
         var pendingReconnectIntent: ConnectionPreparationIntent?
@@ -131,6 +133,7 @@ struct SidebarFeature {
         case refreshAnnouncementsIfNeeded
         case connectionStateChanged(ConnectionState)
         case syncNATPortMappingState
+        case portMappingChanged(Result<PortMappingPacketResponse?, Error>)
         case syncPlutoniumState
         case connectingOverlay(ConnectingOverlayFeature.Action)
 
@@ -138,6 +141,7 @@ struct SidebarFeature {
         case expandButtonTapped
         case connectionCommandReceived(ConnectionCommand)
 
+        case header(HeaderFeature.Action)
         case countriesSection(CountriesSectionFeature.Action)
         case alert(PresentationAction<Alert>)
 
@@ -195,6 +199,8 @@ struct SidebarFeature {
     @Dependency(\.announcementRefresher) private var announcementRefresher
     @Dependency(\.coreAlertService) private var coreAlertService
     @Dependency(\.linkOpener) private var linkOpener
+    @Dependency(\.notificationManager) private var notificationManager
+    @Dependency(\.date) private var date
 
     @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
     @SharedReader(.connectionProtocol) private var sharedConnectionProtocol: ConnectionProtocol
@@ -206,6 +212,9 @@ struct SidebarFeature {
                 ._printChanges()
         }
 
+        Scope(state: \.header, action: \.header) {
+            HeaderFeature()
+        }
         Scope(state: \.countriesSection, action: \.countriesSection) {
             CountriesSectionFeature()
         }
@@ -237,6 +246,7 @@ struct SidebarFeature {
         case connectionCommands
         case connectionState
         case portForwardingSetting
+        case portMapping
         case plutoniumSetting
         case connectionConnectCommandEffect
         case plutoniumSync
@@ -311,6 +321,22 @@ private extension SidebarFeature {
                         }
                     }
                     .cancellable(id: CancelID.portForwardingSetting),
+                    .publisher {
+                        natPortMappingService.portMappingStream
+                            .removeDuplicates(by: { previous, next in
+                                switch (previous, next) {
+                                case let (.success(previousMapping), .success(nextMapping)):
+                                    previousMapping?.mappedExternalPort == nextMapping?.mappedExternalPort
+                                case (.success, .failure), (.failure, .success):
+                                    false
+                                case (.failure, .failure):
+                                    // One failure is as good as another.
+                                    true
+                                }
+                            })
+                            .map(Action.portMappingChanged)
+                    }
+                    .cancellable(id: CancelID.portMapping),
                     .run { send in
                         @SharedReader(.plutoniumFeature) var plutoniumFeature
                         for await _ in $plutoniumFeature.publisher.values {
@@ -604,6 +630,10 @@ private extension SidebarFeature {
         }
     }
 
+    private var portForwardingNotificationsEnabled: Bool {
+        AuthorizedFeatureValue<PortForwardingNotifications>().value() == .on
+    }
+
     var countriesSectionReducer: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -748,9 +778,43 @@ private extension SidebarFeature {
                         log.info("NAT port mapping service started", category: .connection)
                     }
                 } else {
+                    state.header.mappedPort = nil
                     return .run { _ in
                         await natPortMappingService.cancelPortMapping()
                         log.info("NAT port mapping service stopped", category: .connection)
+                    }
+                }
+
+            case let .portMappingChanged(result):
+                switch result {
+                case let .success(mapping):
+                    // A mapping the server has already let expire is no longer a port we have.
+                    guard let mapping, mapping.deadlineDate > date.now else {
+                        state.header.mappedPort = nil
+                        return .none
+                    }
+                    state.header.mappedPort = mapping.mappedExternalPort
+                    log.info(
+                        "Port forwarding mapped a port",
+                        category: .connection,
+                        metadata: ["port": "\(mapping.mappedExternalPort)", "notify": "\(portForwardingNotificationsEnabled)"]
+                    )
+                    guard portForwardingNotificationsEnabled else { return .none }
+                    let portNumber = mapping.mappedExternalPort
+                    return .run { _ in
+                        await MainActor.run { notificationManager.displayPFChange(portNumber: portNumber) }
+                    }
+
+                case .failure:
+                    state.header.mappedPort = nil
+                    log.error(
+                        "Port forwarding could not get a port",
+                        category: .connection,
+                        metadata: ["notify": "\(portForwardingNotificationsEnabled)"]
+                    )
+                    guard portForwardingNotificationsEnabled else { return .none }
+                    return .run { _ in
+                        await MainActor.run { notificationManager.displayPFError() }
                     }
                 }
 

@@ -44,7 +44,7 @@ public struct HomeConnectionCardFeature {
         }
 
         package var headerModel: ConnectionCardHeaderModel {
-            ConnectionCardHeaderModel(connectionState: connectionState, userTier: userTier ?? .free)
+            ConnectionCardHeaderModel(connectionState: connectionState, userTier: userTier.orFree)
         }
 
         public var serverChangeAvailability: ServerChangeAuthorizer.ServerChangeAvailability?
