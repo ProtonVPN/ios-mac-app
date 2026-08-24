@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Theme
 import UIKit
 
 /// The shell's tab pages, one showing at a time. Can't be a UITabBar because that would require the elements to live in
@@ -46,6 +47,8 @@ public final class ShellPagesController: UIViewController {
     /// How much room the bar wants at the bottom edge beyond the safe area, so a page's content stops above it while
     /// its background still runs underneath. This is the inset a tab bar controller would have given these pages for a
     /// bar of its own.
+    private static let columnWidth = Theme.Constants.maxHomeContentWidth
+
     var barRoom: CGFloat = 0 {
         didSet {
             guard barRoom != oldValue else { return }
@@ -57,6 +60,30 @@ public final class ShellPagesController: UIViewController {
         super.viewDidLoad()
         // The app is compact-width everywhere, as it was when a tab bar controller carried these pages.
         traitOverrides.horizontalSizeClass = .compact
+        // The pages keep the height class the window reports.
+        traitOverrides.verticalSizeClass = .regular
+    }
+
+    override public func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        narrowSheetToColumn()
+    }
+
+    override public func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        narrowSheetToColumn()
+    }
+
+    /// Keeps the sheet as wide as the content column on a window wider than the column, and as wide as the window otherwise
+    private func narrowSheetToColumn() {
+        guard let window = view.window, let container = presentationController?.containerView else { return }
+        let width = min(window.bounds.width, Self.columnWidth)
+        if preferredContentSize.width != width {
+            preferredContentSize.width = width
+        }
+        let wantsColumn = width < window.bounds.width
+        guard wantsColumn != (container.traitCollection.verticalSizeClass == .compact) else { return }
+        container.traitOverrides.verticalSizeClass = wantsColumn ? .compact : .unspecified
     }
 
     /// Takes the pages and shows the home tab.
