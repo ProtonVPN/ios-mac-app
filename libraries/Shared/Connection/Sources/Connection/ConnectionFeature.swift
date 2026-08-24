@@ -429,10 +429,18 @@ public enum ConnectionState: Equatable, Sendable, Codable {
 }
 
 public extension ConnectionFeature.State {
-    static let initialState = ConnectionFeature.State(
-        shouldRegisterServerChangeOnConnection: false,
-        tunnel: .unknown
-    )
+    /// A fresh starting state.
+    ///
+    /// This is computed rather than stored. The `@Shared` properties bind to the `defaultAppStorage` that is in
+    /// effect when the value is created, and a stored `static let` is created once per process. Every later caller
+    /// would then receive that first store, so a test or a preview that scopes `defaultAppStorage` to its own
+    /// `UserDefaults` would read and write a different `connectionState` than the rest of the feature it drives.
+    static var initialState: ConnectionFeature.State {
+        ConnectionFeature.State(
+            shouldRegisterServerChangeOnConnection: false,
+            tunnel: .unknown
+        )
+    }
 }
 
 extension ConnectionFeature.Action: CustomDebugStringConvertible {
