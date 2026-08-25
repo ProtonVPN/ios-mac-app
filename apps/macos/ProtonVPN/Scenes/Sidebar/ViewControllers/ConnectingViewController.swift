@@ -179,13 +179,13 @@ private struct ConnectingOverlayGraphicView: View {
             ConnectingOverlayLoadingFramesView()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         case .connected:
-            Image(nsImage: Theme.Asset.vpnResultConnected.image)
+            Theme.Asset.vpnResultConnected.swiftUIImage
                 .resizable()
                 .interpolation(.high)
                 .frame(.square(Dimensions.connectedImageSize))
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         case .warning:
-            Image(nsImage: Theme.Asset.vpnResultWarning.image)
+            Theme.Asset.vpnResultWarning.swiftUIImage
                 .resizable()
                 .scaledToFit()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -197,38 +197,50 @@ private struct ConnectingOverlayGraphicView: View {
     }
 }
 
+/// Plays the loading animation for as long as the overlay is on screen.
 private struct ConnectingOverlayLoadingFramesView: View {
-    @State private var currentFrame = 0
+    @State private var frames: [NSImage] = []
 
-    private static let frameRate: TimeInterval = 1 / 45
-    private static let frames: [NSImage] = {
-        guard let urls = Bundle(for: ConnectingViewController.self)
-            .urls(forResourcesWithExtension: "png", subdirectory: "LoadingAnimationFrames")
-        else {
-            return []
-        }
-
-        return urls
-            .sorted { $0.lastPathComponent < $1.lastPathComponent }
-            .compactMap { NSImage(contentsOf: $0) }
-    }()
-
-    private let timer = Timer.publish(every: frameRate, on: .main, in: .common).autoconnect()
+    private static let frameDuration: TimeInterval = 1 / 45
 
     var body: some View {
-        if Self.frames.isEmpty {
-            ProgressView()
-                .controlSize(.large)
-        } else {
-            Image(nsImage: Self.frames[currentFrame])
-                .resizable()
-                .interpolation(.high)
-                .scaledToFill()
-                .onReceive(timer) { _ in
-                    currentFrame = (currentFrame + 1) % Self.frames.count
+        Group {
+            if frames.isEmpty {
+                ProgressView()
+                    .controlSize(.large)
+            } else {
+                TimelineView(.animation(minimumInterval: Self.frameDuration)) { context in
+                    Image(nsImage: frames[frameIndex(at: context.date)])
+                        .resizable()
+                        .interpolation(.high)
+                        .scaledToFill()
                 }
+            }
+        }
+        .task {
+            frames = await Task.detached(priority: .userInitiated) { loadFrames() }.value
+        }
+        .onDisappear {
+            frames = []
         }
     }
+
+    private func frameIndex(at date: Date) -> Int {
+        let elapsed = date.timeIntervalSinceReferenceDate
+        return Int(elapsed / Self.frameDuration) % frames.count
+    }
+}
+
+private func loadFrames() -> [NSImage] {
+    guard let urls = Bundle(for: ConnectingViewController.self)
+        .urls(forResourcesWithExtension: "png", subdirectory: "LoadingAnimationFrames")
+    else {
+        return []
+    }
+
+    return urls
+        .sorted { $0.lastPathComponent < $1.lastPathComponent }
+        .compactMap { NSImage(contentsOf: $0) }
 }
 
 private struct ConnectingOverlayButtonStyle: ButtonStyle {

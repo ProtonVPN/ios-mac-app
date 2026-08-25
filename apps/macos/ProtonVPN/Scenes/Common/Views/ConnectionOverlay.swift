@@ -22,18 +22,33 @@
 
 import Cocoa
 
-class ConnectionOverlay: NSView {
+final class ConnectionOverlay: NSView {
     private let blurRadius = 4.0
+
+    private lazy var blurFilter: CIFilter? = {
+        guard let filter = CIFilter(name: "CIGaussianBlur") else { return nil }
+        filter.setDefaults()
+        filter.setValue(NSNumber(value: blurRadius), forKey: "inputRadius")
+        return filter
+    }()
+
+    private var activeFilters: [CIFilter] {
+        guard !isHidden, let blurFilter else { return [] }
+        return [blurFilter]
+    }
 
     override var isHidden: Bool {
         didSet {
-            setup()
+            guard isHidden != oldValue else { return }
+            applyFilters()
         }
     }
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
-        setup()
+
+        wantsLayer = true
+        applyFilters()
     }
 
     @available(*, unavailable)
@@ -41,24 +56,10 @@ class ConnectionOverlay: NSView {
         fatalError("Unsupported initializer")
     }
 
-    private func setup() {
-        let blurLayer = CALayer()
-        wantsLayer = true
-        layer = blurLayer
-
-        if isHidden {
-            layer?.needsDisplayOnBoundsChange = false
-            return
-        }
-
-        layer?.masksToBounds = true
-        layer?.needsDisplayOnBoundsChange = true
-
-        let blurFilter = CIFilter(name: "CIGaussianBlur")!
-        blurFilter.setDefaults()
-        blurFilter.setValue(NSNumber(value: blurRadius), forKey: "inputRadius")
-        layer?.backgroundFilters = [blurFilter]
-
+    private func applyFilters() {
+        layer?.masksToBounds = !isHidden
+        layer?.needsDisplayOnBoundsChange = !isHidden
+        layer?.backgroundFilters = activeFilters
         layer?.setNeedsDisplay()
     }
 }
