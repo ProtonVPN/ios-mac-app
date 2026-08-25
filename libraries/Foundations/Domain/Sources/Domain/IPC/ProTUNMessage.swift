@@ -49,6 +49,7 @@ public extension ProTUNMessage.Request {
         case pcapRequest(PcapRequest)
         case pushForkInfo(selector: String, cookieName: String, cookieValue: String)
         case updateConfiguration(ConnectionUpdate)
+        case clearPersistentCache
         case ack(errorId: UUID)
         #if DEBUG
             case ping
@@ -117,6 +118,7 @@ extension ProTUNMessage.Request.Payload: CustomStringConvertible {
         case let .pcapRequest(request): "pcapRequest(\(request))"
         case .pushForkInfo: "pushForkInfo"
         case .updateConfiguration: "updateConfiguration"
+        case .clearPersistentCache: "clearPersistentCache"
         case let .ack(errorId): "ack(\(errorId))"
         }
     }

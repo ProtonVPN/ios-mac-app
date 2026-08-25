@@ -46,6 +46,8 @@ enum MessageRouter {
             return await handlePushSelector(selector, cookieName: cookieName, cookieValue: cookieValue, with: adapter)
         case let .updateConfiguration(update):
             return await handleConfigurationUpdate(update: update, with: adapter)
+        case .clearPersistentCache:
+            return handleClearPersistentCache()
         case let .ack(errorId):
             return await handleAcknowledgeError(errorId, with: adapter)
         }
@@ -91,6 +93,11 @@ private extension MessageRouter {
         with adapter: ProTUNAdapter
     ) async -> Response {
         await adapter.handleForkSelector(selector, cookieName: cookieName, cookieValue: cookieValue)
+        return .init(payload: .ack)
+    }
+
+    static func handleClearPersistentCache() -> Response {
+        SecurePersistentCache.clearAllUsers()
         return .init(payload: .ack)
     }
 

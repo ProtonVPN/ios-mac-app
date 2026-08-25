@@ -36,6 +36,17 @@ public func stopActiveVPNTunnel() async throws {
     }
 }
 
+/// Tells the extension to discard the session state it persisted for every account, so a tunnel started post-logout
+/// (from Settings, Control Centre or an on-demand rule) can't connect after sign-out
+public func clearExtensionPersistentCache() async throws {
+    @Dependency(\.tunnelManager) var tunnelManager
+
+    let response = try await tunnelManager.sendProTUN(request: .init(payload: .clearPersistentCache))
+    guard case .ack = response.payload else {
+        throw TunnelManagerError.protunIPC("Unexpected response to clearPersistentCache: \(response.payload)")
+    }
+}
+
 /// Switches the live tunnel to a peerless zero-peer blackhole in place, so Advanced kill switch keeps blocking
 /// after sign-out without tearing the tunnel down
 public func enterZeroPeerBlockingTunnel() async throws {

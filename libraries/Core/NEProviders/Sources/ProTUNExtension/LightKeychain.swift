@@ -27,6 +27,8 @@ struct LightKeychain {
     var getPassword: @Sendable (_ service: String, _ account: String) -> (OSStatus, Data?) = { _, _ in (.zero, nil) }
     var removePassword: @Sendable (_ service: String, _ account: String) -> OSStatus = { _, _ in .zero }
     var clear: @Sendable (_ service: String) -> OSStatus = { _ in .zero }
+    /// Every generic password service
+    var services: @Sendable () -> (OSStatus, [String]) = { (.zero, []) }
 }
 
 extension LightKeychain: DependencyKey {
@@ -79,6 +81,21 @@ extension LightKeychain: DependencyKey {
                 kSecAttrService: service,
             ] as CFDictionary
         )
+    } services: {
+        let query = [
+            kSecClass: kSecClassGenericPassword,
+            kSecReturnAttributes: true,
+            kSecMatchLimit: kSecMatchLimitAll,
+        ] as CFDictionary
+
+        var result: AnyObject?
+        let status = SecItemCopyMatching(query, &result)
+
+        guard status == errSecSuccess, let items = result as? [[CFString: Any]] else {
+            return (status, [])
+        }
+
+        return (status, Array(Set(items.compactMap { $0[kSecAttrService] as? String })))
     }
 }
 
