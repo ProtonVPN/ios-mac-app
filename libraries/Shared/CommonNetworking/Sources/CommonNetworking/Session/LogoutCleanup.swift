@@ -16,12 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Domain
 import Sharing
 import VPNAppCore
-#if canImport(WidgetKit)
-    import WidgetKit
-#endif
 
 /// Resets user-scoped settings to their defaults on logout (and on login, to clear any prior
 /// session's state). Replaces the legacy `PropertiesManager.logoutCleanup()`.
@@ -52,7 +50,7 @@ public func performLogoutCleanup() {
 
     @Shared(.userSettings) var userSettings
     $userSettings.withLock { $0 = nil }
-    #if canImport(WidgetKit)
-        WidgetCenter.shared.reloadAllTimelines()
-    #endif
+
+    @Dependency(\.widgetReload) var widgetReload
+    widgetReload.reloadAllTimelines(.loggedInOrOut)
 }

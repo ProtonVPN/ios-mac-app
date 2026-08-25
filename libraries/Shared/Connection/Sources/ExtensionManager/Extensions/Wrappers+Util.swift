@@ -19,7 +19,7 @@
 import Dependencies
 import Foundation
 
-extension TunnelProviderManager {
+public extension TunnelProviderManager {
     var providerBundleIdentifier: String? {
         vpnProtocolConfiguration?.providerBundleIdentifier
     }

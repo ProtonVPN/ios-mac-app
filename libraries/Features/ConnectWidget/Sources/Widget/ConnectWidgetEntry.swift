@@ -25,7 +25,7 @@ import WidgetKit
 
 struct ConnectWidgetEntry: TimelineEntry {
     let date: Date
-    let connectionSpec: ConnectionSpec?
+    let connectionSpec: ConnectionSpec
     let currentServer: Server?
     let protectionState: ProtectionState
     let recentServers: OrderedSet<RecentConnection>
@@ -40,7 +40,7 @@ struct ConnectWidgetEntry: TimelineEntry {
     static var loggedOutEntry: Self {
         ConnectWidgetEntry(
             date: .now,
-            connectionSpec: nil,
+            connectionSpec: .defaultFastest,
             currentServer: nil,
             protectionState: .signedOut,
             recentServers: []
@@ -49,17 +49,17 @@ struct ConnectWidgetEntry: TimelineEntry {
 }
 
 extension ConnectWidgetEntry {
-    var currentLocation: ConnectionSpec.Location? {
+    var currentLocation: ConnectionSpec.Location {
         switch protectionState {
         case .protected, .protecting:
             // For `random` connections, when connecting/connected, we show the resolved server.
-            if connectionSpec?.location.selectionSpec == .random, let currentServer {
+            if connectionSpec.location.selectionSpec == .random, let currentServer {
                 return CityStateConnectionSpecFactory.serverLocation(for: currentServer.logical)
                     .applying(RecentConnection.ServerDisplay(logical: currentServer.logical))
             }
         case .signedOut, .unprotected:
             break
         }
-        return connectionSpec?.location
+        return connectionSpec.location
     }
 }

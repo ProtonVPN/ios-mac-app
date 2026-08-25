@@ -80,19 +80,12 @@ private struct HeaderView: View {
     var body: some View {
         HStack(alignment: .center) {
             if widgetFamily == .systemSmall {
-                // We show server flag if available
-                if let location = entry.currentLocation {
-                    FlagView(location: location, flagSize: .defaultSize)
-                    Spacer()
-                }
+                FlagView(location: entry.currentLocation, flagSize: .defaultSize)
+                Spacer()
             } else {
                 switch entry.protectionState {
                 case .protected:
                     ZStack(alignment: .leading) {
-                        if let location = entry.connectionSpec?.location, widgetFamily == .systemSmall {
-                            FlagView(location: location, flagSize: .defaultSize)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
                         HStack {
                             Theme.Asset.Icons.lockFilled.swiftUIImage
                             Text(Localizable.connectionStatusProtected)
@@ -130,25 +123,23 @@ private struct ServerInfoView: View {
 
     var body: some View {
         Group {
-            if let location = entry.currentLocation {
-                HStack(alignment: .top, spacing: .themeSpacing12) {
-                    if widgetFamily != .systemSmall {
-                        FlagView(location: location, flagSize: .defaultSize)
-                    }
-                    VStack(alignment: .leading, spacing: .zero) {
-                        Text(location.text(locale: .current))
-                            .themeFont(widgetFamily == .systemLarge ? .body1(.semibold) : .body2(emphasised: true))
-                            .foregroundStyle(Color(.text, .normal))
+            HStack(alignment: .top, spacing: .themeSpacing12) {
+                if widgetFamily != .systemSmall {
+                    FlagView(location: entry.currentLocation, flagSize: .defaultSize)
+                }
+                VStack(alignment: .leading, spacing: .zero) {
+                    Text(entry.currentLocation.text(locale: .current))
+                        .themeFont(widgetFamily == .systemLarge ? .body1(.semibold) : .body2(emphasised: true))
+                        .foregroundStyle(Color(.text, .normal))
 
-                        if let subtext = location.subtext(locale: .current) {
-                            Text(subtext)
-                                .themeFont(widgetFamily == .systemLarge ? .body2(emphasised: false) : .caption(emphasised: false))
-                                .foregroundStyle(Color(.text, .weak))
-                        }
+                    if let subtext = entry.currentLocation.subtext(locale: .current) {
+                        Text(subtext)
+                            .themeFont(widgetFamily == .systemLarge ? .body2(emphasised: false) : .caption(emphasised: false))
+                            .foregroundStyle(Color(.text, .weak))
                     }
                 }
-                Spacer()
             }
+            Spacer()
         }
     }
 }

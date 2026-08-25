@@ -26,10 +26,6 @@ import Foundation
 import KeychainAccess
 import PMLogger
 
-#if canImport(WidgetKit)
-    import WidgetKit
-#endif
-
 public protocol AuthKeychainHandle {
     var username: String? { get }
     var userId: String? { get }
@@ -229,9 +225,6 @@ extension AuthKeychain: AuthKeychainHandle {
                 #endif
             }
         }
-        #if canImport(WidgetKit)
-            WidgetCenter.shared.reloadAllTimelines()
-        #endif
     }
 
     public func clear(_ reason: ClearKeychainReason) {

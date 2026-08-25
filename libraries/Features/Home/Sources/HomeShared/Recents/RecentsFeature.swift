@@ -25,7 +25,7 @@ import OrderedCollections
 import Persistence
 import SwiftUI
 import VPNAppCore
-import WidgetKit
+import VPNShared
 
 @Reducer
 public struct RecentsFeature {
@@ -82,6 +82,7 @@ public struct RecentsFeature {
     }
 
     @Dependency(\.date) var date
+    @Dependency(\.widgetReload) var widgetReload
 
     public init() {}
 
@@ -120,7 +121,7 @@ public struct RecentsFeature {
             case let .connectionEstablished(spec, display):
                 withAnimation {
                     state.$recentConnections.withLock { $0?.updateList(with: spec, display: display) }
-                    WidgetCenter.shared.reloadAllTimelines()
+                    widgetReload.reloadAllTimelines(.connectionStateChanged(.connected))
                 }
 
                 return .none
@@ -129,27 +130,27 @@ public struct RecentsFeature {
                 // The list changed under the precomputed recents, so rewrite their display fields.
                 @Dependency(\.serverRepository) var serverRepository
                 state.$recentConnections.withLock { $0 = $0?.refreshingServerDisplay(from: serverRepository) }
-                WidgetCenter.shared.reloadAllTimelines()
+                widgetReload.reloadAllTimelines(.connectionStateChanged(.connected))
                 return .none
 
             case let .pin(recent):
                 withAnimation {
                     state.$recentConnections.withLock { $0?.pin(recent: recent, pinnedDate: date.now) }
-                    WidgetCenter.shared.reloadAllTimelines()
+                    widgetReload.reloadAllTimelines(.recentsListChanged)
                 }
                 return .none
 
             case let .unpin(recent):
                 withAnimation {
                     state.$recentConnections.withLock { $0?.unpin(recent: recent) }
-                    WidgetCenter.shared.reloadAllTimelines()
+                    widgetReload.reloadAllTimelines(.recentsListChanged)
                 }
                 return .none
 
             case let .remove(recent):
                 withAnimation {
                     _ = state.$recentConnections.withLock { $0?.remove(recent) }
-                    WidgetCenter.shared.reloadAllTimelines()
+                    widgetReload.reloadAllTimelines(.recentsListChanged)
                 }
                 return .none
 
