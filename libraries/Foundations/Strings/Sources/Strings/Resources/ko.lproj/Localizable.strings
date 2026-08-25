@@ -251,6 +251,12 @@
 /* macOS overlay when reconnecting & text in main window */
 "_you_are_not_protected" = "보호되어 있지 않음";
 
+/* macos header title when authentication is needed */
+"_header_auth_required" = "Authentication required";
+
+/* macos header subtitle when authentication is needed */
+"_header_vpn_traffic_blocked" = "VPN traffic is blocked until you authenticate.";
+
 /* MacOS: button in connecting overlay */
 "_try_again" = "다시 시도";
 
@@ -1204,10 +1210,10 @@
 "split_tunneling_alert_description" = "분할 터널링은 IKEv2 프로토콜과 호환되지 않습니다.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "분할 터널링은 IKEv2 프로토콜과 호환되지 않습니다. 분할 터널링을 사용하려면 귀하의 프로필 프로토콜을 변경하거나 프로필에서 연결 해제하십시오.";
+"split_tunneling_profile_alert_description" = "분할 터널링은 IKEv2 프로토콜과 호환되지 않습니다. 분할 터널링을 사용하려면 프로필 프로토콜을 변경하거나 프로필에서 연결 해제하십시오.";
 
 /* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
-"split_tunneling_connect_to_profile_alert_description" = "분할 터널링은 귀하의 프로필 프로토콜(IKEv2)과 호환되지 않습니다. 연결하면 분할 터널링이 비활성화됩니다. 더 알아보기";
+"split_tunneling_connect_to_profile_alert_description" = "분할 터널링이 사용자의 프로필 프로토콜(IKEv2)과 호환되지 않습니다. 연결하면 분할 터널링이 비활성화됩니다. 더 알아보기";
 
 /* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_link" = "더 알아보기";
@@ -1267,7 +1273,7 @@
 "_per_year" = " / 연간";
 
 /* Per month. Appended to plan price. */
-"_per_month" = " / 월간";
+"_per_month" = " / 월";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Web 전용";
@@ -1397,7 +1403,7 @@
 "_report_field_feedback" = "무엇이 잘못됐나요?";
 
 /* Mac bug report: steps field label */
-"_report_field_steps" = "당신이 실행한 작업이 정확히 무엇입니까?";
+"_report_field_steps" = "실행한 작업이 정확히 무엇인가요?";
 
 /* Mag bug report: textfields placeholder */
 "_report_field_placeholder" = "입력 시작...";
@@ -1471,7 +1477,7 @@
 
 "_troubleshoot_item_gov_title" = "정부 차단";
 
-"_troubleshoot_item_gov_description" = "당신의 국가는 Proton 서비스를 사용하는 것을 막고 있을 지도 모릅니다. Proton 서비스를 사용하기 위하여 Tor를 사용해보세요.";
+"_troubleshoot_item_gov_description" = "현재 거주 중인 국가에서 Proton 서비스를 차단하고 있을 가능성이 있습니다. Proton 서비스를 사용하기 위하여 Tor를 사용해보세요.";
 
 "_troubleshoot_item_gov_link1" = "Tor";
 
@@ -1481,7 +1487,7 @@
 
 "_troubleshoot_item_proxy_title" = "프록시/방화벽의 방해";
 
-"_troubleshoot_item_proxy_description" = "프록시와 방화벽을 비활성화 하시거나, 당신의 네트워크 관리자에 문의하세요.";
+"_troubleshoot_item_proxy_description" = "프록시와 방화벽을 비활성화 하거나, 네트워크 관리자에 문의하세요.";
 
 "_troubleshoot_item_proton_title" = "Proton에 접속할 수 없음";
 
@@ -1663,11 +1669,11 @@
 
 "_sysex_tutorial_subtitle_app" = "Proton VPN을 사용하려면 Mac에서 다음 시스템 확장을 활성화해야 합니다:";
 
-"_sysex_tutorial_subtitle_st" = "분할 터널링을 사용하려면, 귀하의 Mac에서 다음 시스템 확장을 활성화해야 합니다:";
+"_sysex_tutorial_subtitle_st" = "분할 터널링을 사용하려면, Mac에서 다음 시스템 확장을 활성화해야 합니다:";
 
-"_sysex_tutorial_subtitle_wg" = "WireGuard를 사용하려면, 귀하의 Mac에서 다음 시스템 확장을 활성화해야 합니다:";
+"_sysex_tutorial_subtitle_wg" = "WireGuard를 사용하려면, Mac에서 다음 시스템 확장을 활성화해야 합니다:";
 
-"_sysex_tutorial_subtitle_features" = "특정 VPN 기능(및 대부분의 프로토콜)을 사용하려면, 귀하의 Mac에서 Proton VPN 시스템 확장을 활성화해야 합니다.";
+"_sysex_tutorial_subtitle_features" = "특정 VPN 기능(및 대부분의 프로토콜)을 사용하려면, Mac에서 Proton VPN 시스템 확장을 활성화해야 합니다.";
 
 "_sysex_tutorial_step_click_open" = "**네트워크 확장 열기**를 클릭하세요.";
 
@@ -1986,7 +1992,7 @@
 "servers_loading_error_subtitle" = "서버 목록을 불러오지 못했습니다.";
 
 /* Modal help text */
-"no_servers_help_string" = "귀하의 관리자가 VPN 접근 활성화에 도움이 필요하다면, **[이 지침](%@)**을 보내십시오.";
+"no_servers_help_string" = "관리자가 VPN 접근 활성화에 도움이 필요하다면, **[이 지침](%@)**을 보내십시오.";
 
 /* Modal help text */
 "no_servers_contact_us" = "도움이 필요하세요? **[문의해 주세요](%@)**";
@@ -2907,7 +2913,7 @@
 "welcome_to_proton_banner_title" = "노-로그 인증을 받은 VPN";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
-"welcome_to_proton_banner_subtitle" = "사용자의 VPN 활동은 스위스의 개인정보 보호법대로 보호됩니다. 저희는 당신을 온라인 상에서 추적하거나 정보를 제 3자와 공유하지 않습니다.";
+"welcome_to_proton_banner_subtitle" = "사용자의 VPN 활동은 스위스의 개인정보 보호법에 의거하여 보호됩니다. Proton은 사용자를 온라인 상에서 추적하거나 정보를 제 3자와 공유하지 않습니다.";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle_redesign" = "당사는 절대로 고객의 인터넷 활동을 기록하거나 정보를 제3자에게 공유하지 않습니다.";

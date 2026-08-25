@@ -251,6 +251,12 @@
 /* macOS overlay when reconnecting & text in main window */
 "_you_are_not_protected" = "დაცული არ ბრძანდებით";
 
+/* macos header title when authentication is needed */
+"_header_auth_required" = "Authentication required";
+
+/* macos header subtitle when authentication is needed */
+"_header_vpn_traffic_blocked" = "VPN traffic is blocked until you authenticate.";
+
 /* MacOS: button in connecting overlay */
 "_try_again" = "კიდევ ცდა";
 

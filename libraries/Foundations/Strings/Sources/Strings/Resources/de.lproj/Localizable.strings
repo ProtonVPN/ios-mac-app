@@ -251,6 +251,12 @@
 /* macOS overlay when reconnecting & text in main window */
 "_you_are_not_protected" = "Du bist ungeschützt";
 
+/* macos header title when authentication is needed */
+"_header_auth_required" = "Authentifizierung erforderlich";
+
+/* macos header subtitle when authentication is needed */
+"_header_vpn_traffic_blocked" = "Der VPN-Datenverkehr ist blockiert, bis du dich authentifiziert hast.";
+
 /* MacOS: button in connecting overlay */
 "_try_again" = "Erneut versuchen";
 
@@ -1267,7 +1273,7 @@
 "_per_year" = "/Jahr";
 
 /* Per month. Appended to plan price. */
-"_per_month" = "/Monat";
+"_per_month" = " / Monat";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
 "_web_only_feature" = "Nur Web";
