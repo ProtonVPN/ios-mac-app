@@ -83,7 +83,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " /kuukausi"
+            "value" : " /kk"
           }
         },
         "fil" : {
@@ -131,7 +131,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " /월간"
+            "value" : " /월"
           }
         },
         "nb" : {
@@ -149,7 +149,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " / miesiąc"
+            "value" : " /miesiąc"
           }
         },
         "pt" : {
