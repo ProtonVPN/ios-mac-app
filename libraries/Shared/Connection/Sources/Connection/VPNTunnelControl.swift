@@ -33,12 +33,18 @@ public struct VPNTunnelControl: Sendable {
     /// Switches the live tunnel to a peerless zero-peer blackhole in place, so Advanced kill switch
     /// keeps blocking after sign-out without tearing the tunnel down.
     public var enterZeroPeerBlocking: @Sendable () async throws -> Void
+
+    /// Has the extension discard the session state it persisted for every account, so a tunnel started
+    /// outside the app - from Settings, Control Centre or an on-demand rule - can no longer connect.
+    /// Throws when the message can't be delivered.
+    public var clearPersistentCache: @Sendable () async throws -> Void
 }
 
 extension VPNTunnelControl: DependencyKey {
     public static let liveValue = VPNTunnelControl(
         stop: { try await stopActiveVPNTunnel() },
-        enterZeroPeerBlocking: { try await enterZeroPeerBlockingTunnel() }
+        enterZeroPeerBlocking: { try await enterZeroPeerBlockingTunnel() },
+        clearPersistentCache: { try await clearExtensionPersistentCache() }
     )
 
     /// Endpoints report an issue and throw when tests exercise them without an override.

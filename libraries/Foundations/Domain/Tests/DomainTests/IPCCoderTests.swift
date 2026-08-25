@@ -47,6 +47,16 @@
             #expect(decoded.payload == original.payload)
         }
 
+        @Test("Request clearPersistentCache Encoding/Decoding assertions")
+        func clearPersistentCacheRoundTrip() throws {
+            let original = ProTUNMessage.Request(payload: .clearPersistentCache)
+            let data = try live.requestData(for: original)
+            let decoded = try live.request(from: data)
+
+            #expect(decoded.version == original.version)
+            #expect(decoded.payload == original.payload)
+        }
+
         @Test("Other error responses preserves reason string")
         func errorOtherRoundTrip() throws {
             let original = ProTUNMessage.Response(payload: .error(.other(reason: "internal error")))

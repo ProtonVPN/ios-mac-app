@@ -400,6 +400,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         if !settingsClient.isActive() {
             logOutRoutine()
+            Task { [weak self] in await self?.clearExtensionPersistentCache() }
             return
         }
 
@@ -419,6 +420,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                     // not a guarantee, since logOutRoutine dispatches them asynchronously. The tunnel
                     // keeps protecting traffic the whole time.
                     logOutRoutine()
+                    await self?.clearExtensionPersistentCache()
 
                     // Only convert a live tunnel; if already blocking there's nothing to switch.
                     guard connectionState.is(\.connected) else { return }
@@ -435,7 +437,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             }
 
             if settingsClient.isActive() {
-                Task {
+                Task { [weak self] in
+                    await self?.clearExtensionPersistentCache()
                     do {
                         try await settingsClient.disconnect()
                         logOutRoutine()
@@ -459,6 +462,16 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             } else {
                 alertService.push(alert: LogoutWarningAlert(confirmHandler: confirmationClosure))
             }
+        }
+    }
+
+    /// Clear ProTUN session information to prevent reuse after the user signs out.
+    private func clearExtensionPersistentCache() async {
+        @Dependency(\.vpnTunnelControl) var vpnTunnelControl
+        do {
+            try await vpnTunnelControl.clearPersistentCache()
+        } catch {
+            log.error("Failed to clear the extension's persistent cache: \(error)", category: .connection)
         }
     }
 

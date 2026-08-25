@@ -23,12 +23,15 @@ import os
 import protun
 
 final class SecurePersistentCache: PersistentCache {
+    /// Every cache service starts with this, followed by a hash of the user ID.
+    private static let servicePrefix = "ProTUN_"
+
     private let service: String
 
     init(userID: String) {
         let suffix = Self.cacheSuffix(for: userID)
         Logger.adapter.debug("Initialising SecurePersistentCache with suffix: \"\(suffix, privacy: .public)\"")
-        self.service = "ProTUN_" + suffix
+        self.service = Self.servicePrefix + suffix
     }
 
     private static func cacheSuffix(for userID: String) -> String {
@@ -92,6 +95,26 @@ final class SecurePersistentCache: PersistentCache {
 
         if status != errSecSuccess, status != errSecItemNotFound {
             Logger.adapter.error("Failed to clear Keychain items: \(describe(status), privacy: .public)")
+        }
+    }
+
+    /// Clears the cache of every user on this device. Prevents reuse of sessions after signing out.
+    static func clearAllUsers() {
+        @Dependency(\.lightKeychain) var lightKeychain
+
+        let (status, services) = lightKeychain.services()
+        guard status == errSecSuccess || status == errSecItemNotFound else {
+            Logger.adapter.error("Failed to list Keychain services: \(describe(status), privacy: .public)")
+            return
+        }
+
+        for service in services where service.hasPrefix(servicePrefix) {
+            let status = lightKeychain.clear(service: service)
+            if status == errSecSuccess || status == errSecItemNotFound {
+                Logger.adapter.info("Cleared Keychain items for \(service, privacy: .public)")
+            } else {
+                Logger.adapter.error("Failed to clear Keychain items for \(service, privacy: .public): \(describe(status), privacy: .public)")
+            }
         }
     }
 }
