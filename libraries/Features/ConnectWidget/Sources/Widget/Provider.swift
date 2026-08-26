@@ -102,42 +102,48 @@ struct Provider: TimelineProvider {
         )
 
         let protectionState = protectionState()
-        let connectionSpec = if protectionState == .unprotected {
-            specFromSharedProperty ?? specFromPreference
-        } else {
-            await providerConfigurationConnectionSpec()
-        }
+        let connectionSpec = specFromSharedProperty ?? specFromPreference
+
         return ConnectWidgetEntry(
             date: .now,
-            connectionSpec: connectionSpec ?? specFromSharedProperty ?? specFromPreference,
+            connectionSpec: connectionSpec,
             currentServer: connectionState.resolvedServer,
             protectionState: protectionState,
             recentServers: recents
         )
     }
 
-    func providerConfigurationConnectionSpec() async -> ConnectionSpec? {
-        do {
-            let tunnelManagers = try await NETunnelProviderManager.loadAllFromPreferences()
+    #if FALSE
+        /// The code below requires Network Extension / Packet Tunnel capability. At this point this doesn't give us
+        /// any advantage over reading from the shared properties because the network extension can't schedule a
+        /// widget timeline reload.
+        /// We can use this method of retrieving `ConnectionSpec` for the timeline entry once we figure out how
+        /// to talk to the extension directly from the widget. This way, after user interacts with the widget,
+        /// we can await for the connection to finish resolving and only then return with a new timeline entry. The connection
+        /// spec at this point would be already updated by the extension and the widget will be able to retrieve it.
+        func providerConfigurationConnectionSpec() async -> ConnectionSpec? {
+            do {
+                let tunnelManagers = try await NETunnelProviderManager.loadAllFromPreferences()
 
-            @Dependency(\.bundleIDClient) var bundleIDClient
-            let bundleIdentifier = bundleIDClient.bundleIdentifier(.wireGuard)
+                @Dependency(\.bundleIDClient) var bundleIDClient
+                let bundleIdentifier = bundleIDClient.bundleIdentifier(.wireGuard)
 
-            let proTUNManager = tunnelManagers.first {
-                $0.providerBundleIdentifier == bundleIdentifier
-            }
-            guard let proTUNManager,
-                  let protocolConfiguration = proTUNManager.protocolConfiguration,
-                  let tunnelProviderProtocol = protocolConfiguration as? NETunnelProviderProtocol else {
-                log.error("Failed to retrieve protocolConfiguration from NETunnelProviderManager preferences", category: .widget)
+                let proTUNManager = tunnelManagers.first {
+                    $0.providerBundleIdentifier == bundleIdentifier
+                }
+                guard let proTUNManager,
+                      let protocolConfiguration = proTUNManager.protocolConfiguration,
+                      let tunnelProviderProtocol = protocolConfiguration as? NETunnelProviderProtocol else {
+                    log.error("Failed to retrieve protocolConfiguration from NETunnelProviderManager preferences", category: .widget)
+                    return nil
+                }
+                return try tunnelProviderProtocol.connectionSpec
+            } catch {
+                log.error("Failed to retrieve connectionSpec from NETunnelProviderManager preferences", category: .widget)
                 return nil
             }
-            return try tunnelProviderProtocol.connectionSpec
-        } catch {
-            log.error("Failed to retrieve connectionSpec from NETunnelProviderManager preferences", category: .widget)
-            return nil
         }
-    }
+    #endif
 
     func protectionState() -> ConnectWidgetEntry.ProtectionState {
         @Dependency(\.extensionIPC) var extensionIPC
