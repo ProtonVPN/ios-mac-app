@@ -24,7 +24,6 @@ import Cocoa
 import Combine
 import Dependencies
 import Domain
-import Ergonomics
 import Sharing
 import VPNAppCore
 
@@ -44,10 +43,11 @@ class ProfilesMenuViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
     private let navService: NavigationService
     @Dependency(\.upsellManager) private var upsellManager
+    @Dependency(\.planChangeClient) private var planChangeClient
 
     var contentChanged: (() -> Void)?
 
-    private var notificationTokens: [NotificationToken] = []
+    private var planChangeObservation: Task<Void, Never>?
 
     @SharedReader(.sessionStatus) private var sessionStatus: SessionStatus
     @SharedReader(.featureFlags) private var featureFlags: FeatureFlags
@@ -58,9 +58,13 @@ class ProfilesMenuViewModel {
     ) {
         self.navService = navService
 
-        self.notificationTokens = [
-            NotificationCenter.default.addObserver(for: AppEvent.planChanged.name, object: nil, handler: planChanged),
-        ]
+        // A plan change can hand the user profiles or take them away, so the menu is rebuilt.
+        let planChanges = planChangeClient.events()
+        self.planChangeObservation = Task { @MainActor [weak self] in
+            for await _ in planChanges {
+                self?.contentChanged?()
+            }
+        }
 
         $featureFlags.publisher
             .dropFirst()
@@ -104,9 +108,7 @@ class ProfilesMenuViewModel {
         navService.openProfiles(ProfilesTab.createNewProfile)
     }
 
-    // MARK: - Private functions
-
-    private func planChanged(notification _: Notification) {
-        contentChanged?()
+    deinit {
+        planChangeObservation?.cancel()
     }
 }

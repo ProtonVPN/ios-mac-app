@@ -39,6 +39,9 @@ class ProfilesSectionViewModel {
     @Dependency(\.profileManager) private var profileManager
     private let navService: NavigationService
     @Dependency(\.upsellManager) private var upsellManager
+    @Dependency(\.planChangeClient) private var planChangeClient
+
+    private var planChangeObservation: Task<Void, Never>?
 
     @SharedReader(.featureFlags) private var featureFlags: FeatureFlags
     private var featureFlagsObservation: AnyCancellable?
@@ -59,11 +62,15 @@ class ProfilesSectionViewModel {
     init(navService: NavigationService) {
         self.navService = navService
 
-        let events: [AppEvent] = [
-            .profileContentChanged,
-            .planChanged,
-        ]
-        events.subscribe(self, selector: #selector(profilesChanged))
+        AppEvent.profileContentChanged.subscribe(self, selector: #selector(profilesChanged))
+
+        // The tier decides which profiles the user can connect to, so a plan change redraws the list.
+        let planChanges = planChangeClient.events()
+        self.planChangeObservation = Task { @MainActor [weak self] in
+            for await _ in planChanges {
+                self?.profilesChanged()
+            }
+        }
 
         self.featureFlagsObservation = $featureFlags.publisher
             .dropFirst()
@@ -120,5 +127,9 @@ class ProfilesSectionViewModel {
     @objc
     private func profilesChanged() {
         contentChanged?()
+    }
+
+    deinit {
+        planChangeObservation?.cancel()
     }
 }

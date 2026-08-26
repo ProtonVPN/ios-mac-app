@@ -72,20 +72,13 @@ struct ReviewPrompter: DependencyKey {
         $reviewTimestamp.withLock { $0 = date.now }
     }
 
-    #if DEBUG
-        /// Sets a simple ``SharedKey`` to say that the prompt did in fact happen.
-        static let testValue = ReviewPrompter {
-            @Shared(.didPromptReview) var didPrompt
-            $didPrompt.withLock {
-                $0 = true
-            }
-            @Dependency(\.date) var date
-            @Shared(.whenLastReviewShown) var reviewTimestamp
-            @Shared(.successfulConnectionsSinceLastPrompt) var successfulConnectionsSinceLastPrompt
-            $reviewTimestamp.withLock { $0 = date.now }
-            $successfulConnectionsSinceLastPrompt.withLock { $0 = 0 }
-        }
-    #endif
+    /// Does nothing, and deliberately writes no shared state.
+    ///
+    /// ``ReviewFeature`` prompts from an effect that any store can start, since it listens to the app activation
+    /// notification and to shared counters that other tests write. A test value that took the cooldown would write
+    /// that shared state from whichever test happened to be running, and an exhaustive store watching for its own
+    /// changes would report it. Tests that are about the prompt install a prompter of their own instead.
+    static let testValue = ReviewPrompter {}
 }
 
 extension DependencyValues {
@@ -94,11 +87,3 @@ extension DependencyValues {
         set { self[ReviewPrompter.self] = newValue }
     }
 }
-
-#if DEBUG // for testing
-    package extension SharedKey where Self == InMemoryKey<Bool>.Default {
-        static var didPromptReview: Self {
-            Self[.inMemory("didPromptReview"), default: false]
-        }
-    }
-#endif

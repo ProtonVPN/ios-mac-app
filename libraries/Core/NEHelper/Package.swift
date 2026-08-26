@@ -96,6 +96,7 @@ let package = Package(
             dependencies: [
                 "VPNAppCore",
                 "VPNShared",
+                "VPNSharedTesting",
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),

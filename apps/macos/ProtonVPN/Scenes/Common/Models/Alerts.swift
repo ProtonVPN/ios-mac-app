@@ -40,56 +40,6 @@ class ClearApplicationDataAlert: SystemAlert {
     }
 }
 
-class ActiveSessionWarningAlert: SystemAlert {
-    var title: String? = Localizable.vpnConnectionActive
-    var message: String? = Localizable.warningVpnSessionIsActive
-    var actions = [AlertAction]()
-    var dismiss: (() -> Void)?
-
-    private let deliverCancelUnlessHandled: () -> Void
-
-    /// Exactly one of the two handlers runs, on every exit path. The buttons deliver directly, and an alert that goes
-    /// away without either running (host window closed, programmatic dismissal, or the alert service discarding this
-    /// instance after moving its actions onto an already-presented one) delivers the cancel outcome from `deinit`.
-    init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
-        let delivered = OSAllocatedUnfairLock(initialState: false)
-        let once: @Sendable (@escaping () -> Void) -> Void = { handler in
-            let first = delivered.withLock { delivered in
-                defer { delivered = true }
-                return !delivered
-            }
-            guard first else { return }
-            handler()
-        }
-        self.deliverCancelUnlessHandled = { once(cancelHandler) }
-        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: { once(confirmHandler) }))
-        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: { once(cancelHandler) }))
-    }
-
-    deinit {
-        deliverCancelUnlessHandled()
-    }
-}
-
-class QuitWarningAlert: SystemAlert {
-    var title: String?
-    var message: String?
-    var actions = [AlertAction]()
-    var dismiss: (() -> Void)?
-
-    /// Quit confirmation while a VPN session is active. Standard KS allows disconnecting on quit, whereas advanced KS
-    /// will warn the user that Kill Switch will engage if they quit, and they will lose access to the Internet.
-    init(advancedKillSwitchActive: Bool, confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
-        self.title = Localizable.killSwitchQuitTitle
-        // Only warn "you'll stay blocked after quit" when Advanced KS is ready.
-        self.message = advancedKillSwitchActive
-            ? Localizable.killSwitchLogoutAdvancedBody
-            : Localizable.killSwitchDisconnectedFromVpn
-        actions.append(AlertAction(title: Localizable.quit, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
-    }
-}
-
 /// Confirmation shown when the user clicks the in-app Disconnect button while Advanced kill switch is
 /// active. Disconnecting is a clean disconnect, but Advanced keeps blocking traffic afterward.
 class DisconnectWithAdvancedKillSwitchAlert: SystemAlert {

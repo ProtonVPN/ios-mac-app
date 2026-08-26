@@ -50,6 +50,7 @@ final class StatusMenuViewModel {
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
     @Dependency(\.coreAlertService) private var coreAlertService
+    @Dependency(\.planChangeClient) private var planChangeClient
     @Dependency(\.linkOpener) var linkOpener
     @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
     @SharedReader(.killSwitchMode) private var killSwitchMode: KillSwitchMode
@@ -103,12 +104,17 @@ final class StatusMenuViewModel {
     weak var viewController: StatusMenuViewControllerProtocol?
 
     private var cancellables = Set<AnyCancellable>()
+    private var planChangeObservation: Task<Void, Never>?
 
     init(factory: Factory) {
         self.factory = factory
         startObserving()
         wifiSecurityMonitor.startMonitoring()
         wifiSecurityMonitor.delegate = self
+    }
+
+    deinit {
+        planChangeObservation?.cancel()
     }
 
     var isSessionEstablished: Bool {
@@ -374,7 +380,13 @@ final class StatusMenuViewModel {
             .sink { [weak self] status in self?.sessionChanged(status) }
             .store(in: &cancellables)
 
-        AppEvent.planChanged.subscribe(self, selector: #selector(handlePlanChange))
+        // The new tier arrives with the change, so nothing here has to read the credentials back.
+        let planChanges = planChangeClient.events()
+        planChangeObservation = Task { @MainActor [weak self] in
+            for await planChange in planChanges {
+                self?.handlePlanChange(planChange)
+            }
+        }
 
         $userLocation
             .publisher
@@ -542,12 +554,9 @@ final class StatusMenuViewModel {
         contentChanged?()
     }
 
-    @objc
-    private func handlePlanChange() {
-        let tier = credentials.tier
-
+    private func handlePlanChange(_ planChange: PlanChange) {
         // if Secure Core was enabled but the tier no longer allows its use
-        if secureCoreToggle, tier.isFree {
+        if secureCoreToggle, planChange.newTier.isFree {
             log.debug("Disabling Secure Core because the changed plan does not allow its use anymore", category: .app)
             $secureCoreToggle.withLock { $0 = false }
             serverType = .standard

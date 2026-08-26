@@ -36,7 +36,8 @@ public enum AppEvent: String {
 
     /// The user's VPN credentials changed on the backend.
     case credentialsChanged
-    /// The user's VPN plan changed on the backend.
+    /// The user's VPN plan changed on the backend. Posted with the `VpnDowngradeInfo` it changed between, which
+    /// readers get through `planChangeClient` rather than from here.
     case planChanged
     /// Session manager data was reloaded.
     case sessionManagerDataReloaded

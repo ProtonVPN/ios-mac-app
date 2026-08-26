@@ -30,6 +30,7 @@ import Foundation
 
 import Dependencies
 import Domain
+import os
 import Strings
 
 public protocol SystemAlert: AnyObject {
@@ -281,18 +282,18 @@ public class LogoutWarningAlert: SystemAlert {
     public var actions = [AlertAction]()
     public var dismiss: (() -> Void)?
 
-    public init(confirmHandler: @escaping () -> Void) {
+    public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
         actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
             confirmHandler()
         }))
-        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: nil))
+        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
     }
 }
 
 public final class LogoutWarningLongAlert: LogoutWarningAlert {
-    override public init(confirmHandler: @escaping () -> Void) {
-        super.init(confirmHandler: confirmHandler)
+    override public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+        super.init(confirmHandler: confirmHandler, cancelHandler: cancelHandler)
         message = Localizable.logOutWarningLong
     }
 }
@@ -300,14 +301,78 @@ public final class LogoutWarningLongAlert: LogoutWarningAlert {
 /// Sign-out confirmation shown while Advanced kill switch is active: signing out keeps the
 /// device offline because Advanced kill switch persists.
 public final class LogoutWithAdvancedKillSwitchAlert: LogoutWarningAlert {
-    public init(username: String?, confirmHandler: @escaping () -> Void) {
-        super.init(confirmHandler: confirmHandler)
+    public init(username: String?, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+        super.init(confirmHandler: confirmHandler, cancelHandler: cancelHandler)
         if let username {
             title = Localizable.killSwitchLogoutAdvancedTitle(username)
         }
         message = Localizable.killSwitchLogoutAdvancedBody
     }
 }
+
+#if os(macOS)
+    /// Shown when signing in while a tunnel belonging to a different user is up.
+    public final class ActiveSessionWarningAlert: SystemAlert {
+        public var title: String? = Localizable.vpnConnectionActive
+        public var message: String? = Localizable.warningVpnSessionIsActive
+        public var actions = [AlertAction]()
+        public let isError: Bool = false
+        public var dismiss: (() -> Void)?
+
+        private let deliverCancelUnlessHandled: () -> Void
+
+        /// Exactly one of the two handlers runs, on every exit path. The buttons deliver directly, and an alert that
+        /// goes away without either running (host window closed, programmatic dismissal, or the alert service
+        /// discarding this instance after moving its actions onto an already-presented one) delivers the cancel
+        /// outcome from `deinit`.
+        public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
+            let delivered = OSAllocatedUnfairLock(initialState: false)
+            let once: @Sendable (@escaping () -> Void) -> Void = { handler in
+                let first = delivered.withLock { delivered in
+                    defer { delivered = true }
+                    return !delivered
+                }
+                guard first else { return }
+                handler()
+            }
+            self.deliverCancelUnlessHandled = { once(cancelHandler) }
+            actions.append(AlertAction(
+                title: Localizable.continue,
+                style: .confirmative,
+                handler: { once(confirmHandler) }
+            ))
+            actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: { once(cancelHandler) }))
+        }
+
+        deinit {
+            deliverCancelUnlessHandled()
+        }
+    }
+
+    /// Quit confirmation while a VPN session is active. Standard kill switch allows disconnecting on quit, whereas
+    /// Advanced warns the user that it will engage if they quit, and they will lose access to the Internet.
+    public final class QuitWarningAlert: SystemAlert {
+        public var title: String?
+        public var message: String?
+        public var actions = [AlertAction]()
+        public let isError: Bool = false
+        public var dismiss: (() -> Void)?
+
+        public init(
+            advancedKillSwitchActive: Bool,
+            confirmHandler: @escaping () -> Void,
+            cancelHandler: @escaping () -> Void
+        ) {
+            self.title = Localizable.killSwitchQuitTitle
+            // Only warn "you'll stay blocked after quit" when Advanced KS is ready.
+            self.message = advancedKillSwitchActive
+                ? Localizable.killSwitchLogoutAdvancedBody
+                : Localizable.killSwitchDisconnectedFromVpn
+            actions.append(AlertAction(title: Localizable.quit, style: .confirmative, handler: confirmHandler))
+            actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
+        }
+    }
+#endif
 
 /// Shown after sign-out when the app failed to switch the tunnel into Advanced kill switch blocking,
 /// so the device may no longer be protected.
