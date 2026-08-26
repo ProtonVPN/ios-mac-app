@@ -25,6 +25,7 @@ import Ergonomics
 @testable import ExtensionManager
 @testable import ExtensionSync
 import Foundation
+@testable import Hermes
 import NATPortMapping
 import os
 import PaymentsShared
@@ -625,6 +626,28 @@ struct SidebarFeatureTests {
         await store.send(.stopObservingEvents)
     }
 
+    @Test("port mapping addresses the tunnel gateway, not the user's custom DNS resolver")
+    func portMappingAddressesTunnelGateway() async {
+        let service = NATPortMappingServiceMock()
+        let store = withDependencies {
+            $0.hermesClient = .customDNS(resolvers: [.cloudFlare])
+            $0.natPortMappingService = service
+        } operation: {
+            makeStore(
+                connectionState: .previewConnected(for: ConnectionSpec(location: .any(.fastest), features: [.p2p])),
+                featureFlags: .enabling(VPNFeatureFlagType.portForwarding),
+                portForwardingEnabled: true
+            )
+        }
+
+        await store.send(.syncNATPortMappingState) {
+            $0.natPortMappingRunning = true
+        }
+        await store.finish()
+
+        #expect(service.requestedGatewayAddresses == [VpnProtocol.wireGuardGatewayAddress])
+    }
+
     // MARK: - Private
 
     private func makeStore(
@@ -637,6 +660,10 @@ struct SidebarFeatureTests {
         defaults: UserDefaults = .inMemory,
         clock: TestClock<Duration>? = nil,
         coreAlertService: CoreAlertService = .testValue,
+        // `SidebarFeature.State` (via the quick settings) and the NAT-PMP sync read
+        // `VPNFeatureFlagType.portForwarding`. Every flag stays off by default, matching the flagless
+        // environment most of these expectations were written against.
+        featureFlags: FeatureFlagsClient = .enabling(),
         portForwardingEnabled: Bool = false,
         portForwardingNotifications: Bool = false,
         notificationManager: NotificationManager = .init(
@@ -680,10 +707,7 @@ struct SidebarFeatureTests {
                     environment: environment
                 )
             } withDependencies: {
-                // `SidebarFeature.State` (via the quick settings) and the NAT-PMP sync read
-                // `VPNFeatureFlagType.portForwarding`. Keep every flag off, matching the flagless environment these
-                // expectations were written against.
-                $0.featureFlags = .enabling()
+                $0.featureFlags = featureFlags
                 if let clock {
                     $0.continuousClock = clock
                 }
@@ -707,6 +731,17 @@ struct SidebarFeatureTests {
                 $0.withRandomNumberGenerator = WithRandomNumberGenerator(SystemRandomNumberGenerator())
             }
         }
+    }
+}
+
+private extension HermesClient {
+    /// Custom DNS turned on, with `resolvers` as the servers the tunnel hands to the host. Port
+    /// forwarding still has to address the tunnel gateway in this setup, whatever those servers are.
+    static func customDNS(resolvers: [HermesResolver]) -> Self {
+        var client = Self.testValue
+        client.isEnabled = { SharedReader(value: true) }
+        client.activeHermesResolvers = { SharedReader(value: resolvers) }
+        return client
     }
 }
 

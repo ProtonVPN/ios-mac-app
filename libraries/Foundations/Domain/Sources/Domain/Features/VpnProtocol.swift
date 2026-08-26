@@ -108,12 +108,19 @@ public extension VpnProtocol {
 // MARK: - Tunnel gateway addresses
 
 public extension VpnProtocol {
-    /// The fixed by the kernel extension LAN-side gateway address. Used as the
-    /// NAT-PMP destination when no DNS-discovered gateway is available
+    /// The gateway address the IKEv2 tunnel exposes to the host.
     static let ikeGatewayAddress = "10.1.0.1"
-    /// The default LAN-side gateway address the tunnel exposes to the host. Used as the
-    /// NAT-PMP destination when no DNS-discovered gateway is available
+    /// The gateway address the WireGuard tunnel exposes to the host.
     static let wireGuardGatewayAddress = "10.2.0.1"
+
+    var gatewayAddress: String {
+        switch self {
+        case .ike:
+            Self.ikeGatewayAddress
+        case .wireGuard:
+            Self.wireGuardGatewayAddress
+        }
+    }
 }
 
 // MARK: - API description
