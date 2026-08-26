@@ -28,7 +28,6 @@ import Domain
 import Ergonomics
 import ExtensionManager
 import Foundation
-import Hermes
 import NATPortMapping
 import PaymentsShared
 import Persistence
@@ -1010,17 +1009,10 @@ private extension SidebarFeature {
         connectionState.is(\.connected)
     }
 
+    /// The address NAT-PMP requests go to, or `nil` when the protocol in use is still unknown.
     func natPortMappingGatewayAddress(from connectionState: ConnectionState) -> String? {
         let activeVpnProtocol = connectionState.resolvedVpnProtocol ?? currentlySelectedVpnProtocol()
-        guard let activeVpnProtocol else {
-            return nil
-        }
-        switch activeVpnProtocol {
-        case .ike:
-            return VpnProtocol.ikeGatewayAddress
-        case .wireGuard:
-            return wireGuardGatewayAddress()
-        }
+        return activeVpnProtocol?.gatewayAddress
     }
 
     func currentlySelectedVpnProtocol() -> VpnProtocol? {
@@ -1030,22 +1022,5 @@ private extension SidebarFeature {
         case .smartProtocol:
             nil
         }
-    }
-
-    func wireGuardGatewayAddress() -> String {
-        firstHermesDnsServer ?? VpnProtocol.wireGuardGatewayAddress
-    }
-
-    private var firstHermesDnsServer: String? {
-        @Dependency(\.hermesClient) var hermesClient
-        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
-
-        let hermesIsEnabled: Bool = hermesClient.isEnabled().wrappedValue
-        let hermesIsAllowed = featureAuthorizerProvider.authorizer(for: HermesFeature.self)().isAllowed
-
-        guard hermesIsEnabled, hermesIsAllowed else { return nil }
-
-        let hermesResolvers: [HermesResolver] = hermesClient.activeHermesResolvers().wrappedValue + [.proton]
-        return hermesResolvers.map(\.location).first
     }
 }

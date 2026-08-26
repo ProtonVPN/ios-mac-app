@@ -19,6 +19,7 @@
 @preconcurrency import Combine
 import Dependencies
 import Foundation
+import os
 
 public protocol NATPortMappingService: Sendable {
     var portMappingStream: CurrentValueSubject<Result<PortMappingPacketResponse?, Error>, Never> { get }
@@ -163,22 +164,31 @@ private actor RenewalTaskManager {
 }
 
 #if DEBUG
-    final class NATPortMappingServiceMock: NATPortMappingService {
-        let portMappingStream: CurrentValueSubject<Result<PortMappingPacketResponse?, Error>, Never>
+    public final class NATPortMappingServiceMock: NATPortMappingService {
+        public let portMappingStream: CurrentValueSubject<Result<PortMappingPacketResponse?, Error>, Never>
 
-        init() {
+        private let mappedGateways = OSAllocatedUnfairLock(initialState: [String]())
+
+        /// Every gateway address passed to `createPortMapping`, in the order the calls arrived.
+        public var requestedGatewayAddresses: [String] {
+            mappedGateways.withLock { $0 }
+        }
+
+        public init() {
             self.portMappingStream = CurrentValueSubject<Result<PortMappingPacketResponse?, Error>, Never>(.success(nil))
         }
 
-        func createPortMapping(
-            gatewayAddress _: String,
+        public func createPortMapping(
+            gatewayAddress: String,
             portProtocol _: PortMappingProtocol,
             internalPort _: UInt16,
             externalPort _: UInt16,
             currentMappingExpirationDate _: Date?
-        ) {}
+        ) {
+            mappedGateways.withLock { $0.append(gatewayAddress) }
+        }
 
-        func cancelPortMapping() async {}
+        public func cancelPortMapping() async {}
     }
 #endif
 
