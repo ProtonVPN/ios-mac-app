@@ -97,8 +97,13 @@ private extension MessageRouter {
     }
 
     static func handleClearPersistentCache() -> Response {
-        SecurePersistentCache.clearAllUsers()
-        return .init(payload: .ack)
+        do {
+            try SecurePersistentCache.clearAllUsers()
+            return .init(payload: .ack)
+        } catch {
+            Logger.adapter.error("Failed to clear cache: \(error, privacy: .public)")
+            return .init(payload: .error(.other(reason: "\(error)")))
+        }
     }
 
     static func handleAcknowledgeError(_ errorId: UUID, with adapter: ProTUNAdapter) async -> Response {

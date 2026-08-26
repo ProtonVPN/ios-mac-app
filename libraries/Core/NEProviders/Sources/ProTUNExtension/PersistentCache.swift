@@ -98,23 +98,32 @@ final class SecurePersistentCache: PersistentCache {
         }
     }
 
+    enum ClearFailure: Error {
+        case servicesUnavailable(OSStatus)
+        case deleteFailed([String: OSStatus])
+    }
+
     /// Clears the cache of every user on this device. Prevents reuse of sessions after signing out.
-    static func clearAllUsers() {
+    static func clearAllUsers() throws(ClearFailure) {
         @Dependency(\.lightKeychain) var lightKeychain
 
         let (status, services) = lightKeychain.services()
         guard status == errSecSuccess || status == errSecItemNotFound else {
-            Logger.adapter.error("Failed to list Keychain services: \(describe(status), privacy: .public)")
-            return
+            throw .servicesUnavailable(status)
         }
 
+        var failures: [String: OSStatus] = [:]
         for service in services where service.hasPrefix(servicePrefix) {
             let status = lightKeychain.clear(service: service)
             if status == errSecSuccess || status == errSecItemNotFound {
                 Logger.adapter.info("Cleared Keychain items for \(service, privacy: .public)")
             } else {
-                Logger.adapter.error("Failed to clear Keychain items for \(service, privacy: .public): \(describe(status), privacy: .public)")
+                failures[service] = status
             }
+        }
+
+        guard failures.isEmpty else {
+            throw .deleteFailed(failures)
         }
     }
 }
