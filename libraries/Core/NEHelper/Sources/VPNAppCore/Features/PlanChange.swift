@@ -22,17 +22,32 @@ import Foundation
 import Sharing
 import VPNShared
 
-/// A change in the logged-in user's VPN plan tier, derived from `AppEvent.planChanged`.
+/// A change in the logged-in user's VPN plan, derived from `AppEvent.planChanged`.
 public struct PlanChange: Equatable, Sendable {
     public let oldTier: VpnTier
     public let newTier: VpnTier
+    /// The plan the user moved to, when the API named it. The welcome screen and the upsell telemetry report it.
+    public let newPlanName: String?
 
-    public init(oldTier: VpnTier, newTier: VpnTier) {
+    /// Whether the user moved up a tier, which is what makes a change worth welcoming and reporting.
+    public var isUpgrade: Bool {
+        oldTier < newTier
+    }
+
+    public init(oldTier: VpnTier, newTier: VpnTier, newPlanName: String? = nil) {
         self.oldTier = oldTier
         self.newTier = newTier
+        self.newPlanName = newPlanName
+    }
+
+    /// The pair of credentials the keychain swapped, reduced to the plan change they stand for.
+    public init(_ info: VpnDowngradeInfo) {
+        self.init(oldTier: info.from.maxTier, newTier: info.to.maxTier, newPlanName: info.to.planName)
     }
 }
 
+/// Every plan change the app reacts to, read from here rather than from `AppEvent.planChanged` directly, so each
+/// reader gets a typed payload and can be handed a stream it controls in tests.
 public struct PlanChangeClient: Sendable {
     public var events: @Sendable () -> AsyncStream<PlanChange>
 
@@ -46,8 +61,15 @@ extension PlanChangeClient: DependencyKey {
         UncheckedSendable(
             NotificationCenter.default
                 .notifications(named: AppEvent.planChanged.name)
-                .compactMap { $0.object as? VpnDowngradeInfo }
-                .map { info in PlanChange(oldTier: info.from.maxTier, newTier: info.to.maxTier) }
+                .compactMap { notification -> PlanChange? in
+                    // Everything that posts this event sends the credentials it swapped. A post without them says
+                    // that something changed but not what, which no reader can act on.
+                    guard let info = notification.object as? VpnDowngradeInfo else {
+                        log.error("A plan change arrived without the credentials it changed between", category: .app)
+                        return nil
+                    }
+                    return PlanChange(info)
+                }
         )
         .eraseToStream()
     })
@@ -78,7 +100,7 @@ public func applyPlanChangeFeatureResets(_ planChange: PlanChange) {
     }
 
     // Upgrade from free: switch NetShield to the default value for the new tier.
-    if planChange.newTier > planChange.oldTier, planChange.oldTier.isFree {
+    if planChange.isUpgrade, planChange.oldTier.isFree {
         netShieldPropertyProvider.setNetShieldType(.level2)
     }
 }
