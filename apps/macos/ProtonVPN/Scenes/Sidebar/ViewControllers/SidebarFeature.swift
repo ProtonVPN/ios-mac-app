@@ -28,6 +28,7 @@ import Domain
 import Ergonomics
 import ExtensionManager
 import Foundation
+import Modals
 import NATPortMapping
 import PaymentsShared
 import Persistence
@@ -84,6 +85,8 @@ struct SidebarFeature {
         var header = HeaderFeature.State()
         var countriesSection = CountriesSectionFeature.State()
         @Presents var alert: AlertState<Action.Alert>?
+
+        @Presents var telemetryConsent: TelemetryConsentFeature.State?
         var pendingReconnectIntent: ConnectionPreparationIntent?
 
         var connectingOverlay: ConnectingOverlayFeature.State? {
@@ -116,6 +119,7 @@ struct SidebarFeature {
 
         case viewDidLoad
         case viewDidAppear
+        case telemetryConsent(PresentationAction<TelemetryConsentFeature.Action>)
         case mouseDown
         case startObservingEvents
         case stopObservingEvents
@@ -234,6 +238,9 @@ struct SidebarFeature {
             ConnectingOverlayFeature()
         }
         .ifLet(\.$alert, action: \.alert)
+        .ifLet(\.$telemetryConsent, action: \.telemetryConsent) {
+            TelemetryConsentFeature()
+        }
     }
 
     private enum CancelID {
@@ -402,7 +409,12 @@ private extension SidebarFeature {
                     guard featureFlags.pollNotificationAPI else { return }
                     announcementRefresher.tryRefreshing()
                 }
-            case .viewDidAppear, .mouseDown:
+            case .viewDidAppear:
+                if TelemetryOptIn.needsReconsent, state.telemetryConsent == nil {
+                    state.telemetryConsent = TelemetryConsentFeature.State()
+                }
+                return .none
+            case .mouseDown:
                 return .none
             default:
                 return .none

@@ -42,7 +42,7 @@ public struct UserScopedAppStorageKey<Value: Sendable>: SharedKey {
 
     private let baseKey: String
     /// `baseKey + user identifier`, or `nil` when no user was logged in at construction time.
-    private let resolvedKey: String?
+    let resolvedKey: String?
     private let store: UncheckedSendable<UserDefaults>
     private let valueWhenNoUser: Value
     private let decode: @Sendable (UserDefaults, String) -> Value

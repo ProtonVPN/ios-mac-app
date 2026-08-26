@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import Home
+import ModalsShared
 import Payments
 import SwiftUI
 
@@ -45,6 +46,13 @@ struct ShellDestinationsView: View {
             // where it shows whichever tab is up.
             .sheet(item: $store.scope(state: \.localAgentNotice, action: \.localAgentNotice)) { store in
                 LocalAgentNoticeView(store: store)
+            }
+            // The telemetry question, asked of the signed-in app rather than of a tab. Not dismissible by
+            // swiping: leaving the switches alone and confirming is an answer, so there is always a way out, and
+            // an unanswered question would otherwise be asked again at every launch.
+            .sheet(item: $store.scope(state: \.telemetryConsent, action: \.telemetryConsent)) { store in
+                TelemetryConsentView(store: store)
+                    .interactiveDismissDisabled()
             }
     }
 }

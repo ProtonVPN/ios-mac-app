@@ -87,21 +87,13 @@ final class AdvancedSettingsViewModel {
     }
 
     var usageData: Bool {
-        get {
-            telemetryUsageData == String(true)
-        }
-        set {
-            $telemetryUsageData.withLock { $0 = String(newValue) }
-        }
+        get { telemetryUsageData }
+        set { TelemetryOptIn.record(sharesUsageData: newValue, sharesCrashReports: crashReports) }
     }
 
     var crashReports: Bool {
-        get {
-            telemetryCrashReports == String(true)
-        }
-        set {
-            $telemetryCrashReports.withLock { $0 = String(newValue) }
-        }
+        get { telemetryCrashReports }
+        set { TelemetryOptIn.record(sharesUsageData: usageData, sharesCrashReports: newValue) }
     }
 
     var natDisplayState: PaidFeatureDisplayState {

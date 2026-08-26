@@ -36,7 +36,10 @@ final class TelemetryUpsellReporter {
         userLocation?.location.country.lowercased()
     }
 
-    @SharedReader(.userAccountCreationDate) var userAccountCreationDate
+    private var userAccountCreationDate: Date? {
+        @SharedReader(.userAccountCreationDate) var userAccountCreationDate
+        return userAccountCreationDate
+    }
 
     /// The last modal that drove an upsell event.
     @ExpiringValue(timeout: .minutes(10))

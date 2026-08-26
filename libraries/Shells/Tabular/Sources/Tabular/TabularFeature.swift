@@ -23,6 +23,7 @@ import CoreGraphics
 import Domain
 import Home
 import HomeShared
+import ModalsShared
 import Payments
 import PaymentsShared
 import VPNAppCore
@@ -107,6 +108,8 @@ public struct TabularFeature {
         /// runs above the tabs, so the notice can arrive while any tab is up.
         @Presents public var localAgentNotice: LocalAgentNoticeFeature.State?
 
+        @Presents public var telemetryConsent: TelemetryConsentFeature.State?
+
         public init(detent: Detent = .half) {
             self.detent = detent
         }
@@ -123,7 +126,9 @@ public struct TabularFeature {
         /// A tab's navigation depth changed: pushed beyond its root, or back at it.
         case pageDepthChanged(tab: Tab, isDeep: Bool)
         case payments(PresentationAction<PaymentsMainFeature.Action>)
+        case onStart
         case tabSelected(Tab)
+        case telemetryConsent(PresentationAction<TelemetryConsentFeature.Action>)
     }
 
     @Dependency(\.connectionCommandClient) private var connectionCommandClient
@@ -249,7 +254,13 @@ public struct TabularFeature {
                     openCredentiallessSignUp()
                 }
 
-            case .commands, .connectionStatus, .home, .localAgentNotice, .map, .payments:
+            case .onStart:
+                if TelemetryOptIn.needsReconsent, state.telemetryConsent == nil {
+                    state.telemetryConsent = TelemetryConsentFeature.State()
+                }
+                return .none
+
+            case .commands, .connectionStatus, .home, .localAgentNotice, .map, .payments, .telemetryConsent:
                 return .none
             }
         }
@@ -258,6 +269,9 @@ public struct TabularFeature {
         }
         .ifLet(\.$localAgentNotice, action: \.localAgentNotice) {
             LocalAgentNoticeFeature()
+        }
+        .ifLet(\.$telemetryConsent, action: \.telemetryConsent) {
+            TelemetryConsentFeature()
         }
     }
 }

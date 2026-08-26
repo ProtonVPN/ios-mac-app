@@ -27,12 +27,9 @@ import Testing
 @MainActor
 struct SearchFeatureReducerTests {
     @Test("searchQueryChangeDebounced sends performSearch with current query")
-    func searchQueryDebounceFlow() async throws {
-        let suiteName = "SearchFeatureReducerTests-\(#function)"
-        let defaults = try #require(UserDefaults(suiteName: suiteName))
-        defaults.removePersistentDomain(forName: suiteName)
+    func searchQueryDebounceFlow() async {
         await withDependencies {
-            $0.defaultAppStorage = defaults
+            $0.defaultAppStorage = .inMemory
         } operation: {
             let store = TestStore(initialState: SearchFeature.State(searchResults: .placeholder)) {
                 SearchFeature()
@@ -49,12 +46,9 @@ struct SearchFeatureReducerTests {
     }
 
     @Test("empty search loads recents from storage")
-    func emptySearchLoadsRecents() async throws {
-        let suiteName = "SearchFeatureReducerTests-\(#function)"
-        let defaults = try #require(UserDefaults(suiteName: suiteName))
-        defaults.removePersistentDomain(forName: suiteName)
+    func emptySearchLoadsRecents() async {
         await withDependencies {
-            $0.defaultAppStorage = defaults
+            $0.defaultAppStorage = .inMemory
         } operation: {
             @Shared(.recentSearches) var recentSearches
             $recentSearches.withLock { $0 = ["Dd", "Uk"] }
@@ -70,12 +64,9 @@ struct SearchFeatureReducerTests {
     }
 
     @Test("standard search returns results with upsell for free user")
-    func standardSearchBuildsResultsWithUpsell() async throws {
-        let suiteName = "SearchFeatureReducerTests-\(#function)"
-        let defaults = try #require(UserDefaults(suiteName: suiteName))
-        defaults.removePersistentDomain(forName: suiteName)
+    func standardSearchBuildsResultsWithUpsell() async {
         await withDependencies {
-            $0.defaultAppStorage = defaults
+            $0.defaultAppStorage = .inMemory
         } operation: {
             @SharedReader(.secureCoreToggle) var secureCoreToggle = false
             @SharedReader(.userTier) var userTier: VpnTier? = .free
@@ -133,12 +124,9 @@ struct SearchFeatureReducerTests {
     }
 
     @Test("secure core mode returns secure core rows")
-    func secureCoreSearchBuildsSecureCoreRows() async throws {
-        let suiteName = "SearchFeatureReducerTests-\(#function)"
-        let defaults = try #require(UserDefaults(suiteName: suiteName))
-        defaults.removePersistentDomain(forName: suiteName)
+    func secureCoreSearchBuildsSecureCoreRows() async {
         await withDependencies {
-            $0.defaultAppStorage = defaults
+            $0.defaultAppStorage = .inMemory
         } operation: {
             @SharedReader(.secureCoreToggle) var secureCoreToggle = true
             @SharedReader(.userTier) var userTier: VpnTier? = .paid
@@ -191,12 +179,9 @@ struct SearchFeatureReducerTests {
     }
 
     @Test("standard search includes matching states section")
-    func standardSearchBuildsStateResults() async throws {
-        let suiteName = "SearchFeatureReducerTests-\(#function)"
-        let defaults = try #require(UserDefaults(suiteName: suiteName))
-        defaults.removePersistentDomain(forName: suiteName)
+    func standardSearchBuildsStateResults() async {
         await withDependencies {
-            $0.defaultAppStorage = defaults
+            $0.defaultAppStorage = .inMemory
         } operation: {
             @SharedReader(.secureCoreToggle) var secureCoreToggle = false
             @SharedReader(.userTier) var userTier: VpnTier? = .paid
@@ -239,12 +224,9 @@ struct SearchFeatureReducerTests {
     }
 
     @Test("tapping recent search updates query and performs search")
-    func recentTappedTriggersSearch() async throws {
-        let suiteName = "SearchFeatureReducerTests-\(#function)"
-        let defaults = try #require(UserDefaults(suiteName: suiteName))
-        defaults.removePersistentDomain(forName: suiteName)
+    func recentTappedTriggersSearch() async {
         await withDependencies {
-            $0.defaultAppStorage = defaults
+            $0.defaultAppStorage = .inMemory
         } operation: {
             let state = SearchFeature.State(
                 allCountries: [],

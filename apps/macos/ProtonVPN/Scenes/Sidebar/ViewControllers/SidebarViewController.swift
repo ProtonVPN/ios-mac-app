@@ -26,7 +26,9 @@ import Combine
 import ComposableArchitecture
 import Dependencies
 import Ergonomics
+import Modals
 import Strings
+import SwiftUI
 import Theme
 
 final class SidebarViewController: NSViewController, NSWindowDelegate {
@@ -43,12 +45,14 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private var activeController: NSViewController!
 
     private var connectingViewController: ConnectingViewController?
+    private var telemetryConsentController: NSViewController?
     private var isAnimatingMapResize = false
 
     private let navService: NavigationService
     private let store: StoreOf<SidebarFeature>
 
     @Dependency(\.announcementManager) private var announcementManager
+    @Dependency(\.windowService) private var windowService
     private var announcementsCancellable: AnyCancellable?
 
     private lazy var tabBarViewController: SidebarTabBarViewController = .init()
@@ -124,6 +128,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             guard let self else { return }
             applySidebarState()
             applyLoadingOverlayState()
+            applyTelemetryConsentState()
         }
     }
 
@@ -149,6 +154,20 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     }
 
     // MARK: - Private
+
+    private func applyTelemetryConsentState() {
+        guard let consentStore = store.scope(state: \.telemetryConsent, action: \.telemetryConsent.presented) else {
+            telemetryConsentController?.dismiss(nil)
+            telemetryConsentController = nil
+            return
+        }
+        guard telemetryConsentController == nil else { return }
+
+        let viewController = NSHostingController(rootView: TelemetryConsentView(store: consentStore))
+        viewController.title = "Proton VPN"
+        telemetryConsentController = viewController
+        windowService.presentKeyModal(viewController: viewController, activatingApp: false)
+    }
 
     private func presentConnectingOverlay() {
         guard connectingViewController == nil,

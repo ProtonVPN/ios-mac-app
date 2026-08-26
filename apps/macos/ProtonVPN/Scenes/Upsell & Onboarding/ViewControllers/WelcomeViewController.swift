@@ -99,10 +99,7 @@ class WelcomeViewController: NSViewController {
         usageStatisticsButton.delegate = self
         crashReportsButton.delegate = self
 
-        // Telemetry and crash report is on by default
-        $telemetryUsageData.withLock { $0 = String(true) }
-        $telemetryCrashReports.withLock { $0 = String(true) }
-
+        TelemetryOptIn.record(sharesUsageData: true, sharesCrashReports: true)
         usageStatisticsButton.buttonView?.tag = Switch.usageData.rawValue
         usageStatisticsButton.setState(.on)
         crashReportsButton.buttonView?.tag = Switch.crashReports.rawValue
@@ -136,16 +133,11 @@ extension WelcomeViewController: SwitchButtonDelegate {
         completion(true)
     }
 
-    func switchButtonClicked(_ button: NSButton) {
-        switch button.tag {
-        case Switch.crashReports.rawValue:
-            let newValue = String(crashReportsButton.currentButtonState == .on)
-            $telemetryCrashReports.withLock { $0 = newValue }
-        case Switch.usageData.rawValue:
-            let newValue = String(usageStatisticsButton.currentButtonState == .on)
-            $telemetryUsageData.withLock { $0 = newValue }
-        default:
-            break
-        }
+    func switchButtonClicked(_: NSButton) {
+        // Both are recorded together, because both switches are on screen while the user changes either.
+        TelemetryOptIn.record(
+            sharesUsageData: usageStatisticsButton.currentButtonState == .on,
+            sharesCrashReports: crashReportsButton.currentButtonState == .on
+        )
     }
 }

@@ -272,8 +272,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 )
             }
 
-            @Shared(.userAccountCreationDate) var userAccountCreationDate
-            $userAccountCreationDate.withLock { $0 = properties.userCreateTime }
+            // Only overwrite when this refresh actually has some date
+            if let userCreateTime = properties.userCreateTime {
+                @Shared(.userAccountCreationDate) var userAccountCreationDate
+                $userAccountCreationDate.withLock { $0 = userCreateTime }
+            }
 
             if let measured = properties.measuredLocation, connectionState.isDisconnectedForPropertiesRefresh {
                 @Shared(.userLocation) var userLocation

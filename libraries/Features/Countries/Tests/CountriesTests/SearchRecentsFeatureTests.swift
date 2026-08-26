@@ -25,12 +25,9 @@ import Testing
 @MainActor
 struct SearchRecentsFeatureReducerTests {
     @Test("onAppear loads recents from storage")
-    func onAppearLoadsRecents() async throws {
-        let suiteName = "SearchRecentsFeatureTests-\(#function)"
-        let defaults = try #require(UserDefaults(suiteName: suiteName))
-        defaults.removePersistentDomain(forName: suiteName)
+    func onAppearLoadsRecents() async {
         await withDependencies {
-            $0.defaultAppStorage = defaults
+            $0.defaultAppStorage = .inMemory
         } operation: {
             @Shared(.recentSearches) var recentSearches
             $recentSearches.withLock { $0 = ["A", "B"] }
@@ -60,12 +57,9 @@ struct SearchRecentsFeatureReducerTests {
     }
 
     @Test("confirm clear clears storage and emits recentsCleared")
-    func confirmClearClearsStateAndStorage() async throws {
-        let suiteName = "SearchRecentsFeatureTests-\(#function)"
-        let defaults = try #require(UserDefaults(suiteName: suiteName))
-        defaults.removePersistentDomain(forName: suiteName)
+    func confirmClearClearsStateAndStorage() async {
         await withDependencies {
-            $0.defaultAppStorage = defaults
+            $0.defaultAppStorage = .inMemory
         } operation: {
             @Shared(.recentSearches) var recentSearches
             $recentSearches.withLock { $0 = ["A"] }

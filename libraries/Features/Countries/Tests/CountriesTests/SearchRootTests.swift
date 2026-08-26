@@ -65,12 +65,9 @@ private func repository(
 @MainActor
 struct SearchRootTests {
     @Test("onAppear triggers preprocessing and loads placeholder")
-    func onAppearLoadsPlaceholderWhenNoRecents() async throws {
-        let suiteName = "SearchRootTests-\(#function)"
-        let defaults = try #require(UserDefaults(suiteName: suiteName))
-        defaults.removePersistentDomain(forName: suiteName)
+    func onAppearLoadsPlaceholderWhenNoRecents() async {
         await withDependencies {
-            $0.defaultAppStorage = defaults
+            $0.defaultAppStorage = .inMemory
             $0.serverRepository = .empty()
         } operation: {
             @Shared(.recentSearches) var recentSearches
@@ -89,12 +86,9 @@ struct SearchRootTests {
     }
 
     @Test("onAppear initializes recent searches state when storage has data")
-    func onAppearLoadsRecentSearchesState() async throws {
-        let suiteName = "SearchRootTests-\(#function)"
-        let defaults = try #require(UserDefaults(suiteName: suiteName))
-        defaults.removePersistentDomain(forName: suiteName)
+    func onAppearLoadsRecentSearchesState() async {
         await withDependencies {
-            $0.defaultAppStorage = defaults
+            $0.defaultAppStorage = .inMemory
             $0.serverRepository = .empty()
         } operation: {
             @Shared(.recentSearches) var recentSearches
@@ -123,10 +117,6 @@ struct SearchRootTests {
 
     @Test("a place reports maintenance only when every server in it is down")
     func maintenanceFollowsEveryServerInThePlace() async throws {
-        let suiteName = "SearchRootTests-\(#function)"
-        let defaults = try #require(UserDefaults(suiteName: suiteName))
-        defaults.removePersistentDomain(forName: suiteName)
-
         // London keeps one working server, so its group is not under maintenance. Every server in
         // Manchester is down, and so is the whole Northwest state. The database computes these
         // aggregates; this test checks that they reach the search rows.
@@ -142,7 +132,7 @@ struct SearchRootTests {
         ]
 
         try await withDependencies {
-            $0.defaultAppStorage = defaults
+            $0.defaultAppStorage = .inMemory
             $0.serverRepository = repository(
                 returning: servers,
                 cities: [
@@ -187,12 +177,8 @@ struct SearchRootTests {
 
     @Test("a country with nothing to connect to carries maintenance into its search row")
     func countryMaintenanceReachesTheSearchRow() async throws {
-        let suiteName = "SearchRootTests-\(#function)"
-        let defaults = try #require(UserDefaults(suiteName: suiteName))
-        defaults.removePersistentDomain(forName: suiteName)
-
         try await withDependencies {
-            $0.defaultAppStorage = defaults
+            $0.defaultAppStorage = .inMemory
             $0.serverRepository = repository(returning: [])
         } operation: {
             let store = TestStore(initialState: SearchRoot.State.loading([britishSection(isUnderMaintenance: true)], query: "")) {

@@ -65,6 +65,7 @@ public final class AppDelegateService: AppDelegateProtocol {
 
     private var cancellables = Set<AnyCancellable>()
     private var deepLinkConnectStatusCancellable: AnyCancellable?
+    private var crashReportAnswerObservation: AnyCancellable?
 
     public init() {
         prepareDependencies {
@@ -123,8 +124,7 @@ public final class AppDelegateService: AppDelegateProtocol {
                 SentryHelper.setupSentry(
                     dsn: "",
                     isEnabled: {
-                        @SharedReader(.telemetryCrashReports) var telemetryCrashReports
-                        return telemetryCrashReports == String(true)
+                        TelemetryOptIn.sharesCrashReports
                     },
                     getUserId: { [weak self] in
                         self?.authKeychain.userIdCachedOrFetched
@@ -415,13 +415,10 @@ public final class AppDelegateService: AppDelegateProtocol {
                     FeatureFlagsRepository.shared.setUserId(credential.userID)
                 }
 
-                @SharedReader(.telemetryUsageData) var telemetryUsageDataShared
-                @SharedReader(.telemetryCrashReports) var telemetryCrashReportsShared
-
                 ProtonCoreTelemetry.TelemetryService.shared.setApiService(apiService: apiService)
-                ProtonCoreTelemetry.TelemetryService.shared.setTelemetryEnabled(telemetryUsageDataShared == String(true))
+                ProtonCoreTelemetry.TelemetryService.shared.setTelemetryEnabled(TelemetryOptIn.sharesUsageData)
 
-                if telemetryCrashReportsShared == String(true) {
+                if TelemetryOptIn.sharesCrashReports {
                     enableExternalLogging()
                 } else {
                     disableExternalLogging()
@@ -450,19 +447,32 @@ public final class AppDelegateService: AppDelegateProtocol {
         PMLog.disableExternalLogging()
     }
 
+    /// Keeps external logging and Sentry in step with the signed-in user's crash-report answer.
     private func registerForTelemetryChanges() {
+        observeCrashReportAnswer()
+
+        AppEvent.credentialsChanged.publisher
+            .sink { [weak self] _ in self?.observeCrashReportAnswer() }
+            .store(in: &cancellables)
+    }
+
+    private func observeCrashReportAnswer() {
+        applyCrashReportAnswer(TelemetryOptIn.sharesCrashReports)
+
         @SharedReader(.telemetryCrashReports) var telemetryCrashReports
-        $telemetryCrashReports.publisher.sink { [weak self] value in
-            let crashReportsEnabled = value == String(true)
-            switch crashReportsEnabled {
-            case true:
-                self?.enableExternalLogging()
-            case false:
-                self?.disableExternalLogging()
+        crashReportAnswerObservation = $telemetryCrashReports.publisher
+            .sink { [weak self] sharesCrashReports in
+                self?.applyCrashReportAnswer(sharesCrashReports)
             }
-            SentryHelper.shared?.setSentryEnabled(crashReportsEnabled)
+    }
+
+    private func applyCrashReportAnswer(_ sharesCrashReports: Bool) {
+        if sharesCrashReports {
+            enableExternalLogging()
+        } else {
+            disableExternalLogging()
         }
-        .store(in: &cancellables)
+        SentryHelper.shared?.setSentryEnabled(sharesCrashReports)
     }
 
     // MARK: - Networking Events
