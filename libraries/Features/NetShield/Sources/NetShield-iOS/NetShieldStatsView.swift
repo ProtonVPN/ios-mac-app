@@ -25,7 +25,7 @@ public struct NetShieldStatsView: View {
         static let netShieldStatsViewId: String = "net_shield_stats"
     }
 
-    @ObservedObject public var viewModel: NetShieldModel
+    public var viewModel: NetShieldModel
 
     static let maxWidth: CGFloat = 440
 

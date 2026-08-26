@@ -18,9 +18,18 @@
 
 import Foundation
 
+/// The language of the user's most preferred language tag, with any region dropped.
+///
+/// `NSLocale.preferredLanguages` reports full BCP-47 tags such as `en-GB` and `it-CH`. Comparing a whole tag against
+/// `"en"` therefore only matches a device set to plain English, so every `en-US` and `en-GB` user used to look like a
+/// candidate for the English fallback below and paid for a second lookup that returned the same string.
+private var preferredLanguageCode: String? {
+    NSLocale.preferredLanguages.first?.split(separator: "-").first?.lowercased()
+}
+
 func localizeStringAndFallbackToEn(_ key: String, _ table: String, _ value: String) -> String {
     let format = NSLocalizedString(key, tableName: table, bundle: Bundle.module, comment: "")
-    if format != key || NSLocale.preferredLanguages.first == "en" {
+    if format != key || preferredLanguageCode == "en" {
         return format
     }
 

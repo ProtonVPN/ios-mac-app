@@ -19,20 +19,12 @@
 import Foundation
 import Strings
 
-// TODO: VPNAPPL-2541, Should be a struct instead of a class (and remove ObservableObject conformance as well)
-public final class NetShieldModel: Sendable, Equatable, ObservableObject {
+/// The blocking counters the network extension reports, and whether NetShield was on when it measured them.
+public struct NetShieldModel: Sendable, Equatable {
     public let trackersCount: Int
     public let adsCount: Int
     public let dataSaved: UInt64
     public let enabled: Bool
-
-    // TODO: With VPNAPPL-2541, remove this below since we'll get it for free
-    public static func == (lhs: NetShieldModel, rhs: NetShieldModel) -> Bool {
-        lhs.ads == rhs.ads &&
-            lhs.trackers == rhs.trackers &&
-            lhs.data == rhs.data &&
-            lhs.enabled == rhs.enabled
-    }
 
     public init(trackersCount: Int, adsCount: Int, dataSaved: UInt64, enabled: Bool) {
         self.trackersCount = trackersCount
