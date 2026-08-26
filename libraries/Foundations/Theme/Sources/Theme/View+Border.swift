@@ -56,5 +56,9 @@
         func frame(_ size: CGSize) -> some View {
             frame(width: size.width, height: size.height)
         }
+
+        func frame(minSize: CGSize) -> some View {
+            frame(minWidth: minSize.width, minHeight: minSize.height)
+        }
     }
 #endif

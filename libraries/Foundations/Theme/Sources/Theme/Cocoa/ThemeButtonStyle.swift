@@ -61,13 +61,20 @@ public struct ThemeButtonStyle: ButtonStyle {
     public init(padding: Padding = .medium, style: Style = .primary, maxWidth: CGFloat? = nil) {
         self.padding = padding
         self.style = style
-        self.maxWidth = maxWidth
+        #if canImport(UIKit)
+            self.maxWidth = maxWidth ?? .infinity
+        #else
+            self.maxWidth = maxWidth
+        #endif
     }
 
     func backgroundColor(isPressed: Bool) -> Color {
         var backgroundStyle: AppTheme.Style = [.interactive]
         if style == .secondary {
             backgroundStyle.insert(.weak)
+        }
+        if !isEnabled {
+            backgroundStyle.insert([.weak, .disabled])
         }
         if isPressed {
             backgroundStyle.insert(.active)
@@ -88,7 +95,7 @@ public struct ThemeButtonStyle: ButtonStyle {
             .font(.body1(.semibold))
         #endif
             .frame(maxWidth: maxWidth)
-            .foregroundColor(Color(.text, isEnabled ? [] : [.hint]))
+            .foregroundColor(Color(.text, isEnabled ? [.primary] : [.weak]))
             .padding(.vertical, padding.vertical)
             .padding(.horizontal, padding.horizontal)
             .background(backgroundColor(isPressed: configuration.isPressed))
@@ -111,30 +118,55 @@ public extension View {
     }
 }
 
+extension SwiftUICore.ColorScheme: @retroactive CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .light:
+            "Light"
+        case .dark:
+            "Dark"
+        @unknown default:
+            "Unknown"
+        }
+    }
+}
+
 #Preview {
     HStack {
         ForEach([SwiftUICore.ColorScheme.dark, .light], id: \.hashValue) { scheme in
             VStack {
-                Button("Small padding, secondary style") {}
+                Text("\(scheme.description) scheme")
+                HStack {
+                    Text("padding")
+                    Text("style")
+                    Text("enabled?")
+                }
+                Button("Small, secondary, enabled") {}
                     .buttonStyle(ThemeButtonStyle(
                         padding: .small,
                         style: .secondary
                     ))
-                Button("Medium padding, secondary style") {}
+                Button("Medium, secondary, enabled") {}
                     .buttonStyle(ThemeButtonStyle(
                         padding: .medium,
                         style: .secondary
                     ))
-                Button("Small padding, primary style") {}
+                Button("Small, PRIMARY, enabled") {}
                     .buttonStyle(ThemeButtonStyle(
                         padding: .small,
                         style: .primary
                     ))
-                Button("Medium padding, primary style") {}
+                Button("Medium, PRIMARY, enabled") {}
                     .buttonStyle(ThemeButtonStyle(
                         padding: .medium,
                         style: .primary
                     ))
+                Button("Medium, PRIMARY, disabled") {}
+                    .buttonStyle(ThemeButtonStyle(
+                        padding: .medium,
+                        style: .primary
+                    ))
+                    .disabled(true)
             }
             .padding()
             .background(Color(.background, .weak))

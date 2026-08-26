@@ -19,10 +19,12 @@
 import ComposableArchitecture
 import Dependencies
 import DependenciesMacros
+import ModalsShared
 
 @DependencyClient
 public struct AnnouncementOfferPresenting: Sendable {
     public var present: @Sendable (_ store: StoreOf<AnnouncementsFeature>) -> Void
+    public var presentNPS: @Sendable (_ store: StoreOf<NPSModalFeature>) -> Void
     public var dismiss: @Sendable () -> Void
 }
 
@@ -54,12 +56,30 @@ public struct AnnouncementOfferCoordinator {
     }
 
     private func present(_ announcement: Announcement?) {
-        guard let announcement,
-              let state = AnnouncementsFeature.State(announcement: announcement) else {
+        guard let announcement else {
             return
         }
-        announcementManager.markAsRead(announcement: announcement)
+        if let state = AnnouncementsFeature.State(announcement: announcement) {
+            present(state: state)
+        }
+        if announcement.knownType == .nps {
+            presentNPS()
+        }
 
+        announcementManager.markAsRead(announcement: announcement)
+    }
+
+    private func presentNPS() {
+        let presenter = presenter
+        let store = Store(initialState: .init()) {
+            NPSModalFeature()
+        } withDependencies: {
+            $0.dismiss = DismissEffect { presenter.dismiss() }
+        }
+        presenter.presentNPS(store)
+    }
+
+    private func present(state: AnnouncementsFeature.State) {
         let presenter = presenter
         let store = Store(initialState: state) {
             AnnouncementsFeature()

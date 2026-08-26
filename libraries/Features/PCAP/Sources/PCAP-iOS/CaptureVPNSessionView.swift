@@ -56,7 +56,7 @@ public struct CaptureVPNSessionView: View {
                     Button(store.buttonText) {
                         store.send(.captureButtonPressed)
                     }
-                    .buttonStyle(ThemeButtonStyle(padding: .medium, style: buttonStyle, maxWidth: .infinity))
+                    .buttonStyle(ThemeButtonStyle(padding: .medium, style: buttonStyle))
                 }
             }
             .padding(.themeSpacing16)

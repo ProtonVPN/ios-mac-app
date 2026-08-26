@@ -67,7 +67,10 @@ public extension AnnouncementManager {
             @SharedReader(.blockOneTimeAnnouncement) var blockOneTimeAnnouncement
             guard !blockOneTimeAnnouncement else { return nil }
         #endif
-        return fetchCurrentAnnouncementsFromStorage().first { $0.knownType == .oneTime && $0.isRead == false }
+        return fetchCurrentAnnouncementsFromStorage().first {
+            [.nps, .oneTime].contains($0.knownType)
+                && $0.isRead == false
+        }
     }
 
     /// Offer image URLs worth prefetching for the announcement bell.
@@ -91,7 +94,7 @@ extension AnnouncementManager: DependencyKey {
 
         let currentAnnouncements: @Sendable () -> [Announcement] = {
             (key().currentValue() ?? [])
-                .filter { $0.startTime.isPast && $0.endTime.isFuture && $0.offer != nil }
+                .filter { $0.startTime.isPast && $0.endTime.isFuture }
                 // sorting is needed because we only want to consider the first announcement
                 .sorted { $0.startTime < $1.startTime }
         }

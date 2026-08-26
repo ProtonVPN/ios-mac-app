@@ -24,7 +24,7 @@ public extension DefaultProfileFeature.State {
         case .random:
             Theme.Asset.Icons.arrowsSwitch
         default:
-            Theme.Asset.fastestIcon
+            .init(asset: Theme.Asset.fastestIcon)
         }
     }
 

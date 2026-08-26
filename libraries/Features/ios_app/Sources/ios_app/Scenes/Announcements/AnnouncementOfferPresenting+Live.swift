@@ -19,21 +19,33 @@
 import Announcement
 import ComposableArchitecture
 import Dependencies
+import ModalsShared
 import SwiftUI
 
 extension AnnouncementOfferPresenting: @retroactive DependencyKey {
-    public static let liveValue = AnnouncementOfferPresenting(
-        present: { store in
-            MainActor.assumeIsolated {
-                @Dependency(\.windowService) var windowService
-                let controller = UIHostingController(rootView: AnnouncementOfferView(store: store))
-                controller.modalPresentationStyle = .overFullScreen
-                windowService.present(controller)
-            }
-        },
-        dismiss: {
+    public static var liveValue: AnnouncementOfferPresenting {
+        @Sendable
+        func present(controller: UIViewController) {
             @Dependency(\.windowService) var windowService
-            windowService.dismissModal(nil)
+            windowService.present(controller)
         }
-    )
+        return AnnouncementOfferPresenting(
+            present: { store in
+                MainActor.assumeIsolated {
+                    let controller = UIHostingController(rootView: AnnouncementOfferView(store: store))
+                    controller.modalPresentationStyle = .overFullScreen
+                    present(controller: controller)
+                }
+            }, presentNPS: { store in
+                MainActor.assumeIsolated {
+                    let controller = UIHostingController(rootView: NPSModalView(store: store))
+                    controller.modalPresentationStyle = .overFullScreen
+                    present(controller: controller)
+                }
+            }, dismiss: {
+                @Dependency(\.windowService) var windowService
+                windowService.dismissModal(nil)
+            }
+        )
+    }
 }

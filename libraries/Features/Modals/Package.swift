@@ -31,6 +31,8 @@ let package = Package(
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/Domain"),
 
+        .package(path: "../../Shared/CommonNetworking"),
+
         .package(path: "../../Core/SharedViews"),
         .package(path: "../../Core/NEHelper"),
 
@@ -55,10 +57,12 @@ let package = Package(
                 "Strings",
                 "Theme",
                 "SharedViews",
+                "CommonNetworking",
                 .product(name: "VPNAppCore", package: "NEHelper"),
 
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "Logging", package: "swift-log"),
             ],
             resources: [
                 .process("Resources/Media.xcassets"),

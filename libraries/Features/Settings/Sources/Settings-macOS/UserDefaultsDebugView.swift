@@ -66,14 +66,21 @@
         private func defaultsList(entries: [UserDefaultsEntry]) -> some View {
             ForEach(entries, id: \.self) { entry in
                 Section(entry.key) {
-                    if case let .bool(value) = entry.value {
-                        Button {
-                            store.send(.flipBool(entry))
+                    HStack {
+                        Button(role: .destructive) {
+                            store.send(.remove(entry))
                         } label: {
+                            Image(systemName: "trash")
+                        }
+                        if case .bool = entry.value {
+                            Button {
+                                store.send(.flipBool(entry))
+                            } label: {
+                                Text(entry.textValue())
+                            }
+                        } else {
                             Text(entry.textValue())
                         }
-                    } else {
-                        Text(entry.textValue())
                     }
                 }
             }

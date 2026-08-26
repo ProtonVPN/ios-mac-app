@@ -30,6 +30,7 @@ public enum Asset {
   public static let whatsNewFreePlus = ImageAsset(name: "WhatsNewFreePlus")
   public static let bannerIcon = ImageAsset(name: "bannerIcon")
   public static let getStarted = ImageAsset(name: "getStarted")
+  public static let npsSurvey = ImageAsset(name: "NPSSurvey")
   public static let welcomeRedesigned = ImageAsset(name: "welcomeRedesigned")
   public static let worldwideCoverage = ImageAsset(name: "worldwide-coverage")
 }
