@@ -22,7 +22,7 @@
 
 import Cocoa
 import Ergonomics
-import ProtonCoreUIFoundations
+import Theme
 
 class StatusMenuProfileViewItem: NSTableRowView {
     @IBOutlet var profileCircle: ProfileCircle!
@@ -56,11 +56,11 @@ class StatusMenuProfileViewItem: NSTableRowView {
 
         switch viewModel.icon {
         case .bolt:
-            profileImage.image = IconProvider.bolt.colored()
+            profileImage.image = Theme.Asset.Icons.bolt.image.colored()
             profileImage.isHidden = false
             profileCircle.isHidden = true
         case .arrowsSwapRight:
-            profileImage.image = IconProvider.arrowsSwapRight.colored()
+            profileImage.image = Theme.Asset.Icons.arrowsSwapRight.image.colored()
             profileImage.isHidden = false
             profileCircle.isHidden = true
         case let .circle(color):

@@ -19,7 +19,6 @@
 import Dependencies
 import Ergonomics
 import Hermes
-import ProtonCoreUIFoundations
 import SharedViews
 import Sharing
 import Strings

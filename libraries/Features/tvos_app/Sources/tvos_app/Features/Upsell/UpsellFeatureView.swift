@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ProtonCoreUIFoundations
 import SwiftUI
+import Theme
 
 struct UpsellFeatureView: View {
     let text: LocalizedStringKey
     var body: some View {
         HStack(alignment: .top, spacing: .themeSpacing32) {
-            IconProvider.checkmark
+            Theme.Asset.Icons.checkmark.swiftUIImage
             Text(text)
                 .font(.body)
         }

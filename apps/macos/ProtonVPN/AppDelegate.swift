@@ -44,7 +44,6 @@ import TrustKit
 
 // Core dependencies
 import ProtonCoreServices
-import ProtonCoreUIFoundations
 import Sharing
 
 // Local dependencies (Core first, then Shared, then Features, then Foundations)
@@ -55,6 +54,7 @@ import PMLogger
 import Settings
 import Strings
 import Telemetry
+import Theme
 import VPNAppCore
 import VPNShared
 
@@ -391,7 +391,7 @@ extension AppDelegate {
     }
 
     private func setupCoreIntegration() async {
-        ColorProvider.brand = .vpn
+        AppTheme.useVPNBrand()
 
         ProtonCoreLog.PMLog.callback = { message, level in
             switch level {

@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ProtonCoreUIFoundations
 import UIKit
 
 /// A two-line, detail accessory cell with a large image at the leading edge.

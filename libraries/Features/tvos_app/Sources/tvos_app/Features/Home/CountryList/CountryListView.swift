@@ -19,7 +19,6 @@
 import ComposableArchitecture
 import Connection
 import Foundation
-import ProtonCoreUIFoundations
 import SwiftUI
 import Theme
 

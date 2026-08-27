@@ -141,7 +141,8 @@ import SwiftUI
                 return .clear
             }
 
-            var color = UIColor(style: style)
+            // Picking the color reads the asset catalogue, so each context and style pair is picked once.
+            var color = ThemeStyleColors.color(context: self, style: style) { UIColor(style: style) }
 
             if self == .text, style.contains([.transparent, .disabled]) {
                 color = color.withAlphaComponent(0.5)

@@ -19,7 +19,6 @@
 import Cocoa
 import Ergonomics
 import Foundation
-import ProtonCoreUIFoundations
 import SharedViews
 import Strings
 import Theme
@@ -109,7 +108,7 @@ class ChangeServerView: NSView {
     }
 
     private func updateView() {
-        hourglassImageView.image = IconProvider.hourglass
+        hourglassImageView.image = Theme.Asset.Icons.hourglass.image
         hourglassImageView.contentTintColor = .color(.text, .normal)
 
         switch state {

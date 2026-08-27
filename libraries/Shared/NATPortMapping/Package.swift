@@ -16,8 +16,6 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../../../external/protoncore"),
-
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/Strings"),
         .package(path: "../../Core/NEHelper"),
@@ -54,7 +52,6 @@ let package = Package(
                 "NATPortMapping",
                 "Theme",
                 "Strings",
-                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],
             path: "Sources/NATPMPUI"

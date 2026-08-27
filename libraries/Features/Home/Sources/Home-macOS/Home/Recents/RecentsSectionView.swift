@@ -19,7 +19,6 @@
 import ComposableArchitecture
 import Domain
 import HomeShared
-import ProtonCoreUIFoundations
 import SharedViews
 import Strings
 import SwiftUI
@@ -41,8 +40,8 @@ struct RecentsSectionView: View {
                 HStack(spacing: .themeSpacing4) {
                     (
                         recentsHidden
-                            ? IconProvider.chevronRightFilled
-                            : IconProvider.chevronDownFilled
+                            ? Theme.Asset.Icons.chevronRightFilled.swiftUIImage
+                            : Theme.Asset.Icons.chevronDownFilled.swiftUIImage
                     )
                     .resizable()
                     .frame(.square(16))

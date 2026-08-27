@@ -20,7 +20,6 @@ import ComposableArchitecture
 import Connection
 import Domain
 import Localization
-import ProtonCoreUIFoundations
 import SwiftUI
 import Theme
 
@@ -36,7 +35,7 @@ struct ProtectionStatusView: View {
         init(connectionState: Connection.ConnectionState) {
             switch connectionState {
             case .connected:
-                self.icon = IconProvider.lockFilled
+                self.icon = Theme.Asset.Icons.lockFilled.swiftUIImage
                 self.title = "Protected"
                 self.foregroundColor = Asset.vpnGreen.swiftUIColor
                 self.buttonTitle = "Disconnect"
@@ -46,7 +45,7 @@ struct ProtectionStatusView: View {
                 self.foregroundColor = Color(.text)
                 self.buttonTitle = "Cancel"
             case .disconnected:
-                self.icon = IconProvider.lockOpenFilled
+                self.icon = Theme.Asset.Icons.lockOpenFilled.swiftUIImage
                 self.title = "Unprotected"
                 self.foregroundColor = Color(.text, .danger)
                 self.buttonTitle = "Quick Connect"
@@ -61,12 +60,12 @@ struct ProtectionStatusView: View {
                 self.foregroundColor = Color(.text)
                 self.buttonTitle = "Cancel"
             case .authenticationRequired:
-                self.icon = IconProvider.exclamationTriangleFilled
+                self.icon = Theme.Asset.Icons.exclamationTriangleFilled.swiftUIImage
                 self.title = "Authentication required"
                 self.foregroundColor = Color(.text, .warning)
                 self.buttonTitle = "Disconnect"
             case .killSwitchActive:
-                self.icon = IconProvider.lockFilled
+                self.icon = Theme.Asset.Icons.lockFilled.swiftUIImage
                 self.title = "Kill Switch Active"
                 self.foregroundColor = Asset.vpnGreen.swiftUIColor
                 self.buttonTitle = "Quick Connect"

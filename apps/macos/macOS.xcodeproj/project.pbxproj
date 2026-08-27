@@ -32,7 +32,6 @@
 		4C93F57B2CDCDD4D006BFD77 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4C93F57A2CDCDD4D006BFD77 /* Ergonomics */; };
 		4C9FF48A2D64967A004DBF89 /* Announcement in Frameworks */ = {isa = PBXBuildFile; productRef = 4C9FF4892D64967A004DBF89 /* Announcement */; };
 		4CD1F7872A72BEDA00E8AB01 /* BugReport in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7862A72BEDA00E8AB01 /* BugReport */; };
-		4CD1F7892A72BEE700E8AB01 /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7882A72BEE700E8AB01 /* ProtonCoreUIFoundations */; };
 		4CD1F78B2A72BF0100E8AB01 /* LegacyCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F78A2A72BF0100E8AB01 /* LegacyCommon */; };
 		4CEBB4092CDA68DE00AB5556 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 4CEBB4082CDA68DE00AB5556 /* Sparkle */; };
 		6640FF402ED5B24C004A4A9A /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE182C551F617C0000F3BA4C /* NetworkExtension.framework */; };
@@ -369,7 +368,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CD1F7892A72BEE700E8AB01 /* ProtonCoreUIFoundations in Frameworks */,
 				A468180E2FD883E500901B14 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */,
 				4C0930F42A3868340069323E /* Ergonomics in Frameworks */,
 				A4C29CDF2FACCD6300980288 /* Connection in Frameworks */,
@@ -619,7 +617,6 @@
 				E5E48D022A4C3D7100B09111 /* Logging */,
 				4C7D40582A60251700ACDBED /* SDWebImage */,
 				4CD1F7862A72BEDA00E8AB01 /* BugReport */,
-				4CD1F7882A72BEE700E8AB01 /* ProtonCoreUIFoundations */,
 				4CD1F78A2A72BF0100E8AB01 /* LegacyCommon */,
 				4C25999B2A7AA29800A31895 /* Dependencies */,
 				E59447532A86217A00E1E241 /* ProtonCoreLoginUI */,
@@ -2322,10 +2319,6 @@
 		4CD1F7862A72BEDA00E8AB01 /* BugReport */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BugReport;
-		};
-		4CD1F7882A72BEE700E8AB01 /* ProtonCoreUIFoundations */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ProtonCoreUIFoundations;
 		};
 		4CD1F78A2A72BF0100E8AB01 /* LegacyCommon */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -18,7 +18,6 @@
 
 import Domain
 import HomeShared
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Theme
@@ -38,7 +37,7 @@ struct RecentConnectionOptionsButton: View {
             Button {
                 isPresented.toggle()
             } label: {
-                IconProvider.threeDotsVertical
+                Theme.Asset.Icons.threeDotsVertical.swiftUIImage
                     .resizable()
                     .frame(.square(16))
                     .padding(.themeSpacing8)
@@ -85,10 +84,10 @@ private extension RecentConnectionOptionsButton {
             switch role {
             case let .pin(isPinned):
                 isPinned
-                    ? IconProvider.pinSlashFilled
-                    : IconProvider.pinFilled
+                    ? Theme.Asset.Icons.pinSlashFilled.swiftUIImage
+                    : Theme.Asset.Icons.pinFilled.swiftUIImage
             case .remove:
-                IconProvider.trashCross
+                Theme.Asset.Icons.trashCross.swiftUIImage
             }
         }
 

@@ -17,7 +17,6 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ProtonCoreLoginUI
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
 import Theme
@@ -36,10 +35,10 @@ struct NewAccountCardView: View {
 
         var image: Image {
             switch self {
-            case .pass: IconProvider.passMainTransparent
-            case .mail: IconProvider.mailMainTransparent
-            case .calendar: IconProvider.calendarMainTransparent
-            case .drive: IconProvider.driveMainTransparent
+            case .pass: Theme.Asset.Icons.passMainTransparent.swiftUIImage
+            case .mail: Theme.Asset.Icons.mailMainTransparent.swiftUIImage
+            case .calendar: Theme.Asset.Icons.calendarMainTransparent.swiftUIImage
+            case .drive: Theme.Asset.Icons.driveMainTransparent.swiftUIImage
             }
         }
     }
@@ -88,12 +87,12 @@ struct NewAccountCardView: View {
             }
             .padding(.bottom, .themeSpacing8)
 
-            PCButton(
+            ProtonCoreButton(
                 style: .constant(.init(mode: .solid())),
                 content: .constant(.init(title: Localizable.createAccountSettingsTitle, action: { actionHandler(.signUp) }))
             )
 
-            PCButton(
+            ProtonCoreButton(
                 style: .constant(.init(mode: .text)),
                 content: .constant(.init(title: Localizable.logIn, action: { actionHandler(.signIn) }))
             )

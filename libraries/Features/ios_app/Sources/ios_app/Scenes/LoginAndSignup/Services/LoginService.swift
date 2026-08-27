@@ -23,11 +23,11 @@ import ProtonCoreNetworking
 import ProtonCorePayments
 import ProtonCorePushNotifications
 import ProtonCoreServices
-import ProtonCoreUIFoundations
 import SharedErgonomics
 import Sharing
 import Strings
 import SwiftUI
+import Theme
 import UIKit
 import VPNAppCore
 import VPNShared
@@ -81,7 +81,7 @@ final class CoreLoginService {
     private let pushNotificationService: PushNotificationServiceProtocol
 
     private lazy var loginInterface: LoginAndSignupInterface = makeLoginInterface()
-    private var banner: PMBanner?
+    private var banner: ProtonBanner?
 
     weak var delegate: LoginServiceDelegate?
 
@@ -131,7 +131,7 @@ final class CoreLoginService {
     }
 
     private func helpDecorator(input: [[HelpItem]]) -> [[HelpItem]] {
-        let reportBugItem = HelpItem.custom(icon: IconProvider.bug, title: Localizable.reportBug, behaviour: { [weak self] _ in
+        let reportBugItem = HelpItem.custom(icon: Theme.Asset.Icons.bug.image, title: Localizable.reportBug, behaviour: { [weak self] _ in
             self?.settingsService.presentReportBug()
         })
         var result = input
@@ -187,9 +187,9 @@ final class CoreLoginService {
 
     private func showAccountCreatedBanner() {
         if let topmostPresentedViewController = windowService.topmostPresentedViewController() {
-            banner = PMBanner(
+            banner = ProtonBanner(
                 message: Localizable.accountCreatedTitle,
-                style: PMBannerNewStyle.success,
+                style: ProtonBannerStyle.success,
                 dismissDuration: 3.0
             )
             banner?.show(at: .top, on: topmostPresentedViewController)

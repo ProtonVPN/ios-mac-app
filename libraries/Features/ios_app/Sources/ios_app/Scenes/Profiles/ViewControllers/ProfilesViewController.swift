@@ -22,7 +22,6 @@
 
 import Domain
 import GSMessages
-import ProtonCoreUIFoundations
 import Strings
 import Theme
 import UIKit

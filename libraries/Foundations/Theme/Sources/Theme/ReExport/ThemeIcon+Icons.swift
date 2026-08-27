@@ -19,15 +19,23 @@
 import ProtonCoreUIFoundations
 import SwiftUI
 
+/// An icon the app can draw, named once here so no other module has to know which catalogue holds it.
+///
+/// Both catalogues are read through CoreUI, which costs about 38 microseconds per read on macOS and hands back
+/// a new image each time, so `image` keeps what it resolved.
 public struct ThemeIcon: Equatable, Sendable {
-    private enum Source: Equatable {
-        /// An icon resolved from Theme's internal asset catalogue.
+    /// Which catalogue holds the icon. Doubles as the cache key, so it is `Hashable`.
+    fileprivate enum Source: Hashable {
+        /// An icon resolved from Theme's own asset catalogue.
         case asset(String)
         /// An icon resolved via `IconProvider` from ProtonCoreUIFoundations.
         case iconProvider(KeyPath<ProtonIconSet, ProtonIcon> & Sendable)
     }
 
     private let source: Source
+
+    /// Icons already read from a catalogue, so each one is read once per process.
+    private static let images = ThemeAssetCache<Source, ImageAsset.Image>()
 
     // MARK: - Init
 
@@ -41,6 +49,10 @@ public struct ThemeIcon: Equatable, Sendable {
 
     // MARK: - Public API
 
+    /// The icon as a SwiftUI image.
+    ///
+    /// This one is not cached because it only names the image, at about 0.08 microseconds. SwiftUI
+    /// reads the catalogue itself when it draws, and caches that.
     public var swiftUIImage: Image {
         switch source {
         case let .asset(name):
@@ -50,15 +62,34 @@ public struct ThemeIcon: Equatable, Sendable {
         }
     }
 
+    /// The icon as an `NSImage` on macOS and a `UIImage` elsewhere, read from the catalogue once.
     public var image: ImageAsset.Image {
-        switch source {
-        case let .asset(name):
-            if name == Asset.vpnSubscriptionBadge.name {
-                return Asset.vpnSubscriptionBadge.image
+        Self.images.value(for: source) { source in
+            switch source {
+            case let .asset(name):
+                Self.assetCatalogImage(named: name)
+            case let .iconProvider(keyPath):
+                IconProvider[dynamicMember: keyPath]
             }
-            fatalError("image is not available for asset-backed ThemeIcon '\(name)'.")
-        case let .iconProvider(keyPath):
-            return IconProvider[dynamicMember: keyPath]
         }
+    }
+
+    // MARK: - Reading Theme's own catalogue
+
+    /// The named image from Theme's asset catalogue, or an empty image when the name is unknown.
+    ///
+    /// An unknown name means the catalogue and this file disagree, which is a programmer error, so it
+    /// trips an assertion in debug builds and draws nothing in release builds.
+    private static func assetCatalogImage(named name: String) -> ImageAsset.Image {
+        #if canImport(AppKit) && !targetEnvironment(macCatalyst)
+            let image = Bundle.module.image(forResource: NSImage.Name(name))
+        #else
+            let image = ImageAsset.Image(named: name, in: .module, compatibleWith: nil)
+        #endif
+        guard let image else {
+            log.assertionFailure("Theme's asset catalogue has no image named \(name)")
+            return ImageAsset.Image()
+        }
+        return image
     }
 }

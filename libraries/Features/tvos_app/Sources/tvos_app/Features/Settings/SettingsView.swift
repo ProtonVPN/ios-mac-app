@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import ProtonCoreUIFoundations
 import SwiftUI
+import Theme
 
 struct SettingsView: View {
     @Bindable var store: StoreOf<SettingsFeature>
@@ -30,25 +30,25 @@ struct SettingsView: View {
                 VStack(spacing: .themeSpacing24) {
                     Spacer()
                     // TODO: We might bring this back
-                    //                SettingsCellView(title: "Support Center", icon: IconProvider.lifeRing) {
+                    //                SettingsCellView(title: "Support Center", icon: Theme.Asset.Icons.lifeRing.swiftUIImage) {
                     //                    store.send(.showDrillDown(.supportCenter))
                     //                }
-                    SettingsCellView(title: "Contact us", icon: IconProvider.speechBubble) {
+                    SettingsCellView(title: "Contact us", icon: Theme.Asset.Icons.speechBubble.swiftUIImage) {
                         store.send(.showDrillDown(.contactUs))
                     }
-                    SettingsCellView(title: "Privacy policy", icon: IconProvider.fileEmpty) {
+                    SettingsCellView(title: "Privacy policy", icon: Theme.Asset.Icons.fileEmpty.swiftUIImage) {
                         store.send(.showDrillDown(.privacyPolicy))
                     }
-                    SettingsCellView(title: "Terms of service", icon: IconProvider.fileEmpty) {
+                    SettingsCellView(title: "Terms of service", icon: Theme.Asset.Icons.fileEmpty.swiftUIImage) {
                         store.send(.showDrillDown(.eula))
                     }
-                    SettingsCellView(title: "Logs", icon: IconProvider.fileEmpty) {
+                    SettingsCellView(title: "Logs", icon: Theme.Asset.Icons.fileEmpty.swiftUIImage) {
                         store.send(.showLogs)
                     }
-                    SettingsCellView(title: "Report an issue", icon: IconProvider.fileEmpty) {
+                    SettingsCellView(title: "Report an issue", icon: Theme.Asset.Icons.fileEmpty.swiftUIImage) {
                         store.send(.showReportIssue)
                     }
-                    SettingsCellView(title: "Sign out", icon: IconProvider.arrowOutFromRectangle) {
+                    SettingsCellView(title: "Sign out", icon: Theme.Asset.Icons.arrowOutFromRectangle.swiftUIImage) {
                         store.send(.signOutSelected)
                     }
                     Spacer()

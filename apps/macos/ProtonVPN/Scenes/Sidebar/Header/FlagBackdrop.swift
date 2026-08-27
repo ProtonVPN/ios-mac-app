@@ -30,7 +30,7 @@ struct FlagBackdrop: View {
         Color(.background)
             .overlay {
                 if let countryCode,
-                   let flag: Image = AppTheme.Icon.flag(countryCode: countryCode, style: .large) {
+                   let flag: Image = AppTheme.flag(countryCode: countryCode, style: .large) {
                     flag
                         .resizable()
                         .aspectRatio(contentMode: .fill)

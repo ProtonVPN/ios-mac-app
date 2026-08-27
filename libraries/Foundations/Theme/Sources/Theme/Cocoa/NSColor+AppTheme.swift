@@ -156,15 +156,21 @@ import SwiftUI
             } else if contains(.inverted) {
                 CP.TextInvert
             } else {
-                // workaround for a macos bug, where the pure white color in a dropdown text would appear grayed-out
-                if CP.TextNorm.redComponent == 1,
-                   CP.TextNorm.blueComponent == 1,
-                   CP.TextNorm.greenComponent == 1 {
-                    .init(red: 255, green: 255, blue: 254)
-                } else {
-                    Asset.vpnCarbonTextNorm.color
-                }
+                Self.normalTextColor
             }
+        }
+
+        /// The text color for a plain style.
+        ///
+        /// macOS draws pure white text in a dropdown as gray, so when the palette says white this
+        /// hands back a color one step away from white, which macOS leaves alone.
+        private static var normalTextColor: NSColor {
+            // The palette offers this name as several types, so say which one is wanted.
+            let textNorm: NSColor = CP.TextNorm
+            let isPureWhite = textNorm.redComponent == 1
+                && textNorm.greenComponent == 1
+                && textNorm.blueComponent == 1
+            return isPureWhite ? .init(red: 255, green: 255, blue: 254) : Asset.vpnCarbonTextNorm.color
         }
 
         var iconColor: NSColor {
@@ -195,18 +201,11 @@ import SwiftUI
         }
 
         func color(style: AppTheme.Style) -> NSColor {
-            var color: NSColor
+            // Picking the color reads the asset catalogue, so each context and style pair is picked once.
+            var color = ThemeStyleColors.color(context: self, style: style) { NSColor(style: style) }
 
-            if self == .text {
-                let isDisabled = style.contains([.transparent, .disabled])
-
-                color = NSColor(style: style)
-
-                if isDisabled {
-                    color = color.withAlphaComponent(0.5)
-                }
-            } else {
-                color = NSColor(style: style)
+            if self == .text, style.contains([.transparent, .disabled]) {
+                color = color.withAlphaComponent(0.5)
             }
 
             return color

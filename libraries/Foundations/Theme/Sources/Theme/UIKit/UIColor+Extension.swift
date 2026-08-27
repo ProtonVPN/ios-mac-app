@@ -20,7 +20,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import ProtonCoreUIFoundations
 #if canImport(UIKit)
     import UIKit
 
@@ -40,83 +39,83 @@ import ProtonCoreUIFoundations
         }
 
         class func brandColor() -> UIColor {
-            ColorProvider.BrandNorm
+            Asset.Colors.brandNorm.uiColor
         }
 
         class func textAccent() -> UIColor {
-            ColorProvider.TextAccent
+            Asset.Colors.textAccent.uiColor
         }
 
         class func interactionNorm() -> UIColor {
-            ColorProvider.InteractionNorm
+            Asset.Colors.interactionNorm.uiColor
         }
 
         class func brandLighten20Color() -> UIColor {
-            ColorProvider.BrandLighten20
+            Asset.Colors.brandLighten20.uiColor
         }
 
         class func brandLighten40Color() -> UIColor {
-            ColorProvider.BrandLighten40
+            Asset.Colors.brandLighten40.uiColor
         }
 
         class func brandDarken40Color() -> UIColor {
-            ColorProvider.BrandDarken40
+            Asset.Colors.brandDarken40.uiColor
         }
 
         class func secondaryBackgroundColor() -> UIColor {
-            ColorProvider.BackgroundSecondary
+            Asset.Colors.backgroundSecondary.uiColor
         }
 
         class func backgroundColor() -> UIColor {
-            ColorProvider.BackgroundNorm
+            Asset.Colors.backgroundNorm.uiColor
         }
 
         class func weakTextColor() -> UIColor {
-            ColorProvider.TextWeak
+            Asset.Colors.textWeak.uiColor
         }
 
         class func weakInteractionColor() -> UIColor {
-            ColorProvider.InteractionWeak
+            Asset.Colors.interactionWeak.uiColor
         }
 
         class func normalSeparatorColor() -> UIColor {
-            ColorProvider.SeparatorNorm
+            Asset.Colors.separatorNorm.uiColor
         }
 
         class func notificationWarningColor() -> UIColor {
-            ColorProvider.NotificationWarning
+            Asset.Colors.notificationWarning.uiColor
         }
 
         class func notificationOKColor() -> UIColor {
-            ColorProvider.NotificationSuccess
+            Asset.Colors.notificationSuccess.uiColor
         }
 
         class func normalTextColor() -> UIColor {
-            ColorProvider.TextNorm
+            Asset.Colors.textNorm.uiColor
         }
 
         class func buttonTitleColor() -> UIColor {
-            ColorProvider.White
+            Asset.Colors.white.uiColor
         }
 
         class func iconWeak() -> UIColor {
-            ColorProvider.IconWeak
+            Asset.Colors.iconWeak.uiColor
         }
 
         class func iconHint() -> UIColor {
-            ColorProvider.IconHint
+            Asset.Colors.iconHint.uiColor
         }
 
         class func iconNorm() -> UIColor {
-            ColorProvider.IconNorm
+            Asset.Colors.iconNorm.uiColor
         }
 
         class func iconAccent() -> UIColor {
-            ColorProvider.IconAccent
+            Asset.Colors.iconAccent.uiColor
         }
 
         class func notificationErrorColor() -> UIColor {
-            ColorProvider.NotificationError
+            Asset.Colors.notificationError.uiColor
         }
     }
 #endif

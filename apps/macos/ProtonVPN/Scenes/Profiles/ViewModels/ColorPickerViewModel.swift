@@ -22,6 +22,7 @@
 
 import Cocoa
 import LegacyCommon
+import Theme
 
 class ColorPickerViewModel {
     private let colors: [NSColor]
@@ -47,7 +48,7 @@ class ColorPickerViewModel {
     }
 
     init() {
-        self.colors = ProfileConstants.profileColors
+        self.colors = Theme.Asset.Colors.profileColors
         self.selectedColorIndex = colors.randomIndex
     }
 

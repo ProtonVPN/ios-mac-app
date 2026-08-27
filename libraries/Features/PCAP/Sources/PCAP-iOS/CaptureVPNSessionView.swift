@@ -20,7 +20,6 @@ import ComposableArchitecture
 import Connection
 import Domain
 import PCAPShared
-import ProtonCoreUIFoundations
 import Sharing
 import Strings
 import SwiftUI

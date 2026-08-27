@@ -80,7 +80,7 @@ extension OverviewItemViewModel {
         let profileDescription = ("  " + description).styled(font: .themeFont(.heading4), alignment: .left)
         let countryName = LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
         let attributedCountryName = (countryName + "  ").styled(font: .themeFont(.heading4), alignment: .left)
-        let doubleArrow = AppTheme.Icon.chevronRight.asAttachment(style: .normal, size: .square(10))
+        let doubleArrow = Theme.Asset.Icons.chevronRight.image.asAttachment(style: .normal, size: .square(10))
 
         let result: NSAttributedString
         let buffer = "  ".styled(font: .themeFont(.heading4), alignment: .left)
@@ -88,13 +88,13 @@ extension OverviewItemViewModel {
         case .standard:
             result = NSAttributedString.concatenate(attributedCountryName, doubleArrow, profileDescription)
         case .secureCore:
-            let icon = AppTheme.Icon.locks.asAttachment(style: .normal, size: .square(15))
+            let icon = Theme.Asset.Icons.locks.image.asAttachment(style: .normal, size: .square(15))
             result = NSAttributedString.concatenate(icon, profileDescription, buffer, doubleArrow, buffer, attributedCountryName)
         case .p2p:
-            let icon = AppTheme.Icon.arrowsSwitch.asAttachment(style: .normal, size: .square(15))
+            let icon = Theme.Asset.Icons.arrowsSwitch.image.asAttachment(style: .normal, size: .square(15))
             result = NSAttributedString.concatenate(icon, buffer, attributedCountryName, doubleArrow, profileDescription)
         default: // case .tor:
-            let icon = AppTheme.Icon.brandTor.asAttachment(style: .normal, size: .square(15))
+            let icon = Theme.Asset.Icons.brandTor.image.asAttachment(style: .normal, size: .square(15))
             result = NSAttributedString.concatenate(icon, buffer, attributedCountryName, doubleArrow, profileDescription)
         }
 
@@ -102,14 +102,14 @@ extension OverviewItemViewModel {
     }
 
     private func customServerDescriptor(forModel serverModel: ServerModel) -> NSAttributedString {
-        let doubleArrow = AppTheme.Icon.chevronRight.asAttachment(style: .normal, size: .square(10))
+        let doubleArrow = Theme.Asset.Icons.chevronRight.image.asAttachment(style: .normal, size: .square(10))
 
         let prefixIcon: NSImage? = if serverModel.isSecureCore {
-            AppTheme.Icon.locks
+            Theme.Asset.Icons.locks.image
         } else if serverModel.supportsTor {
-            AppTheme.Icon.brandTor
+            Theme.Asset.Icons.brandTor.image
         } else if serverModel.supportsP2P {
-            AppTheme.Icon.arrowsSwitch
+            Theme.Asset.Icons.arrowsSwitch.image
         } else {
             nil
         }

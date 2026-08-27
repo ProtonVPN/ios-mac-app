@@ -20,7 +20,6 @@ import ComposableArchitecture
 import Dependencies
 import Ergonomics
 import HomeShared
-import var ProtonCoreUIFoundations.IconProvider
 import Strings
 import SwiftUI
 import Theme
@@ -41,7 +40,7 @@ struct HomeConnectionCardHeader: View {
 //            Text(Localizable.actionHelp)
 //                .themeFont(.caption(emphasised: true))
 //                .styled(.weak)
-//            IconProvider.questionCircle
+//            Theme.Asset.Icons.questionCircle.swiftUIImage
 //                .resizable()
 //                .styled(.weak)
 //                .frame(.square(16)) // TODO: [redesign, phase 2]
@@ -66,7 +65,7 @@ struct HomeConnectionCardHeader: View {
             Text(titleString)
                 .themeFont(.body3(emphasised: false))
             if shouldShowDropdownChevron {
-                IconProvider.chevronDownFilled
+                Theme.Asset.Icons.chevronDownFilled.swiftUIImage
             }
         }
         .foregroundColor(Color(.text))

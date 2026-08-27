@@ -20,7 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import ProtonCoreUIFoundations
+import Theme
 import UIKit
 
 final class ProfilesTableViewCell: UITableViewCell {
@@ -36,9 +36,9 @@ final class ProfilesTableViewCell: UITableViewCell {
             guard let viewModel else { return }
             switch viewModel.icon {
             case .arrowsSwapRight:
-                profileImage.image = IconProvider.arrowsSwapRight
+                profileImage.image = Theme.Asset.Icons.arrowsSwapRight.image
             case .bolt:
-                profileImage.image = IconProvider.bolt
+                profileImage.image = Theme.Asset.Icons.bolt.image
             case let .circle(color):
                 profileImage.backgroundColor = UIColor(rgbHex: color)
                 profileImage.layer.cornerRadius = 10
@@ -73,7 +73,7 @@ final class ProfilesTableViewCell: UITableViewCell {
         super.setEditing(editing, animated: animated)
         if editing {
             connectButton.setTitle(nil, for: .normal)
-            connectButton.setImage(IconProvider.chevronRight, for: .normal)
+            connectButton.setImage(Theme.Asset.Icons.chevronRight.image, for: .normal)
             connectButton.imageView?.tintColor = .white
             connectButton.backgroundColor = .clear
             connectButton.isUserInteractionEnabled = false

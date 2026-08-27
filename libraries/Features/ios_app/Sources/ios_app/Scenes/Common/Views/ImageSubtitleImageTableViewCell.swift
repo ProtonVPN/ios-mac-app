@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Ergonomics
-import ProtonCoreUIFoundations
 import UIKit
 
 /// A two-line, detail cell with a large images at both ends.

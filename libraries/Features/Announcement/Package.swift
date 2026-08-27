@@ -48,7 +48,6 @@ let package = Package(
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "ProtonCoreNetworking", package: "protoncore"),
-                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DependenciesMacros", package: "swift-dependencies"),

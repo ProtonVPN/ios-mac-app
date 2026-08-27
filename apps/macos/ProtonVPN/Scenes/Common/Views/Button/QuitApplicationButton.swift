@@ -41,7 +41,7 @@ class QuitApplicationButton: HoverDetectionButton {
     private func configureView() {
         let style: AppTheme.Style = isHovered ? [.danger, .hovered] : .weak
         let show = (" " + Localizable.quit).styled(style)
-        image = AppTheme.Icon.powerOff.resize(.square(18))
+        image = Theme.Asset.Icons.powerOff.image.resize(.square(18))
         imagePosition = .imageLeft
         contentTintColor = .color(.icon, style)
         attributedTitle = show

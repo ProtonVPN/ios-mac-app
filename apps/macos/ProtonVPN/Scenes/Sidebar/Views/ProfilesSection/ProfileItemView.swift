@@ -22,7 +22,7 @@
 
 import Cocoa
 import Domain
-import ProtonCoreUIFoundations
+import Theme
 
 class ProfileItemView: NSView {
     @IBOutlet var profileImage: NSImageView!
@@ -73,11 +73,11 @@ class ProfileItemView: NSView {
     private func setupImage() {
         switch viewModel.icon {
         case .bolt:
-            profileImage.image = IconProvider.bolt.colored()
+            profileImage.image = Theme.Asset.Icons.bolt.image.colored()
             profileImage.isHidden = false
             profileCircle.isHidden = true
         case .arrowsSwapRight:
-            profileImage.image = IconProvider.arrowsSwapRight.colored()
+            profileImage.image = Theme.Asset.Icons.arrowsSwapRight.image.colored()
             profileImage.isHidden = false
             profileCircle.isHidden = true
         case let .circle(color):

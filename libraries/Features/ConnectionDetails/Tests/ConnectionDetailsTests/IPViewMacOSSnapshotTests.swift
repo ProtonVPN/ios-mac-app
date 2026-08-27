@@ -22,7 +22,6 @@
     @testable import ConnectionDetails_macOS
     @testable import ConnectionDetailsShared
     import Domain
-    import ProtonCoreUIFoundations
     import SnapshotTesting
     import SwiftUI
     import System
@@ -43,7 +42,7 @@
             // The theme's colours resolve against the running app's appearance, not the SwiftUI
             // environment or the hosting view's — the app pins both of these on launch.
             NSApplication.shared.appearance = NSAppearance(named: .darkAqua)
-            ColorProvider.brand = .vpn
+            AppTheme.useVPNBrand()
             $connectionState.withLock { $0 = SnapshotFixtures.connected() }
             $userLocation.withLock { $0 = .measured(.init(ip: "31.14.72.5", country: "PL", isp: "Play"), at: .now) }
         }

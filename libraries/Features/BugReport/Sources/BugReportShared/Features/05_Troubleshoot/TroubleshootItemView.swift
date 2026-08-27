@@ -21,7 +21,6 @@
 //
 
 import ComposableArchitecture
-import ProtonCoreUIFoundations
 import SwiftUI
 import Theme
 

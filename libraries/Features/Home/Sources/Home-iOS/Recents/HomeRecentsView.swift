@@ -23,7 +23,6 @@ import Ergonomics
 import Foundation
 import HomeShared
 import OrderedCollections
-import ProtonCoreUIFoundations
 import SharedViews
 import Strings
 import SwiftUI

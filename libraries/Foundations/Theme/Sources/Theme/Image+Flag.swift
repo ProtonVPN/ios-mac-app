@@ -19,9 +19,18 @@
 import ProtonCoreUIFoundations
 import SwiftUI
 
+/// Country flags already read from the catalogue, including the codes that have no flag.
+///
+/// Flags come from the same catalogue as the icons and cost the same 38 microseconds per read, and a
+/// country list asks for one per row, so they are read once per country code.
+private let flagImages = ThemeAssetCache<String, ImageAsset.Image?>()
+
 public extension ImageAsset.Image {
+    /// The flag of the country, or `nil` when the catalogue has no flag for that code.
     static func flag(countryCode: String) -> ImageAsset.Image? {
-        IconProvider.flag(forCountryCode: countryCode)
+        flagImages.value(for: countryCode) { code in
+            IconProvider.flag(forCountryCode: code)
+        }
     }
 }
 

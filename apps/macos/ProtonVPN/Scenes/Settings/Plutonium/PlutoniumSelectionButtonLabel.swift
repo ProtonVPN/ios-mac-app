@@ -17,9 +17,9 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import ProtonCoreUIFoundations
 import Strings
 import SwiftUI
+import Theme
 import VPNAppCore
 
 struct PlutoniumSelectionButtonLabel: View {
@@ -154,7 +154,7 @@ struct PlutoniumSelectionButtonLabel: View {
                 .frame(height: 20)
             }
             Spacer(minLength: 0)
-            IconProvider.chevronRight
+            Theme.Asset.Icons.chevronRight.swiftUIImage
                 .resizable()
                 .frame(.square(.themeSpacing16))
         }

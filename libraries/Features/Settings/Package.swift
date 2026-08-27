@@ -55,7 +55,6 @@ let package = Package(
                 .product(name: "CommonNetworking", package: "CommonNetworking"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
-                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
 
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
