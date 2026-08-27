@@ -63,26 +63,34 @@
         }
 
         private func assertFeaturesSnapshot(view: some View, named: String, snapshotSize: CGSize) {
-            let nsView = NSHostingView(rootView: view)
-            nsView.appearance = NSAppearance(named: .darkAqua)
-            nsView.frame = CGRect(origin: .zero, size: snapshotSize)
+            // The pin covers the layout as well as the snapshot. The rows below resolve their colors while
+            // laying out, so an appearance applied only around `assertSnapshot` arrives after they have
+            // already picked the system theme's.
+            SnapshotEnvironment.withAppearance {
+                let nsView = NSHostingView(rootView: view)
+                nsView.appearance = NSAppearance(named: .darkAqua)
+                nsView.frame = CGRect(origin: .zero, size: snapshotSize)
 
-            // Attach to a window and run a cycle so List-backed content renders rows.
-            let window = NSWindow(
-                contentRect: CGRect(origin: .zero, size: snapshotSize),
-                styleMask: [.borderless],
-                backing: .buffered,
-                defer: false
-            )
-            window.contentView = nsView
-            window.layoutIfNeeded()
-            nsView.layoutSubtreeIfNeeded()
+                // Attach to a window and run a cycle so List-backed content renders rows.
+                let window = NSWindow(
+                    contentRect: CGRect(origin: .zero, size: snapshotSize),
+                    styleMask: [.borderless],
+                    backing: .buffered,
+                    defer: false
+                )
+                // The window follows the system theme unless told, and its content takes some of its
+                // colors from it rather than from the hosting view.
+                window.appearance = NSAppearance(named: .darkAqua)
+                window.contentView = nsView
+                window.layoutIfNeeded()
+                nsView.layoutSubtreeIfNeeded()
 
-            assertSnapshot(
-                of: nsView,
-                as: .wait(for: 0.05, on: .image(size: snapshotSize)),
-                testName: named
-            )
+                assertSnapshot(
+                    of: nsView,
+                    as: .wait(for: 0.05, on: .image(size: snapshotSize)),
+                    testName: named
+                )
+            }
         }
     }
 

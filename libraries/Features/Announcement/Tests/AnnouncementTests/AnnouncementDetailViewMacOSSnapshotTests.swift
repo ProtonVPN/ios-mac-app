@@ -32,7 +32,9 @@
             let view = AnnouncementDetailView(panel: Self.samplePanel, onAction: {}, onClose: {})
                 .environment(\.colorScheme, .dark)
 
-            assertSnapshot(of: NSHostingView(rootView: view), as: .image(size: CGSize(width: 528, height: 439)))
+            SnapshotEnvironment.withAppearance {
+                assertSnapshot(of: NSHostingView(rootView: view), as: .image(size: CGSize(width: 528, height: 439)))
+            }
         }
 
         /// The remote `WebImage` won't load in tests, so this captures the layout/chrome (CTA +
@@ -42,7 +44,9 @@
             let view = AnnouncementOfferImageView(panel: Self.sampleImagePanel, onAction: {}, onClose: {})
                 .environment(\.colorScheme, .dark)
 
-            assertSnapshot(of: NSHostingView(rootView: view), as: .image(size: CGSize(width: 528, height: 439)))
+            SnapshotEnvironment.withAppearance {
+                assertSnapshot(of: NSHostingView(rootView: view), as: .image(size: CGSize(width: 528, height: 439)))
+            }
         }
 
         private static let sampleImagePanel = OfferPanel.ImagePanel(

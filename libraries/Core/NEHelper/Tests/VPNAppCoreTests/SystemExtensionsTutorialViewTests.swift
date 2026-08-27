@@ -23,6 +23,7 @@
     import SnapshotTesting
     import SwiftUI
     import Testing
+    import TestingErgonomics
     @testable import VPNAppCore
 
     @MainActor
@@ -37,7 +38,9 @@
             .colorScheme(.dark)
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            SnapshotEnvironment.withAppearance {
+                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            }
         }
 
         @Test
@@ -49,7 +52,9 @@
             .colorScheme(.dark)
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            SnapshotEnvironment.withAppearance {
+                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            }
         }
 
         @Test
@@ -61,7 +66,9 @@
             .colorScheme(.dark)
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            SnapshotEnvironment.withAppearance {
+                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            }
         }
 
         @Test
@@ -73,7 +80,9 @@
             .colorScheme(.dark)
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            SnapshotEnvironment.withAppearance {
+                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            }
         }
 
         @Test
@@ -85,7 +94,9 @@
             .colorScheme(.dark)
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            SnapshotEnvironment.withAppearance {
+                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            }
         }
 
         @Test
@@ -97,7 +108,9 @@
             .colorScheme(.dark)
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            SnapshotEnvironment.withAppearance {
+                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            }
         }
 
         @Test
@@ -109,7 +122,9 @@
             .colorScheme(.dark)
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            SnapshotEnvironment.withAppearance {
+                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            }
         }
 
         @Test
@@ -121,7 +136,9 @@
             .colorScheme(.dark)
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            SnapshotEnvironment.withAppearance {
+                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            }
         }
 
         @Test
@@ -133,7 +150,9 @@
             .colorScheme(.dark)
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            SnapshotEnvironment.withAppearance {
+                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            }
         }
 
         @Test
@@ -145,7 +164,9 @@
             .colorScheme(.dark)
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            SnapshotEnvironment.withAppearance {
+                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
+            }
         }
     }
 

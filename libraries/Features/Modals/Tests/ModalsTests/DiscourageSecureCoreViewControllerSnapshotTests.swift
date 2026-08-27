@@ -43,7 +43,9 @@
                 .environment(\.colorScheme, .dark)
 
             let nsView = NSHostingView(rootView: view)
-            assertSnapshot(of: nsView, as: .image(size: snapshotSize))
+            SnapshotEnvironment.withAppearance {
+                assertSnapshot(of: nsView, as: .image(size: snapshotSize))
+            }
         }
 
         @Test("default dark appearance with SC available (no reconnect notice)")
@@ -57,7 +59,9 @@
                 .environment(\.colorScheme, .dark)
 
             let nsView = NSHostingView(rootView: view)
-            assertSnapshot(of: nsView, as: .image(size: snapshotSize))
+            SnapshotEnvironment.withAppearance {
+                assertSnapshot(of: nsView, as: .image(size: snapshotSize))
+            }
         }
     }
 

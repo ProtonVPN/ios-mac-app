@@ -49,7 +49,9 @@
             .environment(\.colorScheme, .dark)
 
             let nsView = NSHostingView(rootView: view)
-            assertSnapshot(of: nsView, as: .image(size: CGSize(width: 520, height: 500)))
+            SnapshotEnvironment.withAppearance {
+                assertSnapshot(of: nsView, as: .image(size: CGSize(width: 520, height: 500)))
+            }
         }
     }
 
