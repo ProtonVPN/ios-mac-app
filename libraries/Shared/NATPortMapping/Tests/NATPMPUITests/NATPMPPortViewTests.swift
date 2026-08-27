@@ -22,6 +22,7 @@ import Foundation
 import SnapshotTesting
 import SwiftUI
 import Testing
+import TestingErgonomics
 
 @MainActor
 @Suite(.serialized, .snapshots(record: .missing))
@@ -38,7 +39,9 @@ struct NATPMPPortViewTests {
             )
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
+            SnapshotEnvironment.withAppearance(.aqua) {
+                assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
+            }
         }
     }
 
@@ -54,7 +57,9 @@ struct NATPMPPortViewTests {
             )
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: .init(width: 190, height: 84)))
+            SnapshotEnvironment.withAppearance(.aqua) {
+                assertSnapshot(of: nsView, as: .image(size: .init(width: 190, height: 84)))
+            }
         }
     }
 
@@ -70,7 +75,9 @@ struct NATPMPPortViewTests {
             ).environment(\.colorScheme, .dark)
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
+            SnapshotEnvironment.withAppearance(.darkAqua) {
+                assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
+            }
         }
     }
 
@@ -86,7 +93,9 @@ struct NATPMPPortViewTests {
             )
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
+            SnapshotEnvironment.withAppearance(.aqua) {
+                assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
+            }
         }
     }
 
@@ -102,7 +111,9 @@ struct NATPMPPortViewTests {
             ).environment(\.colorScheme, .dark)
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
+            SnapshotEnvironment.withAppearance(.darkAqua) {
+                assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
+            }
         }
     }
 
@@ -118,7 +129,9 @@ struct NATPMPPortViewTests {
             )
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
+            SnapshotEnvironment.withAppearance(.aqua) {
+                assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
+            }
         }
     }
 
@@ -134,7 +147,9 @@ struct NATPMPPortViewTests {
             ).environment(\.colorScheme, .dark)
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
+            SnapshotEnvironment.withAppearance(.darkAqua) {
+                assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
+            }
         }
     }
 
@@ -146,7 +161,9 @@ struct NATPMPPortViewTests {
             let view = LoadingPortView()
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: .init(width: 268, height: 66)))
+            SnapshotEnvironment.withAppearance(.aqua) {
+                assertSnapshot(of: nsView, as: .image(size: .init(width: 268, height: 66)))
+            }
         }
     }
 
@@ -158,7 +175,9 @@ struct NATPMPPortViewTests {
             let view = LoadingPortView().environment(\.colorScheme, .dark)
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: .init(width: 268, height: 66)))
+            SnapshotEnvironment.withAppearance(.darkAqua) {
+                assertSnapshot(of: nsView, as: .image(size: .init(width: 268, height: 66)))
+            }
         }
     }
 
@@ -170,7 +189,9 @@ struct NATPMPPortViewTests {
             let view = StatusPortView(portNumber: 36528)
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: .init(width: 188, height: 25)))
+            SnapshotEnvironment.withAppearance(.aqua) {
+                assertSnapshot(of: nsView, as: .image(size: .init(width: 188, height: 25)))
+            }
         }
     }
 
@@ -182,7 +203,9 @@ struct NATPMPPortViewTests {
             let view = StatusPortView(portNumber: 36528).environment(\.colorScheme, .dark)
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: .init(width: 188, height: 25)))
+            SnapshotEnvironment.withAppearance(.darkAqua) {
+                assertSnapshot(of: nsView, as: .image(size: .init(width: 188, height: 25)))
+            }
         }
     }
 
@@ -194,7 +217,9 @@ struct NATPMPPortViewTests {
             let view = PortErrorView()
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: .init(width: 268, height: 66)))
+            SnapshotEnvironment.withAppearance(.aqua) {
+                assertSnapshot(of: nsView, as: .image(size: .init(width: 268, height: 66)))
+            }
         }
     }
 
@@ -206,7 +231,9 @@ struct NATPMPPortViewTests {
             let view = PortErrorView().environment(\.colorScheme, .dark)
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: .init(width: 268, height: 66)))
+            SnapshotEnvironment.withAppearance(.darkAqua) {
+                assertSnapshot(of: nsView, as: .image(size: .init(width: 268, height: 66)))
+            }
         }
     }
 }

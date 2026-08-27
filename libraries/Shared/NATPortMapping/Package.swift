@@ -16,8 +16,10 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/Strings"),
+
         .package(path: "../../Core/NEHelper"),
 
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.6.0"),
@@ -65,6 +67,7 @@ let package = Package(
             dependencies: [
                 "NATPMPUI",
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+                .product(name: "TestingErgonomics", package: "Ergonomics"),
             ]
         ),
     ]

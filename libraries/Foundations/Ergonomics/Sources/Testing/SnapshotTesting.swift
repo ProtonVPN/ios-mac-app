@@ -1,3 +1,6 @@
+#if canImport(AppKit)
+    import AppKit
+#endif
 import Foundation
 import IssueReporting
 import SnapshotTesting
@@ -47,6 +50,29 @@ public enum SnapshotEnvironment {
     /// each run's calendar date into the reference images and they would silently rot as time passes.
     public static let date = Date(timeIntervalSince1970: 1_781_784_000)
 }
+
+#if canImport(AppKit)
+    public extension SnapshotEnvironment {
+        /// Renders `body` against `appearance`, then puts back whatever was set before.
+        ///
+        /// macOS snapshots have to pin this. Theme resolves its colors through `NSAppearance`, and `NSApp`
+        /// follows the system theme unless told otherwise, so a Mac set to switch automatically renders one way
+        /// by day and the other by night. A reference recorded in the morning then fails in the evening.
+        ///
+        /// Note that `\.colorScheme` does not stand in for it: that reaches SwiftUI's own colors, not Theme's.
+        @MainActor
+        static func withAppearance<T>(
+            _ appearance: NSAppearance.Name = .darkAqua,
+            _ body: () throws -> T
+        ) rethrows -> T {
+            _ = NSApplication.shared
+            let previous = NSApp.appearance
+            defer { NSApp.appearance = previous }
+            NSApp.appearance = NSAppearance(named: appearance)
+            return try body()
+        }
+    }
+#endif
 
 public extension AssertSnapshot {
     static var projectDir: String? {
