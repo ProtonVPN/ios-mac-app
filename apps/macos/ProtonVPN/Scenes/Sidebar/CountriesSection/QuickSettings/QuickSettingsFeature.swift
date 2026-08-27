@@ -65,6 +65,12 @@ struct QuickSettingsFeature {
             isVisible: VPNFeatureFlagType.portForwarding.enabled
         )
 
+        @SharedReader(.connectionState) var connectionState: ConnectionState
+        @SharedReader(.discourageSecureCore) var discourageSecureCore: Bool
+        @Shared(.killSwitchMode) var killSwitchMode: KillSwitchMode
+        @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
+        @Shared(.secureCoreToggle) var secureCoreToggle: Bool
+
         var activeType: QuickSettingType? {
             guard case let .quickSettingDetail(detail) = destination else { return nil }
             return detail.type
@@ -115,12 +121,6 @@ struct QuickSettingsFeature {
             case confirmSecureCoreToggle(turningOn: Bool)
         }
     }
-
-    @SharedReader(.discourageSecureCore) private var discourageSecureCore: Bool
-    @SharedReader(.connectionState) private var connectionState: ConnectionState
-    @Shared(.secureCoreToggle) private var secureCoreToggle: Bool
-    @Shared(.killSwitchMode) private var killSwitchMode: KillSwitchMode
-    @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
 
     @Dependency(\.sessionService) var sessionService
     @Dependency(\.linkOpener) var linkOpener
@@ -190,7 +190,7 @@ private extension QuickSettingsFeature {
                     .send(.netShield(.startObserving)),
                     .send(.portForwarding(.startObserving)),
                     .send(.refreshConnectionInfo),
-                    .run { [connectionState = $connectionState] send in
+                    .run { [connectionState = state.$connectionState] send in
                         for await state in connectionState.publisher.values {
                             await send(.connectionStateUpdated(
                                 isConnected: state.is(\.connected),
@@ -283,11 +283,11 @@ private extension QuickSettingsFeature {
                 // `applyQuickSettingOptionSelection`.
                 if type == .killSwitchDisplay, let targetMode = option.killSwitchMode {
                     // Confirm only when increasing protection. Downgrades and Off apply immediately.
-                    if targetMode.rawValue > killSwitchMode.rawValue {
-                        state.alert = Self.killSwitchUpgradeAlert(from: killSwitchMode, to: targetMode)
+                    if targetMode.rawValue > state.killSwitchMode.rawValue {
+                        state.alert = Self.killSwitchUpgradeAlert(from: state.killSwitchMode, to: targetMode)
                         return .none
                     }
-                    apply(.killSwitch(mode: targetMode))
+                    apply(.killSwitch(mode: targetMode), state)
                     return .send(.dismissDetails)
                 }
 
@@ -305,8 +305,8 @@ private extension QuickSettingsFeature {
 
                 if type == .secureCoreDisplay {
                     let turningOn = (option == .secureCoreOn)
-                    let isConnected = connectionState.isConnected
-                    let fallback = fallbackCountryName(turningOn: turningOn)
+                    let isConnected = state.connectionState.isConnected
+                    let fallback = fallbackCountryName(turningOn: turningOn, state)
 
                     // Unified iOS/macOS matrix.
                     //   switch (turningOn, discourageSecureCore, isConnected) {
@@ -317,7 +317,7 @@ private extension QuickSettingsFeature {
                     //   default:                    apply silently
                     //   }
 
-                    switch (turningOn, discourageSecureCore, isConnected) {
+                    switch (turningOn, state.discourageSecureCore, isConnected) {
                     case (true, true, true):
                         let notice = SecureCoreConnectionSpecResolver.toggleAlertMessage(
                             turningOn: true,
@@ -342,7 +342,7 @@ private extension QuickSettingsFeature {
                     }
                 }
 
-                applyQuickSettingOptionSelection(type: type, option: option)
+                applyQuickSettingOptionSelection(type: type, option: option, state)
                 return .send(.dismissDetails)
 
             case let .destination(.presented(.quickSettingDetail(.delegate(.upgrade(type))))):
@@ -364,7 +364,7 @@ private extension QuickSettingsFeature {
 
             case .destination(.presented(.discourageSecureCoreView(.delegate(.activateTapped)))):
                 state.destination = nil
-                applyQuickSettingOptionSelection(type: .secureCoreDisplay, option: .secureCoreOn)
+                applyQuickSettingOptionSelection(type: .secureCoreDisplay, option: .secureCoreOn, state)
                 return .send(.dismissDetails)
 
             case .destination:
@@ -378,24 +378,25 @@ private extension QuickSettingsFeature {
 
     /// Handles confirm/cancel from the conflict alerts surfaced by `detailNavigationReducer`.
     var alertReducer: some ReducerOf<Self> {
-        Reduce { _, action in
+        Reduce { state, action in
             switch action {
             case .alert(.presented(.cancelKillSwitchMode)):
                 return .send(.dismissDetails)
 
             case let .alert(.presented(.confirmKillSwitchMode(mode))):
-                apply(.killSwitch(mode: mode))
+                apply(.killSwitch(mode: mode), state)
                 return .send(.dismissDetails)
 
             case let .alert(.presented(.confirmDisableHermesAndSetNetShield(level))):
                 hermesClient.setIsEnabled(false)
-                applyQuickSettingOptionSelection(type: .netShieldDisplay, option: .netShield(level))
+                applyQuickSettingOptionSelection(type: .netShieldDisplay, option: .netShield(level), state)
                 return .send(.dismissDetails)
 
             case let .alert(.presented(.confirmSecureCoreToggle(turningOn))):
                 applyQuickSettingOptionSelection(
                     type: .secureCoreDisplay,
-                    option: turningOn ? .secureCoreOn : .secureCoreOff
+                    option: turningOn ? .secureCoreOn : .secureCoreOff,
+                    state
                 )
                 return .send(.dismissDetails)
 
@@ -462,50 +463,51 @@ private extension QuickSettingsFeature {
 
     func applyQuickSettingOptionSelection(
         type: QuickSettingType,
-        option: QuickSettingOptionID
+        option: QuickSettingOptionID,
+        _ state: State
     ) {
         guard let change = QuickSettingChange(type: type, option: option) else {
             assertionFailure("Mismatched quick setting type/option pair: \(type), \(option)")
             SentryHelper.shared?.log(message: "Mismatched quick setting type/option pair: \(type), \(option)")
             return
         }
-        apply(change)
+        apply(change, state)
     }
 
     /// Persists the user's choice for the selected quick setting and either applies the change
     /// live via local agent or triggers a reconnect, depending on the protocol/connection state.
-    func apply(_ change: QuickSettingChange) {
+    func apply(_ change: QuickSettingChange, _ state: State) {
         switch change {
         case let .secureCore(enabled):
-            $secureCoreToggle.withLock { $0 = enabled }
-            quickSettingsDisplayReconnectionFeedback()
+            state.$secureCoreToggle.withLock { $0 = enabled }
+            quickSettingsDisplayReconnectionFeedback(state)
 
         case let .killSwitch(mode):
             // KS is mutually exclusive with Split Tunneling.
-            $killSwitchMode.withLock { $0 = mode }
+            state.$killSwitchMode.withLock { $0 = mode }
             if mode.isProtected {
-                $plutonium.withLock { $0 = .disabled(plutonium.mode) }
+                state.$plutonium.withLock { $0 = .disabled(state.plutonium.mode) }
             }
 
         case let .netShield(level):
-            quickSettingsChangeNetShieldLevel(level)
+            quickSettingsChangeNetShieldLevel(level, state)
 
         case let .portForwarding(enabled):
-            quickSettingsChangePortForwarding(enabled)
+            quickSettingsChangePortForwarding(enabled, state)
         }
     }
 
     /// Fires a passive reconnect when a Secure Core toggle change happens mid-connection.
     /// No-op if not connected — the new toggle value will be picked up on the next connect.
-    func quickSettingsDisplayReconnectionFeedback() {
-        guard connectionState.isConnected else { return }
+    func quickSettingsDisplayReconnectionFeedback(_ state: State) {
+        guard state.connectionState.isConnected else { return }
         log.debug("Reconnection requested by changing quick setting", category: .connectionConnect, event: .trigger)
         @SharedReader(.userTier) var userTier: VpnTier?
         let isFree = userTier.isFree
-        let connectedCountryCode = connectionState.resolvedServer?.logical.exitCountryCode
+        let connectedCountryCode = state.connectionState.resolvedServer?.logical.exitCountryCode
         let canReuseCurrentExitCountry: Bool = if let connectedCountryCode {
             serverRepository.hasServer(
-                secureCore: secureCoreToggle,
+                secureCore: state.secureCoreToggle,
                 exitCountryCode: connectedCountryCode
             )
         } else {
@@ -513,7 +515,7 @@ private extension QuickSettingsFeature {
         }
         let resolvedExit = canReuseCurrentExitCountry ? connectedCountryCode : nil
         let spec = SecureCoreConnectionSpecResolver.toggleReconnectSpec(
-            secureCoreEnabled: secureCoreToggle,
+            secureCoreEnabled: state.secureCoreToggle,
             exitCountryCode: resolvedExit,
             isFree: isFree
         )
@@ -521,13 +523,13 @@ private extension QuickSettingsFeature {
             connectedExitCountryCode: resolvedExit,
             isFree: isFree
         )
-        let connectionProtocol = connectionState.resolvedVpnProtocol.map(ConnectionProtocol.vpnProtocol)
+        let connectionProtocol = state.connectionState.resolvedVpnProtocol.map(ConnectionProtocol.vpnProtocol)
         connectionCommandClient.send(.connect(spec, connectionProtocol, intent))
     }
 
-    func quickSettingsChangeNetShieldLevel(_ level: NetShieldType) {
+    func quickSettingsChangeNetShieldLevel(_ level: NetShieldType, _ state: State) {
         netShieldPropertyProvider.setNetShieldType(level)
-        switch VpnFeatureChangeState(connectionState: connectionState) {
+        switch VpnFeatureChangeState(connectionState: state.connectionState) {
         case .withConnectionUpdate:
             connectionCommandClient.send(.applySettings([.agent(.netShield(level))]))
         case .withReconnect:
@@ -539,16 +541,16 @@ private extension QuickSettingsFeature {
         }
     }
 
-    func quickSettingsChangePortForwarding(_ isEnabled: Bool) {
+    func quickSettingsChangePortForwarding(_ isEnabled: Bool, _ state: State) {
         portForwardingPropertyProvider.setPortForwarding(isEnabled)
-        switch VpnFeatureChangeState(connectionState: connectionState) {
+        switch VpnFeatureChangeState(connectionState: state.connectionState) {
         case .withConnectionUpdate:
             log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
             connectionCommandClient.send(.applySettings([.agent(.portForwarding(isEnabled))]))
         case .withReconnect:
-            guard isConnectionActive else { return }
+            guard state.isConnectionActive else { return }
             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-            if let activeVpnProtocol = connectionState.resolvedVpnProtocol {
+            if let activeVpnProtocol = state.connectionState.resolvedVpnProtocol {
                 connectionCommandClient.send(.reconnect(.vpnProtocol(activeVpnProtocol)))
             } else {
                 connectionCommandClient.send(.retry)
@@ -558,7 +560,9 @@ private extension QuickSettingsFeature {
             break
         }
     }
+}
 
+extension QuickSettingsFeature.State {
     var isConnectionActive: Bool {
         switch connectionState {
         case .disconnected, .resolving, .killSwitchActive: false
@@ -698,8 +702,8 @@ extension QuickSettingsFeature {
 private extension QuickSettingsFeature {
     /// Localized name of the connected exit country to show in the alert/discourage view when no Secure Core server
     /// exits via it. Nil when turning off, disconnected, or an SC server is available.
-    func fallbackCountryName(turningOn: Bool) -> String? {
-        guard turningOn, let cc = connectionState.resolvedServer?.logical.exitCountryCode,
+    func fallbackCountryName(turningOn: Bool, _ state: State) -> String? {
+        guard turningOn, let cc = state.connectionState.resolvedServer?.logical.exitCountryCode,
               !serverRepository.hasServer(secureCore: true, exitCountryCode: cc) else { return nil }
         return LocalizationUtility.default.countryName(forCode: cc) ?? cc
     }

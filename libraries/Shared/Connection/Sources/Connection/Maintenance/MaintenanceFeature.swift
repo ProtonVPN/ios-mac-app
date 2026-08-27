@@ -37,9 +37,6 @@ public struct MaintenanceFeature {
     @Dependency(\.date) private var date
     @Dependency(\.withRandomNumberGenerator) private var withRandomNumberGenerator
 
-    @SharedReader(.featureFlags) private var featureFlags: FeatureFlags
-    @SharedReader(.maintenanceServerRefreshIntereval) private var refreshIntervalInMinutes: Int
-
     /// Spreads clients out so they don't all poll the API at the same moment.
     private static let jitterPercentage = 10
 
@@ -57,6 +54,9 @@ public struct MaintenanceFeature {
 
         /// When the user was last told a server is going into maintenance.
         var lastNotifiedAt: Date?
+
+        @SharedReader(.featureFlags) var featureFlags: FeatureFlags
+        @SharedReader(.maintenanceServerRefreshIntereval) var refreshIntervalInMinutes: Int
 
         public init() {}
     }
@@ -85,8 +85,8 @@ public struct MaintenanceFeature {
             case .onStart:
                 return .merge(
                     .send(.configurationChanged),
-                    .publisher { [$featureFlags] in
-                        $featureFlags
+                    .publisher { [featureFlags = state.$featureFlags] in
+                        featureFlags
                             .publisher
                             .dropFirst()
                             .receive(on: UIScheduler.shared)
@@ -100,12 +100,12 @@ public struct MaintenanceFeature {
                 return .merge(.cancel(id: CancelID.poll), .cancel(id: CancelID.configuration))
 
             case .configurationChanged:
-                guard featureFlags.serverRefresh else {
+                guard state.featureFlags.serverRefresh else {
                     state.pollingInterval = nil
                     return .cancel(id: CancelID.poll)
                 }
 
-                let interval = Duration.seconds(refreshIntervalInMinutes * 60)
+                let interval = Duration.seconds(state.refreshIntervalInMinutes * 60)
                 guard interval > .zero else {
                     // A non-positive interval means check once, without scheduling anything
                     state.pollingInterval = nil

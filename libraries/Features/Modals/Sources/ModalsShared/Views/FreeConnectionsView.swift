@@ -57,14 +57,12 @@ public struct FreeConnectionsView: View {
         }
         #if os(iOS)
         .background {
-            // A reader that ignores the safe area reports how much of the sheet the home indicator covers.
-            GeometryReader { geometry in
-                Color.clear.preference(key: BottomInsetPreferenceKey.self, value: geometry.safeAreaInsets.bottom)
-            }
-            .ignoresSafeArea()
-        }
-        .onPreferenceChange(BottomInsetPreferenceKey.self) { newInset in
-            bottomInset = newInset
+            // Only a view that ignores the safe area is told how much of the sheet the home indicator covers.
+            Color.clear
+                .ignoresSafeArea()
+                .onGeometryChange(for: CGFloat.self, of: \.safeAreaInsets.bottom) { newInset in
+                    bottomInset = newInset
+                }
         }
         .presentationDetents([.height(sheetHeight)])
         #endif
@@ -113,12 +111,7 @@ public struct FreeConnectionsView: View {
         #else
         .padding(.horizontal, .themeSpacing12)
         .padding(.bottom, .themeSpacing16)
-        .overlay {
-            GeometryReader { geometry in
-                Color.clear.preference(key: ContentHeightPreferenceKey.self, value: geometry.size.height)
-            }
-        }
-        .onPreferenceChange(ContentHeightPreferenceKey.self) { newHeight in
+        .onGeometryChange(for: CGFloat.self, of: \.size.height) { newHeight in
             contentHeight = newHeight
         }
         #endif
@@ -217,24 +210,6 @@ public struct FreeConnectionsView: View {
         static let bannerIdealHeight: CGFloat = 74
     }
 }
-
-#if os(iOS)
-    private struct ContentHeightPreferenceKey: PreferenceKey {
-        static let defaultValue: CGFloat = .zero
-
-        static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-            value = nextValue()
-        }
-    }
-
-    private struct BottomInsetPreferenceKey: PreferenceKey {
-        static let defaultValue: CGFloat = .zero
-
-        static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-            value = nextValue()
-        }
-    }
-#endif
 
 #if DEBUG
     #Preview("Free Connections") {

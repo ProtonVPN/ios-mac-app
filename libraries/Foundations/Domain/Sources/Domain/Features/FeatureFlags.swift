@@ -23,7 +23,7 @@
 import Ergonomics
 import Foundation
 
-public struct FeatureFlags: Codable, DefaultableProperty, Sendable {
+public struct FeatureFlags: Codable, DefaultableProperty, Equatable, Sendable {
     public let smartReconnect: Bool
     public let vpnAccelerator: Bool
     public let netShield: Bool

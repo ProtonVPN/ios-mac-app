@@ -54,9 +54,10 @@ public struct CountriesListFeature: Sendable {
         var countries: IdentifiedArrayOf<DesktopCityStateListFeature.State> = []
 
         public var searchText: String = ""
+
+        @SharedReader(.userTier) var userTier: VpnTier?
         var isFree: Bool {
-            @SharedReader(.userTier) var userTier: VpnTier?
-            return userTier.isFree
+            userTier.isFree
         }
 
         // Stored so that we can collapse the previously expanded section
@@ -119,8 +120,6 @@ public struct CountriesListFeature: Sendable {
     @Dependency(\.imagePrefetcher) var imagePrefetcher
     @Dependency(\.sessionService) var sessionService
     @Dependency(\.linkOpener) var linkOpener
-
-    @Shared(.announcementBanner) var announcementBannerStorage: Announcement?
 
     private enum CancelID {
         case debounceRequest
@@ -197,7 +196,8 @@ public struct CountriesListFeature: Sendable {
                     longLivingAnnouncementBannerEffect
                 )
             case .refreshOfferBanner:
-                return .run { _ in
+                @Shared(.announcementBanner) var announcementBannerStorage: Announcement?
+                return .run { [$announcementBannerStorage] _ in
                     let urls = announcementManager.fetchCurrentAnnouncementsFromStorage().compactMap(\.prefetchableImage)
                     await imagePrefetcher.prefetchURLs(urls)
                     let offerBanner = announcementManager.fetchCurrentOfferBannerFromStorage()
@@ -344,6 +344,7 @@ public extension CountriesListFeature.State {
             lhs.searchText == rhs.searchText &&
             lhs.expandedCountryCode == rhs.expandedCountryCode &&
             lhs.listState == rhs.listState &&
+            lhs.userTier == rhs.userTier &&
             lhs.announcementBanner == rhs.announcementBanner &&
             lhs.secureCore == rhs.secureCore &&
             lhs.destination == rhs.destination
