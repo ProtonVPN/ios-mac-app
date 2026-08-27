@@ -51,6 +51,7 @@ actor ProTUNAdapter {
         case missingUserID
         case missingConfiguration
         case noConnection
+        case sessionCleared
     }
 
     private(set) var state: State = .idle
@@ -121,7 +122,14 @@ actor ProTUNAdapter {
         try await setNetworkSettings(excludingRoutes: config.uniquePeerAddresses, dnsServers: config.dnsServers)
     }
 
-    func start(config: Configuration) async throws {
+    /// - Parameter activationAttemptId: `nil` when the tunnel start was requested by the system (through an on-demand
+    /// rule, or user action in VPN Settings or the Control Centre). This can happen after the user has signed out
+    func start(config: Configuration, activationAttemptId: String? = nil) async throws {
+        if activationAttemptId == nil, sessionWasCleared(for: config) {
+            Logger.adapter.info("ProTUN session state was cleared on sign-out, start refused")
+            throw Error.sessionCleared
+        }
+
         let task = startQueue.addOperation { [weak self] in
             guard let self else { throw CancellationError() }
             try await _start(config: config)
@@ -132,6 +140,19 @@ actor ProTUNAdapter {
         guard case .running = state else {
             throw CancellationError()
         }
+    }
+
+    private func sessionWasCleared(for config: Configuration) -> Bool {
+        if config.proTUN.peers.isEmpty {
+            // Kill switch edge case: we should continue blackholing
+            return false
+        }
+
+        if config.isLegacyFallback {
+            // Legacy edge case: no session information yet because we're replacing a WG Go tunnel
+            return false
+        }
+        return SecurePersistentCache.wasSessionCleared(for: config.userID)
     }
 
     private func _start(config: Configuration) async throws {

@@ -29,9 +29,13 @@ final class SecurePersistentCache: PersistentCache {
     private let service: String
 
     init(userID: String) {
-        let suffix = Self.cacheSuffix(for: userID)
-        Logger.adapter.debug("Initialising SecurePersistentCache with suffix: \"\(suffix, privacy: .public)\"")
-        self.service = Self.servicePrefix + suffix
+        let service = Self.service(for: userID)
+        self.service = service
+        Logger.adapter.debug("Initialising SecurePersistentCache with service: \"\(service, privacy: .public)\"")
+    }
+
+    private static func service(for userID: String) -> String {
+        servicePrefix + cacheSuffix(for: userID)
     }
 
     private static func cacheSuffix(for userID: String) -> String {
@@ -101,6 +105,17 @@ final class SecurePersistentCache: PersistentCache {
     enum ClearFailure: Error {
         case servicesUnavailable(OSStatus)
         case deleteFailed([String: OSStatus])
+    }
+
+    /// Whether `clearAllUsers` has removed the session state that ProTUN needs to authenticate.
+    /// Allows the extension to exit early, without getting stuck in the connecting state with no connectivity
+    static func wasSessionCleared(for userID: String) -> Bool {
+        @Dependency(\.lightKeychain) var lightKeychain
+        let service = service(for: userID)
+        return [CacheKey.apiSession, .privateKey].contains { key in
+            let (status, _) = lightKeychain.getPassword(service: service, account: key.keychainAccount)
+            return status == errSecItemNotFound
+        }
     }
 
     /// Clears the cache of every user on this device. Prevents reuse of sessions after signing out.
