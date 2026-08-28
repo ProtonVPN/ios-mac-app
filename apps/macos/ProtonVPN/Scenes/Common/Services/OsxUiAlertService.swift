@@ -46,10 +46,8 @@ final class OsxUiAlertService {
         }
 
         if let window = hostWindow() {
-            if NSApp.keyWindow is StatusWindow {
-                // The app may be inactive, so bring it forward and take the keyboard's focus.
-                NSRunningApplication.current.activate(options: [.activateAllWindows])
-                window.makeKeyAndOrderFront(nil)
+            if alert.activatingApp || NSApp.keyWindow is StatusWindow {
+                window.bringToFront()
             }
             showAsSheet(alert, in: window)
         } else {
@@ -79,10 +77,6 @@ final class OsxUiAlertService {
 
         // Allows the alert to be dismissed programmatically (e.g. auto-dismiss on connection).
         alert.dismiss = { presentation.isPresented = false }
-
-        if alert.activatingApp {
-            NSRunningApplication.current.activate(options: [.activateAllWindows])
-        }
     }
 
     private func hostWindow() -> NSWindow? {
@@ -224,5 +218,22 @@ private extension PrimaryActionType {
         case .cancel: .cancel
         case .confirmative, .secondary: nil
         }
+    }
+}
+
+// MARK: - Helpers
+
+private extension NSWindow {
+    /// Puts the window in front of every other app's windows and gives it the keyboard focus.
+    func bringToFront() {
+        if NSApp.isHidden {
+            NSApp.unhide(nil)
+        }
+        if isMiniaturized {
+            deminiaturize(nil)
+        }
+        orderFrontRegardless()
+        NSRunningApplication.current.activate(options: [.activateAllWindows])
+        makeKey()
     }
 }

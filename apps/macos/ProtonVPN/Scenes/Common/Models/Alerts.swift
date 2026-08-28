@@ -60,6 +60,7 @@ class WarningAlert: SystemAlert {
     var message: String?
     var actions = [AlertAction]()
     var dismiss: (() -> Void)?
+    var activatingApp = false
 
     init(
         title: String,
@@ -154,5 +155,6 @@ final class TwoFactorRequiredAlert: @MainActor WarningAlert {
             cancelTitle: Localizable.disconnect,
             onCancel: onCancel
         )
+        activatingApp = true
     }
 }

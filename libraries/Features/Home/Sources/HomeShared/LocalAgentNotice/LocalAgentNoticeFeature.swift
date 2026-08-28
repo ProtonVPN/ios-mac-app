@@ -47,7 +47,7 @@ public struct LocalAgentNoticeFeature {
             case .openFidoAuthentication:
                 .run { @MainActor _ in
                     @Dependency(\.linkOpener) var linkOpener
-                    linkOpener.open(ObfuscatedConstants.fidoPortal)
+                    linkOpener.open(FidoPortalLink.urlString)
                 }
             case .disconnect:
                 .none

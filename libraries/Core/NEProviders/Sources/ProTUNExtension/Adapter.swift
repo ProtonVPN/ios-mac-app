@@ -348,7 +348,7 @@ extension ProTUNAdapter {
         Logger.localAgent.info("Received fork selector from app")
         let forkSelectorInfo = ForkSelectorInfo(
             selector: selector,
-            cookies: .init(cookies: [.init(name: cookieName, value: cookieValue)])
+            cookies: .init(items: [.init(name: cookieName, value: cookieValue)])
         )
         connection?.provideApiForkSelector(forkSelectorInfo: forkSelectorInfo)
     }

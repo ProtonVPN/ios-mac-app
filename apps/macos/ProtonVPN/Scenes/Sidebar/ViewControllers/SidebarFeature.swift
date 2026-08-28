@@ -742,7 +742,7 @@ private extension SidebarFeature {
                 let linkOpener = linkOpener
                 coreAlertService.push(
                     alert: TwoFactorRequiredAlert(
-                        onConfirm: { linkOpener.open(CommonNetworking.ObfuscatedConstants.fidoPortal) },
+                        onConfirm: { linkOpener.open(CommonNetworking.FidoPortalLink.urlString) },
                         onCancel: { connectionCommandClient.send(.disconnect(.fidoAuthentication)) }
                     )
                 )
