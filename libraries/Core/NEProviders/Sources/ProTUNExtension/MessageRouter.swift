@@ -57,20 +57,29 @@ enum MessageRouter {
 private extension MessageRouter {
     static func handleFlushLogsToFile() -> Response {
         do {
-            let logsURL = try Logger.flushToSingleFile()
-            return .init(payload: .logs(.success(logsURL)))
+            let logsURL = try Logger.flushToFile()
+            #if os(macOS)
+                let data = try Data(contentsOf: logsURL)
+                return .init(payload: .logs(.success(data)))
+            #else
+                return .init(payload: .logs(.success(logsURL)))
+            #endif
         } catch {
             return .init(payload: .logs(.failure(.init(failureReason: error.localizedDescription))))
         }
     }
 
     static func handleRetrieveLogsArchive() -> Response {
-        do {
-            let logsURL = try Logger.retrieveSessionArchive()
-            return .init(payload: .logs(.success(logsURL)))
-        } catch {
-            return .init(payload: .logs(.failure(.init(failureReason: error.localizedDescription))))
-        }
+        #if os(macOS)
+            return .init(payload: .error(.other(reason: "Not implemented")))
+        #else
+            do {
+                let archiveURL = try Logger.retrieveSessionArchive()
+                return .init(payload: .logs(.success(archiveURL)))
+            } catch {
+                return .init(payload: .logs(.failure(.init(failureReason: error.localizedDescription))))
+            }
+        #endif
     }
 
     static func handlePacketCaptureRequest(

@@ -19,7 +19,6 @@
 import Domain
 import Ergonomics
 import OSLog
-import Synchronization
 
 enum LoggingMode {
     case singleOutputFile
@@ -31,10 +30,6 @@ extension Logger {
     static let adapter = Logger(subsystem: Subsystem.protun.rawValue, category: Category.adapter.rawValue)
     static let localAgent = Logger(subsystem: Subsystem.protun.rawValue, category: Category.localAgent.rawValue)
     static let library = Logger(subsystem: Subsystem.protun.rawValue, category: Category.library.rawValue)
-}
-
-extension Logger {
-    static let lastFlushDate: OSAllocatedUnfairLock<Date?> = .init(uncheckedState: nil)
 }
 
 private enum LogFilter: Sendable {
@@ -67,11 +62,12 @@ private enum Category: String, CaseIterable {
 
 extension Logger {
     enum LogsError: Swift.Error {
+        case noContainerFound
         case noLogsFound
         case serializationFailure
     }
 
-    static func fetch(sinceDate: Date, predicateFormat: String? = nil) throws -> some Collection<String> {
+    private static func fetch(sinceDate: Date, predicateFormat: String? = nil) throws -> [OSLogEntryLog] {
         let store = try OSLogStore(scope: .currentProcessIdentifier)
 
         let predicateFormat = predicateFormat ?? LogFilter.default.predicateFormat
@@ -84,50 +80,70 @@ extension Logger {
 
         try Task.checkCancellation()
 
-        return entries.map(\.content)
+        return entries
     }
 
     private static func retrieveRelevantEntries(
         from store: OSLogStore,
         since startDate: Date,
         predicate: NSPredicate
-    ) throws -> some Collection<OSLogEntryLog> {
+    ) throws -> [OSLogEntryLog] {
         let position = store.position(date: startDate)
         return try store
             .getEntries(at: position, matching: predicate)
             .compactMap { $0 as? OSLogEntryLog }
+            .filter { $0.date > startDate }
+    }
+
+    private static func serialize(_ entries: [OSLogEntryLog]) throws -> Data {
+        let text = entries.reduce(into: "") { $0 += $1.content + "\n" }
+        guard let data = text.data(using: .utf8) else {
+            throw LogsError.serializationFailure
+        }
+        return data
     }
 }
 
 extension Logger {
-    private static let logsFilename = "ProTUN-Logs"
-    private static let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: DomainConstants.AppGroups.main)
+    private static let logsFilename = "ProTUN-Logs.log"
+    private static let containerURL: URL? = try? FileManager.default.mainContainerURL
 
-    static func flushToSingleFile(sinceDate: Date? = nil, filename: String? = nil) throws -> URL {
-        let lastFlushDate = Self.lastFlushDate.withLock { $0 }
-        let sinceDate = sinceDate ?? lastFlushDate ?? AppStartup.processStartDate ?? .distantPast
-        let preFlushDate = Date.now
-        let entries = try fetch(sinceDate: sinceDate)
-        Self.lastFlushDate.withLock { $0 = preFlushDate }
+    // Flushing to a file & using the file's metadata as our lastFlushDate
+    // so that each flush only appends the newest entries from the OSLogStore.
+    @discardableResult
+    static func flushToFile(filename: String? = nil) throws -> URL {
         guard let containerURL else {
-            throw LogsError.serializationFailure
+            throw LogsError.noContainerFound
         }
+
         let dstURL = containerURL.appending(path: filename ?? Self.logsFilename)
-        guard let data = entries.joined(separator: "\n").data(using: .utf8) else {
-            throw LogsError.serializationFailure
+        let lastFlushDate = dstURL.contentModificationDate
+        let sinceDate = lastFlushDate ?? AppStartup.processStartDate ?? .distantPast
+
+        do {
+            let entries = try fetch(sinceDate: sinceDate)
+            let data = try serialize(entries)
+
+            if let handle = try? FileHandle(forWritingTo: dstURL) {
+                try handle.seekToEnd()
+                try handle.write(contentsOf: data)
+                try handle.close()
+            } else {
+                try data.write(to: dstURL, options: .atomic)
+            }
+            // The write above already stamped the mtime with the wall clock, which is later than the newest entry we
+            // wrote: refine it so the next flush doesn't skip entries logged while we were fetching and writing.
+            // Best effort on purpose, the data is already on disk and the unrefined mtime only costs us that sliver.
+            let watermark = entries.last?.date ?? sinceDate
+            try? FileManager.default.setAttributes([.modificationDate: watermark], ofItemAtPath: dstURL.path())
+            return dstURL
+        } catch LogsError.noLogsFound where FileManager.default.fileExists(atPath: dstURL.path()) {
+            return dstURL // no new entries since last flush
         }
-        if let handle = try? FileHandle(forWritingTo: dstURL) {
-            try handle.seekToEnd()
-            try handle.write(contentsOf: data)
-            try handle.close()
-        } else {
-            try data.write(to: dstURL, options: .atomic)
-        }
-        return dstURL
     }
 
     static func flushSession() throws {
-        _ = try flushToSingleFile(filename: "ProTUN-Logs-Session-\(Date.now.timeIntervalSince1970)")
+        try flushToFile(filename: "ProTUN-Logs-Session-\(Date.now.timeIntervalSince1970)")
     }
 
     static func retrieveSessionArchive(fileManager: FileManager = .default) throws -> URL {
@@ -252,5 +268,11 @@ private extension OSLogEntryLog.Level {
         case .fault: "FAULT"
         @unknown default: "DEFAULT"
         }
+    }
+}
+
+private extension URL {
+    var contentModificationDate: Date? {
+        try? resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate
     }
 }
