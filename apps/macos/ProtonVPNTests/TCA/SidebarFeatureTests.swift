@@ -26,6 +26,7 @@ import Ergonomics
 @testable import ExtensionSync
 import Foundation
 @testable import Hermes
+import Modals
 import NATPortMapping
 import os
 import PaymentsShared
@@ -289,16 +290,15 @@ struct SidebarFeatureTests {
     }
 
     @Test("window end live resize persists map width")
-    func windowEndLiveResizePersistsMapWidth() async throws {
-        let defaults = try #require(UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)"))
-        let store = makeStore(
-            defaults: defaults
-        )
+    func windowEndLiveResizePersistsMapWidth() async {
+        let defaults = UserDefaults.inMemory
+        let store = makeStore(defaults: defaults)
 
         await store.send(.windowDidEndLiveResize(width: 1000, isFullscreen: false)) {
             $0.expandState = .expanded
             $0.mapWidth = 575
         }
+        // Read back from the same suite the reducer persisted through.
         #expect(defaults.integer(forKey: "MapWidth") == 575)
     }
 
@@ -534,10 +534,9 @@ struct SidebarFeatureTests {
     }
 
     @Test("loads map with initial width")
-    func viewDidLoadLoadsInitialMapWidth() async throws {
-        let defaults = try #require(UserDefaults(suiteName: "SidebarFeatureTests-\(UUID().uuidString)"))
+    func viewDidLoadLoadsInitialMapWidth() async {
+        let defaults = UserDefaults.inMemory
         defaults.set(720, forKey: "MapWidth")
-        // `startObservingEvents` starts the maintenance feature, which schedules its refresh on the continuous clock.
         let store = makeStore(defaults: defaults, clock: TestClock())
         store.exhaustivity = .off
 
@@ -646,6 +645,80 @@ struct SidebarFeatureTests {
         await store.finish()
 
         #expect(service.requestedGatewayAddresses == [VpnProtocol.wireGuardGatewayAddress])
+    }
+
+    // MARK: - Telemetry consent
+
+    /// A store whose reducer can resolve per-user storage, which the telemetry answer lives in. The keychain
+    /// goes in an enclosing scope rather than into `makeStore`, so no other test's storage resolution changes.
+    private func makeTelemetryStore(defaults: UserDefaults) -> TestStoreOf<SidebarFeature> {
+        let keychain = MockAuthKeychain()
+        keychain.username = "test-user"
+        return withDependencies {
+            $0.authKeychain = keychain
+        } operation: {
+            makeStore(defaults: defaults)
+        }
+    }
+
+    @Test("Appearing asks the telemetry question of a user whose answer the app wrote for them")
+    func appearingAsksTheTelemetryQuestionWhenNeeded() async {
+        let defaults = UserDefaults.inMemory
+        defaults.set("false", forKey: "TelemetryUsageDatatest-user")
+        defaults.set(true, forKey: "TelemetryNeedsReconsenttest-user")
+
+        let store = makeTelemetryStore(defaults: defaults)
+        store.exhaustivity = .off(showSkippedAssertions: false)
+
+        await store.send(.viewDidAppear) {
+            $0.telemetryConsent = TelemetryConsentFeature.State()
+        }
+    }
+
+    @Test("Appearing asks nobody else")
+    func appearingAsksNothingOtherwise() async {
+        let defaults = UserDefaults.inMemory
+        defaults.set("true", forKey: "TelemetryUsageDatatest-user")
+
+        let store = makeTelemetryStore(defaults: defaults)
+        store.exhaustivity = .off(showSkippedAssertions: false)
+
+        await store.send(.viewDidAppear)
+        #expect(store.state.telemetryConsent == nil)
+    }
+
+    @Test("The question is asked once per run, not again on every appearance")
+    func appearingAgainDoesNotReAskTheQuestion() async {
+        let defaults = UserDefaults.inMemory
+        defaults.set("false", forKey: "TelemetryUsageDatatest-user")
+        defaults.set(true, forKey: "TelemetryNeedsReconsenttest-user")
+
+        let store = makeTelemetryStore(defaults: defaults)
+        store.exhaustivity = .off(showSkippedAssertions: false)
+
+        await store.send(.viewDidAppear) {
+            $0.telemetryConsent = TelemetryConsentFeature.State()
+        }
+        // Already up: appearing again must not replace it, which would put the window back in front.
+        await store.send(.viewDidAppear)
+    }
+
+    @Test("Confirming the telemetry question takes the window down")
+    func confirmingRecordsTheAnswer() async {
+        let defaults = UserDefaults.inMemory
+        defaults.set("false", forKey: "TelemetryUsageDatatest-user")
+        defaults.set(true, forKey: "TelemetryNeedsReconsenttest-user")
+
+        let store = makeTelemetryStore(defaults: defaults)
+        store.exhaustivity = .off(showSkippedAssertions: false)
+
+        await store.send(.viewDidAppear) {
+            $0.telemetryConsent = TelemetryConsentFeature.State()
+        }
+        await store.send(.telemetryConsent(.presented(.confirmButtonTapped)))
+        await store.receive(\.telemetryConsent.dismiss) {
+            $0.telemetryConsent = nil
+        }
     }
 
     // MARK: - Private

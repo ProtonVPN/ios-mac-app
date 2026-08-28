@@ -16,6 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Features/Home"),
+        .package(path: "../../Features/Modals"),
         .package(path: "../../Features/Payments"),
 
         .package(path: "../../Foundations/Domain"),
@@ -39,6 +40,7 @@ let package = Package(
                 .product(name: "HomeShared", package: "Home"),
                 .product(name: "Connection", package: "Connection"),
                 "Domain",
+                .product(name: "ModalsShared", package: "Modals"),
                 .product(name: "Payments", package: "Payments"),
                 .product(name: "PaymentsShared", package: "Payments"),
                 "Strings",
@@ -54,6 +56,7 @@ let package = Package(
             name: "TabularTests",
             dependencies: [
                 "Tabular",
+                .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
                 .product(name: "TestingErgonomics", package: "Ergonomics"),
             ]

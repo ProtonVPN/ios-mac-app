@@ -68,4 +68,5 @@ extension MigrationManagerImplementation: @retroactive DependencyKey {
         .checkingServerConnectionIntent()
         .checkingKillSwitchMode()
         .checkingUserLocation()
+        .checkingTelemetryOptIn()
 }

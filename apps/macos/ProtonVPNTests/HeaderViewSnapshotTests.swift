@@ -118,7 +118,7 @@ struct HeaderViewSnapshotTests {
         column: UInt = #column
     ) {
         withDependencies {
-            $0.defaultAppStorage = UserDefaults(suiteName: "HeaderViewSnapshotTests-\(UUID().uuidString)")!
+            $0.defaultAppStorage = .inMemory
             $0.date = .constant(now)
         } operation: {
             @Shared(.connectionState) var sharedConnectionState

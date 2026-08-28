@@ -23,6 +23,9 @@ public typealias DiscourageSecureCoreFeature = ModalsShared.DiscourageSecureCore
 public typealias DiscourageSecureCoreView = ModalsShared.DiscourageSecureCoreView
 public typealias FreeConnectionsFeature = ModalsShared.FreeConnectionsFeature
 public typealias FreeConnectionsView = ModalsShared.FreeConnectionsView
+public typealias TelemetryConsentFeature = ModalsShared.TelemetryConsentFeature
+public typealias TelemetryConsentView = ModalsShared.TelemetryConsentView
+public typealias TelemetryTogglesView = ModalsShared.TelemetryTogglesView
 
 #if canImport(Modals_macOS)
     import Modals_macOS

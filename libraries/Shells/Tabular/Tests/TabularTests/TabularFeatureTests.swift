@@ -17,13 +17,81 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Foundation
+import ModalsShared
 import Persistence
 import PersistenceTestSupport
 @testable import Tabular
 import Testing
+import VPNAppCore
+import VPNShared
 
 @Suite("Tabular shell")
 struct TabularFeatureTests {
+    /// Runs `body` with an isolated app storage suite and a signed-in user, because the telemetry answer the
+    /// question depends on is stored per user.
+    @MainActor
+    private func withTelemetryAnswer(
+        stored: Bool?,
+        needsReconsent: Bool,
+        _ body: @MainActor () async -> Void
+    ) async {
+        let keychain = MockAuthKeychain()
+        keychain.setMockUsername("test-user")
+        let defaults = UserDefaults.inMemory
+        await withDependencies {
+            $0.defaultAppStorage = defaults
+            $0.authKeychain = keychain
+        } operation: {
+            if let stored {
+                defaults.set(String(stored), forKey: "TelemetryUsageDatatest-user")
+            }
+            defaults.set(needsReconsent, forKey: "TelemetryNeedsReconsenttest-user")
+            await body()
+        }
+    }
+
+    @Test("Starting the shell asks the telemetry question of a user whose answer the app wrote for them")
+    @MainActor
+    func startAsksTheTelemetryQuestionWhenNeeded() async {
+        await withTelemetryAnswer(stored: false, needsReconsent: true) {
+            let store = TestStore(initialState: TabularFeature.State()) { TabularFeature() }
+            store.exhaustivity = .off(showSkippedAssertions: false)
+
+            await store.send(.onStart) {
+                $0.telemetryConsent = TelemetryConsentFeature.State()
+            }
+        }
+    }
+
+    @Test("Starting the shell asks nobody else")
+    @MainActor
+    func startAsksNothingOtherwise() async {
+        await withTelemetryAnswer(stored: true, needsReconsent: false) {
+            let store = TestStore(initialState: TabularFeature.State()) { TabularFeature() }
+            store.exhaustivity = .off(showSkippedAssertions: false)
+
+            await store.send(.onStart)
+            #expect(store.state.telemetryConsent == nil)
+        }
+    }
+
+    @Test("Confirming the telemetry question takes the sheet down")
+    @MainActor
+    func confirmingTakesTheSheetDown() async {
+        await withTelemetryAnswer(stored: false, needsReconsent: true) {
+            var state = TabularFeature.State()
+            state.telemetryConsent = TelemetryConsentFeature.State()
+            let store = TestStore(initialState: state) { TabularFeature() }
+            store.exhaustivity = .off(showSkippedAssertions: false)
+
+            await store.send(.telemetryConsent(.presented(.confirmButtonTapped)))
+            await store.receive(\.telemetryConsent.dismiss) {
+                $0.telemetryConsent = nil
+            }
+        }
+    }
+
     @Test("Choosing a tab raises the sheet off its bar, and leaves it alone otherwise")
     @MainActor
     func tabSelectionRaisesTheSheet() async {

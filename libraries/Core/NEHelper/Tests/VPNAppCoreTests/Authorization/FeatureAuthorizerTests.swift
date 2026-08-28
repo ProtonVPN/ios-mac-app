@@ -72,7 +72,7 @@ class FeatureAuthorizerProviderTests: XCTestCase {
 
     func testAuthorizationBasedOnFeatureFlags() {
         withDependencies {
-            $0.defaultAppStorage = UserDefaults(suiteName: "FeatureAuthorizerTests-\(UUID().uuidString)")!
+            $0.defaultAppStorage = .inMemory
             $0.credentialsProvider = .constant(credentials: .tier(.paid))
         } operation: {
             @Shared(.featureFlags) var featureFlags
@@ -90,7 +90,7 @@ class FeatureAuthorizerProviderTests: XCTestCase {
 
     func testSubFeatureAuthorization() {
         withDependencies {
-            $0.defaultAppStorage = UserDefaults(suiteName: "FeatureAuthorizerTests-\(UUID().uuidString)")!
+            $0.defaultAppStorage = .inMemory
             $0.credentialsProvider = .constant(credentials: .tier(.free))
         } operation: {
             @Shared(.featureFlags) var featureFlags

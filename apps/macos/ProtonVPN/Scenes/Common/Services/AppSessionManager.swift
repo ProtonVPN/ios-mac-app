@@ -179,8 +179,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             $userLocation.recordMeasured(measured)
         }
 
-        @Shared(.userAccountCreationDate) var userAccountCreationDate
-        $userAccountCreationDate.withLock { $0 = properties.userCreateTime }
+        // Only overwrite when this refresh actually has some date
+        if let userCreateTime = properties.userCreateTime {
+            @Shared(.userAccountCreationDate) var userAccountCreationDate
+            $userAccountCreationDate.withLock { $0 = userCreateTime }
+        }
 
         if let clientConfig = properties.clientConfig {
             @Shared(.smartProtocolConfig) var smartProtocolConfig

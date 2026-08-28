@@ -103,9 +103,9 @@ extension OnboardingModuleService: OnboardingService {
 
             switch feature {
             case let .toggle(.statistics, _, _, state):
-                $telemetryUsageDataShared.withLock { $0 = String(state) }
+                $telemetryUsageDataShared.withLock { $0 = state }
             case let .toggle(.crashes, _, _, state):
-                $telemetryCrashReportsShared.withLock { $0 = String(state) }
+                $telemetryCrashReportsShared.withLock { $0 = state }
             default:
                 log.assertionFailure("Onboarding interactive feature not handled")
             }

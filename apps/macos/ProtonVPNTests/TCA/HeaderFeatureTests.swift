@@ -353,12 +353,11 @@ struct HeaderFeatureTests {
         announcementOfferPresenting: AnnouncementOfferPresenting = .init(present: { _ in }, dismiss: {}),
         networkTraffic: NetworkTrafficClient = .testValue
     ) -> TestStoreOf<HeaderFeature> {
-        let defaults = UserDefaults(suiteName: "HeaderFeatureTests-\(UUID().uuidString)")!
         // Per-user settings resolve their storage key from the logged-in username, so without one
         // every write is dropped and every read comes back as the feature's default.
         let keychain = MockAuthKeychain()
         keychain.username = "test-user"
-
+        let defaults = UserDefaults.inMemory
         return withDependencies {
             $0.defaultAppStorage = defaults
             $0.authKeychain = keychain

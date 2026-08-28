@@ -16,15 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ModalsShared
 import Strings
 import SwiftUI
 import UIKit
 
 public class TelemetrySettingsViewController: UIViewController {
-    var telemetryView: TelemetryTogglesView
+    var telemetryView: TelemetrySettingsView
 
     public init() {
-        self.telemetryView = TelemetryTogglesView()
+        self.telemetryView = TelemetrySettingsView()
         super.init(nibName: nil, bundle: nil)
         self.title = Localizable.usageStatistics
     }

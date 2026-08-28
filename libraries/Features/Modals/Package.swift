@@ -20,6 +20,10 @@ let package = Package(
             name: "ModalsServices",
             targets: ["ModalsServices"]
         ),
+        .library(
+            name: "ModalsShared",
+            targets: ["ModalsShared"]
+        ),
     ],
     dependencies: [
         .package(path: "../../Foundations/Strings"),
@@ -74,7 +78,6 @@ let package = Package(
             name: "Modals-iOS",
             dependencies: [
                 "ModalsShared",
-                .product(name: "VPNShared", package: "NEHelper"),
             ]
         ),
         .target(
@@ -92,6 +95,7 @@ let package = Package(
             dependencies: [
                 "ModalsShared",
                 "Strings",
+                .product(name: "VPNShared", package: "NEHelper"),
                 .target(name: "Modals-iOS", condition: .when(platforms: [.iOS])),
                 .target(name: "Modals-macOS", condition: .when(platforms: [.macOS])),
 

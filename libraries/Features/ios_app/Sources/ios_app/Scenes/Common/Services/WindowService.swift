@@ -48,6 +48,13 @@ public struct WindowService: Sendable {
 
     public var dismissModal: @Sendable ((@Sendable () -> Void)?) -> Void
 
+    /// Drops any modal still waiting for a window hierarchy to be presented in.
+    ///
+    /// The queue exists so a modal asked for while the window is being set up is not lost. It drains on the next
+    /// root view controller swap, and signing out is such a swap, so a modal meant for the signed-in app would
+    /// otherwise be presented over the login screen.
+    public var discardScheduledModals: @Sendable () -> Void
+
     public var presentMessage: @Sendable (String, _ type: PresentedMessageType, _ accessibilityIdentifier: String?) -> Void
 
     public var topmostPresentedViewController: @Sendable () -> UIViewController?
@@ -64,6 +71,7 @@ enum WindowServiceKey: DependencyKey {
             popStackToRoot: { implementation.popStackToRoot() },
             present: { implementation.present(modal: $0) },
             dismissModal: { implementation.dismissModal($0) },
+            discardScheduledModals: { implementation.discardScheduledModals() },
             presentMessage: { implementation.present(message: $0, type: $1, accessibilityIdentifier: $2) },
             topmostPresentedViewController: { implementation.topmostPresentedViewController }
         )
@@ -188,6 +196,10 @@ final class WindowServiceImplementation {
             return
         }
         presentingViewController.present(modal, animated: true, completion: nil)
+    }
+
+    func discardScheduledModals() {
+        scheduledViewControllers.removeAll()
     }
 
     func dismissModal(_ completion: (() -> Void)? = nil) {

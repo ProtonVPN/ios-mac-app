@@ -30,7 +30,7 @@ struct TelemetrySettingsReporterTests {
         func `split tunneling enabled with exclusion telemetry settings heartbeat`() async {
             @Shared(.telemetryUsageData) var telemetryUsageData
             $telemetryUsageData.withLock {
-                $0 = String(false)
+                $0 = false
             }
             @Shared(.plutoniumFeatureApplied) var splitTunneling: PlutoniumFeatureToggle
             $splitTunneling.withLock {
@@ -53,7 +53,7 @@ struct TelemetrySettingsReporterTests {
         func `split tunneling disabled with inclusion telemetry settings heartbeat`() async {
             @Shared(.telemetryUsageData) var telemetryUsageData
             $telemetryUsageData.withLock {
-                $0 = String(false)
+                $0 = false
             }
             @Shared(.plutoniumFeatureApplied) var splitTunneling: PlutoniumFeatureToggle
             $splitTunneling.withLock {

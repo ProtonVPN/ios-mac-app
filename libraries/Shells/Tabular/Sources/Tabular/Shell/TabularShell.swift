@@ -86,13 +86,21 @@ public final class TabularShell {
     /// Puts the shell in front: roots the backdrop through `makeRoot`, presents the pages sheet over it, and
     /// mounts the bar in the window. A root swap tears some of these attachments down and leaves others, so each one
     /// is redone only if it is missing. Calling this while the shell is already up does nothing.
-    public func present(rootedBy makeRoot: (UIViewController) -> Void) {
+    ///
+    /// - Parameter didPresent: Called once the shell is on screen and able to present anything else over itself.
+    ///   The sheet goes up asynchronously, so a modal asked for on the line after this method returns arrives while
+    ///   that presentation is still in flight, and UIKit drops it.
+    public func present(rootedBy makeRoot: (UIViewController) -> Void, didPresent: (() -> Void)? = nil) {
         if backdrop.view.window == nil {
             makeRoot(backdrop)
             // Keep the app compact-width everywhere for now; this keeps the bottom sheet working on iPad.
             backdrop.view.window?.traitOverrides.horizontalSizeClass = .compact
         }
-        guard pages.presentingViewController == nil else { return }
+        guard pages.presentingViewController == nil else {
+            // Already up, so it can be presented over right away.
+            didPresent?()
+            return
+        }
 
         // UIKit builds a fresh sheet controller for each presentation, so the ladder is configured per present.
         if let sheet = pages.sheetPresentationController {
@@ -111,6 +119,7 @@ public final class TabularShell {
         backdrop.present(pages, animated: false) { [backdrop, pages, bar] in
             // Mounted once the sheet is up, so the bar goes in over the container it was presented into.
             backdrop.view.window.map { Self.mountBar(bar, in: $0, matching: pages.view) }
+            didPresent?()
         }
     }
 

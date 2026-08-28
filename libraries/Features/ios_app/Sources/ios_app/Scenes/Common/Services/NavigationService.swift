@@ -170,6 +170,9 @@ final class NavigationService {
     }
 
     func presentWelcome(initialError: String?) {
+        // Swapping the root drains the modal queue, and nothing queued for the signed-in app belongs
+        // over the login screen.
+        windowService.discardScheduledModals()
         loginService.showWelcome(initialError: initialError, withOverlayViewController: nil)
         // Release the shell with the login it belonged to. The store keeps the feature tree and its
         // long-running observations (connection state, recents, shared properties) alive for as long as
@@ -283,14 +286,28 @@ final class NavigationService {
         store.send(.home(.sharedProperties(.listen)))
         store.send(.map(.observeConnectionState))
 
-        presentShell()
-        showInitialModals()
+        // The shell's sheet goes up asynchronously, so the modals wait for it. Asked for any earlier
+        // they arrive mid-presentation, and UIKit either refuses them or the window service queues
+        // them until the next root swap, which is the login screen.
+        presentShell { [weak self] in
+            guard let self else { return }
+            // The shell is up, so its own destinations can present. This is what raises the telemetry
+            // question for the users the repair migration marked.
+            store.send(.onStart)
+            // One at a time. Two modals presented into the same hierarchy at once knock each other out,
+            // and the question is the one that has to be answered, so what's new waits for a launch where
+            // it is not asked. Its own flag is untouched, so nothing is lost by waiting.
+            guard store.telemetryConsent == nil else { return }
+            showInitialModals()
+        }
     }
 
     /// Puts the shell in front, rooting its backdrop through the window service.
+    ///
+    /// - Parameter didPresent: Called once the shell is able to present anything else over itself.
     @MainActor
-    private func presentShell() {
-        shell?.present(rootedBy: { windowService.show(viewController: $0) })
+    private func presentShell(didPresent: (() -> Void)? = nil) {
+        shell?.present(rootedBy: { windowService.show(viewController: $0) }, didPresent: didPresent)
     }
 
     private func makeHomeViewController(store: StoreOf<HomeFeature>) -> UIViewController {

@@ -19,9 +19,7 @@
 import CommonNetworking
 import Dependencies
 import Foundation
-import Sharing
 import VPNAppCore
-import VPNShared
 
 public class TelemetryEventScheduler {
     struct Error: Swift.Error {
@@ -31,8 +29,6 @@ public class TelemetryEventScheduler {
     private let isBusiness: Bool
     private let buffer: TelemetryBuffer
     @Dependency(\.networking) private var networking
-
-    @SharedReader(.telemetryUsageData) var telemetryUsageDataShared
 
     @Dependency(\.credentialsProvider) private var credentialsProvider
 
@@ -49,8 +45,9 @@ public class TelemetryEventScheduler {
         self.buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: isBusiness ? .businessEvents : .telemetryEvents)
     }
 
-    private var telemetryUsageData: Bool {
-        isBusiness ? businessEvents : telemetryUsageDataShared == String(true)
+    /// Whether this scheduler may send the event it was just handed.
+    private var mayReport: Bool {
+        isBusiness ? businessEvents : TelemetryOptIn.sharesUsageData
     }
 
     private var businessEvents: Bool {
@@ -60,7 +57,7 @@ public class TelemetryEventScheduler {
     /// This should be the single point of reporting telemetry events. Before we do anything with the event,
     /// we need to check if the user agreed to collecting telemetry data or the B2B requires it.
     public func report(event: any TelemetryEvent) async throws {
-        if telemetryUsageData {
+        if mayReport {
             try await sendEvent(event)
         } else {
             throw Error(localizedDescription: "Didn't send \(isBusiness ? "Business" : "Telemetry") event, feature disabled")
