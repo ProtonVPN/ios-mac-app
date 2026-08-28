@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import AppKit
 import ComposableArchitecture
 import Connection
 import Dependencies
@@ -25,17 +24,20 @@ import Foundation
 @testable import ProtonVPN
 import Sharing
 import SnapshotTesting
-import SwiftUI
-import System
 import Testing
 import TestingErgonomics
 import VPNAppCore
 import VPNShared
 
+/// The panel above the sidebar, in both appearances, in every state it reports a connection in.
 @MainActor
 @Suite(.serialized, .snapshots(record: .missing))
 struct HeaderViewSnapshotTests {
-    private let snapshotSize = CGSize(width: 340, height: 200)
+    typealias Appearance = SnapshotEnvironment.Appearance
+
+    /// The sidebar sets the panel's width and the panel takes the height each state needs.
+    private static let layout = SnapshotEnvironment.Layout.fitting(width: 340)
+
     private let now = SnapshotEnvironment.date
 
     @Test("Disconnected", arguments: Appearance.allCases)
@@ -97,22 +99,13 @@ struct HeaderViewSnapshotTests {
 
     // MARK: - Private
 
-    enum Appearance: String, CaseIterable {
-        case light
-        case dark
-
-        var name: NSAppearance.Name {
-            self == .dark ? .darkAqua : .aqua
-        }
-    }
-
     private func assert(
         appearance: Appearance,
         connectionState: ConnectionState = .disconnected,
         userTier: VpnTier = .paid,
         state configure: (inout HeaderFeature.State) -> Void,
         fileID: StaticString = #fileID,
-        file: StaticString = #filePath,
+        file filePath: StaticString = #filePath,
         testName: String = #function,
         line: UInt = #line,
         column: UInt = #column
@@ -129,62 +122,24 @@ struct HeaderViewSnapshotTests {
             var state = HeaderFeature.State()
             configure(&state)
 
-            let (window, size) = makeWindow(state: state, appearance: appearance.name)
             assertSnapshot(
-                of: window.contentView!,
-                as: .image(size: size),
+                of: HeaderView(store: StoreOf<HeaderFeature>(initialState: state) { EmptyReducer() }),
+                layout: Self.layout,
+                appearance: appearance,
                 named: appearance.rawValue,
                 fileID: fileID,
-                file: file,
+                file: filePath,
                 testName: testName,
                 line: line,
                 column: column
             )
         }
     }
-
-    private func makeWindow(
-        state: HeaderFeature.State,
-        appearance: NSAppearance.Name
-    ) -> (window: NSWindow, size: CGSize) {
-        _ = NSApplication.shared
-        NSApp.appearance = NSAppearance(named: appearance)
-
-        let store = StoreOf<HeaderFeature>(initialState: state) {
-            EmptyReducer()
-        }
-        let viewController = NSHostingController(rootView: HeaderView(store: store))
-        let needed = viewController.sizeThatFits(in: CGSize(width: snapshotSize.width, height: 0))
-        let size = CGSize(
-            width: snapshotSize.width,
-            height: max(snapshotSize.height, needed.height)
-        )
-
-        let window = NSWindow(
-            contentRect: CGRect(origin: .zero, size: size),
-            styleMask: [.titled],
-            backing: .buffered,
-            defer: false
-        )
-        window.appearance = NSAppearance(named: appearance)
-        window.contentViewController = viewController
-        window.setContentSize(size)
-        window.layoutIfNeeded()
-        viewController.view.layoutSubtreeIfNeeded()
-
-        return (window, viewController.view.bounds.size)
-    }
 }
 
 extension HeaderViewSnapshotTests: @preconcurrency AssertSnapshot {
     func snapshotDirectory() -> String? {
-        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
-            let path = FilePath(String(describing: #filePath))
-            let suite = path.lastComponent?.stem ?? ""
-            return "\(projectDir)/apps/macos/ProtonVPNTests/__Snapshots__/\(suite)"
-        } else {
-            return nil
-        }
+        Self.ciSnapshotDirectory(testsDirectory: "apps/macos/ProtonVPNTests")
     }
 }
 

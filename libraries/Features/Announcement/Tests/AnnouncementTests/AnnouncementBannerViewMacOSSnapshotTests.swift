@@ -21,13 +21,18 @@
     import ComposableArchitecture
     import SnapshotTesting
     import SwiftUI
-    import System
     import Testing
     import TestingErgonomics
 
     @MainActor
     @Suite(.serialized, .snapshots(record: .missing))
     struct AnnouncementBannerViewMacOSSnapshotTests {
+        /// The banner sits in the sidebar's width. Its height is given rather than measured, because the
+        /// close button hangs over the banner's corner and a fitted height would cut it off.
+        private static func layout(height: CGFloat) -> SnapshotEnvironment.Layout {
+            .fixed(CGSize(width: 200, height: height))
+        }
+
         @Test("Offer banner with countdown")
         func offerBannerViewWithCountdown() {
             assertBanner(state: bannerState(showCountdown: true, endingIn: 3600), height: 70)
@@ -57,16 +62,13 @@
             line: UInt = #line,
             column: UInt = #column
         ) {
-            let view = AnnouncementBannerView(
-                store: Store(initialState: state) { EmptyReducer() },
-                revealed: true
-            )
-            .background(Color(.background, .weak))
-            .environment(\.colorScheme, .dark)
-
             assertSnapshot(
-                of: NSHostingView(rootView: view),
-                as: .image(size: CGSize(width: 200, height: height)),
+                of: AnnouncementBannerView(
+                    store: Store(initialState: state) { EmptyReducer() },
+                    revealed: true
+                )
+                .background(Color(.background, .weak)),
+                layout: Self.layout(height: height),
                 fileID: fileID,
                 file: filePath,
                 testName: testName,
@@ -107,13 +109,7 @@
 
     extension AnnouncementBannerViewMacOSSnapshotTests: @preconcurrency AssertSnapshot {
         func snapshotDirectory() -> String? {
-            if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
-                let path = FilePath(String(describing: #filePath))
-                let suite = path.lastComponent?.stem ?? ""
-                return "\(projectDir)/libraries/Features/Announcement/Tests/AnnouncementTests/__Snapshots__/\(suite)"
-            } else {
-                return nil
-            }
+            Self.ciSnapshotDirectory(testsDirectory: "libraries/Features/Announcement/Tests/AnnouncementTests")
         }
     }
 #endif

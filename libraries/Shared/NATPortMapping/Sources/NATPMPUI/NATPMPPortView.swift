@@ -144,8 +144,10 @@ struct ActivePortView: View {
 
     private static var dateFormatter: DateFormatter {
         @Dependency(\.locale) var locale
+        @Dependency(\.timeZone) var timeZone
         let formatter = DateFormatter()
         formatter.locale = locale
+        formatter.timeZone = timeZone
         formatter.dateStyle = .medium
         formatter.timeStyle = .short
         return formatter

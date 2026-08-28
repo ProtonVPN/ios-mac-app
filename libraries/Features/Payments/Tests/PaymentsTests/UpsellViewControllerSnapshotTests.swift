@@ -17,7 +17,6 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(macOS)
-    import AppKit
     import Dependencies
     @testable import Payments_macOS
     import PaymentsShared
@@ -25,36 +24,36 @@
     import PersistenceTestSupport
     import SnapshotTesting
     import SwiftUI
-    import System
     import Testing
     import TestingErgonomics
 
     @MainActor
     @Suite(.serialized, .snapshots(record: .missing))
     struct UpsellViewControllerSnapshotTests {
-        private let snapshotSize = CGSize(width: 600, height: 640)
+        /// The size of the window the app shows an upsell in.
+        private static let layout = SnapshotEnvironment.Layout.fixed(CGSize(width: 600, height: 640))
 
         @Test("netshield with features")
         func netshieldWithFeatures() {
-            assertUpsellSnapshot(modalType: .netShield)
+            assertUpsell(modalType: .netShield)
         }
 
         @Test("subscription without features")
         func subscriptionWithoutFeatures() {
-            assertUpsellSnapshot(modalType: .subscription)
+            assertUpsell(modalType: .subscription)
         }
 
         @Test("all countries")
         func allCountries() {
             withCountingRepository {
-                assertUpsellSnapshot(modalType: .allCountries)
+                assertUpsell(modalType: .allCountries)
             }
         }
 
         @Test("country")
         func country() {
             withCountingRepository {
-                assertUpsellSnapshot(modalType: .country(countryCode: "CH"))
+                assertUpsell(modalType: .country(countryCode: "CH"))
             }
         }
 
@@ -64,7 +63,7 @@
                 $0.date = .constant(Date(timeIntervalSince1970: 3_035_109_458 - 600))
                 $0.continuousClock = TestClock()
             } operation: {
-                assertUpsellSnapshot(
+                assertUpsell(
                     modalType: .cantSkip(
                         before: Date(timeIntervalSince1970: 3_035_109_458),
                         totalDuration: 3600,
@@ -87,29 +86,29 @@
             }
         }
 
-        private func assertUpsellSnapshot(modalType: UpsellModalType) {
-            let view = UpsellViewController(
-                modalType: modalType,
-                upgradeAction: nil
+        private func assertUpsell(
+            modalType: UpsellModalType,
+            fileID: StaticString = #fileID,
+            file filePath: StaticString = #filePath,
+            testName: String = #function,
+            line: UInt = #line,
+            column: UInt = #column
+        ) {
+            assertSnapshot(
+                of: UpsellViewController(modalType: modalType, upgradeAction: nil),
+                layout: Self.layout,
+                fileID: fileID,
+                file: filePath,
+                testName: testName,
+                line: line,
+                column: column
             )
-            .environment(\.colorScheme, .dark)
-
-            let hostingView = NSHostingView(rootView: view)
-            hostingView.appearance = NSAppearance(named: .darkAqua)
-            hostingView.frame = CGRect(origin: .zero, size: snapshotSize)
-            hostingView.layoutSubtreeIfNeeded()
-
-            assertSnapshot(of: hostingView, as: .image(size: hostingView.frame.size), named: "\(modalType)")
         }
     }
 
     extension UpsellViewControllerSnapshotTests: @preconcurrency AssertSnapshot {
         func snapshotDirectory() -> String? {
-            guard let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty else {
-                return nil
-            }
-            let suite = FilePath(String(describing: #filePath)).lastComponent?.stem ?? ""
-            return "\(projectDir)/libraries/Features/Payments/Tests/PaymentsTests/__Snapshots__/\(suite)"
+            Self.ciSnapshotDirectory(testsDirectory: "libraries/Features/Payments/Tests/PaymentsTests")
         }
     }
 #endif

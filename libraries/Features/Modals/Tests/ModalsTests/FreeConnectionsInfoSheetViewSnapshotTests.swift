@@ -21,49 +21,38 @@
     import ModalsShared
     import SnapshotTesting
     import SwiftUI
-    import System
     import Testing
     import TestingErgonomics
 
     @MainActor
     @Suite(.serialized, .snapshots(record: .missing))
     struct FreeConnectionsInfoSheetViewSnapshotTests {
+        /// The size of the window the app shows the sheet in.
+        private static let layout = SnapshotEnvironment.Layout.fixed(CGSize(width: 520, height: 500))
+
+        private static let countries: IdentifiedArrayOf<FreeConnectionsFeature.State.Country> = [
+            FreeConnectionsFeature.State.Country(code: "US", name: "United States"),
+            .init(code: "JP", name: "Japan"),
+            .init(code: "NL", name: "Netherlands"),
+            .init(code: "RO", name: "Romania"),
+            .init(code: "PL", name: "Poland"),
+            .init(code: "DE", name: "Germany"),
+        ]
+
         @Test("Free connections info sheet")
         func freeConnectionsInfoSheetViewDefault() {
-            let countries: IdentifiedArrayOf<FreeConnectionsFeature.State.Country> = [
-                FreeConnectionsFeature.State.Country(code: "US", name: "United States"),
-                .init(code: "JP", name: "Japan"),
-                .init(code: "NL", name: "Netherlands"),
-                .init(code: "RO", name: "Romania"),
-                .init(code: "PL", name: "Poland"),
-                .init(code: "DE", name: "Germany"),
-            ]
-            let view = FreeConnectionsView(
-                store: Store(
-                    initialState: .init(countries: countries)
-                ) {
-                    EmptyReducer()
-                }
-            )
-            .background(Color(.background))
-            .environment(\.colorScheme, .dark)
+            assertSnapshot(of: Self.view(), layout: Self.layout)
+        }
 
-            let nsView = NSHostingView(rootView: view)
-            SnapshotEnvironment.withAppearance {
-                assertSnapshot(of: nsView, as: .image(size: CGSize(width: 520, height: 500)))
-            }
+        private static func view() -> some View {
+            FreeConnectionsView(store: Store(initialState: .init(countries: countries)) { EmptyReducer() })
+                .background(Color(.background))
         }
     }
 
     extension FreeConnectionsInfoSheetViewSnapshotTests: @preconcurrency AssertSnapshot {
         func snapshotDirectory() -> String? {
-            if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
-                let path = FilePath(String(describing: #filePath))
-                let suite = path.lastComponent?.stem ?? ""
-                return "\(projectDir)/libraries/Features/Modals/Tests/ModalsTests/__Snapshots__/\(suite)"
-            } else {
-                return nil
-            }
+            Self.ciSnapshotDirectory(testsDirectory: "libraries/Features/Modals/Tests/ModalsTests")
         }
     }
 #endif

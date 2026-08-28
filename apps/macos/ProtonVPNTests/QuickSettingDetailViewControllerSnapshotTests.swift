@@ -16,27 +16,23 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import AppKit
 import ComposableArchitecture
 import Domain
 import Ergonomics
 @testable import ProtonVPN
 import SnapshotTesting
 import SwiftUI
-import System
 import Testing
 import TestingErgonomics
 
+/// One popover per quick setting, all at the size the sidebar gives the popover.
 @MainActor
 @Suite(.serialized, .snapshots(record: .missing))
 struct QuickSettingDetailViewControllerSnapshotTests {
-    private let snapshotSize = CGSize(width: 360, height: 420)
+    private static let layout = SnapshotEnvironment.Layout.fixed(CGSize(width: 360, height: 420))
 
     @Test("Quick setting detail snapshots for all types", arguments: QuickSettingType.allCases)
     func quickSettingDetailSnapshots(type: QuickSettingType) {
-        _ = NSApplication.shared
-        NSApp.appearance = NSAppearance(named: .darkAqua)
-
         @SharedReader(.userTier) var userTier: VpnTier? = .paid
         @Shared(.connectionProtocol) var connectionProtocol
         $connectionProtocol.withLock { $0 = .vpnProtocol(.wireGuard(.udp)) }
@@ -44,23 +40,15 @@ struct QuickSettingDetailViewControllerSnapshotTests {
         withDependencies {
             $0.featureFlags = .enabling(VPNFeatureFlagType.isNetShieldLevelThreeEnabled)
         } operation: {
-            let store = Store(initialState: makeState(type: type)) {
-                QuickSettingDetailFeature()
-            }
-            let view = QuickSettingDetailView(store: store)
-                .frame(width: snapshotSize.width, height: snapshotSize.height)
-                .background(Color(.background))
-
-            let hostingView = NSHostingView(rootView: view)
-            hostingView.frame = CGRect(origin: .zero, size: snapshotSize)
-            hostingView.layoutSubtreeIfNeeded()
-
-            assertSnapshot(
-                of: hostingView,
-                as: .image(size: snapshotSize),
-                named: "\(type)"
-            )
+            assertSnapshot(of: Self.view(state: makeState(type: type)), layout: Self.layout, named: "\(type)")
         }
+    }
+
+    // MARK: - Private
+
+    private static func view(state: QuickSettingDetailFeature.State) -> some View {
+        QuickSettingDetailView(store: Store(initialState: state) { EmptyReducer() })
+            .background(Color(.background))
     }
 
     private func makeState(type: QuickSettingType) -> QuickSettingDetailFeature.State {
@@ -87,12 +75,6 @@ struct QuickSettingDetailViewControllerSnapshotTests {
 
 extension QuickSettingDetailViewControllerSnapshotTests: @preconcurrency AssertSnapshot {
     func snapshotDirectory() -> String? {
-        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
-            let path = FilePath(String(describing: #filePath))
-            let suite = path.lastComponent?.stem ?? ""
-            return "\(projectDir)/apps/macos/ProtonVPNTests/__Snapshots__/\(suite)"
-        } else {
-            return nil
-        }
+        Self.ciSnapshotDirectory(testsDirectory: "apps/macos/ProtonVPNTests")
     }
 }

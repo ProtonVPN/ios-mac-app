@@ -20,220 +20,122 @@ import Dependencies
 import Foundation
 @testable import NATPMPUI
 import SnapshotTesting
-import SwiftUI
 import Testing
 import TestingErgonomics
 
+/// The port sits in a popover the app gives a fixed width, so each state is recorded at the width the
+/// design asks for. The active state repeats across locales, because it prints a date and a time.
 @MainActor
 @Suite(.serialized, .snapshots(record: .missing))
 struct NATPMPPortViewTests {
+    private static let activePort = SnapshotEnvironment.Layout.fixed(CGSize(width: 290, height: 84))
+    /// The same view in the narrower popover, where the label wraps onto a second line.
+    private static let narrowActivePort = SnapshotEnvironment.Layout.fixed(CGSize(width: 190, height: 84))
+    private static let portMessage = SnapshotEnvironment.Layout.fixed(CGSize(width: 268, height: 66))
+    private static let portStatus = SnapshotEnvironment.Layout.fixed(CGSize(width: 188, height: 25))
+
+    /// When the port was last renewed. Fixed, because the view prints it.
+    private static let updateDate = Date(timeIntervalSince1970: 1_757_929_224)
+
     @Test
     func loadedViewEnUS() {
-        withDependencies {
-            $0.date.now = .init()
-            $0.locale = Locale(identifier: "en_US")
-        } operation: {
-            let view = ActivePortView(
-                portNumber: 36528,
-                updateDate: Date(timeIntervalSince1970: 1_757_929_224)
-            )
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance(.aqua) {
-                assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
-            }
+        withLocale("en_US") {
+            assertSnapshot(of: activePortView, layout: Self.activePort, appearance: .light)
         }
     }
 
     @Test
     func loadedViewEnUSBut2Lines() {
-        withDependencies {
-            $0.date.now = .init()
-            $0.locale = Locale(identifier: "en_US")
-        } operation: {
-            let view = ActivePortView(
-                portNumber: 36528,
-                updateDate: Date(timeIntervalSince1970: 1_757_929_224)
-            )
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance(.aqua) {
-                assertSnapshot(of: nsView, as: .image(size: .init(width: 190, height: 84)))
-            }
+        withLocale("en_US") {
+            assertSnapshot(of: activePortView, layout: Self.narrowActivePort, appearance: .light)
         }
     }
 
     @Test
     func loadedViewDarkEnUK() {
-        withDependencies {
-            $0.date.now = .init()
-            $0.locale = Locale(identifier: "en_UK")
-        } operation: {
-            let view = ActivePortView(
-                portNumber: 36528,
-                updateDate: Date(timeIntervalSince1970: 1_757_929_224)
-            ).environment(\.colorScheme, .dark)
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance(.darkAqua) {
-                assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
-            }
+        withLocale("en_UK") {
+            assertSnapshot(of: activePortView, layout: Self.activePort)
         }
     }
 
     @Test
     func loadedViewEsES() {
-        withDependencies {
-            $0.date.now = .init()
-            $0.locale = Locale(identifier: "es_ES")
-        } operation: {
-            let view = ActivePortView(
-                portNumber: 36528,
-                updateDate: Date(timeIntervalSince1970: 1_757_936_455)
-            )
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance(.aqua) {
-                assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
-            }
+        withLocale("es_ES") {
+            assertSnapshot(of: activePortView, layout: Self.activePort, appearance: .light)
         }
     }
 
     @Test
     func loadedViewDarkFrCH() {
-        withDependencies {
-            $0.date.now = .init()
-            $0.locale = Locale(identifier: "fr_CH")
-        } operation: {
-            let view = ActivePortView(
-                portNumber: 36528,
-                updateDate: Date(timeIntervalSince1970: 1_757_936_455)
-            ).environment(\.colorScheme, .dark)
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance(.darkAqua) {
-                assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
-            }
+        withLocale("fr_CH") {
+            assertSnapshot(of: activePortView, layout: Self.activePort)
         }
     }
 
     @Test
     func loadedViewDeCH() {
-        withDependencies {
-            $0.date.now = .init()
-            $0.locale = Locale(identifier: "de_CH")
-        } operation: {
-            let view = ActivePortView(
-                portNumber: 36528,
-                updateDate: Date(timeIntervalSince1970: 1_757_936_455)
-            )
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance(.aqua) {
-                assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
-            }
+        withLocale("de_CH") {
+            assertSnapshot(of: activePortView, layout: Self.activePort, appearance: .light)
         }
     }
 
     @Test
     func loadedViewDarkUk() {
-        withDependencies {
-            $0.date.now = .init()
-            $0.locale = Locale(identifier: "uk")
-        } operation: {
-            let view = ActivePortView(
-                portNumber: 36528,
-                updateDate: Date(timeIntervalSince1970: 1_757_936_455)
-            ).environment(\.colorScheme, .dark)
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance(.darkAqua) {
-                assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
-            }
+        withLocale("uk") {
+            assertSnapshot(of: activePortView, layout: Self.activePort)
         }
     }
 
     @Test
     func loadingView() {
-        withDependencies {
-            $0.date.now = .init()
-        } operation: {
-            let view = LoadingPortView()
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance(.aqua) {
-                assertSnapshot(of: nsView, as: .image(size: .init(width: 268, height: 66)))
-            }
-        }
+        assertSnapshot(of: LoadingPortView(), layout: Self.portMessage, appearance: .light)
     }
 
     @Test
     func loadingViewDark() {
-        withDependencies {
-            $0.date.now = .init()
-        } operation: {
-            let view = LoadingPortView().environment(\.colorScheme, .dark)
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance(.darkAqua) {
-                assertSnapshot(of: nsView, as: .image(size: .init(width: 268, height: 66)))
-            }
-        }
+        assertSnapshot(of: LoadingPortView(), layout: Self.portMessage)
     }
 
     @Test
     func statusView() {
-        withDependencies {
-            $0.date.now = .init()
-        } operation: {
-            let view = StatusPortView(portNumber: 36528)
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance(.aqua) {
-                assertSnapshot(of: nsView, as: .image(size: .init(width: 188, height: 25)))
-            }
-        }
+        assertSnapshot(of: StatusPortView(portNumber: 36528), layout: Self.portStatus, appearance: .light)
     }
 
     @Test
     func statusViewDark() {
-        withDependencies {
-            $0.date.now = .init()
-        } operation: {
-            let view = StatusPortView(portNumber: 36528).environment(\.colorScheme, .dark)
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance(.darkAqua) {
-                assertSnapshot(of: nsView, as: .image(size: .init(width: 188, height: 25)))
-            }
-        }
+        assertSnapshot(of: StatusPortView(portNumber: 36528), layout: Self.portStatus)
     }
 
     @Test
     func errorView() {
-        withDependencies {
-            $0.date.now = .init()
-        } operation: {
-            let view = PortErrorView()
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance(.aqua) {
-                assertSnapshot(of: nsView, as: .image(size: .init(width: 268, height: 66)))
-            }
-        }
+        assertSnapshot(of: PortErrorView(), layout: Self.portMessage, appearance: .light)
     }
 
     @Test
     func errorViewDark() {
-        withDependencies {
-            $0.date.now = .init()
-        } operation: {
-            let view = PortErrorView().environment(\.colorScheme, .dark)
-            let nsView = NSHostingView(rootView: view)
+        assertSnapshot(of: PortErrorView(), layout: Self.portMessage)
+    }
 
-            SnapshotEnvironment.withAppearance(.darkAqua) {
-                assertSnapshot(of: nsView, as: .image(size: .init(width: 268, height: 66)))
-            }
+    // MARK: - Private
+
+    private var activePortView: ActivePortView {
+        ActivePortView(portNumber: 36528, updateDate: Self.updateDate)
+    }
+
+    /// Renders `operation` against `identifier`, and against the one time zone, so the date and time the
+    /// view prints don't follow the machine the references were recorded on.
+    private func withLocale(_ identifier: String, _ operation: () -> Void) {
+        withDependencies {
+            $0.locale = Locale(identifier: identifier)
+            $0.timeZone = .gmt
+        } operation: {
+            operation()
         }
+    }
+}
+
+extension NATPMPPortViewTests: @preconcurrency AssertSnapshot {
+    func snapshotDirectory() -> String? {
+        Self.ciSnapshotDirectory(testsDirectory: "libraries/Shared/NATPortMapping/Tests/NATPMPUITests")
     }
 }

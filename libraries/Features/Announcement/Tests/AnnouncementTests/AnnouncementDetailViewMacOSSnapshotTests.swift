@@ -20,33 +20,31 @@
     @testable import Announcement
     import SnapshotTesting
     import SwiftUI
-    import System
     import Testing
     import TestingErgonomics
 
     @MainActor
     @Suite(.serialized, .snapshots(record: .missing))
     struct AnnouncementDetailViewMacOSSnapshotTests {
+        /// The size of the window the app shows an offer in.
+        private static let layout = SnapshotEnvironment.Layout.fixed(CGSize(width: 528, height: 439))
+
         @Test("Announcement legacy offer panel (macOS)")
         func legacyOfferPanel() {
-            let view = AnnouncementDetailView(panel: Self.samplePanel, onAction: {}, onClose: {})
-                .environment(\.colorScheme, .dark)
-
-            SnapshotEnvironment.withAppearance {
-                assertSnapshot(of: NSHostingView(rootView: view), as: .image(size: CGSize(width: 528, height: 439)))
-            }
+            assertSnapshot(
+                of: AnnouncementDetailView(panel: Self.samplePanel, onAction: {}, onClose: {}),
+                layout: Self.layout
+            )
         }
 
-        /// The remote `WebImage` won't load in tests, so this captures the layout/chrome (CTA +
-        /// close button + image frame) rather than the artwork itself.
+        /// The remote `WebImage` won't load in tests, so this captures the layout (CTA + close button +
+        /// image frame) rather than the artwork itself.
         @Test("Announcement image offer panel (macOS)")
         func imageOfferPanel() {
-            let view = AnnouncementOfferImageView(panel: Self.sampleImagePanel, onAction: {}, onClose: {})
-                .environment(\.colorScheme, .dark)
-
-            SnapshotEnvironment.withAppearance {
-                assertSnapshot(of: NSHostingView(rootView: view), as: .image(size: CGSize(width: 528, height: 439)))
-            }
+            assertSnapshot(
+                of: AnnouncementOfferImageView(panel: Self.sampleImagePanel, onAction: {}, onClose: {}),
+                layout: Self.layout
+            )
         }
 
         private static let sampleImagePanel = OfferPanel.ImagePanel(
@@ -76,13 +74,7 @@
 
     extension AnnouncementDetailViewMacOSSnapshotTests: @preconcurrency AssertSnapshot {
         func snapshotDirectory() -> String? {
-            if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
-                let path = FilePath(String(describing: #filePath))
-                let suite = path.lastComponent?.stem ?? ""
-                return "\(projectDir)/libraries/Features/Announcement/Tests/AnnouncementTests/__Snapshots__/\(suite)"
-            } else {
-                return nil
-            }
+            Self.ciSnapshotDirectory(testsDirectory: "libraries/Features/Announcement/Tests/AnnouncementTests")
         }
     }
 #endif
