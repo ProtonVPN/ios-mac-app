@@ -21,6 +21,7 @@ import Connection
 import Dependencies
 import Domain
 import Ergonomics
+import Hermes
 import NetShield
 @testable import ProtonVPN
 import Sharing
@@ -461,6 +462,79 @@ struct CountriesQuickSettingsFeatureTests {
         await store.send(.destination(.presented(.quickSettingDetail(.delegate(.option(.netShieldDisplay, .netShield(.level1))))))) {
             $0.alert = QuickSettingsFeature.hermesConflictAlert(level: .level1)
         }
+    }
+
+    @Test("confirming CustomDNS conflict turns it off")
+    func confirmingHermesConflictAppliesCustomDNSChange() async {
+        @SharedReader(.userTier) var userTier: VpnTier? = .paid
+        @Shared(.connectionState) var connectionState
+        $connectionState.withLock { $0 = .previewConnected(for: .defaultFastest) }
+
+        let appliedSettings = LockIsolated<[Set<ConnectionFeatureChange>]>([])
+        let store = TestStore(initialState: QuickSettingsFeature.State()) {
+            QuickSettingsFeature()
+        } withDependencies: {
+            $0.featureFlags = .enabling()
+            $0.hermesClient.setIsEnabled(true)
+            _ = $0.hermesClient.addHermesResolver(.cloudFlare)
+            $0.connectionCommandClient.send = { command in
+                guard case let .applySettings(changes) = command else { return }
+                appliedSettings.withValue { $0.append(changes) }
+            }
+        }
+
+        await store.send(.buttonTapped(.netShieldDisplay)) {
+            $0.destination = .quickSettingDetail(Self.expectedDetail(type: .netShieldDisplay, from: $0))
+            $0.netShield.isSelected = true
+        }
+        await store.send(.destination(.presented(.quickSettingDetail(.delegate(.option(.netShieldDisplay, .netShield(.level1))))))) {
+            $0.alert = QuickSettingsFeature.hermesConflictAlert(level: .level1)
+        }
+        await store.send(.alert(.presented(.confirmDisableHermesAndSetNetShield(.level1)))) {
+            $0.alert = nil
+        }
+        await store.receive(\.dismissDetails) {
+            $0.destination = nil
+            $0.netShield.isSelected = false
+        }
+
+        #expect(appliedSettings.value == [[
+            .agent(.netShield(.level1)),
+            .tunnel(.customDNS([HermesResolver.proton.location])),
+        ]])
+    }
+
+    @Test("switching between netshield levels leaves Custom DNS off")
+    func switchingNetShieldLevelSendsNoDNSChange() async {
+        @SharedReader(.userTier) var userTier: VpnTier? = .paid
+        @Shared(.connectionState) var connectionState
+        $connectionState.withLock { $0 = .previewConnected(for: .defaultFastest) }
+
+        let appliedSettings = LockIsolated<[Set<ConnectionFeatureChange>]>([])
+        let store = TestStore(initialState: QuickSettingsFeature.State()) {
+            QuickSettingsFeature()
+        } withDependencies: {
+            $0.featureFlags = .enabling()
+            // Already on a level, and Hermes is off (the default), so there is no resolver change to report.
+            $0.netShieldPropertyProvider.setNetShieldType(.level1)
+            $0.connectionCommandClient.send = { command in
+                guard case let .applySettings(changes) = command else { return }
+                appliedSettings.withValue { $0.append(changes) }
+            }
+        }
+
+        await store.send(.buttonTapped(.netShieldDisplay)) {
+            $0.destination = .quickSettingDetail(Self.expectedDetail(type: .netShieldDisplay, from: $0))
+            $0.netShield.isSelected = true
+        }
+        await store.send(.destination(.presented(.quickSettingDetail(.delegate(.option(.netShieldDisplay, .netShield(.level2)))))))
+        await store.receive(\.dismissDetails) {
+            $0.destination = nil
+            $0.netShield.isSelected = false
+        }
+
+        // No need to specify custom DNS changes when there was no conflict.
+        #expect(appliedSettings.value == [[.agent(.netShield(.level2))]])
     }
 
     private func makeStore() -> TestStoreOf<QuickSettingsFeature> {
