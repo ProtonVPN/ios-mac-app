@@ -55,30 +55,53 @@ private struct ProTUNLogContent: LogArchiveContent {
     private func getLogContents() async -> String {
         @Dependency(\.tunnelMessageSender) var messageSender
 
-        guard let response = try? await messageSender.sendProTUN(.init(payload: .flushLogsToFile)) else {
-            return ""
-        }
-        guard case let .logs(.success(url)) = response.payload else {
-            return ""
-        }
-        guard let contents = try? String(contentsOf: url), !contents.isEmpty else {
-            log.error("No content in ProTUN log file with url: \(url)")
-            return ""
-        }
+        do {
+            let response = try await messageSender.sendProTUN(.init(payload: .flushLogsToFile))
 
-        return contents
+            guard case let .logs(logsResponse) = response.payload else {
+                log.error("Received non ProTUN logs response payload")
+                return ""
+            }
+
+            #if os(macOS)
+                guard case let .success(data) = logsResponse, let contents = String(data: data, encoding: .utf8), !contents.isEmpty
+                else {
+                    log.error("Received empty ProTUN logs or invalid data")
+                    return ""
+                }
+                return contents
+            #else
+                guard case let .success(url) = logsResponse else {
+                    log.error("Received error ProTUN logs response payload")
+                    return ""
+                }
+                guard let contents = try? String(contentsOf: url), !contents.isEmpty else {
+                    log.error("No content in ProTUN log file with url: \(url)")
+                    return ""
+                }
+
+                return contents
+            #endif
+        } catch {
+            log.error("Error sending ProTUN logs request: \(error)")
+            return ""
+        }
     }
 
     func loadArchive() async -> URL? {
-        @Dependency(\.tunnelMessageSender) var messageSender
+        #if os(macOS)
+            return nil // unimplemented for now
+        #else
+            @Dependency(\.tunnelMessageSender) var messageSender
 
-        guard let response = try? await messageSender.sendProTUN(.init(payload: .retrieveLogsArchive)) else {
-            return nil
-        }
-        guard case let .logs(.success(url)) = response.payload else {
-            return nil
-        }
+            guard let response = try? await messageSender.sendProTUN(.init(payload: .retrieveLogsArchive)) else {
+                return nil
+            }
+            guard case let .logs(.success(url)) = response.payload else {
+                return nil
+            }
 
-        return url
+            return url
+        #endif
     }
 }

@@ -106,7 +106,10 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
             // from this method is what sends the acknowledgment, so the exit must come after it. Exiting directly kills
             // the reply, and nesessionmanager then waits out a timer before declaring the extension failed. That timer
             // can otherwise make every disconnect linger.
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+            Task.detached(priority: .userInitiated) {
+                async let minimumWait: Void? = try? Task.sleep(for: .milliseconds(500))
+                async let flush: Void = { _ = try? Logger.flushToFile() }()
+                _ = await (minimumWait, flush)
                 exit(EXIT_SUCCESS)
             }
         #endif

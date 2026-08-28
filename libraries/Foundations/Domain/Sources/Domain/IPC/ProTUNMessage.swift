@@ -16,8 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import struct Foundation.URL
-import struct Foundation.UUID
+import Foundation
 import IPCErgonomics
 
 public enum ProTUNMessage {
@@ -58,9 +57,15 @@ public extension ProTUNMessage.Request {
 }
 
 public extension ProTUNMessage.Response {
+    #if os(macOS)
+        typealias LogsResponse = CodableResult<Data, Error>
+    #else
+        typealias LogsResponse = CodableResult<URL, Error>
+    #endif
+
     enum Payload: Sendable, Codable, Equatable {
         case ack
-        case logs(CodableResult<URL, Error>)
+        case logs(LogsResponse)
         case error(GenericError)
         #if DEBUG
             case pong
