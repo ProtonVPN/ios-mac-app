@@ -252,7 +252,7 @@
 "_you_are_not_protected" = "You are not protected";
 
 /* macos header title when authentication is needed */
-"_header_auth_required" = "Authentication required";
+"_header_auth_required" = "需要驗證";
 
 /* macos header subtitle when authentication is needed */
 "_header_vpn_traffic_blocked" = "VPN traffic is blocked until you authenticate.";

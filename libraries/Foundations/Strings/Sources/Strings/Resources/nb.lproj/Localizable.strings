@@ -252,10 +252,10 @@
 "_you_are_not_protected" = "Du er ikke beskyttet";
 
 /* macos header title when authentication is needed */
-"_header_auth_required" = "Authentication required";
+"_header_auth_required" = "Autentisering kreves";
 
 /* macos header subtitle when authentication is needed */
-"_header_vpn_traffic_blocked" = "VPN traffic is blocked until you authenticate.";
+"_header_vpn_traffic_blocked" = "VPN-trafikk er blokkert inntil du autentiserer.";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Prøv igjen";
@@ -1004,16 +1004,16 @@
 "_kill_switch_switch_advanced_title" = "Bytte til avansert nødstopp?";
 
 /* macOS: Kill switch popover - "Standard" option row label */
-"_kill_switch_option_standard" = "Kill switch Standard";
+"_kill_switch_option_standard" = "Nødstopp Standard";
 
 /* macOS: Kill switch popover - "Advanced" option row label */
-"_kill_switch_option_advanced" = "Kill switch Advanced";
+"_kill_switch_option_advanced" = "Nødstopp Avansert";
 
 /* macOS: Kill switch popover - explanation shown with the disabled "Advanced" option while the selected protocol (IKEv2) cannot support it */
-"_kill_switch_advanced_unavailable_protocol_description" = "This setting is not available for the protocol you have selected. Please choose another protocol to use Advanced Kill Switch.";
+"_kill_switch_advanced_unavailable_protocol_description" = "Denne innstillingen er ikke tilgjengelig for protokollen du har valgt. Velg en annen protokoll for å bruke Avansert Nødstopp.";
 
 /* macOS: Kill switch confirmation - bullet: enabling KS disables split tunneling (macOS only) */
-"_kill_switch_bullet_split_tunneling" = "This will disable split tunneling";
+"_kill_switch_bullet_split_tunneling" = "Dette vil deaktivere delt tunnelering";
 
 /* iOS: Kill switch confirmation - bullet: Advanced blocking persists */
 "_kill_switch_bullet_advanced_persists" = "Internett forblir blokkert ved omstart og bevisste frakoblinger helt til du slår det av";
@@ -1064,13 +1064,13 @@
 "_kill_switch_logout_blocking_failed_body" = "Du er logget av, men nødstopp kunne ikke holdes aktiv, så enheten din kan være eksponert. Åpne Proton VPN og koble til igjen for å forbli beskyttet.";
 
 /* macOS: title of the confirmation shown when disconnecting with Advanced kill switch active */
-"_kill_switch_disconnect_advanced_title" = "Disconnect from VPN?";
+"_kill_switch_disconnect_advanced_title" = "Koble fra VPN?";
 
 /* macOS: title of the quit confirmation shown while a VPN session is active */
-"_kill_switch_quit_title" = "Quit Proton VPN?";
+"_kill_switch_quit_title" = "Avslutte Proton VPN?";
 
 /* macOS: quit confirmation body (Standard / non-advanced kill switch) */
-"_kill_switch_disconnected_from_vpn" = "You'll be disconnected from VPN.";
+"_kill_switch_disconnected_from_vpn" = "Du blir koblet fra VPN.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "Portviderekobling";
@@ -1187,7 +1187,7 @@
 "_allow_lan_title" = "Tillat LAN-forbindelser";
 
 /* Description of the Allow LAN connections feature */
-"_allow_lan_info" = "Connect to devices on your local network (such as your printer or NAS drive) when the kill switch is active.";
+"_allow_lan_info" = "Koble til enheter på det lokale nettverket (som skriveren eller NAS-stasjonen) når nødstopp er aktiv.";
 
 "_allow_lan_note" = "Vær oppmerksom på at tilkoblingen må startes på nytt for å bruke denne endringen.";
 
@@ -1597,7 +1597,7 @@
 
 "_quick_settings_netShield_note" = "Hvis nettsteder ikke lastes inn, kan du prøve å deaktivere NetShield.";
 
-"_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try allowing LAN connections in Settings.";
+"_quick_settings_killSwitch_note" = "Hvis du ikke kan koble til enheter på det lokale nettverket, kan du prøve å tillate LAN-tilkoblinger i Innstillinger.";
 
 "_quick_settings_portForwarding_note" = "Skriv inn det aktive portnummeret i BitTorrent-appen for å forbedre P2P-hastighetene dine.";
 
@@ -3063,7 +3063,7 @@
 "_ike_deprecation_alert_message" = "Denne protokollen vil bli fjernet snart. Vurder å bytte til Smart protokoll. Lær mer.";
 
 /* Message added to the IKEv2 deprecation alert when Advanced kill switch is enabled: continuing with IKEv2 changes the setting to Standard */
-"_ike_deprecation_alert_kill_switch_downgrade_message" = "Your Kill Switch setting will be changed to Standard.";
+"_ike_deprecation_alert_kill_switch_downgrade_message" = "Nødstopp-innstillingen vil bli endret til Standard.";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
 "_disable_plutonium_message" = "Dette vil deaktivere delt tunnelering.";
@@ -3177,10 +3177,10 @@
 "_connection_error_intent_missing" = "Vi klarte ikke å koble til tjeneren.";
 
 /* Error message: a problem occurred while building the VPN configuration, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds. */
-"_connection_error_configuration" = "There was a problem configuring the VPN connection.";
+"_connection_error_configuration" = "Det oppstod et problem under konfigurering av VPN-tilkoblingen.";
 
 /* Error message: the VPN configuration is missing something it needs, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds. */
-"_connection_error_configuration_invalid" = "There was a problem with the VPN configuration.";
+"_connection_error_configuration_invalid" = "Det var et problem med VPN-konfigurasjonen.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
 "_connection_error_preparation" = "Det oppstod et problem under forberedelsen av tilkoblingen";
@@ -3408,7 +3408,7 @@
 "_pcap_capture_session_capturing" = "Tar opp";
 
 /* Header of the pending PCAP session view */
-"_pcap_capture_session_pending" = "Pending connection";
+"_pcap_capture_session_pending" = "Venter på tilkobling";
 
 /* Button title on the PCAP export view. Presents a share sheet to save the file outside of the app */
 "_pcap_capture_session_export" = "Lagre fil";

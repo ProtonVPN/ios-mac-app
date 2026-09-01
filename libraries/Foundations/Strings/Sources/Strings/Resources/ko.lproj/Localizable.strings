@@ -252,10 +252,10 @@
 "_you_are_not_protected" = "보호되어 있지 않음";
 
 /* macos header title when authentication is needed */
-"_header_auth_required" = "Authentication required";
+"_header_auth_required" = "인증 필요";
 
 /* macos header subtitle when authentication is needed */
-"_header_vpn_traffic_blocked" = "VPN traffic is blocked until you authenticate.";
+"_header_vpn_traffic_blocked" = "인증 전에는 VPN 트래픽이 차단됩니다.";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "다시 시도";
@@ -924,7 +924,7 @@
 "_delete_application_data_popup_body" = "모든 Proton VPN 데이터가 삭제되고 어플리케이션이 종료됩니다. 계속하시겠습니까?";
 
 /* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Disable kill switch";
+"_kill_switch_disable" = "킬 스위치 비활성화";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "킬 스위치 활성화";
@@ -968,109 +968,109 @@
 "_kill_switch_tooltip" = "VPN 터널이 끊기면 모든 네트워크 트래픽을 차단합니다.";
 
 /* iOS: Kill switch settings - header description above the Off/Standard/Advanced options */
-"_kill_switch_header_description" = "Protects your IP address by disconnecting you from the internet if you lose your VPN connection.";
+"_kill_switch_header_description" = "VPN 연결 상실 시 인터넷 연결을 강제 해제하여 사용자의 IP 주소를 보호합니다.";
 
 /* iOS: Kill switch settings - "Off" option title */
-"_kill_switch_mode_off" = "Off";
+"_kill_switch_mode_off" = "끔";
 
 /* iOS: Kill switch settings - "Standard" option title */
-"_kill_switch_mode_standard" = "Standard";
+"_kill_switch_mode_standard" = "표준";
 
 /* iOS: Kill switch settings - "Advanced" option title */
-"_kill_switch_mode_advanced" = "Advanced";
+"_kill_switch_mode_advanced" = "고급";
 
 /* iOS: Kill switch status message when KS isn't protecting a dropped connection (Off, or Standard while disconnected) */
-"_kill_switch_status_exposed" = "Your IP address could be exposed if your VPN connection drops";
+"_kill_switch_status_exposed" = "VPN 연결이 끊어지면 IP 주소가 노출될 수 있습니다.";
 
 /* iOS: Kill switch settings - status message under the options when Standard is selected and VPN is connected */
-"_kill_switch_status_standard" = "If your VPN connection drops, you'll be disconnected from the internet until VPN is restored";
+"_kill_switch_status_standard" = "VPN 연결이 끊어지면 VPN이 복원될 때까지 인터넷 연결이 끊어집니다.";
 
 /* iOS: Kill switch settings - Advanced status message (VPN connected): blocks all non-VPN traffic */
-"_kill_switch_status_advanced_blocks_all" = "Blocks all internet access when you're not connected to Proton VPN";
+"_kill_switch_status_advanced_blocks_all" = "Proton VPN에 연결되어 있지 않을 때 모든 인터넷 접속을 차단합니다.";
 
 /* iOS: Kill switch settings - Advanced status message (VPN connected): applies even on intentional disconnect */
-"_kill_switch_status_advanced_applies" = "Advanced kill switch applies even if you intentionally disconnect from VPN";
+"_kill_switch_status_advanced_applies" = "의도적으로 VPN 연결을 끊는 경우에도 향상된 킬 스위치가 적용됩니다.";
 
 /* iOS: Kill switch settings - Advanced status message (VPN disconnected): internet disabled to protect IP */
-"_kill_switch_status_advanced_disables_internet" = "Advanced kill switch disables your internet to protect your IP address while you're not connected to Proton VPN";
+"_kill_switch_status_advanced_disables_internet" = "향상된 킬 스위치는 Proton VPN에 연결되지 않은 상태에서 사용자의 IP 주소를 보호하기 위해 인터넷을 비활성화합니다";
 
 /* iOS: Kill switch confirmation - title when enabling Standard from Off */
-"_kill_switch_enable_standard_title" = "Enable kill switch?";
+"_kill_switch_enable_standard_title" = "킬 스위치를 비활성화할까요?";
 
 /* iOS: Kill switch confirmation - title when enabling Advanced from Off */
-"_kill_switch_enable_advanced_title" = "Enable advanced kill switch?";
+"_kill_switch_enable_advanced_title" = "향상된 킬 스위치를 활성화할까요?";
 
 /* iOS: Kill switch confirmation - title when switching from Standard to Advanced */
-"_kill_switch_switch_advanced_title" = "Switch to advanced kill switch?";
+"_kill_switch_switch_advanced_title" = "향상된 킬 스위치로 전환할까요?";
 
 /* macOS: Kill switch popover - "Standard" option row label */
-"_kill_switch_option_standard" = "Kill switch Standard";
+"_kill_switch_option_standard" = "표준 킬 스위치";
 
 /* macOS: Kill switch popover - "Advanced" option row label */
-"_kill_switch_option_advanced" = "Kill switch Advanced";
+"_kill_switch_option_advanced" = "고급 킬 스위치";
 
 /* macOS: Kill switch popover - explanation shown with the disabled "Advanced" option while the selected protocol (IKEv2) cannot support it */
-"_kill_switch_advanced_unavailable_protocol_description" = "This setting is not available for the protocol you have selected. Please choose another protocol to use Advanced Kill Switch.";
+"_kill_switch_advanced_unavailable_protocol_description" = "현재 선택한 프로토콜에서는 해당 설정을 사용할 수 없습니다. 고급 킬 스위치를 사용하려면 다른 프로토콜을 사용하십시오.";
 
 /* macOS: Kill switch confirmation - bullet: enabling KS disables split tunneling (macOS only) */
-"_kill_switch_bullet_split_tunneling" = "This will disable split tunneling";
+"_kill_switch_bullet_split_tunneling" = "분할 터널링이 비활성화됩니다";
 
 /* iOS: Kill switch confirmation - bullet: Advanced blocking persists */
-"_kill_switch_bullet_advanced_persists" = "Internet stays blocked across reboots and intentional disconnects until you turn it off";
+"_kill_switch_bullet_advanced_persists" = "수동으로 해제하기 전까지는 재부팅하거나 의도적으로 연결 해제하더라도 인터넷 연결이 차단됩니다.";
 
 /* iOS: Kill switch confirmation - bullet: how to get back online with Advanced */
-"_kill_switch_bullet_advanced_recover" = "To get back online, connect to VPN or disable advanced kill switch";
+"_kill_switch_bullet_advanced_recover" = "다시 온라인에 접속하려면 VPN에 연결하거나 향상된 킬 스위치를 비활성화하세요.";
 
 /* iOS: Kill switch confirmation - bullet: KS activates on the next connection (deferred activation, both modes) */
-"_kill_switch_bullet_deferred" = "Takes effect the next time you connect to VPN";
+"_kill_switch_bullet_deferred" = "다음 VPN 연결 시 까지 적용됩니다.";
 
 /* iOS: Kill switch confirmation - primary button to enable */
-"_kill_switch_confirm_enable" = "Enable";
+"_kill_switch_confirm_enable" = "활성화";
 
 /* iOS: Kill switch confirmation - primary button to switch to advanced */
-"_kill_switch_confirm_switch" = "Switch";
+"_kill_switch_confirm_switch" = "전환";
 
 /* iOS: Warning shown before disconnecting / signing out while Advanced kill switch is active */
-"_kill_switch_advanced_disconnect_warning" = "Advanced kill switch is enabled. If you continue, you will be disconnected from the internet.";
+"_kill_switch_advanced_disconnect_warning" = "고급 킬 스위치가 활성화되었습니다. 계속하면 인터넷에서 연결이 해제됩니다.";
 
 /* iOS: Home map overlay title while Advanced kill switch is blocking */
-"_kill_switch_advanced_banner_title" = "Advanced kill switch activated";
+"_kill_switch_advanced_banner_title" = "고급 킬 스위치가 활성화됨";
 
 /* iOS: Persistent home banner message while Advanced kill switch is blocking */
-"_kill_switch_advanced_banner_message" = "Connect to VPN to restore your internet connection.";
+"_kill_switch_advanced_banner_message" = "VPN에 연결하여 인터넷 연결을 복원하세요.";
 
 /* iOS: Login screen banner shown while Advanced kill switch is blocking internet */
-"_kill_switch_login_blocking" = "Advanced kill switch is blocking your internet connection.";
+"_kill_switch_login_blocking" = "고급 킬 스위치가 인터넷 연결을 차단 중입니다.";
 
 /* iOS: Confirmation banner shown after disabling kill switch from the login screen */
-"_kill_switch_disabled_confirmation" = "Kill switch is disabled.";
+"_kill_switch_disabled_confirmation" = "킬 스위치가 비활성화되었습니다.";
 
 /* iOS: Body of the alert shown when a user tries to sign in / sign up / continue as guest while Advanced kill switch is blocking */
-"_kill_switch_turn_off_to_get_online" = "To get back online you need to turn off kill switch.";
+"_kill_switch_turn_off_to_get_online" = "인터넷에 다시 접속하려면 킬 스위치를 해제해야 합니다.";
 
 /* iOS: Primary button of the kill-switch-blocking alert; turns the kill switch off */
-"_kill_switch_turn_off" = "Turn off kill switch";
+"_kill_switch_turn_off" = "킬 스위치 해제";
 
 /* iOS: Sign-out confirmation title while Advanced kill switch is active (%@ is the username) */
-"_kill_switch_logout_advanced_title" = "Sign out from %@?";
+"_kill_switch_logout_advanced_title" = "%@(에)서 로그아웃하시겠어요?";
 
 /* iOS: Sign-out confirmation body while Advanced kill switch is active */
-"_kill_switch_logout_advanced_body" = "You'll be disconnected from VPN.\nAdvanced kill switch is enabled. If you continue, you will be disconnected from the internet.";
+"_kill_switch_logout_advanced_body" = "VPN으로부터 연결 해제됩니다.\n고급 킬 스위치가 켜져 있습니다. 계속하면, 인터넷으로의 연결이 해제됩니다.";
 
 /* iOS: Title of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
-"_kill_switch_logout_blocking_failed_title" = "Kill switch could not stay active";
+"_kill_switch_logout_blocking_failed_title" = "킬 스위치를 활성 상태로 유지할 수 없습니다";
 
 /* iOS: Body of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
-"_kill_switch_logout_blocking_failed_body" = "You've been signed out, but the kill switch couldn't be kept active, so your device may be exposed. Open Proton VPN and connect again to stay protected.";
+"_kill_switch_logout_blocking_failed_body" = "앱에서 로그아웃됩니다. 킬 스위치가 비활성화되며 기기의 노출 가능성이 있습니다. 계속 보호 받으려면 Proton VPN 실행 후 다시 연결하십시오.";
 
 /* macOS: title of the confirmation shown when disconnecting with Advanced kill switch active */
-"_kill_switch_disconnect_advanced_title" = "Disconnect from VPN?";
+"_kill_switch_disconnect_advanced_title" = "VPN에 연결 해제합니까?";
 
 /* macOS: title of the quit confirmation shown while a VPN session is active */
-"_kill_switch_quit_title" = "Quit Proton VPN?";
+"_kill_switch_quit_title" = "Proton VPN을 종료하시겠습니까?";
 
 /* macOS: quit confirmation body (Standard / non-advanced kill switch) */
-"_kill_switch_disconnected_from_vpn" = "You'll be disconnected from VPN.";
+"_kill_switch_disconnected_from_vpn" = "VPN 연결이 해제됩니다.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
 "_port_forwarding" = "포트 포워딩";
@@ -1179,7 +1179,7 @@
 "_protun_logs" = "ProTUN 로그";
 
 /* iOS Settings: Troubleshooting logs row */
-"_create_troubleshooting_file" = "Create a troubleshooting file";
+"_create_troubleshooting_file" = "문제 해결 파일 생성";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "문제 보고하기";
@@ -1187,7 +1187,7 @@
 "_allow_lan_title" = "LAN 연결 허용";
 
 /* Description of the Allow LAN connections feature */
-"_allow_lan_info" = "Connect to devices on your local network (such as your printer or NAS drive) when the kill switch is active.";
+"_allow_lan_info" = "킬 스위치 활성화 중애도 로컬 네트워크 (NAS 드라이브 및 프린터 등)에 연결합니다.";
 
 "_allow_lan_note" = "이 설정을 적용하려면 다시 연결해야 합니다";
 
@@ -1457,7 +1457,7 @@
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "문제 해결";
 
-"_troubleshooting_file" = "Troubleshooting file";
+"_troubleshooting_file" = "문제 해결 파일";
 
 "_troubleshoot_item_alt_title" = "대체 라우팅 허용";
 
@@ -1597,7 +1597,7 @@
 
 "_quick_settings_netShield_note" = "웹사이트가 로드되지 않는다면, NetShield를 비활성화해 보세요";
 
-"_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try allowing LAN connections in Settings.";
+"_quick_settings_killSwitch_note" = "로컬 네트워크 상의 기기에 연결이 불가한 경우, 설정에서 LAN연결을 허용하십시오.";
 
 "_quick_settings_portForwarding_note" = "P2P 속도를 향상시키기 위해 BitTorrent 앱으로의 활성 포트 번호를 입력하세요.";
 
@@ -2206,7 +2206,7 @@
 "connection_status_unprotected" = "노출됨";
 
 /* Connection status when zero peer killswitch is enabled */
-"connection_status_disconnectedByKillswitch" = "Disconnected due to Kill Switch";
+"connection_status_disconnectedByKillswitch" = "킬 스위치로 인해 연결 해제됨";
 
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
 "connection_status_protecting" = "회원님의 디지털 신원을 보호하는 중";
@@ -3063,7 +3063,7 @@
 "_ike_deprecation_alert_message" = "이 프로토콜은 곧 제거됩니다. 스마트 프로토콜로 전환하는 것을 고려해 보세요. 더 알아보기";
 
 /* Message added to the IKEv2 deprecation alert when Advanced kill switch is enabled: continuing with IKEv2 changes the setting to Standard */
-"_ike_deprecation_alert_kill_switch_downgrade_message" = "Your Kill Switch setting will be changed to Standard.";
+"_ike_deprecation_alert_kill_switch_downgrade_message" = "킬 스위치 설정값이 표준으로 변경됩니다.";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
 "_disable_plutonium_message" = "분할 터널링이 비활성화됩니다.";
@@ -3177,10 +3177,10 @@
 "_connection_error_intent_missing" = "서버에 연결하는데 실패했습니다.";
 
 /* Error message: a problem occurred while building the VPN configuration, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds. */
-"_connection_error_configuration" = "There was a problem configuring the VPN connection.";
+"_connection_error_configuration" = "VPN연결 준비 중 오류가 발생했습니다.";
 
 /* Error message: the VPN configuration is missing something it needs, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds. */
-"_connection_error_configuration_invalid" = "There was a problem with the VPN configuration.";
+"_connection_error_configuration_invalid" = "VPN 연결 도중 문제가 발생했습니다.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
 "_connection_error_preparation" = "연결 준비 중 오류가 발생했습니다";
@@ -3393,70 +3393,70 @@
 "_transaction_log_" = "거래 로그";
 
 /* Footer note that is visible across the whole flow of the PCAP session */
-"_pcap_capture_file_storage" = "The troubleshooting file is stored on your device and is not sent to Proton unless you share it. It captures your VPN traffic, which may include the websites you visit. [Learn more](%@)";
+"_pcap_capture_file_storage" = "문제 해결 파일은 기기에 저장되어 있으며, 공유하지 않는 한 Proton에 전송되지 않습니다. VPN 트래픽을 캡처하며, 여기에는 방문하는 웹사이트가 포함될 수 있습니다. [자세히 알아보기](%@)";
 
 /* Description of the PCAP feature presented to the user before they start the PCAP session */
-"_pcap_capture_feature_description" = "Reproduce a specific issue you’re facing when using Proton VPN to get help from our customer support team.\n\nThe app will create a file containing technical details about your VPN connection.";
+"_pcap_capture_feature_description" = "Proton VPN 사용 중 발생하는 특정 문제를 재현하여 Proton 고객 지원팀에 제공해 도움을 받을 수 있습지다.\n\n앱이 사용자의 설치된 VPN에 관한 기술적 데이터를 수집하여 파일을 생성합니다.";
 
 /* Directions to the user shown on the active PCAP session view */
-"_pcap_capture_session_directions" = "Reproduce the issue then stop the capture.";
+"_pcap_capture_session_directions" = "문제 재현 후 캡처를 중단하세요";
 
 /* Format: mm:ss / mm:ss. Left hand side is the counter, right hand side is the maximum allowed time */
 "_pcap_capture_session_duration" = "%@ / %@";
 
 /* Header of the active PCAP session view */
-"_pcap_capture_session_capturing" = "Capturing";
+"_pcap_capture_session_capturing" = "캡처 중";
 
 /* Header of the pending PCAP session view */
-"_pcap_capture_session_pending" = "Pending connection";
+"_pcap_capture_session_pending" = "연결 대기 중";
 
 /* Button title on the PCAP export view. Presents a share sheet to save the file outside of the app */
-"_pcap_capture_session_export" = "Save file";
+"_pcap_capture_session_export" = "파일 저장";
 
 /* Header of the PCAP export view */
-"_pcap_capture_session_captured" = "VPN session captured";
+"_pcap_capture_session_captured" = "VPN 세션 캡처 완료";
 
 /* `it` refers to the exportable `<date>.pcap` file that is available while user sees this text */
-"_pcap_capture_file_sharing" = "You can now share it with our customer support by attaching it in your conversation, or by storing it securely on [Proton Drive](%@) and sharing a public link.";
+"_pcap_capture_file_sharing" = "이제 고객 지원 팀에 이 대화에 해당 파일을 첨부하거나 [Proton Drive](%@)에 안전하게 저장한 뒤 공개 링크로 공유하여 안전하게 전달할 수 있습니다.";
 
 /* Button title in the PCAP view. Starts the PCAP session */
-"_pcap_capture_session_start" = "Start";
+"_pcap_capture_session_start" = "시작";
 
 /* Button title in the PCAP view. Stops the PCAP session */
-"_pcap_capture_session_stop" = "Stop";
+"_pcap_capture_session_stop" = "중단";
 
 /* Title of an alert when user starts the PCAP session */
-"_pcap_capture_session_should_start_session" = "Start capturing VPN session?";
+"_pcap_capture_session_should_start_session" = "VPN 세션 캡처를 중단합니까?";
 
 /* Description of an alert when user starts the PCAP session */
-"_pcap_capture_session_issue_reproduction" = "If possible, apply the same settings and type of connection you used when you first faced the issue.\n\nAim to reproduce the issue in the same way it first happened (browsing the web, using an app, etc.)\n\nWhen you’ve reproduced the issue, you can stop the capture and share the file with the customer support team.";
+"_pcap_capture_session_issue_reproduction" = "가능하다먼 처음 문제를 겪었을 때 사용한 설정과 연결 유형을 동일하게 적용해 주시기 바랍니다.\n\n문제를 처음 발생했을 때와 같은 방식으로 재현하십시오(웹 브라우징, 앱 사용 등).\n\n문제를 재현한 후에는 캡처를 중단하고 파일을 고객 지원팀과 공유할 수 있습니다.";
 
 /* Description of an alert when user tries dismissing the PCAP sheet */
-"_pcap_capture_discard_description" = "The file will not be stored in the app. Make sure you’ve exported it before discarding.";
+"_pcap_capture_discard_description" = "이 파일은 앱에 저장되지 않습니다. 삭제 전 내보냈는지 여부를 반드시 확인하십시오.";
 
 /* Title of an alert when user tries dismissing the PCAP sheet */
-"_pcap_capture_discard_title" = "Discard file?";
+"_pcap_capture_discard_title" = "파일을 삭제합니까?";
 
 /* Button title in an alert */
-"_pcap_capture_discard_button" = "Discard file";
+"_pcap_capture_discard_button" = "파일 삭제";
 
 /* Commonly used title of a button */
-"_got_it" = "Got it";
+"_got_it" = "확인";
 
 /* Title of an alert that presents the reason for PCAP failure */
-"_pcap_capture_low_storage" = "Not enough storage";
+"_pcap_capture_low_storage" = "저장공간이 충분하지 않음";
 
 /* Description of an alert that presents the reason for PCAP failure */
-"_pcap_capture_low_storage_action_description" = "You need at least 200MB of available space to start a capture";
+"_pcap_capture_low_storage_action_description" = "캡처하려면 200 MB 이상의 잔여 저장공간이 필요합니다.";
 
 /* Title of an alert that presents the reason for PCAP failure */
-"_pcap_capture_failed" = "Capture failed";
+"_pcap_capture_failed" = "캡처 실패";
 
 /* Title of the alert shown when the VPN server refuses one of the user's requested settings */
-"_local_agent_setting_refused_title" = "Setting not applied";
+"_local_agent_setting_refused_title" = "설정이 적용되지 않음";
 
 /* Alert body shown when the server refuses a named setting. %@ is the setting name, e.g. NetShield */
-"_local_agent_setting_refused_message" = "%@ is not an available setting for this connection.";
+"_local_agent_setting_refused_message" = "%@은(는) 현재 연결 설정에서 사용할 수 없습니다.";
 
 /* Alert body shown when the server refuses a setting the app doesn't surface as a named control */
-"_local_agent_setting_refused_message_generic" = "One of your settings is not available for this connection, it has been turned off.";
+"_local_agent_setting_refused_message_generic" = "설정값 중 일부가 현재 연결에서 사용할 수 없으며, 설정을 해제해야 합니다.";

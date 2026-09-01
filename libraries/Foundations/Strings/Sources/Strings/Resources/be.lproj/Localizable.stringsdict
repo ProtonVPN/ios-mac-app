@@ -236,15 +236,15 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Вы змяняеце налады занадта часта. Паспрабуйце яшчэ раз праз %d хвіліну.</string>
+        <string>Вы змяняеце налады занадта часта. Паўтарыце спробу праз %d хвіліну.</string>
         <key>few</key>
-        <string>Вы змяняеце налады занадта часта. Паспрабуйце яшчэ раз праз %d хвіліны.</string>
+        <string>Вы змяняеце налады занадта часта. Паўтарыце спробу праз %d хвіліны.</string>
         <key>many</key>
-        <string>Вы змяняеце налады занадта часта. Паспрабуйце яшчэ раз праз %d хвілін.</string>
+        <string>Вы змяняеце налады занадта часта. Паўтарыце спробу праз %d хвілін.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>other</key>
-        <string>Вы змяняеце налады занадта часта. Паспрабуйце яшчэ раз праз %d хвілін.</string>
+        <string>Вы змяняеце налады занадта часта. Паўтарыце спробу праз %d хвілін.</string>
       </dict>
     </dict>
     <key>_countries_count_plus</key>

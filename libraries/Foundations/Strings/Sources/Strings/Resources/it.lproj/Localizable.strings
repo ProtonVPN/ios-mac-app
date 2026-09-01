@@ -252,10 +252,10 @@
 "_you_are_not_protected" = "Non sei protetto";
 
 /* macos header title when authentication is needed */
-"_header_auth_required" = "Authentication required";
+"_header_auth_required" = "Autenticazione richiesta";
 
 /* macos header subtitle when authentication is needed */
-"_header_vpn_traffic_blocked" = "VPN traffic is blocked until you authenticate.";
+"_header_vpn_traffic_blocked" = "Il traffico VPN è bloccato fino all'autenticazione.";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Riprova";

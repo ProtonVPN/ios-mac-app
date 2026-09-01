@@ -252,7 +252,7 @@
 "_you_are_not_protected" = "Korunmuyorsunuz";
 
 /* macos header title when authentication is needed */
-"_header_auth_required" = "Kimlik doğrulama gerekiyor";
+"_header_auth_required" = "Kimlik doğrulaması gerekli";
 
 /* macos header subtitle when authentication is needed */
 "_header_vpn_traffic_blocked" = "Kimliğinizi doğrulayana kadar VPN trafiği engellenir.";
