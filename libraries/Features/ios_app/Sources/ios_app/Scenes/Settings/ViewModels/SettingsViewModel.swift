@@ -935,17 +935,23 @@ final class SettingsViewModel {
                 log.assertionFailure("NetShield should never require a reconnect on iOS")
                 fallthrough
             case .withConnectionUpdate:
+                // NetShield and CustomDNS are mutually exclusive
+                let wasCustomDNSEnabled = self?.hermesSettingsViewModel.isEnabled == true
                 let setNetShieldValue: (NetShieldType) -> Void = { [weak self] newValue in
-                    self?.netShieldPropertyProvider.setNetShieldType(newValue)
-                    self?.apply(agentFeatureChange: .netShield(newValue))
+                    guard let self else { return }
+                    netShieldPropertyProvider.setNetShieldType(newValue)
+                    var changes: Set<ConnectionFeatureChange> = [.agent(.netShield(newValue))]
+                    if wasCustomDNSEnabled, newValue != .off {
+                        changes.insert(.tunnel(.customDNS(hermesClient.currentResolvers.map(\.location))))
+                    }
+                    apply(featureChanges: changes)
                 }
                 if case .off = type {
                     setNetShieldValue(type)
                     completion(true)
                 } else {
-                    self?.showHermesNetshieldOnConflictAlertIfNecessary { enable in
+                    self?.resolveHermesNetShieldConflictIfNecessary { enable in
                         if enable {
-                            self?.hermesSettingsViewModel.setIsEnabled(false, force: true)
                             setNetShieldValue(type)
                         }
                         completion(enable)
@@ -956,9 +962,8 @@ final class SettingsViewModel {
                     self?.netShieldPropertyProvider.setNetShieldType(type)
                     completion(true)
                 } else {
-                    self?.showHermesNetshieldOnConflictAlertIfNecessary { enable in
+                    self?.resolveHermesNetShieldConflictIfNecessary { enable in
                         if enable {
-                            self?.hermesSettingsViewModel.setIsEnabled(false, force: true)
                             self?.netShieldPropertyProvider.setNetShieldType(type)
                         }
                         completion(enable)
@@ -968,14 +973,21 @@ final class SettingsViewModel {
         }
     }
 
-    private func showHermesNetshieldOnConflictAlertIfNecessary(completionHandler: @escaping (_ shouldEnableNetShield: Bool) -> Void) {
+    private func resolveHermesNetShieldConflictIfNecessary(
+        completionHandler: @escaping (_ shouldEnableNetShield: Bool) -> Void
+    ) {
         guard hermesSettingsViewModel.isEnabled else {
             completionHandler(true)
             return
         }
 
-        let alertController = hermesSettingsViewModel.netShieldOnConflictAlertController {
-            completionHandler($0)
+        let alertController = hermesSettingsViewModel.netShieldOnConflictAlertController { [weak self] confirmed in
+            guard confirmed else {
+                completionHandler(false)
+                return
+            }
+            self?.hermesSettingsViewModel.setIsEnabled(false, force: true)
+            completionHandler(true)
         }
 
         showModalController?(alertController)
@@ -1054,14 +1066,16 @@ final class SettingsViewModel {
     }
 
     private func apply(agentFeatureChange: ConnectionFeatureChange.AgentFeature) {
-        DispatchQueue.main.async {
-            self.settingsClient.update(Set([.agent(agentFeatureChange)]))
-        }
+        apply(featureChanges: [.agent(agentFeatureChange)])
     }
 
     private func apply(tunnelFeatureChange: ConnectionFeatureChange.TunnelFeature) {
+        apply(featureChanges: [.tunnel(tunnelFeatureChange)])
+    }
+
+    private func apply(featureChanges: Set<ConnectionFeatureChange>) {
         DispatchQueue.main.async {
-            self.settingsClient.update(Set([.tunnel(tunnelFeatureChange)]))
+            self.settingsClient.update(featureChanges)
         }
     }
 

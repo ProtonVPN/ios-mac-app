@@ -388,7 +388,6 @@ private extension QuickSettingsFeature {
                 return .send(.dismissDetails)
 
             case let .alert(.presented(.confirmDisableHermesAndSetNetShield(level))):
-                hermesClient.setIsEnabled(false)
                 applyQuickSettingOptionSelection(type: .netShieldDisplay, option: .netShield(level), state)
                 return .send(.dismissDetails)
 
@@ -528,10 +527,19 @@ private extension QuickSettingsFeature {
     }
 
     func quickSettingsChangeNetShieldLevel(_ level: NetShieldType, _ state: State) {
+        // NetShield and CustomDNS are mutually exclusive
+        let shouldDisableCustomDNS = level != .off && hermesClient.isEnabled().wrappedValue
+        if shouldDisableCustomDNS {
+            hermesClient.setIsEnabled(false)
+        }
         netShieldPropertyProvider.setNetShieldType(level)
         switch VpnFeatureChangeState(connectionState: state.connectionState) {
         case .withConnectionUpdate:
-            connectionCommandClient.send(.applySettings([.agent(.netShield(level))]))
+            var changes: Set<ConnectionFeatureChange> = [.agent(.netShield(level))]
+            if shouldDisableCustomDNS {
+                changes.insert(.tunnel(.customDNS(hermesClient.currentResolvers.map(\.location))))
+            }
+            connectionCommandClient.send(.applySettings(changes))
         case .withReconnect:
             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
             connectionCommandClient.send(.retry)
