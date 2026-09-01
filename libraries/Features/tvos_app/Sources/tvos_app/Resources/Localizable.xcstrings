@@ -545,6 +545,12 @@
             "value" : "ჟურნალი ფაილის ტიპია, რომელიც გვაჩვენებს ქმედებებს, რომლებმაც შეცდომა გამოიწვია. ჩვენ მას, მხოლოდ, თქვენი პრობლემების გადასაწყვეტად ვიყენებთ."
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로그는 오류를 초래한 작업을 보여주는 파일 유형입니다. 엔지니어들이 버그를 수정할 수 있도록 수정에만 해당 로그를 사용합니다."
+          }
+        },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3778,6 +3784,12 @@
             "value" : "ელფოსტა"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이메일"
+          }
+        },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4152,6 +4164,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ანგარიშის გაგზავნა ჩავარდა"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "리포트 전송 실패"
           }
         },
         "nb" : {
@@ -4742,6 +4760,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "აპლიკაციის ჟურნალის მიღება"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "어플리케이션 로그 보기"
           }
         },
         "nb" : {
@@ -5757,6 +5781,12 @@
             "value" : "Kill Switch აქტიურია"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "킬 스위치 활성화됨"
+          }
+        },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6342,6 +6372,12 @@
             "value" : "ჟურნალის ჩატვირთვა..."
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로그를 불러오는 중..."
+          }
+        },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6502,6 +6538,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ჟურნალი"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로그"
           }
         },
         "nb" : {
@@ -6882,6 +6924,12 @@
             "value" : "ჟურნალი ხელმისაწვდომი არაა."
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용 가능한 로그 없음."
+          }
+        },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7042,6 +7090,12 @@
             "value" : "დიახ"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "확인"
+          }
+        },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7115,7 +7169,7 @@
         "be" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Паспрабуйце яшчэ раз."
+            "value" : "Паўтарыце спробу."
           }
         },
         "ca" : {
@@ -7194,6 +7248,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "თავიდან სცადეთ."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다시 시도해주세요."
           }
         },
         "nb" : {
@@ -9102,6 +9162,12 @@
             "value" : "პრობლემის ანგარიშის გაგზავნა"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "문제 제보하기"
+          }
+        },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9254,6 +9320,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ანგარიში გაგზავნილია"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "보고서 전송 완료"
           }
         },
         "nb" : {
@@ -9626,6 +9698,12 @@
             "value" : "შეცდომის ჟურნალის გაგზავნა"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오류 로그 보내기"
+          }
+        },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9780,6 +9858,12 @@
             "value" : "ანგარიშის გაგზავნა"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "리포트 보내기"
+          }
+        },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9932,6 +10016,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ანგარიშის გაგზავნა..."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "리포트 전송 중..."
           }
         },
         "nb" : {
@@ -12845,7 +12935,7 @@
         "be" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Паспрабаваць яшчэ раз"
+            "value" : "Паўтарыце спробу"
           }
         },
         "ca" : {
@@ -12924,6 +13014,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "კიდევ სცადეთ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다시 시도"
           }
         },
         "nb" : {
@@ -13734,6 +13830,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "მომხმარებლის სახელი"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용자 이름"
           }
         },
         "nb" : {
@@ -14965,6 +15067,12 @@
             "value" : "რა დაგემართათ? თუ შეცდომის შეტყობინება მიიღეთ, გვითხარით, რა ეწერა იქ."
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "어떤 문제가 발생했나요? 에러 메시지가 표시되었다면, 표시된 내용을 알려주세요."
+          }
+        },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15551,6 +15659,12 @@
             "value" : "რომელი სტრიმინგის სერვისის გამოყენებას ცდილობთ?"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용을 시도하려는 스트리밍 서비스가 무엇인가요?"
+          }
+        },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15888,6 +16002,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "თქვენი კავშირი ჩავარდა"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN 연결 실패"
           }
         },
         "nb" : {
