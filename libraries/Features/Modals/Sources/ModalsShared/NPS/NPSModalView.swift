@@ -21,17 +21,11 @@ import Strings
 import SwiftUI
 import Theme
 
-/// Full-screen Net Promoter Score survey.
-///
-/// The modal opens with no score picked, which leaves the comment field hidden and the submit
-/// button disabled. Picking a score reveals the optional comment field and enables submission.
 public struct NPSModalView: View {
     @Bindable public var store: StoreOf<NPSModalFeature>
 
     @Environment(\.dismissWindow) private var dismissWindow
 
-    /// Creates the survey view.
-    /// - Parameter store: The store driving the survey.
     public init(store: StoreOf<NPSModalFeature>) {
         self.store = store
     }

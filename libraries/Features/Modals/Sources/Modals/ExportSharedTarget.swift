@@ -25,8 +25,6 @@ public typealias FreeConnectionsFeature = ModalsShared.FreeConnectionsFeature
 public typealias FreeConnectionsView = ModalsShared.FreeConnectionsView
 public typealias NPSModalFeature = ModalsShared.NPSModalFeature
 public typealias NPSModalView = ModalsShared.NPSModalView
-@available(macOS 15.0, *)
-public typealias NPSModalScene = ModalsShared.NPSModalScene
 public typealias TelemetryConsentFeature = ModalsShared.TelemetryConsentFeature
 public typealias TelemetryConsentView = ModalsShared.TelemetryConsentView
 public typealias TelemetryTogglesView = ModalsShared.TelemetryTogglesView

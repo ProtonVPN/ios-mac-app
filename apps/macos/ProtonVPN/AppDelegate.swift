@@ -94,18 +94,8 @@ import VPNShared
 #endif
 
 extension AppDelegate: NSApplicationDelegate {
-    @MainActor
-    fileprivate func installSwiftUIViews() {
-        @Dependency(\.windowService) var windowService
-        if #available(macOS 26.0, *) {
-            windowService.installSwiftUIViews()
-        }
-    }
-
     /// Runs before `applicationDidFinishLaunching`, and before anything has touched the database.
     func applicationWillFinishLaunching(_: Notification) {
-        installSwiftUIViews()
-
         AppStartup.captureMagicKeysAtLaunch {
             log.debug("Command+Option+Control+Shift held at launch, forcing system extension upgrade", category: .app)
         }

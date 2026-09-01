@@ -42,9 +42,6 @@ protocol WindowServiceFactory {
 }
 
 protocol WindowService: WindowControllerDelegate {
-    @available(macOS 26.0, *)
-    @MainActor
-    func installSwiftUIViews()
     func setStatusMenuWindowController(_ controller: StatusMenuWindowController)
 
     func showIfPresent(windowController: (some NSWindowController).Type) -> Bool
@@ -99,24 +96,6 @@ extension DependencyValues {
 
 // this need to abstract class for common functions. for sharing code. ios/mac should have different implementation
 final class WindowServiceImplementation: WindowService {
-    var openNPSScene: (() -> Void)?
-
-    @MainActor
-    @available(macOS 26.0, *)
-    func installSwiftUIViews() {
-        let scene = NSHostingSceneRepresentation {
-            NPSModalScene(store: .init(initialState: .init()) {
-                NPSModalFeature()
-            })
-        }
-        NSApplication.shared.addSceneRepresentation(scene)
-        openNPSScene = {
-            if !scene.environment.isPresented {
-                scene.environment.openWindow(id: "NPSModal")
-            }
-        }
-    }
-
     typealias Factory = DependencyContainer
 
     private let factory: Factory
@@ -278,15 +257,11 @@ final class WindowServiceImplementation: WindowService {
     }
 
     func openNPSWindow(store: StoreOf<NPSModalFeature>) {
-        if #available(macOS 26.0, *), false {
-            openNPSScene?()
-        } else {
-            NSApp.setActivationPolicy(.regular)
-            let windowController = NPSWindowController(store: store)
-            activeWindowControllers.insert(windowController)
-            windowController.showWindow(self)
-            windowController.window?.positionWindow(size: Theme.Constants.settingsViewSize)
-        }
+        NSApp.setActivationPolicy(.regular)
+        let windowController = NPSWindowController(store: store)
+        activeWindowControllers.insert(windowController)
+        windowController.showWindow(self)
+        windowController.window?.positionWindow(size: Theme.Constants.settingsViewSize)
     }
 
     func openSystemExtensionGuideWindow(origin: SystemExtensionTourAlert.Origin, cancelledHandler: @escaping () -> Void) {
