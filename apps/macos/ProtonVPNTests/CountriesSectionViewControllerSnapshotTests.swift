@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import AppKit
 import ComposableArchitecture
 import Countries
 import Dependencies
@@ -27,81 +26,56 @@ import LegacyCommon
 import Sharing
 import SnapshotTesting
 import SwiftUI
-import System
 import Testing
 import TestingErgonomics
 
+/// The sidebar's country list, in both appearances, on a paid and on a free plan.
 @MainActor
 @Suite(.serialized, .snapshots(record: .missing))
 struct CountriesSectionViewControllerSnapshotTests {
-    private let snapshotSize = CGSize(width: 360, height: 800)
+    typealias Appearance = SnapshotEnvironment.Appearance
+
+    /// The size of the sidebar the app puts the list in.
+    private static let layout = SnapshotEnvironment.Layout.fixed(CGSize(width: 360, height: 800))
+
     private let snapshotCountryCodes = ["SE", "CH", "DE", "NL", "US", "JP", "GB", "FR", "CA", "AU", "ES", "IT"]
 
-    @Test("Countries screen", arguments: ["light", "dark"])
-    func countriesScreen(appearance: String) {
+    @Test("Countries screen", arguments: Appearance.allCases)
+    func countriesScreen(appearance: Appearance) {
         @SharedReader(.secureCoreToggle) var secureCoreToggle = false
         @SharedReader(.userTier) var userTier: VpnTier? = .paid
-        let appearanceName: NSAppearance.Name = appearance == "dark" ? .darkAqua : .aqua
         withMockedDeps {
-            let (viewController, window) = makeViewController(appearance: appearanceName)
-            viewController.view.layoutSubtreeIfNeeded()
-
             assertSnapshot(
-                of: window.contentView!,
-                as: .image(size: snapshotSize),
-                named: appearance
+                of: rootView(),
+                layout: Self.layout,
+                appearance: appearance,
+                named: appearance.rawValue
             )
         }
     }
 
-    @Test("Countries screen free tier", arguments: ["light", "dark"])
-    func countriesScreenFreeTier(appearance: String) {
+    @Test("Countries screen free tier", arguments: Appearance.allCases)
+    func countriesScreenFreeTier(appearance: Appearance) {
         @SharedReader(.secureCoreToggle) var secureCoreToggle = false
         @SharedReader(.userTier) var userTier: VpnTier? = .free
-        let appearanceName: NSAppearance.Name = appearance == "dark" ? .darkAqua : .aqua
         withMockedDeps {
-            let (viewController, window) = makeViewController(appearance: appearanceName)
-            viewController.view.layoutSubtreeIfNeeded()
-
             assertSnapshot(
-                of: window.contentView!,
-                as: .image(size: snapshotSize),
-                named: appearance
+                of: rootView(),
+                layout: Self.layout,
+                appearance: appearance,
+                named: appearance.rawValue
             )
         }
     }
 
     // MARK: - Private
 
-    private func makeViewController(appearance: NSAppearance.Name) -> (NSHostingController<CountriesSectionRootView>, NSWindow) {
-        _ = NSApplication.shared
-        NSApp.appearance = NSAppearance(named: appearance)
-
+    private func rootView() -> CountriesSectionRootView {
         let state = makeSnapshotState()
-        let countriesSectionStore = StoreOf<CountriesSectionFeature>(initialState: state) {
-            EmptyReducer()
-        }
-        let quickSettingsStore = StoreOf<QuickSettingsFeature>(initialState: state.quickSettings) {
-            EmptyReducer()
-        }
-        let rootView = CountriesSectionRootView(
-            store: countriesSectionStore,
-            quickSettingsStore: quickSettingsStore
+        return CountriesSectionRootView(
+            store: StoreOf<CountriesSectionFeature>(initialState: state) { EmptyReducer() },
+            quickSettingsStore: StoreOf<QuickSettingsFeature>(initialState: state.quickSettings) { EmptyReducer() }
         )
-        let viewController = NSHostingController(rootView: rootView)
-        let window = NSWindow(
-            contentRect: CGRect(origin: .zero, size: snapshotSize),
-            styleMask: [.titled],
-            backing: .buffered,
-            defer: false
-        )
-        window.appearance = NSAppearance(named: appearance)
-        window.contentViewController = viewController
-        viewController.view.frame = window.contentView?.bounds ?? CGRect(origin: .zero, size: snapshotSize)
-        window.layoutIfNeeded()
-        viewController.view.layoutSubtreeIfNeeded()
-
-        return (viewController, window)
     }
 
     private func makeSnapshotState() -> CountriesSectionFeature.State {
@@ -186,12 +160,6 @@ struct CountriesSectionViewControllerSnapshotTests {
 
 extension CountriesSectionViewControllerSnapshotTests: @preconcurrency AssertSnapshot {
     func snapshotDirectory() -> String? {
-        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
-            let path = FilePath(String(describing: #filePath))
-            let suite = path.lastComponent?.stem ?? ""
-            return "\(projectDir)/apps/macos/ProtonVPNTests/__Snapshots__/\(suite)"
-        } else {
-            return nil
-        }
+        Self.ciSnapshotDirectory(testsDirectory: "apps/macos/ProtonVPNTests")
     }
 }

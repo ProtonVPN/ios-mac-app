@@ -17,13 +17,11 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(macOS)
-    import AppKit
     import ComposableArchitecture
     import Dependencies
     import ModalsShared
     import SnapshotTesting
     import SwiftUI
-    import System
     import Testing
     import TestingErgonomics
     import VPNAppCore
@@ -33,38 +31,28 @@
     @MainActor
     @Suite(.serialized, .snapshots(record: .missing))
     struct TelemetryConsentWindowSnapshotTests {
-        private let snapshotWidth: CGFloat = 420
+        typealias Appearance = SnapshotEnvironment.Appearance
+
+        /// The window is as wide as the design asks and as tall as the questions it lists.
+        private static let layout = SnapshotEnvironment.Layout.fitting(width: 420)
 
         @Test("Opens with both answers on", arguments: Appearance.allCases)
         func opensWithBothOn(appearance: Appearance) {
             assert(appearance: appearance, storedSharesUsageData: false, storedSharesCrashReports: false)
         }
 
-        enum Appearance: String, CaseIterable {
-            case light
-            case dark
-
-            var name: NSAppearance.Name {
-                self == .dark ? .darkAqua : .aqua
-            }
-        }
+        // MARK: - Private
 
         private func assert(
             appearance: Appearance,
             storedSharesUsageData: Bool,
             storedSharesCrashReports: Bool,
             fileID: StaticString = #fileID,
-            file: StaticString = #filePath,
+            file filePath: StaticString = #filePath,
             testName: String = #function,
             line: UInt = #line,
             column: UInt = #column
         ) {
-            _ = NSApplication.shared
-            // Other suites in this target render against whatever appearance is already set, so the one
-            // this test picks has to be put back.
-            let previousAppearance = NSApp.appearance
-            defer { NSApp.appearance = previousAppearance }
-
             // A suite of its own per test, so one test's answers can't drive another's view. The
             // keychain has to report a user because these answers are stored per user.
             let keychain = MockAuthKeychain()
@@ -79,13 +67,13 @@
                     sharesCrashReports: storedSharesCrashReports
                 )
 
-                let (window, size) = makeWindow(appearance: appearance.name)
                 assertSnapshot(
-                    of: window.contentView!,
-                    as: .image(size: size),
+                    of: Self.view(),
+                    layout: Self.layout,
+                    appearance: appearance,
                     named: appearance.rawValue,
                     fileID: fileID,
-                    file: file,
+                    file: filePath,
                     testName: testName,
                     line: line,
                     column: column
@@ -93,43 +81,14 @@
             }
         }
 
-        private func makeWindow(appearance: NSAppearance.Name) -> (window: NSWindow, size: CGSize) {
-            NSApp.appearance = NSAppearance(named: appearance)
-
-            let view = TelemetryConsentView(
-                store: Store(initialState: TelemetryConsentFeature.State()) {
-                    EmptyReducer()
-                }
-            )
-            let viewController = NSHostingController(rootView: view)
-            let needed = viewController.sizeThatFits(in: CGSize(width: snapshotWidth, height: 0))
-            let size = CGSize(width: snapshotWidth, height: needed.height)
-
-            let window = NSWindow(
-                contentRect: CGRect(origin: .zero, size: size),
-                styleMask: [.titled],
-                backing: .buffered,
-                defer: false
-            )
-            window.appearance = NSAppearance(named: appearance)
-            window.contentViewController = viewController
-            window.setContentSize(size)
-            window.layoutIfNeeded()
-            viewController.view.layoutSubtreeIfNeeded()
-
-            return (window, viewController.view.bounds.size)
+        private static func view() -> some View {
+            TelemetryConsentView(store: Store(initialState: TelemetryConsentFeature.State()) { EmptyReducer() })
         }
     }
 
     extension TelemetryConsentWindowSnapshotTests: @preconcurrency AssertSnapshot {
         func snapshotDirectory() -> String? {
-            if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
-                let path = FilePath(String(describing: #filePath))
-                let suite = path.lastComponent?.stem ?? ""
-                return "\(projectDir)/libraries/Features/Modals/Tests/ModalsTests/__Snapshots__/\(suite)"
-            } else {
-                return nil
-            }
+            Self.ciSnapshotDirectory(testsDirectory: "libraries/Features/Modals/Tests/ModalsTests")
         }
     }
 #endif

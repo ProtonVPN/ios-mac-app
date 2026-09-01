@@ -17,61 +17,43 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(macOS)
-    import AppKit
     import ComposableArchitecture
     @testable import Modals_macOS
     import ModalsShared
     import SnapshotTesting
     import Strings
     import SwiftUI
-    import System
     import Testing
     import TestingErgonomics
 
     @MainActor
     @Suite(.serialized, .snapshots(record: .missing))
     struct DiscourageSecureCoreViewControllerSnapshotTests {
-        private let snapshotSize = CGSize(width: 520, height: 630)
+        /// The size of the window the app shows the modal in.
+        private static let layout = SnapshotEnvironment.Layout.fixed(CGSize(width: 520, height: 630))
 
         @Test("default dark appearance")
         func defaultAppearance() {
-            let store = StoreOf<DiscourageSecureCoreFeature>(initialState: .init(), reducer: {
-                EmptyReducer()
-            })
-            let view = DiscourageSecureCoreView(store: store)
-                .background(Color(.background))
-                .environment(\.colorScheme, .dark)
-
-            let nsView = NSHostingView(rootView: view)
-            SnapshotEnvironment.withAppearance {
-                assertSnapshot(of: nsView, as: .image(size: snapshotSize))
-            }
+            assertSnapshot(of: Self.view(state: .init()), layout: Self.layout)
         }
 
         @Test("default dark appearance with SC available (no reconnect notice)")
         func defaultAppearanceWithSameCountryReconnectNotice() {
-            let store = StoreOf<DiscourageSecureCoreFeature>(
-                initialState: .init(reconnectNotice: Localizable.viewToggleOnReconnectSameCountry),
-                reducer: { EmptyReducer() }
+            assertSnapshot(
+                of: Self.view(state: .init(reconnectNotice: Localizable.viewToggleOnReconnectSameCountry)),
+                layout: Self.layout
             )
-            let view = DiscourageSecureCoreView(store: store)
-                .background(Color(.background))
-                .environment(\.colorScheme, .dark)
+        }
 
-            let nsView = NSHostingView(rootView: view)
-            SnapshotEnvironment.withAppearance {
-                assertSnapshot(of: nsView, as: .image(size: snapshotSize))
-            }
+        private static func view(state: DiscourageSecureCoreFeature.State) -> some View {
+            DiscourageSecureCoreView(store: Store(initialState: state) { EmptyReducer() })
+                .background(Color(.background))
         }
     }
 
     extension DiscourageSecureCoreViewControllerSnapshotTests: @preconcurrency AssertSnapshot {
         func snapshotDirectory() -> String? {
-            guard let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty else {
-                return nil
-            }
-            let suite = FilePath(String(describing: #filePath)).lastComponent?.stem ?? ""
-            return "\(projectDir)/libraries/Features/Modals/Tests/ModalsTests/__Snapshots__/\(suite)"
+            Self.ciSnapshotDirectory(testsDirectory: "libraries/Features/Modals/Tests/ModalsTests")
         }
     }
 #endif

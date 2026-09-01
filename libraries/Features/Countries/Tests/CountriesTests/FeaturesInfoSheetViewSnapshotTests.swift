@@ -17,92 +17,45 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(macOS)
-    import AppKit
     import ComposableArchitecture
     @testable import Countries_macOS
     import CountriesShared
     import SnapshotTesting
     import SwiftUI
-    import System
     import Testing
     import TestingErgonomics
 
+    /// Both sheets are one list of features in the sidebar's width, tall enough to hold every row.
     @MainActor
     @Suite(.serialized, .snapshots(record: .missing))
     struct FeaturesInfoSheetViewSnapshotTests {
+        /// The sheets are as wide as the sidebar and as tall as the rows they list.
+        private static let servicesSheet = SnapshotEnvironment.Layout.fixed(CGSize(width: 300, height: 690))
+        private static let gatewaysSheet = SnapshotEnvironment.Layout.fixed(CGSize(width: 300, height: 320))
+
         @Test("Features info services sheet")
         func featuresInfoServicesSheetView() {
             var state = ServersFeaturesInformationFeature.State.servicesInfo
             state.screenTitle = "Features"
-            let view = ServersFeaturesInformationView(
-                store: Store(
-                    initialState: state
-                ) {
-                    EmptyReducer()
-                }
-            )
-            .background(Color(.background))
-            .environment(\.colorScheme, .dark)
-            assertFeaturesSnapshot(view: view, named: "featuresInfoServicesSheetView", snapshotSize: CGSize(width: 300, height: 690))
+            assertSnapshot(of: Self.view(state: state), layout: Self.servicesSheet)
         }
 
         @Test("Features info gateways sheet")
         func featuresInfoGatewaysSheetView() {
             var state = ServersFeaturesInformationFeature.State.gatewaysInfo
             state.screenTitle = "Gateways"
-            let view = ServersFeaturesInformationView(
-                store: Store(
-                    initialState: state
-                ) {
-                    EmptyReducer()
-                }
-            )
-            .background(Color(.background))
-            .environment(\.colorScheme, .dark)
-            assertFeaturesSnapshot(view: view, named: "featuresInfoGatewaysSheetView", snapshotSize: CGSize(width: 300, height: 320))
+            assertSnapshot(of: Self.view(state: state), layout: Self.gatewaysSheet)
         }
 
-        private func assertFeaturesSnapshot(view: some View, named: String, snapshotSize: CGSize) {
-            // The pin covers the layout as well as the snapshot. The rows below resolve their colors while
-            // laying out, so an appearance applied only around `assertSnapshot` arrives after they have
-            // already picked the system theme's.
-            SnapshotEnvironment.withAppearance {
-                let nsView = NSHostingView(rootView: view)
-                nsView.appearance = NSAppearance(named: .darkAqua)
-                nsView.frame = CGRect(origin: .zero, size: snapshotSize)
-
-                // Attach to a window and run a cycle so List-backed content renders rows.
-                let window = NSWindow(
-                    contentRect: CGRect(origin: .zero, size: snapshotSize),
-                    styleMask: [.borderless],
-                    backing: .buffered,
-                    defer: false
-                )
-                // The window follows the system theme unless told, and its content takes some of its
-                // colors from it rather than from the hosting view.
-                window.appearance = NSAppearance(named: .darkAqua)
-                window.contentView = nsView
-                window.layoutIfNeeded()
-                nsView.layoutSubtreeIfNeeded()
-
-                assertSnapshot(
-                    of: nsView,
-                    as: .wait(for: 0.05, on: .image(size: snapshotSize)),
-                    testName: named
-                )
-            }
+        private static func view(state: ServersFeaturesInformationFeature.State) -> some View {
+            ServersFeaturesInformationView(store: Store(initialState: state) { EmptyReducer() })
+                .background(Color(.background))
         }
     }
 
     extension FeaturesInfoSheetViewSnapshotTests: @preconcurrency AssertSnapshot {
         func snapshotDirectory() -> String? {
-            if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"], !projectDir.isEmpty {
-                let path = FilePath(String(describing: #filePath))
-                let suite = path.lastComponent?.stem ?? ""
-                return "\(projectDir)/libraries/Features/Countries/Tests/CountriesTests/__Snapshots__/\(suite)"
-            } else {
-                return nil
-            }
+            Self.ciSnapshotDirectory(testsDirectory: "libraries/Features/Countries/Tests/CountriesTests")
         }
     }
 #endif

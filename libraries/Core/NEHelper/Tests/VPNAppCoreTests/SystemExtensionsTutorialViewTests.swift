@@ -16,157 +16,103 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if canImport(AppKit)
+#if os(macOS)
 
-    import Dependencies
     import Foundation
     import SnapshotTesting
-    import SwiftUI
     import Testing
     import TestingErgonomics
     @testable import VPNAppCore
 
+    /// The tutorial names the extensions the app is waiting for, and Sequoia moves the setting the user has
+    /// to reach, so every case is one combination of the two.
     @MainActor
     @Suite(.serialized, .snapshots(record: .missing))
     struct SystemExtensionsTutorialViewTests {
+        /// The window the app shows the tutorial in has the size the view itself asks for.
+        private static let layout = SnapshotEnvironment.Layout.fixed(SystemExtensionsTutorialView.viewSize)
+
         @Test
         func firstAppLaunchNotSequoia() {
-            let view = SystemExtensionsTutorialView(
-                isSequoiaOrNewer: false,
-                origin: .firstAppLaunch
-            )
-            .colorScheme(.dark)
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance {
-                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
-            }
+            assertSnapshot(of: Self.view(isSequoiaOrNewer: false, origin: .firstAppLaunch), layout: Self.layout)
         }
 
         @Test
         func firstAppLaunchSequoia() {
-            let view = SystemExtensionsTutorialView(
-                isSequoiaOrNewer: true,
-                origin: .firstAppLaunch
-            )
-            .colorScheme(.dark)
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance {
-                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
-            }
+            assertSnapshot(of: Self.view(isSequoiaOrNewer: true, origin: .firstAppLaunch), layout: Self.layout)
         }
 
         @Test
         func justWireguardNotSequoia() {
-            let view = SystemExtensionsTutorialView(
-                isSequoiaOrNewer: false,
-                origin: .inAppPrompt([.wireguard])
+            assertSnapshot(
+                of: Self.view(isSequoiaOrNewer: false, origin: .inAppPrompt([.wireguard])),
+                layout: Self.layout
             )
-            .colorScheme(.dark)
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance {
-                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
-            }
         }
 
         @Test
         func justWireguardSequoia() {
-            let view = SystemExtensionsTutorialView(
-                isSequoiaOrNewer: true,
-                origin: .inAppPrompt([.wireguard])
+            assertSnapshot(
+                of: Self.view(isSequoiaOrNewer: true, origin: .inAppPrompt([.wireguard])),
+                layout: Self.layout
             )
-            .colorScheme(.dark)
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance {
-                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
-            }
         }
 
         @Test
         func justSplitTunnelingNotSequoia() {
-            let view = SystemExtensionsTutorialView(
-                isSequoiaOrNewer: false,
-                origin: .inAppPrompt([.splitTunneling])
+            assertSnapshot(
+                of: Self.view(isSequoiaOrNewer: false, origin: .inAppPrompt([.splitTunneling])),
+                layout: Self.layout
             )
-            .colorScheme(.dark)
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance {
-                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
-            }
         }
 
         @Test
         func justSplitTunnelingSequoia() {
-            let view = SystemExtensionsTutorialView(
-                isSequoiaOrNewer: true,
-                origin: .inAppPrompt([.splitTunneling])
+            assertSnapshot(
+                of: Self.view(isSequoiaOrNewer: true, origin: .inAppPrompt([.splitTunneling])),
+                layout: Self.layout
             )
-            .colorScheme(.dark)
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance {
-                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
-            }
         }
 
         @Test
         func inAppPromptBothNotSequoia() {
-            let view = SystemExtensionsTutorialView(
-                isSequoiaOrNewer: false,
-                origin: .inAppPrompt([.wireguard, .splitTunneling])
+            assertSnapshot(
+                of: Self.view(isSequoiaOrNewer: false, origin: .inAppPrompt([.wireguard, .splitTunneling])),
+                layout: Self.layout
             )
-            .colorScheme(.dark)
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance {
-                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
-            }
         }
 
         @Test
         func inAppPromptBothSequoia() {
-            let view = SystemExtensionsTutorialView(
-                isSequoiaOrNewer: true,
-                origin: .inAppPrompt([.wireguard, .splitTunneling])
+            assertSnapshot(
+                of: Self.view(isSequoiaOrNewer: true, origin: .inAppPrompt([.wireguard, .splitTunneling])),
+                layout: Self.layout
             )
-            .colorScheme(.dark)
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance {
-                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
-            }
         }
 
         @Test
         func helpMenuNotSequoia() {
-            let view = SystemExtensionsTutorialView(
-                isSequoiaOrNewer: false,
-                origin: .inAppPrompt([])
-            )
-            .colorScheme(.dark)
-            let nsView = NSHostingView(rootView: view)
-
-            SnapshotEnvironment.withAppearance {
-                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
-            }
+            assertSnapshot(of: Self.view(isSequoiaOrNewer: false, origin: .inAppPrompt([])), layout: Self.layout)
         }
 
         @Test
         func helpMenuSequoia() {
-            let view = SystemExtensionsTutorialView(
-                isSequoiaOrNewer: true,
-                origin: .inAppPrompt([])
-            )
-            .colorScheme(.dark)
-            let nsView = NSHostingView(rootView: view)
+            assertSnapshot(of: Self.view(isSequoiaOrNewer: true, origin: .inAppPrompt([])), layout: Self.layout)
+        }
 
-            SnapshotEnvironment.withAppearance {
-                assertSnapshot(of: nsView, as: .image(size: SystemExtensionsTutorialView.viewSize))
-            }
+        // MARK: - Private
+
+        private static func view(
+            isSequoiaOrNewer: Bool,
+            origin: SystemExtensionTourAlert.Origin
+        ) -> SystemExtensionsTutorialView {
+            SystemExtensionsTutorialView(isSequoiaOrNewer: isSequoiaOrNewer, origin: origin)
+        }
+    }
+
+    extension SystemExtensionsTutorialViewTests: @preconcurrency AssertSnapshot {
+        func snapshotDirectory() -> String? {
+            Self.ciSnapshotDirectory(testsDirectory: "libraries/Core/NEHelper/Tests/VPNAppCoreTests")
         }
     }
 

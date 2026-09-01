@@ -24,7 +24,8 @@ public func expectSameBytes(
     guard actual != expected else { return }
 
     func hexWindow(_ data: Data, around offset: Int) -> String {
-        let window = max(data.startIndex, offset - 8) ..< min(data.endIndex, offset + 8)
+        let center = data.startIndex + offset
+        let window = max(data.startIndex, center - 8) ..< min(data.endIndex, center + 8)
         return data[window].map { String(format: "%02x", $0) }.joined(separator: " ")
     }
 
@@ -53,6 +54,24 @@ public enum SnapshotEnvironment {
 
 #if canImport(AppKit)
     public extension SnapshotEnvironment {
+        /// One of the two appearances a macOS snapshot renders in.
+        ///
+        /// A suite that records the same screen light and dark takes this as a test argument, which
+        /// `NSAppearance.Name` cannot be: it wraps a string and lists no cases. The raw value also names the
+        /// reference image, so both suites that do it name their files the same way.
+        enum Appearance: String, CaseIterable, Sendable {
+            case light
+            case dark
+
+            /// The AppKit appearance the application is set to while the snapshot renders.
+            var name: NSAppearance.Name {
+                switch self {
+                case .light: .aqua
+                case .dark: .darkAqua
+                }
+            }
+        }
+
         /// Renders `body` against `appearance`, then puts back whatever was set before.
         ///
         /// macOS snapshots have to pin this. Theme resolves its colors through `NSAppearance`, and `NSApp`
@@ -62,13 +81,13 @@ public enum SnapshotEnvironment {
         /// Note that `\.colorScheme` does not stand in for it: that reaches SwiftUI's own colors, not Theme's.
         @MainActor
         static func withAppearance<T>(
-            _ appearance: NSAppearance.Name = .darkAqua,
+            _ appearance: Appearance = .dark,
             _ body: () throws -> T
         ) rethrows -> T {
             _ = NSApplication.shared
             let previous = NSApp.appearance
             defer { NSApp.appearance = previous }
-            NSApp.appearance = NSAppearance(named: appearance)
+            NSApp.appearance = NSAppearance(named: appearance.name)
             return try body()
         }
     }
@@ -166,19 +185,24 @@ private extension SnapshotTestingConfiguration.DiffTool {
         }
 
         let actual = FilePath($1)
-        let outputDir = FilePath(projectDir)
+        let root = FilePath(projectDir)
+        let outputDir = root
             .appending("output")
             .appending("Snapshots")
 
-        // Either take the subpath starting from `SnapshotTests`, or the very last element.
-        let index = actual.components
-            .firstIndex(where: {
-                $0.string.hasSuffix("SnapshotTests") ||
-                    $0.string.hasSuffix("Snapshots")
-            }) ?? actual.components.endIndex
-
-        // Then, append that subpath to the output dir.
-        let destination = actual.components[index...].reduce(outputDir) { $0.appending($1) }
+        // `ciSnapshotDirectory(testsDirectory:)` builds every suite's snapshot directory under
+        // `CI_PROJECT_DIR`, so the destination mirrors the repo-relative path of the failing snapshot:
+        // `output/Snapshots/libraries/.../Tests/<PackageTests>/__Snapshots__/<Suite>/<test>.png`. Mirroring the
+        // repo layout keeps destinations unique by construction — matching path components against a naming
+        // convention broke for any suite whose tests directory wasn't named `*SnapshotTests`, and every such
+        // suite collapsed onto the bare output directory.
+        //
+        // A suite whose `snapshotDirectory()` points outside the repo (none do today) keeps only its file
+        // name: lossy, but never an empty subpath.
+        let relative = actual.starts(with: root)
+            ? actual.components.dropFirst(root.components.count)
+            : actual.components.suffix(1)
+        let destination = relative.reduce(outputDir) { $0.appending($1) }
 
         // This gets scanned by a command after the tests have been run to place differing snapshots into artifacts.
         return """

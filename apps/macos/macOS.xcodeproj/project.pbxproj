@@ -202,14 +202,6 @@
 		A46823EF2FD96C1E00901B14 /* Exceptions for "ProtonVPNTests" folder in "ProtonVPNmacOSTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"__Snapshots__/CountriesSectionViewControllerSnapshotTests/countriesScreen-appearance.dark.png",
-				"__Snapshots__/CountriesSectionViewControllerSnapshotTests/countriesScreen-appearance.light.png",
-				"__Snapshots__/CountriesSectionViewControllerSnapshotTests/countriesScreenFreeTier-appearance.dark.png",
-				"__Snapshots__/CountriesSectionViewControllerSnapshotTests/countriesScreenFreeTier-appearance.light.png",
-				"__Snapshots__/QuickSettingDetailViewControllerSnapshotTests/quickSettingDetailSnapshots-type.killSwitchDisplay.png",
-				"__Snapshots__/QuickSettingDetailViewControllerSnapshotTests/quickSettingDetailSnapshots-type.netShieldDisplay.png",
-				"__Snapshots__/QuickSettingDetailViewControllerSnapshotTests/quickSettingDetailSnapshots-type.portForwardingDisplay.png",
-				"__Snapshots__/QuickSettingDetailViewControllerSnapshotTests/quickSettingDetailSnapshots-type.secureCoreDisplay.png",
 				Info.plist,
 			);
 			target = E15B754C20FA83CB0022C406 /* ProtonVPNmacOSTests */;
