@@ -251,6 +251,12 @@
 /* macOS overlay when reconnecting & text in main window */
 "_you_are_not_protected" = "Korunmuyorsunuz";
 
+/* macos header title when authentication is needed */
+"_header_auth_required" = "Kimlik doğrulama gerekiyor";
+
+/* macos header subtitle when authentication is needed */
+"_header_vpn_traffic_blocked" = "Kimliğinizi doğrulayana kadar VPN trafiği engellenir.";
+
 /* MacOS: button in connecting overlay */
 "_try_again" = "Yeniden dene";
 

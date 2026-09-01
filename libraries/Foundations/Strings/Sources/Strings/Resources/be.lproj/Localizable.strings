@@ -251,6 +251,12 @@
 /* macOS overlay when reconnecting & text in main window */
 "_you_are_not_protected" = "Вы не абаронены";
 
+/* macos header title when authentication is needed */
+"_header_auth_required" = "Authentication required";
+
+/* macos header subtitle when authentication is needed */
+"_header_vpn_traffic_blocked" = "VPN traffic is blocked until you authenticate.";
+
 /* MacOS: button in connecting overlay */
 "_try_again" = "Паспрабаваць яшчэ раз";
 
@@ -1451,7 +1457,7 @@
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Выпраўленне непаладак";
 
-"_troubleshooting_file" = "Файл выпраўленне непаладак";
+"_troubleshooting_file" = "Файл выпраўлення непаладак";
 
 "_troubleshoot_item_alt_title" = "Дазволіць альтэрнатыўную маршрутызацыю";
 
@@ -3057,7 +3063,7 @@
 "_ike_deprecation_alert_message" = "Гэты пратакол будзе неўзабаве выдалены. Падумайце, каб перайсці на пратакол Smart. Даведацца больш";
 
 /* Message added to the IKEv2 deprecation alert when Advanced kill switch is enabled: continuing with IKEv2 changes the setting to Standard */
-"_ike_deprecation_alert_kill_switch_downgrade_message" = "Вашы наалыд Kill Switch будуць зменены да стандартных.";
+"_ike_deprecation_alert_kill_switch_downgrade_message" = "Вашы налады Kill Switch будуць зменены да стандартных.";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
 "_disable_plutonium_message" = "Гэта дзеянне прывядзе да адключэння Split Tunneling.";
@@ -3423,7 +3429,7 @@
 "_pcap_capture_session_should_start_session" = "Пачаць захоп сеанса VPN?";
 
 /* Description of an alert when user starts the PCAP session */
-"_pcap_capture_session_issue_reproduction" = "Па магчымасці прымяніце аналагічныя налады і той тып падключэння, якія вы выкарыстоўвалі пры першым сутыкненні з праблемай.\n\nМэтай з'яўляецца ўзнавіць праблему такім чынам, калі яна ўзнікла ў першы раз (прагляд старонак у інтэрнэце, выкарыстанне праграмы і г.д.)\n\nПасля ўзнаўлення праблемы, вы можаце спыніць захоп і абагуліць файл з камандай падтрымкі.";
+"_pcap_capture_session_issue_reproduction" = "Па магчымасці, прымяніце аналагічныя налады і той тып падключэння, якія вы выкарыстоўвалі пры першым сутыкненні з праблемай.\n\nМэтай з'яўляецца ўзнавіць праблему такім чынам, калі яна ўзнікла ў першы раз (прагляд старонак у інтэрнэце, выкарыстанне праграмы і г.д.)\n\nПасля ўзнаўлення праблемы, вы можаце спыніць захоп і абагуліць файл з камандай падтрымкі кліентаў.";
 
 /* Description of an alert when user tries dismissing the PCAP sheet */
 "_pcap_capture_discard_description" = "Файл не будзе захаваны ў праграме. Пераканайцеся, што вы экспартавалі яго перад адхіленнем.";

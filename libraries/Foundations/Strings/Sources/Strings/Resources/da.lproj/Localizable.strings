@@ -251,6 +251,12 @@
 /* macOS overlay when reconnecting & text in main window */
 "_you_are_not_protected" = "Du er ikke beskyttet";
 
+/* macos header title when authentication is needed */
+"_header_auth_required" = "Godkendelse påkrævet";
+
+/* macos header subtitle when authentication is needed */
+"_header_vpn_traffic_blocked" = "VPN-traffik er blokeret indtil du godkender dig selv.";
+
 /* MacOS: button in connecting overlay */
 "_try_again" = "Forsøg igen";
 
