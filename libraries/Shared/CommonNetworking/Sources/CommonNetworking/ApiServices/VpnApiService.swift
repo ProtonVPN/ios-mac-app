@@ -164,7 +164,7 @@ enum VpnApiClientKey: DependencyKey {
                 switch response {
                 case let .success(.notModified(lastModified)):
                     log.debug("Logicals unchanged since last request", metadata: ["lastModified": "\(optional: lastModified)"])
-                    result = .success(.notModified(since: lastModified))
+                    result = .success(.notModified(since: lastModified, scope: scope))
 
                 case let .success(.modified(lastModified, logicals)):
                     switch logicals {
