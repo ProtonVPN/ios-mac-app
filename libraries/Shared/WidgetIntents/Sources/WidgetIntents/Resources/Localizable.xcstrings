@@ -1158,6 +1158,12 @@
             "value" : "დაკავშირება რეგიონთან"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "해당 지역에 연결"
+          }
+        },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1732,6 +1738,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "VPN-ის დაკავშირება"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN 연결"
           }
         },
         "nb" : {
@@ -2968,6 +2980,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "VPN-ის გათიშვა"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN 연결 해제"
           }
         },
         "nb" : {
@@ -4418,6 +4436,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "უახლესი ინდექსი"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최근 인덱스"
           }
         },
         "nb" : {
@@ -6688,6 +6712,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "VPN-ის სტატუსი"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VPN 상태"
           }
         },
         "nb" : {

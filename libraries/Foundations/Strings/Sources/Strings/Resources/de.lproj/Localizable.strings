@@ -255,7 +255,7 @@
 "_header_auth_required" = "Authentifizierung erforderlich";
 
 /* macos header subtitle when authentication is needed */
-"_header_vpn_traffic_blocked" = "Der VPN-Datenverkehr ist blockiert, bis du dich authentifiziert hast.";
+"_header_vpn_traffic_blocked" = "Der VPN-Datenverkehr bleibt gesperrt, bis du dich authentifiziert hast.";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Erneut versuchen";
