@@ -43,6 +43,7 @@ public struct ServerListUpdater: Sendable {
         _ lastModifiedAt: String?,
         _ language: String
     ) -> Void
+    public var recordUnchanged: @Sendable (_ scope: ServerListScope, _ lastModifiedAt: String?) -> Void
 }
 
 extension ServerListUpdater: DependencyKey {
@@ -87,6 +88,10 @@ extension ServerListUpdater: DependencyKey {
             }
 
             NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
+        }, recordUnchanged: { scope, lastModifiedAt in
+            guard let lastModifiedAt else { return }
+            @Dependency(\.serverRepository) var repository
+            repository.recordServerList(scope: scope, lastModifiedAt: lastModifiedAt)
         }
     )
 
@@ -99,7 +104,7 @@ extension ServerListUpdater: DependencyKey {
     public extension ServerListUpdater {
         /// Drops server list updates on the floor, for tests that drive a refresh but don't assert on its servers.
         static var noOp: ServerListUpdater {
-            ServerListUpdater(update: { _, _, _, _ in })
+            ServerListUpdater(update: { _, _, _, _ in }, recordUnchanged: { _, _ in })
         }
     }
 #endif

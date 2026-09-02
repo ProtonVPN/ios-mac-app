@@ -71,9 +71,10 @@ extension MaintenanceChecker: DependencyKey {
                 scope: userTier.isFree ? .freeTier : .allTiers
             )
 
+            @Dependency(\.serverListUpdater) var serverListUpdater
+
             switch result {
             case let .modified(at: modifiedAt, servers: servers, scope: scope, language: language):
-                @Dependency(\.serverListUpdater) var serverListUpdater
                 serverListUpdater.update(
                     servers: servers,
                     scope: scope,
@@ -81,11 +82,15 @@ extension MaintenanceChecker: DependencyKey {
                     language: language
                 )
 
-            case let .notModified(lastModified):
+            case let .notModified(lastModified, scope):
                 log.debug(
                     "Servers not modified",
                     category: .api,
                     metadata: ["LastModified": "\(optional: lastModified)"]
+                )
+                serverListUpdater.recordUnchanged(
+                    scope: scope,
+                    lastModifiedAt: lastModified
                 )
             }
 
