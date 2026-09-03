@@ -63,6 +63,7 @@ class MapSectionViewModel {
     init() {
         $connectionState
             .publisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 self?.connectionStateChanged(state)
             }

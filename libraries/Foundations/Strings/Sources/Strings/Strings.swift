@@ -767,7 +767,7 @@ public enum Localizable {
   /// iOS: Kill switch confirmation - primary button to switch to advanced
   public static var killSwitchConfirmSwitch: String { return Localizable.tr("Localizable", "_kill_switch_confirm_switch", fallback: "Switch") }
   /// iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button
-  public static var killSwitchDisable: String { return Localizable.tr("Localizable", "_kill_switch_disable", fallback: "Disable kill switch") }
+  public static var killSwitchDisable: String { return Localizable.tr("Localizable", "_kill_switch_disable", fallback: "Disable") }
   /// iOS: Confirmation banner shown after disabling kill switch from the login screen
   public static var killSwitchDisabledConfirmation: String { return Localizable.tr("Localizable", "_kill_switch_disabled_confirmation", fallback: "Kill switch is disabled.") }
   /// macOS: title of the confirmation shown when disconnecting with Advanced kill switch active
