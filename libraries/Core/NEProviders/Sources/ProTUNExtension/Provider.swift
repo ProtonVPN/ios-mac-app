@@ -75,10 +75,11 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
         do {
             let uncheckedCompletion = UncheckedCompletion(completionHandler)
             let config = try decodeConfiguration()
+            let activationAttemptId = options?[TunnelStartOptions.activationAttemptId] as? String
 
             Task { [adapter] in
                 do {
-                    try await adapter.start(config: config)
+                    try await adapter.start(config: config, activationAttemptId: activationAttemptId)
                     Logger.provider.info("Adapter start finished")
                     uncheckedCompletion(nil)
                 } catch {

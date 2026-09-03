@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import enum ConnectionShared.TunnelStartOptions
 import let CoreConnection.log
 import Domain
 import enum ExtensionIPC.ProviderMessageError
@@ -71,7 +72,7 @@ extension NEVPNConnection: VPNSession {
     public func startTunnel() throws {
         let id = UUID()
         log.debug("Starting VPN tunnel", category: .connection, metadata: ["activationAttemptId": "\(id)"])
-        try startVPNTunnel(options: ["activationAttemptId": id.uuidString as NSString])
+        try startVPNTunnel(options: [TunnelStartOptions.activationAttemptId: id.uuidString as NSString])
     }
 
     public func stopTunnel() {
