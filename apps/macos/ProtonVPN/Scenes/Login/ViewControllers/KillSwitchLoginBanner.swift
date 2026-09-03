@@ -69,7 +69,7 @@ final class KillSwitchLoginBanner: NSView {
         actionHandler = onDisable
         actionButton.isEnabled = actionHandler != nil // actionHandler is nil when logging out/quitting.
         applyStyle(.warning)
-        iconView.image = Theme.Asset.Icons.exclamationTriangleFilled.image
+        iconView.image = Theme.Asset.advancedKs.image
         iconView.contentTintColor = .color(.icon, .warning)
         messageLabel.attributedStringValue = Localizable.killSwitchLoginBlocking
             .styled(.normal, font: .themeFont(.small), alignment: .natural)
@@ -118,8 +118,10 @@ final class KillSwitchLoginBanner: NSView {
     }
 
     private func applyStyle(_ style: AppTheme.Style) {
-        layer?.backgroundColor = NSColor.color(.background, .weak).cgColor
-        layer?.borderColor = NSColor.color(.border, style).cgColor
+        DarkAppearance {
+            layer?.backgroundColor = NSColor.color(.background, .weak).cgColor
+            layer?.borderColor = NSColor.color(.border, style).cgColor
+        }
     }
 
     @objc
