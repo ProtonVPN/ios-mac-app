@@ -22,13 +22,16 @@ import Domain
 import Foundation
 import IPCDefinitions
 import IPCErgonomics
+import Logging
 
-// Typed accessors over the live tunnel-data channels. Each exposes the Swift struct that wraps the raw C payload as
-// a getter + an `AsyncStream`.
+private let log: Logging.Logger = .init(label: "ProtonVPN.TunnelData.logger")
+
+// Typed accessors over the tunnel-data channels. Each reads the raw C payload and returns the Swift struct that wraps
+// it. `ExtensionIPCClient` builds the matching streams.
 
 public extension IPCNotifications.RawChannel where Payload == IPCConnectionDataPayload, Role == ReaderRole, Backing: ~Copyable {
     func currentExtensionState() -> ExtensionStateSnapshot {
-        if let payload = try? read() {
+        if let payload = readOrLog("extension state") {
             ExtensionStateSnapshot(
                 state: payload.extensionState,
                 requestId: payload.requestId
@@ -44,25 +47,38 @@ public extension IPCNotifications.RawChannel where Payload == IPCConnectionDataP
 
 public extension IPCNotifications.RawChannel where Payload == IPCStatsPayload, Role == ReaderRole, Backing: ~Copyable {
     func stats() -> LocalAgent.Stats? {
-        (try? read()).flatMap(\.localAgentStats)
+        readOrLog("stats").flatMap(\.localAgentStats)
     }
 }
 
 public extension IPCNotifications.RawChannel where Payload == IPCAgentFeaturesPayload, Role == ReaderRole, Backing: ~Copyable {
-    /// The server-applied features, or `nil` until the extension has published them (or after a disconnect zeroes the region).
+    /// The server-applied features, or `nil` until the extension has published them.
     func agentFeatures() -> AgentTunnelFeatures? {
-        (try? read())?.agentFeatures
+        readOrLog("agent features")?.agentFeatures
     }
 }
 
 public extension IPCNotifications.RawChannel where Payload == IPCPacketCapturePayload, Role == ReaderRole, Backing: ~Copyable {
     func packetCaptureReport() -> PacketCaptureReport {
-        (try? read())?.packetCaptureReport ?? .cleared
+        readOrLog("packet capture report")?.packetCaptureReport ?? .cleared
     }
 }
 
 public extension IPCNotifications.RawChannel where Payload == IPCErrorPayload, Role == ReaderRole, Backing: ~Copyable {
     func currentExtensionError() -> ExtensionError? {
-        (try? read())?.extensionError
+        readOrLog("extension error")?.extensionError
+    }
+}
+
+private extension IPCNotifications.RawChannel where Role == ReaderRole, Backing: ~Copyable {
+    /// Reads the channel, logging a failure instead of throwing it. The accessors above feed the non-throwing getters
+    /// on `ExtensionIPCClient`, so the log is the only place a failed read shows up.
+    func readOrLog(_ description: StaticString) -> Payload? {
+        do {
+            return try read()
+        } catch {
+            log.error("Could not read \(description) from the tunnel-data channel: \(error)")
+            return nil
+        }
     }
 }

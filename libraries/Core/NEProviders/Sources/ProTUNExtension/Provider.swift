@@ -93,6 +93,10 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
         }
     }
 
+    #if os(macOS)
+        @Dependency(\.packetFilterCoordinator) private var packetFilterCoordinator
+    #endif
+
     override open func stopTunnel(with reason: NEProviderStopReason) async {
         Logger.provider.info("Stopping tunnel with reason: \(reason, privacy: .public)")
 
@@ -104,13 +108,13 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
 
         #if os(macOS)
             // The system does not reliably reap provider processes, so exit once the stop is acknowledged. Returning
-            // from this method is what sends the acknowledgment, so the exit must come after it. Exiting directly kills
-            // the reply, and nesessionmanager then waits out a timer before declaring the extension failed. That timer
-            // can otherwise make every disconnect linger.
-            Task.detached(priority: .userInitiated) {
+            // from this method is what sends the acknowledgment to the NE framework, so the exit must come afterwards.
+            Task.detached(priority: .userInitiated) { [packetFilterCoordinator] in
                 async let minimumWait: Void? = try? Task.sleep(for: .milliseconds(500))
                 async let flush: Void = { _ = try? Logger.flushToFile() }()
                 _ = await (minimumWait, flush)
+                // This check comes last so a filter that comes up during this wait doesn't get killed.
+                guard !packetFilterCoordinator.isFilterActive else { return }
                 exit(EXIT_SUCCESS)
             }
         #endif

@@ -25,8 +25,8 @@ import NetworkExtension
 // Backing operations for the `VPNTunnelControl` dependency (see its docs for the use cases). They
 // live in this module because `tunnelManager` and `vpnManagerRepository` are internal to it.
 
-/// Stops the active VPN tunnel (including the zero-peer kill switch tunnel) and disables on-demand
-/// so it won't auto-restart. Finding no tunnel to stop counts as success.
+/// Stops the active VPN tunnel (including the zero-peer kill switch tunnel) and disables on-demand so it won't
+/// auto-restart. On macOS it also removes the packet filter. Finding no tunnel to stop counts as success.
 public func stopActiveVPNTunnel() async throws {
     @Dependency(\.tunnelManager) var tunnelManager
     do {
@@ -34,6 +34,13 @@ public func stopActiveVPNTunnel() async throws {
     } catch TunnelManagerError.missingConfiguration {
         // Nothing is running, so the caller's goal (no tunnel, no blackhole) is already met.
     }
+    #if os(macOS)
+        // With the tunnel down, the packet filter blocks everything. The login screen calls this while leaving
+        // Advanced, and no ConnectionFeature store runs there to reconcile the level, so this function removes the
+        // filter once the tunnel is gone.
+        @Dependency(\.packetFilterConfigurator) var packetFilterConfigurator
+        try await packetFilterConfigurator.reconcile(killSwitchMode: .off)
+    #endif
 }
 
 /// Tells the extension to discard the session state it persisted for every account, so a tunnel started post-logout

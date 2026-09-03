@@ -17,6 +17,7 @@
 	<array>
 		<string>packet-tunnel-provider$(NE_ENTITLEMENT_SUFFIX)</string>
         <string>app-proxy-provider$(NE_ENTITLEMENT_SUFFIX)</string>
+        <string>content-filter-provider$(NE_ENTITLEMENT_SUFFIX)</string>
 	</array>
 	<key>com.apple.developer.networking.vpn.api</key>
 	<array>

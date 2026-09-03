@@ -49,6 +49,7 @@ let package = Package(
                 "ConnectionShared",
                 "Domain",
                 "Ergonomics",
+                .product(name: "NetworkingErgonomics", package: "Ergonomics"),
                 "PMLogger",
                 "ExtensionIPC",
                 "Strings",

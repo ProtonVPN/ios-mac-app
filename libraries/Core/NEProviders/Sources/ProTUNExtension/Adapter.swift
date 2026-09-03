@@ -80,12 +80,15 @@ actor ProTUNAdapter {
     /// The tunnel's utun file descriptor, saved here for the duration of the tunnel session. Every time startTunnel
     /// gets called, we hand a duplicate file descriptor to ProTUN, which gets closed if/when ProTUN disconnects through
     /// a call to `stop(reason:)`. Keeping the original lets us fully restart the tunnel by creating another duplicate.
-    private var tunnelFd: CInt?
+    private(set) var tunnelFd: CInt?
 
     private let startQueue = AsyncQueue()
 
     @Dependency(\.extensionIPCServer) private var extensionIPCServer
     @Dependency(\.date) private var date
+    #if os(macOS)
+        @Dependency(\.packetFilterCoordinator) var packetFilterCoordinator
+    #endif
 
     /// Serializes every change to the session configuration.
     private let configurationStore: ConfigurationStore
@@ -200,6 +203,11 @@ actor ProTUNAdapter {
         guard let tunnelFd, case let rawTunFd = dup(tunnelFd), rawTunFd >= 0 else {
             throw Error.noTunFileDescriptor
         }
+        #if os(macOS)
+            // Now that the descriptor and the saved configuration are both known, update the filter policy here so the
+            // tunnel doesn't come up before the packet filter is active.
+            refreshPacketFilterPolicy()
+        #endif
 
         // Initial Local Agent settings come from the app, while the extension manages all protocol settings once it's
         // running.
@@ -280,6 +288,9 @@ actor ProTUNAdapter {
             close(tunnelFd)
             self.tunnelFd = nil
         }
+        #if os(macOS)
+            refreshPacketFilterPolicy()
+        #endif
     }
 
     /// The symmetric case of `_stop`, where we want to disconnect ProTUN outside of the Network Extension lifecycle.
@@ -420,6 +431,10 @@ extension ProTUNAdapter {
 
         do {
             try configuration.apply(update: update)
+            #if os(macOS)
+                // The saved configuration determines the packet filter policy.
+                refreshPacketFilterPolicy()
+            #endif
             return try configuration.updates(for: update, currentPeer: currentPeer)
         } catch {
             Logger.adapter.error(

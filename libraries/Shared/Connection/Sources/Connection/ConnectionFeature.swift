@@ -120,6 +120,7 @@ public struct ConnectionFeature: Sendable {
     private enum CancelID {
         case preparation
         case observation
+        case packetFilterReconciliation
         case zeroPeerRecovery
     }
 
@@ -136,11 +137,18 @@ public struct ConnectionFeature: Sendable {
         Reduce { state, action in
             switch action {
             case .input(.onLaunch):
-                return .merge(
+                let observation = Effect<Action>.merge(
                     .send(.tunnel(.startObserving)),
-                    // Listen for session changes (logout or guest --> authenticated transitions)
+                    // Listen for session changes (logout, or a guest becoming authenticated)
                     .listen(to: sessionChangeNotifier.stream()) { _ in .input(.onSessionChange) }
                 ).cancellable(id: CancelID.observation, cancelInFlight: true)
+                // Reconciliation runs under its own cancel ID because `.stopObserving` must not end it, since Advanced
+                // Kill Switch needs to keep blocking after sign-out.
+                return .merge(
+                    observation,
+                    reconcilePacketFilterWithKillSwitchLevel()
+                        .cancellable(id: CancelID.packetFilterReconciliation, cancelInFlight: true)
+                )
 
             case .stopObserving:
                 return .merge(.send(.tunnel(.stopObserving)), .cancel(id: CancelID.observation))
@@ -421,6 +429,30 @@ public struct ConnectionFeature: Sendable {
                 .send(.connectionStateUpdated(newValue))
             }
         }
+    }
+
+    /// Keeps the macOS packet filter installed according to whether Advanced Kill Switch is enabled.
+    private func reconcilePacketFilterWithKillSwitchLevel() -> Effect<Action> {
+        #if os(macOS)
+            return .run { _ in
+                @Dependency(\.packetFilterConfigurator) var packetFilterConfigurator
+                @SharedReader(.killSwitchMode) var killSwitchMode
+                for await level in $killSwitchMode.publisher.values {
+                    do {
+                        try await packetFilterConfigurator.reconcile(killSwitchMode: level)
+                    } catch {
+                        log.error(
+                            "Packet filter reconciliation failed",
+                            category: .connection,
+                            metadata: ["error": "\(error)"]
+                        )
+                        SentryHelper.shared?.log(error: error)
+                    }
+                }
+            }
+        #else
+            return .none
+        #endif
     }
 
     /// Switches a live kill switch tunnel to zero-peer blocking, if Advanced kill switch is Active.

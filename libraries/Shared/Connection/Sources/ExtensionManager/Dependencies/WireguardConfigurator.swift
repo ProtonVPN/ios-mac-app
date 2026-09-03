@@ -294,9 +294,19 @@ extension ManagerConfigurator {
     }
 
     #if !os(tvOS)
-        /// A configuration with the kill switch flag and no peers describes the zero-peer blackhole.
+        /// A configuration with the kill switch flag and no peers is the zero-peer kill switch. A peer list that fails
+        /// to decode counts as empty, which we also interpret as the kill switch blocking all traffic.
         private static func isZeroPeerBlocking(_ configuration: NETunnelProviderProtocol) -> Bool {
-            configuration.includeAllNetworks && ((try? configuration.peerIDs) ?? []).isEmpty
+            guard configuration.includeAllNetworks else { return false }
+            do {
+                return try configuration.peerIDs.isEmpty
+            } catch {
+                log.error(
+                    "Unable to decode peers, treating the configuration as blocking: \(error)",
+                    category: .connection
+                )
+                return true
+            }
         }
     #endif
 

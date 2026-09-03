@@ -5,6 +5,7 @@
 	<key>com.apple.developer.networking.networkextension</key>
 	<array>
 		<string>packet-tunnel-provider$(NE_ENTITLEMENT_SUFFIX)</string>
+		<string>content-filter-provider$(NE_ENTITLEMENT_SUFFIX)</string>
 	</array>
     <key>com.apple.security.application-groups</key>
     <array>

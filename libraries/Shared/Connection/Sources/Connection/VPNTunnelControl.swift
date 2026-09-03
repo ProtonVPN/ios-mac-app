@@ -26,8 +26,9 @@ import ExtensionManager
 /// flows can go through the reducer instead.
 @DependencyClient
 public struct VPNTunnelControl: Sendable {
-    /// Stops the active tunnel (including the zero-peer kill switch tunnel) and disables on-demand
-    /// so it won't auto-restart. Finding no tunnel to stop counts as success.
+    /// Stops the active tunnel (including the zero-peer kill switch tunnel) and disables on-demand so it won't
+    /// auto-restart. On macOS it also removes the packet filter, so nothing keeps blocking once the tunnel is gone.
+    /// Finding no tunnel to stop counts as success.
     public var stop: @Sendable () async throws -> Void
 
     /// Switches the live tunnel to a peerless zero-peer blackhole in place, so Advanced kill switch
