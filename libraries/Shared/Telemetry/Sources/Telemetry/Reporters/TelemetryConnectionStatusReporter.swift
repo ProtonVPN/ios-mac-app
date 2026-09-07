@@ -31,9 +31,8 @@ actor TelemetryConnectionStatusReporter {
 
     @SharedReader(.userLocation) var userLocation
 
-    /// Lowercased, which is the casing this dimension has always been reported with.
     private var userCountry: String? {
-        userLocation?.location.country.lowercased()
+        userLocation?.location.country
     }
 
     private var userISP: String? {
