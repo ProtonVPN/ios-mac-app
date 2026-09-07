@@ -37,7 +37,7 @@ struct NPSScoreSelector: View {
     }()
 
     var body: some View {
-        VStack(spacing: .themeSpacing4) {
+        VStack(spacing: .themeSpacing8) {
             EqualWidthRowsLayout(columns: columns, spacing: Self.spacing) {
                 ForEach(NPSModalFeature.scoreRange, id: \.self) { score in
                     NPSScoreCell(score: score, isSelected: score == selectedScore) {
@@ -90,7 +90,7 @@ private struct NPSScaleHints: View {
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: .themeSpacing8) {
             Text(Localizable.npsModalScaleLowerBound)
-            Spacer(minLength: .themeSpacing8)
+            Spacer()
             Text(Localizable.npsModalScaleUpperBound)
         }
         .font(.themeFont(.npsScaleHint))

@@ -22,23 +22,24 @@ import Foundation
 import ProtonCoreNetworking
 
 @Reducer
-public struct NPSModalFeature {
+public struct NPSModalFeature: Sendable {
     public static let scoreRange: ClosedRange<Int> = 0 ... 10
     public static let maxCommentCharLength: Int = 250
 
     @Dependency(\.dismiss) private var dismiss
-    @Dependency(\.isPresented) private var isPresented
     public init() {}
 
     @ObservableState
-    public struct State: Equatable {
+    public struct State: Equatable, Sendable {
         public var score: Int?
 
         public var comment: String
+        public var didSubmit: Bool = false
 
-        public init(score: Int? = nil, comment: String = "") {
+        public init(score: Int? = nil, comment: String = "", didSubmit: Bool = false) {
             self.score = score
             self.comment = comment
+            self.didSubmit = didSubmit
         }
 
         var isCommentFieldVisible: Bool {
@@ -60,8 +61,8 @@ public struct NPSModalFeature {
 
         @CasePathable
         public enum Delegate: Equatable {
-            case submitted(score: Int, comment: String)
-            case dismissed
+            case submit(score: Int, comment: String)
+            case dismiss
         }
     }
 
@@ -76,16 +77,15 @@ public struct NPSModalFeature {
 
             case .submitTapped:
                 guard let score = state.score else { return .none }
-                return .send(.delegate(.submitted(score: score, comment: state.comment)))
+                return .send(.delegate(.submit(score: score, comment: state.comment)))
 
             case .closeTapped:
-                return .send(.delegate(.dismissed))
+                return .send(.delegate(.dismiss))
 
-            case .delegate(.dismissed):
-                return .run { [dismiss] _ in
-                    if isPresented {
-                        await dismiss()
-                    }
+            case .delegate(.dismiss):
+                return .run { [didSubmit = state.didSubmit] _ in
+                    guard !didSubmit else { return }
+
                     @Dependency(\.networking) var networking
                     let response: NPSResponse = try await networking.perform(request: NPSRequest(useCase: .dismiss))
                     log.info("Dismiss NPS survey sent with response code: \(response.code)")
@@ -93,11 +93,9 @@ public struct NPSModalFeature {
                     log.info("Failed sending NPS survey with error: \(error)")
                 }
 
-            case let .delegate(.submitted(score, comment)):
-                return .run { [dismiss] _ in
-                    if isPresented {
-                        await dismiss()
-                    }
+            case let .delegate(.submit(score, comment)):
+                state.didSubmit = true
+                return .run { _ in
                     @Dependency(\.networking) var networking
                     let response: NPSResponse = try await networking.perform(request: NPSRequest(useCase: .submit(score: score, comment: comment)))
                     log.info("NPS survey sent with response code: \(response.code)")

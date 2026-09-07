@@ -176,75 +176,85 @@ public extension DependencyValues {
 }
 
 #if DEBUG
-    struct VPNNetworkingMock: VPNNetworking {
+
+    public protocol MockResponse: ProtonCoreNetworking.Request {
+        var mockResponse: Codable { get }
+    }
+
+    public struct VPNNetworkingMock: VPNNetworking {
         var userTierResult: Result<Int, Error>
 
-        init(userTierResult: Result<Int, Error> = .failure("" as GenericError)) {
+        public init(userTierResult: Result<Int, Error> = .failure("" as GenericError)) {
             self.userTierResult = userTierResult
         }
 
-        func acquireSessionIfNeeded() async throws -> ProtonCoreServices.SessionAcquiringResult {
+        public func acquireSessionIfNeeded() async throws -> ProtonCoreServices.SessionAcquiringResult {
             throw "" as GenericError
         }
 
-        var userTier: VpnTier {
+        public var userTier: VpnTier {
             get async throws {
                 try VpnTier(rawValue: userTierResult.get())
             }
         }
 
-        var userDisplayName: String? {
+        public var userDisplayName: String? {
             get async throws {
                 throw "" as GenericError
             }
         }
 
-        var userEmail: String? {
+        public var userEmail: String? {
             get async throws {
                 throw "" as GenericError
             }
         }
 
-        func setSession(_: Session) {}
+        public func setSession(_: Session) {}
 
-        func perform<T: Decodable>(request _: any ProtonCoreNetworking.Request) async throws -> T {
+        public func perform<T: Decodable>(request: any ProtonCoreNetworking.Request) async throws -> T {
+            log.debug("\(#function) \(request)", category: .net)
+            if let response = request as? MockResponse,
+               let mockResponse = response.mockResponse as? T {
+                return mockResponse
+            }
             throw "" as GenericError
         }
 
-        func perform<T: Codable>(request _: any Request, files _: [String: URL]) async throws -> T {
+        public func perform<T: Codable>(request _: any Request, files _: [String: URL]) async throws -> T {
             throw "" as GenericError
         }
 
-        var sessionCookie: HTTPCookie? {
+        public var sessionCookie: HTTPCookie? {
             nil
         }
 
-        var apiService: APIService {
+        public var apiService: APIService {
             fatalError("Not implemented")
         }
 
-        func perform(request _: any Request) async throws -> JSONDictionary {
+        public func perform(request _: any Request) async throws -> JSONDictionary {
             throw "" as GenericError
         }
 
-        func request(_: any Request, completion _: @escaping (Result<JSONDictionary, any Error>) -> Void) {}
+        public func request(_: any Request, completion _: @escaping (Result<JSONDictionary, any Error>) -> Void) {}
 
-        func request<T: Decodable>(
+        public func request<T: Decodable>(
             _: any ConditionalRequest,
             completion _: @escaping (Result<IfModifiedSinceResponse<T>, any Error>) -> Void
         ) {}
 
-        func request<T: Codable>(
+        public func request<T: Codable>(
             _: any Request,
             completion _: @escaping (Result<T, any Error>) -> Void
         ) {}
 
-        func request(
+        public func request(
             _: URLRequest,
             completion _: @escaping (Result<String, any Error>) -> Void
         ) {}
 
-        func request<T: Codable>(
+        public func request<T: Codable>(
             _: any Request,
             files _: [String: URL],
             completion _: @escaping (Result<T, any Error>) -> Void

@@ -1,0 +1,23 @@
+{
+  "configurations": [
+    {
+      "id": "94C842E9-D768-4642-AE81-D76556C92B29",
+      "name": "Test Scheme Action",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {
+    "codeCoverage": false,
+    "performanceAntipatternCheckerEnabled": true
+  },
+  "testTargets": [
+    {
+      "target": {
+        "containerPath": "container:../../libraries/Shared/Telemetry",
+        "identifier": "TelemetryTests",
+        "name": "TelemetryTests"
+      }
+    }
+  ],
+  "version": 1
+}

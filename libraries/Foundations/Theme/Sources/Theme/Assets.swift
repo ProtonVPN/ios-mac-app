@@ -561,6 +561,8 @@ public enum Asset {
   public static let icNetshield = ImageAsset(name: "ic-netshield")
   public static let icsBrandTor = SymbolAsset(name: "ics-brand-tor")
   public static let vpnSubscriptionBadge = ImageAsset(name: "vpn-subscription-badge")
+  public static let npsSurvey = ImageAsset(name: "NPSSurvey")
+  public static let npsSurveySuccess = ImageAsset(name: "NPSSurveySuccess")
   public static let dynamicAppIconConnected = ImageAsset(name: "DynamicAppIconConnected")
   public static let dynamicAppIconDebugConnected = ImageAsset(name: "DynamicAppIconDebugConnected")
   public static let dynamicAppIconDebugDisconnected = ImageAsset(name: "DynamicAppIconDebugDisconnected")

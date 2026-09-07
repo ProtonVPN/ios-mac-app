@@ -16,6 +16,8 @@ let package = Package(
         .package(path: "../../../external/protoncore"),
 
         .package(path: "../PCAP"),
+        .package(path: "../Announcement"),
+        .package(path: "../Modals"),
 
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/Strings"),
@@ -49,6 +51,8 @@ let package = Package(
                 "Strings",
                 "Domain",
                 "PCAP",
+                "Modals",
+                "Announcement",
                 "Ergonomics",
                 "Localization",
                 "SharedViews",

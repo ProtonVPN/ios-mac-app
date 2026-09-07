@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Announcement
 import AppKit
 import ComposableArchitecture
-import ModalsShared
 import SwiftUI
 
 final class NPSWindowController: WindowController {
@@ -27,20 +27,26 @@ final class NPSWindowController: WindowController {
         fatalError("Unsupported initializer")
     }
 
+    private static let windowSize = CGSize(width: 650, height: 550)
+
     let store: StoreOf<NPSModalFeature>
 
     required init(store: StoreOf<NPSModalFeature>) {
         self.store = store
-        let viewController = NSHostingController(rootView: NPSModalView(store: store))
+        let view = NPSModalView(store: store)
+            .padding(.vertical, .themeSpacing24)
+            .frame(width: Self.windowSize.width, height: Self.windowSize.height) // gives the window its size
+        let viewController = NSHostingController(rootView: view)
         viewController.title = "Proton VPN"
-        viewController.preferredContentSize = .init(width: 700, height: 600)
 
         let window = NSWindow(contentViewController: viewController)
+        window.backgroundColor = .color(.background)
         super.init(window: window)
     }
 
     override func windowShouldClose(_: NSWindow) -> Bool {
-        store.send(.delegate(.dismissed))
+        // This is being called when either the user tapped on close button or we dismissed the view from SwiftUI context.
+        store.send(.delegate(.dismiss))
         return true
     }
 }

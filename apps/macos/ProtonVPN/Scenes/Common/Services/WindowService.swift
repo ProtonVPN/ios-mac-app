@@ -261,7 +261,6 @@ final class WindowServiceImplementation: WindowService {
         let windowController = NPSWindowController(store: store)
         activeWindowControllers.insert(windowController)
         windowController.showWindow(self)
-        windowController.window?.positionWindow(size: Theme.Constants.settingsViewSize)
     }
 
     func openSystemExtensionGuideWindow(origin: SystemExtensionTourAlert.Origin, cancelledHandler: @escaping () -> Void) {

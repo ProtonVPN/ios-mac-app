@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+@testable import Announcement
 import ComposableArchitecture
-@testable import ModalsShared
 import Testing
 
 @MainActor
@@ -67,7 +67,9 @@ struct NPSModalFeatureTests {
             $0.comment = "Fast and private"
         }
         await store.send(.submitTapped)
-        await store.receive(.delegate(.submitted(score: 9, comment: "Fast and private")))
+        await store.receive(.delegate(.submit(score: 9, comment: "Fast and private"))) {
+            $0.didSubmit = true
+        }
     }
 
     @Test("Submitting without a comment delegates an empty one")
@@ -77,7 +79,9 @@ struct NPSModalFeatureTests {
         }
 
         await store.send(.submitTapped)
-        await store.receive(.delegate(.submitted(score: 0, comment: "")))
+        await store.receive(.delegate(.submit(score: 0, comment: ""))) {
+            $0.didSubmit = true
+        }
     }
 
     @Test("Submitting without a score does nothing")
@@ -96,6 +100,6 @@ struct NPSModalFeatureTests {
         }
 
         await store.send(.closeTapped)
-        await store.receive(.delegate(.dismissed))
+        await store.receive(.delegate(.dismiss))
     }
 }

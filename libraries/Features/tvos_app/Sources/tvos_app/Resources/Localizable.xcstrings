@@ -1481,6 +1481,9 @@
         }
       }
     },
+    "Authentication required" : {
+
+    },
     "Available with Proton VPN Plus" : {
       "comment" : "Badge title on the login page",
       "localizations" : {

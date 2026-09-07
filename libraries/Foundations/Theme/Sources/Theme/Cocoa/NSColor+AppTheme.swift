@@ -37,8 +37,6 @@ import SwiftUI
                     return Asset.protonCarbonInteractionWeakHover.color
                 } else if contains(.active) {
                     return Asset.protonCarbonInteractionWeakActive.color
-                } else if contains(.disabled) {
-                    return Asset.protonCarbonInteractionWeak.color
                 } else {
                     return Asset.protonCarbonInteractionWeak.color
                 }

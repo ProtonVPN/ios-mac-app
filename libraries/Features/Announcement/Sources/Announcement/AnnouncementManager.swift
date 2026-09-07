@@ -94,7 +94,7 @@ extension AnnouncementManager: DependencyKey {
 
         let currentAnnouncements: @Sendable () -> [Announcement] = {
             (key().currentValue() ?? [])
-                .filter { $0.startTime.isPast && $0.endTime.isFuture }
+                .filter { $0.startTime.isPast && $0.endTime.isFuture && ($0.offer != nil || $0.knownType == .nps) }
                 // sorting is needed because we only want to consider the first announcement
                 .sorted { $0.startTime < $1.startTime }
         }

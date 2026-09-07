@@ -2361,7 +2361,11 @@ public enum Localizable {
   /// Button that submits the Net Promoter Score survey answer
   public static var npsModalSubmit: String { return Localizable.tr("Localizable", "nps_modal_submit", fallback: "Share anonymously") }
   /// Question asked by the Net Promoter Score survey modal
-  public static var npsModalTitle: String { return Localizable.tr("Localizable", "nps_modal_title", fallback: "How likely are you to recommend Proton VPN to a friend or colleague?") }
+  public static var npsModalTitle: String { return Localizable.tr("Localizable", "nps_modal_title", fallback: "How likely are you to recommend Proton VPN to a friend?") }
+  /// Title label after submitting Net Promoter Score survey
+  public static var npsModalTitleThanksForSharing: String { return Localizable.tr("Localizable", "nps_modal_title_thanks_for_sharing", fallback: "Thanks for sharing") }
+  /// Subtitle label after submitting Net Promoter Score survey
+  public static var npsModalTitleThanksSubtitle: String { return Localizable.tr("Localizable", "nps_modal_title_thanks_subtitle", fallback: "Your feedback helps us improve Proton VPN.") }
   /// Crash reports help us fix bugs, detect firewalls, and avoid VPN blocks.
   public static var onboardingCrashReportsDescription: String { return Localizable.tr("Localizable", "onboarding_crash_reports_description", fallback: "Crash reports help us fix bugs, detect firewalls, and avoid VPN blocks.") }
   /// Share anonymous crash reports

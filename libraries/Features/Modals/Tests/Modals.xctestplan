@@ -1,25 +1,23 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "877E6C73-AC72-4AEA-B499-D04193A50760",
-      "name" : "Test Scheme Action",
-      "options" : {
-
-      }
+      "id": "877E6C73-AC72-4AEA-B499-D04193A50760",
+      "name": "Test Scheme Action",
+      "options": {}
     }
   ],
-  "defaultOptions" : {
-    "codeCoverage" : false,
-    "performanceAntipatternCheckerEnabled" : true
+  "defaultOptions": {
+    "codeCoverage": false,
+    "performanceAntipatternCheckerEnabled": true
   },
-  "testTargets" : [
+  "testTargets": [
     {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "ModalsTests",
-        "name" : "ModalsTests"
+      "target": {
+        "containerPath": "container:",
+        "identifier": "ModalsTests",
+        "name": "ModalsTests"
       }
     }
   ],
-  "version" : 1
+  "version": 1
 }

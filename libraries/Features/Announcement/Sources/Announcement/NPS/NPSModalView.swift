@@ -25,6 +25,7 @@ public struct NPSModalView: View {
     @Bindable public var store: StoreOf<NPSModalFeature>
 
     @Environment(\.dismissWindow) private var dismissWindow
+    @Environment(\.dismiss) private var dismiss
 
     public init(store: StoreOf<NPSModalFeature>) {
         self.store = store
@@ -33,38 +34,56 @@ public struct NPSModalView: View {
     public var body: some View {
         VStack(spacing: .themeSpacing0) {
             #if os(iOS)
-                NPSCloseButton { store.send(.closeTapped) }
+                NPSCloseButton {
+                    store.send(.closeTapped)
+                    dismiss()
+                }
             #endif
             Group {
-                ScrollView { content }
-                NPSSubmitButton(isEnabled: store.canSubmit) {
-                    store.send(.submitTapped)
-                    #if os(macOS)
-                        dismissWindow()
-                    #endif
+                content
+                Spacer()
+                if store.didSubmit {
+                    NPSSubmitButton(isEnabled: true, text: Localizable.done) {
+                        #if os(macOS)
+                            dismissWindow()
+                        #else
+                            dismiss()
+                        #endif
+                    }
+                } else {
+                    NPSSubmitButton(isEnabled: store.canSubmit, text: Localizable.npsModalSubmit) {
+                        store.send(.submitTapped)
+                    }
                 }
-                .padding(.horizontal, .themeSpacing16)
-                .padding(.bottom, .themeSpacing12)
             }
-            .frame(maxWidth: Constants.maxHomeContentWidth)
         }
         .background(Color(.background))
-        .animation(.default, value: store.isCommentFieldVisible)
+        .interactiveDismissDisabled()
     }
 
     var content: some View {
         VStack(spacing: .themeSpacing24) {
-            VStack(spacing: .themeSpacing8) {
+            if store.didSubmit {
+                Asset.npsSurveySuccess.swiftUIImage
+                NPSTitle(text: Localizable.npsModalTitleThanksForSharing)
+                Text(Localizable.npsModalTitleThanksSubtitle)
+                    .themeFont(.npsSubtitle)
+                    .foregroundStyle(Color(.text, .weak))
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+            } else {
                 Asset.npsSurvey.swiftUIImage
-                NPSTitle()
+                NPSTitle(text: Localizable.npsModalTitle)
             }
 
-            NPSScoreSelector(selectedScore: store.score) { score in
-                store.send(.scoreTapped(score))
-            }
+            if !store.didSubmit {
+                NPSScoreSelector(selectedScore: store.score) { score in
+                    store.send(.scoreTapped(score))
+                }
 
-            if store.isCommentFieldVisible {
-                NPSCommentField(comment: $store.comment)
+                if store.isCommentFieldVisible {
+                    NPSCommentField(comment: $store.comment)
+                }
             }
         }
         .padding(.horizontal, .themeSpacing16)
@@ -74,17 +93,14 @@ public struct NPSModalView: View {
 
 // MARK: - Subviews
 
-/// The dismiss affordance in the top-leading corner.
 private struct NPSCloseButton: View {
     let action: () -> Void
 
-    private static let size: CGFloat = .themeSpacing8
-
     var body: some View {
-        HStack(spacing: .themeSpacing0) {
+        HStack {
             Button(action: action) {
                 Theme.Asset.Icons.cross.swiftUIImage
-                    .padding(.all, Self.size)
+                    .padding(.themeSpacing8)
                     .foregroundStyle(Color(.icon))
             }
             .buttonStyle(.plain)
@@ -98,8 +114,9 @@ private struct NPSCloseButton: View {
 }
 
 private struct NPSTitle: View {
+    let text: String
     var body: some View {
-        Text(Localizable.npsModalTitle)
+        Text(text)
             .themeFont(.npsTitle)
             .foregroundStyle(Color(.text))
             .multilineTextAlignment(.center)
@@ -126,7 +143,7 @@ private struct NPSCommentField: View {
                     .font(.themeFont(.npsCommentBody))
                     .foregroundStyle(Color(.text))
                     .scrollContentBackground(.hidden)
-                    .frame(minHeight: Self.height)
+                    .frame(height: Self.height)
                     .background(Color(.background, .weak))
                     .clipShape(.rect(cornerRadius: .themeRadius8))
                     .accessibilityLabel(Localizable.npsModalCommentTitle)
@@ -139,47 +156,39 @@ private struct NPSCommentField: View {
     }
 }
 
-/// The primary call to action, disabled until a score is picked.
 private struct NPSSubmitButton: View {
     let isEnabled: Bool
+    let text: String
     let action: () -> Void
 
     var body: some View {
-        Button(action: action) {
-            Text(Localizable.npsModalSubmit)
-        }
-        .buttonStyle(ThemeButtonStyle(padding: .medium, style: .primary))
-        .disabled(!isEnabled)
-    }
-
-    private var backgroundColor: Color {
-        isEnabled
-            ? Color(.background, .interactive)
-            : Color(.background, [.interactive, .disabled])
+        Button(text, action: action)
+            .buttonStyle(ThemeButtonStyle(padding: .medium, style: .primary))
+            .disabled(!isEnabled)
+            .padding(.horizontal, .themeSpacing16)
+            .padding(.bottom, .themeSpacing12)
     }
 }
 
 // MARK: - Typography
 
-/// Typography used across the NPS survey, resolved per platform in a single place so the views
-/// themselves stay free of conditional compilation.
 extension AppTheme.Typography {
     #if os(iOS)
         static let npsTitle: Self = .headline
+        static let npsSubtitle: Self = .body1(.regular)
         static let npsScore: Self = .body2(emphasised: false)
         static let npsScaleHint: Self = .caption()
         static let npsCommentTitle: Self = .caption(emphasised: true)
         static let npsCommentBody: Self = .body1(.regular)
         static let npsCommentHint: Self = .caption()
-        static let npsButton: Self = .body1(.semibold)
     #elseif os(macOS)
-        static let npsTitle: Self = .title1(emphasised: true)
-        static let npsScore: Self = .body()
-        static let npsScaleHint: Self = .footnote()
-        static let npsCommentTitle: Self = .callout(emphasised: true)
-        static let npsCommentBody: Self = .body()
-        static let npsCommentHint: Self = .footnote()
-        static let npsButton: Self = .body(emphasised: true)
+        static let npsTitle: Self = .title2(emphasised: true)
+        static let npsSubtitle: Self = .body(emphasised: false)
+        static let npsScore: Self = .body(emphasised: false)
+        static let npsScaleHint: Self = .callout(emphasised: false)
+        static let npsCommentTitle: Self = .headline(emphasised: true)
+        static let npsCommentBody: Self = .body(emphasised: false)
+        static let npsCommentHint: Self = .callout(emphasised: false)
     #endif
 }
 

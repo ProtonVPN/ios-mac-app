@@ -36,7 +36,7 @@ public enum Flag: Equatable {
         // VPNAPPL-2543: Refer to static assets via swiftgen asset, instead of hardcoded name
         switch self {
         case .fastest:
-            "Fastest"
+            "FastestFlag"
 
         case .mostRecent:
             "MostRecent"

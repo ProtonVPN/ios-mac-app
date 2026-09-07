@@ -103,7 +103,7 @@ struct ConnectableItem: Equatable, Hashable {
     var location: ConnectionSpec.Location {
         if let cityName {
             .city(name: cityName, code: countryCode, order: .fastest)
-        } else if countryCode == "Fastest" {
+        } else if countryCode == "FastestTV" {
             .any(.fastest)
         } else {
             .country(code: countryCode, order: .fastest)
@@ -119,7 +119,7 @@ struct ConnectableItem: Equatable, Hashable {
 }
 
 extension CountryListItem {
-    static let fastest: Self = .init(section: 0, row: 0, code: "Fastest", supportsStreaming: true)
+    static let fastest: Self = .init(section: 0, row: 0, code: "FastestTV", supportsStreaming: true)
 }
 
 private extension ServerGroupInfo {

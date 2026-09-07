@@ -3333,7 +3333,13 @@
 
 // MARK: NPS survey
 /* Question asked by the Net Promoter Score survey modal */
-"nps_modal_title" = "How likely are you to recommend Proton VPN to a friend or colleague?";
+"nps_modal_title" = "How likely are you to recommend Proton VPN to a friend?";
+
+/* Title label after submitting Net Promoter Score survey */
+"nps_modal_title_thanks_for_sharing" = "Thanks for sharing";
+
+/* Subtitle label after submitting Net Promoter Score survey */
+"nps_modal_title_thanks_subtitle" = "Your feedback helps us improve Proton VPN.";
 
 /* Caption under the low end of the 0-10 Net Promoter Score scale */
 "nps_modal_scale_lower_bound" = "0 is very unlikely";

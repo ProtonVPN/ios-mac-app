@@ -26,6 +26,10 @@ public struct ThemeButtonStyle: ButtonStyle {
     @State private var isHovered = false
     @Environment(\.isEnabled) var isEnabled
 
+    #if canImport(UIKit)
+        private static let maxButtonWidth: CGFloat = 450
+    #endif
+
     public enum Style {
         case primary
         case secondary
@@ -62,7 +66,7 @@ public struct ThemeButtonStyle: ButtonStyle {
         self.padding = padding
         self.style = style
         #if canImport(UIKit)
-            self.maxWidth = maxWidth ?? .infinity
+            self.maxWidth = maxWidth ?? Self.maxButtonWidth
         #else
             self.maxWidth = maxWidth
         #endif
@@ -151,6 +155,12 @@ extension SwiftUICore.ColorScheme: @retroactive CustomStringConvertible {
                         padding: .medium,
                         style: .secondary
                     ))
+                Button("Medium, secondary, disabled") {}
+                    .buttonStyle(ThemeButtonStyle(
+                        padding: .medium,
+                        style: .secondary
+                    ))
+                    .disabled(true)
                 Button("Small, PRIMARY, enabled") {}
                     .buttonStyle(ThemeButtonStyle(
                         padding: .small,
@@ -168,8 +178,9 @@ extension SwiftUICore.ColorScheme: @retroactive CustomStringConvertible {
                     ))
                     .disabled(true)
             }
-            .padding()
-            .background(Color(.background, .weak))
+            .frame(width: 600)
+            .padding(.vertical)
+            .background(Color(.background))
             .colorScheme(scheme)
         }
     }
