@@ -924,7 +924,7 @@
 "_delete_application_data_popup_body" = "所有 Proton VPN 数据将被删除，应用程序将退出。您想要继续吗？";
 
 /* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
-"_kill_switch_disable" = "禁用终止开关";
+"_kill_switch_disable" = "Disable";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "启用终止开关";
@@ -1187,7 +1187,7 @@
 "_allow_lan_title" = "允许 LAN 连接";
 
 /* Description of the Allow LAN connections feature */
-"_allow_lan_info" = "Connect to devices on your local network (such as your printer or NAS drive) when the kill switch is active.";
+"_allow_lan_info" = "当终止开关激活时，连接您的本地网络中的设备（例如您的打印机或者 NAS 云端硬盘）。";
 
 "_allow_lan_note" = "您需要重新启动连接才能应用此更改。";
 

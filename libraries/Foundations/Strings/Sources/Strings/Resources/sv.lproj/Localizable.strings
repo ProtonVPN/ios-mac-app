@@ -252,7 +252,7 @@
 "_you_are_not_protected" = "Du är inte skyddad";
 
 /* macos header title when authentication is needed */
-"_header_auth_required" = "Authentication required";
+"_header_auth_required" = "Autentisering krävs";
 
 /* macos header subtitle when authentication is needed */
 "_header_vpn_traffic_blocked" = "VPN traffic is blocked until you authenticate.";
@@ -924,7 +924,7 @@
 "_delete_application_data_popup_body" = "All Proton VPN-data kommer att tas bort och applikationen kommer avslutas. Vill du fortsätta?";
 
 /* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Inaktivera kill switch";
+"_kill_switch_disable" = "Inaktivera";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "Aktivera kill switch";

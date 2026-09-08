@@ -924,7 +924,7 @@
 "_delete_application_data_popup_body" = "Minden Proton VPN adat törlődik, és az alkalmazás kilép. Folytatja?";
 
 /* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Disable kill switch";
+"_kill_switch_disable" = "Disable";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "Vészkapcsoló bekapcsolása";

@@ -924,7 +924,7 @@
 "_delete_application_data_popup_body" = "Todos los datos de Proton VPN se eliminarán y la aplicación se cerrará. ¿Quiere continuar?";
 
 /* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Desactivar el interruptor de bloqueo";
+"_kill_switch_disable" = "Desactivar";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "Activar el interruptor de bloqueo";
