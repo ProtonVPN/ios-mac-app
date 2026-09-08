@@ -924,7 +924,7 @@
 "_delete_application_data_popup_body" = "همه‌ی اطلاعات Proton VPN از بین می‌رود و برنامه بسته می‌شود. آیا برای ادامه مطمئن هستید؟";
 
 /* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Disable kill switch";
+"_kill_switch_disable" = "Disable";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "Enable Kill Switch";

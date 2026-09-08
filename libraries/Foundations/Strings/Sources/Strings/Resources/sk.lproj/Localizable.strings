@@ -924,7 +924,7 @@
 "_delete_application_data_popup_body" = "Všetky údaje Proton VPN sa odstránia a aplikácia sa ukončí. Chcete pokračovať?";
 
 /* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Deaktivovať Kill Switch";
+"_kill_switch_disable" = "Deaktivovať";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "Zapnúť Kill Switch";
