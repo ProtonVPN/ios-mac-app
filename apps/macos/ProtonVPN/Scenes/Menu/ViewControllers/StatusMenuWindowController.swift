@@ -205,6 +205,7 @@ extension StatusIcon {
     private static let connectedImage = statusBarImage(Theme.Asset.connected)
     private static let disconnectedImage = statusBarImage(Theme.Asset.disconnected)
     private static let connectingImage = statusBarImage(Theme.Asset.idle)
+    private static let warningImage = statusBarImage(Theme.Asset.warning)
     private static let unknownImage = statusBarImage(Theme.Asset.emptyIcon)
 
     var image: NSImage {
@@ -212,6 +213,7 @@ extension StatusIcon {
         case .connected: Self.connectedImage
         case .disconnected: Self.disconnectedImage
         case .connecting: Self.connectingImage
+        case .warning: Self.warningImage
         case .unknown: Self.unknownImage
         }
     }
