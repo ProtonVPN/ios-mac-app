@@ -75,7 +75,9 @@ class StatusMenuWindowModel {
             return .connected
         case .connecting, .resolving:
             return .connecting
-        case .disconnected, .disconnecting, .authenticationRequired, .killSwitchActive:
+        case .authenticationRequired:
+            return .warning
+        case .disconnected, .disconnecting, .killSwitchActive:
             return .disconnected
         }
     }
@@ -85,7 +87,9 @@ class StatusMenuWindowModel {
     }
 
     var isStatusIconBlinking: Bool {
-        connectionState.is(\.connecting) || connectionState.is(\.resolving)
+        connectionState.is(\.connecting)
+            || connectionState.is(\.resolving)
+            || connectionState.is(\.authenticationRequired)
     }
 
     // MARK: - Private functions
@@ -123,6 +127,7 @@ enum StatusIcon {
     case connected
     case disconnected
     case connecting
+    case warning
     case unknown
 }
 
