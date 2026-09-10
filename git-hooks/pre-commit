@@ -12,7 +12,7 @@ if git diff --cached --name-only | grep -q "libraries/Core/NEProviders/Package.s
 fi
 
 sh Integration/Scripts/swift-format-it.sh
-sh Integration/Scripts/format-xctestplans.sh
+bash Integration/Scripts/format-xctestplans.sh
 
 # Make sure Version.xcconfig is up to date
 REPO_ROOT=$(git rev-parse --show-toplevel)
