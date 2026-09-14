@@ -22,8 +22,7 @@
 # Requires SwiftLint 0.57.1 or later (for --use-script-input-file-lists), run
 # through mint from the repository's Mintfile.
 
-# Re-run under bash when started as `sh script`. This block is the only code
-# the other shell reads.
+# Re-run under bash when started as `sh script`.
 if [ -z "${BASH_VERSION-}" ]; then
     exec bash "$0" "$@"
 fi
@@ -59,18 +58,15 @@ done
 repo_root=$(git rev-parse --show-toplevel 2>/dev/null) || fail "not in a git repository"
 cd "$repo_root"
 
-# A relative REPORT is resolved from the repository root, like every other
-# path in this script, not from where the script was started.
+# Resolve the REPORT directory from the repository root rather than from
+# where the script was started.
 mkdir -p "$(dirname "$report")"
 [ -f Mintfile ] || fail "no Mintfile at $repo_root"
 [ -f .swiftlint.yml ] || fail "no .swiftlint.yml at $repo_root"
 
-# CI sets MINT_PATH and MINT_LINK_PATH to paths relative to the checkout so
-# the mint cache can be kept between jobs; anchor those at the repository
-# root, since this script may be started from any directory. Unset (mint's
-# default, ~/.mint) and absolute values are left alone. The previous version
-# prefixed unconditionally, which for an unset variable produced
-# "$PWD/" and made mint install and build its packages into the repository.
+# CI sets MINT_PATH and MINT_LINK_PATH to paths relative to the checkout for
+# the mint cache. Since this script can be started from any directory, make sure
+# these directories are anchored at the repo root.
 for var in MINT_PATH MINT_LINK_PATH; do
     value=${!var-}
     if [ -n "$value" ] && [ "${value#/}" = "$value" ]; then
