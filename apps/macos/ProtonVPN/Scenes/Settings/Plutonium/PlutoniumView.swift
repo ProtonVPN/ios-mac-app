@@ -93,7 +93,9 @@ struct PlutoniumView: View {
     private func isOnBinding() -> Binding<Bool> {
         .init(
             get: {
-                if case .enabled = store.feature { return true }
+                if case .enabled = store.feature {
+                    return true
+                }
                 return false
             }, set: { _ in
                 store.send(.toggleModeClicked)

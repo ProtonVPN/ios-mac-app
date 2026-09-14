@@ -112,7 +112,9 @@ public struct AnnouncementBannerView: View {
         .frame(maxHeight: showBanner ? .infinity : 0)
         .opacity(showBanner ? 1 : 0)
         .task {
-            if showBanner { return }
+            if showBanner {
+                return
+            }
             @Dependency(\.imagePrefetcher) var imagePrefetcher
             if await imagePrefetcher.containsImageForKey(model.imageURL.absoluteString) {
                 showBanner = true

@@ -63,8 +63,12 @@ struct MapCalibration {
         // the poles, where the field is zero anyway.
         let stretch = max(0.1, cos(latitude * .pi / 180))
         var longitude = longitudeDegrees - lonKm / (Constants.kmPerDegree * stretch)
-        if longitude >= 180 { longitude -= 360 }
-        if longitude < -180 { longitude += 360 }
+        if longitude >= 180 {
+            longitude -= 360
+        }
+        if longitude < -180 {
+            longitude += 360
+        }
         return (latitude, longitude)
     }
 
@@ -72,7 +76,9 @@ struct MapCalibration {
     private static func interpolate(_ grid: [Double], _ latitude: Double, _ longitude: Double) -> Double {
         let row = (min(max(latitude, -90), 90) + 90) / Grid.rowSpacingDegrees
         var column = (longitude + 180) / Grid.columnSpacingDegrees
-        if column < 0 { column += Double(Grid.columns) }
+        if column < 0 {
+            column += Double(Grid.columns)
+        }
         let row0 = min(Int(row), Grid.rows - 2)
         let column0 = Int(column) % Grid.columns
         let rowFraction = row - Double(row0)
@@ -214,7 +220,9 @@ extension MapCalibration {
         for sample in samples {
             let row = (min(max(sample.latitude, -90), 90) + 90) / Grid.rowSpacingDegrees
             var column = (sample.longitude + 180) / Grid.columnSpacingDegrees
-            if column < 0 { column += Double(Grid.columns) }
+            if column < 0 {
+                column += Double(Grid.columns)
+            }
             let row0 = min(Int(row), Grid.rows - 2)
             let column0 = Int(column) % Grid.columns
             let rowFraction = row - Double(row0)

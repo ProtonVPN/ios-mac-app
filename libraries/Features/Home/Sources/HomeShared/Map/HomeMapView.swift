@@ -193,7 +193,9 @@ public struct HomeMapView: View {
         // recenter the camera. A deliberate gesture has already turned following off, so this cannot override the
         // user.
         .onChange(of: trackball.isMoving) { _, isMoving in
-            if !isMoving { flyToHighlightedCountry() }
+            if !isMoving {
+                flyToHighlightedCountry()
+            }
         }
         // Ease the sunlight color to its new connection tint instead of snapping, so a fast reconnect that runs through
         // green, white, and red in under a second reads as a smooth cross-fade.

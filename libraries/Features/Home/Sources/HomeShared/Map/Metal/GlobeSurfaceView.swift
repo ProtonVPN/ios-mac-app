@@ -270,7 +270,9 @@ struct AnimatableGlobe<Overlay: View>: View, Animatable {
             camera.distance = newValue.distance
             let q = newValue.orientation
             let length = simd_length(q)
-            if length > 1e-6 { camera.orientation = simd_quatf(vector: q / length) }
+            if length > 1e-6 {
+                camera.orientation = simd_quatf(vector: q / length)
+            }
         }
     }
 

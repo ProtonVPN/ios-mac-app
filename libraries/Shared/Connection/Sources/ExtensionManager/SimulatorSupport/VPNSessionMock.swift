@@ -104,12 +104,16 @@
                 @Dependency(\.continuousClock) var clock
                 if !shouldTransitionToConnectingImmediately {
                     try await clock.sleep(for: startupDuration)
-                    if Task.isCancelled { return }
+                    if Task.isCancelled {
+                        return
+                    }
                     self.status = .connecting
                 }
 
                 try await clock.sleep(for: connectionDuration)
-                if Task.isCancelled { return }
+                if Task.isCancelled {
+                    return
+                }
 
                 @Dependency(\.date) var date
                 connectedDate = date.now

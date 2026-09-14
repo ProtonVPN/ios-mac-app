@@ -140,18 +140,18 @@ private struct TelemetryFooter: View {
         Link(destination: VPNLink.learnMoreTelemetry.url) {
             footnote
             #if os(macOS)
-            .themeFont(.subHeadline())
+                .themeFont(.subHeadline())
             #else
-            .themeFont(.caption())
+                .themeFont(.caption())
             #endif
-            .multilineTextAlignment(.center)
-            .fixedSize(horizontal: false, vertical: true)
-            .frame(maxWidth: .infinity)
-            // Centered, so it is not part of the left-aligned rhythm the questions set. A
-            // narrower column keeps it apart from them and stops "Learn more" breaking lines.
-            .padding(.horizontal, TelemetryTogglesView.contentInset + .themeSpacing16)
-            .padding(.vertical, .themeSpacing16)
-            .foregroundStyle(Color(.text, .weak))
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity)
+                // Centered, so it is not part of the left-aligned rhythm the questions set. A
+                // narrower column keeps it apart from them and stops "Learn more" breaking lines.
+                .padding(.horizontal, TelemetryTogglesView.contentInset + .themeSpacing16)
+                .padding(.vertical, .themeSpacing16)
+                .foregroundStyle(Color(.text, .weak))
         }
         .buttonStyle(.plain)
     }

@@ -50,7 +50,9 @@ enum GeosTriangulator {
             }
             if let combined = region {
                 region = combined.symmetricDifference(polygon)
-                if region == nil { warn("symmetric difference failed", geos) }
+                if region == nil {
+                    warn("symmetric difference failed", geos)
+                }
             } else {
                 region = polygon
             }
@@ -104,7 +106,9 @@ private struct VertexWelder {
     /// The shared index for `point`, minting one the first time its grid cell is seen.
     mutating func index(of point: SIMD2<Double>) -> Int {
         let key = GridKey(x: Int64((point.x * cellsPerUnit).rounded()), y: Int64((point.y * cellsPerUnit).rounded()))
-        if let existing = lookup[key] { return existing }
+        if let existing = lookup[key] {
+            return existing
+        }
         let index = vertices.count
         vertices.append(SIMD2<Float>(Float(point.x), Float(point.y)))
         lookup[key] = index

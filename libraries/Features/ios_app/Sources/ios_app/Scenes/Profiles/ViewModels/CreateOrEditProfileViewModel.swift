@@ -515,9 +515,9 @@ extension CreateOrEditProfileViewModel {
         [.free, .paid, .internal].sorted(by: { tier1, tier2 -> Bool in
             if userTier >= tier1 && userTier >= tier2 ||
                 userTier < tier1 && userTier < tier2 { // sort within available then non-available groups
-                return tier1 > tier2
+                tier1 > tier2
             } else {
-                return tier1 < tier2
+                tier1 < tier2
             }
         })
     }

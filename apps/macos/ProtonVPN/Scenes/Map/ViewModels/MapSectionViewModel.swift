@@ -290,7 +290,7 @@ class MapSectionViewModel {
             guard let annotation = annotation as? StandardCountryAnnotationViewModel else { return false }
             return annotation.isConnected
         }.map { annotation -> ConnectionViewModel in
-            return ConnectionViewModel(.connected, fromHomeTo: annotation)
+            ConnectionViewModel(.connected, fromHomeTo: annotation)
         }
     }
 

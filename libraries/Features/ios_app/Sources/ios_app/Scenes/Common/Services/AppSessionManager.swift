@@ -485,7 +485,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         // Standard kill switch auto-disables on logout so the user isn't locked out of the
         // internet. Advanced persists until explicitly disabled.
         @Shared(.killSwitchMode) var killSwitchMode
-        $killSwitchMode.withLock { if $0 == .standard { $0 = .off } }
+        $killSwitchMode.withLock {
+            if $0 == .standard {
+                $0 = .off
+            }
+        }
 
         if let userId = authKeychain.userId {
             FeatureFlagsRepository.shared.resetFlags(for: userId)

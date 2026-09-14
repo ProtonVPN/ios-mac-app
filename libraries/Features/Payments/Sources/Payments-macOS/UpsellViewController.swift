@@ -155,7 +155,9 @@ public struct UpsellViewController: View {
     }
 
     private var isSkipMode: Bool {
-        if case .cantSkip = modalType, !isCantSkipCooldownActive { return true }
+        if case .cantSkip = modalType, !isCantSkipCooldownActive {
+            return true
+        }
         return false
     }
 

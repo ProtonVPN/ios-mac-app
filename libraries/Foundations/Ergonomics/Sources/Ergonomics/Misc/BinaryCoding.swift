@@ -340,7 +340,9 @@ public struct BinaryEncoder: BinaryCoder {
         // Alignment is measured from the start of the encoded blob, which is also where a decoder's blob begins, so the
         // two sides compute identical padding.
         let misalignment = data.count % alignment
-        if misalignment > 0 { data.append(contentsOf: repeatElement(0, count: alignment - misalignment)) }
+        if misalignment > 0 {
+            data.append(contentsOf: repeatElement(0, count: alignment - misalignment))
+        }
         array.withUnsafeBufferPointer { data.append(contentsOf: UnsafeRawBufferPointer($0)) }
     }
 
@@ -356,7 +358,9 @@ public struct BinaryEncoder: BinaryCoder {
     public mutating func append(_ value: some BitwiseCopyable) {
         withUnsafeBytes(of: value) { data.append(contentsOf: $0) }
         let padding = MemoryLayout.stride(ofValue: value) - MemoryLayout.size(ofValue: value)
-        if padding > 0 { data.append(contentsOf: repeatElement(0, count: padding)) }
+        if padding > 0 {
+            data.append(contentsOf: repeatElement(0, count: padding))
+        }
     }
 }
 
@@ -461,7 +465,9 @@ public struct BinaryDecoder<Storage: BinaryBacking>: BinaryCoder, ~Escapable {
     /// are usually read out of the input itself, which is why a negative one counts as corrupt input rather than
     /// a caller's mistake: it would otherwise walk the cursor backwards and re-read what it just consumed.
     private func require(_ byteCount: Int) throws {
-        if byteCount < 0 || offset + byteCount > bytes.byteCount { throw BinaryDecodeError.truncated }
+        if byteCount < 0 || offset + byteCount > bytes.byteCount {
+            throw BinaryDecodeError.truncated
+        }
     }
 }
 

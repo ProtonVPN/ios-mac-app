@@ -55,7 +55,11 @@ struct CountriesSectionRootView: View {
     private func isDetailPresented(for type: QuickSettingType) -> Binding<Bool> {
         Binding(
             get: { quickSettingsStore.activeType == type },
-            set: { if !$0 { quickSettingsStore.send(.dismissDetails) } }
+            set: {
+                if !$0 {
+                    quickSettingsStore.send(.dismissDetails)
+                }
+            }
         )
     }
 

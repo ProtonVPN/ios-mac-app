@@ -770,7 +770,9 @@ final class PacketTunnelManager: TunnelManager {
                 for await error in $extensionError.publisher.values {
                     guard let state = resolved(after: {
                         $0.error = error
-                        if let requestId = error?.id { $0.appliedRequestId = requestId }
+                        if let requestId = error?.id {
+                            $0.appliedRequestId = requestId
+                        }
                     }) else { continue }
                     continuation.yield(state)
                 }

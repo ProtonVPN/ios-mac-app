@@ -59,7 +59,9 @@ struct ConnectingOverlayFeatureTests {
         await confirmation("disconnect command sent") { confirm in
             let client = ConnectionCommandClient(
                 send: { command in
-                    if case .disconnect = command { confirm() }
+                    if case .disconnect = command {
+                        confirm()
+                    }
                 },
                 stream: { .finished },
                 quickConnect: { _ in }
@@ -84,7 +86,9 @@ struct ConnectingOverlayFeatureTests {
         await confirmation("retry command sent") { confirm in
             let client = ConnectionCommandClient(
                 send: { command in
-                    if case .retry = command { confirm() }
+                    if case .retry = command {
+                        confirm()
+                    }
                 },
                 stream: { .finished },
                 quickConnect: { _ in }
@@ -111,7 +115,9 @@ struct ConnectingOverlayFeatureTests {
         await confirmation("retry command sent") { confirm in
             let client = ConnectionCommandClient(
                 send: { command in
-                    if case .retry = command { confirm() }
+                    if case .retry = command {
+                        confirm()
+                    }
                 },
                 stream: { .finished },
                 quickConnect: { _ in }

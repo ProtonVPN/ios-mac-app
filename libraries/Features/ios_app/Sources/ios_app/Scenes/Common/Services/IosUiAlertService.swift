@@ -43,13 +43,13 @@ final class IosUiAlertService {
 
     private func alertIsNew(_ alert: SystemAlert) -> Bool {
         !currentAlerts.contains(where: { currentAlert -> Bool in
-            return currentAlert.className == alert.className
+            currentAlert.className == alert.className
         })
     }
 
     private func updateOldAlert(with newAlert: SystemAlert) {
         let oldAlert = currentAlerts.first { alert -> Bool in
-            return alert.className == newAlert.className
+            alert.className == newAlert.className
         }
 
         // In particular this means the alert's completion handlers will be updated

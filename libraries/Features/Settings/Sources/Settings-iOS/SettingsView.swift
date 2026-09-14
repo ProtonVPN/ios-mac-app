@@ -59,7 +59,11 @@ struct SettingsView: View {
             icon: feature.icon,
             content: .standard(title: feature.title, value: value?.localizedDescription),
             accessory: Accessory(style: feature.accessory),
-            onTap: { if let action { store.send(action) } }
+            onTap: {
+                if let action {
+                    store.send(action)
+                }
+            }
         )
     }
 

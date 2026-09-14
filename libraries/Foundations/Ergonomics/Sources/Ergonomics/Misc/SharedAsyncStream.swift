@@ -95,7 +95,9 @@ extension SharedAsyncThrowingStream {
         AsyncThrowingStream { continuation in
             let id = UUID()
             let alreadyFinished = state.withCriticalRegion { state -> Bool in
-                if state.isFinished { return true }
+                if state.isFinished {
+                    return true
+                }
                 state.continuations[id] = continuation
                 return false
             }

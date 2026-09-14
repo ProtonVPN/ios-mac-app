@@ -32,7 +32,9 @@ public struct ChangeGate<Value: Sendable>: Sendable {
     /// last value seen; `false` when it is an duplicate
     public func isChange(_ newValue: Value) -> Bool {
         previous.withValue { last in
-            if Self.valuesAreEqual(newValue, last) == true { return false }
+            if Self.valuesAreEqual(newValue, last) == true {
+                return false
+            }
             last = newValue
             return true
         }

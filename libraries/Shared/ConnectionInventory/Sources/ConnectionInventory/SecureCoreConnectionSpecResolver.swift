@@ -83,7 +83,9 @@ public enum SecureCoreConnectionSpecResolver {
         exitCountryCode: String?,
         isFree: Bool
     ) -> ConnectionSpec.Location {
-        if isFree { return .any(.fastest) }
+        if isFree {
+            return .any(.fastest)
+        }
 
         if let exitCountryCode {
             return secureCoreEnabled

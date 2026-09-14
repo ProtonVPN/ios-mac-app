@@ -161,7 +161,9 @@ public extension ConnectionState {
 
     /// Date the active tunnel finished connecting. `nil` outside of `.connected`.
     var connectedDate: Date? {
-        if case let .connected(_, connectionData) = self { return connectionData.connectionDate }
+        if case let .connected(_, connectionData) = self {
+            return connectionData.connectionDate
+        }
         return nil
     }
 

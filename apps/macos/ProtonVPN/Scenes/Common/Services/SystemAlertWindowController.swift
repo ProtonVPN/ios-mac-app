@@ -260,8 +260,12 @@ private struct SystemAlertCardView: View {
     }
 
     private func shortcut(for action: Action, isDefault: Bool) -> KeyboardShortcut? {
-        if action.style == .cancel { return .cancelAction }
-        if isDefault { return .defaultAction }
+        if action.style == .cancel {
+            return .cancelAction
+        }
+        if isDefault {
+            return .defaultAction
+        }
         return nil
     }
 
