@@ -132,7 +132,7 @@
 "_log_out_warning" = "Oturumu kapatmak VPN oturumunuzu sonlandıracak.";
 
 /* MacOS: Logout alert */
-"_log_out_warning_long" = "Uygulama oturumunu kapatmak, etkin VPN bağlantısını kesecek. İlerlemek istiyor musunuz?";
+"_log_out_warning_long" = "Uygulama oturumunu kapatmak, kullanımdaki VPN bağlantısını kesecek. İlerlemek istiyor musunuz?";
 
 /* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
 "_change_protocol_disconnect_warning" = "İletişim kurallarını değiştirmek, var olan VPN oturumunuzu sonlandıracak.";
@@ -327,7 +327,7 @@
 "_always_on_will_reconnect" = "Hep açık VPN bağlantınızı otomatik olarak yeniden kuracak";
 
 /* Subtitle of the Notification shown with the port number */
-"_port_forwarding_info_subtitle" = "Etkin bağlantı noktası: %@";
+"_port_forwarding_info_subtitle" = "Kullanılan bağlantı noktası: %@";
 
 /* Explanation of the Notification about port forwarding */
 "_port_forwarding_info_body" = "Torrent istemcinize veya P2P uygulamasına gidip bu numarayı yazın.";
@@ -336,7 +336,7 @@
 "_port_forwarding_info_copy_button" = "Kopyala";
 
 /* Subtitle of the Notification shown when a port mapping request failed */
-"_port_forwarding_error_subtitle" = "Etkin bağlantı noktası numarası alınamadı";
+"_port_forwarding_error_subtitle" = "Kullanılan bağlantı noktası numarası alınamadı";
 
 /* Explanation of the Notification about a failed port mapping request */
 "_port_forwarding_error_body" = "Bağlantınızı yeniden başlatıp yeniden deneyin. Bu işe yaramazsa, farklı bir sunucu kullanmayı deneyin.";
@@ -1058,10 +1058,10 @@
 "_kill_switch_logout_advanced_body" = "VPN bağlantınız kesilecek.\nGelişmiş bağlantı kesici açık. İlerlerseniz internet bağlantınız kesilecek.";
 
 /* iOS: Title of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
-"_kill_switch_logout_blocking_failed_title" = "Bağlantı kesici etkin kalamadı";
+"_kill_switch_logout_blocking_failed_title" = "Bağlantı kesici açık kalamadı";
 
 /* iOS: Body of the alert shown when the app fails to keep Advanced kill switch blocking after sign-out */
-"_kill_switch_logout_blocking_failed_body" = "Oturumunuz kapatıldı ancak bağlantı kesici etkin tutulamadığı için aygıtınız risk altında olabilir. Korunmaya sürdürmek için Proton VPN uygulamasını açın ve yeniden bağlanın.";
+"_kill_switch_logout_blocking_failed_body" = "Oturumunuz kapatıldı ancak bağlantı kesici açık tutulamadığı için aygıtınız risk altında olabilir. Korunmayı sürdürmek için Proton VPN uygulamasını açın ve yeniden bağlanın.";
 
 /* macOS: title of the confirmation shown when disconnecting with Advanced kill switch active */
 "_kill_switch_disconnect_advanced_title" = "VPN bağlantısı kesilsin mi?";
@@ -1124,7 +1124,7 @@
 "_settings_port_forwarding_notifications_title" = "Bağlantı noktası yönlendirme bildirimleri";
 
 /* MacOS: Settings -> Port forwarding notifications settings explained */
-"_settings_port_forwarding_notifications_info" = "Etkin bağlantı noktası numaranız değiştiğinde bildirim alın";
+"_settings_port_forwarding_notifications_info" = "Kullanılan bağlantı noktası numaranız değiştiğinde bildirim alın";
 
 /* iOS Settings: table section cell */
 "_security_keys" = "Güvenlik anahtarları";
@@ -1562,10 +1562,10 @@
 "_offer_ending_" = "%@ sonra sona erecek";
 
 /* Text appears in main view with the assigned port */
-"_pf_active_port_status" = "Etkin bağlantı noktası:";
+"_pf_active_port_status" = "Kullanılan bağlantı noktası:";
 
 /* Text appears in port forwarding view with the assigned port */
-"_pf_active_port_number" = "Etkin bağlantı noktası";
+"_pf_active_port_number" = "Kullanılan bağlantı noktası";
 
 /* Text appears as hint when hovering mouse over the assigned port number */
 "_pf_copy_port_number" = "Bağlantı noktasını kopyala";
@@ -1599,11 +1599,11 @@
 
 "_quick_settings_killSwitch_note" = "Yerel ağınızdaki aygıtlara bağlanamıyorsanız, Ayarlar bölümünden LAN bağlantılarına izin vermeyi deneyin.";
 
-"_quick_settings_portForwarding_note" = "P2P hızınızı artırmak için BitTorrent uygulamanıza etkin bağlantı noktası numaranızı yazın";
+"_quick_settings_portForwarding_note" = "P2P hızınızı artırmak için BitTorrent uygulamanıza kullanılan bağlantı noktası numaranızı yazın";
 
 "_quick_settings_portForwarding_warningNote" = "Torrent hızını iyileştirmek için bir P2P sunucusuyla bağlantı kurun";
 
-"_quick_settings_portForwarding_errorNote" = "Etkin bağlantı noktası numarası bulunamadı. Bağlantınızı yeniden başlatıp yeniden deneyin.";
+"_quick_settings_portForwarding_errorNote" = "Kullanılan bağlantı noktası numarası bulunamadı. Bağlantınızı yeniden başlatıp yeniden deneyin.";
 
 "_quick_settings_get_plus" = "Plus edinin";
 
@@ -3372,7 +3372,7 @@
 "_restore_purchase" = "Satın alınanı geri yükle";
 
 /* The detail text dispalyed in the payments options settings menu. */
-"_restore_purchase_detail" = "Uygulamada daha önce satın aldığınız eiytkin bir tarife bulamıyor veya kullanamıyorsanız “Satın alınanı geri yükle” seçeneğini kullanarak önceki aboneliklerinizi yeniden etkinleştirebilirsiniz.";
+"_restore_purchase_detail" = "Uygulamada daha önce satın aldığınız ve kullanıma alınmış bir tarife bulamıyorsanız veya kullanamıyorsanız “Satın alınanı geri yükle” seçeneğini kullanarak önceki aboneliklerinizi yeniden kullanıma alabilirsiniz.";
 
 /* Purchase was successfully restored in account settings */
 "_purchase_restored" = "Satın alınan geri yüklendi. (Tarife adı: %@)";

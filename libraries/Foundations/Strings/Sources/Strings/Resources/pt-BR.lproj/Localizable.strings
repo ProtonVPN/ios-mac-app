@@ -252,7 +252,7 @@
 "_you_are_not_protected" = "Você não está protegido";
 
 /* macos header title when authentication is needed */
-"_header_auth_required" = "Authentication required";
+"_header_auth_required" = "Autenticação obrigatória";
 
 /* macos header subtitle when authentication is needed */
 "_header_vpn_traffic_blocked" = "VPN traffic is blocked until you authenticate.";
@@ -924,7 +924,7 @@
 "_delete_application_data_popup_body" = "Todos os dados do Proton VPN serão excluídos e o aplicativo será encerrado. Você tem certeza que deseja continuar?";
 
 /* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Disable";
+"_kill_switch_disable" = "Desativar";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "Ativar Kill Switch";
@@ -3177,7 +3177,7 @@
 "_connection_error_intent_missing" = "Não foi possível conectar com o servidor.";
 
 /* Error message: a problem occurred while building the VPN configuration, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds. */
-"_connection_error_configuration" = "There was a problem configuring the VPN connection.";
+"_connection_error_configuration" = "Ocorreu um problema ao configurar a conexão da VPN.";
 
 /* Error message: the VPN configuration is missing something it needs, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds. */
 "_connection_error_configuration_invalid" = "There was a problem with the VPN configuration.";
