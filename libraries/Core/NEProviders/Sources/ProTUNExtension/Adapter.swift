@@ -507,7 +507,8 @@ extension ProTUNAdapter {
         pathUpdatesTask?.cancel()
 
         pathUpdatesTask = Task {
-            @Dependency(\.pathMonitor) var pathMonitor
+            @Dependency(\.pathMonitor) var pathMonitorDependency
+            let pathMonitor = pathMonitorDependency
 
             let stream = pathMonitor.subscribe()
             pathMonitor.start()

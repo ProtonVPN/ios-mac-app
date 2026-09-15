@@ -23,7 +23,7 @@ let package = Package(
         .package(path: "../Strings"),
         .package(path: "../../Shared/Localization"),
 
-        .package(url: "https://github.com/lachlanbell/SwiftOTP.git", .upToNextMinor(from: "2.0.3")),
+        .package(url: "https://github.com/lachlanbell/SwiftOTP.git", .upToNextMinor(from: "3.0.2")),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
