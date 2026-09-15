@@ -260,6 +260,7 @@ final class WindowServiceImplementation: WindowService {
         NSApp.setActivationPolicy(.regular)
         let windowController = NPSWindowController(store: store)
         activeWindowControllers.insert(windowController)
+        windowController.delegate = self
         windowController.showWindow(self)
     }
 

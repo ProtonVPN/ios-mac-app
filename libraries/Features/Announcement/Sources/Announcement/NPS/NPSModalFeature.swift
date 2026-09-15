@@ -16,17 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CommonNetworking
 import ComposableArchitecture
 import Foundation
-import ProtonCoreNetworking
 
 @Reducer
 public struct NPSModalFeature: Sendable {
     public static let scoreRange: ClosedRange<Int> = 0 ... 10
     public static let maxCommentCharLength: Int = 250
 
-    @Dependency(\.dismiss) private var dismiss
     public init() {}
 
     @ObservableState
@@ -35,6 +32,8 @@ public struct NPSModalFeature: Sendable {
 
         public var comment: String
         public var didSubmit: Bool = false
+        public var didDismiss: Bool = false
+        public var submitInProgress: Bool = false
 
         public init(score: Int? = nil, comment: String = "", didSubmit: Bool = false) {
             self.score = score
@@ -49,13 +48,18 @@ public struct NPSModalFeature: Sendable {
         var canSubmit: Bool {
             score != nil
         }
+
+        var submitButtonEnabled: Bool {
+            (canSubmit && !submitInProgress) || didSubmit
+        }
     }
 
     @CasePathable
-    public enum Action: BindableAction, Equatable {
+    public enum Action: BindableAction {
         case binding(BindingAction<State>)
         case scoreTapped(Int)
         case submitTapped
+        case submitResult(Result<Int, Error>)
         case closeTapped
         case delegate(Delegate)
 
@@ -64,6 +68,10 @@ public struct NPSModalFeature: Sendable {
             case submit(score: Int, comment: String)
             case dismiss
         }
+    }
+
+    private enum CancelID {
+        case submitRequest
     }
 
     public var body: some ReducerOf<Self> {
@@ -80,28 +88,44 @@ public struct NPSModalFeature: Sendable {
                 return .send(.delegate(.submit(score: score, comment: state.comment)))
 
             case .closeTapped:
-                return .send(.delegate(.dismiss))
+                return .merge(
+                    .cancel(id: CancelID.submitRequest),
+                    .send(.delegate(.dismiss))
+                )
 
             case .delegate(.dismiss):
-                return .run { [didSubmit = state.didSubmit] _ in
-                    guard !didSubmit else { return }
-
-                    @Dependency(\.networking) var networking
-                    let response: NPSResponse = try await networking.perform(request: NPSRequest(useCase: .dismiss))
+                state.didDismiss = true
+                guard !state.didSubmit else {
+                    return .none
+                }
+                return .run { _ in
+                    @Dependency(\.announcementClient) var announcementClient
+                    let response = try await announcementClient.sendNPSScore(.dismiss)
                     log.info("Dismiss NPS survey sent with response code: \(response.code)")
                 } catch: { error, _ in
                     log.info("Failed sending NPS survey with error: \(error)")
                 }
 
             case let .delegate(.submit(score, comment)):
-                state.didSubmit = true
-                return .run { _ in
-                    @Dependency(\.networking) var networking
-                    let response: NPSResponse = try await networking.perform(request: NPSRequest(useCase: .submit(score: score, comment: comment)))
-                    log.info("NPS survey sent with response code: \(response.code)")
-                } catch: { error, _ in
+                state.submitInProgress = true
+                return .run { send in
+                    @Dependency(\.announcementClient) var announcementClient
+                    let response = try await announcementClient.sendNPSScore(.submit(score: score, comment: comment))
+                    await send(.submitResult(.success(response.code)))
+                } catch: { error, send in
+                    await send(.submitResult(.failure(error)))
+                }.cancellable(id: CancelID.submitRequest, cancelInFlight: true)
+
+            case let .submitResult(result):
+                state.submitInProgress = false
+                switch result {
+                case let .success(code):
+                    state.didSubmit = true
+                    log.info("NPS survey sent with response code: \(code)")
+                case let .failure(error):
                     log.info("Failed sending NPS survey with error: \(error)")
                 }
+                return .none
 
             case .binding:
                 return .none

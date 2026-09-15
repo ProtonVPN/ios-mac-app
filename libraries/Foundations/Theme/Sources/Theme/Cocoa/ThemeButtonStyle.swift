@@ -89,30 +89,40 @@ public struct ThemeButtonStyle: ButtonStyle {
         return Color(.background, backgroundStyle)
     }
 
+    var foregroundColor: Color {
+        var foregroundStyle: AppTheme.Style = []
+        if style == .primary, isEnabled {
+            foregroundStyle.insert(.primary)
+        } else if !isEnabled {
+            foregroundStyle.insert(.weak)
+        }
+        return Color(.text, foregroundStyle)
+    }
+
     public func makeBody(configuration: Self.Configuration) -> some View {
         configuration
             .label
         #if canImport(AppKit)
             .font(.body(emphasised: true))
-            .onHover { isHovered = $0 }
         #else
             .font(.body1(.semibold))
         #endif
             .frame(maxWidth: maxWidth)
-            .foregroundColor(Color(.text, isEnabled ? [.primary] : [.weak]))
+            .foregroundColor(foregroundColor)
             .padding(.vertical, padding.vertical)
             .padding(.horizontal, padding.horizontal)
             .background(backgroundColor(isPressed: configuration.isPressed))
             .cornerRadius(.themeRadius8)
-            .linkPointer()
+            .linkPointer(isEnabled: isEnabled)
+            .onHover { isHovered = $0 }
     }
 }
 
 public extension View {
-    func linkPointer() -> some View {
+    func linkPointer(isEnabled: Bool) -> some View {
         #if canImport(AppKit)
             if #available(macOS 15.0, *) {
-                return pointerStyle(.link)
+                return pointerStyle(isEnabled ? PointerStyle.link : PointerStyle.default)
             } else {
                 return self
             }
@@ -178,7 +188,11 @@ extension SwiftUICore.ColorScheme: @retroactive CustomStringConvertible {
                     ))
                     .disabled(true)
             }
+            #if canImport(AppKit)
+            .frame(width: 300)
+            #else
             .frame(width: 600)
+            #endif
             .padding(.vertical)
             .background(Color(.background))
             .colorScheme(scheme)

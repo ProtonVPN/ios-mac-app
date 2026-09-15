@@ -23,6 +23,7 @@
 
     struct LinkButtonStyle: ButtonStyle {
         @State var isHovered = false
+        @Environment(\.isEnabled) var isEnabled
 
         func helpForegroundColor(isPressed: Bool) -> Color {
             var style: AppTheme.Style = .link
@@ -40,7 +41,7 @@
                 .font(.body(emphasised: true))
                 .foregroundColor(helpForegroundColor(isPressed: configuration.isPressed))
                 .onHover { isHovered = $0 }
-                .linkPointer()
+                .linkPointer(isEnabled: isEnabled)
         }
     }
 #endif

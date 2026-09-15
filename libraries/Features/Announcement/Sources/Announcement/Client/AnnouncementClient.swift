@@ -23,6 +23,7 @@ import Foundation
 @DependencyClient
 public struct AnnouncementClient: Sendable {
     public internal(set) var fetchAnnouncements: @Sendable () async throws -> AnnouncementResponse
+    var sendNPSScore: @Sendable (NPSRequest.UseCase) async throws -> NPSResponse
 }
 
 extension AnnouncementClient: DependencyKey {
@@ -32,6 +33,8 @@ extension AnnouncementClient: DependencyKey {
             fetchAnnouncements: {
                 let request = AnnouncementRequest()
                 return try await networking.perform(request: request)
+            }, sendNPSScore: { useCase in
+                try await networking.perform(request: NPSRequest(useCase: useCase))
             }
         )
     }()
@@ -39,6 +42,8 @@ extension AnnouncementClient: DependencyKey {
     #if DEBUG
         public static var testValue: AnnouncementClient = AnnouncementClient {
             AnnouncementResponse(notifications: [])
+        } sendNPSScore: { _ in
+            .init(code: 1000)
         }
     #endif
 }

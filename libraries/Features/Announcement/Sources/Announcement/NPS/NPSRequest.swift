@@ -75,8 +75,16 @@ extension NPSRequest: CustomStringConvertible {
     }
 }
 
-extension NPSRequest: MockResponse {
-    var mockResponse: any Codable {
-        NPSResponse(code: 1000)
+#if DEBUG
+
+    extension NPSRequest: MockResponse {
+        var responseDelay: Duration {
+            .seconds(1)
+        }
+
+        var mockResponse: any Codable {
+            NPSResponse(code: 1000)
+        }
     }
-}
+
+#endif

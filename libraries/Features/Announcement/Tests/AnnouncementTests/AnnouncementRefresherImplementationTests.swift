@@ -87,7 +87,7 @@ struct AnnouncementRefresherImplementationTests {
                 $0.announcementClient = .init {
                     await counter.increment()
                     return .init(notifications: [])
-                }
+                } sendNPSScore: { _ in .init(code: 0) }
             } operation: {
                 let refresher = AnnouncementRefresherImplementation()
                 refresher.tryRefreshing()
@@ -105,7 +105,7 @@ struct AnnouncementRefresherImplementationTests {
                 $0.announcementClient = .init {
                     await counter.increment()
                     return .init(notifications: [])
-                }
+                } sendNPSScore: { _ in .init(code: 0) }
             } operation: {
                 let refresher = AnnouncementRefresherImplementation()
                 refresher.tryRefreshing()
@@ -127,7 +127,7 @@ struct AnnouncementRefresherImplementationTests {
                 $0.announcementClient = .init {
                     await counter.increment()
                     return .init(notifications: [])
-                }
+                } sendNPSScore: { _ in .init(code: 0) }
             } operation: {
                 // A zero interval disables the throttle, so both calls refresh.
                 let refresher = AnnouncementRefresherImplementation(refreshInterval: 0)
@@ -153,7 +153,7 @@ struct AnnouncementRefresherImplementationTests {
                         announcement("newDefault", type: .default),
                         announcement("newOneTime", type: .oneTime),
                     ])
-                }
+                } sendNPSScore: { _ in .init(code: 0) }
             } operation: {
                 let refresher = AnnouncementRefresherImplementation(refreshInterval: 0)
 
@@ -186,7 +186,7 @@ struct AnnouncementRefresherImplementationTests {
                 $0.announcementClient = .init {
                     await counter.increment()
                     throw CancellationError()
-                }
+                } sendNPSScore: { _ in .init(code: 0) }
             } operation: {
                 let refresher = AnnouncementRefresherImplementation(refreshInterval: 0)
 

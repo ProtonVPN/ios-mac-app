@@ -23,17 +23,18 @@ import Testing
 @MainActor
 @Suite("NPSModalFeature")
 struct NPSModalFeatureTests {
-    @Test("Modal opens with nothing selected, no comment field and submission disabled")
-    func initialState() {
+    @Test
+    func `Modal opens with nothing selected, no comment field and submission disabled`() {
         let state = NPSModalFeature.State()
 
         #expect(state.score == nil)
         #expect(state.isCommentFieldVisible == false)
+        #expect(state.submitButtonEnabled == false)
         #expect(state.canSubmit == false)
     }
 
-    @Test("Picking a score reveals the comment field and enables submission")
-    func scoreTappedRevealsCommentField() async {
+    @Test
+    func `Picking a score reveals the comment field and enables submission`() async {
         let store = TestStore(initialState: NPSModalFeature.State()) {
             NPSModalFeature()
         }
@@ -44,10 +45,11 @@ struct NPSModalFeatureTests {
 
         #expect(store.state.isCommentFieldVisible)
         #expect(store.state.canSubmit)
+        #expect(store.state.submitButtonEnabled)
     }
 
-    @Test("Picking another score replaces the previous one")
-    func scoreTappedReplacesSelection() async {
+    @Test
+    func `Picking another score replaces the previous one`() async {
         let store = TestStore(initialState: NPSModalFeature.State(score: 7)) {
             NPSModalFeature()
         }
@@ -57,35 +59,59 @@ struct NPSModalFeatureTests {
         }
     }
 
-    @Test("Submitting delegates the score and the comment")
-    func submitTappedDelegatesAnswer() async {
+    @Test
+    func `Submitting sends NPS score and the comment`() async {
+        let sentUseCases = LockIsolated<[NPSRequest.UseCase]>([])
         let store = TestStore(initialState: NPSModalFeature.State(score: 9)) {
             NPSModalFeature()
+        } withDependencies: {
+            $0.continuousClock = .immediate
+            $0.announcementClient.sendNPSScore = { useCase in
+                sentUseCases.withValue { $0.append(useCase) }
+                return NPSResponse(code: 1000)
+            }
         }
 
         await store.send(\.binding.comment, "Fast and private") {
             $0.comment = "Fast and private"
         }
         await store.send(.submitTapped)
-        await store.receive(.delegate(.submit(score: 9, comment: "Fast and private"))) {
+        await store.receive(\.delegate.submit) {
+            $0.submitInProgress = true
+        }
+        await store.receive(\.submitResult) {
+            $0.submitInProgress = false
             $0.didSubmit = true
         }
+        #expect(sentUseCases.value == [.submit(score: 9, comment: "Fast and private")])
     }
 
-    @Test("Submitting without a comment delegates an empty one")
-    func submitTappedWithoutCommentDelegatesEmptyComment() async {
+    @Test
+    func `Submitting without a comment delegates an empty string`() async {
+        let sentUseCases = LockIsolated<[NPSRequest.UseCase]>([])
         let store = TestStore(initialState: NPSModalFeature.State(score: 0)) {
             NPSModalFeature()
+        } withDependencies: {
+            $0.continuousClock = .immediate
+            $0.announcementClient.sendNPSScore = { useCase in
+                sentUseCases.withValue { $0.append(useCase) }
+                return NPSResponse(code: 1000)
+            }
         }
 
         await store.send(.submitTapped)
-        await store.receive(.delegate(.submit(score: 0, comment: ""))) {
+        await store.receive(\.delegate.submit) {
+            $0.submitInProgress = true
+        }
+        await store.receive(\.submitResult) {
+            $0.submitInProgress = false
             $0.didSubmit = true
         }
+        #expect(sentUseCases.value == [.submit(score: 0, comment: "")])
     }
 
-    @Test("Submitting without a score does nothing")
-    func submitTappedWithoutScoreIsIgnored() async {
+    @Test
+    func `Submitting without a score does nothing`() async {
         let store = TestStore(initialState: NPSModalFeature.State()) {
             NPSModalFeature()
         }
@@ -93,13 +119,56 @@ struct NPSModalFeatureTests {
         await store.send(.submitTapped)
     }
 
-    @Test("Closing delegates a dismissal")
-    func closeTappedDelegatesDismissal() async {
-        let store = TestStore(initialState: NPSModalFeature.State(score: 5)) {
+    @Test
+    func `closing after a submission sends only the submit request`() async {
+        let sentUseCases = LockIsolated<[NPSRequest.UseCase]>([])
+        let store = TestStore(initialState: NPSModalFeature.State(score: 9)) {
             NPSModalFeature()
+        } withDependencies: {
+            $0.continuousClock = .immediate
+            $0.announcementClient.sendNPSScore = { useCase in
+                sentUseCases.withValue { $0.append(useCase) }
+                return NPSResponse(code: 1000)
+            }
         }
 
+        await store.send(\.binding.comment, "Fast and private") {
+            $0.comment = "Fast and private"
+        }
+        await store.send(.submitTapped)
+        await store.receive(\.delegate.submit) {
+            $0.submitInProgress = true
+        }
+        await store.receive(\.submitResult) {
+            $0.submitInProgress = false
+            $0.didSubmit = true
+        }
+
+        // The user closes the modal with the close button instead of the done button.
         await store.send(.closeTapped)
-        await store.receive(.delegate(.dismiss))
+        await store.receive(\.delegate.dismiss) {
+            $0.didDismiss = true
+        }
+
+        #expect(sentUseCases.value == [.submit(score: 9, comment: "Fast and private")])
+    }
+
+    @Test("Closing delegates a dismissal")
+    func closeTappedDelegatesDismissal() async {
+        let sentUseCases = LockIsolated<[NPSRequest.UseCase]>([])
+        let store = TestStore(initialState: NPSModalFeature.State(score: 5)) {
+            NPSModalFeature()
+        } withDependencies: {
+            $0.continuousClock = .immediate
+            $0.announcementClient.sendNPSScore = { useCase in
+                sentUseCases.withValue { $0.append(useCase) }
+                return NPSResponse(code: 1000)
+            }
+        }
+        await store.send(.closeTapped)
+        await store.receive(\.delegate.dismiss) {
+            $0.didDismiss = true
+        }
+        #expect(sentUseCases.value == [.dismiss])
     }
 }

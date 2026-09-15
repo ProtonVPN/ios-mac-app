@@ -46,7 +46,7 @@ final class NPSWindowController: WindowController {
 
     override func windowShouldClose(_: NSWindow) -> Bool {
         // This is being called when either the user tapped on close button or we dismissed the view from SwiftUI context.
-        store.send(.delegate(.dismiss))
+        store.send(.closeTapped)
         return true
     }
 }

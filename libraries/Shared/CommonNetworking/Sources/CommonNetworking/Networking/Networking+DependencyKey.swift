@@ -179,6 +179,7 @@ public extension DependencyValues {
 
     public protocol MockResponse: ProtonCoreNetworking.Request {
         var mockResponse: Codable { get }
+        var responseDelay: Duration { get }
     }
 
     public struct VPNNetworkingMock: VPNNetworking {
@@ -216,6 +217,8 @@ public extension DependencyValues {
             log.debug("\(#function) \(request)", category: .net)
             if let response = request as? MockResponse,
                let mockResponse = response.mockResponse as? T {
+                @Dependency(\.continuousClock) var clock
+                try await clock.sleep(for: response.responseDelay)
                 return mockResponse
             }
             throw "" as GenericError

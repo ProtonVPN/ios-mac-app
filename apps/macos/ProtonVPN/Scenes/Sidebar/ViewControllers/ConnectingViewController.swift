@@ -263,7 +263,7 @@ private struct ConnectingOverlayButtonStyle: ButtonStyle {
                     .stroke(borderColor, lineWidth: 2)
             )
             .onHover { isHovered = $0 }
-            .linkPointer()
+            .linkPointer(isEnabled: true)
     }
 
     private var backgroundColor: Color {

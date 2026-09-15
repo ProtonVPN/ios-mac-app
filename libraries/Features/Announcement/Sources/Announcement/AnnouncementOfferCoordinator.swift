@@ -62,8 +62,7 @@ public struct AnnouncementOfferCoordinator {
         if let state = AnnouncementsFeature.State(announcement: announcement) {
             present(state: state)
             announcementManager.markAsRead(announcement: announcement)
-        }
-        if announcement.knownType == .nps {
+        } else if announcement.knownType == .nps {
             presentNPS()
             announcementManager.markAsRead(announcement: announcement)
         }

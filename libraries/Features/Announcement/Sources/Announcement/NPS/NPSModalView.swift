@@ -24,7 +24,6 @@ import Theme
 public struct NPSModalView: View {
     @Bindable public var store: StoreOf<NPSModalFeature>
 
-    @Environment(\.dismissWindow) private var dismissWindow
     @Environment(\.dismiss) private var dismiss
 
     public init(store: StoreOf<NPSModalFeature>) {
@@ -35,7 +34,7 @@ public struct NPSModalView: View {
         VStack(spacing: .themeSpacing0) {
             #if os(iOS)
                 NPSCloseButton {
-                    store.send(.closeTapped)
+                    store.send(.closeTapped) // for macOS, the window controller sends this action
                     dismiss()
                 }
             #endif
@@ -43,17 +42,21 @@ public struct NPSModalView: View {
                 content
                 Spacer()
                 if store.didSubmit {
-                    NPSSubmitButton(isEnabled: true, text: Localizable.done) {
-                        #if os(macOS)
-                            dismissWindow()
-                        #else
-                            dismiss()
-                        #endif
+                    NPSSubmitButton(
+                        isInProgress: store.submitInProgress,
+                        text: Localizable.done
+                    ) {
+                        dismiss()
                     }
+                    .disabled(!store.submitButtonEnabled)
                 } else {
-                    NPSSubmitButton(isEnabled: store.canSubmit, text: Localizable.npsModalSubmit) {
+                    NPSSubmitButton(
+                        isInProgress: store.submitInProgress,
+                        text: Localizable.npsModalSubmit
+                    ) {
                         store.send(.submitTapped)
                     }
+                    .disabled(!store.submitButtonEnabled)
                 }
             }
         }
@@ -73,16 +76,17 @@ public struct NPSModalView: View {
                     .fixedSize(horizontal: false, vertical: true)
             } else {
                 Asset.npsSurvey.swiftUIImage
-                NPSTitle(text: Localizable.npsModalTitle)
-            }
 
-            if !store.didSubmit {
+                NPSTitle(text: Localizable.npsModalTitle)
+
                 NPSScoreSelector(selectedScore: store.score) { score in
                     store.send(.scoreTapped(score))
                 }
+                .disabled(store.submitInProgress)
 
                 if store.isCommentFieldVisible {
                     NPSCommentField(comment: $store.comment)
+                        .disabled(store.submitInProgress)
                 }
             }
         }
@@ -157,16 +161,22 @@ private struct NPSCommentField: View {
 }
 
 private struct NPSSubmitButton: View {
-    let isEnabled: Bool
+    let isInProgress: Bool
     let text: String
     let action: () -> Void
 
     var body: some View {
-        Button(text, action: action)
-            .buttonStyle(ThemeButtonStyle(padding: .medium, style: .primary))
-            .disabled(!isEnabled)
-            .padding(.horizontal, .themeSpacing16)
-            .padding(.bottom, .themeSpacing12)
+        Button(action: action) {
+            HStack {
+                if isInProgress {
+                    ProgressView()
+                }
+                Text(text)
+            }
+        }
+        .buttonStyle(ThemeButtonStyle(padding: .medium, style: .primary))
+        .padding(.horizontal, .themeSpacing16)
+        .padding(.bottom, .themeSpacing12)
     }
 }
 
