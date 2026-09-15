@@ -28,7 +28,9 @@ class ResizingTextButton: HoverDetectionButton {
         for area in trackingAreas {
             removeTrackingArea(area)
         }
-        if !isEnabled { return }
+        if !isEnabled {
+            return
+        }
         let trackingArea = NSTrackingArea(rect: bounds, options: [.mouseEnteredAndExited, .activeInKeyWindow], owner: self, userInfo: nil)
         addTrackingArea(trackingArea)
     }

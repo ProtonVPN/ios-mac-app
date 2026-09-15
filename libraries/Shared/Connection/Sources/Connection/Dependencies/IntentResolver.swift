@@ -67,7 +67,9 @@ package struct ConnectionIntentResolver: DependencyKey {
             throw .serverSelectionFailed(error)
         }
 
-        if Task.isCancelled { throw .cancelled }
+        if Task.isCancelled {
+            throw .cancelled
+        }
 
         let specifiedProtocol = intent.connectionProtocol ?? connectionFeatureProvider.connectionProtocol()
         log.debug("Resolved connection protocol", category: .connection, metadata: ["protocol": "\(specifiedProtocol)"])

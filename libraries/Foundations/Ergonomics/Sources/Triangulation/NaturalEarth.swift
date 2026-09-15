@@ -53,7 +53,11 @@ public enum NaturalEarth {
         var hi = Double.pi / 2
         for _ in 0 ..< Constants.latitudeBisectionSteps {
             let mid = (lo + hi) / 2
-            if DistanceFromEquator.standard(mid) < point.y { lo = mid } else { hi = mid }
+            if DistanceFromEquator.standard(mid) < point.y {
+                lo = mid
+            } else {
+                hi = mid
+            }
         }
         let phi = (lo + hi) / 2
         let parallel = LengthOfParallel.standard(phi)

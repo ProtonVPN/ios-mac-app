@@ -86,7 +86,9 @@ enum GlobeFocus {
                 return projected.isFront && region.contains(projected.point)
             }
         }
-        if fits(distance) { return distance }
+        if fits(distance) {
+            return distance
+        }
         guard fits(ceiling) else { return ceiling }
         return boundary(where: fits, holds: ceiling, fails: distance)
     }
@@ -97,7 +99,11 @@ enum GlobeFocus {
         var fails = fails
         for _ in 0 ..< boundarySearchSteps {
             let middle = (holds + fails) / 2
-            if condition(middle) { holds = middle } else { fails = middle }
+            if condition(middle) {
+                holds = middle
+            } else {
+                fails = middle
+            }
         }
         return holds
     }

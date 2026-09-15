@@ -136,11 +136,15 @@ public extension IPCConnectionDataPayload {
             self.reason = reason.rawValue
         case let .connecting(peerID, waitReason):
             self.reason = waitReason.rawValue
-            if let peerID { self.peerID = peerID }
+            if let peerID {
+                self.peerID = peerID
+            }
         case let .connectingToLocalAgent(peerID, waitReason, jail):
             self.reason = waitReason.rawValue
             context = jail.rawValue
-            if let peerID { self.peerID = peerID }
+            if let peerID {
+                self.peerID = peerID
+            }
         case let .connected(peer):
             self.reason = IPCConnectionTransport(peer.transport).rawValue
             self.peerID = peer.peerID
@@ -335,7 +339,9 @@ private extension Data {
             .replacingOccurrences(of: "-", with: "+")
             .replacingOccurrences(of: "_", with: "/")
         let remainder = standard.count % 4
-        if remainder > 0 { standard += String(repeating: "=", count: 4 - remainder) }
+        if remainder > 0 {
+            standard += String(repeating: "=", count: 4 - remainder)
+        }
         self.init(base64Encoded: standard)
     }
 }

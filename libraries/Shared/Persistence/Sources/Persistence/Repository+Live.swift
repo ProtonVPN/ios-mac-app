@@ -118,7 +118,9 @@ public enum ServerRepositoryKey: DependencyKey {
 
                     let groups = try GroupInfoResult.fetchAll(db, request).map(\.domainModel)
                     return Dictionary(grouping: groups.filter {
-                        if case .gateway = $0.kind { return true }
+                        if case .gateway = $0.kind {
+                            return true
+                        }
                         return false
                     }, by: \.kind)
                         .compactMap { key, values in
@@ -146,7 +148,9 @@ public enum ServerRepositoryKey: DependencyKey {
                             return false
                         } // Sorting gateways by gateway name.
                         + groups.filter {
-                            if case .gateway = $0.kind { return false }
+                            if case .gateway = $0.kind {
+                                return false
+                            }
                             return true
                         } // Then adding all other kinds.
                 }

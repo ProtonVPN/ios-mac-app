@@ -110,7 +110,9 @@ enum GlobeResource {
 
     private static func firstCountry(_ candidates: [String?]) -> MapGlobeCountry? {
         for case let key? in candidates {
-            if let country = model.countries[key] { return country }
+            if let country = model.countries[key] {
+                return country
+            }
         }
         return nil
     }

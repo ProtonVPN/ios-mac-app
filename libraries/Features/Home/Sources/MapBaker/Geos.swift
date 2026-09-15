@@ -55,7 +55,9 @@ final class Geos {
     /// one. Repairing resolves self-intersections up front so overlay operations on the result don't choke.
     func validPolygon(ring: [SIMD2<Float>]) -> Geometry? {
         var points = ring
-        if let first = points.first, let last = points.last, first != last { points.append(first) }
+        if let first = points.first, let last = points.last, first != last {
+            points.append(first)
+        }
         guard points.count >= 4, let sequence = GEOSCoordSeq_create_r(handle, UInt32(points.count), 2) else {
             return nil
         }

@@ -32,7 +32,9 @@ public extension NetShieldType {
         netshieldSettings: NetShieldFeatureSettings?,
         isBusiness: Bool
     ) -> FeatureAuthorizationResult {
-        if isDisabled { return .failure(.featureDisabled) }
+        if isDisabled {
+            return .failure(.featureDisabled)
+        }
         let base = canUse(userTier: userTier, featureFlags: featureFlags)
         guard case .success = base else { return base }
         return isHidden(by: netshieldSettings, isBusiness: isBusiness) ? .failure(.featureDisabled) : .success
@@ -41,7 +43,9 @@ public extension NetShieldType {
     /// Whether the given NetShield level should be hidden from the UI, either due to business
     /// account policies or because a given level is disabled as a feature.
     func isHidden(by settings: NetShieldFeatureSettings?, isBusiness: Bool) -> Bool {
-        if isDisabled { return true }
+        if isDisabled {
+            return true
+        }
         guard isBusiness, let settings else { return false }
         switch self {
         case .off:

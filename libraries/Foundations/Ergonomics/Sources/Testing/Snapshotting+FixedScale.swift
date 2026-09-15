@@ -55,7 +55,9 @@
                 MainActor.assumeIsolated {
                     let initialFrame = view.frame
                     defer { view.frame = initialFrame }
-                    if let size { view.frame.size = size }
+                    if let size {
+                        view.frame.size = size
+                    }
                     precondition(
                         view.frame.width > 0 && view.frame.height > 0,
                         "View not renderable to image at size \(view.frame.size)"

@@ -323,7 +323,9 @@ final class GlobeRenderer: NSObject, MTKViewDelegate {
         uniforms.tintStrength = Constants.landTintStrength
         let cullDot = pathCullDot
         for unit in drawOrder {
-            if simd_dot(unit.centroid, cameraTarget) < cullDot { continue } // provably behind the visible rim
+            if simd_dot(unit.centroid, cameraTarget) < cullDot {
+                continue
+            } // provably behind the visible rim
 
             if !unit.fillRange.isEmpty {
                 let color = contained(unit.fillRange, in: highlight.fillRanges) ? MapStyle.highlightColor : unit.color

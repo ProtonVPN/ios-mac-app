@@ -35,7 +35,9 @@ public extension simd_quatf {
     ) -> simd_quatf {
         let forward = simd_normalize(target)
         var up = worldUp
-        if abs(simd_dot(forward, up)) > poleGuardDot { up = SIMD3<Float>(0, 0, 1) }
+        if abs(simd_dot(forward, up)) > poleGuardDot {
+            up = SIMD3<Float>(0, 0, 1)
+        }
         let right = simd_normalize(simd_cross(up, forward))
         let trueUp = simd_cross(forward, right)
         // Rows (right, up, forward) map model directions into the view frame.

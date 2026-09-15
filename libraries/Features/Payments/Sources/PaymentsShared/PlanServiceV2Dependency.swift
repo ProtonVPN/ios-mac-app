@@ -328,7 +328,9 @@ final class CorePaymentsPlanServiceV2: PaymentsPlanServiceV2, @unchecked Sendabl
         // racing on stop() + start() inside TransactionsObserver
         if let existingTask = observerStartTask {
             try await existingTask.value
-            if TransactionsObserver.shared.isON { return }
+            if TransactionsObserver.shared.isON {
+                return
+            }
         }
 
         // Observer was stopped (e.g. after logout) — create a fresh start task

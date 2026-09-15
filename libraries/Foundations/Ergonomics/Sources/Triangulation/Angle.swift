@@ -78,7 +78,11 @@ public struct Angle: Equatable, Comparable, Sendable, BitwiseCopyable {
     /// antimeridian has a single normal form whichever side it's approached from.
     public var normalizedSigned: Angle {
         var d = degrees.truncatingRemainder(dividingBy: 360)
-        if d > 180 { d -= 360 } else if d <= -180 { d += 360 }
+        if d > 180 {
+            d -= 360
+        } else if d <= -180 {
+            d += 360
+        }
         return .degrees(d)
     }
 }

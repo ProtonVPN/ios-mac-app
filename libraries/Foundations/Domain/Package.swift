@@ -41,7 +41,7 @@ let package = Package(
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "CasePaths", package: "swift-case-paths"),
                 .product(name: "DependenciesMacros", package: "swift-dependencies"),
-           ],
+            ],
             resources: [.process("Resources")]
         ),
         .target(name: "DomainTestSupport", dependencies: ["Domain"]),

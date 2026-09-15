@@ -52,7 +52,9 @@ final class GlobeMomentum {
     /// is moving" signal back to false when the coast settles.
     private(set) var isCoasting = false {
         didSet {
-            if isCoasting != oldValue { onCoastingChange?(isCoasting) }
+            if isCoasting != oldValue {
+                onCoastingChange?(isCoasting)
+            }
         }
     }
 

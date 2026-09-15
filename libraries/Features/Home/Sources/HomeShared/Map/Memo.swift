@@ -38,7 +38,9 @@ struct Memo<Key: Equatable, Value> {
 
     /// The value for `key`, recomputed only when it differs from the key this memo last answered for.
     mutating func callAsFunction(_ key: Key) -> Value {
-        if let entry, entry.key == key { return entry.value }
+        if let entry, entry.key == key {
+            return entry.value
+        }
         let value = compute(key)
         entry = (key, value)
         return value

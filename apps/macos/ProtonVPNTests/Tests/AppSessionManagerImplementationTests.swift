@@ -444,7 +444,9 @@ struct AppSessionManagerImplementationTests {
         attempts: Int = 500
     ) async -> Bool {
         for _ in 0 ..< attempts {
-            if manager.sessionStatus == target { return true }
+            if manager.sessionStatus == target {
+                return true
+            }
             try? await Task.sleep(for: pollInterval)
         }
         return manager.sessionStatus == target

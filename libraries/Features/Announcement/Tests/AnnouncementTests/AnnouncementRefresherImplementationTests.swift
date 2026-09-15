@@ -59,7 +59,9 @@ struct AnnouncementRefresherImplementationTests {
         let clock = ContinuousClock()
         let deadline = clock.now.advanced(by: timeout)
         while clock.now < deadline {
-            if await condition() { return }
+            if await condition() {
+                return
+            }
             try? await Task.sleep(for: .milliseconds(5))
         }
     }

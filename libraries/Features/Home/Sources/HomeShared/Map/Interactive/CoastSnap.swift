@@ -70,7 +70,9 @@ enum CoastSnap {
         var nearest = direction
         var nearestDot: Float = -2 // cos(angle), larger is nearer. Below any real dot, so the first candidate wins.
         for triangle in mesh.triangles(of: country) {
-            if triangle.robustlyContains(direction) { return direction } // already on this country's land
+            if triangle.robustlyContains(direction) {
+                return direction
+            } // already on this country's land
             for (a, b) in [(triangle.a, triangle.b), (triangle.b, triangle.c), (triangle.c, triangle.a)] {
                 let candidate = nearestPoint(on: (a, b), to: direction)
                 let dot = simd_dot(direction, candidate)
@@ -119,7 +121,9 @@ enum CoastSnap {
         let nudge = min(Float(inlandNudge.radians), max(simd_length(step) * 0.5, Dimensions.minimumNudge))
         for factor in [1, 0.5] as [Float] {
             let candidate = simd_normalize(nearest + factor * nudge * inland)
-            if lands(candidate, on: country, in: mesh) { return candidate }
+            if lands(candidate, on: country, in: mesh) {
+                return candidate
+            }
         }
         return nearest
     }

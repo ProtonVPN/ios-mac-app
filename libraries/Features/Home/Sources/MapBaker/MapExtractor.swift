@@ -92,11 +92,15 @@ enum MapExtractor {
         into paths: inout [ExtractedPath]
     ) {
         let opacity = opacity * node.opacity
-        if opacity <= Constants.hiddenOpacityThreshold { return } // skip the ocean and hidden overlays wholesale
+        if opacity <= Constants.hiddenOpacityThreshold {
+            return
+        } // skip the ocean and hidden overlays wholesale
 
         let worldTransform = node.transform.concatenating(transform)
         var ids = ancestorIDs
-        if let id = node.id, !id.isEmpty { ids.append(id) }
+        if let id = node.id, !id.isEmpty {
+            ids.append(id)
+        }
 
         switch node {
         case let group as SVGGroup:
@@ -189,7 +193,9 @@ enum MapExtractor {
             current.append(SIMD2<Float>(Float(p.x), Float(p.y)))
         }
         func emit() {
-            if current.count >= 2 { rings.append(Ring(points: current, closed: closed)) }
+            if current.count >= 2 {
+                rings.append(Ring(points: current, closed: closed))
+            }
             current = []
             closed = false
         }
@@ -271,7 +277,9 @@ enum MapExtractor {
     private static func distanceToLine(_ p: CGPoint, a: CGPoint, b: CGPoint) -> CGFloat {
         let dx = b.x - a.x, dy = b.y - a.y
         let lengthSquared = dx * dx + dy * dy
-        if lengthSquared < 1e-12 { return hypot(p.x - a.x, p.y - a.y) }
+        if lengthSquared < 1e-12 {
+            return hypot(p.x - a.x, p.y - a.y)
+        }
         return abs((p.x - a.x) * dy - (p.y - a.y) * dx) / sqrt(lengthSquared)
     }
 

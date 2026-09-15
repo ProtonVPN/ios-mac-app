@@ -146,8 +146,12 @@ enum GlobeExtractor {
             let wrapped = bucket < -180 ? bucket + 360 : bucket >= 180 ? bucket - 360 : bucket
             for candidate in drawnByLon[wrapped] ?? [] {
                 var dLon = candidate.lon - vertex.x
-                if dLon > 180 { dLon -= 360 }
-                if dLon < -180 { dLon += 360 }
+                if dLon > 180 {
+                    dLon -= 360
+                }
+                if dLon < -180 {
+                    dLon += 360
+                }
                 let dLonKm = dLon * Dimensions.kmPerDegree * stretch
                 let dLatKm = (candidate.lat - vertex.y) * Dimensions.kmPerDegree
                 let (delta, crossGap) = component == .latitude ? (dLatKm, dLonKm) : (dLonKm, dLatKm)
@@ -177,7 +181,9 @@ enum CuratedCenters {
 
     static func center(forMapID id: String) -> CLLocationCoordinate2D? {
         var id = id
-        if id.count == 3, id.hasSuffix("x") { id = String(id.dropLast()) }
+        if id.count == 3, id.hasSuffix("x") {
+            id = String(id.dropLast())
+        }
         let key = isoOverrides[id] ?? id.uppercased()
         return CountriesCoordinates.countryCenterCoordinates(key)
     }
@@ -317,7 +323,9 @@ private struct GlobeBuilder {
             for i in 0 ..< edgeCount {
                 let a = unprojector.sphere(points[i])
                 let b = unprojector.sphere(points[(i + 1) % points.count])
-                if simd_distance_squared(a, b) < Dimensions.degenerateSegmentLengthSquared { continue }
+                if simd_distance_squared(a, b) < Dimensions.degenerateSegmentLengthSquared {
+                    continue
+                }
                 borderSegments.append(MapGlobeSegment(a: a, b: b))
             }
         }
@@ -345,7 +353,9 @@ private struct GlobeBuilder {
                 }
             }
         }
-        if !ring.closed { out.append(points[points.count - 1]) }
+        if !ring.closed {
+            out.append(points[points.count - 1])
+        }
         return MapExtractor.Ring(points: out, closed: ring.closed)
     }
 
@@ -378,7 +388,9 @@ private struct GlobeBuilder {
             let pin = pinDirection(from: curated ?? centroid, fillRanges: fillRanges)
             if let curated {
                 curatedPins += 1
-                if pin != curated { snappedCuratedPins += 1 }
+                if pin != curated {
+                    snappedCuratedPins += 1
+                }
             }
             result[id] = MapGlobeCountry(
                 cap: .enclosing(members.map { bakedPaths[$0].cap }, around: centroid),
@@ -404,7 +416,9 @@ private struct GlobeBuilder {
     /// Where the disconnected pin renders. Uses `candidate` when it lands on the given fill, otherwise takes the
     /// closest fill vertex and nudges it inland.
     private func pinDirection(from candidate: SIMD3<Float>, fillRanges: [Range<Int>]) -> SIMD3<Float> {
-        if lands(candidate, onAnyOf: fillRanges) { return candidate }
+        if lands(candidate, onAnyOf: fillRanges) {
+            return candidate
+        }
         var nearest = candidate
         var nearestDot: Float = -2 // cos(angle), larger is nearer. Below any real dot, so the first vertex wins.
         for range in fillRanges {
@@ -434,7 +448,9 @@ private struct GlobeBuilder {
                 // cos(2x) = 2cos(x)^2 - 1, and a larger dot product means a nearer point.
                 let widest = min(min(simd_dot(a, b), simd_dot(b, c)), simd_dot(c, a))
                 let nearEnough = simd_dot(point, a) >= 2 * widest * widest - 1
-                if nearEnough, SphericalTriangle(a, b, c).contains(point) { return true }
+                if nearEnough, SphericalTriangle(a, b, c).contains(point) {
+                    return true
+                }
                 index += 3
             }
         }
@@ -454,7 +470,9 @@ private struct GlobeBuilder {
         let inland = simd_normalize(step) // the chord approximates the tangent at these separations
         for factor in [1, 0.5] as [Float] {
             let nudged = simd_normalize(nearest + factor * Constants.pinInlandNudge * inland)
-            if lands(nudged, onAnyOf: fillRanges) { return nudged }
+            if lands(nudged, onAnyOf: fillRanges) {
+                return nudged
+            }
         }
         return nearest
     }
@@ -579,8 +597,12 @@ struct Unprojector {
         let projY = (midY - Double(p.y)) / ratioY
         let geo = NaturalEarth.unproject(SIMD2<Double>(projX, projY))
         var lon = geo.longitude.degrees + 10 // reverse the map's 10-degree prime-meridian shift
-        if lon > 180 { lon -= 360 }
-        if lon < -180 { lon += 360 }
+        if lon > 180 {
+            lon -= 360
+        }
+        if lon < -180 {
+            lon += 360
+        }
         let corrected = calibration.corrected(latitudeDegrees: geo.latitude.degrees, longitudeDegrees: lon)
         return (corrected.latitude, corrected.longitude)
     }

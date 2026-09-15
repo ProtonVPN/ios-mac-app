@@ -122,25 +122,23 @@ private struct ServerInfoView: View {
     let entry: ConnectWidgetEntry
 
     var body: some View {
-        Group {
-            HStack(alignment: .top, spacing: .themeSpacing12) {
-                if widgetFamily != .systemSmall {
-                    FlagView(location: entry.currentLocation, flagSize: .defaultSize)
-                }
-                VStack(alignment: .leading, spacing: .zero) {
-                    Text(entry.currentLocation.text(locale: .current))
-                        .themeFont(widgetFamily == .systemLarge ? .body1(.semibold) : .body2(emphasised: true))
-                        .foregroundStyle(Color(.text, .normal))
+        HStack(alignment: .top, spacing: .themeSpacing12) {
+            if widgetFamily != .systemSmall {
+                FlagView(location: entry.currentLocation, flagSize: .defaultSize)
+            }
+            VStack(alignment: .leading, spacing: .zero) {
+                Text(entry.currentLocation.text(locale: .current))
+                    .themeFont(widgetFamily == .systemLarge ? .body1(.semibold) : .body2(emphasised: true))
+                    .foregroundStyle(Color(.text, .normal))
 
-                    if let subtext = entry.currentLocation.subtext(locale: .current) {
-                        Text(subtext)
-                            .themeFont(widgetFamily == .systemLarge ? .body2(emphasised: false) : .caption(emphasised: false))
-                            .foregroundStyle(Color(.text, .weak))
-                    }
+                if let subtext = entry.currentLocation.subtext(locale: .current) {
+                    Text(subtext)
+                        .themeFont(widgetFamily == .systemLarge ? .body2(emphasised: false) : .caption(emphasised: false))
+                        .foregroundStyle(Color(.text, .weak))
                 }
             }
-            Spacer()
         }
+        Spacer()
     }
 }
 

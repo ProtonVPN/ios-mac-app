@@ -318,7 +318,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             } else {
                 // Standard auto-disables on logout so the user isn't locked out. Only change the kill switch setting to
                 // "off" in this specific case, since we want the Advanced setting to stay active after logout.
-                $killSwitchMode.withLock { if $0 == .standard { $0 = .off } }
+                $killSwitchMode.withLock {
+                    if $0 == .standard {
+                        $0 = .off
+                    }
+                }
                 confirmLogout(showAlert: !force) { [weak self] in
                     self?.connectionCommandClient.send(.disconnect(.signout, completion: { [weak self] in
                         self?.logoutRoutine(reason: reason)
@@ -326,7 +330,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 }
             }
         case .connecting, .authenticationRequired, .disconnecting, .resolving:
-            $killSwitchMode.withLock { if $0 == .standard { $0 = .off } }
+            $killSwitchMode.withLock {
+                if $0 == .standard {
+                    $0 = .off
+                }
+            }
             connectionCommandClient.send(.disconnect(.signout, completion: { [weak self] in
                 self?.logoutRoutine(reason: reason)
             }))
