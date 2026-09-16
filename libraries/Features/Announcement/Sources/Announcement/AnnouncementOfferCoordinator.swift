@@ -19,7 +19,6 @@
 import ComposableArchitecture
 import Dependencies
 import DependenciesMacros
-import ModalsShared
 
 @DependencyClient
 public struct AnnouncementOfferPresenting: Sendable {
@@ -72,8 +71,6 @@ public struct AnnouncementOfferCoordinator {
         let presenter = presenter
         let store = Store(initialState: .init()) {
             NPSModalFeature()
-        } withDependencies: {
-            $0.dismiss = DismissEffect { presenter.dismiss() }
         }
         presenter.presentNPS(store)
     }

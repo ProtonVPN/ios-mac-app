@@ -170,6 +170,8 @@ private struct NPSSubmitButton: View {
             HStack {
                 if isInProgress {
                     ProgressView()
+                        .progressViewStyle(.circular)
+                        .controlSize(.small)
                 }
                 Text(text)
             }

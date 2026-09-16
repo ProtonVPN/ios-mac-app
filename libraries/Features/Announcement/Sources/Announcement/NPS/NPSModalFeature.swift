@@ -70,10 +70,6 @@ public struct NPSModalFeature: Sendable {
         }
     }
 
-    private enum CancelID {
-        case submitRequest
-    }
-
     public var body: some ReducerOf<Self> {
         BindingReducer()
 
@@ -88,33 +84,30 @@ public struct NPSModalFeature: Sendable {
                 return .send(.delegate(.submit(score: score, comment: state.comment)))
 
             case .closeTapped:
-                return .merge(
-                    .cancel(id: CancelID.submitRequest),
-                    .send(.delegate(.dismiss))
-                )
+                return .send(.delegate(.dismiss))
 
             case .delegate(.dismiss):
                 state.didDismiss = true
-                guard !state.didSubmit else {
+                guard !state.didSubmit, !state.submitInProgress else {
                     return .none
                 }
-                return .run { _ in
-                    @Dependency(\.announcementClient) var announcementClient
-                    let response = try await announcementClient.sendNPSScore(.dismiss)
-                    log.info("Dismiss NPS survey sent with response code: \(response.code)")
-                } catch: { error, _ in
-                    log.info("Failed sending NPS survey with error: \(error)")
-                }
+                @Dependency(\.announcementClient) var announcementClient
+                announcementClient.sendDismissNPSScore()
+                log.info("Dismiss NPS survey sent")
+                return .none
 
             case let .delegate(.submit(score, comment)):
                 state.submitInProgress = true
                 return .run { send in
                     @Dependency(\.announcementClient) var announcementClient
-                    let response = try await announcementClient.sendNPSScore(.submit(score: score, comment: comment))
+                    let response = try await announcementClient.sendNPSScore(
+                        score: score,
+                        comment: comment
+                    )
                     await send(.submitResult(.success(response.code)))
                 } catch: { error, send in
                     await send(.submitResult(.failure(error)))
-                }.cancellable(id: CancelID.submitRequest, cancelInFlight: true)
+                }
 
             case let .submitResult(result):
                 state.submitInProgress = false

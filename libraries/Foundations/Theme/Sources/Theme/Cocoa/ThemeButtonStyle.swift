@@ -114,7 +114,9 @@ public struct ThemeButtonStyle: ButtonStyle {
             .background(backgroundColor(isPressed: configuration.isPressed))
             .cornerRadius(.themeRadius8)
             .linkPointer(isEnabled: isEnabled)
+        #if canImport(AppKit)
             .onHover { isHovered = $0 }
+        #endif
     }
 }
 

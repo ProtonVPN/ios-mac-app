@@ -22,8 +22,6 @@ public typealias AssetImageTypeAlias = ImageAsset.Image
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum Asset {
-  public static let npsSurvey = ImageAsset(name: "NPSSurvey")
-  public static let npsSurveySuccess = ImageAsset(name: "NPSSurveySuccess")
   public static let secureCoreDiscourage = ImageAsset(name: "SecureCoreDiscourage")
   public static let welcomeFallback = ImageAsset(name: "WelcomeFallback")
   public static let welcomePlus = ImageAsset(name: "WelcomePlus")

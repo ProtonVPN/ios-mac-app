@@ -25,36 +25,16 @@ struct NPSScoreSelector: View {
     let onScoreTapped: (Int) -> Void
 
     private static let numberOfColumnsInCompactSize = 6
-
-    @State private var columns = Self.numberOfColumnsInCompactSize
-
-    private static let spacing: CGFloat = .themeSpacing4
-
-    var widthThreshold: CGFloat = {
-        let scoreCount = CGFloat(NPSModalFeature.scoreRange.count)
-        let spaces = scoreCount - 1
-        return scoreCount * NPSScoreCell.minWidth + spaces * spacing
-    }()
-
     var body: some View {
         VStack(spacing: .themeSpacing8) {
-            EqualWidthRowsLayout(columns: columns, spacing: Self.spacing) {
+            EqualWidthRowsLayout(compactColumns: Self.numberOfColumnsInCompactSize, spacing: .themeSpacing4) {
                 ForEach(NPSModalFeature.scoreRange, id: \.self) { score in
                     NPSScoreCell(score: score, isSelected: score == selectedScore) {
                         onScoreTapped(score)
                     }
                 }
             }
-
             NPSScaleHints()
-        }.onGeometryChange(for: CGSize.self) { proxy in
-            proxy.size
-        } action: { newValue in
-            if newValue.width >= widthThreshold {
-                columns = NPSModalFeature.scoreRange.count
-            } else {
-                columns = Self.numberOfColumnsInCompactSize
-            }
         }
         #if os(iOS)
         .sensoryFeedback(.selection, trigger: selectedScore)
@@ -100,36 +80,35 @@ private struct NPSScaleHints: View {
 }
 
 private struct EqualWidthRowsLayout: Layout {
-    let columns: Int
+    let compactColumns: Int
     let spacing: CGFloat
-
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache _: inout ()) -> CGSize {
-        guard !subviews.isEmpty, columns > 0 else { return .zero }
+        guard !subviews.isEmpty, compactColumns > 0 else { return .zero }
 
-        let totalWidth = proposal.replacingUnspecifiedDimensions().width
-        let cellWidth = cellWidth(forTotalWidth: totalWidth)
+        // With no proposed width, report the width of a single row at minimum item width.
+        let width = proposal.width ?? singleRowWidth(of: subviews)
+        let columns = columns(fitting: width, subviews: subviews)
+        let itemWidth = itemWidth(forTotalWidth: width, columns: columns)
+        let rows = numberOfRows(forCount: subviews.count, columns: columns)
         let rowHeight = subviews
-            .map { $0.sizeThatFits(ProposedViewSize(width: cellWidth, height: nil)).height }
+            .map { $0.sizeThatFits(ProposedViewSize(width: itemWidth, height: nil)).height }
             .max() ?? 0
-        let rows = numberOfRows(forCount: subviews.count)
-
         return CGSize(
-            width: totalWidth,
+            width: width,
             height: rowHeight * CGFloat(rows) + spacing * CGFloat(rows - 1)
         )
     }
 
     func placeSubviews(in bounds: CGRect, proposal _: ProposedViewSize, subviews: Subviews, cache _: inout ()) {
-        guard !subviews.isEmpty, columns > 0 else { return }
-
-        let cellWidth = cellWidth(forTotalWidth: bounds.width)
-        let rows = numberOfRows(forCount: subviews.count)
+        guard !subviews.isEmpty, compactColumns > 0 else { return }
+        let columns = columns(fitting: bounds.width, subviews: subviews)
+        let itemWidth = itemWidth(forTotalWidth: bounds.width, columns: columns)
+        let rows = numberOfRows(forCount: subviews.count, columns: columns)
         let rowHeight = (bounds.height - spacing * CGFloat(rows - 1)) / CGFloat(rows)
-        let cellProposal = ProposedViewSize(width: cellWidth, height: rowHeight)
-
+        let itemProposal = ProposedViewSize(width: itemWidth, height: rowHeight)
         for row in 0 ..< rows {
             let indices = (row * columns) ..< min((row + 1) * columns, subviews.count)
-            let rowWidth = cellWidth * CGFloat(indices.count) + spacing * CGFloat(indices.count - 1)
+            let rowWidth = itemWidth * CGFloat(indices.count) + spacing * CGFloat(indices.count - 1)
             var x = bounds.minX + (bounds.width - rowWidth) / 2
             let y = bounds.minY + (rowHeight + spacing) * CGFloat(row)
 
@@ -137,18 +116,31 @@ private struct EqualWidthRowsLayout: Layout {
                 subviews[index].place(
                     at: CGPoint(x: x, y: y),
                     anchor: .topLeading,
-                    proposal: cellProposal
+                    proposal: itemProposal
                 )
-                x += cellWidth + spacing
+                x += itemWidth + spacing
             }
         }
     }
 
-    private func cellWidth(forTotalWidth totalWidth: CGFloat) -> CGFloat {
+    private func columns(fitting width: CGFloat, subviews: Subviews) -> Int {
+        width >= singleRowWidth(of: subviews) ? subviews.count : min(compactColumns, subviews.count)
+    }
+
+    /// Proposing zero width returns each item's minimum width, which `NPSScoreCell` declares
+    /// through `.frame(minWidth:)`. The layout reads it from there instead of taking it as a parameter.
+    private func singleRowWidth(of subviews: Subviews) -> CGFloat {
+        let minimumItemWidth = subviews
+            .map { $0.sizeThatFits(ProposedViewSize(width: 0, height: nil)).width }
+            .max() ?? 0
+        return minimumItemWidth * CGFloat(subviews.count) + spacing * CGFloat(subviews.count - 1)
+    }
+
+    private func itemWidth(forTotalWidth totalWidth: CGFloat, columns: Int) -> CGFloat {
         max(0, (totalWidth - spacing * CGFloat(columns - 1)) / CGFloat(columns))
     }
 
-    private func numberOfRows(forCount count: Int) -> Int {
+    private func numberOfRows(forCount count: Int, columns: Int) -> Int {
         (count + columns - 1) / columns
     }
 }
@@ -163,5 +155,5 @@ private struct EqualWidthRowsLayout: Layout {
         .frame(width: 700)
         .padding()
         .background(.background)
-        .colorScheme(.dark)
+        .preferredColorScheme(.dark)
 }

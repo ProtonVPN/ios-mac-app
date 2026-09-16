@@ -257,9 +257,6 @@
                 .frame(maxWidth: Theme.Constants.readableContentWidth)
                 .alert($store.scope(state: \.alert, action: \.alert))
                 .navigationDestination(item: $store.scope(state: \.destination?.userDefaults, action: \.destination.userDefaults)) { UserDefaultsDebugView(store: $0) }
-                .popover(item: $store.scope(state: \.destination?.nps, action: \.destination.nps)) {
-                    NPSModalView(store: $0)
-                }
                 .navigationDestination(item: $store.scope(state: \.destination?.keychain, action: \.destination.keychain)) { KeychainDebugView(store: $0) }
                 .navigationDestination(item: $store.scope(state: \.destination?.networkConfigurations, action: \.destination.networkConfigurations)) { NetworkConfigurationsDebugView(store: $0) }
             }

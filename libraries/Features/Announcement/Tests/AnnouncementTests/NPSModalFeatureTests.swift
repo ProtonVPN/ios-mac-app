@@ -66,8 +66,8 @@ struct NPSModalFeatureTests {
             NPSModalFeature()
         } withDependencies: {
             $0.continuousClock = .immediate
-            $0.announcementClient.sendNPSScore = { useCase in
-                sentUseCases.withValue { $0.append(useCase) }
+            $0.announcementClient.sendNPSScore = { score, comment in
+                sentUseCases.withValue { $0.append(.submit(score: score, comment: comment)) }
                 return NPSResponse(code: 1000)
             }
         }
@@ -93,8 +93,8 @@ struct NPSModalFeatureTests {
             NPSModalFeature()
         } withDependencies: {
             $0.continuousClock = .immediate
-            $0.announcementClient.sendNPSScore = { useCase in
-                sentUseCases.withValue { $0.append(useCase) }
+            $0.announcementClient.sendNPSScore = { score, comment in
+                sentUseCases.withValue { $0.append(.submit(score: score, comment: comment)) }
                 return NPSResponse(code: 1000)
             }
         }
@@ -126,8 +126,8 @@ struct NPSModalFeatureTests {
             NPSModalFeature()
         } withDependencies: {
             $0.continuousClock = .immediate
-            $0.announcementClient.sendNPSScore = { useCase in
-                sentUseCases.withValue { $0.append(useCase) }
+            $0.announcementClient.sendNPSScore = { score, comment in
+                sentUseCases.withValue { $0.append(.submit(score: score, comment: comment)) }
                 return NPSResponse(code: 1000)
             }
         }
@@ -160,9 +160,12 @@ struct NPSModalFeatureTests {
             NPSModalFeature()
         } withDependencies: {
             $0.continuousClock = .immediate
-            $0.announcementClient.sendNPSScore = { useCase in
-                sentUseCases.withValue { $0.append(useCase) }
+            $0.announcementClient.sendNPSScore = { score, comment in
+                sentUseCases.withValue { $0.append(.submit(score: score, comment: comment)) }
                 return NPSResponse(code: 1000)
+            }
+            $0.announcementClient.sendDismissNPSScore = {
+                sentUseCases.withValue { $0.append(.dismiss) }
             }
         }
         await store.send(.closeTapped)

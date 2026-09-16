@@ -404,8 +404,6 @@
                     break
                 case .destination(.presented(.keychain)):
                     break
-                case .destination(.presented(.nps)):
-                    break
                 case .destination(.presented(.networkConfigurations)):
                     break
                 case .destination(.dismiss):
@@ -431,7 +429,6 @@
             case userDefaults(UserDefaultsDebugFeature)
             case keychain(KeychainDebugFeature)
             case networkConfigurations(NetworkConfigurationsDebugFeature)
-            case nps(NPSModalFeature)
         }
     }
 
