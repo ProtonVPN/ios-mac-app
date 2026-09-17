@@ -350,7 +350,7 @@ struct HeaderFeatureTests {
         coreAlertService: CoreAlertService = .testValue,
         serverChangeAuthorizer: ServerChangeAuthorizer = .availableValue,
         announcementManager: AnnouncementManager = .silent,
-        announcementOfferPresenting: AnnouncementOfferPresenting = .init(present: { _ in }, dismiss: {}),
+        announcementOfferPresenting: AnnouncementOfferPresenting = .init(present: { _ in }, presentNPS: { _ in }, dismiss: {}),
         networkTraffic: NetworkTrafficClient = .testValue
     ) -> TestStoreOf<HeaderFeature> {
         // Per-user settings resolve their storage key from the logged-in username, so without one

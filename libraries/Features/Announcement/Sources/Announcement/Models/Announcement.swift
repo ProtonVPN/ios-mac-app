@@ -53,6 +53,8 @@ public extension Announcement {
         case `default` = 0
         case oneTime = 1
         case banner = 2
+        case prominentBanner = 3
+        case nps = 4
     }
 }
 

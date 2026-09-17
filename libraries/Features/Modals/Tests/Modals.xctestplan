@@ -1,12 +1,15 @@
 {
   "configurations": [
     {
-      "id": "34BCFE33-EB28-42D2-B55D-79931585D424",
-      "name": "Configuration 1",
+      "id": "877E6C73-AC72-4AEA-B499-D04193A50760",
+      "name": "Test Scheme Action",
       "options": {}
     }
   ],
-  "defaultOptions": {},
+  "defaultOptions": {
+    "codeCoverage": false,
+    "performanceAntipatternCheckerEnabled": true
+  },
   "testTargets": [
     {
       "target": {

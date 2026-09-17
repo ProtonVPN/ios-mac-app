@@ -128,7 +128,7 @@ struct HeaderButtonStyle: ButtonStyle {
             }
             .clipShape(.rect(cornerRadius: AppTheme.ButtonConstants.cornerRadius))
             .opacity(configuration.isPressed ? Dimensions.pressedOpacity : 1)
-            .linkPointer()
+            .linkPointer(isEnabled: true)
             .onHover { isHovered = $0 }
     }
 

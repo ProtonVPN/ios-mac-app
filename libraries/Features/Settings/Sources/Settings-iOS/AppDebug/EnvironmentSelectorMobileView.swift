@@ -17,15 +17,21 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
+    import Announcement
+    import CommonNetworking
     import ComposableArchitecture
+    import Dependencies
     import Domain
     import Foundation
+    import Modals
     import SettingsShared
     import SwiftUI
     import Theme
 
     public struct EnvironmentSelectorMobileView: View {
         @Binding public var store: StoreOf<DebugConfigurationFeature>
+
+        @Environment(\.dismiss) var dismiss
 
         var selectedEnvironmentSection: some View {
             Section {
@@ -207,6 +213,14 @@
             .buttonStyle(EnvironmentSelectorButtonStyle.active)
         }
 
+        var modalsSection: some View {
+            Section(header: Text("Modals").font(.headline)) {
+                Button("NPS Modal") {
+                    store.send(.pushNPS)
+                }
+            }
+        }
+
         var bottomButtonsSection: some View {
             Section {} header: {
                 Text("Apply changes").font(.headline)
@@ -237,6 +251,7 @@
                     userStandardDefaultsCell
                     keychainCell
                     networkConfigurationsCell
+                    modalsSection
                 }
                 .padding(.top, .themeSpacing16)
                 .frame(maxWidth: Theme.Constants.readableContentWidth)
@@ -252,9 +267,12 @@
         }
 
         public init(continueHandler: @Sendable @escaping () -> Void) {
-            self.init(store: .init(initialState: DebugConfigurationFeature.State(), reducer: {
-                DebugConfigurationFeature(continueHandler: continueHandler)
-            }))
+            self.init(store: .init(
+                initialState: DebugConfigurationFeature.State(),
+                reducer: {
+                    DebugConfigurationFeature(continueHandler: continueHandler)
+                }
+            ))
         }
     }
 

@@ -24,6 +24,7 @@ import Announcement
 import AppKit
 import BugReport
 import Cocoa
+import ComposableArchitecture
 import Dependencies
 import Domain
 import Ergonomics
@@ -57,6 +58,7 @@ protocol WindowService: WindowControllerDelegate {
     func openProfilesWindow(viewModel: ProfilesContainerViewModel)
     func openReportBugWindow()
     func openPlutoniumWindow()
+    func openNPSWindow(store: StoreOf<NPSModalFeature>)
     func openTroubleshootingWindow()
     func openSystemExtensionGuideWindow(origin: SystemExtensionTourAlert.Origin, cancelledHandler: @escaping () -> Void)
     func openSubuserAlertWindow(mode: NoConnectionsAvailableMode)
@@ -252,6 +254,14 @@ final class WindowServiceImplementation: WindowService {
         activeWindowControllers.insert(windowController)
         windowController.showWindow(self)
         windowController.window?.positionWindow(size: Theme.Constants.settingsViewSize)
+    }
+
+    func openNPSWindow(store: StoreOf<NPSModalFeature>) {
+        NSApp.setActivationPolicy(.regular)
+        let windowController = NPSWindowController(store: store)
+        activeWindowControllers.insert(windowController)
+        windowController.delegate = self
+        windowController.showWindow(self)
     }
 
     func openSystemExtensionGuideWindow(origin: SystemExtensionTourAlert.Origin, cancelledHandler: @escaping () -> Void) {

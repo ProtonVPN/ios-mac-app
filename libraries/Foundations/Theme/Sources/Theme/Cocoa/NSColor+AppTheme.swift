@@ -34,13 +34,11 @@ import SwiftUI
             assert(contains(.interactive))
             if contains(.weak) {
                 if contains(.hovered) {
-                    return CP.InteractionWeakHover
+                    return Asset.protonCarbonInteractionWeakHover.color
                 } else if contains(.active) {
-                    return CP.InteractionWeakActive
-                } else if contains(.disabled) {
-                    return CP.TextDisabled
+                    return Asset.protonCarbonInteractionWeakActive.color
                 } else {
-                    return CP.InteractionWeak
+                    return Asset.protonCarbonInteractionWeak.color
                 }
             } else if contains(.hint) {
                 if contains(.hovered) {
@@ -51,7 +49,9 @@ import SwiftUI
                     return CP.LinkNorm
                 }
             } else {
-                if contains(.hovered) {
+                if contains(.disabled) {
+                    return Asset.protonCarbonInteractionWeak.color
+                } else if contains(.hovered) {
                     return CP.InteractionNormHover
                 } else if contains(.active) {
                     return CP.InteractionNormActive

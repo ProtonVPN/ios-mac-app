@@ -23,6 +23,7 @@ import DependenciesMacros
 @DependencyClient
 public struct AnnouncementOfferPresenting: Sendable {
     public var present: @Sendable (_ store: StoreOf<AnnouncementsFeature>) -> Void
+    public var presentNPS: @Sendable (_ store: StoreOf<NPSModalFeature>) -> Void
     public var dismiss: @Sendable () -> Void
 }
 
@@ -54,12 +55,32 @@ public struct AnnouncementOfferCoordinator {
     }
 
     private func present(_ announcement: Announcement?) {
-        guard let announcement,
-              let state = AnnouncementsFeature.State(announcement: announcement) else {
+        guard let announcement else {
             return
         }
-        announcementManager.markAsRead(announcement: announcement)
+        if let state = AnnouncementsFeature.State(announcement: announcement) {
+            present(state: state)
+            announcementManager.markAsRead(announcement: announcement)
+        } else if announcement.knownType == .nps {
+            presentNPS()
+            /// Note: We do not mark NPS survey as read.
+            /// NPS survey needs to be presented each time the notifications response payload contains the type 4 notification.
+            /// Backend is responsible for inserting the notification or not based on eligibility criteria which are fully implemented
+            /// on the backend side.
+            /// The notification ID that we use to mark the notification as read is not unique over time, so we would be blocking
+            /// the app from showing future NPS surveys if we marked it as read.
+        }
+    }
 
+    private func presentNPS() {
+        let presenter = presenter
+        let store = Store(initialState: .init()) {
+            NPSModalFeature()
+        }
+        presenter.presentNPS(store)
+    }
+
+    private func present(state: AnnouncementsFeature.State) {
         let presenter = presenter
         let store = Store(initialState: state) {
             AnnouncementsFeature()

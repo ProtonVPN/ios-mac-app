@@ -23,6 +23,8 @@ import Foundation
 @DependencyClient
 public struct AnnouncementClient: Sendable {
     public internal(set) var fetchAnnouncements: @Sendable () async throws -> AnnouncementResponse
+    var sendNPSScore: @Sendable (_ score: Int, _ comment: String) async throws -> NPSResponse
+    var sendDismissNPSScore: @Sendable () -> Void
 }
 
 extension AnnouncementClient: DependencyKey {
@@ -32,6 +34,15 @@ extension AnnouncementClient: DependencyKey {
             fetchAnnouncements: {
                 let request = AnnouncementRequest()
                 return try await networking.perform(request: request)
+            }, sendNPSScore: { score, comment in
+                try await networking.perform(request: NPSRequest(useCase: .submit(
+                    score: score,
+                    comment: comment
+                )))
+            }, sendDismissNPSScore: {
+                Task {
+                    let _: NPSResponse = try await networking.perform(request: NPSRequest(useCase: .dismiss))
+                }
             }
         )
     }()
@@ -39,7 +50,9 @@ extension AnnouncementClient: DependencyKey {
     #if DEBUG
         public static var testValue: AnnouncementClient = AnnouncementClient {
             AnnouncementResponse(notifications: [])
-        }
+        } sendNPSScore: { _, _ in
+            .init(code: 1000)
+        } sendDismissNPSScore: {}
     #endif
 }
 

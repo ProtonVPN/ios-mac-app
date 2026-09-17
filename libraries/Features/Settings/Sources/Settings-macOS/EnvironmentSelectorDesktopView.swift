@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
+    import CommonNetworking
     import ComposableArchitecture
     import Domain
     import Foundation
@@ -139,6 +140,12 @@
             }
         }
 
+        var modals: some View {
+            Button("NPS Modal") {
+                store.send(.pushNPS)
+            }
+        }
+
         @ViewBuilder
         var bottomButtonsSection: some View {
             Button("Apply and kill") {
@@ -161,6 +168,7 @@
                     featureOverridesSection
                     Form {
                         userDefaultsCell
+                        modals
                     }.padding(.horizontal)
                     bottomButtonsSection
                 }
@@ -181,6 +189,8 @@
                 initialState: DebugConfigurationFeature.State(),
                 reducer: {
                     DebugConfigurationFeature(continueHandler: continueHandler)
+                }, withDependencies: {
+                    $0.networking = VPNNetworkingMock(userTierResult: .success(2))
                 }
             ))
         }

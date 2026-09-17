@@ -2350,6 +2350,22 @@ public enum Localizable {
   }
   /// Modal subtitle
   public static var noServersSubtitle: String { return Localizable.tr("Localizable", "no_servers_subtitle", fallback: "Ask your administrator to enable VPN access for your account.") }
+  /// Caption marking the Net Promoter Score comment field as not required
+  public static var npsModalCommentOptional: String { return Localizable.tr("Localizable", "nps_modal_comment_optional", fallback: "Optional") }
+  /// Label above the optional free-form field of the Net Promoter Score survey
+  public static var npsModalCommentTitle: String { return Localizable.tr("Localizable", "nps_modal_comment_title", fallback: "Please let us know why you gave that rating") }
+  /// Caption under the low end of the 0-10 Net Promoter Score scale
+  public static var npsModalScaleLowerBound: String { return Localizable.tr("Localizable", "nps_modal_scale_lower_bound", fallback: "0 is very unlikely") }
+  /// Caption under the high end of the 0-10 Net Promoter Score scale
+  public static var npsModalScaleUpperBound: String { return Localizable.tr("Localizable", "nps_modal_scale_upper_bound", fallback: "10 is very likely") }
+  /// Button that submits the Net Promoter Score survey answer
+  public static var npsModalSubmit: String { return Localizable.tr("Localizable", "nps_modal_submit", fallback: "Share anonymously") }
+  /// Question asked by the Net Promoter Score survey modal
+  public static var npsModalTitle: String { return Localizable.tr("Localizable", "nps_modal_title", fallback: "How likely are you to recommend Proton VPN to a friend?") }
+  /// Title label after submitting Net Promoter Score survey
+  public static var npsModalTitleThanksForSharing: String { return Localizable.tr("Localizable", "nps_modal_title_thanks_for_sharing", fallback: "Thanks for sharing") }
+  /// Subtitle label after submitting Net Promoter Score survey
+  public static var npsModalTitleThanksSubtitle: String { return Localizable.tr("Localizable", "nps_modal_title_thanks_subtitle", fallback: "Your feedback helps us improve Proton VPN.") }
   /// Crash reports help us fix bugs, detect firewalls, and avoid VPN blocks.
   public static var onboardingCrashReportsDescription: String { return Localizable.tr("Localizable", "onboarding_crash_reports_description", fallback: "Crash reports help us fix bugs, detect firewalls, and avoid VPN blocks.") }
   /// Share anonymous crash reports

@@ -19,6 +19,8 @@ let package = Package(
     dependencies: [
         .package(path: "../../../external/protoncore"),
 
+        .package(path: "../Modals"),
+
         .package(path: "../../Foundations/Strings"),
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/Domain"),
@@ -45,6 +47,7 @@ let package = Package(
                 "Domain",
                 "Theme",
                 "CommonNetworking",
+                "Modals",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "ProtonCoreNetworking", package: "protoncore"),

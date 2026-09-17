@@ -75,14 +75,23 @@
         private func defaultsList(entries: [UserDefaultsEntry]) -> some View {
             ForEach(entries, id: \.self) { entry in
                 Section {
-                    if case let .bool(value) = entry.value {
-                        Button {
-                            store.send(.flipBool(entry))
-                        } label: {
+                    Group {
+                        if case .bool = entry.value {
+                            Button {
+                                store.send(.flipBool(entry))
+                            } label: {
+                                Text(entry.textValue())
+                            }
+                        } else {
                             Text(entry.textValue())
                         }
-                    } else {
-                        Text(entry.textValue())
+                    }
+                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                        Button(role: .destructive) {
+                            store.send(.remove(entry))
+                        } label: {
+                            Image(systemName: "trash")
+                        }
                     }
                 } footer: {
                     Text(entry.key)

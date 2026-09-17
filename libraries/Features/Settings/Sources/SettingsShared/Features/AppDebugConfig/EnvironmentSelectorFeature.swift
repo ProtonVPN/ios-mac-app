@@ -17,12 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
+    import Announcement
     import CommonNetworking
     import ComposableArchitecture
     import Dependencies
     import Domain
     import Ergonomics
     import Foundation
+    import ModalsShared
     import Sharing
     import Theme
 
@@ -223,6 +225,7 @@
             case overridesRemoved(IndexSet)
             case localValuesOverridesRemoved(IndexSet)
             case insert(feature: String)
+            case pushNPS
 
             case destination(PresentationAction<Destination.Action>)
             case alert(PresentationAction<Alert>)
@@ -238,6 +241,16 @@
 
             Reduce { [continueHandler] state, action in
                 switch action {
+                case .pushNPS:
+                    return .run { @MainActor _ in
+                        @Dependency(\.announcementOfferPresenting) var presenter
+                        let store = StoreOf<NPSModalFeature>(initialState: .init()) {
+                            NPSModalFeature()
+                        } withDependencies: {
+                            $0.networking = VPNNetworkingMock(userTierResult: .success(2))
+                        }
+                        presenter.presentNPS(store)
+                    }
                 case .userDefaultsTapped:
                     state.destination = .userDefaults(.init(alert: nil, isStandard: false, content: .none))
                 case .userStandardDefaultsTapped:
@@ -400,7 +413,6 @@
             }
             .ifLet(\.$destination, action: \.destination)
             .ifLet(\.$alert, action: \.alert)
-            ._printChanges()
         }
 
         var continueHandler: (@Sendable () -> Void)?

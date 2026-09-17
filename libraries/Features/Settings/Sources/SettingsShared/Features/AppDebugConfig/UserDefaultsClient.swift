@@ -25,19 +25,25 @@ import Foundation
 // accidentally reused as a general storage accessor — use `@Dependency(\.defaultAppStorage)` for that.
 public struct UserDefaultsClient: DependencyKey, Sendable {
     public var flipBool: @Sendable (UserDefaultsEntry) -> Void
+    public var remove: @Sendable (UserDefaultsEntry) -> Void
     public var entries: @Sendable () async throws -> [UserDefaultsEntry]
     public var standardEntries: @Sendable () async throws -> [UserDefaultsEntry]
     public var reset: @Sendable () async throws -> Void
 
     public static let liveValue = UserDefaultsClient(
         flipBool: { entry in
-            guard let suiteName = getSuiteName(),
-                  let userDefaults = getUserDefaults else {
+            guard let userDefaults = getUserDefaults else {
                 return
             }
             guard case let .bool(value) = entry.value else { return }
 
             userDefaults.set(!value, forKey: entry.key)
+        },
+        remove: { entry in
+            guard let userDefaults = getUserDefaults else {
+                return
+            }
+            userDefaults.removeObject(forKey: entry.key)
         },
         entries: {
             try getPersistentDomain()

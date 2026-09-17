@@ -66,6 +66,14 @@ struct AnnouncementManagerImplementationTests {
             reference: nil
         ),
         Announcement(
+            notificationID: "2-no-offer-nps",
+            startTime: Date(),
+            endTime: .distantFuture,
+            type: Announcement.NotificationType.nps.rawValue,
+            offer: nil,
+            reference: nil
+        ),
+        Announcement(
             notificationID: "3-ended",
             startTime: .distantPast,
             endTime: .distantPast,
@@ -101,7 +109,8 @@ struct AnnouncementManagerImplementationTests {
             let filtered = manager.fetchCurrentAnnouncementsFromStorage()
             #expect(filtered.containsAnnouncement(withId: "2-with-offer"))
             #expect(filtered.containsAnnouncement(withId: "2-with-offer-one-time"))
-            #expect(filtered.count == 3)
+            #expect(filtered.containsAnnouncement(withId: "2-no-offer-nps"))
+            #expect(filtered.count == 4)
             #expect(!filtered.containsAnnouncement(withId: "1-no-offer"))
             #expect(!filtered.containsAnnouncement(withId: "3-ended"))
             #expect(!filtered.containsAnnouncement(withId: "3-future"))

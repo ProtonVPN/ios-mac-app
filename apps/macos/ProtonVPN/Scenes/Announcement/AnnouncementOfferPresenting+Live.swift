@@ -20,6 +20,7 @@ import Announcement
 import AppKit
 import ComposableArchitecture
 import Dependencies
+import ModalsShared
 import SwiftUI
 
 /// Weakly tracks the presented controller so `\.dismiss` can close it without capturing a
@@ -49,7 +50,12 @@ extension AnnouncementOfferPresenting: @retroactive DependencyKey {
                     windowService.presentKeyModal(viewController: controller, activatingApp: false)
                 }
             },
-            dismiss: {
+            presentNPS: { store in
+                MainActor.assumeIsolated {
+                    @Dependency(\.windowService) var windowService
+                    windowService.openNPSWindow(store: store)
+                }
+            }, dismiss: {
                 MainActor.assumeIsolated {
                     box.controller?.dismiss(nil)
                 }

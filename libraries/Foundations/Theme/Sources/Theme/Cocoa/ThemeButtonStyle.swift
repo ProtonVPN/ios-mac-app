@@ -26,6 +26,10 @@ public struct ThemeButtonStyle: ButtonStyle {
     @State private var isHovered = false
     @Environment(\.isEnabled) var isEnabled
 
+    #if canImport(UIKit)
+        private static let maxButtonWidth: CGFloat = 450
+    #endif
+
     public enum Style {
         case primary
         case secondary
@@ -61,13 +65,20 @@ public struct ThemeButtonStyle: ButtonStyle {
     public init(padding: Padding = .medium, style: Style = .primary, maxWidth: CGFloat? = nil) {
         self.padding = padding
         self.style = style
-        self.maxWidth = maxWidth
+        #if canImport(UIKit)
+            self.maxWidth = maxWidth ?? Self.maxButtonWidth
+        #else
+            self.maxWidth = maxWidth
+        #endif
     }
 
     func backgroundColor(isPressed: Bool) -> Color {
         var backgroundStyle: AppTheme.Style = [.interactive]
         if style == .secondary {
             backgroundStyle.insert(.weak)
+        }
+        if !isEnabled {
+            backgroundStyle.insert([.weak, .disabled])
         }
         if isPressed {
             backgroundStyle.insert(.active)
@@ -78,30 +89,42 @@ public struct ThemeButtonStyle: ButtonStyle {
         return Color(.background, backgroundStyle)
     }
 
+    var foregroundColor: Color {
+        var foregroundStyle: AppTheme.Style = []
+        if style == .primary, isEnabled {
+            foregroundStyle.insert(.primary)
+        } else if !isEnabled {
+            foregroundStyle.insert(.weak)
+        }
+        return Color(.text, foregroundStyle)
+    }
+
     public func makeBody(configuration: Self.Configuration) -> some View {
         configuration
             .label
         #if canImport(AppKit)
             .font(.body(emphasised: true))
-            .onHover { isHovered = $0 }
         #else
             .font(.body1(.semibold))
         #endif
             .frame(maxWidth: maxWidth)
-            .foregroundColor(Color(.text, isEnabled ? [] : [.hint]))
+            .foregroundColor(foregroundColor)
             .padding(.vertical, padding.vertical)
             .padding(.horizontal, padding.horizontal)
             .background(backgroundColor(isPressed: configuration.isPressed))
             .cornerRadius(.themeRadius8)
-            .linkPointer()
+            .linkPointer(isEnabled: isEnabled)
+        #if canImport(AppKit)
+            .onHover { isHovered = $0 }
+        #endif
     }
 }
 
 public extension View {
-    func linkPointer() -> some View {
+    func linkPointer(isEnabled: Bool) -> some View {
         #if canImport(AppKit)
             if #available(macOS 15.0, *) {
-                return pointerStyle(.link)
+                return pointerStyle(isEnabled ? PointerStyle.link : PointerStyle.default)
             } else {
                 return self
             }
@@ -111,33 +134,69 @@ public extension View {
     }
 }
 
+extension SwiftUICore.ColorScheme: @retroactive CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .light:
+            "Light"
+        case .dark:
+            "Dark"
+        @unknown default:
+            "Unknown"
+        }
+    }
+}
+
 #Preview {
     HStack {
         ForEach([SwiftUICore.ColorScheme.dark, .light], id: \.hashValue) { scheme in
             VStack {
-                Button("Small padding, secondary style") {}
+                Text("\(scheme.description) scheme")
+                HStack {
+                    Text("padding")
+                    Text("style")
+                    Text("enabled?")
+                }
+                Button("Small, secondary, enabled") {}
                     .buttonStyle(ThemeButtonStyle(
                         padding: .small,
                         style: .secondary
                     ))
-                Button("Medium padding, secondary style") {}
+                Button("Medium, secondary, enabled") {}
                     .buttonStyle(ThemeButtonStyle(
                         padding: .medium,
                         style: .secondary
                     ))
-                Button("Small padding, primary style") {}
+                Button("Medium, secondary, disabled") {}
+                    .buttonStyle(ThemeButtonStyle(
+                        padding: .medium,
+                        style: .secondary
+                    ))
+                    .disabled(true)
+                Button("Small, PRIMARY, enabled") {}
                     .buttonStyle(ThemeButtonStyle(
                         padding: .small,
                         style: .primary
                     ))
-                Button("Medium padding, primary style") {}
+                Button("Medium, PRIMARY, enabled") {}
                     .buttonStyle(ThemeButtonStyle(
                         padding: .medium,
                         style: .primary
                     ))
+                Button("Medium, PRIMARY, disabled") {}
+                    .buttonStyle(ThemeButtonStyle(
+                        padding: .medium,
+                        style: .primary
+                    ))
+                    .disabled(true)
             }
-            .padding()
-            .background(Color(.background, .weak))
+            #if canImport(AppKit)
+            .frame(width: 300)
+            #else
+            .frame(width: 600)
+            #endif
+            .padding(.vertical)
+            .background(Color(.background))
             .colorScheme(scheme)
         }
     }

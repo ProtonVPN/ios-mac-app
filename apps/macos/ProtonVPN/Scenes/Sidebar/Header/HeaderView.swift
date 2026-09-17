@@ -136,7 +136,7 @@ private struct AnnouncementsBellButton: View {
                 }
         }
         .buttonStyle(.plain)
-        .linkPointer()
+        .linkPointer(isEnabled: true)
         .help(bell.tooltip ?? "")
     }
 

@@ -39,7 +39,7 @@ public struct ThemeIcon: Equatable, Sendable {
 
     // MARK: - Init
 
-    init(asset: ImageAsset) {
+    public init(asset: ImageAsset) {
         self.source = .asset(asset.name)
     }
 

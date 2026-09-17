@@ -71,7 +71,7 @@
             }
             .padding(.themeSpacing8)
             .background(Color(.background, .transparent))
-            .linkPointer()
+            .linkPointer(isEnabled: true)
             .clipRectangle(cornerRadius: .radius8)
             .help(feature.hint)
         }

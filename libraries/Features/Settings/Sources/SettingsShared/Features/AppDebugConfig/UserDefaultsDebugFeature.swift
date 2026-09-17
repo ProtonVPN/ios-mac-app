@@ -34,6 +34,7 @@
 
         public enum Action {
             case flipBool(UserDefaultsEntry)
+            case remove(UserDefaultsEntry)
             case resetDefaultsTapped
             case resetDefaults
             case resetDefaultsFinished(Result<Void, Error>)
@@ -61,23 +62,25 @@
                     client.flipBool(entry)
                     return .send(.loadDefaults)
 
+                case let .remove(entry):
+                    client.remove(entry)
+                    return .send(.loadDefaults)
+
                 case .loadDefaults:
                     state.alert = nil
-                    state.content = .loading
                     return .run { send in
-                        let result = await Result { try await (
-                            client.entries()
-                        ) }
+                        let result = await Result {
+                            try await client.entries()
+                        }
                         return await send(.loadDefaultsFinished(result))
                     }
 
                 case .loadStandardDefaults:
                     state.alert = nil
-                    state.content = .loading
                     return .run { send in
-                        let result = await Result { try await (
-                            client.standardEntries()
-                        ) }
+                        let result = await Result {
+                            try await client.standardEntries()
+                        }
                         return await send(.loadDefaultsFinished(result))
                     }
 
