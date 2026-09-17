@@ -63,7 +63,12 @@ public struct AnnouncementOfferCoordinator {
             announcementManager.markAsRead(announcement: announcement)
         } else if announcement.knownType == .nps {
             presentNPS()
-            announcementManager.markAsRead(announcement: announcement)
+            /// Note: We do not mark NPS survey as read.
+            /// NPS survey needs to be presented each time the notifications response payload contains the type 4 notification.
+            /// Backend is responsible for inserting the notification or not based on eligibility criteria which are fully implemented
+            /// on the backend side.
+            /// The notification ID that we use to mark the notification as read is not unique over time, so we would be blocking
+            /// the app from showing future NPS surveys if we marked it as read.
         }
     }
 
