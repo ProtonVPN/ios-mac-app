@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
+    import ConnectionShared
     @testable import CoreConnection
     import CoreConnectionTestSupport
     import Dependencies
@@ -82,6 +83,115 @@
                 XCTAssertFalse(configuration.includeAllNetworks)
                 XCTAssertFalse(manager.isOnDemandEnabled)
                 XCTAssertTrue(manager.isEnabled)
+            }
+        #endif
+
+        #if !os(tvOS)
+            /// Advanced kill switch clears the exclusions Apple enables by default (push, carrier
+            /// services, device communication). Standard keeps the platform defaults.
+            @MainActor
+            func testConnectionClosesDefaultBypassesOnlyForAdvanced() async throws {
+                let configurator = ManagerConfigurator.wireGuardConfigurator
+                let keychain = MockAuthKeychain()
+                keychain.userId = "user-id"
+
+                for (mode, expectExcluded) in [(KillSwitchMode.advanced, false), (.standard, true)] {
+                    let session = VPNSessionMock(status: .disconnected, connectedDate: nil)
+                    var manager: TunnelProviderManager = MockTunnelProviderManager(
+                        session: session,
+                        isOnDemandEnabled: false,
+                        isEnabled: false
+                    )
+                    let intent = ServerConnectionIntent.mock(
+                        server: .mock,
+                        protocolConfiguration: .wireGuard(.init(backend: .proTUN, transport: .udp)),
+                        tunnelFeatures: .init(killSwitchMode: mode, excludeLocalNetworks: false)
+                    )
+
+                    try await withDependencies {
+                        $0.authKeychain = keychain
+                        $0.credentiallessHelper = .init(isCredentialLess: { false })
+                        $0.connectionFeatureProvider = .init(
+                            connectionFeatures: { .mock },
+                            requestedFeatures: { .init(killSwitchMode: mode, excludeLocalNetworks: false) },
+                            connectionProtocol: { .smartProtocol }
+                        )
+                    } operation: {
+                        try await configurator.configure(&manager, for: .connection(intent))
+                    }
+
+                    let config = try XCTUnwrap(manager.protocolConfiguration as? NETunnelProviderProtocol)
+                    XCTAssertTrue(config.includeAllNetworks)
+                    XCTAssertEqual(config.excludeCellularServices, expectExcluded)
+                    XCTAssertEqual(config.excludeAPNs, expectExcluded)
+                    if #available(iOS 17.4, macOS 14.4, *) {
+                        XCTAssertEqual(config.excludeDeviceCommunication, expectExcluded)
+                    }
+                }
+            }
+
+            /// The zero-peer tunnel takes `excludeLocalNetworks` from the user's preference instead of
+            /// the platform default, which allows LAN on iOS but not on macOS. It clears the default
+            /// exclusions unconditionally, because it only exists under Advanced.
+            @MainActor
+            func testZeroPeerColdStartFollowsLANPreferenceAndClosesDefaultBypasses() async throws {
+                let configurator = ManagerConfigurator.wireGuardConfigurator
+                let session = VPNSessionMock(status: .disconnected, connectedDate: nil)
+                var manager: TunnelProviderManager = MockTunnelProviderManager(
+                    session: session,
+                    isOnDemandEnabled: true,
+                    isEnabled: false
+                )
+                let keychain = MockAuthKeychain()
+                keychain.userId = "user-id"
+
+                try await withDependencies {
+                    $0.authKeychain = keychain
+                    $0.uuid = .incrementing
+                    $0.connectionFeatureProvider = .init(
+                        connectionFeatures: { .mock },
+                        requestedFeatures: { .init(killSwitchMode: .advanced, excludeLocalNetworks: true) },
+                        connectionProtocol: { .smartProtocol }
+                    )
+                } operation: {
+                    try await configurator.configure(&manager, for: .zeroPeerColdStart)
+                }
+
+                let config = try XCTUnwrap(manager.protocolConfiguration as? NETunnelProviderProtocol)
+                XCTAssertTrue(config.includeAllNetworks)
+                XCTAssertTrue(config.excludeLocalNetworks)
+                XCTAssertFalse(config.excludeCellularServices)
+                XCTAssertFalse(config.excludeAPNs)
+                XCTAssertNotNil(config.requestId)
+                XCTAssertFalse(manager.isOnDemandEnabled)
+                XCTAssertTrue(manager.isEnabled)
+
+                let protunConfig = try ProTUNConfigurationCoder.decode(from: config)
+                XCTAssertTrue(protunConfig.peers.isEmpty)
+            }
+
+            /// Switching a live tunnel into zero-peer blocking in place drops the peers, clears the
+            /// default exclusions, and records the requested `excludeLocalNetworks` value, so the
+            /// in-place zero-peer tunnel matches a freshly started one.
+            @MainActor
+            func testZeroPeerUpdateClosesDefaultBypassesAndStatesLANPosture() throws {
+                let protocolConfiguration = NETunnelProviderProtocol()
+                let peers = try Server.mock.peerInfo(using: WireguardConfig())
+                try ProTUNConfigurationCoder.encode(
+                    configuration: .init(preferredTransport: .udp, peers: peers, dnsServers: []),
+                    to: protocolConfiguration
+                )
+                XCTAssertTrue(protocolConfiguration.excludeCellularServices)
+
+                try protocolConfiguration.apply(update: .zeroPeer(using: ConnectionSpec(), allowLAN: false))
+
+                XCTAssertTrue(protocolConfiguration.includeAllNetworks)
+                XCTAssertFalse(protocolConfiguration.excludeLocalNetworks)
+                XCTAssertFalse(protocolConfiguration.excludeCellularServices)
+                XCTAssertFalse(protocolConfiguration.excludeAPNs)
+
+                let updated = try ProTUNConfigurationCoder.decode(from: protocolConfiguration)
+                XCTAssertTrue(updated.peers.isEmpty)
             }
         #endif
 

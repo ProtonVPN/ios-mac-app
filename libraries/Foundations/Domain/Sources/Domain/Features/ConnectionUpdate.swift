@@ -71,10 +71,15 @@ public struct ConnectionUpdate: Identifiable, Sendable, Equatable, Codable {
 }
 
 public extension ConnectionUpdate {
-    static func zeroPeer(using spec: ConnectionSpec) -> Self {
+    /// An update that switches the tunnel into zero-peer blocking for Advanced kill switch. The
+    /// update always sets `allowLAN` explicitly. Otherwise `apply(update:)` would leave the
+    /// previous connection's value, or the platform default, in place, and that may not match the
+    /// user's current preference.
+    static func zeroPeer(using spec: ConnectionSpec, allowLAN: Bool) -> Self {
         Self(
             location: .init(spec: spec, peers: []),
-            killSwitch: true
+            killSwitch: true,
+            allowLAN: allowLAN
         )
     }
 }

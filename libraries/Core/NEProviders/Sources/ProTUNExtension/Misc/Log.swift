@@ -30,6 +30,7 @@ extension Logger {
     static let adapter = Logger(subsystem: Subsystem.protun.rawValue, category: Category.adapter.rawValue)
     static let localAgent = Logger(subsystem: Subsystem.protun.rawValue, category: Category.localAgent.rawValue)
     static let library = Logger(subsystem: Subsystem.protun.rawValue, category: Category.library.rawValue)
+    static let packetFilter = Logger(subsystem: Subsystem.protun.rawValue, category: Category.packetFilter.rawValue)
 }
 
 private enum LogFilter: Sendable {
@@ -58,6 +59,7 @@ private enum Category: String, CaseIterable {
     case adapter = "Adapter"
     case localAgent = "LocalAgent"
     case library = "Library"
+    case packetFilter = "PacketFilter"
 }
 
 extension Logger {

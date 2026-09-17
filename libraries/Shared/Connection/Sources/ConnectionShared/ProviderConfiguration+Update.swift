@@ -39,6 +39,14 @@ public extension NETunnelProviderProtocol {
             if let allowLAN = update.allowLAN {
                 excludeLocalNetworks = allowLAN
             }
+
+            // Only Advanced kill switch requests a zero-peer location, so the zero-peer update also
+            // clears the exclusions Apple enables by default. A configuration built by a connect
+            // already carries the right exclusions for its mode. This covers switching a tunnel
+            // into blocking in place.
+            if update.killSwitch == true, update.location?.peers.isEmpty == true {
+                applyAdvancedKillSwitchExclusions()
+            }
         #endif
 
         // If we don't have changes to make to the `ProTUNConfiguration`, don't bother unpacking it.

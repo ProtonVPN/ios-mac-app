@@ -89,6 +89,10 @@ let package = Package(
             plugins: protunExtensionPlugins
         ),
         .target(name: "XPCAuditToken"),
+        .testTarget(
+            name: "ProTUNExtensionTests",
+            dependencies: ["ProTUNExtension"]
+        ),
         ProTUNFFITargetKind.current.target,
     ]
 )

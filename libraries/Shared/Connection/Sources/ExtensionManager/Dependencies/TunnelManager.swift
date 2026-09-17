@@ -191,7 +191,8 @@ enum TunnelManagerKey: DependencyKey {
 }
 
 final class PacketTunnelManager: TunnelManager {
-    let lastConnectionSpec: OSAllocatedUnfairLock<ConnectionSpec?> = .init(initialState: nil)
+    /// Where the user last asked to connect in this process.
+    private let lastConnectionSpec: OSAllocatedUnfairLock<ConnectionSpec?> = .init(initialState: nil)
 
     @Dependency(\.vpnManagerRepository) private var managerRepository
 
@@ -206,7 +207,7 @@ final class PacketTunnelManager: TunnelManager {
     /// The extension's most-recent reported error (carrying the request id it pertains to), sent over the error channel.
     @SharedReader(.extensionError) private var extensionError: ExtensionError? = nil
 
-    /// Where the user last asked to connect, falling back to persisted recents if none was recorded.
+    /// Where the user last asked to connect in this process, else the most recent connection on record.
     private func recoveredConnectionSpec() -> ConnectionSpec? {
         @SharedReader(.recentConnections) var recentConnections
         return lastConnectionSpec.withLock { $0 }
@@ -240,8 +241,8 @@ final class PacketTunnelManager: TunnelManager {
             metadata: ["tunnelFeatures": "\(intent.tunnelFeatures)"]
         )
 
-        // Stash the connection spec on the tunnel manager. During connection, the extension can check in with us faster
-        // than the Network Extension framework is able to persist the protocol configuration by the time that it pings.
+        // Keep the spec here as well as in the saved configuration to account for a race window during connection, when
+        // the extension can check in before the NE framework has persisted the new provider configuration.
         lastConnectionSpec.withLock { $0 = intent.spec }
 
         // Prepare the configuration - this may prompt the user for VPN permissions
@@ -517,8 +518,8 @@ final class PacketTunnelManager: TunnelManager {
         }
     #endif
 
-    /// Resolves the `ProTUN` extension state using both the `NEVPNStatus` of the tunel as reported by NetworkExtension
-    /// and the extension state sent over the reverse channel.
+    /// Resolves the tunnel state for ProTUN from both the `NEVPNStatus` that NetworkExtension reports and the extension
+    /// state that ProTUN publishes over the tunnel-data channels.
     private func resolveProTUN(
         session: VPNSession,
         configuration: NETunnelProviderProtocol?,
@@ -530,21 +531,24 @@ final class PacketTunnelManager: TunnelManager {
         guard let configuration else { return .success(.disconnected(nil)) }
 
         // NE preferences record intent (the app writes them before every request) and add a UUID to every configuration
-        // update to allow the app to know what the extension is still awiting on. Equal IDs mean nothing is pending, so
-        // an error comes in and the IDs are different, then the error in question is directly relevant to the
+        // update to allow the app to know what the extension is still awaiting on. Equal IDs mean nothing is pending.
+        // If an error comes in and the IDs are different, then the error in question is directly relevant to the
         // configuration we just applied. Surface to the user if possible.
         let quiesced = appliedRequestId != nil && appliedRequestId == configuration.requestId
         if quiesced, let error {
             return .failure(error)
         }
 
-        // The provider configuration can sometimes not be available if accessed while the extension is writing to it,
-        // or if the `ExtensionState` gets published before the NE framework has time to react. We want to make sure we
-        // do our best to respect it since it may differ from what we have stashed in memory, e.g. due to MDM profiles
-        // or the app launching while the extension is already connected.
-        let connectionSpec = (try? configuration.connectionSpec) ??
-            recoveredConnectionSpec() ??
-            ConnectionSpec()
+        // The saved configuration records where the user asked to connect. It can be missing for a brief window when
+        // connecting if the extension checks in with the app before the NE framework has persisted the configuration.
+        // To account for this case we return what was previously recorded if it's missing or fails to decode.
+        let connectionSpec: ConnectionSpec
+        do {
+            connectionSpec = try configuration.connectionSpec ?? recoveredConnectionSpec() ?? ConnectionSpec()
+        } catch {
+            log.error("The recorded connection spec failed to decode: \(error)", category: .connection)
+            connectionSpec = recoveredConnectionSpec() ?? ConnectionSpec()
+        }
 
         #if os(tvOS)
             let killSwitch = false

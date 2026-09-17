@@ -420,6 +420,7 @@
 
                 await store.send(.tunnel(.tunnelStatusChanged(.disconnected(.tunnelAborted)))) {
                     $0.tunnel = .disconnected(.tunnelAborted)
+                    $0.zeroPeerRecoveryAttempts = 1
                     $0.$connectionState.withLock { $0 = .disconnected }
                 }
                 await store.receive(\.tunnel.startZeroPeerColdStart)
@@ -427,6 +428,151 @@
                 await store.receive(\.delegate.stateChanged)
                 await store.receive(\.reloadWidgetTimelines)
                 await store.receive(\.tunnel.tunnelStartRequestFinished)
+            }
+
+            /// Disconnecting during an attempt whose configuration already carries the kill switch flag
+            /// keeps blocking under Advanced. The intent outlives the teardown, and the disconnected
+            /// report starts a fresh zero-peer tunnel instead of leaving the device unprotected.
+            @Test
+            @MainActor
+            func disconnectMidAttemptWithKillSwitchFlagRestoresTheBlackhole() async {
+                let spec = ConnectionSpec(location: .country(code: "IT", order: .fastest), features: [])
+                let configuration = TunnelConfiguration(
+                    connectionSpec: spec,
+                    tunnelProtocol: .wireGuard,
+                    peerIDs: ["old-peer"],
+                    killSwitch: true
+                )
+                let session = VPNSessionMock(status: .connecting)
+                session.startupDuration = nil
+                @Shared(.connectionState) var connectionState
+                $connectionState.withLock {
+                    $0 = .connecting(.unresolved(.init(spec: spec, acceptableProtocols: .all)), tunnelActive: false)
+                }
+                let store = TestStore(initialState: ConnectionFeature.State(
+                    shouldRegisterServerChangeOnConnection: false,
+                    tunnel: .connecting(configuration, tunnelActive: false)
+                )) {
+                    ConnectionFeature()
+                } withDependencies: {
+                    $0.connectionFeatureProvider = .init(
+                        connectionFeatures: { .mock },
+                        requestedFeatures: { .init(killSwitchMode: .advanced, excludeLocalNetworks: false) },
+                        connectionProtocol: { .smartProtocol }
+                    )
+                    $0.tunnelManager = MockTunnelManager(connection: session)
+                    $0.continuousClock = ImmediateClock()
+                    $0.date = .constant(.now)
+                }
+                store.exhaustivity = .off
+
+                await store.send(.input(.disconnect)) {
+                    $0.isBlockingIntended = true
+                }
+                await store.receive(\.tunnel.disconnect)
+
+                await store.send(.tunnel(.tunnelStatusChanged(.disconnected(nil)))) {
+                    $0.zeroPeerRecoveryAttempts = 1
+                }
+                await store.receive(\.tunnel.startZeroPeerColdStart)
+            }
+
+            /// Disconnecting during an attempt whose configuration does not carry the kill switch flag
+            /// releases the tunnel even under Advanced. Enabling Advanced mid-attempt only requests the
+            /// flag for the next connection, matching the connected case.
+            @Test
+            @MainActor
+            func disconnectMidAttemptWithoutKillSwitchFlagReleases() async {
+                let spec = ConnectionSpec(location: .country(code: "IT", order: .fastest), features: [])
+                let configuration = TunnelConfiguration(
+                    connectionSpec: spec,
+                    tunnelProtocol: .wireGuard,
+                    peerIDs: ["old-peer"],
+                    killSwitch: false
+                )
+                let session = VPNSessionMock(status: .connecting)
+                session.startupDuration = nil
+                @Shared(.connectionState) var connectionState
+                $connectionState.withLock {
+                    $0 = .connecting(.unresolved(.init(spec: spec, acceptableProtocols: .all)), tunnelActive: false)
+                }
+                let store = TestStore(initialState: ConnectionFeature.State(
+                    shouldRegisterServerChangeOnConnection: false,
+                    tunnel: .connecting(configuration, tunnelActive: false)
+                )) {
+                    ConnectionFeature()
+                } withDependencies: {
+                    $0.connectionFeatureProvider = .init(
+                        connectionFeatures: { .mock },
+                        requestedFeatures: { .init(killSwitchMode: .advanced, excludeLocalNetworks: false) },
+                        connectionProtocol: { .smartProtocol }
+                    )
+                    $0.tunnelManager = MockTunnelManager(connection: session)
+                    $0.continuousClock = ImmediateClock()
+                    $0.date = .constant(.now)
+                }
+                store.exhaustivity = .off
+
+                await store.send(.input(.disconnect))
+                #expect(store.state.isBlockingIntended == false)
+                await store.receive(\.tunnel.disconnect)
+
+                await store.send(.tunnel(.tunnelStatusChanged(.disconnected(nil))))
+                await store.finish()
+                #expect(store.state.zeroPeerRecoveryAttempts == 0)
+                #expect(store.state.connectionState.is(\.disconnected))
+            }
+
+            /// Zero-peer recovery is bounded. While attempts remain, the reducer swallows each failure
+            /// and retries. Once they run out, the failure reaches the parent, so the user learns the
+            /// device is not blocking, and the reducer releases the blocking intent.
+            @Test
+            @MainActor
+            func zeroPeerRecoveryStopsRetryingAndReportsTheFinalFailure() async {
+                let spec = ConnectionSpec(location: .country(code: "IT", order: .fastest), features: [])
+                let zeroPeerConfiguration = TunnelConfiguration(
+                    connectionSpec: spec,
+                    tunnelProtocol: .wireGuard,
+                    peerIDs: [],
+                    killSwitch: true
+                )
+                var initialState = ConnectionFeature.State(
+                    shouldRegisterServerChangeOnConnection: false,
+                    tunnel: .killSwitchActive(zeroPeerConfiguration)
+                )
+                initialState.isBlockingIntended = true
+                let session = VPNSessionMock(status: .disconnected)
+                session.startupDuration = nil
+                @Shared(.connectionState) var connectionState
+                $connectionState.withLock {
+                    $0 = .killSwitchActive(spec, zeroPeerConfiguration)
+                }
+                let store = TestStore(initialState: initialState) {
+                    ConnectionFeature()
+                } withDependencies: {
+                    $0.connectionFeatureProvider = .init(
+                        connectionFeatures: { .mock },
+                        requestedFeatures: { .init(killSwitchMode: .advanced, excludeLocalNetworks: false) },
+                        connectionProtocol: { .smartProtocol }
+                    )
+                    $0.tunnelManager = MockTunnelManager(connection: session)
+                    $0.continuousClock = ImmediateClock()
+                    $0.date = .constant(.now)
+                }
+                store.exhaustivity = .off
+
+                for attempt in 1 ... 3 {
+                    await store.send(.tunnel(.tunnelStatusChanged(.disconnected(.tunnelAborted)))) {
+                        $0.zeroPeerRecoveryAttempts = attempt
+                    }
+                    await store.receive(\.tunnel.startZeroPeerColdStart)
+                }
+
+                await store.send(.tunnel(.tunnelStatusChanged(.disconnected(.tunnelAborted)))) {
+                    $0.isBlockingIntended = false
+                }
+                await store.receive(\.delegate.connectionFailed)
+                #expect(store.state.zeroPeerRecoveryAttempts == 3)
             }
         }
     #endif

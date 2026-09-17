@@ -31,6 +31,16 @@
     }
 
     public extension IPv4Address {
+        /// The address as one host-order integer for quick comparison.
+        var packed: UInt32 {
+            rawValue.withUnsafeBytes { $0.loadUnaligned(as: UInt32.self).bigEndian }
+        }
+
+        /// Reads the address as a subnet mask and returns its prefix length.
+        var prefixLength: Int {
+            (~packed).leadingZeroBitCount
+        }
+
         var in_addr_value: in_addr {
             rawValue.withUnsafeBytes { $0.load(as: in_addr.self) }
         }
@@ -47,6 +57,16 @@
     }
 
     public extension IPv6Address {
+        /// The address as two host-order integers for quick comparison.
+        var packed: (hi: UInt64, lo: UInt64) {
+            rawValue.withUnsafeBytes { raw in
+                (
+                    raw.loadUnaligned(fromByteOffset: 0, as: UInt64.self).bigEndian,
+                    raw.loadUnaligned(fromByteOffset: 8, as: UInt64.self).bigEndian
+                )
+            }
+        }
+
         var in6_addr_value: in6_addr {
             rawValue.withUnsafeBytes { $0.load(as: in6_addr.self) }
         }

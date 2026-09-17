@@ -49,6 +49,7 @@ let package = Package(
                 "ConnectionShared",
                 "Domain",
                 "Ergonomics",
+                .product(name: "NetworkingErgonomics", package: "Ergonomics"),
                 "PMLogger",
                 "ExtensionIPC",
                 "Strings",
@@ -176,6 +177,7 @@ let package = Package(
             dependencies: [
                 "ExtensionManager",
                 "ExtensionSync",
+                "ConnectionShared",
                 "CoreConnectionTestSupport",
                 .product(name: "SharedErgonomics", package: "Ergonomics"),
                 .product(name: "VPNShared", package: "NEHelper"),
