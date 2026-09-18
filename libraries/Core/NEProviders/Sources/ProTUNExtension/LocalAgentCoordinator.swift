@@ -85,16 +85,16 @@ private extension LocalAgentCoordinator {
                         estimatedRoundTripTime: rtt
                     )
                 )
-            case let .error(.apiError(_, _, _, _, refreshTokenInvalid)) where refreshTokenInvalid:
+            case let .localAgentError(.apiError(_, _, _, _, refreshTokenInvalid)) where refreshTokenInvalid:
                 fallthrough
-            case .error(.forkSelectorNeeded):
+            case .localAgentError(.forkSelectorNeeded):
                 events.send(.forkSelectorRequest)
-            case let .error(.apiError(_, httpCode, bodyCode, _, _)):
+            case let .localAgentError(.apiError(_, httpCode, bodyCode, _, _)):
                 Logger.localAgent.error("Encountered API error: \(event)")
                 await sendError(error: APIError(httpCode: httpCode ?? 0, bodyCode: bodyCode ?? 0))
-            case let .error(.localAgentSettingPolicyRefused(setting)):
+            case let .localAgentError(.localAgentSettingPolicyRefused(setting)):
                 await sendError(error: LocalAgent.Error.policyRefusedError(from: setting))
-            case .error(.certificateRefreshFatalError):
+            case .localAgentError(.certificateRefreshFatalError):
                 await sendError(error: ExtensionTunnelError.certificateRefreshFatalError)
             case .packetCaptureStarted:
                 await adapter.reportPacketCaptureWhenConnected()
