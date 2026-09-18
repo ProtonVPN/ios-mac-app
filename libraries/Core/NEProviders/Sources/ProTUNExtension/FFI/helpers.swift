@@ -242,7 +242,7 @@ extension Event: @retroactive CustomStringConvertible {
                 ds:\(ds, default: "0")
             )
             """
-        case let .error(error: error):
+        case let .localAgentError(error: error):
             error.debugDescription
         @unknown default:
             unknownDefault(value: "(unknown value)")
