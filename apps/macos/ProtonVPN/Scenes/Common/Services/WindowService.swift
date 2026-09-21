@@ -257,6 +257,8 @@ final class WindowServiceImplementation: WindowService {
     }
 
     func openNPSWindow(store: StoreOf<NPSModalFeature>) {
+        // Prevent the window from showing multiple times, there should ever be only 1 NPS window.
+        guard !showIfPresent(windowController: NPSWindowController.self) else { return }
         NSApp.setActivationPolicy(.regular)
         let windowController = NPSWindowController(store: store)
         activeWindowControllers.insert(windowController)
