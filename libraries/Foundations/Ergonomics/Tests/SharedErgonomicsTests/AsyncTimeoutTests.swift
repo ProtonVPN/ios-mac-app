@@ -37,6 +37,7 @@ private func clockWork<T>(of duration: Duration, do work: () throws -> T) async 
     return try work()
 }
 
+@Suite(.mainSerialExecutor)
 struct AsyncTimeoutTests {
     @Test("`withSimpleTimeoutTest` helper test")
     func withSimpleTimeoutTest() async {
