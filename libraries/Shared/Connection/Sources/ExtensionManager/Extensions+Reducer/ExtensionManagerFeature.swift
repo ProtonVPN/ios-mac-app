@@ -145,7 +145,7 @@ public struct ExtensionFeature: Sendable {
                     await send(.delegate(.reconfigurationFailed(error)))
                 }
 
-            case let .connect(intent) where state.canUpdateConfiguration:
+            case let .connect(intent) where state.canUpdateConfiguration(to: intent.protocolConfiguration):
                 // The tunnel is already up, so reconfigure it in-place instead of reconnecting. Route any failure
                 // through `reconfigurationFailed` (never a disconnect) so the existing tunnel doesn't get torn down.
                 return .run { send in
@@ -161,7 +161,11 @@ public struct ExtensionFeature: Sendable {
                 // Start the tunnel and, concurrently, arm the connection timeout. The timeout is cancelled once we
                 // reach a terminal state for the attempt (connected / disconnected / start-request failure).
                 return .merge(
-                    .run { send in
+                    .run { [state] send in
+                        // Switching between IKEv2 and WireGuard requires stopping the existing tunnel first
+                        if let active = state.activeTunnelProtocol, active != intent.tunnelProtocol {
+                            try? await tunnelManager.stopTunnel()
+                        }
                         await send(.tunnelStartRequestFinished(Result {
                             try await tunnelManager.startTunnel(with: intent)
                             try Task.checkCancellation()
@@ -346,10 +350,25 @@ public enum ConnectionStage: Equatable, Sendable {
 }
 
 extension TunnelState {
+    /// The protocol of the tunnel that is currently up or being brought up, if any.
+    var activeTunnelProtocol: TunnelProtocol? {
+        switch self {
+        case let .connecting(config, _),
+             let .connectingToLocalAgent(config, _, _, _),
+             let .reasserting(config),
+             let .connected(config, _),
+             let .killSwitchActive(config):
+            config.tunnelProtocol
+        default:
+            nil
+        }
+    }
+
     /// Whether the tunnel is in a state where its configuration can be updated in place, rather than requiring a fresh
     /// connection.
-    var canUpdateConfiguration: Bool {
-        switch self {
+    func canUpdateConfiguration(to newConfiguration: ProtocolConfiguration) -> Bool {
+        guard case .wireGuard = newConfiguration else { return false }
+        return switch self {
         case .unknown:
             // Can be returned when the app is just starting to resolve the tunnel state
             false

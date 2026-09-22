@@ -301,7 +301,13 @@ final class ConnectionSettingsViewModel {
                     return
                 }
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User accepted to switch to Smart protocol.")
-                confirmEnableSmartProtocol(completion)
+                // Defer until after the current alert's action returns before calling the handler.
+                // Without this the alert, that is being presented from inside the closure
+                // get silently dropped because SwiftUI refuses to pile alerts on top of one
+                // another
+                Task { @MainActor [weak self] in
+                    self?.confirmEnableSmartProtocol(completion)
+                }
             }, continueHandler: { [weak self] in
                 guard let self else {
                     return
