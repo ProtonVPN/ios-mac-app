@@ -1,4 +1,4 @@
-# Proton VPN for iOS and macOS
+# Proton VPN for iOS, macOS and tvOS
 
 Copyright (c) 2025 Proton Technologies AG
 
@@ -8,15 +8,21 @@ This project uses Swift Package Manager for all of it's dependencies. Allow Xcod
 
 ### Third-party dependencies
 
-[ACKNOWLEDGEMENTS.md](ACKNOWLEDGEMENTS.md)
+Resolved versions are recorded in `ProtonVPN.xcworkspace/xcshareddata/swiftpm/Package.resolved`. Proton's own
+shared code is vendored as git submodules under `external/`, and those must be initialized before the
+workspace will resolve.
 
 ## Setup
+
+The quickest path is `./Integration/Scripts/bootstrap.sh` from the repository root, which installs the
+Homebrew dependencies, clones and links the credentials repository, initializes submodules, and installs the
+pre-commit hook. The steps below are what it does, plus what it cannot do for you.
 
 - Enable [Git LFS](https://git-lfs.github.com) on your machine
 - Clone this repository
 - Ensure you clone submodules (`git submodule init` + `git submodule update`)
 - Install Homebrew dependencies with `brew bundle`
-- You'll need to use Xcode 14.x for now
+- You'll need to use Xcode 26.x for now
 - Configure code signing for all targets with a paid Apple developer account (required due to VPN entitlements) and change the bundle identifiers to something unique
 - Clean build folder in Xcode (`Cmd+Shift+K`)
 
@@ -60,7 +66,9 @@ During development swiftlint is run on non-strict mode so it's easier to develop
 
 ### Localization
 
-The app uses [SwiftGen](https://github.com/SwiftGen/SwiftGen) to generate the `Localizable.strings` file for accessing all the app strings stored in the standard `Localizable.strings` files. Just add a new string to Strings package and run the `swiftgen` command in a directory where `swiftgen.yml` is defined.
+The app uses [SwiftGen](https://github.com/SwiftGen/SwiftGen) to generate type-safe accessors for the strings in the Strings package. Add a new string to the English `Localizable.strings` only, then run `swiftgen` from `libraries/Foundations/Strings` and commit the regenerated `Strings.swift`. All other languages come from Crowdin and must not be hand-edited.
+
+Note that names of unreleased features are checked in as placeholders such as `$HERMES`, and a build step substitutes them at build time using the mappings in `libraries/Foundations/Strings/Codewords.strings.env`. Use a placeholder rather than the real name when adding such a string.
 
 ## License
 

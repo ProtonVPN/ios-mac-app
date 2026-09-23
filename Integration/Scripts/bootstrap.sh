@@ -19,15 +19,6 @@ if [[ $? != 0 ]] ; then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-# Check if go is installed
-echo "Check if go package is installed"
-if brew list go &>/dev/null; then
-    echo "go package found ✅"
-else
-    echo "go not found, installing package.. 👷🏼‍♂️"
-    brew install go && echo "Go installed successfully 🤙🏻"
-fi
-
 # Obfuscated constants
 if ! ${scripts_folder}credentials.sh checkout &> /dev/null; then
     echo "Credentials repo not found.."
