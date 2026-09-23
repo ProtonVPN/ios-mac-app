@@ -172,8 +172,8 @@
       location = "container:"
       name = "Scripts">
       <Group
-         location = "group:docs"
-         name = "docs">
+         location = "group:Docs"
+         name = "Docs">
          <Group
             location = "group:decisions"
             name = "decisions">

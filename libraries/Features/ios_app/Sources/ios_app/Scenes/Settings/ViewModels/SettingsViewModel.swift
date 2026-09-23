@@ -93,15 +93,11 @@ final class SettingsViewModel {
     var pushHandler: ((_ viewController: UIViewController, _ translucentNavBar: Bool, _ hidesBackBarButton: Bool) -> Void)?
     var showModalController: ((UIViewController) -> Void)?
 
-    private let hermesSettingsViewModel: HermesSettingsViewModel
-
     // MARK: - Init
 
     init(factory: Factory, protocolService: ProtocolService) {
         self.factory = factory
         self.protocolService = protocolService
-
-        self.hermesSettingsViewModel = HermesSettingsViewModel()
 
         self.isAccountRecoveryEnabled = AccountRecoveryModule.feature.enabled
 
@@ -529,9 +525,10 @@ final class SettingsViewModel {
 
     private func pushHermesViewController() {
         DispatchQueue.main.async {
-            let viewController = self.settingsService.makeHermesSettingsViewController(viewModel: self.hermesSettingsViewModel)
+            let viewModel = HermesSettingsViewModel()
+            let viewController = self.settingsService.makeHermesSettingsViewController(viewModel: viewModel)
             viewController.onDidDisappear = { [weak self] in
-                self?.applyHermesChangesIfNecessary()
+                self?.applyHermesChangesIfNecessary(viewModel)
             }
             self.push(viewController: viewController, hidesTranslucentNarBar: true, hidesBackBarButton: true)
         }
@@ -936,7 +933,7 @@ final class SettingsViewModel {
                 fallthrough
             case .withConnectionUpdate:
                 // NetShield and CustomDNS are mutually exclusive
-                let wasCustomDNSEnabled = self?.hermesSettingsViewModel.isEnabled == true
+                let wasCustomDNSEnabled = self?.hermesClient.isEnabled().wrappedValue == true
                 let setNetShieldValue: (NetShieldType) -> Void = { [weak self] newValue in
                     guard let self else { return }
                     netShieldPropertyProvider.setNetShieldType(newValue)
@@ -976,24 +973,25 @@ final class SettingsViewModel {
     private func resolveHermesNetShieldConflictIfNecessary(
         completionHandler: @escaping (_ shouldEnableNetShield: Bool) -> Void
     ) {
-        guard hermesSettingsViewModel.isEnabled else {
+        guard hermesClient.isEnabled().wrappedValue else {
             completionHandler(true)
             return
         }
 
-        let alertController = hermesSettingsViewModel.netShieldOnConflictAlertController { [weak self] confirmed in
+        let hermesSettingsViewModel = HermesSettingsViewModel()
+        let alertController = hermesSettingsViewModel.netShieldOnConflictAlertController { confirmed in
             guard confirmed else {
                 completionHandler(false)
                 return
             }
-            self?.hermesSettingsViewModel.setIsEnabled(false, force: true)
+            hermesSettingsViewModel.setIsEnabled(false, force: true)
             completionHandler(true)
         }
 
         showModalController?(alertController)
     }
 
-    private func applyHermesChangesIfNecessary() {
+    private func applyHermesChangesIfNecessary(_ hermesSettingsViewModel: HermesSettingsViewModel) {
         hermesSettingsViewModel.hermesChangeAvailability { [weak self] availability in
             guard let self, let availability else {
                 log.assertionFailure("Hermes change availability callback called but unable to handle the change")
