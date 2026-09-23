@@ -171,6 +171,74 @@
    <Group
       location = "container:"
       name = "Scripts">
+      <Group
+         location = "group:docs"
+         name = "docs">
+         <Group
+            location = "group:decisions"
+            name = "decisions">
+            <FileRef
+               location = "group:001-tca.md">
+            </FileRef>
+            <FileRef
+               location = "group:002-grdb-persistence.md">
+            </FileRef>
+            <FileRef
+               location = "group:003-swift-sharing-settings.md">
+            </FileRef>
+            <FileRef
+               location = "group:004-metal-globe.md">
+            </FileRef>
+            <FileRef
+               location = "group:005-tunnel-data-shared-memory.md">
+            </FileRef>
+         </Group>
+         <FileRef
+            location = "group:architecture.md">
+         </FileRef>
+         <FileRef
+            location = "group:api.md">
+         </FileRef>
+         <FileRef
+            location = "group:localization.md">
+         </FileRef>
+         <FileRef
+            location = "group:map-globe.md">
+         </FileRef>
+         <FileRef
+            location = "group:testing.md">
+         </FileRef>
+         <FileRef
+            location = "group:README.md">
+         </FileRef>
+         <FileRef
+            location = "group:persistence.md">
+         </FileRef>
+         <FileRef
+            location = "group:release.md">
+         </FileRef>
+         <FileRef
+            location = "group:protoncore.md">
+         </FileRef>
+         <FileRef
+            location = "group:platforms.md">
+         </FileRef>
+         <FileRef
+            location = "group:vpn-connection.md">
+         </FileRef>
+         <FileRef
+            location = "group:features.md">
+         </FileRef>
+         <FileRef
+            location = "group:observability.md">
+         </FileRef>
+         <FileRef
+            location = "group:development.md">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:AGENTS.md">
+      </FileRef>
       <FileRef
          location = "group:CLAUDE.md">
       </FileRef>
