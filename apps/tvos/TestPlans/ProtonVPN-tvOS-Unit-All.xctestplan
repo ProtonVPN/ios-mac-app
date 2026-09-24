@@ -26,15 +26,46 @@
     {
       "target": {
         "containerPath": "container:../../libraries/Shared/Connection",
-        "identifier": "CertificateAuthenticationTests",
-        "name": "CertificateAuthenticationTests"
+        "identifier": "ConnectionTests",
+        "name": "ConnectionTests"
       }
     },
     {
+      "skippedTests": {
+        "suites": [
+          {
+            "name": "ConnectionSpecLocationDisplayTests"
+          },
+          {
+            "name": "IPCCoderTests"
+          },
+          {
+            "name": "MDMAppStorageKeyTests",
+            "testFunctions": [
+              "macDoesNotReadUnManagedKeys()",
+              "mdmBoolExplicitFalseOverridesDefault()",
+              "mdmBoolStringValueFallsBackToDefault()",
+              "mdmBoolSubscriptionDeduplicates()",
+              "mdmBoolSubscriptionFires()",
+              "mdmStringAbsentKeyReturnsNil()",
+              "mdmStringNonStringValueReturnsNil()",
+              "mdmStringSubscriptionFires()",
+              "sameNameDifferentStoresDifferentIDs()",
+              "subscriptionCancellationRemovesObserver()",
+              "unrelatedKeyChangeDoesNotEmit()"
+            ]
+          }
+        ],
+        "xctestClasses": [
+          {
+            "name": "CountriesCoordinatesTests"
+          }
+        ]
+      },
       "target": {
-        "containerPath": "container:../../libraries/Shared/Connection",
-        "identifier": "ConnectionTests",
-        "name": "ConnectionTests"
+        "containerPath": "container:../../libraries/Foundations/Domain",
+        "identifier": "DomainTests",
+        "name": "DomainTests"
       }
     },
     {

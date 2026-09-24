@@ -82,6 +82,37 @@
       }
     },
     {
+      "skippedTests": {
+        "suites": [
+          {
+            "name": "ConnectionSpecLocationDisplayTests"
+          },
+          {
+            "name": "IPCCoderTests"
+          },
+          {
+            "name": "PropertiesSharedKeyTests"
+          }
+        ],
+        "xctestClasses": [
+          {
+            "name": "CountriesCoordinatesTests"
+          },
+          {
+            "name": "ProtocolSupportTests"
+          },
+          {
+            "name": "URLTests"
+          }
+        ]
+      },
+      "target": {
+        "containerPath": "container:../../libraries/Foundations/Domain",
+        "identifier": "DomainTests",
+        "name": "DomainTests"
+      }
+    },
+    {
       "target": {
         "containerPath": "container:../../libraries/Foundations/Ergonomics",
         "identifier": "ErgonomicsTests",
