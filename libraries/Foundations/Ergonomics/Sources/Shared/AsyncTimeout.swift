@@ -83,7 +83,7 @@ public func withTimeout<ReturnType: Sendable>(
                 }
             }
 
-            Task {
+            _ = Task {
                 try await anyClock.sleep(for: timeoutDuration)
                 workTask.cancel()
                 if await coordinator.tryComplete() {
