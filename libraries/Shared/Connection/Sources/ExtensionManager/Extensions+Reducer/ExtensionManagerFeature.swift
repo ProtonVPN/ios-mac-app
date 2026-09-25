@@ -24,6 +24,7 @@ import Domain
 import Ergonomics
 import ExtensionSync
 import Foundation
+import SharedErgonomics
 import Strings
 import VPNAppCore
 
@@ -34,6 +35,10 @@ public struct ExtensionFeature: Sendable {
     @Dependency(\.forkSelectorClient) var forkSelectorClient
 
     private static let defaultConnectionTimeout = Duration.seconds(30)
+    /// How long to wait for a tunnel we asked to stop to report itself down.
+    private static let tunnelStopTimeout = Duration.seconds(5)
+    /// How often the tunnel is asked for its state while waiting for it to stop.
+    private static let tunnelStopPollInterval = Duration.milliseconds(250)
 
     public init() {}
 
@@ -56,6 +61,9 @@ public struct ExtensionFeature: Sendable {
         /// Requests that the extension apply a partial configuration/feature change to the running tunnel.
         case requestConfigChange(ConnectionUpdate)
         case connect(ServerConnectionIntent)
+        /// The second half of `.connect`: any tunnel that had to be stopped first is down, so the new one can be
+        /// started and the connection timeout armed for it.
+        case tunnelStartRequested(ServerConnectionIntent)
         #if !os(tvOS)
             /// Start a zero-peer tunnel from a disconnected state (Advanced kill switch cold-start).
             case startZeroPeerColdStart
@@ -158,14 +166,22 @@ public struct ExtensionFeature: Sendable {
                 }
 
             case let .connect(intent):
+                // Switching between IKEv2 and WireGuard requires stopping the existing tunnel first. Tearing the old
+                // tunnel down is not part of the new connection attempt, so the start is deferred to
+                // `.tunnelStartRequested` and the timeout is armed there, once the wait is behind us.
+                guard let active = state.activeTunnelProtocol, active != intent.tunnelProtocol else {
+                    return .send(.tunnelStartRequested(intent))
+                }
+                return .run { send in
+                    await stopTunnelAndWaitForDisconnection()
+                    await send(.tunnelStartRequested(intent))
+                }.cancellable(id: CancelID.tunnelStart)
+
+            case let .tunnelStartRequested(intent):
                 // Start the tunnel and, concurrently, arm the connection timeout. The timeout is cancelled once we
                 // reach a terminal state for the attempt (connected / disconnected / start-request failure).
                 return .merge(
-                    .run { [state] send in
-                        // Switching between IKEv2 and WireGuard requires stopping the existing tunnel first
-                        if let active = state.activeTunnelProtocol, active != intent.tunnelProtocol {
-                            try? await tunnelManager.stopTunnel()
-                        }
+                    .run { send in
                         await send(.tunnelStartRequestFinished(Result {
                             try await tunnelManager.startTunnel(with: intent)
                             try Task.checkCancellation()
@@ -301,6 +317,36 @@ public struct ExtensionFeature: Sendable {
         }
     }
 
+    /// Stops the tunnel and waits until the system reports it down.
+    ///
+    /// `stopTunnel()` only asks NetworkExtension to tear the session down: it returns while the session is still
+    /// `.disconnecting`. Starting the next tunnel at that point leaves two sessions contending over the same
+    /// configuration — the very thing that makes a protocol switch fail — so the caller waits here first. The
+    /// wait is bounded: a session that never reports itself down should delay the new tunnel, not block it.
+    private func stopTunnelAndWaitForDisconnection() async {
+        do {
+            try await withTimeout(of: Self.tunnelStopTimeout) {
+                try await tunnelManager.stopTunnel()
+                repeat {
+                    guard !Task.isCancelled else { return }
+                    try await clock.sleep(for: Self.tunnelStopPollInterval)
+                } while try await !(tunnelManager.status.isStopped)
+            }
+        } catch is AsyncTimeoutError {
+            log.error(
+                "Tunnel did not stop within \(Self.tunnelStopTimeout); starting the new tunnel anyway",
+                category: .connection
+            )
+        } catch {
+            // `stopTunnel` throws when no configuration is active, in which case there is nothing to wait for.
+            log.debug(
+                "Stopping the tunnel before the protocol switch failed",
+                category: .connection,
+                metadata: ["error": "\(error)"]
+            )
+        }
+    }
+
     /// Returns the connection stage the tunnel is currently in, or `nil` if fully connected.
     private func connectionStage(_ state: TunnelState) -> ConnectionStage? {
         switch state {
@@ -350,6 +396,17 @@ public enum ConnectionStage: Equatable, Sendable {
 }
 
 extension TunnelState {
+    /// Whether the tunnel is down: either torn down, or with no configuration to tear down in the first place.
+    var isStopped: Bool {
+        switch self {
+        case .disconnected, .invalid:
+            true
+        case .unknown, .connecting, .connectingToLocalAgent, .connected, .reasserting, .disconnecting,
+             .killSwitchActive:
+            false
+        }
+    }
+
     /// The protocol of the tunnel that is currently up or being brought up, if any.
     var activeTunnelProtocol: TunnelProtocol? {
         switch self {
@@ -466,6 +523,8 @@ extension ExtensionFeature.Action: CustomDebugStringConvertible {
             ".stopObserving"
         case let .connect(serverConnectionIntent):
             ".connect(\(serverConnectionIntent))"
+        case let .tunnelStartRequested(serverConnectionIntent):
+            ".tunnelStartRequested(\(serverConnectionIntent))"
         #if !os(tvOS)
             case .startZeroPeerColdStart:
                 ".startZeroPeerColdStart"

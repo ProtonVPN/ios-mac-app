@@ -96,8 +96,8 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             }, cancelHandler: {
                 completion(.failure(ReconnectOnSmartProtocolChangeAlert.userCancelled))
             })
-            Task { @MainActor [weak self] in
-                self?.alertService.push(alert: alert)
+            Task { @MainActor in
+                self.alertService.push(alert: alert)
             }
             return
         }
@@ -113,8 +113,8 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             completion(.failure(ReconnectOnSettingsChangeAlert.userCancelled))
         })
 
-        Task { @MainActor [weak self] in
-            self?.alertService.push(alert: reconnectAlert)
+        Task { @MainActor in
+            self.alertService.push(alert: reconnectAlert)
         }
     }
 
