@@ -144,7 +144,7 @@ private struct ConnectingOverlayContentView: View {
 
     private var overlayButtons: [ConnectingOverlayButtonModel] {
         if store.timedOut {
-            return store.isIkeWithKsEnabled ? [.retryWithoutKillSwitch, .cancel] : [.retry, .cancel]
+            return store.isRetryWithoutKillSwitchAllowed ? [.retryWithoutKillSwitch, .cancel] : [.retry, .cancel]
         }
         return store.displayState.is(\.connected) ? [.done] : [.cancel]
     }

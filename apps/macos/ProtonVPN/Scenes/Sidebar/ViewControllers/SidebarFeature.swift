@@ -927,9 +927,12 @@ private extension SidebarFeature {
         // Misconfigured LAN. Fires when an interface uses a non-RFC1918 subnet that the OS would otherwise route around
         // the tunnel. Kill Switch fully mitigates the issue.
         @SharedReader(.featureFlags) var featureFlags
+        // If alwaysOn is enabled for a managed device, we don't any anything to change the level we have activated for kill switch.
+        @SharedReader(.alwaysOnEnabled) var alwaysOnEnabled
         if !pending.resolvedIntercepts.contains(.badLAN),
            featureFlags.unsafeLanWarnings,
            !killSwitchMode.isProtected,
+           !alwaysOnEnabled,
            let bad = networkInterfacePropertiesProvider.firstBadInterface() {
             return bad.interceptAlert(
                 enableKillSwitch: .enableKillSwitchAndConnect(pending),

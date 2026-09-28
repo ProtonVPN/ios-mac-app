@@ -47,8 +47,11 @@ extension ConnectionFeatureProvider: DependencyKey {
             },
             requestedFeatures: {
                 @SharedReader(.killSwitchMode) var killSwitchMode
+                @SharedReader(.alwaysOnEnabled) var alwaysOnEnabled
+               
                 return LocalTunnelFeatures(
-                    killSwitchMode: killSwitchMode,
+                    killSwitchMode: effectiveKillSwitchMode(requested: killSwitchMode,
+                                                            alwaysOnEnabled: alwaysOnEnabled),
                     excludeLocalNetworks: AuthorizedFeatureValue<ExcludeLocalNetworks>().value() == .on
                 )
             },
@@ -66,6 +69,20 @@ extension ConnectionFeatureProvider: DependencyKey {
     #endif
 
     public static let testValue: ConnectionFeatureProvider = .init()
+}
+
+extension ConnectionFeatureProvider {
+    // If always-on is mandated, the effective mode should be .advanced, however
+    // until we have support from R&D to allow authentication in this mode
+    // we will be using .standard for the time being.
+    static func effectiveKillSwitchMode(requested: KillSwitchMode,
+                                        alwaysOnEnabled: Bool) -> KillSwitchMode {
+        guard alwaysOnEnabled, !requested.isProtected else {
+            return requested
+        }
+        
+        return .mdmMandatedMinimum
+    }
 }
 
 public extension DependencyValues {

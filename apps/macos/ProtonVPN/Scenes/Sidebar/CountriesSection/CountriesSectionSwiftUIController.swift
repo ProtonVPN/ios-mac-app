@@ -83,6 +83,7 @@ struct CountriesSectionRootView: View {
             switch type {
             case .netShieldDisplay: quickSettingsStore.netShield.isVisible
             case .portForwardingDisplay: quickSettingsStore.portForwarding.isVisible
+            case .killSwitchDisplay: quickSettingsStore.killSwitch.isVisible
             default: true
             }
         }

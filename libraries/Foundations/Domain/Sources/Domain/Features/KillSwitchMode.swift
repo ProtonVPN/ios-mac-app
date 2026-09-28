@@ -41,6 +41,11 @@ public enum KillSwitchMode: Int, CaseIterable, Codable, Comparable, Sendable {
     public var isAdvanced: Bool {
         self == .advanced
     }
+    
+    /// MDM mandated floor that determines the minimum kill switch level
+    static public var mdmMandatedMinimum : KillSwitchMode {
+        .standard // Note: eventually this will be advanced once we are supported by R&D.
+    }
 
     /// Modes are ordered by how much protection they provide, so confirmation flows can distinguish
     /// upgrades from downgrades.
