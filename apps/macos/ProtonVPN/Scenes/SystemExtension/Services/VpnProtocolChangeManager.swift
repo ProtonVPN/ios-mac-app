@@ -96,11 +96,13 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             }, cancelHandler: {
                 completion(.failure(ReconnectOnSmartProtocolChangeAlert.userCancelled))
             })
-            alertService.push(alert: alert)
+            Task { @MainActor in
+                self.alertService.push(alert: alert)
+            }
             return
         }
 
-        alertService.push(alert: ReconnectOnSettingsChangeAlert(confirmHandler: { [weak self] in
+        let reconnectAlert = ReconnectOnSettingsChangeAlert(confirmHandler: { [weak self] in
             self?.set(
                 vpnProtocol: vpnProtocol,
                 userInitiated: userInitiated,
@@ -109,7 +111,11 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             )
         }, cancelHandler: {
             completion(.failure(ReconnectOnSettingsChangeAlert.userCancelled))
-        }))
+        })
+
+        Task { @MainActor in
+            self.alertService.push(alert: reconnectAlert)
+        }
     }
 
     private func set(

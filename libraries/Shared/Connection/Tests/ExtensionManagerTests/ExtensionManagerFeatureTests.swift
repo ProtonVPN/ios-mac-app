@@ -63,6 +63,7 @@
             await store.receive(\.tunnelStatusChanged.disconnected)
 
             await store.send(.connect(intent))
+            await store.receive(\.tunnelStartRequested)
             await store.receive(\.tunnelStartRequestFinished)
 
             // Now that the start request has completed, simulate the extension reporting the connecting state.
@@ -149,6 +150,120 @@
             }
 
             await store.send(.connect(intent))
+
+            // Switching protocol stops the IKEv2 tunnel first and waits for the session to actually go down, which
+            // the mock does `disconnectionDuration` after being asked.
+            #expect(mockManager.connection.status == .disconnecting)
+            await mockClock.advance(by: .seconds(1))
+            await mockClock.advance(by: .milliseconds(250)) // the poll that observes it
+
+            await store.receive(\.tunnelStartRequested)
+            await store.receive(\.tunnelStartRequestFinished.success)
+
+            await store.send(.stopObserving)
+        }
+
+        /// The tunnel has to be down before the next one starts: `stopTunnel()` returns while the session is still
+        /// `.disconnecting`, and starting then leaves two sessions contending over the same configuration.
+        @Test
+        @MainActor
+        func protocolSwitchWaitsForTheOldTunnelToStop() async {
+            let mockManager = MockTunnelManager()
+            let mockClock = TestClock()
+            let now = Date.now
+            let didStartTunnel = OSAllocatedUnfairLock(initialState: false)
+
+            mockManager.connection = VPNSessionMock(status: .connected, connectedDate: now, lastDisconnectError: nil)
+            mockManager.connection.disconnectionDuration = .seconds(2)
+            mockManager.connection.onConnection = { didStartTunnel.withLock { $0 = true } }
+
+            let intent = ServerConnectionIntent(
+                spec: .defaultFastest,
+                server: .ca,
+                protocolConfiguration: .wireGuard(TunnelSettings.mock),
+                features: .mock,
+                tunnelFeatures: .mock
+            )
+            let connectedOverIKE = TunnelState.connected(
+                TunnelConfiguration(
+                    connectionSpec: .defaultFastest,
+                    tunnelProtocol: .ike,
+                    peerIDs: ["server-id"],
+                    killSwitch: false
+                ),
+                DynamicConnectionData(currentPeerId: "server-id", connectionDate: now, protocolConnectionData: .ike)
+            )
+
+            let store = TestStore(initialState: connectedOverIKE) {
+                ExtensionFeature()
+            } withDependencies: {
+                $0.continuousClock = mockClock
+                $0.tunnelManager = mockManager
+                $0.date = .constant(now)
+            }
+
+            await store.send(.connect(intent))
+
+            // Half way through the teardown: the stop has been asked for, but the new tunnel must not be started
+            // while the old session is still on its way down.
+            await mockClock.advance(by: .seconds(1))
+            #expect(mockManager.connection.status == .disconnecting)
+            #expect(didStartTunnel.withLock { $0 } == false)
+
+            // The session finishes going down, and only then is the start requested — and with it, the connection
+            // timeout armed, so the teardown doesn't eat into the new attempt's budget.
+            await mockClock.advance(by: .seconds(1))
+            await mockClock.advance(by: .milliseconds(250)) // the poll that observes it
+
+            await store.receive(\.tunnelStartRequested)
+            await store.receive(\.tunnelStartRequestFinished.success)
+            #expect(didStartTunnel.withLock { $0 })
+
+            await store.send(.stopObserving)
+        }
+
+        /// A tunnel that never reports itself down must delay the new connection, not block it: the wait gives up
+        /// after `tunnelStopTimeout` and the start goes ahead.
+        @Test
+        @MainActor
+        func protocolSwitchStartsAnywayWhenTheOldTunnelNeverStops() async {
+            let mockManager = MockTunnelManager()
+            let mockClock = TestClock()
+            let now = Date.now
+
+            mockManager.connection = VPNSessionMock(status: .connected, connectedDate: now, lastDisconnectError: nil)
+            // A session that acknowledges the stop and then stays `.disconnecting` forever.
+            mockManager.connection.disconnectionDuration = nil
+
+            let intent = ServerConnectionIntent(
+                spec: .defaultFastest,
+                server: .ca,
+                protocolConfiguration: .wireGuard(TunnelSettings.mock),
+                features: .mock,
+                tunnelFeatures: .mock
+            )
+            let connectedOverIKE = TunnelState.connected(
+                TunnelConfiguration(
+                    connectionSpec: .defaultFastest,
+                    tunnelProtocol: .ike,
+                    peerIDs: ["server-id"],
+                    killSwitch: false
+                ),
+                DynamicConnectionData(currentPeerId: "server-id", connectionDate: now, protocolConnectionData: .ike)
+            )
+
+            let store = TestStore(initialState: connectedOverIKE) {
+                ExtensionFeature()
+            } withDependencies: {
+                $0.continuousClock = mockClock
+                $0.tunnelManager = mockManager
+                $0.date = .constant(now)
+            }
+
+            await store.send(.connect(intent))
+            await mockClock.advance(by: .seconds(5)) // `tunnelStopTimeout`
+
+            await store.receive(\.tunnelStartRequested)
             await store.receive(\.tunnelStartRequestFinished.success)
 
             await store.send(.stopObserving)
@@ -233,6 +348,7 @@
             mockManager.tunnelStartErrorToThrow = permissionDenied
 
             await store.send(.connect(intent))
+            await store.receive(\.tunnelStartRequested)
             await store.receive(\.tunnelStartRequestFinished.failure)
             await store.receive(\.tunnelStatusChanged.disconnected) {
                 $0 = .disconnected(.tunnelStartFailed(permissionDenied))
