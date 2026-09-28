@@ -30,6 +30,12 @@ struct KillSwitchQuickSettingFeature {
         var isSelected: Bool
         @SharedReader(.killSwitchMode) var killSwitchMode: KillSwitchMode
         @SharedReader(.connectionState) var connectionState: ConnectionState
+        
+        // If always-on is enabled and mandated by MDM, the user shouldn't be able to change kill switch settings.
+        var isVisible: Bool {
+            @SharedReader(.alwaysOnEnabled) var alwaysOnEnabled: Bool
+            return !alwaysOnEnabled
+        }
 
         var icon: Image {
             switch killSwitchMode {

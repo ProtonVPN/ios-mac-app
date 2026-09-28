@@ -185,6 +185,29 @@ struct ConnectingOverlayFeatureTests {
         )
         #expect(state.isIkeWithKsEnabled == expected)
     }
+    
+    // MARK: - State.isRetryWithoutKillSwitchAllowed
+    
+    @Test("isRetryWithoutKillSwitchAllowed is only true when always on is disabled and isIkeWithKsEnabled is true",
+          arguments: [
+            (ConnectionProtocol.vpnProtocol(.ike), true, false, true), // IKE + KS on, always on off > true
+            (.vpnProtocol(.ike),                   true, true, false), // IKE + KS on, always on on > false
+            (.vpnProtocol(.ike),                   false, false, false), // IKE + KS off, always on off > false
+            (.vpnProtocol(.wireGuard(.udp)),       true, true, false), // Wiregaurd + KS on
+            (.smartProtocol,                       true, true, false),  // Smart + KS on
+            ] as [(ConnectionProtocol, Bool, Bool, Bool)])
+    func isRetryWithoutKillSwitchAllowed(proto: ConnectionProtocol, ksOn: Bool, alwaysOn: Bool, expected: Bool) {
+        let defaults = UserDefaults.inMemory
+        defaults.set(alwaysOn, forKey: "AlwaysOnEnabled")
+        withDependencies {
+            $0.defaultAppStorage = defaults
+        } operation: {
+            let state = ConnectingOverlayFeature.State(
+                killSwitchEnabled: ksOn,
+                selectedProtocol: proto)
+            #expect(state.isRetryWithoutKillSwitchAllowed == expected)
+        }
+    }
 
     // MARK: - State.headlinePhase
 

@@ -39,7 +39,7 @@ struct ConnectingOverlayFeature {
         var timedOut = false
         var killSwitchEnabled = false
         var selectedProtocol: ConnectionProtocol = .smartProtocol
-
+        
         enum GraphicKind: Equatable {
             case loading
             case connected
@@ -52,6 +52,11 @@ struct ConnectingOverlayFeature {
 
         var isIkeWithKsEnabled: Bool {
             selectedProtocol == .vpnProtocol(.ike) && killSwitchEnabled
+        }
+        
+        var isRetryWithoutKillSwitchAllowed: Bool {
+            @SharedReader(.alwaysOnEnabled) var alwaysOnEnabled: Bool
+            return isIkeWithKsEnabled && !alwaysOnEnabled
         }
 
         var hidePhase: Bool {

@@ -21,6 +21,7 @@ import Connection
 import Dependencies
 import Domain
 import Ergonomics
+import Foundation
 import Hermes
 import NetShield
 @testable import ProtonVPN
@@ -536,6 +537,48 @@ struct CountriesQuickSettingsFeatureTests {
         // No need to specify custom DNS changes when there was no conflict.
         #expect(appliedSettings.value == [[.agent(.netShield(.level2))]])
     }
+    
+    // MARK: -  Always-On Related Tests (MDM)
+        
+    @Test("Kill Switch should be not visible when always on is mandated")
+    func killSwitchNotVisibleWithMandatedAlwaysOn() async {
+        withMDMState(alwaysOnEnabled: true) { state in
+            #expect(state.killSwitch.isVisible == false)
+            
+            let detail = Self.expectedDetail(type: .secureCoreDisplay, from: state)
+            #expect(detail.visibleQuickSettingTypes.contains(.killSwitchDisplay) == false)
+        }
+    }
+    
+    @Test("Kill Switch should be visible when always on is not mandated")
+     func killSwitchVisibleWithNotMandatedAlwaysOn() async {
+         withMDMState(alwaysOnEnabled: false) { state in
+             #expect(state.killSwitch.isVisible == true)
+             
+             let detail = Self.expectedDetail(type: .secureCoreDisplay, from: state)
+             #expect(detail.visibleQuickSettingTypes.contains(.killSwitchDisplay) == true)
+         }
+     }
+    
+    // MARK: - Helper Functions
+    
+    // MARK: MDM Helper Functions
+    private func withMDMState(
+        alwaysOnEnabled: Bool,
+        operation: (QuickSettingsFeature.State) -> Void
+    ) {
+        let defaults = UserDefaults.inMemory
+        defaults.set(alwaysOnEnabled, forKey: "AlwaysOnEnabled")
+        withDependencies {
+            $0.defaultAppStorage = defaults
+            $0.featureFlags = .enabling()
+        } operation: {
+            operation(QuickSettingsFeature.State())
+        }
+    }
+
+        
+        // MARK: General Helper Functions
 
     private func makeStore() -> TestStoreOf<QuickSettingsFeature> {
         TestStore(initialState: .init()) {
@@ -572,7 +615,9 @@ struct CountriesQuickSettingsFeatureTests {
         if state.netShield.isVisible {
             types.append(.netShieldDisplay)
         }
-        types.append(.killSwitchDisplay)
+        
+        if state.killSwitch.isVisible { types.append(.killSwitchDisplay) }
+        
         if state.portForwarding.isVisible {
             types.append(.portForwardingDisplay)
         }

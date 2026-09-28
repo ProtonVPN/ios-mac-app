@@ -281,13 +281,9 @@ struct QuickSettingDetailFeature {
 
         private static func visibleQuickSettingTypes(from state: QuickSettingsFeature.State) -> [QuickSettingType] {
             var types: [QuickSettingType] = [.secureCoreDisplay]
-            if state.netShield.isVisible {
-                types.append(.netShieldDisplay)
-            }
-            types.append(.killSwitchDisplay)
-            if state.portForwarding.isVisible {
-                types.append(.portForwardingDisplay)
-            }
+            if state.netShield.isVisible { types.append(.netShieldDisplay) }
+            if state.killSwitch.isVisible { types.append(.killSwitchDisplay) }
+            if state.portForwarding.isVisible { types.append(.portForwardingDisplay) }
             return types
         }
     }
