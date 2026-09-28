@@ -77,11 +77,8 @@ public struct ServerIp: Codable {
     }
 
     public func entryIp(using vpnProtocol: VpnProtocol) -> String? {
-        guard let protocolEntries else {
-            return entryIp
-        }
-
-        return protocolEntries.overrides(vpnProtocol: vpnProtocol, defaultIp: entryIp)
+        // A server IP without per-protocol entries follows the same rules as one with an empty list.
+        (protocolEntries ?? [:]).overrides(vpnProtocol: vpnProtocol, defaultIp: entryIp)
     }
 
     public func supports(vpnProtocol: VpnProtocol) -> Bool {
@@ -96,17 +93,7 @@ public struct ServerIp: Codable {
             return supports(vpnProtocol: vpnProtocol)
         }
 
-        // Skip the loop if there are no overrides.
-        guard protocolEntries?.isEmpty != true else {
-            return true
-        }
-
-        for vpnProtocol in smartProtocolConfig.supportedProtocols {
-            if supports(vpnProtocol: vpnProtocol) {
-                return true
-            }
-        }
-        return false
+        return smartProtocolConfig.supportedProtocols.contains { supports(vpnProtocol: $0) }
     }
 
     /// Used for testing purposes.
@@ -153,11 +140,13 @@ public extension PerProtocolEntries {
     //     "OpenVPNTCP": {"Ports": [22, 23]}
     //  }
     init?(dic: JSONDictionary) {
-        guard let entries = dic["EntryPerProtocol"] as? [String: JSONDictionary] else {
+        guard let entries = dic["EntryPerProtocol"] as? [String: Any] else {
             return nil
         }
 
-        self = .init(rawValue: entries.mapValues(ServerProtocolEntry.init(dic:)))
+        // A null entry reads as a missing one, so the entries next to it are kept.
+        let entryDictionaries = entries.compactMapValues { $0 as? JSONDictionary }
+        self = .init(rawValue: entryDictionaries.mapValues(ServerProtocolEntry.init(dic:)))
     }
 
     var asDict: JSONDictionary {

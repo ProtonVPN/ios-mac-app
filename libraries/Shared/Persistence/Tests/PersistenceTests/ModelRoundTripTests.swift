@@ -32,7 +32,8 @@ final class ModelToRecordRoundTripTests: TestIsolatedDatabaseTestCase {
         let server = try XCTUnwrap(result)
 
         XCTAssertEqual(server, serverToInsert)
-        XCTAssertEqual(server.supportedProtocols, .all)
+        // Neither endpoint has an IKEv2 entry.
+        XCTAssertEqual(server.supportedProtocols, [.wireGuardUDP, .wireGuardTCP, .wireGuardTLS])
     }
 
     func testVPNServerWithLimitedProtocolSupport() throws {
@@ -54,7 +55,8 @@ final class ModelToRecordRoundTripTests: TestIsolatedDatabaseTestCase {
         let server = try XCTUnwrap(result)
 
         XCTAssertEqual(server, serverToInsert)
-        XCTAssertEqual(server.supportedProtocols, [.all])
+        // A server without entries has no IKEv2 entry either.
+        XCTAssertEqual(server.supportedProtocols, [.wireGuardUDP, .wireGuardTCP, .wireGuardTLS])
     }
 
     func testLogicalStatusForcedToMaintenanceWhenAllEndpointsDown() throws {

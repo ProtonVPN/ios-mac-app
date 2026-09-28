@@ -563,11 +563,8 @@ class VpnServerSelectorTests: XCTestCase {
         return server
     }
 
-    private static func mockProtocolEntries(supporting protocols: ProtocolSupport) -> PerProtocolEntries? {
-        if protocols == .all {
-            return nil
-        }
-
+    /// Lists every protocol explicitly, because a server without entries does not support IKEv2.
+    private static func mockProtocolEntries(supporting protocols: ProtocolSupport) -> PerProtocolEntries {
         let entries: [String: ServerProtocolEntry] = VpnProtocol.allCases
             .reduce(into: [:]) {
                 if protocols.contains($1.protocolSupport) {

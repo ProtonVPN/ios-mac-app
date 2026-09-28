@@ -53,6 +53,7 @@ import Sharing
 // Local dependencies (Core first, then Shared, then Features, then Foundations)
 import LegacyCommon
 import Logging
+import Persistence
 import PMLogger
 import Settings
 import Telemetry
@@ -404,7 +405,9 @@ extension AppDelegate {
     private func checkMigration() async {
         @Dependency(\.migrationManager) var migrationManager
         do {
-            try await migrationManager.migrate()
+            try await migrationManager
+                .checkingServerListTimestamps()
+                .migrate()
         } catch {
             log.error("Was unable to run upgrade step: \(error)")
         }
@@ -425,6 +428,22 @@ extension AppDelegate {
             appStateManager.disconnect {
                 self.container.makeVpnGateway().quickConnect(trigger: .auto)
             }
+        }
+    }
+}
+
+extension MigrationManager {
+    /// Makes the first server list request after this update download the full list.
+    ///
+    /// The API now lists an IKEv2 entry on each server that still accepts IKEv2, and the app offers IKEv2 only on
+    /// those servers. A list stored before that change has no IKEv2 entries. If the API still reports the same
+    /// `Last-Modified` value, it answers 304 and the app keeps that list, so it finds no IKEv2 server. Deleting the
+    /// stored values makes the next request unconditional.
+    func checkingServerListTimestamps() -> Self {
+        checking("6.5.2") { _ in
+            @Dependency(\.serverRepository) var repository
+            repository.deleteMetadata(for: .lastModifiedFree)
+            repository.deleteMetadata(for: .lastModifiedAll)
         }
     }
 }

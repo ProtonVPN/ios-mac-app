@@ -60,11 +60,8 @@ public extension ServerEndpoint {
     }
 
     func entryIp(using vpnProtocol: VpnProtocol) -> String? {
-        guard let protocolEntries else {
-            return entryIp
-        }
-
-        return protocolEntries.overrides(vpnProtocol: vpnProtocol, defaultIp: entryIp)
+        // An endpoint without per-protocol entries follows the same rules as one with an empty list.
+        (protocolEntries ?? [:]).overrides(vpnProtocol: vpnProtocol, defaultIp: entryIp)
     }
 
     func overridePorts(using vpnProtocol: VpnProtocol) -> [Int]? {
@@ -81,8 +78,10 @@ public extension ServerEndpoint {
     }
 
     var supportedProtocols: ProtocolSupport {
-        if protocolEntries == nil {
-            return .all
+        // An endpoint without per-protocol entries supports `PerProtocolEntries.implicitlySupported`. The database
+        // queries count it the same way, and they do not check the entry IP either.
+        guard protocolEntries != nil else {
+            return PerProtocolEntries.implicitlySupported
         }
 
         return VpnProtocol.allCases.reduce(into: .zero) {

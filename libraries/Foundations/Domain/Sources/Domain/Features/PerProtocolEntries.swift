@@ -24,6 +24,7 @@ import Foundation
 /// 1. If `e.ipv4` is `nil`, `s` only supports `p`, and must use `s.entryIp` when connecting.
 /// 2. If `e.ipv4` is not `nil`, `s` supports all protocols. Client must use `e.ipv4` when connecting with `p`.
 /// 3. If `e.ports` is non-empty, client must choose from these ports when connecting, instead of ports from config.
+/// 4. `s` supports IKEv2 only if it has a non-null entry for it. See `implicitlySupported`.
 public struct PerProtocolEntries: Equatable, RawRepresentable, ExpressibleByDictionaryLiteral, Codable, Sendable {
     public let rawValue: [String: Value]
 
@@ -70,10 +71,24 @@ extension PerProtocolEntries: CustomStringConvertible {
 }
 
 public extension PerProtocolEntries {
+    /// The protocols a server supports through its default entry IP when the API sends no entry for them.
+    ///
+    /// IKEv2 is left out because infra is retiring it. The API adds an IKEv2 entry only to the servers that still
+    /// accept it, so a server without that entry does not support IKEv2.
+    static var implicitlySupported: ProtocolSupport {
+        ProtocolSupport.all.subtracting(.ikev2)
+    }
+
     /// Determine the appropriate entry IP to use for the given `ServerIp` object and
     /// protocol, according to the `entryIp` and `rawValue` properties.
     /// - Warning: The `entryIp` property is nullable, be careful when changing this function.
     func overrides(vpnProtocol: VpnProtocol, defaultIp: String?) -> String? {
+        // A protocol outside `implicitlySupported` needs an entry of its own. A null entry counts as no entry.
+        let hasEntry = (self[vpnProtocol] ?? nil) != nil
+        guard hasEntry || Self.implicitlySupported.contains(vpnProtocol.protocolSupport) else {
+            return nil
+        }
+
         // Check to see if the given server IP contains a per-protocol override.
         guard let override = self[vpnProtocol] else {
             // An override does not exist on the server IP for the current protocol.
