@@ -3455,7 +3455,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Etkin VPN bağlantınızı keser."
+            "value" : "Kullanımdaki VPN bağlantınızı keser."
           }
         },
         "uk" : {

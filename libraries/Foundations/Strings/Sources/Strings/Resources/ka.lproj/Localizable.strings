@@ -924,7 +924,7 @@
 "_delete_application_data_popup_body" = "Proton VPN-ის ყველა მონაცემი წაიშლება და აპლიკაცია დაასრულებს მუშაობას. გნებავთ, გააგრძელოთ?";
 
 /* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Disable";
+"_kill_switch_disable" = "გათიშვა";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "Kill Switch-ის ჩართვა";
