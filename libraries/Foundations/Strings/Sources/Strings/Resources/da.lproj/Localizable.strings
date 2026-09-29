@@ -3460,3 +3460,27 @@
 
 /* Alert body shown when the server refuses a setting the app doesn't surface as a named control */
 "_local_agent_setting_refused_message_generic" = "En af dine indstillinger er ikke tilgængelig for denne forbindelse, da den er blevet slået fra.";
+
+/* Question asked by the Net Promoter Score survey modal */
+"nps_modal_title" = "Hvor sandsynligt er det, at du vil anbefale Proton VPN til en ven?";
+
+/* Title label after submitting Net Promoter Score survey */
+"nps_modal_title_thanks_for_sharing" = "Tak for at dele dine tanker";
+
+/* Subtitle label after submitting Net Promoter Score survey */
+"nps_modal_title_thanks_subtitle" = "Din feedback hjælper os med at forbedre Proton VPN.";
+
+/* Caption under the low end of the 0-10 Net Promoter Score scale */
+"nps_modal_scale_lower_bound" = "0 er meget usandsynligt";
+
+/* Caption under the high end of the 0-10 Net Promoter Score scale */
+"nps_modal_scale_upper_bound" = "10 er meget sandsynligt";
+
+/* Label above the optional free-form field of the Net Promoter Score survey */
+"nps_modal_comment_title" = "Fortæl os hvorfor du gav den vurdering";
+
+/* Caption marking the Net Promoter Score comment field as not required */
+"nps_modal_comment_optional" = "Valgfrit";
+
+/* Button that submits the Net Promoter Score survey answer */
+"nps_modal_submit" = "Del anonymt";

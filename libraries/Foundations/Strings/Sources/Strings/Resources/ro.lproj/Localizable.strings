@@ -3460,3 +3460,27 @@
 
 /* Alert body shown when the server refuses a setting the app doesn't surface as a named control */
 "_local_agent_setting_refused_message_generic" = "Una dintre setări nu este disponibilă pentru această conexiune și a fost dezactivată.";
+
+/* Question asked by the Net Promoter Score survey modal */
+"nps_modal_title" = "Cât de probabil este să recomandați Proton VPN unui prieten?";
+
+/* Title label after submitting Net Promoter Score survey */
+"nps_modal_title_thanks_for_sharing" = "Vă mulțumim pentru răspuns";
+
+/* Subtitle label after submitting Net Promoter Score survey */
+"nps_modal_title_thanks_subtitle" = "Părerile pe care ni le împărtășiți ne ajută să îmbunătățim Proton VPN.";
+
+/* Caption under the low end of the 0-10 Net Promoter Score scale */
+"nps_modal_scale_lower_bound" = "0 este foarte improbabil";
+
+/* Caption under the high end of the 0-10 Net Promoter Score scale */
+"nps_modal_scale_upper_bound" = "10 este foarte probabil";
+
+/* Label above the optional free-form field of the Net Promoter Score survey */
+"nps_modal_comment_title" = "Vă rugăm să ne spuneți de ce ați acordat această evaluare";
+
+/* Caption marking the Net Promoter Score comment field as not required */
+"nps_modal_comment_optional" = "Opțional";
+
+/* Button that submits the Net Promoter Score survey answer */
+"nps_modal_submit" = "Partajare anonimă";

@@ -924,7 +924,7 @@
 "_delete_application_data_popup_body" = "S'eliminaran totes les dades de Proton VPN i l'aplicació es tancarà. Voleu continuar?";
 
 /* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Desactivar";
+"_kill_switch_disable" = "Desactiva";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "Activa el Kill Switch";
@@ -1025,7 +1025,7 @@
 "_kill_switch_bullet_deferred" = "S'aplicarà la pròxima vegada que us connecteu a la VPN";
 
 /* iOS: Kill switch confirmation - primary button to enable */
-"_kill_switch_confirm_enable" = "Activar";
+"_kill_switch_confirm_enable" = "Activa";
 
 /* iOS: Kill switch confirmation - primary button to switch to advanced */
 "_kill_switch_confirm_switch" = "Canviar";
@@ -3420,7 +3420,7 @@
 "_pcap_capture_file_sharing" = "Ara podeu compartir-lo amb el nostre suport al client adjuntant-lo a la vostra conversa, o emmagatzemant-lo de manera segura a [Proton Drive](%@) i compartint un enllaç públic.";
 
 /* Button title in the PCAP view. Starts the PCAP session */
-"_pcap_capture_session_start" = "Començar";
+"_pcap_capture_session_start" = "Comença";
 
 /* Button title in the PCAP view. Stops the PCAP session */
 "_pcap_capture_session_stop" = "Aturar";
@@ -3460,3 +3460,27 @@
 
 /* Alert body shown when the server refuses a setting the app doesn't surface as a named control */
 "_local_agent_setting_refused_message_generic" = "Un dels vostres paràmetres no està disponible per aquesta connexió, ja que ha estat desactivat.";
+
+/* Question asked by the Net Promoter Score survey modal */
+"nps_modal_title" = "Amb quina probabilitat recomanaríeu Proton VPN a una amistat?";
+
+/* Title label after submitting Net Promoter Score survey */
+"nps_modal_title_thanks_for_sharing" = "Gràcies per compartir-ho";
+
+/* Subtitle label after submitting Net Promoter Score survey */
+"nps_modal_title_thanks_subtitle" = "Els vostres comentaris ens ajuden a millorar Proton VPN.";
+
+/* Caption under the low end of the 0-10 Net Promoter Score scale */
+"nps_modal_scale_lower_bound" = "0 és molt improbable";
+
+/* Caption under the high end of the 0-10 Net Promoter Score scale */
+"nps_modal_scale_upper_bound" = "10 és molt probable";
+
+/* Label above the optional free-form field of the Net Promoter Score survey */
+"nps_modal_comment_title" = "Feu-nos saber per què heu donat aquesta puntuació.";
+
+/* Caption marking the Net Promoter Score comment field as not required */
+"nps_modal_comment_optional" = "Opcional";
+
+/* Button that submits the Net Promoter Score survey answer */
+"nps_modal_submit" = "Compartir-ho de manera anònima";
