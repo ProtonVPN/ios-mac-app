@@ -19,6 +19,7 @@ let package = Package(
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/Strings"),
         .package(path: "../../Foundations/Domain"),
+        .package(path: "../../Foundations/WidgetReload"),
         .package(path: "../../Foundations/PMLogger"),
 
         .package(path: "../../Core/NEHelper"),
@@ -38,6 +39,7 @@ let package = Package(
             name: "ConnectWidget",
             dependencies: [
                 "Theme",
+                "WidgetReload",
                 "Strings",
                 "Domain",
                 "SharedViews",
@@ -60,7 +62,11 @@ let package = Package(
         ),
         .testTarget(
             name: "ConnectWidgetTests",
-            dependencies: ["ConnectWidget"]
+            dependencies: [
+                "ConnectWidget",
+                .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ]
         ),
     ]
 )

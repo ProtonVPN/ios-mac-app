@@ -21,6 +21,7 @@ import ComposableArchitecture
 import ConnectionInventory
 import Domain
 import VPNAppCore
+import WidgetReload
 
 @Reducer
 public struct DefaultConnectionFeature {

@@ -27,6 +27,7 @@ import Foundation
 import IPCDefinitions
 import Sharing
 import VPNAppCore
+import WidgetReload
 
 @Reducer
 public struct ConnectionFeature: Sendable {

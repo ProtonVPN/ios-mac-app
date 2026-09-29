@@ -25,12 +25,18 @@ import Theme
 import VPNAppCore
 import WidgetIntents
 import WidgetKit
+import WidgetReload
 
 struct ConnectWidgetView: View {
     let entry: ConnectWidgetEntry
 
     @Environment(\.widgetFamily) var widgetFamily
     @Environment(\.widgetRenderingMode) var renderingMode
+
+    #if DEBUG
+        @SharedReader(.reloadAllTimelinesCounter) var reloadAllTimelinesCounter
+        @SharedReader(.getTimelineCounter) var getTimelineCounter
+    #endif
 
     var body: some View {
         if case .accented = renderingMode {
@@ -58,6 +64,20 @@ struct ConnectWidgetView: View {
                     }
                 }
             }
+            #if DEBUG
+            .background {
+                HStack {
+                    Spacer(minLength: 0)
+                    VStack(spacing: 0) {
+                        Text("reload timelines")
+                        Text("counter: \(currentWidgetReloadCount)")
+                        Text("get timeline")
+                        Text("counter: \(currentTimelineCount)")
+                        Spacer()
+                    }
+                }.font(.system(size: 6))
+            }
+            #endif
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .containerBackground(for: .widget) {
@@ -69,6 +89,18 @@ struct ConnectWidgetView: View {
         }
         .environment(\.colorScheme, .dark) // we need both colorScheme overrides because of the `containerBackground(for: .widget)`
     }
+
+    #if DEBUG
+        var currentTimelineCount: Int {
+            let calendarDate = Calendar.current.dateComponents([.day, .year, .month], from: .now)
+            return getTimelineCounter[calendarDate] ?? 0
+        }
+
+        var currentWidgetReloadCount: Int {
+            let calendarDate = Calendar.current.dateComponents([.day, .year, .month], from: .now)
+            return reloadAllTimelinesCounter[calendarDate] ?? 0
+        }
+    #endif
 }
 
 // MARK: - Subviews

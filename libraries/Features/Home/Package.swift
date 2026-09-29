@@ -34,6 +34,7 @@ let package = Package(
         .package(path: "../../Foundations/Theme"),
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/Domain"),
+        .package(path: "../../Foundations/WidgetReload"),
         .package(path: "../../Foundations/PMLogger"),
         .package(path: "../../Foundations/Strings"),
 
@@ -71,6 +72,7 @@ let package = Package(
             name: "HomeShared",
             dependencies: [
                 "CommonNetworking",
+                "WidgetReload",
                 "Connection",
                 .product(name: "ExtensionSync", package: "Connection"),
                 "Localization",

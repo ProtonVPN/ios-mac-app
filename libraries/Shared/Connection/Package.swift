@@ -27,6 +27,7 @@ let package = Package(
         .package(path: "../CommonNetworking"),
 
         .package(path: "../../Foundations/Domain"),
+        .package(path: "../../Foundations/WidgetReload"),
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/PMLogger"),
         .package(path: "../../Foundations/Strings"),
@@ -116,6 +117,7 @@ let package = Package(
             name: "Connection",
             dependencies: [
                 "ExtensionManager",
+                "WidgetReload",
                 "IPCDefinitions",
                 "Domain",
                 "Localization",

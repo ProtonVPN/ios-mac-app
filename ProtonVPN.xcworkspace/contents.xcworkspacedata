@@ -38,6 +38,9 @@
          <FileRef
             location = "group:libraries/Foundations/Theme">
          </FileRef>
+         <FileRef
+            location = "group:libraries/Foundations/WidgetReload">
+         </FileRef>
       </Group>
       <Group
          location = "container:"

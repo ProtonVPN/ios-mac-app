@@ -26,6 +26,7 @@ import Persistence
 import SwiftUI
 import VPNAppCore
 import VPNShared
+import WidgetReload
 
 @Reducer
 public struct RecentsFeature {
@@ -121,7 +122,7 @@ public struct RecentsFeature {
             case let .connectionEstablished(spec, display):
                 withAnimation {
                     state.$recentConnections.withLock { $0?.updateList(with: spec, display: display) }
-                    widgetReload.reloadAllTimelines(.connectionStateChanged(.connected))
+                    widgetReload.reloadAllTimelines(.recentsListChanged)
                 }
 
                 return .none
@@ -130,7 +131,7 @@ public struct RecentsFeature {
                 // The list changed under the precomputed recents, so rewrite their display fields.
                 @Dependency(\.serverRepository) var serverRepository
                 state.$recentConnections.withLock { $0 = $0?.refreshingServerDisplay(from: serverRepository) }
-                widgetReload.reloadAllTimelines(.connectionStateChanged(.connected))
+                widgetReload.reloadAllTimelines(.recentsListChanged)
                 return .none
 
             case let .pin(recent):

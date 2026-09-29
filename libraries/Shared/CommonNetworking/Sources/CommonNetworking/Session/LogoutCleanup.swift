@@ -20,6 +20,7 @@ import Dependencies
 import Domain
 import Sharing
 import VPNAppCore
+import WidgetReload
 
 /// Resets user-scoped settings to their defaults on logout (and on login, to clear any prior
 /// session's state). Replaces the legacy `PropertiesManager.logoutCleanup()`.
