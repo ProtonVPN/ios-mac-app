@@ -1571,6 +1571,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
 "_sysex_error_description_subcase_default" = "please contact our support.";
 
+/* Button in the system extension error alert shown when the app does not run from the /Applications folder. It opens a Finder window with the app selected, so the user can move it to /Applications. */
+"_sysex_error_show_in_finder" = "Show in Finder";
+
 // MARK: Cert based auth
 
 "_vpnauth_certfail_title" = "Auto-connect failed";

@@ -154,6 +154,7 @@ public struct PlutoniumFeature {
                 return .run { send in
                     let result: SystemExtensionResult = await withCheckedContinuation { (continuation: CheckedContinuation<SystemExtensionResult, Never>) in
                         systemExtensionManager.installOrUpdateExtensionsIfNeeded(
+                            origin: .init(entryPoint: .splitTunnelSetting, isUserInitiated: true),
                             shouldStartTour: true,
                             includedTypes: [.wireGuard, .plutonium]
                         ) { result, _ in

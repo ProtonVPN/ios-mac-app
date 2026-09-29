@@ -29,6 +29,7 @@
     import ProtonCoreFeatureFlags
 
     import Domain
+    import Telemetry
     import VPNAppCore
 
     public protocol SystemExtensionManagerFactory {
@@ -201,24 +202,38 @@
         /// - Parameter userActionRequiredHandler: Called with the number of extensions that require user approval.
         ///             This callback will *not* be called if no extensions require approval.
         /// - Parameter installationFinishedHandler: Called when installation is finished, regardless of success.
+        /// - Returns: The submitted requests.
         private func submitInstallationRequests(
+            origin: SystemExtensionEvent.Origin,
             includedTypes: [SystemExtensionType],
             userInitiated: Bool,
             userActionRequiredHandler: @escaping (([SystemExtensionType]) -> Void),
             installationFinishedHandler: @escaping ((InstallationState) -> Void)
-        ) {
+        ) -> [SystemExtensionRequest] {
             let queue = DispatchQueue(label: "ch.protonvpn.sysext.status.\(UUID().uuidString)")
             var states: InstallationState = [:]
             var extensionsRequiringApproval = [SystemExtensionType]()
+            var requests: [SystemExtensionRequest] = []
 
             let finishedInstalling = DispatchGroup()
             let installStatesKnown = DispatchGroup()
+            let connectionProtocol = propertiesManager.connectionProtocol
 
             for type in includedTypes where type.featureEnabled {
                 finishedInstalling.enter()
                 installStatesKnown.enter()
 
-                let install = SystemExtensionRequest.install(type: type, userInitiated: userInitiated, manager: self) { stateChange in
+                let activation = SystemExtensionActivationTelemetry(
+                    origin: origin,
+                    extensionType: SystemExtensionEvent.ExtensionType(type),
+                    connectionProtocol: connectionProtocol
+                )
+                let install = SystemExtensionRequest.install(
+                    type: type,
+                    userInitiated: userInitiated,
+                    activation: activation,
+                    manager: self
+                ) { stateChange in
                     var prevState: SystemExtensionRequest.State?
                     queue.sync {
                         prevState = states[type]
@@ -239,7 +254,9 @@
                         finishedInstalling.leave()
                     }
                 }
+                activation.reportAttempt()
                 request(install)
+                requests.append(install)
             }
 
             installStatesKnown.notify(queue: SystemExtensionManager.requestQueue) {
@@ -251,6 +268,19 @@
             finishedInstalling.notify(queue: SystemExtensionManager.requestQueue) {
                 installationFinishedHandler(states)
             }
+
+            return requests
+        }
+
+        /// Moves the approval tour of each request that waits for approval, and reports it.
+        private static func reportPrompt(
+            _ prompt: SystemExtensionActivationTelemetry.Prompt,
+            for requests: [SystemExtensionRequest]
+        ) {
+            // The system delivers request callbacks on this queue, so telemetry stays on it too.
+            requestQueue.async {
+                requests.forEach { $0.activation?.reportPrompt(prompt) }
+            }
         }
 
         /// Installs the specified system extensions if needed, provided the following hold true:
@@ -259,11 +289,13 @@
         /// - The user has created a custom profile containing a protocol requiring a system extension
         ///
         /// - Parameters:
+        ///   - origin: Origin of the request for the telemetry.
         ///   - shouldStartTour: Whether the system extension tour should be shown if user approval is required. When false,
         ///     and approval is required, `actionHandler` will report `.failure(.tourSkipped)`.
         ///   - includedTypes: The extensions to check and install. Pass `SystemExtensionType.allCases` to include all.
         ///   - actionHandler: A completion handler invoked when installation or system extension tour complete or fail.
         public func checkAndInstallOrUpdateExtensionsIfNeeded(
+            origin: SystemExtensionEvent.Origin,
             shouldStartTour: Bool,
             includedTypes: [SystemExtensionType],
             actionHandler: @escaping (SystemExtensionResult, [SystemExtensionType: SystemExtensionResult]) -> Void
@@ -282,6 +314,7 @@
             }
 
             installOrUpdateExtensionsIfNeeded(
+                origin: origin,
                 shouldStartTour: shouldStartTour,
                 includedTypes: includedTypes,
                 actionHandler: actionHandler
@@ -292,23 +325,27 @@
         /// not approved any on the system yet.
         ///
         /// - Parameters:
+        ///   - origin: Origin of the request for the telemetry.
         ///   - shouldStartTour: Whether the system extension tour should be shown if user approval is required. When false,
         ///     and approval is required, `actionHandler` will report `.failure(.tourSkipped)`.
         ///   - includedTypes: The extensions to install or update. Pass `SystemExtensionType.allCases` to include all.
         ///   - actionHandler: A completion handler invoked when installation or system extension tour complete or fail.
         ///                    Receives both the accumulated result and individual results for each extension type.
         public func installOrUpdateExtensionsIfNeeded(
+            origin: SystemExtensionEvent.Origin,
             shouldStartTour: Bool,
             includedTypes: [SystemExtensionType],
             actionHandler: @escaping (SystemExtensionResult, [SystemExtensionType: SystemExtensionResult]) -> Void
         ) {
             var didRequireUserApproval = false
+            var requests: [SystemExtensionRequest] = []
 
-            submitInstallationRequests(includedTypes: includedTypes, userInitiated: shouldStartTour, userActionRequiredHandler: { [unowned self] installationState in
+            requests = submitInstallationRequests(origin: origin, includedTypes: includedTypes, userInitiated: shouldStartTour, userActionRequiredHandler: { [unowned self] installationState in
                 didRequireUserApproval = true
 
                 guard shouldStartTour else {
                     SentryHelper.shared?.log(message: "Sysex tour ended.", extra: ["reason": "skipped"])
+                    Self.reportPrompt(.answered(.skipped), for: requests)
                     let skippedResults: [SystemExtensionType: SystemExtensionResult] = Dictionary(
                         uniqueKeysWithValues: includedTypes.map { ($0, .failure(.tourSkipped)) }
                     )
@@ -316,14 +353,17 @@
                     return
                 }
 
-                let origin: SystemExtensionTourAlert.Origin = if propertiesManager.isSubsequentLaunch {
+                let tourOrigin: SystemExtensionTourAlert.Origin = if propertiesManager.isSubsequentLaunch {
                     .inAppPrompt(installationState.map(\.feature))
                 } else {
                     .firstAppLaunch
                 }
 
-                let tour = SystemExtensionTourAlert(origin: origin, cancelHandler: {
+                let tour = SystemExtensionTourAlert(origin: tourOrigin, openedSystemSettingsHandler: {
+                    Self.reportPrompt(.answered(.proceeded), for: requests)
+                }, cancelHandler: {
                     SentryHelper.shared?.log(message: "Sysex tour ended.", extra: ["reason": "cancelled"])
+                    Self.reportPrompt(.answered(.cancelled), for: requests)
                     DispatchQueue.main.async {
                         let cancelledResults: [SystemExtensionType: SystemExtensionResult] = Dictionary(
                             uniqueKeysWithValues: includedTypes.map { ($0, .failure(.tourCancelled)) }
@@ -333,6 +373,7 @@
                     }
                 })
 
+                Self.reportPrompt(.displayed, for: requests)
                 alertService.push(alert: tour)
             }, installationFinishedHandler: { installationResults in
                 var (accumulated, results) = self.processExtensionResults(installationResults: installationResults, didRequireUserApproval: didRequireUserApproval)
@@ -393,6 +434,8 @@
         let stateChangeCallback: StateChangeCallback
         unowned let manager: SystemExtensionManager
         let userInitiated: Bool
+        /// Telemetry for activation requests. Deactivation requests are not reported.
+        let activation: SystemExtensionActivationTelemetry?
         @Dependency(\.propertiesManager) private var propertiesManager
 
         let uuid = UUID()
@@ -429,18 +472,21 @@
             request: OSSystemExtensionRequest,
             stateChange: @escaping StateChangeCallback,
             manager: SystemExtensionManager,
-            userInitiated: Bool
+            userInitiated: Bool,
+            activation: SystemExtensionActivationTelemetry?
         ) {
             self.action = action
             self.request = request
             self.stateChangeCallback = stateChange
             self.manager = manager
             self.userInitiated = userInitiated
+            self.activation = activation
         }
 
         static func install(
             type: SystemExtensionType,
             userInitiated: Bool,
+            activation: SystemExtensionActivationTelemetry,
             manager: SystemExtensionManager,
             stateChange: @escaping StateChangeCallback
         ) -> Self {
@@ -452,7 +498,8 @@
                 ),
                 stateChange: stateChange,
                 manager: manager,
-                userInitiated: userInitiated
+                userInitiated: userInitiated,
+                activation: activation
             )
             result.request.delegate = result
             return result
@@ -471,7 +518,8 @@
                 ),
                 stateChange: stateChange,
                 manager: manager,
-                userInitiated: false
+                userInitiated: false,
+                activation: nil
             )
             result.request.delegate = result
             return result
@@ -479,6 +527,12 @@
 
         deinit {
             log.debug("Deinit request \(uuid.uuidString) for \(request.identifier)")
+        }
+
+        /// Records the new state for telemetry, then passes it on.
+        private func changeState(_ state: State) {
+            activation?.record(state)
+            stateChangeCallback(state)
         }
     }
 
@@ -506,47 +560,54 @@
                 )
             )
 
+            let isExistingEnabled = existing.isEnabled && !existing.isAwaitingUserApproval
+
             // Allow equal-version replacement when the run is user-initiated to surface the approval flow.
             if !shouldReplace, userInitiated {
                 let isEqualVersion = (existing.bundleShortVersion == ext.bundleShortVersion) && (existing.bundleVersion == ext.bundleVersion)
                 if isEqualVersion {
-                    stateChangeCallback(.replacing)
+                    activation?.installedCopy = .reinstalled(isEnabled: isExistingEnabled)
+                    changeState(.replacing)
                     return .replace
                 }
             }
 
-            // Don't call stateChangeCallback(.cancelled) here, we do that when sysextd calls us again
+            // Don't call changeState(.cancelled) here, we do that when sysextd calls us again
             // with `request(_:didFailWithError:)`.
-            guard shouldReplace else { return .cancel }
+            guard shouldReplace else {
+                activation?.installedCopy = .kept(isEnabled: isExistingEnabled)
+                return .cancel
+            }
 
-            stateChangeCallback(.replacing)
+            activation?.installedCopy = .replacedOlderVersion
+            changeState(.replacing)
             return .replace
         }
 
         public func requestNeedsUserApproval(_: OSSystemExtensionRequest) {
-            stateChangeCallback(.userActionRequired)
+            changeState(.userActionRequired)
         }
 
         public func request(_: OSSystemExtensionRequest, didFailWithError error: Error) {
             guard let sysextError = error as? OSSystemExtensionError else {
-                stateChangeCallback(.failed(error))
+                changeState(.failed(error))
                 return
             }
 
             switch sysextError.code {
             case .requestCanceled:
-                stateChangeCallback(.cancelled)
+                changeState(.cancelled)
             case .requestSuperseded:
-                stateChangeCallback(.superseded)
+                changeState(.superseded)
             default:
-                stateChangeCallback(.failed(sysextError))
+                changeState(.failed(sysextError))
             }
 
             manager.outstandingRequests.remove(self)
         }
 
         public func request(_: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
-            stateChangeCallback(.succeeded(result))
+            changeState(.succeeded(result))
 
             manager.outstandingRequests.remove(self)
         }
@@ -558,6 +619,169 @@
             case .plutonium: .splitTunneling
             case .wireGuard: .wireguard
             }
+        }
+    }
+
+    // MARK: - Telemetry
+
+    /// Reports one activation request to telemetry: the attempt, the approval tour, and the outcome.
+    final class SystemExtensionActivationTelemetry {
+        /// What the system found installed when it asked whether to replace it.
+        enum InstalledCopy {
+            /// An older version, which the request replaces.
+            case replacedOlderVersion
+            /// The same version, which a user-initiated request replaces anyway to show the approval flow again.
+            case reinstalled(isEnabled: Bool)
+            /// The same or a newer version, which the request keeps.
+            case kept(isEnabled: Bool)
+        }
+
+        enum Prompt: Equatable {
+            case displayed
+            case answered(SystemExtensionEvent.PromptOutcome)
+        }
+
+        let origin: SystemExtensionEvent.Origin
+        let extensionType: SystemExtensionEvent.ExtensionType
+        /// The connection protocol when the request was made.
+        let connectionProtocol: ConnectionProtocol
+        var installedCopy: InstalledCopy?
+
+        private let submittedAt: Date
+        private var isAwaitingApproval = false
+        /// Where the approval tour stands. A cancelled tour also reports the request as declined, so its later
+        /// outcome is not reported again.
+        private var prompt: Prompt?
+        private var hasReportedOutcome = false
+
+        @Dependency(\.telemetryService) private var telemetryService
+        @Dependency(\.date.now) private var now
+
+        init(
+            origin: SystemExtensionEvent.Origin,
+            extensionType: SystemExtensionEvent.ExtensionType,
+            connectionProtocol: ConnectionProtocol
+        ) {
+            @Dependency(\.date.now) var submissionDate
+            self.origin = origin
+            self.extensionType = extensionType
+            self.connectionProtocol = connectionProtocol
+            self.submittedAt = submissionDate
+        }
+
+        func reportAttempt() {
+            send([.installAttempt(origin: origin, extensionType: extensionType)])
+        }
+
+        func record(_ state: SystemExtensionRequest.State) {
+            if case .userActionRequired = state {
+                isAwaitingApproval = true
+            }
+            // A user who approves the extension while the tour is open went to System Settings without its button.
+            let promptReport: SystemExtensionEvent.Report? = if case .succeeded = state {
+                movePrompt(to: .answered(.proceeded))
+            } else {
+                nil
+            }
+            let result = Self.outcome(for: state, installedCopy: installedCopy).flatMap(recordResult)
+            send([promptReport, result].compactMap { $0 })
+        }
+
+        /// Moves the approval tour to `next` and reports it, when the request waits for approval.
+        func reportPrompt(_ next: Prompt) {
+            let promptReport = movePrompt(to: next)
+            // sysextd keeps a request open until the user approves it, so closing the tour is the only sign of a
+            // refusal.
+            let result = promptReport != nil && next == .answered(.cancelled) ? recordResult(.userDeclined) : nil
+            send([promptReport, result].compactMap { $0 })
+        }
+
+        /// The outcome a state ends the request with, or nil if the request has not ended or reports nothing.
+        static func outcome(
+            for state: SystemExtensionRequest.State,
+            installedCopy: InstalledCopy?
+        ) -> SystemExtensionEvent.InstallOutcome? {
+            switch state {
+            case .succeeded:
+                switch installedCopy {
+                case nil:
+                    .installed
+                case .replacedOlderVersion:
+                    .upgraded
+                case let .reinstalled(isEnabled), let .kept(isEnabled):
+                    .alreadyThere(isExtensionActive: isEnabled)
+                }
+            case .cancelled:
+                // The app cancels a request when the installed copy is the same or newer.
+                if case let .kept(isEnabled) = installedCopy {
+                    .alreadyThere(isExtensionActive: isEnabled)
+                } else {
+                    .alreadyThere(isExtensionActive: nil)
+                }
+            case let .failed(error):
+                .failed(SystemExtensionEvent.ErrorCode(error))
+            case .replacing, .userActionRequired, .superseded:
+                nil
+            }
+        }
+
+        /// Moves the tour to `next` and returns its report, or nil when the tour cannot get there from where it
+        /// stands. Only a shown tour can be answered, and the app skips a tour only when it never shows it.
+        private func movePrompt(to next: Prompt) -> SystemExtensionEvent.Report? {
+            let current: Prompt? = switch next {
+            case .displayed, .answered(.skipped): nil
+            case .answered(.proceeded), .answered(.cancelled): .displayed
+            }
+            guard isAwaitingApproval, prompt == current else { return nil }
+            prompt = next
+            return switch next {
+            case .displayed:
+                .approvalPromptDisplay(origin: origin, extensionType: extensionType)
+            case let .answered(outcome):
+                .approvalPromptAction(origin: origin, extensionType: extensionType, outcome: outcome)
+            }
+        }
+
+        /// Records the outcome and returns its report, or nil when one was already reported.
+        private func recordResult(_ outcome: SystemExtensionEvent.InstallOutcome) -> SystemExtensionEvent.Report? {
+            guard !hasReportedOutcome else { return nil }
+            hasReportedOutcome = true
+            return .installResult(
+                origin: origin,
+                extensionType: extensionType,
+                outcome: outcome,
+                connectionProtocol: connectionProtocol,
+                timeToResult: now.timeIntervalSince(submittedAt)
+            )
+        }
+
+        private func send(_ reports: [SystemExtensionEvent.Report]) {
+            guard !reports.isEmpty else { return }
+            Task { [telemetryService] in
+                for report in reports {
+                    // The scheduler throws when the user has not opted in to usage data, which is expected.
+                    try? await telemetryService.systemExtensionEvent(report)
+                }
+            }
+        }
+    }
+
+    extension SystemExtensionEvent.ExtensionType {
+        init(_ type: SystemExtensionType) {
+            switch type {
+            case .wireGuard: self = .wireGuard
+            case .plutonium: self = .splitTunnel
+            }
+        }
+    }
+
+    extension SystemExtensionEvent.ErrorCode {
+        /// Maps an activation error to its `charCode`. Errors from outside the system extension framework are sent
+        /// as unknown.
+        init(_ error: Error) {
+            // `debugDescription` spells a `FourCharCode` as its four characters.
+            let charCode = (error as? OSSystemExtensionError)?.code.charCode.debugDescription
+            self = charCode.flatMap(Self.init(rawValue:)) ?? .unknown
         }
     }
 

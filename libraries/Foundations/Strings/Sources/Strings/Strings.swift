@@ -1707,6 +1707,8 @@ public enum Localizable {
   public static var sysexErrorDescriptionSubcaseDefault: String { return Localizable.tr("Localizable", "_sysex_error_description_subcase_default", fallback: "please contact our support.") }
   /// This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type.
   public static var sysexErrorDescriptionSubcaseForbiddenBySystemPolicy: String { return Localizable.tr("Localizable", "_sysex_error_description_subcase_forbidden_by_system_policy", fallback: "the current system policy prohibits activating extensions on your device.") }
+  /// Button in the system extension error alert shown when the app does not run from the /Applications folder. It opens a Finder window with the app selected, so the user can move it to /Applications.
+  public static var sysexErrorShowInFinder: String { return Localizable.tr("Localizable", "_sysex_error_show_in_finder", fallback: "Show in Finder") }
   /// Open System Settings
   public static var sysexOpenSystemSettings: String { return Localizable.tr("Localizable", "_sysex_open_system_settings", fallback: "Open System Settings") }
   /// Proton VPN requires to load a System Extension to leverage Smart Protocol, OpenVPN and WireGuard.

@@ -1055,10 +1055,34 @@ public final class PaymentRestorationAlert: SystemAlert {
         public let isError: Bool = true
         public var dismiss: (() -> Void)?
 
-        public init?(error: Error) {
+        private let code: OSSystemExtensionError.Code
+
+        /// Whether the app runs from outside `/Applications`, which the user can fix by moving the app there.
+        public var isBadInstallLocation: Bool {
+            code == .unsupportedParentBundleLocation
+        }
+
+        /// What the buttons of the install location recovery prompt do.
+        public struct RelocationHandlers {
+            public let showInFinder: () -> Void
+            public let dismissed: () -> Void
+
+            public init(showInFinder: @escaping () -> Void, dismissed: @escaping () -> Void) {
+                self.showInFinder = showInFinder
+                self.dismissed = dismissed
+            }
+        }
+
+        /// Creates the alert for a failed activation, or nil when the error does not come from the system
+        /// extension framework.
+        ///
+        /// - Parameter relocation: Used only when `isBadInstallLocation` is true. The alert then adds a button that
+        ///   shows the app in Finder, and calls these handlers for both of its buttons.
+        public init?(error: Error, relocation: RelocationHandlers? = nil) {
             guard let sysexError = error as? OSSystemExtensionError else {
                 return nil
             }
+            self.code = sysexError.code
 
             let subcase: String = switch sysexError.code {
             case .unsupportedParentBundleLocation:
@@ -1075,7 +1099,16 @@ public final class PaymentRestorationAlert: SystemAlert {
 
             self.message = Localizable.sysexErrorDescription(subcase)
 
-            actions.append(AlertAction(title: Localizable.ok, style: .cancel, handler: nil))
+            if isBadInstallLocation, let relocation {
+                actions.append(AlertAction(
+                    title: Localizable.sysexErrorShowInFinder,
+                    style: .confirmative,
+                    handler: relocation.showInFinder
+                ))
+                actions.append(AlertAction(title: Localizable.ok, style: .cancel, handler: relocation.dismissed))
+            } else {
+                actions.append(AlertAction(title: Localizable.ok, style: .cancel, handler: nil))
+            }
         }
     }
 
@@ -1085,6 +1118,8 @@ public final class PaymentRestorationAlert: SystemAlert {
         public var actions = [AlertAction]()
         public let isError: Bool = false
         public var dismiss: (() -> Void)?
+        /// Called when the user opens System Settings from the tour.
+        public var openedSystemSettingsHandler: () -> Void
         public var cancelHandler: () -> Void
 
         public let origin: Origin
@@ -1099,7 +1134,12 @@ public final class PaymentRestorationAlert: SystemAlert {
             case splitTunneling
         }
 
-        public init(origin: Origin, cancelHandler: @escaping () -> Void) {
+        public init(
+            origin: Origin,
+            openedSystemSettingsHandler: @escaping () -> Void,
+            cancelHandler: @escaping () -> Void
+        ) {
+            self.openedSystemSettingsHandler = openedSystemSettingsHandler
             self.cancelHandler = cancelHandler
             self.dismiss = cancelHandler
             self.origin = origin

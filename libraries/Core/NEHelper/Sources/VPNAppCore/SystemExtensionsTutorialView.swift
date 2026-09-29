@@ -40,14 +40,21 @@
         @Dependency(\.linkOpener) var linkOpener
 
         let model: Model
+        /// Called when the user opens System Settings to approve the extensions.
+        let openedSystemSettings: () -> Void
 
         static let viewSize = CGSize(width: 864, height: 574)
         private static let viewMaxWidth: CGFloat = 542
 
         static let securityPreferencesUrlString = "x-apple.systempreferences:com.apple.ExtensionsPreferences?extensionPointIdentifier=com.apple.system_extension.network_extension.extension-point"
 
-        public init(isSequoiaOrNewer: Bool, origin: SystemExtensionTourAlert.Origin) {
+        public init(
+            isSequoiaOrNewer: Bool,
+            origin: SystemExtensionTourAlert.Origin,
+            openedSystemSettings: @escaping () -> Void = {}
+        ) {
             self.model = .init(isSequoiaOrNewer: isSequoiaOrNewer, origin: origin)
+            self.openedSystemSettings = openedSystemSettings
         }
 
         public var body: some View {
@@ -101,6 +108,7 @@
             VStack(spacing: .themeSpacing16) {
                 Button(model.buttonText) {
                     linkOpener.open(Self.securityPreferencesUrlString)
+                    openedSystemSettings()
                 }
                 .buttonStyle(ThemeButtonStyle(padding: .medium, style: .primary))
 

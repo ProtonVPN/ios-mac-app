@@ -22,6 +22,7 @@ import Domain
 import Foundation
 import LegacyCommon
 @testable import ProtonVPN
+import Telemetry
 import Testing
 @testable import VPNAppCore
 import VPNShared
@@ -53,6 +54,8 @@ struct PlutoniumFeatureTests {
         } withDependencies: {
             $0.continuousClock = clock
             $0.systemExtensionManager = systemExtensionManager
+            $0.date.now = Date(timeIntervalSince1970: 0)
+            $0.telemetryService = .ignoringSystemExtensionEvents
             $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
             $0.propertiesManager.connectionProtocol = .smartProtocol
         }
@@ -99,6 +102,8 @@ struct PlutoniumFeatureTests {
         } withDependencies: {
             $0.continuousClock = clock
             $0.systemExtensionManager = systemExtensionManager
+            $0.date.now = Date(timeIntervalSince1970: 0)
+            $0.telemetryService = .ignoringSystemExtensionEvents
             $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
             $0.propertiesManager.connectionProtocol = .smartProtocol
         }
@@ -143,6 +148,8 @@ struct PlutoniumFeatureTests {
             PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         } withDependencies: {
             $0.systemExtensionManager = systemExtensionManager
+            $0.date.now = Date(timeIntervalSince1970: 0)
+            $0.telemetryService = .ignoringSystemExtensionEvents
             $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
             $0.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
         }
@@ -176,6 +183,8 @@ struct PlutoniumFeatureTests {
             PlutoniumFeature(appStateManager: appStateManager, vpnGateway: gateway)
         } withDependencies: {
             $0.systemExtensionManager = systemExtensionManager
+            $0.date.now = Date(timeIntervalSince1970: 0)
+            $0.telemetryService = .ignoringSystemExtensionEvents
             $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
             $0.propertiesManager.connectionProtocol = .smartProtocol
         }
@@ -203,6 +212,8 @@ struct PlutoniumFeatureTests {
         } withDependencies: {
             $0.continuousClock = clock
             $0.systemExtensionManager = systemExtensionManager
+            $0.date.now = Date(timeIntervalSince1970: 0)
+            $0.telemetryService = .ignoringSystemExtensionEvents
             $0.vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
             $0.propertiesManager.connectionProtocol = .smartProtocol
         }
@@ -399,5 +410,15 @@ extension ConnectionConfiguration {
             ports: [500],
             intent: .fastest
         )
+    }
+}
+
+private extension TelemetryService {
+    /// Ignores system extension events and leaves every other endpoint unimplemented. Assigning a whole value keeps
+    /// the live telemetry service, with its event observers, from being created.
+    static var ignoringSystemExtensionEvents: TelemetryService {
+        var service = TelemetryService()
+        service.systemExtensionEvent = { _ in }
+        return service
     }
 }

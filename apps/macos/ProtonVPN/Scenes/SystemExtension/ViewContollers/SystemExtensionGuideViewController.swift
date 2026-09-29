@@ -31,12 +31,18 @@ class SystemExtensionGuideViewController: NSViewController {
 
     var finishedTour: Bool = false
 
+    var openedSystemSettingsHandler: () -> Void
     var cancelledHandler: () -> Void
 
     let origin: SystemExtensionTourAlert.Origin
 
-    init(origin: SystemExtensionTourAlert.Origin, cancelledHandler: @escaping () -> Void) {
+    init(
+        origin: SystemExtensionTourAlert.Origin,
+        openedSystemSettingsHandler: @escaping () -> Void,
+        cancelledHandler: @escaping () -> Void
+    ) {
         self.origin = origin
+        self.openedSystemSettingsHandler = openedSystemSettingsHandler
         self.cancelledHandler = cancelledHandler
         super.init(nibName: nil, bundle: nil)
     }
@@ -55,7 +61,8 @@ class SystemExtensionGuideViewController: NSViewController {
     override func loadView() {
         let tutorialView = SystemExtensionsTutorialView(
             isSequoiaOrNewer: isSequoiaOrNewer,
-            origin: origin
+            origin: origin,
+            openedSystemSettings: openedSystemSettingsHandler
         )
         .preferredColorScheme(.dark)
         view = NSHostingView(rootView: tutorialView)

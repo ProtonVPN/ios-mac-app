@@ -130,7 +130,11 @@ private class WindowServiceMock: WindowService {
 
     func closeActiveWindows(except _: [NSWindowController.Type]) {}
 
-    func openSystemExtensionGuideWindow(origin _: SystemExtensionTourAlert.Origin, cancelledHandler _: @escaping () -> Void) {}
+    func openSystemExtensionGuideWindow(
+        origin _: SystemExtensionTourAlert.Origin,
+        openedSystemSettingsHandler _: @escaping () -> Void,
+        cancelledHandler _: @escaping () -> Void
+    ) {}
 
     func openSubuserAlertWindow(alert _: SubuserWithoutConnectionsAlert) {}
 

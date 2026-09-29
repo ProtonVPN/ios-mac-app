@@ -285,7 +285,11 @@ extension AppDelegate: NSApplicationDelegate {
 
         container
             .makeSystemExtensionManager()
-            .installOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: includedExtensionTypes) { _, individualResults in
+            .installOrUpdateExtensionsIfNeeded(
+                origin: .init(entryPoint: .appLaunch, isUserInitiated: false),
+                shouldStartTour: true,
+                includedTypes: includedExtensionTypes
+            ) { _, individualResults in
                 // Check WireGuard installation for protocol fallback logic
                 if let wireGuardResult = individualResults[.wireGuard] {
                     switch wireGuardResult {

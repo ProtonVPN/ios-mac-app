@@ -85,11 +85,15 @@ class CreateNewProfileViewModel {
             if oldValue.connectionProtocol != state.connectionProtocol {
                 checkSystemExtensionOrResetProtocol(
                     newProtocol: state.connectionProtocol,
-                    shouldStartTour: false
+                    shouldStartTour: false,
+                    isUserInitiated: false
                 ) { result in
                     if let error = result.error,
                        case let .installationError(installError) = error,
-                       let alert = SysexInstallingErrorAlert(error: installError) {
+                       let alert = SysexInstallingErrorAlert.reportingRelocation(
+                           error: installError,
+                           entryPoint: .profileCreate
+                       ) {
                         self.alertService.push(alert: alert)
                     }
                 }
@@ -316,7 +320,11 @@ class CreateNewProfileViewModel {
         self.state = createStartingState()
 
         // Check is required here, as the didSet check is not invoked when assigning inside the constructor
-        checkSystemExtensionOrResetProtocol(newProtocol: state.connectionProtocol, shouldStartTour: true)
+        checkSystemExtensionOrResetProtocol(
+            newProtocol: state.connectionProtocol,
+            shouldStartTour: true,
+            isUserInitiated: false
+        )
 
         setupUserTier()
 
@@ -362,7 +370,11 @@ class CreateNewProfileViewModel {
 
     /// Starts the system extension tour if system extensions are required for `connection protocol` but are not enabled
     private func update(connectionProtocol: ConnectionProtocol?, userInitiated: Bool = false) {
-        checkSystemExtensionOrResetProtocol(newProtocol: connectionProtocol, shouldStartTour: true)
+        checkSystemExtensionOrResetProtocol(
+            newProtocol: connectionProtocol,
+            shouldStartTour: true,
+            isUserInitiated: userInitiated
+        )
         state = state.updating(connectionProtocol: connectionProtocol)
 
         if connectionProtocol == .vpnProtocol(.ike), userInitiated {
@@ -371,7 +383,7 @@ class CreateNewProfileViewModel {
                     return
                 }
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User accepted to switch to Smart protocol for a new profile.")
-                update(connectionProtocol: .smartProtocol)
+                update(connectionProtocol: .smartProtocol, userInitiated: true)
             }, continueHandler: {
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User decided to continue with IKEv2 anyway for a new profile.")
             }))
@@ -390,6 +402,7 @@ class CreateNewProfileViewModel {
     private func checkSystemExtensionOrResetProtocol(
         newProtocol: ConnectionProtocol?,
         shouldStartTour: Bool,
+        isUserInitiated: Bool,
         completionHandler: ((SystemExtensionResult) -> Void)? = nil
     ) {
         guard newProtocol?.requiresSystemExtension == true else {
@@ -407,6 +420,7 @@ class CreateNewProfileViewModel {
 
         sysexManager
             .installOrUpdateExtensionsIfNeeded(
+                origin: .init(entryPoint: .profileCreate, isUserInitiated: isUserInitiated),
                 shouldStartTour: shouldStartTour,
                 includedTypes: [.wireGuard]
             ) { result, _ in

@@ -39,6 +39,8 @@ public struct TelemetryService {
         _ flowType: UpsellEvent.FlowType?
     ) async throws -> Void
     public var startSettingsHeartbeat: () -> Void
+    /// Reports a macOS system extension activation, its outcome, or the install location recovery prompt.
+    public var systemExtensionEvent: (_ report: SystemExtensionEvent.Report) async throws -> Void
 
     public var vpnGatewayConnectionChanged: (_ connectionStatus: ConnectionStatus) async throws -> Void
     public var connectionStateChanged: (_ connectionState: ConnectionState) async throws -> Void
