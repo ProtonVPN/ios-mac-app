@@ -14,6 +14,9 @@ repo = defines.get("repo", os.getcwd())
 application = defines["app"]
 appname = os.path.basename(application)
 
+# Volume name, which overrides the product name passed on the command line
+volume_name = 'Proton VPN'
+
 # Volume format (see hdiutil create -help)
 format = defines.get('format', 'UDBZ')
 
@@ -26,14 +29,17 @@ files = [ application ]
 # Symlinks to create
 symlinks = { 'Applications': '/Applications' }
 
-# Note: paths are relative to the script's directory.
+# Files to show without their extension
+hide_extensions = [ appname ]
+
+# Note: paths are relative to the repository root, which -Drepo=<path> sets.
 icon = repo + '/Integration/Assets/ProtonVPN-Disk-Image.icns' # Set the 'disk' icon to display when the dmg has been mounted
 background = repo + '/Integration/Assets/Disk-Image-Background.pdf' # Set the dmg background to display when the image is opened
 
 # Where to put the icons
 icon_locations = {
-    appname:        (130, 194),
-    'Applications': (412, 194),
+    appname:        (113, 210),
+    'Applications': (441, 210),
     '.background.pdf': (100, 468), # move the background file icon off screen
     '.VolumeIcon.icns': (100, 468) # move the disk icon file off screen
 }
@@ -46,7 +52,7 @@ show_sidebar = False
 sidebar_width = 180
 
 # Window position in ((x, y), (w, h)) format
-window_rect = ((200, 200), (548, 412))
+window_rect = ((200, 200), (550, 410))
 
 default_view = 'icon-view'
 
@@ -65,8 +71,8 @@ grid_offset = (0, 0)
 grid_spacing = 100
 scroll_position = (0, 0)
 label_pos = 'bottom' # or 'right'
-text_size = 14
-icon_size = 96
+text_size = 16
+icon_size = 92
 
 # .. List view configuration ...................................................
 
@@ -88,7 +94,7 @@ list_text_size = 12
 list_scroll_position = (0, 0)
 list_sort_by = 'name'
 list_use_relative_dates = True
-list_calculate_all_sizes = False,
+list_calculate_all_sizes = False
 list_columns = ('name', 'date-modified', 'size', 'kind', 'date-added')
 
 list_column_widths = {
