@@ -571,6 +571,7 @@ struct CountriesQuickSettingsFeatureTests {
         defaults.set(alwaysOnEnabled, forKey: "AlwaysOnEnabled")
         withDependencies {
             $0.defaultAppStorage = defaults
+            $0.managedDomainReader = ManagedDomainReader(rawValue: { key in defaults.object(forKey: key) })
             $0.featureFlags = .enabling()
         } operation: {
             operation(QuickSettingsFeature.State())
