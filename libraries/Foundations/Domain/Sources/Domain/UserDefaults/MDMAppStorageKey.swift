@@ -31,6 +31,12 @@ public struct ManagedDomainReader: Sendable {
     }
 }
 
+extension ManagedDomainReader: TestDependencyKey {
+    public static var testValue: ManagedDomainReader {
+        .init(rawValue: { _ in nil })
+    }
+}
+
 extension ManagedDomainReader: DependencyKey {
     public static var liveValue: ManagedDomainReader {
         #if os(iOS)
