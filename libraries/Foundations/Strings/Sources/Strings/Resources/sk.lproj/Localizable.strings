@@ -3460,3 +3460,27 @@
 
 /* Alert body shown when the server refuses a setting the app doesn't surface as a named control */
 "_local_agent_setting_refused_message_generic" = "Jedno z vašich nastavení nie je pre toto pripojenie k dispozícii, bolo vypnuté.";
+
+/* Question asked by the Net Promoter Score survey modal */
+"nps_modal_title" = "Aká je pravdepodobnosť, že odporučíte Proton VPN svojmu priateľovi?";
+
+/* Title label after submitting Net Promoter Score survey */
+"nps_modal_title_thanks_for_sharing" = "Ďakujeme za zdieľanie";
+
+/* Subtitle label after submitting Net Promoter Score survey */
+"nps_modal_title_thanks_subtitle" = "Vaša spätná väzba nám pomáha zlepšovať Proton VPN.";
+
+/* Caption under the low end of the 0-10 Net Promoter Score scale */
+"nps_modal_scale_lower_bound" = "0 je veľmi nepravdepodobne";
+
+/* Caption under the high end of the 0-10 Net Promoter Score scale */
+"nps_modal_scale_upper_bound" = "10 je vysoko pravdepodobne";
+
+/* Label above the optional free-form field of the Net Promoter Score survey */
+"nps_modal_comment_title" = "Dajte nám, prosím, vedieť, prečo ste udelili toto hodnotenie";
+
+/* Caption marking the Net Promoter Score comment field as not required */
+"nps_modal_comment_optional" = "Voliteľné";
+
+/* Button that submits the Net Promoter Score survey answer */
+"nps_modal_submit" = "Zdieľať anonymne";

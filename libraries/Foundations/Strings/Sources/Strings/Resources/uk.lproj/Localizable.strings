@@ -252,10 +252,10 @@
 "_you_are_not_protected" = "Ви не захищені";
 
 /* macos header title when authentication is needed */
-"_header_auth_required" = "Authentication required";
+"_header_auth_required" = "Необхідно пройти автентифікацію";
 
 /* macos header subtitle when authentication is needed */
-"_header_vpn_traffic_blocked" = "VPN traffic is blocked until you authenticate.";
+"_header_vpn_traffic_blocked" = "Трафік VPN блокуватиметься доки ви не пройдете автентифікацію.";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Спробувати знову";
@@ -924,7 +924,7 @@
 "_delete_application_data_popup_body" = "Усі дані Proton VPN будуть видалені та виконається вихід із програми. Бажаєте продовжити?";
 
 /* iOS: login-screen kill-switch banner action; macOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Disable";
+"_kill_switch_disable" = "Вимкнути";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
 "_kill_switch_enable" = "Увімкнути Kill Switch";
@@ -3177,10 +3177,10 @@
 "_connection_error_intent_missing" = "Не вдалося з'єднатися із сервером.";
 
 /* Error message: a problem occurred while building the VPN configuration, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds. */
-"_connection_error_configuration" = "There was a problem configuring the VPN connection.";
+"_connection_error_configuration" = "Виникла проблема під час налаштування з'єднання VPN.";
 
 /* Error message: the VPN configuration is missing something it needs, covering every underlying cause. The error code identifying the cause is appended in TestFlight builds. */
-"_connection_error_configuration_invalid" = "There was a problem with the VPN configuration.";
+"_connection_error_configuration_invalid" = "Виникла проблема з конфігурацією VPN.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
 "_connection_error_preparation" = "Виникла проблема під час підготовки з'єднання.";
@@ -3408,7 +3408,7 @@
 "_pcap_capture_session_capturing" = "Запис";
 
 /* Header of the pending PCAP session view */
-"_pcap_capture_session_pending" = "Pending connection";
+"_pcap_capture_session_pending" = "Очікується з'єднання";
 
 /* Button title on the PCAP export view. Presents a share sheet to save the file outside of the app */
 "_pcap_capture_session_export" = "Зберегти файл";
@@ -3460,3 +3460,27 @@
 
 /* Alert body shown when the server refuses a setting the app doesn't surface as a named control */
 "_local_agent_setting_refused_message_generic" = "Один з параметрів недоступний для цього з'єднання, тому його вимкнено.";
+
+/* Question asked by the Net Promoter Score survey modal */
+"nps_modal_title" = "Наскільки ймовірно, що ви порекомендуєте Proton VPN друзям?";
+
+/* Title label after submitting Net Promoter Score survey */
+"nps_modal_title_thanks_for_sharing" = "Дякуємо, що поділилися";
+
+/* Subtitle label after submitting Net Promoter Score survey */
+"nps_modal_title_thanks_subtitle" = "Ваш відгук допомагає нам удосконалити Proton VPN.";
+
+/* Caption under the low end of the 0-10 Net Promoter Score scale */
+"nps_modal_scale_lower_bound" = "0 – дуже малоймовірно";
+
+/* Caption under the high end of the 0-10 Net Promoter Score scale */
+"nps_modal_scale_upper_bound" = "10 – цілком ймовірно";
+
+/* Label above the optional free-form field of the Net Promoter Score survey */
+"nps_modal_comment_title" = "Повідомте, чому ви поставили таку оцінку";
+
+/* Caption marking the Net Promoter Score comment field as not required */
+"nps_modal_comment_optional" = "Необов'язково";
+
+/* Button that submits the Net Promoter Score survey answer */
+"nps_modal_submit" = "Поділитись анонімно";

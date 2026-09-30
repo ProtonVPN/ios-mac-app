@@ -3460,3 +3460,27 @@
 
 /* Alert body shown when the server refuses a setting the app doesn't surface as a named control */
 "_local_agent_setting_refused_message_generic" = "설정값 중 일부가 현재 연결에서 사용할 수 없으며, 설정을 해제해야 합니다.";
+
+/* Question asked by the Net Promoter Score survey modal */
+"nps_modal_title" = "Proton VPN을 친구나 동료에게 얼마나 추천하실 것 같나요?";
+
+/* Title label after submitting Net Promoter Score survey */
+"nps_modal_title_thanks_for_sharing" = "공유해 주셔서 감사합니다";
+
+/* Subtitle label after submitting Net Promoter Score survey */
+"nps_modal_title_thanks_subtitle" = "회원님의 피드백은 Proton VPN을 향상하는데 도움이 됩니다.";
+
+/* Caption under the low end of the 0-10 Net Promoter Score scale */
+"nps_modal_scale_lower_bound" = "0은 매우 가능성 낮음";
+
+/* Caption under the high end of the 0-10 Net Promoter Score scale */
+"nps_modal_scale_upper_bound" = "10은 매우 가능성이 높음";
+
+/* Label above the optional free-form field of the Net Promoter Score survey */
+"nps_modal_comment_title" = "이 점수를 주신 이유를 알려주세요";
+
+/* Caption marking the Net Promoter Score comment field as not required */
+"nps_modal_comment_optional" = "선택";
+
+/* Button that submits the Net Promoter Score survey answer */
+"nps_modal_submit" = "익명으로 공유";
