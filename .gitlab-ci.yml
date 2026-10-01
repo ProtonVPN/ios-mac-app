@@ -90,7 +90,7 @@ include:
     # Keep this toolchain version in sync with userProperties.toolchainVersion in .lhc.pkl, so this job shares its Mint
     # cache with the child pipeline's build and test jobs.
     - key:
-        prefix: mint-xcode-26.2
+        prefix: mint-xcode-26.4
         files:
           - Mintfile
       paths:
