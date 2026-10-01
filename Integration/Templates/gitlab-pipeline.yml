@@ -36,7 +36,7 @@ variables:
   SWIFT_DETERMINISTIC_HASHING: 1
 
 default:
-  image: tahoe:26.4.22
+  image: tahoe:26.4.2
 
 include:
   - component: gitlab.protontech.ch/proton/devops/cicd-components/kits/devsecops/generic@0.0.10
