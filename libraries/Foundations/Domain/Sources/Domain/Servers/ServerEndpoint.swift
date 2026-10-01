@@ -69,7 +69,7 @@ public extension ServerEndpoint {
             return nil
         }
 
-        return protocolEntries[vpnProtocol]??.ports
+        return protocolEntries[vpnProtocol]?.ports
     }
 
     /// Returns true if any of the protocols in the set are supported by this server ip.

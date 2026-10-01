@@ -90,14 +90,15 @@ struct PerProtocolEntriesTests {
         #expect(endpoint.entryIp(using: .wireGuard(.udp)) == entryIp)
     }
 
-    @Test("A null IKEv2 entry counts as no entry")
-    func nullIKEv2EntryCountsAsNoEntry() {
-        let endpoint = endpoint(entries: [
-            .wireGuard(.udp): .init(ipv4: relayIp, ports: nil),
-            .ike: nil,
-        ])
+    @Test("A null entry counts as no entry")
+    func nullEntryCountsAsNoEntry() throws {
+        let json = #"{"WireGuardUDP": {"IPv4": "9.9.9.9"}, "IKEv2": null}"#
+        let entries = try JSONDecoder().decode(PerProtocolEntries.self, from: Data(json.utf8))
+        let endpoint = endpoint(entries: entries)
 
+        #expect(entries.rawValue.keys.sorted() == ["WireGuardUDP"])
         #expect(endpoint.entryIp(using: .ike) == nil)
+        #expect(endpoint.entryIp(using: .wireGuard(.tcp)) == entryIp)
     }
 
     // MARK: - Parsing

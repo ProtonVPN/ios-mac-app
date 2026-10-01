@@ -146,12 +146,12 @@ public extension PerProtocolEntries {
 
         // A null entry reads as a missing one, so the entries next to it are kept.
         let entryDictionaries = entries.compactMapValues { $0 as? JSONDictionary }
-        self = .init(rawValue: entryDictionaries.mapValues(ServerProtocolEntry.init(dic:)))
+        self = .init(rawValue: entryDictionaries.compactMapValues(ServerProtocolEntry.init(dic:)))
     }
 
     var asDict: JSONDictionary {
         rawValue.reduce(into: [:]) { partialResult, keyPair in
-            partialResult[keyPair.key] = keyPair.value?.asDict as? AnyObject
+            partialResult[keyPair.key] = keyPair.value.asDict
         }
     }
 }
