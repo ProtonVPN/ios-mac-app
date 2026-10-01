@@ -10,6 +10,3 @@
 	path = external/wireguard-apple
 	url = ../wireguard-apple
 	branch = release/ios
-[submodule "external/swift-cargo"]
-	path = external/swift-cargo
-	url = ../swift-cargo
