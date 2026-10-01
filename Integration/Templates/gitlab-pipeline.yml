@@ -20,7 +20,7 @@ stages:
   - cleanup
 
 variables:
-  PIPELINE_HOST: {{ config.build.ci.userProperties.pipelineHosts|split:","|random }}
+  PIPELINE_HOST: "ci-geneva-cluster"
   # Use parallel compression/decompression to speed up caching
   FF_USE_FASTZIP: "true"
   # Low-effort compression to reduce bandwidth spent uploading/downloading, with some parallelism for speed
@@ -35,7 +35,7 @@ variables:
   RELEASE_PAGE_URL: "$CI_PAGES_URL/$CI_COMMIT_REF_SLUG/documentation/protonvpnrelease/"
 
 default:
-  image: "team-vpn-$BUILD_HOST_IDENTIFIER"
+  image: tahoe:26.4.3
 
 include:
   - component: gitlab.protontech.ch/proton/devops/cicd-components/kits/devsecops/generic@0.0.10

@@ -24,7 +24,7 @@ variables:
   IMAGES: $IMAGES
 
 default:
-  image: "team-vpn-macos-15.6-xcode-26.2"
+  image: tahoe:26.4.3
 
 # Only start a pipeline if it's for a merge request, if the pipeline has been scheduled, if this is a merge result onto
 # the develop branch, or if this is a tag which begins with a recognized tag prefix like `mac` or `ios`.
@@ -108,7 +108,8 @@ prepare:
     GIT_SUBMODULE_STRATEGY: normal
   stage: prepare
   tags:
-    - vpn-apple-xs
+    - ci-geneva-cluster
+    - mac-arm64-vm
   before_script:
     - !reference [.job_template, before_script]
     - !reference [.lhc_describe, before_script]

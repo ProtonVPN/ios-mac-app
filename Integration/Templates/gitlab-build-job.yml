@@ -7,8 +7,8 @@
 {% endblock %}
 
 {% block build_tags %}
-    - vpn-apple-builds
     - $PIPELINE_HOST
+    - mac-arm64-vm
 {% endblock %}
 
 {% block fastlane_build_args %}
