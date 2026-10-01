@@ -6,6 +6,11 @@
     - .build_cache_template
 {% endblock %}
 
+{% block build_vars %}
+    DERIVED_DATA_CACHE_POLICY: push
+{{ block.super }}
+{% endblock %}
+
 {% block build_tags %}
     - $PIPELINE_HOST
     - mac-arm64-vm
@@ -13,6 +18,7 @@
 
 {% block fastlane_build_args %}
 {{ block.super }}
+        "cloned_source_packages_path:$SPM_PACKAGES_PATH"
 {%- if config.build.ci.tagName %}
         "describe_directory:$DESCRIBE_DIR/release"
 {% else %}
@@ -33,7 +39,7 @@
       done
       popd
 
-      CHECKOUTS="$DERIVED_DATA_PATH/SourcePackages/checkouts"
+      CHECKOUTS="$SPM_PACKAGES_PATH/checkouts"
       if [ -d "$CHECKOUTS" ]; then
           pushd "$CHECKOUTS"
           for dependency in $(ls); do

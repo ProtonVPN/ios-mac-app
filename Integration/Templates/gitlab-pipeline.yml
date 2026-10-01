@@ -33,6 +33,7 @@ variables:
   TIMESTAMP: "{% include "timestamp.base" %}"
   BUILD_HOST_IDENTIFIER: "macos-{{ config.build.userProperties.platformVersion }}-xcode-{{ config.build.userProperties.toolchainVersion }}"
   RELEASE_PAGE_URL: "$CI_PAGES_URL/$CI_COMMIT_REF_SLUG/documentation/protonvpnrelease/"
+  SWIFT_DETERMINISTIC_HASHING: 1
 
 default:
   image: tahoe:26.4.3
@@ -83,35 +84,86 @@ include:
 
 # BUILD CACHES
 ##############
-# Caches for DerivedData, fetched SPM packages, and Mint build dependencies
+# Caching is split into four independent objects so pipelines can share the branch-independent parts.
+# build-* holds DerivedData (build products and intermediates) and stays branch-keyed, since a branch's Test jobs
+# consume the products its Build jobs produced. cas-* holds Xcode's compilation cache, keyed by platform, host, and
+# configuration. spm-* holds fetched Swift package checkouts and artifacts, keyed by platform and host. mint-* holds the
+# Mint-managed build tools. The cas-* and spm-* caches are not branch-keyed, so every pipeline shares them.
 .derived_data_cache_template:
   variables: &derived_data_cache_variables
     DERIVED_DATA_PATH: .caches/Xcode/DerivedData
     DERIVED_DATA_CACHE_POLICY: pull-push
     TRAIN_CACHE_KEY: "{{ config.build.platform }}-host-$BUILD_HOST_IDENTIFIER"
-  cache: &derived_data_cache_cache
-    - key: build-$TRAIN_CACHE_KEY-$CI_COMMIT_REF_SLUG
-      fallback_keys:
-        - build-$TRAIN_CACHE_KEY-{{ config.userProperties.releaseBranch }}
-        - build-$TRAIN_CACHE_KEY-$CI_DEFAULT_BRANCH
+  cache:
+    - &derived_data_cache_cache
+      key: build-$TRAIN_CACHE_KEY-$CI_COMMIT_REF_SLUG
       paths:
         - $DERIVED_DATA_PATH
       policy: $DERIVED_DATA_CACHE_POLICY
+
+# Xcode's compilation cache (CAS). It is relocated out of DerivedData by COMPILATION_CACHE_CAS_PATH, set in the Fastfile
+# template's :xcargs, so it can be shared across branches independently of the branch-keyed DerivedData.
+.compilation_cache_template:
+  variables: &compilation_cache_variables
+    # Keep this path in sync with COMPILATION_CACHE_CAS_PATH in Integration/Templates/fastlane/Fastfile.template.
+    COMPILATION_CACHE_PATH: .caches/Xcode/CompilationCache
+    COMPILATION_CACHE_POLICY: pull-push
+  cache:
+    - &compilation_cache_cache
+      key: cas-$TRAIN_CACHE_KEY-$CONFIGURATION
+      paths:
+        - $COMPILATION_CACHE_PATH
+      policy: $COMPILATION_CACHE_POLICY
+
+# Swift package checkouts and binary artifacts, relocated out of DerivedData by cloned_source_packages_path (passed in
+# the build job's fastlane args). Keyed by platform and host, since binary artifacts are platform-specific.
+.spm_cache_template:
+  variables: &spm_cache_variables
+    SPM_PACKAGES_PATH: .caches/Xcode/SourcePackages
+    SPM_CACHE_POLICY: pull-push
+  cache:
+    - &spm_cache_cache
+      key:
+        prefix: spm-$TRAIN_CACHE_KEY
+        files:
+          - libraries/Core/NEProviders/Package.swift
+          - ProtonVPN.xcworkspace/xcshareddata/swiftpm/Package.resolved
+      paths:
+        - $SPM_PACKAGES_PATH
+      policy: $SPM_CACHE_POLICY
 
 .mint_cache_template:
   variables: &mint_cache_variables
     MINT_PATH: .caches/mint
     MINT_LINK_PATH: $MINT_PATH/bin
     MINT_CACHE_POLICY: pull-push
-  cache: &mint_cache_cache
-    - key: mint-xcode-{{ config.build.userProperties.toolchainVersion }}-$CI_COMMIT_REF_SLUG
-      fallback_keys:
-        - mint-xcode-{{ config.build.userProperties.toolchainVersion }}-{{ config.userProperties.releaseBranch }}
+  cache:
+    - &mint_cache_cache
+      key:
+        prefix: mint-xcode-{{ config.build.userProperties.toolchainVersion }}
+        files:
+          - Mintfile
       paths:
         - $MINT_PATH
       policy: $MINT_CACHE_POLICY
 
+# Build jobs populate all four caches. GitLab allows a maximum of four cache objects per job.
 .build_cache_template:
+  variables:
+    <<: *derived_data_cache_variables
+    <<: *compilation_cache_variables
+    <<: *spm_cache_variables
+    <<: *mint_cache_variables
+  cache:
+    - *derived_data_cache_cache
+    - *compilation_cache_cache
+    - *spm_cache_cache
+    - *mint_cache_cache
+
+# Test jobs only consume the branch's DerivedData (built products) and the Mint tools. They neither compile nor resolve
+# packages, so they skip the CAS and SPM caches. Their DerivedData and Mint policies are overridden to pull in the test
+# job template.
+.test_cache_template:
   variables:
     <<: *derived_data_cache_variables
     <<: *mint_cache_variables

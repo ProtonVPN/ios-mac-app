@@ -37,7 +37,15 @@ end
     {% if config.build.userProperties.simulatorRuntime %}
     :simulator_runtime_filter => "{{ config.build.userProperties.simulatorRuntime }}",
     {% endif %}
-    :xcargs => "-skipPackagePluginValidation CI_PROJECT_DIR=\"#{ENV.fetch("CI_PROJECT_DIR", $repo_path)}\"",
+    # CAS path must stay in sync with COMPILATION_CACHE_PATH in gitlab-pipeline.yml. COMPILATION_CACHE_LIMIT_SIZE is a
+    # byte count (25 GiB here). We also turn COMPILATION_CACHE_ENABLE_CACHING on from the command line so it covers
+    # every target, including Swift package targets that do not pick up the app xcconfigs.
+    :xcargs =>
+        "-skipPackagePluginValidation " \
+        "CI_PROJECT_DIR=\"#{ENV.fetch("CI_PROJECT_DIR", $repo_path)}\" " \
+        "COMPILATION_CACHE_ENABLE_CACHING=YES " \
+        "COMPILATION_CACHE_CAS_PATH=\"#{ENV.fetch("CI_PROJECT_DIR", $repo_path)}/.caches/Xcode/CompilationCache\" " \
+        "COMPILATION_CACHE_LIMIT_SIZE=#{25 * 1024 ** 3}",
     :sentry_app_identifier => "{{ config.build.userProperties.sentryAppIdentifier }}",
     {%- if config.releaseChannel == "alpha" %}
     :sentry_upload => true,

@@ -21,7 +21,7 @@
 {% block test_header %}
   extends:
     - .job_template
-    - .build_cache_template
+    - .test_cache_template
 {% endblock %}
 
 {% block test_footer %}
