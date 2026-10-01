@@ -1318,6 +1318,16 @@ public enum Localizable {
   public static var reestablishVpnConnection: String { return Localizable.tr("Localizable", "_reestablish_vpn_connection_", fallback: "Re-establishing VPN connection.") }
   /// MacOS: About window
   public static var releaseDate: String { return Localizable.tr("Localizable", "_release_date", fallback: "Release date:") }
+  /// Message of the prompt shown when the app runs straight from the disk image it was downloaded in. The disk image window shows an Applications folder next to the app.
+  public static var relocationPromptMessageDiskImage: String { return Localizable.tr("Localizable", "_relocation_prompt_message_disk_image", fallback: "Proton VPN is running from its disk image. To connect with WireGuard, Stealth, or Smart protocol, drag it into the Applications folder next to it, then open it from Applications.") }
+  /// Message of the prompt shown when the app runs from a regular folder, such as Downloads, instead of /Applications.
+  public static var relocationPromptMessageFolder: String { return Localizable.tr("Localizable", "_relocation_prompt_message_folder", fallback: "Proton VPN must be in the Applications folder to connect with WireGuard, Stealth, or Smart protocol. Drag it into Applications, then open it from there.") }
+  /// Message of the prompt shown when macOS runs a temporary, read-only copy of the app (App Translocation), so the app cannot show where the original is.
+  public static var relocationPromptMessageTranslocated: String { return Localizable.tr("Localizable", "_relocation_prompt_message_translocated", fallback: "macOS is running a temporary copy of Proton VPN. To connect with WireGuard, Stealth, or Smart protocol, quit Proton VPN, drag it into the Applications folder in Finder, then open it from there.") }
+  /// Button in the prompt shown when the app does not run from the /Applications folder. It opens a Finder window with the app selected, so the user can move it to /Applications.
+  public static var relocationPromptShowInFinder: String { return Localizable.tr("Localizable", "_relocation_prompt_show_in_finder", fallback: "Show in Finder") }
+  /// Title of the prompt shown when the app does not run from the /Applications folder. macOS only enables the system extensions that WireGuard, Stealth, and Smart protocol need for an app in /Applications.
+  public static var relocationPromptTitle: String { return Localizable.tr("Localizable", "_relocation_prompt_title", fallback: "Move Proton VPN to Applications") }
   /// MacOS: label in login and settings screens
   public static var rememberLogin: String { return Localizable.tr("Localizable", "_remember_login", fallback: "Remember sign in") }
   /// Button in Kill switch error alert
@@ -1707,8 +1717,6 @@ public enum Localizable {
   public static var sysexErrorDescriptionSubcaseDefault: String { return Localizable.tr("Localizable", "_sysex_error_description_subcase_default", fallback: "please contact our support.") }
   /// This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type.
   public static var sysexErrorDescriptionSubcaseForbiddenBySystemPolicy: String { return Localizable.tr("Localizable", "_sysex_error_description_subcase_forbidden_by_system_policy", fallback: "the current system policy prohibits activating extensions on your device.") }
-  /// Button in the system extension error alert shown when the app does not run from the /Applications folder. It opens a Finder window with the app selected, so the user can move it to /Applications.
-  public static var sysexErrorShowInFinder: String { return Localizable.tr("Localizable", "_sysex_error_show_in_finder", fallback: "Show in Finder") }
   /// Open System Settings
   public static var sysexOpenSystemSettings: String { return Localizable.tr("Localizable", "_sysex_open_system_settings", fallback: "Open System Settings") }
   /// Proton VPN requires to load a System Extension to leverage Smart Protocol, OpenVPN and WireGuard.

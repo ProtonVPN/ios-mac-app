@@ -20,19 +20,18 @@ import AppKit
 import Foundation
 
 import Dependencies
+import Domain
 
 import Telemetry
 import VPNAppCore
 
-extension SysexInstallingErrorAlert {
-    /// Creates the alert for a failed activation, and reports it when it is the install location recovery prompt.
-    ///
-    /// When the app runs from outside `/Applications`, the alert offers to show the app in Finder, so the user can
-    /// move it there. Telemetry then records that the prompt was shown and which button the user pressed.
-    static func reportingRelocation(
-        error: Error,
-        entryPoint: SystemExtensionEvent.EntryPoint
-    ) -> SysexInstallingErrorAlert? {
+extension RelocationPromptAlert {
+    /// Creates the prompt for where the app runs from and reports it to telemetry, or returns nil when the app is in
+    /// `/Applications`.
+    static func reporting(
+        entryPoint: SystemExtensionEvent.EntryPoint,
+        location: BundleLocation = .current
+    ) -> RelocationPromptAlert? {
         @Dependency(\.telemetryService) var telemetryService
         let report = { (report: SystemExtensionEvent.Report) in
             Task {
@@ -41,7 +40,8 @@ extension SysexInstallingErrorAlert {
             }
         }
 
-        let relocation = RelocationHandlers(
+        let alert = RelocationPromptAlert(
+            location: location,
             showInFinder: {
                 NSWorkspace.shared.activateFileViewerSelecting([Bundle.main.bundleURL])
                 report(.relocationPromptAction(.openedFinder))
@@ -50,12 +50,26 @@ extension SysexInstallingErrorAlert {
                 report(.relocationPromptAction(.dismissed))
             }
         )
-        guard let alert = SysexInstallingErrorAlert(error: error, relocation: relocation) else {
-            return nil
-        }
-        if alert.isBadInstallLocation {
+        if alert != nil {
             report(.relocationPromptDisplay(entryPoint: entryPoint))
         }
         return alert
+    }
+}
+
+extension SysexInstallingErrorAlert {
+    /// Creates the alert for a failed activation. An app outside `/Applications` gets the relocation prompt instead.
+    static func reportingRelocation(
+        error: Error,
+        entryPoint: SystemExtensionEvent.EntryPoint,
+        location: BundleLocation = .current
+    ) -> SystemAlert? {
+        guard let alert = SysexInstallingErrorAlert(error: error) else {
+            return nil
+        }
+        guard alert.isBadInstallLocation else {
+            return alert
+        }
+        return RelocationPromptAlert.reporting(entryPoint: entryPoint, location: location) ?? alert
     }
 }

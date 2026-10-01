@@ -1062,23 +1062,9 @@ public final class PaymentRestorationAlert: SystemAlert {
             code == .unsupportedParentBundleLocation
         }
 
-        /// What the buttons of the install location recovery prompt do.
-        public struct RelocationHandlers {
-            public let showInFinder: () -> Void
-            public let dismissed: () -> Void
-
-            public init(showInFinder: @escaping () -> Void, dismissed: @escaping () -> Void) {
-                self.showInFinder = showInFinder
-                self.dismissed = dismissed
-            }
-        }
-
         /// Creates the alert for a failed activation, or nil when the error does not come from the system
         /// extension framework.
-        ///
-        /// - Parameter relocation: Used only when `isBadInstallLocation` is true. The alert then adds a button that
-        ///   shows the app in Finder, and calls these handlers for both of its buttons.
-        public init?(error: Error, relocation: RelocationHandlers? = nil) {
+        public init?(error: Error) {
             guard let sysexError = error as? OSSystemExtensionError else {
                 return nil
             }
@@ -1099,16 +1085,7 @@ public final class PaymentRestorationAlert: SystemAlert {
 
             self.message = Localizable.sysexErrorDescription(subcase)
 
-            if isBadInstallLocation, let relocation {
-                actions.append(AlertAction(
-                    title: Localizable.sysexErrorShowInFinder,
-                    style: .confirmative,
-                    handler: relocation.showInFinder
-                ))
-                actions.append(AlertAction(title: Localizable.ok, style: .cancel, handler: relocation.dismissed))
-            } else {
-                actions.append(AlertAction(title: Localizable.ok, style: .cancel, handler: nil))
-            }
+            actions.append(AlertAction(title: Localizable.ok, style: .cancel, handler: nil))
         }
     }
 

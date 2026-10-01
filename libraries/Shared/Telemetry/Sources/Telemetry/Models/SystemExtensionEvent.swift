@@ -326,21 +326,17 @@ extension SystemExtensionEvent.Dimensions {
 // MARK: - Dimension values
 
 extension SystemExtensionEvent.InstallLocation {
-    /// Classifies the path of the running app bundle.
-    ///
-    /// Gatekeeper runs a quarantined app from a randomized read-only copy under `AppTranslocation`, so that case is
-    /// checked before the folders the user can see.
-    init(bundlePath: String) {
-        let components = URL(fileURLWithPath: bundlePath).pathComponents
-        if components.contains("AppTranslocation") {
-            self = .translocated
-        } else if components.starts(with: ["/", "Applications"]) {
+    init(_ location: BundleLocation) {
+        switch location {
+        case .applications:
             self = .applications
-        } else if components.starts(with: ["/", "Volumes"]) {
-            self = .dmgVolume
-        } else if components.count > 3, components.starts(with: ["/", "Users"]), components[3] == "Downloads" {
+        case .downloads:
             self = .downloads
-        } else {
+        case .dmgVolume:
+            self = .dmgVolume
+        case .translocated:
+            self = .translocated
+        case .other:
             self = .other
         }
     }

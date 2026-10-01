@@ -185,6 +185,7 @@ extension AppDelegate: NSApplicationDelegate {
                 appHasCompletedInitialSetup = true
 
                 startObservingNetworkingEvents()
+                promptToMoveToApplicationsIfNeeded()
             }
         }
 
@@ -270,6 +271,17 @@ extension AppDelegate: NSApplicationDelegate {
         log.info("applicationShouldTerminate", category: .os)
         provider.getDefaults().set(500, forKey: "NSInitialToolTipDelay")
         return navigationService.handleApplicationShouldTerminate()
+    }
+
+    /// Reminds the user on every launch from outside `/Applications`. macOS activates the system extensions only there,
+    /// and without them the app falls back to IKEv2.
+    private func promptToMoveToApplicationsIfNeeded() {
+        #if DEBUG
+            // Xcode runs debug builds from its build folder, where developers enable extensions in developer mode.
+            guard !Bundle.main.bundlePath.contains("/Build/Products/") else { return }
+        #endif
+        guard let alert = RelocationPromptAlert.reporting(entryPoint: .appLaunch) else { return }
+        container.makeCoreAlertService().push(alert: alert)
     }
 
     private func checkSysexAndAdjustGlobalProtocol() {

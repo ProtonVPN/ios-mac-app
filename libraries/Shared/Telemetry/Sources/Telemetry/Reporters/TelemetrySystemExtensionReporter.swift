@@ -39,7 +39,7 @@ public final class TelemetrySystemExtensionReporter {
         self.init(
             send: { try await telemetryEventScheduler.report(event: $0) },
             userTier: { CommonTelemetryDimensions.userTier() },
-            installLocation: { SystemExtensionEvent.InstallLocation(bundlePath: Bundle.main.bundlePath) }
+            installLocation: { SystemExtensionEvent.InstallLocation(.current) }
         )
     }
 

@@ -188,19 +188,17 @@ struct SystemExtensionEventTests {
     // MARK: - Dimension values
 
     @Test(
-        "The install location comes from the shape of the bundle path",
+        "Each bundle location keeps its name in the event",
         arguments: [
-            ("/Applications/ProtonVPN.app", SystemExtensionEvent.InstallLocation.applications),
-            ("/Applications/VPN/ProtonVPN.app", .applications),
-            ("/Users/someone/Downloads/ProtonVPN.app", .downloads),
-            ("/Volumes/ProtonVPN/ProtonVPN.app", .dmgVolume),
-            ("/private/var/folders/ab/xyz/T/AppTranslocation/1234/d/ProtonVPN.app", .translocated),
-            ("/Users/someone/Applications/ProtonVPN.app", .other),
-            ("/Users/someone/Desktop/ProtonVPN.app", .other),
+            (BundleLocation.applications, "applications"),
+            (.downloads, "downloads"),
+            (.dmgVolume, "dmg_volume"),
+            (.translocated, "translocated"),
+            (.other, "other"),
         ]
     )
-    func installLocation(bundlePath: String, expected: SystemExtensionEvent.InstallLocation) {
-        #expect(SystemExtensionEvent.InstallLocation(bundlePath: bundlePath) == expected)
+    func installLocation(location: BundleLocation, expected: String) {
+        #expect(SystemExtensionEvent.InstallLocation(location).rawValue == expected)
     }
 
     @Test("The protocol uses the names vpn.any.connection sends")
