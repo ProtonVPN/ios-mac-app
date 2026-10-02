@@ -343,6 +343,7 @@ extension MacAlertService: CoreAlertService {
     private func show(_ alert: SystemExtensionTourAlert) {
         windowService.openSystemExtensionGuideWindow(
             origin: alert.origin,
+            openedSystemSettingsHandler: alert.openedSystemSettingsHandler,
             cancelledHandler: alert.cancelHandler
         )
     }

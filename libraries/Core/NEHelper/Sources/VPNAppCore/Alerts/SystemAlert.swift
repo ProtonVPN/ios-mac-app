@@ -1055,10 +1055,20 @@ public final class PaymentRestorationAlert: SystemAlert {
         public let isError: Bool = true
         public var dismiss: (() -> Void)?
 
+        private let code: OSSystemExtensionError.Code
+
+        /// Whether the app runs from outside `/Applications`, which the user can fix by moving the app there.
+        public var isBadInstallLocation: Bool {
+            code == .unsupportedParentBundleLocation
+        }
+
+        /// Creates the alert for a failed activation, or nil when the error does not come from the system
+        /// extension framework.
         public init?(error: Error) {
             guard let sysexError = error as? OSSystemExtensionError else {
                 return nil
             }
+            self.code = sysexError.code
 
             let subcase: String = switch sysexError.code {
             case .unsupportedParentBundleLocation:
@@ -1085,6 +1095,8 @@ public final class PaymentRestorationAlert: SystemAlert {
         public var actions = [AlertAction]()
         public let isError: Bool = false
         public var dismiss: (() -> Void)?
+        /// Called when the user opens System Settings from the tour.
+        public var openedSystemSettingsHandler: () -> Void
         public var cancelHandler: () -> Void
 
         public let origin: Origin
@@ -1099,7 +1111,12 @@ public final class PaymentRestorationAlert: SystemAlert {
             case splitTunneling
         }
 
-        public init(origin: Origin, cancelHandler: @escaping () -> Void) {
+        public init(
+            origin: Origin,
+            openedSystemSettingsHandler: @escaping () -> Void,
+            cancelHandler: @escaping () -> Void
+        ) {
+            self.openedSystemSettingsHandler = openedSystemSettingsHandler
             self.cancelHandler = cancelHandler
             self.dismiss = cancelHandler
             self.origin = origin

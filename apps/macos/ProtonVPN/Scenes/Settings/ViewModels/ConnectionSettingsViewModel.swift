@@ -359,7 +359,11 @@ final class ConnectionSettingsViewModel {
 
     private func enableSmartProtocol(and then: ProtocolSwitchAction, _ completion: @escaping (Result<Void, Error>) -> Void) {
         sysexManager
-            .installOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: [.wireGuard]) { [weak self] result, _ in
+            .installOrUpdateExtensionsIfNeeded(
+                origin: .init(entryPoint: .connectionSettings, isUserInitiated: true),
+                shouldStartTour: true,
+                includedTypes: [.wireGuard]
+            ) { [weak self] result, _ in
                 self?.sysexPending = false
 
                 switch result {
@@ -396,7 +400,10 @@ final class ConnectionSettingsViewModel {
                     }
                 case let .failure(error):
                     if case let .installationError(installError) = error,
-                       let alert = SysexInstallingErrorAlert(error: installError) {
+                       let alert = SysexInstallingErrorAlert.reportingRelocation(
+                           error: installError,
+                           entryPoint: .connectionSettings
+                       ) {
                         self?.alertService.push(alert: alert)
                     }
                     completion(.failure(error))
@@ -411,7 +418,11 @@ final class ConnectionSettingsViewModel {
     private func checkSysexOrResetProtocol(_: ConnectionProtocol) {
         sysexPending = true
         sysexManager
-            .checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: false, includedTypes: [.wireGuard]) { [weak self] result, _ in
+            .checkAndInstallOrUpdateExtensionsIfNeeded(
+                origin: .init(entryPoint: .connectionSettings, isUserInitiated: false),
+                shouldStartTour: false,
+                includedTypes: [.wireGuard]
+            ) { [weak self] result, _ in
                 guard let self else { return }
                 sysexPending = false
                 if case .failure = result {

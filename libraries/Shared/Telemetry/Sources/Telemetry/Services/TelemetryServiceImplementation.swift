@@ -37,6 +37,7 @@ public final class TelemetryServiceImplementation {
     private var telemetrySettingsReporter: TelemetrySettingsReporter?
     private var telemetryConnectionStatusReporter: TelemetryConnectionStatusReporter?
     private var telemetryConversionReporter: TelemetryConversionReporter?
+    private var telemetrySystemExtensionReporter: TelemetrySystemExtensionReporter?
 
     private var telemetryEventScheduler: TelemetryEventScheduler?
     private var businessEventScheduler: TelemetryEventScheduler?
@@ -66,6 +67,9 @@ public final class TelemetryServiceImplementation {
             businessEventScheduler: businessEventScheduler
         )
         telemetrySettingsReporter = TelemetrySettingsReporter(telemetryEventScheduler: telemetryEventScheduler)
+        telemetrySystemExtensionReporter = TelemetrySystemExtensionReporter(
+            telemetryEventScheduler: telemetryEventScheduler
+        )
 
         #if canImport(AdAttributionKit)
             if #available(iOS 17.4, *) {
@@ -88,6 +92,11 @@ public final class TelemetryServiceImplementation {
         _ = await initializeTask.value
         telemetryConversionReporter?.onboardingEvent(event)
         try await telemetryOnboardingReporter?.onboardingEvent(event)
+    }
+
+    public func systemExtensionEvent(_ report: SystemExtensionEvent.Report) async throws {
+        _ = await initializeTask.value
+        try await telemetrySystemExtensionReporter?.report(report)
     }
 
     public func startSettingsHeartbeat() {
@@ -132,6 +141,7 @@ extension TelemetryService: DependencyKey {
             onboardingEvent: implementation.onboardingEvent,
             upsellEvent: implementation.upsellEvent,
             startSettingsHeartbeat: implementation.startSettingsHeartbeat,
+            systemExtensionEvent: implementation.systemExtensionEvent,
             vpnGatewayConnectionChanged: unimplemented("This is a part of the old connection layer"),
             connectionStateChanged: implementation.connectionStateChanged,
             userInitiatedVPNChange: implementation.userInitiatedVPNChange,

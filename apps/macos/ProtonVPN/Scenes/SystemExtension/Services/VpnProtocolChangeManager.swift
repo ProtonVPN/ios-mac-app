@@ -144,7 +144,11 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         }
 
         sysexManager
-            .installOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: [.wireGuard]) { [weak self] result, _ in
+            .installOrUpdateExtensionsIfNeeded(
+                origin: .init(entryPoint: .protocolChange, isUserInitiated: true),
+                shouldStartTour: true,
+                includedTypes: [.wireGuard]
+            ) { [weak self] result, _ in
                 switch result {
                 case .success:
                     self?.propertiesManager.vpnProtocol = vpnProtocol
@@ -157,7 +161,10 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
                     )
 
                     if case let .installationError(installError) = error,
-                       let alert = SysexInstallingErrorAlert(error: installError) {
+                       let alert = SysexInstallingErrorAlert.reportingRelocation(
+                           error: installError,
+                           entryPoint: .protocolChange
+                       ) {
                         self?.alertService.push(alert: alert)
                     }
                     completion(.failure(error))

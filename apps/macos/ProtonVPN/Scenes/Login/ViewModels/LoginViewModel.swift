@@ -277,7 +277,11 @@ final class LoginViewModel: ObservableObject {
     /// - Parameter shouldStartTour: Controls whether the sysex tour is shown, if approval is required.
     private func checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: Bool, shouldStartTour: Bool) {
         let includedExtensionTypes: [SystemExtensionType] = propertiesManager.isSubsequentLaunch ? [.wireGuard] : [.wireGuard, .plutonium]
-        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: shouldStartTour, includedTypes: includedExtensionTypes) { result, _ in
+        sysexManager.installOrUpdateExtensionsIfNeeded(
+            origin: .init(entryPoint: .login, isUserInitiated: shouldStartTour),
+            shouldStartTour: shouldStartTour,
+            includedTypes: includedExtensionTypes
+        ) { result, _ in
             switch result {
             case let .success(success):
                 if shouldDefaultToSmartIfPossible {

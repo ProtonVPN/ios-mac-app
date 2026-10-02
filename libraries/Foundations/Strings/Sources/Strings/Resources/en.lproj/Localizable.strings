@@ -1571,6 +1571,21 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. */
 "_sysex_error_description_subcase_default" = "please contact our support.";
 
+/* Title of the prompt shown when the app does not run from the /Applications folder. macOS only enables the system extensions that WireGuard, Stealth, and Smart protocol need for an app in /Applications. */
+"_relocation_prompt_title" = "Move Proton VPN to Applications";
+
+/* Message of the prompt shown when the app runs from a regular folder, such as Downloads, instead of /Applications. */
+"_relocation_prompt_message_folder" = "Proton VPN must be in the Applications folder to connect with WireGuard, Stealth, or Smart protocol. Drag it into Applications, then open it from there.";
+
+/* Message of the prompt shown when the app runs straight from the disk image it was downloaded in. The disk image window shows an Applications folder next to the app. */
+"_relocation_prompt_message_disk_image" = "Proton VPN is running from its disk image. To connect with WireGuard, Stealth, or Smart protocol, drag it into the Applications folder next to it, then open it from Applications.";
+
+/* Message of the prompt shown when macOS runs a temporary, read-only copy of the app (App Translocation), so the app cannot show where the original is. */
+"_relocation_prompt_message_translocated" = "macOS is running a temporary copy of Proton VPN. To connect with WireGuard, Stealth, or Smart protocol, quit Proton VPN, drag it into the Applications folder in Finder, then open it from there.";
+
+/* Button in the prompt shown when the app does not run from the /Applications folder. It opens a Finder window with the app selected, so the user can move it to /Applications. */
+"_relocation_prompt_show_in_finder" = "Show in Finder";
+
 // MARK: Cert based auth
 
 "_vpnauth_certfail_title" = "Auto-connect failed";

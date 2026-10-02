@@ -89,7 +89,11 @@ class HelpMenuViewModel {
     }
 
     func systemExtensionTutorialAction() {
-        windowService.openSystemExtensionGuideWindow(origin: .inAppPrompt([]), cancelledHandler: {})
+        windowService.openSystemExtensionGuideWindow(
+            origin: .inAppPrompt([]),
+            openedSystemSettingsHandler: {},
+            cancelledHandler: {}
+        )
     }
 
     #if DEBUG

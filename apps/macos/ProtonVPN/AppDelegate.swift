@@ -185,6 +185,7 @@ extension AppDelegate: NSApplicationDelegate {
                 appHasCompletedInitialSetup = true
 
                 startObservingNetworkingEvents()
+                promptToMoveToApplicationsIfNeeded()
             }
         }
 
@@ -272,6 +273,17 @@ extension AppDelegate: NSApplicationDelegate {
         return navigationService.handleApplicationShouldTerminate()
     }
 
+    /// Reminds the user on every launch from outside `/Applications`. macOS activates the system extensions only there,
+    /// and without them the app falls back to IKEv2.
+    private func promptToMoveToApplicationsIfNeeded() {
+        #if DEBUG
+            // Xcode runs debug builds from its build folder, where developers enable extensions in developer mode.
+            guard !Bundle.main.bundlePath.contains("/Build/Products/") else { return }
+        #endif
+        guard let alert = RelocationPromptAlert.reporting(entryPoint: .appLaunch) else { return }
+        container.makeCoreAlertService().push(alert: alert)
+    }
+
     private func checkSysexAndAdjustGlobalProtocol() {
         let connectionProtocol = propertiesManager.connectionProtocol
         if connectionProtocol.isDeprecated {
@@ -285,7 +297,11 @@ extension AppDelegate: NSApplicationDelegate {
 
         container
             .makeSystemExtensionManager()
-            .installOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: includedExtensionTypes) { _, individualResults in
+            .installOrUpdateExtensionsIfNeeded(
+                origin: .init(entryPoint: .appLaunch, isUserInitiated: false),
+                shouldStartTour: true,
+                includedTypes: includedExtensionTypes
+            ) { _, individualResults in
                 // Check WireGuard installation for protocol fallback logic
                 if let wireGuardResult = individualResults[.wireGuard] {
                     switch wireGuardResult {

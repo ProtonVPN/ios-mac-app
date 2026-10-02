@@ -41,16 +41,20 @@ public class TelemetryLegacyServiceImplementation {
     private var telemetrySettingsReporter: TelemetrySettingsReporter?
     private var telemetryConnectionStatusReporter: TelemetryLegacyConnectionStatusReporter?
     private var telemetryConversionReporter: TelemetryConversionReporter?
+    private var telemetrySystemExtensionReporter: TelemetrySystemExtensionReporter?
 
     private var telemetryEventScheduler: TelemetryEventScheduler?
     private var businessEventScheduler: TelemetryEventScheduler?
+
+    /// Creates the reporters. System extension events arrive during launch, so they wait for it to finish.
+    private var initializeTask: Task<Void, Never>!
 
     public init(
         factory: AppStateManagerFactory,
         eventNotifier: TelemetryEventNotifier = .init()
     ) {
         self.eventNotifier = eventNotifier
-        Task {
+        self.initializeTask = Task {
             await initializeReporters(factory: factory)
         }
     }
@@ -68,6 +72,9 @@ public class TelemetryLegacyServiceImplementation {
         telemetryOnboardingReporter = await TelemetryOnboardingReporter(telemetryEventScheduler: telemetryEventScheduler)
         telemetryConnectionStatusReporter = await TelemetryLegacyConnectionStatusReporter(factory: factory, telemetryEventScheduler: telemetryEventScheduler, businessEventScheduler: businessEventScheduler)
         telemetrySettingsReporter = TelemetrySettingsReporter(telemetryEventScheduler: telemetryEventScheduler)
+        telemetrySystemExtensionReporter = TelemetrySystemExtensionReporter(
+            telemetryEventScheduler: telemetryEventScheduler
+        )
 
         if #available(iOS 17.4, *) {
             telemetryConversionReporter = TelemetryConversionReporter()
@@ -89,6 +96,11 @@ public class TelemetryLegacyServiceImplementation {
 
     public func startSettingsHeartbeat() {
         telemetrySettingsReporter?.start()
+    }
+
+    public func systemExtensionEvent(_ report: SystemExtensionEvent.Report) async throws {
+        _ = await initializeTask.value
+        try await telemetrySystemExtensionReporter?.report(report)
     }
 
     public func upsellEvent(
@@ -122,6 +134,7 @@ public extension TelemetryService {
             onboardingEvent: implementation.onboardingEvent,
             upsellEvent: implementation.upsellEvent,
             startSettingsHeartbeat: implementation.startSettingsHeartbeat,
+            systemExtensionEvent: implementation.systemExtensionEvent,
             vpnGatewayConnectionChanged: implementation.vpnGatewayConnectionChanged,
             connectionStateChanged: unimplemented("This is a part of the new connection layer"),
             userInitiatedVPNChange: implementation.userInitiatedVPNChange,
