@@ -80,24 +80,10 @@ class CreateNewProfileViewModel {
 
     private var userTier: Int = .paidTier
     private var profileId: String?
+    /// Assigning this does not check the system extensions. `update(connectionProtocol:userInitiated:)` and
+    /// `replaceState(with:)` do, so that one protocol change sends one activation request.
     private var state: ModelState {
         didSet {
-            if oldValue.connectionProtocol != state.connectionProtocol {
-                checkSystemExtensionOrResetProtocol(
-                    newProtocol: state.connectionProtocol,
-                    shouldStartTour: false,
-                    isUserInitiated: false
-                ) { result in
-                    if let error = result.error,
-                       case let .installationError(installError) = error,
-                       let alert = SysexInstallingErrorAlert.reportingRelocation(
-                           error: installError,
-                           entryPoint: .profileCreate
-                       ) {
-                        self.alertService.push(alert: alert)
-                    }
-                }
-            }
             if let contentUpdate = oldValue.menuContentUpdate(forNewValue: state) {
                 menuContentChanged?(contentUpdate)
             }
@@ -373,7 +359,8 @@ class CreateNewProfileViewModel {
         checkSystemExtensionOrResetProtocol(
             newProtocol: connectionProtocol,
             shouldStartTour: true,
-            isUserInitiated: userInitiated
+            isUserInitiated: userInitiated,
+            completionHandler: presentInstallationError(in:)
         )
         state = state.updating(connectionProtocol: connectionProtocol)
 
@@ -391,13 +378,39 @@ class CreateNewProfileViewModel {
     }
 
     func clearContent() {
-        state = createStartingState()
+        replaceState(with: createStartingState())
         profileId = nil
         colorPickerViewModel.select(index: 0)
         NotificationCenter.default.post(name: sessionFinished, object: nil)
     }
 
     // MARK: System extensions
+
+    /// Replaces the state with one the app chose, such as an existing profile or the defaults. Checks the system
+    /// extensions when the new state changes the protocol.
+    private func replaceState(with newState: ModelState) {
+        let oldProtocol = state.connectionProtocol
+        state = newState
+        guard newState.connectionProtocol != oldProtocol else {
+            return
+        }
+        checkSystemExtensionOrResetProtocol(
+            newProtocol: newState.connectionProtocol,
+            shouldStartTour: false,
+            isUserInitiated: false,
+            completionHandler: presentInstallationError(in:)
+        )
+    }
+
+    /// Shows the error alert for a failed activation, or the install location prompt when that is the cause.
+    private func presentInstallationError(in result: SystemExtensionResult) {
+        guard case let .installationError(installError) = result.error,
+              let alert = SysexInstallingErrorAlert.reportingRelocation(error: installError, entryPoint: .profileCreate)
+        else {
+            return
+        }
+        alertService.push(alert: alert)
+    }
 
     private func checkSystemExtensionOrResetProtocol(
         newProtocol: ConnectionProtocol?,
@@ -482,14 +495,14 @@ class CreateNewProfileViewModel {
         colorPickerViewModel.select(rgbHex: color)
         profileId = profile.id
 
-        state = ModelState(
+        replaceState(with: ModelState(
             profileName: profile.name,
             serverType: profile.serverType,
             serverGroups: grouping,
             countryIndex: countryIndex,
             serverOffering: profile.serverOffering,
             connectionProtocol: connectionProtocol
-        )
+        ))
 
         prefillContent?() // tell the view controller to fill in non-menu things (like the name)
     }
