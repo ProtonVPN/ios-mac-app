@@ -83,3 +83,18 @@ extension PeerInfo {
         )
     }
 }
+
+extension CertificateDuration {
+    init(lifetime: CertificateLifetime) {
+        switch lifetime {
+        case let .days(days):
+            self = .days(count: UInt32(days))
+        case let .minutes(minutes):
+            self = .minutes(count: UInt32(minutes))
+        case let .hours(hours):
+            self = .hours(count: UInt32(hours))
+        case let .seconds(seconds):
+            self = .seconds(count: UInt32(seconds))
+        }
+    }
+}

@@ -679,7 +679,16 @@ extension ProTUNAdapter {
             .map { peer throws(ProTUNAdapter.Error) in
                 try PeerInfo(from: peer)
             }
+
         @Dependency(\.appInfo) var appInfo
+
+        #if DEBUG
+            let duration: CertificateDuration = proTUNConfig
+                .certificateLifetime
+                .map(CertificateDuration.init) ?? .minutes(count: 10)
+        #else
+            let duration: CertificateDuration? = nil
+        #endif
 
         return .init(
             peers: peers,
@@ -690,7 +699,7 @@ extension ProTUNAdapter {
                 appVersion: appInfo.appVersion,
                 settings: localAgentSettings,
                 muonEnv: .prod,
-                certificateDuration: .minutes(count: 10)
+                certificateDuration: duration
             ),
             sniStrategy: .random
         )

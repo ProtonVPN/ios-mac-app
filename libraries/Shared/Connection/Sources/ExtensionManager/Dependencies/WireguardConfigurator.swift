@@ -144,6 +144,13 @@ extension ManagerConfigurator {
     static func encodeProTUNConfiguration(connectionIntent: ServerConnectionIntent, on protocolConfiguration: NETunnelProviderProtocol) throws {
         @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
 
+        #if DEBUG
+            @SharedReader(.localValuesOverrides) var localOverrides
+            let lifetime = localOverrides?["CertLifetime"].map(CertificateLifetime.init) ?? nil
+        #else
+            let lifetime: CertificateLifetime? = nil
+        #endif
+
         let wgConfig = connectionConfigurationProvider.configuration().wireguardConfig
         let features = appropriateFeatures
 
@@ -155,6 +162,7 @@ extension ManagerConfigurator {
             preferredTransport: preferredTransport,
             peers: peers,
             dnsServers: wgConfig.dnsServers ?? [],
+            certificateLifetime: lifetime,
             netShieldLevel: features?.netshield.rawValue,
             vpnAccelerator: features?.vpnAccelerator,
             portForwarding: features.flatMap(\.portForwarding),
