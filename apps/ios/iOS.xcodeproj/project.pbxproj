@@ -339,6 +339,11 @@
 			path = "ProTUN-Extension-Mobile";
 			sourceTree = "<group>";
 		};
+		985DF1253BFD659DEAE60490 /* Credentials */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Credentials;
+			sourceTree = "<group>";
+		};
 		E55CCA9F2D30121E00FD0AAD /* ConnectWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -645,6 +650,7 @@
 				B2BCF0AA28B760B70041A635 /* Support */,
 				F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */,
 				D5811D81229BBD870087B63A /* Info.plist */,
+				985DF1253BFD659DEAE60490 /* Credentials */,
 			);
 			path = ProtonVPNUITests;
 			sourceTree = "<group>";
@@ -962,6 +968,9 @@
 			);
 			dependencies = (
 				D5811D83229BBD870087B63A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				985DF1253BFD659DEAE60490 /* Credentials */,
 			);
 			name = ProtonVPNUITests;
 			packageProductDependencies = (

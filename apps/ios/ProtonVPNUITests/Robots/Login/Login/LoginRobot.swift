@@ -109,7 +109,9 @@ class LoginRobot: CoreElements {
 
         @discardableResult
         func assignVPNConnectionErrorIsShown() -> LoginRobot {
-            staticText(assignConnectionErrorBannerMessage).waitUntilExists().checkExists()
+            // The banner is a SwiftUI `Text`, which exposes its message as the accessibility *label* (not an
+            // identifier), so match by label rather than the default identifier lookup.
+            staticText().hasLabel(assignConnectionErrorBannerMessage).waitUntilExists().checkExists()
             button(loginButton).waitUntilExists().checkExists().tap()
             return LoginRobot()
         }
