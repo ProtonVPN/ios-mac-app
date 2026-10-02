@@ -25,7 +25,7 @@ variables:
   SWIFT_DETERMINISTIC_HASHING: 1
 
 default:
-  image: tahoe:26.4.2
+  image: tahoe:26.4.40
 
 # Only start a pipeline if it's for a merge request, if the pipeline has been scheduled, if this is a merge result onto
 # the develop branch, or if this is a tag which begins with a recognized tag prefix like `mac` or `ios`.
