@@ -4,8 +4,8 @@
 {% block testplan_name %}{{ config.build.productName }}-{{ config.build.platform }}-$TEST_SUITE{% endblock %}
 
 {% block test_tags %}
-    - vpn-{{ config.build.platform|lowercase }}-tests
     - $PIPELINE_HOST
+    - mac-arm64-vm
 {% endblock %}
 
 {% block test_vars %}
@@ -21,7 +21,7 @@
 {% block test_header %}
   extends:
     - .job_template
-    - .build_cache_template
+    - .test_cache_template
 {% endblock %}
 
 {% block test_footer %}

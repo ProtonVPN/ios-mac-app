@@ -13,8 +13,8 @@
 {% endblock %}
 
 {% block publish_tags %}
-  - vpn-apple-metal
   - $PIPELINE_HOST
+  - mac-arm64-vm
 {% endblock %}
 
 {% block publish_needs %}

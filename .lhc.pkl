@@ -37,15 +37,14 @@ local base = new Train {
         ci = if (read?("env:CI") == "true") new PipelineProperties {
             userProperties = new Mapping {
                 ["readOnlyProvisioning"] = if (read?("env:MATCH_REPROVISION") == "true") "false" else "true"
-                ["pipelineHosts"] = "ci-vilnius-6" // for now, vilnius-1 is only used for macOS builds/tests.
             }
         } else null
 
         productName = "ProtonVPN"
 
         userProperties = new Mapping {
-            ["platformVersion"] = "15.6"
-            ["toolchainVersion"] = "26.2"
+            ["platformVersion"] = "26.4"
+            ["toolchainVersion"] = "26.4"
         }
     }
 
@@ -202,7 +201,7 @@ local ios = (base) {
         }
 
         userProperties = (base.build.userProperties) {
-            ["simulatorRuntime"] = "iOS 26.2"
+            ["simulatorRuntime"] = "iOS 26.4"
             ["sentryAppIdentifier"] = "ios-vpn"
             ["isSliTestEnabled"] = read?("env:SLI_TEST") ?? ""
         }
@@ -260,7 +259,7 @@ local tv = (ios) {
         }
 
         userProperties = (base.build.userProperties) {
-            ["simulatorRuntime"] = "tvOS 26.2"
+            ["simulatorRuntime"] = "tvOS 26.4"
             ["sentryAppIdentifier"] = "appletv-vpn"
         }
     }

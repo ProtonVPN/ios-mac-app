@@ -6,13 +6,19 @@
     - .build_cache_template
 {% endblock %}
 
+{% block build_vars %}
+    DERIVED_DATA_CACHE_POLICY: push
+{{ block.super }}
+{% endblock %}
+
 {% block build_tags %}
-    - vpn-apple-builds
     - $PIPELINE_HOST
+    - mac-arm64-vm
 {% endblock %}
 
 {% block fastlane_build_args %}
 {{ block.super }}
+        "cloned_source_packages_path:$SPM_PACKAGES_PATH"
 {%- if config.build.ci.tagName %}
         "describe_directory:$DESCRIBE_DIR/release"
 {% else %}
@@ -21,6 +27,11 @@
 {% endblock %}
 
 {% block build_script %}
+    - | # The WireGuard Go bridge needs Go, which tahoe:26.4.2 does not include.
+      # Keep the version in sync with GO_VERSION in the iOS and macOS Config.xcconfig files. The tvOS project does not
+      # add go@$(GO_VERSION) to its PATH build setting, so we put Go on PATH for the rest of the job as well.
+      brew install go@1.24
+      export PATH="$(brew --prefix go@1.24)/bin:$PATH"
     - | # Restore modification times of files, according to git history...
       git restore-mtime --force
 
@@ -33,7 +44,7 @@
       done
       popd
 
-      CHECKOUTS="$DERIVED_DATA_PATH/SourcePackages/checkouts"
+      CHECKOUTS="$SPM_PACKAGES_PATH/checkouts"
       if [ -d "$CHECKOUTS" ]; then
           pushd "$CHECKOUTS"
           for dependency in $(ls); do

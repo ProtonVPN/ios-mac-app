@@ -19,7 +19,6 @@
 		4CEFB75F2D3E6A3B00CE36FD /* ProtonCoreEnvironment in Frameworks */ = {isa = PBXBuildFile; productRef = 4CEFB75E2D3E6A3B00CE36FD /* ProtonCoreEnvironment */; };
 		4CEFB7612D3E6A4700CE36FD /* ProtonCoreTestingToolkitUnitTestsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 4CEFB7602D3E6A4700CE36FD /* ProtonCoreTestingToolkitUnitTestsCore */; };
 		4CEFB7632D3E6A5E00CE36FD /* ProtonCoreHumanVerification in Frameworks */ = {isa = PBXBuildFile; productRef = 4CEFB7622D3E6A5E00CE36FD /* ProtonCoreHumanVerification */; };
-		572DD1FF28EAD6E60051DB1A /* credentials_bf22.plist in Resources */ = {isa = PBXBuildFile; fileRef = 572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */; };
 		57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438D28E573D60012B2DF /* PlanTests.swift */; };
 		57E3439028E576A70012B2DF /* SubscriptionsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */; };
 		57E3439228E5A6780012B2DF /* AccountRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3439128E5A6780012B2DF /* AccountRobot.swift */; };
@@ -72,14 +71,10 @@
 		B28688CA2AC1C13800C1BA37 /* FreeRescopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28688C92AC1C13800C1BA37 /* FreeRescopeTests.swift */; };
 		B28688CE2AC1C65300C1BA37 /* LoginExternalAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28688CD2AC1C65300C1BA37 /* LoginExternalAccountTests.swift */; };
 		B29D298B2B989F47000BA715 /* HumanVerificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D298A2B989F47000BA715 /* HumanVerificationTests.swift */; };
-		B2BCF09C28B547F00041A635 /* twofausercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2BCF09B28B547F00041A635 /* twofausercredentials.plist */; };
-		B2BCF09E28B549C90041A635 /* twopasstwofausercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2BCF09D28B549C90041A635 /* twopasstwofausercredentials.plist */; };
-		B2BCF0A028B54ACF0041A635 /* twopassusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2BCF09F28B54ACF0041A635 /* twopassusercredentials.plist */; };
 		B2D4572A2771D8AD0065FEC2 /* PaymentsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D457292771D8AD0065FEC2 /* PaymentsRobot.swift */; };
 		B2D4572E2771D8D50065FEC2 /* CreatingAccountRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D4572D2771D8D50065FEC2 /* CreatingAccountRobot.swift */; };
 		B2FCF5442940E91300EAC786 /* TokenRefreshTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FCF5432940E91300EAC786 /* TokenRefreshTests.swift */; };
 		D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */; };
-		D5AAA128229D23F500EA839A /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5AAA127229D23F500EA839A /* credentials.plist */; };
 		D5C7C8AB2B0B72A100641808 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8AA2B0B72A100641808 /* main.swift */; };
 		D5C7C8AD2B0B73CA00641808 /* TestAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8AC2B0B73CA00641808 /* TestAppDelegate.swift */; };
 		D5EE41312AD9619800ECC064 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = D5EE41302AD9619800ECC064 /* WireGuardKit */; };
@@ -96,7 +91,6 @@
 		E5E02A722F3A2F7F00158C27 /* AppShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E02A712F3A2F7F00158C27 /* AppShortcuts.swift */; };
 		E5ECD4852F39DC55008FEFA7 /* WidgetIntents in Frameworks */ = {isa = PBXBuildFile; productRef = E5ECD4842F39DC55008FEFA7 /* WidgetIntents */; };
 		E5F0AB172F69A64300EAEC7E /* AppShortcuts.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E5F0AB162F69A64300EAEC7E /* AppShortcuts.xcstrings */; };
-		E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */; };
 		E93F769327C788740033B88F /* WGLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93F769227C788740033B88F /* WGLogFormatter.swift */; };
 		E9445D5F26528A790075FD31 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
 		E9445D6226528A790075FD31 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9445D6126528A790075FD31 /* PacketTunnelProvider.swift */; };
@@ -208,7 +202,6 @@
 		37CC821428F4407C00230335 /* LoginExtAccountTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginExtAccountTests.swift; sourceTree = "<group>"; };
 		4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRobot.swift; sourceTree = "<group>"; };
 		570A00212C1706A6003317EC /* ProtonVPN-DEBUG.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ProtonVPN-DEBUG.entitlements"; sourceTree = "<group>"; };
-		572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials_bf22.plist; sourceTree = "<group>"; };
 		57E3438D28E573D60012B2DF /* PlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTests.swift; sourceTree = "<group>"; };
 		57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsRobot.swift; sourceTree = "<group>"; };
 		57E3439128E5A6780012B2DF /* AccountRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRobot.swift; sourceTree = "<group>"; };
@@ -256,9 +249,6 @@
 		B28688C92AC1C13800C1BA37 /* FreeRescopeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeRescopeTests.swift; sourceTree = "<group>"; };
 		B28688CD2AC1C65300C1BA37 /* LoginExternalAccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExternalAccountTests.swift; sourceTree = "<group>"; };
 		B29D298A2B989F47000BA715 /* HumanVerificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumanVerificationTests.swift; sourceTree = "<group>"; };
-		B2BCF09B28B547F00041A635 /* twofausercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = twofausercredentials.plist; sourceTree = "<group>"; };
-		B2BCF09D28B549C90041A635 /* twopasstwofausercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = twopasstwofausercredentials.plist; sourceTree = "<group>"; };
-		B2BCF09F28B54ACF0041A635 /* twopassusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = twopassusercredentials.plist; sourceTree = "<group>"; };
 		B2D457292771D8AD0065FEC2 /* PaymentsRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsRobot.swift; sourceTree = "<group>"; };
 		B2D4572D2771D8D50065FEC2 /* CreatingAccountRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatingAccountRobot.swift; sourceTree = "<group>"; };
 		B2E466D2297E98070026ED26 /* ProtonVPN-iOS-Unit-All.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-iOS-Unit-All.xctestplan"; sourceTree = "<group>"; };
@@ -269,7 +259,6 @@
 		D5811D7D229BBD870087B63A /* ProtonVPNUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonVPNUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITests.swift; sourceTree = "<group>"; };
 		D5811D81229BBD870087B63A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D5AAA127229D23F500EA839A /* credentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		D5C7C8AA2B0B72A100641808 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		D5C7C8AC2B0B73CA00641808 /* TestAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAppDelegate.swift; sourceTree = "<group>"; };
 		E10DFB6C22E1D0040026CAE5 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
@@ -284,7 +273,6 @@
 		E5CE8CDF2F73F37800AE36BD /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Localizable.xcstrings; path = ../../../../libraries/Shared/WidgetIntents/Sources/WidgetIntents/Resources/Localizable.xcstrings; sourceTree = "<group>"; };
 		E5E02A712F3A2F7F00158C27 /* AppShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppShortcuts.swift; sourceTree = "<group>"; };
 		E5F0AB162F69A64300EAEC7E /* AppShortcuts.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = AppShortcuts.xcstrings; sourceTree = "<group>"; };
-		E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
 		E93F769227C788740033B88F /* WGLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGLogFormatter.swift; sourceTree = "<group>"; };
 		E9445D5E26528A790075FD31 /* WireGuardiOS Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WireGuardiOS Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9445D6126528A790075FD31 /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
@@ -349,6 +337,11 @@
 				6640FF372ED5B09B004A4A9A /* Exceptions for "ProTUN-Extension-Mobile" folder in "ProTUN-Extension-Mobile" target */,
 			);
 			path = "ProTUN-Extension-Mobile";
+			sourceTree = "<group>";
+		};
+		985DF1253BFD659DEAE60490 /* Credentials */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Credentials;
 			sourceTree = "<group>";
 		};
 		E55CCA9F2D30121E00FD0AAD /* ConnectWidget */ = {
@@ -657,12 +650,7 @@
 				B2BCF0AA28B760B70041A635 /* Support */,
 				F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */,
 				D5811D81229BBD870087B63A /* Info.plist */,
-				D5AAA127229D23F500EA839A /* credentials.plist */,
-				572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */,
-				B2BCF09D28B549C90041A635 /* twopasstwofausercredentials.plist */,
-				B2BCF09F28B54ACF0041A635 /* twopassusercredentials.plist */,
-				B2BCF09B28B547F00041A635 /* twofausercredentials.plist */,
-				E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */,
+				985DF1253BFD659DEAE60490 /* Credentials */,
 			);
 			path = ProtonVPNUITests;
 			sourceTree = "<group>";
@@ -981,6 +969,9 @@
 			dependencies = (
 				D5811D83229BBD870087B63A /* PBXTargetDependency */,
 			);
+			fileSystemSynchronizedGroups = (
+				985DF1253BFD659DEAE60490 /* Credentials */,
+			);
 			name = ProtonVPNUITests;
 			packageProductDependencies = (
 				E531EB3B2A78EE9D00E56D7D /* fusion */,
@@ -1204,13 +1195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA46A20A2B2712CA00929229 /* Proton VPN: Fast & Secure.storekit in Resources */,
-				E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */,
-				B2BCF09E28B549C90041A635 /* twopasstwofausercredentials.plist in Resources */,
-				D5AAA128229D23F500EA839A /* credentials.plist in Resources */,
-				B2BCF0A028B54ACF0041A635 /* twopassusercredentials.plist in Resources */,
 				F377836D26E644BC00392958 /* ProtonVPN-iOS-UI-Smoke.xctestplan in Resources */,
-				B2BCF09C28B547F00041A635 /* twofausercredentials.plist in Resources */,
-				572DD1FF28EAD6E60051DB1A /* credentials_bf22.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

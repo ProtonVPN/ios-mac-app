@@ -162,11 +162,6 @@
 		D516EB9D2315775E0095B735 /* MacAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516EB9C2315775E0095B735 /* MacAlertService.swift */; };
 		D5204E6A22A11B8400FFAB99 /* XCUIElement+clearText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */; };
 		D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */; };
-		D54BB5DF2990ECEB00733E45 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5DD2990ECEB00733E45 /* credentials.plist */; };
-		D54BB5E02990ECEB00733E45 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5DE2990ECEB00733E45 /* subusercredentials.plist */; };
-		D54BB5E2299124D800733E45 /* twofausercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5E1299124D800733E45 /* twofausercredentials.plist */; };
-		D54BB5E42991253600733E45 /* twopassusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5E32991253600733E45 /* twopassusercredentials.plist */; };
-		D54BB5E629912D8100733E45 /* twopasstwofausercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5E529912D8100733E45 /* twopasstwofausercredentials.plist */; };
 		D563319E23212A0800CE2EE3 /* AbstractProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563319D23212A0800CE2EE3 /* AbstractProfileViewModel.swift */; };
 		D57597C123B10C2E002D6631 /* WindowMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57597C023B10C2E002D6631 /* WindowMenuController.swift */; };
 		D5911709229F9574005829DA /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5911708229F9574005829DA /* ProtonVPNUITests.swift */; };
@@ -667,11 +662,6 @@
 		D516EB9C2315775E0095B735 /* MacAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacAlertService.swift; sourceTree = "<group>"; };
 		D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+clearText.swift"; sourceTree = "<group>"; };
 		D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectingOverlayViewModelTests.swift; sourceTree = "<group>"; };
-		D54BB5DD2990ECEB00733E45 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
-		D54BB5DE2990ECEB00733E45 /* subusercredentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
-		D54BB5E1299124D800733E45 /* twofausercredentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = twofausercredentials.plist; sourceTree = "<group>"; };
-		D54BB5E32991253600733E45 /* twopassusercredentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = twopassusercredentials.plist; sourceTree = "<group>"; };
-		D54BB5E529912D8100733E45 /* twopasstwofausercredentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = twopasstwofausercredentials.plist; sourceTree = "<group>"; };
 		D563319D23212A0800CE2EE3 /* AbstractProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractProfileViewModel.swift; sourceTree = "<group>"; };
 		D57597C023B10C2E002D6631 /* WindowMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowMenuController.swift; sourceTree = "<group>"; };
 		D58496A025935F8000CFAFDE /* ProtonVPN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProtonVPN.entitlements; sourceTree = "<group>"; };
@@ -1458,11 +1448,6 @@
 				7795C7112C5786AB00F8AB7A /* Support */,
 				D5911708229F9574005829DA /* ProtonVPNUITests.swift */,
 				D591170A229F9574005829DA /* Info.plist */,
-				D54BB5DD2990ECEB00733E45 /* credentials.plist */,
-				D54BB5E32991253600733E45 /* twopassusercredentials.plist */,
-				D54BB5E529912D8100733E45 /* twopasstwofausercredentials.plist */,
-				D54BB5E1299124D800733E45 /* twofausercredentials.plist */,
-				D54BB5DE2990ECEB00733E45 /* subusercredentials.plist */,
 			);
 			path = ProtonVPNUITests;
 			sourceTree = "<group>";
@@ -2947,11 +2932,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D54BB5E42991253600733E45 /* twopassusercredentials.plist in Resources */,
-				D54BB5E629912D8100733E45 /* twopasstwofausercredentials.plist in Resources */,
-				D54BB5E02990ECEB00733E45 /* subusercredentials.plist in Resources */,
-				D54BB5E2299124D800733E45 /* twofausercredentials.plist in Resources */,
-				D54BB5DF2990ECEB00733E45 /* credentials.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,9 +22,10 @@ variables:
   DESCRIBE_DIR: "apple-vpn-ci"
   PIPELINE_TEMPLATE: "gitlab-pipeline.yml"
   IMAGES: $IMAGES
+  SWIFT_DETERMINISTIC_HASHING: 1
 
 default:
-  image: "team-vpn-macos-15.6-xcode-26.2"
+  image: tahoe:26.4.2
 
 # Only start a pipeline if it's for a merge request, if the pipeline has been scheduled, if this is a merge result onto
 # the develop branch, or if this is a tag which begins with a recognized tag prefix like `mac` or `ios`.
@@ -86,9 +87,12 @@ include:
     MINT_LINK_PATH: $MINT_PATH/bin
     MINT_CACHE_POLICY: pull-push
   cache: &mint_cache
-    - key: mint-xcode-16.2-$CI_COMMIT_REF_SLUG
-      fallback_keys:
-        - mint-Xcode-16.2-$CI_DEFAULT_BRANCH
+    # Keep this toolchain version in sync with userProperties.toolchainVersion in .lhc.pkl, so this job shares its Mint
+    # cache with the child pipeline's build and test jobs.
+    - key:
+        prefix: mint-xcode-26.4
+        files:
+          - Mintfile
       paths:
         - $MINT_PATH
       policy: $MINT_CACHE_POLICY
@@ -108,7 +112,8 @@ prepare:
     GIT_SUBMODULE_STRATEGY: normal
   stage: prepare
   tags:
-    - vpn-apple-xs
+    - ci-geneva-cluster
+    - mac-arm64-vm
   before_script:
     - !reference [.job_template, before_script]
     - !reference [.lhc_describe, before_script]
@@ -137,7 +142,6 @@ prepare:
     - if: $I18N_SCHEDULES_FILTER == "commit-translations" # Don't run pipelines when syncing from crowdin
       when: never
     - when: always
-  cache:
   cache:
     - *mint_cache
     - key: suggest-reviewer-$CI_COMMIT_REF_SLUG
