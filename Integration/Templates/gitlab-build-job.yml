@@ -27,11 +27,6 @@
 {% endblock %}
 
 {% block build_script %}
-    - | # The WireGuard Go bridge needs Go, which tahoe:26.4.2 does not include.
-      # Keep the version in sync with GO_VERSION in the iOS and macOS Config.xcconfig files. The tvOS project does not
-      # add go@$(GO_VERSION) to its PATH build setting, so we put Go on PATH for the rest of the job as well.
-      brew install go@1.24
-      export PATH="$(brew --prefix go@1.24)/bin:$PATH"
     - | # Restore modification times of files, according to git history...
       git restore-mtime --force
 
