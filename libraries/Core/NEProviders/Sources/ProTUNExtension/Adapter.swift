@@ -689,7 +689,8 @@ extension ProTUNAdapter {
                 userAgent: appInfo.userAgent,
                 appVersion: appInfo.appVersion,
                 settings: localAgentSettings,
-                muonEnv: .prod
+                muonEnv: .prod,
+                certificateDuration: .minutes(count: 10)
             ),
             sniStrategy: .random
         )
