@@ -204,6 +204,9 @@ extension MacAlertService: CoreAlertService {
         case is SysexInstallingErrorAlert:
             showDefaultSystemAlert(alert)
 
+        case is RelocationPromptAlert:
+            showDefaultSystemAlert(alert)
+
         case let systemExtensionTourAlert as SystemExtensionTourAlert:
             show(systemExtensionTourAlert)
 
