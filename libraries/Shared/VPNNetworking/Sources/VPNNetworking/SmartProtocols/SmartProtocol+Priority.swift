@@ -24,48 +24,37 @@ import Domain
 import Foundation
 import VPNShared
 
-enum SmartProtocolProtocol {
-    case ikev2
+/// The protocols Smart Protocol chooses between. Only the WireGuard transports are included, so Smart Protocol never
+/// connects with IKEv2, which infra is retiring.
+enum SmartProtocolProtocol: CaseIterable {
     case wireguardUdp
     case wireguardTcp
     case wireguardTls
 
-    var vpnProtocol: VpnProtocol {
+    var transport: WireGuardTransport {
         switch self {
-        case .ikev2:
-            .ike
         case .wireguardUdp:
-            .wireGuard(.udp)
+            .udp
         case .wireguardTcp:
-            .wireGuard(.tcp)
+            .tcp
         case .wireguardTls:
-            .wireGuard(.tls)
+            .tls
         }
     }
 
+    var vpnProtocol: VpnProtocol {
+        .wireGuard(transport)
+    }
+
+    /// Smart Protocol prefers lower values, both among the protocols that pass their checks and when falling back.
     var priority: Int {
-        #if os(iOS)
-            switch self {
-            case .wireguardUdp:
-                return 0
-            case .wireguardTls:
-                return 3
-            case .wireguardTcp:
-                return 4
-            case .ikev2:
-                return 5
-            }
-        #else
-            switch self {
-            case .wireguardUdp:
-                return 0
-            case .ikev2:
-                return 1
-            case .wireguardTls:
-                return 4
-            case .wireguardTcp:
-                return 5
-            }
-        #endif
+        switch self {
+        case .wireguardUdp:
+            0
+        case .wireguardTls:
+            1
+        case .wireguardTcp:
+            2
+        }
     }
 }

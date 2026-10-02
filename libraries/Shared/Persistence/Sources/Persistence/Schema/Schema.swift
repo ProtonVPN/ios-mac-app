@@ -73,6 +73,14 @@ extension EndpointOverrides: TableRecord, FetchableRecord, PersistableRecord {
         case endpointId
         case protocolMask // bit flags/mask representing protocol support
     }
+
+    /// The protocols an endpoint supports, for queries that optionally join this table.
+    ///
+    /// An endpoint without per-protocol entries has no row in this table. Such an endpoint supports
+    /// `PerProtocolEntries.implicitlySupported`.
+    static func protocolSupport(in alias: TableAlias<EndpointOverrides>) -> SQLExpression {
+        alias[Columns.protocolMask] ?? PerProtocolEntries.implicitlySupported.rawValue
+    }
 }
 
 extension DatabaseMetadata: TableRecord, FetchableRecord, PersistableRecord {

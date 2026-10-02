@@ -27,6 +27,9 @@ import PersistenceTestSupport
 @testable import Persistence
 
 final class GroupsTests: CaseIsolatedDatabaseTestCase {
+    /// Servers without an IKEv2 entry support only WireGuard.
+    private let wireGuardOnly: ProtocolSupport = [.wireGuardUDP, .wireGuardTCP, .wireGuardTLS]
+
     override class func setUp() {
         super.setUp()
         let servers = try! fetch([VPNServer].self, fromResourceNamed: "TestServers")
@@ -43,14 +46,14 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
             isOfKind: .gateway(name: "Mega Gateway 1000"),
             hasServerCount: 2,
             isUnderMaintenance: false,
-            supports: .all
+            supports: wireGuardOnly
         )
         assert(
             groups[1],
             isOfKind: .gateway(name: "Mega Gateway 2000"),
             hasServerCount: 1,
             isUnderMaintenance: false,
-            supports: .all
+            supports: wireGuardOnly
         )
 
         assert(
@@ -66,7 +69,7 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
             isOfKind: .country(code: "AE"),
             hasServerCount: 1,
             isUnderMaintenance: false,
-            supports: [.all]
+            supports: wireGuardOnly
         )
     }
 
@@ -80,7 +83,7 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
             isOfKind: .country(code: "CA"),
             hasServerCount: 3,
             isUnderMaintenance: false,
-            supports: [.all]
+            supports: wireGuardOnly
         )
     }
 
@@ -94,7 +97,7 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
             isOfKind: .gateway(name: "Mega Gateway 1000"),
             hasServerCount: 2,
             isUnderMaintenance: false,
-            supports: [.all]
+            supports: wireGuardOnly
         )
 
         assert(
@@ -102,7 +105,7 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
             isOfKind: .gateway(name: "Mega Gateway 2000"),
             hasServerCount: 1,
             isUnderMaintenance: false,
-            supports: [.all]
+            supports: wireGuardOnly
         )
     }
 

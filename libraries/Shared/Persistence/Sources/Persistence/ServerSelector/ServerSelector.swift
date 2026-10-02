@@ -91,8 +91,9 @@ extension VPNServerFilter {
             let hasAllRequiredFeatures = info.logical.feature.intersection(filter.required) == filter.required
             let hasNoExcludedFeatures = info.logical.feature.intersection(filter.excluded).isEmpty
             return hasAllRequiredFeatures && hasNoExcludedFeatures
-        case let .supports(vpnProtocol):
-            return info.protocolSupport.contains(vpnProtocol)
+        case let .supports(acceptableProtocols):
+            // Matches the database filter, which accepts a server that supports any of the protocols.
+            return !info.protocolSupport.isDisjoint(with: acceptableProtocols)
         case .isNotUnderMaintenance:
             return !info.logical.isUnderMaintenance
         default:
