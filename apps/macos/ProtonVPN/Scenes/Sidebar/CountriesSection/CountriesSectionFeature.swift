@@ -69,7 +69,7 @@ struct CountriesSectionFeature {
                 return .merge(
                     .send(.quickSettings(.dismissDetails)),
                     .send(.quickSettings(.startObserving)),
-                    .send(.countriesList(.listenForSecureCoreUpdates))
+                    .send(.countriesList(.startObserving))
                 )
             case .countriesList, .quickSettings, .delegate:
                 return .none

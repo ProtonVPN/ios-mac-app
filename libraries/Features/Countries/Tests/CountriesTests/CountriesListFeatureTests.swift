@@ -17,10 +17,15 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(macOS)
+    import CommonNetworking
     import ComposableArchitecture
     @testable import Countries_macOS
     import CountriesShared
+    import Domain
+    import Foundation
+    import LegacyCommon
     import PaymentsShared
+    import Persistence
     import PersistenceTestSupport
     import Testing
 
@@ -86,6 +91,73 @@
             }
 
             await store.send(.searchText("us"))
+        }
+    }
+
+    /// These tests post app-wide notifications, so they run one at a time to keep each store from seeing the others.
+    @Suite("Countries List Feature reload tests mac", .serialized)
+    @MainActor
+    struct CountriesListFeatureReloadTests {
+        @Test("choosing Smart queries the list for the protocols Smart uses")
+        func choosingSmartQueriesTheListAgain() async {
+            let propertiesManager = PropertiesManagerMock()
+            propertiesManager.vpnProtocol = .ike
+            let queriedSupport = LockIsolated<[ProtocolSupport]>([])
+            var repository = ServerRepository.empty()
+            repository.groups = { filters, _, _ in
+                for case let .supports(protocol: support) in filters {
+                    queriedSupport.withValue { $0.append(support) }
+                }
+                return []
+            }
+
+            let store = TestStore(initialState: CountriesListFeature.State()) {
+                CountriesListFeature()
+            } withDependencies: {
+                $0.propertiesManager = propertiesManager
+                $0.serverRepository = repository
+            }
+
+            // The list starts out loading, so the first query leaves the state as it is.
+            await store.send(.startObserving)
+            await store.receive(\.getGroups)
+            await store.receive(\.loadOfferBanner)
+            await store.receive(\.loadingFinished) { $0.listState = .loaded }
+
+            propertiesManager.smartProtocol = true
+            await store.receive(\.getGroups) { $0.listState = .loading }
+            await store.receive(\.loadOfferBanner)
+            await store.receive(\.loadingFinished) { $0.listState = .loaded }
+
+            let ikeSupport = VpnProtocol.ike.protocolSupport
+            let smartSupport = ProtocolSupport(vpnProtocols: SmartProtocolConfig().supportedProtocols)
+            // One country query and one gateway query per load.
+            #expect(queriedSupport.value == [ikeSupport, ikeSupport, smartSupport, smartSupport])
+            await store.skipInFlightEffects()
+        }
+
+        @Test("a server list update queries the list again and keeps the rows on screen")
+        func serverListUpdateQueriesTheListAgain() async {
+            let store = TestStore(initialState: CountriesListFeature.State()) {
+                CountriesListFeature()
+            } withDependencies: {
+                $0.propertiesManager = PropertiesManagerMock()
+                $0.serverRepository = .empty()
+            }
+
+            // The list starts out loading, so the first query leaves the state as it is.
+            await store.send(.startObserving)
+            await store.receive(\.getGroups)
+            await store.receive(\.loadOfferBanner)
+            await store.receive(\.loadingFinished) { $0.listState = .loaded }
+
+            // The list state stays loaded for the whole reload.
+            NotificationCenter.default.post(name: ServerListUpdateNotification.name, object: nil)
+            await store.receive(\.reloadGroups)
+            await store.receive(\.loadOfferBanner)
+            await store.receive(\.loadingFinished)
+
+            await store.skipInFlightEffects()
         }
     }
 #endif

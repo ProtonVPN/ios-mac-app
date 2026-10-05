@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Announcement
+import CommonNetworking
 import ComposableArchitecture
 import ConnectionInventory
 import CountriesShared
@@ -89,6 +90,8 @@ public struct CountriesListFeature: Sendable {
         case searchText(String)
         case binding(BindingAction<State>)
         case getGroups(secureCore: Bool)
+        /// Queries the list again after a server list update, keeping the current rows on screen until it finishes.
+        case reloadGroups
         case loadingFinished(
             countries: IdentifiedArrayOf<DesktopCityStateListFeature.State>,
             gateways: IdentifiedArrayOf<DesktopCityStateListFeature.State>
@@ -102,7 +105,7 @@ public struct CountriesListFeature: Sendable {
         case infoButtonTappedFreeConnections
         case upsellBannerTapped
         case connectToFastest
-        case listenForSecureCoreUpdates
+        case startObserving
         case loadOfferBanner
         case destination(PresentationAction<Destination.Action>)
     }
@@ -118,7 +121,9 @@ public struct CountriesListFeature: Sendable {
 
     private enum CancelID {
         case debounceRequest
-        case watchSecureCoreToggle
+        case watchFilters
+        case watchServerList
+        case groups
     }
 
     public var body: some Reducer<State, Action> {
@@ -177,15 +182,25 @@ public struct CountriesListFeature: Sendable {
                 return .none
             case .destination:
                 return .none
-            case .listenForSecureCoreUpdates:
-                return .publisher {
-                    state.$secureCore
-                        .publisher
-                        .receive(on: UIScheduler.shared)
-                        .removeDuplicates()
-                        .map(Action.getGroups)
-                }
-                .cancellable(id: CancelID.watchSecureCoreToggle)
+            case .startObserving:
+                return .merge(
+                    .publisher {
+                        state.$secureCore
+                            .publisher
+                            .removeDuplicates()
+                            .combineLatest(ProtocolFilters().requiredProtocolSupportPublisher)
+                            .receive(on: UIScheduler.shared)
+                            .map { secureCore, _ in Action.getGroups(secureCore: secureCore) }
+                    }
+                    .cancellable(id: CancelID.watchFilters),
+                    .publisher {
+                        NotificationCenter.default
+                            .publisher(for: ServerListUpdateNotification.name)
+                            .receive(on: UIScheduler.shared)
+                            .map { _ in Action.reloadGroups }
+                    }
+                    .cancellable(id: CancelID.watchServerList)
+                )
             case .loadOfferBanner:
                 state.offerBannerViewModel = announcementManager.offerBannerViewModel { announcement in
                     announcementManager.markAsRead(notificationID: announcement.notificationID)
@@ -193,23 +208,17 @@ public struct CountriesListFeature: Sendable {
                 return .none
             case let .getGroups(secureCore):
                 state.listState = .loading
-                return .run { [search = state.searchText, expandedCode = state.expandedCountryCode] send in
-                    await send(.loadOfferBanner)
-
-                    let countries = groups(
-                        with: .country,
-                        search: search,
-                        expandedCountryCode: expandedCode,
-                        secureCore: secureCore
-                    )
-                    let gateways = groups(
-                        with: .gateway,
-                        search: search,
-                        expandedCountryCode: expandedCode,
-                        secureCore: secureCore
-                    )
-                    await send(.loadingFinished(countries: countries, gateways: gateways))
-                }
+                return loadGroups(
+                    search: state.searchText,
+                    expandedCountryCode: state.expandedCountryCode,
+                    secureCore: secureCore
+                )
+            case .reloadGroups:
+                return loadGroups(
+                    search: state.searchText,
+                    expandedCountryCode: state.expandedCountryCode,
+                    secureCore: state.secureCore
+                )
             case let .loadingFinished(countries, gateways):
                 state.countries = countries
                 state.gateways = gateways
@@ -265,6 +274,30 @@ public struct CountriesListFeature: Sendable {
             DesktopCityStateListFeature()
         }
         .ifLet(\.$destination, action: \.destination)
+    }
+
+    /// Queries the countries and gateways that match the filters and sends them back in `loadingFinished`.
+    ///
+    /// Starting a new load cancels the one in progress, so a slower query never replaces a newer result.
+    private func loadGroups(search: String, expandedCountryCode: String?, secureCore: Bool) -> Effect<Action> {
+        .run { send in
+            await send(.loadOfferBanner)
+
+            let countries = groups(
+                with: .country,
+                search: search,
+                expandedCountryCode: expandedCountryCode,
+                secureCore: secureCore
+            )
+            let gateways = groups(
+                with: .gateway,
+                search: search,
+                expandedCountryCode: expandedCountryCode,
+                secureCore: secureCore
+            )
+            await send(.loadingFinished(countries: countries, gateways: gateways))
+        }
+        .cancellable(id: CancelID.groups, cancelInFlight: true)
     }
 
     func groups(
