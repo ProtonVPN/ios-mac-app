@@ -631,6 +631,14 @@ public final class VpnManager: VpnManagerProtocol {
                 return
             }
 
+            // A manager that was never saved has no on-demand setting to change, and saving it fails with
+            // configurationInvalid. That error would cancel the connection attempt that is about to save one.
+            guard vpnManager.protocolConfiguration != nil else {
+                log.debug("No saved configuration, On Demand left unchanged", category: .connectionConnect)
+                completion(vpnManager)
+                return
+            }
+
             vpnManager.onDemandRules = [NEOnDemandRuleConnect()]
             vpnManager.isOnDemandEnabled = enabled
             log.info("On Demand set: \(enabled ? "On" : "Off") for \(currentVpnProtocolFactory.self)", category: .connectionConnect)
