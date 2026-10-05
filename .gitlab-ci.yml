@@ -43,7 +43,7 @@ include:
   # - component: gitlab.protontech.ch/proton/devops/cicd-components/community/git-lhc/describe (not in the catalog yet)
   - project: 'proton/devops/cicd-components/community/git-lhc'
     file: templates/describe.yml
-    ref: 0.9.0-alpha.22
+    ref: 0.10.1
     inputs:
       output_directory: apple-vpn-ci
       cmd_prefix: "mint run "

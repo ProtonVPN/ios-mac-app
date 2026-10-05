@@ -118,7 +118,7 @@ end
     {%- if config.distribution.sparkle %}
     # Notarize the dmg, which automatically encompasses the app itself.
     dmg_output_path = "#{$options[:output_directory]}/{{ config.build.productName }}_mac_v{{ short_version }}.dmg"
-    $options[:notarize_package] = dmg_output_path
+    $options[:notarize_packages] = [dmg_output_path]
     $options[:sparkle_binary_path] = dmg_output_path
     $options[:appcast_url] = "https://protonvpn.com/download/macos-update5.xml"
     {%- endif %}
