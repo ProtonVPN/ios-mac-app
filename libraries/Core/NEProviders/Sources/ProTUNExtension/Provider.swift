@@ -120,17 +120,15 @@ open class ProTUNPacketTunnelProvider: NEPacketTunnelProvider {
         #endif
     }
 
+    /// ProTUN is not told about sleep or wake. Its clock counts the time the device spends asleep, so its timers run
+    /// as soon as the device wakes, and pvpnclient then renews the WireGuard keys that expired in the meantime.
     override open func sleep() async {
         Logger.provider.info("Sleeping...")
-        await adapter.sleep()
         await super.sleep()
     }
 
     override open func wake() {
         Logger.provider.info("Waking up!")
-        Task { [adapter] in
-            await adapter.wake()
-        }
         super.wake()
     }
 
