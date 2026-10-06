@@ -25,13 +25,13 @@
         @Test("Socket creation (IPv4)")
         func socketCreation() throws {
             let socket = try Socket.tcp()
-            #expect(socket.addressFamily == AF_INET)
+            #expect(socket.family == .v4)
         }
 
         @Test("Socket creation (IPv6)")
         func socketCreationV6() throws {
             let socket = try Socket.tcp(v6: true)
-            #expect(socket.addressFamily == AF_INET6)
+            #expect(socket.family == .v6)
         }
 
         @Test("TCP socket configuration methods")

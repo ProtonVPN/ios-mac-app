@@ -43,7 +43,7 @@
         case splitFailed(POSIXError)
         case getsocknameFailed(POSIXError)
         case interfaceNotFound
-        case interfaceBindingFailed
+        case interfaceBindingFailed(POSIXError)
         case connectionFailed
         case localBindFailed
         case udpSendFailed(Reason)
@@ -57,11 +57,11 @@
     /// Type-safe socket wrapper with protocol (TCP/UDP) and state (Closed/Opened) tracking.
     public struct Socket<Protocol, State>: ~Copyable {
         let fd: FileDescriptor
-        let addressFamily: CInt
+        let family: IPVersion
 
-        init(fd: CInt, addressFamily: CInt) {
+        init(fd: CInt, family: IPVersion) {
             self.fd = .init(fd: fd)
-            self.addressFamily = addressFamily
+            self.family = family
         }
     }
 
@@ -69,12 +69,12 @@
         /// Creates a TCP socket.
         /// - Parameter v6: pass `true` to create an IPv6 socket. Defaults to `false`.
         static func tcp(v6: Bool = false) throws(SocketError) -> Socket<TCP, Closed> {
-            let addressFamily: CInt = v6 ? AF_INET6 : AF_INET
-            let rawSocketFd = socket(addressFamily, SOCK_STREAM, 0)
+            let family: IPVersion = v6 ? .v6 : .v4
+            let rawSocketFd = socket(family.addressFamily, SOCK_STREAM, 0)
             guard rawSocketFd >= 0 else {
                 throw .creationFailed(.shared)
             }
-            return Socket<TCP, Closed>(fd: rawSocketFd, addressFamily: addressFamily)
+            return Socket<TCP, Closed>(fd: rawSocketFd, family: family)
         }
     }
 
@@ -82,12 +82,12 @@
         /// Creates a UDP socket.
         /// - Parameter v6: pass `true` to create an IPv6 socket. Defaults to `false`.
         static func udp(v6: Bool = false) throws(SocketError) -> Socket<UDP, Closed> {
-            let addressFamily: CInt = v6 ? AF_INET6 : AF_INET
-            let rawSocketFd = socket(addressFamily, SOCK_DGRAM, 0)
+            let family: IPVersion = v6 ? .v6 : .v4
+            let rawSocketFd = socket(family.addressFamily, SOCK_DGRAM, 0)
             guard rawSocketFd >= 0 else {
                 throw .creationFailed(.shared)
             }
-            return Socket<UDP, Closed>(fd: rawSocketFd, addressFamily: addressFamily)
+            return Socket<UDP, Closed>(fd: rawSocketFd, family: family)
         }
     }
 
@@ -177,11 +177,17 @@
     }
 
     public extension Socket where State == Closed {
-        /// Binds the socket to a specific network interface by index.
-        /// - Parameter ifIndex: the network interface index.
-        func bindToInterface(ifIndex: CInt) throws(SocketError) {
-            var ifIndex: CInt = ifIndex
-            try setSockOpt(fd.fd, IPPROTO_IP, IP_BOUND_IF, &ifIndex, cIntPayloadSize, elseThrow: { _ in .interfaceBindingFailed })
+        /// Binds the socket to a specific network interface by index, so it can only send and receive through that
+        /// interface. IPv4 and IPv6 sockets take different options, and the socket's own version decides which.
+        /// - Parameter index: the network interface index.
+        func bindToInterface(index: UInt32) throws(SocketError) {
+            let (level, name) = switch family {
+            case .v4: (IPPROTO_IP, IP_BOUND_IF)
+            case .v6: (IPPROTO_IPV6, IPV6_BOUND_IF)
+            }
+            var index = index
+            let size = socklen_t(MemoryLayout<UInt32>.size)
+            try setSockOpt(fd.fd, level, name, &index, size, elseThrow: { .interfaceBindingFailed($0) })
         }
 
         /// Binds the socket to a specific network interface by name.
@@ -191,7 +197,44 @@
             guard interfaceIndex > 0 else {
                 throw .interfaceNotFound
             }
-            try bindToInterface(ifIndex: CInt(interfaceIndex))
+            try bindToInterface(index: interfaceIndex)
+        }
+    }
+
+    public extension Socket where Protocol == Never, State == Closed {
+        /// Lends `body` a socket for a descriptor that someone else opened and keeps. The socket must not be connected
+        /// yet. Its transport protocol is not known, so no TCP or UDP operation applies to it. `body` cannot connect
+        /// or close the socket, because it only borrows it. The descriptor is still open when this returns or throws.
+        /// - Parameters:
+        ///   - descriptor: the descriptor of an IPv4 or IPv6 socket.
+        ///   - body: a closure that receives the socket for the length of the call.
+        static func borrowing<R>(
+            _ descriptor: CInt,
+            _ body: (borrowing Socket<Never, Closed>) throws(SocketError) -> R
+        ) throws(SocketError) -> R {
+            let socket = try Socket(fd: descriptor, family: family(ofSocket: descriptor))
+            let result = Result { () throws(SocketError) -> R in try body(socket) }
+            // The socket would close the descriptor when it goes out of scope, so take the descriptor back out first.
+            _ = socket.fd.take()
+            return try result.get()
+        }
+
+        /// Asks the system which IP version the socket behind `descriptor` was created for.
+        private static func family(ofSocket descriptor: CInt) throws(SocketError) -> IPVersion {
+            var address = sockaddr_storage()
+            var length = socklen_t(MemoryLayout<sockaddr_storage>.size)
+            let result = withUnsafeMutablePointer(to: &address) {
+                $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
+                    getsockname(descriptor, $0, &length)
+                }
+            }
+            guard result == 0 else {
+                throw .getsocknameFailed(.shared)
+            }
+            guard let family = IPVersion(addressFamily: CInt(address.ss_family)) else {
+                throw .invalidSocketType
+            }
+            return family
         }
     }
 

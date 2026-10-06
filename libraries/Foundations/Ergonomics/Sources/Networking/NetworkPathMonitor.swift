@@ -18,7 +18,6 @@
 
 import Dependencies
 import DependenciesMacros
-import Dispatch
 import Ergonomics
 import Network
 
@@ -27,6 +26,9 @@ public struct NetworkPath: Equatable, Sendable {
 
     public private(set) var status: NWPath.Status
     private(set) var interfaceName: String?
+    /// The system's index for the physical interface this path prefers, or nil when the path has none. A socket
+    /// bound to this index can only leave the device through that interface.
+    public private(set) var interfaceIndex: UInt32?
     public private(set) var interfaceType: NWInterface.InterfaceType?
     private(set) var gateways: [String]
     private(set) var supportsIPv4: Bool
@@ -35,6 +37,7 @@ public struct NetworkPath: Equatable, Sendable {
     public init(
         status: NWPath.Status,
         interfaceName: String? = nil,
+        interfaceIndex: UInt32? = nil,
         interfaceType: NWInterface.InterfaceType? = nil,
         gateways: [String],
         supportsIPv4: Bool,
@@ -42,6 +45,7 @@ public struct NetworkPath: Equatable, Sendable {
     ) {
         self.status = status
         self.interfaceName = interfaceName
+        self.interfaceIndex = interfaceIndex
         self.interfaceType = interfaceType
         self.gateways = gateways
         self.supportsIPv4 = supportsIPv4
@@ -77,6 +81,7 @@ public extension NetworkPath {
         }
 
         self.interfaceName = physical?.name
+        self.interfaceIndex = physical.flatMap { UInt32(exactly: $0.index) }
         self.interfaceType = physical?.type
         self.gateways = path.gateways.map(\.debugDescription).sorted()
         self.supportsIPv4 = path.supportsIPv4
@@ -87,61 +92,39 @@ public extension NetworkPath {
 @DependencyClient
 public struct NetworkPathMonitor: Sendable {
     /// Opens a stream of paths. Repeats are already dropped, so every value describes a path that
-    /// differs from the one before it.
+    /// differs from the one before it. A new subscriber may first receive paths the system reported
+    /// while nobody was subscribed.
     public var subscribe: @Sendable () -> AsyncStream<NetworkPath> = { .finished }
 
-    /// Begins monitoring, unless another subscriber has already started it.
-    public var start: @Sendable () -> Void
-
-    /// Ends monitoring for every subscriber, not just the one that calls it. A subscriber that shares
-    /// the monitor with others should leave it running instead.
-    public var stop: @Sendable () -> Void
+    /// The path the system reports right now. Any thread can call this, and it never suspends. A
+    /// subscriber that just received a path gets that path or a newer one. Until the system reports
+    /// its first path, this is an unsatisfied path with no interface.
+    public var currentPath: @Sendable () -> NetworkPath = { .initial }
 }
 
 extension NetworkPathMonitor: DependencyKey {
+    /// Monitoring begins when this client is first used and lasts until the process exits. The
+    /// system does not let a cancelled monitor start again, so nothing here cancels it.
     public static let liveValue: NetworkPathMonitor = {
-        let queue = DispatchQueue(label: "ch.proton.nwpath.monitor")
         let networkMonitor = NWPathMonitor(prohibitedInterfaceTypes: [.other])
-
-        let (stream, continuation) = AsyncStream<NetworkPath>.makeStream()
+        let paths = networkMonitor.map { NetworkPath($0) }.removeDuplicates()
 
         let streamSource: StreamSource<NetworkPath>
         if #available(macOS 15, iOS 18.0, tvOS 18.0, *) {
-            let shared = stream.removeDuplicates().share()
+            let shared = paths.share()
             streamSource = .asyncAlgorithms { shared.eraseToStream() }
         } else {
-            streamSource = .sharedStream(stream.removeDuplicates().sharedStream)
+            streamSource = .sharedStream(paths.sharedStream)
         }
-
-        nonisolated(unsafe) var started = false
 
         return .init {
             streamSource.newStream
-        } start: {
-            queue.sync {
-                guard !started else {
-                    return
-                }
-
-                networkMonitor.pathUpdateHandler = { path in
-                    continuation.yield(.init(path))
-                }
-                networkMonitor.start(queue: queue)
-                started = true
-            }
-        } stop: {
-            queue.sync {
-                guard started else {
-                    return
-                }
-
-                networkMonitor.cancel()
-                started = false
-            }
+        } currentPath: {
+            NetworkPath(networkMonitor.currentPath)
         }
     }()
 
-    public static let testValue = NetworkPathMonitor(subscribe: { .finished }, start: {}, stop: {})
+    public static let testValue = NetworkPathMonitor(subscribe: { .finished }, currentPath: { .initial })
 }
 
 public extension DependencyValues {

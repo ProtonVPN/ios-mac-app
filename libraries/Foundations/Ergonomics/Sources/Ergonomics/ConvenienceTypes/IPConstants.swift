@@ -21,8 +21,8 @@ import Foundation
 // Wire-format constants for reading IP packets: header layouts, protocol numbers, and the message types and ports of
 // the protocols a packet filter has to recognize.
 
-/// The version nibble that opens every IP header.
-public enum IPVersion: UInt8 {
+/// An IP version. The raw value is the version nibble that opens every IP header.
+public enum IPVersion: UInt8, Sendable {
     case v4 = 4
     case v6 = 6
 }

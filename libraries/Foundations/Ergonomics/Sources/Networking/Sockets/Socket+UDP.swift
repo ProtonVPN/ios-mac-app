@@ -60,9 +60,10 @@
         /// Binds the socket to a local port (0 for auto-assign).
         /// - Parameter port: the port you want to bind the socket to. Defaults to `.zero` to let the OS choose.
         consuming func bindLocally(to port: UInt16 = .zero) throws(SocketError) -> Socket<UDP, Opened> {
-            if addressFamily == AF_INET6 {
+            switch family {
+            case .v6:
                 var addr = sockaddr_in6()
-                addr.sin6_family = sa_family_t(addressFamily)
+                addr.sin6_family = sa_family_t(family.addressFamily)
                 addr.sin6_port = in_port_t(port).bigEndian
                 addr.sin6_addr = in6addr_any
                 let bindResult = withUnsafePointer(to: &addr) {
@@ -73,10 +74,10 @@
                 guard bindResult == 0 else {
                     throw .localBindFailed
                 }
-                return Socket<UDP, Opened>(fd: fd.take(), addressFamily: addressFamily)
-            } else {
+                return Socket<UDP, Opened>(fd: fd.take(), family: family)
+            case .v4:
                 var addr = sockaddr_in()
-                addr.sin_family = sa_family_t(addressFamily)
+                addr.sin_family = sa_family_t(family.addressFamily)
                 addr.sin_port = in_port_t(port).bigEndian
                 let bindResult = withUnsafePointer(to: &addr) {
                     $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
@@ -86,7 +87,7 @@
                 guard bindResult == 0 else {
                     throw .localBindFailed
                 }
-                return Socket<UDP, Opened>(fd: fd.take(), addressFamily: addressFamily)
+                return Socket<UDP, Opened>(fd: fd.take(), family: family)
             }
         }
     }

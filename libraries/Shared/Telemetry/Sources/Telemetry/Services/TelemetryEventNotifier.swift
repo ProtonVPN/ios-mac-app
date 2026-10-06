@@ -96,14 +96,8 @@ class TelemetryEventNotifier {
         pathUpdatesTask = Task {
             @Dependency(\.pathMonitor) var pathMonitor
 
-            await withTaskCancellationHandler {
-                let stream = pathMonitor.subscribe()
-                pathMonitor.start()
-                for await newPath in stream {
-                    reachabilityChanged(newPath)
-                }
-            } onCancel: {
-                pathMonitor.stop()
+            for await newPath in pathMonitor.subscribe() {
+                reachabilityChanged(newPath)
             }
         }
     }

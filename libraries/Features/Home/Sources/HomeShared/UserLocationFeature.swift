@@ -124,9 +124,6 @@ public struct UserLocationFeature {
         @Dependency(\.pathMonitor) var pathMonitor
 
         let paths = pathMonitor.subscribe()
-        // Other subscribers share this monitor, and stopping it stops it for all of them, so this
-        // effect starts it and leaves it running.
-        pathMonitor.start()
 
         // The monitor drops repeated paths
         for await path in paths where path.isUsable {

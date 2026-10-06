@@ -25,7 +25,7 @@
         /// Connects the socket to a remote endpoint.
         /// - Parameter endpoint: a `sockaddr_in` value.
         consuming func connect(to endpoint: sockaddr_in) throws(SocketError) -> Socket<TCP, Opened> {
-            guard addressFamily == AF_INET else {
+            guard family == .v4 else {
                 throw .invalidSocketType
             }
             var endpoint: sockaddr_in = endpoint
@@ -37,13 +37,13 @@
             guard result == 0 else {
                 throw .connectionFailed
             }
-            return Socket<TCP, Opened>(fd: fd.take(), addressFamily: addressFamily)
+            return Socket<TCP, Opened>(fd: fd.take(), family: family)
         }
 
         /// Connects the socket to a remote endpoint.
         /// - Parameter endpoint: a `sockaddr_in6` value.
         consuming func connect(to endpoint: sockaddr_in6) throws(SocketError) -> Socket<TCP, Opened> {
-            guard addressFamily == AF_INET6 else {
+            guard family == .v6 else {
                 throw .invalidSocketType
             }
             var endpoint: sockaddr_in6 = endpoint
@@ -55,7 +55,7 @@
             guard result == 0 else {
                 throw .connectionFailed
             }
-            return Socket<TCP, Opened>(fd: fd.take(), addressFamily: addressFamily)
+            return Socket<TCP, Opened>(fd: fd.take(), family: family)
         }
 
         /// Connects the socket to a remote address and port.
@@ -63,17 +63,18 @@
         ///   - address: the IP address as a string.
         ///   - port: the port number.
         consuming func connect(to address: String, on port: some BinaryInteger) throws(SocketError) -> Socket<TCP, Opened> {
-            if addressFamily == AF_INET6 {
+            switch family {
+            case .v6:
                 var addr = sockaddr_in6()
-                addr.sin6_family = sa_family_t(addressFamily)
+                addr.sin6_family = sa_family_t(family.addressFamily)
                 addr.sin6_port = in_port_t(port).bigEndian
-                inet_pton(addressFamily, address, &addr.sin6_addr)
+                inet_pton(family.addressFamily, address, &addr.sin6_addr)
                 return try connect(to: addr)
-            } else {
+            case .v4:
                 var addr = sockaddr_in()
-                addr.sin_family = sa_family_t(addressFamily)
+                addr.sin_family = sa_family_t(family.addressFamily)
                 addr.sin_port = in_port_t(port).bigEndian
-                inet_pton(addressFamily, address, &addr.sin_addr)
+                inet_pton(family.addressFamily, address, &addr.sin_addr)
                 return try connect(to: addr)
             }
         }

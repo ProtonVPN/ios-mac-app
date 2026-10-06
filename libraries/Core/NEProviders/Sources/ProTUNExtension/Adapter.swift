@@ -82,6 +82,7 @@ actor ProTUNAdapter {
 
     @Dependency(\.extensionIPCServer) private var extensionIPCServer
     @Dependency(\.date) private var date
+    @Dependency(\.pathMonitor) private var pathMonitor
     #if os(macOS)
         @Dependency(\.packetFilterCoordinator) var packetFilterCoordinator
     #endif
@@ -91,6 +92,8 @@ actor ProTUNAdapter {
 
     private var pcapDurationTask: Task<Void, Never>?
 
+    /// The network path the adapter last acted on. The initial connection config and every connectivity event sent to
+    /// ProTUN are computed from it, so it records what ProTUN has been told about the network.
     private var networkPath: NetworkPath = .initial
 
     private var localAgentTask: Task<Void, Never>?
@@ -210,9 +213,14 @@ actor ProTUNAdapter {
         startLocalAgentRunLoop()
         signposter.emitEvent("Local agent run loop started", id: signpostID)
 
+        // ProTUN first hears about the network through this config, so the adapter records the path it reports here.
+        // The adapter subscribed to path updates earlier in this method, so the listener receives every path the
+        // system reports after this read.
+        networkPath = pathMonitor.currentPath()
+
         let proTunInitialConfig = try initialConnectionConfig(
             proTUNConfig: config.proTUN,
-            networkAvailable: networkPath.isUsable,
+            networkAvailable: networkPath.vpnSocketInterfaceIndex != nil,
             localAgentSettings: localAgentSettings,
             pcapFile: pcapFile
         )
@@ -230,7 +238,7 @@ actor ProTUNAdapter {
             tunFd: rawTunFd,
             stateChangeCallback: stateDelegate,
             eventCallback: eventDelegate,
-            socketFdAvailableCallback: nil,
+            socketProtector: PhysicalInterfaceBinder(currentPath: pathMonitor.currentPath),
             cache: cache
         )
 
@@ -497,20 +505,14 @@ extension ProTUNAdapter {
     func listenToPathUpdates() {
         pathUpdatesTask?.cancel()
 
+        let paths = pathMonitor.subscribe()
         pathUpdatesTask = Task {
-            @Dependency(\.pathMonitor) var pathMonitorDependency
-            let pathMonitor = pathMonitorDependency
-
-            let stream = pathMonitor.subscribe()
-            pathMonitor.start()
-
-            await withTaskCancellationHandler {
-                for await newPath in stream {
-                    handleNetworkPathUpdate(old: networkPath, new: newPath)
-                    networkPath = newPath
-                }
-            } onCancel: {
-                pathMonitor.stop()
+            // A new subscriber can first receive paths from before it subscribed. Each element therefore only says
+            // that the path changed, and the path to act on is the one the system reports now.
+            for await _ in paths {
+                let newPath = pathMonitor.currentPath()
+                handleNetworkPathUpdate(old: networkPath, new: newPath)
+                networkPath = newPath
             }
         }
     }
@@ -631,8 +633,10 @@ private extension PcapFileInfo {
 // MARK: - Helpers
 
 extension NetworkPath {
+    /// ProTUN hears that the network is available only while the path has a physical interface for its sockets. See
+    /// ``vpnSocketInterfaceIndex``.
     static func eventFromUpdates(old: NetworkPath, new: NetworkPath) -> ConnectivityEvent? {
-        switch (old.isUsable, new.isUsable) {
+        switch (old.vpnSocketInterfaceIndex != nil, new.vpnSocketInterfaceIndex != nil) {
         case (false, true): .up
         case (true, false): .down
         // avoid flapping connectivity events if the status hasn't meaningfully changed

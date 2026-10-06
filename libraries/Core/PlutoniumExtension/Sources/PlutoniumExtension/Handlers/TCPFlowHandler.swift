@@ -86,7 +86,7 @@ final class TCPFlowHandler: FlowHandler, Sendable {
             try socket.setNoSigPipe(true)
 
             if let destInterface {
-                try socket.bindToInterface(ifIndex: CInt(destInterface.index))
+                try socket.bindToInterface(index: UInt32(destInterface.index))
                 Logger.udp.debug("Socket bound to \(destInterface.name)")
             } else {
                 // Bind to en0
