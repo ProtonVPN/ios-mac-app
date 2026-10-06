@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 import Dependencies
 import Domain
 import LegacyCommon
@@ -41,9 +42,23 @@ package struct ProtocolFilters {
         }
     }
 
+    private var requiredProtocolSupport: ProtocolSupport {
+        supportedProtocols.reduce(.zero) { $0.union($1.protocolSupport) }
+    }
+
     package var supportedProtocolsFilter: VPNServerFilter {
-        let requiredProtocolSupport: ProtocolSupport = supportedProtocols
-            .reduce(.zero) { $0.union($1.protocolSupport) }
-        return .supports(protocol: requiredProtocolSupport)
+        .supports(protocol: requiredProtocolSupport)
+    }
+
+    /// Sends the protocols a server must support, first right away and then each time the user's choice changes it.
+    ///
+    /// PropertiesManager posts a `vpnProtocol` or `smartProtocol` event when the user picks a protocol. Switching from
+    /// Smart to a single protocol posts both, so the publisher skips values equal to the one it sent last.
+    package var requiredProtocolSupportPublisher: some Publisher<ProtocolSupport, Never> {
+        AppEvent.vpnProtocol.publisher
+            .merge(with: AppEvent.smartProtocol.publisher)
+            .map { _ in requiredProtocolSupport }
+            .prepend(requiredProtocolSupport)
+            .removeDuplicates()
     }
 }

@@ -47,7 +47,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
         .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.3")),
         .package(url: "https://github.com/SDWebImage/SDWebImageSwiftUI.git", from: "3.0.0"),
-        .package(url: "https://github.com/airbnb/lottie-ios", .upToNextMajor(from: "4.0.0")),
+        .package(url: "https://github.com/airbnb/lottie-spm", .upToNextMajor(from: "4.6.0")),
     ],
     targets: [
         .target(
@@ -81,7 +81,7 @@ let package = Package(
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
 
-                .product(name: "Lottie", package: "lottie-ios"),
+                .product(name: "Lottie", package: "lottie-spm"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "Sharing", package: "swift-sharing"),

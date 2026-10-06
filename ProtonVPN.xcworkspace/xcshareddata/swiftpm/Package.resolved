@@ -100,12 +100,12 @@
       }
     },
     {
-      "identity" : "lottie-ios",
+      "identity" : "lottie-spm",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/airbnb/lottie-ios",
+      "location" : "https://github.com/airbnb/lottie-spm.git",
       "state" : {
-        "revision" : "45517c3cfec9469bbdd4f86e32393c28ae9df0bc",
-        "version" : "4.3.3"
+        "revision" : "0aff16288f8dc1e3dab35cbf5cf45979673fd3df",
+        "version" : "4.6.1"
       }
     },
     {
@@ -124,15 +124,6 @@
       "state" : {
         "revision" : "3bfd2737b700b9a36565a8c94f4ad2b050a5e574",
         "version" : "1.0.1"
-      }
-    },
-    {
-      "identity" : "reachability.swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ashleymills/Reachability.swift",
-      "state" : {
-        "revision" : "c01bbdf2d633cf049ae1ed1a68a2020a8bda32e2",
-        "version" : "5.1.0"
       }
     },
     {
@@ -158,8 +149,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/getsentry/sentry-cocoa",
       "state" : {
-        "revision" : "0041fe6374a0557747d3c7f19888510a30684dfa",
-        "version" : "9.1.0"
+        "revision" : "00a2fec32ea665b81e406419e078bb713238e23f",
+        "version" : "9.19.0"
       }
     },
     {
@@ -205,6 +196,15 @@
       "state" : {
         "revision" : "309a47b2b1d9b5e991f36961c983ecec72275be3",
         "version" : "1.6.1"
+      }
+    },
+    {
+      "identity" : "swift-asn1",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-asn1.git",
+      "state" : {
+        "revision" : "3b6410f7dee09eb33cdd26260c5fd47fda19b0e2",
+        "version" : "1.7.3"
       }
     },
     {
@@ -268,6 +268,15 @@
       "state" : {
         "revision" : "82a4ae7170d98d8538ec77238b7eb8e7199ef2e8",
         "version" : "1.3.1"
+      }
+    },
+    {
+      "identity" : "swift-crypto",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-crypto.git",
+      "state" : {
+        "revision" : "95ba0316a9b733e92bb6b071255ff46263bbe7dc",
+        "version" : "3.15.1"
       }
     },
     {
@@ -383,8 +392,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/lachlanbell/SwiftOTP.git",
       "state" : {
-        "revision" : "93d4942c90dd498580988ffb9971e2ddf91d5a28",
-        "version" : "2.0.3"
+        "revision" : "9660551ea3df153c3cbacfa34ac3abbec73a8b84",
+        "version" : "3.0.2"
       }
     },
     {
