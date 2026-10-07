@@ -4,8 +4,8 @@
 import PackageDescription
 
 enum ProTUNFFITargetKind {
-    private static let artifact = "2.4.5_3610322.2610020947.1/protun-release.xcframework.zip"
-    private static let checksum = "b02b642a8567e2c3435c414507ee65237ff11afb1ba7d4c9ebaa3d547400d3f5"
+    private static let artifact = "3.0.1_3634101.2610071518.1/protun-release.xcframework.zip"
+    private static let checksum = "52c5ca1b0a044105f2a3f7fb20f62785e905068edf42136bf7a8e79b867d5d76"
 
     private static var url: String {
         guard let nexus = Context.environment["CI_NEXUS_URL"], !nexus.isEmpty else {
