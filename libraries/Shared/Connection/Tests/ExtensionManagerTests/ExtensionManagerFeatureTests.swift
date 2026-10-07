@@ -21,6 +21,7 @@
     import Domain
     import DomainTestSupport
     import Ergonomics
+    import enum ExtensionIPC.ProviderMessageError
     @testable import ExtensionManager
     import Foundation
     import os

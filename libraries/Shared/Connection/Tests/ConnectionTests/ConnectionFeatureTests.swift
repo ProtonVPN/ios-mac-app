@@ -577,6 +577,84 @@
         }
     #endif
 
+    /// The reducer follows the signed-in account's tier from launch, and asks the extension for a new certificate each
+    /// time the tier changes.
+    struct ConnectionFeatureTierObservationTests {
+        private typealias Store = TestStore<ConnectionFeature.State, ConnectionFeature.Action>
+
+        /// Fresh in-memory suite per test
+        private let defaults = UserDefaults.inMemory
+        /// How many tier changes the reducer was sent.
+        private let tierChanges = LockIsolated(0)
+
+        @Test
+        @MainActor
+        func tierChangeAfterLaunchInvalidatesTheCertificate() async {
+            let (store, userTier) = makeStore(startingTier: .free)
+
+            await store.send(.input(.onLaunch))
+            userTier.withLock { $0 = .paid }
+            #expect(tierChanges.value == 1)
+            await store.receive(\.userTierChanged)
+            await store.receive(\.tunnel.invalidateCertificate)
+            await store.send(.stopObserving)
+        }
+
+        /// Signing in writes a new user tier value where none existed previously, make sure that upgrading the user
+        /// tier afterwards results in only one tier change event.
+        @Test
+        @MainActor
+        func signingInAfterLaunchIsNotATierChange() async {
+            let (store, userTier) = makeStore(startingTier: nil)
+
+            await store.send(.input(.onLaunch))
+            userTier.withLock { $0 = .free }
+            userTier.withLock { $0 = .paid }
+            await store.receive(\.userTierChanged)
+            await store.send(.stopObserving)
+
+            #expect(tierChanges.value == 1)
+        }
+
+        /// A store that reads its tier from this suite's defaults, together with the shared tier the test writes.
+        ///
+        /// `defaultAppStorage` is set in both scopes so the returned reference and the reducer's own reference resolve
+        /// against the same suite.
+        @MainActor
+        private func makeStore(startingTier: VpnTier?) -> (Store, Shared<VpnTier?>) {
+            let session = VPNSessionMock(status: .disconnected)
+            session.messageHandler = { _, _ in .init(payload: .ack) }
+
+            return withDependencies {
+                $0.defaultAppStorage = defaults
+            } operation: {
+                @Shared(.userTier) var userTier
+                $userTier.withLock { $0 = startingTier }
+
+                let store = TestStore(initialState: ConnectionFeature.State(
+                    shouldRegisterServerChangeOnConnection: false,
+                    tunnel: .unknown
+                )) {
+                    CombineReducers {
+                        ConnectionFeature()
+                        Reduce { [tierChanges] _, action in
+                            if action.is(\.userTierChanged) {
+                                tierChanges.withValue { $0 += 1 }
+                            }
+                            return .none
+                        }
+                    }
+                } withDependencies: {
+                    $0.defaultAppStorage = defaults
+                    $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
+                    $0.tunnelManager = MockTunnelManager(connection: session)
+                }
+                store.exhaustivity = .off
+                return (store, $userTier)
+            }
+        }
+    }
+
     // TODO: ProTUN: Revisit and update tests that are still relevant
 //    final class ConnectionFeatureTests: XCTestCase {
 //        override func setUp() async throws {

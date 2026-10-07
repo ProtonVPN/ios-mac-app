@@ -48,6 +48,8 @@ enum MessageRouter {
             return await handleConfigurationUpdate(update: update, with: adapter)
         case .clearPersistentCache:
             return handleClearPersistentCache()
+        case .invalidateCertificate:
+            return await handleInvalidateCertificate(with: adapter)
         case let .ack(errorId):
             return await handleAcknowledgeError(errorId, with: adapter)
         }
@@ -113,6 +115,11 @@ private extension MessageRouter {
             Logger.adapter.error("Failed to clear cache: \(error, privacy: .public)")
             return .init(payload: .error(.other(reason: "\(error)")))
         }
+    }
+
+    static func handleInvalidateCertificate(with adapter: ProTUNAdapter) async -> Response {
+        await adapter.invalidateCertificate()
+        return .init(payload: .ack)
     }
 
     static func handleAcknowledgeError(_ errorId: UUID, with adapter: ProTUNAdapter) async -> Response {

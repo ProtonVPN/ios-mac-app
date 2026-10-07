@@ -49,6 +49,7 @@ public extension ProTUNMessage.Request {
         case pushForkInfo(selector: String, cookieName: String, cookieValue: String)
         case updateConfiguration(ConnectionUpdate)
         case clearPersistentCache
+        case invalidateCertificate
         case ack(errorId: UUID)
         #if DEBUG
             case ping
@@ -124,6 +125,7 @@ extension ProTUNMessage.Request.Payload: CustomStringConvertible {
         case .pushForkInfo: "pushForkInfo"
         case .updateConfiguration: "updateConfiguration"
         case .clearPersistentCache: "clearPersistentCache"
+        case .invalidateCertificate: "invalidateCertificate"
         case let .ack(errorId): "ack(\(errorId))"
         }
     }

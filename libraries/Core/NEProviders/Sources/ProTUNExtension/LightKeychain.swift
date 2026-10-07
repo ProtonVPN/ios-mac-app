@@ -25,6 +25,11 @@ struct LightKeychain {
     var updateStatus: @Sendable (_ service: String, _ account: String, _ bytes: Data) -> OSStatus = { _, _, _ in .zero }
     var addPassword: @Sendable (_ service: String, _ account: String, _ bytes: Data) -> OSStatus = { _, _, _ in .zero }
     var getPassword: @Sendable (_ service: String, _ account: String) -> (OSStatus, Data?) = { _, _ in (.zero, nil) }
+    /// When the keychain last wrote the item
+    var modificationDate: @Sendable (_ service: String, _ account: String) -> (OSStatus, Date?) = { _, _ in
+        (.zero, nil)
+    }
+
     var removePassword: @Sendable (_ service: String, _ account: String) -> OSStatus = { _, _ in .zero }
     var clear: @Sendable (_ service: String) -> OSStatus = { _ in .zero }
     /// Every generic password service
@@ -66,6 +71,22 @@ extension LightKeychain: DependencyKey {
         } else {
             return (status, nil)
         }
+    } modificationDate: { service, account in
+        let query = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: account,
+            kSecReturnAttributes: true,
+        ] as CFDictionary
+
+        var result: AnyObject?
+        let status = SecItemCopyMatching(query, &result)
+
+        guard status == errSecSuccess, let attributes = result as? [CFString: Any] else {
+            return (status, nil)
+        }
+
+        return (status, attributes[kSecAttrModificationDate] as? Date)
     } removePassword: { service, account in
         SecItemDelete(
             [

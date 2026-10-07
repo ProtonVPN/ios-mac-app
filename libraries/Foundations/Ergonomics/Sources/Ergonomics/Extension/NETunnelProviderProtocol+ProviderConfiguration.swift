@@ -25,6 +25,7 @@ public extension NETunnelProviderProtocol {
         case connectedServerIpIdKey = "PVPNServerIpID"
         case wgProtocolKey = "wg-protocol"
         case pcapFileKey = "PVPNPcapFile"
+        case certificateInvalidationDateKey = "PVPNCertificateInvalidationDate"
     }
 
     private func ensureProviderConfig() {
@@ -72,6 +73,18 @@ public extension NETunnelProviderProtocol {
         set {
             ensureProviderConfig()
             providerConfiguration?[.pcapFileKey] = newValue?.absoluteString
+        }
+    }
+
+    /// When the app last declared ProTUN's stored Local Agent certificate out of date, if ever.
+    var certificateInvalidationDate: Date? {
+        get {
+            (providerConfiguration?[.certificateInvalidationDateKey] as? TimeInterval)
+                .map(Date.init(timeIntervalSince1970:))
+        }
+        set {
+            ensureProviderConfig()
+            providerConfiguration?[.certificateInvalidationDateKey] = newValue?.timeIntervalSince1970
         }
     }
 }

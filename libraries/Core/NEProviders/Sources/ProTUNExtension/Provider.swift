@@ -189,7 +189,12 @@ extension ProTUNAdapter.Configuration {
             throw ProTUNAdapter.Error.missingUserID
         }
 
-        self.init(userID: userID, proTUN: proTUN, pcapCaptureFileURL: config.pcapCaptureFileURL)
+        self.init(
+            userID: userID,
+            proTUN: proTUN,
+            pcapCaptureFileURL: config.pcapCaptureFileURL,
+            certificateInvalidationDate: config.certificateInvalidationDate
+        )
     }
 }
 

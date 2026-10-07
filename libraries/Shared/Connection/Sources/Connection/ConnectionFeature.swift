@@ -90,6 +90,8 @@ public struct ConnectionFeature: Sendable {
         case connectionStateUpdated(ConnectionState)
         case reloadWidgetTimelines(ConnectionState)
         case stopObserving
+        /// The signed-in account moved to a different tier while this reducer was observing it.
+        case userTierChanged
 
         /// A subset of this reducer's actions suitable to be sent from outside
         @DebugDescription
@@ -140,7 +142,16 @@ public struct ConnectionFeature: Sendable {
                 let observation = Effect<Action>.merge(
                     .send(.tunnel(.startObserving)),
                     // Listen for session changes (logout, or a guest becoming authenticated)
-                    .listen(to: sessionChangeNotifier.stream()) { _ in .input(.onSessionChange) }
+                    .listen(to: sessionChangeNotifier.stream()) { _ in .input(.onSessionChange) },
+                    .publisher { [userTier = state.$userTier] in
+                        userTier
+                            .publisher
+                            .compactMap { $0 }
+                            .removeDuplicates()
+                            .dropFirst()
+                            .receive(on: UIScheduler.shared)
+                            .map { _ in Action.userTierChanged }
+                    }
                 ).cancellable(id: CancelID.observation, cancelInFlight: true)
                 // Reconciliation runs under its own cancel ID because `.stopObserving` must not end it, since Advanced
                 // Kill Switch needs to keep blocking after sign-out.
@@ -265,6 +276,11 @@ public struct ConnectionFeature: Sendable {
 
             case .input(.onSessionChange):
                 return .send(.tunnel(.cleanup))
+
+            case .userTierChanged:
+                // The API issued the extension's Local Agent certificate for the previous tier, so ask for one that
+                // matches the account.
+                return .send(.tunnel(.invalidateCertificate))
 
             case let .prepare(intent):
                 state.shouldRegisterServerChangeOnConnection = intent.spec.location == .any(.random)
@@ -584,6 +600,8 @@ extension ConnectionFeature.Action: CustomDebugStringConvertible {
             ".connectionStateUpdated(\(connectionState.debugDescription)"
         case .reloadWidgetTimelines:
             ".reloadWidgetTimelines"
+        case .userTierChanged:
+            ".userTierChanged"
         }
     }
 }

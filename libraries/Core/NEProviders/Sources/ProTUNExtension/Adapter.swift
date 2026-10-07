@@ -178,6 +178,12 @@ actor ProTUNAdapter {
 
         let cache = SecurePersistentCache(userID: config.userID)
 
+        // The app can invalidate the stored certificate (e.g. due to a plan upgrade) while the extension isn't running,
+        // check to make sure if the certificate has been invalidated since the last VPN connection.
+        if let invalidationDate = config.certificateInvalidationDate {
+            cache.removeCertificate(storedBefore: invalidationDate)
+        }
+
         extensionIPCServer.zeroAll()
 
         let pcapFile = configuredPacketCapture(for: config)
@@ -367,6 +373,13 @@ extension ProTUNAdapter {
             cookies: .init(items: [.init(name: cookieName, value: cookieValue)])
         )
         connection?.provideApiForkSelector(forkSelectorInfo: forkSelectorInfo)
+    }
+
+    /// The app can request to invalidate the current certificate and fetch a new one, for example if the current user's
+    /// plan has changed. ProTUN will reconnect LocalAgent with the new certificate once it's updated.
+    func invalidateCertificate() {
+        Logger.localAgent.info("Received certificate invalidation from app")
+        connection?.invalidateCertificate()
     }
 
     func handlePeersUpdate(_ peers: [PeerInfo]) throws(Error) {
@@ -606,9 +619,14 @@ extension ProTUNAdapter {
     }
 
     struct Configuration {
+        /// The user ID of the current account.
         let userID: String
+        /// The configuration used for the VPN connection.
         let proTUN: ProTUNConfiguration
+        /// The file location used for an active packet capture, if underway.
         var pcapCaptureFileURL: URL?
+        /// When the app last declared the stored certificate out of date, if ever.
+        var certificateInvalidationDate: Date?
 
         static func legacy(proTUN: ProTUNConfiguration) -> Self {
             self.init(userID: NETunnelProviderProtocol.legacyMigrationUserID, proTUN: proTUN)

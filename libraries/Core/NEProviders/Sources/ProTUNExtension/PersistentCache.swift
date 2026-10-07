@@ -92,6 +92,20 @@ final class SecurePersistentCache: PersistentCache {
         return data
     }
 
+    /// Removes the stored certificate if the keychain last wrote it before `date`, if one exists.
+    func removeCertificate(storedBefore date: Date) {
+        @Dependency(\.lightKeychain) var lightKeychain
+
+        let account = CacheKey.certificate.keychainAccount
+        let (_, storedAt) = lightKeychain.modificationDate(service: service, account: account)
+        let wholeSecond = Date(timeIntervalSince1970: date.timeIntervalSince1970.rounded(.down))
+
+        guard let storedAt, storedAt < wholeSecond else { return }
+
+        Logger.adapter.info("Stored certificate predates its invalidation, removing it")
+        remove(key: .certificate)
+    }
+
     func clearAll() {
         @Dependency(\.lightKeychain) var lightKeychain
 

@@ -316,6 +316,8 @@ final class PacketTunnelManager: TunnelManager {
                 try await managerRepository.prepareManager(.wireGuard, .packetCapture(fileURL: fileURL))
             case .pcapRequest(.stop):
                 try await managerRepository.prepareManager(.wireGuard, .packetCapture(fileURL: nil))
+            case .invalidateCertificate:
+                try await managerRepository.prepareManager(.wireGuard, .certificateInvalidation)
             default:
                 try await managerRepository.manager(for: .wireGuard)
             }

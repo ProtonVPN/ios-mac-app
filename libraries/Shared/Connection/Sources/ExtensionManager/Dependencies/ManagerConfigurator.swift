@@ -32,6 +32,9 @@ public enum TunnelConfigurationOperation {
     /// Declares which file the extension should write a packet capture into, or `nil` to withdraw the request. A tunnel
     /// that starts later reads this from its own configuration.
     case packetCapture(fileURL: URL?)
+    /// Declares the connection certificate, if any, as out of date as of now. A tunnel that starts later reads the date
+    /// from its configuration and discards the certificate before it connects.
+    case certificateInvalidation
     #if !os(tvOS)
         /// Build/start a zero-peer ProTUN tunnel with no server, used to enforce Advanced kill switch
         /// blocking from a fully disconnected state. The tunnel intercepts all traffic and never

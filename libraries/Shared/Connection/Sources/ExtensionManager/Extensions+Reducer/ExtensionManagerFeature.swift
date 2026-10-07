@@ -60,6 +60,8 @@ public struct ExtensionFeature: Sendable {
         case stopObserving
         /// Requests that the extension apply a partial configuration/feature change to the running tunnel.
         case requestConfigChange(ConnectionUpdate)
+        /// Requests that the extension replace its Local Agent certificate.
+        case invalidateCertificate
         case connect(ServerConnectionIntent)
         /// The second half of `.connect`: any tunnel that had to be stopped first is down, so the new one can be
         /// started and the connection timeout armed for it.
@@ -151,6 +153,23 @@ public struct ExtensionFeature: Sendable {
                     log.error("Failed to apply connection update", category: .connection, metadata: ["error": "\(error)"])
                     SentryHelper.shared?.log(error: error)
                     await send(.delegate(.reconfigurationFailed(error)))
+                }
+
+            case .invalidateCertificate:
+                return .run { _ in
+                    log.debug("Requesting certificate invalidation", category: .connection)
+                    let response = try await tunnelManager.sendProTUN(request: .init(payload: .invalidateCertificate))
+                    guard case .ack = response.payload else {
+                        throw TunnelManagerError.protunIPC(
+                            "Unexpected response to invalidateCertificate: \(response.payload)"
+                        )
+                    }
+                } catch: { error, _ in
+                    log.warning(
+                        "Certificate invalidation not delivered",
+                        category: .connection,
+                        metadata: ["error": "\(error)"]
+                    )
                 }
 
             case let .connect(intent) where state.canUpdateConfiguration(to: intent.protocolConfiguration):
@@ -545,6 +564,8 @@ extension ExtensionFeature.Action: CustomDebugStringConvertible {
             ".cleanup"
         case let .requestConfigChange(update):
             ".requestConfigChange(\(update))"
+        case .invalidateCertificate:
+            ".invalidateCertificate"
         case let .delegate(action):
             ".delegate(\(action)"
         }

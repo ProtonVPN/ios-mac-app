@@ -219,6 +219,10 @@ extension ManagerConfigurator {
                         // declared beforehand. Otherwise the connection a capture is waiting for is the very thing that
                         // discards it.
                         protocolConfig.pcapCaptureFileURL = manager.vpnProtocolConfiguration?.pcapCaptureFileURL
+                        // The certificate invalidation carries over for the same reason. The tunnel this connection
+                        // starts is the one that has to discard the certificate.
+                        protocolConfig.certificateInvalidationDate =
+                            manager.vpnProtocolConfiguration?.certificateInvalidationDate
                         manager.vpnProtocolConfiguration = protocolConfig
                     }
                     manager.localizedDescription = configurationTitle(for: connectionIntent)
@@ -262,6 +266,17 @@ extension ManagerConfigurator {
                         manager.vpnProtocolConfiguration = protocolConfig
                     }
 
+                case .certificateInvalidation:
+                    // Without a configuration, no tunnel has started that could have stored a certificate. Throwing
+                    // also stops the repository from saving a new configuration, which would ask the user for VPN
+                    // permission in the middle of a plan change.
+                    guard let protocolConfig = manager.vpnProtocolConfiguration else {
+                        throw WireguardConfiguratorError.incorrectProtocolConfiguration
+                    }
+                    @Dependency(\.date.now) var now
+                    protocolConfig.certificateInvalidationDate = now
+                    manager.vpnProtocolConfiguration = protocolConfig
+
                 case .disconnection:
                     #if !os(tvOS)
                         // Turn off Kill Switch as the user asks for it, rather than when the tunnel finishes going
@@ -283,6 +298,10 @@ extension ManagerConfigurator {
                         // A zero-peer tunnel has nothing to capture, but the declaration still belongs to the app and
                         // has to survive for whichever real connection comes next.
                         zeroPeerConfig.pcapCaptureFileURL = manager.vpnProtocolConfiguration?.pcapCaptureFileURL
+                        // ProTUN loads the stored certificate when a zero-peer tunnel starts too, and a later
+                        // connection might reconfigure the tunnel in place.
+                        zeroPeerConfig.certificateInvalidationDate =
+                            manager.vpnProtocolConfiguration?.certificateInvalidationDate
                         manager.vpnProtocolConfiguration = zeroPeerConfig
                         manager.localizedDescription = killSwitchConfigurationTitle
                         manager.isOnDemandEnabled = false

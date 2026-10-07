@@ -221,6 +221,92 @@
             XCTAssertNil(config.randomNat)
         }
 
+        /// Declaring the certificate out of date should only update the invalidation timestamp, without affecting any
+        /// other tunnel configuration values.
+        @MainActor
+        func testCertificateInvalidationRecordsTheCurrentDate() async throws {
+            let configurator = ManagerConfigurator.wireGuardConfigurator
+            let session = VPNSessionMock(status: .disconnected, connectedDate: nil)
+            var manager: TunnelProviderManager = MockTunnelProviderManager(
+                session: session,
+                isOnDemandEnabled: false,
+                isEnabled: false
+            )
+            manager.protocolConfiguration = NETunnelProviderProtocol()
+            let now = Date(timeIntervalSince1970: 1_800_000_000)
+
+            try await withDependencies {
+                $0.date.now = now
+            } operation: {
+                try await configurator.configure(&manager, for: .certificateInvalidation)
+            }
+
+            XCTAssertEqual(manager.vpnProtocolConfiguration?.certificateInvalidationDate, now)
+            XCTAssertFalse(manager.isOnDemandEnabled)
+            XCTAssertFalse(manager.isEnabled)
+        }
+
+        /// A manager with no configuration has never started a tunnel. The configurator throws so that the repository
+        /// does not save a new configuration for it.
+        @MainActor
+        func testCertificateInvalidationThrowsWithoutAConfiguration() async {
+            let configurator = ManagerConfigurator.wireGuardConfigurator
+            let session = VPNSessionMock(status: .disconnected, connectedDate: nil)
+            var manager: TunnelProviderManager = MockTunnelProviderManager(
+                session: session,
+                isOnDemandEnabled: false,
+                isEnabled: false
+            )
+
+            await XCTAssertThrowsErrorAsync {
+                try await configurator.configure(&manager, for: .certificateInvalidation)
+            } errorHandler: { error in
+                guard case .incorrectProtocolConfiguration = error as? WireguardConfiguratorError else {
+                    XCTFail("Expected incorrectProtocolConfiguration error, got \(error)")
+                    return
+                }
+            }
+
+            XCTAssertNil(manager.vpnProtocolConfiguration)
+        }
+
+        /// Connecting builds a new provider configuration. The invalidation recorded on the old one has to carry over,
+        /// because the tunnel that connection starts is the one that discards the certificate.
+        @MainActor
+        func testConnectingKeepsTheRecordedCertificateInvalidation() async throws {
+            let configurator = ManagerConfigurator.wireGuardConfigurator
+            let session = VPNSessionMock(status: .disconnected, connectedDate: nil)
+            let invalidationDate = Date(timeIntervalSince1970: 1_800_000_000)
+            let previousConfiguration = NETunnelProviderProtocol()
+            previousConfiguration.certificateInvalidationDate = invalidationDate
+            var manager: TunnelProviderManager = MockTunnelProviderManager(
+                session: session,
+                isOnDemandEnabled: false,
+                isEnabled: false
+            )
+            manager.protocolConfiguration = previousConfiguration
+            let keychain = MockAuthKeychain()
+            keychain.userId = "user-id"
+            let intent = ServerConnectionIntent.mock(
+                server: .mock,
+                protocolConfiguration: .wireGuard(.init(backend: .proTUN, transport: .udp))
+            )
+
+            try await withDependencies {
+                $0.authKeychain = keychain
+                $0.credentiallessHelper = .init(isCredentialLess: { false })
+                $0.connectionFeatureProvider = .init(
+                    connectionFeatures: { .mock },
+                    requestedFeatures: { .mock },
+                    connectionProtocol: { .smartProtocol }
+                )
+            } operation: {
+                try await configurator.configure(&manager, for: .connection(intent))
+            }
+
+            XCTAssertEqual(manager.vpnProtocolConfiguration?.certificateInvalidationDate, invalidationDate)
+        }
+
         @MainActor
         func testIkeConfigurationThrowsWhenCredentialsCannotBeRead() async {
             let configurator = ManagerConfigurator.wireGuardConfigurator
