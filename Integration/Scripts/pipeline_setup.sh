@@ -22,13 +22,16 @@ git config --global --add "url.https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERV
 # Don't fetch secrets unless we're cloning the whole repository, i.e., for a build, or if we're trying to upload
 # localizations
 if ([ "$GIT_STRATEGY" != "none" ] && [ "$GIT_SUBMODULE_STRATEGY" != "none" ]) || [ -n "$I18N_SYNC_CROWDIN_PROJECT" ]; then
+    SECRETS_REF=ios/8.0.0
+
     echo "Cloning secrets..."
     # Download obfuscated constants
     "$CREDENTIALS" cleanup
     GIT_LFS_SKIP_SMUDGE=1 "$CREDENTIALS" setup -s \
         -p .secrets-ci-${CI_JOB_ID} \
         -r "https://${CI_SERVER_HOST}/${CI_SECRETS_REPO_PATH}"
-    "$CREDENTIALS" checkout -- .
+    "$CREDENTIALS" fetch --depth=1 origin tag "$SECRETS_REF"
+    "$CREDENTIALS" checkout "$SECRETS_REF"
 fi
 
 if [ "$SKIP_MACROS_SETUP" != "true" ]; then
