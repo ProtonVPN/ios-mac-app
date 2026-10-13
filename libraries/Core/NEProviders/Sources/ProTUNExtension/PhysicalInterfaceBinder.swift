@@ -39,7 +39,10 @@ final class PhysicalInterfaceBinder: SocketProtector {
     func protectSocket(socketFd: Int32) -> Bool {
         let path = currentPath()
         do {
-            try bind(socketFd, to: path)
+            let interfaceIndex = try bind(socketFd, to: path)
+            Logger.adapter.notice(
+                "Bound socket \(socketFd) to interface \(interfaceIndex) of path \(path, privacy: .public)"
+            )
             return true
         } catch {
             Logger.adapter.error(
@@ -49,13 +52,14 @@ final class PhysicalInterfaceBinder: SocketProtector {
         }
     }
 
-    /// Binds ProTUN's socket to the physical interface of `path`. ProTUN opened the socket and closes it, so this only
-    /// borrows it.
-    private func bind(_ socketFd: Int32, to path: NetworkPath) throws(SocketError) {
+    /// Binds ProTUN's socket to the physical interface of `path` and returns that interface's index. ProTUN opened the
+    /// socket and closes it, so this only borrows it.
+    private func bind(_ socketFd: Int32, to path: NetworkPath) throws(SocketError) -> UInt32 {
         guard let interfaceIndex = path.vpnSocketInterfaceIndex else { throw .interfaceNotFound }
         try Socket.borrowing(socketFd) { socket throws(SocketError) in
             try socket.bindToInterface(index: interfaceIndex)
         }
+        return interfaceIndex
     }
 }
 
@@ -65,7 +69,11 @@ extension NetworkPath {
     ///
     /// ProTUN is only told that the network is available while this is not nil, because a socket it opens without a
     /// physical interface would be routed into the tunnel.
+    ///
+    /// An index of 0 counts as no interface. The system reports 0 for an interface it no longer has, and binding a
+    /// socket to interface 0 removes its binding instead of setting one.
     var vpnSocketInterfaceIndex: UInt32? {
-        isUsable ? interfaceIndex : nil
+        guard isUsable, let interfaceIndex, interfaceIndex != 0 else { return nil }
+        return interfaceIndex
     }
 }

@@ -77,4 +77,22 @@ struct ConnectivityEventTests {
         #expect(NetworkPath.eventFromUpdates(old: .initial, new: unusable) == nil)
         #expect(NetworkPath.eventFromUpdates(old: cellular, new: unusable) == .down)
     }
+
+    /// The system reports index 0 for an interface it no longer has. A socket cannot be bound to it, so ProTUN must
+    /// not hear that the network is available.
+    @Test
+    func usablePathWithAnIndexlessInterfaceIsReportedAsNoNetwork() {
+        let indexless = NetworkPath(
+            status: .satisfied,
+            interfaceName: "pdp_ip0",
+            interfaceIndex: 0,
+            interfaceType: .cellular,
+            gateways: [],
+            supportsIPv4: true,
+            supportsIPv6: false
+        )
+
+        #expect(NetworkPath.eventFromUpdates(old: .initial, new: indexless) == nil)
+        #expect(NetworkPath.eventFromUpdates(old: cellular, new: indexless) == .down)
+    }
 }

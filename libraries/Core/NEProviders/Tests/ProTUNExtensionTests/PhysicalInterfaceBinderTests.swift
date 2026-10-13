@@ -61,8 +61,22 @@ struct PhysicalInterfaceBinderTests {
         #expect(boundInterface == 0)
     }
 
+    /// The system reports index 0 for an interface it no longer has. Binding to 0 would succeed and leave the socket
+    /// unbound, so the binder must refuse instead.
+    @Test
+    func refusesASocketWhenThePathsInterfaceHasNoIndex() {
+        let socket = TestSocket()
+        let binder = PhysicalInterfaceBinder(currentPath: { .indexlessInterface })
+
+        let isProtected = binder.protectSocket(socketFd: socket.descriptor)
+        let boundInterface = socket.boundInterface
+
+        #expect(!isProtected)
+        #expect(boundInterface == 0)
+    }
+
     /// ProTUN connects the socket after the binder returns, so the binder must leave the descriptor open.
-    @Test(arguments: [NetworkPath.loopback, .removedInterface])
+    @Test(arguments: [NetworkPath.loopback, .removedInterface, .indexlessInterface])
     func leavesProTUNsSocketOpen(path: NetworkPath) {
         let socket = TestSocket()
         let binder = PhysicalInterfaceBinder(currentPath: { path })
@@ -133,6 +147,17 @@ private extension NetworkPath {
         interfaceName: "en9",
         interfaceIndex: UInt32(Int32.max),
         interfaceType: .wifi,
+        gateways: [],
+        supportsIPv4: true,
+        supportsIPv6: false
+    )
+
+    /// A usable path whose interface the system reports with index 0, as it does for one it no longer has.
+    static let indexlessInterface = NetworkPath(
+        status: .satisfied,
+        interfaceName: "pdp_ip0",
+        interfaceIndex: 0,
+        interfaceType: .cellular,
         gateways: [],
         supportsIPv4: true,
         supportsIPv6: false
