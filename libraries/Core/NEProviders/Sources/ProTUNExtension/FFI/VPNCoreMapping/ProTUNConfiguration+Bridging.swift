@@ -45,7 +45,8 @@ extension ProTUNConfiguration.Peer {
             tcpPorts: tcpPorts,
             tlsPorts: tlsPorts,
             priority: priority,
-            exitLabel: exitLabel
+            exitLabel: exitLabel,
+            serverName: serverName
         )
     }
 
@@ -79,7 +80,8 @@ extension PeerInfo {
             tcpPorts: peer.tcpPorts,
             tlsPorts: peer.tlsPorts,
             priority: Int32(peer.priority),
-            exitLabel: peer.exitLabel
+            exitLabel: peer.exitLabel,
+            serverName: peer.serverName
         )
     }
 }

@@ -202,7 +202,8 @@
                 tcpPorts: [],
                 tlsPorts: [],
                 priority: 0,
-                exitLabel: nil
+                exitLabel: nil,
+                serverName: nil
             )
             let connected = PacketFilterPolicy(
                 configuration: .init(preferredTransport: .udp, peers: [peer], dnsServers: []),

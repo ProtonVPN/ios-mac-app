@@ -62,6 +62,7 @@
             #expect(peers[0].tcpPorts == [443])
             #expect(peers[0].tlsPorts == [8443])
             #expect(peers[0].exitLabel == "2")
+            #expect(peers[0].serverName == "node.mock.protonvpn.net")
         }
 
         @Test
@@ -96,6 +97,7 @@
             #expect(tlsPeer.tlsPorts == [4433])
             #expect(tlsPeer.udpPorts.isEmpty)
             #expect(tlsPeer.tcpPorts.isEmpty)
+            #expect(tlsPeer.serverName == "node.mock.protonvpn.net")
         }
 
         /// Every transport has its own address, so there is no default peer to build even though the API

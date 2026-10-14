@@ -103,7 +103,8 @@ private extension ProTUNConfiguration {
                     tcpPorts: ports(for: .tcp, defaults: wgConfig.defaultTcpPorts),
                     tlsPorts: ports(for: .tls, defaults: wgConfig.defaultTlsPorts),
                     priority: 0,
-                    exitLabel: nil
+                    exitLabel: nil,
+                    serverName: nil
                 ),
             ],
             dnsServers: wgConfig.dnsServers ?? []

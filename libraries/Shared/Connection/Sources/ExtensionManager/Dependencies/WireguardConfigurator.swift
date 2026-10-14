@@ -638,7 +638,8 @@ extension Server {
             tcpPorts: perTransportPortOverrides[.tcp] ?? [],
             tlsPorts: perTransportPortOverrides[.tls] ?? [],
             priority: 0,
-            exitLabel: endpoint.label
+            exitLabel: endpoint.label,
+            serverName: endpoint.domain
         )
     }
 
@@ -672,7 +673,8 @@ extension Server {
                 tcpPorts: transport == .tcp ? ports(for: .tcp, with: config) : [],
                 tlsPorts: transport == .tls ? ports(for: .tls, with: config) : [],
                 priority: 0,
-                exitLabel: endpoint.label
+                exitLabel: endpoint.label,
+                serverName: endpoint.domain
             )
         }
     }

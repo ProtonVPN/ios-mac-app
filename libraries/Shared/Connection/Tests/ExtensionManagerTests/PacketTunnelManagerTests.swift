@@ -948,7 +948,8 @@
                 tcpPorts: [],
                 tlsPorts: [],
                 priority: 0,
-                exitLabel: nil
+                exitLabel: nil,
+                serverName: nil
             )
         }
     }
